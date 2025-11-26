@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>eInkChess – Chess for E‑Ink</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <h1><a href="index.html" class="app-title-link">♞ eInkChess</a></h1>
+      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
+    </div>
+    <div class="user-panel">
+      <div id="user-status">Not connected</div>
+      <button id="login-button" class="primary">Connect (Lichess)</button>
+      <button id="logout-button" class="secondary hidden">Logout</button>
+      <button id="high-contrast-toggle" class="secondary small">Contrast</button>
+    </div>
+  </header>
+
+  <main>
+
+<section class="mode-section">
+  <div class="mode-section-row">
+    <div class="mode-buttons">
+      <button id="mode-offline" class="mode-btn secondary hidden">Offline</button>
+      <button id="mode-offline-ai" class="mode-btn secondary">Offline</button>
+      <button id="mode-online" class="mode-btn secondary">Online</button>
+    </div>
+    <button id="toggle-piece-style" class="secondary small hidden">♟ / A</button>
+  </div>
+</section>
+
+        <section id="online-controls" class="card hidden">
+      <div class="field-row online-inline-row">
+        <button id="start-seek-button" class="primary">Find game</button>
+        <button id="attach-button" class="secondary">Load game</button>
+        <label class="checkbox-label">
+          <input type="checkbox" id="rated-checkbox" checked>
+          Rated
+        </label>
+        <select id="time-profile">
+          <option value="10+0">10 + 0 (Rapid)</option>
+          <option value="15+10" selected>15 + 10 (Rapid)</option>
+          <option value="25+10">25 + 10 (Rapid)</option>
+          <option value="30+20">30 + 20 (Classic)</option>
+        </select>
+        <div class="online-action-right">
+          <button id="offer-draw-button" class="secondary small">Offer draw</button>
+          <button id="resign-button" class="secondary small">Resign 🏳</button>
+        </div>
+      </div>
+      <div id="online-status" class="status-text"></div>
+    </section>
+
+    <section id="offline-ai-controls" class="card hidden">
+  <div class="field-row">
+    <button id="start-ai-game" class="primary">New game</button>
+    <div class="inline-options">
+      <label class="color-choice"><input type="radio" name="ai-color" value="white" checked> &#9817;</label>
+      <label class="color-choice"><input type="radio" name="ai-color" value="black"> &#9823;</label>
+      <select id="ai-level-inline">
+        <option value="0">2 Player</option>
+        <option value="1">Level 1 – ~600 Elo (~1s/move)</option>
+        <option value="2">Level 2 – ~900 Elo (~2s/move)</option>
+        <option value="3">Level 3 – ~1200 Elo (~4s/move)</option>
+        <option value="4">Level 4 – ~1400 Elo (~4–6s/move)</option>
+        <option value="5">Level 5 – ~1600 Elo (~6–10s/move)</option>
+      </select>
+    </div>
+    <button id="undo-btn" class="secondary small" onclick="undoLastMove()" style="display:none; margin-left:auto;">Undo</button>
+  </div>
+  <div id="offline-ai-status" class="status-text"></div>
+</section>
+
+
+<section id="board-section" class="card">
+  <div class="board-header">
+    <div id="game-label"></div>
+    <div id="game-meta"></div>
+    <div id="game-clocks" class="status-text game-clocks"></div>
+    <div id="game-result"></div>
+
+    <div id="board-info" class="status-text"></div>
+  </div>
+  <div id="board-placeholder" class="board-placeholder">
+    <span class="board-placeholder-icon">♞</span>
+    <div class="board-placeholder-text">
+      <span class="board-placeholder-title">eInkChess</span>
+      <span class="board-placeholder-subtitle">by Christopher Müller</span>
+    </div>
+  </div>
+  <div id="board-container" class="hidden">
+    <div id="board"></div>
+  </div>
+  <div id="score-line" class="score-line hidden"><span id="score-captures" class="score-line-captures"></span><span id="score-diff" class="score-line-diff"></span></div>
+  <pre id="moves-list" class="moves-list hidden"></pre>
+</section>
+  </main>
+</div>
+
+<script src="chess-core.js"></script>
+<script src="ai-engine.js"></script>
+<script src="lichess-auth.js"></script>
+<script src="lichess-api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

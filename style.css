@@ -1,0 +1,610 @@
+/* eInkChess – einfache, E‑Ink-freundliche Gestaltung */
+
+:root {
+  --bg: #f5f5f5;
+  --bg-alt: #e3e3e3;
+  --border: #111;
+  --text: #111;
+  --muted: #555;
+  --accent: #111;
+  --danger: #900;
+  --square-light: #fdfdfd;
+  --square-dark: #d5d5d5;
+  --square-selected: #bbb;
+  --square-last: #c5e1ff;
+  --radius: 10px;
+  --shadow: 0 0 0 1px #000;
+  --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-main);
+}
+
+#app {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0.3rem;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.2rem;
+}
+
+.title-wrap h1 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.app-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-title-link:visited {
+  color: inherit;
+}
+
+.app-title-link:active,
+.app-title-link:hover,
+.app-title-link:focus {
+  text-decoration: underline;
+}
+
+.app-title-author-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-title-author-link:visited {
+  color: inherit;
+}
+
+.app-title-author-link:hover,
+.app-title-author-link:active,
+.app-title-author-link:focus {
+  text-decoration: underline;
+}
+
+
+.subtitle {
+  margin: 0.1rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.user-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+}
+
+#user-status {
+  text-align: right;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+button {
+  font-family: inherit;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+button.primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+button.secondary {
+  background: var(--bg-alt);
+}
+
+button.small {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+}
+
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.mode-section {
+  margin: 0.5rem 0;
+}
+
+.mode-section h2 {
+  font-size: 1rem;
+  margin: 0 0 0.35rem;
+}
+
+.mode-section-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.mode-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.mode-buttons .mode-btn {
+  border-radius: 2px;
+}
+
+.mode-buttons .mode-btn.active-mode {
+  background: #ffffff;
+  color: #000000;
+  border: 2px solid #000000;
+}
+
+
+.card {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0.25rem 0;
+  margin-bottom: 0.25rem;
+}
+
+.field-row {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.field-row label {
+  font-size: 0.9rem;
+}
+
+.field-row select {
+  flex: 1;
+  padding: 0.25rem 0.4rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: #fff;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.status-text {
+  font-size: 0.8rem;
+  color: var(--muted);
+  min-height: 1.2em;
+}
+
+.game-clocks {
+  font-size: 0.8rem;
+}
+
+/* Brett */
+
+#board-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.board-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.board-header-tools {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  margin-top: 0.15rem;
+}
+
+
+#game-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+#game-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+
+#game-result {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+
+#board-container {
+  width: 100%;
+  text-align: center;
+}
+
+#board {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  border: 2px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+/* Fallback, falls aspect-ratio nicht unterstützt wird, kümmert sich JS */
+
+.square {
+  position: relative;
+  border-radius: 0;
+  width: 12.5%;
+  float: left;
+  border: none;
+  padding: 0;
+  font-size: 1.8rem;
+  line-height: 1;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.square.light {
+  background: var(--square-light);
+}
+
+.square.dark {
+  background: var(--square-dark);
+}
+
+
+/* Auswahl-Markierung für ein Feld */
+
+.square.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.square.selected {
+  outline: 2px solid var(--border);
+}
+
+/* Züge unter dem Brett in einer Zeile, horizontal scrollend */
+.moves-list {
+  font-size: 0.7rem;
+  line-height: 1.3;
+  border-top: 1px solid var(--border);
+  padding-top: 0.15rem;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.moves-list.hidden {
+  display: none;
+}
+
+
+/* Coordinate overlays inside squares.
+   We only draw them on the "outer" ranks/files of the *visible* board:
+   - left edge: rank number
+   - bottom edge: file letter
+   This works for both white and black orientation. */
+.square[data-show-rank="1"]::before {
+  content: attr(data-rank);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  font-size: 0.7rem;
+  opacity: 0.9;
+}
+
+.square[data-show-file="1"]::after {
+  content: attr(data-file);
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-size: 0.7rem;
+  opacity: 0.9;
+}
+
+
+.piece-black {
+  color: #000;
+}
+
+.piece-white {
+  color: #000;
+}
+
+/* Mobile tweaks */
+
+@media (max-width: 600px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .user-panel {
+    align-items: flex-start;
+  }
+}
+
+
+/* Mode-Header mit About rechts */
+.mode-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.mode-about-inline {
+  font-size: 0.6rem;
+  text-align: right;
+  flex: 1;
+}
+
+.mode-about-inline a {
+  text-decoration: underline;
+}
+
+
+.app-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.app-title-author {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+
+.inline-options {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin-left: 0.5rem;
+}
+
+/* Compact selects for inline controls (offline level + online time) */
+#offline-ai-controls #ai-level-inline,
+#online-controls .online-inline-row > select#time-profile {
+  flex: 0 0 auto;
+  width: auto;
+}
+.ai-color-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+#online-controls .online-inline-row {
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+#online-controls .online-inline-row > select#time-profile {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+#online-controls .online-inline-row .online-action-right {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+
+html.is-ereader {
+  --bg: #ffffff;
+  --bg-alt: #f3f3f3;
+  --square-light: #ffffff;
+  --square-dark: #bfbfbf;
+  --accent: #000000;
+}
+
+
+.board-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.board-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.board-actions .small {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.85rem;
+}
+
+
+/* color-choice labels for AI color selection (pawns instead of text) */
+.inline-options .color-choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 1.2rem;
+}
+
+
+#undo-btn {
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+}
+
+
+.board-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10rem;
+  padding: 1.5rem 0;
+  color: var(--muted);
+}
+
+
+
+
+
+.board-placeholder-icon {
+  font-size: 1em;
+  line-height: 1;
+}
+
+.board-placeholder-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 0.4em;
+}
+
+.board-placeholder-title {
+  font-size: 0.35em;
+  line-height: 1;
+}
+
+.board-placeholder-subtitle {
+  font-size: 0.18em;
+  line-height: 1.1;
+  opacity: 0.8;
+}
+
+
+.score-line {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  font-size: 0.7rem;
+  line-height: 1.3;
+  border-top: 1px solid var(--border);
+  padding-top: 0.15rem;
+  color: var(--muted);
+  column-gap: 0.5rem;
+}
+
+.score-line.hidden {
+  display: none;
+}
+
+.score-line-captures {
+  justify-self: center;
+  white-space: nowrap;
+}
+
+.score-line-diff {
+  justify-self: end;
+  white-space: nowrap;
+}
+
+
+/* High-contrast mode for older E‑Ink panels */
+body.high-contrast {
+  --bg: #ffffff;
+  --bg-alt: #f0f0f0;
+  --border: #000000;
+  --text: #000000;
+  --muted: #000000;
+  --accent: #000000;
+  --danger: #000000;
+  --square-light: #ffffff;
+  --square-dark: #e0e0e0;
+  --square-selected: #b0b0b0;
+  --square-last: #000000;
+}
+
+/* Last move besonders klar markieren im High-Contrast-Modus */
+body.high-contrast .square.last-move {
+  box-shadow: inset 0 0 0 2px #000000;
+}
+
+
+/* About page */
+.about-donate {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.btn-donate {
+  display: inline-block;
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  word-break: normal;
+}
+
+.btn-donate:visited {
+  color: #fff;
+}
+
+.btn-donate:hover,
+.btn-donate:active,
+.btn-donate:focus {
+  text-decoration: underline;
+}
+
+/* Keep long links in other contexts from breaking layouts */
+.about-donate a {
+  word-break: break-all;
+}
+
+.about-qr {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.about-qr img {
+  max-width: 180px;
+  height: auto;
+  border: 1px solid var(--border);
+  padding: 0.25rem;
+  border-radius: 4px;
+}
+
+.about-back {
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+}
