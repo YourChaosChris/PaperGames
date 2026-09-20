@@ -669,7 +669,20 @@ aiLevelInline.addEventListener("change", () => {
 
   // Versuchen, bestehenden Login aus Redirect zu vervollständigen
   LichessAuth.maybeFinishLoginFromRedirect()
-    .then((didLogin) => refreshAccount(!!didLogin))
+    .then(async (didLogin) => {
+      await refreshAccount(!!didLogin);
+      // maybeFinishLoginFromRedirect() fails silently on several distinct
+      // problems (lost login session, rejected code, network error) - if
+      // one happened and we're still not connected, surface the specific
+      // reason instead of the generic "not connected" default.
+      if (!didLogin) {
+        const err = window.LichessAuth.getLastError && window.LichessAuth.getLastError();
+        const stillLoggedOut = !(window.LichessAuth.getAccessToken && window.LichessAuth.getAccessToken());
+        if (err && stillLoggedOut) {
+          updateUserPanel(err);
+        }
+      }
+    })
     .catch(err => console.error(err));
 }
 
