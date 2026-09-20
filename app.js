@@ -444,11 +444,11 @@ startAiGameBtn.addEventListener("click", () => {
   AppState.mode = "offline-ai";
   updateActionButtonsVisibility();
   const thinkHints = {
-    1: "~600 Elo (~1s/move)",
-    2: "~900 Elo (~2s/move)",
-    3: "~1200 Elo (~4s/move)",
-    4: "~1400 Elo (~4–6s/move)",
-    5: "~1600 Elo (~6–10s/move)"
+    1: "~800 Elo (instant)",
+    2: "~1100 Elo (~1s/move)",
+    3: "~1400 Elo (~2–4s/move)",
+    4: "~1700 Elo (~5–10s/move)",
+    5: "~2000 Elo (~10–20s/move)"
   };
   const hintText = thinkHints[level] || "";
 
@@ -509,11 +509,11 @@ aiLevelInline.addEventListener("change", () => {
           setStatus("offline-ai-status", "Local 2‑player game (no computer).");
         } else {
           const thinkHints = {
-            1: "~600 Elo (~1s/move)",
-            2: "~900 Elo (~2s/move)",
-            3: "~1200 Elo (~4s/move)",
-            4: "~1400 Elo (~4–6s/move)",
-            5: "~1600 Elo (~6–10s/move)"
+            1: "~800 Elo (instant)",
+            2: "~1100 Elo (~1s/move)",
+            3: "~1400 Elo (~2–4s/move)",
+            4: "~1700 Elo (~5–10s/move)",
+            5: "~2000 Elo (~10–20s/move)"
           };
           const hintText = thinkHints[level] || "";
           setStatus("offline-ai-status", "Computer level " + level + (hintText ? " (" + hintText + ")." : " active."));
