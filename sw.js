@@ -34,7 +34,7 @@ const APP_SHELL = [
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(APP_SHELL))
+      .then((cache) => cache.addAll(APP_SHELL.map((url) => new Request(url, { cache: "reload" }))))
       .then(() => self.skipWaiting())
   );
 });
@@ -59,10 +59,17 @@ self.addEventListener("fetch", (event) => {
   // background and refresh the cache for next time. Plain cache-first would
   // otherwise serve the exact same files forever after every future deploy,
   // until the CACHE_NAME below happens to get bumped by hand.
+  //
+  // { cache: "reload" } is required here: GitHub Pages sends
+  // Cache-Control: max-age=600, so a plain fetch(req) can be silently
+  // answered by the browser's own HTTP cache for up to 10 minutes,
+  // never reaching the network at all - the background "revalidation"
+  // would then just re-store the same stale response, and updates would
+  // only ever appear once that HTTP cache entry happens to expire.
   event.respondWith(
     caches.open(CACHE_NAME).then((cache) =>
       cache.match(req).then((cached) => {
-        const networkUpdate = fetch(req)
+        const networkUpdate = fetch(req, { cache: "reload" })
           .then((resp) => {
             if (resp && resp.ok) {
               cache.put(req, resp.clone());
