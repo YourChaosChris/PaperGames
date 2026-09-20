@@ -68,22 +68,31 @@ const LichessApi = (function () {
 
     // Keep the streaming response alive in the background until it closes
     // on its own (game found or seek cancelled/expired) or cancelSeek() is
-    // called once we've attached to the matched game via polling.
-    cancelSeek();
-    const reader = resp.body.getReader();
-    activeSeekReader = reader;
-    (async () => {
-      try {
-        while (true) {
-          const { done } = await reader.read();
-          if (done) break;
-        }
-      } catch (e) {
-        // Expected once cancelSeek() cancels the reader.
-      } finally {
-        if (activeSeekReader === reader) activeSeekReader = null;
+    // called once we've attached to the matched game via polling. This is
+    // best-effort: some browsers (e.g. older e-ink devices) don't expose a
+    // readable response body, so failing to set this up must never break
+    // the seek itself, which has already succeeded at this point.
+    try {
+      cancelSeek();
+      if (resp.body && typeof resp.body.getReader === "function") {
+        const reader = resp.body.getReader();
+        activeSeekReader = reader;
+        (async () => {
+          try {
+            while (true) {
+              const { done } = await reader.read();
+              if (done) break;
+            }
+          } catch (e) {
+            // Expected once cancelSeek() cancels the reader.
+          } finally {
+            if (activeSeekReader === reader) activeSeekReader = null;
+          }
+        })();
       }
-    })();
+    } catch (e) {
+      // Streaming isn't supported here - proceed without keeping it warm.
+    }
 
     return true;
   }
