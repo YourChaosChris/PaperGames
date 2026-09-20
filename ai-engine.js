@@ -71,7 +71,82 @@ const AiEngine = (function () {
     return isWhite ? bonus : -bonus;
   }
 
-  function evaluateBoardFor(color, board) {
+  // Cheap (no move generation) structural terms - pawn shield in front of
+  // each king, doubled pawns, and the bishop pair - added on top of the
+  // material/positional score above without the cost of legal-move
+  // generation, so stronger levels play more soundly without a large
+  // per-node performance hit.
+  function structuralBonus(board) {
+    let score = 0;
+    const pawnFileCount = { white: new Array(8).fill(0), black: new Array(8).fill(0) };
+    let whiteBishops = 0;
+    let blackBishops = 0;
+    let whiteKing = null;
+    let blackKing = null;
+
+    for (let r = 0; r < 8; r++) {
+      for (let f = 0; f < 8; f++) {
+        const p = board[r][f];
+        if (!p) continue;
+        const isWhite = ChessCore.isWhitePiece(p);
+        const lower = p.toLowerCase();
+        if (lower === 'p') {
+          pawnFileCount[isWhite ? "white" : "black"][f]++;
+        } else if (lower === 'b') {
+          if (isWhite) whiteBishops++; else blackBishops++;
+        } else if (lower === 'k') {
+          if (isWhite) whiteKing = { r, f }; else blackKing = { r, f };
+        }
+      }
+    }
+
+    // Doubled pawns: small penalty per extra pawn sharing a file.
+    for (let f = 0; f < 8; f++) {
+      if (pawnFileCount.white[f] > 1) score -= (pawnFileCount.white[f] - 1) * 12;
+      if (pawnFileCount.black[f] > 1) score += (pawnFileCount.black[f] - 1) * 12;
+    }
+
+    // Bishop pair: a real, well-known small advantage.
+    if (whiteBishops >= 2) score += 25;
+    if (blackBishops >= 2) score -= 25;
+
+    // Pawn shield: friendly pawns on the two ranks in front of the king,
+    // across its file and the two adjacent files. Cheap proxy for king
+    // safety without needing attack-map generation.
+    function shieldScore(king, isWhite) {
+      if (!king) return 0;
+      let shield = 0;
+      const dir = isWhite ? 1 : -1;
+      for (let df = -1; df <= 1; df++) {
+        const f = king.f + df;
+        if (f < 0 || f > 7) continue;
+        for (let dr = 1; dr <= 2; dr++) {
+          const r = king.r + dir * dr;
+          if (r < 0 || r > 7) continue;
+          const p = board[r][f];
+          if (p && p.toLowerCase() === 'p' && ChessCore.isWhitePiece(p) === isWhite) {
+            shield += 4;
+            break;
+          }
+        }
+      }
+      return shield;
+    }
+    score += shieldScore(whiteKing, true);
+    score -= shieldScore(blackKing, false);
+
+    return score;
+  }
+
+  // Cheap mobility proxy: pseudo-legal move counts (no check filtering, so
+  // far cheaper than generateLegalMoves) rewarding sides with more options.
+  function mobilityBonus(board) {
+    const whiteMoves = generatePseudoMovesForColor(board, "white").length;
+    const blackMoves = generatePseudoMovesForColor(board, "black").length;
+    return (whiteMoves - blackMoves) * 2;
+  }
+
+  function evaluateBoardFor(color, board, includeMobility) {
     let score = 0;
     for (let r = 0; r < 8; r++) {
       for (let f = 0; f < 8; f++) {
@@ -79,6 +154,10 @@ const AiEngine = (function () {
         score += pieceValue(p);
         score += positionalBonus(p, r, f);
       }
+    }
+    score += structuralBonus(board);
+    if (includeMobility) {
+      score += mobilityBonus(board);
     }
     // score > 0 is good for White, < 0 is good for Black
     return color === "white" ? score : -score;
@@ -429,88 +508,104 @@ const AiEngine = (function () {
 
   /* ---------- KI-Entscheidung ---------- */
 
+  // Level ladder matches Lichess's own AI spacing (levels 1-5: ~800/1100/
+  // 1400/1700/2000 Elo) so the offline and online options read the same way.
+  // These labels are necessarily approximate - there's no way to rate a
+  // client-side engine against a real pool without playing it out - but the
+  // depth/budget below are tuned to close the gap as much as is practical
+  // on E-Ink-class hardware. nodeBudget bounds worst-case search time via
+  // the iterative-deepening cutoff in searchBestMove(): a slow device still
+  // gets an answer, just from a shallower completed depth.
+  const LEVEL_CONFIG = {
+    1: { style: "greedy", topN: 5 },
+    2: { style: "search", maxDepth: 2, nodeBudget: 40000 },
+    3: { style: "search", maxDepth: 3, nodeBudget: 150000 },
+    4: { style: "search", maxDepth: 4, nodeBudget: 400000 },
+    5: { style: "search", maxDepth: 5, nodeBudget: 600000 }
+  };
+
   function chooseMove(board, color, level) {
     const moves = generateLegalMoves(board, color);
     if (!moves.length) return null;
 
-    // Normalize level in case something weird is passed in
     if (typeof level !== "number" || level < 1) {
       level = 1;
     }
+    const config = LEVEL_CONFIG[level] || LEVEL_CONFIG[5];
 
-    // Level 1: very fast, purely random
-    if (level <= 1) {
-      const idx = Math.floor(Math.random() * moves.length);
-      return moves[idx];
-    }
-
-    // Level 2: one-ply material/position evaluation with a bit of randomness
-    if (level === 2) {
+    if (config.style === "greedy") {
+      // ~800 Elo: a real (if shallow) look at the position rather than a
+      // purely random mover, which plays far weaker than any human
+      // beginner since it hangs pieces every single move.
       const scored = [];
       for (const m of moves) {
         const b2 = cloneBoard(board);
         ChessCore.applyMove(b2, m.from, m.to, m.promotion);
-        const s = evaluateBoardFor(color, b2);
-        scored.push({ move: m, score: s });
+        scored.push({ move: m, score: evaluateBoardFor(color, b2) });
       }
       scored.sort((a, b) => b.score - a.score);
-      const topN = Math.min(4, scored.length);
-      const choice = scored[Math.floor(Math.random() * topN)];
-      return choice.move;
+      const topN = Math.min(config.topN, scored.length);
+      return scored[Math.floor(Math.random() * topN)].move;
     }
 
-    // Levels 3–5: alpha-beta search with increasing depth / selectivity
-    let maxDepth;
-    let beamWidth;
+    return searchBestMove(board, color, moves, config.maxDepth, config.nodeBudget);
+  }
 
-    if (level === 3) {
-      // ~1200 Elo – depth 3 on all moves
-      maxDepth = 3;
-      beamWidth = moves.length;
-    } else if (level === 4) {
-      // slightly deeper search on the most promising moves
-      maxDepth = 4;
-      beamWidth = Math.min(10, moves.length);
-    } else {
-      // Level 5 and above: same depth, but consider a few more candidate moves
-      maxDepth = 4;
-      beamWidth = Math.min(14, moves.length);
-    }
+  // Iterative deepening: searches depth 1, 2, 3, ... up to maxDepth,
+  // re-using each completed depth's best move(s) to order the next
+  // iteration's root moves (principal-variation-first ordering, which
+  // makes alpha-beta pruning far more effective at deeper depths). If the
+  // shared node budget is exhausted mid-depth, that depth's incomplete
+  // result is discarded and the last fully completed depth's move is kept -
+  // this bounds worst-case time on slow hardware instead of the search
+  // just taking however long a given position happens to need.
+  function searchBestMove(board, color, moves, maxDepth, nodeBudget) {
+    const searchState = { nodes: 0, budget: nodeBudget, aborted: false };
+    let orderedMoves = moves.slice();
 
-    // First do a light evaluation of all root moves to get a rough ordering
-    const rootScored = [];
-    for (const m of moves) {
+    const rootScored = orderedMoves.map((m) => {
       const b2 = cloneBoard(board);
       ChessCore.applyMove(b2, m.from, m.to, m.promotion);
-      const s = evaluateBoardFor(color, b2);
-      rootScored.push({ move: m, score: s });
-    }
+      return { move: m, score: evaluateBoardFor(color, b2) };
+    });
+    // Small jitter on the initial ordering only, so otherwise-tied opening
+    // choices still vary between games without needing to track exact
+    // ties through the (now root-alpha-tightened) deep search below.
+    rootScored.forEach((e) => { e.score += (Math.random() - 0.5) * 2; });
     rootScored.sort((a, b) => b.score - a.score);
+    orderedMoves = rootScored.map((e) => e.move);
 
-    const candidates = rootScored.slice(0, beamWidth);
+    let lastCompleteBestMove = null;
 
-    let bestScore = -INF;
-    let bestMoves = [];
+    for (let depth = 1; depth <= maxDepth; depth++) {
+      let bestScore = -INF;
+      let bestMove = null;
+      let alpha = -INF; // tightened after each root move - real alpha-beta pruning between siblings, not just within one
+      let depthAborted = false;
 
-    for (const entry of candidates) {
-      const m = entry.move;
-      const b2 = cloneBoard(board);
-      ChessCore.applyMove(b2, m.from, m.to, m.promotion);
-      const score = minimax(b2, otherColor(color), 1, maxDepth, -INF, INF, color);
-      if (score > bestScore + 1e-6) {
-        bestScore = score;
-        bestMoves = [m];
-      } else if (Math.abs(score - bestScore) < 1e-6) {
-        bestMoves.push(m);
+      for (const m of orderedMoves) {
+        const b2 = cloneBoard(board);
+        ChessCore.applyMove(b2, m.from, m.to, m.promotion);
+        const score = minimax(b2, otherColor(color), 1, depth, alpha, INF, color, searchState);
+        if (searchState.aborted) {
+          depthAborted = true;
+          break;
+        }
+        if (score > bestScore) {
+          bestScore = score;
+          bestMove = m;
+          if (score > alpha) alpha = score;
+        }
       }
+
+      if (depthAborted || !bestMove) break;
+
+      lastCompleteBestMove = bestMove;
+      // Principal-variation-first ordering for the next (deeper) iteration.
+      orderedMoves = [bestMove].concat(orderedMoves.filter((m) => m !== bestMove));
     }
 
-    if (!bestMoves.length) {
-      const idxFallback = Math.floor(Math.random() * moves.length);
-      return moves[idxFallback];
-    }
-    const idx = Math.floor(Math.random() * bestMoves.length);
-    return bestMoves[idx];
+    return lastCompleteBestMove || moves[Math.floor(Math.random() * moves.length)];
   }
 
 
@@ -540,8 +635,17 @@ const AiEngine = (function () {
   // bei dem die Engine mitten in einer Schlagserie abbricht und z. B. eine
   // Dame für einen Bauern hergibt, weil der Rückschlag erst einen Halbzug
   // später sichtbar wäre.
-  function quiescence(board, colorToMove, alpha, beta, perspective, qDepth) {
-    const standPat = evaluateBoardFor(perspective, board);
+  function quiescence(board, colorToMove, alpha, beta, perspective, qDepth, searchState) {
+    if (searchState) {
+      if (searchState.aborted) return 0;
+      searchState.nodes++;
+      if (searchState.nodes > searchState.budget) {
+        searchState.aborted = true;
+        return 0;
+      }
+    }
+
+    const standPat = evaluateBoardFor(perspective, board, true);
     const isMaximizing = (colorToMove === perspective);
 
     if (isMaximizing) {
@@ -562,7 +666,8 @@ const AiEngine = (function () {
     for (const m of ordered) {
       const b2 = cloneBoard(board);
       ChessCore.applyMove(b2, m.from, m.to, m.promotion);
-      const score = quiescence(b2, otherColor(colorToMove), alpha, beta, perspective, qDepth - 1);
+      const score = quiescence(b2, otherColor(colorToMove), alpha, beta, perspective, qDepth - 1, searchState);
+      if (searchState && searchState.aborted) return best;
       if (isMaximizing) {
         if (score > best) best = score;
         if (score > alpha) alpha = score;
@@ -575,9 +680,22 @@ const AiEngine = (function () {
     return best;
   }
 
-  function minimax(board, colorToMove, depth, maxDepth, alpha, beta, perspective) {
+  // searchState (optional) bounds total node count across an entire
+  // iterative-deepening run (see searchBestMove) so a slow device gets a
+  // timely answer from the last fully completed depth instead of the
+  // search running as long as a given position happens to demand.
+  function minimax(board, colorToMove, depth, maxDepth, alpha, beta, perspective, searchState) {
+    if (searchState) {
+      if (searchState.aborted) return 0;
+      searchState.nodes++;
+      if (searchState.nodes > searchState.budget) {
+        searchState.aborted = true;
+        return 0;
+      }
+    }
+
     if (depth >= maxDepth) {
-      return quiescence(board, colorToMove, alpha, beta, perspective, QUIESCENCE_MAX_DEPTH);
+      return quiescence(board, colorToMove, alpha, beta, perspective, QUIESCENCE_MAX_DEPTH, searchState);
     }
     let moves = generateLegalMoves(board, colorToMove);
     moves = orderMoves(board, moves);
@@ -595,7 +713,8 @@ const AiEngine = (function () {
       for (const m of moves) {
         const b2 = cloneBoard(board);
         ChessCore.applyMove(b2, m.from, m.to, m.promotion);
-        const score = minimax(b2, otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective);
+        const score = minimax(b2, otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState);
+        if (searchState && searchState.aborted) return best;
         if (score > best) best = score;
         if (score > alpha) alpha = score;
         if (beta <= alpha) break;
@@ -606,7 +725,8 @@ const AiEngine = (function () {
       for (const m of moves) {
         const b2 = cloneBoard(board);
         ChessCore.applyMove(b2, m.from, m.to, m.promotion);
-        const score = minimax(b2, otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective);
+        const score = minimax(b2, otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState);
+        if (searchState && searchState.aborted) return best;
         if (score < best) best = score;
         if (score < beta) beta = score;
         if (beta <= alpha) break;
@@ -655,3 +775,10 @@ const AiEngine = (function () {
     hasInsufficientMaterial
   };
 })();
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = AiEngine;
+}
+if (typeof window !== "undefined") {
+  window.AiEngine = AiEngine;
+}

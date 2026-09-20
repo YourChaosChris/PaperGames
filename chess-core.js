@@ -191,3 +191,10 @@ const ChessCore = (function () {
     isBlackPiece
   };
 })();
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = ChessCore;
+}
+if (typeof window !== "undefined") {
+  window.ChessCore = ChessCore;
+}

@@ -21,6 +21,7 @@ const APP_SHELL = [
   "ai-engine.js",
   "lichess-auth.js",
   "lichess-api.js",
+  "result-modal.js",
   "app.js",
   "go-core.js",
   "go-ai.js",
