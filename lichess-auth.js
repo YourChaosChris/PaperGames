@@ -1,6 +1,6 @@
 // lichess-auth.js
-// OAuth2 PKCE Login mit Lichess, komplett clientseitig, ohne WebCrypto-Abhängigkeit.
-// Nutzt einen einfachen SHA-256 in JavaScript, damit es auch auf älteren Browsern (z.B. Tolino) läuft.
+// OAuth2 PKCE Login mit Lichess, komplett clientseitig, über die native
+// Web Crypto API (window.crypto.subtle) für den PKCE code_challenge-Hash.
 
 var LichessAuth;
 
@@ -136,6 +136,13 @@ var LichessAuth;
   // real input and made every login fail with "hash of code_verifier does
   // not match code_challenge" - correct by construction beats re-debugging
   // custom crypto.
+  // Bumped whenever the PKCE hashing implementation changes, and echoed
+  // into diagnostic messages below - since a wrong code_challenge and a
+  // stale cached copy of an older, differently-wrong implementation
+  // produce the exact same error text from Lichess, this is the only way
+  // to tell from a bug report which code actually ran.
+  const AUTH_BUILD_TAG = "webcrypto-1";
+
   async function pkceChallengeFromVerifier(codeVerifier) {
     if (!window.crypto || !window.crypto.subtle || !window.crypto.subtle.digest) {
       throw new Error("This browser doesn't support the Web Crypto API needed for a secure login.");
@@ -341,7 +348,8 @@ var LichessAuth;
         } catch (e) {
         }
         lastError = "Login failed exchanging the code for a token" +
-          (resp ? " (HTTP " + resp.status + ")" : "") + (detail ? ": " + detail : ".");
+          (resp ? " (HTTP " + resp.status + ")" : "") + (detail ? ": " + detail : ".") +
+          " [build " + AUTH_BUILD_TAG + ", verifier length " + (verifier ? verifier.length : 0) + "]";
         return false;
       }
 
