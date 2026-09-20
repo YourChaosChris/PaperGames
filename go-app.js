@@ -390,19 +390,36 @@ function buildGoBoardDOM() {
     }
   }
 
+  // Fallback if `aspect-ratio` isn't supported (seen on real E-Ink browsers,
+  // e.g. older Tolino WebViews): without it, #go-board's height comes only
+  // from its percentage padding, and #go-grid - sized 100%/100% of that -
+  // collapses to near zero, squashing the whole grid onto one line. Setting
+  // an explicit pixel height mirrors app.js's ensureSquareAspectRatio().
+  ensureGoBoardSquare();
+  if (window.requestAnimationFrame) {
+    window.requestAnimationFrame(ensureGoBoardSquare);
+  } else {
+    setTimeout(ensureGoBoardSquare, 0);
+  }
   ensureGoResizeHandler();
+}
+
+function ensureGoBoardSquare() {
+  const boardEl = document.getElementById("go-board");
+  if (!boardEl) return;
+  const rect = boardEl.getBoundingClientRect();
+  if (!rect || !rect.width) return;
+  boardEl.style.height = rect.width + "px";
 }
 
 function ensureGoResizeHandler() {
   if (einkGoResizeHandlerAttached) return;
   einkGoResizeHandlerAttached = true;
-  // The board is pure CSS percentage layout, so no JS resize math is
-  // currently needed - kept as a debounced no-op hook in case a future
-  // E-Ink browser needs a manual nudge, mirroring app.js's pattern.
   window.addEventListener("resize", () => {
     if (einkGoResizeTimeoutId !== null) clearTimeout(einkGoResizeTimeoutId);
     einkGoResizeTimeoutId = setTimeout(() => {
       einkGoResizeTimeoutId = null;
+      ensureGoBoardSquare();
     }, 150);
   });
 }
@@ -426,6 +443,7 @@ function updateGoBoard() {
          AppStateGo.lastMove.r === r && AppStateGo.lastMove.c === c)
     );
   });
+  ensureGoBoardSquare();
   updateScoreLineGo();
 }
 
