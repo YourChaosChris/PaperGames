@@ -120,7 +120,9 @@ html, body {
   margin-bottom: 0.4rem;
 }
 
-button {
+button,
+a.primary,
+a.secondary {
   font-family: inherit;
   border-radius: var(--radius);
   border: var(--border-width) solid var(--border);
@@ -129,18 +131,24 @@ button {
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  color: var(--text);
 }
 
-button.primary {
+button.primary,
+a.primary {
   background: var(--accent);
   color: #fff;
 }
 
-button.secondary {
+button.secondary,
+a.secondary {
   background: var(--bg-alt);
 }
 
-button.small {
+button.small,
+a.small {
   font-size: 0.7rem;
   padding: 0.25rem 0.5rem;
 }
@@ -632,4 +640,152 @@ button:disabled {
 .about-back {
   margin-top: 1.25rem;
   font-size: 0.85rem;
+}
+
+/* Site-wide nav bar and language switch (home/rules/guide/about pages) */
+
+.lang-switch {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.lang-switch button {
+  padding: 0.2rem 0.5rem;
+}
+
+.lang-switch button.active-mode {
+  background: var(--accent);
+  color: #fff;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+
+.site-nav-link {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--text);
+  background: #fff;
+}
+
+.site-nav-link.active-mode {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Home page */
+
+.home-hero {
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+.home-hero-icon {
+  font-size: 5rem;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.home-hero h1 {
+  margin: 0.25rem 0;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.home-tagline {
+  color: var(--muted);
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+
+.home-play-button {
+  display: inline-block;
+  margin-top: 0.75rem;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 0.6rem 1.4rem;
+}
+
+.nav-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.6rem;
+  margin: 0.6rem 0;
+}
+
+.nav-card {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.nav-card-title {
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.nav-card-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.game-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.game-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  border: var(--border-width) dashed var(--border);
+  border-radius: var(--radius);
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.coming-soon-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: var(--bg-alt);
+  border-radius: var(--radius);
+  padding: 0.1rem 0.35rem;
+}
+
+/* Rules / Guide content pages */
+
+.content-page h2 {
+  font-size: 1.1rem;
+  margin: 1rem 0 0.4rem;
+}
+
+.content-page h2:first-child {
+  margin-top: 0;
+}
+
+.rule-list {
+  margin: 0 0 0.75rem;
+}
+
+.rule-list dt {
+  font-weight: 800;
+  margin-top: 0.5rem;
+}
+
+.rule-list dd {
+  margin: 0.15rem 0 0;
+  color: var(--text);
 }
