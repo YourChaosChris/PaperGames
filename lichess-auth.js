@@ -401,8 +401,6 @@ var LichessAuth;
     return true;
   }
 
-  }
-
   function logout() {
     try {
       safeRemoveItem(KEY_TOKEN);
