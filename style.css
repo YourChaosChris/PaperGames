@@ -1095,3 +1095,167 @@ button:disabled {
   background: #fdfdfd;
   border: 2px solid var(--border);
 }
+
+/* Royal Game of Ur board: a 3x8 float-grid (same technique as the chess
+   and checkers boards) with the four corner squares at columns 4-5 of
+   rows 0/2 left as invisible gaps, forming the traditional H-shape - a
+   private 4-square lane per player top/bottom, connected by a shared
+   8-square lane through the middle row. */
+
+#ur-board {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.ur-square {
+  background: var(--square-light);
+  border: 1px solid var(--border);
+}
+
+.ur-square-gap {
+  background: transparent;
+  border: none;
+  pointer-events: none;
+}
+
+.ur-square-rosette::after {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  width: 40%;
+  height: 40%;
+  border: 2px solid var(--muted);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.ur-square-movable {
+  background: var(--square-dark);
+}
+
+.ur-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 74%;
+  height: 74%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.ur-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.ur-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.ur-piece-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.ur-piece-icon-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.ur-piece-icon-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Off-board "start" and finished "home" pieces have no board square of
+   their own, so they're shown as simple labelled counters above/below
+   the board instead. */
+.ur-tray {
+  display: flex;
+  gap: 0.6rem;
+  max-width: 760px;
+  margin: 0 auto 0.4rem;
+}
+
+.ur-tray-slot {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem 0.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  font-size: 0.85rem;
+  box-sizing: border-box;
+}
+
+button.ur-tray-slot {
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.ur-tray-slot-static {
+  cursor: default;
+}
+
+.ur-tray-slot-movable {
+  background: var(--square-dark);
+}
+
+.ur-tray-slot-count {
+  font-weight: 700;
+}
+
+.ur-dice-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.ur-dice-display {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.ur-die {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: var(--border-width) solid var(--border);
+  box-sizing: border-box;
+}
+
+.ur-die-marked {
+  background: var(--accent);
+}
+
+.ur-die-blank {
+  background: #fff;
+}
+
+.ur-die-total {
+  font-weight: 700;
+  margin-left: 0.3rem;
+}

@@ -1,0 +1,543 @@
+// ur-app.js
+// Wires UrCore/UrAi to the ur.html UI. The board is a 3x8 float-grid
+// (mirrors checkers-app.js's per-square approach, proven safe on a real
+// E-Ink browser that silently ignores `aspect-ratio` and the `inset`
+// shorthand) with four square positions left as visual gaps to form the
+// traditional H-shaped Ur board. Off-board ("start") and finished
+// ("home") pieces have no board square of their own, so they're shown as
+// simple counters in a tray above/below the board instead.
+//
+// Turn flow: the current player presses "Roll dice", then either clicks
+// one of their highlighted movable pieces (or the highlighted "start"
+// tray slot, to bring a new piece onto the board) or, if the roll leaves
+// no legal move, the turn auto-passes after a short delay. Landing on a
+// rosette keeps the turn with the same player instead of switching it.
+
+const UR_ROW_FOR_COLOR = { b: 0, w: 2 };
+const UR_COLOR_FOR_ROW = { 0: "b", 2: "w" };
+
+const AppStateUr = {
+  mode: "offline",        // "offline" | "offline-ai"
+  state: UrCore.createInitialState(),
+  turn: "b",              // "b" | "w" - Black always moves first
+  humanColor: "b",
+  aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
+  gameOver: false,
+  roll: null,             // null until rolled this turn, then 0-4
+  legalMoves: [],
+  moveCount: 0,
+  undoStack: []
+};
+
+function colorNameUr(color) {
+  return color === "b" ? "Black" : "White";
+}
+
+function setStatusUr(elementId, text) {
+  const el = document.getElementById(elementId);
+  if (el) el.textContent = text || "";
+}
+
+function setGameResultUr(text) {
+  const el = document.getElementById("game-result");
+  if (el) el.textContent = text || "";
+  if (!text && window.ResultModal) {
+    window.ResultModal.hide();
+  }
+}
+
+function announceGameResultUr(resultCode, message) {
+  setGameResultUr(message);
+  setStatusUr("board-info", message);
+  if (window.ResultModal) {
+    window.ResultModal.show("Game Over", message);
+  }
+}
+
+function resetUndoStackUr() {
+  AppStateUr.undoStack = [];
+}
+
+function pushUndoSnapshotUr() {
+  AppStateUr.undoStack.push({
+    state: UrCore.cloneState(AppStateUr.state),
+    turn: AppStateUr.turn,
+    gameOver: AppStateUr.gameOver,
+    moveCount: AppStateUr.moveCount
+  });
+}
+
+// Physical square <-> path position mapping. Row 1 (the middle row) is
+// the shared lane both players travel through; rows 0 and 2 are each
+// player's own private squares, with a two-square gap in the middle
+// where the shared lane passes beneath them.
+function urSquareInfo(row, col) {
+  if (row === 1) {
+    return { pos: col + 5, owner: null };
+  }
+  if (row === 0 || row === 2) {
+    const owner = UR_COLOR_FOR_ROW[row];
+    if (col >= 0 && col <= 3) return { pos: col + 1, owner };
+    if (col >= 6 && col <= 7) return { pos: col - 6 + 13, owner };
+  }
+  return null; // gap square, purely visual
+}
+
+function initUrApp() {
+  const menuToggle = document.getElementById("menu-toggle");
+  const settingsPanel = document.getElementById("settings-panel");
+  const modeOffline = document.getElementById("mode-offline");
+  const modeOfflineAi = document.getElementById("mode-offline-ai");
+  const offlineAiControls = document.getElementById("offline-ai-controls");
+  const colorChoice = document.getElementById("ur-color-choice");
+  const levelInline = document.getElementById("ur-level-inline");
+  const startGameBtn = document.getElementById("start-ur-game");
+  const resignBtn = document.getElementById("resign-button");
+  const rollBtn = document.getElementById("ur-roll-button");
+  const trayTopStart = document.getElementById("ur-tray-top-start");
+  const trayBottomStart = document.getElementById("ur-tray-bottom-start");
+
+  function updateColorChoiceVisibilityUr() {
+    if (!colorChoice || !levelInline) return;
+    colorChoice.classList.toggle("hidden", levelInline.value === "0");
+  }
+
+  function setActiveModeButtonUr(mode) {
+    if (!modeOffline || !modeOfflineAi) return;
+    modeOffline.classList.toggle("active-mode", mode === "offline");
+    modeOfflineAi.classList.toggle("active-mode", mode === "offline-ai");
+  }
+
+  function closeSettingsPanel() {
+    if (!settingsPanel) return;
+    settingsPanel.classList.add("hidden");
+    if (menuToggle) menuToggle.textContent = "☰ Menu";
+  }
+
+  function openSettingsPanel() {
+    if (!settingsPanel) return;
+    settingsPanel.classList.remove("hidden");
+    if (menuToggle) menuToggle.textContent = "✕ Close";
+  }
+
+  if (menuToggle && settingsPanel) {
+    menuToggle.addEventListener("click", () => {
+      if (settingsPanel.classList.contains("hidden")) openSettingsPanel();
+      else closeSettingsPanel();
+    });
+  }
+
+  function startNewGameUr(mode, humanColor, level) {
+    AppStateUr.mode = mode;
+    AppStateUr.state = UrCore.createInitialState();
+    AppStateUr.turn = "b";
+    AppStateUr.humanColor = humanColor;
+    AppStateUr.aiLevel = level;
+    AppStateUr.gameOver = false;
+    AppStateUr.roll = null;
+    AppStateUr.legalMoves = [];
+    AppStateUr.moveCount = 0;
+    resetUndoStackUr();
+    setGameResultUr("");
+    showBoardSectionUr();
+    buildUrBoardDOM();
+    updateUrBoard();
+    updateGameLabelsUr();
+
+    if (mode === "offline-ai" && humanColor !== "b") {
+      setStatusUr("board-info", "Computer thinking…");
+      setTimeout(aiTurnUr, 300);
+    } else {
+      setStatusUr("board-info", colorNameUr(AppStateUr.turn) + " to move. Roll the dice.");
+    }
+  }
+
+  modeOffline.addEventListener("click", () => {
+    setActiveModeButtonUr("offline");
+    offlineAiControls.classList.add("hidden");
+    startNewGameUr("offline", "b", 0);
+  });
+
+  modeOfflineAi.addEventListener("click", () => {
+    setActiveModeButtonUr("offline-ai");
+    offlineAiControls.classList.remove("hidden");
+    if (levelInline) levelInline.value = String(AppStateUr.aiLevel || 2);
+    updateColorChoiceVisibilityUr();
+    setStatusUr("board-info", "");
+  });
+
+  if (levelInline) {
+    levelInline.addEventListener("change", updateColorChoiceVisibilityUr);
+  }
+
+  startGameBtn.addEventListener("click", () => {
+    const level = levelInline ? parseInt(levelInline.value, 10) : 2;
+    const colorInput = document.querySelector("input[name='ur-color']:checked");
+    const humanColor = colorInput && colorInput.value === "white" ? "w" : "b";
+
+    if (level === 0) {
+      setActiveModeButtonUr("offline-ai");
+      startNewGameUr("offline", "b", 0);
+      setStatusUr("offline-ur-status", "Local 2-player game (no computer).");
+      return;
+    }
+
+    setActiveModeButtonUr("offline-ai");
+    startNewGameUr("offline-ai", humanColor, level);
+    const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
+    setStatusUr("offline-ur-status",
+      "You play " + colorNameUr(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
+  });
+
+  if (resignBtn) {
+    resignBtn.addEventListener("click", () => {
+      if (AppStateUr.gameOver) return;
+      const loser = AppStateUr.turn;
+      const winner = UrCore.otherColor(loser);
+      AppStateUr.gameOver = true;
+      announceGameResultUr(colorNameUr(winner) + " wins", colorNameUr(winner) + " wins by resignation.");
+      updateGameLabelsUr();
+    });
+  }
+
+  if (rollBtn) {
+    rollBtn.addEventListener("click", rollDiceUr);
+  }
+
+  if (trayTopStart) trayTopStart.addEventListener("click", () => onUrTrayClick("b"));
+  if (trayBottomStart) trayBottomStart.addEventListener("click", () => onUrTrayClick("w"));
+
+  updateColorChoiceVisibilityUr();
+  // No mode is pre-selected and no game auto-starts: the placeholder
+  // shows until the player picks 2-player or configures vs-computer and
+  // presses New game, matching chess.html's behavior.
+}
+
+function rollDiceUr() {
+  if (AppStateUr.gameOver) return;
+  if (AppStateUr.mode === "offline-ai" && AppStateUr.turn !== AppStateUr.humanColor) return;
+  if (AppStateUr.roll !== null) return; // already rolled, must move (or wait for auto-pass) first
+
+  const roll = UrCore.rollDice();
+  AppStateUr.roll = roll;
+  AppStateUr.legalMoves = UrCore.getLegalMoves(AppStateUr.state, AppStateUr.turn, roll);
+  updateDiceDisplayUr(roll);
+  updateUrBoard();
+  updateGameLabelsUr();
+
+  if (!AppStateUr.legalMoves.length) {
+    setStatusUr("board-info", colorNameUr(AppStateUr.turn) + " rolled " + roll + ". No legal move - turn passes.");
+    setTimeout(passTurnUr, 700);
+    return;
+  }
+
+  setStatusUr("board-info", colorNameUr(AppStateUr.turn) + " rolled " + roll + ". Choose a piece to move.");
+}
+
+function passTurnUr() {
+  AppStateUr.roll = null;
+  AppStateUr.legalMoves = [];
+  AppStateUr.turn = UrCore.otherColor(AppStateUr.turn);
+  updateDiceDisplayUr(null);
+  updateUrBoard();
+  updateGameLabelsUr();
+  maybeTriggerAiTurnUr();
+  if (!(AppStateUr.mode === "offline-ai" && AppStateUr.turn !== AppStateUr.humanColor)) {
+    setStatusUr("board-info", colorNameUr(AppStateUr.turn) + " to move. Roll the dice.");
+  }
+}
+
+function maybeTriggerAiTurnUr() {
+  if (AppStateUr.gameOver) return;
+  if (AppStateUr.mode === "offline-ai" && AppStateUr.turn !== AppStateUr.humanColor) {
+    setTimeout(aiTurnUr, 400);
+  }
+}
+
+function onUrSquareClick(e) {
+  const pos = parseInt(e.currentTarget.dataset.pos, 10);
+  attemptUrMoveFrom(pos);
+}
+
+function onUrTrayClick(color) {
+  if (color !== AppStateUr.turn) return;
+  attemptUrMoveFrom(0);
+}
+
+function attemptUrMoveFrom(fromPos) {
+  if (AppStateUr.gameOver) {
+    setStatusUr("board-info", "Game is over. Start a new game to play again.");
+    return;
+  }
+  if (AppStateUr.mode === "offline-ai" && AppStateUr.turn !== AppStateUr.humanColor) {
+    setStatusUr("board-info", "Computer to move.");
+    return;
+  }
+  if (AppStateUr.roll === null) {
+    setStatusUr("board-info", "Roll the dice first.");
+    return;
+  }
+  const move = AppStateUr.legalMoves.find((m) => m.from === fromPos);
+  if (!move) return; // not a legal source for this roll - silently ignore the click
+
+  applyUrMove(move);
+}
+
+function applyUrMove(move) {
+  pushUndoSnapshotUr();
+  const mover = AppStateUr.turn;
+  AppStateUr.state = UrCore.applyMove(AppStateUr.state, mover, move);
+  AppStateUr.moveCount++;
+  AppStateUr.roll = null;
+  AppStateUr.legalMoves = [];
+  updateDiceDisplayUr(null);
+  updateUrBoard();
+  updateGameLabelsUr();
+
+  if (UrCore.hasWon(AppStateUr.state, mover)) {
+    AppStateUr.gameOver = true;
+    const winnerName = colorNameUr(mover);
+    announceGameResultUr(winnerName + " wins", winnerName + " wins - all pieces home!");
+    return;
+  }
+
+  if (move.rosette) {
+    setStatusUr("board-info", colorNameUr(mover) + " landed on a rosette - roll again!");
+    maybeTriggerAiTurnUr();
+    return;
+  }
+
+  AppStateUr.turn = UrCore.otherColor(mover);
+  updateUrBoard();
+  updateGameLabelsUr();
+  maybeTriggerAiTurnUr();
+  if (!(AppStateUr.mode === "offline-ai" && AppStateUr.turn !== AppStateUr.humanColor)) {
+    setStatusUr("board-info", colorNameUr(mover) + " played. " + colorNameUr(AppStateUr.turn) + " to move.");
+  }
+}
+
+function aiTurnUr() {
+  if (AppStateUr.mode !== "offline-ai" || AppStateUr.gameOver) return;
+  const aiColor = UrCore.otherColor(AppStateUr.humanColor);
+  if (AppStateUr.turn !== aiColor) return;
+
+  const roll = UrCore.rollDice();
+  updateDiceDisplayUr(roll);
+  const legalMoves = UrCore.getLegalMoves(AppStateUr.state, aiColor, roll);
+  setStatusUr("board-info", "Computer rolled " + roll + ".");
+
+  if (!legalMoves.length) {
+    setStatusUr("board-info", "Computer rolled " + roll + ". No legal move - turn passes.");
+    setTimeout(passTurnUr, 700);
+    return;
+  }
+
+  setStatusUr("board-info", "Computer rolled " + roll + ", thinking…");
+  setTimeout(() => {
+    const move = UrAi.chooseMove(AppStateUr.state, aiColor, roll, AppStateUr.aiLevel);
+    if (!move) return;
+    applyUrMove(move);
+  }, 350);
+}
+
+function undoLastMove() {
+  if (!AppStateUr.undoStack || !AppStateUr.undoStack.length) return;
+  let prev = AppStateUr.undoStack.pop();
+  if (AppStateUr.mode === "offline-ai") {
+    while (prev.turn !== AppStateUr.humanColor && AppStateUr.undoStack.length) {
+      prev = AppStateUr.undoStack.pop();
+    }
+  }
+  AppStateUr.state = prev.state;
+  AppStateUr.turn = prev.turn;
+  AppStateUr.gameOver = prev.gameOver;
+  AppStateUr.moveCount = prev.moveCount;
+  AppStateUr.roll = null;
+  AppStateUr.legalMoves = [];
+  setGameResultUr("");
+  updateDiceDisplayUr(null);
+  updateUrBoard();
+  updateGameLabelsUr();
+  setStatusUr("board-info", "Move undone. " + colorNameUr(AppStateUr.turn) + " to move. Roll the dice.");
+}
+
+function showBoardSectionUr() {
+  const section = document.getElementById("board-section");
+  if (section) section.classList.remove("hidden");
+  const placeholder = document.getElementById("board-placeholder");
+  const boardContainer = document.getElementById("board-container");
+  if (placeholder) placeholder.classList.add("hidden");
+  if (boardContainer) boardContainer.classList.remove("hidden");
+
+  const settingsPanel = document.getElementById("settings-panel");
+  const menuToggle = document.getElementById("menu-toggle");
+  if (settingsPanel) settingsPanel.classList.add("hidden");
+  if (menuToggle) menuToggle.textContent = "☰ Menu";
+}
+
+/*** Board rendering (mirrors checkers-app.js's per-square float-grid approach) ***/
+
+function buildUrBoardDOM() {
+  const boardEl = document.getElementById("ur-board");
+  if (!boardEl) return;
+  boardEl.innerHTML = "";
+
+  for (let row = 0; row < 3; row++) {
+    for (let col = 0; col < 8; col++) {
+      const info = urSquareInfo(row, col);
+      const square = document.createElement("button");
+      square.className = "square ur-square";
+      square.type = "button";
+      square.dataset.row = row;
+      square.dataset.col = col;
+
+      if (!info) {
+        square.classList.add("ur-square-gap");
+        square.disabled = true;
+        boardEl.appendChild(square);
+        continue;
+      }
+
+      square.dataset.pos = info.pos;
+      if (UrCore.isRosette(info.pos)) square.classList.add("ur-square-rosette");
+
+      const piece = document.createElement("span");
+      piece.className = "ur-piece";
+      square.appendChild(piece);
+      square.addEventListener("click", onUrSquareClick);
+      boardEl.appendChild(square);
+    }
+  }
+
+  ensureUrSquareAspectRatio();
+  if (window.requestAnimationFrame) {
+    window.requestAnimationFrame(ensureUrSquareAspectRatio);
+  } else {
+    setTimeout(ensureUrSquareAspectRatio, 0);
+  }
+  ensureUrResizeHandler();
+}
+
+let einkUrResizeHandlerAttached = false;
+let einkUrResizeTimeoutId = null;
+
+function ensureUrSquareAspectRatio() {
+  const boardEl = document.getElementById("ur-board");
+  if (!boardEl) return;
+  const rect = boardEl.getBoundingClientRect();
+  if (!rect || !rect.width) return;
+  const squareSize = rect.width / 8;
+  boardEl.querySelectorAll(".ur-square").forEach((sq) => {
+    sq.style.height = squareSize + "px";
+  });
+}
+
+function ensureUrResizeHandler() {
+  if (einkUrResizeHandlerAttached) return;
+  einkUrResizeHandlerAttached = true;
+  window.addEventListener("resize", () => {
+    if (einkUrResizeTimeoutId !== null) clearTimeout(einkUrResizeTimeoutId);
+    einkUrResizeTimeoutId = setTimeout(() => {
+      einkUrResizeTimeoutId = null;
+      ensureUrSquareAspectRatio();
+    }, 150);
+  });
+}
+
+// Finds which color's piece (if any) currently occupies board position
+// `pos` for the given `owner` (fixed for private squares, either color
+// for the shared lane).
+function urPieceColorAt(pos, owner) {
+  if (owner) {
+    return AppStateUr.state.positions[owner].includes(pos) ? owner : null;
+  }
+  if (AppStateUr.state.positions.b.includes(pos)) return "b";
+  if (AppStateUr.state.positions.w.includes(pos)) return "w";
+  return null;
+}
+
+function updateUrBoard() {
+  const boardEl = document.getElementById("ur-board");
+  if (!boardEl) return;
+
+  const movableFrom = new Set(AppStateUr.legalMoves.map((m) => m.from));
+
+  boardEl.querySelectorAll(".ur-square").forEach((sq) => {
+    if (sq.classList.contains("ur-square-gap")) return;
+    const pos = parseInt(sq.dataset.pos, 10);
+    const row = parseInt(sq.dataset.row, 10);
+    const owner = row === 1 ? null : UR_COLOR_FOR_ROW[row];
+    const occupant = urPieceColorAt(pos, owner);
+    const pieceEl = sq.querySelector(".ur-piece");
+    if (pieceEl) {
+      pieceEl.classList.remove("ur-piece-black", "ur-piece-white");
+      if (occupant) pieceEl.classList.add(occupant === "b" ? "ur-piece-black" : "ur-piece-white");
+    }
+    sq.classList.toggle("ur-square-movable", movableFrom.has(pos));
+  });
+
+  updateUrTrays();
+}
+
+function updateUrTrays() {
+  const topStart = AppStateUr.state.positions.b.filter((p) => p === 0).length;
+  const topHome = UrCore.countHome(AppStateUr.state, "b");
+  const bottomStart = AppStateUr.state.positions.w.filter((p) => p === 0).length;
+  const bottomHome = UrCore.countHome(AppStateUr.state, "w");
+
+  setStatusUr("ur-tray-top-start-count", String(topStart));
+  setStatusUr("ur-tray-top-home-count", String(topHome));
+  setStatusUr("ur-tray-bottom-start-count", String(bottomStart));
+  setStatusUr("ur-tray-bottom-home-count", String(bottomHome));
+
+  const movableFromStart = AppStateUr.legalMoves.some((m) => m.from === 0);
+  const topStartBtn = document.getElementById("ur-tray-top-start");
+  const bottomStartBtn = document.getElementById("ur-tray-bottom-start");
+  if (topStartBtn) topStartBtn.classList.toggle("ur-tray-slot-movable", movableFromStart && AppStateUr.turn === "b");
+  if (bottomStartBtn) bottomStartBtn.classList.toggle("ur-tray-slot-movable", movableFromStart && AppStateUr.turn === "w");
+}
+
+function updateDiceDisplayUr(roll) {
+  const el = document.getElementById("ur-dice-display");
+  if (!el) return;
+  el.innerHTML = "";
+  if (roll === null || roll === undefined) return;
+  for (let i = 0; i < 4; i++) {
+    const die = document.createElement("span");
+    die.className = "ur-die " + (i < roll ? "ur-die-marked" : "ur-die-blank");
+    el.appendChild(die);
+  }
+  const label = document.createElement("span");
+  label.className = "ur-die-total";
+  label.textContent = String(roll);
+  el.appendChild(label);
+}
+
+function updateGameLabelsUr() {
+  const meta = document.getElementById("game-meta");
+  if (meta) meta.textContent = AppStateUr.moveCount ? "Move " + AppStateUr.moveCount : "";
+  updateUndoButtonVisibilityUr();
+  updateResignVisibilityUr();
+  updateRollButtonVisibilityUr();
+}
+
+function updateUndoButtonVisibilityUr() {
+  const btn = document.getElementById("undo-btn");
+  if (!btn) return;
+  const hasUndo = (AppStateUr.undoStack || []).length > 0;
+  btn.classList.toggle("hidden", !(hasUndo && !AppStateUr.gameOver));
+}
+
+function updateResignVisibilityUr() {
+  const resignBtn = document.getElementById("resign-button");
+  if (resignBtn) resignBtn.classList.toggle("hidden", AppStateUr.gameOver);
+}
+
+function updateRollButtonVisibilityUr() {
+  const rollBtn = document.getElementById("ur-roll-button");
+  if (!rollBtn) return;
+  const isHumanTurn = !(AppStateUr.mode === "offline-ai" && AppStateUr.turn !== AppStateUr.humanColor);
+  rollBtn.disabled = AppStateUr.gameOver || !isHumanTurn || AppStateUr.roll !== null;
+}
+
+document.addEventListener("DOMContentLoaded", initUrApp);
