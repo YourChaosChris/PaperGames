@@ -34,6 +34,20 @@ function setStatusGo(elementId, text) {
 function setGameResultGo(text) {
   const el = document.getElementById("game-result");
   if (el) el.textContent = text || "";
+  if (!text && window.ResultModal) {
+    window.ResultModal.hide();
+  }
+}
+
+// Sets the compact result badge (#game-result) and the status line, and
+// shows a centered popup with the same description - so the outcome is
+// impossible to miss regardless of mode (2-player or vs-computer).
+function announceGameResultGo(resultCode, message) {
+  setGameResultGo(resultCode);
+  setStatusGo("board-info", message);
+  if (window.ResultModal) {
+    window.ResultModal.show("Game Over", message);
+  }
 }
 
 function resetUndoStackGo() {
@@ -64,8 +78,7 @@ function endGameByScoreGo() {
   const score = GoCore.scoreArea(AppStateGo.board, AppStateGo.size, GoCore.DEFAULT_KOMI);
   const margin = Math.abs(score.blackScore - score.whiteScore);
   const winnerLetter = score.winner === "b" ? "B" : "W";
-  setGameResultGo(winnerLetter + "+" + margin);
-  setStatusGo("board-info",
+  announceGameResultGo(winnerLetter + "+" + margin,
     "Both passed. " + colorNameGo(score.winner) + " wins by " + margin +
     " (Black " + score.blackScore + " – White " + score.whiteScore + ").");
   updateGameLabelsGo();
@@ -219,8 +232,7 @@ function initGoApp() {
       const loser = AppStateGo.turn;
       const winner = loser === "b" ? "w" : "b";
       AppStateGo.gameOver = true;
-      setGameResultGo((winner === "b" ? "B" : "W") + "+R");
-      setStatusGo("board-info", colorNameGo(winner) + " wins by resignation.");
+      announceGameResultGo((winner === "b" ? "B" : "W") + "+R", colorNameGo(winner) + " wins by resignation.");
       updateGameLabelsGo();
     });
   }

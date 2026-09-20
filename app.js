@@ -124,8 +124,24 @@ function renderMoveList() {
 }
 function setGameResult(text) {
   const el = document.getElementById("game-result");
-  if (!el) return;
-  el.textContent = text || "";
+  if (el) el.textContent = text || "";
+  if (!text && window.ResultModal) {
+    // A fresh game starting should dismiss any popup left over from the
+    // previous one, in case the player started a new game without
+    // closing it first.
+    window.ResultModal.hide();
+  }
+}
+
+// Sets the compact result badge (#game-result) and the status line, and
+// shows a centered popup with the same description - so the outcome is
+// impossible to miss regardless of mode (offline, vs-computer, or online).
+function announceGameResult(resultCode, message) {
+  setGameResult(resultCode);
+  setStatus("board-info", message);
+  if (window.ResultModal) {
+    window.ResultModal.show("Game Over", message);
+  }
 }
 
 
@@ -216,18 +232,15 @@ function isPawnMoveOrCapture(board, from, to) {
 // Setzt bei einem Remis Status und Ergebnis und gibt true zurück.
 function checkAutoDraw() {
   if (isThreefoldRepetition()) {
-    setGameResult("½-½");
-    setStatus("board-info", "Draw by repetition.");
+    announceGameResult("½-½", "Draw by repetition.");
     return true;
   }
   if (AppState.halfmoveClock >= 100) {
-    setGameResult("½-½");
-    setStatus("board-info", "Draw (50-move rule).");
+    announceGameResult("½-½", "Draw (50-move rule).");
     return true;
   }
   if (AiEngine.hasInsufficientMaterial(AppState.board)) {
-    setGameResult("½-½");
-    setStatus("board-info", "Draw (insufficient material).");
+    announceGameResult("½-½", "Draw (insufficient material).");
     return true;
   }
   return false;
@@ -547,8 +560,7 @@ aiLevelInline.addEventListener("change", () => {
           await LichessApi.resignGame(AppState.currentGame.gameId);
           const myColor = AppState.currentGame.color === "white" ? "white" : "black";
           const result = myColor === "white" ? "0-1" : "1-0";
-          setGameResult(result);
-          setStatus("board-info", "You resigned.");
+          announceGameResult(result, "You resigned.");
           AppState.gameOver = true;
         } catch (e) {
           setStatus("board-info", "Resign failed: " + (e && e.message ? e.message : "Unknown error."));
@@ -559,8 +571,7 @@ aiLevelInline.addEventListener("change", () => {
       // Offline & Computer
       const loser = AppState.turn || "white";
       const result = loser === "white" ? "0-1" : "1-0";
-      setGameResult(result);
-      setStatus("board-info", "Resigned. " + (loser === "white" ? "Black" : "White") + " wins.");
+      announceGameResult(result, "Resigned. " + (loser === "white" ? "Black" : "White") + " wins.");
       AppState.gameOver = true;
     });
   }
@@ -580,8 +591,7 @@ aiLevelInline.addEventListener("change", () => {
       }
 
       // Offline & Computer: draw by agreement
-      setGameResult("½-½");
-      setStatus("board-info", "Game drawn by agreement.");
+      announceGameResult("½-½", "Game drawn by agreement.");
       AppState.gameOver = true;
     });
   }
@@ -1168,11 +1178,9 @@ function onSquareClick(e) {
       if (end.status === "checkmate") {
         const winner = end.winner === "white" ? "White" : "Black";
         const result = winner === "White" ? "1-0" : "0-1";
-        setGameResult(result);
-        setStatus("board-info", "Checkmate! " + winner + " wins.");
+        announceGameResult(result, "Checkmate! " + winner + " wins.");
       } else if (end.status === "stalemate") {
-        setGameResult("½-½");
-        setStatus("board-info", "Draw (stalemate).");
+        announceGameResult("½-½", "Draw (stalemate).");
       } else {
 
 const side = AppState.turn === "white" ? "White" : "Black";
@@ -1210,12 +1218,10 @@ setStatus("board-info", "Move: " + from + "–" + to + ". " + side + " to move."
       if (endAfterHuman.status === "checkmate") {
         const winner = endAfterHuman.winner === "white" ? "White" : "Black";
         const result = winner === "White" ? "1-0" : "0-1";
-        setGameResult(result);
-        setStatus("board-info", "Checkmate! You win.");
+        announceGameResult(result, "Checkmate! You win.");
         return;
       } else if (endAfterHuman.status === "stalemate") {
-        setGameResult("½-½");
-        setStatus("board-info", "Draw (stalemate).");
+        announceGameResult("½-½", "Draw (stalemate).");
         return;
       }
 
@@ -1386,12 +1392,10 @@ async function aiMoveOffline() {
   if (!moves.length) {
     const end = AiEngine.detectGameEnd(AppState.board, aiColor);
     if (end.status === "checkmate") {
-      setStatus("board-info", "Checkmate! The computer is mated.");
       const result = aiColor === "white" ? "0-1" : "1-0";
-      setGameResult(result);
+      announceGameResult(result, "Checkmate! The computer is mated.");
     } else if (end.status === "stalemate") {
-      setStatus("board-info", "Draw (stalemate).");
-      setGameResult("½-½");
+      announceGameResult("½-½", "Draw (stalemate).");
     } else {
       setStatus("board-info", "Computer has no moves.");
     }
@@ -1422,12 +1426,10 @@ async function aiMoveOffline() {
 
   const endForHuman = AiEngine.detectGameEnd(AppState.board, AppState.turn);
   if (endForHuman.status === "checkmate") {
-    setStatus("board-info", "Checkmate! The computer wins.");
     const result = aiColor === "white" ? "0-1" : "1-0";
-    setGameResult(result);
+    announceGameResult(result, "Checkmate! The computer wins.");
   } else if (endForHuman.status === "stalemate") {
-    setStatus("board-info", "Draw (stalemate).");
-    setGameResult("½-½");
+    announceGameResult("½-½", "Draw (stalemate).");
   } else {
     setStatus("board-info", "Computer plays " + move.from + "–" + move.to + ". Your move.");
   }
