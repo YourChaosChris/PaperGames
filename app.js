@@ -20,7 +20,7 @@ const AppState = {
   moveHistory: [],
   undoStack: [],
   viewColor: "white",    // Perspektive des Bretts: "white" oder "black"
-  pieceStyle: "unicode"  // "unicode" (♟) oder "letters" (P,N,B,R,Q,K)
+  pieceStyle: "svg"  // "svg" (Figurensymbole) oder "letters" (P,N,B,R,Q,K)
 };
 
 // Debounced Resize-Handling für langsame E‑Ink-Displays
@@ -525,7 +525,7 @@ aiLevelInline.addEventListener("change", () => {
   if (pieceStyleToggle) {
     pieceStyleToggle.addEventListener("click", () => {
       AppState.pieceStyle =
-        AppState.pieceStyle === "unicode" ? "letters" : "unicode";
+        AppState.pieceStyle === "svg" ? "letters" : "svg";
       updateBoard();
     });
   }
@@ -838,13 +838,23 @@ function updateBoard() {
     const idx = ChessCore.coordToIndex(coord);
     const piece = AppState.board[idx.rank][idx.file];
 
-    const glyph = (AppState.pieceStyle === "letters")
-      ? ChessCore.pieceToLetter(piece)
-      : ChessCore.pieceToGlyph(piece);
-
-    // Auf E‑Ink unnötige Text-Updates vermeiden
-    if (sq.textContent !== glyph) {
-      sq.textContent = glyph;
+    // Auf E‑Ink unnötige DOM-Updates vermeiden: nur neu rendern, wenn sich
+    // die Figur oder der gewählte Darstellungsstil seit dem letzten Aufruf
+    // geändert hat.
+    if (AppState.pieceStyle === "letters") {
+      const glyph = ChessCore.pieceToLetter(piece);
+      if (sq.dataset.renderedStyle !== "letters" || sq.dataset.renderedPiece !== glyph) {
+        sq.textContent = glyph;
+        sq.dataset.renderedStyle = "letters";
+        sq.dataset.renderedPiece = glyph;
+      }
+    } else {
+      const key = piece || "";
+      if (sq.dataset.renderedStyle !== "svg" || sq.dataset.renderedPiece !== key) {
+        sq.innerHTML = (piece && window.PieceIcons && window.PieceIcons[piece]) || "";
+        sq.dataset.renderedStyle = "svg";
+        sq.dataset.renderedPiece = key;
+      }
     }
 
     sq.classList.remove("selected", "last-move", "piece-white", "piece-black");

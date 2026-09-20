@@ -170,34 +170,7 @@ const ChessCore = (function () {
     }
   }
 
-  function pieceToGlyph(piece) {
-    if (!piece) return '';
-    const isWhite = piece === piece.toUpperCase();
-    const p = piece.toLowerCase();
-    if (isWhite) {
-      switch (p) {
-        case 'k': return '\u2654'; // ♔
-        case 'q': return '\u2655'; // ♕
-        case 'r': return '\u2656'; // ♖
-        case 'b': return '\u2657'; // ♗
-        case 'n': return '\u2658'; // ♘
-        case 'p': return '\u2659'; // ♙
-      }
-    } else {
-      switch (p) {
-        case 'k': return '\u265A'; // ♚
-        case 'q': return '\u265B'; // ♛
-        case 'r': return '\u265C'; // ♜
-        case 'b': return '\u265D'; // ♝
-        case 'n': return '\u265E'; // ♞
-        case 'p': return '\u265F'; // ♟
-      }
-    }
-    return piece;
-  }
-
-
-  // ASCII-Variante, falls auf manchen Geräten die Unicode-Symbole schlecht aussehen.
+  // ASCII-Variante, falls auf manchen Geräten die SVG-Figuren schlecht aussehen.
   function pieceToLetter(piece) {
     if (!piece) return '';
     const p = piece.toLowerCase();
@@ -229,7 +202,6 @@ const ChessCore = (function () {
     applyMove,
     getEnPassantSquare,
     setEnPassantSquare,
-    pieceToGlyph,
     pieceToLetter,
     isWhitePiece,
     isBlackPiece

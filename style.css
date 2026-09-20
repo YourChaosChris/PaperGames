@@ -290,6 +290,18 @@ button:disabled {
   background: var(--square-dark);
 }
 
+/* Inline-SVG-Figuren zentriert im Feld, unabhängig von der tatsächlichen
+   Feldgröße (die per JS dynamisch gesetzt wird). */
+.square svg.piece-svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 82%;
+  height: 82%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
 
 /* Auswahl-Markierung für ein Feld */
 
@@ -611,6 +623,12 @@ body.high-contrast .square.last-move {
   border: 1px solid var(--border);
   padding: 0.25rem;
   border-radius: 4px;
+}
+
+.about-credits {
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  color: var(--muted);
 }
 
 .about-back {
