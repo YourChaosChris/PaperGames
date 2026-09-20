@@ -854,7 +854,10 @@ button:disabled {
 
 .go-stone {
   position: absolute;
-  inset: 4%;
+  top: 4%;
+  right: 4%;
+  bottom: 4%;
+  left: 4%;
   border-radius: 50%;
   box-sizing: border-box;
   pointer-events: none;
@@ -873,7 +876,10 @@ button:disabled {
 .go-point.last-move .go-stone::after {
   content: "";
   position: absolute;
-  inset: -22%;
+  top: -22%;
+  right: -22%;
+  bottom: -22%;
+  left: -22%;
   border: 2px solid var(--accent);
   border-radius: 50%;
 }
