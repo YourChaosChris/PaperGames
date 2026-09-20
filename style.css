@@ -32,7 +32,7 @@ html, body {
 }
 
 #app {
-  max-width: 680px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 0.3rem;
 }
@@ -105,6 +105,13 @@ html, body {
   overflow-x: auto;
 }
 
+.user-panel-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
 button {
   font-family: inherit;
   border-radius: var(--radius);
@@ -175,11 +182,12 @@ button:disabled {
 
 
 .card {
-  background: transparent;
-  border-radius: 0;
+  background: #fff;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
   box-shadow: none;
-  padding: 0.25rem 0;
-  margin-bottom: 0.25rem;
+  padding: 0.65rem 0.75rem;
+  margin-bottom: 0.6rem;
 }
 
 .field-row {
@@ -266,7 +274,7 @@ button:disabled {
 #board {
   display: block;
   width: 100%;
-  max-width: 440px;
+  max-width: 760px;
   border: 3px solid var(--border);
   background: var(--square-light);
   box-sizing: border-box;

@@ -19,9 +19,11 @@
     </div>
     <div class="user-panel">
       <div id="user-status">Not connected</div>
-      <button id="login-button" class="primary">Connect (Lichess)</button>
-      <button id="logout-button" class="secondary hidden">Logout</button>
-      <button id="high-contrast-toggle" class="secondary small">Contrast</button>
+      <div class="user-panel-buttons">
+        <button id="login-button" class="primary">Connect (Lichess)</button>
+        <button id="logout-button" class="secondary hidden">Logout</button>
+        <button id="high-contrast-toggle" class="secondary small">Contrast</button>
+      </div>
     </div>
   </header>
 
@@ -99,7 +101,6 @@
         <option value="4">Level 4 – ~1400 Elo (~4–6s/move)</option>
         <option value="5">Level 5 – ~1600 Elo (~6–10s/move)</option>
       </select>
-    </div>
     <button id="undo-btn" class="secondary small" onclick="undoLastMove()" style="display:none; margin-left:auto;">Undo</button>
   </div>
   <div id="offline-ai-status" class="status-text"></div>
