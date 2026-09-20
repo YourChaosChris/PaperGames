@@ -39,9 +39,15 @@
 </section>
 
         <section id="online-controls" class="card hidden">
-      <div class="field-row online-inline-row">
+      <div class="field-row online-tabs-row">
+        <div class="mode-buttons online-sub-tabs">
+          <button id="online-tab-human" class="mode-btn secondary small active-mode">vs Human</button>
+          <button id="online-tab-ai" class="mode-btn secondary small">vs Computer</button>
+        </div>
+        <button id="attach-button" class="secondary small">Load game</button>
+      </div>
+      <div id="online-human-row" class="field-row online-inline-row">
         <button id="start-seek-button" class="primary">Find game</button>
-        <button id="attach-button" class="secondary">Load game</button>
         <label class="checkbox-label">
           <input type="checkbox" id="rated-checkbox" checked>
           Rated
@@ -52,10 +58,28 @@
           <option value="25+10">25 + 10 (Rapid)</option>
           <option value="30+20">30 + 20 (Classic)</option>
         </select>
-        <div class="online-action-right">
-          <button id="offer-draw-button" class="secondary small">Offer draw</button>
-          <button id="resign-button" class="secondary small">Resign 🏳</button>
+      </div>
+      <div id="online-ai-row" class="field-row online-inline-row hidden">
+        <button id="start-ai-challenge-button" class="primary">Play Lichess AI</button>
+        <div class="inline-options">
+          <label class="color-choice"><input type="radio" name="ai-online-color" value="white" checked> &#9817;</label>
+          <label class="color-choice"><input type="radio" name="ai-online-color" value="black"> &#9823;</label>
+          <label class="color-choice"><input type="radio" name="ai-online-color" value="random"> Random</label>
         </div>
+        <select id="ai-online-level">
+          <option value="1">Level 1 – ~800 Elo</option>
+          <option value="2">Level 2 – ~1100 Elo</option>
+          <option value="3" selected>Level 3 – ~1400 Elo</option>
+          <option value="4">Level 4 – ~1700 Elo</option>
+          <option value="5">Level 5 – ~2000 Elo</option>
+          <option value="6">Level 6 – ~2300 Elo</option>
+          <option value="7">Level 7 – ~2700 Elo</option>
+          <option value="8">Level 8 – ~3200 Elo</option>
+        </select>
+      </div>
+      <div class="field-row online-inline-row">
+        <button id="offer-draw-button" class="secondary small">Offer draw</button>
+        <button id="resign-button" class="secondary small">Resign 🏳</button>
       </div>
       <div id="online-status" class="status-text"></div>
     </section>
@@ -63,10 +87,11 @@
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
     <button id="start-ai-game" class="primary">New game</button>
-    <div class="inline-options">
+    <div id="ai-color-choice" class="inline-options">
       <label class="color-choice"><input type="radio" name="ai-color" value="white" checked> &#9817;</label>
       <label class="color-choice"><input type="radio" name="ai-color" value="black"> &#9823;</label>
-      <select id="ai-level-inline">
+    </div>
+    <select id="ai-level-inline">
         <option value="0">2 Player</option>
         <option value="1">Level 1 – ~600 Elo (~1s/move)</option>
         <option value="2">Level 2 – ~900 Elo (~2s/move)</option>
@@ -107,6 +132,7 @@
 </div>
 
 <script src="chess-core.js"></script>
+<script src="pieces.js"></script>
 <script src="ai-engine.js"></script>
 <script src="lichess-auth.js"></script>
 <script src="lichess-api.js"></script>

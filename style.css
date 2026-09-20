@@ -5,14 +5,15 @@
   --bg-alt: #e3e3e3;
   --border: #111;
   --text: #111;
-  --muted: #555;
+  --muted: #333;
   --accent: #111;
   --danger: #900;
   --square-light: #fdfdfd;
   --square-dark: #d5d5d5;
   --square-selected: #bbb;
   --square-last: #c5e1ff;
-  --radius: 10px;
+  --radius: 4px;
+  --border-width: 2px;
   --shadow: 0 0 0 1px #000;
   --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -27,6 +28,7 @@ html, body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-main);
+  font-weight: 500;
 }
 
 #app {
@@ -41,12 +43,13 @@ html, body {
   gap: 1rem;
   align-items: center;
   margin-bottom: 0.3rem;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 0.2rem;
+  border-bottom: var(--border-width) solid var(--border);
+  padding-bottom: 0.3rem;
 }
 
 .title-wrap h1 {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
+  font-weight: 800;
   margin: 0;
 }
 
@@ -104,11 +107,12 @@ html, body {
 
 button {
   font-family: inherit;
-  border-radius: 2px;
-  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  border: var(--border-width) solid var(--border);
   background: #fff;
-  padding: 0.35rem 0.75rem;
+  padding: 0.4rem 0.85rem;
   font-size: 0.9rem;
+  font-weight: 700;
   cursor: pointer;
 }
 
@@ -123,7 +127,7 @@ button.secondary {
 
 button.small {
   font-size: 0.7rem;
-  padding: 0.2rem 0.4rem;
+  padding: 0.25rem 0.5rem;
 }
 
 
@@ -159,13 +163,14 @@ button:disabled {
   gap: 0.5rem;
 }
 .mode-buttons .mode-btn {
-  border-radius: 2px;
+  border-radius: var(--radius);
 }
 
 .mode-buttons .mode-btn.active-mode {
   background: #ffffff;
   color: #000000;
-  border: 2px solid #000000;
+  border-width: 3px;
+  font-weight: 800;
 }
 
 
@@ -190,10 +195,11 @@ button:disabled {
 
 .field-row select {
   flex: 1;
-  padding: 0.25rem 0.4rem;
+  padding: 0.3rem 0.4rem;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border: var(--border-width) solid var(--border);
   background: #fff;
+  font-weight: 600;
 }
 
 .checkbox-label {
@@ -203,7 +209,8 @@ button:disabled {
 }
 
 .status-text {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
   color: var(--muted);
   min-height: 1.2em;
 }
@@ -260,7 +267,7 @@ button:disabled {
   display: block;
   width: 100%;
   max-width: 440px;
-  border: 2px solid var(--border);
+  border: 3px solid var(--border);
   background: var(--square-light);
   box-sizing: border-box;
   overflow: hidden;
@@ -290,15 +297,34 @@ button:disabled {
   background: var(--square-dark);
 }
 
+/* Inline-SVG-Figuren zentriert im Feld, unabhängig von der tatsächlichen
+   Feldgröße (die per JS dynamisch gesetzt wird). */
+.square svg.piece-svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 82%;
+  height: 82%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Bolder outlines than the source artwork's default 1.5 - reads much
+   more clearly on E‑Ink, where thin strokes tend to look faint/grey. */
+.square svg.piece-svg [stroke-width] {
+  stroke-width: 2.2;
+}
+
 
 /* Auswahl-Markierung für ein Feld */
 
 .square.last-move {
-  box-shadow: inset 0 0 0 2px var(--accent);
+  box-shadow: inset 0 0 0 3px var(--accent);
 }
 
 .square.selected {
-  outline: 2px solid var(--border);
+  outline: 3px solid var(--border);
+  outline-offset: -3px;
 }
 
 /* Züge unter dem Brett in einer Zeile, horizontal scrollend */
@@ -424,6 +450,15 @@ button:disabled {
   margin-left: auto;
   display: inline-flex;
   gap: 0.5rem;
+}
+
+#online-controls .online-tabs-row {
+  justify-content: space-between;
+  width: 100%;
+}
+
+.online-sub-tabs {
+  gap: 0.35rem;
 }
 
 
@@ -602,6 +637,12 @@ body.high-contrast .square.last-move {
   border: 1px solid var(--border);
   padding: 0.25rem;
   border-radius: 4px;
+}
+
+.about-credits {
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  color: var(--muted);
 }
 
 .about-back {

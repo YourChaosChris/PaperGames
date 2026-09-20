@@ -16,10 +16,11 @@ const AppState = {
   gameOver: false,
 
   positionHistory: [],
+  halfmoveClock: 0,   // Halbzüge seit letztem Bauernzug/letzter Schlagaktion (50-Züge-Regel)
   moveHistory: [],
   undoStack: [],
   viewColor: "white",    // Perspektive des Bretts: "white" oder "black"
-  pieceStyle: "unicode"  // "unicode" (♟) oder "letters" (P,N,B,R,Q,K)
+  pieceStyle: "svg"  // "svg" (Figurensymbole) oder "letters" (P,N,B,R,Q,K)
 };
 
 // Debounced Resize-Handling für langsame E‑Ink-Displays
@@ -97,7 +98,9 @@ function pushUndoSnapshot() {
   AppState.undoStack.push({
     board: boardCopy,
     turn: AppState.turn,
-    gameOver: AppState.gameOver
+    gameOver: AppState.gameOver,
+    halfmoveClock: AppState.halfmoveClock,
+    positionHistory: (AppState.positionHistory || []).slice()
   });
 }
 
@@ -194,7 +197,41 @@ function computePositionKey(board, turn) {
 
 function resetPositionHistory() {
   AppState.positionHistory = [];
+  AppState.halfmoveClock = 0;
   recordCurrentPosition();
+}
+
+// Vor dem Ziehen aufrufen: true, wenn der Zug ein Bauernzug oder ein Schlag ist
+// (dann wird der 50-Züge-Zähler zurückgesetzt), sonst false.
+function isPawnMoveOrCapture(board, from, to) {
+  const fromIdx = ChessCore.coordToIndex(from);
+  const toIdx = ChessCore.coordToIndex(to);
+  const piece = board[fromIdx.rank][fromIdx.file];
+  if (!piece) return false;
+  const isPawn = piece.toLowerCase() === "p";
+  const isCapture = board[toIdx.rank][toIdx.file] != null || (isPawn && fromIdx.file !== toIdx.file);
+  return isPawn || isCapture;
+}
+
+// Prüft Remisbedingungen, die nicht vom Zuganzahl-basierten Schachmatt/Patt abhängen.
+// Setzt bei einem Remis Status und Ergebnis und gibt true zurück.
+function checkAutoDraw() {
+  if (isThreefoldRepetition()) {
+    setGameResult("½-½");
+    setStatus("board-info", "Draw by repetition.");
+    return true;
+  }
+  if (AppState.halfmoveClock >= 100) {
+    setGameResult("½-½");
+    setStatus("board-info", "Draw (50-move rule).");
+    return true;
+  }
+  if (AiEngine.hasInsufficientMaterial(AppState.board)) {
+    setGameResult("½-½");
+    setStatus("board-info", "Draw (insufficient material).");
+    return true;
+  }
+  return false;
 }
 
 function recordCurrentPosition() {
@@ -231,33 +268,41 @@ function initApp() {
   const modeOnline = document.getElementById("mode-online");
   const onlineControls = document.getElementById("online-controls");
   const offlineAiControls = document.getElementById("offline-ai-controls");
-  const aiInlineControls = document.getElementById("ai-inline-controls");
+  const aiColorChoice = document.getElementById("ai-color-choice");
   const aiLevelInline = document.getElementById("ai-level-inline");
   const startSeekBtn = document.getElementById("start-seek-button");
   const attachBtn = document.getElementById("attach-button");
   const startAiGameBtn = document.getElementById("start-ai-game");
   const resignBtn = document.getElementById("resign-button");
   const offerDrawBtn = document.getElementById("offer-draw-button");
+  const onlineTabHuman = document.getElementById("online-tab-human");
+  const onlineTabAi = document.getElementById("online-tab-ai");
+  const onlineHumanRow = document.getElementById("online-human-row");
+  const onlineAiRow = document.getElementById("online-ai-row");
 
-
-
-  function updateActionButtonsVisibility() {
-    const isOnline = AppState.mode === "online";
-    if (resignBtn) {
-      if (isOnline) {
-        resignBtn.classList.remove("hidden");
-      } else {
-        resignBtn.classList.add("hidden");
-      }
-    }
-    if (offerDrawBtn) {
-      if (isOnline) {
-        offerDrawBtn.classList.remove("hidden");
-      } else {
-        offerDrawBtn.classList.add("hidden");
-      }
-    }
+  function updateAiColorChoiceVisibility() {
+    if (!aiColorChoice || !aiLevelInline) return;
+    const isTwoPlayer = aiLevelInline.value === "0";
+    aiColorChoice.classList.toggle("hidden", isTwoPlayer);
   }
+
+  function setOnlineTab(tab) {
+    if (!onlineTabHuman || !onlineTabAi || !onlineHumanRow || !onlineAiRow) return;
+    const isHuman = tab === "human";
+    onlineTabHuman.classList.toggle("active-mode", isHuman);
+    onlineTabAi.classList.toggle("active-mode", !isHuman);
+    onlineHumanRow.classList.toggle("hidden", !isHuman);
+    onlineAiRow.classList.toggle("hidden", isHuman);
+  }
+
+  if (onlineTabHuman) {
+    onlineTabHuman.addEventListener("click", () => setOnlineTab("human"));
+  }
+  if (onlineTabAi) {
+    onlineTabAi.addEventListener("click", () => setOnlineTab("ai"));
+  }
+
+
 
   function setActiveModeButton(mode) {
     if (!modeOffline || !modeOfflineAi || !modeOnline) return;
@@ -301,9 +346,6 @@ modeOffline.addEventListener("click", () => {
   if (offlineAiControls) {
     offlineAiControls.classList.add("hidden");
   }
-  if (aiInlineControls) {
-    aiInlineControls.classList.add("hidden");
-  }
   showBoardSection();
   buildBoardDOM();
   updateBoard();
@@ -323,13 +365,11 @@ modeOffline.addEventListener("click", () => {
     if (offlineAiControls) {
       offlineAiControls.classList.remove("hidden");
     }
-    if (aiInlineControls) {
-      aiInlineControls.classList.remove("hidden");
-    }
   if (aiLevelInline) {
       const lvl = (typeof AppState.aiLevel === "number") ? AppState.aiLevel : 2;
       aiLevelInline.value = String(lvl);
     }
+    updateAiColorChoiceVisibility();
     updateGameLabels();
     // Offline-AI: Board-Status leeren, bis eine Partie gestartet wird
     setStatus("board-info", "");
@@ -357,9 +397,7 @@ startAiGameBtn.addEventListener("click", () => {
     updateActionButtonsVisibility();
     setActiveModeButton("offline-ai");
     AppState.board = ChessCore.createInitialBoard();
-    if (aiInlineControls) {
-      aiInlineControls.classList.remove("hidden");
-    }
+    updateAiColorChoiceVisibility();
     AppState.turn = "white";
     AppState.selected = null;
     AppState.lastMove = null;
@@ -390,9 +428,7 @@ startAiGameBtn.addEventListener("click", () => {
   const hintText = thinkHints[level] || "";
 
   AppState.board = ChessCore.createInitialBoard();
-  if (aiInlineControls) {
-    aiInlineControls.classList.remove("hidden");
-  }
+  updateAiColorChoiceVisibility();
   AppState.turn = "white";
   AppState.selected = null;
   AppState.lastMove = null;
@@ -428,9 +464,7 @@ modeOnline.addEventListener("click", () => {
     if (offlineAiControls) {
       offlineAiControls.classList.add("hidden");
     }
-    if (aiInlineControls) {
-      aiInlineControls.classList.add("hidden");
-    }
+    setOnlineTab("human");
     setGameResult("");
     resetMoveHistory();
     setStatus("board-info", "Online mode: log in and start a game.");
@@ -440,21 +474,25 @@ modeOnline.addEventListener("click", () => {
   if (aiLevelInline) {
 
 aiLevelInline.addEventListener("change", () => {
-      const level = parseInt(aiLevelInline.value, 10) || AppState.aiLevel || 2;
+      const parsedLevel = parseInt(aiLevelInline.value, 10);
+      const level = Number.isNaN(parsedLevel) ? (AppState.aiLevel || 2) : parsedLevel;
       AppState.aiLevel = level;
       updateGameLabels();
+      updateAiColorChoiceVisibility();
       if (AppState.mode === "offline-ai") {
-
-
-const thinkHints = {
-  1: "~600 Elo (~1s/move)",
-  2: "~900 Elo (~2s/move)",
-  3: "~1200 Elo (~4s/move)",
-  4: "~1400 Elo (~4–6s/move)",
-  5: "~1600 Elo (~6–10s/move)"
-};
-        const hintText = thinkHints[level] || "";
-        setStatus("offline-ai-status", "Computer level " + level + (hintText ? " (" + hintText + ")." : " active."));
+        if (level === 0) {
+          setStatus("offline-ai-status", "Local 2‑player game (no computer).");
+        } else {
+          const thinkHints = {
+            1: "~600 Elo (~1s/move)",
+            2: "~900 Elo (~2s/move)",
+            3: "~1200 Elo (~4s/move)",
+            4: "~1400 Elo (~4–6s/move)",
+            5: "~1600 Elo (~6–10s/move)"
+          };
+          const hintText = thinkHints[level] || "";
+          setStatus("offline-ai-status", "Computer level " + level + (hintText ? " (" + hintText + ")." : " active."));
+        }
       }
     });
   }
@@ -487,7 +525,7 @@ const thinkHints = {
   if (pieceStyleToggle) {
     pieceStyleToggle.addEventListener("click", () => {
       AppState.pieceStyle =
-        AppState.pieceStyle === "unicode" ? "letters" : "unicode";
+        AppState.pieceStyle === "svg" ? "letters" : "svg";
       updateBoard();
     });
   }
@@ -575,6 +613,30 @@ const thinkHints = {
     }
   });
 
+  const startAiChallengeBtn = document.getElementById("start-ai-challenge-button");
+  const aiOnlineLevel = document.getElementById("ai-online-level");
+
+  if (startAiChallengeBtn) {
+    startAiChallengeBtn.addEventListener("click", async () => {
+      if (!window.LichessAuth || !window.LichessAuth.getAccessToken || !window.LichessAuth.getAccessToken()) {
+        alert("Please connect your online account first.");
+        return;
+      }
+      AppState.gameOver = false;
+      const level = aiOnlineLevel ? parseInt(aiOnlineLevel.value, 10) : 3;
+      const colorInput = document.querySelector("input[name='ai-online-color']:checked");
+      const color = colorInput ? colorInput.value : "random";
+      setStatus("online-status", "Starting game vs Lichess AI (level " + level + ") …");
+      try {
+        await LichessApi.challengeAi({ level, color, timeMinutes: 15, incrementSeconds: 10 });
+        AppState.currentGame = null;
+        startPollingForGame("Loading game vs Lichess AI …");
+      } catch (e) {
+        setStatus("online-status", "Error: " + e.message);
+      }
+    });
+  }
+
   attachBtn.addEventListener("click", async () => {
     if (!window.LichessAuth || !window.LichessAuth.getAccessToken || !window.LichessAuth.getAccessToken()) {
       alert("Please connect your online account first.");
@@ -595,6 +657,8 @@ const thinkHints = {
   });
 
   updateActionButtonsVisibility();
+  updateAiColorChoiceVisibility();
+  setOnlineTab("human");
 
   // Versuchen, bestehenden Login aus Redirect zu vervollständigen
   LichessAuth.maybeFinishLoginFromRedirect()
@@ -774,13 +838,23 @@ function updateBoard() {
     const idx = ChessCore.coordToIndex(coord);
     const piece = AppState.board[idx.rank][idx.file];
 
-    const glyph = (AppState.pieceStyle === "letters")
-      ? ChessCore.pieceToLetter(piece)
-      : ChessCore.pieceToGlyph(piece);
-
-    // Auf E‑Ink unnötige Text-Updates vermeiden
-    if (sq.textContent !== glyph) {
-      sq.textContent = glyph;
+    // Auf E‑Ink unnötige DOM-Updates vermeiden: nur neu rendern, wenn sich
+    // die Figur oder der gewählte Darstellungsstil seit dem letzten Aufruf
+    // geändert hat.
+    if (AppState.pieceStyle === "letters") {
+      const glyph = ChessCore.pieceToLetter(piece);
+      if (sq.dataset.renderedStyle !== "letters" || sq.dataset.renderedPiece !== glyph) {
+        sq.textContent = glyph;
+        sq.dataset.renderedStyle = "letters";
+        sq.dataset.renderedPiece = glyph;
+      }
+    } else {
+      const key = piece || "";
+      if (sq.dataset.renderedStyle !== "svg" || sq.dataset.renderedPiece !== key) {
+        sq.innerHTML = (piece && window.PieceIcons && window.PieceIcons[piece]) || "";
+        sq.dataset.renderedStyle = "svg";
+        sq.dataset.renderedPiece = key;
+      }
     }
 
     sq.classList.remove("selected", "last-move", "piece-white", "piece-black");
@@ -923,6 +997,20 @@ function formatSecondsToClock(seconds) {
 
 
 
+function updateActionButtonsVisibility() {
+  // Draw/resign only make sense once an online game is actually running -
+  // showing them beforehand is just clutter with nothing to act on yet.
+  const showGameActions = AppState.mode === "online" && !!AppState.currentGame;
+  const resignBtn = document.getElementById("resign-button");
+  const offerDrawBtn = document.getElementById("offer-draw-button");
+  if (resignBtn) {
+    resignBtn.classList.toggle("hidden", !showGameActions);
+  }
+  if (offerDrawBtn) {
+    offerDrawBtn.classList.toggle("hidden", !showGameActions);
+  }
+}
+
 function updateGameLabels() {
   const label = document.getElementById("game-label");
   const meta = document.getElementById("game-meta");
@@ -944,7 +1032,9 @@ function updateGameLabels() {
 
   if (AppState.currentGame) {
     const g = AppState.currentGame;
-    const opponent = g.opponent ? g.opponent.username : (g.opponent && g.opponent.user && g.opponent.user.name) || "Opponent";
+    const opponent = g.opponent && typeof g.opponent.ai === "number"
+      ? "Computer (level " + g.opponent.ai + ")"
+      : g.opponent ? g.opponent.username : (g.opponent && g.opponent.user && g.opponent.user.name) || "Opponent";
     const myColor = g.color === "white" ? "White" : "Black";
     const speed = g.speed || "";
     label.textContent = "Online: " + myColor + " vs " + opponent;
@@ -1042,8 +1132,10 @@ function onSquareClick(e) {
         return;
       }
       const movingColor = AppState.turn;
+      const resetsHalfmove = isPawnMoveOrCapture(AppState.board, legal.from, legal.to);
       pushUndoSnapshot();
       ChessCore.applyMove(AppState.board, legal.from, legal.to, legal.promotion);
+      AppState.halfmoveClock = resetsHalfmove ? 0 : AppState.halfmoveClock + 1;
       AppState.lastMove = { from: legal.from, to: legal.to };
       recordMove(movingColor, legal.from, legal.to);
       AppState.selected = null;
@@ -1051,11 +1143,9 @@ function onSquareClick(e) {
       updateBoard();
       updateGameLabels();
 
-      // Save position after the move and check for repetition
+      // Save position after the move and check for repetition/other auto-draws
       recordCurrentPosition();
-      if (isThreefoldRepetition()) {
-        setStatus("board-info", "Draw by repetition.");
-        setGameResult("½-½");
+      if (checkAutoDraw()) {
         return;
       }
 
@@ -1084,19 +1174,19 @@ setStatus("board-info", "Move: " + from + "–" + to + ". " + side + " to move."
         updateBoard();
         return;
       }
+      const resetsHalfmoveHuman = isPawnMoveOrCapture(AppState.board, legal.from, legal.to);
       pushUndoSnapshot();
       ChessCore.applyMove(AppState.board, legal.from, legal.to, legal.promotion);
+      AppState.halfmoveClock = resetsHalfmoveHuman ? 0 : AppState.halfmoveClock + 1;
       recordMove(AppState.humanColor, legal.from, legal.to);
       AppState.selected = null;
       AppState.turn = AppState.humanColor === "white" ? "black" : "white";
       updateBoard();
       updateGameLabels();
 
-      // Save position after the human move and check for repetition
+      // Save position after the human move and check for repetition/other auto-draws
       recordCurrentPosition();
-      if (isThreefoldRepetition()) {
-        setStatus("board-info", "Draw by repetition.");
-        setGameResult("½-½");
+      if (checkAutoDraw()) {
         return;
       }
 
@@ -1164,12 +1254,13 @@ async function sendOnlineMove(uci, from, to) {
 
 /*** Polling für Online-Spiel ***/
 
-function startPollingForGame() {
+function startPollingForGame(statusMessage) {
   stopPolling();
-  setStatus("online-status", "Searching for opponent…");
+  setStatus("online-status", statusMessage || "Searching for opponent…");
   AppState.currentGame = null;
   AppState.mode = "online";
   updateGameLabels();
+  updateActionButtonsVisibility();
 
   AppState.pollingIntervalId = window.setInterval(() => {
     pollOnce().catch(err => console.error(err));
@@ -1197,6 +1288,7 @@ async function pollOnce() {
       }
       AppState.currentGame = null;
       updateGameLabels();
+      updateActionButtonsVisibility();
       return;
     }
 
@@ -1261,6 +1353,7 @@ function attachGame(game) {
   buildBoardDOM();
   updateBoard();
   updateGameLabels();
+  updateActionButtonsVisibility();
   const myColor = game.color === "white" ? "White" : "Black";
   const turnText = game.isMyTurn ? "Your move." : "Opponent to move.";
   setStatus("board-info", "Online game active. You play " + myColor + ". " + turnText);
@@ -1294,8 +1387,10 @@ async function aiMoveOffline() {
     setStatus("board-info", "Computer cannot find a move.");
     return;
   }
+  const resetsHalfmoveAi = isPawnMoveOrCapture(AppState.board, move.from, move.to);
   pushUndoSnapshot();
   ChessCore.applyMove(AppState.board, move.from, move.to, move.promotion);
+  AppState.halfmoveClock = resetsHalfmoveAi ? 0 : AppState.halfmoveClock + 1;
   AppState.lastMove = { from: move.from, to: move.to };
   recordMove(aiColor, move.from, move.to);
   AppState.turn = aiColor === "white" ? "black" : "white";
@@ -1303,11 +1398,9 @@ async function aiMoveOffline() {
   updateBoard();
   updateGameLabels();
 
-  // Save position after the AI move and check for repetition
+  // Save position after the AI move and check for repetition/other auto-draws
   recordCurrentPosition();
-  if (isThreefoldRepetition()) {
-    setStatus("board-info", "Draw by repetition.");
-    setGameResult("½-½");
+  if (checkAutoDraw()) {
     return;
   }
 
@@ -1367,6 +1460,8 @@ function undoLastMove() {
   AppState.board = prev.board;
   AppState.turn = prev.turn;
   AppState.gameOver = !!prev.gameOver;
+  AppState.halfmoveClock = typeof prev.halfmoveClock === "number" ? prev.halfmoveClock : 0;
+  AppState.positionHistory = prev.positionHistory ? prev.positionHistory.slice() : [];
   AppState.selected = null;
   AppState.lastMove = null; // Last-move-Markierung im Brett entfernen
   updateBoard();
