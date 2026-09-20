@@ -977,3 +977,80 @@ button:disabled {
 .result-modal .result-modal-close {
   min-width: 6rem;
 }
+
+/* Checkers board: reuses .square/.light/.dark/.selected/.last-move from
+   the chess board (same float-grid technique, already proven on a real
+   E-Ink device) rather than inventing a new layout mechanism. */
+
+#checkers-board {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.checkers-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 78%;
+  height: 78%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.checkers-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.checkers-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+.checkers-piece-king::after {
+  content: "";
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.checkers-piece-black.checkers-piece-king::after {
+  border: 2px solid #fff;
+}
+
+.checkers-piece-white.checkers-piece-king::after {
+  border: 2px solid var(--border);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.checkers-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.checkers-icon-disc-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.checkers-icon-disc-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
