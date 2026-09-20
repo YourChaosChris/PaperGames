@@ -511,6 +511,19 @@ button:disabled {
   font-size: 1.2rem;
 }
 
+/* Same cburnett pawn SVGs as on the board itself, sized as small inline
+   icons here instead of the board's absolutely-positioned full-square use. */
+.color-choice-icon {
+  display: inline-flex;
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.color-choice-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
 
 #undo-btn {
   padding-left: 0.2rem;
