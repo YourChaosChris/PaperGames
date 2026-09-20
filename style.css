@@ -99,10 +99,10 @@ html, body {
 }
 
 #user-status {
-  text-align: right;
   white-space: nowrap;
   max-width: 100%;
   overflow-x: auto;
+  font-weight: 600;
 }
 
 .user-panel-buttons {
@@ -112,7 +112,17 @@ html, body {
   gap: 0.4rem;
 }
 
-button {
+.user-status-row {
+  justify-content: space-between;
+}
+
+#settings-panel {
+  margin-bottom: 0.4rem;
+}
+
+button,
+a.primary,
+a.secondary {
   font-family: inherit;
   border-radius: var(--radius);
   border: var(--border-width) solid var(--border);
@@ -121,18 +131,24 @@ button {
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  color: var(--text);
 }
 
-button.primary {
+button.primary,
+a.primary {
   background: var(--accent);
   color: #fff;
 }
 
-button.secondary {
+button.secondary,
+a.secondary {
   background: var(--bg-alt);
 }
 
-button.small {
+button.small,
+a.small {
   font-size: 0.7rem;
   padding: 0.25rem 0.5rem;
 }
@@ -326,8 +342,12 @@ button:disabled {
 
 /* Auswahl-Markierung für ein Feld */
 
+/* Letzter Zug: dünner Rahmen plus dezente Tönung statt der früheren dicken
+   Umrandung - liest sich ruhiger, bleibt aber dank des klaren Rahmens auch
+   auf E-Ink-Displays mit wenigen Graustufen sicher erkennbar, ohne wie ein
+   aktiver Auswahlrahmen (siehe .square.selected) auszusehen. */
 .square.last-move {
-  box-shadow: inset 0 0 0 3px var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent), inset 0 0 0 999px rgba(0, 0, 0, 0.22);
 }
 
 .square.selected {
@@ -469,27 +489,12 @@ button:disabled {
   gap: 0.35rem;
 }
 
-
-html.is-ereader {
-  --bg: #ffffff;
-  --bg-alt: #f3f3f3;
-  --square-light: #ffffff;
-  --square-dark: #bfbfbf;
-  --accent: #000000;
-}
-
-
-.board-header {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
 .board-actions {
   display: flex;
   gap: 0.5rem;
   justify-content: flex-start;
   flex-wrap: wrap;
+  margin-top: 0.5rem;
 }
 
 .board-actions .small {
@@ -577,27 +582,6 @@ html.is-ereader {
 }
 
 
-/* High-contrast mode for older E‑Ink panels */
-body.high-contrast {
-  --bg: #ffffff;
-  --bg-alt: #f0f0f0;
-  --border: #000000;
-  --text: #000000;
-  --muted: #000000;
-  --accent: #000000;
-  --danger: #000000;
-  --square-light: #ffffff;
-  --square-dark: #e0e0e0;
-  --square-selected: #b0b0b0;
-  --square-last: #000000;
-}
-
-/* Last move besonders klar markieren im High-Contrast-Modus */
-body.high-contrast .square.last-move {
-  box-shadow: inset 0 0 0 2px #000000;
-}
-
-
 /* About page */
 .about-donate {
   margin-top: 1rem;
@@ -656,4 +640,273 @@ body.high-contrast .square.last-move {
 .about-back {
   margin-top: 1.25rem;
   font-size: 0.85rem;
+}
+
+/* Site-wide nav bar and language switch (home/rules/guide/about pages) */
+
+.lang-switch {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.lang-switch button {
+  padding: 0.2rem 0.5rem;
+}
+
+.lang-switch button.active-mode {
+  background: var(--accent);
+  color: #fff;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+
+.site-nav-link {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--text);
+  background: #fff;
+}
+
+.site-nav-link.active-mode {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Home page */
+
+.home-hero {
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+.home-hero-icon {
+  font-size: 5rem;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.home-hero h1 {
+  margin: 0.25rem 0;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.home-tagline {
+  color: var(--muted);
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+
+.home-play-button {
+  display: inline-block;
+  margin-top: 0.75rem;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 0.6rem 1.4rem;
+}
+
+.nav-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.6rem;
+  margin: 0.6rem 0;
+}
+
+.nav-card {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.nav-card-title {
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.nav-card-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.game-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.game-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  border: var(--border-width) dashed var(--border);
+  border-radius: var(--radius);
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.coming-soon-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: var(--bg-alt);
+  border-radius: var(--radius);
+  padding: 0.1rem 0.35rem;
+}
+
+/* Rules / Guide content pages */
+
+.content-page h2 {
+  font-size: 1.1rem;
+  margin: 1rem 0 0.4rem;
+}
+
+.content-page h2:first-child {
+  margin-top: 0;
+}
+
+.rule-list {
+  margin: 0 0 0.75rem;
+}
+
+.rule-list dt {
+  font-weight: 800;
+  margin-top: 0.5rem;
+}
+
+.rule-list dd {
+  margin: 0.15rem 0 0;
+  color: var(--text);
+}
+
+/* Go board: intersections rather than squares, built as absolutely
+   positioned lines/points inside a padded square (see go-app.js) rather
+   than a CSS gradient grid, since that's more predictable across the
+   older browsers found on E-Ink devices. */
+
+.go-board {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+  padding: 6%;
+}
+
+.go-grid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.go-line {
+  position: absolute;
+  background: var(--border);
+}
+
+.go-line-h {
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform: translateY(-1px);
+}
+
+.go-line-v {
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-1px);
+}
+
+.go-hoshi {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  background: var(--border);
+  pointer-events: none;
+}
+
+.go-point {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+}
+
+.go-stone {
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.go-stone-black {
+  background: #111;
+  border: 1px solid #000;
+}
+
+.go-stone-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+.go-point.last-move .go-stone::after {
+  content: "";
+  position: absolute;
+  inset: -22%;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+}
+
+/* Home page: game selection, Chess and Go shown with equal weight */
+
+.game-select-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.6rem;
+  margin: 0.6rem 0;
+}
+
+.game-select-item {
+  background: #fff;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+}
+
+.game-select-title {
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin-bottom: 0.3rem;
+}
+
+.game-select-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 0.6rem;
+}
+
+.game-select-actions {
+  display: flex;
+  gap: 0.5rem;
 }

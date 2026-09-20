@@ -14,130 +14,77 @@
 <div id="app">
   <header class="app-header">
     <div class="title-wrap app-title-row">
-      <h1><a href="index.html" class="app-title-link">♞ eInkChess</a></h1>
-      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
+      <a href="index.html" class="app-title-link">♞ eInkChess</a>
     </div>
     <div class="user-panel">
-      <div id="user-status">Not connected</div>
-      <div class="user-panel-buttons">
-        <button id="login-button" class="primary">Connect (Lichess)</button>
-        <button id="logout-button" class="secondary hidden">Logout</button>
-        <button id="high-contrast-toggle" class="secondary small">Contrast</button>
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
       </div>
     </div>
   </header>
 
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link active-mode" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+  </nav>
+
   <main>
-
-<section class="mode-section">
-  <div class="mode-section-row">
-    <div class="mode-buttons">
-      <button id="mode-offline" class="mode-btn secondary hidden">Offline</button>
-      <button id="mode-offline-ai" class="mode-btn secondary">Offline</button>
-      <button id="mode-online" class="mode-btn secondary">Online</button>
-    </div>
-    <button id="toggle-piece-style" class="secondary small hidden">♟ / A</button>
-  </div>
-</section>
-
-        <section id="online-controls" class="card hidden">
-      <div class="field-row online-tabs-row">
-        <div class="mode-buttons online-sub-tabs">
-          <button id="online-tab-human" class="mode-btn secondary small active-mode">vs Human</button>
-          <button id="online-tab-ai" class="mode-btn secondary small">vs Computer</button>
-        </div>
-        <button id="attach-button" class="secondary small">Load game</button>
-      </div>
-      <div id="online-human-row" class="field-row online-inline-row">
-        <button id="start-seek-button" class="primary">Find game</button>
-        <label class="checkbox-label">
-          <input type="checkbox" id="rated-checkbox" checked>
-          Rated
-        </label>
-        <select id="time-profile">
-          <option value="10+0">10 + 0 (Rapid)</option>
-          <option value="15+10" selected>15 + 10 (Rapid)</option>
-          <option value="25+10">25 + 10 (Rapid)</option>
-          <option value="30+20">30 + 20 (Classic)</option>
-        </select>
-      </div>
-      <div id="online-ai-row" class="field-row online-inline-row hidden">
-        <button id="start-ai-challenge-button" class="primary">Play Lichess AI</button>
-        <div class="inline-options">
-          <label class="color-choice"><input type="radio" name="ai-online-color" value="white" checked> &#9817;</label>
-          <label class="color-choice"><input type="radio" name="ai-online-color" value="black"> &#9823;</label>
-          <label class="color-choice"><input type="radio" name="ai-online-color" value="random"> Random</label>
-        </div>
-        <select id="ai-online-level">
-          <option value="1">Level 1 – ~800 Elo</option>
-          <option value="2">Level 2 – ~1100 Elo</option>
-          <option value="3" selected>Level 3 – ~1400 Elo</option>
-          <option value="4">Level 4 – ~1700 Elo</option>
-          <option value="5">Level 5 – ~2000 Elo</option>
-          <option value="6">Level 6 – ~2300 Elo</option>
-          <option value="7">Level 7 – ~2700 Elo</option>
-          <option value="8">Level 8 – ~3200 Elo</option>
-        </select>
-      </div>
-      <div class="field-row online-inline-row">
-        <button id="offer-draw-button" class="secondary small">Offer draw</button>
-        <button id="resign-button" class="secondary small">Resign 🏳</button>
-      </div>
-      <div id="online-status" class="status-text"></div>
+    <section class="card home-hero">
+      <div class="home-hero-icon" aria-hidden="true">♞</div>
+      <h1>eInkChess</h1>
+      <p class="home-tagline" data-i18n="home_tagline">Chess, built for e-readers.</p>
+      <p data-i18n="home_intro">A small, dependency-free chess app made for E-Ink displays.</p>
+      <a href="#games" class="primary home-play-button" data-i18n="home_play_button">▶ Choose a game</a>
     </section>
 
-    <section id="offline-ai-controls" class="card hidden">
-  <div class="field-row">
-    <button id="start-ai-game" class="primary">New game</button>
-    <div id="ai-color-choice" class="inline-options">
-      <label class="color-choice"><input type="radio" name="ai-color" value="white" checked> &#9817;</label>
-      <label class="color-choice"><input type="radio" name="ai-color" value="black"> &#9823;</label>
-    </div>
-    <select id="ai-level-inline">
-        <option value="0">2 Player</option>
-        <option value="1">Level 1 – ~600 Elo (~1s/move)</option>
-        <option value="2">Level 2 – ~900 Elo (~2s/move)</option>
-        <option value="3">Level 3 – ~1200 Elo (~4s/move)</option>
-        <option value="4">Level 4 – ~1400 Elo (~4–6s/move)</option>
-        <option value="5">Level 5 – ~1600 Elo (~6–10s/move)</option>
-      </select>
-    <button id="undo-btn" class="secondary small" onclick="undoLastMove()" style="display:none; margin-left:auto;">Undo</button>
-  </div>
-  <div id="offline-ai-status" class="status-text"></div>
-</section>
+    <section id="games" class="card">
+      <h2 data-i18n="home_games_title">Choose a game</h2>
+      <div class="game-select-grid">
+        <div class="game-select-item">
+          <div class="game-select-title">♞ <span data-i18n="game_chess">Chess</span></div>
+          <p class="game-select-desc" data-i18n="home_chess_desc">The classic game. Local 2-player, vs. the built-in engine, or online via Lichess.</p>
+          <div class="game-select-actions">
+            <a href="chess.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="chess-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+          </div>
+        </div>
+        <div class="game-select-item">
+          <div class="game-select-title">&#9679; <span data-i18n="game_go">Go</span></div>
+          <p class="game-select-desc" data-i18n="home_go_desc">The ancient territory game. Local 2-player or vs. the built-in engine, three board sizes, three difficulty levels.</p>
+          <div class="game-select-actions">
+            <a href="go.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="go-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section class="nav-cards">
+      <a href="guide.html" class="card nav-card">
+        <div class="nav-card-title" data-i18n="nav_guide">Guide</div>
+        <div class="nav-card-desc" data-i18n="home_guide_desc">Get it onto your e-reader and keep it working offline.</div>
+      </a>
+      <a href="about.html" class="card nav-card">
+        <div class="nav-card-title" data-i18n="nav_about">About</div>
+        <div class="nav-card-desc" data-i18n="home_about_desc">Why this exists, and how to say thanks.</div>
+      </a>
+    </section>
 
-<section id="board-section" class="card">
-  <div class="board-header">
-    <div id="game-label"></div>
-    <div id="game-meta"></div>
-    <div id="game-clocks" class="status-text game-clocks"></div>
-    <div id="game-result"></div>
-
-    <div id="board-info" class="status-text"></div>
-  </div>
-  <div id="board-placeholder" class="board-placeholder">
-    <span class="board-placeholder-icon">♞</span>
-    <div class="board-placeholder-text">
-      <span class="board-placeholder-title">eInkChess</span>
-      <span class="board-placeholder-subtitle">by Christopher Müller</span>
-    </div>
-  </div>
-  <div id="board-container" class="hidden">
-    <div id="board"></div>
-  </div>
-  <div id="score-line" class="score-line hidden"><span id="score-captures" class="score-line-captures"></span><span id="score-diff" class="score-line-diff"></span></div>
-  <pre id="moves-list" class="moves-list hidden"></pre>
-</section>
+    <section class="card">
+      <h2 data-i18n="home_more_games_title">More games, one day</h2>
+      <p data-i18n="home_more_games_intro">eInkChess is built so more E-Ink-friendly board games can join it here later.</p>
+      <div class="game-chips">
+        <span class="game-chip"><span data-i18n="game_checkers">Checkers</span> <span class="coming-soon-badge" data-i18n="home_coming_soon">Coming soon</span></span>
+        <span class="game-chip"><span data-i18n="game_backgammon">Backgammon</span> <span class="coming-soon-badge" data-i18n="home_coming_soon">Coming soon</span></span>
+        <span class="game-chip"><span data-i18n="game_ur">Royal Game of Ur</span> <span class="coming-soon-badge" data-i18n="home_coming_soon">Coming soon</span></span>
+        <span class="game-chip"><span data-i18n="game_xiangqi">Xiangqi</span> <span class="coming-soon-badge" data-i18n="home_coming_soon">Coming soon</span></span>
+      </div>
+    </section>
   </main>
 </div>
-
-<script src="chess-core.js"></script>
-<script src="pieces.js"></script>
-<script src="ai-engine.js"></script>
-<script src="lichess-auth.js"></script>
-<script src="lichess-api.js"></script>
-<script src="app.js"></script>
+<script src="i18n.js"></script>
 <script src="sw-register.js"></script>
 </body>
 </html>

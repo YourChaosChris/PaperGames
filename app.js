@@ -19,8 +19,7 @@ const AppState = {
   halfmoveClock: 0,   // Halbzüge seit letztem Bauernzug/letzter Schlagaktion (50-Züge-Regel)
   moveHistory: [],
   undoStack: [],
-  viewColor: "white",    // Perspektive des Bretts: "white" oder "black"
-  pieceStyle: "svg"  // "svg" (Figurensymbole) oder "letters" (P,N,B,R,Q,K)
+  viewColor: "white"    // Perspektive des Bretts: "white" oder "black"
 };
 
 // Debounced Resize-Handling für langsame E‑Ink-Displays
@@ -260,8 +259,8 @@ function initApp() {
   const logoutBtn = document.getElementById("logout-button");
   const userStatus = document.getElementById("user-status");
   const toggleMovesBtn = document.getElementById("toggle-moves");
-  const highContrastToggle = document.getElementById("high-contrast-toggle");
-  const pieceStyleToggle = document.getElementById("toggle-piece-style");
+  const menuToggle = document.getElementById("menu-toggle");
+  const settingsPanel = document.getElementById("settings-panel");
 
   const modeOffline = document.getElementById("mode-offline");
   const modeOfflineAi = document.getElementById("mode-offline-ai");
@@ -312,6 +311,32 @@ function initApp() {
     if (mode === "offline") modeOffline.classList.add("active-mode");
     else if (mode === "offline-ai") modeOfflineAi.classList.add("active-mode");
     else if (mode === "online") modeOnline.classList.add("active-mode");
+  }
+
+  // Die Spieleinstellungen (Modus wählen, neue Partie starten, Login) sind ein
+  // aufklappbares Menü: vor dem ersten Zug offen, damit man loslegen kann,
+  // während einer laufenden Partie eingeklappt, damit das Brett den Bildschirm
+  // dominiert - aber über den Menü-Button jederzeit wieder erreichbar.
+  function closeSettingsPanel() {
+    if (!settingsPanel) return;
+    settingsPanel.classList.add("hidden");
+    if (menuToggle) menuToggle.textContent = "☰ Menu";
+  }
+
+  function openSettingsPanel() {
+    if (!settingsPanel) return;
+    settingsPanel.classList.remove("hidden");
+    if (menuToggle) menuToggle.textContent = "✕ Close";
+  }
+
+  if (menuToggle && settingsPanel) {
+    menuToggle.addEventListener("click", () => {
+      if (settingsPanel.classList.contains("hidden")) {
+        openSettingsPanel();
+      } else {
+        closeSettingsPanel();
+      }
+    });
   }
 
 loginBtn.addEventListener("click", async () => {
@@ -511,24 +536,6 @@ aiLevelInline.addEventListener("change", () => {
     });
   }
 
-
-  if (highContrastToggle) {
-    const body = document.body;
-    // Initialzustand im Button widerspiegeln
-    highContrastToggle.textContent = body.classList.contains("high-contrast") ? "Standard" : "Kontrast";
-    highContrastToggle.addEventListener("click", () => {
-      const enabled = body.classList.toggle("high-contrast");
-      highContrastToggle.textContent = enabled ? "Standard" : "Kontrast";
-    });
-  }
-
-  if (pieceStyleToggle) {
-    pieceStyleToggle.addEventListener("click", () => {
-      AppState.pieceStyle =
-        AppState.pieceStyle === "svg" ? "letters" : "svg";
-      updateBoard();
-    });
-  }
 
   if (resignBtn) {
     resignBtn.addEventListener("click", async () => {
@@ -737,10 +744,16 @@ function showBoardSection() {
     movesList.classList.remove("hidden");
   }
 
-  // Figuren-Design-Umschalter erst zeigen, wenn ein Brett aktiv ist
-  const pieceStyleToggle = document.getElementById("toggle-piece-style");
-  if (pieceStyleToggle) {
-    pieceStyleToggle.classList.remove("hidden");
+  // Sobald wirklich eine Partie läuft, das Einstellungsmenü einklappen,
+  // damit das Brett den Bildschirm einnimmt - über den Menü-Button bleibt
+  // es jederzeit erreichbar.
+  const settingsPanel = document.getElementById("settings-panel");
+  const menuToggle = document.getElementById("menu-toggle");
+  if (settingsPanel) {
+    settingsPanel.classList.add("hidden");
+  }
+  if (menuToggle) {
+    menuToggle.textContent = "☰ Menu";
   }
 }
 
@@ -839,22 +852,11 @@ function updateBoard() {
     const piece = AppState.board[idx.rank][idx.file];
 
     // Auf E‑Ink unnötige DOM-Updates vermeiden: nur neu rendern, wenn sich
-    // die Figur oder der gewählte Darstellungsstil seit dem letzten Aufruf
-    // geändert hat.
-    if (AppState.pieceStyle === "letters") {
-      const glyph = ChessCore.pieceToLetter(piece);
-      if (sq.dataset.renderedStyle !== "letters" || sq.dataset.renderedPiece !== glyph) {
-        sq.textContent = glyph;
-        sq.dataset.renderedStyle = "letters";
-        sq.dataset.renderedPiece = glyph;
-      }
-    } else {
-      const key = piece || "";
-      if (sq.dataset.renderedStyle !== "svg" || sq.dataset.renderedPiece !== key) {
-        sq.innerHTML = (piece && window.PieceIcons && window.PieceIcons[piece]) || "";
-        sq.dataset.renderedStyle = "svg";
-        sq.dataset.renderedPiece = key;
-      }
+    // die Figur seit dem letzten Aufruf geändert hat.
+    const key = piece || "";
+    if (sq.dataset.renderedPiece !== key) {
+      sq.innerHTML = (piece && window.PieceIcons && window.PieceIcons[piece]) || "";
+      sq.dataset.renderedPiece = key;
     }
 
     sq.classList.remove("selected", "last-move", "piece-white", "piece-black");
@@ -982,7 +984,7 @@ function updateUndoButtonVisibility() {
   const hasUndo = stack.length > 0;
   const isOfflineMode = AppState.mode === "offline" || AppState.mode === "offline-ai";
   const shouldShow = isOfflineMode && hasUndo && !AppState.gameOver;
-  btn.style.display = shouldShow ? "" : "none";
+  btn.classList.toggle("hidden", !shouldShow);
 }
 
 
@@ -1178,6 +1180,7 @@ setStatus("board-info", "Move: " + from + "–" + to + ". " + side + " to move."
       pushUndoSnapshot();
       ChessCore.applyMove(AppState.board, legal.from, legal.to, legal.promotion);
       AppState.halfmoveClock = resetsHalfmoveHuman ? 0 : AppState.halfmoveClock + 1;
+      AppState.lastMove = { from: legal.from, to: legal.to };
       recordMove(AppState.humanColor, legal.from, legal.to);
       AppState.selected = null;
       AppState.turn = AppState.humanColor === "white" ? "black" : "white";

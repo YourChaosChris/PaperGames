@@ -170,21 +170,6 @@ const ChessCore = (function () {
     }
   }
 
-  // ASCII-Variante, falls auf manchen Geräten die SVG-Figuren schlecht aussehen.
-  function pieceToLetter(piece) {
-    if (!piece) return '';
-    const p = piece.toLowerCase();
-    switch (p) {
-      case 'k': return 'K';
-      case 'q': return 'Q';
-      case 'r': return 'R';
-      case 'b': return 'B';
-      case 'n': return 'N';
-      case 'p': return 'P';
-      default:  return '?';
-    }
-  }
-
   function isWhitePiece(piece) {
     return !!piece && piece === piece.toUpperCase();
   }
@@ -202,7 +187,6 @@ const ChessCore = (function () {
     applyMove,
     getEnPassantSquare,
     setEnPassantSquare,
-    pieceToLetter,
     isWhitePiece,
     isBlackPiece
   };
