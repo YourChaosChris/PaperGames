@@ -42,7 +42,7 @@ function setGameResultCheckers(text) {
 }
 
 function announceGameResultCheckers(resultCode, message) {
-  setGameResultCheckers(resultCode);
+  setGameResultCheckers(message);
   setStatusCheckers("board-info", message);
   if (window.ResultModal) {
     window.ResultModal.show("Game Over", message);
@@ -182,8 +182,9 @@ function initCheckersApp() {
   }
 
   updateColorChoiceVisibility();
-  setActiveModeButton("offline");
-  startNewGame("offline", "b", 0);
+  // No mode is pre-selected and no game auto-starts: the placeholder
+  // shows until the player picks 2-player or configures vs-computer and
+  // presses New game, matching chess.html's behavior.
 }
 
 function isPieceOfTurn(piece, turn) {

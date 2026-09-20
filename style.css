@@ -277,8 +277,13 @@ button:disabled {
 
 
 #game-result {
-  font-size: 0.75rem;
-  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+#game-result:empty {
+  display: none;
 }
 
 
@@ -547,6 +552,15 @@ button:disabled {
 .board-placeholder-icon {
   font-size: 1em;
   line-height: 1;
+}
+
+/* Raw inline SVG (e.g. chess's knight) has no intrinsic width/height of its
+   own, only a viewBox, so size it explicitly to match the other games'
+   1em icon classes (.go-stone-icon, .checkers-icon-disc). */
+.board-placeholder-icon-svg svg {
+  display: block;
+  width: 1em;
+  height: 1em;
 }
 
 .board-placeholder-text {
@@ -886,6 +900,20 @@ button:disabled {
   border: 2px solid var(--border);
 }
 
+/* Standalone stone icon for use outside the board (color-choice picker,
+   home page card, placeholder) - same .go-stone-black/.go-stone-white
+   coloring, but sized/positioned inline rather than absolutely within a
+   .go-point. Avoids relying on Unicode circle glyphs (●/○), whose look
+   varies by device font. */
+.go-stone-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
 .go-point.last-move .go-stone::after {
   content: "";
   position: absolute;
@@ -917,6 +945,19 @@ button:disabled {
   font-weight: 800;
   font-size: 1.15rem;
   margin-bottom: 0.3rem;
+}
+
+.game-select-icon-svg {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+
+.game-select-icon-svg svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .game-select-desc {
