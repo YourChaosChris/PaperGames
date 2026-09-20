@@ -16,6 +16,7 @@ const AppState = {
   gameOver: false,
 
   positionHistory: [],
+  halfmoveClock: 0,   // Halbzüge seit letztem Bauernzug/letzter Schlagaktion (50-Züge-Regel)
   moveHistory: [],
   undoStack: [],
   viewColor: "white",    // Perspektive des Bretts: "white" oder "black"
@@ -97,7 +98,9 @@ function pushUndoSnapshot() {
   AppState.undoStack.push({
     board: boardCopy,
     turn: AppState.turn,
-    gameOver: AppState.gameOver
+    gameOver: AppState.gameOver,
+    halfmoveClock: AppState.halfmoveClock,
+    positionHistory: (AppState.positionHistory || []).slice()
   });
 }
 
@@ -194,7 +197,41 @@ function computePositionKey(board, turn) {
 
 function resetPositionHistory() {
   AppState.positionHistory = [];
+  AppState.halfmoveClock = 0;
   recordCurrentPosition();
+}
+
+// Vor dem Ziehen aufrufen: true, wenn der Zug ein Bauernzug oder ein Schlag ist
+// (dann wird der 50-Züge-Zähler zurückgesetzt), sonst false.
+function isPawnMoveOrCapture(board, from, to) {
+  const fromIdx = ChessCore.coordToIndex(from);
+  const toIdx = ChessCore.coordToIndex(to);
+  const piece = board[fromIdx.rank][fromIdx.file];
+  if (!piece) return false;
+  const isPawn = piece.toLowerCase() === "p";
+  const isCapture = board[toIdx.rank][toIdx.file] != null || (isPawn && fromIdx.file !== toIdx.file);
+  return isPawn || isCapture;
+}
+
+// Prüft Remisbedingungen, die nicht vom Zuganzahl-basierten Schachmatt/Patt abhängen.
+// Setzt bei einem Remis Status und Ergebnis und gibt true zurück.
+function checkAutoDraw() {
+  if (isThreefoldRepetition()) {
+    setGameResult("½-½");
+    setStatus("board-info", "Draw by repetition.");
+    return true;
+  }
+  if (AppState.halfmoveClock >= 100) {
+    setGameResult("½-½");
+    setStatus("board-info", "Draw (50-move rule).");
+    return true;
+  }
+  if (AiEngine.hasInsufficientMaterial(AppState.board)) {
+    setGameResult("½-½");
+    setStatus("board-info", "Draw (insufficient material).");
+    return true;
+  }
+  return false;
 }
 
 function recordCurrentPosition() {
@@ -1068,8 +1105,10 @@ function onSquareClick(e) {
         return;
       }
       const movingColor = AppState.turn;
+      const resetsHalfmove = isPawnMoveOrCapture(AppState.board, legal.from, legal.to);
       pushUndoSnapshot();
       ChessCore.applyMove(AppState.board, legal.from, legal.to, legal.promotion);
+      AppState.halfmoveClock = resetsHalfmove ? 0 : AppState.halfmoveClock + 1;
       AppState.lastMove = { from: legal.from, to: legal.to };
       recordMove(movingColor, legal.from, legal.to);
       AppState.selected = null;
@@ -1077,11 +1116,9 @@ function onSquareClick(e) {
       updateBoard();
       updateGameLabels();
 
-      // Save position after the move and check for repetition
+      // Save position after the move and check for repetition/other auto-draws
       recordCurrentPosition();
-      if (isThreefoldRepetition()) {
-        setStatus("board-info", "Draw by repetition.");
-        setGameResult("½-½");
+      if (checkAutoDraw()) {
         return;
       }
 
@@ -1110,19 +1147,19 @@ setStatus("board-info", "Move: " + from + "–" + to + ". " + side + " to move."
         updateBoard();
         return;
       }
+      const resetsHalfmoveHuman = isPawnMoveOrCapture(AppState.board, legal.from, legal.to);
       pushUndoSnapshot();
       ChessCore.applyMove(AppState.board, legal.from, legal.to, legal.promotion);
+      AppState.halfmoveClock = resetsHalfmoveHuman ? 0 : AppState.halfmoveClock + 1;
       recordMove(AppState.humanColor, legal.from, legal.to);
       AppState.selected = null;
       AppState.turn = AppState.humanColor === "white" ? "black" : "white";
       updateBoard();
       updateGameLabels();
 
-      // Save position after the human move and check for repetition
+      // Save position after the human move and check for repetition/other auto-draws
       recordCurrentPosition();
-      if (isThreefoldRepetition()) {
-        setStatus("board-info", "Draw by repetition.");
-        setGameResult("½-½");
+      if (checkAutoDraw()) {
         return;
       }
 
@@ -1320,8 +1357,10 @@ async function aiMoveOffline() {
     setStatus("board-info", "Computer cannot find a move.");
     return;
   }
+  const resetsHalfmoveAi = isPawnMoveOrCapture(AppState.board, move.from, move.to);
   pushUndoSnapshot();
   ChessCore.applyMove(AppState.board, move.from, move.to, move.promotion);
+  AppState.halfmoveClock = resetsHalfmoveAi ? 0 : AppState.halfmoveClock + 1;
   AppState.lastMove = { from: move.from, to: move.to };
   recordMove(aiColor, move.from, move.to);
   AppState.turn = aiColor === "white" ? "black" : "white";
@@ -1329,11 +1368,9 @@ async function aiMoveOffline() {
   updateBoard();
   updateGameLabels();
 
-  // Save position after the AI move and check for repetition
+  // Save position after the AI move and check for repetition/other auto-draws
   recordCurrentPosition();
-  if (isThreefoldRepetition()) {
-    setStatus("board-info", "Draw by repetition.");
-    setGameResult("½-½");
+  if (checkAutoDraw()) {
     return;
   }
 
@@ -1393,6 +1430,8 @@ function undoLastMove() {
   AppState.board = prev.board;
   AppState.turn = prev.turn;
   AppState.gameOver = !!prev.gameOver;
+  AppState.halfmoveClock = typeof prev.halfmoveClock === "number" ? prev.halfmoveClock : 0;
+  AppState.positionHistory = prev.positionHistory ? prev.positionHistory.slice() : [];
   AppState.selected = null;
   AppState.lastMove = null; // Last-move-Markierung im Brett entfernen
   updateBoard();

@@ -496,11 +496,43 @@ function minimax(board, colorToMove, depth, maxDepth, alpha, beta, perspective) 
     }
   }
 
+  // Remis wegen unzureichenden Materials: nur Könige, K+Springer/Läufer vs. K,
+  // oder K+Läufer vs. K+Läufer mit gleichfarbigen Läufern.
+  function hasInsufficientMaterial(board) {
+    const rest = { white: [], black: [] };
+    for (let r = 0; r < 8; r++) {
+      for (let f = 0; f < 8; f++) {
+        const p = board[r][f];
+        if (!p || p.toLowerCase() === "k") continue;
+        const color = ChessCore.isWhitePiece(p) ? "white" : "black";
+        rest[color].push({ type: p.toLowerCase(), file: f, rank: r });
+      }
+    }
+
+    const all = rest.white.concat(rest.black);
+    if (all.some((p) => p.type === "p" || p.type === "r" || p.type === "q")) {
+      return false;
+    }
+
+    if (rest.white.length === 0 && rest.black.length === 0) return true; // K vs K
+    if (rest.white.length + rest.black.length === 1) return true; // K+minor vs K
+
+    if (rest.white.length === 1 && rest.black.length === 1 &&
+        rest.white[0].type === "b" && rest.black[0].type === "b") {
+      const whiteSquareColor = (rest.white[0].file + rest.white[0].rank) % 2;
+      const blackSquareColor = (rest.black[0].file + rest.black[0].rank) % 2;
+      return whiteSquareColor === blackSquareColor;
+    }
+
+    return false;
+  }
+
   return {
     generateLegalMoves,
     generatePseudoMovesForColor,
     chooseMove,
     detectGameEnd,
-    isKingInCheck
+    isKingInCheck,
+    hasInsufficientMaterial
   };
 })();
