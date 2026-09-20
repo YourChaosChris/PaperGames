@@ -22,6 +22,12 @@ var LichessAuth;
   const KEY_VERIFIER = "eInkChess_pkce_verifier";
   const KEY_STATE = "eInkChess_oauth_state";
 
+  // Set whenever maybeFinishLoginFromRedirect() can't complete the login,
+  // so the UI can show *why* instead of just "not connected" - the login
+  // flow has several silent-failure points (state lost, code rejected,
+  // network error) that were previously indistinguishable to the user.
+  let lastError = null;
+
   function safeGetItem(key) {
     try {
       if (window.localStorage) {
@@ -280,6 +286,7 @@ var LichessAuth;
   }
 
   async function maybeFinishLoginFromRedirect() {
+    lastError = null;
     var code = null;
     var state = null;
     var urlObj = null;
@@ -304,101 +311,140 @@ var LichessAuth;
       state = getQueryParam("state");
     }
 
+    // Lichess redirects back with ?error=... instead of ?code=... when the
+    // user declines, or the request itself was rejected outright.
+    const oauthError = getQueryParam("error");
+    if (!code && oauthError) {
+      lastError = "Lichess declined the login: " + oauthError +
+        (getQueryParam("error_description") ? " (" + getQueryParam("error_description") + ")" : "");
+      return false;
+    }
+
     if (!code) return false;
 
-    let verifier = null;
-    let storedState = null;
     try {
-      storedState = safeGetItem(KEY_STATE);
-      verifier = safeGetItem(KEY_VERIFIER);
-    } catch (e) {
-    }
+      let verifier = null;
+      let storedState = null;
+      try {
+        storedState = safeGetItem(KEY_STATE);
+        verifier = safeGetItem(KEY_VERIFIER);
+      } catch (e) {
+      }
 
-    if (!storedState || !verifier || state !== storedState) {
-      return false;
-    }
+      if (!storedState || !verifier) {
+        lastError = "Login couldn't be completed: no matching login session was found on this page. " +
+          "This usually means the authorize step opened in a separate browser window/tab that doesn't " +
+          "share storage with this one - try Connect again and keep it in the same tab.";
+        return false;
+      }
+      if (state !== storedState) {
+        lastError = "Login couldn't be completed: the security check (state) didn't match. Please try Connect again.";
+        return false;
+      }
 
-    try {
-      safeRemoveItem(KEY_STATE);
-      safeRemoveItem(KEY_VERIFIER);
-    } catch (e) {
-      // ignorieren
-    }
+      try {
+        safeRemoveItem(KEY_STATE);
+        safeRemoveItem(KEY_VERIFIER);
+      } catch (e) {
+        // ignorieren
+      }
 
-    const body = new URLSearchParams({
-      grant_type: "authorization_code",
-      code: code,
-      redirect_uri: LICHESS_REDIRECT_URI,
-      client_id: LICHESS_CLIENT_ID,
-      code_verifier: verifier
-    });
+      const body = new URLSearchParams({
+        grant_type: "authorization_code",
+        code: code,
+        redirect_uri: LICHESS_REDIRECT_URI,
+        client_id: LICHESS_CLIENT_ID,
+        code_verifier: verifier
+      });
 
-    // fetch mit Fallback auf XMLHttpRequest für sehr alte Browser
-    function doPost(url, bodyParams) {
-      if (window.fetch) {
-        return fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: bodyParams
-        });
-      } else {
-        return new Promise(function (resolve, reject) {
-          const xhr = new XMLHttpRequest();
-          xhr.open("POST", url, true);
-          xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-          xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-              if (xhr.status >= 200 && xhr.status < 300) {
-                resolve({
-                  ok: true,
-                  status: xhr.status,
-                  json: function () {
-                    return Promise.resolve(JSON.parse(xhr.responseText));
-                  }
-                });
-              } else {
-                resolve({ ok: false, status: xhr.status });
+      // fetch mit Fallback auf XMLHttpRequest für sehr alte Browser
+      function doPost(url, bodyParams) {
+        if (window.fetch) {
+          return fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: bodyParams
+          });
+        } else {
+          return new Promise(function (resolve, reject) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+              if (xhr.readyState === 4) {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                  resolve({
+                    ok: true,
+                    status: xhr.status,
+                    json: function () {
+                      return Promise.resolve(JSON.parse(xhr.responseText));
+                    }
+                  });
+                } else {
+                  resolve({
+                    ok: false,
+                    status: xhr.status,
+                    json: function () {
+                      try {
+                        return Promise.resolve(JSON.parse(xhr.responseText));
+                      } catch (e) {
+                        return Promise.resolve(null);
+                      }
+                    }
+                  });
+                }
               }
-            }
-          };
-          xhr.onerror = function (e) {
-            reject(e);
-          };
-          xhr.send(bodyParams.toString());
-        });
+            };
+            xhr.onerror = function (e) {
+              reject(e);
+            };
+            xhr.send(bodyParams.toString());
+          });
+        }
       }
-    }
 
-    const resp = await doPost(LICHESS_OAUTH_TOKEN, body);
-    if (!resp || !resp.ok) {
+      const resp = await doPost(LICHESS_OAUTH_TOKEN, body);
+      if (!resp || !resp.ok) {
+        let detail = "";
+        try {
+          const errBody = resp && resp.json ? await resp.json() : null;
+          detail = errBody && (errBody.error_description || errBody.error) || "";
+        } catch (e) {
+        }
+        lastError = "Login failed exchanging the code for a token" +
+          (resp ? " (HTTP " + resp.status + ")" : "") + (detail ? ": " + detail : ".");
+        return false;
+      }
+
+      const data = await resp.json();
+      const token = data.access_token;
+      const expiresIn = data.expires_in || (365 * 24 * 60 * 60);
+      const expAt = Date.now() + expiresIn * 1000 - 60 * 1000; // 1 Minute Puffer
+
+      try {
+        safeSetItem(KEY_TOKEN, token);
+        safeSetItem(KEY_TOKEN_EXP, String(expAt));
+      } catch (e) {
+      }
+
+      // URL aufräumen (code/state aus der Adressleiste entfernen)
+      try {
+        if (urlObj && urlObj.searchParams) {
+          urlObj.searchParams.delete("code");
+          urlObj.searchParams.delete("state");
+          window.history.replaceState({}, "", urlObj.toString());
+        }
+      } catch (e) {
+        // nicht kritisch
+      }
+
+      return true;
+    } catch (e) {
+      lastError = "Login failed: " + (e && e.message ? e.message : "unknown error.");
       return false;
     }
-
-    const data = await resp.json();
-    const token = data.access_token;
-    const expiresIn = data.expires_in || (365 * 24 * 60 * 60);
-    const expAt = Date.now() + expiresIn * 1000 - 60 * 1000; // 1 Minute Puffer
-
-    try {
-      safeSetItem(KEY_TOKEN, token);
-      safeSetItem(KEY_TOKEN_EXP, String(expAt));
-    } catch (e) {
-    }
-
-    // URL aufräumen (code/state aus der Adressleiste entfernen)
-    try {
-      if (urlObj && urlObj.searchParams) {
-        urlObj.searchParams.delete("code");
-        urlObj.searchParams.delete("state");
-        window.history.replaceState({}, "", urlObj.toString());
-      }
-    } catch (e) {
-      // nicht kritisch
-    }
-
-    return true;
   }
 
   function logout() {
@@ -414,6 +460,9 @@ var LichessAuth;
     getAccessToken: getAccessToken,
     login: login,
     maybeFinishLoginFromRedirect: maybeFinishLoginFromRedirect,
-    logout: logout
+    logout: logout,
+    getLastError: function () {
+      return lastError;
+    }
   };
 })();
