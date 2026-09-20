@@ -1,7 +1,7 @@
 {
   "name": "eInkChess",
   "short_name": "eInkChess",
-  "description": "Chess for E-Ink readers – play offline, vs. the built-in AI, or online via Lichess.",
+  "description": "Chess and Go for E-Ink readers – play offline, vs. the built-in AI, or online via Lichess (chess only).",
   "start_url": "index.html",
   "scope": ".",
   "display": "standalone",

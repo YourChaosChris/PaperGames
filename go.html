@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>eInkChess – Go for E‑Ink</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <h1><a href="index.html" class="app-title-link">♞ eInkChess</a></h1>
+      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
+    </div>
+    <div class="user-panel">
+      <button id="menu-toggle" class="secondary">&#9776; Menu</button>
+    </div>
+  </header>
+
+  <main>
+
+<div id="settings-panel">
+<section class="mode-section">
+  <div class="mode-section-row">
+    <div class="mode-buttons">
+      <button id="mode-offline" class="mode-btn secondary">2 Player</button>
+      <button id="mode-offline-ai" class="mode-btn secondary">vs Computer</button>
+    </div>
+  </div>
+</section>
+
+    <section id="offline-ai-controls" class="card hidden">
+  <div class="field-row">
+    <select id="go-size-inline">
+      <option value="9">9 × 9 (fast)</option>
+      <option value="13">13 × 13</option>
+      <option value="19">19 × 19 (full size)</option>
+    </select>
+  </div>
+  <div class="field-row">
+    <button id="start-go-game" class="primary">New game</button>
+    <div id="go-color-choice" class="inline-options">
+      <label class="color-choice"><input type="radio" name="go-color" value="black" checked> &#9679; Black</label>
+      <label class="color-choice"><input type="radio" name="go-color" value="white"> &#9675; White</label>
+    </div>
+    <select id="go-level-inline">
+        <option value="0">2 Player</option>
+        <option value="1">Easy</option>
+        <option value="2">Medium</option>
+        <option value="3">Hard</option>
+      </select>
+  </div>
+  <div id="offline-go-status" class="status-text"></div>
+</section>
+</div>
+
+
+<section id="board-section" class="card">
+  <div class="board-header">
+    <div id="game-label"></div>
+    <div id="game-meta"></div>
+    <div id="game-result"></div>
+
+    <div id="board-info" class="status-text"></div>
+  </div>
+  <div id="board-placeholder" class="board-placeholder">
+    <span class="board-placeholder-icon">&#9679;</span>
+    <div class="board-placeholder-text">
+      <span class="board-placeholder-title">Go</span>
+      <span class="board-placeholder-subtitle">eInkChess</span>
+    </div>
+  </div>
+  <div id="board-container" class="hidden">
+    <div id="go-board" class="go-board"><div id="go-grid" class="go-grid"></div></div>
+  </div>
+  <div id="board-actions" class="board-actions">
+    <button id="undo-btn" class="secondary small hidden" onclick="undoLastMove()">Undo</button>
+    <button id="pass-button" class="secondary small hidden">Pass</button>
+    <button id="resign-button" class="secondary small hidden">Resign 🏳</button>
+  </div>
+  <div id="score-line" class="score-line hidden"><span id="score-captures" class="score-line-captures"></span></div>
+</section>
+  </main>
+</div>
+
+<script src="go-core.js"></script>
+<script src="go-ai.js"></script>
+<script src="go-app.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>
