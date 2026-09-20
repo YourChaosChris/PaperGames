@@ -10,6 +10,8 @@ const AppState = {
   lastMove: null,       // { from, to }
   pollingIntervalId: null,
   currentGame: null,    // online game object (e.g. from Lichess)
+  awaitedGameId: null,   // set right after /api/challenge/ai: the exact game we're waiting to see appear
+  seekBaselineIds: null, // set right after /api/board/seek: gameIds already playing before the seek, so we can spot the new one
   account: null,
   humanColor: "white",
   aiLevel: 2,
@@ -622,6 +624,13 @@ aiLevelInline.addEventListener("change", () => {
     }
     setStatus("online-status", "Searching (" + profile + (rated ? ", rated" : ", casual") + ") …");
     try {
+      // Record which games are already active before we seek, so that once
+      // matched we can tell our new game apart from any other game already
+      // in progress on this account instead of blindly grabbing "the first
+      // currently playing game" (which could be a stale/unrelated one).
+      const before = await LichessApi.getNowPlayingList();
+      AppState.seekBaselineIds = before.map(g => g.gameId);
+      AppState.awaitedGameId = null;
       await LichessApi.createSeek({ timeMinutes, incrementSeconds, rated });
       AppState.currentGame = null;
       startPollingForGame();
@@ -645,7 +654,9 @@ aiLevelInline.addEventListener("change", () => {
       const color = colorInput ? colorInput.value : "random";
       setStatus("online-status", "Starting game vs Lichess AI (level " + level + ") …");
       try {
-        await LichessApi.challengeAi({ level, color, timeMinutes: 15, incrementSeconds: 10 });
+        const created = await LichessApi.challengeAi({ level, color, timeMinutes: 15, incrementSeconds: 10 });
+        AppState.awaitedGameId = created && created.id ? created.id : null;
+        AppState.seekBaselineIds = null;
         AppState.currentGame = null;
         startPollingForGame("Loading game vs Lichess AI …");
       } catch (e) {
@@ -1303,7 +1314,27 @@ async function pollOnce() {
   if (!window.LichessAuth || !window.LichessAuth.getAccessToken || !window.LichessAuth.getAccessToken()) return;
 
   try {
-    const game = await LichessApi.getCurrentPlaying();
+    const list = await LichessApi.getNowPlayingList();
+
+    // Pick the game we actually care about instead of blindly taking
+    // nowPlaying[0], which can be a stale/unrelated game already on the
+    // account (e.g. one started outside this app) and not the one we just
+    // sought/challenged.
+    let game = null;
+    if (AppState.currentGame) {
+      // Already attached to a game: keep following that exact game.
+      game = list.find(g => g.gameId === AppState.currentGame.gameId) || null;
+    } else if (AppState.awaitedGameId) {
+      // Waiting for a specific game we just created (vs Lichess AI).
+      game = list.find(g => g.gameId === AppState.awaitedGameId) || null;
+    } else if (AppState.seekBaselineIds) {
+      // Waiting for a seek to match: the new game is whichever one wasn't
+      // already playing before we sought it.
+      game = list.find(g => !AppState.seekBaselineIds.includes(g.gameId)) || null;
+    } else {
+      game = list[0] || null;
+    }
+
     if (!game) {
       if (AppState.currentGame) {
         setStatus("online-status", "Game finished or no active game.");
@@ -1328,6 +1359,8 @@ async function pollOnce() {
       }
     }
 
+    AppState.awaitedGameId = null;
+    AppState.seekBaselineIds = null;
     attachGame(game);
   } catch (e) {
     setStatus("online-status", "Polling error: " + e.message);
@@ -1336,6 +1369,10 @@ async function pollOnce() {
 
 
 function attachGame(game) {
+  // Once we're locked onto a real game, any still-open seek stream is done
+  // its job - release it.
+  LichessApi.cancelSeek();
+
   // Prüfen, ob es sich um eine neue Partie handelt (für Move-History-Reset)
   const prev = AppState.currentGame;
   const isNewGame = !prev || prev.gameId !== game.gameId;

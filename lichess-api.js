@@ -2,6 +2,20 @@
 // Dünne Wrapper um die wichtigsten Lichess-Endpunkte, die wir brauchen.
 
 const LichessApi = (function () {
+  // The seek stream (POST /api/board/seek) stays open until a game starts
+  // or the seek is cancelled - it must be read continuously to keep the
+  // connection (and therefore the seek) alive, otherwise the browser can
+  // drop it once the Response object is no longer referenced, silently
+  // cancelling the search for an opponent.
+  let activeSeekReader = null;
+
+  function cancelSeek() {
+    if (activeSeekReader) {
+      try { activeSeekReader.cancel(); } catch (e) {}
+      activeSeekReader = null;
+    }
+  }
+
   function authHeaders() {
     const auth = (typeof window !== "undefined" && window.LichessAuth && typeof window.LichessAuth.getAccessToken === "function")
       ? window.LichessAuth
@@ -52,7 +66,25 @@ const LichessApi = (function () {
       throw new Error("Error at /api/board/seek: " + resp.status + " " + text);
     }
 
-    // Die Antwort ist ein Textstream. Für uns reicht: hat funktioniert.
+    // Keep the streaming response alive in the background until it closes
+    // on its own (game found or seek cancelled/expired) or cancelSeek() is
+    // called once we've attached to the matched game via polling.
+    cancelSeek();
+    const reader = resp.body.getReader();
+    activeSeekReader = reader;
+    (async () => {
+      try {
+        while (true) {
+          const { done } = await reader.read();
+          if (done) break;
+        }
+      } catch (e) {
+        // Expected once cancelSeek() cancels the reader.
+      } finally {
+        if (activeSeekReader === reader) activeSeekReader = null;
+      }
+    })();
+
     return true;
   }
 
@@ -81,8 +113,8 @@ const LichessApi = (function () {
     return resp.json();
   }
 
-  async function getCurrentPlaying() {
-    const resp = await fetch("https://lichess.org/api/account/playing?nb=5", {
+  async function getNowPlayingList() {
+    const resp = await fetch("https://lichess.org/api/account/playing?nb=10", {
       headers: {
         ...authHeaders(),
         "Accept": "application/json"
@@ -92,9 +124,14 @@ const LichessApi = (function () {
       throw new Error("Error at /api/account/playing: " + resp.status);
     }
     const data = await resp.json();
-    if (!data.nowPlaying || data.nowPlaying.length === 0) return null;
+    return data.nowPlaying || [];
+  }
+
+  async function getCurrentPlaying() {
+    const list = await getNowPlayingList();
+    if (list.length === 0) return null;
     // Wir nehmen einfach das erste laufende Spiel
-    return data.nowPlaying[0];
+    return list[0];
   }
 
   async function makeMove(gameId, uci) {
@@ -154,8 +191,10 @@ const LichessApi = (function () {
   return {
     getAccount,
     createSeek,
+    cancelSeek,
     challengeAi,
     getCurrentPlaying,
+    getNowPlayingList,
     makeMove,
     resignGame,
     handleDraw
