@@ -426,6 +426,15 @@ button:disabled {
   gap: 0.5rem;
 }
 
+#online-controls .online-tabs-row {
+  justify-content: space-between;
+  width: 100%;
+}
+
+.online-sub-tabs {
+  gap: 0.35rem;
+}
+
 
 html.is-ereader {
   --bg: #ffffff;

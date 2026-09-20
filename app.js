@@ -268,33 +268,41 @@ function initApp() {
   const modeOnline = document.getElementById("mode-online");
   const onlineControls = document.getElementById("online-controls");
   const offlineAiControls = document.getElementById("offline-ai-controls");
-  const aiInlineControls = document.getElementById("ai-inline-controls");
+  const aiColorChoice = document.getElementById("ai-color-choice");
   const aiLevelInline = document.getElementById("ai-level-inline");
   const startSeekBtn = document.getElementById("start-seek-button");
   const attachBtn = document.getElementById("attach-button");
   const startAiGameBtn = document.getElementById("start-ai-game");
   const resignBtn = document.getElementById("resign-button");
   const offerDrawBtn = document.getElementById("offer-draw-button");
+  const onlineTabHuman = document.getElementById("online-tab-human");
+  const onlineTabAi = document.getElementById("online-tab-ai");
+  const onlineHumanRow = document.getElementById("online-human-row");
+  const onlineAiRow = document.getElementById("online-ai-row");
 
-
-
-  function updateActionButtonsVisibility() {
-    const isOnline = AppState.mode === "online";
-    if (resignBtn) {
-      if (isOnline) {
-        resignBtn.classList.remove("hidden");
-      } else {
-        resignBtn.classList.add("hidden");
-      }
-    }
-    if (offerDrawBtn) {
-      if (isOnline) {
-        offerDrawBtn.classList.remove("hidden");
-      } else {
-        offerDrawBtn.classList.add("hidden");
-      }
-    }
+  function updateAiColorChoiceVisibility() {
+    if (!aiColorChoice || !aiLevelInline) return;
+    const isTwoPlayer = aiLevelInline.value === "0";
+    aiColorChoice.classList.toggle("hidden", isTwoPlayer);
   }
+
+  function setOnlineTab(tab) {
+    if (!onlineTabHuman || !onlineTabAi || !onlineHumanRow || !onlineAiRow) return;
+    const isHuman = tab === "human";
+    onlineTabHuman.classList.toggle("active-mode", isHuman);
+    onlineTabAi.classList.toggle("active-mode", !isHuman);
+    onlineHumanRow.classList.toggle("hidden", !isHuman);
+    onlineAiRow.classList.toggle("hidden", isHuman);
+  }
+
+  if (onlineTabHuman) {
+    onlineTabHuman.addEventListener("click", () => setOnlineTab("human"));
+  }
+  if (onlineTabAi) {
+    onlineTabAi.addEventListener("click", () => setOnlineTab("ai"));
+  }
+
+
 
   function setActiveModeButton(mode) {
     if (!modeOffline || !modeOfflineAi || !modeOnline) return;
@@ -338,9 +346,6 @@ modeOffline.addEventListener("click", () => {
   if (offlineAiControls) {
     offlineAiControls.classList.add("hidden");
   }
-  if (aiInlineControls) {
-    aiInlineControls.classList.add("hidden");
-  }
   showBoardSection();
   buildBoardDOM();
   updateBoard();
@@ -360,13 +365,11 @@ modeOffline.addEventListener("click", () => {
     if (offlineAiControls) {
       offlineAiControls.classList.remove("hidden");
     }
-    if (aiInlineControls) {
-      aiInlineControls.classList.remove("hidden");
-    }
   if (aiLevelInline) {
       const lvl = (typeof AppState.aiLevel === "number") ? AppState.aiLevel : 2;
       aiLevelInline.value = String(lvl);
     }
+    updateAiColorChoiceVisibility();
     updateGameLabels();
     // Offline-AI: Board-Status leeren, bis eine Partie gestartet wird
     setStatus("board-info", "");
@@ -394,9 +397,7 @@ startAiGameBtn.addEventListener("click", () => {
     updateActionButtonsVisibility();
     setActiveModeButton("offline-ai");
     AppState.board = ChessCore.createInitialBoard();
-    if (aiInlineControls) {
-      aiInlineControls.classList.remove("hidden");
-    }
+    updateAiColorChoiceVisibility();
     AppState.turn = "white";
     AppState.selected = null;
     AppState.lastMove = null;
@@ -427,9 +428,7 @@ startAiGameBtn.addEventListener("click", () => {
   const hintText = thinkHints[level] || "";
 
   AppState.board = ChessCore.createInitialBoard();
-  if (aiInlineControls) {
-    aiInlineControls.classList.remove("hidden");
-  }
+  updateAiColorChoiceVisibility();
   AppState.turn = "white";
   AppState.selected = null;
   AppState.lastMove = null;
@@ -465,9 +464,7 @@ modeOnline.addEventListener("click", () => {
     if (offlineAiControls) {
       offlineAiControls.classList.add("hidden");
     }
-    if (aiInlineControls) {
-      aiInlineControls.classList.add("hidden");
-    }
+    setOnlineTab("human");
     setGameResult("");
     resetMoveHistory();
     setStatus("board-info", "Online mode: log in and start a game.");
@@ -477,21 +474,25 @@ modeOnline.addEventListener("click", () => {
   if (aiLevelInline) {
 
 aiLevelInline.addEventListener("change", () => {
-      const level = parseInt(aiLevelInline.value, 10) || AppState.aiLevel || 2;
+      const parsedLevel = parseInt(aiLevelInline.value, 10);
+      const level = Number.isNaN(parsedLevel) ? (AppState.aiLevel || 2) : parsedLevel;
       AppState.aiLevel = level;
       updateGameLabels();
+      updateAiColorChoiceVisibility();
       if (AppState.mode === "offline-ai") {
-
-
-const thinkHints = {
-  1: "~600 Elo (~1s/move)",
-  2: "~900 Elo (~2s/move)",
-  3: "~1200 Elo (~4s/move)",
-  4: "~1400 Elo (~4–6s/move)",
-  5: "~1600 Elo (~6–10s/move)"
-};
-        const hintText = thinkHints[level] || "";
-        setStatus("offline-ai-status", "Computer level " + level + (hintText ? " (" + hintText + ")." : " active."));
+        if (level === 0) {
+          setStatus("offline-ai-status", "Local 2‑player game (no computer).");
+        } else {
+          const thinkHints = {
+            1: "~600 Elo (~1s/move)",
+            2: "~900 Elo (~2s/move)",
+            3: "~1200 Elo (~4s/move)",
+            4: "~1400 Elo (~4–6s/move)",
+            5: "~1600 Elo (~6–10s/move)"
+          };
+          const hintText = thinkHints[level] || "";
+          setStatus("offline-ai-status", "Computer level " + level + (hintText ? " (" + hintText + ")." : " active."));
+        }
       }
     });
   }
@@ -656,6 +657,8 @@ const thinkHints = {
   });
 
   updateActionButtonsVisibility();
+  updateAiColorChoiceVisibility();
+  setOnlineTab("human");
 
   // Versuchen, bestehenden Login aus Redirect zu vervollständigen
   LichessAuth.maybeFinishLoginFromRedirect()
@@ -984,6 +987,20 @@ function formatSecondsToClock(seconds) {
 
 
 
+function updateActionButtonsVisibility() {
+  // Draw/resign only make sense once an online game is actually running -
+  // showing them beforehand is just clutter with nothing to act on yet.
+  const showGameActions = AppState.mode === "online" && !!AppState.currentGame;
+  const resignBtn = document.getElementById("resign-button");
+  const offerDrawBtn = document.getElementById("offer-draw-button");
+  if (resignBtn) {
+    resignBtn.classList.toggle("hidden", !showGameActions);
+  }
+  if (offerDrawBtn) {
+    offerDrawBtn.classList.toggle("hidden", !showGameActions);
+  }
+}
+
 function updateGameLabels() {
   const label = document.getElementById("game-label");
   const meta = document.getElementById("game-meta");
@@ -1233,6 +1250,7 @@ function startPollingForGame(statusMessage) {
   AppState.currentGame = null;
   AppState.mode = "online";
   updateGameLabels();
+  updateActionButtonsVisibility();
 
   AppState.pollingIntervalId = window.setInterval(() => {
     pollOnce().catch(err => console.error(err));
@@ -1260,6 +1278,7 @@ async function pollOnce() {
       }
       AppState.currentGame = null;
       updateGameLabels();
+      updateActionButtonsVisibility();
       return;
     }
 
@@ -1324,6 +1343,7 @@ function attachGame(game) {
   buildBoardDOM();
   updateBoard();
   updateGameLabels();
+  updateActionButtonsVisibility();
   const myColor = game.color === "white" ? "White" : "Black";
   const turnText = game.isMyTurn ? "Your move." : "Opponent to move.";
   setStatus("board-info", "Online game active. You play " + myColor + ". " + turnText);

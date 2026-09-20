@@ -295,13 +295,73 @@ const AiEngine = (function () {
     return null;
   }
 
+  const DIAGONAL_DIRS = [[1, 1], [1, -1], [-1, 1], [-1, -1]];
+  const STRAIGHT_DIRS = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+  const KNIGHT_DELTAS = [[1, 2], [2, 1], [-1, 2], [-2, 1], [1, -2], [2, -1], [-1, -2], [-2, -1]];
+
+  function isFromColor(piece, wantWhite) {
+    return wantWhite ? ChessCore.isWhitePiece(piece) : ChessCore.isBlackPiece(piece);
+  }
+
+  // Prüft direkt vom Zielfeld aus (Sprung-/Strahl-Muster), ob eine Figur von
+  // byColor dieses Feld angreift - ohne für jede Prüfung alle pseudo-legalen
+  // Züge des gesamten Bretts zu erzeugen. Das ist der heiße Pfad der
+  // Legalitätsprüfung (wird bei jedem Zugkandidaten in jedem Suchknoten
+  // aufgerufen), daher lohnt sich die direkte, allokationsfreie Variante.
   function isSquareAttacked(board, file, rank, byColor) {
-    // Wir generieren alle pseudo-legalen Züge der angreifenden Farbe und schauen, ob eines der Zielfelder passt.
-    const moves = generatePseudoMovesForColor(board, byColor);
-    const targetCoord = ChessCore.indexToCoord(file, rank);
-    for (const m of moves) {
-      if (m.to === targetCoord) return true;
+    const wantWhite = byColor === "white";
+
+    // Bauern: ein angreifender Bauer steht diagonal "hinter" dem Zielfeld
+    // aus seiner eigenen Laufrichtung gesehen.
+    const pawnRank = rank + (wantWhite ? -1 : 1);
+    if (pawnRank >= 0 && pawnRank < 8) {
+      for (const df of [-1, 1]) {
+        const pf = file + df;
+        if (pf < 0 || pf > 7) continue;
+        const p = board[pawnRank][pf];
+        if (p && p.toLowerCase() === "p" && isFromColor(p, wantWhite)) return true;
+      }
     }
+
+    // Springer
+    for (const [df, dr] of KNIGHT_DELTAS) {
+      const nr = rank + dr, nf = file + df;
+      if (nr < 0 || nr > 7 || nf < 0 || nf > 7) continue;
+      const p = board[nr][nf];
+      if (p && p.toLowerCase() === "n" && isFromColor(p, wantWhite)) return true;
+    }
+
+    // König (angrenzende Felder)
+    for (let dr = -1; dr <= 1; dr++) {
+      for (let df = -1; df <= 1; df++) {
+        if (dr === 0 && df === 0) continue;
+        const nr = rank + dr, nf = file + df;
+        if (nr < 0 || nr > 7 || nf < 0 || nf > 7) continue;
+        const p = board[nr][nf];
+        if (p && p.toLowerCase() === "k" && isFromColor(p, wantWhite)) return true;
+      }
+    }
+
+    // Gleitende Figuren: Läufer/Dame diagonal, Turm/Dame gerade
+    function scan(dirs, matchTypes) {
+      for (const [df, dr] of dirs) {
+        let nr = rank + dr, nf = file + df;
+        while (nr >= 0 && nr < 8 && nf >= 0 && nf < 8) {
+          const p = board[nr][nf];
+          if (p) {
+            if (isFromColor(p, wantWhite) && matchTypes.indexOf(p.toLowerCase()) !== -1) return true;
+            break; // blockiert, unabhängig von der Farbe
+          }
+          nr += dr;
+          nf += df;
+        }
+      }
+      return false;
+    }
+
+    if (scan(DIAGONAL_DIRS, ["b", "q"])) return true;
+    if (scan(STRAIGHT_DIRS, ["r", "q"])) return true;
+
     return false;
   }
 
@@ -315,8 +375,11 @@ const AiEngine = (function () {
     return isSquareAttacked(board, kingPos.file, kingPos.rank, opp);
   }
 
-  function generateLegalMoves(board, color) {
-    const pseudo = generatePseudoMovesForColor(board, color);
+  function generateLegalMoves(board, color, pseudoFilter) {
+    let pseudo = generatePseudoMovesForColor(board, color);
+    if (pseudoFilter) {
+      pseudo = pseudo.filter(pseudoFilter);
+    }
     const legal = [];
     const hasEpHelpers = !!(ChessCore.getEnPassantSquare && ChessCore.setEnPassantSquare);
     const originalEp = hasEpHelpers ? ChessCore.getEnPassantSquare() : null;
@@ -336,6 +399,20 @@ const AiEngine = (function () {
       ChessCore.setEnPassantSquare(originalEp);
     }
     return legal;
+  }
+
+  function isCaptureOrPromotion(board, m) {
+    const to = ChessCore.coordToIndex(m.to);
+    return !!board[to.rank][to.file] || !!m.promotion;
+  }
+
+  // Wie generateLegalMoves, aber verwirft Nicht-Schlagzüge schon vor dem
+  // teuren Klon-und-Legalitätscheck. Für die Quiescence-Suche, wo ohnehin nur
+  // Schlagzüge/Umwandlungen relevant sind, spart das die meisten der sonst
+  // nötigen Board-Klone (in einer normalen Stellung sind nur wenige der
+  // pseudo-legalen Züge Schlagzüge).
+  function generateLegalCaptures(board, color) {
+    return generateLegalMoves(board, color, (m) => isCaptureOrPromotion(board, m));
   }
 
   function detectGameEnd(board, colorToMove) {
@@ -456,9 +533,51 @@ const AiEngine = (function () {
     return scored.map((s) => s.move);
   }
 
-function minimax(board, colorToMove, depth, maxDepth, alpha, beta, perspective) {
+  const QUIESCENCE_MAX_DEPTH = 2;
+
+  // Sucht über den Suchhorizont hinaus weiter, aber nur Schlagzüge (und
+  // Umwandlungen), bis die Stellung "ruhig" ist. Vermeidet den Horizont-Effekt,
+  // bei dem die Engine mitten in einer Schlagserie abbricht und z. B. eine
+  // Dame für einen Bauern hergibt, weil der Rückschlag erst einen Halbzug
+  // später sichtbar wäre.
+  function quiescence(board, colorToMove, alpha, beta, perspective, qDepth) {
+    const standPat = evaluateBoardFor(perspective, board);
+    const isMaximizing = (colorToMove === perspective);
+
+    if (isMaximizing) {
+      if (standPat >= beta) return standPat;
+      if (standPat > alpha) alpha = standPat;
+    } else {
+      if (standPat <= alpha) return standPat;
+      if (standPat < beta) beta = standPat;
+    }
+
+    if (qDepth <= 0) return standPat;
+
+    const captures = generateLegalCaptures(board, colorToMove);
+    if (!captures.length) return standPat;
+
+    const ordered = orderMoves(board, captures);
+    let best = standPat;
+    for (const m of ordered) {
+      const b2 = cloneBoard(board);
+      ChessCore.applyMove(b2, m.from, m.to, m.promotion);
+      const score = quiescence(b2, otherColor(colorToMove), alpha, beta, perspective, qDepth - 1);
+      if (isMaximizing) {
+        if (score > best) best = score;
+        if (score > alpha) alpha = score;
+      } else {
+        if (score < best) best = score;
+        if (score < beta) beta = score;
+      }
+      if (beta <= alpha) break;
+    }
+    return best;
+  }
+
+  function minimax(board, colorToMove, depth, maxDepth, alpha, beta, perspective) {
     if (depth >= maxDepth) {
-      return evaluateBoardFor(perspective, board);
+      return quiescence(board, colorToMove, alpha, beta, perspective, QUIESCENCE_MAX_DEPTH);
     }
     let moves = generateLegalMoves(board, colorToMove);
     moves = orderMoves(board, moves);
