@@ -320,7 +320,32 @@ var LichessAuth;
       return false;
     }
 
-    if (!code) return false;
+    if (!code) {
+      // No code and no explicit ?error= either: if a login was actually
+      // started (a PKCE verifier is sitting in storage waiting for this
+      // redirect), the flow never made it back with anything usable -
+      // otherwise this stays a silent "not connected" forever, which is
+      // exactly what was reported (no error shown at all, on two
+      // different devices/browsers). Surface it once, then clear the
+      // pending state so an unrelated later visit doesn't repeat it.
+      let pendingVerifier = null;
+      try {
+        pendingVerifier = safeGetItem(KEY_VERIFIER);
+      } catch (e) {
+      }
+      if (pendingVerifier) {
+        try {
+          safeRemoveItem(KEY_VERIFIER);
+          safeRemoveItem(KEY_STATE);
+        } catch (e) {
+        }
+        lastError = "A login was started but Lichess never redirected back with an authorization code " +
+          "(landed on " + window.location.href + " instead). This can happen if the authorize step opened " +
+          "in a separate window/tab, or the connection was interrupted before it could redirect back. " +
+          "Please try Connect again.";
+      }
+      return false;
+    }
 
     try {
       let verifier = null;
