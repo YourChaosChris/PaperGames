@@ -1,0 +1,22 @@
+{
+  "name": "eInkChess",
+  "short_name": "eInkChess",
+  "description": "Chess for E-Ink readers – play offline, vs. the built-in AI, or online via Lichess.",
+  "start_url": "index.html",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
