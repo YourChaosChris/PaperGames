@@ -575,6 +575,30 @@ const thinkHints = {
     }
   });
 
+  const startAiChallengeBtn = document.getElementById("start-ai-challenge-button");
+  const aiOnlineLevel = document.getElementById("ai-online-level");
+
+  if (startAiChallengeBtn) {
+    startAiChallengeBtn.addEventListener("click", async () => {
+      if (!window.LichessAuth || !window.LichessAuth.getAccessToken || !window.LichessAuth.getAccessToken()) {
+        alert("Please connect your online account first.");
+        return;
+      }
+      AppState.gameOver = false;
+      const level = aiOnlineLevel ? parseInt(aiOnlineLevel.value, 10) : 3;
+      const colorInput = document.querySelector("input[name='ai-online-color']:checked");
+      const color = colorInput ? colorInput.value : "random";
+      setStatus("online-status", "Starting game vs Lichess AI (level " + level + ") …");
+      try {
+        await LichessApi.challengeAi({ level, color, timeMinutes: 15, incrementSeconds: 10 });
+        AppState.currentGame = null;
+        startPollingForGame("Loading game vs Lichess AI …");
+      } catch (e) {
+        setStatus("online-status", "Error: " + e.message);
+      }
+    });
+  }
+
   attachBtn.addEventListener("click", async () => {
     if (!window.LichessAuth || !window.LichessAuth.getAccessToken || !window.LichessAuth.getAccessToken()) {
       alert("Please connect your online account first.");
@@ -944,7 +968,9 @@ function updateGameLabels() {
 
   if (AppState.currentGame) {
     const g = AppState.currentGame;
-    const opponent = g.opponent ? g.opponent.username : (g.opponent && g.opponent.user && g.opponent.user.name) || "Opponent";
+    const opponent = g.opponent && typeof g.opponent.ai === "number"
+      ? "Computer (level " + g.opponent.ai + ")"
+      : g.opponent ? g.opponent.username : (g.opponent && g.opponent.user && g.opponent.user.name) || "Opponent";
     const myColor = g.color === "white" ? "White" : "Black";
     const speed = g.speed || "";
     label.textContent = "Online: " + myColor + " vs " + opponent;
@@ -1164,9 +1190,9 @@ async function sendOnlineMove(uci, from, to) {
 
 /*** Polling für Online-Spiel ***/
 
-function startPollingForGame() {
+function startPollingForGame(statusMessage) {
   stopPolling();
-  setStatus("online-status", "Searching for opponent…");
+  setStatus("online-status", statusMessage || "Searching for opponent…");
   AppState.currentGame = null;
   AppState.mode = "online";
   updateGameLabels();

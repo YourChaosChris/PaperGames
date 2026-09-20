@@ -56,6 +56,31 @@ const LichessApi = (function () {
     return true;
   }
 
+  async function challengeAi(options) {
+    const { level, color, timeMinutes, incrementSeconds } = options;
+    const params = new URLSearchParams();
+    params.append("level", String(level));
+    params.append("color", color || "random");
+    params.append("clock.limit", String(timeMinutes * 60));
+    params.append("clock.increment", String(incrementSeconds));
+
+    const resp = await fetch("https://lichess.org/api/challenge/ai", {
+      method: "POST",
+      headers: {
+        ...authHeaders(),
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: params
+    });
+
+    if (!resp.ok) {
+      const text = await resp.text();
+      throw new Error("Error at /api/challenge/ai: " + resp.status + " " + text);
+    }
+
+    return resp.json();
+  }
+
   async function getCurrentPlaying() {
     const resp = await fetch("https://lichess.org/api/account/playing?nb=5", {
       headers: {
@@ -129,6 +154,7 @@ const LichessApi = (function () {
   return {
     getAccount,
     createSeek,
+    challengeAi,
     getCurrentPlaying,
     makeMove,
     resignGame,

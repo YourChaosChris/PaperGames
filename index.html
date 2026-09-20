@@ -57,6 +57,24 @@
           <button id="resign-button" class="secondary small">Resign 🏳</button>
         </div>
       </div>
+      <div class="field-row online-inline-row">
+        <button id="start-ai-challenge-button" class="primary">Play Lichess AI</button>
+        <div class="inline-options">
+          <label class="color-choice"><input type="radio" name="ai-online-color" value="white" checked> &#9817;</label>
+          <label class="color-choice"><input type="radio" name="ai-online-color" value="black"> &#9823;</label>
+          <label class="color-choice"><input type="radio" name="ai-online-color" value="random"> Random</label>
+        </div>
+        <select id="ai-online-level">
+          <option value="1">Level 1 – ~800 Elo</option>
+          <option value="2">Level 2 – ~1100 Elo</option>
+          <option value="3" selected>Level 3 – ~1400 Elo</option>
+          <option value="4">Level 4 – ~1700 Elo</option>
+          <option value="5">Level 5 – ~2000 Elo</option>
+          <option value="6">Level 6 – ~2300 Elo</option>
+          <option value="7">Level 7 – ~2700 Elo</option>
+          <option value="8">Level 8 – ~3200 Elo</option>
+        </select>
+      </div>
       <div id="online-status" class="status-text"></div>
     </section>
 
