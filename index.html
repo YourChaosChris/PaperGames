@@ -18,16 +18,20 @@
       <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
     </div>
     <div class="user-panel">
-      <div id="user-status">Not connected</div>
-      <div class="user-panel-buttons">
-        <button id="login-button" class="primary">Connect (Lichess)</button>
-        <button id="logout-button" class="secondary hidden">Logout</button>
-        <button id="high-contrast-toggle" class="secondary small">Contrast</button>
-      </div>
+      <button id="menu-toggle" class="secondary">&#9776; Menu</button>
     </div>
   </header>
 
   <main>
+
+<div id="settings-panel">
+  <div class="field-row user-status-row">
+    <div id="user-status">Not connected</div>
+    <div class="user-panel-buttons">
+      <button id="login-button" class="primary">Connect (Lichess)</button>
+      <button id="logout-button" class="secondary hidden">Logout</button>
+    </div>
+  </div>
 
 <section class="mode-section">
   <div class="mode-section-row">
@@ -36,7 +40,6 @@
       <button id="mode-offline-ai" class="mode-btn secondary">Offline</button>
       <button id="mode-online" class="mode-btn secondary">Online</button>
     </div>
-    <button id="toggle-piece-style" class="secondary small hidden">♟ / A</button>
   </div>
 </section>
 
@@ -79,10 +82,6 @@
           <option value="8">Level 8 – ~3200 Elo</option>
         </select>
       </div>
-      <div class="field-row online-inline-row">
-        <button id="offer-draw-button" class="secondary small">Offer draw</button>
-        <button id="resign-button" class="secondary small">Resign 🏳</button>
-      </div>
       <div id="online-status" class="status-text"></div>
     </section>
 
@@ -101,10 +100,10 @@
         <option value="4">Level 4 – ~1400 Elo (~4–6s/move)</option>
         <option value="5">Level 5 – ~1600 Elo (~6–10s/move)</option>
       </select>
-    <button id="undo-btn" class="secondary small" onclick="undoLastMove()" style="display:none; margin-left:auto;">Undo</button>
   </div>
   <div id="offline-ai-status" class="status-text"></div>
 </section>
+</div>
 
 
 <section id="board-section" class="card">
@@ -125,6 +124,11 @@
   </div>
   <div id="board-container" class="hidden">
     <div id="board"></div>
+  </div>
+  <div id="board-actions" class="board-actions">
+    <button id="undo-btn" class="secondary small hidden" onclick="undoLastMove()">Undo</button>
+    <button id="offer-draw-button" class="secondary small hidden">Offer draw</button>
+    <button id="resign-button" class="secondary small hidden">Resign 🏳</button>
   </div>
   <div id="score-line" class="score-line hidden"><span id="score-captures" class="score-line-captures"></span><span id="score-diff" class="score-line-diff"></span></div>
   <pre id="moves-list" class="moves-list hidden"></pre>

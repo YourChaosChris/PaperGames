@@ -99,10 +99,10 @@ html, body {
 }
 
 #user-status {
-  text-align: right;
   white-space: nowrap;
   max-width: 100%;
   overflow-x: auto;
+  font-weight: 600;
 }
 
 .user-panel-buttons {
@@ -110,6 +110,14 @@ html, body {
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 0.4rem;
+}
+
+.user-status-row {
+  justify-content: space-between;
+}
+
+#settings-panel {
+  margin-bottom: 0.4rem;
 }
 
 button {
@@ -326,8 +334,12 @@ button:disabled {
 
 /* Auswahl-Markierung für ein Feld */
 
+/* Letzter Zug: dünner Rahmen plus dezente Tönung statt der früheren dicken
+   Umrandung - liest sich ruhiger, bleibt aber dank des klaren Rahmens auch
+   auf E-Ink-Displays mit wenigen Graustufen sicher erkennbar, ohne wie ein
+   aktiver Auswahlrahmen (siehe .square.selected) auszusehen. */
 .square.last-move {
-  box-shadow: inset 0 0 0 3px var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent), inset 0 0 0 999px rgba(0, 0, 0, 0.22);
 }
 
 .square.selected {
@@ -469,27 +481,12 @@ button:disabled {
   gap: 0.35rem;
 }
 
-
-html.is-ereader {
-  --bg: #ffffff;
-  --bg-alt: #f3f3f3;
-  --square-light: #ffffff;
-  --square-dark: #bfbfbf;
-  --accent: #000000;
-}
-
-
-.board-header {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
 .board-actions {
   display: flex;
   gap: 0.5rem;
   justify-content: flex-start;
   flex-wrap: wrap;
+  margin-top: 0.5rem;
 }
 
 .board-actions .small {
@@ -574,27 +571,6 @@ html.is-ereader {
 .score-line-diff {
   justify-self: end;
   white-space: nowrap;
-}
-
-
-/* High-contrast mode for older E‑Ink panels */
-body.high-contrast {
-  --bg: #ffffff;
-  --bg-alt: #f0f0f0;
-  --border: #000000;
-  --text: #000000;
-  --muted: #000000;
-  --accent: #000000;
-  --danger: #000000;
-  --square-light: #ffffff;
-  --square-dark: #e0e0e0;
-  --square-selected: #b0b0b0;
-  --square-last: #000000;
-}
-
-/* Last move besonders klar markieren im High-Contrast-Modus */
-body.high-contrast .square.last-move {
-  box-shadow: inset 0 0 0 2px #000000;
 }
 
 
