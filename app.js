@@ -137,7 +137,7 @@ function setGameResult(text) {
 // shows a centered popup with the same description - so the outcome is
 // impossible to miss regardless of mode (offline, vs-computer, or online).
 function announceGameResult(resultCode, message) {
-  setGameResult(resultCode);
+  setGameResult(message);
   setStatus("board-info", message);
   if (window.ResultModal) {
     window.ResultModal.show("Game Over", message);

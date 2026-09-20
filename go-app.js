@@ -43,7 +43,7 @@ function setGameResultGo(text) {
 // shows a centered popup with the same description - so the outcome is
 // impossible to miss regardless of mode (2-player or vs-computer).
 function announceGameResultGo(resultCode, message) {
-  setGameResultGo(resultCode);
+  setGameResultGo(message);
   setStatusGo("board-info", message);
   if (window.ResultModal) {
     window.ResultModal.show("Game Over", message);
@@ -238,8 +238,9 @@ function initGoApp() {
   }
 
   updateGoColorChoiceVisibility();
-  setActiveModeButtonGo("offline");
-  startNewGame(9, "offline", "b", 0);
+  // No mode is pre-selected and no game auto-starts: the placeholder
+  // shows until the player picks 2-player or configures vs-computer and
+  // presses New game, matching chess.html's behavior.
 }
 
 function onGoPointClick(e) {

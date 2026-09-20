@@ -45,8 +45,8 @@
   <div class="field-row">
     <button id="start-go-game" class="primary">New game</button>
     <div id="go-color-choice" class="inline-options">
-      <label class="color-choice"><input type="radio" name="go-color" value="black" checked> &#9679; Black</label>
-      <label class="color-choice"><input type="radio" name="go-color" value="white"> &#9675; White</label>
+      <label class="color-choice"><input type="radio" name="go-color" value="black" checked> <span class="color-choice-icon"><span class="go-stone-icon go-stone-black"></span></span> Black</label>
+      <label class="color-choice"><input type="radio" name="go-color" value="white"> <span class="color-choice-icon"><span class="go-stone-icon go-stone-white"></span></span> White</label>
     </div>
     <select id="go-level-inline">
         <option value="0">2 Player</option>
@@ -69,9 +69,9 @@
     <div id="board-info" class="status-text"></div>
   </div>
   <div id="board-placeholder" class="board-placeholder">
-    <span class="board-placeholder-icon">&#9679;</span>
+    <span class="board-placeholder-icon"><span class="go-stone-icon go-stone-black"></span></span>
     <div class="board-placeholder-text">
-      <span class="board-placeholder-title">Go</span>
+      <span class="board-placeholder-title" data-i18n="game_go">Go</span>
       <span class="board-placeholder-subtitle">eInkChess</span>
     </div>
   </div>
@@ -88,6 +88,7 @@
   </main>
 </div>
 
+<script src="i18n.js"></script>
 <script src="go-core.js"></script>
 <script src="go-ai.js"></script>
 <script src="result-modal.js"></script>
