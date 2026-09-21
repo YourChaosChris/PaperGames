@@ -10,8 +10,11 @@
 // own, so - like Ur's off-board pieces - they're simple clickable
 // counters above/below the board rather than board squares.
 //
-// This app deliberately doesn't implement the doubling cube - see the
-// note in backgammon-core.js about the "maximize dice usage" rule too.
+// The doubling cube is a stakes multiplier only - this app has no
+// match/score play across games, so accepting/declining just changes
+// how many points the announced winner is credited with for this one
+// game. See backgammon-core.js for the note on the "maximize dice
+// usage" rule this app also doesn't enforce.
 
 const TOP_ROW = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
 const BOTTOM_ROW = [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
@@ -26,7 +29,9 @@ const AppStateBackgammon = {
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
   gameOver: false,
   moveCount: 0,
-  undoStack: []
+  undoStack: [],
+  cubeValue: 1,           // 1, 2, 4, 8, ...
+  cubeOwner: null         // null (centered - either side may double) | "b" | "w"
 };
 
 const BACKGAMMON_SAVE_KEY = "einkchess_save_backgammon";
@@ -40,7 +45,9 @@ function saveBackgammonGame() {
     dice: AppStateBackgammon.dice,
     humanColor: AppStateBackgammon.humanColor,
     aiLevel: AppStateBackgammon.aiLevel,
-    moveCount: AppStateBackgammon.moveCount
+    moveCount: AppStateBackgammon.moveCount,
+    cubeValue: AppStateBackgammon.cubeValue,
+    cubeOwner: AppStateBackgammon.cubeOwner
   });
 }
 
@@ -84,7 +91,9 @@ function pushUndoSnapshotBg() {
     turn: AppStateBackgammon.turn,
     dice: AppStateBackgammon.dice.slice(),
     gameOver: AppStateBackgammon.gameOver,
-    moveCount: AppStateBackgammon.moveCount
+    moveCount: AppStateBackgammon.moveCount,
+    cubeValue: AppStateBackgammon.cubeValue,
+    cubeOwner: AppStateBackgammon.cubeOwner
   });
 }
 
@@ -105,6 +114,7 @@ function initBackgammonApp() {
   const startGameBtn = document.getElementById("start-backgammon-game");
   const resignBtn = document.getElementById("resign-button");
   const rollBtn = document.getElementById("backgammon-roll-button");
+  const doubleBtn = document.getElementById("backgammon-double-button");
   const barTop = document.getElementById("backgammon-bar-top");
   const barBottom = document.getElementById("backgammon-bar-bottom");
   const offTop = document.getElementById("backgammon-off-top");
@@ -150,6 +160,8 @@ function initBackgammonApp() {
     AppStateBackgammon.aiLevel = level;
     AppStateBackgammon.gameOver = false;
     AppStateBackgammon.moveCount = 0;
+    AppStateBackgammon.cubeValue = 1;
+    AppStateBackgammon.cubeOwner = null;
     resetUndoStackBg();
     setGameResultBg("");
     showBoardSectionBg();
@@ -208,12 +220,15 @@ function initBackgammonApp() {
       const loser = AppStateBackgammon.turn;
       const winner = BackgammonCore.otherColor(loser);
       AppStateBackgammon.gameOver = true;
-      announceGameResultBg(colorNameBg(winner) + " wins", colorNameBg(winner) + " wins by resignation.");
+      const points = AppStateBackgammon.cubeValue;
+      announceGameResultBg(colorNameBg(winner) + " wins",
+        colorNameBg(winner) + " wins by resignation - " + points + " point" + (points === 1 ? "" : "s") + ".");
       updateGameLabelsBg();
     });
   }
 
   if (rollBtn) rollBtn.addEventListener("click", rollDiceBg);
+  if (doubleBtn) doubleBtn.addEventListener("click", offerDoubleBg);
   if (barTop) barTop.addEventListener("click", () => onBackgammonSourceClick("bar", "b"));
   if (barBottom) barBottom.addEventListener("click", () => onBackgammonSourceClick("bar", "w"));
   if (offTop) offTop.addEventListener("click", () => onBackgammonDestClick("off", "b"));
@@ -231,6 +246,8 @@ function initBackgammonApp() {
     AppStateBackgammon.humanColor = savedGame.humanColor;
     AppStateBackgammon.aiLevel = savedGame.aiLevel;
     AppStateBackgammon.moveCount = savedGame.moveCount;
+    AppStateBackgammon.cubeValue = savedGame.cubeValue || 1;
+    AppStateBackgammon.cubeOwner = savedGame.cubeOwner || null;
     AppStateBackgammon.gameOver = false;
     resetUndoStackBg();
     setActiveModeButtonBg(AppStateBackgammon.mode);
@@ -251,6 +268,48 @@ function initBackgammonApp() {
   // Otherwise no mode is pre-selected and no game auto-starts: the
   // placeholder shows until the player picks 2-player or configures
   // vs-computer and presses New game, matching chess.html's behavior.
+}
+
+// The doubling cube may only be offered by whoever currently owns it (or
+// either side while it's centered), at the start of a turn before rolling.
+function canOfferDoubleBg() {
+  if (AppStateBackgammon.gameOver || AppStateBackgammon.dice.length) return false;
+  return AppStateBackgammon.cubeOwner === null || AppStateBackgammon.cubeOwner === AppStateBackgammon.turn;
+}
+
+function offerDoubleBg() {
+  if (AppStateBackgammon.mode === "offline-ai" && AppStateBackgammon.turn !== AppStateBackgammon.humanColor) return;
+  if (!canOfferDoubleBg()) return;
+
+  const offerer = AppStateBackgammon.turn;
+  const opponent = BackgammonCore.otherColor(offerer);
+  const newValue = AppStateBackgammon.cubeValue * 2;
+
+  function accept() {
+    pushUndoSnapshotBg();
+    AppStateBackgammon.cubeValue = newValue;
+    AppStateBackgammon.cubeOwner = opponent;
+    updateBackgammonBoard();
+    updateGameLabelsBg();
+    setStatusBg("board-info", colorNameBg(opponent) + " accepts. Cube is now " + newValue + ". " + colorNameBg(offerer) + " to roll.");
+  }
+
+  function decline() {
+    AppStateBackgammon.gameOver = true;
+    const points = AppStateBackgammon.cubeValue;
+    announceGameResultBg(colorNameBg(offerer) + " wins",
+      colorNameBg(opponent) + " declines the double. " + colorNameBg(offerer) + " wins " + points + " point" + (points === 1 ? "" : "s") + ".");
+    updateGameLabelsBg();
+  }
+
+  if (AppStateBackgammon.mode === "offline-ai" && opponent !== AppStateBackgammon.humanColor) {
+    const willAccept = BackgammonAi.shouldAcceptDouble(AppStateBackgammon.state, opponent);
+    setStatusBg("board-info", colorNameBg(offerer) + " doubles to " + newValue + ". Computer is thinking…");
+    setTimeout(() => { if (willAccept) accept(); else decline(); }, 400);
+  } else {
+    const accepted = window.confirm(colorNameBg(opponent) + ": accept the double to " + newValue + "?");
+    if (accepted) accept(); else decline();
+  }
 }
 
 function rollDiceBg() {
@@ -362,7 +421,9 @@ function applyBackgammonMove(move, die) {
     AppStateBackgammon.gameOver = true;
     const mult = BackgammonCore.scoreMultiplier(AppStateBackgammon.state, mover);
     const kind = mult === 3 ? "backgammon" : mult === 2 ? "gammon" : "single game";
-    announceGameResultBg(colorNameBg(mover) + " wins", colorNameBg(mover) + " wins (" + kind + ")!");
+    const points = mult * AppStateBackgammon.cubeValue;
+    const cubeNote = AppStateBackgammon.cubeValue > 1 ? ", cube x" + AppStateBackgammon.cubeValue : "";
+    announceGameResultBg(colorNameBg(mover) + " wins", colorNameBg(mover) + " wins (" + kind + cubeNote + ") - " + points + " point" + (points === 1 ? "" : "s") + "!");
     return;
   }
 
@@ -432,6 +493,8 @@ function undoLastMove() {
   AppStateBackgammon.dice = prev.dice;
   AppStateBackgammon.gameOver = prev.gameOver;
   AppStateBackgammon.moveCount = prev.moveCount;
+  AppStateBackgammon.cubeValue = prev.cubeValue || 1;
+  AppStateBackgammon.cubeOwner = prev.cubeOwner || null;
   AppStateBackgammon.selected = null;
   setGameResultBg("");
   updateBackgammonBoard();
@@ -592,6 +655,8 @@ function updateBackgammonBoard() {
   }
 
   updateDiceDisplayBg();
+  updateCubeDisplayBg();
+  updatePipCountDisplayBg();
 }
 
 function updateDiceDisplayBg() {
@@ -606,12 +671,29 @@ function updateDiceDisplayBg() {
   });
 }
 
+function updateCubeDisplayBg() {
+  const el = document.getElementById("backgammon-cube-display");
+  if (!el) return;
+  const owner = AppStateBackgammon.cubeOwner;
+  el.textContent = "Cube: " + AppStateBackgammon.cubeValue +
+    (owner ? " (" + colorNameBg(owner) + ")" : "");
+}
+
+function updatePipCountDisplayBg() {
+  const el = document.getElementById("backgammon-pip-count");
+  if (!el || typeof BackgammonAi === "undefined") return;
+  const blackPips = BackgammonAi.pipCountFor(AppStateBackgammon.state, "b");
+  const whitePips = BackgammonAi.pipCountFor(AppStateBackgammon.state, "w");
+  el.textContent = "Pips - Black: " + blackPips + " · White: " + whitePips;
+}
+
 function updateGameLabelsBg() {
   const meta = document.getElementById("game-meta");
   if (meta) meta.textContent = AppStateBackgammon.moveCount ? "Move " + AppStateBackgammon.moveCount : "";
   updateUndoButtonVisibilityBg();
   updateResignVisibilityBg();
   updateRollButtonVisibilityBg();
+  updateDoubleButtonVisibilityBg();
 
   if (AppStateBackgammon.gameOver) clearSavedBackgammonGame();
   else saveBackgammonGame();
@@ -634,6 +716,13 @@ function updateRollButtonVisibilityBg() {
   if (!rollBtn) return;
   const isHumanTurn = !(AppStateBackgammon.mode === "offline-ai" && AppStateBackgammon.turn !== AppStateBackgammon.humanColor);
   rollBtn.disabled = AppStateBackgammon.gameOver || !isHumanTurn || AppStateBackgammon.dice.length > 0;
+}
+
+function updateDoubleButtonVisibilityBg() {
+  const doubleBtn = document.getElementById("backgammon-double-button");
+  if (!doubleBtn) return;
+  const isHumanTurn = !(AppStateBackgammon.mode === "offline-ai" && AppStateBackgammon.turn !== AppStateBackgammon.humanColor);
+  doubleBtn.classList.toggle("hidden", !isHumanTurn || !canOfferDoubleBg());
 }
 
 document.addEventListener("DOMContentLoaded", initBackgammonApp);
