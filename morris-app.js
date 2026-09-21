@@ -18,8 +18,33 @@ const AppStateMorris = {
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
   gameOver: false,
   moveCount: 0,
-  undoStack: []
+  undoStack: [],
+  moveHistory: []
 };
+
+function recordMoveMorris(color, move) {
+  const text = (move.type === "place" ? "P" + (move.to + 1) : "P" + (move.from + 1) + "-P" + (move.to + 1)) +
+    (move.remove !== null && move.remove !== undefined ? " x P" + (move.remove + 1) : "");
+  AppStateMorris.moveHistory.push({ color: color, text: text });
+  renderMoveListMorris();
+}
+
+function resetMoveHistoryMorris() {
+  AppStateMorris.moveHistory = [];
+  renderMoveListMorris();
+}
+
+function renderMoveListMorris() {
+  const el = document.getElementById("moves-list");
+  if (!el) return;
+  const moves = AppStateMorris.moveHistory || [];
+  if (!moves.length) {
+    el.textContent = "";
+    return;
+  }
+  el.textContent = moves.map((m) => (m.color === "b" ? "B" : "W") + " " + m.text).join("; ");
+  el.scrollLeft = el.scrollWidth;
+}
 
 const MORRIS_SAVE_KEY = "einkchess_save_morris";
 
@@ -32,7 +57,8 @@ function saveMorrisGame() {
     pendingRemoval: AppStateMorris.pendingRemoval,
     humanColor: AppStateMorris.humanColor,
     aiLevel: AppStateMorris.aiLevel,
-    moveCount: AppStateMorris.moveCount
+    moveCount: AppStateMorris.moveCount,
+    moveHistory: AppStateMorris.moveHistory
   });
 }
 
@@ -164,6 +190,7 @@ function initMorrisApp() {
     AppStateMorris.gameOver = false;
     AppStateMorris.moveCount = 0;
     resetUndoStackMorris();
+    resetMoveHistoryMorris();
     setGameResultMorris("");
     showBoardSectionMorris();
     buildMorrisBoardDOM();
@@ -227,6 +254,21 @@ function initMorrisApp() {
     });
   }
 
+  const toggleMovesBtn = document.getElementById("toggle-moves");
+  if (toggleMovesBtn) {
+    toggleMovesBtn.addEventListener("click", () => {
+      const list = document.getElementById("moves-list");
+      if (!list) return;
+      const isHidden = list.classList.contains("hidden");
+      if (isHidden) {
+        list.classList.remove("hidden");
+        renderMoveListMorris();
+      } else {
+        list.classList.add("hidden");
+      }
+    });
+  }
+
   updateColorChoiceVisibilityMorris();
 
   const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(MORRIS_SAVE_KEY) : null;
@@ -239,8 +281,10 @@ function initMorrisApp() {
     AppStateMorris.humanColor = savedGame.humanColor;
     AppStateMorris.aiLevel = savedGame.aiLevel;
     AppStateMorris.moveCount = savedGame.moveCount;
+    AppStateMorris.moveHistory = savedGame.moveHistory || [];
     AppStateMorris.gameOver = false;
     resetUndoStackMorris();
+    renderMoveListMorris();
     setActiveModeButtonMorris(AppStateMorris.mode);
     setGameResultMorris("");
     showBoardSectionMorris();
@@ -356,6 +400,7 @@ function applyMorrisMove(move) {
   const mover = AppStateMorris.turn;
   AppStateMorris.state = MorrisCore.applyMove(AppStateMorris.state, mover, move);
   AppStateMorris.moveCount++;
+  recordMoveMorris(mover, move);
   AppStateMorris.selected = null;
   AppStateMorris.pendingRemoval = null;
   AppStateMorris.turn = MorrisCore.otherColor(mover);
@@ -407,6 +452,8 @@ function undoLastMove() {
   AppStateMorris.moveCount = prev.moveCount;
   AppStateMorris.selected = null;
   AppStateMorris.pendingRemoval = null;
+  AppStateMorris.moveHistory.length = AppStateMorris.moveCount;
+  renderMoveListMorris();
   setGameResultMorris("");
   updateMorrisBoard();
   updateGameLabelsMorris();
@@ -418,8 +465,10 @@ function showBoardSectionMorris() {
   if (section) section.classList.remove("hidden");
   const placeholder = document.getElementById("board-placeholder");
   const boardContainer = document.getElementById("board-container");
+  const movesList = document.getElementById("moves-list");
   if (placeholder) placeholder.classList.add("hidden");
   if (boardContainer) boardContainer.classList.remove("hidden");
+  if (movesList) movesList.classList.remove("hidden");
 
   const settingsPanel = document.getElementById("settings-panel");
   const menuToggle = document.getElementById("menu-toggle");

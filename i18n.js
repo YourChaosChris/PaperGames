@@ -11,6 +11,7 @@ const STRINGS = {
     nav_guide: "Guide",
     nav_about: "About",
     nav_stats: "Stats",
+    toggle_moves_button: "Moves",
 
     home_tagline: "Chess, built for e-readers.",
     home_intro: "A small, dependency-free chess app made for E-Ink displays like Tolino, Kobo and Kindle: high contrast, no animations, and it keeps working with no internet connection once you've opened it.",
@@ -338,6 +339,7 @@ const STRINGS = {
     nav_guide: "Anleitung",
     nav_about: "Über",
     nav_stats: "Statistik",
+    toggle_moves_button: "Züge",
 
     home_tagline: "Schach, gemacht für E-Reader.",
     home_intro: "Eine kleine Schach-App ohne Abhängigkeiten, gebaut für E-Ink-Displays wie Tolino, Kobo und Kindle: hoher Kontrast, keine Animationen, und funktioniert nach dem ersten Öffnen auch ohne Internetverbindung weiter.",
