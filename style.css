@@ -2578,3 +2578,85 @@ button.ur-tray-slot {
   border: 2px solid var(--border);
   box-sizing: border-box;
 }
+
+/* Minesweeper board: a float-grid (same JS-enforced square cell size
+   technique as the other games) at a fixed pixel width rather than a
+   percentage one, wrapped in a horizontally scrolling container - so
+   the 30-column Expert board keeps a legible ~32px cell size on a
+   narrow e-reader screen instead of shrinking every cell down to
+   illegibility. Numbers, flags and mines are told apart by the glyph
+   itself, never by color, so this reads fine on a monochrome display
+   without any special-casing. */
+
+.minesweeper-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.minesweeper-mine-counter,
+.minesweeper-timer {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.minesweeper-board-wrap {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+#minesweeper-board {
+  display: block;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.minesweeper-cell {
+  background: var(--square-dark);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+
+.minesweeper-cell-revealed {
+  background: var(--square-light);
+}
+
+.minesweeper-cell-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(0.7rem, 3vw, 1.1rem);
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.minesweeper-cell-mine {
+  background: var(--square-dark);
+}
+
+.minesweeper-cell-exploded {
+  outline: 2px solid var(--border);
+  outline-offset: -2px;
+}
+
+.mine-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.4em;
+}
+
+.mine-icon::before {
+  content: "\25CF";
+  font-size: 1em;
+  line-height: 1;
+}
