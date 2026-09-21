@@ -47,11 +47,19 @@
       <h2 data-i18n="guide_offline_title">What works offline</h2>
       <p data-i18n="guide_offline_body"></p>
 
+      <h2 data-i18n="guide_update_title">Not seeing the latest version?</h2>
+      <p data-i18n="guide_update_body"></p>
+      <p>
+        <button id="force-update-button" type="button" class="secondary" data-i18n="guide_update_button">Force update now</button>
+      </p>
+      <p id="force-update-status" class="status-text" aria-live="polite"></p>
+
       <p class="about-back"><a href="index.html" data-i18n="back_home">&larr; Back to home</a></p>
     </section>
   </main>
 </div>
 <script src="i18n.js"></script>
 <script src="sw-register.js"></script>
+<script src="force-update.js"></script>
 </body>
 </html>

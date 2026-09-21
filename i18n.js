@@ -315,6 +315,11 @@ const STRINGS = {
     guide_offline_title: "What works offline",
     guide_offline_body: "Everything except Chess's online Lichess games: local 2-player and the built-in computer opponent at every level, in every game here, run entirely on the device with no server involved.",
 
+    guide_update_title: "Not seeing the latest version?",
+    guide_update_body: "eInkChess caches itself so it keeps working offline, which on some e-reader browsers can mean an update takes a while to show up even after a reload. This button clears that cache and forces a fresh copy of every file - you'll need to be online for it to work.",
+    guide_update_button: "Force update now",
+    guide_update_done: "Cache cleared. Reloading…",
+
     about_intro: "I searched for a simple chess game for my eReader — but all I found were people searching, not playing. So I built my own. That’s how eInkChess was born, and I’m happy to share it with everyone. It has since grown into a small collection of E-Ink-friendly board games, with more planned.",
     about_donate_intro: "If you enjoy eInkChess or have ideas for improvements, you can send feedback and support the project here:",
     about_donate_button: "Buy me a coffee ☕",
@@ -642,6 +647,11 @@ const STRINGS = {
     guide_sideload_body: "Kopiere alle Dateien der App per USB auf das Gerät und öffne index.html direkt aus dem lokalen Speicher (eine file://-Adresse). Offline-Spielen funktioniert genauso. Das Einzige, was über file:// nicht geht, ist der Lichess-Login (OAuth braucht eine echte http/https-Adresse) – der lokale 2-Spieler- und der Computer-Modus sind bei jedem Spiel hier davon nicht betroffen.",
     guide_offline_title: "Was offline funktioniert",
     guide_offline_body: "Alles außer Online-Partien über Lichess bei Schach: lokal zu zweit und der eingebaute Computergegner auf jeder Stufe laufen bei jedem Spiel hier komplett auf dem Gerät, ganz ohne Server.",
+
+    guide_update_title: "Siehst du nicht die neueste Version?",
+    guide_update_body: "eInkChess speichert sich selbst zwischen, damit es offline weiterläuft – das kann auf manchen E-Reader-Browsern dazu führen, dass ein Update auch nach einem Neuladen erst mit Verzögerung ankommt. Dieser Button löscht diesen Zwischenspeicher und erzwingt eine frische Kopie jeder Datei – dafür musst du kurz online sein.",
+    guide_update_button: "Jetzt aktualisieren erzwingen",
+    guide_update_done: "Zwischenspeicher gelöscht. Lädt neu…",
 
     about_intro: "Ich habe nach einem einfachen Schachspiel für meinen eReader gesucht — gefunden habe ich nur andere, die auch suchten, statt zu spielen. Also habe ich mein eigenes gebaut. So ist eInkChess entstanden, und ich freue mich, es mit allen zu teilen. Mittlerweile ist daraus eine kleine Sammlung E-Ink-freundlicher Brettspiele geworden, weitere sind geplant.",
     about_donate_intro: "Wenn dir eInkChess gefällt oder du Ideen für Verbesserungen hast, kannst du hier Feedback schicken und das Projekt unterstützen:",
