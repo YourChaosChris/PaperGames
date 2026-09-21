@@ -21,7 +21,8 @@ const STATS_GAME_NAME_KEY = {
   minesweeper: "game_minesweeper",
   nonogram: "game_nonograms",
   twenty48: "game_2048",
-  mahjong: "game_mahjong_solitaire"
+  mahjong: "game_mahjong_solitaire",
+  freecell: "game_freecell"
 };
 
 function gameDisplayName(game) {
