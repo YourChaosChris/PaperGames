@@ -2129,3 +2129,149 @@ button.ur-tray-slot {
   border: 2px solid var(--accent);
   border-radius: 50%;
 }
+
+/* Senet board: a 3x10 float-grid (same technique as the chess/checkers/
+   Connect Four boards - a JS-enforced square size per cell, since CSS
+   `aspect-ratio` is unreliable on E-Ink browsers), numbered in the
+   traditional boustrophedon path across all three rows. The three named
+   squares (House of Rebirth/Beauty/Water) get their own hatch patterns
+   rather than a color, so they stay distinguishable on a monochrome
+   E-Ink display. */
+
+#senet-board {
+  display: block;
+  width: 100%;
+  max-width: 820px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.senet-square {
+  width: calc(100% / 10);
+  background: var(--square-light);
+  border: 1px solid var(--border);
+}
+
+.senet-square-number {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-size: 0.6rem;
+  line-height: 1;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.senet-square-rebirth {
+  background: repeating-linear-gradient(45deg, var(--square-light), var(--square-light) 5px, #e6e6e6 5px, #e6e6e6 6px);
+}
+
+.senet-square-beauty {
+  background: repeating-linear-gradient(-45deg, var(--square-light), var(--square-light) 5px, #e6e6e6 5px, #e6e6e6 6px);
+}
+
+.senet-square-water {
+  background: repeating-linear-gradient(90deg, var(--square-light), var(--square-light) 4px, #d8d8d8 4px, #d8d8d8 6px);
+}
+
+.senet-square-movable {
+  background: var(--square-dark);
+}
+
+.senet-piece {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  width: 62%;
+  height: 62%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.senet-piece-a {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.senet-piece-b {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+.senet-piece-count {
+  position: absolute;
+  bottom: 2px;
+  right: 3px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.senet-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.senet-icon-disc-a {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.senet-icon-disc-b {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+.senet-borne-off {
+  text-align: center;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  white-space: pre-wrap;
+}
+
+.senet-sticks-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.senet-sticks-display {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.senet-stick {
+  display: inline-block;
+  width: 0.5rem;
+  height: 1.1rem;
+  border: var(--border-width) solid var(--border);
+  box-sizing: border-box;
+}
+
+.senet-stick-marked {
+  background: var(--accent);
+}
+
+.senet-stick-blank {
+  background: #fff;
+}
+
+.senet-stick-total {
+  font-weight: 700;
+  margin-left: 0.3rem;
+}

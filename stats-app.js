@@ -13,7 +13,8 @@ const STATS_GAME_NAME_KEY = {
   mancala: "game_mancala",
   othello: "game_othello",
   connectfour: "game_connect_four",
-  gomoku: "game_gomoku"
+  gomoku: "game_gomoku",
+  senet: "game_senet"
 };
 
 function gameDisplayName(game) {
