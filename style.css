@@ -2511,3 +2511,70 @@ button.ur-tray-slot {
   box-sizing: border-box;
   font-weight: 700;
 }
+
+/* Peg Solitaire board: a 7x7 float-grid (same technique as the chess/
+   checkers/Connect Four boards - a JS-enforced square cell size, since
+   CSS `aspect-ratio` is unreliable on E-Ink browsers), with the four
+   2x2 corners left as invisible gaps to form the classic cross shape -
+   the same gap technique used for the Royal Game of Ur's board. */
+
+#pegsolitaire-board {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.peg-square {
+  width: calc(100% / 7);
+  background: var(--square-light);
+  border: 1px solid var(--border);
+}
+
+.peg-square-gap {
+  background: transparent;
+  border: none;
+  pointer-events: none;
+}
+
+.peg-square-movable {
+  background: var(--square-dark);
+}
+
+.peg-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  height: 40%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.peg-piece-filled {
+  background: #111;
+}
+
+.peg-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.4em;
+}
+
+.peg-icon::before {
+  content: "";
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 50%;
+  background: #111;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+}

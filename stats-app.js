@@ -16,7 +16,8 @@ const STATS_GAME_NAME_KEY = {
   gomoku: "game_gomoku",
   senet: "game_senet",
   shogi: "game_shogi",
-  sudoku: "game_sudoku"
+  sudoku: "game_sudoku",
+  pegsolitaire: "game_peg_solitaire"
 };
 
 function gameDisplayName(game) {
