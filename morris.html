@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>eInkChess – Nine Men's Morris for E‑Ink</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <h1><a href="index.html" class="app-title-link">♞ eInkChess</a></h1>
+      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
+    </div>
+    <div class="user-panel">
+      <button id="menu-toggle" class="secondary">&#9776; Menu</button>
+    </div>
+  </header>
+
+  <main>
+
+<div id="settings-panel">
+<section class="mode-section">
+  <div class="mode-section-row">
+    <div class="mode-buttons">
+      <button id="mode-offline" class="mode-btn secondary">2 Player</button>
+      <button id="mode-offline-ai" class="mode-btn secondary">vs Computer</button>
+    </div>
+  </div>
+</section>
+
+    <section id="offline-ai-controls" class="card hidden">
+  <div class="field-row">
+    <button id="start-morris-game" class="primary">New game</button>
+    <div id="morris-color-choice" class="inline-options">
+      <label class="color-choice"><input type="radio" name="morris-color" value="black" checked> <span class="color-choice-icon"><span class="morris-icon-disc morris-icon-disc-black"></span></span></label>
+      <label class="color-choice"><input type="radio" name="morris-color" value="white"> <span class="color-choice-icon"><span class="morris-icon-disc morris-icon-disc-white"></span></span></label>
+    </div>
+    <select id="morris-level-inline">
+        <option value="0">2 Player</option>
+        <option value="1">Easy</option>
+        <option value="2" selected>Medium</option>
+        <option value="3">Hard</option>
+      </select>
+  </div>
+  <div id="offline-morris-status" class="status-text"></div>
+</section>
+</div>
+
+
+<section id="board-section" class="card">
+  <div class="board-header">
+    <div id="game-label"></div>
+    <div id="game-meta"></div>
+    <div id="game-result"></div>
+
+    <div id="board-info" class="status-text"></div>
+  </div>
+  <div id="board-placeholder" class="board-placeholder">
+    <span class="board-placeholder-icon"><span class="morris-icon-disc morris-icon-disc-black"></span></span>
+    <div class="board-placeholder-text">
+      <span class="board-placeholder-title" data-i18n="game_morris">Morris</span>
+      <span class="board-placeholder-subtitle">eInkChess</span>
+    </div>
+  </div>
+  <div id="board-container" class="hidden">
+    <div id="morris-board" class="morris-board"></div>
+  </div>
+  <div id="board-actions" class="board-actions">
+    <button id="undo-btn" class="secondary small hidden" onclick="undoLastMove()">Undo</button>
+    <button id="resign-button" class="secondary small hidden">Resign 🏳</button>
+  </div>
+</section>
+  </main>
+</div>
+
+<script src="i18n.js"></script>
+<script src="morris-core.js"></script>
+<script src="morris-ai.js"></script>
+<script src="result-modal.js"></script>
+<script src="morris-app.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>

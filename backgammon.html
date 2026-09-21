@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>eInkChess – Backgammon for E‑Ink</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <h1><a href="index.html" class="app-title-link">♞ eInkChess</a></h1>
+      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
+    </div>
+    <div class="user-panel">
+      <button id="menu-toggle" class="secondary">&#9776; Menu</button>
+    </div>
+  </header>
+
+  <main>
+
+<div id="settings-panel">
+<section class="mode-section">
+  <div class="mode-section-row">
+    <div class="mode-buttons">
+      <button id="mode-offline" class="mode-btn secondary">2 Player</button>
+      <button id="mode-offline-ai" class="mode-btn secondary">vs Computer</button>
+    </div>
+  </div>
+</section>
+
+    <section id="offline-ai-controls" class="card hidden">
+  <div class="field-row">
+    <button id="start-backgammon-game" class="primary">New game</button>
+    <div id="backgammon-color-choice" class="inline-options">
+      <label class="color-choice"><input type="radio" name="backgammon-color" value="black" checked> <span class="color-choice-icon"><span class="bg-icon-checker bg-icon-checker-black"></span></span></label>
+      <label class="color-choice"><input type="radio" name="backgammon-color" value="white"> <span class="color-choice-icon"><span class="bg-icon-checker bg-icon-checker-white"></span></span></label>
+    </div>
+    <select id="backgammon-level-inline">
+        <option value="0">2 Player</option>
+        <option value="1">Easy</option>
+        <option value="2" selected>Medium</option>
+        <option value="3">Hard</option>
+      </select>
+  </div>
+  <div id="offline-backgammon-status" class="status-text"></div>
+</section>
+</div>
+
+
+<section id="board-section" class="card">
+  <div class="board-header">
+    <div id="game-label"></div>
+    <div id="game-meta"></div>
+    <div id="game-result"></div>
+
+    <div id="board-info" class="status-text"></div>
+  </div>
+  <div id="board-placeholder" class="board-placeholder">
+    <span class="board-placeholder-icon"><span class="bg-icon-checker bg-icon-checker-black"></span></span>
+    <div class="board-placeholder-text">
+      <span class="board-placeholder-title" data-i18n="game_backgammon">Backgammon</span>
+      <span class="board-placeholder-subtitle">eInkChess</span>
+    </div>
+  </div>
+  <div id="board-container" class="hidden">
+    <div id="backgammon-tray-top" class="bg-tray">
+      <button id="backgammon-bar-top" class="bg-tray-slot" type="button">
+        <span class="bg-tray-slot-label" data-i18n="backgammon_tray_bar">Bar</span>
+        <span id="backgammon-bar-top-count" class="bg-tray-slot-count"></span>
+      </button>
+      <button id="backgammon-off-top" class="bg-tray-slot" type="button">
+        <span class="bg-tray-slot-label" data-i18n="backgammon_tray_off">Off</span>
+        <span id="backgammon-off-top-count" class="bg-tray-slot-count"></span>
+      </button>
+    </div>
+    <div id="backgammon-board" class="bg-board"></div>
+    <div id="backgammon-tray-bottom" class="bg-tray">
+      <button id="backgammon-bar-bottom" class="bg-tray-slot" type="button">
+        <span class="bg-tray-slot-label" data-i18n="backgammon_tray_bar">Bar</span>
+        <span id="backgammon-bar-bottom-count" class="bg-tray-slot-count"></span>
+      </button>
+      <button id="backgammon-off-bottom" class="bg-tray-slot" type="button">
+        <span class="bg-tray-slot-label" data-i18n="backgammon_tray_off">Off</span>
+        <span id="backgammon-off-bottom-count" class="bg-tray-slot-count"></span>
+      </button>
+    </div>
+    <div id="backgammon-dice-area" class="ur-dice-area">
+      <button id="backgammon-roll-button" class="primary" type="button" data-i18n="ur_roll_dice">Roll dice</button>
+      <div id="backgammon-dice-display" class="bg-dice-display"></div>
+    </div>
+  </div>
+  <div id="board-actions" class="board-actions">
+    <button id="undo-btn" class="secondary small hidden" onclick="undoLastMove()">Undo</button>
+    <button id="resign-button" class="secondary small hidden">Resign 🏳</button>
+  </div>
+</section>
+  </main>
+</div>
+
+<script src="i18n.js"></script>
+<script src="backgammon-core.js"></script>
+<script src="backgammon-ai.js"></script>
+<script src="result-modal.js"></script>
+<script src="backgammon-app.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>

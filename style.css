@@ -765,32 +765,6 @@ button:disabled {
   color: var(--muted);
 }
 
-.game-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.game-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.3rem 0.6rem;
-  border: var(--border-width) dashed var(--border);
-  border-radius: var(--radius);
-  font-weight: 600;
-  color: var(--muted);
-}
-
-.coming-soon-badge {
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  background: var(--bg-alt);
-  border-radius: var(--radius);
-  padding: 0.1rem 0.35rem;
-}
 
 /* Rules / Guide content pages */
 
@@ -1118,19 +1092,42 @@ button:disabled {
   border: 1px solid var(--border);
 }
 
+/* The shared lane (middle row) is where captures can happen - a warm
+   tint sets it visually apart from each player's own safe private
+   squares, so the "contested" zone reads at a glance. */
+.ur-square-shared {
+  background: #efe6d3;
+}
+
 .ur-square-gap {
   background: transparent;
   border: none;
   pointer-events: none;
 }
 
+/* A small layered rosette mark (a diamond behind a ring) rather than a
+   plain circle, closer to the flower motif on the real board, built
+   from flat shapes only - no gradients or shadows to stay e-ink safe. */
+.ur-square-rosette::before {
+  content: "";
+  position: absolute;
+  top: 38%;
+  left: 38%;
+  width: 24%;
+  height: 24%;
+  background: var(--muted);
+  transform: rotate(45deg);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
 .ur-square-rosette::after {
   content: "";
   position: absolute;
-  top: 30%;
-  left: 30%;
-  width: 40%;
-  height: 40%;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
   border: 2px solid var(--muted);
   border-radius: 50%;
   box-sizing: border-box;
@@ -1153,14 +1150,34 @@ button:disabled {
   pointer-events: none;
 }
 
+.ur-piece::after {
+  content: "";
+  position: absolute;
+  top: 22%;
+  left: 22%;
+  width: 56%;
+  height: 56%;
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
 .ur-piece-black {
   background: #111;
   border: 2px solid #000;
 }
 
+.ur-piece-black::after {
+  border: 2px solid #555;
+}
+
 .ur-piece-white {
   background: #fdfdfd;
   border: 2px solid var(--border);
+}
+
+.ur-piece-white::after {
+  border: 2px solid #bbb;
 }
 
 /* Small disc icons for the color-choice picker and board placeholder,
@@ -1258,4 +1275,446 @@ button.ur-tray-slot {
 .ur-die-total {
   font-weight: 700;
   margin-left: 0.3rem;
+}
+
+/* Nine Men's Morris board: a point-and-line grid (same technique as the
+   Go board - a JS-enforced square container, since `aspect-ratio` alone
+   is silently ignored on some E-Ink browsers) rather than a filled
+   square grid, since the board is three nested squares of points
+   connected by lines, not a checkerboard. */
+
+.morris-board {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+  padding: 7%;
+}
+
+.morris-line {
+  position: absolute;
+  background: var(--border);
+}
+
+.morris-line-h {
+  height: 2px;
+  margin-top: -1px;
+}
+
+.morris-line-v {
+  width: 2px;
+  margin-left: -1px;
+}
+
+.morris-point {
+  position: absolute;
+  width: 11%;
+  height: 11%;
+  transform: translate(-50%, -50%);
+  background: var(--square-light);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.morris-point-movable {
+  background: var(--square-dark);
+}
+
+.morris-point-selected {
+  border-color: var(--accent);
+  border-width: 3px;
+}
+
+.morris-point-removable {
+  background: #f3d4d4;
+  border-color: #a33;
+}
+
+.morris-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 82%;
+  height: 82%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.morris-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.morris-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.morris-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.morris-icon-disc-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.morris-icon-disc-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Backgammon board: a 13-column x 2-row CSS grid (12 point lanes per
+   row plus a middle bar column spanning both rows), every cell placed
+   explicitly by grid-column/grid-row rather than relying on auto-flow.
+   Height is JS-enforced (see ensureBackgammonBoardSquare) rather than
+   via `aspect-ratio`, which some E-Ink browsers silently ignore. */
+
+.bg-board {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr) 0.7fr repeat(6, 1fr);
+  grid-template-rows: 1fr 1fr;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  gap: 1px;
+  padding: 1px;
+}
+
+.bg-bar {
+  background: #d9cba8;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+
+.bg-point {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border: none;
+  padding: 2px 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.bg-point-top {
+  justify-content: flex-start;
+}
+
+.bg-point-bottom {
+  justify-content: flex-end;
+}
+
+.bg-point-alt {
+  background: #efe6d3;
+}
+
+.bg-point-movable {
+  background: var(--square-dark);
+}
+
+.bg-point-selected {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.bg-point-label {
+  font-size: 0.55rem;
+  color: var(--muted);
+  line-height: 1;
+}
+
+.bg-point-top .bg-point-label {
+  order: -1;
+}
+
+.bg-point-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.bg-point-top .bg-point-stack {
+  order: 1;
+}
+
+.bg-checker {
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.bg-checker-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.bg-checker-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+.bg-checker-overflow {
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+
+.bg-tray {
+  display: flex;
+  gap: 0.6rem;
+  max-width: 760px;
+  margin: 0 auto 0.4rem;
+}
+
+.bg-tray-slot {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem 0.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  font-size: 0.85rem;
+  box-sizing: border-box;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.bg-tray-slot-static {
+  cursor: default;
+}
+
+.bg-tray-movable {
+  background: var(--square-dark);
+}
+
+.bg-tray-slot-count {
+  font-weight: 700;
+}
+
+.bg-dice-display {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.bg-die {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  font-weight: 700;
+  background: #fff;
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.bg-icon-checker {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.bg-icon-checker-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.bg-icon-checker-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Xiangqi board: a point-and-line grid, same technique as the Go board
+   (a JS-enforced square-per-cell container, since `aspect-ratio` alone
+   is silently ignored on some E-Ink browsers). */
+
+.xq-board {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  background: #f3ead9;
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+  padding: 6%;
+}
+
+.xq-grid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.xq-line {
+  position: absolute;
+  background: var(--border);
+}
+
+.xq-line-h {
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform: translateY(-1px);
+}
+
+.xq-line-v {
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-1px);
+}
+
+.xq-river {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: #dce8ec;
+}
+
+.xq-palace {
+  position: absolute;
+  background: #eadfc4;
+}
+
+.xq-point {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  width: 11%;
+  height: 11%;
+}
+
+.xq-point-movable::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  width: 40%;
+  height: 40%;
+  border-radius: 50%;
+  background: var(--square-dark);
+}
+
+.xq-point-last-move::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  border: 2px dashed var(--muted);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.xq-point-selected .xq-piece.xq-piece-filled {
+  outline: 3px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.xq-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 88%;
+  height: 88%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.xq-piece-filled {
+  background: #f3ead9;
+  border: 2px solid var(--border);
+}
+
+.xq-piece-red {
+  color: #b3261e;
+}
+
+.xq-piece-black {
+  color: #111;
+}
+
+.xq-piece-cannon::after {
+  content: "";
+  position: absolute;
+  top: 12%;
+  left: 12%;
+  width: 20%;
+  height: 20%;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  box-sizing: border-box;
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.xq-icon-disc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3em;
+  height: 1.3em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+  background: #f3ead9;
+  border: 2px solid var(--border);
+  font-size: 0.7em;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.xq-icon-disc-red {
+  color: #b3261e;
+}
+
+.xq-icon-disc-black {
+  color: #111;
 }
