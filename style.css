@@ -1741,12 +1741,26 @@ button.ur-tray-slot {
   border: 2px solid var(--border);
 }
 
+/* Red vs. Black is a color distinction, which doesn't exist at all on
+   a monochrome E-Ink display - both used to render as similarly dark
+   ink on the same light disc. Black pieces get their own solid dark
+   disc instead (the same filled-vs-outlined trick already used for
+   every other two-color game here), so which piece is whose reads
+   from the disc itself, not from a hue. Classic-character text color
+   and the symbol-style SVGs' own stroke color (in xiangqi-app.js) are
+   flipped to match: dark ink on Red's light disc, light ink on
+   Black's now-dark one. */
+.xq-piece-black.xq-piece-filled {
+  background: #111;
+  border: 2px solid #000;
+}
+
 .xq-piece-red {
-  color: #b3261e;
+  color: #111;
 }
 
 .xq-piece-black {
-  color: #111;
+  color: #fdfdfd;
 }
 
 .xq-piece svg {
@@ -1773,11 +1787,17 @@ button.ur-tray-slot {
 }
 
 .xq-icon-disc-red {
-  color: #b3261e;
+  color: #111;
 }
 
+/* Same dark-filled-disc treatment as the board's own pieces - shown
+   side by side with the red icon in the color-choice picker, so it
+   needs the same monochrome-safe distinction, not just a text-color
+   change. */
 .xq-icon-disc-black {
-  color: #111;
+  background: #111;
+  border-color: #000;
+  color: #fdfdfd;
 }
 
 /* Mancala board: a store well at each end of a 6x2 grid of pits,
@@ -1883,4 +1903,75 @@ button.ur-tray-slot {
 
 .coming-soon-list strong {
   color: var(--text);
+}
+
+/* Othello/Reversi board: reuses .square from the chess board (same
+   float-grid technique) but, unlike checkers, every square looks the
+   same - a real Othello board is a uniform grid, not a checkered one. */
+
+#othello-board {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.othello-square {
+  background: var(--square-light);
+  border: 1px solid var(--border);
+}
+
+.othello-square-movable {
+  background: var(--square-dark);
+}
+
+.othello-square:disabled {
+  cursor: default;
+}
+
+.othello-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 78%;
+  height: 78%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.othello-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.othello-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.othello-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.othello-icon-disc-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.othello-icon-disc-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
 }
