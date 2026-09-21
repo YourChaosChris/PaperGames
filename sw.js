@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "einkchess-cache-v21";
+const CACHE_NAME = "einkchess-cache-v22";
 
 const APP_SHELL = [
   "./",
@@ -44,6 +44,9 @@ const APP_SHELL = [
   "senet.html",
   "senet-rules.html",
   "senet-history.html",
+  "shogi.html",
+  "shogi-rules.html",
+  "shogi-history.html",
   "guide.html",
   "about.html",
   "stats.html",
@@ -89,6 +92,9 @@ const APP_SHELL = [
   "senet-core.js",
   "senet-ai.js",
   "senet-app.js",
+  "shogi-core.js",
+  "shogi-ai.js",
+  "shogi-app.js",
   "sw-register.js",
   "game-storage.js",
   "game-stats.js",

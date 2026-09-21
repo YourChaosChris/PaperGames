@@ -14,7 +14,8 @@ const STATS_GAME_NAME_KEY = {
   othello: "game_othello",
   connectfour: "game_connect_four",
   gomoku: "game_gomoku",
-  senet: "game_senet"
+  senet: "game_senet",
+  shogi: "game_shogi"
 };
 
 function gameDisplayName(game) {
