@@ -454,6 +454,13 @@ function buildUrBoardDOM() {
   const boardEl = document.getElementById("ur-board");
   if (!boardEl) return;
   boardEl.innerHTML = "";
+  // The actual grid lives in its own wrapper, inset-clipped 3px inside
+  // #ur-board's own H-shape (see style.css) - that's what turns the
+  // board's outer edge and its two inner "waist" notches into a visible
+  // border ring instead of a plain rectangle.
+  const gridEl = document.createElement("div");
+  gridEl.id = "ur-grid";
+  boardEl.appendChild(gridEl);
 
   for (let row = 0; row < 3; row++) {
     for (let col = 0; col < 8; col++) {
@@ -468,7 +475,7 @@ function buildUrBoardDOM() {
         square.classList.add("ur-square-gap");
         square.disabled = true;
         square.setAttribute("aria-hidden", "true");
-        boardEl.appendChild(square);
+        gridEl.appendChild(square);
         continue;
       }
 
@@ -480,7 +487,7 @@ function buildUrBoardDOM() {
       piece.className = "ur-piece";
       square.appendChild(piece);
       square.addEventListener("click", onUrSquareClick);
-      boardEl.appendChild(square);
+      gridEl.appendChild(square);
     }
   }
 
