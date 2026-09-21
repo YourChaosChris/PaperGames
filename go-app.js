@@ -46,6 +46,12 @@ function clearSavedGoGame() {
   GameStorage.clear(GO_SAVE_KEY);
 }
 
+function recordGoStatsIfVsAi(outcome) {
+  if (typeof GameStats === "undefined") return;
+  if (AppStateGo.mode !== "offline-ai") return;
+  GameStats.record("go", outcome);
+}
+
 function colorNameGo(color) {
   return color === "b" ? "Black" : "White";
 }
@@ -105,6 +111,7 @@ function endGameByScoreGo() {
   announceGameResultGo(winnerLetter + "+" + margin,
     "Both passed. " + colorNameGo(score.winner) + " wins by " + margin +
     " (Black " + score.blackScore + " – White " + score.whiteScore + ").");
+  recordGoStatsIfVsAi(score.winner === AppStateGo.humanColor ? "win" : "loss");
   updateGameLabelsGo();
 }
 
@@ -257,6 +264,7 @@ function initGoApp() {
       const winner = loser === "b" ? "w" : "b";
       AppStateGo.gameOver = true;
       announceGameResultGo((winner === "b" ? "B" : "W") + "+R", colorNameGo(winner) + " wins by resignation.");
+      recordGoStatsIfVsAi("loss");
       updateGameLabelsGo();
     });
   }

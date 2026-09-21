@@ -41,6 +41,12 @@ function clearSavedMorrisGame() {
   GameStorage.clear(MORRIS_SAVE_KEY);
 }
 
+function recordMorrisStatsIfVsAi(outcome) {
+  if (typeof GameStats === "undefined") return;
+  if (AppStateMorris.mode !== "offline-ai") return;
+  GameStats.record("morris", outcome);
+}
+
 function colorNameMorris(color) {
   return color === "b" ? "Black" : "White";
 }
@@ -215,6 +221,7 @@ function initMorrisApp() {
       const winner = MorrisCore.otherColor(loser);
       AppStateMorris.gameOver = true;
       announceGameResultMorris(colorNameMorris(winner) + " wins", colorNameMorris(winner) + " wins by resignation.");
+      recordMorrisStatsIfVsAi("loss");
       updateGameLabelsMorris();
     });
   }
@@ -360,6 +367,7 @@ function applyMorrisMove(move) {
     const reason = end.status === "reduced" ? "reduced to two pieces" : "no legal moves left";
     AppStateMorris.gameOver = true;
     announceGameResultMorris(winnerName + " wins", winnerName + " wins (" + reason + ").");
+    recordMorrisStatsIfVsAi(end.winner === AppStateMorris.humanColor ? "win" : "loss");
     updateGameLabelsMorris();
     return;
   }

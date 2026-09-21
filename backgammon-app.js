@@ -56,6 +56,12 @@ function clearSavedBackgammonGame() {
   GameStorage.clear(BACKGAMMON_SAVE_KEY);
 }
 
+function recordBackgammonStatsIfVsAi(outcome) {
+  if (typeof GameStats === "undefined") return;
+  if (AppStateBackgammon.mode !== "offline-ai") return;
+  GameStats.record("backgammon", outcome);
+}
+
 function colorNameBg(color) {
   return color === "b" ? "Black" : "White";
 }
@@ -223,6 +229,7 @@ function initBackgammonApp() {
       const points = AppStateBackgammon.cubeValue;
       announceGameResultBg(colorNameBg(winner) + " wins",
         colorNameBg(winner) + " wins by resignation - " + points + " point" + (points === 1 ? "" : "s") + ".");
+      recordBackgammonStatsIfVsAi("loss");
       updateGameLabelsBg();
     });
   }
@@ -299,6 +306,7 @@ function offerDoubleBg() {
     const points = AppStateBackgammon.cubeValue;
     announceGameResultBg(colorNameBg(offerer) + " wins",
       colorNameBg(opponent) + " declines the double. " + colorNameBg(offerer) + " wins " + points + " point" + (points === 1 ? "" : "s") + ".");
+    recordBackgammonStatsIfVsAi(offerer === AppStateBackgammon.humanColor ? "win" : "loss");
     updateGameLabelsBg();
   }
 
@@ -424,6 +432,8 @@ function applyBackgammonMove(move, die) {
     const points = mult * AppStateBackgammon.cubeValue;
     const cubeNote = AppStateBackgammon.cubeValue > 1 ? ", cube x" + AppStateBackgammon.cubeValue : "";
     announceGameResultBg(colorNameBg(mover) + " wins", colorNameBg(mover) + " wins (" + kind + cubeNote + ") - " + points + " point" + (points === 1 ? "" : "s") + "!");
+    recordBackgammonStatsIfVsAi(mover === AppStateBackgammon.humanColor ? "win" : "loss");
+    updateGameLabelsBg();
     return;
   }
 

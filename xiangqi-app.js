@@ -94,6 +94,12 @@ function clearSavedXiangqiGame() {
   GameStorage.clear(XQ_SAVE_KEY);
 }
 
+function recordXiangqiStatsIfVsAi(outcome) {
+  if (typeof GameStats === "undefined") return;
+  if (AppStateXiangqi.mode !== "offline-ai") return;
+  GameStats.record("xiangqi", outcome);
+}
+
 function colorNameXq(color) {
   return color === "r" ? "Red" : "Black";
 }
@@ -276,6 +282,7 @@ function initXiangqiApp() {
       const winner = XiangqiCore.otherColor(loser);
       AppStateXiangqi.gameOver = true;
       announceGameResultXq(colorNameXq(winner) + " wins", colorNameXq(winner) + " wins by resignation.");
+      recordXiangqiStatsIfVsAi("loss");
       updateGameLabelsXq();
     });
   }
@@ -385,6 +392,7 @@ function applyXiangqiMove(move) {
     const reason = end.status === "checkmate" ? "checkmate" : "no legal moves";
     AppStateXiangqi.gameOver = true;
     announceGameResultXq(winnerName + " wins", winnerName + " wins (" + reason + ").");
+    recordXiangqiStatsIfVsAi(end.winner === AppStateXiangqi.humanColor ? "win" : "loss");
     updateGameLabelsXq();
     return;
   }

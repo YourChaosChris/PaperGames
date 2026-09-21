@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>eInkChess – Stats</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link">♞ eInkChess</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="stats_title">Your Stats</h1>
+      <p data-i18n="stats_intro">Results against the built-in computer, kept on this device only.</p>
+
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th data-i18n="stats_col_game">Game</th>
+            <th data-i18n="stats_col_wins">Wins</th>
+            <th data-i18n="stats_col_losses">Losses</th>
+            <th data-i18n="stats_col_draws">Draws</th>
+          </tr>
+        </thead>
+        <tbody id="stats-body"></tbody>
+      </table>
+
+      <p id="stats-empty" class="stats-empty hidden" data-i18n="stats_empty">No games played against the computer yet.</p>
+
+      <p class="stats-actions">
+        <button id="stats-reset" type="button" class="secondary small" data-i18n="stats_reset_button">Reset stats</button>
+      </p>
+
+      <p class="about-back">
+        <a href="index.html" data-i18n="back_home">&larr; Back to home</a>
+      </p>
+    </section>
+  </main>
+</div>
+<script src="i18n.js"></script>
+<script src="game-stats.js"></script>
+<script src="sw-register.js"></script>
+<script src="stats-app.js"></script>
+</body>
+</html>

@@ -669,6 +669,37 @@ button:disabled {
   font-size: 0.85rem;
 }
 
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.stats-table th,
+.stats-table td {
+  border: var(--border-width) solid var(--border);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+}
+
+.stats-table th {
+  background: var(--bg-alt);
+}
+
+.stats-table td:not(:first-child),
+.stats-table th:not(:first-child) {
+  text-align: center;
+}
+
+.stats-empty {
+  margin-top: 1rem;
+  color: var(--muted);
+}
+
+.stats-actions {
+  margin-top: 1.25rem;
+}
+
 /* Site-wide nav bar and language switch (home/rules/guide/about pages) */
 
 .lang-switch {
