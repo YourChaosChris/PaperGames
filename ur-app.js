@@ -71,14 +71,26 @@ function pushUndoSnapshotUr() {
 // the shared lane both players travel through; rows 0 and 2 are each
 // player's own private squares, with a two-square gap in the middle
 // where the shared lane passes beneath them.
+//
+// Column direction is chosen so a piece never visually "teleports"
+// between lanes: it enters the board at column 3 (the inner edge of its
+// private lane, next to the gap) and travels OUTWARD to column 0 (square
+// 4, a rosette, at the board's true outer edge); from there it drops
+// straight down into the shared lane at that same column 0 and sweeps
+// all the way across to column 7; it then rises straight up into its
+// private end lane at that same column 7 (square 13), and finally moves
+// back inward to column 6 (square 14, a rosette) before bearing off. So
+// every lane change happens in the same column, and every square is
+// adjacent to the one before it along the path - the classic S-shaped
+// route across the board.
 function urSquareInfo(row, col) {
   if (row === 1) {
     return { pos: col + 5, owner: null };
   }
   if (row === 0 || row === 2) {
     const owner = UR_COLOR_FOR_ROW[row];
-    if (col >= 0 && col <= 3) return { pos: col + 1, owner };
-    if (col >= 6 && col <= 7) return { pos: col - 6 + 13, owner };
+    if (col >= 0 && col <= 3) return { pos: 4 - col, owner };
+    if (col >= 6 && col <= 7) return { pos: 20 - col, owner };
   }
   return null; // gap square, purely visual
 }
@@ -399,6 +411,7 @@ function buildUrBoardDOM() {
       }
 
       square.dataset.pos = info.pos;
+      if (row === 1) square.classList.add("ur-square-shared");
       if (UrCore.isRosette(info.pos)) square.classList.add("ur-square-rosette");
 
       const piece = document.createElement("span");
