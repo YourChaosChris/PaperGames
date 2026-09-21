@@ -24,6 +24,28 @@ const AppStateCheckers = {
 let einkCheckersResizeHandlerAttached = false;
 let einkCheckersResizeTimeoutId = null;
 
+const CHECKERS_SAVE_KEY = "einkchess_save_checkers";
+
+function saveCheckersGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.save(CHECKERS_SAVE_KEY, {
+    mode: AppStateCheckers.mode,
+    board: AppStateCheckers.board,
+    turn: AppStateCheckers.turn,
+    lastMove: AppStateCheckers.lastMove,
+    humanColor: AppStateCheckers.humanColor,
+    aiLevel: AppStateCheckers.aiLevel,
+    moveCount: AppStateCheckers.moveCount,
+    movesSinceCapture: AppStateCheckers.movesSinceCapture,
+    captures: AppStateCheckers.captures
+  });
+}
+
+function clearSavedCheckersGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.clear(CHECKERS_SAVE_KEY);
+}
+
 function colorNameCheckers(color) {
   return color === "b" ? "Black" : "White";
 }
@@ -182,9 +204,37 @@ function initCheckersApp() {
   }
 
   updateColorChoiceVisibility();
-  // No mode is pre-selected and no game auto-starts: the placeholder
-  // shows until the player picks 2-player or configures vs-computer and
-  // presses New game, matching chess.html's behavior.
+
+  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(CHECKERS_SAVE_KEY) : null;
+  if (savedGame && savedGame.board) {
+    AppStateCheckers.mode = savedGame.mode;
+    AppStateCheckers.board = savedGame.board;
+    AppStateCheckers.turn = savedGame.turn;
+    AppStateCheckers.selected = null;
+    AppStateCheckers.lastMove = savedGame.lastMove;
+    AppStateCheckers.humanColor = savedGame.humanColor;
+    AppStateCheckers.aiLevel = savedGame.aiLevel;
+    AppStateCheckers.moveCount = savedGame.moveCount;
+    AppStateCheckers.movesSinceCapture = savedGame.movesSinceCapture;
+    AppStateCheckers.captures = savedGame.captures;
+    AppStateCheckers.gameOver = false;
+    resetUndoStackCheckers();
+    setActiveModeButton(AppStateCheckers.mode);
+    setGameResultCheckers("");
+    showBoardSectionCheckers();
+    buildCheckersBoardDOM();
+    updateCheckersBoard();
+    updateGameLabelsCheckers();
+    if (AppStateCheckers.mode === "offline-ai" && AppStateCheckers.turn !== AppStateCheckers.humanColor) {
+      setStatusCheckers("board-info", "Computer thinking…");
+      setTimeout(aiMoveOfflineCheckers, 10);
+    } else {
+      setStatusCheckers("board-info", colorNameCheckers(AppStateCheckers.turn) + " to move.");
+    }
+  }
+  // Otherwise no mode is pre-selected and no game auto-starts: the
+  // placeholder shows until the player picks 2-player or configures
+  // vs-computer and presses New game, matching chess.html's behavior.
 }
 
 function isPieceOfTurn(piece, turn) {
@@ -458,6 +508,9 @@ function updateGameLabelsCheckers() {
   if (meta) meta.textContent = AppStateCheckers.moveCount ? "Move " + AppStateCheckers.moveCount : "";
   updateUndoButtonVisibilityCheckers();
   updateResignVisibilityCheckers();
+
+  if (AppStateCheckers.gameOver) clearSavedCheckersGame();
+  else saveCheckersGame();
 }
 
 function updateUndoButtonVisibilityCheckers() {

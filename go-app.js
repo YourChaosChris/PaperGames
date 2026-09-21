@@ -22,6 +22,30 @@ const AppStateGo = {
 let einkGoResizeHandlerAttached = false;
 let einkGoResizeTimeoutId = null;
 
+const GO_SAVE_KEY = "einkchess_save_go";
+
+function saveGoGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.save(GO_SAVE_KEY, {
+    mode: AppStateGo.mode,
+    size: AppStateGo.size,
+    board: AppStateGo.board,
+    turn: AppStateGo.turn,
+    koPoint: AppStateGo.koPoint,
+    lastMove: AppStateGo.lastMove,
+    humanColor: AppStateGo.humanColor,
+    aiLevel: AppStateGo.aiLevel,
+    consecutivePasses: AppStateGo.consecutivePasses,
+    moveCount: AppStateGo.moveCount,
+    captures: AppStateGo.captures
+  });
+}
+
+function clearSavedGoGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.clear(GO_SAVE_KEY);
+}
+
 function colorNameGo(color) {
   return color === "b" ? "Black" : "White";
 }
@@ -238,9 +262,38 @@ function initGoApp() {
   }
 
   updateGoColorChoiceVisibility();
-  // No mode is pre-selected and no game auto-starts: the placeholder
-  // shows until the player picks 2-player or configures vs-computer and
-  // presses New game, matching chess.html's behavior.
+
+  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(GO_SAVE_KEY) : null;
+  if (savedGame && savedGame.board) {
+    AppStateGo.mode = savedGame.mode;
+    AppStateGo.size = savedGame.size;
+    AppStateGo.board = savedGame.board;
+    AppStateGo.turn = savedGame.turn;
+    AppStateGo.koPoint = savedGame.koPoint;
+    AppStateGo.lastMove = savedGame.lastMove;
+    AppStateGo.humanColor = savedGame.humanColor;
+    AppStateGo.aiLevel = savedGame.aiLevel;
+    AppStateGo.consecutivePasses = savedGame.consecutivePasses;
+    AppStateGo.moveCount = savedGame.moveCount;
+    AppStateGo.captures = savedGame.captures;
+    AppStateGo.gameOver = false;
+    resetUndoStackGo();
+    setActiveModeButtonGo(AppStateGo.mode);
+    setGameResultGo("");
+    showBoardSectionGo();
+    buildGoBoardDOM();
+    updateGoBoard();
+    updateGameLabelsGo();
+    if (AppStateGo.mode === "offline-ai" && AppStateGo.turn !== AppStateGo.humanColor) {
+      setStatusGo("board-info", "Computer thinking…");
+      setTimeout(aiMoveOfflineGo, 10);
+    } else {
+      setStatusGo("board-info", colorNameGo(AppStateGo.turn) + " to move.");
+    }
+  }
+  // Otherwise no mode is pre-selected and no game auto-starts: the
+  // placeholder shows until the player picks 2-player or configures
+  // vs-computer and presses New game, matching chess.html's behavior.
 }
 
 function onGoPointClick(e) {
@@ -479,6 +532,9 @@ function updateGameLabelsGo() {
   if (meta) meta.textContent = AppStateGo.moveCount ? "Move " + AppStateGo.moveCount : "";
   updateUndoButtonVisibilityGo();
   updatePassResignVisibilityGo();
+
+  if (AppStateGo.gameOver) clearSavedGoGame();
+  else saveGoGame();
 }
 
 function updateUndoButtonVisibilityGo() {

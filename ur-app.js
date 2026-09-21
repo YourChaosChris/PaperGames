@@ -29,6 +29,26 @@ const AppStateUr = {
   undoStack: []
 };
 
+const UR_SAVE_KEY = "einkchess_save_ur";
+
+function saveUrGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.save(UR_SAVE_KEY, {
+    mode: AppStateUr.mode,
+    state: AppStateUr.state,
+    turn: AppStateUr.turn,
+    roll: AppStateUr.roll,
+    humanColor: AppStateUr.humanColor,
+    aiLevel: AppStateUr.aiLevel,
+    moveCount: AppStateUr.moveCount
+  });
+}
+
+function clearSavedUrGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.clear(UR_SAVE_KEY);
+}
+
 function colorNameUr(color) {
   return color === "b" ? "Black" : "White";
 }
@@ -220,9 +240,40 @@ function initUrApp() {
   if (trayBottomStart) trayBottomStart.addEventListener("click", () => onUrTrayClick("w"));
 
   updateColorChoiceVisibilityUr();
-  // No mode is pre-selected and no game auto-starts: the placeholder
-  // shows until the player picks 2-player or configures vs-computer and
-  // presses New game, matching chess.html's behavior.
+
+  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(UR_SAVE_KEY) : null;
+  if (savedGame && savedGame.state) {
+    AppStateUr.mode = savedGame.mode;
+    AppStateUr.state = savedGame.state;
+    AppStateUr.turn = savedGame.turn;
+    AppStateUr.roll = savedGame.roll;
+    AppStateUr.legalMoves = savedGame.roll !== null
+      ? UrCore.getLegalMoves(AppStateUr.state, AppStateUr.turn, savedGame.roll)
+      : [];
+    AppStateUr.humanColor = savedGame.humanColor;
+    AppStateUr.aiLevel = savedGame.aiLevel;
+    AppStateUr.moveCount = savedGame.moveCount;
+    AppStateUr.gameOver = false;
+    resetUndoStackUr();
+    setActiveModeButtonUr(AppStateUr.mode);
+    setGameResultUr("");
+    showBoardSectionUr();
+    buildUrBoardDOM();
+    updateDiceDisplayUr(AppStateUr.roll);
+    updateUrBoard();
+    updateGameLabelsUr();
+    if (AppStateUr.mode === "offline-ai" && AppStateUr.turn !== AppStateUr.humanColor) {
+      setStatusUr("board-info", "Computer thinking…");
+      setTimeout(aiTurnUr, 300);
+    } else if (AppStateUr.roll !== null) {
+      setStatusUr("board-info", colorNameUr(AppStateUr.turn) + " rolled " + AppStateUr.roll + ". Choose a piece to move.");
+    } else {
+      setStatusUr("board-info", colorNameUr(AppStateUr.turn) + " to move. Roll the dice.");
+    }
+  }
+  // Otherwise no mode is pre-selected and no game auto-starts: the
+  // placeholder shows until the player picks 2-player or configures
+  // vs-computer and presses New game, matching chess.html's behavior.
 }
 
 function rollDiceUr() {
@@ -532,6 +583,9 @@ function updateGameLabelsUr() {
   updateUndoButtonVisibilityUr();
   updateResignVisibilityUr();
   updateRollButtonVisibilityUr();
+
+  if (AppStateUr.gameOver) clearSavedUrGame();
+  else saveUrGame();
 }
 
 function updateUndoButtonVisibilityUr() {

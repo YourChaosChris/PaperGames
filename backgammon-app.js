@@ -29,6 +29,26 @@ const AppStateBackgammon = {
   undoStack: []
 };
 
+const BACKGAMMON_SAVE_KEY = "einkchess_save_backgammon";
+
+function saveBackgammonGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.save(BACKGAMMON_SAVE_KEY, {
+    mode: AppStateBackgammon.mode,
+    state: AppStateBackgammon.state,
+    turn: AppStateBackgammon.turn,
+    dice: AppStateBackgammon.dice,
+    humanColor: AppStateBackgammon.humanColor,
+    aiLevel: AppStateBackgammon.aiLevel,
+    moveCount: AppStateBackgammon.moveCount
+  });
+}
+
+function clearSavedBackgammonGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.clear(BACKGAMMON_SAVE_KEY);
+}
+
 function colorNameBg(color) {
   return color === "b" ? "Black" : "White";
 }
@@ -200,9 +220,37 @@ function initBackgammonApp() {
   if (offBottom) offBottom.addEventListener("click", () => onBackgammonDestClick("off", "w"));
 
   updateColorChoiceVisibilityBg();
-  // No mode is pre-selected and no game auto-starts: the placeholder
-  // shows until the player picks 2-player or configures vs-computer and
-  // presses New game, matching chess.html's behavior.
+
+  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(BACKGAMMON_SAVE_KEY) : null;
+  if (savedGame && savedGame.state) {
+    AppStateBackgammon.mode = savedGame.mode;
+    AppStateBackgammon.state = savedGame.state;
+    AppStateBackgammon.turn = savedGame.turn;
+    AppStateBackgammon.dice = savedGame.dice || [];
+    AppStateBackgammon.selected = null;
+    AppStateBackgammon.humanColor = savedGame.humanColor;
+    AppStateBackgammon.aiLevel = savedGame.aiLevel;
+    AppStateBackgammon.moveCount = savedGame.moveCount;
+    AppStateBackgammon.gameOver = false;
+    resetUndoStackBg();
+    setActiveModeButtonBg(AppStateBackgammon.mode);
+    setGameResultBg("");
+    showBoardSectionBg();
+    buildBackgammonBoardDOM();
+    updateBackgammonBoard();
+    updateGameLabelsBg();
+    if (AppStateBackgammon.mode === "offline-ai" && AppStateBackgammon.turn !== AppStateBackgammon.humanColor) {
+      setStatusBg("board-info", "Computer thinking…");
+      setTimeout(aiTurnBg, 300);
+    } else if (AppStateBackgammon.dice.length) {
+      setStatusBg("board-info", colorNameBg(AppStateBackgammon.turn) + " to move. " + AppStateBackgammon.dice.length + " di" + (AppStateBackgammon.dice.length === 1 ? "e" : "ce") + " left to play.");
+    } else {
+      setStatusBg("board-info", colorNameBg(AppStateBackgammon.turn) + " to move. Roll the dice.");
+    }
+  }
+  // Otherwise no mode is pre-selected and no game auto-starts: the
+  // placeholder shows until the player picks 2-player or configures
+  // vs-computer and presses New game, matching chess.html's behavior.
 }
 
 function rollDiceBg() {
@@ -564,6 +612,9 @@ function updateGameLabelsBg() {
   updateUndoButtonVisibilityBg();
   updateResignVisibilityBg();
   updateRollButtonVisibilityBg();
+
+  if (AppStateBackgammon.gameOver) clearSavedBackgammonGame();
+  else saveBackgammonGame();
 }
 
 function updateUndoButtonVisibilityBg() {

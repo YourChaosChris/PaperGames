@@ -74,6 +74,25 @@ const AppStateXiangqi = {
 };
 
 const XQ_STYLE_KEY = "einkchess_xiangqi_piece_style";
+const XQ_SAVE_KEY = "einkchess_save_xiangqi";
+
+function saveXiangqiGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.save(XQ_SAVE_KEY, {
+    mode: AppStateXiangqi.mode,
+    board: AppStateXiangqi.board,
+    turn: AppStateXiangqi.turn,
+    lastMove: AppStateXiangqi.lastMove,
+    humanColor: AppStateXiangqi.humanColor,
+    aiLevel: AppStateXiangqi.aiLevel,
+    moveCount: AppStateXiangqi.moveCount
+  });
+}
+
+function clearSavedXiangqiGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.clear(XQ_SAVE_KEY);
+}
 
 function colorNameXq(color) {
   return color === "r" ? "Red" : "Black";
@@ -262,9 +281,35 @@ function initXiangqiApp() {
   }
 
   updateColorChoiceVisibilityXq();
-  // No mode is pre-selected and no game auto-starts: the placeholder
-  // shows until the player picks 2-player or configures vs-computer and
-  // presses New game, matching chess.html's behavior.
+
+  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(XQ_SAVE_KEY) : null;
+  if (savedGame && savedGame.board) {
+    AppStateXiangqi.mode = savedGame.mode;
+    AppStateXiangqi.board = savedGame.board;
+    AppStateXiangqi.turn = savedGame.turn;
+    AppStateXiangqi.selected = null;
+    AppStateXiangqi.lastMove = savedGame.lastMove;
+    AppStateXiangqi.humanColor = savedGame.humanColor;
+    AppStateXiangqi.aiLevel = savedGame.aiLevel;
+    AppStateXiangqi.moveCount = savedGame.moveCount;
+    AppStateXiangqi.gameOver = false;
+    resetUndoStackXq();
+    setActiveModeButtonXq(AppStateXiangqi.mode);
+    setGameResultXq("");
+    showBoardSectionXq();
+    buildXiangqiBoardDOM();
+    updateXiangqiBoard();
+    updateGameLabelsXq();
+    if (AppStateXiangqi.mode === "offline-ai" && AppStateXiangqi.turn !== AppStateXiangqi.humanColor) {
+      setStatusXq("board-info", "Computer thinking…");
+      setTimeout(aiMoveOfflineXq, 300);
+    } else {
+      setStatusXq("board-info", colorNameXq(AppStateXiangqi.turn) + " to move.");
+    }
+  }
+  // Otherwise no mode is pre-selected and no game auto-starts: the
+  // placeholder shows until the player picks 2-player or configures
+  // vs-computer and presses New game, matching chess.html's behavior.
 }
 
 function isPieceOfTurnXq(piece, turn) {
@@ -526,6 +571,9 @@ function updateGameLabelsXq() {
   if (meta) meta.textContent = AppStateXiangqi.moveCount ? "Move " + AppStateXiangqi.moveCount : "";
   updateUndoButtonVisibilityXq();
   updateResignVisibilityXq();
+
+  if (AppStateXiangqi.gameOver) clearSavedXiangqiGame();
+  else saveXiangqiGame();
 }
 
 function updateUndoButtonVisibilityXq() {
