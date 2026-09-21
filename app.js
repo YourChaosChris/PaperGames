@@ -24,6 +24,29 @@ const AppState = {
   viewColor: "white"    // Perspektive des Bretts: "white" oder "black"
 };
 
+const CHESS_SAVE_KEY = "einkchess_save_chess";
+
+function saveChessGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.save(CHESS_SAVE_KEY, {
+    mode: AppState.mode,
+    board: AppState.board,
+    turn: AppState.turn,
+    lastMove: AppState.lastMove,
+    humanColor: AppState.humanColor,
+    aiLevel: AppState.aiLevel,
+    viewColor: AppState.viewColor,
+    positionHistory: AppState.positionHistory,
+    halfmoveClock: AppState.halfmoveClock,
+    moveHistory: AppState.moveHistory
+  });
+}
+
+function clearSavedChessGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.clear(CHESS_SAVE_KEY);
+}
+
 // Debounced Resize-Handling für langsame E‑Ink-Displays
 let einkResizeHandlerAttached = false;
 let einkResizeTimeoutId = null;
@@ -688,6 +711,44 @@ aiLevelInline.addEventListener("change", () => {
   updateAiColorChoiceVisibility();
   setOnlineTab("human");
 
+  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(CHESS_SAVE_KEY) : null;
+  if (savedGame && savedGame.board) {
+    AppState.mode = savedGame.mode;
+    AppState.board = savedGame.board;
+    AppState.turn = savedGame.turn;
+    AppState.selected = null;
+    AppState.lastMove = savedGame.lastMove;
+    AppState.humanColor = savedGame.humanColor;
+    AppState.aiLevel = savedGame.aiLevel;
+    AppState.viewColor = savedGame.viewColor || "white";
+    AppState.positionHistory = savedGame.positionHistory || [];
+    AppState.halfmoveClock = savedGame.halfmoveClock || 0;
+    AppState.moveHistory = savedGame.moveHistory || [];
+    AppState.currentGame = null;
+    AppState.gameOver = false;
+    resetUndoStack();
+    updateActionButtonsVisibility();
+    setActiveModeButton(savedGame.mode);
+    onlineControls.classList.add("hidden");
+    if (savedGame.mode === "offline-ai" && offlineAiControls) {
+      offlineAiControls.classList.remove("hidden");
+      if (aiLevelInline) aiLevelInline.value = String(savedGame.aiLevel || 2);
+      updateAiColorChoiceVisibility();
+    }
+    setGameResult("");
+    showBoardSection();
+    buildBoardDOM();
+    updateBoard();
+    updateGameLabels();
+    renderMoveList();
+    if (savedGame.mode === "offline-ai" && AppState.turn !== AppState.humanColor) {
+      setStatus("board-info", "Computer thinking…");
+      setTimeout(aiMoveOffline, 10);
+    } else {
+      setStatus("board-info", (AppState.turn === "white" ? "White" : "Black") + " to move.");
+    }
+  }
+
   // Versuchen, bestehenden Login aus Redirect zu vervollständigen
   LichessAuth.maybeFinishLoginFromRedirect()
     .then(async (didLogin) => {
@@ -1063,6 +1124,8 @@ function updateGameLabels() {
     meta.textContent = "";
     if (clocks) clocks.textContent = "";
     updateUndoButtonVisibility();
+    if (AppState.gameOver) clearSavedChessGame();
+    else saveChessGame();
     return;
   }
 

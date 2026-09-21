@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "einkchess-cache-v9";
+const CACHE_NAME = "einkchess-cache-v10";
 
 const APP_SHELL = [
   "./",
@@ -59,6 +59,7 @@ const APP_SHELL = [
   "xiangqi-ai.js",
   "xiangqi-app.js",
   "sw-register.js",
+  "game-storage.js",
   "manifest.json",
   "favicon.png",
   "icon-192.png"

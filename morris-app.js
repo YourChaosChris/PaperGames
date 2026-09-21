@@ -21,6 +21,26 @@ const AppStateMorris = {
   undoStack: []
 };
 
+const MORRIS_SAVE_KEY = "einkchess_save_morris";
+
+function saveMorrisGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.save(MORRIS_SAVE_KEY, {
+    mode: AppStateMorris.mode,
+    state: AppStateMorris.state,
+    turn: AppStateMorris.turn,
+    pendingRemoval: AppStateMorris.pendingRemoval,
+    humanColor: AppStateMorris.humanColor,
+    aiLevel: AppStateMorris.aiLevel,
+    moveCount: AppStateMorris.moveCount
+  });
+}
+
+function clearSavedMorrisGame() {
+  if (typeof GameStorage === "undefined") return;
+  GameStorage.clear(MORRIS_SAVE_KEY);
+}
+
 function colorNameMorris(color) {
   return color === "b" ? "Black" : "White";
 }
@@ -200,9 +220,37 @@ function initMorrisApp() {
   }
 
   updateColorChoiceVisibilityMorris();
-  // No mode is pre-selected and no game auto-starts: the placeholder
-  // shows until the player picks 2-player or configures vs-computer and
-  // presses New game, matching chess.html's behavior.
+
+  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(MORRIS_SAVE_KEY) : null;
+  if (savedGame && savedGame.state) {
+    AppStateMorris.mode = savedGame.mode;
+    AppStateMorris.state = savedGame.state;
+    AppStateMorris.turn = savedGame.turn;
+    AppStateMorris.selected = null;
+    AppStateMorris.pendingRemoval = savedGame.pendingRemoval;
+    AppStateMorris.humanColor = savedGame.humanColor;
+    AppStateMorris.aiLevel = savedGame.aiLevel;
+    AppStateMorris.moveCount = savedGame.moveCount;
+    AppStateMorris.gameOver = false;
+    resetUndoStackMorris();
+    setActiveModeButtonMorris(AppStateMorris.mode);
+    setGameResultMorris("");
+    showBoardSectionMorris();
+    buildMorrisBoardDOM();
+    updateMorrisBoard();
+    updateGameLabelsMorris();
+    if (AppStateMorris.pendingRemoval) {
+      setStatusMorris("board-info", colorNameMorris(AppStateMorris.turn) + " formed a mill - choose an opponent piece to remove.");
+    } else if (AppStateMorris.mode === "offline-ai" && AppStateMorris.turn !== AppStateMorris.humanColor) {
+      setStatusMorris("board-info", "Computer thinking…");
+      setTimeout(aiMoveOfflineMorris, 300);
+    } else {
+      setStatusMorris("board-info", colorNameMorris(AppStateMorris.turn) + " to move.");
+    }
+  }
+  // Otherwise no mode is pre-selected and no game auto-starts: the
+  // placeholder shows until the player picks 2-player or configures
+  // vs-computer and presses New game, matching chess.html's behavior.
 }
 
 // Legal moves that share the same physical action (same from/to for a
@@ -291,6 +339,7 @@ function resolveMoveOrAskRemoval(group) {
     options: group.map((m) => m.remove)
   };
   updateMorrisBoard();
+  saveMorrisGame();
   setStatusMorris("board-info", colorNameMorris(AppStateMorris.turn) + " formed a mill - choose an opponent piece to remove.");
 }
 
@@ -501,6 +550,9 @@ function updateGameLabelsMorris() {
   }
   updateUndoButtonVisibilityMorris();
   updateResignVisibilityMorris();
+
+  if (AppStateMorris.gameOver) clearSavedMorrisGame();
+  else saveMorrisGame();
 }
 
 function updateUndoButtonVisibilityMorris() {
