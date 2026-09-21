@@ -46,6 +46,12 @@ function clearSavedCheckersGame() {
   GameStorage.clear(CHECKERS_SAVE_KEY);
 }
 
+function recordCheckersStatsIfVsAi(outcome) {
+  if (typeof GameStats === "undefined") return;
+  if (AppStateCheckers.mode !== "offline-ai") return;
+  GameStats.record("checkers", outcome);
+}
+
 function colorNameCheckers(color) {
   return color === "b" ? "Black" : "White";
 }
@@ -199,6 +205,7 @@ function initCheckersApp() {
       const winner = CheckersCore.otherColor(loser);
       AppStateCheckers.gameOver = true;
       announceGameResultCheckers(colorNameCheckers(winner) + " wins", colorNameCheckers(winner) + " wins by resignation.");
+      recordCheckersStatsIfVsAi("loss");
       updateGameLabelsCheckers();
     });
   }
@@ -317,7 +324,10 @@ function applyCheckersMove(move) {
   updateGameLabelsCheckers();
 
   if (AppStateCheckers.movesSinceCapture >= 80) {
+    AppStateCheckers.gameOver = true;
     announceGameResultCheckers("Draw", "Draw (no capture in the last 40 moves).");
+    recordCheckersStatsIfVsAi("draw");
+    updateGameLabelsCheckers();
     return;
   }
 
@@ -325,7 +335,10 @@ function applyCheckersMove(move) {
   if (end.status !== "normal") {
     const winnerName = colorNameCheckers(end.winner);
     const reason = end.status === "no-pieces" ? "no pieces left" : "no legal moves";
+    AppStateCheckers.gameOver = true;
     announceGameResultCheckers(winnerName + " wins", winnerName + " wins (" + reason + ").");
+    recordCheckersStatsIfVsAi(end.winner === AppStateCheckers.humanColor ? "win" : "loss");
+    updateGameLabelsCheckers();
     return;
   }
 
@@ -355,7 +368,10 @@ function aiMoveOfflineCheckers() {
   updateGameLabelsCheckers();
 
   if (AppStateCheckers.movesSinceCapture >= 80) {
+    AppStateCheckers.gameOver = true;
     announceGameResultCheckers("Draw", "Draw (no capture in the last 40 moves).");
+    recordCheckersStatsIfVsAi("draw");
+    updateGameLabelsCheckers();
     return;
   }
 
@@ -363,7 +379,10 @@ function aiMoveOfflineCheckers() {
   if (end.status !== "normal") {
     const winnerName = colorNameCheckers(end.winner);
     const reason = end.status === "no-pieces" ? "no pieces left" : "no legal moves";
+    AppStateCheckers.gameOver = true;
     announceGameResultCheckers(winnerName + " wins", winnerName + " wins (" + reason + ").");
+    recordCheckersStatsIfVsAi(end.winner === AppStateCheckers.humanColor ? "win" : "loss");
+    updateGameLabelsCheckers();
     return;
   }
 

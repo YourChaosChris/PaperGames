@@ -10,6 +10,7 @@ const STRINGS = {
     nav_rules: "Rules",
     nav_guide: "Guide",
     nav_about: "About",
+    nav_stats: "Stats",
 
     home_tagline: "Chess, built for e-readers.",
     home_intro: "A small, dependency-free chess app made for E-Ink displays like Tolino, Kobo and Kindle: high contrast, no animations, and it keeps working with no internet connection once you've opened it.",
@@ -18,6 +19,7 @@ const STRINGS = {
     home_rules_desc: "How the pieces move, check, castling, and the draw rules.",
     home_guide_desc: "Get it onto your e-reader and keep it working offline.",
     home_about_desc: "Why this exists, and how to say thanks.",
+    home_stats_desc: "See your win/loss record against the computer, for every game.",
     home_games_title: "Choose a game",
     home_chess_desc: "The classic game. Local 2-player, vs. the built-in engine, or online via Lichess.",
     home_go_desc: "The ancient territory game. Local 2-player or vs. the built-in engine, three board sizes, three difficulty levels.",
@@ -317,7 +319,17 @@ const STRINGS = {
     about_donate_button: "Buy me a coffee ☕",
     about_qr_text: "Or scan this QR code to open the donation page on your phone:",
     about_credits: "Chess piece set (“cburnett”) by Colin M.L. Burnett, used under the BSD license.",
-    about_back: "← Back to the board"
+    about_back: "← Back to the board",
+
+    stats_title: "Your Stats",
+    stats_intro: "Results against the built-in computer, kept on this device only.",
+    stats_col_game: "Game",
+    stats_col_wins: "Wins",
+    stats_col_losses: "Losses",
+    stats_col_draws: "Draws",
+    stats_empty: "No games played against the computer yet.",
+    stats_reset_button: "Reset stats",
+    stats_reset_confirm: "Reset all stats? This cannot be undone."
   },
   de: {
     nav_home: "Start",
@@ -325,6 +337,7 @@ const STRINGS = {
     nav_rules: "Regeln",
     nav_guide: "Anleitung",
     nav_about: "Über",
+    nav_stats: "Statistik",
 
     home_tagline: "Schach, gemacht für E-Reader.",
     home_intro: "Eine kleine Schach-App ohne Abhängigkeiten, gebaut für E-Ink-Displays wie Tolino, Kobo und Kindle: hoher Kontrast, keine Animationen, und funktioniert nach dem ersten Öffnen auch ohne Internetverbindung weiter.",
@@ -333,6 +346,7 @@ const STRINGS = {
     home_rules_desc: "Wie die Figuren ziehen, Schach, Rochade und die Remis-Regeln.",
     home_guide_desc: "So kommt es auf deinen E-Reader und bleibt offline nutzbar.",
     home_about_desc: "Warum es das gibt, und wie man Danke sagen kann.",
+    home_stats_desc: "Sieh dir deine Bilanz gegen den Computer an, für jedes Spiel.",
     home_games_title: "Spiel wählen",
     home_chess_desc: "Der Klassiker. Lokal zu zweit, gegen die eingebaute KI, oder online via Lichess.",
     home_go_desc: "Das uralte Gebietsspiel. Lokal zu zweit oder gegen die eingebaute KI, drei Brettgrößen, drei Schwierigkeitsstufen.",
@@ -632,7 +646,17 @@ const STRINGS = {
     about_donate_button: "Spendier mir einen Kaffee ☕",
     about_qr_text: "Oder scanne diesen QR-Code, um die Spendenseite auf dem Handy zu öffnen:",
     about_credits: "Figurensatz („cburnett“) von Colin M.L. Burnett, verwendet unter der BSD-Lizenz.",
-    about_back: "← Zurück zum Brett"
+    about_back: "← Zurück zum Brett",
+
+    stats_title: "Deine Statistik",
+    stats_intro: "Ergebnisse gegen den eingebauten Computer, nur auf diesem Gerät gespeichert.",
+    stats_col_game: "Spiel",
+    stats_col_wins: "Siege",
+    stats_col_losses: "Niederlagen",
+    stats_col_draws: "Remis",
+    stats_empty: "Noch keine Partien gegen den Computer gespielt.",
+    stats_reset_button: "Statistik zurücksetzen",
+    stats_reset_confirm: "Statistik wirklich zurücksetzen? Das kann nicht rückgängig gemacht werden."
   }
 };
 

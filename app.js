@@ -47,6 +47,15 @@ function clearSavedChessGame() {
   GameStorage.clear(CHESS_SAVE_KEY);
 }
 
+// Records a game's outcome from the human player's perspective, but only
+// when actually playing the built-in AI - local 2-player and online games
+// (already tracked by Lichess itself) aren't counted.
+function recordChessStatsIfVsAi(outcome) {
+  if (typeof GameStats === "undefined") return;
+  if (AppState.mode !== "offline-ai") return;
+  GameStats.record("chess", outcome);
+}
+
 // Debounced Resize-Handling für langsame E‑Ink-Displays
 let einkResizeHandlerAttached = false;
 let einkResizeTimeoutId = null;
@@ -162,6 +171,10 @@ function setGameResult(text) {
 // shows a centered popup with the same description - so the outcome is
 // impossible to miss regardless of mode (offline, vs-computer, or online).
 function announceGameResult(resultCode, message) {
+  AppState.gameOver = true;
+  if (AppState.mode === "offline" || AppState.mode === "offline-ai") {
+    clearSavedChessGame();
+  }
   setGameResult(message);
   setStatus("board-info", message);
   if (window.ResultModal) {
@@ -258,14 +271,17 @@ function isPawnMoveOrCapture(board, from, to) {
 function checkAutoDraw() {
   if (isThreefoldRepetition()) {
     announceGameResult("½-½", "Draw by repetition.");
+    recordChessStatsIfVsAi("draw");
     return true;
   }
   if (AppState.halfmoveClock >= 100) {
     announceGameResult("½-½", "Draw (50-move rule).");
+    recordChessStatsIfVsAi("draw");
     return true;
   }
   if (AiEngine.hasInsufficientMaterial(AppState.board)) {
     announceGameResult("½-½", "Draw (insufficient material).");
+    recordChessStatsIfVsAi("draw");
     return true;
   }
   return false;
@@ -1293,9 +1309,11 @@ setStatus("board-info", "Move: " + from + "–" + to + ". " + side + " to move."
         const winner = endAfterHuman.winner === "white" ? "White" : "Black";
         const result = winner === "White" ? "1-0" : "0-1";
         announceGameResult(result, "Checkmate! You win.");
+        recordChessStatsIfVsAi("win");
         return;
       } else if (endAfterHuman.status === "stalemate") {
         announceGameResult("½-½", "Draw (stalemate).");
+        recordChessStatsIfVsAi("draw");
         return;
       }
 
@@ -1494,8 +1512,10 @@ async function aiMoveOffline() {
     if (end.status === "checkmate") {
       const result = aiColor === "white" ? "0-1" : "1-0";
       announceGameResult(result, "Checkmate! The computer is mated.");
+      recordChessStatsIfVsAi("win");
     } else if (end.status === "stalemate") {
       announceGameResult("½-½", "Draw (stalemate).");
+      recordChessStatsIfVsAi("draw");
     } else {
       setStatus("board-info", "Computer has no moves.");
     }
@@ -1528,8 +1548,10 @@ async function aiMoveOffline() {
   if (endForHuman.status === "checkmate") {
     const result = aiColor === "white" ? "0-1" : "1-0";
     announceGameResult(result, "Checkmate! The computer wins.");
+    recordChessStatsIfVsAi("loss");
   } else if (endForHuman.status === "stalemate") {
     announceGameResult("½-½", "Draw (stalemate).");
+    recordChessStatsIfVsAi("draw");
   } else {
     setStatus("board-info", "Computer plays " + move.from + "–" + move.to + ". Your move.");
   }
