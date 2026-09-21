@@ -284,6 +284,18 @@ const STRINGS = {
     backgammon_history_modern_p1: "Backgammon holds a special place in AI history: in 1992, a program called TD-Gammon, built by IBM researcher Gerald Tesauro, used a neural network that learned by playing itself millions of times - one of the earliest successes of what's now called reinforcement learning.",
     backgammon_history_modern_p2: "TD-Gammon played at a level competitive with the world's best humans years before similar techniques conquered chess or Go, and its unconventional strategic ideas ended up changing how top human players approached the game.",
 
+    xiangqi_history_title: "The History of Xiangqi",
+    xiangqi_history_intro: "Chinese chess shares deep roots with international chess, yet took its own distinct path over more than a thousand years to become the game played by hundreds of millions today.",
+    xiangqi_history_origins_title: "A Shared Root, a Separate Path",
+    xiangqi_history_origins_p1: "Like international chess, Xiangqi almost certainly descends from chaturanga, the Indian war game that spread along trade routes in every direction during the first millennium CE. Chinese legend credits the Han dynasty general Han Xin with inventing the game around 200 BCE to keep his troops entertained and sharp, though most historians consider this an appealing myth rather than established fact.",
+    xiangqi_history_origins_p2: "The earliest solid textual evidence places a recognizable ancestor of Xiangqi in the Tang dynasty (7th-10th century), under the name Baoyingqi. It still lacked several features that define the modern game.",
+    xiangqi_history_evolution_title: "The River, the Palace, and the Cannon",
+    xiangqi_history_evolution_p1: "Xiangqi reached roughly its modern form during the Song dynasty (960-1279 CE), when the board gained its distinctive river and the two palaces, and the pieces were fixed at the seven types played today.",
+    xiangqi_history_evolution_p2: "The Cannon is Xiangqi's one truly original piece, with no equivalent in chess or its other descendants - fittingly, since it was added specifically to reflect the introduction of early gunpowder weapons into Chinese warfare, centuries after the other pieces had already settled into their roles.",
+    xiangqi_history_modern_title: "Hundreds of Millions of Players",
+    xiangqi_history_modern_p1: "Xiangqi remains one of the most widely played board games on Earth, especially across China, Vietnam and Chinese communities worldwide, with professional leagues, televised tournaments, and dedicated sponsorship not unlike chess in the West.",
+    xiangqi_history_modern_p2: "As with international chess, computers have transformed elite play: strong Xiangqi engines now analyze the game at a level far beyond any human, and Xiangqi has become a standard benchmark - alongside chess, Go, and shogi - for testing general-purpose game-playing AI.",
+
     back_home: "← Back to home",
 
     guide_title: "Guide: eInkChess on your device",
@@ -583,6 +595,18 @@ const STRINGS = {
     backgammon_history_modern_title: "Ein früher Sieg für Künstliche Intelligenz",
     backgammon_history_modern_p1: "Backgammon nimmt einen besonderen Platz in der KI-Geschichte ein: 1992 nutzte ein Programm namens TD-Gammon des IBM-Forschers Gerald Tesauro ein neuronales Netz, das durch Millionen Partien gegen sich selbst lernte – einer der frühesten Erfolge dessen, was heute bestärkendes Lernen (Reinforcement Learning) genannt wird.",
     backgammon_history_modern_p2: "TD-Gammon spielte schon Jahre bevor ähnliche Verfahren Schach oder Go eroberten auf einem mit den besten Menschen konkurrenzfähigen Niveau, und seine unkonventionellen strategischen Ideen veränderten sogar, wie Spitzenspieler das Spiel seither angehen.",
+
+    xiangqi_history_title: "Die Geschichte von Xiangqi",
+    xiangqi_history_intro: "Chinesisches Schach teilt tiefe Wurzeln mit dem internationalen Schach, ging aber über mehr als tausend Jahre einen eigenen Weg, um zu dem Spiel zu werden, das heute von Hunderten Millionen Menschen gespielt wird.",
+    xiangqi_history_origins_title: "Eine gemeinsame Wurzel, ein eigener Weg",
+    xiangqi_history_origins_p1: "Wie das internationale Schach stammt Xiangqi mit ziemlicher Sicherheit vom Chaturanga ab, dem indischen Kriegsspiel, das sich im ersten Jahrtausend n. Chr. über Handelsrouten in alle Richtungen verbreitete. Eine chinesische Legende schreibt die Erfindung des Spiels um 200 v. Chr. dem Han-General Han Xin zu, der damit seine Truppen bei Laune und geistig fit halten wollte – die meisten Historiker halten das jedoch eher für einen reizvollen Mythos als für gesicherte Tatsache.",
+    xiangqi_history_origins_p2: "Die frühesten verlässlichen schriftlichen Belege verorten einen erkennbaren Vorläufer von Xiangqi in der Tang-Dynastie (7.–10. Jahrhundert) unter dem Namen Baoyingqi. Ihm fehlten noch mehrere Merkmale, die das moderne Spiel ausmachen.",
+    xiangqi_history_evolution_title: "Der Fluss, der Palast und die Kanone",
+    xiangqi_history_evolution_p1: "Xiangqi erreichte während der Song-Dynastie (960–1279 n. Chr.) ungefähr seine moderne Form: Das Brett erhielt seinen charakteristischen Fluss und die beiden Paläste, und die Figuren wurden auf die sieben Typen festgelegt, die heute gespielt werden.",
+    xiangqi_history_evolution_p2: "Die Kanone ist Xiangqis einzige wirklich eigenständige Figur, ohne Entsprechung im Schach oder dessen anderen Nachfahren – passenderweise, denn sie wurde eigens hinzugefügt, um die Einführung früher Schwarzpulverwaffen in die chinesische Kriegsführung widerzuspiegeln, Jahrhunderte nachdem die anderen Figuren ihre Rollen bereits gefunden hatten.",
+    xiangqi_history_modern_title: "Hunderte Millionen Spieler",
+    xiangqi_history_modern_p1: "Xiangqi zählt bis heute zu den weltweit meistgespielten Brettspielen, besonders in China, Vietnam und chinesischen Gemeinschaften rund um den Globus, mit professionellen Ligen, im Fernsehen übertragenen Turnieren und Sponsoring, nicht unähnlich dem Schach im Westen.",
+    xiangqi_history_modern_p2: "Wie beim internationalen Schach haben Computer das Spitzenspiel verändert: Starke Xiangqi-Engines analysieren das Spiel heute auf einem Niveau weit über jedem Menschen, und Xiangqi ist – neben Schach, Go und Shogi – zu einem Standard-Testfeld für allgemeine spielende KI geworden.",
 
     back_home: "← Zurück zur Startseite",
 
