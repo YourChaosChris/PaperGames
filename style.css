@@ -2775,3 +2775,83 @@ button.ur-tray-slot {
 .nonogram-icon::after {
   grid-row: 3;
 }
+
+/* 2048 board: a 4x4 float-grid (same technique as the chess/checkers/
+   Connect Four boards - a JS-enforced square cell size, since CSS
+   `aspect-ratio` is unreliable on E-Ink browsers). Tiles are told apart
+   purely by their printed number and a couple of border/weight steps
+   as the value grows, never by color, unlike the classic game's usual
+   color-per-value palette - so this reads fine on a monochrome E-Ink
+   display without needing sixteen shades any reader could tell apart
+   on some displays but not others. */
+
+#twenty48-board {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+  touch-action: none;
+}
+
+.twenty48-cell {
+  width: 25%;
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+
+.twenty48-cell-filled {
+  border-width: 2px;
+}
+
+.twenty48-cell-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(0.9rem, 5vw, 1.6rem);
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.twenty48-cell-big .twenty48-cell-value {
+  font-size: clamp(0.7rem, 4vw, 1.3rem);
+}
+
+.twenty48-cell-huge {
+  background: var(--square-dark);
+}
+
+.twenty48-cell-huge .twenty48-cell-value {
+  font-size: clamp(0.6rem, 3.2vw, 1.1rem);
+}
+
+.twenty48-controls-pad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+
+.twenty48-controls-row {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.twenty48-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2em;
+  height: 1.4em;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  font-size: 0.6rem;
+  font-weight: 700;
+}
