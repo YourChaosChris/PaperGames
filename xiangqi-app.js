@@ -8,20 +8,56 @@
 //
 // The one feature unique to this game: a toggle between each piece's
 // traditional Chinese character (which some E-Ink browsers may lack a
-// CJK font for) and a Western chess-style Unicode symbol as a safe,
+// CJK font for) and a Western-style pictorial symbol as a safe,
 // always-legible fallback/preference. Both styles render the same
-// neutral disc with red or black text - only the glyph inside changes -
+// neutral disc with red or black content - only what's inside changes -
 // so switching styles never reflows the board.
 
 const XQ_CLASSIC_CHARS = {
   r: { G: "帥", A: "仕", E: "相", H: "傌", R: "俥", C: "炮", P: "兵" },
   b: { G: "將", A: "士", E: "象", H: "馬", R: "車", C: "砲", P: "卒" }
 };
-// One Unicode chess glyph per type; Cannon reuses Chariot's rook glyph
-// with a small dot marker added in CSS so the two remain visually
-// distinct despite sharing a symbol (there are only 6 standard chess
-// piece glyphs for Xiangqi's 7 piece types).
-const XQ_SYMBOL_CHARS = { G: "♚", A: "♛", E: "♝", H: "♞", R: "♜", C: "♜", P: "♟" };
+
+// Symbol style: General/Horse/Chariot/Soldier reuse the app's own
+// cburnett chess artwork (pieces.js) for pieces whose role genuinely
+// matches - King for General (the piece you must protect), Knight for
+// Horse (identical move shape), Rook for Chariot (its historical
+// ancestor really is a war chariot), Pawn for Soldier. Advisor,
+// Elephant and Cannon have no equivalent in Western chess, so they get
+// three small custom SVGs drawn to actually look like what they are
+// (a shield, an elephant, a cannon on wheels) rather than borrowing an
+// unrelated chess piece.
+const XQ_CUSTOM_SVG = {
+  A: '<svg viewBox="0 0 45 45"><path fill="{c}" stroke="#000" stroke-width="1.5" stroke-linejoin="round" d="M22.5 6 34 11v9c0 10.5-6 18-11.5 21C17 44 11 33.5 11 26v-9z"/></svg>',
+  E: '<svg viewBox="0 0 45 45"><g fill="{c}" stroke="#000" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"><path d="M31 39c1.5-1 2.5-3 2.5-5.5 0-3-2-5-2-9 0-6-4.5-11-11-11-6 0-10 4-11.5 9-1 3.5.5 6-1 8.5-1 2 0 5.5 2 6.5"/><path d="M9 28c-2 0-3.5-1.5-3.5-4 0-2 1.2-3.6 2.7-5.6"/><circle cx="24" cy="16" r="1.4" fill="#000" stroke="none"/></g></svg>',
+  C: '<svg viewBox="0 0 45 45"><g fill="{c}" stroke="#000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"><rect x="9" y="15" width="26" height="8" rx="3"/><circle cx="15" cy="30" r="7" fill="none" stroke-width="2.2"/><circle cx="15" cy="30" r="1.6" fill="#000" stroke="none"/><path d="M31 15v-5h4v5" fill="none"/></g></svg>'
+};
+
+function xqRecolor(svg, hex) {
+  return svg.replace(/fill="#fff"/g, 'fill="' + hex + '"').replace("{c}", hex);
+}
+
+const XQ_RED = "#b3261e";
+const XQ_SYMBOL_SVG = {
+  r: {
+    G: xqRecolor(PieceIcons.K, XQ_RED),
+    A: xqRecolor(XQ_CUSTOM_SVG.A, XQ_RED),
+    E: xqRecolor(XQ_CUSTOM_SVG.E, XQ_RED),
+    H: xqRecolor(PieceIcons.N, XQ_RED),
+    R: xqRecolor(PieceIcons.R, XQ_RED),
+    C: xqRecolor(XQ_CUSTOM_SVG.C, XQ_RED),
+    P: xqRecolor(PieceIcons.P, XQ_RED)
+  },
+  b: {
+    G: PieceIcons.k,
+    A: xqRecolor(XQ_CUSTOM_SVG.A, "#111"),
+    E: xqRecolor(XQ_CUSTOM_SVG.E, "#111"),
+    H: PieceIcons.n,
+    R: PieceIcons.r,
+    C: xqRecolor(XQ_CUSTOM_SVG.C, "#111"),
+    P: PieceIcons.p
+  }
+};
 
 const AppStateXiangqi = {
   mode: "offline",        // "offline" | "offline-ai"
@@ -463,13 +499,14 @@ function updateXiangqiBoard() {
     const piece = AppStateXiangqi.board[r][c];
     const pieceEl = pt.querySelector(".xq-piece");
     if (pieceEl) {
-      pieceEl.classList.remove("xq-piece-red", "xq-piece-black", "xq-piece-cannon", "xq-piece-filled");
+      pieceEl.classList.remove("xq-piece-red", "xq-piece-black", "xq-piece-filled");
       if (piece) {
         pieceEl.classList.add(piece.color === "r" ? "xq-piece-red" : "xq-piece-black", "xq-piece-filled");
-        if (piece.type === "C") pieceEl.classList.add("xq-piece-cannon");
-        pieceEl.textContent = AppStateXiangqi.pieceStyle === "classic"
-          ? XQ_CLASSIC_CHARS[piece.color][piece.type]
-          : XQ_SYMBOL_CHARS[piece.type];
+        if (AppStateXiangqi.pieceStyle === "classic") {
+          pieceEl.textContent = XQ_CLASSIC_CHARS[piece.color][piece.type];
+        } else {
+          pieceEl.innerHTML = XQ_SYMBOL_SVG[piece.color][piece.type];
+        }
       } else {
         pieceEl.textContent = "";
       }
