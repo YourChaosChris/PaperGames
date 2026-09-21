@@ -6,7 +6,7 @@
 
 const GameStats = (function () {
   const KEY = "einkchess_stats";
-  const GAMES = ["chess", "go", "checkers", "ur", "morris", "backgammon", "xiangqi", "mancala", "othello", "connectfour", "gomoku", "senet", "shogi", "sudoku", "pegsolitaire", "minesweeper", "nonogram", "twenty48", "mahjong"];
+  const GAMES = ["chess", "go", "checkers", "ur", "morris", "backgammon", "xiangqi", "mancala", "othello", "connectfour", "gomoku", "senet", "shogi", "sudoku", "pegsolitaire", "minesweeper", "nonogram", "twenty48", "mahjong", "freecell"];
 
   function loadAll() {
     try {

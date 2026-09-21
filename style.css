@@ -2924,3 +2924,109 @@ button.ur-tray-slot {
   height: 1.4em;
   font-size: 1.1rem;
 }
+
+/* FreeCell board: free cells and foundations in a row above eight
+   cascading tableau columns. Cards overlap via a negative margin
+   rather than the float-grid/percentage-grid techniques used
+   elsewhere, since a solitaire cascade is a variable-height stack, not
+   a fixed board shape - the page simply scrolls if a column grows
+   tall. Suits are told apart by their glyph shape (already
+   unambiguous - spade/club vs. heart/diamond), never by the
+   traditional red/black coloring, so this reads fine on a monochrome
+   E-Ink display without needing a color-blindness-style retrofit. */
+
+.freecell-top-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 900px;
+  margin: 0 auto 0.6rem;
+  flex-wrap: wrap;
+}
+
+.freecell-freecells,
+.freecell-foundations {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.freecell-cell {
+  width: 2.6rem;
+  height: 3.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.freecell-foundation-empty {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.freecell-cell-selected {
+  outline: 3px solid var(--border);
+  outline-offset: 1px;
+}
+
+.freecell-columns {
+  display: flex;
+  gap: 0.4rem;
+  max-width: 900px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+.freecell-column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.freecell-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  border: var(--border-width) solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  box-sizing: border-box;
+  margin-top: -1.6rem;
+  padding: 0.2rem 0 0 0.3rem;
+  text-align: left;
+  font-weight: 700;
+  font-size: clamp(0.65rem, 2.4vw, 0.95rem);
+  cursor: pointer;
+}
+
+.freecell-card:first-child {
+  margin-top: 0;
+}
+
+.freecell-card-selected {
+  outline: 3px solid var(--border);
+  outline-offset: -2px;
+}
+
+.freecell-actions-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.6rem;
+}
+
+.freecell-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8em;
+  height: 1.4em;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
