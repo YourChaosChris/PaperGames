@@ -94,6 +94,7 @@ function pushUndoSnapshotCheckers() {
 }
 
 function initCheckersApp() {
+  if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
@@ -445,6 +446,12 @@ function buildCheckersBoardDOM() {
         piece.className = "checkers-piece";
         square.appendChild(piece);
         square.addEventListener("click", onCheckersSquareClick);
+      } else {
+        // Light squares are never played on - keep them out of the tab
+        // order and hidden from screen readers instead of leaving 32
+        // unlabeled, unusable buttons in the way.
+        square.tabIndex = -1;
+        square.setAttribute("aria-hidden", "true");
       }
       boardEl.appendChild(square);
     }
@@ -499,10 +506,23 @@ function updateCheckersBoard() {
       }
     }
 
-    sq.classList.toggle("selected", !!(AppStateCheckers.selected && AppStateCheckers.selected[0] === r && AppStateCheckers.selected[1] === c));
+    const isSelected = !!(AppStateCheckers.selected && AppStateCheckers.selected[0] === r && AppStateCheckers.selected[1] === c);
+    sq.classList.toggle("selected", isSelected);
     sq.classList.toggle("last-move", !!(AppStateCheckers.lastMove &&
       ((AppStateCheckers.lastMove.from[0] === r && AppStateCheckers.lastMove.from[1] === c) ||
        (AppStateCheckers.lastMove.to[0] === r && AppStateCheckers.lastMove.to[1] === c))));
+
+    if (sq.classList.contains("dark")) {
+      let label = "Row " + (r + 1) + ", column " + (c + 1);
+      if (piece) {
+        label += ", " + (CheckersCore.colorOf(piece) === "b" ? "Black" : "White") +
+          (CheckersCore.isKing(piece) ? " king" : " piece");
+      } else {
+        label += ", empty";
+      }
+      if (isSelected) label += ", selected";
+      sq.setAttribute("aria-label", label);
+    }
   });
   ensureCheckersSquareAspectRatio();
   updateScoreLineCheckers();

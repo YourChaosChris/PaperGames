@@ -123,6 +123,7 @@ function explainIllegalGoMove(reason) {
 }
 
 function initGoApp() {
+  if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
@@ -516,6 +517,10 @@ function updateGoBoard() {
       !!(AppStateGo.lastMove && !AppStateGo.lastMove.pass &&
          AppStateGo.lastMove.r === r && AppStateGo.lastMove.c === c)
     );
+
+    let label = "Row " + (r + 1) + ", column " + (c + 1);
+    label += stone ? ", " + (stone === "b" ? "Black" : "White") + " stone" : ", empty";
+    pt.setAttribute("aria-label", label);
   });
   ensureGoBoardSquare();
   updateScoreLineGo();

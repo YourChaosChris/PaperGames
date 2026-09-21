@@ -64,9 +64,9 @@
   <div class="board-header">
     <div id="game-label"></div>
     <div id="game-meta"></div>
-    <div id="game-result"></div>
+    <div id="game-result" aria-live="assertive"></div>
 
-    <div id="board-info" class="status-text"></div>
+    <div id="board-info" class="status-text" aria-live="polite"></div>
   </div>
   <div id="board-placeholder" class="board-placeholder">
     <span class="board-placeholder-icon"><span class="go-stone-icon go-stone-black"></span></span>
@@ -76,7 +76,7 @@
     </div>
   </div>
   <div id="board-container" class="hidden">
-    <div id="go-board" class="go-board"><div id="go-grid" class="go-grid"></div></div>
+    <div id="go-board" class="go-board" role="group" aria-label="Go board"><div id="go-grid" class="go-grid"></div></div>
   </div>
   <div id="board-actions" class="board-actions">
     <button id="undo-btn" class="secondary small hidden" onclick="undoLastMove()">Undo</button>
@@ -94,6 +94,7 @@
 <script src="result-modal.js"></script>
 <script src="game-storage.js"></script>
 <script src="game-stats.js"></script>
+<script src="board-a11y.js"></script>
 <script src="go-app.js"></script>
 <script src="sw-register.js"></script>
 </body>

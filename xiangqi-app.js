@@ -18,6 +18,8 @@ const XQ_CLASSIC_CHARS = {
   b: { G: "將", A: "士", E: "象", H: "馬", R: "車", C: "砲", P: "卒" }
 };
 
+const XQ_PIECE_NAMES = { G: "General", A: "Advisor", E: "Elephant", H: "Horse", R: "Chariot", C: "Cannon", P: "Soldier" };
+
 // Symbol style: General/Horse/Chariot/Soldier reuse the app's own
 // cburnett chess artwork (pieces.js) for pieces whose role genuinely
 // matches - King for General (the piece you must protect), Knight for
@@ -153,6 +155,7 @@ function savePieceStylePref() {
 }
 
 function initXiangqiApp() {
+  if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
@@ -564,11 +567,24 @@ function updateXiangqiBoard() {
         pieceEl.textContent = "";
       }
     }
-    pt.classList.toggle("xq-point-selected", !!(AppStateXiangqi.selected && AppStateXiangqi.selected[0] === r && AppStateXiangqi.selected[1] === c));
-    pt.classList.toggle("xq-point-movable", destSet.has(r + "," + c));
+    const isSelected = !!(AppStateXiangqi.selected && AppStateXiangqi.selected[0] === r && AppStateXiangqi.selected[1] === c);
+    const isMovable = destSet.has(r + "," + c);
+    pt.classList.toggle("xq-point-selected", isSelected);
+    pt.classList.toggle("xq-point-movable", isMovable);
     pt.classList.toggle("xq-point-last-move", !!(AppStateXiangqi.lastMove &&
       ((AppStateXiangqi.lastMove.from[0] === r && AppStateXiangqi.lastMove.from[1] === c) ||
        (AppStateXiangqi.lastMove.to[0] === r && AppStateXiangqi.lastMove.to[1] === c))));
+
+    let label = "Row " + (r + 1) + ", column " + (c + 1);
+    if (piece) {
+      const color = piece.color === "r" ? "Red" : "Black";
+      label += ", " + color + " " + (XQ_PIECE_NAMES[piece.type] || "piece");
+    } else {
+      label += ", empty";
+    }
+    if (isSelected) label += ", selected";
+    else if (isMovable) label += ", movable";
+    pt.setAttribute("aria-label", label);
   });
 
   ensureXiangqiBoardSquare();

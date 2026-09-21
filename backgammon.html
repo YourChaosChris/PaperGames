@@ -57,9 +57,9 @@
   <div class="board-header">
     <div id="game-label"></div>
     <div id="game-meta"></div>
-    <div id="game-result"></div>
+    <div id="game-result" aria-live="assertive"></div>
 
-    <div id="board-info" class="status-text"></div>
+    <div id="board-info" class="status-text" aria-live="polite"></div>
   </div>
   <div id="board-placeholder" class="board-placeholder">
     <span class="board-placeholder-icon"><span class="bg-icon-checker bg-icon-checker-black"></span></span>
@@ -79,7 +79,7 @@
         <span id="backgammon-off-top-count" class="bg-tray-slot-count"></span>
       </button>
     </div>
-    <div id="backgammon-board" class="bg-board"></div>
+    <div id="backgammon-board" class="bg-board" role="group" aria-label="Backgammon board"></div>
     <div id="backgammon-tray-bottom" class="bg-tray">
       <button id="backgammon-bar-bottom" class="bg-tray-slot" type="button">
         <span class="bg-tray-slot-label" data-i18n="backgammon_tray_bar">Bar</span>
@@ -112,6 +112,7 @@
 <script src="result-modal.js"></script>
 <script src="game-storage.js"></script>
 <script src="game-stats.js"></script>
+<script src="board-a11y.js"></script>
 <script src="backgammon-app.js"></script>
 <script src="sw-register.js"></script>
 </body>

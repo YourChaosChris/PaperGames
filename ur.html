@@ -57,9 +57,9 @@
   <div class="board-header">
     <div id="game-label"></div>
     <div id="game-meta"></div>
-    <div id="game-result"></div>
+    <div id="game-result" aria-live="assertive"></div>
 
-    <div id="board-info" class="status-text"></div>
+    <div id="board-info" class="status-text" aria-live="polite"></div>
   </div>
   <div id="board-placeholder" class="board-placeholder">
     <span class="board-placeholder-icon"><span class="ur-piece-icon ur-piece-icon-black"></span></span>
@@ -79,7 +79,7 @@
         <span id="ur-tray-top-home-count" class="ur-tray-slot-count"></span>
       </div>
     </div>
-    <div id="ur-board" class="ur-board"></div>
+    <div id="ur-board" class="ur-board" role="group" aria-label="Royal Game of Ur board"></div>
     <div id="ur-tray-bottom" class="ur-tray">
       <button id="ur-tray-bottom-start" class="ur-tray-slot" type="button">
         <span class="ur-tray-slot-label" data-i18n="ur_tray_start">Start</span>
@@ -109,6 +109,7 @@
 <script src="result-modal.js"></script>
 <script src="game-storage.js"></script>
 <script src="game-stats.js"></script>
+<script src="board-a11y.js"></script>
 <script src="ur-app.js"></script>
 <script src="sw-register.js"></script>
 </body>

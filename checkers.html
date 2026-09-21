@@ -57,9 +57,9 @@
   <div class="board-header">
     <div id="game-label"></div>
     <div id="game-meta"></div>
-    <div id="game-result"></div>
+    <div id="game-result" aria-live="assertive"></div>
 
-    <div id="board-info" class="status-text"></div>
+    <div id="board-info" class="status-text" aria-live="polite"></div>
   </div>
   <div id="board-placeholder" class="board-placeholder">
     <span class="board-placeholder-icon checkers-icon-disc checkers-icon-disc-black"></span>
@@ -69,7 +69,7 @@
     </div>
   </div>
   <div id="board-container" class="hidden">
-    <div id="checkers-board"></div>
+    <div id="checkers-board" role="group" aria-label="Checkers board"></div>
   </div>
   <div id="board-actions" class="board-actions">
     <button id="undo-btn" class="secondary small hidden" onclick="undoLastMove()">Undo</button>
@@ -86,6 +86,7 @@
 <script src="result-modal.js"></script>
 <script src="game-storage.js"></script>
 <script src="game-stats.js"></script>
+<script src="board-a11y.js"></script>
 <script src="checkers-app.js"></script>
 <script src="sw-register.js"></script>
 </body>

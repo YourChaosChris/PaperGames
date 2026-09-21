@@ -58,9 +58,9 @@
     <div id="game-label"></div>
     <div id="game-meta"></div>
     <button id="xiangqi-style-toggle" class="secondary small" type="button">Switch to symbols</button>
-    <div id="game-result"></div>
+    <div id="game-result" aria-live="assertive"></div>
 
-    <div id="board-info" class="status-text"></div>
+    <div id="board-info" class="status-text" aria-live="polite"></div>
   </div>
   <div id="board-placeholder" class="board-placeholder">
     <span class="board-placeholder-icon"><span class="xq-icon-disc xq-icon-disc-red">帥</span></span>
@@ -70,7 +70,7 @@
     </div>
   </div>
   <div id="board-container" class="hidden">
-    <div id="xiangqi-board" class="xq-board"><div id="xiangqi-grid" class="xq-grid"></div></div>
+    <div id="xiangqi-board" class="xq-board" role="group" aria-label="Xiangqi board"><div id="xiangqi-grid" class="xq-grid"></div></div>
   </div>
   <div id="board-actions" class="board-actions">
     <button id="undo-btn" class="secondary small hidden" onclick="undoLastMove()">Undo</button>
@@ -87,6 +87,7 @@
 <script src="result-modal.js"></script>
 <script src="game-storage.js"></script>
 <script src="game-stats.js"></script>
+<script src="board-a11y.js"></script>
 <script src="xiangqi-app.js"></script>
 <script src="sw-register.js"></script>
 </body>
