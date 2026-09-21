@@ -72,11 +72,38 @@ const AppStateXiangqi = {
   gameOver: false,
   moveCount: 0,
   undoStack: [],
-  pieceStyle: "classic"   // "classic" | "symbols"
+  pieceStyle: "classic",  // "classic" | "symbols"
+  moveHistory: []
 };
 
 const XQ_STYLE_KEY = "einkchess_xiangqi_piece_style";
 const XQ_SAVE_KEY = "einkchess_save_xiangqi";
+
+function xqCoord(rc) {
+  return "abcdefghi".charAt(rc[1]) + (rc[0] + 1);
+}
+
+function recordMoveXq(color, from, to) {
+  AppStateXiangqi.moveHistory.push({ color: color, from: xqCoord(from), to: xqCoord(to) });
+  renderMoveListXq();
+}
+
+function resetMoveHistoryXq() {
+  AppStateXiangqi.moveHistory = [];
+  renderMoveListXq();
+}
+
+function renderMoveListXq() {
+  const el = document.getElementById("moves-list");
+  if (!el) return;
+  const moves = AppStateXiangqi.moveHistory || [];
+  if (!moves.length) {
+    el.textContent = "";
+    return;
+  }
+  el.textContent = moves.map((m) => m.from + "–" + m.to).join("; ");
+  el.scrollLeft = el.scrollWidth;
+}
 
 function saveXiangqiGame() {
   if (typeof GameStorage === "undefined") return;
@@ -87,7 +114,8 @@ function saveXiangqiGame() {
     lastMove: AppStateXiangqi.lastMove,
     humanColor: AppStateXiangqi.humanColor,
     aiLevel: AppStateXiangqi.aiLevel,
-    moveCount: AppStateXiangqi.moveCount
+    moveCount: AppStateXiangqi.moveCount,
+    moveHistory: AppStateXiangqi.moveHistory
   });
 }
 
@@ -227,6 +255,7 @@ function initXiangqiApp() {
     AppStateXiangqi.gameOver = false;
     AppStateXiangqi.moveCount = 0;
     resetUndoStackXq();
+    resetMoveHistoryXq();
     setGameResultXq("");
     showBoardSectionXq();
     buildXiangqiBoardDOM();
@@ -290,6 +319,21 @@ function initXiangqiApp() {
     });
   }
 
+  const toggleMovesBtn = document.getElementById("toggle-moves");
+  if (toggleMovesBtn) {
+    toggleMovesBtn.addEventListener("click", () => {
+      const list = document.getElementById("moves-list");
+      if (!list) return;
+      const isHidden = list.classList.contains("hidden");
+      if (isHidden) {
+        list.classList.remove("hidden");
+        renderMoveListXq();
+      } else {
+        list.classList.add("hidden");
+      }
+    });
+  }
+
   updateColorChoiceVisibilityXq();
 
   const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(XQ_SAVE_KEY) : null;
@@ -302,8 +346,10 @@ function initXiangqiApp() {
     AppStateXiangqi.humanColor = savedGame.humanColor;
     AppStateXiangqi.aiLevel = savedGame.aiLevel;
     AppStateXiangqi.moveCount = savedGame.moveCount;
+    AppStateXiangqi.moveHistory = savedGame.moveHistory || [];
     AppStateXiangqi.gameOver = false;
     resetUndoStackXq();
+    renderMoveListXq();
     setActiveModeButtonXq(AppStateXiangqi.mode);
     setGameResultXq("");
     showBoardSectionXq();
@@ -383,6 +429,7 @@ function applyXiangqiMove(move) {
   const mover = AppStateXiangqi.turn;
   AppStateXiangqi.board = XiangqiCore.applyMove(AppStateXiangqi.board, move);
   AppStateXiangqi.lastMove = { from: move.from, to: move.to };
+  recordMoveXq(mover, move.from, move.to);
   AppStateXiangqi.selected = null;
   AppStateXiangqi.moveCount++;
   AppStateXiangqi.turn = XiangqiCore.otherColor(mover);
@@ -429,6 +476,8 @@ function undoLastMove() {
   AppStateXiangqi.moveCount = prev.moveCount;
   AppStateXiangqi.lastMove = prev.lastMove;
   AppStateXiangqi.selected = null;
+  AppStateXiangqi.moveHistory.length = AppStateXiangqi.moveCount;
+  renderMoveListXq();
   setGameResultXq("");
   updateXiangqiBoard();
   updateGameLabelsXq();
@@ -440,8 +489,10 @@ function showBoardSectionXq() {
   if (section) section.classList.remove("hidden");
   const placeholder = document.getElementById("board-placeholder");
   const boardContainer = document.getElementById("board-container");
+  const movesList = document.getElementById("moves-list");
   if (placeholder) placeholder.classList.add("hidden");
   if (boardContainer) boardContainer.classList.remove("hidden");
+  if (movesList) movesList.classList.remove("hidden");
 
   const settingsPanel = document.getElementById("settings-panel");
   const menuToggle = document.getElementById("menu-toggle");

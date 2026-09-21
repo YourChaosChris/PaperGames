@@ -31,8 +31,35 @@ const AppStateBackgammon = {
   moveCount: 0,
   undoStack: [],
   cubeValue: 1,           // 1, 2, 4, 8, ...
-  cubeOwner: null         // null (centered - either side may double) | "b" | "w"
+  cubeOwner: null,        // null (centered - either side may double) | "b" | "w"
+  moveHistory: []
 };
+
+function bgPointLabel(ref) {
+  return ref === "bar" || ref === "off" ? ref : String(ref);
+}
+
+function recordMoveBg(color, move) {
+  AppStateBackgammon.moveHistory.push({ color: color, from: move.from, to: move.to });
+  renderMoveListBg();
+}
+
+function resetMoveHistoryBg() {
+  AppStateBackgammon.moveHistory = [];
+  renderMoveListBg();
+}
+
+function renderMoveListBg() {
+  const el = document.getElementById("moves-list");
+  if (!el) return;
+  const moves = AppStateBackgammon.moveHistory || [];
+  if (!moves.length) {
+    el.textContent = "";
+    return;
+  }
+  el.textContent = moves.map((m) => (m.color === "b" ? "B" : "W") + " " + bgPointLabel(m.from) + "/" + bgPointLabel(m.to)).join("; ");
+  el.scrollLeft = el.scrollWidth;
+}
 
 const BACKGAMMON_SAVE_KEY = "einkchess_save_backgammon";
 
@@ -47,7 +74,8 @@ function saveBackgammonGame() {
     aiLevel: AppStateBackgammon.aiLevel,
     moveCount: AppStateBackgammon.moveCount,
     cubeValue: AppStateBackgammon.cubeValue,
-    cubeOwner: AppStateBackgammon.cubeOwner
+    cubeOwner: AppStateBackgammon.cubeOwner,
+    moveHistory: AppStateBackgammon.moveHistory
   });
 }
 
@@ -170,6 +198,7 @@ function initBackgammonApp() {
     AppStateBackgammon.cubeValue = 1;
     AppStateBackgammon.cubeOwner = null;
     resetUndoStackBg();
+    resetMoveHistoryBg();
     setGameResultBg("");
     showBoardSectionBg();
     buildBackgammonBoardDOM();
@@ -235,6 +264,21 @@ function initBackgammonApp() {
     });
   }
 
+  const toggleMovesBtn = document.getElementById("toggle-moves");
+  if (toggleMovesBtn) {
+    toggleMovesBtn.addEventListener("click", () => {
+      const list = document.getElementById("moves-list");
+      if (!list) return;
+      const isHidden = list.classList.contains("hidden");
+      if (isHidden) {
+        list.classList.remove("hidden");
+        renderMoveListBg();
+      } else {
+        list.classList.add("hidden");
+      }
+    });
+  }
+
   if (rollBtn) rollBtn.addEventListener("click", rollDiceBg);
   if (doubleBtn) doubleBtn.addEventListener("click", offerDoubleBg);
   if (barTop) barTop.addEventListener("click", () => onBackgammonSourceClick("bar", "b"));
@@ -256,8 +300,10 @@ function initBackgammonApp() {
     AppStateBackgammon.moveCount = savedGame.moveCount;
     AppStateBackgammon.cubeValue = savedGame.cubeValue || 1;
     AppStateBackgammon.cubeOwner = savedGame.cubeOwner || null;
+    AppStateBackgammon.moveHistory = savedGame.moveHistory || [];
     AppStateBackgammon.gameOver = false;
     resetUndoStackBg();
+    renderMoveListBg();
     setActiveModeButtonBg(AppStateBackgammon.mode);
     setGameResultBg("");
     showBoardSectionBg();
@@ -420,6 +466,7 @@ function applyBackgammonMove(move, die) {
   const mover = AppStateBackgammon.turn;
   AppStateBackgammon.state = BackgammonCore.applyMove(AppStateBackgammon.state, mover, move);
   AppStateBackgammon.moveCount++;
+  recordMoveBg(mover, move);
   AppStateBackgammon.selected = null;
   const dieIdx = AppStateBackgammon.dice.indexOf(die);
   if (dieIdx !== -1) AppStateBackgammon.dice.splice(dieIdx, 1);
@@ -507,6 +554,8 @@ function undoLastMove() {
   AppStateBackgammon.cubeValue = prev.cubeValue || 1;
   AppStateBackgammon.cubeOwner = prev.cubeOwner || null;
   AppStateBackgammon.selected = null;
+  AppStateBackgammon.moveHistory.length = AppStateBackgammon.moveCount;
+  renderMoveListBg();
   setGameResultBg("");
   updateBackgammonBoard();
   updateGameLabelsBg();
@@ -518,8 +567,10 @@ function showBoardSectionBg() {
   if (section) section.classList.remove("hidden");
   const placeholder = document.getElementById("board-placeholder");
   const boardContainer = document.getElementById("board-container");
+  const movesList = document.getElementById("moves-list");
   if (placeholder) placeholder.classList.add("hidden");
   if (boardContainer) boardContainer.classList.remove("hidden");
+  if (movesList) movesList.classList.remove("hidden");
 
   const settingsPanel = document.getElementById("settings-panel");
   const menuToggle = document.getElementById("menu-toggle");
