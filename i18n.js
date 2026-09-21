@@ -402,6 +402,21 @@ const STRINGS = {
     twenty48_term_loss: "Running out of moves",
     twenty48_rules_loss: "The game ends the moment the board is completely full and no two adjacent tiles share a value, so no move - in any direction - could change anything.",
 
+    mahjong_new_game: "New game",
+    mahjong_shuffle: "Shuffle remaining tiles",
+    mahjong_rules_title: "Mahjong Solitaire Rules",
+    mahjong_rules_intro: "A quick reference for how eInkChess plays Mahjong Solitaire - useful if you're rusty, or learning.",
+    mahjong_rules_basics_title: "The basic idea",
+    mahjong_term_layout: "The layout",
+    mahjong_rules_layout: "80 tiles are stacked three layers deep in a pyramid-like shape. A tile is free to pick up only when nothing sits on top of it and at least one of its immediate left or right neighbors, on its own layer, is missing or already cleared.",
+    mahjong_term_matching: "Matching",
+    mahjong_rules_matching: "Click a free tile, then click another free tile showing the same symbol to clear both from the board. Every deal is generated so that a full clear is always possible from the starting position, though a careless order of matches can still leave you stuck partway through.",
+    mahjong_term_shuffle: "Getting stuck",
+    mahjong_rules_shuffle: "If no legal match remains anywhere on the board, use Shuffle remaining tiles to redeal fresh symbols onto whatever's left - a new solution is guaranteed from that point onward, so a single stuck position never has to mean starting completely over.",
+    mahjong_rules_end_title: "Finishing a game",
+    mahjong_term_win: "Cleared",
+    mahjong_rules_win: "The board is cleared the moment every tile has been matched away.",
+
     nav_history: "History",
 
     chess_history_title: "The History of Chess",
@@ -620,6 +635,18 @@ const STRINGS = {
     twenty48_history_modern_p1: "Despite its simple rules, optimal 2048 play turns out to be a genuinely hard search problem because of the randomness in tile spawning: strong computer players use expectimax search (weighing moves against the probability of each possible next tile) rather than the plain minimax search a deterministic game like chess allows.",
     twenty48_history_modern_p2: "The very best documented computer players can reach the 32768 tile with high probability and have occasionally reached 65536 - two doublings beyond the tile most human players are thrilled to ever see once.",
 
+    mahjong_history_title: "The History of Mahjong Solitaire",
+    mahjong_history_intro: "A single-player tile-matching game named after, and visually borrowing from, a completely different four-player game it has almost nothing else in common with.",
+    mahjong_history_origins_title: "Borrowed Tiles, New Game",
+    mahjong_history_origins_p1: "Mahjong Solitaire (also called Shanghai) is not a traditional Chinese game - it's a Western invention from the early-to-mid 20th century that repurposes the beautifully illustrated tile set from the four-player game Mahjong (itself a 19th-century Chinese creation) for an entirely different, single-player matching puzzle with none of the original game's melds, discards, or scoring hands.",
+    mahjong_history_origins_p2: "Exactly who first combined a pair-matching solitaire format with Mahjong tiles is genuinely unclear, with competing claims stretching back decades before the computer era - what's certain is that the pairing didn't become a global phenomenon until it made the jump to personal computers.",
+    mahjong_history_spread_title: "A 1980s Computer Screen Staple",
+    mahjong_history_spread_p1: "The game reached a mass audience through early computer versions in the 1980s, most notably Activision's 1986 'Shanghai' for the Macintosh - popular enough that 'Shanghai' became, and in many places remains, an alternate name for the whole genre of solitaire tile-matching games built around the classic layered layout.",
+    mahjong_history_spread_p2: "The layout that gives the game its name - a stepped, pyramid-like mound nicknamed 'the Turtle' - became so strongly associated with the genre that most implementations, including this one, default to some variation of it rather than inventing a new shape.",
+    mahjong_history_modern_title: "A Solvable-By-Construction Puzzle",
+    mahjong_history_modern_p1: "Unlike a game such as Sudoku or a Nonogram, where a puzzle's solution is checked for uniqueness after being designed, a Mahjong Solitaire deal is normally guaranteed playable a different way: many implementations, including eInkChess's, build the deal by working backward from an empty board, replaying a legal removal sequence in reverse to decide which symbols go where.",
+    mahjong_history_modern_p2: "That guarantees at least one winning path exists from the very first tile placed, but - exactly as with a real deck of Klondike solitaire cards - it says nothing about whether any particular sequence of matches a player actually makes will reach it, which is why getting stuck partway through a perfectly solvable deal is a normal, expected part of the game rather than a sign anything went wrong.",
+
     back_home: "← Back to home",
 
     guide_title: "Guide: eInkChess on your device",
@@ -688,7 +715,7 @@ const STRINGS = {
     game_2048: "2048",
     home_2048_desc: "Slide and merge numbered tiles to reach 2048 before the board fills up. Keep playing afterward to push your best score even higher.",
     game_mahjong_solitaire: "Mahjong Solitaire",
-    home_mahjong_solitaire_desc: "Clear the layered tile layout by matching identical pairs.",
+    home_mahjong_solitaire_desc: "Clear the layered tile layout by matching identical pairs. Every deal is generated to always have a solution.",
     game_freecell: "FreeCell",
     home_freecell_desc: "The classic card solitaire where nearly every deal can be won with the right moves."
   },
@@ -1090,6 +1117,21 @@ const STRINGS = {
     twenty48_term_loss: "Keine Züge mehr",
     twenty48_rules_loss: "Die Partie endet in dem Moment, in dem das Brett vollständig gefüllt ist und keine zwei benachbarten Kacheln denselben Wert teilen, sodass kein Zug – in keine Richtung – mehr etwas verändern könnte.",
 
+    mahjong_new_game: "Neues Spiel",
+    mahjong_shuffle: "Verbleibende Steine mischen",
+    mahjong_rules_title: "Mahjong-Solitär-Regeln",
+    mahjong_rules_intro: "Eine kurze Übersicht darüber, wie eInkChess Mahjong Solitär spielt – nützlich, wenn man aus der Übung ist oder es gerade lernt.",
+    mahjong_rules_basics_title: "Die Grundidee",
+    mahjong_term_layout: "Das Layout",
+    mahjong_rules_layout: "80 Steine sind drei Ebenen tief in einer pyramidenartigen Form gestapelt. Ein Stein ist nur dann frei zum Aufnehmen, wenn nichts auf ihm liegt und mindestens einer seiner direkten linken oder rechten Nachbarn auf derselben Ebene fehlt oder bereits entfernt wurde.",
+    mahjong_term_matching: "Paare finden",
+    mahjong_rules_matching: "Einen freien Stein anklicken und dann einen anderen freien Stein mit demselben Symbol anklicken, um beide vom Brett zu entfernen. Jedes Blatt wird so erzeugt, dass ein vollständiges Räumen von der Startposition aus immer möglich ist – eine unbedachte Reihenfolge kann einen aber trotzdem mittendrin feststecken lassen.",
+    mahjong_term_shuffle: "Wenn nichts mehr geht",
+    mahjong_rules_shuffle: "Bleibt kein legaler Zug mehr übrig, hilft \"Verbleibende Steine mischen\": Die übrigen Steine bekommen frische Symbole zugewiesen, wobei ab diesem Punkt wieder eine Lösung garantiert ist – eine festgefahrene Stellung muss also nie einen kompletten Neustart bedeuten.",
+    mahjong_rules_end_title: "Eine Partie abschließen",
+    mahjong_term_win: "Geräumt",
+    mahjong_rules_win: "Das Brett ist geräumt, sobald jeder Stein durch ein Paar entfernt wurde.",
+
     nav_history: "Geschichte",
 
     chess_history_title: "Die Geschichte des Schachs",
@@ -1308,6 +1350,18 @@ const STRINGS = {
     twenty48_history_modern_p1: "Trotz seiner einfachen Regeln erweist sich optimales 2048-Spiel wegen der Zufälligkeit beim Erscheinen neuer Kacheln als ein wirklich schwieriges Suchproblem: starke Computerspieler verwenden Expectimax-Suche (die Züge gegen die Wahrscheinlichkeit jeder möglichen nächsten Kachel abwägt) statt der einfachen Minimax-Suche, die ein deterministisches Spiel wie Schach erlaubt.",
     twenty48_history_modern_p2: "Die dokumentiert besten Computerspieler erreichen mit hoher Wahrscheinlichkeit die Kachel 32768 und haben gelegentlich sogar 65536 erreicht – zwei Verdopplungen jenseits der Kachel, die die meisten menschlichen Spieler schon einmal zu sehen als Triumph empfinden.",
 
+    mahjong_history_title: "Die Geschichte von Mahjong Solitär",
+    mahjong_history_intro: "Ein Einzelspieler-Zuordnungsspiel, benannt nach einem völlig anderen Vierspielerspiel, dessen Optik es sich leiht, mit dem es aber ansonsten fast nichts gemein hat.",
+    mahjong_history_origins_title: "Geliehene Steine, neues Spiel",
+    mahjong_history_origins_p1: "Mahjong Solitär (auch Shanghai genannt) ist kein traditionelles chinesisches Spiel – es ist eine westliche Erfindung aus der ersten Hälfte des 20. Jahrhunderts, die den prächtig illustrierten Steinsatz des Vierspielerspiels Mahjong (selbst eine chinesische Schöpfung des 19. Jahrhunderts) für ein völlig anderes Einzelspieler-Zuordnungsrätsel wiederverwendet, ganz ohne die Kombinationen, Abwürfe oder Wertungshände des Originalspiels.",
+    mahjong_history_origins_p2: "Wer genau als Erster ein Paar-Zuordnungs-Solitär-Format mit Mahjong-Steinen verband, ist wirklich unklar, mit konkurrierenden Ansprüchen, die Jahrzehnte vor der Computerzeit zurückreichen – sicher ist nur, dass die Kombination erst mit dem Sprung auf Personal Computer zum weltweiten Phänomen wurde.",
+    mahjong_history_spread_title: "Ein Bildschirmklassiker der 1980er",
+    mahjong_history_spread_p1: "Das Spiel erreichte durch frühe Computerversionen in den 1980er-Jahren ein Massenpublikum, allen voran Activisions \"Shanghai\" von 1986 für den Macintosh – so beliebt, dass \"Shanghai\" vielerorts bis heute als alternativer Name für das gesamte Genre der Solitär-Zuordnungsspiele mit dem klassischen gestapelten Layout dient.",
+    mahjong_history_spread_p2: "Das Layout, das dem Spiel seinen Namen gibt – ein gestuftes, pyramidenartiges Gebilde mit dem Spitznamen \"die Schildkröte\" – wurde so stark mit dem Genre verknüpft, dass die meisten Umsetzungen, auch diese hier, standardmäßig auf eine Variante davon zurückgreifen, statt eine neue Form zu erfinden.",
+    mahjong_history_modern_title: "Ein durch Konstruktion lösbares Rätsel",
+    mahjong_history_modern_p1: "Anders als etwa bei Sudoku oder einem Nonogramm, wo die Lösung eines Rätsels nach dem Entwurf auf Eindeutigkeit geprüft wird, wird ein Mahjong-Solitär-Blatt normalerweise auf andere Weise als spielbar garantiert: Viele Umsetzungen, auch die von eInkChess, bauen das Blatt rückwärts von einem leeren Brett auf, indem sie eine legale Entfernungsreihenfolge rückwärts abspielen, um zu entscheiden, welches Symbol wohin kommt.",
+    mahjong_history_modern_p2: "Das garantiert, dass vom allerersten gelegten Stein an mindestens ein Gewinnweg existiert, sagt aber – genau wie bei einem echten Klondike-Kartenspiel – nichts darüber aus, ob die konkrete Zugfolge, die ein Spieler tatsächlich wählt, dorthin führt. Deshalb ist es ein normaler, erwarteter Teil des Spiels, in einem eigentlich vollständig lösbaren Blatt mittendrin steckenzubleiben, und kein Zeichen dafür, dass etwas schiefgelaufen ist.",
+
     back_home: "← Zurück zur Startseite",
 
     guide_title: "Anleitung: eInkChess auf deinem Gerät",
@@ -1376,7 +1430,7 @@ const STRINGS = {
     game_2048: "2048",
     home_2048_desc: "Schiebe und verschmelze nummerierte Kacheln, um 2048 zu erreichen, bevor das Brett voll ist. Danach weiterspielen, um den Bestwert noch weiter zu treiben.",
     game_mahjong_solitaire: "Mahjong Solitaire",
-    home_mahjong_solitaire_desc: "Räume das gestapelte Steine-Layout ab, indem du gleiche Paare findest.",
+    home_mahjong_solitaire_desc: "Räume das gestapelte Steine-Layout ab, indem du gleiche Paare findest. Jedes Blatt wird so erzeugt, dass immer eine Lösung existiert.",
     game_freecell: "FreeCell",
     home_freecell_desc: "Der klassische Karten-Solitär, bei dem sich fast jede Runde mit den richtigen Zügen gewinnen lässt."
   }

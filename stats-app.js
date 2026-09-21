@@ -20,7 +20,8 @@ const STATS_GAME_NAME_KEY = {
   pegsolitaire: "game_peg_solitaire",
   minesweeper: "game_minesweeper",
   nonogram: "game_nonograms",
-  twenty48: "game_2048"
+  twenty48: "game_2048",
+  mahjong: "game_mahjong_solitaire"
 };
 
 function gameDisplayName(game) {
