@@ -2427,3 +2427,87 @@ button.ur-tray-slot {
   margin-top: 0.5rem;
   flex-wrap: wrap;
 }
+
+/* Sudoku board: a 9x9 float-grid (same technique as the chess/checkers/
+   Connect Four boards - a JS-enforced square cell size, since CSS
+   `aspect-ratio` is unreliable on E-Ink browsers), with a thicker
+   border marking each 3x3 box. Given cells are told apart from the
+   player's own entries by weight (bold vs regular), and a conflicting
+   entry gets a dashed outline - both structural, so nothing here
+   depends on color to stay readable on a monochrome E-Ink display. */
+
+#sudoku-board {
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.sudoku-cell {
+  width: calc(100% / 9);
+  background: var(--square-light);
+  border: 1px solid var(--border);
+}
+
+.sudoku-box-left {
+  border-left-width: 3px;
+}
+
+.sudoku-box-top {
+  border-top-width: 3px;
+}
+
+.sudoku-cell-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(0.9rem, 3.5vw, 1.4rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.sudoku-cell-given .sudoku-cell-value {
+  font-weight: 700;
+}
+
+.sudoku-cell-conflict {
+  outline: 2px dashed var(--border);
+  outline-offset: -2px;
+}
+
+.sudoku-numpad {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  max-width: 540px;
+  margin: 0.6rem auto 0;
+}
+
+.sudoku-numpad-btn {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.sudoku-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.4em;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  font-weight: 700;
+}
