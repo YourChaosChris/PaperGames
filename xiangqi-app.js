@@ -24,39 +24,52 @@ const XQ_PIECE_NAMES = { G: "General", A: "Advisor", E: "Elephant", H: "Horse", 
 // cburnett chess artwork (pieces.js) for pieces whose role genuinely
 // matches - King for General (the piece you must protect), Knight for
 // Horse (identical move shape), Rook for Chariot (its historical
-// ancestor really is a war chariot), Pawn for Soldier. Advisor,
-// Elephant and Cannon have no equivalent in Western chess, so they get
-// three small custom SVGs drawn to actually look like what they are
-// (a shield, an elephant, a cannon on wheels) rather than borrowing an
-// unrelated chess piece.
-const XQ_CUSTOM_SVG = {
-  A: '<svg viewBox="0 0 45 45"><path fill="{c}" stroke="#000" stroke-width="1.5" stroke-linejoin="round" d="M22.5 6 34 11v9c0 10.5-6 18-11.5 21C17 44 11 33.5 11 26v-9z"/></svg>',
-  E: '<svg viewBox="0 0 45 45"><g fill="{c}" stroke="#000" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"><path d="M31 39c1.5-1 2.5-3 2.5-5.5 0-3-2-5-2-9 0-6-4.5-11-11-11-6 0-10 4-11.5 9-1 3.5.5 6-1 8.5-1 2 0 5.5 2 6.5"/><path d="M9 28c-2 0-3.5-1.5-3.5-4 0-2 1.2-3.6 2.7-5.6"/><circle cx="24" cy="16" r="1.4" fill="#000" stroke="none"/></g></svg>',
-  C: '<svg viewBox="0 0 45 45"><g fill="{c}" stroke="#000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"><rect x="9" y="15" width="26" height="8" rx="3"/><circle cx="15" cy="30" r="7" fill="none" stroke-width="2.2"/><circle cx="15" cy="30" r="1.6" fill="#000" stroke="none"/><path d="M31 15v-5h4v5" fill="none"/></g></svg>'
-};
-
+// ancestor really is a war chariot), Pawn for Soldier.
+//
+// Advisor, Elephant and Cannon have no equivalent in Western chess.
+// These three are adapted from "Xiangqi pieces with pictorial (Western
+// chess style) drawings" by Hari Seldon (Wikimedia Commons, CC BY-SA
+// 3.0 - https://commons.wikimedia.org/wiki/File:Western_pieces.svg),
+// via the cleaned-up per-piece split in Kadagaden/chess-pieces
+// (xiangqi_wikipedia_intl_modded, itself CC BY-SA-derived); only the
+// background disc fill was stripped here so the piece sits on this
+// app's own board-square disc instead of carrying its own. See
+// about.html for the required attribution.
 function xqRecolor(svg, hex) {
-  return svg.replace(/fill="#fff"/g, 'fill="' + hex + '"').replace("{c}", hex);
+  return svg.replace(/fill="#fff"/g, 'fill="' + hex + '"');
 }
 
 const XQ_RED = "#b3261e";
+const XQ_ADVISOR_SVG = {
+  r: '<svg viewBox="0 0 92 92"><g><circle cx="46" cy="46" fill="none" r="36.9" stroke="#000" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="2.3"/><g stroke="#c00"><circle cx="46" cy="46" fill="none" r="33.1" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="2.3"/><g fill="none" stroke-width="1.3" transform="matrix(1.7646 0 0 1.7646 -704.6273 -672.2753)"><path d="m419.5 403.59375c-.86079 1.1323-1.34375 2.53337-1.34375 4.03125 0 1.86072.79538 3.54695 2.0625 4.78125-2.50925 1.48035-4.31127 4.02565-4.84375 7h20c-.53248-2.97435-2.3345-5.51965-4.84375-7 1.26712-1.2343 2.03125-2.92053 2.03125-4.78125 0-1.43388-.49195-2.77029-1.28125-3.875z" stroke-linecap="round" stroke-linejoin="round"/><path d="m431.42341 403.68264-12.32701-.0975-2.79029-6.74796 6.48273 1.47375 2.75068-3.63455 2.44584 3.97189 7.06889-1.30416-3.63084 6.33852z" stroke-linejoin="round"/><g stroke-linecap="round"><path d="m428.90115 406.53666-1.96869 1.97952"/><path d="m421.82763 406.45315 1.96869 1.97952"/></g></g></g></g></svg>',
+  b: '<svg viewBox="0 0 92 92"><g stroke="#000"><circle cx="46" cy="46" fill="none" r="36.9" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="2.3"/><circle cx="46" cy="46" fill="none" r="33.1" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="2.3"/><g fill="none" stroke-width="1.3" transform="matrix(1.7646 0 0 1.7646 -704.6273 -672.2753)"><path d="m419.5 403.59375c-.86079 1.1323-1.34375 2.53337-1.34375 4.03125 0 1.86072.79538 3.54695 2.0625 4.78125-2.50925 1.48035-4.31127 4.02565-4.84375 7h20c-.53248-2.97435-2.3345-5.51965-4.84375-7 1.26712-1.2343 2.03125-2.92053 2.03125-4.78125 0-1.43388-.49195-2.77029-1.28125-3.875z" stroke-linecap="round" stroke-linejoin="round"/><path d="m431.42341 403.68264-12.32701-.0975-2.79029-6.74796 6.48273 1.47375 2.75068-3.63455 2.44584 3.97189 7.06889-1.30416-3.63084 6.33852z" stroke-linejoin="round"/><g stroke-linecap="round"><path d="m428.90115 406.53666-1.96869 1.97952"/><path d="m421.82763 406.45315 1.96869 1.97952"/></g></g></g></svg>'
+};
+const XQ_ELEPHANT_SVG = {
+  r: '<svg viewBox="0 0 92 92"><g><circle cx="46" cy="46" fill="none" r="36.9" stroke="#000" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="2.3"/><g stroke="#c00"><circle cx="46" cy="46" fill="none" r="33.1" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="2.3"/><g stroke-linejoin="round" transform="translate(2.29 -1.33)"><g fill="none"><path d="m47.064588 53.683811c1.948125 2.351345 2.686542 6.462037 1.885289 10.220845l-25.32568-.268075c-5.1869-.05498 1.57106-13.907083 1.57106-13.907083" stroke-width="2.3"/><path d="m40.277558 45.037955s-1.164733 5.674796-4.713215 7.204877c-3.548483 1.530081-14.453877-3.015986-14.453877-3.015986s7.963534-18.259428 10.211988-19.436405 8.012468.502671 8.012468.502671c13.712891-7.82814 16.862772 6.982704 18.77669 17.349531.527326 4.989282 9.782247 14.906139 6.424641 18.200979l-2.912033.234291c-8.56514 2.630333 9.675021-1.123141-9.473328-13.467284 0 0-3.140326.923427-5.71457.732219-2.574227-.191228-6.158764-8.304932-6.158764-8.304932z" stroke-width="2.3"/><path d="m50.174012 48.390196c4.939804 4.666342 13.152163 5.105119 19.048856 6.256559-6.758428-2.053547-14.465314-4.630902-17.016322-9.753045z" stroke-width="1.5"/></g><ellipse cx="38.41" cy="-50.4" fill="#a00" rx=".85" ry=".8" stroke-linecap="round" stroke-width="1.8" transform="rotate(90)"/></g></g></g></svg>',
+  b: '<svg viewBox="0 0 92 92"><g stroke="#000"><circle cx="46" cy="46" fill="none" r="36.9" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="2.3"/><circle cx="46" cy="46" fill="none" r="33.1" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="2.3"/><g stroke-linejoin="round" transform="translate(2.29 -1.33)"><g fill="none"><path d="m47.064588 53.683811c1.948125 2.351345 2.686542 6.462037 1.885289 10.220845l-25.32568-.268075c-5.1869-.05498 1.57106-13.907083 1.57106-13.907083" stroke-width="2.3"/><path d="m40.277558 45.037955s-1.164733 5.674796-4.713215 7.204877c-3.548483 1.530081-14.453877-3.015986-14.453877-3.015986s7.963534-18.259428 10.211988-19.436405 8.012468.502671 8.012468.502671c13.712891-7.82814 16.862772 6.982704 18.77669 17.349531.527326 4.989282 9.782247 14.906139 6.424641 18.200979l-2.912033.234291c-8.56514 2.630333 9.675021-1.123141-9.473328-13.467284 0 0-3.140326.923427-5.71457.732219-2.574227-.191228-6.158764-8.304932-6.158764-8.304932z" stroke-width="2.3"/><path d="m50.174012 48.390196c4.939804 4.666342 13.152163 5.105119 19.048856 6.256559-6.758428-2.053547-14.465314-4.630902-17.016322-9.753045z" stroke-width="1.5"/></g><ellipse cx="38.41" cy="-50.4" fill="#a00" rx=".85" ry=".8" stroke-linecap="round" stroke-width="1.8" transform="rotate(90)"/></g></g></svg>'
+};
+const XQ_CANNON_SVG = {
+  r: '<svg viewBox="0 0 92 92"><g transform="matrix(1.136 0 0 1.136 -95.663 -3.011)"><circle cx="124.71" cy="43.14" fill="none" r="32.5" stroke="#000" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="2"/><g fill="none" stroke="#c00"><circle cx="124.71" cy="43.14" r="29.11" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="2"/><g stroke-width="1.2" transform="matrix(0 1.6096 -1.6897 0 1021.1269 -482.7349)"><circle cx="328.36" cy="530.18" r="3.09" stroke-linecap="round" stroke-linejoin="round"/><circle cx="328.36" cy="530.18" r="5.11" stroke-linecap="round" stroke-linejoin="round"/><path d="m328.93092 525.18882c.10522-1.45209-.29463-5.24017-.56821-8.27062l-3.34613-.0631c-2.82833 7.30933-5.75997 14.2007-4.9245 18.18274.83548 3.98203 5.1928 5.53828 7.95496 2.46225l1.95717 2.77791.00003 3.72494 2.27284.18944-.0631-4.35629-2.90419-4.48254"/></g></g></g></svg>',
+  b: '<svg viewBox="0 0 92 92"><g stroke="#000" transform="matrix(1.136 0 0 1.136 -251.88 -1.4045)"><circle cx="262.23" cy="41.73" fill="none" r="32.5" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="2"/><g fill="none"><circle cx="262.23" cy="41.73" r="29.11" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="2"/><g stroke-width="1.2" transform="matrix(0 1.6096 -1.6897 0 1158.6451 -484.1491)"><circle cx="328.36" cy="530.18" r="3.09" stroke-linecap="round" stroke-linejoin="round"/><circle cx="328.36" cy="530.18" r="5.11" stroke-linecap="round" stroke-linejoin="round"/><path d="m328.93092 525.18882c.10522-1.45209-.29463-5.24017-.56821-8.27062l-3.34613-.0631c-2.82833 7.30933-5.75997 14.2007-4.9245 18.18274.83548 3.98203 5.1928 5.53828 7.95496 2.46225l1.95717 2.77791.00003 3.72494 2.27284.18944-.0631-4.35629-2.90419-4.48254"/></g></g></g></svg>'
+};
+
 const XQ_SYMBOL_SVG = {
   r: {
     G: xqRecolor(PieceIcons.K, XQ_RED),
-    A: xqRecolor(XQ_CUSTOM_SVG.A, XQ_RED),
-    E: xqRecolor(XQ_CUSTOM_SVG.E, XQ_RED),
+    A: XQ_ADVISOR_SVG.r,
+    E: XQ_ELEPHANT_SVG.r,
     H: xqRecolor(PieceIcons.N, XQ_RED),
     R: xqRecolor(PieceIcons.R, XQ_RED),
-    C: xqRecolor(XQ_CUSTOM_SVG.C, XQ_RED),
+    C: XQ_CANNON_SVG.r,
     P: xqRecolor(PieceIcons.P, XQ_RED)
   },
   b: {
     G: PieceIcons.k,
-    A: xqRecolor(XQ_CUSTOM_SVG.A, "#111"),
-    E: xqRecolor(XQ_CUSTOM_SVG.E, "#111"),
+    A: XQ_ADVISOR_SVG.b,
+    E: XQ_ELEPHANT_SVG.b,
     H: PieceIcons.n,
     R: PieceIcons.r,
-    C: xqRecolor(XQ_CUSTOM_SVG.C, "#111"),
+    C: XQ_CANNON_SVG.b,
     P: PieceIcons.p
   }
 };
