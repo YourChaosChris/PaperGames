@@ -11,7 +11,8 @@ const STATS_GAME_NAME_KEY = {
   backgammon: "game_backgammon",
   xiangqi: "game_xiangqi_short",
   mancala: "game_mancala",
-  othello: "game_othello"
+  othello: "game_othello",
+  connectfour: "game_connect_four"
 };
 
 function gameDisplayName(game) {
