@@ -324,7 +324,7 @@ const STRINGS = {
     about_donate_intro: "If you enjoy eInkChess or have ideas for improvements, you can send feedback and support the project here:",
     about_donate_button: "Buy me a coffee ☕",
     about_qr_text: "Or scan this QR code to open the donation page on your phone:",
-    about_credits: "Chess piece set (“cburnett”) by Colin M.L. Burnett, used under the BSD license. Xiangqi's Advisor/Elephant/Cannon symbol icons are adapted from “Xiangqi pieces with pictorial (Western chess style) drawings” by Hari Seldon (Wikimedia Commons), used under CC BY-SA 3.0.",
+    about_credits: "Chess piece set (“cburnett”) by Colin M.L. Burnett, used under the BSD license. Xiangqi's symbol-style pieces are adapted from piece drawings originally by Inductiveload (Wikimedia Commons, CC BY-SA), as resplit per piece by Kadagaden (github.com/Kadagaden/chess-pieces, “xiangqi_wikipedia_intl_modded”, CC BY 4.0).",
     about_back: "← Back to the board",
 
     stats_title: "Your Stats",
@@ -657,7 +657,7 @@ const STRINGS = {
     about_donate_intro: "Wenn dir eInkChess gefällt oder du Ideen für Verbesserungen hast, kannst du hier Feedback schicken und das Projekt unterstützen:",
     about_donate_button: "Spendier mir einen Kaffee ☕",
     about_qr_text: "Oder scanne diesen QR-Code, um die Spendenseite auf dem Handy zu öffnen:",
-    about_credits: "Figurensatz („cburnett“) von Colin M.L. Burnett, verwendet unter der BSD-Lizenz. Die Symbole für Berater/Elefant/Kanone bei Xiangqi stammen (angepasst) von „Xiangqi pieces with pictorial (Western chess style) drawings“ von Hari Seldon (Wikimedia Commons), verwendet unter CC BY-SA 3.0.",
+    about_credits: "Figurensatz („cburnett“) von Colin M.L. Burnett, verwendet unter der BSD-Lizenz. Die Symbolfiguren bei Xiangqi stammen (angepasst) ursprünglich von Inductiveload (Wikimedia Commons, CC BY-SA), neu aufgeteilt pro Figur von Kadagaden (github.com/Kadagaden/chess-pieces, „xiangqi_wikipedia_intl_modded“, CC BY 4.0).",
     about_back: "← Zurück zum Brett",
 
     stats_title: "Deine Statistik",

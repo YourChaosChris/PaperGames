@@ -1106,17 +1106,53 @@ button:disabled {
    and checkers boards) with the four corner squares at columns 4-5 of
    rows 0/2 left as invisible gaps, forming the traditional H-shape - a
    private 4-square lane per player top/bottom, connected by a shared
-   8-square lane through the middle row. */
+   8-square lane through the middle row.
+   The board is clipped to that same H-shape (a 4-column block, a
+   2-column bridge through the middle row only, then a 2-column tail
+   block) instead of sitting inside a plain rectangle, so the outline
+   reads as the real board's silhouette rather than a box with two blank
+   corners top and bottom. Getting a border to trace that outline -
+   including its two inward-facing notch corners, where a plain CSS
+   `border` would just vanish since border stays rectangular under a
+   clip-path - takes two nested elements rather than one: #ur-board is
+   the frame (filled with the border color, clipped to the full
+   H-shape) and #ur-grid, the actual clickable grid inside it, is
+   clipped to the same H-shape inset by the border width on every edge.
+   Since #ur-grid's squares otherwise tile it edge-to-edge, that inset
+   clip trims a uniform border-width sliver off their outer-facing
+   edges everywhere - all along the perimeter and both notches alike -
+   letting the frame color show through as a continuous ring. */
 
 #ur-board {
   display: block;
   width: 100%;
   max-width: 760px;
-  border: 3px solid var(--border);
-  background: var(--square-light);
+  background: var(--border);
+  clip-path: polygon(
+    0% 0%, 50% 0%, 50% calc(100%/3), 75% calc(100%/3), 75% 0%, 100% 0%,
+    100% 100%, 75% 100%, 75% calc(200%/3), 50% calc(200%/3), 50% 100%, 0% 100%
+  );
   box-sizing: border-box;
-  overflow: hidden;
   margin: 0 auto;
+}
+
+#ur-grid {
+  display: block;
+  overflow: hidden;
+  clip-path: polygon(
+    calc(0% + 3px) calc(0% + 3px),
+    calc(50% - 3px) calc(0% + 3px),
+    calc(50% - 3px) calc(100%/3 + 3px),
+    calc(75% + 3px) calc(100%/3 + 3px),
+    calc(75% + 3px) calc(0% + 3px),
+    calc(100% - 3px) calc(0% + 3px),
+    calc(100% - 3px) calc(100% - 3px),
+    calc(75% + 3px) calc(100% - 3px),
+    calc(75% + 3px) calc(200%/3 - 3px),
+    calc(50% - 3px) calc(200%/3 - 3px),
+    calc(50% - 3px) calc(100% - 3px),
+    calc(0% + 3px) calc(100% - 3px)
+  );
 }
 
 .ur-square {
