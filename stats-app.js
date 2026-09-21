@@ -9,7 +9,8 @@ const STATS_GAME_NAME_KEY = {
   ur: "game_ur",
   morris: "game_morris",
   backgammon: "game_backgammon",
-  xiangqi: "game_xiangqi_short"
+  xiangqi: "game_xiangqi_short",
+  mancala: "game_mancala"
 };
 
 function gameDisplayName(game) {
