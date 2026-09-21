@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "einkchess-cache-v20";
+const CACHE_NAME = "einkchess-cache-v21";
 
 const APP_SHELL = [
   "./",
@@ -41,6 +41,9 @@ const APP_SHELL = [
   "gomoku.html",
   "gomoku-rules.html",
   "gomoku-history.html",
+  "senet.html",
+  "senet-rules.html",
+  "senet-history.html",
   "guide.html",
   "about.html",
   "stats.html",
@@ -83,6 +86,9 @@ const APP_SHELL = [
   "gomoku-core.js",
   "gomoku-ai.js",
   "gomoku-app.js",
+  "senet-core.js",
+  "senet-ai.js",
+  "senet-app.js",
   "sw-register.js",
   "game-storage.js",
   "game-stats.js",
