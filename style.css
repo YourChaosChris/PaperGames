@@ -2660,3 +2660,118 @@ button.ur-tray-slot {
   font-size: 1em;
   line-height: 1;
 }
+
+/* Nonogram board: a CSS grid rather than the usual float-grid, since a
+   Nonogram needs a row of column clues above the picture and a column
+   of row clues to its left, in addition to the picture cells - a shape
+   a simple square-per-cell float layout doesn't fit. A thicker border
+   every 5th cell marks off easy 5-cell counting groups, the same idea
+   as chess/checkers board coordinates but for line-counting instead. */
+
+.nonogram-mode-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.nonogram-wrap {
+  overflow: auto;
+  max-width: 100%;
+}
+
+.nonogram-grid {
+  display: grid;
+  width: fit-content;
+  margin: 0 auto;
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+  background: var(--square-light);
+}
+
+.nonogram-corner {
+  background: var(--square-light);
+  border-right: 2px solid var(--border);
+  border-bottom: 2px solid var(--border);
+}
+
+.nonogram-clue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--square-light);
+  padding: 0.15em;
+  box-sizing: border-box;
+}
+
+.nonogram-clue-col {
+  flex-direction: column;
+  border-bottom: 2px solid var(--border);
+}
+
+.nonogram-clue-row {
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 0.5em;
+  border-right: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+.nonogram-cell {
+  width: 1.8em;
+  height: 1.8em;
+  min-width: 1.4em;
+  min-height: 1.4em;
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  font-weight: 700;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nonogram-cell-block-left {
+  border-left-width: 2px;
+}
+
+.nonogram-cell-block-top {
+  border-top-width: 2px;
+}
+
+.nonogram-cell-filled {
+  background: #111;
+}
+
+.nonogram-cell-marked {
+  color: var(--muted);
+}
+
+.nonogram-icon {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 1.4em;
+  height: 1.4em;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  gap: 1px;
+  padding: 1px;
+}
+
+.nonogram-icon::before,
+.nonogram-icon::after {
+  content: "";
+  background: #111;
+  grid-column: 2;
+}
+
+.nonogram-icon::before {
+  grid-row: 1;
+}
+
+.nonogram-icon::after {
+  grid-row: 3;
+}
