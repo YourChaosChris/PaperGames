@@ -15,7 +15,8 @@ const STATS_GAME_NAME_KEY = {
   connectfour: "game_connect_four",
   gomoku: "game_gomoku",
   senet: "game_senet",
-  shogi: "game_shogi"
+  shogi: "game_shogi",
+  sudoku: "game_sudoku"
 };
 
 function gameDisplayName(game) {
