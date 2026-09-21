@@ -2855,3 +2855,72 @@ button.ur-tray-slot {
   font-size: 0.6rem;
   font-weight: 700;
 }
+
+/* Mahjong Solitaire board: absolute positioning on a percentage grid
+   (the same approach as Go/Xiangqi/Gomoku's point grids) rather than
+   the usual float-grid, since tiles overlap across three layers
+   instead of sitting in a simple rectangular arrangement. Each layer
+   gets a small fixed pixel nudge (in mahjong-app.js) purely for the
+   classic layered "mound" look. Tiles are matched by their printed
+   glyph alone, so nothing here needs color to stay readable on a
+   monochrome E-Ink display. */
+
+.mahjong-wrap {
+  overflow: auto;
+  max-width: 100%;
+}
+
+#mahjong-board {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+}
+
+.mahjong-tile {
+  position: absolute;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 0 var(--border);
+  padding: 0;
+  cursor: pointer;
+}
+
+.mahjong-tile-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(0.6rem, 2.2vw, 1.2rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.mahjong-tile-blocked {
+  background: var(--square-dark);
+}
+
+.mahjong-tile-selected {
+  outline: 3px solid var(--border);
+  outline-offset: 1px;
+}
+
+.mahjong-actions-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.mahjong-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.4em;
+  font-size: 1.1rem;
+}
