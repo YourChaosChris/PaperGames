@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "einkchess-cache-v18";
+const CACHE_NAME = "einkchess-cache-v19";
 
 const APP_SHELL = [
   "./",
@@ -35,6 +35,9 @@ const APP_SHELL = [
   "othello.html",
   "othello-rules.html",
   "othello-history.html",
+  "connectfour.html",
+  "connectfour-rules.html",
+  "connectfour-history.html",
   "guide.html",
   "about.html",
   "stats.html",
@@ -71,6 +74,9 @@ const APP_SHELL = [
   "othello-core.js",
   "othello-ai.js",
   "othello-app.js",
+  "connectfour-core.js",
+  "connectfour-ai.js",
+  "connectfour-app.js",
   "sw-register.js",
   "game-storage.js",
   "game-stats.js",

@@ -1975,3 +1975,74 @@ button.ur-tray-slot {
   background: #fdfdfd;
   border: 2px solid var(--border);
 }
+
+/* Connect Four board: same uniform-grid approach as Othello (a real
+   Connect Four board isn't checkered either) - 6 rows x 7 columns,
+   with the whole column clickable, not just the empty landing cell. */
+
+#connectfour-board {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.c4-square {
+  /* Overrides .square's own 12.5% (built for an 8-column board): with
+     7 columns, that width made floats wrap after 8 cells instead of 7,
+     desyncing every row from its logical column past the first one. */
+  width: calc(100% / 7);
+  background: var(--square-light);
+  border: 1px solid var(--border);
+}
+
+.c4-square-movable {
+  background: var(--square-dark);
+}
+
+.c4-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 78%;
+  height: 78%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.c4-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.c4-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.c4-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.c4-icon-disc-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.c4-icon-disc-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
