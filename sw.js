@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "einkchess-cache-v24";
+const CACHE_NAME = "einkchess-cache-v25";
 
 const APP_SHELL = [
   "./",
@@ -53,6 +53,9 @@ const APP_SHELL = [
   "pegsolitaire.html",
   "pegsolitaire-rules.html",
   "pegsolitaire-history.html",
+  "minesweeper.html",
+  "minesweeper-rules.html",
+  "minesweeper-history.html",
   "guide.html",
   "about.html",
   "stats.html",
@@ -105,6 +108,8 @@ const APP_SHELL = [
   "sudoku-app.js",
   "pegsolitaire-core.js",
   "pegsolitaire-app.js",
+  "minesweeper-core.js",
+  "minesweeper-app.js",
   "sw-register.js",
   "game-storage.js",
   "game-stats.js",
