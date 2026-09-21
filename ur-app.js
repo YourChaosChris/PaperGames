@@ -122,6 +122,7 @@ function urSquareInfo(row, col) {
 }
 
 function initUrApp() {
+  if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
@@ -466,6 +467,7 @@ function buildUrBoardDOM() {
       if (!info) {
         square.classList.add("ur-square-gap");
         square.disabled = true;
+        square.setAttribute("aria-hidden", "true");
         boardEl.appendChild(square);
         continue;
       }
@@ -546,7 +548,14 @@ function updateUrBoard() {
       pieceEl.classList.remove("ur-piece-black", "ur-piece-white");
       if (occupant) pieceEl.classList.add(occupant === "b" ? "ur-piece-black" : "ur-piece-white");
     }
-    sq.classList.toggle("ur-square-movable", movableFrom.has(pos));
+    const isMovable = movableFrom.has(pos);
+    sq.classList.toggle("ur-square-movable", isMovable);
+
+    let label = "Path square " + pos;
+    if (UrCore.isRosette(pos)) label += ", rosette";
+    label += occupant ? ", " + (occupant === "b" ? "Black" : "White") + " piece" : ", empty";
+    if (isMovable) label += ", movable";
+    sq.setAttribute("aria-label", label);
   });
 
   updateUrTrays();
@@ -566,8 +575,14 @@ function updateUrTrays() {
   const movableFromStart = AppStateUr.legalMoves.some((m) => m.from === 0);
   const topStartBtn = document.getElementById("ur-tray-top-start");
   const bottomStartBtn = document.getElementById("ur-tray-bottom-start");
-  if (topStartBtn) topStartBtn.classList.toggle("ur-tray-slot-movable", movableFromStart && AppStateUr.turn === "b");
-  if (bottomStartBtn) bottomStartBtn.classList.toggle("ur-tray-slot-movable", movableFromStart && AppStateUr.turn === "w");
+  if (topStartBtn) {
+    topStartBtn.classList.toggle("ur-tray-slot-movable", movableFromStart && AppStateUr.turn === "b");
+    topStartBtn.setAttribute("aria-label", "Black start, " + topStart + " piece" + (topStart === 1 ? "" : "s") + " waiting");
+  }
+  if (bottomStartBtn) {
+    bottomStartBtn.classList.toggle("ur-tray-slot-movable", movableFromStart && AppStateUr.turn === "w");
+    bottomStartBtn.setAttribute("aria-label", "White start, " + bottomStart + " piece" + (bottomStart === 1 ? "" : "s") + " waiting");
+  }
 }
 
 function updateDiceDisplayUr(roll) {

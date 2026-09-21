@@ -309,6 +309,8 @@ function isThreefoldRepetition() {
 }
 
 function initApp() {
+  if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
+
   const loginBtn = document.getElementById("login-button");
   const logoutBtn = document.getElementById("logout-button");
   const userStatus = document.getElementById("user-status");
@@ -953,6 +955,20 @@ function ensureSquareAspectRatio() {
     sq.style.height = squareSize + "px";
   });
 }
+const CHESS_PIECE_NAMES = { p: "pawn", n: "knight", b: "bishop", r: "rook", q: "queen", k: "king" };
+
+function chessSquareAriaLabel(coord, piece, selected) {
+  let label = coord;
+  if (piece) {
+    const color = ChessCore.isWhitePiece(piece) ? "White" : "Black";
+    label += ", " + color + " " + (CHESS_PIECE_NAMES[piece.toLowerCase()] || "piece");
+  } else {
+    label += ", empty";
+  }
+  if (selected) label += ", selected";
+  return label;
+}
+
 function updateBoard() {
   const boardEl = document.getElementById("board");
   if (!boardEl) return;
@@ -978,13 +994,15 @@ function updateBoard() {
         sq.classList.add("piece-black");
       }
     }
-    if (AppState.selected === coord) {
+    const isSelected = AppState.selected === coord;
+    if (isSelected) {
       sq.classList.add("selected");
     }
     if (AppState.lastMove &&
         (AppState.lastMove.from === coord || AppState.lastMove.to === coord)) {
       sq.classList.add("last-move");
     }
+    sq.setAttribute("aria-label", chessSquareAriaLabel(coord, piece, isSelected));
   });
   // Keep squares square, in case something changed the board width
   ensureSquareAspectRatio();

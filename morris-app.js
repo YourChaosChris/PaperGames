@@ -112,6 +112,7 @@ function pct(gridUnits) {
 }
 
 function initMorrisApp() {
+  if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
@@ -541,9 +542,19 @@ function updateMorrisBoard() {
       pieceEl.classList.remove("morris-piece-black", "morris-piece-white");
       if (piece) pieceEl.classList.add(piece === "b" ? "morris-piece-black" : "morris-piece-white");
     }
-    pt.classList.toggle("morris-point-selected", AppStateMorris.selected === i);
-    pt.classList.toggle("morris-point-movable", movableSources.has(i) || destinations.has(i) || (phase === "place" && !piece && legalMoves.some((m) => m.type === "place" && m.to === i)));
-    pt.classList.toggle("morris-point-removable", removalTargets.has(i));
+    const isSelected = AppStateMorris.selected === i;
+    const isMovable = movableSources.has(i) || destinations.has(i) || (phase === "place" && !piece && legalMoves.some((m) => m.type === "place" && m.to === i));
+    const isRemovable = removalTargets.has(i);
+    pt.classList.toggle("morris-point-selected", isSelected);
+    pt.classList.toggle("morris-point-movable", isMovable);
+    pt.classList.toggle("morris-point-removable", isRemovable);
+
+    let label = "Point " + (i + 1);
+    label += piece ? ", " + (piece === "b" ? "Black" : "White") + " piece" : ", empty";
+    if (isSelected) label += ", selected";
+    if (isRemovable) label += ", removable";
+    else if (isMovable) label += ", movable";
+    pt.setAttribute("aria-label", label);
   });
 }
 
