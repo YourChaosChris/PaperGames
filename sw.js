@@ -3,23 +3,29 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "einkchess-cache-v7";
+const CACHE_NAME = "einkchess-cache-v8";
 
 const APP_SHELL = [
   "./",
   "index.html",
   "chess.html",
   "chess-rules.html",
+  "chess-history.html",
   "go.html",
   "go-rules.html",
+  "go-history.html",
   "checkers.html",
   "checkers-rules.html",
+  "checkers-history.html",
   "ur.html",
   "ur-rules.html",
+  "ur-history.html",
   "morris.html",
   "morris-rules.html",
+  "morris-history.html",
   "backgammon.html",
   "backgammon-rules.html",
+  "backgammon-history.html",
   "xiangqi.html",
   "xiangqi-rules.html",
   "guide.html",

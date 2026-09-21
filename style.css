@@ -942,6 +942,7 @@ button:disabled {
 
 .game-select-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 }
 
@@ -1681,16 +1682,9 @@ button.ur-tray-slot {
   color: #111;
 }
 
-.xq-piece-cannon::after {
-  content: "";
-  position: absolute;
-  top: 12%;
-  left: 12%;
-  width: 20%;
-  height: 20%;
-  border-radius: 50%;
-  border: 1.5px solid currentColor;
-  box-sizing: border-box;
+.xq-piece svg {
+  width: 68%;
+  height: 68%;
 }
 
 /* Small disc icons for the color-choice picker and board placeholder,
