@@ -341,6 +341,18 @@ const STRINGS = {
     sudoku_term_difficulty: "Difficulty",
     sudoku_rules_difficulty: "Easy, Medium and Hard puzzles differ only in how many of the 81 cells start out filled in - fewer givens means more deduction is needed to make progress.",
 
+    pegsolitaire_new_game: "New game",
+    pegsolitaire_rules_title: "Peg Solitaire Rules",
+    pegsolitaire_rules_intro: "A quick reference for how eInkChess plays Peg Solitaire - useful if you're rusty, or learning.",
+    pegsolitaire_rules_basics_title: "The basic idea",
+    pegsolitaire_term_board: "The board and starting position",
+    pegsolitaire_rules_board: "The classic English board has 33 holes arranged in a plus/cross shape. Every hole starts filled with a peg except the very center, which starts empty.",
+    pegsolitaire_term_jump: "Jumping",
+    pegsolitaire_rules_jump: "Select a peg, then choose an empty hole two spaces away in a straight line (up, down, left or right - never diagonally) with another peg sitting directly between them. The peg jumps into the empty hole, and the peg it jumped over is removed from the board.",
+    pegsolitaire_rules_end_title: "Finishing a game",
+    pegsolitaire_term_win: "Solved",
+    pegsolitaire_rules_win: "The classic goal is to jump your way down to a single peg. The game also ends, unsolved, the moment no legal jump remains, however many pegs are still on the board.",
+
     nav_history: "History",
 
     chess_history_title: "The History of Chess",
@@ -510,6 +522,18 @@ const STRINGS = {
     sudoku_history_modern_title: "From Newspaper Column to Computer Science",
     sudoku_history_modern_p1: "Sudoku's sudden popularity attracted mathematicians and computer scientists as much as casual solvers: in 2005, the total number of distinct completed 9x9 grids was computed exactly (a little over 6.6 sextillion), and in 2012 an exhaustive computer search established that no valid 9x9 puzzle needs fewer than 17 givens to have a unique solution.",
     sudoku_history_modern_p2: "That second result is exactly the kind of fact eInkChess's generator relies on in reverse: because uniqueness gets harder to preserve as givens are removed, every puzzle here is produced by starting from a full solved grid and removing cells one at a time for as long as a unique solution survives - the same logic, worked backward, that puzzle constructors have used since Nikoli's earliest issues.",
+
+    pegsolitaire_history_title: "The History of Peg Solitaire",
+    pegsolitaire_history_intro: "A single-player puzzle old enough to have its own court legend, and the subject of one of the more surprising results in recreational mathematics.",
+    pegsolitaire_history_origins_title: "A French Court Game",
+    pegsolitaire_history_origins_p1: "The earliest confirmed evidence of peg solitaire comes from late-17th-century France, where the game appears in a 1697 engraving and was fashionable enough at the court of Louis XIV to be mentioned in contemporary writing. A popular legend credits its invention to a nobleman confined alone on an island - a charming story with no supporting evidence, and almost certainly invented well after the fact to give the game a more romantic origin.",
+    pegsolitaire_history_origins_p2: "The board that became standard in France has 37 holes (adding four more corners to the plain cross), while the version that spread to England - the 33-hole cross used here - became the more common English-language standard, popularized in Britain during the 19th century.",
+    pegsolitaire_history_spread_title: "One Board, Many Shapes",
+    pegsolitaire_history_spread_p1: "Beyond the classic cross, solitaire boards have been built in triangular form (with its own 15-peg version, a fixture of American restaurant tables for decades), diamond shapes, and other arrangements - the jumping rule stays identical no matter what shape the holes are arranged into.",
+    pegsolitaire_history_spread_p2: "Because every move removes exactly one peg, a full game from n pegs to 1 always takes exactly n-1 jumps - one of the few board games where the move count of a won game is fixed in advance, regardless of which particular sequence of jumps gets there.",
+    pegsolitaire_history_modern_title: "A Solved Puzzle, With a Twist",
+    pegsolitaire_history_modern_p1: "Peg solitaire attracted serious mathematical attention starting in the 1960s and 70s, when researchers including John Conway analyzed it using tools like resistor-network and group-theoretic arguments to work out exactly which final single-peg positions are reachable from the standard starting position - the center is one of them, though far from the only one.",
+    pegsolitaire_history_modern_p2: "Later computer search settled the question completely for the 33-hole board: a game starting with the center empty can always be finished down to one peg, and the number of essentially different winning games has been computed exactly - a rare case of a physical puzzle turning into a fully solved combinatorial problem.",
 
     back_home: "← Back to home",
 
@@ -920,6 +944,18 @@ const STRINGS = {
     sudoku_term_difficulty: "Schwierigkeitsgrad",
     sudoku_rules_difficulty: "Leichte, mittlere und schwere Rätsel unterscheiden sich nur darin, wie viele der 81 Felder zu Beginn schon ausgefüllt sind – weniger Vorgaben bedeuten, dass mehr logisches Schließen nötig ist, um voranzukommen.",
 
+    pegsolitaire_new_game: "Neues Spiel",
+    pegsolitaire_rules_title: "Solitär-Regeln",
+    pegsolitaire_rules_intro: "Eine kurze Übersicht darüber, wie eInkChess Solitär (Peg Solitaire) spielt – nützlich, wenn man aus der Übung ist oder es gerade lernt.",
+    pegsolitaire_rules_basics_title: "Die Grundidee",
+    pegsolitaire_term_board: "Das Brett und die Startaufstellung",
+    pegsolitaire_rules_board: "Das klassische englische Brett hat 33 Löcher in Kreuzform. Jedes Loch beginnt mit einem Stift gefüllt, außer dem mittleren, das leer bleibt.",
+    pegsolitaire_term_jump: "Springen",
+    pegsolitaire_rules_jump: "Einen Stift auswählen und dann ein leeres Loch zwei Felder entfernt in gerader Linie (hoch, runter, links oder rechts – nie diagonal) wählen, wobei direkt dazwischen ein weiterer Stift steht. Der Stift springt ins leere Loch, und der übersprungene Stift wird vom Brett entfernt.",
+    pegsolitaire_rules_end_title: "Eine Partie abschließen",
+    pegsolitaire_term_win: "Gelöst",
+    pegsolitaire_rules_win: "Das klassische Ziel ist, sich bis auf einen einzigen übrig bleibenden Stift durchzuspringen. Die Partie endet auch unlösbar, sobald kein legaler Sprung mehr möglich ist, egal wie viele Stifte noch auf dem Brett sind.",
+
     nav_history: "Geschichte",
 
     chess_history_title: "Die Geschichte des Schachs",
@@ -1089,6 +1125,18 @@ const STRINGS = {
     sudoku_history_modern_title: "Von der Zeitungsspalte zur Informatik",
     sudoku_history_modern_p1: "Sudokus plötzliche Beliebtheit zog ebenso Mathematiker und Informatiker an wie Gelegenheitslöser: 2005 wurde die Gesamtzahl unterschiedlicher vollständiger 9x9-Gitter exakt berechnet (etwas mehr als 6,6 Trilliarden), und 2012 zeigte eine erschöpfende Computersuche, dass kein gültiges 9x9-Rätsel mit weniger als 17 Vorgaben eine eindeutige Lösung haben kann.",
     sudoku_history_modern_p2: "Dieses zweite Ergebnis ist genau die Tatsache, auf die sich eInkChess' Generator umgekehrt verlässt: Weil die Eindeutigkeit mit jeder entfernten Vorgabe schwerer zu bewahren ist, entsteht jedes Rätsel hier, indem von einem vollständig gelösten Gitter ausgehend Felder einzeln entfernt werden, solange eine eindeutige Lösung erhalten bleibt – dieselbe Logik, nur rückwärts angewandt, die Rätselkonstrukteure schon seit Nikolis frühesten Ausgaben nutzen.",
+
+    pegsolitaire_history_title: "Die Geschichte von Solitär (Peg Solitaire)",
+    pegsolitaire_history_intro: "Ein Einzelspieler-Rätsel, alt genug für eine eigene Hoflegende, und Gegenstand eines der überraschenderen Ergebnisse der Unterhaltungsmathematik.",
+    pegsolitaire_history_origins_title: "Ein französisches Hofspiel",
+    pegsolitaire_history_origins_p1: "Der früheste gesicherte Beleg für Peg Solitaire stammt aus dem Frankreich des späten 17. Jahrhunderts, wo das Spiel auf einem Stich von 1697 erscheint und am Hof Ludwigs XIV. offenbar beliebt genug war, um in zeitgenössischen Schriften erwähnt zu werden. Eine populäre Legende schreibt seine Erfindung einem Adligen zu, der allein auf einer Insel gefangen war – eine reizvolle Geschichte ohne jeden Beleg, fast sicher erst im Nachhinein erfunden, um dem Spiel einen romantischeren Ursprung zu geben.",
+    pegsolitaire_history_origins_p2: "Das in Frankreich zum Standard gewordene Brett hat 37 Löcher (vier zusätzliche Ecken am schlichten Kreuz), während die nach England verbreitete Version – das hier verwendete 33-Loch-Kreuz – im englischsprachigen Raum zum gebräuchlicheren Standard wurde und sich im 19. Jahrhundert in Großbritannien durchsetzte.",
+    pegsolitaire_history_spread_title: "Ein Spielprinzip, viele Formen",
+    pegsolitaire_history_spread_p1: "Neben dem klassischen Kreuz wurden Solitär-Bretter auch in Dreiecksform (mit einer eigenen 15-Stift-Version, jahrzehntelang fester Bestandteil amerikanischer Restauranttische), Rautenform und weiteren Anordnungen gebaut – die Sprungregel bleibt dabei immer dieselbe, ganz gleich, in welcher Form die Löcher angeordnet sind.",
+    pegsolitaire_history_spread_p2: "Da jeder Zug genau einen Stift entfernt, braucht eine vollständige Partie von n Stiften bis zu einem einzigen immer genau n-1 Sprünge – eines der wenigen Brettspiele, bei denen die Zuganzahl einer gewonnenen Partie von vornherein feststeht, unabhängig davon, welche konkrete Sprungfolge dorthin führt.",
+    pegsolitaire_history_modern_title: "Ein gelöstes Rätsel mit einer Pointe",
+    pegsolitaire_history_modern_p1: "Peg Solitaire zog ab den 1960er- und 70er-Jahren ernsthafte mathematische Aufmerksamkeit auf sich, als Forscher wie John Conway es mit Werkzeugen wie Widerstandsnetzwerk- und gruppentheoretischen Argumenten analysierten, um genau zu bestimmen, welche letzten Ein-Stift-Positionen von der Standard-Ausgangsstellung aus erreichbar sind – die Mitte ist eine davon, aber bei Weitem nicht die einzige.",
+    pegsolitaire_history_modern_p2: "Eine spätere Computersuche klärte die Frage für das 33-Loch-Brett vollständig: Eine Partie, die mit leerer Mitte beginnt, lässt sich immer bis auf einen Stift zu Ende spielen, und die Anzahl grundlegend unterschiedlicher Gewinnpartien wurde exakt berechnet – ein seltener Fall, in dem ein physisches Rätsel zu einem vollständig gelösten kombinatorischen Problem wurde.",
 
     back_home: "← Zurück zur Startseite",
 
