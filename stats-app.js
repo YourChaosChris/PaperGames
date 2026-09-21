@@ -12,7 +12,8 @@ const STATS_GAME_NAME_KEY = {
   xiangqi: "game_xiangqi_short",
   mancala: "game_mancala",
   othello: "game_othello",
-  connectfour: "game_connect_four"
+  connectfour: "game_connect_four",
+  gomoku: "game_gomoku"
 };
 
 function gameDisplayName(game) {
