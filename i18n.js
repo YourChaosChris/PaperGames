@@ -403,7 +403,9 @@ const STRINGS = {
     stats_reset_confirm: "Reset all stats? This cannot be undone.",
 
     home_coming_soon_title: "Coming soon",
-    home_coming_soon_intro: "More strategy games under consideration for a future update:",
+    home_coming_soon_intro: "More games under consideration for a future update:",
+    home_coming_soon_multiplayer_title: "Two-player strategy games",
+    home_coming_soon_solo_title: "Single-player puzzles",
     game_connect_four: "Connect Four",
     home_connect_four_desc: "Drop discs to connect four in a row before your opponent does.",
     game_gomoku: "Gomoku (Five in a Row)",
@@ -421,7 +423,21 @@ const STRINGS = {
     game_hex: "Hex",
     home_hex_desc: "Connect your two sides of a hexagonal board before your opponent connects theirs.",
     game_halma: "Halma",
-    home_halma_desc: "Race all your pieces across the board into your opponent's starting camp."
+    home_halma_desc: "Race all your pieces across the board into your opponent's starting camp.",
+    game_sudoku: "Sudoku",
+    home_sudoku_desc: "Fill a 9x9 grid with digits so every row, column and 3x3 box contains 1-9 exactly once.",
+    game_peg_solitaire: "Peg Solitaire",
+    home_peg_solitaire_desc: "Jump pegs over each other on a cross-shaped board until only one remains.",
+    game_minesweeper: "Minesweeper",
+    home_minesweeper_desc: "Uncover every safe square using the number clues, without triggering a hidden mine.",
+    game_nonograms: "Nonograms (Picross)",
+    home_nonograms_desc: "Use row and column number clues to reveal a hidden picture, one cell at a time.",
+    game_2048: "2048",
+    home_2048_desc: "Slide and merge numbered tiles to reach 2048 before the board fills up.",
+    game_mahjong_solitaire: "Mahjong Solitaire",
+    home_mahjong_solitaire_desc: "Clear the layered tile layout by matching identical pairs.",
+    game_freecell: "FreeCell",
+    home_freecell_desc: "The classic card solitaire where nearly every deal can be won with the right moves."
   },
   de: {
     nav_home: "Start",
@@ -822,7 +838,9 @@ const STRINGS = {
     stats_reset_confirm: "Statistik wirklich zurücksetzen? Das kann nicht rückgängig gemacht werden.",
 
     home_coming_soon_title: "Demnächst",
-    home_coming_soon_intro: "Weitere Strategiespiele, die für ein zukünftiges Update in Betracht gezogen werden:",
+    home_coming_soon_intro: "Weitere Spiele, die für ein zukünftiges Update in Betracht gezogen werden:",
+    home_coming_soon_multiplayer_title: "Strategiespiele zu zweit",
+    home_coming_soon_solo_title: "Einzelspieler-Rätsel",
     game_connect_four: "Vier Gewinnt",
     home_connect_four_desc: "Wirf Scheiben ein und verbinde als Erster vier in einer Reihe.",
     game_gomoku: "Gomoku (Fünf in einer Reihe)",
@@ -840,7 +858,21 @@ const STRINGS = {
     game_hex: "Hex",
     home_hex_desc: "Verbinde deine beiden Seiten eines Sechseck-Bretts, bevor es der Gegner tut.",
     game_halma: "Halma",
-    home_halma_desc: "Bringe alle deine Figuren als Erster ins gegnerische Lager."
+    home_halma_desc: "Bringe alle deine Figuren als Erster ins gegnerische Lager.",
+    game_sudoku: "Sudoku",
+    home_sudoku_desc: "Fülle ein 9x9-Gitter mit Ziffern, sodass jede Zeile, Spalte und jedes 3x3-Feld die Zahlen 1–9 genau einmal enthält.",
+    game_peg_solitaire: "Solitär",
+    home_peg_solitaire_desc: "Springe auf einem kreuzförmigen Brett über Stifte, bis nur noch einer übrig ist.",
+    game_minesweeper: "Minesweeper",
+    home_minesweeper_desc: "Decke mit Hilfe der Zahlenhinweise alle sicheren Felder auf, ohne eine versteckte Mine auszulösen.",
+    game_nonograms: "Nonogramme (Picross)",
+    home_nonograms_desc: "Nutze Zeilen- und Spalten-Zahlenhinweise, um Feld für Feld ein verstecktes Bild aufzudecken.",
+    game_2048: "2048",
+    home_2048_desc: "Schiebe und verschmelze nummerierte Kacheln, um 2048 zu erreichen, bevor das Brett voll ist.",
+    game_mahjong_solitaire: "Mahjong Solitaire",
+    home_mahjong_solitaire_desc: "Räume das gestapelte Steine-Layout ab, indem du gleiche Paare findest.",
+    game_freecell: "FreeCell",
+    home_freecell_desc: "Der klassische Karten-Solitär, bei dem sich fast jede Runde mit den richtigen Zügen gewinnen lässt."
   }
 };
 
