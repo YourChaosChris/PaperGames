@@ -164,9 +164,10 @@ const STRINGS = {
 
     backgammon_tray_bar: "Bar",
     backgammon_tray_off: "Off",
+    backgammon_double_button: "Double",
 
     backgammon_rules_title: "Backgammon Rules",
-    backgammon_rules_intro: "A quick reference for how eInkChess plays backgammon - useful if you're rusty, or learning. This app doesn't use a doubling cube; every game is played for a single point.",
+    backgammon_rules_intro: "A quick reference for how eInkChess plays backgammon - useful if you're rusty, or learning.",
     backgammon_rules_basics_title: "The basic idea",
     backgammon_term_pieces: "Checkers and the board",
     backgammon_rules_pieces: "Each player has 15 checkers on a 24-point board. Black moves from point 1 toward point 24, White from point 24 toward point 1 - each racing all their checkers into their own home board and then off it.",
@@ -181,6 +182,8 @@ const STRINGS = {
     backgammon_rules_win: "The first player to bear off all 15 checkers wins.",
     backgammon_term_resignation: "Resignation",
     backgammon_rules_resignation: "A player can resign at any time, ending the game immediately in the opponent's favor.",
+    backgammon_term_doubling: "The doubling cube",
+    backgammon_rules_doubling: "Before rolling, a player who holds (or shares) the cube may offer to double the stakes. The opponent must accept, taking control of the cube and doubling how much the game is worth, or decline and immediately lose the game at its current value. A gammon (opponent bears off nothing) counts double, and a backgammon (opponent still has a checker in the winner's home board or on the bar) counts triple - both multiplied by the cube on top.",
 
     xiangqi_rules_title: "Xiangqi Rules",
     xiangqi_rules_intro: "A quick reference for how eInkChess plays Xiangqi (Chinese Chess) - useful if you're rusty, or learning. Red moves first, unlike the other games here.",
@@ -476,9 +479,10 @@ const STRINGS = {
 
     backgammon_tray_bar: "Bar",
     backgammon_tray_off: "Raus",
+    backgammon_double_button: "Verdoppeln",
 
     backgammon_rules_title: "Backgammon-Regeln",
-    backgammon_rules_intro: "Eine kurze Übersicht, wie eInkChess Backgammon spielt – nützlich zum Auffrischen oder Lernen. Diese App verwendet keinen Verdopplungswürfel; jede Partie zählt einen Punkt.",
+    backgammon_rules_intro: "Eine kurze Übersicht, wie eInkChess Backgammon spielt – nützlich zum Auffrischen oder Lernen.",
     backgammon_rules_basics_title: "Die Grundidee",
     backgammon_term_pieces: "Steine und das Brett",
     backgammon_rules_pieces: "Jeder Spieler hat 15 Steine auf einem Brett mit 24 Punkten. Schwarz zieht von Punkt 1 Richtung Punkt 24, Weiß von Punkt 24 Richtung Punkt 1 – jeder bringt seine Steine ins eigene Zielfeld (Home) und dann hinaus.",
@@ -493,6 +497,8 @@ const STRINGS = {
     backgammon_rules_win: "Wer als Erster alle 15 Steine ausgewürfelt hat, gewinnt.",
     backgammon_term_resignation: "Aufgabe",
     backgammon_rules_resignation: "Ein Spieler kann jederzeit aufgeben, wodurch die Partie sofort zugunsten des Gegners endet.",
+    backgammon_term_doubling: "Der Verdopplungswürfel",
+    backgammon_rules_doubling: "Vor dem Würfeln darf ein Spieler, der den Würfel besitzt (oder er steht noch in der Mitte), anbieten, den Einsatz zu verdoppeln. Der Gegner muss annehmen – und übernimmt damit den Würfel sowie den doppelten Einsatz – oder ablehnen und verliert die Partie sofort zum aktuellen Einsatz. Ein Gammon (Gegner würfelt keinen Stein aus) zählt doppelt, ein Backgammon (Gegner hat noch einen Stein im Zielfeld des Gewinners oder auf der Bar) zählt dreifach – beides zusätzlich mit dem Würfel multipliziert.",
 
     xiangqi_rules_title: "Xiangqi-Regeln",
     xiangqi_rules_intro: "Eine kurze Übersicht, wie eInkChess Xiangqi (Chinesisches Schach) spielt – nützlich zum Auffrischen oder Lernen. Anders als bei den anderen Spielen hier zieht Rot zuerst.",

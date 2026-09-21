@@ -98,9 +98,20 @@ const BackgammonAi = (function () {
     return scored[0].move; // level 3: always take the best-evaluated move
   }
 
+  // Very rough doubling-cube heuristic: a double should be declined once
+  // the player's winning chance drops below roughly 25%. Pip count alone
+  // is an imperfect proxy for that (it ignores blocking/timing), but a
+  // reasonable approximation for a casual, non-tournament AI opponent.
+  function shouldAcceptDouble(state, color) {
+    const opp = otherColor(color);
+    const pipDiff = pipCountFor(state, color) - pipCountFor(state, opp);
+    return pipDiff < 16;
+  }
+
   return {
     evaluateFor,
     pipCountFor,
+    shouldAcceptDouble,
     chooseMove
   };
 })();

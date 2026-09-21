@@ -1,7 +1,9 @@
 // backgammon-core.js
-// Dependency-free rules engine for standard backgammon (no doubling
-// cube - see the note in backgammon-app.js). Mirrors the separation of
-// concerns in checkers-core.js/go-core.js: rules only, no DOM/UI.
+// Dependency-free rules engine for standard backgammon. The doubling
+// cube is a stakes multiplier tracked at the app layer (see
+// backgammon-app.js) since it doesn't affect move legality. Mirrors the
+// separation of concerns in checkers-core.js/go-core.js: rules only, no
+// DOM/UI.
 //
 // Board: 24 points, numbered 1-24. White ("w") moves from 24 toward 1
 // and bears off past 1; Black ("b") moves from 1 toward 24 and bears
