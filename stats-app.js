@@ -19,7 +19,8 @@ const STATS_GAME_NAME_KEY = {
   sudoku: "game_sudoku",
   pegsolitaire: "game_peg_solitaire",
   minesweeper: "game_minesweeper",
-  nonogram: "game_nonograms"
+  nonogram: "game_nonograms",
+  twenty48: "game_2048"
 };
 
 function gameDisplayName(game) {

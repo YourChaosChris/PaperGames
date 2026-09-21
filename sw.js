@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "einkchess-cache-v26";
+const CACHE_NAME = "einkchess-cache-v27";
 
 const APP_SHELL = [
   "./",
@@ -59,6 +59,9 @@ const APP_SHELL = [
   "nonogram.html",
   "nonogram-rules.html",
   "nonogram-history.html",
+  "twenty48.html",
+  "twenty48-rules.html",
+  "twenty48-history.html",
   "guide.html",
   "about.html",
   "stats.html",
@@ -116,6 +119,8 @@ const APP_SHELL = [
   "nonogram-core.js",
   "nonogram-puzzles.js",
   "nonogram-app.js",
+  "twenty48-core.js",
+  "twenty48-app.js",
   "sw-register.js",
   "game-storage.js",
   "game-stats.js",

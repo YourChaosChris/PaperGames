@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>eInkChess – 2048 for E‑Ink</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <h1><a href="index.html" class="app-title-link">♞ eInkChess</a></h1>
+      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
+    </div>
+    <div class="user-panel">
+      <button id="menu-toggle" class="secondary">&#9776; Menu</button>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+  </nav>
+
+  <main>
+
+<div id="settings-panel">
+    <section id="twenty48-controls" class="card">
+  <div class="field-row">
+    <button id="start-twenty48-game" class="primary" data-i18n="twenty48_new_game">New game</button>
+  </div>
+  <div id="offline-twenty48-status" class="status-text"></div>
+</section>
+</div>
+
+
+<section id="board-section" class="card">
+  <div class="board-header">
+    <div id="game-label"></div>
+    <div id="game-meta"></div>
+    <div id="game-result" aria-live="assertive"></div>
+
+    <div id="board-info" class="status-text" aria-live="polite"></div>
+  </div>
+  <div id="board-placeholder" class="board-placeholder">
+    <span class="board-placeholder-icon twenty48-icon" aria-hidden="true">2048</span>
+    <div class="board-placeholder-text">
+      <span class="board-placeholder-title" data-i18n="game_2048">2048</span>
+      <span class="board-placeholder-subtitle">eInkChess</span>
+    </div>
+  </div>
+  <div id="board-container" class="hidden">
+    <div id="twenty48-board" class="twenty48-board" role="group" aria-label="2048 board"></div>
+    <div id="twenty48-controls-pad" class="twenty48-controls-pad">
+      <button id="twenty48-up" type="button" class="secondary small" data-i18n="twenty48_up">Up</button>
+      <div class="twenty48-controls-row">
+        <button id="twenty48-left" type="button" class="secondary small" data-i18n="twenty48_left">Left</button>
+        <button id="twenty48-down" type="button" class="secondary small" data-i18n="twenty48_down">Down</button>
+        <button id="twenty48-right" type="button" class="secondary small" data-i18n="twenty48_right">Right</button>
+      </div>
+    </div>
+  </div>
+  <div id="board-actions" class="board-actions">
+    <button id="undo-btn" class="secondary small hidden" onclick="undoLastMove()">Undo</button>
+  </div>
+</section>
+  </main>
+</div>
+
+<script src="i18n.js"></script>
+<script src="twenty48-core.js"></script>
+<script src="result-modal.js"></script>
+<script src="game-storage.js"></script>
+<script src="game-stats.js"></script>
+<script src="board-a11y.js"></script>
+<script src="twenty48-app.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>
