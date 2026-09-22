@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Legal Notice | PaperGames</title>
-  <meta name="description" content="Legal notice (Impressum) for PaperGames, a free collection of 31 offline board games for e-ink readers, operated by Christopher Müller.">
-  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/impressum.html">
+  <title>All Games – PaperGames</title>
+  <meta name="description" content="Browse, search, and sort all 31 free board and puzzle games in PaperGames, alphabetically or by type.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/games.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PaperGames">
-  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/impressum.html">
-  <meta property="og:title" content="Legal Notice | PaperGames">
-  <meta property="og:description" content="Legal notice (Impressum) for PaperGames, a free collection of 31 offline board games for e-ink readers, operated by Christopher Müller.">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/games.html">
+  <meta property="og:title" content="All Games – PaperGames">
+  <meta property="og:description" content="Browse, search, and sort all 31 free board and puzzle games in PaperGames, alphabetically or by type.">
   <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Legal Notice | PaperGames">
-  <meta name="twitter:description" content="Legal notice (Impressum) for PaperGames, a free collection of 31 offline board games for e-ink readers, operated by Christopher Müller.">
+  <meta name="twitter:title" content="All Games – PaperGames">
+  <meta name="twitter:description" content="Browse, search, and sort all 31 free board and puzzle games in PaperGames, alphabetically or by type.">
   <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -27,6 +27,7 @@
   <header class="app-header">
     <div class="title-wrap app-title-row">
       <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
     </div>
     <div class="user-panel">
       <div class="lang-switch">
@@ -44,32 +45,24 @@
   </nav>
 
   <main>
-    <section class="card content-page">
-      <h1 data-i18n="nav_impressum">Legal Notice</h1>
+    <section class="card">
+      <h1 data-i18n="nav_all_games">All Games</h1>
+      <p data-i18n="all_games_intro">Every game in PaperGames, in one place. Search by name, sort alphabetically or by type, and tap the star to add a game to your Favorites on the home page.</p>
 
-      <h2 data-i18n="impressum_info_heading">Information pursuant to Section 5 DDG (German Digital Services Act)</h2>
-      <p>
-        Christopher Müller<br>
-        Im Hagen 21<br>
-        59387 Ascheberg<br>
-        <span data-i18n="impressum_country">Germany</span>
-      </p>
-      <p>
-        <span data-i18n="impressum_phone_label">Phone:</span> +49 170 628 11 20<br>
-        <span data-i18n="impressum_email_label">Email:</span> <a href="mailto:yourchaos@googlemail.com">yourchaos@googlemail.com</a>
-      </p>
+      <div class="games-toolbar">
+        <input type="search" id="games-search" class="games-search-input" data-i18n-attr="placeholder:all_games_search_placeholder" placeholder="Search games…" aria-label="Search games">
+        <label for="games-sort" class="games-sort-label" data-i18n="all_games_sort_label">Sort by:</label>
+        <select id="games-sort" class="games-sort-select" aria-label="Sort games">
+          <option value="alpha" data-i18n="all_games_sort_alpha">Alphabetical</option>
+          <option value="type" data-i18n="all_games_sort_type">Type</option>
+        </select>
+      </div>
 
-      <h2 data-i18n="impressum_responsible_heading">Responsible for content pursuant to Section 18(2) MStV (German Interstate Media Treaty)</h2>
-      <p data-i18n="impressum_responsible_body">Christopher Müller, address as above</p>
-
-      <p data-i18n="impressum_vat_notice">No VAT is shown on this site pursuant to Section 19 UStG (German small business regulation).</p>
-
-      <h2 data-i18n="impressum_disclaimer_heading">Disclaimer</h2>
-      <h3 data-i18n="impressum_liability_links_heading">Liability for links</h3>
-      <p data-i18n="impressum_liability_links_body">This website contains links to external third-party websites, in particular lichess.org and paypal.com, over whose content we have no influence. We therefore cannot accept any liability for this external content. The respective provider or operator of a linked page is always responsible for its content. The linked pages were checked for possible legal violations at the time of linking. No unlawful content was identifiable at that time. However, permanent monitoring of the content of linked pages is not reasonable without concrete evidence of a legal violation. If we become aware of any legal violations, we will remove such links immediately.</p>
-
-      <p class="about-back"><a href="index.html" data-i18n="back_home">&larr; Back to home</a></p>
+      <p id="games-no-results" class="games-no-results hidden" data-i18n="all_games_no_results">No games match your search.</p>
+      <div id="games-grid"></div>
     </section>
+
+    <p class="about-back"><a href="index.html" data-i18n="back_home">&larr; Back to home</a></p>
   </main>
   <footer class="site-footer">
     <a href="guide.html" data-i18n="nav_guide">Guide</a>
@@ -81,6 +74,10 @@
   </footer>
 </div>
 <script src="i18n.js"></script>
+<script src="games-catalog.js"></script>
+<script src="favorites.js"></script>
+<script src="games-render.js"></script>
+<script src="games-app.js"></script>
 <script src="sw-register.js"></script>
 </body>
 </html>
