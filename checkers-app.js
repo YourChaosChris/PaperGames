@@ -500,9 +500,20 @@ function updateCheckersBoard() {
     const pieceEl = sq.querySelector(".checkers-piece");
     if (pieceEl) {
       pieceEl.classList.remove("checkers-piece-black", "checkers-piece-white", "checkers-piece-king");
+      // The king badge (see .checkers-king-mark in style.css) is a nested
+      // element rather than a CSS-only pseudo-element, since .checkers-piece
+      // already uses its own ::before for the piece's depth rim - so it's
+      // added/removed here alongside the checkers-piece-king class instead.
+      const existingMark = pieceEl.querySelector(".checkers-king-mark");
+      if (existingMark) existingMark.remove();
       if (piece) {
         pieceEl.classList.add(CheckersCore.colorOf(piece) === "b" ? "checkers-piece-black" : "checkers-piece-white");
-        if (CheckersCore.isKing(piece)) pieceEl.classList.add("checkers-piece-king");
+        if (CheckersCore.isKing(piece)) {
+          pieceEl.classList.add("checkers-piece-king");
+          const mark = document.createElement("span");
+          mark.className = "checkers-king-mark";
+          pieceEl.appendChild(mark);
+        }
       }
     }
 
