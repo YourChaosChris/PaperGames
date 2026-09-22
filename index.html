@@ -37,11 +37,17 @@
       <h1>eInkChess</h1>
       <p class="home-tagline" data-i18n="home_tagline">Chess, built for e-readers.</p>
       <p data-i18n="home_intro">A small, dependency-free chess app made for E-Ink displays.</p>
-      <a href="#games" class="primary home-play-button" data-i18n="home_play_button">▶ Choose a game</a>
+      <a href="#section-strategy" class="primary home-play-button" data-i18n="home_play_button">▶ Choose a game</a>
     </section>
 
-    <section id="games" class="card">
-      <h2 data-i18n="home_games_title">Choose a game</h2>
+    <nav class="game-section-nav" aria-label="Jump to game category">
+      <a href="#section-strategy"><span aria-hidden="true">🎯</span> <span data-i18n="home_section_strategy">Two-Player Strategy</span></a>
+      <a href="#section-race"><span aria-hidden="true">🎲</span> <span data-i18n="home_section_race">Dice &amp; Race Games</span></a>
+      <a href="#section-puzzles"><span aria-hidden="true">🧩</span> <span data-i18n="home_section_puzzles">Solo Puzzles</span></a>
+    </nav>
+
+    <section id="section-strategy" class="card">
+      <h2 data-i18n="home_section_strategy">Two-Player Strategy</h2>
       <div class="game-select-grid">
         <div class="game-select-item">
           <div class="game-select-title"><span class="game-select-icon-svg" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 45"><g fill="none" fill-rule="evenodd" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path fill="#000" d="M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21"/><path fill="#000" d="M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.04-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-1-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-2 2.5-3c1 0 1 3 1 3"/><path fill="#ececec" stroke="#ececec" d="M9.5 25.5a.5.5 0 1 1-1 0 .5.5 0 1 1 1 0m5.43-9.75a.5 1.5 30 1 1-.86-.5.5 1.5 30 1 1 .86.5"/><path fill="#ececec" stroke="none" d="m24.55 10.4-.45 1.45.5.15c3.15 1 5.65 2.49 7.9 6.75S35.75 29.06 35.25 39l-.05.5h2.25l.05-.5c.5-10.06-.88-16.85-3.25-21.34s-5.79-6.64-9.19-7.16z"/></g></svg></span> <span data-i18n="game_chess">Chess</span></div>
@@ -50,15 +56,6 @@
             <a href="chess.html" class="primary small" data-i18n="nav_play">Play</a>
             <a href="chess-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
             <a href="chess-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
-          <div class="game-select-title"><span class="go-stone-icon go-stone-black" aria-hidden="true"></span> <span data-i18n="game_go">Go</span></div>
-          <p class="game-select-desc" data-i18n="home_go_desc">The ancient territory game. Local 2-player or vs. the built-in engine, three board sizes, three difficulty levels.</p>
-          <div class="game-select-actions">
-            <a href="go.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="go-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="go-history.html" class="secondary small" data-i18n="nav_history">History</a>
           </div>
         </div>
         <div class="game-select-item">
@@ -71,33 +68,6 @@
           </div>
         </div>
         <div class="game-select-item">
-          <div class="game-select-title"><span class="ur-piece-icon ur-piece-icon-black" aria-hidden="true"></span> <span data-i18n="game_ur">Ur</span></div>
-          <p class="game-select-desc" data-i18n="home_ur_desc">A 4,600-year-old race game rediscovered from ancient Mesopotamia. Local 2-player or vs. the built-in engine, with rosette squares and capture-by-landing.</p>
-          <div class="game-select-actions">
-            <a href="ur.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="ur-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="ur-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
-          <div class="game-select-title"><span class="morris-icon-disc morris-icon-disc-black" aria-hidden="true"></span> <span data-i18n="game_morris">Morris</span></div>
-          <p class="game-select-desc" data-i18n="home_morris_desc">A centuries-old strategy game of placing and sliding pieces to form mills. Local 2-player or vs. the built-in engine, with the classic flying endgame rule.</p>
-          <div class="game-select-actions">
-            <a href="morris.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="morris-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="morris-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
-          <div class="game-select-title"><span class="bg-icon-checker bg-icon-checker-black" aria-hidden="true"></span> <span data-i18n="game_backgammon">Backgammon</span></div>
-          <p class="game-select-desc" data-i18n="home_backgammon_desc">The classic dice race game. Local 2-player or vs. the built-in engine, with the bar, bearing off, and blot-hitting.</p>
-          <div class="game-select-actions">
-            <a href="backgammon.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="backgammon-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="backgammon-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
           <div class="game-select-title"><span class="xq-icon-disc xq-icon-disc-red" aria-hidden="true">帥</span> <span data-i18n="game_xiangqi_short">Xiangqi</span></div>
           <p class="game-select-desc" data-i18n="home_xiangqi_desc">Chinese chess: generals, elephants, cannons and more on a 9x10 grid. Local 2-player or vs. the built-in engine, with a toggle between classic characters and Western-style symbols.</p>
           <div class="game-select-actions">
@@ -107,12 +77,39 @@
           </div>
         </div>
         <div class="game-select-item">
-          <div class="game-select-title"><span class="mancala-seed-icon" aria-hidden="true"></span> <span data-i18n="game_mancala">Mancala</span></div>
-          <p class="game-select-desc" data-i18n="home_mancala_desc">One of the world's oldest game families: sow seeds around the board to fill your own store. Local 2-player or vs. the built-in engine, with captures and extra turns.</p>
+          <div class="game-select-title"><span class="shogi-icon-piece" aria-hidden="true">王</span> <span data-i18n="game_shogi">Shogi</span></div>
+          <p class="game-select-desc" data-i18n="home_shogi_desc">Japanese chess, where captured pieces switch sides and rejoin the battle. Local 2-player or vs. the built-in engine.</p>
           <div class="game-select-actions">
-            <a href="mancala.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="mancala-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="mancala-history.html" class="secondary small" data-i18n="nav_history">History</a>
+            <a href="shogi.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="shogi-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="shogi-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="onitama-icon-piece onitama-icon-piece-blue" aria-hidden="true"></span> <span data-i18n="game_onitama">Onitama</span></div>
+          <p class="game-select-desc" data-i18n="home_onitama_desc">A fast, elegant duel decided by five shifting move cards.</p>
+          <div class="game-select-actions">
+            <a href="onitama.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="onitama-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="onitama-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="hnefatafl-icon-piece hnefatafl-icon-piece-defender" aria-hidden="true"></span> <span data-i18n="game_hnefatafl">Hnefatafl (Viking Chess)</span></div>
+          <p class="game-select-desc" data-i18n="home_hnefatafl_desc">An asymmetric Norse game: the king must escape, the attackers must trap him.</p>
+          <div class="game-select-actions">
+            <a href="hnefatafl.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="hnefatafl-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="hnefatafl-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="go-stone-icon go-stone-black" aria-hidden="true"></span> <span data-i18n="game_go">Go</span></div>
+          <p class="game-select-desc" data-i18n="home_go_desc">The ancient territory game. Local 2-player or vs. the built-in engine, three board sizes, three difficulty levels.</p>
+          <div class="game-select-actions">
+            <a href="go.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="go-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="go-history.html" class="secondary small" data-i18n="nav_history">History</a>
           </div>
         </div>
         <div class="game-select-item">
@@ -143,102 +140,21 @@
           </div>
         </div>
         <div class="game-select-item">
-          <div class="game-select-title"><span class="senet-icon-disc senet-icon-disc-a" aria-hidden="true"></span> <span data-i18n="game_senet">Senet</span></div>
-          <p class="game-select-desc" data-i18n="home_senet_desc">One of the oldest known board games, from ancient Egypt. Local 2-player or vs. the built-in engine.</p>
+          <div class="game-select-title"><span class="hex-icon-piece hex-icon-piece-r" aria-hidden="true"></span> <span data-i18n="game_hex">Hex</span></div>
+          <p class="game-select-desc" data-i18n="home_hex_desc">Connect your two sides of a hexagonal board before your opponent connects theirs.</p>
           <div class="game-select-actions">
-            <a href="senet.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="senet-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="senet-history.html" class="secondary small" data-i18n="nav_history">History</a>
+            <a href="hex.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="hex-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="hex-history.html" class="secondary small" data-i18n="nav_history">History</a>
           </div>
         </div>
         <div class="game-select-item">
-          <div class="game-select-title"><span class="shogi-icon-piece" aria-hidden="true">王</span> <span data-i18n="game_shogi">Shogi</span></div>
-          <p class="game-select-desc" data-i18n="home_shogi_desc">Japanese chess, where captured pieces switch sides and rejoin the battle. Local 2-player or vs. the built-in engine.</p>
+          <div class="game-select-title"><span class="morris-icon-disc morris-icon-disc-black" aria-hidden="true"></span> <span data-i18n="game_morris">Morris</span></div>
+          <p class="game-select-desc" data-i18n="home_morris_desc">A centuries-old strategy game of placing and sliding pieces to form mills. Local 2-player or vs. the built-in engine, with the classic flying endgame rule.</p>
           <div class="game-select-actions">
-            <a href="shogi.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="shogi-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="shogi-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
-          <div class="game-select-title"><span class="sudoku-icon" aria-hidden="true">9</span> <span data-i18n="game_sudoku">Sudoku</span></div>
-          <p class="game-select-desc" data-i18n="home_sudoku_desc">Fill a 9x9 grid with digits so every row, column and 3x3 box contains 1-9 exactly once. Freshly generated with a unique solution, in three difficulty levels.</p>
-          <div class="game-select-actions">
-            <a href="sudoku.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="sudoku-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="sudoku-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
-          <div class="game-select-title"><span class="peg-icon" aria-hidden="true"></span> <span data-i18n="game_peg_solitaire">Peg Solitaire</span></div>
-          <p class="game-select-desc" data-i18n="home_peg_solitaire_desc">Jump pegs over each other on a cross-shaped board until only one remains.</p>
-          <div class="game-select-actions">
-            <a href="pegsolitaire.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="pegsolitaire-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="pegsolitaire-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
-          <div class="game-select-title"><span class="mine-icon" aria-hidden="true"></span> <span data-i18n="game_minesweeper">Minesweeper</span></div>
-          <p class="game-select-desc" data-i18n="home_minesweeper_desc">Uncover every safe square using the number clues, without triggering a hidden mine.</p>
-          <div class="game-select-actions">
-            <a href="minesweeper.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="minesweeper-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="minesweeper-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
-          <div class="game-select-title"><span class="nonogram-icon" aria-hidden="true"></span> <span data-i18n="game_nonograms">Nonograms (Picross)</span></div>
-          <p class="game-select-desc" data-i18n="home_nonograms_desc">Use row and column number clues to reveal a hidden picture, one cell at a time. A fresh, uniquely-solvable puzzle in three sizes.</p>
-          <div class="game-select-actions">
-            <a href="nonogram.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="nonogram-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="nonogram-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
-          <div class="game-select-title"><span class="twenty48-icon" aria-hidden="true">2048</span> <span data-i18n="game_2048">2048</span></div>
-          <p class="game-select-desc" data-i18n="home_2048_desc">Slide and merge numbered tiles to reach 2048 before the board fills up. Keep playing afterward to push your best score even higher.</p>
-          <div class="game-select-actions">
-            <a href="twenty48.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="twenty48-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="twenty48-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
-          <div class="game-select-title"><span class="mahjong-icon" aria-hidden="true">🀄</span> <span data-i18n="game_mahjong_solitaire">Mahjong Solitaire</span></div>
-          <p class="game-select-desc" data-i18n="home_mahjong_solitaire_desc">Clear the layered tile layout by matching identical pairs. Every deal is generated to always have a solution.</p>
-          <div class="game-select-actions">
-            <a href="mahjong.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="mahjong-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="mahjong-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
-          <div class="game-select-title"><span class="freecell-icon" aria-hidden="true">A♠</span> <span data-i18n="game_freecell">FreeCell</span></div>
-          <p class="game-select-desc" data-i18n="home_freecell_desc">The classic card solitaire where nearly every deal can be won with the right moves. Full supermoves and a one-click collect to the foundations.</p>
-          <div class="game-select-actions">
-            <a href="freecell.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="freecell-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="freecell-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
-          <div class="game-select-title"><span class="onitama-icon-piece onitama-icon-piece-blue" aria-hidden="true"></span> <span data-i18n="game_onitama">Onitama</span></div>
-          <p class="game-select-desc" data-i18n="home_onitama_desc">A fast, elegant duel decided by five shifting move cards.</p>
-          <div class="game-select-actions">
-            <a href="onitama.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="onitama-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="onitama-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
-          <div class="game-select-title"><span class="hnefatafl-icon-piece hnefatafl-icon-piece-defender" aria-hidden="true"></span> <span data-i18n="game_hnefatafl">Hnefatafl (Viking Chess)</span></div>
-          <p class="game-select-desc" data-i18n="home_hnefatafl_desc">An asymmetric Norse game: the king must escape, the attackers must trap him.</p>
-          <div class="game-select-actions">
-            <a href="hnefatafl.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="hnefatafl-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="hnefatafl-history.html" class="secondary small" data-i18n="nav_history">History</a>
+            <a href="morris.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="morris-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="morris-history.html" class="secondary small" data-i18n="nav_history">History</a>
           </div>
         </div>
         <div class="game-select-item">
@@ -251,21 +167,123 @@
           </div>
         </div>
         <div class="game-select-item">
-          <div class="game-select-title"><span class="hex-icon-piece hex-icon-piece-r" aria-hidden="true"></span> <span data-i18n="game_hex">Hex</span></div>
-          <p class="game-select-desc" data-i18n="home_hex_desc">Connect your two sides of a hexagonal board before your opponent connects theirs.</p>
-          <div class="game-select-actions">
-            <a href="hex.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="hex-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="hex-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item">
           <div class="game-select-title"><span class="halma-icon-piece halma-icon-piece-p1" aria-hidden="true"></span> <span data-i18n="game_halma">Halma</span></div>
           <p class="game-select-desc" data-i18n="home_halma_desc">Race all your pieces across the board into your opponent's starting camp.</p>
           <div class="game-select-actions">
             <a href="halma.html" class="primary small" data-i18n="nav_play">Play</a>
             <a href="halma-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
             <a href="halma-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-race" class="card">
+      <h2 data-i18n="home_section_race">Dice &amp; Race Games</h2>
+      <div class="game-select-grid">
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="bg-icon-checker bg-icon-checker-black" aria-hidden="true"></span> <span data-i18n="game_backgammon">Backgammon</span></div>
+          <p class="game-select-desc" data-i18n="home_backgammon_desc">The classic dice race game. Local 2-player or vs. the built-in engine, with the bar, bearing off, and blot-hitting.</p>
+          <div class="game-select-actions">
+            <a href="backgammon.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="backgammon-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="backgammon-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="ur-piece-icon ur-piece-icon-black" aria-hidden="true"></span> <span data-i18n="game_ur">Ur</span></div>
+          <p class="game-select-desc" data-i18n="home_ur_desc">A 4,600-year-old race game rediscovered from ancient Mesopotamia. Local 2-player or vs. the built-in engine, with rosette squares and capture-by-landing.</p>
+          <div class="game-select-actions">
+            <a href="ur.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="ur-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="ur-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="senet-icon-disc senet-icon-disc-a" aria-hidden="true"></span> <span data-i18n="game_senet">Senet</span></div>
+          <p class="game-select-desc" data-i18n="home_senet_desc">One of the oldest known board games, from ancient Egypt. Local 2-player or vs. the built-in engine.</p>
+          <div class="game-select-actions">
+            <a href="senet.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="senet-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="senet-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="mancala-seed-icon" aria-hidden="true"></span> <span data-i18n="game_mancala">Mancala</span></div>
+          <p class="game-select-desc" data-i18n="home_mancala_desc">One of the world's oldest game families: sow seeds around the board to fill your own store. Local 2-player or vs. the built-in engine, with captures and extra turns.</p>
+          <div class="game-select-actions">
+            <a href="mancala.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="mancala-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="mancala-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-puzzles" class="card">
+      <h2 data-i18n="home_section_puzzles">Solo Puzzles</h2>
+      <div class="game-select-grid">
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="sudoku-icon" aria-hidden="true">9</span> <span data-i18n="game_sudoku">Sudoku</span></div>
+          <p class="game-select-desc" data-i18n="home_sudoku_desc">Fill a 9x9 grid with digits so every row, column and 3x3 box contains 1-9 exactly once. Freshly generated with a unique solution, in three difficulty levels.</p>
+          <div class="game-select-actions">
+            <a href="sudoku.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="sudoku-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="sudoku-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="mine-icon" aria-hidden="true"></span> <span data-i18n="game_minesweeper">Minesweeper</span></div>
+          <p class="game-select-desc" data-i18n="home_minesweeper_desc">Uncover every safe square using the number clues, without triggering a hidden mine.</p>
+          <div class="game-select-actions">
+            <a href="minesweeper.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="minesweeper-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="minesweeper-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="twenty48-icon" aria-hidden="true">2048</span> <span data-i18n="game_2048">2048</span></div>
+          <p class="game-select-desc" data-i18n="home_2048_desc">Slide and merge numbered tiles to reach 2048 before the board fills up. Keep playing afterward to push your best score even higher.</p>
+          <div class="game-select-actions">
+            <a href="twenty48.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="twenty48-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="twenty48-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="freecell-icon" aria-hidden="true">A♠</span> <span data-i18n="game_freecell">FreeCell</span></div>
+          <p class="game-select-desc" data-i18n="home_freecell_desc">The classic card solitaire where nearly every deal can be won with the right moves. Full supermoves and a one-click collect to the foundations.</p>
+          <div class="game-select-actions">
+            <a href="freecell.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="freecell-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="freecell-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="mahjong-icon" aria-hidden="true">🀄</span> <span data-i18n="game_mahjong_solitaire">Mahjong Solitaire</span></div>
+          <p class="game-select-desc" data-i18n="home_mahjong_solitaire_desc">Clear the layered tile layout by matching identical pairs. Every deal is generated to always have a solution.</p>
+          <div class="game-select-actions">
+            <a href="mahjong.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="mahjong-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="mahjong-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="nonogram-icon" aria-hidden="true"></span> <span data-i18n="game_nonograms">Nonograms (Picross)</span></div>
+          <p class="game-select-desc" data-i18n="home_nonograms_desc">Use row and column number clues to reveal a hidden picture, one cell at a time. A fresh, uniquely-solvable puzzle in three sizes.</p>
+          <div class="game-select-actions">
+            <a href="nonogram.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="nonogram-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="nonogram-history.html" class="secondary small" data-i18n="nav_history">History</a>
+          </div>
+        </div>
+        <div class="game-select-item">
+          <div class="game-select-title"><span class="peg-icon" aria-hidden="true"></span> <span data-i18n="game_peg_solitaire">Peg Solitaire</span></div>
+          <p class="game-select-desc" data-i18n="home_peg_solitaire_desc">Jump pegs over each other on a cross-shaped board until only one remains.</p>
+          <div class="game-select-actions">
+            <a href="pegsolitaire.html" class="primary small" data-i18n="nav_play">Play</a>
+            <a href="pegsolitaire-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
+            <a href="pegsolitaire-history.html" class="secondary small" data-i18n="nav_history">History</a>
           </div>
         </div>
       </div>
