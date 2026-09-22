@@ -2,7 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PaperGames – Go Rules</title>
+  <title>Go Rules | PaperGames</title>
+  <meta name="description" content="Complete Go rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/go-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/go-rules.html">
+  <meta property="og:title" content="Go Rules | PaperGames">
+  <meta property="og:description" content="Complete Go rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Go Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Go rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
@@ -38,31 +50,31 @@
       <h2 data-i18n="go_rules_basics_title">The basic idea</h2>
       <dl class="rule-list">
         <dt data-i18n="go_term_stones">Stones</dt>
-        <dd data-i18n="go_rules_stones"></dd>
+        <dd data-i18n="go_rules_stones">Black and White place stones on empty intersections in turn, starting with Black. Stones never move once placed - the board fills up rather than pieces sliding around.</dd>
         <dt data-i18n="go_term_liberties">Liberties</dt>
-        <dd data-i18n="go_rules_liberties"></dd>
+        <dd data-i18n="go_rules_liberties">A stone's liberties are the empty points directly next to it (up/down/left/right, not diagonally). Connected stones of the same color share their liberties as one group.</dd>
         <dt data-i18n="go_term_capture">Capture</dt>
-        <dd data-i18n="go_rules_capture"></dd>
+        <dd data-i18n="go_rules_capture">A group with no liberties left is captured and removed from the board immediately after the opponent's move.</dd>
       </dl>
 
       <h2 data-i18n="go_rules_illegal_title">Illegal moves</h2>
       <dl class="rule-list">
         <dt data-i18n="go_term_suicide">Suicide</dt>
-        <dd data-i18n="go_rules_suicide"></dd>
+        <dd data-i18n="go_rules_suicide">You may not play a stone that would leave your own group with zero liberties, unless doing so captures enough enemy stones to free it first.</dd>
         <dt data-i18n="go_term_ko">Ko</dt>
-        <dd data-i18n="go_rules_ko"></dd>
+        <dd data-i18n="go_rules_ko">You may not immediately recapture a single stone in a way that would recreate the position from just before your opponent's last move - you must play elsewhere first.</dd>
       </dl>
 
       <h2 data-i18n="go_rules_end_title">How a game ends</h2>
       <dl class="rule-list">
         <dt data-i18n="go_term_passing">Passing</dt>
-        <dd data-i18n="go_rules_passing"></dd>
+        <dd data-i18n="go_rules_passing">Either player may pass instead of placing a stone. When both players pass one after another, the game ends and is scored.</dd>
         <dt data-i18n="go_term_scoring">Scoring</dt>
-        <dd data-i18n="go_rules_scoring"></dd>
+        <dd data-i18n="go_rules_scoring">PaperGames uses area scoring: your score is your own stones on the board plus empty points surrounded only by your stones. Points bordering both colors count for neither side.</dd>
         <dt data-i18n="go_term_komi">Komi</dt>
-        <dd data-i18n="go_rules_komi"></dd>
+        <dd data-i18n="go_rules_komi">White moves second, so White gets a fixed bonus (komi, 7.5 points in PaperGames) to balance that disadvantage. Ties are therefore impossible.</dd>
         <dt data-i18n="go_term_resignation">Resignation</dt>
-        <dd data-i18n="go_rules_resignation"></dd>
+        <dd data-i18n="go_rules_resignation">A player can resign at any time, ending the game immediately in the opponent's favor.</dd>
       </dl>
 
       <p class="about-back"><a href="go.html" data-i18n="about_back">&larr; Back to the board</a></p>

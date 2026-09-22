@@ -2,7 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PaperGames – Senet for E‑Ink</title>
+  <title>Senet on e-ink – play offline, no ads | PaperGames</title>
+  <meta name="description" content="One of the oldest known board games, from ancient Egypt. Local 2-player or vs. the built-in engine.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/senet.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/senet.html">
+  <meta property="og:title" content="Senet on e-ink – play offline, no ads | PaperGames">
+  <meta property="og:description" content="One of the oldest known board games, from ancient Egypt. Local 2-player or vs. the built-in engine.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Senet on e-ink – play offline, no ads | PaperGames">
+  <meta name="twitter:description" content="One of the oldest known board games, from ancient Egypt. Local 2-player or vs. the built-in engine.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
@@ -18,7 +30,7 @@
       <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
     </div>
     <div class="user-panel">
-      <button id="menu-toggle" class="secondary">&#9776; Menu</button>
+      <button id="menu-toggle" class="secondary" data-i18n="menu_toggle">&#9776; Menu</button>
     </div>
   </header>
 
@@ -34,24 +46,24 @@
 <section class="mode-section">
   <div class="mode-section-row">
     <div class="mode-buttons">
-      <button id="mode-offline" class="mode-btn secondary">2 Player</button>
-      <button id="mode-offline-ai" class="mode-btn secondary">vs Computer</button>
+      <button id="mode-offline" class="mode-btn secondary" data-i18n="mode_two_player">2 Player (local)</button>
+      <button id="mode-offline-ai" class="mode-btn secondary" data-i18n="vs_computer">vs Computer</button>
     </div>
   </div>
 </section>
 
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
-    <button id="start-senet-game" class="primary">New game</button>
+    <button id="start-senet-game" class="primary" data-i18n="new_game">New game</button>
     <div id="senet-color-choice" class="inline-options">
       <label class="color-choice"><input type="radio" name="senet-color" value="a" checked> <span class="color-choice-icon"><span class="senet-icon-disc senet-icon-disc-a"></span></span></label>
       <label class="color-choice"><input type="radio" name="senet-color" value="b"> <span class="color-choice-icon"><span class="senet-icon-disc senet-icon-disc-b"></span></span></label>
     </div>
     <select id="senet-level-inline">
-        <option value="0">2 Player</option>
-        <option value="1">Easy</option>
-        <option value="2" selected>Medium</option>
-        <option value="3">Hard</option>
+        <option value="0" data-i18n="mode_two_player">2 Player (local)</option>
+        <option value="1" data-i18n="level_easy">Easy</option>
+        <option value="2" selected data-i18n="level_medium">Medium</option>
+        <option value="3" data-i18n="level_hard">Hard</option>
       </select>
   </div>
   <div id="offline-senet-status" class="status-text"></div>
