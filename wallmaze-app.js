@@ -661,10 +661,10 @@ function updateQuoridorWallModeUI() {
   const canAct = isHumanTurnQuoridor();
   const t = window.I18n ? window.I18n.t : (key) => key;
   wallModeBtn.classList.toggle("hidden", AppStateQuoridor.gameOver || (!canAct && !AppStateQuoridor.wallMode));
-  wallModeBtn.textContent = AppStateQuoridor.wallMode ? t("quoridor_wall_mode_cancel") : t("quoridor_wall_mode_start");
+  wallModeBtn.textContent = AppStateQuoridor.wallMode ? t("wallmaze_wall_mode_cancel") : t("wallmaze_wall_mode_start");
 
   orientationBtn.classList.toggle("hidden", !AppStateQuoridor.wallMode);
-  orientationBtn.textContent = AppStateQuoridor.wallOrientation === "h" ? t("quoridor_wall_orientation_h") : t("quoridor_wall_orientation_v");
+  orientationBtn.textContent = AppStateQuoridor.wallOrientation === "h" ? t("wallmaze_wall_orientation_h") : t("wallmaze_wall_orientation_v");
 
   confirmWallBtn.classList.toggle("hidden", !AppStateQuoridor.wallMode || !AppStateQuoridor.pendingWall);
 }

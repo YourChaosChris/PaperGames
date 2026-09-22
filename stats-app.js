@@ -11,8 +11,8 @@ const STATS_GAME_NAME_KEY = {
   backgammon: "game_backgammon",
   xiangqi: "game_xiangqi_short",
   mancala: "game_mancala",
-  othello: "game_othello",
-  connectfour: "game_connect_four",
+  othello: "game_reversi",
+  connectfour: "game_four_in_a_row",
   gomoku: "game_gomoku",
   senet: "game_senet",
   shogi: "game_shogi",
@@ -23,9 +23,9 @@ const STATS_GAME_NAME_KEY = {
   twenty48: "game_2048",
   mahjong: "game_mahjong_solitaire",
   freecell: "game_freecell",
-  onitama: "game_onitama",
+  onitama: "game_card_tactics",
   hnefatafl: "game_hnefatafl",
-  quoridor: "game_quoridor",
+  quoridor: "game_wall_maze",
   hex: "game_hex",
   halma: "game_halma"
 };
