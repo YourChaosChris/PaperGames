@@ -32,7 +32,8 @@ const STATS_GAME_NAME_KEY = {
   mastermind: "game_mastermind",
   dotsandboxes: "game_dotsandboxes",
   amazons: "game_amazons",
-  kakuro: "game_kakuro"
+  kakuro: "game_kakuro",
+  fanorona: "game_fanorona"
 };
 
 function gameDisplayName(game) {

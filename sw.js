@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "papergames-cache-v55";
+const CACHE_NAME = "papergames-cache-v56";
 
 const APP_SHELL = [
   "./",
@@ -104,6 +104,9 @@ const APP_SHELL = [
   "kakuro.html",
   "kakuro-rules.html",
   "kakuro-history.html",
+  "fanorona.html",
+  "fanorona-rules.html",
+  "fanorona-history.html",
   "games.html",
   "history.html",
   "guide.html",
@@ -205,6 +208,9 @@ const APP_SHELL = [
   "kakuro-core.js",
   "kakuro-puzzles.js",
   "kakuro-app.js",
+  "fanorona-core.js",
+  "fanorona-ai.js",
+  "fanorona-app.js",
   "sw-register.js",
   "game-storage.js",
   "game-stats.js",

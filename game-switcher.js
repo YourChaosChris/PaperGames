@@ -53,7 +53,8 @@
     ["dotsandboxes", "game_dotsandboxes"],
     ["klondike", "game_klondike"],
     ["amazons", "game_amazons"],
-    ["kakuro", "game_kakuro"]
+    ["kakuro", "game_kakuro"],
+    ["fanorona", "game_fanorona"]
   ];
 
   var GAME_SLUGS = {};
