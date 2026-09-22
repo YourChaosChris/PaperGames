@@ -31,7 +31,8 @@ const STATS_GAME_NAME_KEY = {
   lightsout: "game_lightsout",
   mastermind: "game_mastermind",
   dotsandboxes: "game_dotsandboxes",
-  amazons: "game_amazons"
+  amazons: "game_amazons",
+  kakuro: "game_kakuro"
 };
 
 function gameDisplayName(game) {

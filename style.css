@@ -3241,6 +3241,130 @@ max-width: 540px;
   font-weight: 700;
 }
 
+/* Kakuro board: a float-grid (same JS-enforced-square-cell technique as
+   the Sudoku/chess/checkers boards, since CSS `aspect-ratio` is
+   unreliable on E-Ink browsers), sized 7x7/9x9/11x11 by difficulty
+   rather than Sudoku's fixed 9x9, so cell width is set inline per
+   puzzle instead of a fixed CSS percentage. A black "clue" cell is
+   solid black with white sum numbers tucked in its corners - the
+   across sum upper-right, the down sum lower-left, split by a thin
+   diagonal line only when a cell carries both (see .kakuro-cell-split)
+   - the standard Kakuro notation, kept legible in pure black/white with
+   no reliance on color. */
+
+#kakuro-board {
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.kakuro-cell {
+  background: var(--square-light);
+  border: 1px solid var(--border);
+}
+
+.kakuro-cell-white {
+  cursor: pointer;
+}
+
+.kakuro-cell-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.1rem;
+  font-size: clamp(0.8rem, 3.2vw, 1.3rem);
+  line-height: 1;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.kakuro-cell-conflict {
+  outline: 2px dashed var(--border);
+  outline-offset: -2px;
+}
+
+.kakuro-cell-black {
+  background: var(--border);
+  box-sizing: border-box;
+}
+
+/* A thin white seam along the main diagonal (top-left to bottom-right),
+   just wide enough to read as a dividing line, only drawn when a black
+   cell carries both an across and a down clue at once - a cell with
+   only one clue needs no divider. */
+.kakuro-cell-split {
+  background:
+    linear-gradient(to top right,
+      var(--border) 0%, var(--border) calc(50% - 0.75px),
+      #fff calc(50% - 0.75px), #fff calc(50% + 0.75px),
+      var(--border) calc(50% + 0.75px), var(--border) 100%);
+}
+
+.kakuro-clue {
+  position: absolute;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1;
+  font-size: 0.55rem;
+  font-size: clamp(0.42rem, 1.7vw, 0.68rem);
+  pointer-events: none;
+}
+
+.kakuro-clue-right {
+  top: 2px;
+  right: 2px;
+}
+
+.kakuro-clue-down {
+  bottom: 2px;
+  left: 2px;
+}
+
+.kakuro-numpad {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+max-width: 540px;
+  margin: 0.6rem auto 0;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.kakuro-numpad > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.kakuro-numpad > *:last-child {
+  margin-right: 0;
+}
+
+
+.kakuro-numpad-btn {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.kakuro-icon {
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  background: linear-gradient(to top right, var(--border) 0%, var(--border) 50%, transparent 50%, transparent 100%);
+}
+
 /* Peg Solitaire board: a 7x7 float-grid (same technique as the chess/
    checkers/Connect Four boards - a JS-enforced square cell size, since
    CSS `aspect-ratio` is unreliable on E-Ink browsers), with the four
