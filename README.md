@@ -45,6 +45,22 @@ no internet connection at all.
 - Hex
 - Halma
 
+## Languages
+
+The interface is available in 11 languages:
+
+- English
+- German (Deutsch)
+- French (Français)
+- Spanish (Español)
+- Italian (Italiano)
+- Dutch (Nederlands)
+- Polish (Polski)
+- Ukrainian (Українська)
+- Russian (Русский)
+- Japanese (日本語)
+- Chinese (中文)
+
 ## Technology
 
 Plain HTML, CSS, and JavaScript — no build step, no framework, no backend.
