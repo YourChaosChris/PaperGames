@@ -38,7 +38,27 @@ const GamesRender = (function () {
     }
   }
 
-  return { buildGameCardHTML, updateFavoriteButtons };
+  // Translates every data-i18n element within `root` only, instead of
+  // the whole document. Callers that rebuild a subtree from
+  // GAMES_CATALOG (home-app.js, games-app.js) run on an I18n.onChange
+  // listener themselves - calling the global I18n.apply() from inside
+  // one would fire that same listener again, calling this function
+  // again, calling I18n.apply() again... an infinite loop that only
+  // stops once it blows the call stack, which is exactly what made
+  // "sort by type" freeze the games page (caught silently by i18n.js's
+  // own try/catch, but only after burning a huge number of stack
+  // frames first). Scoping the translation to `root` sidesteps that
+  // entirely: this never touches the rest of the document, so it never
+  // re-triggers the very listener that called it.
+  function translateInto(root) {
+    if (!window.I18n) return;
+    const lang = I18n.getLang();
+    root.querySelectorAll("[data-i18n]").forEach((el) => {
+      el.textContent = I18n.t(el.getAttribute("data-i18n"), lang);
+    });
+  }
+
+  return { buildGameCardHTML, updateFavoriteButtons, translateInto };
 })();
 
 // See favorites.js for why this explicit export is needed: a top-level

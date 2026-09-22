@@ -29,7 +29,7 @@
     section.classList.remove("hidden");
     grid.innerHTML = favGames.map(GamesRender.buildGameCardHTML).join("");
     GamesRender.updateFavoriteButtons(grid);
-    if (window.I18n) I18n.apply();
+    GamesRender.translateInto(grid);
   }
 
   function init() {
