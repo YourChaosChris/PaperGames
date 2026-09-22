@@ -78,14 +78,17 @@ const Twenty48Core = (function () {
       for (let c = 0; c < SIZE; c++) line.push(grid[index][c]);
       if (direction === "right") line.reverse();
     } else {
+      // grid[0][index] is the top row, so this line is already top-to-bottom
+      // - exactly what "up" (slide toward index 0) needs unreversed, mirroring
+      // "left" above. Only "down" (slide toward the bottom) needs reversing.
       for (let r = 0; r < SIZE; r++) line.push(grid[r][index]);
-      if (direction === "up") line.reverse();
+      if (direction === "down") line.reverse();
     }
     return line;
   }
 
   function setLine(grid, direction, index, line) {
-    const oriented = (direction === "right" || direction === "up") ? line.slice().reverse() : line;
+    const oriented = (direction === "right" || direction === "down") ? line.slice().reverse() : line;
     if (direction === "left" || direction === "right") {
       for (let c = 0; c < SIZE; c++) grid[index][c] = oriented[c];
     } else {

@@ -12,10 +12,6 @@
   --square-dark: #d5d5d5;
   --square-selected: #bbb;
   --square-last: #c5e1ff;
-  --ludo-red: #b23a2e;
-  --ludo-green: #2c8a4b;
-  --ludo-yellow: #c98a12;
-  --ludo-blue: #2f5fa8;
   --radius: 4px;
   --border-width: 2px;
   --shadow: 0 0 0 1px #000;
@@ -6978,10 +6974,18 @@ max-width: 900px;
   margin-left: -4px;
 }
 
-.ludo-token-red { background: var(--ludo-red); }
-.ludo-token-green { background: var(--ludo-green); }
-.ludo-token-yellow { background: var(--ludo-yellow); }
-.ludo-token-blue { background: var(--ludo-blue); }
+/* Four colors are indistinguishable on a grayscale E-Ink panel (Tolino
+   confirmed - no color at all, not even a color->gray conversion), so
+   each color is a distinct fill+border TEXTURE instead of a hue: red is
+   a solid filled disc, the other three are hollow rings with a
+   different border-style each. This same red/green/yellow/blue ->
+   filled/solid-ring/dashed-ring/dotted-ring mapping is reused below for
+   every other per-color indicator (home slots, turn chips, hub wedges,
+   icon discs) so the pattern only needs to be learned once. */
+.ludo-token-red { background: var(--border); }
+.ludo-token-green { background: var(--square-light); }
+.ludo-token-yellow { background: var(--square-light); border-style: dashed; }
+.ludo-token-blue { background: var(--square-light); border-style: dotted; }
 
 .ludo-home-base {
   position: relative;
@@ -7008,10 +7012,12 @@ max-width: 900px;
   cursor: pointer;
 }
 
-.ludo-home-slot-filled.ludo-home-slot-red { background: var(--ludo-red); }
-.ludo-home-slot-filled.ludo-home-slot-green { background: var(--ludo-green); }
-.ludo-home-slot-filled.ludo-home-slot-yellow { background: var(--ludo-yellow); }
-.ludo-home-slot-filled.ludo-home-slot-blue { background: var(--ludo-blue); }
+/* Same filled/solid-ring/dashed-ring/dotted-ring texture as .ludo-token-*
+   (see comment there) - no color, since a grayscale panel can't show one. */
+.ludo-home-slot-filled.ludo-home-slot-red { background: var(--border); }
+.ludo-home-slot-filled.ludo-home-slot-green { background: var(--square-light); }
+.ludo-home-slot-filled.ludo-home-slot-yellow { background: var(--square-light); border-style: dashed; }
+.ludo-home-slot-filled.ludo-home-slot-blue { background: var(--square-light); border-style: dotted; }
 
 .ludo-home-slot-movable {
   box-shadow: 0 0 0 3px var(--square-dark) inset;
@@ -7026,10 +7032,14 @@ max-width: 900px;
   pointer-events: none;
 }
 
-.ludo-hub-wedge-red { background: var(--ludo-red); }
-.ludo-hub-wedge-green { background: var(--ludo-green); }
-.ludo-hub-wedge-yellow { background: var(--ludo-yellow); }
-.ludo-hub-wedge-blue { background: var(--ludo-blue); }
+/* Same filled/solid-ring/dashed-ring/dotted-ring texture as .ludo-token-*
+   (see comment there). Border is thickened to 2px so the ring styles
+   still read as a marked wedge rather than blending into the plain
+   1px-bordered cells around it. */
+.ludo-hub-wedge-red { background: var(--border); }
+.ludo-hub-wedge-green { background: var(--square-light); border-width: 2px; }
+.ludo-hub-wedge-yellow { background: var(--square-light); border-width: 2px; border-style: dashed; }
+.ludo-hub-wedge-blue { background: var(--square-light); border-width: 2px; border-style: dotted; }
 
 .ludo-hub-center {
   position: relative;
@@ -7078,16 +7088,21 @@ max-width: 900px;
   opacity: 0.45;
 }
 
-.ludo-turn-chip-red { background: var(--ludo-red); }
-.ludo-turn-chip-green { background: var(--ludo-green); }
-.ludo-turn-chip-yellow { background: var(--ludo-yellow); }
-.ludo-turn-chip-blue { background: var(--ludo-blue); }
+/* Same filled/solid-ring/dashed-ring/dotted-ring texture as .ludo-token-*
+   (see comment there). */
+.ludo-turn-chip-red { background: var(--border); }
+.ludo-turn-chip-green { background: var(--square-light); }
+.ludo-turn-chip-yellow { background: var(--square-light); border-style: dashed; }
+.ludo-turn-chip-blue { background: var(--square-light); border-style: dotted; }
 
 .ludo-turn-chip-active {
   opacity: 1;
   box-shadow: 0 0 0 3px var(--square-dark);
 }
 
+/* Black text with a white halo reads on both the solid-black (red) chip
+   and the light-filled (green/yellow/blue) chips, unlike a single fixed
+   text color which would only work on one of the two fills. */
 .ludo-turn-chip-ai::after {
   content: "AI";
   display: block;
@@ -7095,8 +7110,8 @@ max-width: 900px;
   font-weight: 700;
   line-height: 1.1rem;
   text-align: center;
-  color: #fff;
-  text-shadow: 0 0 1px #000;
+  color: var(--border);
+  text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
 }
 
 .ludo-dice-area {
@@ -7145,7 +7160,9 @@ max-width: 900px;
   border: 2px solid var(--border);
 }
 
-.ludo-icon-disc-red { background: var(--ludo-red); }
-.ludo-icon-disc-green { background: var(--ludo-green); }
-.ludo-icon-disc-yellow { background: var(--ludo-yellow); }
-.ludo-icon-disc-blue { background: var(--ludo-blue); }
+/* Same filled/solid-ring/dashed-ring/dotted-ring texture as .ludo-token-*
+   (see comment there). */
+.ludo-icon-disc-red { background: var(--border); }
+.ludo-icon-disc-green { background: var(--square-light); }
+.ludo-icon-disc-yellow { background: var(--square-light); border-style: dashed; }
+.ludo-icon-disc-blue { background: var(--square-light); border-style: dotted; }
