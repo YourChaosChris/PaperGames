@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "papergames-cache-v47";
+const CACHE_NAME = "papergames-cache-v48";
 
 const APP_SHELL = [
   "./",
@@ -89,6 +89,9 @@ const APP_SHELL = [
   "lightsout.html",
   "lightsout-rules.html",
   "lightsout-history.html",
+  "mastermind.html",
+  "mastermind-rules.html",
+  "mastermind-history.html",
   "guide.html",
   "about.html",
   "stats.html",
@@ -175,6 +178,8 @@ const APP_SHELL = [
   "yatzy-app.js",
   "lightsout-core.js",
   "lightsout-app.js",
+  "mastermind-core.js",
+  "mastermind-app.js",
   "sw-register.js",
   "game-storage.js",
   "game-stats.js",
