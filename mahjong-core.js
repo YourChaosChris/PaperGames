@@ -39,10 +39,16 @@ const MahjongCore = (function () {
   }
 
   const LAYOUT = generateLayout();
-  const SYMBOLS = ["\u{1F004}", "\u{1F383}", "\u{1F3AF}", "\u{1F338}", "\u{1F340}", "\u{1F341}",
-    "\u{1F98B}", "\u{1F41F}", "\u{1F426}", "\u{1F430}", "☀", "\u{1F319}",
-    "⭐", "❤", "\u{1F536}", "\u{1F537}", "\u{1F538}", "\u{1F539}",
-    "♻", "⚖"];
+  // Plain geometric/card-suit glyphs, not pictorial emoji: those render
+  // as small full-color images on most platforms (a colorful bitmap,
+  // not ink respecting the page's monochrome palette), which turns to
+  // visual noise once an E-Ink panel dithers it to grayscale. These are
+  // ordinary text characters that pick up the page's own text color
+  // and are supported by essentially every font, the same reasoning
+  // already applied to the chess/card glyphs used elsewhere in this
+  // app (app.js's piece letters, FreeCell's suit symbols).
+  const SYMBOLS = ["●", "○", "■", "□", "▲", "△", "▼", "▽", "◆", "◇",
+    "★", "☆", "♠", "♣", "♥", "♦", "▶", "◀", "▮", "▯"];
 
   function isCoveredAmong(tile, present) {
     return LAYOUT.some((t) => present[t.id] && t.layer > tile.layer
