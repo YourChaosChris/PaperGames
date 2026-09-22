@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "einkchess-cache-v29";
+const CACHE_NAME = "einkchess-cache-v30";
 
 const APP_SHELL = [
   "./",
@@ -68,6 +68,9 @@ const APP_SHELL = [
   "freecell.html",
   "freecell-rules.html",
   "freecell-history.html",
+  "onitama.html",
+  "onitama-rules.html",
+  "onitama-history.html",
   "guide.html",
   "about.html",
   "stats.html",
@@ -131,6 +134,9 @@ const APP_SHELL = [
   "mahjong-app.js",
   "freecell-core.js",
   "freecell-app.js",
+  "onitama-core.js",
+  "onitama-ai.js",
+  "onitama-app.js",
   "sw-register.js",
   "game-storage.js",
   "game-stats.js",
