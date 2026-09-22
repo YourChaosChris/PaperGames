@@ -4390,3 +4390,89 @@ margin: 0.5rem auto 0;
   background: var(--square-light);
   border: 2px solid var(--border);
 }
+
+/* Yatzy: five pip-dot dice drawn as inline SVG (see yatzy-app.js) laid
+   out in a row, plus a scoresheet built on the same .stats-table used
+   by the Stats page. A held die is shown inverted (dark face, light
+   pips) rather than picking it out with color, so it stays legible on
+   e-ink. */
+.yatzy-dice-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.yatzy-dice-row > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+.yatzy-dice-row > *:last-child {
+  margin-right: 0;
+}
+
+.yatzy-die {
+  display: block;
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.yatzy-die:disabled {
+  cursor: default;
+}
+
+.yatzy-die svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.yatzy-die-held {
+  transform: scale(0.92);
+}
+
+.yatzy-scoresheet {
+  margin-top: 0.75rem;
+}
+
+.yatzy-scoresheet .yatzy-cat-score,
+.yatzy-scoresheet .yatzy-subtotal-value {
+  width: 4.5rem;
+}
+
+.yatzy-score-btn {
+  width: 100%;
+  padding: 0.25rem 0.4rem;
+  font-weight: 700;
+  background: var(--bg);
+  color: var(--text);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.yatzy-score-btn:disabled {
+  cursor: default;
+}
+
+.yatzy-score-filled {
+  background: var(--bg-alt);
+}
+
+.yatzy-score-preview {
+  background: var(--square-last);
+}
+
+.yatzy-subtotal-row td {
+  font-weight: 700;
+  background: var(--bg-alt);
+}
+
+.yatzy-grand-total-row td {
+  font-size: 1.05em;
+}

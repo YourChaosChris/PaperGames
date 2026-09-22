@@ -324,4 +324,16 @@
     <loc>https://yourchaoschris.github.io/PaperGames/xiangqi.html</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/yatzy-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/yatzy-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/yatzy.html</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>
