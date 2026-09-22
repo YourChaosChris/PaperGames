@@ -29,7 +29,8 @@ const STATS_GAME_NAME_KEY = {
   hex: "game_hex",
   halma: "game_halma",
   lightsout: "game_lightsout",
-  mastermind: "game_mastermind"
+  mastermind: "game_mastermind",
+  dotsandboxes: "game_dotsandboxes"
 };
 
 function gameDisplayName(game) {

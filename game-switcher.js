@@ -46,7 +46,8 @@
     ["freecell", "game_freecell"],
     ["mahjong", "game_mahjong_solitaire"],
     ["nonogram", "game_nonograms"],
-    ["pegsolitaire", "game_peg_solitaire"]
+    ["pegsolitaire", "game_peg_solitaire"],
+    ["dotsandboxes", "game_dotsandboxes"]
   ];
 
   var GAME_SLUGS = {};
