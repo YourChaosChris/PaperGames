@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>eInkChess – Stats</title>
+  <title>eInkChess – Privacy Policy</title>
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
@@ -32,30 +32,40 @@
 
   <main>
     <section class="card content-page">
-      <h1 data-i18n="stats_title">Your Stats</h1>
-      <p data-i18n="stats_intro">Results against the built-in computer, kept on this device only.</p>
+      <h1 data-i18n="privacy_title">Privacy Policy</h1>
 
-      <table class="stats-table">
-        <thead>
-          <tr>
-            <th data-i18n="stats_col_game">Game</th>
-            <th data-i18n="stats_col_wins">Wins</th>
-            <th data-i18n="stats_col_losses">Losses</th>
-            <th data-i18n="stats_col_draws">Draws</th>
-          </tr>
-        </thead>
-        <tbody id="stats-body"></tbody>
-      </table>
-
-      <p id="stats-empty" class="stats-empty hidden" data-i18n="stats_empty">No games played against the computer yet.</p>
-
-      <p class="stats-actions">
-        <button id="stats-reset" type="button" class="secondary small" data-i18n="stats_reset_button">Reset stats</button>
+      <h2 data-i18n="privacy_controller_heading">1. Controller</h2>
+      <p data-i18n="privacy_controller_body"></p>
+      <p>
+        Christopher Müller<br>
+        Im Hagen 21<br>
+        59387 Ascheberg<br>
+        <span data-i18n="impressum_country">Germany</span><br>
+        <a href="mailto:info@chris-sounddesign.de">info@chris-sounddesign.de</a>
       </p>
 
-      <p class="about-back">
-        <a href="index.html" data-i18n="back_home">&larr; Back to home</a>
-      </p>
+      <h2 data-i18n="privacy_hosting_heading">2. Hosting</h2>
+      <p data-i18n="privacy_hosting_body"></p>
+
+      <h2 data-i18n="privacy_storage_heading">3. Local storage (no cookies)</h2>
+      <p data-i18n="privacy_storage_body"></p>
+
+      <h2 data-i18n="privacy_lichess_heading">4. Lichess (optional)</h2>
+      <p data-i18n="privacy_lichess_body"></p>
+
+      <h2 data-i18n="privacy_paypal_heading">5. PayPal donation link</h2>
+      <p data-i18n="privacy_paypal_body"></p>
+
+      <h2 data-i18n="privacy_no_tracking_heading">6. No analytics, no advertising, no data sharing</h2>
+      <p data-i18n="privacy_no_tracking_body"></p>
+
+      <h2 data-i18n="privacy_rights_heading">7. Your rights</h2>
+      <p data-i18n="privacy_rights_body"></p>
+
+      <h2 data-i18n="privacy_complaint_heading">8. Right to lodge a complaint</h2>
+      <p data-i18n="privacy_complaint_body"></p>
+
+      <p class="about-back"><a href="index.html" data-i18n="back_home">&larr; Back to home</a></p>
     </section>
   </main>
   <footer class="site-footer">
@@ -68,8 +78,6 @@
   </footer>
 </div>
 <script src="i18n.js"></script>
-<script src="game-stats.js"></script>
 <script src="sw-register.js"></script>
-<script src="stats-app.js"></script>
 </body>
 </html>
