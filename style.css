@@ -707,13 +707,26 @@ button:disabled {
   gap: 0.3rem;
 }
 
-.lang-switch button {
-  padding: 0.2rem 0.5rem;
-}
-
-.lang-switch button.active-mode {
-  background: var(--accent);
-  color: #fff;
+/* A native <select>, built dynamically by i18n.js from however many
+   languages exist - deliberately not a row of buttons, which stopped
+   scaling once the app grew past a couple of languages. A native
+   control also means the OS/browser draws the actual dropdown list,
+   which behaves correctly and predictably on E-Ink browsers without
+   any custom popover logic of our own. */
+.lang-select {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.7rem;
+  padding: 0.25rem 1.5rem 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  border: var(--border-width) solid var(--border);
+  background: var(--bg-alt) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23111' d='M1 1l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 0.5rem center;
+  background-size: 0.6rem;
+  color: var(--text);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 .site-nav {
@@ -737,6 +750,27 @@ button:disabled {
 .site-nav-link.active-mode {
   background: var(--accent);
   color: #fff;
+}
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem 1rem;
+  margin: 2rem 0 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.site-footer a {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.site-footer a:hover,
+.site-footer a:focus {
+  text-decoration: underline;
 }
 
 /* Home page */
@@ -3354,38 +3388,31 @@ button.ur-tray-slot {
   border: 2px solid var(--border);
 }
 
-/* The only clickable wall control: one small square per intersection,
-   never overlapping a neighbor (unlike a full 2-cell wall bar would -
-   see quoridor-app.js for why). The actual 2-cell wall bars are drawn
-   separately, as non-interactive overlays, so they can visually span
-   and even touch/overlap each other without stealing taps. */
-.quoridor-intersection {
-  position: absolute;
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  border: none;
-  background: var(--muted);
-  opacity: 0.35;
-  border-radius: 1px;
-  z-index: 3;
-}
-
-.quoridor-intersection-available {
-  opacity: 1;
-  background: var(--muted);
-}
-
-.quoridor-intersection-pending {
-  opacity: 1;
-  background: var(--accent);
-}
-
 .quoridor-wall-layer {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 2;
+}
+
+/* The whole-board tap target for "place a wall" mode: inert (and
+   invisible) the rest of the time, so ordinary pawn-move clicks on
+   the cells beneath it pass straight through. Turning the entire
+   board into one forgiving target - rather than 64+ small, easily
+   overlapping candidate buttons squeezed between cells - is what
+   makes wall placement reliable to tap on a touchscreen; see
+   quoridor-app.js's onQuoridorBoardTap/selectNearestWallAtPoint. */
+.quoridor-wall-tap-catcher {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.quoridor-wall-tap-catcher.active {
+  pointer-events: auto;
+  cursor: crosshair;
+  background: rgba(0, 0, 0, 0.03);
 }
 
 .quoridor-wall-bar {

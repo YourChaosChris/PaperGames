@@ -1,16 +1,29 @@
 // quoridor-app.js
 // Wires QuoridorCore/QuoridorAi to the quoridor.html UI. Unlike the
 // float-grid boards elsewhere in this app, Quoridor needs clickable
-// targets BETWEEN cells too (the wall slots), so the board uses
+// targets BETWEEN cells too (the walls), so the board uses
 // percentage-based absolute positioning instead - the same technique
 // already proven for Go's line-and-point board, with a JS-enforced
 // square aspect ratio for the same reason (CSS `aspect-ratio` is
 // unreliable on E-Ink browsers).
 //
 // Since each player only ever has a single pawn, there's no
-// select-a-piece step: every turn, every legal pawn destination and
-// every legal wall slot is highlighted at once, and clicking either
-// directly makes that move.
+// select-a-piece step for movement: every turn, every legal pawn
+// destination is highlighted at once, and clicking one directly makes
+// that move.
+//
+// Wall placement is a separate, explicit mode rather than tiny
+// buttons squeezed between cells: a wall is two cells long, so any
+// scheme of one button per candidate wall either makes adjacent
+// candidates' hit areas overlap (ambiguous taps) or shrinks each
+// target down to a sliver only a few pixels wide - both were tried
+// and both were awkward to use. Instead, entering "place a wall" mode
+// covers the whole board with one big, forgiving tap-catcher: tapping
+// anywhere previews whichever LEGAL wall of the current orientation
+// has its center closest to that tap, and a separate confirm button
+// commits it - so the target is effectively the entire board, and a
+// wrong first guess is fixed by just tapping again, not by hitting a
+// precise sliver.
 
 const AppStateQuoridor = {
   mode: "offline",        // "offline" | "offline-ai"
@@ -22,7 +35,9 @@ const AppStateQuoridor = {
   gameOver: false,
   moveCount: 0,
   undoStack: [],
-  pendingWall: null       // { wr, wc, orientation, toggled } | null - a wall placement being previewed
+  wallMode: false,        // true while the player is placing a wall instead of moving
+  wallOrientation: "h",   // "h" | "v" - which orientation new taps preview
+  pendingWall: null       // { wr, wc, orientation } | null - a wall placement being previewed
 };
 
 const QUORIDOR_SAVE_KEY = "einkchess_save_quoridor";
@@ -101,6 +116,22 @@ function initQuoridorApp() {
   const levelInline = document.getElementById("quoridor-level-inline");
   const startGameBtn = document.getElementById("start-quoridor-game");
   const resignBtn = document.getElementById("resign-button");
+  const wallModeBtn = document.getElementById("quoridor-wall-mode-btn");
+  const orientationBtn = document.getElementById("quoridor-orientation-btn");
+  const confirmWallBtn = document.getElementById("quoridor-confirm-wall-btn");
+
+  if (wallModeBtn) {
+    wallModeBtn.addEventListener("click", () => {
+      if (AppStateQuoridor.wallMode) exitQuoridorWallMode();
+      else enterQuoridorWallMode();
+    });
+  }
+  if (orientationBtn) {
+    orientationBtn.addEventListener("click", toggleQuoridorWallOrientation);
+  }
+  if (confirmWallBtn) {
+    confirmWallBtn.addEventListener("click", confirmQuoridorPendingWall);
+  }
 
   function updateSideChoiceVisibility() {
     if (!sideChoice || !levelInline) return;
@@ -142,6 +173,7 @@ function initQuoridorApp() {
     AppStateQuoridor.gameOver = false;
     AppStateQuoridor.moveCount = 0;
     AppStateQuoridor.pendingWall = null;
+    AppStateQuoridor.wallMode = false;
     resetUndoStackQuoridor();
     setGameResultQuoridor("");
     showBoardSectionQuoridor();
@@ -219,6 +251,7 @@ function initQuoridorApp() {
     AppStateQuoridor.moveCount = savedGame.moveCount;
     AppStateQuoridor.gameOver = false;
     AppStateQuoridor.pendingWall = null;
+    AppStateQuoridor.wallMode = false;
     resetUndoStackQuoridor();
     setActiveModeButton(AppStateQuoridor.mode);
     setGameResultQuoridor("");
@@ -245,13 +278,10 @@ function isHumanTurnQuoridor() {
 }
 
 function onQuoridorCellClick(r, c) {
+  if (AppStateQuoridor.wallMode) return; // the tap-catcher overlay handles taps in wall mode
   if (!isHumanTurnQuoridor()) {
     setStatusQuoridor("board-info", "Computer to move.");
     return;
-  }
-  if (AppStateQuoridor.pendingWall) {
-    AppStateQuoridor.pendingWall = null;
-    updateQuoridorBoard();
   }
   const moves = QuoridorCore.getLegalMoves(AppStateQuoridor.state, AppStateQuoridor.turn)
     .filter((m) => m.type === "move");
@@ -260,46 +290,98 @@ function onQuoridorCellClick(r, c) {
   applyQuoridorMove(match);
 }
 
-// Each of the 64 intersections has exactly one small clickable square
-// (never overlapping a neighbor, unlike a full 2-cell wall bar would),
-// and handles choosing between the two orientations that could start
-// there: first tap previews one orientation, a second tap on the same
-// intersection either switches to the other orientation (if both are
-// legal there) or confirms, and a further tap always confirms.
-function onQuoridorIntersectionClick(wr, wc) {
+// A horizontal and a vertical wall anchored at the same (wr, wc) cross
+// at the same intersection point, so both orientations share this one
+// center-point formula regardless of which is being asked for.
+function wallCenterPct(wr, wc) {
+  return {
+    x: wc * QUORIDOR_STEP_PCT + QUORIDOR_CELL_PCT + QUORIDOR_GAP_PCT / 2,
+    y: wr * QUORIDOR_STEP_PCT + QUORIDOR_CELL_PCT + QUORIDOR_GAP_PCT / 2
+  };
+}
+
+// Finds whichever legal wall of the currently selected orientation has
+// its center closest to (px, py) (board-relative percentages) and
+// previews it - this is what makes the whole board a single forgiving
+// tap target instead of 128 tiny, overlapping candidate buttons.
+function selectNearestWallAtPoint(px, py) {
+  const wallMoves = QuoridorCore.getLegalMoves(AppStateQuoridor.state, AppStateQuoridor.turn)
+    .filter((m) => m.type === "wall" && m.orientation === AppStateQuoridor.wallOrientation);
+
+  if (!wallMoves.length) {
+    setStatusQuoridor("board-info", AppStateQuoridor.wallOrientation === "h"
+      ? "No horizontal wall can be placed right now."
+      : "No vertical wall can be placed right now.");
+    return;
+  }
+
+  let best = null;
+  let bestDist = Infinity;
+  wallMoves.forEach((m) => {
+    const center = wallCenterPct(m.row, m.col);
+    const dist = Math.hypot(center.x - px, center.y - py);
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = m;
+    }
+  });
+
+  AppStateQuoridor.pendingWall = { wr: best.row, wc: best.col, orientation: best.orientation };
+  updateQuoridorBoard();
+  updateQuoridorWallModeUI();
+  setStatusQuoridor("board-info", "Tap ✓ Place to confirm, or tap elsewhere to move it.");
+}
+
+function onQuoridorBoardTap(evt) {
+  if (!AppStateQuoridor.wallMode || !isHumanTurnQuoridor()) return;
+  const boardEl = document.getElementById("quoridor-board");
+  if (!boardEl) return;
+  const rect = boardEl.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  const px = ((evt.clientX - rect.left) / rect.width) * 100;
+  const py = ((evt.clientY - rect.top) / rect.height) * 100;
+  selectNearestWallAtPoint(px, py);
+}
+
+function enterQuoridorWallMode() {
   if (!isHumanTurnQuoridor()) {
     setStatusQuoridor("board-info", "Computer to move.");
     return;
   }
-  const wallMoves = QuoridorCore.getLegalMoves(AppStateQuoridor.state, AppStateQuoridor.turn)
-    .filter((m) => m.type === "wall");
-  const legalH = wallMoves.some((m) => m.orientation === "h" && m.row === wr && m.col === wc);
-  const legalV = wallMoves.some((m) => m.orientation === "v" && m.row === wr && m.col === wc);
-
-  if (!legalH && !legalV) {
-    setStatusQuoridor("board-info", "No wall can be placed there.");
-    return;
-  }
-
-  const pending = AppStateQuoridor.pendingWall;
-  if (pending && pending.wr === wr && pending.wc === wc) {
-    if (legalH && legalV && !pending.toggled) {
-      pending.orientation = pending.orientation === "h" ? "v" : "h";
-      pending.toggled = true;
-      updateQuoridorBoard();
-      setStatusQuoridor("board-info", "Tap again to place this wall.");
-      return;
-    }
-    applyQuoridorMove({ type: "wall", orientation: pending.orientation, row: wr, col: wc });
-    AppStateQuoridor.pendingWall = null;
-    return;
-  }
-
-  AppStateQuoridor.pendingWall = { wr, wc, orientation: legalH ? "h" : "v", toggled: false };
+  AppStateQuoridor.wallMode = true;
+  AppStateQuoridor.pendingWall = null;
   updateQuoridorBoard();
-  setStatusQuoridor("board-info", legalH && legalV
-    ? "Tap again to place this wall, or tap once more to switch orientation."
-    : "Tap again to place this wall.");
+  updateQuoridorWallModeUI();
+  setStatusQuoridor("board-info", "Tap anywhere on the board to preview a wall there.");
+}
+
+function exitQuoridorWallMode() {
+  AppStateQuoridor.wallMode = false;
+  AppStateQuoridor.pendingWall = null;
+  updateQuoridorBoard();
+  updateQuoridorWallModeUI();
+  setStatusQuoridor("board-info", sideNameQuoridor(AppStateQuoridor.turn) + " to move.");
+}
+
+function toggleQuoridorWallOrientation() {
+  AppStateQuoridor.wallOrientation = AppStateQuoridor.wallOrientation === "h" ? "v" : "h";
+  const pending = AppStateQuoridor.pendingWall;
+  updateQuoridorWallModeUI();
+  if (pending) {
+    const center = wallCenterPct(pending.wr, pending.wc);
+    selectNearestWallAtPoint(center.x, center.y);
+  } else {
+    updateQuoridorBoard();
+  }
+}
+
+function confirmQuoridorPendingWall() {
+  const pending = AppStateQuoridor.pendingWall;
+  if (!pending) return;
+  applyQuoridorMove({ type: "wall", orientation: pending.orientation, row: pending.wr, col: pending.wc });
+  AppStateQuoridor.wallMode = false;
+  updateQuoridorBoard();
+  updateQuoridorWallModeUI();
 }
 
 function applyQuoridorMove(move) {
@@ -354,6 +436,7 @@ function undoLastMove() {
   AppStateQuoridor.moveCount = prev.moveCount;
   AppStateQuoridor.lastMove = prev.lastMove;
   AppStateQuoridor.pendingWall = null;
+  AppStateQuoridor.wallMode = false;
   setGameResultQuoridor("");
   updateQuoridorBoard();
   updateGameLabelsQuoridor();
@@ -407,32 +490,22 @@ function buildQuoridorBoardDOM() {
     }
   }
 
-  // The 2-cell-long wall bars themselves are drawn as non-interactive
-  // overlays (see renderQuoridorWallBars below) so their footprints
-  // can freely span/overlap without stealing clicks. The ONLY
-  // clickable wall control is a small square exactly at each of the
-  // 64 intersections, so neighboring wall candidates never fight over
-  // the same tap target the way two overlapping 2-cell bars would.
-  for (let wr = 0; wr < QuoridorCore.WALL_GRID; wr++) {
-    for (let wc = 0; wc < QuoridorCore.WALL_GRID; wc++) {
-      const dot = document.createElement("button");
-      dot.type = "button";
-      dot.className = "quoridor-intersection";
-      dot.style.left = (wc * QUORIDOR_STEP_PCT + QUORIDOR_CELL_PCT) + "%";
-      dot.style.top = (wr * QUORIDOR_STEP_PCT + QUORIDOR_CELL_PCT) + "%";
-      dot.style.width = QUORIDOR_GAP_PCT + "%";
-      dot.style.height = QUORIDOR_GAP_PCT + "%";
-      dot.dataset.row = wr;
-      dot.dataset.col = wc;
-      dot.addEventListener("click", () => onQuoridorIntersectionClick(wr, wc));
-      boardEl.appendChild(dot);
-    }
-  }
-
+  // The 2-cell-long wall bars are drawn as a non-interactive overlay
+  // (see renderQuoridorWallBars below). The single interactive layer
+  // for walls is the tap-catcher added next: a plain full-board
+  // overlay that only becomes clickable while wall mode is active
+  // (see onQuoridorBoardTap), turning the entire board into one big,
+  // forgiving tap target instead of many small, easily-missed ones.
   const wallLayer = document.createElement("div");
   wallLayer.id = "quoridor-wall-layer";
   wallLayer.className = "quoridor-wall-layer";
   boardEl.appendChild(wallLayer);
+
+  const tapCatcher = document.createElement("div");
+  tapCatcher.id = "quoridor-wall-tap-catcher";
+  tapCatcher.className = "quoridor-wall-tap-catcher";
+  tapCatcher.addEventListener("click", onQuoridorBoardTap);
+  boardEl.appendChild(tapCatcher);
 
   ensureQuoridorBoardSquare();
   if (window.requestAnimationFrame) {
@@ -471,13 +544,11 @@ function updateQuoridorBoard() {
   if (!boardEl) return;
   const state = AppStateQuoridor.state;
   const turn = AppStateQuoridor.turn;
-  const humanCanAct = isHumanTurnQuoridor();
-  const legalMoves = humanCanAct ? QuoridorCore.getLegalMoves(state, turn) : [];
+  const humanCanAct = isHumanTurnQuoridor() && !AppStateQuoridor.wallMode;
+  const legalMoves = humanCanAct ? QuoridorCore.getLegalMoves(state, turn).filter((m) => m.type === "move") : [];
   const legalCellKeys = {};
-  const legalWallKeys = {};
   legalMoves.forEach((m) => {
-    if (m.type === "move") legalCellKeys[m.to[0] + "," + m.to[1]] = true;
-    else legalWallKeys[m.orientation + "," + m.row + "," + m.col] = true;
+    legalCellKeys[m.to[0] + "," + m.to[1]] = true;
   });
 
   boardEl.querySelectorAll(".quoridor-cell").forEach((cell) => {
@@ -496,14 +567,8 @@ function updateQuoridorBoard() {
     cell.setAttribute("aria-label", label);
   });
 
-  boardEl.querySelectorAll(".quoridor-intersection").forEach((dot) => {
-    const wr = parseInt(dot.dataset.row, 10);
-    const wc = parseInt(dot.dataset.col, 10);
-    const legalHere = legalWallKeys["h," + wr + "," + wc] || legalWallKeys["v," + wr + "," + wc];
-    const isPending = !!(AppStateQuoridor.pendingWall && AppStateQuoridor.pendingWall.wr === wr && AppStateQuoridor.pendingWall.wc === wc);
-    dot.classList.toggle("quoridor-intersection-available", !!legalHere);
-    dot.classList.toggle("quoridor-intersection-pending", isPending);
-  });
+  const tapCatcher = document.getElementById("quoridor-wall-tap-catcher");
+  if (tapCatcher) tapCatcher.classList.toggle("active", AppStateQuoridor.wallMode);
 
   renderQuoridorWallBars(state);
   updateScoreLineQuoridor();
@@ -569,6 +634,7 @@ function updateGameLabelsQuoridor() {
   if (meta) meta.textContent = AppStateQuoridor.moveCount ? "Move " + AppStateQuoridor.moveCount : "";
   updateUndoButtonVisibilityQuoridor();
   updateResignVisibilityQuoridor();
+  updateQuoridorWallModeUI();
 
   if (AppStateQuoridor.gameOver) clearSavedQuoridorGame();
   else saveQuoridorGame();
@@ -584,6 +650,23 @@ function updateUndoButtonVisibilityQuoridor() {
 function updateResignVisibilityQuoridor() {
   const resignBtn = document.getElementById("resign-button");
   if (resignBtn) resignBtn.classList.toggle("hidden", AppStateQuoridor.gameOver);
+}
+
+function updateQuoridorWallModeUI() {
+  const wallModeBtn = document.getElementById("quoridor-wall-mode-btn");
+  const orientationBtn = document.getElementById("quoridor-orientation-btn");
+  const confirmWallBtn = document.getElementById("quoridor-confirm-wall-btn");
+  if (!wallModeBtn || !orientationBtn || !confirmWallBtn) return;
+
+  const canAct = isHumanTurnQuoridor();
+  const t = window.I18n ? window.I18n.t : (key) => key;
+  wallModeBtn.classList.toggle("hidden", AppStateQuoridor.gameOver || (!canAct && !AppStateQuoridor.wallMode));
+  wallModeBtn.textContent = AppStateQuoridor.wallMode ? t("quoridor_wall_mode_cancel") : t("quoridor_wall_mode_start");
+
+  orientationBtn.classList.toggle("hidden", !AppStateQuoridor.wallMode);
+  orientationBtn.textContent = AppStateQuoridor.wallOrientation === "h" ? t("quoridor_wall_orientation_h") : t("quoridor_wall_orientation_v");
+
+  confirmWallBtn.classList.toggle("hidden", !AppStateQuoridor.wallMode || !AppStateQuoridor.pendingWall);
 }
 
 document.addEventListener("DOMContentLoaded", initQuoridorApp);
