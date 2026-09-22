@@ -1,7 +1,7 @@
 {
   "name": "PaperGames",
   "short_name": "PaperGames",
-  "description": "A collection of 26 classic board, strategy, and puzzle games for E-Ink readers – play offline or vs. the built-in AI (chess also supports online play via Lichess).",
+  "description": "A collection of 27 classic board, strategy, and puzzle games for E-Ink readers – play offline or vs. the built-in AI (chess also supports online play via Lichess).",
   "start_url": "index.html",
   "scope": ".",
   "display": "standalone",

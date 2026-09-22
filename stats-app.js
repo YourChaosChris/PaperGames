@@ -27,7 +27,8 @@ const STATS_GAME_NAME_KEY = {
   hnefatafl: "game_hnefatafl",
   quoridor: "game_wall_maze",
   hex: "game_hex",
-  halma: "game_halma"
+  halma: "game_halma",
+  lightsout: "game_lightsout"
 };
 
 function gameDisplayName(game) {

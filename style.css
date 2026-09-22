@@ -3539,6 +3539,34 @@ margin-top: 0.6rem;
   font-weight: 700;
 }
 
+/* Lights Out board: a fixed 5x5 float-grid (same JS-enforced square cell
+   size technique as 2048/Minesweeper). Cells are told apart purely by a
+   background fill - on (lit) is dark, off is light - never by color, so
+   this reads fine on a monochrome E-Ink display. */
+
+#lightsout-board {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.lightsout-cell {
+  width: 20%;
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  padding: 0;
+  cursor: pointer;
+}
+
+.lightsout-cell-on {
+  background: #141413;
+}
+
 /* Mahjong Solitaire board: absolute positioning on a percentage grid
    (the same approach as Go/Xiangqi/Gomoku's point grids) rather than
    the usual float-grid, since tiles overlap across three layers
