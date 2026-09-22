@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tablut Rules | PaperGames</title>
+  <meta name="description" content="Complete Tablut rules explained clearly, including the throne/corner hostile-square capture rule and a worked example.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/tablut-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/tablut-rules.html">
+  <meta property="og:title" content="Tablut Rules | PaperGames">
+  <meta property="og:description" content="Complete Tablut rules explained clearly, including the throne/corner hostile-square capture rule and a worked example.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tablut Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Tablut rules explained clearly, including the throne/corner hostile-square capture rule and a worked example.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="tablut_rules_title">Tablut Rules</h1>
+      <p data-i18n="tablut_rules_intro">A quick reference for how PaperGames plays Tablut, the 9x9 member of the Tafl family - useful if you're rusty, or learning.</p>
+
+      <h2 data-i18n="tablut_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="tablut-icon-piece tablut-icon-piece-defender" aria-hidden="true"></span> <span data-i18n="tablut_term_setup">The setup</span></dt>
+        <dd data-i18n="tablut_rules_setup">The king starts on the central throne in a cross of eight defenders, besieged by eight attackers stationed two per edge. Attackers move first, and the two sides chase very different goals: the king's side wants him to reach a corner, the attackers want to trap him first.</dd>
+        <dt data-i18n="tablut_term_moving">Moving</dt>
+        <dd data-i18n="tablut_rules_moving">Every piece - attacker, defender, or the king - moves like a rook: any distance in a straight line, but never through or onto another piece.</dd>
+        <dt data-i18n="tablut_term_special">The throne and corners</dt>
+        <dd data-i18n="tablut_rules_special">The center throne and the four corner squares are off-limits to everyone but the king: attackers and defenders can neither land on them nor pass through them, though the king may freely re-enter the empty throne. The corners are the king's only escape squares.</dd>
+        <dt data-i18n="tablut_term_capture">Capturing</dt>
+        <dd data-i18n="tablut_rules_capture">A regular piece (attacker or defender) is captured by custodian capture: trap it between two enemy pieces, or one enemy piece and a hostile special square (the empty throne, or a corner), on opposite sides of a straight line. Only the piece that just moved can trigger a capture, so moving a piece between two enemies yourself is always safe.</dd>
+      </dl>
+
+      <h2 data-i18n="tablut_rules_example_title">Worked example</h2>
+      <p data-i18n="tablut_rules_example_intro">Two short examples of how the sandwich works in practice (using the classic a-i / 1-9 board coordinates, column then row):</p>
+      <dl class="rule-list">
+        <dt data-i18n="tablut_term_example_ordinary">An ordinary sandwich</dt>
+        <dd data-i18n="tablut_rules_example_ordinary">A Swedish defender at d6 has a Muscovite attacker sitting at c6, immediately to its west. When a second attacker slides into e6, the defender is now trapped between two attackers in a straight line - and is captured.</dd>
+        <dt data-i18n="tablut_term_example_throne">A throne-assisted sandwich</dt>
+        <dd data-i18n="tablut_rules_example_throne">A defender at e6 sits just south of the empty throne (e5). A single attacker sliding into e7, immediately south of the defender, is enough to capture it: the empty throne counts as hostile on the opposite side, so no second attacker piece is needed.</dd>
+      </dl>
+
+      <h2 data-i18n="tablut_rules_end_title">Winning the game</h2>
+      <dl class="rule-list">
+        <dt data-i18n="tablut_term_kingcapture">Capturing the king</dt>
+        <dd data-i18n="tablut_rules_kingcapture">The king is captured only when all four squares orthogonally adjacent to him are hostile: occupied by attackers, or - for a side facing the throne - the empty throne itself, which counts as an attacker-equivalent hostile square. Unlike a regular piece, the board edge never counts as hostile to the king in this ruleset: a king pushed to the rim of the board still needs a real attacker on every open side.</dd>
+        <dt data-i18n="tablut_term_win">How the game ends</dt>
+        <dd data-i18n="tablut_rules_win">The king's side wins the instant he reaches any of the four corners. The attackers win by capturing the king as described above. A side with no legal move at all on its turn loses.</dd>
+      </dl>
+
+      <p class="about-back"><a href="tablut.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>

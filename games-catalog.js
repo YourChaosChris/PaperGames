@@ -367,4 +367,44 @@ const GAMES_CATALOG = [
     popular: false,
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><line x1=\"10\" y1=\"10\" x2=\"90\" y2=\"10\"/><line x1=\"10\" y1=\"50\" x2=\"90\" y2=\"50\"/><line x1=\"10\" y1=\"90\" x2=\"90\" y2=\"90\"/><line x1=\"10\" y1=\"10\" x2=\"10\" y2=\"90\"/><line x1=\"50\" y1=\"10\" x2=\"50\" y2=\"90\"/><line x1=\"90\" y1=\"10\" x2=\"90\" y2=\"90\"/><line x1=\"10\" y1=\"10\" x2=\"90\" y2=\"90\"/><line x1=\"90\" y1=\"10\" x2=\"10\" y2=\"90\"/></g><polygon points=\"10,17 3,3 17,3\" fill=\"#b5651d\" stroke=\"#000\" stroke-width=\"2\"/><polygon points=\"90,17 83,3 97,3\" fill=\"#b5651d\" stroke=\"#000\" stroke-width=\"2\"/><polygon points=\"10,97 3,83 17,83\" fill=\"#b5651d\" stroke=\"#000\" stroke-width=\"2\"/><polygon points=\"90,97 83,83 97,83\" fill=\"#b5651d\" stroke=\"#000\" stroke-width=\"2\"/><circle cx=\"50\" cy=\"50\" r=\"7\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"30\" cy=\"30\" r=\"6\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"70\" r=\"6\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2\"/></svg></span>"
   },
+  {
+    slug: "tablut",
+    category: "strategy",
+    nameKey: "game_tablut",
+    nameText: "Tablut",
+    descKey: "home_tablut_desc",
+    descText: "The largest and best-documented Tafl game: a 9x9 board where the king must reach a corner and the attackers must trap him first.",
+    popular: false,
+    icon: "<span class=\"tablut-icon-piece tablut-icon-piece-defender\" aria-hidden=\"true\"></span>"
+  },
+  {
+    slug: "abalone",
+    category: "strategy",
+    nameKey: "game_abalone",
+    nameText: "Abalone",
+    descKey: "home_abalone_desc",
+    descText: "Push 6 of your opponent's marbles off the hexagonal board to win. Local 2-player or vs. the built-in engine, with full sumito push and broadside move rules.",
+    popular: false,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><polygon points=\"50,6 87,28 87,72 50,94 13,72 13,28\" fill=\"none\" stroke=\"#000\" stroke-width=\"3\"/><circle cx=\"35\" cy=\"30\" r=\"9\" fill=\"#000\"/><circle cx=\"55\" cy=\"22\" r=\"9\" fill=\"#000\"/><circle cx=\"70\" cy=\"35\" r=\"9\" fill=\"#000\"/><circle cx=\"30\" cy=\"70\" r=\"9\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"50\" cy=\"78\" r=\"9\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"68\" cy=\"66\" r=\"9\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/></svg></span>"
+  },
+  {
+    slug: "pyramidsolitaire",
+    category: "puzzles",
+    nameKey: "game_pyramidsolitaire",
+    nameText: "Pyramid Solitaire",
+    descKey: "home_pyramidsolitaire_desc",
+    descText: "Clear the 28-card pyramid by removing exposed pairs that add up to 13, or a lone King. A stock/waste pile with two redeals to work through.",
+    popular: false,
+    icon: "<span class=\"pyramidsolitaire-icon\" aria-hidden=\"true\">13</span>"
+  },
+  {
+    slug: "surakarta",
+    category: "strategy",
+    nameKey: "game_surakarta",
+    nameText: "Surakarta",
+    descKey: "home_surakarta_desc",
+    descText: "The Indonesian looping-track capture game: quiet steps never capture, only a slide that rides one of the board's 4 corner loop tracks does. Local 2-player or vs. the built-in engine.",
+    popular: false,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><line x1=\"25\" y1=\"18\" x2=\"75\" y2=\"18\"/><line x1=\"25\" y1=\"38\" x2=\"75\" y2=\"38\"/><line x1=\"25\" y1=\"62\" x2=\"75\" y2=\"62\"/><line x1=\"25\" y1=\"82\" x2=\"75\" y2=\"82\"/><line x1=\"18\" y1=\"25\" x2=\"18\" y2=\"75\"/><line x1=\"38\" y1=\"25\" x2=\"38\" y2=\"75\"/><line x1=\"62\" y1=\"25\" x2=\"62\" y2=\"75\"/><line x1=\"82\" y1=\"25\" x2=\"82\" y2=\"75\"/></g><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><path d=\"M18,25 Q6,6 38,6\"/><path d=\"M82,25 Q94,6 62,6\"/><path d=\"M18,75 Q6,94 38,94\"/><path d=\"M82,75 Q94,94 62,94\"/></g><g fill=\"#000\"><circle cx=\"38\" cy=\"6\" r=\"5\"/><circle cx=\"62\" cy=\"6\" r=\"5\"/><circle cx=\"38\" cy=\"94\" r=\"5\"/><circle cx=\"62\" cy=\"94\" r=\"5\"/></g><g fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"><circle cx=\"18\" cy=\"25\" r=\"5\"/><circle cx=\"82\" cy=\"25\" r=\"5\"/><circle cx=\"18\" cy=\"75\" r=\"5\"/><circle cx=\"82\" cy=\"75\" r=\"5\"/></g></svg></span>"
+  },
 ];

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pyramid Solitaire on e-ink – play offline, no ads | PaperGames</title>
+  <meta name="description" content="Clear the 28-card pyramid by removing exposed pairs that sum to 13, or a lone King. A stock/waste pile with two redeals to work through.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/pyramidsolitaire.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/pyramidsolitaire.html">
+  <meta property="og:title" content="Pyramid Solitaire on e-ink – play offline, no ads | PaperGames">
+  <meta property="og:description" content="Clear the 28-card pyramid by removing exposed pairs that sum to 13, or a lone King. A stock/waste pile with two redeals to work through.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pyramid Solitaire on e-ink – play offline, no ads | PaperGames">
+  <meta name="twitter:description" content="Clear the 28-card pyramid by removing exposed pairs that sum to 13, or a lone King. A stock/waste pile with two redeals to work through.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <h1><a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a></h1>
+      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
+    </div>
+    <div class="user-panel">
+      <button id="menu-toggle" class="secondary" data-i18n="menu_toggle">&#9776; Menu</button>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+
+<div id="settings-panel">
+    <section id="pyramidsolitaire-controls" class="card">
+  <div class="field-row">
+    <button id="start-pyramidsolitaire-game" class="primary" data-i18n="pyramidsolitaire_new_game">New game</button>
+  </div>
+  <div id="offline-pyramidsolitaire-status" class="status-text"></div>
+</section>
+</div>
+
+
+<section id="board-section" class="card">
+  <div class="board-header">
+    <div id="game-label"></div>
+    <div id="game-meta"></div>
+    <div id="game-result" aria-live="assertive"></div>
+
+    <div id="board-info" class="status-text" aria-live="polite"></div>
+  </div>
+  <div id="board-placeholder" class="board-placeholder">
+    <span class="board-placeholder-icon pyramidsolitaire-icon" aria-hidden="true">13</span>
+    <div class="board-placeholder-text">
+      <span class="board-placeholder-title" data-i18n="game_pyramidsolitaire">Pyramid Solitaire</span>
+      <span class="board-placeholder-subtitle">PaperGames</span>
+    </div>
+  </div>
+  <div id="board-container" class="hidden">
+    <div id="pyramidsolitaire-top-row" class="pyramidsolitaire-top-row">
+      <div id="pyramidsolitaire-stockwaste" class="pyramidsolitaire-stockwaste">
+        <button id="pyramidsolitaire-stock" type="button" class="pyramidsolitaire-cell pyramidsolitaire-stock"></button>
+        <button id="pyramidsolitaire-waste" type="button" class="pyramidsolitaire-cell pyramidsolitaire-waste"></button>
+      </div>
+      <div id="pyramidsolitaire-redeal-info" class="status-text"></div>
+    </div>
+    <div id="pyramidsolitaire-board" class="pyramidsolitaire-board" role="group" aria-label="Pyramid"></div>
+  </div>
+  <div id="board-actions" class="board-actions">
+    <button id="undo-btn" class="secondary small hidden" onclick="undoLastMove()">Undo</button>
+  </div>
+</section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="pyramidsolitaire-core.js"></script>
+<script src="result-modal.js"></script>
+<script src="game-storage.js"></script>
+<script src="game-stats.js"></script>
+<script src="board-a11y.js"></script>
+<script src="pyramidsolitaire-app.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>

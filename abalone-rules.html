@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Abalone Rules | PaperGames</title>
+  <meta name="description" content="Complete Abalone rules explained clearly, with a worked example of a sumito push. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/abalone-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/abalone-rules.html">
+  <meta property="og:title" content="Abalone Rules | PaperGames">
+  <meta property="og:description" content="Complete Abalone rules explained clearly, with a worked example of a sumito push. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Abalone Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Abalone rules explained clearly, with a worked example of a sumito push. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="abalone_rules_title">Abalone Rules</h1>
+      <p data-i18n="abalone_rules_intro">A quick reference for how PaperGames plays Abalone - useful if you're rusty, or learning.</p>
+
+      <h2 data-i18n="abalone_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="abalone-icon-disc abalone-icon-disc-black" aria-hidden="true"></span> <span data-i18n="abalone_term_board">The board</span></dt>
+        <dd data-i18n="abalone_rules_board">A hexagon of 61 cells, arranged in rows of 5, 6, 7, 8, 9, 8, 7, 6, 5. Each player starts with 14 marbles: their two nearest rows fully filled, plus the middle 3 cells of the next row. Black moves first.</dd>
+        <dt data-i18n="abalone_term_move">Moving a single marble</dt>
+        <dd data-i18n="abalone_rules_single">Select one marble and slide it into any adjacent empty cell.</dd>
+        <dt data-i18n="abalone_term_line">Moving a line</dt>
+        <dd data-i18n="abalone_rules_line">Select 2 or 3 of your own marbles that sit in a straight, unbroken line, then move the whole line one step in any of the board's 6 directions. There are two kinds of line move, described below.</dd>
+        <dt data-i18n="abalone_term_broadside">Broadside move</dt>
+        <dd data-i18n="abalone_rules_broadside">The line steps sideways, off its own axis. Every cell the line moves into must be empty - a broadside move can never push anything.</dd>
+        <dt data-i18n="abalone_term_inline">Inline move</dt>
+        <dd data-i18n="abalone_rules_inline">The line moves along its own axis, in the direction either of its two ends is facing. If the cell straight ahead is empty, the whole line simply slides forward.</dd>
+        <dt data-i18n="abalone_term_sumito">Sumito (the push)</dt>
+        <dd data-i18n="abalone_rules_sumito">If the cell straight ahead of an inline move holds enemy marbles, you may push them - but only if your line is strictly longer than the contiguous enemy line blocking it (3 marbles can push 1 or 2, 2 marbles can push 1; 1 marble can never push). There must also be room to push into: either an empty cell just past the enemy line, or the edge of the board. If the enemy line runs off the edge of the board, its last marble is eliminated - the way a player scores.</dd>
+      </dl>
+
+      <h2 data-i18n="abalone_rules_example_title">Worked example: a 3-vs-1 sumito</h2>
+      <p data-i18n="abalone_rules_example_intro">In the mini-diagram below, ● is Black and ○ is White. Black has 3 marbles in a row (A, B, C) facing a single White marble (D), with an empty cell (E) - or the board's edge - just beyond it.</p>
+      <div class="abalone-example-row">
+        <figure class="abalone-example-figure">
+          <svg viewBox="0 0 260 90" width="260" height="90" role="img" aria-label="Sumito push example">
+            <defs>
+              <marker id="abaloneArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#000"/>
+              </marker>
+            </defs>
+            <line x1="20" y1="45" x2="220" y2="45" stroke="#000" stroke-width="2"/>
+            <path d="M20,18 L98,18" stroke="#000" stroke-width="2" marker-end="url(#abaloneArrow)"/>
+            <circle cx="20" cy="45" r="12" fill="#111" stroke="#000" stroke-width="2"/>
+            <circle cx="60" cy="45" r="12" fill="#111" stroke="#000" stroke-width="2"/>
+            <circle cx="100" cy="45" r="12" fill="#111" stroke="#000" stroke-width="2"/>
+            <circle cx="140" cy="45" r="12" fill="#fdfdfd" stroke="#000" stroke-width="2"/>
+            <circle cx="180" cy="45" r="12" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="3,3"/>
+            <text x="20" y="78" text-anchor="middle" font-size="13">A</text>
+            <text x="60" y="78" text-anchor="middle" font-size="13">B</text>
+            <text x="100" y="78" text-anchor="middle" font-size="13">C</text>
+            <text x="140" y="78" text-anchor="middle" font-size="13">D</text>
+            <text x="180" y="78" text-anchor="middle" font-size="13">E</text>
+          </svg>
+          <figcaption data-i18n="abalone_rules_example_caption">Black's 3-line (A, B, C) outnumbers White's single marble (D), and cell E is empty - so Black may push: the whole line slides forward one step, D is shoved into E, and Black's line ends up occupying B, C and D's old cell. If E were instead the edge of the board, D would be eliminated entirely.</figcaption>
+        </figure>
+      </div>
+
+      <h2 data-i18n="abalone_rules_end_title">How a game ends</h2>
+      <dl class="rule-list">
+        <dt data-i18n="abalone_term_win">Winning</dt>
+        <dd data-i18n="abalone_rules_win">The first player to push 6 of the opponent's marbles off the board wins.</dd>
+        <dt data-i18n="abalone_term_resignation">Resignation</dt>
+        <dd data-i18n="abalone_rules_resignation">A player can resign at any time, ending the game immediately in the opponent's favor.</dd>
+      </dl>
+
+      <p class="about-back"><a href="abalone.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>
