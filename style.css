@@ -40,12 +40,21 @@ html, body {
 .app-header {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
-  align-items: center;
+align-items: center;
   margin-bottom: 0.3rem;
   border-bottom: var(--border-width) solid var(--border);
   padding-bottom: 0.3rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.app-header > * {
+  margin: 0 1rem 1rem 0;
+}
+
+.app-header > *:last-child {
+  margin: 0;
+}
+
 
 .title-wrap h1 {
   font-size: 1.5rem;
@@ -105,9 +114,18 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.25rem;
-  font-size: 0.8rem;
+font-size: 0.8rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.user-panel > * {
+  margin: 0 0.25rem 0.25rem 0;
+}
+
+.user-panel > *:last-child {
+  margin: 0;
+}
+
 
 #user-status {
   white-space: nowrap;
@@ -120,8 +138,17 @@ html, body {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 0.4rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.user-panel-buttons > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.user-panel-buttons > *:last-child {
+  margin: 0;
+}
+
 
 .user-status-row {
   justify-content: space-between;
@@ -187,15 +214,33 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+flex-wrap: wrap;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.mode-section-row > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+.mode-section-row > *:last-child {
+  margin: 0;
+}
+
 
 .mode-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.mode-buttons > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+.mode-buttons > *:last-child {
+  margin: 0;
+}
+
 .mode-buttons .mode-btn {
   border-radius: var(--radius);
 }
@@ -223,15 +268,29 @@ button:disabled {
 .game-section-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 0 0 0.6rem;
+margin: 0 0 0.6rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* A quick way to skip past 25 games' worth of cards to the category
+   you actually want - three plain anchor jumps > *, not JS > *, so they work
+   the same with scripting on or off and cost nothing on E-Ink. */
+.game-section-nav > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+/* A quick way to skip past 25 games' worth of cards to the category
+   you actually want - three plain anchor jumps > *:last-child, not JS > *:last-child, so they work
+   the same with scripting on or off and cost nothing on E-Ink. */
+.game-section-nav > *:last-child {
+  margin: 0;
+}
+
 
 .game-section-nav a {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.35rem 0.75rem;
+padding: 0.35rem 0.75rem;
   border: var(--border-width) solid var(--border);
   border-radius: 999px;
   background: #fff;
@@ -241,12 +300,31 @@ button:disabled {
   text-decoration: none;
 }
 
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.game-section-nav a > * {
+  margin: 0 0.35rem 0.35rem 0;
+}
+
+.game-section-nav a > *:last-child {
+  margin: 0;
+}
+
+
 .field-row {
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.field-row > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+.field-row > *:last-child {
+  margin: 0;
+}
+
 
 .field-row label {
   font-size: 0.9rem;
@@ -264,8 +342,17 @@ button:disabled {
 .checkbox-label {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.checkbox-label > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.checkbox-label > *:last-child {
+  margin: 0;
+}
+
 
 .status-text {
   font-size: 0.85rem;
@@ -283,21 +370,52 @@ button:disabled {
 #board-section {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Brett */
+
+#board-section > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+/* Brett */
+
+#board-section > *:last-child {
+  margin: 0;
+}
+
 
 .board-header {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.board-header > * {
+  margin: 0 0.25rem 0.25rem 0;
+}
+
+.board-header > *:last-child {
+  margin: 0;
+}
+
 
 .board-header-tools {
   display: flex;
   justify-content: flex-end;
-  gap: 0.25rem;
-  margin-top: 0.15rem;
+margin-top: 0.15rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.board-header-tools > * {
+  margin: 0 0.25rem 0.25rem 0;
+}
+
+.board-header-tools > *:last-child {
+  margin: 0;
+}
+
 
 
 #game-label {
@@ -461,8 +579,19 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Mode-Header mit About rechts */
+.mode-header > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+/* Mode-Header mit About rechts */
+.mode-header > *:last-child {
+  margin: 0;
+}
+
 
 .mode-about-inline {
   font-size: 0.6rem;
@@ -478,8 +607,17 @@ button:disabled {
 .app-title-row {
   display: flex;
   align-items: baseline;
-  gap: 0.5rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.app-title-row > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+.app-title-row > *:last-child {
+  margin: 0;
+}
+
 
 .app-title-author {
   font-size: 0.7rem;
@@ -489,9 +627,18 @@ button:disabled {
 
 .inline-options {
   display: inline-flex;
-  gap: 0.25rem;
-  margin-left: 0.5rem;
+margin-left: 0.5rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.inline-options > * {
+  margin: 0 0.25rem 0.25rem 0;
+}
+
+.inline-options > *:last-child {
+  margin: 0;
+}
+
 
 /* Compact selects for inline controls (offline level + online time) */
 #offline-ai-controls #ai-level-inline,
@@ -517,25 +664,50 @@ button:disabled {
 #online-controls .online-inline-row .online-action-right {
   margin-left: auto;
   display: inline-flex;
-  gap: 0.5rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+#online-controls .online-inline-row .online-action-right > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+#online-controls .online-inline-row .online-action-right > *:last-child {
+  margin: 0;
+}
+
 
 #online-controls .online-tabs-row {
   justify-content: space-between;
   width: 100%;
 }
 
-.online-sub-tabs {
-  gap: 0.35rem;
+/* Flexbox `gap` fallback: margin-based spacing instead (see the .mode-buttons
+   rule above) - this class is combined with .mode-buttons on the same
+   element (see chess.html), it just overrides the gap value. */
+.online-sub-tabs > * {
+  margin: 0 0.35rem 0.35rem 0;
+}
+
+.online-sub-tabs > *:last-child {
+  margin: 0;
 }
 
 .board-actions {
   display: flex;
-  gap: 0.5rem;
-  justify-content: flex-start;
+justify-content: flex-start;
   flex-wrap: wrap;
   margin-top: 0.5rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.board-actions > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+.board-actions > *:last-child {
+  margin: 0;
+}
+
 
 .board-actions .small {
   padding: 0.2rem 0.6rem;
@@ -547,9 +719,20 @@ button:disabled {
 .inline-options .color-choice {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 1.2rem;
+font-size: 1.2rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* color-choice labels for AI color selection (pawns instead of text) */
+.inline-options .color-choice > * {
+  margin: 0 4px 4px 0;
+}
+
+/* color-choice labels for AI color selection (pawns instead of text) */
+.inline-options .color-choice > *:last-child {
+  margin: 0;
+}
+
 
 /* Same cburnett pawn SVGs as on the board itself, sized as small inline
    icons here instead of the board's absolutely-positioned full-square use. */
@@ -682,8 +865,17 @@ button:disabled {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.25rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.about-qr > * {
+  margin: 0 0.25rem 0.25rem 0;
+}
+
+.about-qr > *:last-child {
+  margin: 0;
+}
+
 
 .about-qr img {
   max-width: 180px;
@@ -739,8 +931,21 @@ button:disabled {
 
 .lang-switch {
   display: flex;
-  gap: 0.3rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Site-wide nav bar and language switch (home/rules/guide/about pages) */
+
+.lang-switch > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+/* Site-wide nav bar and language switch (home/rules/guide/about pages) */
+
+.lang-switch > *:last-child {
+  margin: 0;
+}
+
 
 /* A native <select>, built dynamically by i18n.js from however many
    languages exist - deliberately not a row of buttons, which stopped
@@ -771,8 +976,23 @@ button:disabled {
 .game-switch {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Game switcher: same treatment as the language picker > *, built at
+   runtime by game-switcher.js on every game/rules/history page (not on
+   the home page > *, which has no "current game" to switch away from). */
+.game-switch > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+/* Game switcher: same treatment as the language picker > *:last-child, built at
+   runtime by game-switcher.js on every game/rules/history page (not on
+   the home page > *:last-child, which has no "current game" to switch away from). */
+.game-switch > *:last-child {
+  margin: 0;
+}
+
 
 .game-switch-icon {
   font-size: 0.8rem;
@@ -786,9 +1006,18 @@ button:disabled {
 .site-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0.5rem 0;
+margin: 0.5rem 0;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.site-nav > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.site-nav > *:last-child {
+  margin: 0;
+}
+
 
 .site-nav-link {
   display: inline-block;
@@ -810,11 +1039,20 @@ button:disabled {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.3rem 1rem;
-  margin: 2rem 0 1rem;
+margin: 2rem 0 1rem;
   padding-top: 1rem;
   border-top: 1px solid var(--border);
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.site-footer > * {
+  margin: 0 1rem 0.3rem 0;
+}
+
+.site-footer > *:last-child {
+  margin: 0;
+}
+
 
 .site-footer a {
   font-size: 0.8rem;
@@ -1090,8 +1328,17 @@ button:disabled {
 .game-select-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.game-select-actions > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+.game-select-actions > *:last-child {
+  margin: 0;
+}
+
 
 /* End-of-game result popup, shared by chess.html and go.html via
    result-modal.js. Longhand top/right/bottom/left rather than the
@@ -1457,10 +1704,25 @@ button:disabled {
    the board instead. */
 .ur-tray {
   display: flex;
-  gap: 0.6rem;
-  max-width: 760px;
+max-width: 760px;
   margin: 0 auto 0.4rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Off-board "start" and finished "home" pieces have no board square of
+   their own > *, so they're shown as simple labelled counters above/below
+   the board instead. */
+.ur-tray > * {
+  margin: 0 0.6rem 0.6rem 0;
+}
+
+/* Off-board "start" and finished "home" pieces have no board square of
+   their own > *:last-child, so they're shown as simple labelled counters above/below
+   the board instead. */
+.ur-tray > *:last-child {
+  margin: 0;
+}
+
 
 .ur-tray-slot {
   flex: 1;
@@ -1497,15 +1759,33 @@ button.ur-tray-slot {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  margin-top: 0.5rem;
+margin-top: 0.5rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.ur-dice-area > * {
+  margin: 0 0.6rem 0.6rem 0;
+}
+
+.ur-dice-area > *:last-child {
+  margin: 0;
+}
+
 
 .ur-dice-display {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.ur-dice-display > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+.ur-dice-display > *:last-child {
+  margin: 0;
+}
+
 
 .ur-die {
   display: inline-block;
@@ -1705,8 +1985,17 @@ button.ur-tray-slot {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.bg-point-stack > * {
+  margin: 0 2px 2px 0;
+}
+
+.bg-point-stack > *:last-child {
+  margin: 0;
+}
+
 
 .bg-point-top .bg-point-stack {
   order: 1;
@@ -1737,10 +2026,19 @@ button.ur-tray-slot {
 
 .bg-tray {
   display: flex;
-  gap: 0.6rem;
-  max-width: 760px;
+max-width: 760px;
   margin: 0 auto 0.4rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.bg-tray > * {
+  margin: 0 0.6rem 0.6rem 0;
+}
+
+.bg-tray > *:last-child {
+  margin: 0;
+}
+
 
 .bg-tray-slot {
   flex: 1;
@@ -1773,8 +2071,17 @@ button.ur-tray-slot {
 .bg-dice-display {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.bg-dice-display > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.bg-dice-display > *:last-child {
+  margin: 0;
+}
+
 
 .bg-die {
   display: inline-flex;
@@ -1992,24 +2299,52 @@ button.ur-tray-slot {
 .mancala-board {
   display: flex;
   align-items: stretch;
-  gap: 0.4rem;
-  max-width: 760px;
+max-width: 760px;
   margin: 0 auto;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Mancala board: a store well at each end of a 6x2 grid of pits > *, matching a physical Kalaha board's layout. The top row shows Player
+   2's pits right-to-left and the bottom row shows Player 1's pits
+   left-to-right > *, so sowing always reads as one continuous loop around
+   the board rather than jumping between rows in raw array order. */
+
+.mancala-board > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+/* Mancala board: a store well at each end of a 6x2 grid of pits > *:last-child, matching a physical Kalaha board's layout. The top row shows Player
+   2's pits right-to-left and the bottom row shows Player 1's pits
+   left-to-right > *:last-child, so sowing always reads as one continuous loop around
+   the board rather than jumping between rows in raw array order. */
+
+.mancala-board > *:last-child {
+  margin: 0;
+}
+
 
 .mancala-store {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.3rem;
-  flex: 0 0 15%;
+flex: 0 0 15%;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   background: var(--square-light);
   box-sizing: border-box;
   padding: 0.4rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.mancala-store > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+.mancala-store > *:last-child {
+  margin: 0;
+}
+
 
 .mancala-store-label {
   font-size: 0.75rem;
@@ -2428,15 +2763,33 @@ button.ur-tray-slot {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  margin-top: 0.5rem;
+margin-top: 0.5rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.senet-sticks-area > * {
+  margin: 0 0.6rem 0.6rem 0;
+}
+
+.senet-sticks-area > *:last-child {
+  margin: 0;
+}
+
 
 .senet-sticks-display {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.senet-sticks-display > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+.senet-sticks-display > *:last-child {
+  margin: 0;
+}
+
 
 .senet-stick {
   display: inline-block;
@@ -2552,17 +2905,31 @@ button.ur-tray-slot {
 .shogi-hand {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.3rem;
-  justify-content: center;
+justify-content: center;
   max-width: 620px;
   margin: 0 auto 0.4rem;
 }
 
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Captured pieces switch sides and join the capturing player's hand -
+   shown as a row of labelled buttons above/below the board > *, since they
+   have no board square of their own until dropped. */
+.shogi-hand > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+/* Captured pieces switch sides and join the capturing player's hand -
+   shown as a row of labelled buttons above/below the board > *:last-child, since they
+   have no board square of their own until dropped. */
+.shogi-hand > *:last-child {
+  margin: 0;
+}
+
+
 .shogi-hand-piece {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0.5rem;
+padding: 0.25rem 0.5rem;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   background: #fff;
@@ -2570,6 +2937,16 @@ button.ur-tray-slot {
   cursor: pointer;
   box-sizing: border-box;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.shogi-hand-piece > * {
+  margin: 0 0.25rem 0.25rem 0;
+}
+
+.shogi-hand-piece > *:last-child {
+  margin: 0;
+}
+
 
 .shogi-hand-piece:disabled {
   opacity: 0.4;
@@ -2610,10 +2987,19 @@ button.ur-tray-slot {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  margin-top: 0.5rem;
+margin-top: 0.5rem;
   flex-wrap: wrap;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.shogi-promotion-prompt > * {
+  margin: 0 0.6rem 0.6rem 0;
+}
+
+.shogi-promotion-prompt > *:last-child {
+  margin: 0;
+}
+
 
 /* Sudoku board: a 9x9 float-grid (same technique as the chess/checkers/
    Connect Four boards - a JS-enforced square cell size, since CSS
@@ -2671,10 +3057,19 @@ button.ur-tray-slot {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.4rem;
-  max-width: 540px;
+max-width: 540px;
   margin: 0.6rem auto 0;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.sudoku-numpad > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.sudoku-numpad > *:last-child {
+  margin: 0;
+}
+
 
 .sudoku-numpad-btn {
   width: 2.4rem;
@@ -2779,10 +3174,37 @@ button.ur-tray-slot {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
-  margin-bottom: 0.5rem;
+margin-bottom: 0.5rem;
   flex-wrap: wrap;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Minesweeper board: a float-grid (same JS-enforced square cell size
+   technique as the other games) at a fixed pixel width rather than a
+   percentage one > *, wrapped in a horizontally scrolling container - so
+   the 30-column Expert board keeps a legible ~32px cell size on a
+   narrow e-reader screen instead of shrinking every cell down to
+   illegibility. Numbers > *, flags and mines are told apart by the glyph
+   itself > *, never by color > *, so this reads fine on a monochrome display
+   without any special-casing. */
+
+.minesweeper-toolbar > * {
+  margin: 0 0.8rem 0.8rem 0;
+}
+
+/* Minesweeper board: a float-grid (same JS-enforced square cell size
+   technique as the other games) at a fixed pixel width rather than a
+   percentage one > *:last-child, wrapped in a horizontally scrolling container - so
+   the 30-column Expert board keeps a legible ~32px cell size on a
+   narrow e-reader screen instead of shrinking every cell down to
+   illegibility. Numbers > *:last-child, flags and mines are told apart by the glyph
+   itself > *:last-child, never by color > *:last-child, so this reads fine on a monochrome display
+   without any special-casing. */
+
+.minesweeper-toolbar > *:last-child {
+  margin: 0;
+}
+
 
 .minesweeper-mine-counter,
 .minesweeper-timer {
@@ -2858,9 +3280,32 @@ button.ur-tray-slot {
 .nonogram-mode-toggle {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+margin-bottom: 0.5rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Nonogram board: a CSS grid rather than the usual float-grid > *, since a
+   Nonogram needs a row of column clues above the picture and a column
+   of row clues to its left > *, in addition to the picture cells - a shape
+   a simple square-per-cell float layout doesn't fit. A thicker border
+   every 5th cell marks off easy 5-cell counting groups > *, the same idea
+   as chess/checkers board coordinates but for line-counting instead. */
+
+.nonogram-mode-toggle > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+/* Nonogram board: a CSS grid rather than the usual float-grid > *:last-child, since a
+   Nonogram needs a row of column clues above the picture and a column
+   of row clues to its left > *:last-child, in addition to the picture cells - a shape
+   a simple square-per-cell float layout doesn't fit. A thicker border
+   every 5th cell marks off easy 5-cell counting groups > *:last-child, the same idea
+   as chess/checkers board coordinates but for line-counting instead. */
+
+.nonogram-mode-toggle > *:last-child {
+  margin: 0;
+}
+
 
 .nonogram-wrap {
   overflow: auto;
@@ -2886,13 +3331,22 @@ button.ur-tray-slot {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.15em;
-  font-size: 0.75rem;
+font-size: 0.75rem;
   font-weight: 700;
   background: var(--square-light);
   padding: 0.15em;
   box-sizing: border-box;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.nonogram-clue > * {
+  margin: 0 0.15em 0.15em 0;
+}
+
+.nonogram-clue > *:last-child {
+  margin: 0;
+}
+
 
 .nonogram-clue-col {
   flex-direction: column;
@@ -2902,9 +3356,19 @@ button.ur-tray-slot {
 .nonogram-clue-row {
   flex-direction: row;
   justify-content: flex-end;
-  gap: 0.5em;
   border-right: 2px solid var(--border);
   white-space: nowrap;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead (see the
+   .mode-buttons rule earlier) - this class is combined with the
+   display:flex .nonogram-clue on the same element. */
+.nonogram-clue-row > * {
+  margin: 0 0.5em 0.5em 0;
+}
+
+.nonogram-clue-row > *:last-child {
+  margin: 0;
 }
 
 .nonogram-cell {
@@ -3022,14 +3486,32 @@ button.ur-tray-slot {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.6rem;
+margin-top: 0.6rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.twenty48-controls-pad > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.twenty48-controls-pad > *:last-child {
+  margin: 0;
+}
+
 
 .twenty48-controls-row {
   display: flex;
-  gap: 0.4rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.twenty48-controls-row > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.twenty48-controls-row > *:last-child {
+  margin: 0;
+}
+
 
 .twenty48-icon {
   display: inline-flex;
@@ -3125,17 +3607,55 @@ button.ur-tray-slot {
 .freecell-top-row {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
-  max-width: 900px;
+max-width: 900px;
   margin: 0 auto 0.6rem;
   flex-wrap: wrap;
 }
 
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* FreeCell board: free cells and foundations in a row above eight
+   cascading tableau columns. Cards overlap via a negative margin
+   rather than the float-grid/percentage-grid techniques used
+   elsewhere > *, since a solitaire cascade is a variable-height stack > *, not
+   a fixed board shape - the page simply scrolls if a column grows
+   tall. Suits are told apart by their glyph shape (already
+   unambiguous - spade/club vs. heart/diamond) > *, never by the
+   traditional red/black coloring > *, so this reads fine on a monochrome
+   E-Ink display without needing a color-blindness-style retrofit. */
+
+.freecell-top-row > * {
+  margin: 0 1rem 1rem 0;
+}
+
+/* FreeCell board: free cells and foundations in a row above eight
+   cascading tableau columns. Cards overlap via a negative margin
+   rather than the float-grid/percentage-grid techniques used
+   elsewhere > *:last-child, since a solitaire cascade is a variable-height stack > *:last-child, not
+   a fixed board shape - the page simply scrolls if a column grows
+   tall. Suits are told apart by their glyph shape (already
+   unambiguous - spade/club vs. heart/diamond) > *:last-child, never by the
+   traditional red/black coloring > *:last-child, so this reads fine on a monochrome
+   E-Ink display without needing a color-blindness-style retrofit. */
+
+.freecell-top-row > *:last-child {
+  margin: 0;
+}
+
+
 .freecell-freecells,
 .freecell-foundations {
   display: flex;
-  gap: 0.3rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.freecell-freecells > *, .freecell-foundations > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+.freecell-freecells > *:last-child, .freecell-foundations > *:last-child {
+  margin: 0;
+}
+
 
 .freecell-cell {
   width: 2.6rem;
@@ -3161,11 +3681,20 @@ button.ur-tray-slot {
 
 .freecell-columns {
   display: flex;
-  gap: 0.4rem;
-  max-width: 900px;
+max-width: 900px;
   margin: 0 auto;
   align-items: flex-start;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.freecell-columns > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.freecell-columns > *:last-child {
+  margin: 0;
+}
+
 
 .freecell-column {
   flex: 1;
@@ -3328,34 +3857,71 @@ button.ur-tray-slot {
 .onitama-cards-row {
   display: flex;
   justify-content: center;
-  gap: 0.6rem;
-  margin: 0 auto 0.4rem;
+margin: 0 auto 0.4rem;
   max-width: 460px;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Card rows above/below the board (each side's two cards) and the
+   neutral-card display between them. Cards are plain buttons holding
+   a name and a tiny 5x5 dot-diagram of that card's actual move
+   offsets > *, so a player can read a card's moves without memorizing
+   names. */
+.onitama-cards-row > * {
+  margin: 0 0.6rem 0.6rem 0;
+}
+
+/* Card rows above/below the board (each side's two cards) and the
+   neutral-card display between them. Cards are plain buttons holding
+   a name and a tiny 5x5 dot-diagram of that card's actual move
+   offsets > *:last-child, so a player can read a card's moves without memorizing
+   names. */
+.onitama-cards-row > *:last-child {
+  margin: 0;
+}
+
 
 .onitama-neutral-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  margin: 0.4rem auto 0;
+margin: 0.4rem auto 0;
   max-width: 460px;
   font-size: 0.85rem;
   color: var(--muted);
 }
 
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.onitama-neutral-row > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+.onitama-neutral-row > *:last-child {
+  margin: 0;
+}
+
+
 .onitama-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.2rem;
-  padding: 0.3rem;
+padding: 0.3rem;
   border: var(--border-width) solid var(--border);
   border-radius: 4px;
   background: #fff;
   box-sizing: border-box;
   cursor: pointer;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.onitama-card > * {
+  margin: 0 0.2rem 0.2rem 0;
+}
+
+.onitama-card > *:last-child {
+  margin: 0;
+}
+
 
 .onitama-card-selected {
   outline: 3px solid var(--border);
@@ -3661,18 +4227,36 @@ button.ur-tray-slot {
 .hex-legend {
   display: flex;
   justify-content: center;
-  gap: 1.2rem;
-  margin: 0.5rem auto 0;
+margin: 0.5rem auto 0;
   max-width: 620px;
   font-size: 0.8rem;
   color: var(--muted);
 }
 
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.hex-legend > * {
+  margin: 0 1.2rem 1.2rem 0;
+}
+
+.hex-legend > *:last-child {
+  margin: 0;
+}
+
+
 .hex-legend-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
 }
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.hex-legend-item > * {
+  margin: 0 0.35rem 0.35rem 0;
+}
+
+.hex-legend-item > *:last-child {
+  margin: 0;
+}
+
 
 .hex-stone {
   position: absolute;
