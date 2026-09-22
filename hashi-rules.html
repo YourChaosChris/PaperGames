@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hashiwokakero Rules | PaperGames</title>
+  <meta name="description" content="Complete Hashiwokakero (Bridges) rules explained clearly, with a worked example. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/hashi-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/hashi-rules.html">
+  <meta property="og:title" content="Hashiwokakero Rules | PaperGames">
+  <meta property="og:description" content="Complete Hashiwokakero (Bridges) rules explained clearly, with a worked example. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hashiwokakero Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Hashiwokakero (Bridges) rules explained clearly, with a worked example. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="hashi_rules_title">Hashiwokakero Rules</h1>
+      <p data-i18n="hashi_rules_intro">A quick reference for how PaperGames plays Hashiwokakero (literally "build the bridge!", usually just called "Hashi" or "Bridges" in English) - useful if you're rusty, or learning. Instead of filling in digits, you draw bridges between numbered islands until the whole map is one connected network.</p>
+
+      <h2 data-i18n="hashi_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="hashi-icon" aria-hidden="true"></span> <span data-i18n="hashi_term_board">The islands</span></dt>
+        <dd data-i18n="hashi_rules_board">The board is a grid where some cells hold a numbered circle - an "island" - and the rest are empty sea. Every island's number says exactly how many bridge-endpoints must end up touching it, no more and no less.</dd>
+        <dt data-i18n="hashi_term_bridges">Drawing bridges</dt>
+        <dd data-i18n="hashi_rules_bridges">A bridge always runs perfectly straight, horizontally or vertically, directly between two islands with a completely clear line between them - no other island, and no other bridge crossing at a right angle, may sit in the way. Two islands may be joined by up to two parallel bridges (a "double bridge") counting twice toward both islands' numbers, but never by three or more, and a bridge can never run diagonally.</dd>
+        <dt data-i18n="hashi_term_crossing">No crossings</dt>
+        <dd data-i18n="hashi_rules_crossing">Bridges may never cross each other. If a horizontal and a vertical bridge would have to cross to both exist, only one of the two connections can be built - the other island pair simply cannot be bridged directly as long as the crossing one stands.</dd>
+        <dt data-i18n="hashi_term_goal">The goal</dt>
+        <dd data-i18n="hashi_rules_goal">Connect every island into a single network - it must be possible to travel from any island to any other one over the bridges - while making every island's bridge count match its number exactly. Matching every number without full connectivity, or connecting everything without matching every number, are both incomplete.</dd>
+        <dt data-i18n="hashi_term_input">Placing and removing bridges</dt>
+        <dd data-i18n="hashi_rules_input">Tap the line between two islands (or tap one island, then the other) to add a bridge: the first tap draws a single bridge, a second tap upgrades it to a double bridge, and a third tap removes it again. An island already showing its exact required count is highlighted; one with too many bridges is flagged the same way an over-full Kakuro run is - a sign to undo, not a dead end.</dd>
+        <dt data-i18n="hashi_term_difficulty">Difficulty</dt>
+        <dd data-i18n="hashi_rules_difficulty">Easy, Medium and Hard puzzles use progressively larger grids with more islands (roughly 11, 20 and 30 of them), which means more overlapping numbers to juggle at once, but the same rules throughout.</dd>
+      </dl>
+
+      <h2 data-i18n="hashi_rules_example_title">A worked example</h2>
+      <dl class="rule-list">
+        <dt data-i18n="hashi_term_example">Three islands in an L</dt>
+        <dd data-i18n="hashi_rules_example_p1">Say island A (top-left) is numbered 2, island B sits directly to A's right and is numbered 1, and island C sits directly below A and is numbered 3, with nothing else nearby. A's only two possible connections are to B (right) and to C (down) - so if A needs 2 bridge-endpoints from only two available directions, both connections must exist, meaning at least a single bridge to B and a single bridge to C.</dd>
+        <dd data-i18n="hashi_rules_example_p2">B only needs 1, and it's already got its one bridge from A, so B is done - no second bridge to B is allowed, since that would give it 2. C needs 3, but has only received 1 so far from A; since A-C is C's only possible connection (assuming no other island lines up with C), that single connection must become a double bridge to give C its remaining 2 - two parallel bridges running between A and C. The puzzle is solved by that same kind of "only one arrangement fits the numbers" deduction on every larger board.</dd>
+      </dl>
+
+      <h2 data-i18n="hashi_rules_end_title">Finishing a puzzle</h2>
+      <dl class="rule-list">
+        <dt data-i18n="hashi_term_win">Solved</dt>
+        <dd data-i18n="hashi_rules_win">The puzzle is solved the moment every island's bridge count matches its number exactly AND every island can be reached from every other island over the bridges drawn - both conditions at once, not just one of them.</dd>
+      </dl>
+
+      <p class="about-back"><a href="hashi.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>

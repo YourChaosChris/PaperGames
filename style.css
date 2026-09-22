@@ -6253,3 +6253,410 @@ max-width: 900px;
   color: var(--muted);
   margin-top: 0.4rem;
 }
+
+/* Hashiwokakero (Bridges) board: islands scattered over a sparse grid
+   rather than a filled one, so - like Fanorona/Hex/Quoridor/Go - it's
+   rendered as absolutely-positioned circular island buttons over a
+   single SVG line layer, with the container's height JS-enforced from
+   its measured width each time it's built or the window resizes (CSS
+   `aspect-ratio` is unreliable on E-Ink browsers; see hashi-app.js's
+   ensureHashiBoardAspect). Every candidate bridge connection is drawn as
+   an SVG line UNDER the islands, same as Fanorona's connection lines,
+   but unlike Fanorona's purely decorative lines these ARE the primary
+   clickable element: an invisible wide "hit" line sits under a thin
+   visible one (or two, offset apart, for a double bridge) that's shown
+   or hidden as bridges are placed/removed. */
+
+#hashi-board {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: var(--border-width) solid var(--border);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.hashi-lines {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.hashi-edge-hit {
+  stroke: rgba(0, 0, 0, 0.01);
+  stroke-width: 22;
+  cursor: pointer;
+}
+
+.hashi-edge-line {
+  stroke: var(--text);
+  stroke-width: 6;
+  pointer-events: none;
+}
+
+.hashi-island {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  background: #fff;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+.hashi-island-value {
+  font-size: 1rem;
+  font-size: clamp(0.7rem, 3.4vw, 1.3rem);
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.hashi-island-selected {
+  border-color: var(--accent);
+  border-width: 4px;
+  box-shadow: 0 0 0 3px var(--accent) inset;
+}
+
+/* An island whose current bridge count already matches its required
+   number - the positive counterpart to Kakuro's conflict highlighting
+   (see .kakuro-cell-conflict): a filled disc instead of an error
+   outline, since here reaching the target is progress, not a mistake. */
+.hashi-island-satisfied {
+  background: var(--border);
+}
+
+.hashi-island-satisfied .hashi-island-value {
+  color: #fff;
+}
+
+/* An island with MORE bridges than its number allows - always a mistake
+   to fix, flagged the same dashed-outline way KakuroCore flags an
+   overshot run sum. */
+.hashi-island-over {
+  outline: 2px dashed var(--border);
+  outline-offset: 2px;
+}
+
+.hashi-icon {
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  background: #fff;
+}
+
+
+
+/* Fleet Battle: two 10x10 grids (own fleet + enemy waters), each an 11-
+   column CSS grid (a fixed-width row/column-label column plus the 10
+   1fr board-cell columns). CSS grid `gap` is fine on this project's
+   target E-Ink browsers (unlike flexbox `gap`, which several of this
+   file's other rules work around with margin-based spacing instead), so
+   no fallback is needed for the small gutters below. Cell WIDTH is left
+   to the grid engine's own 1fr distribution; cell HEIGHT is set from JS
+   (see ensureFbSquareCells in fleetbattle-app.js) once the grid has been
+   measured, the same JS-enforced-square-cell approach checkers/kakuro
+   use, since `aspect-ratio` isn't reliable on this project's target E-Ink
+   browsers. */
+
+.fb-boards {
+  margin-top: 0.5rem;
+}
+
+.fb-board-block {
+  margin-bottom: 1.25rem;
+}
+
+.fb-board-block:last-child {
+  margin-bottom: 0;
+}
+
+.fb-board-block h2 {
+  font-size: 1rem;
+  margin: 0 0 0.4rem;
+}
+
+.fb-grid-wrap {
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.fb-grid {
+  display: grid;
+  grid-template-columns: 1.7em repeat(10, 1fr);
+  gap: 1px;
+  width: 100%;
+  border: 2px solid var(--border);
+  background: var(--border);
+  box-sizing: border-box;
+}
+
+.fb-label,
+.fb-corner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  color: var(--muted);
+  background: var(--bg-alt);
+}
+
+.fb-cell {
+  position: relative;
+  display: block;
+  width: 100%;
+  background: var(--square-light);
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  cursor: default;
+}
+
+.fb-cell.fb-clickable:not(:disabled) {
+  cursor: pointer;
+}
+
+/* Own ship, not yet hit - a plain filled square (hull). */
+.fb-cell.fb-ship::before {
+  content: "";
+  position: absolute;
+  top: 14%;
+  left: 14%;
+  width: 72%;
+  height: 72%;
+  background: var(--square-dark);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+
+/* Miss - a small hollow ring, distinct from a hit without relying on color. */
+.fb-cell.fb-miss::before {
+  content: "";
+  position: absolute;
+  top: 37%;
+  left: 37%;
+  width: 26%;
+  height: 26%;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+}
+
+/* Hit (ship not yet fully sunk) - a filled circle. */
+.fb-cell.fb-hit::before {
+  content: "";
+  position: absolute;
+  top: 18%;
+  left: 18%;
+  width: 64%;
+  height: 64%;
+  border-radius: 50%;
+  background: #000;
+  border: 2px solid #000;
+  box-sizing: border-box;
+}
+
+/* Sunk ship - every cell gets a diagonal hatch fill plus an inverted
+   ring marker, the same "distinct pattern, not just a color" technique
+   as .amazons-icon-burned above, so a fully destroyed ship reads as
+   clearly different from a plain in-progress hit. */
+.fb-cell.fb-sunk {
+  background-image: repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 2px, transparent 6px);
+}
+
+.fb-cell.fb-sunk::after {
+  content: "";
+  position: absolute;
+  top: 27%;
+  left: 27%;
+  width: 46%;
+  height: 46%;
+  border-radius: 50%;
+  background: var(--square-light);
+  border: 2px solid #000;
+  box-sizing: border-box;
+}
+
+.fb-cell.fb-last {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.fb-legend {
+  margin-top: 0.75rem;
+}
+
+.fb-legend-row {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0.35rem;
+  font-size: 0.85rem;
+}
+
+.fb-legend-mark {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+}
+
+.fb-placement-status {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+/* Skyscrapers board: a real CSS grid (n+2) x (n+2), unlike the other
+   puzzle boards' float-grid technique - a grid is a natural fit here
+   since a row/column of edge-clue cells needs to sit flush around all
+   four sides of the board, not just the fillable n x n interior. Grid
+   `gap` is fine to use on E-Ink per this project's compatibility notes
+   (only flexbox `gap` needs the margin-based fallback); the 1px gap on
+   top of a solid background acts as the grid line between cells. Each
+   cell's height is set inline by JS to match its computed square width,
+   since CSS `aspect-ratio` is unreliable on E-Ink browsers. */
+
+#skyscrapers-board {
+  display: grid;
+  gap: 1px;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  border: 3px solid var(--border);
+  background: var(--border);
+  overflow: hidden;
+}
+
+.skyscrapers-cell {
+  background: var(--square-light);
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skyscrapers-corner {
+  background: transparent;
+}
+
+.skyscrapers-clue-cell {
+  background: transparent;
+}
+
+.skyscrapers-clue-value {
+  font-weight: 700;
+  line-height: 1;
+  font-size: 0.9rem;
+  font-size: clamp(0.7rem, 3vw, 1.1rem);
+}
+
+.skyscrapers-clue-ok .skyscrapers-clue-value {
+  text-decoration: underline;
+}
+
+.skyscrapers-clue-violated .skyscrapers-clue-value {
+  outline: 2px dashed var(--border);
+  outline-offset: 2px;
+  padding: 0 0.15em;
+}
+
+.skyscrapers-cell-board {
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.skyscrapers-cell-board.selected {
+  outline: 3px solid var(--border);
+  outline-offset: -3px;
+}
+
+.skyscrapers-cell-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 3.5vw, 1.4rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.skyscrapers-cell-conflict {
+  outline: 2px dashed var(--border);
+  outline-offset: -2px;
+}
+
+.skyscrapers-numpad {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 540px;
+  margin: 0.6rem auto 0;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.skyscrapers-numpad > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.skyscrapers-numpad > *:last-child {
+  margin-right: 0;
+}
+
+.skyscrapers-numpad-btn {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* A tiny ascending skyline drawn with stacked background rectangles,
+   anchored to the bottom of the icon box - no raw SVG needed, the same
+   "one element, layered backgrounds" trick as .kakuro-icon's diagonal
+   split, just with four bars instead of two triangles. */
+.skyscrapers-icon {
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-image:
+    linear-gradient(var(--border), var(--border)),
+    linear-gradient(var(--border), var(--border)),
+    linear-gradient(var(--border), var(--border)),
+    linear-gradient(var(--border), var(--border));
+  background-size: 16% 32%, 16% 52%, 16% 42%, 16% 78%;
+  background-position: 8% 100%, 34% 100%, 60% 100%, 84% 100%;
+}
+

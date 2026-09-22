@@ -407,4 +407,34 @@ const GAMES_CATALOG = [
     popular: false,
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><line x1=\"25\" y1=\"18\" x2=\"75\" y2=\"18\"/><line x1=\"25\" y1=\"38\" x2=\"75\" y2=\"38\"/><line x1=\"25\" y1=\"62\" x2=\"75\" y2=\"62\"/><line x1=\"25\" y1=\"82\" x2=\"75\" y2=\"82\"/><line x1=\"18\" y1=\"25\" x2=\"18\" y2=\"75\"/><line x1=\"38\" y1=\"25\" x2=\"38\" y2=\"75\"/><line x1=\"62\" y1=\"25\" x2=\"62\" y2=\"75\"/><line x1=\"82\" y1=\"25\" x2=\"82\" y2=\"75\"/></g><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><path d=\"M18,25 Q6,6 38,6\"/><path d=\"M82,25 Q94,6 62,6\"/><path d=\"M18,75 Q6,94 38,94\"/><path d=\"M82,75 Q94,94 62,94\"/></g><g fill=\"#000\"><circle cx=\"38\" cy=\"6\" r=\"5\"/><circle cx=\"62\" cy=\"6\" r=\"5\"/><circle cx=\"38\" cy=\"94\" r=\"5\"/><circle cx=\"62\" cy=\"94\" r=\"5\"/></g><g fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"><circle cx=\"18\" cy=\"25\" r=\"5\"/><circle cx=\"82\" cy=\"25\" r=\"5\"/><circle cx=\"18\" cy=\"75\" r=\"5\"/><circle cx=\"82\" cy=\"75\" r=\"5\"/></g></svg></span>"
   },
+  {
+    slug: "hashi",
+    category: "puzzles",
+    nameKey: "game_hashi",
+    nameText: "Hashiwokakero",
+    descKey: "home_hashi_desc",
+    descText: "Connect every numbered island with straight single or double bridges so the whole network joins together and every island's count matches its number. Freshly generated, in three difficulty levels.",
+    popular: false,
+    icon: "<span class=\"hashi-icon\" aria-hidden=\"true\"></span>"
+  },
+  {
+    slug: "fleetbattle",
+    category: "strategy",
+    nameKey: "game_fleetbattle",
+    nameText: "Fleet Battle",
+    descKey: "home_fleetbattle_desc",
+    descText: "Sink the computer's hidden fleet before it sinks yours - classic grid-guessing naval combat, one shot per turn.",
+    popular: false,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g fill=\"#000\"><polygon points=\"8,68 20,55 80,55 92,68 78,84 22,84\"/><rect x=\"36\" y=\"36\" width=\"9\" height=\"22\"/><rect x=\"57\" y=\"30\" width=\"9\" height=\"28\"/></g><g stroke=\"#000\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\"><path d=\"M4,92 q9,-7 18,0 t18,0 t18,0 t18,0 t18,0\"/></g></svg></span>"
+  },
+  {
+    slug: "skyscrapers",
+    category: "puzzles",
+    nameKey: "game_skyscrapers",
+    nameText: "Skyscrapers",
+    descKey: "home_skyscrapers_desc",
+    descText: "Fill an NxN grid with building heights 1-N so every row and column has each height once, matching how many are visible from the numbered clues around the edge. Freshly generated, in three difficulty levels.",
+    popular: false,
+    icon: "<span class=\"skyscrapers-icon\" aria-hidden=\"true\"></span>"
+  },
 ];

@@ -6,7 +6,7 @@
 
 const GameStats = (function () {
   const KEY = "einkchess_stats";
-  const GAMES = ["chess", "go", "checkers", "ur", "morris", "backgammon", "xiangqi", "mancala", "othello", "connectfour", "gomoku", "senet", "shogi", "sudoku", "pegsolitaire", "minesweeper", "nonogram", "twenty48", "mahjong", "freecell", "onitama", "hnefatafl", "quoridor", "hex", "halma", "lightsout", "mastermind", "dotsandboxes", "amazons", "kakuro", "fanorona", "sternhalma", "baghchal", "tablut", "abalone", "pyramidsolitaire", "surakarta"];
+  const GAMES = ["chess", "go", "checkers", "ur", "morris", "backgammon", "xiangqi", "mancala", "othello", "connectfour", "gomoku", "senet", "shogi", "sudoku", "pegsolitaire", "minesweeper", "nonogram", "twenty48", "mahjong", "freecell", "onitama", "hnefatafl", "quoridor", "hex", "halma", "lightsout", "mastermind", "dotsandboxes", "amazons", "kakuro", "hashi", "skyscrapers", "fanorona", "fleetbattle", "sternhalma", "baghchal", "tablut", "abalone", "pyramidsolitaire", "surakarta"];
 
   function loadAll() {
     try {
