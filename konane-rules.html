@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Konane Rules | PaperGames</title>
+  <meta name="description" content="Complete Konane (Hawaiian checkers) rules explained clearly, including the opening removal ritual and jump-chain examples. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/konane-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/konane-rules.html">
+  <meta property="og:title" content="Konane Rules | PaperGames">
+  <meta property="og:description" content="Complete Konane (Hawaiian checkers) rules explained clearly, including the opening removal ritual and jump-chain examples. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Konane Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Konane (Hawaiian checkers) rules explained clearly, including the opening removal ritual and jump-chain examples. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="konane_rules_title">Konane Rules</h1>
+      <p data-i18n="konane_rules_intro">A quick reference for how PaperGames plays Konane (Hawaiian checkers) - useful if you're rusty, or learning.</p>
+
+      <h2 data-i18n="konane_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="konane-icon-disc konane-icon-disc-black" aria-hidden="true"></span> <span data-i18n="konane_term_board">The board</span></dt>
+        <dd data-i18n="konane_rules_board">An 8x8 board, and every single one of its 64 squares starts filled with a stone - unlike Western checkers, which only uses the dark squares. Stones alternate strictly in a checkerboard pattern: Black on one color of square, White on the other.</dd>
+        <dt data-i18n="konane_term_moves">Movement</dt>
+        <dd data-i18n="konane_rules_moves">Stones never simply slide. The only move in Konane is a jump: hop one of your stones over an orthogonally adjacent enemy stone (up, down, left or right - never diagonally) into the empty square immediately beyond it, removing the jumped stone.</dd>
+      </dl>
+
+      <h2 data-i18n="konane_rules_opening_title">The opening removal ritual</h2>
+      <dl class="rule-list">
+        <dt data-i18n="konane_term_opening">Starting the game</dt>
+        <dd data-i18n="konane_rules_opening">Since every square starts occupied, nobody can jump yet - a jump needs an empty landing square. So the game opens with a short ritual instead of a first jump: Black removes one of their own stones from either a corner or one of the four center-most squares. Then White removes one of their own stones that sits directly (orthogonally) next to the square Black just emptied. Those two empty squares are what make the very first jump possible.</dd>
+        <dt data-i18n="konane_term_opening_next">After the ritual</dt>
+        <dd data-i18n="konane_rules_opening_next">Once both removals are done, Black makes the first real jump, and play continues with normal alternating turns from there.</dd>
+      </dl>
+
+      <h2 data-i18n="konane_rules_capture_title">Jumping and jump chains</h2>
+      <dl class="rule-list">
+        <dt data-i18n="konane_term_mandatory">Mandatory jump</dt>
+        <dd data-i18n="konane_rules_mandatory">If any of your stones has a legal jump anywhere on the board, you must play one - you may choose which stone jumps if more than one can.</dd>
+        <dt data-i18n="konane_term_chain">Continuing a jump chain</dt>
+        <dd data-i18n="konane_rules_chain">After landing, that same stone may keep jumping again from its new position, and may change direction freely between jumps (each individual jump is still a straight orthogonal line, but a chain doesn't have to keep going the same way). Unlike checkers, you are never forced to take the longest chain available: you may stop after any single jump, choosing how far to continue each turn.</dd>
+        <dt data-i18n="konane_term_example">Worked example</dt>
+        <dd data-i18n="konane_rules_example">Say your stone sits at c4 with an enemy stone at c5 and an empty square at c6: jumping c4-c6 captures the stone on c5. If your stone, now on c6, also has an enemy stone at b6 with d6 empty on the far side, you could continue that same turn by jumping c6-d6 (a 90-degree turn from your first jump's direction) to capture the stone on b6 too - or you could simply stop at c6 after the first jump instead. Both are legal; the choice is yours each step.</dd>
+      </dl>
+
+      <h2 data-i18n="konane_rules_end_title">How a game ends</h2>
+      <dl class="rule-list">
+        <dt data-i18n="konane_term_win">Winning</dt>
+        <dd data-i18n="konane_rules_win">If you have no legal jump available anywhere on your turn, you lose immediately - there's no other kind of move to fall back on in Konane once the game is underway.</dd>
+        <dt data-i18n="konane_term_resignation">Resignation</dt>
+        <dd data-i18n="konane_rules_resignation">A player can resign at any time, ending the game immediately in the opponent's favor.</dd>
+      </dl>
+
+      <p class="about-back"><a href="konane.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>

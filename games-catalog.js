@@ -437,4 +437,34 @@ const GAMES_CATALOG = [
     popular: false,
     icon: "<span class=\"skyscrapers-icon\" aria-hidden=\"true\"></span>"
   },
+  {
+    slug: "konane",
+    category: "strategy",
+    nameKey: "game_konane",
+    nameText: "Konane",
+    descKey: "home_konane_desc",
+    descText: "Hawaiian checkers: a full board of alternating stones and orthogonal jump chains, opening with a unique two-stone removal ritual. Local 2-player or vs. the built-in engine.",
+    popular: false,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"4\" y=\"4\" width=\"92\" height=\"92\" fill=\"none\" stroke=\"#000\" stroke-width=\"4\"/><g stroke=\"#000\" stroke-width=\"2\"><line x1=\"27\" y1=\"4\" x2=\"27\" y2=\"96\"/><line x1=\"50\" y1=\"4\" x2=\"50\" y2=\"96\"/><line x1=\"73\" y1=\"4\" x2=\"73\" y2=\"96\"/><line x1=\"4\" y1=\"27\" x2=\"96\" y2=\"27\"/><line x1=\"4\" y1=\"50\" x2=\"96\" y2=\"50\"/><line x1=\"4\" y1=\"73\" x2=\"96\" y2=\"73\"/></g><circle cx=\"15.5\" cy=\"15.5\" r=\"8\" fill=\"#000\"/><circle cx=\"38.5\" cy=\"15.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"61.5\" cy=\"15.5\" r=\"8\" fill=\"#000\"/><circle cx=\"84.5\" cy=\"15.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"15.5\" cy=\"38.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"61.5\" cy=\"38.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"84.5\" cy=\"38.5\" r=\"8\" fill=\"#000\"/><circle cx=\"38.5\" cy=\"61.5\" r=\"8\" fill=\"#000\"/><circle cx=\"15.5\" cy=\"61.5\" r=\"8\" fill=\"#000\"/><circle cx=\"84.5\" cy=\"61.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"38.5\" cy=\"84.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"61.5\" cy=\"84.5\" r=\"8\" fill=\"#000\"/><circle cx=\"84.5\" cy=\"84.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/></svg></span>"
+  },
+  {
+    slug: "slitherlink",
+    category: "puzzles",
+    nameKey: "game_slitherlink",
+    nameText: "Slitherlink",
+    descKey: "home_slitherlink_desc",
+    descText: "Draw a single loop between the dots so every numbered cell has exactly that many edges on its sides. Freshly generated, in three difficulty levels.",
+    popular: false,
+    icon: "<span class=\"slitherlink-icon\" aria-hidden=\"true\"></span>"
+  },
+  {
+    slug: "ludo",
+    category: "race",
+    nameKey: "game_ludo",
+    nameText: "Ludo",
+    descKey: "home_ludo_desc",
+    descText: "The classic cross-shaped race game descended from ancient Pachisi. Play one color yourself against up to three built-in computer opponents (2-4 players total), or pass the device around in local hotseat.",
+    popular: false,
+    icon: "<span class=\"ludo-icon-disc ludo-icon-disc-red\" aria-hidden=\"true\"></span>"
+  },
 ];

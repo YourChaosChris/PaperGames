@@ -12,6 +12,10 @@
   --square-dark: #d5d5d5;
   --square-selected: #bbb;
   --square-last: #c5e1ff;
+  --ludo-red: #b23a2e;
+  --ludo-green: #2c8a4b;
+  --ludo-yellow: #c98a12;
+  --ludo-blue: #2f5fa8;
   --radius: 4px;
   --border-width: 2px;
   --shadow: 0 0 0 1px #000;
@@ -6660,3 +6664,487 @@ max-width: 900px;
   background-position: 8% 100%, 34% 100%, 60% 100%, 84% 100%;
 }
 
+
+/* Konane board: reuses .square's float-grid layout from the chess/
+   checkers boards (see ensureKonaneSquareAspectRatio in konane-app.js for
+   the JS-enforced row height), but unlike checkers every one of the 64
+   squares is playable - Konane fills the whole board with alternating
+   stones at the start, not just the dark squares - so both .light and
+   .dark squares get a piece span and a click handler here. */
+
+#konane-board {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.konane-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 78%;
+  height: 78%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.konane-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.konane-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Opening-ritual removal targets: a distinct reddish tint (the same
+   "about to be removed" convention morris-app.js uses for its own mill-
+   capture phase, see .morris-point-removable), so the two-stone opening
+   ritual reads as visually different from an ordinary jump destination. */
+.konane-square.konane-square-removable {
+  background: #f3d4d4;
+}
+
+.konane-square.konane-square-movable {
+  background: var(--square-dark);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.konane-icon-disc {
+  position: relative;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.konane-icon-disc-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.konane-icon-disc-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* The "continue or stop" jump-chain prompt: a plain stacked button,
+   margin-based spacing rather than flexbox `gap` (unsupported on the
+   Tolino's Chrome 61 WebView) - same pattern as Fanorona's own chain
+   controls (.fanorona-chain-controls) just above. */
+.konane-chain-controls {
+  margin-top: 0.6rem;
+}
+
+.konane-chain-controls button {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+
+
+/* Slitherlink board: a dot grid where every potential edge between two
+   neighboring dots is a real, invisible-until-drawn <button> - one tap
+   cycles it empty -> line -> marked-off -> empty. The dots, clue
+   numbers and the loop lines themselves are a purely decorative SVG
+   layer underneath those buttons (re-styled in place as state changes,
+   never rebuilt), the mirror image of fanorona-app.js's board, which
+   draws its fixed lines as decorative SVG *under* real button points -
+   here it's the lines that are clickable and the dots that are just
+   markers. Sized with a JS-enforced pixel height (see
+   ensureSlitherlinkAspectRatio in slitherlink-app.js) rather than CSS
+   `aspect-ratio`, which is unreliable on E-Ink browsers. */
+
+#slitherlink-board {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+.slitherlink-svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.slitherlink-dot {
+  fill: var(--border);
+}
+
+.slitherlink-dot.slitherlink-conflict {
+  fill: var(--square-light);
+  stroke: var(--danger);
+  stroke-width: 3;
+}
+
+.slitherlink-edge-line {
+  stroke: var(--muted);
+  stroke-opacity: 0.28;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.slitherlink-edge-line.slitherlink-edge-on {
+  stroke: var(--border);
+  stroke-opacity: 1;
+  stroke-width: 9;
+}
+
+.slitherlink-edge-line.slitherlink-edge-marked {
+  stroke: var(--danger);
+  stroke-opacity: 0.85;
+  stroke-width: 4;
+  stroke-dasharray: 6 8;
+}
+
+.slitherlink-clue-ring {
+  fill: none;
+  stroke: none;
+}
+
+.slitherlink-clue-ring.slitherlink-conflict {
+  stroke: var(--danger);
+  stroke-width: 2.5;
+  stroke-dasharray: 5 4;
+}
+
+.slitherlink-clue-text {
+  font-weight: 700;
+  fill: var(--text);
+  font-size: 34px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.slitherlink-clue-text.slitherlink-conflict {
+  fill: var(--danger);
+}
+
+.slitherlink-edge-btn {
+  position: absolute;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.slitherlink-edge-btn:focus-visible {
+  outline: 2px dashed var(--border);
+  outline-offset: 1px;
+}
+
+.slitherlink-icon {
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  box-sizing: border-box;
+  border: 2px solid var(--border);
+  border-radius: 2px;
+  position: relative;
+}
+
+.slitherlink-icon::before {
+  content: "";
+  position: absolute;
+  top: 25%;
+  right: 25%;
+  bottom: 25%;
+  left: 25%;
+  border: 2px solid var(--border);
+  border-right: none;
+  border-bottom: none;
+}
+
+  --ludo-red: #b23a2e;
+  --ludo-green: #2c8a4b;
+  --ludo-yellow: #c98a12;
+  --ludo-blue: #2f5fa8;
+
+/* Ludo board: a single 15x15 CSS grid (CSS grid `gap` is fine on E-Ink
+   browsers - only flexbox `gap` isn't - though this board doesn't use
+   even that, every cell is simply placed at its own grid-area). Built
+   from a JS-measured square container (no `aspect-ratio`), holding the
+   52 shared track cells, each color's 5-cell home stretch, four 6x6
+   home bases and a purely decorative center hub - see ludo-app.js for
+   the coordinate tables. */
+
+#ludo-board {
+  display: grid;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  border: var(--border-width) solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.ludo-filler {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+
+.ludo-cell {
+  position: relative;
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  padding: 0;
+  overflow: hidden;
+}
+
+.ludo-cell-safe::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  width: 40%;
+  height: 40%;
+  border: 2px solid var(--muted);
+  transform: rotate(45deg);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+/* Plain fixed tint colors rather than color-mix() (unsupported on the
+   Chrome 61 WebView this project targets - see CLAUDE conventions). */
+.ludo-cell-home-column-red { background: #f0d9d5; }
+.ludo-cell-home-column-green { background: #d7ecdd; }
+.ludo-cell-home-column-yellow { background: #f3e3c4; }
+.ludo-cell-home-column-blue { background: #d8e2f0; }
+
+.ludo-cell-movable {
+  background: var(--square-dark);
+}
+
+.ludo-cell-tokens {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.ludo-cell-tokens > * {
+  margin: 0 1px 0 0;
+}
+
+.ludo-cell-tokens > *:last-child {
+  margin-right: 0;
+}
+
+.ludo-token {
+  display: inline-block;
+  width: 62%;
+  height: 62%;
+  min-width: 8px;
+  min-height: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+}
+
+.ludo-token-stacked {
+  margin-left: -4px;
+}
+
+.ludo-token-red { background: var(--ludo-red); }
+.ludo-token-green { background: var(--ludo-green); }
+.ludo-token-yellow { background: var(--ludo-yellow); }
+.ludo-token-blue { background: var(--ludo-blue); }
+
+.ludo-home-base {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10%;
+  padding: 18%;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+}
+
+.ludo-home-base-red { background: #f5e5e2; }
+.ludo-home-base-green { background: #e2f0e6; }
+.ludo-home-base-yellow { background: #f7ecd4; }
+.ludo-home-base-blue { background: #e3e9f3; }
+
+.ludo-home-slot {
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  padding: 0;
+  cursor: pointer;
+}
+
+.ludo-home-slot-filled.ludo-home-slot-red { background: var(--ludo-red); }
+.ludo-home-slot-filled.ludo-home-slot-green { background: var(--ludo-green); }
+.ludo-home-slot-filled.ludo-home-slot-yellow { background: var(--ludo-yellow); }
+.ludo-home-slot-filled.ludo-home-slot-blue { background: var(--ludo-blue); }
+
+.ludo-home-slot-movable {
+  box-shadow: 0 0 0 3px var(--square-dark) inset;
+}
+
+/* The center hub's decorative cells (see ludo-app.js for why its 4
+   corners are ordinary track-cell buttons instead, and not part of
+   this overlay). */
+.ludo-hub-wedge {
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.ludo-hub-wedge-red { background: var(--ludo-red); }
+.ludo-hub-wedge-green { background: var(--ludo-green); }
+.ludo-hub-wedge-yellow { background: var(--ludo-yellow); }
+.ludo-hub-wedge-blue { background: var(--ludo-blue); }
+
+.ludo-hub-center {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.ludo-finished-tally {
+  text-align: center;
+  font-size: 0.42rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+/* Turn indicator: one chip per active color, the current player's chip
+   highlighted - see the board header in ludo.html. */
+.ludo-turn-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.3rem 0;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.ludo-turn-indicator > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+.ludo-turn-indicator > *:last-child {
+  margin-right: 0;
+}
+
+.ludo-turn-chip {
+  display: inline-block;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  opacity: 0.45;
+}
+
+.ludo-turn-chip-red { background: var(--ludo-red); }
+.ludo-turn-chip-green { background: var(--ludo-green); }
+.ludo-turn-chip-yellow { background: var(--ludo-yellow); }
+.ludo-turn-chip-blue { background: var(--ludo-blue); }
+
+.ludo-turn-chip-active {
+  opacity: 1;
+  box-shadow: 0 0 0 3px var(--square-dark);
+}
+
+.ludo-turn-chip-ai::after {
+  content: "AI";
+  display: block;
+  font-size: 0.45rem;
+  font-weight: 700;
+  line-height: 1.1rem;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 0 1px #000;
+}
+
+.ludo-dice-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.ludo-dice-area > * {
+  margin: 0 0.6rem 0.6rem 0;
+}
+
+.ludo-dice-area > *:last-child {
+  margin-right: 0;
+}
+
+.ludo-dice-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ludo-die {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  font-weight: 700;
+  background: #fff;
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own token styling. */
+.ludo-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+  border: 2px solid var(--border);
+}
+
+.ludo-icon-disc-red { background: var(--ludo-red); }
+.ludo-icon-disc-green { background: var(--ludo-green); }
+.ludo-icon-disc-yellow { background: var(--ludo-yellow); }
+.ludo-icon-disc-blue { background: var(--ludo-blue); }
