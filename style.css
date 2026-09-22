@@ -4895,3 +4895,126 @@ margin: 0.5rem auto 0;
 .dab-icon-swatch-p2 {
   background: repeating-linear-gradient(45deg, var(--square-light), var(--square-light) 3px, var(--border) 3px, var(--border) 4px);
 }
+
+/* Amazons board: percentage-based absolute positioning (the same
+   technique as Wall Maze/Hex), a plain 10x10 grid of clickable cell
+   buttons with a JS-enforced square aspect ratio. Amazons are told
+   apart structurally, not by color alone: Player 1 is a filled disc,
+   Player 2 an outlined disc, the same convention used everywhere else
+   in this app. A burned square (wherever an arrow has landed) gets
+   its own crosshatch fill - a criss-cross of both diagonals, visually
+   distinct from every single-direction stripe pattern used elsewhere
+   (Senet's rebirth/beauty squares, Halma's camps, Dots and Boxes'
+   player-2 fill) - so it reads unmistakably as "different terrain",
+   not as a movable-square highlight or another player's marker. */
+
+.amazons-board {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+}
+
+.amazons-cell {
+  position: absolute;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  background: var(--square-light);
+  padding: 0;
+  margin: 0;
+}
+
+.amazons-cell-burned {
+  background-color: var(--square-dark);
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 3px, var(--border) 3px, var(--border) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 3px, var(--border) 3px, var(--border) 4px);
+}
+
+/* Step 2: legal move destinations for the amazon already selected. */
+.amazons-cell-movable {
+  background-color: var(--square-dark);
+}
+
+/* Step 3: legal arrow landings from the amazon's new square - a
+   dashed accent ring rather than a plain fill, so it reads as a
+   distinct "now aiming" mode instead of looking like another
+   move-destination square. */
+.amazons-cell-arrow-target {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.amazons-cell.selected {
+  outline: 3px solid var(--border);
+  outline-offset: -3px;
+}
+
+/* The destination already chosen in step 2, while step 3 (aiming the
+   arrow) is in progress - kept visually marked so the board still
+   shows where the moving amazon ended up. */
+.amazons-cell-pending-to {
+  box-shadow: inset 0 0 0 2px var(--border);
+}
+
+.amazons-cell.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.amazons-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 62%;
+  height: 62%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.amazons-piece-p1 {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.amazons-piece-p2 {
+  background: var(--square-light);
+  border: 2px solid var(--border);
+}
+
+/* Small icons for the side-choice picker, board placeholder, and
+   rules page, matching the board's own piece/terrain styling. */
+.amazons-icon-piece {
+  display: inline-flex;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.amazons-icon-piece-p1 {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.amazons-icon-piece-p2 {
+  background: var(--square-light);
+  border: 2px solid var(--border);
+}
+
+.amazons-icon-burned {
+  display: inline-flex;
+  width: 1.2em;
+  height: 1.2em;
+  box-sizing: border-box;
+  vertical-align: middle;
+  border: 1px solid var(--border);
+  background-color: var(--square-dark);
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 3px, var(--border) 3px, var(--border) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 3px, var(--border) 3px, var(--border) 4px);
+}

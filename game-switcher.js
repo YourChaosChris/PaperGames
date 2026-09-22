@@ -47,7 +47,8 @@
     ["mahjong", "game_mahjong_solitaire"],
     ["nonogram", "game_nonograms"],
     ["pegsolitaire", "game_peg_solitaire"],
-    ["dotsandboxes", "game_dotsandboxes"]
+    ["dotsandboxes", "game_dotsandboxes"],
+    ["amazons", "game_amazons"]
   ];
 
   var GAME_SLUGS = {};
