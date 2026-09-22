@@ -3422,3 +3422,117 @@ button.ur-tray-slot {
   background: var(--square-light);
   border: 2px solid var(--border);
 }
+
+/* Hex board: a rhombus of hexagonal cells (percentage-based absolute
+   positioning, the same technique as Go's board), with a JS-enforced
+   non-square aspect ratio - the board is noticeably wider than tall,
+   unlike every other board here. Stones are told apart structurally
+   (filled vs. outlined), and each player's pair of target edges gets
+   its own distinct thicker border so it's clear which side is trying
+   to connect where without relying on color for that either. */
+
+.hex-board-wrap {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.hex-board {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* A clip-path polygon clips away a plain CSS border wherever the
+   polygon's edge is diagonal (only the two vertical flat sides of
+   this pointy-top hexagon would show a stroke), so each cell is built
+   from two stacked, identically-clipped hexagons instead: a slightly
+   larger one in the border color underneath, and a slightly inset one
+   in the fill color on top - the same trick used to fake a uniform
+   outline on any non-rectangular CSS shape. */
+.hex-cell {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+}
+
+.hex-cell-border,
+.hex-cell-fill {
+  position: absolute;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.hex-cell-border {
+  inset: 0;
+  background: var(--border);
+}
+
+.hex-cell-fill {
+  inset: 6%;
+  background: var(--square-light);
+}
+
+.hex-cell.last-move .hex-cell-fill {
+  background: var(--square-dark);
+}
+
+.hex-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin: 0.5rem auto 0;
+  max-width: 620px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.hex-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.hex-stone {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 56%;
+  height: 56%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.hex-stone-r {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.hex-stone-b {
+  background: var(--square-light);
+  border: 2px solid var(--border);
+}
+
+/* Small icons for the color-choice picker and board placeholder,
+   matching the board's own stone styling. */
+.hex-icon-piece {
+  display: inline-flex;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.hex-icon-piece-r {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.hex-icon-piece-b {
+  background: var(--square-light);
+  border: 2px solid var(--border);
+}
