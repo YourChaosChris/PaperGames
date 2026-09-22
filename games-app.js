@@ -57,7 +57,7 @@
     }
 
     GamesRender.updateFavoriteButtons(grid);
-    if (window.I18n) I18n.apply();
+    GamesRender.translateInto(grid);
   }
 
   function init() {
