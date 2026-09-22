@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slitherlink Rules | PaperGames</title>
+  <meta name="description" content="Complete Slitherlink rules explained clearly, with a worked example of forced-edge deductions. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/slitherlink-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/slitherlink-rules.html">
+  <meta property="og:title" content="Slitherlink Rules | PaperGames">
+  <meta property="og:description" content="Complete Slitherlink rules explained clearly, with a worked example of forced-edge deductions. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Slitherlink Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Slitherlink rules explained clearly, with a worked example of forced-edge deductions. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="slitherlink_rules_title">Slitherlink Rules</h1>
+      <p data-i18n="slitherlink_rules_intro">A quick reference for how PaperGames plays Slitherlink (also known as "Fences" or "Loop the Loop") - useful if you're rusty, or learning. Unlike most puzzles in this collection, nothing here is filled in with numbers or letters: the whole puzzle is drawn with lines.</p>
+
+      <h2 data-i18n="slitherlink_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="slitherlink-icon" aria-hidden="true"></span> <span data-i18n="slitherlink_term_board">The grid</span></dt>
+        <dd data-i18n="slitherlink_rules_board">The board is a grid of dots. Between every two dots that are next to each other, horizontally or vertically, there's a potential edge that can be drawn in or left blank. Some of the squares formed by four dots contain a small number; squares with no number place no restriction at all.</dd>
+        <dt data-i18n="slitherlink_term_clue">Reading a clue</dt>
+        <dd data-i18n="slitherlink_rules_clue">A number inside a square (0, 1, 2 or 3) says exactly how many of that square's four surrounding edges must be drawn in the finished puzzle - no more, no less. A 0 means none of its four edges are ever drawn; a 3 means exactly three of the four are.</dd>
+        <dt data-i18n="slitherlink_term_goal">The goal</dt>
+        <dd data-i18n="slitherlink_rules_goal">Draw edges so that they form exactly one continuous closed loop that never branches and never crosses itself, while satisfying every numbered square's count at the same time. The loop can pass through as much or as little of the grid as it needs to, and doesn't have to enclose any particular shape - it's the numbers, not a target picture, that pin down where it has to run.</dd>
+        <dt data-i18n="slitherlink_term_input">Drawing edges</dt>
+        <dd data-i18n="slitherlink_rules_input">Tap an edge to draw it in; tap again to mark it with a dashed cross, a purely optional note-to-self meaning "definitely not part of the loop" (handy for edges you've ruled out but don't want to forget); tap a third time to clear it back to blank. A square whose count is already broken - too many edges drawn around it, or too few blank ones left to ever reach its number - gets a dashed ring around it as a hint that something nearby needs to change, and a dot with three or more lines already meeting at it (never allowed in a single loop) is shown hollow.</dd>
+        <dt data-i18n="slitherlink_term_difficulty">Difficulty</dt>
+        <dd data-i18n="slitherlink_rules_difficulty">Easy, Medium and Hard puzzles use progressively larger grids (5x5, 7x7 and 10x10 squares), which means a longer loop with more numbers to juggle in view at once - but the same rules throughout, and every puzzle this collection generates is checked ahead of time to have exactly one valid loop, so there's always a way to reach the solution through pure deduction, with no guessing required.</dd>
+      </dl>
+
+      <h2 data-i18n="slitherlink_rules_example_title">A worked example</h2>
+      <dl class="rule-list">
+        <dt data-i18n="slitherlink_term_example1">A 0 next to anything</dt>
+        <dd data-i18n="slitherlink_rules_example_p1">A square clued 0 immediately draws four blank edges around itself - none of its sides can ever be part of the loop. That alone can ripple outward: if a neighboring square is clued 3, and it shares an edge with that 0-square, the shared edge is already known to be blank (since it belongs to the 0), which means all three of the 3-square's *other* edges must be drawn instead, since blank + 3 drawn is the only way left to reach exactly three.</dd>
+        <dt data-i18n="slitherlink_term_example2">Following a corner</dt>
+        <dd data-i18n="slitherlink_rules_example_p2">A dot where exactly two drawn edges already meet can take no more - every other potential edge touching that same dot must be blank, since a valid loop never branches (three or more lines meeting at one dot) and never dead-ends (exactly one line meeting at a dot, with nowhere for the loop to continue). Chaining that single rule, dot by dot, corner by corner, around the forced edges a handful of clued squares create is often enough to pin down a whole region of the board before a single guess is ever needed - and, further out, once every clue is satisfied and the drawn edges already form one closed shape, every other edge on the board is forced blank as well, since a second loop is never allowed.</dd>
+      </dl>
+
+      <h2 data-i18n="slitherlink_rules_end_title">Finishing a puzzle</h2>
+      <dl class="rule-list">
+        <dt data-i18n="slitherlink_term_win">Solved</dt>
+        <dd data-i18n="slitherlink_rules_win">The puzzle is solved the moment the drawn edges form exactly one closed loop - no loose ends, no branches, no second separate loop anywhere on the board - and every numbered square's count matches exactly. The game recognizes this the instant it happens, with no separate "check" step needed.</dd>
+      </dl>
+
+      <p class="about-back"><a href="slitherlink.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>
