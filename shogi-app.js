@@ -121,11 +121,18 @@ function setGameResultShogi(text) {
   }
 }
 
+function resultTitleShogi(winner) {
+  if (AppStateShogi.mode === "offline-ai") {
+    return winner === AppStateShogi.humanColor ? "You win!" : "You lose";
+  }
+  return colorNameShogi(winner) + " wins";
+}
+
 function announceGameResultShogi(resultCode, message) {
   setGameResultShogi(message);
   setStatusShogi("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -258,7 +265,7 @@ function initShogiApp() {
       const loser = AppStateShogi.turn;
       const winner = ShogiCore.otherColor(loser);
       AppStateShogi.gameOver = true;
-      announceGameResultShogi(colorNameShogi(winner) + " wins", colorNameShogi(winner) + " wins by resignation.");
+      announceGameResultShogi(resultTitleShogi(winner), colorNameShogi(winner) + " wins by resignation.");
       recordShogiStatsIfVsAi("loss");
       updateGameLabelsShogi();
     });
@@ -441,7 +448,7 @@ function finishShogiTurn(mover) {
   if (end.status === "checkmate") {
     AppStateShogi.gameOver = true;
     const winnerName = colorNameShogi(end.winner);
-    announceGameResultShogi(winnerName + " wins", winnerName + " wins by checkmate!");
+    announceGameResultShogi(resultTitleShogi(end.winner), winnerName + " wins by checkmate!");
     recordShogiStatsIfVsAi(end.winner === AppStateShogi.humanColor ? "win" : "loss");
     updateGameLabelsShogi();
     return;

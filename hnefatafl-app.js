@@ -69,11 +69,18 @@ function setGameResultHnefatafl(text) {
   }
 }
 
+function resultTitleHnefatafl(winner) {
+  if (AppStateHnefatafl.mode === "offline-ai") {
+    return winner === AppStateHnefatafl.humanSide ? "You win!" : "You lose";
+  }
+  return sideNameHnefatafl(winner) + " win";
+}
+
 function announceGameResultHnefatafl(resultCode, message) {
   setGameResultHnefatafl(message);
   setStatusHnefatafl("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -202,7 +209,7 @@ function initHnefataflApp() {
       const loser = AppStateHnefatafl.turn;
       const winner = HnefataflCore.otherPlayer(loser);
       AppStateHnefatafl.gameOver = true;
-      announceGameResultHnefatafl(sideNameHnefatafl(winner) + " win", sideNameHnefatafl(winner) + " win by resignation.");
+      announceGameResultHnefatafl(resultTitleHnefatafl(winner), sideNameHnefatafl(winner) + " win by resignation.");
       recordHnefataflStatsIfVsAi("loss");
       updateGameLabelsHnefatafl();
     });
@@ -311,7 +318,7 @@ function applyHnefataflMove(move) {
       "no-moves": " - the other side has no legal move!"
     };
     const reason = reasons[AppStateHnefatafl.state.winReason] || ".";
-    announceGameResultHnefatafl(winnerName + " win", winnerName + " win" + reason);
+    announceGameResultHnefatafl(resultTitleHnefatafl(AppStateHnefatafl.state.winner), winnerName + " win" + reason);
     recordHnefataflStatsIfVsAi(AppStateHnefatafl.state.winner === AppStateHnefatafl.humanSide ? "win" : "loss");
     updateGameLabelsHnefatafl();
     return;

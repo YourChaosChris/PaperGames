@@ -83,11 +83,18 @@ function setGameResultQuoridor(text) {
   }
 }
 
+function resultTitleQuoridor(winner) {
+  if (AppStateQuoridor.mode === "offline-ai") {
+    return winner === AppStateQuoridor.humanSide ? "You win!" : "You lose";
+  }
+  return sideNameQuoridor(winner) + " wins";
+}
+
 function announceGameResultQuoridor(resultCode, message) {
   setGameResultQuoridor(message);
   setStatusQuoridor("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -232,7 +239,7 @@ function initQuoridorApp() {
       const loser = AppStateQuoridor.turn;
       const winner = QuoridorCore.otherPlayer(loser);
       AppStateQuoridor.gameOver = true;
-      announceGameResultQuoridor(sideNameQuoridor(winner) + " wins", sideNameQuoridor(winner) + " wins by resignation.");
+      announceGameResultQuoridor(resultTitleQuoridor(winner), sideNameQuoridor(winner) + " wins by resignation.");
       recordQuoridorStatsIfVsAi("loss");
       updateGameLabelsQuoridor();
     });
@@ -398,7 +405,7 @@ function applyQuoridorMove(move) {
   if (AppStateQuoridor.state.gameOver) {
     AppStateQuoridor.gameOver = true;
     const winnerName = sideNameQuoridor(AppStateQuoridor.state.winner);
-    announceGameResultQuoridor(winnerName + " wins", winnerName + " wins by reaching the far side!");
+    announceGameResultQuoridor(resultTitleQuoridor(AppStateQuoridor.state.winner), winnerName + " wins by reaching the far side!");
     recordQuoridorStatsIfVsAi(AppStateQuoridor.state.winner === AppStateQuoridor.humanSide ? "win" : "loss");
     updateGameLabelsQuoridor();
     return;

@@ -60,11 +60,21 @@ function setGameResultMancala(text) {
   }
 }
 
+// winner is null/undefined for a draw. Kept short for the modal title even
+// where the message body goes into more detail (score, resignation, etc).
+function resultTitleMancala(winner) {
+  if (!winner) return "Draw";
+  if (AppStateMancala.mode === "offline-ai") {
+    return winner === AppStateMancala.humanSide ? "You win!" : "You lose";
+  }
+  return sideNameMancala(winner) + " wins";
+}
+
 function announceGameResultMancala(title, message) {
   setGameResultMancala(message);
   setStatusMancala("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(title, message);
   }
 }
 
@@ -189,7 +199,7 @@ function initMancalaApp() {
       const loser = AppStateMancala.turn;
       const winner = MancalaCore.otherPlayer(loser);
       AppStateMancala.gameOver = true;
-      announceGameResultMancala(sideNameMancala(winner) + " wins", sideNameMancala(winner) + " wins by resignation.");
+      announceGameResultMancala(resultTitleMancala(winner), sideNameMancala(winner) + " wins by resignation.");
       recordMancalaStatsIfVsAi("loss");
       updateGameLabelsMancala();
     });
@@ -258,7 +268,7 @@ function applyMancalaMove(pit) {
     AppStateMancala.gameOver = true;
     const winner = MancalaCore.getWinner(AppStateMancala.state);
     const message = winner ? sideNameMancala(winner) + " wins!" : "It's a draw!";
-    announceGameResultMancala(message, message);
+    announceGameResultMancala(resultTitleMancala(winner), message);
     if (winner) {
       recordMancalaStatsIfVsAi(winner === AppStateMancala.humanSide ? "win" : "loss");
     } else {

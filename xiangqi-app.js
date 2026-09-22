@@ -169,11 +169,18 @@ function setGameResultXq(text) {
   }
 }
 
+function resultTitleXq(winner) {
+  if (AppStateXiangqi.mode === "offline-ai") {
+    return winner === AppStateXiangqi.humanColor ? "You win!" : "You lose";
+  }
+  return colorNameXq(winner) + " wins";
+}
+
 function announceGameResultXq(resultCode, message) {
   setGameResultXq(message);
   setStatusXq("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -335,7 +342,7 @@ function initXiangqiApp() {
       const loser = AppStateXiangqi.turn;
       const winner = XiangqiCore.otherColor(loser);
       AppStateXiangqi.gameOver = true;
-      announceGameResultXq(colorNameXq(winner) + " wins", colorNameXq(winner) + " wins by resignation.");
+      announceGameResultXq(resultTitleXq(winner), colorNameXq(winner) + " wins by resignation.");
       recordXiangqiStatsIfVsAi("loss");
       updateGameLabelsXq();
     });
@@ -463,7 +470,7 @@ function applyXiangqiMove(move) {
     const winnerName = colorNameXq(end.winner);
     const reason = end.status === "checkmate" ? "checkmate" : "no legal moves";
     AppStateXiangqi.gameOver = true;
-    announceGameResultXq(winnerName + " wins", winnerName + " wins (" + reason + ").");
+    announceGameResultXq(resultTitleXq(end.winner), winnerName + " wins (" + reason + ").");
     recordXiangqiStatsIfVsAi(end.winner === AppStateXiangqi.humanColor ? "win" : "loss");
     updateGameLabelsXq();
     return;

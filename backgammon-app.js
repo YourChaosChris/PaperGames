@@ -107,11 +107,18 @@ function setGameResultBg(text) {
   }
 }
 
+function resultTitleBg(winner) {
+  if (AppStateBackgammon.mode === "offline-ai") {
+    return winner === AppStateBackgammon.humanColor ? "You win!" : "You lose";
+  }
+  return colorNameBg(winner) + " wins";
+}
+
 function announceGameResultBg(resultCode, message) {
   setGameResultBg(message);
   setStatusBg("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -257,7 +264,7 @@ function initBackgammonApp() {
       const winner = BackgammonCore.otherColor(loser);
       AppStateBackgammon.gameOver = true;
       const points = AppStateBackgammon.cubeValue;
-      announceGameResultBg(colorNameBg(winner) + " wins",
+      announceGameResultBg(resultTitleBg(winner),
         colorNameBg(winner) + " wins by resignation - " + points + " point" + (points === 1 ? "" : "s") + ".");
       recordBackgammonStatsIfVsAi("loss");
       updateGameLabelsBg();
@@ -351,7 +358,7 @@ function offerDoubleBg() {
   function decline() {
     AppStateBackgammon.gameOver = true;
     const points = AppStateBackgammon.cubeValue;
-    announceGameResultBg(colorNameBg(offerer) + " wins",
+    announceGameResultBg(resultTitleBg(offerer),
       colorNameBg(opponent) + " declines the double. " + colorNameBg(offerer) + " wins " + points + " point" + (points === 1 ? "" : "s") + ".");
     recordBackgammonStatsIfVsAi(offerer === AppStateBackgammon.humanColor ? "win" : "loss");
     updateGameLabelsBg();
@@ -479,7 +486,7 @@ function applyBackgammonMove(move, die) {
     const kind = mult === 3 ? "backgammon" : mult === 2 ? "gammon" : "single game";
     const points = mult * AppStateBackgammon.cubeValue;
     const cubeNote = AppStateBackgammon.cubeValue > 1 ? ", cube x" + AppStateBackgammon.cubeValue : "";
-    announceGameResultBg(colorNameBg(mover) + " wins", colorNameBg(mover) + " wins (" + kind + cubeNote + ") - " + points + " point" + (points === 1 ? "" : "s") + "!");
+    announceGameResultBg(resultTitleBg(mover), colorNameBg(mover) + " wins (" + kind + cubeNote + ") - " + points + " point" + (points === 1 ? "" : "s") + "!");
     recordBackgammonStatsIfVsAi(mover === AppStateBackgammon.humanColor ? "win" : "loss");
     updateGameLabelsBg();
     return;

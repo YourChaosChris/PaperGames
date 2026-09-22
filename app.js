@@ -170,6 +170,22 @@ function setGameResult(text) {
 // Sets the compact result badge (#game-result) and the status line, and
 // shows a centered popup with the same description - so the outcome is
 // impossible to miss regardless of mode (offline, vs-computer, or online).
+// Builds a short, prominent modal title from the chess notation result code
+// ("1-0", "0-1", "½-½"). That code alone would be a confusing title for a
+// casual player, so it's translated using the same you/computer/color
+// distinction the message text already uses for each mode.
+function chessResultTitle(resultCode) {
+  if (resultCode === "½-½") return "Draw";
+  const winnerColor = resultCode === "1-0" ? "white" : "black";
+  if (AppState.mode === "offline-ai") {
+    return winnerColor === AppState.humanColor ? "You win!" : "The computer wins";
+  }
+  if (AppState.mode === "online") {
+    return winnerColor === AppState.viewColor ? "You win!" : "You lose";
+  }
+  return (winnerColor === "white" ? "White" : "Black") + " wins";
+}
+
 function announceGameResult(resultCode, message) {
   AppState.gameOver = true;
   if (AppState.mode === "offline" || AppState.mode === "offline-ai") {
@@ -178,7 +194,7 @@ function announceGameResult(resultCode, message) {
   setGameResult(message);
   setStatus("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(chessResultTitle(resultCode), message);
   }
 }
 

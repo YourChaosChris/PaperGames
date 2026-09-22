@@ -72,11 +72,18 @@ function setGameResultUr(text) {
   }
 }
 
+function resultTitleUr(winner) {
+  if (AppStateUr.mode === "offline-ai") {
+    return winner === AppStateUr.humanColor ? "You win!" : "You lose";
+  }
+  return colorNameUr(winner) + " wins";
+}
+
 function announceGameResultUr(resultCode, message) {
   setGameResultUr(message);
   setStatusUr("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -234,7 +241,7 @@ function initUrApp() {
       const loser = AppStateUr.turn;
       const winner = UrCore.otherColor(loser);
       AppStateUr.gameOver = true;
-      announceGameResultUr(colorNameUr(winner) + " wins", colorNameUr(winner) + " wins by resignation.");
+      announceGameResultUr(resultTitleUr(winner), colorNameUr(winner) + " wins by resignation.");
       recordUrStatsIfVsAi("loss");
       updateGameLabelsUr();
     });
@@ -368,7 +375,7 @@ function applyUrMove(move) {
   if (UrCore.hasWon(AppStateUr.state, mover)) {
     AppStateUr.gameOver = true;
     const winnerName = colorNameUr(mover);
-    announceGameResultUr(winnerName + " wins", winnerName + " wins - all pieces home!");
+    announceGameResultUr(resultTitleUr(mover), winnerName + " wins - all pieces home!");
     recordUrStatsIfVsAi(mover === AppStateUr.humanColor ? "win" : "loss");
     updateGameLabelsUr();
     return;

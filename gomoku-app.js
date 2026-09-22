@@ -62,11 +62,18 @@ function setGameResultGomoku(text) {
   }
 }
 
+function resultTitleGomoku(winner) {
+  if (AppStateGomoku.mode === "offline-ai") {
+    return winner === AppStateGomoku.humanColor ? "You win!" : "You lose";
+  }
+  return colorNameGomoku(winner) + " wins";
+}
+
 function announceGameResultGomoku(resultCode, message) {
   setGameResultGomoku(message);
   setStatusGomoku("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -193,7 +200,7 @@ function initGomokuApp() {
       const loser = AppStateGomoku.turn;
       const winner = GomokuCore.otherColor(loser);
       AppStateGomoku.gameOver = true;
-      announceGameResultGomoku(colorNameGomoku(winner) + " wins", colorNameGomoku(winner) + " wins by resignation.");
+      announceGameResultGomoku(resultTitleGomoku(winner), colorNameGomoku(winner) + " wins by resignation.");
       recordGomokuStatsIfVsAi("loss");
       updateGameLabelsGomoku();
     });
@@ -263,7 +270,7 @@ function applyGomokuMove(r, c) {
   if (winner) {
     AppStateGomoku.gameOver = true;
     const winnerName = colorNameGomoku(winner);
-    announceGameResultGomoku(winnerName + " wins", winnerName + " wins - five in a row!");
+    announceGameResultGomoku(resultTitleGomoku(winner), winnerName + " wins - five in a row!");
     recordGomokuStatsIfVsAi(winner === AppStateGomoku.humanColor ? "win" : "loss");
     updateGameLabelsGomoku();
     return;

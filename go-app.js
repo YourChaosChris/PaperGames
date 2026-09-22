@@ -72,11 +72,22 @@ function setGameResultGo(text) {
 // Sets the compact result badge (#game-result) and the status line, and
 // shows a centered popup with the same description - so the outcome is
 // impossible to miss regardless of mode (2-player or vs-computer).
+// Go's own resultCode is scoring notation ("B+7", "W+R") - clear to a Go
+// player but not a useful modal title at a glance, so the title is built
+// from the winner color plus the same you/computer distinction the rest of
+// the app uses instead.
+function resultTitleGo(winner) {
+  if (AppStateGo.mode === "offline-ai") {
+    return winner === AppStateGo.humanColor ? "You win!" : "The computer wins";
+  }
+  return colorNameGo(winner) + " wins";
+}
+
 function announceGameResultGo(resultCode, message) {
   setGameResultGo(message);
   setStatusGo("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -107,8 +118,7 @@ function endGameByScoreGo() {
   AppStateGo.gameOver = true;
   const score = GoCore.scoreArea(AppStateGo.board, AppStateGo.size, GoCore.DEFAULT_KOMI);
   const margin = Math.abs(score.blackScore - score.whiteScore);
-  const winnerLetter = score.winner === "b" ? "B" : "W";
-  announceGameResultGo(winnerLetter + "+" + margin,
+  announceGameResultGo(resultTitleGo(score.winner),
     "Both passed. " + colorNameGo(score.winner) + " wins by " + margin +
     " (Black " + score.blackScore + " – White " + score.whiteScore + ").");
   recordGoStatsIfVsAi(score.winner === AppStateGo.humanColor ? "win" : "loss");
@@ -264,7 +274,7 @@ function initGoApp() {
       const loser = AppStateGo.turn;
       const winner = loser === "b" ? "w" : "b";
       AppStateGo.gameOver = true;
-      announceGameResultGo((winner === "b" ? "B" : "W") + "+R", colorNameGo(winner) + " wins by resignation.");
+      announceGameResultGo(resultTitleGo(winner), colorNameGo(winner) + " wins by resignation.");
       recordGoStatsIfVsAi("loss");
       updateGameLabelsGo();
     });
