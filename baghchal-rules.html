@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bagh-Chal Rules | PaperGames</title>
+  <meta name="description" content="Complete Bagh-Chal (Tigers and Goats) rules explained clearly, with a worked example of a tiger's capturing jump. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/baghchal-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/baghchal-rules.html">
+  <meta property="og:title" content="Bagh-Chal Rules | PaperGames">
+  <meta property="og:description" content="Complete Bagh-Chal (Tigers and Goats) rules explained clearly, with a worked example of a tiger's capturing jump. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bagh-Chal Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Bagh-Chal (Tigers and Goats) rules explained clearly, with a worked example of a tiger's capturing jump. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="baghchal_rules_title">Bagh-Chal Rules</h1>
+      <p data-i18n="baghchal_rules_intro">A quick reference for how PaperGames plays Bagh-Chal ("Tigers and Goats") - useful if you're rusty, or learning.</p>
+
+      <h2 data-i18n="baghchal_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="baghchal-icon-disc baghchal-icon-disc-tiger" aria-hidden="true"></span> <span data-i18n="baghchal_term_board">The board</span></dt>
+        <dd data-i18n="baghchal_rules_board">25 points in a 5x5 grid, connected by horizontal, vertical, and some diagonal lines - the same alquerque-style lattice as Fanorona's board, just square: the four corners and the center are full 8-direction hubs, and diagonals fan out from there, giving the board its distinctive lattice of triangles. Four tigers (bagh) start on the four corners. The other 21 points start empty - the 20 goats (bakhera) aren't on the board yet.</dd>
+        <dt data-i18n="baghchal_term_placement">Placement phase</dt>
+        <dd data-i18n="baghchal_rules_placement">Goats move first each turn: the goat player places one new goat on any empty point. Then the tiger player moves (see below) - tigers can already move and capture from turn one, even while goats are still being placed. This continues until all 20 goats are on the board.</dd>
+        <dt data-i18n="baghchal_term_movement">Movement phase</dt>
+        <dd data-i18n="baghchal_rules_movement">Once every goat has been placed, both sides just move: each turn, slide one of your own pieces one step along a connecting line to an adjacent empty point.</dd>
+        <dt data-i18n="baghchal_term_capture">Capturing</dt>
+        <dd data-i18n="baghchal_rules_capture">A tiger next to a goat, in a straight line along one of the board's real connections, may jump over it to the empty point immediately beyond, removing the goat. Capturing here is optional, not forced: a tiger with a capture available may play a quiet move instead if it prefers to. (Some traditional rule sets make capturing mandatory whenever possible - this is a documented, deliberate choice for the more common modern ruleset, not an oversight.) Goats never capture.</dd>
+      </dl>
+
+      <h2 data-i18n="baghchal_rules_example_title">Worked example: a tiger's capture</h2>
+      <p data-i18n="baghchal_rules_example_intro">In the mini-diagram below, ▲ is a tiger, ○ is a goat, and the dashed circle is the empty point the tiger is about to jump to.</p>
+      <div class="fanorona-example-row">
+        <figure class="fanorona-example-figure">
+          <svg viewBox="0 0 220 90" width="220" height="90" role="img" aria-label="Tiger capture example">
+            <defs>
+              <marker id="baghchalArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#000"/>
+              </marker>
+            </defs>
+            <line x1="20" y1="45" x2="180" y2="45" stroke="#000" stroke-width="2"/>
+            <path d="M24,18 L136,18" stroke="#000" stroke-width="2" marker-end="url(#baghchalArrow)"/>
+            <polygon points="20,53 12,37 28,37" fill="#b5651d" stroke="#000" stroke-width="2"/>
+            <circle cx="100" cy="45" r="11" fill="none" stroke="#000" stroke-width="2"/>
+            <circle cx="140" cy="45" r="12" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="3,3"/>
+            <text x="20" y="78" text-anchor="middle" font-size="13">A</text>
+            <text x="100" y="78" text-anchor="middle" font-size="13">B</text>
+            <text x="140" y="78" text-anchor="middle" font-size="13">C</text>
+          </svg>
+          <figcaption data-i18n="baghchal_rules_example_caption">The tiger at A is next to a goat at B, and the point C directly beyond it (in the same direction, along a real board line) is empty. The tiger may jump A→C, removing the goat at B. If C were occupied, or A-B-C weren't a straight line along an actual board connection, the jump would not be legal.</figcaption>
+        </figure>
+      </div>
+
+      <h2 data-i18n="baghchal_rules_end_title">How a game ends</h2>
+      <dl class="rule-list">
+        <dt data-i18n="baghchal_term_tiger_win">Tigers win</dt>
+        <dd data-i18n="baghchal_rules_tiger_win">By capturing 5 goats in total - the standard threshold (some regional variants use a different number, but 5 is the most common).</dd>
+        <dt data-i18n="baghchal_term_goat_win">Goats win</dt>
+        <dd data-i18n="baghchal_rules_goat_win">By trapping every one of the 4 tigers so that the tiger to move has no legal move at all - no quiet move and no capture, for any of its tigers.</dd>
+        <dt data-i18n="baghchal_term_resignation">Resignation</dt>
+        <dd data-i18n="baghchal_rules_resignation">A player can resign at any time, ending the game immediately in the opponent's favor.</dd>
+      </dl>
+
+      <p class="about-back"><a href="baghchal.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>

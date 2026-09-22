@@ -54,7 +54,10 @@
     ["klondike", "game_klondike"],
     ["amazons", "game_amazons"],
     ["kakuro", "game_kakuro"],
-    ["fanorona", "game_fanorona"]
+    ["fanorona", "game_fanorona"],
+    ["sternhalma", "game_sternhalma"],
+    ["spidersolitaire", "game_spidersolitaire"],
+    ["baghchal", "game_baghchal"]
   ];
 
   var GAME_SLUGS = {};

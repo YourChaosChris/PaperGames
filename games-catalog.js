@@ -148,6 +148,16 @@ const GAMES_CATALOG = [
     icon: "<span class=\"halma-icon-piece halma-icon-piece-p1\" aria-hidden=\"true\"></span>"
   },
   {
+    slug: "sternhalma",
+    category: "strategy",
+    nameKey: "game_sternhalma",
+    nameText: "Chinese Checkers",
+    descKey: "home_sternhalma_desc",
+    descText: "Race all ten of your marbles across the star-shaped board into the point opposite yours.",
+    popular: false,
+    icon: "<span class=\"sternhalma-icon-piece sternhalma-icon-piece-p1\" aria-hidden=\"true\"></span>"
+  },
+  {
     slug: "dotsandboxes",
     category: "strategy",
     nameKey: "game_dotsandboxes",
@@ -318,6 +328,16 @@ const GAMES_CATALOG = [
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 100 100\"><g><rect x=\"16\" y=\"24\" width=\"34\" height=\"48\" rx=\"4\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"3.5\" transform=\"rotate(-14 50 60)\"/><g clip-path=\"url(#klondike-back-clip)\" transform=\"rotate(-14 50 60)\"><line x1=\"10\" y1=\"30\" x2=\"56\" y2=\"76\" stroke=\"#000\" stroke-width=\"3\"/><line x1=\"10\" y1=\"42\" x2=\"44\" y2=\"76\" stroke=\"#000\" stroke-width=\"3\"/><line x1=\"10\" y1=\"54\" x2=\"32\" y2=\"76\" stroke=\"#000\" stroke-width=\"3\"/><line x1=\"22\" y1=\"24\" x2=\"56\" y2=\"58\" stroke=\"#000\" stroke-width=\"3\"/><line x1=\"34\" y1=\"24\" x2=\"56\" y2=\"46\" stroke=\"#000\" stroke-width=\"3\"/></g></g><defs><clipPath id=\"klondike-back-clip\"><rect x=\"16\" y=\"24\" width=\"34\" height=\"48\" rx=\"4\"/></clipPath></defs><g transform=\"rotate(14 50 60)\"><rect x=\"50\" y=\"24\" width=\"34\" height=\"48\" rx=\"4\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"3.5\"/><path d=\"M67 34c-5 5-9 9-9 14a9 9 0 0 0 18 0c0-5-4-9-9-14z\" fill=\"#000\"/></g><rect x=\"33\" y=\"20\" width=\"34\" height=\"48\" rx=\"4\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"3.5\"/><path d=\"M50 30c-6 6-11 11-11 17a11 11 0 0 0 22 0c0-6-5-11-11-17z\" fill=\"none\" stroke=\"#000\" stroke-width=\"3\"/><rect x=\"47\" y=\"44\" width=\"6\" height=\"10\" fill=\"#000\"/></svg></span>"
   },
   {
+    slug: "spidersolitaire",
+    category: "puzzles",
+    nameKey: "game_spidersolitaire",
+    nameText: "Spider Solitaire",
+    descKey: "home_spidersolitaire_desc",
+    descText: "Two decks, ten tableau columns, no foundations - build same-suit King-to-Ace runs to clear them. Choose 1, 2, or 4 suits for an easier or harder deal.",
+    popular: false,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 100 100\"><ellipse cx=\"50\" cy=\"58\" rx=\"18\" ry=\"14\" fill=\"#000\"/><circle cx=\"50\" cy=\"36\" r=\"10\" fill=\"#000\"/><g stroke=\"#000\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"><path d=\"M35 46 L10 30\"/><path d=\"M33 56 L6 52\"/><path d=\"M35 66 L10 80\"/><path d=\"M40 74 L25 94\"/><path d=\"M65 46 L90 30\"/><path d=\"M67 56 L94 52\"/><path d=\"M65 66 L90 80\"/><path d=\"M60 74 L75 94\"/></g></svg></span>"
+  },
+  {
     slug: "kakuro",
     category: "puzzles",
     nameKey: "game_kakuro",
@@ -336,5 +356,15 @@ const GAMES_CATALOG = [
     descText: "Madagascar's national board game: slide pieces along a 5x9 grid of lines to capture by approach or withdrawal. Local 2-player or vs. the built-in engine.",
     popular: false,
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><line x1=\"12\" y1=\"20\" x2=\"88\" y2=\"20\"/><line x1=\"12\" y1=\"50\" x2=\"88\" y2=\"50\"/><line x1=\"12\" y1=\"80\" x2=\"88\" y2=\"80\"/><line x1=\"12\" y1=\"20\" x2=\"12\" y2=\"80\"/><line x1=\"31\" y1=\"20\" x2=\"31\" y2=\"80\"/><line x1=\"50\" y1=\"20\" x2=\"50\" y2=\"80\"/><line x1=\"69\" y1=\"20\" x2=\"69\" y2=\"80\"/><line x1=\"88\" y1=\"20\" x2=\"88\" y2=\"80\"/><line x1=\"12\" y1=\"20\" x2=\"31\" y2=\"50\"/><line x1=\"50\" y1=\"20\" x2=\"69\" y2=\"50\"/><line x1=\"50\" y1=\"20\" x2=\"31\" y2=\"50\"/><line x1=\"88\" y1=\"20\" x2=\"69\" y2=\"50\"/><line x1=\"31\" y1=\"50\" x2=\"50\" y2=\"80\"/><line x1=\"31\" y1=\"50\" x2=\"12\" y2=\"80\"/><line x1=\"69\" y1=\"50\" x2=\"88\" y2=\"80\"/><line x1=\"69\" y1=\"50\" x2=\"50\" y2=\"80\"/></g><g fill=\"#000\"><circle cx=\"12\" cy=\"20\" r=\"5\"/><circle cx=\"31\" cy=\"20\" r=\"5\"/><circle cx=\"50\" cy=\"20\" r=\"5\"/><circle cx=\"69\" cy=\"20\" r=\"5\"/><circle cx=\"88\" cy=\"20\" r=\"5\"/><circle cx=\"12\" cy=\"50\" r=\"5\"/><circle cx=\"31\" cy=\"50\" r=\"5\"/><circle cx=\"50\" cy=\"50\" r=\"5\"/><circle cx=\"69\" cy=\"50\" r=\"5\"/><circle cx=\"88\" cy=\"50\" r=\"5\"/><circle cx=\"12\" cy=\"80\" r=\"5\"/><circle cx=\"31\" cy=\"80\" r=\"5\"/><circle cx=\"50\" cy=\"80\" r=\"5\"/><circle cx=\"69\" cy=\"80\" r=\"5\"/><circle cx=\"88\" cy=\"80\" r=\"5\"/></g></svg></span>"
+  },
+  {
+    slug: "baghchal",
+    category: "strategy",
+    nameKey: "game_baghchal",
+    nameText: "Bagh-Chal",
+    descKey: "home_baghchal_desc",
+    descText: "Nepal's traditional hunt game: 4 tigers vs. 20 goats on an alquerque-style 5x5 board of lines. Local 2-player or vs. the built-in engine, playing either side.",
+    popular: false,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><line x1=\"10\" y1=\"10\" x2=\"90\" y2=\"10\"/><line x1=\"10\" y1=\"50\" x2=\"90\" y2=\"50\"/><line x1=\"10\" y1=\"90\" x2=\"90\" y2=\"90\"/><line x1=\"10\" y1=\"10\" x2=\"10\" y2=\"90\"/><line x1=\"50\" y1=\"10\" x2=\"50\" y2=\"90\"/><line x1=\"90\" y1=\"10\" x2=\"90\" y2=\"90\"/><line x1=\"10\" y1=\"10\" x2=\"90\" y2=\"90\"/><line x1=\"90\" y1=\"10\" x2=\"10\" y2=\"90\"/></g><polygon points=\"10,17 3,3 17,3\" fill=\"#b5651d\" stroke=\"#000\" stroke-width=\"2\"/><polygon points=\"90,17 83,3 97,3\" fill=\"#b5651d\" stroke=\"#000\" stroke-width=\"2\"/><polygon points=\"10,97 3,83 17,83\" fill=\"#b5651d\" stroke=\"#000\" stroke-width=\"2\"/><polygon points=\"90,97 83,83 97,83\" fill=\"#b5651d\" stroke=\"#000\" stroke-width=\"2\"/><circle cx=\"50\" cy=\"50\" r=\"7\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"30\" cy=\"30\" r=\"6\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"70\" r=\"6\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2\"/></svg></span>"
   },
 ];
