@@ -60,7 +60,7 @@ project) is released under the [MIT License](LICENSE).
 ### Third-party assets
 
 A few visual assets are third-party work, used here under their own
-licenses (not the MIT grant above):
+licenses (not the MIT grant above) — see [NOTICE](NOTICE):
 
 - Chess piece set ("cburnett") by Colin M.L. Burnett, used under the BSD
   license (`pieces.js`).
