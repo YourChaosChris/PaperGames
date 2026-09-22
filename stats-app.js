@@ -30,7 +30,8 @@ const STATS_GAME_NAME_KEY = {
   halma: "game_halma",
   lightsout: "game_lightsout",
   mastermind: "game_mastermind",
-  dotsandboxes: "game_dotsandboxes"
+  dotsandboxes: "game_dotsandboxes",
+  amazons: "game_amazons"
 };
 
 function gameDisplayName(game) {
