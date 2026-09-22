@@ -3962,6 +3962,7 @@ margin-top: 0.6rem;
   border: 3px solid var(--border);
   background: var(--square-light);
   box-sizing: border-box;
+  overflow: hidden;
   margin: 0 auto;
 }
 
@@ -4157,10 +4158,13 @@ max-width: 900px;
   flex-direction: column;
 }
 
+/* Height is set in JS from the measured column width (see
+   ensureFreeCellCardAspectRatio in freecell-app.js) rather than CSS
+   `aspect-ratio`, which some E-Ink browsers (Tolino confirmed) don't
+   support reliably. */
 .freecell-card {
   position: relative;
   width: 100%;
-  aspect-ratio: 5 / 3;
   border: var(--border-width) solid var(--border);
   border-radius: 4px;
   background: #fff;
@@ -4288,10 +4292,13 @@ max-width: 900px;
   flex-direction: column;
 }
 
+/* Height is set in JS from the measured column width (see
+   ensureKlondikeCardAspectRatio in klondike-app.js) rather than CSS
+   `aspect-ratio`, which some E-Ink browsers (Tolino confirmed) don't
+   support reliably. */
 .klondike-card {
   position: relative;
   width: 100%;
-  aspect-ratio: 5 / 3;
   border: var(--border-width) solid var(--border);
   border-radius: 4px;
   background: #fff;
@@ -4316,7 +4323,6 @@ max-width: 900px;
 .klondike-empty-slot {
   display: block;
   width: 100%;
-  aspect-ratio: 5 / 3;
   border: var(--border-width) dashed var(--muted);
   border-radius: 4px;
   box-sizing: border-box;
@@ -6852,7 +6858,7 @@ max-width: 900px;
   cursor: pointer;
 }
 
-.slitherlink-edge-btn:focus-visible {
+.slitherlink-edge-btn:focus {
   outline: 2px dashed var(--border);
   outline-offset: 1px;
 }

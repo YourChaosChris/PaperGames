@@ -421,6 +421,40 @@ function updateKlondikeBoard() {
       });
     });
   }
+  ensureKlondikeCardAspectRatio();
+}
+
+// Cards are 5:3 (width:height) - set in JS from the measured column width
+// rather than CSS `aspect-ratio`, which some E-Ink browsers (Tolino
+// confirmed) don't support reliably. Recomputed after every render and on
+// resize.
+let einkKlondikeResizeHandlerAttached = false;
+let einkKlondikeResizeTimeoutId = null;
+
+function ensureKlondikeCardAspectRatio() {
+  const columnsEl = document.getElementById("klondike-columns");
+  if (!columnsEl) return;
+  const firstCol = columnsEl.querySelector(".klondike-column");
+  if (!firstCol) return;
+  const rect = firstCol.getBoundingClientRect();
+  if (!rect || !rect.width) return;
+  const height = Math.round(rect.width * 0.6); // 5:3 width:height
+  columnsEl.querySelectorAll(".klondike-card, .klondike-empty-slot").forEach((el) => {
+    el.style.height = height + "px";
+  });
+  ensureKlondikeResizeHandler();
+}
+
+function ensureKlondikeResizeHandler() {
+  if (einkKlondikeResizeHandlerAttached) return;
+  einkKlondikeResizeHandlerAttached = true;
+  window.addEventListener("resize", () => {
+    if (einkKlondikeResizeTimeoutId !== null) clearTimeout(einkKlondikeResizeTimeoutId);
+    einkKlondikeResizeTimeoutId = setTimeout(() => {
+      einkKlondikeResizeTimeoutId = null;
+      ensureKlondikeCardAspectRatio();
+    }, 150);
+  });
 }
 
 function updateGameLabelsKlondike() {
