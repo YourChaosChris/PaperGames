@@ -206,6 +206,30 @@ button:disabled {
   margin-bottom: 0.6rem;
 }
 
+/* A quick way to skip past 25 games' worth of cards to the category
+   you actually want - three plain anchor jumps, not JS, so they work
+   the same with scripting on or off and cost nothing on E-Ink. */
+.game-section-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 0.6rem;
+}
+
+.game-section-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
 .field-row {
   margin-bottom: 0.5rem;
   display: flex;
