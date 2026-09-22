@@ -68,6 +68,17 @@ html, body {
   text-decoration: underline;
 }
 
+/* The PaperGames brand mark: a raised checkerboard tile. Pure flat fills
+   and hard-edged shapes only (no gradients, no blur/filter) so it renders
+   identically on 16-level-grayscale e-ink browsers, not just on phones -
+   see the logo review in project history for why. */
+.brand-icon {
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -0.2em;
+  margin-right: 0.15em;
+}
+
 .app-title-author-link {
   color: inherit;
   text-decoration: none;
