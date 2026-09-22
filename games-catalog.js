@@ -74,7 +74,7 @@ const GAMES_CATALOG = [
     nameText: "Go",
     descKey: "home_go_desc",
     descText: "The ancient territory game. Local 2-player or vs. the built-in engine, three board sizes, three difficulty levels.",
-    popular: true,
+    popular: false,
     icon: "<span class=\"go-stone-icon go-stone-black\" aria-hidden=\"true\"></span>"
   },
   {
@@ -214,7 +214,7 @@ const GAMES_CATALOG = [
     nameText: "Yatzy",
     descKey: "home_yatzy_desc",
     descText: "The classic 5-dice scoring game. Roll up to three times a turn, hold the dice you want to keep, and fill in all 15 categories on the scoresheet for the highest total.",
-    popular: true,
+    popular: false,
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 100 100\"><rect x=\"6\" y=\"6\" width=\"88\" height=\"88\" rx=\"16\" fill=\"#ffffff\" stroke=\"#000\" stroke-width=\"6\"/><circle cx=\"27\" cy=\"27\" r=\"9\" fill=\"#000\"/><circle cx=\"50\" cy=\"50\" r=\"9\" fill=\"#000\"/><circle cx=\"73\" cy=\"27\" r=\"9\" fill=\"#000\"/><circle cx=\"27\" cy=\"73\" r=\"9\" fill=\"#000\"/><circle cx=\"73\" cy=\"73\" r=\"9\" fill=\"#000\"/></svg></span>"
   },
   {
@@ -244,7 +244,7 @@ const GAMES_CATALOG = [
     nameText: "2048",
     descKey: "home_2048_desc",
     descText: "Slide and merge numbered tiles to reach 2048 before the board fills up. Keep playing afterward to push your best score even higher.",
-    popular: true,
+    popular: false,
     icon: "<span class=\"twenty48-icon\" aria-hidden=\"true\">2048</span>"
   },
   {
@@ -264,7 +264,7 @@ const GAMES_CATALOG = [
     nameText: "Mahjong Solitaire",
     descKey: "home_mahjong_solitaire_desc",
     descText: "Clear the layered tile layout by matching identical pairs. Every deal is generated to always have a solution.",
-    popular: true,
+    popular: false,
     icon: "<span class=\"mahjong-icon\" aria-hidden=\"true\">\u9ebb</span>"
   },
   {
