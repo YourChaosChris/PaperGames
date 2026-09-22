@@ -317,4 +317,14 @@ const GAMES_CATALOG = [
     popular: false,
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 100 100\"><g><rect x=\"16\" y=\"24\" width=\"34\" height=\"48\" rx=\"4\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"3.5\" transform=\"rotate(-14 50 60)\"/><g clip-path=\"url(#klondike-back-clip)\" transform=\"rotate(-14 50 60)\"><line x1=\"10\" y1=\"30\" x2=\"56\" y2=\"76\" stroke=\"#000\" stroke-width=\"3\"/><line x1=\"10\" y1=\"42\" x2=\"44\" y2=\"76\" stroke=\"#000\" stroke-width=\"3\"/><line x1=\"10\" y1=\"54\" x2=\"32\" y2=\"76\" stroke=\"#000\" stroke-width=\"3\"/><line x1=\"22\" y1=\"24\" x2=\"56\" y2=\"58\" stroke=\"#000\" stroke-width=\"3\"/><line x1=\"34\" y1=\"24\" x2=\"56\" y2=\"46\" stroke=\"#000\" stroke-width=\"3\"/></g></g><defs><clipPath id=\"klondike-back-clip\"><rect x=\"16\" y=\"24\" width=\"34\" height=\"48\" rx=\"4\"/></clipPath></defs><g transform=\"rotate(14 50 60)\"><rect x=\"50\" y=\"24\" width=\"34\" height=\"48\" rx=\"4\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"3.5\"/><path d=\"M67 34c-5 5-9 9-9 14a9 9 0 0 0 18 0c0-5-4-9-9-14z\" fill=\"#000\"/></g><rect x=\"33\" y=\"20\" width=\"34\" height=\"48\" rx=\"4\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"3.5\"/><path d=\"M50 30c-6 6-11 11-11 17a11 11 0 0 0 22 0c0-6-5-11-11-17z\" fill=\"none\" stroke=\"#000\" stroke-width=\"3\"/><rect x=\"47\" y=\"44\" width=\"6\" height=\"10\" fill=\"#000\"/></svg></span>"
   },
+  {
+    slug: "kakuro",
+    category: "puzzles",
+    nameKey: "game_kakuro",
+    nameText: "Kakuro",
+    descKey: "home_kakuro_desc",
+    descText: "Fill white cells with digits 1-9 so every run sums to its clue, with no digit repeated within a run. Freshly generated, in three difficulty levels.",
+    popular: false,
+    icon: "<span class=\"kakuro-icon\" aria-hidden=\"true\"></span>"
+  },
 ];

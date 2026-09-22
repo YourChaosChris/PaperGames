@@ -52,7 +52,8 @@
     ["mastermind", "game_mastermind"],
     ["dotsandboxes", "game_dotsandboxes"],
     ["klondike", "game_klondike"],
-    ["amazons", "game_amazons"]
+    ["amazons", "game_amazons"],
+    ["kakuro", "game_kakuro"]
   ];
 
   var GAME_SLUGS = {};

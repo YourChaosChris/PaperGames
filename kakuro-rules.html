@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kakuro Rules | PaperGames</title>
+  <meta name="description" content="Complete Kakuro rules explained clearly, with a worked example. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/kakuro-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/kakuro-rules.html">
+  <meta property="og:title" content="Kakuro Rules | PaperGames">
+  <meta property="og:description" content="Complete Kakuro rules explained clearly, with a worked example. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kakuro Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Kakuro rules explained clearly, with a worked example. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="kakuro_rules_title">Kakuro Rules</h1>
+      <p data-i18n="kakuro_rules_intro">A quick reference for how PaperGames plays Kakuro - useful if you're rusty, or learning. Kakuro is sometimes described as "crossword sudoku": instead of letters, every white square holds a digit, and instead of words, the clues are sums.</p>
+
+      <h2 data-i18n="kakuro_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="kakuro-icon" aria-hidden="true"></span> <span data-i18n="kakuro_term_board">The grid</span></dt>
+        <dd data-i18n="kakuro_rules_board">The grid is a mix of black clue cells and white fillable cells. Every maximal unbroken line of white cells, reading left-to-right or top-to-bottom, is called a "run". Each run has exactly one clue: the total its digits must add up to.</dd>
+        <dt data-i18n="kakuro_term_clues">Reading the clue cells</dt>
+        <dd data-i18n="kakuro_rules_clues">A black cell shows its sum (or sums) in white digits, split diagonally when it carries two: the number in the upper-right corner is the target for the run of white cells starting immediately to its right (an "across" clue), and the number in the lower-left corner is the target for the run of white cells starting immediately below it (a "down" clue). A black cell with only one clue shows only that number.</dd>
+        <dt data-i18n="kakuro_term_goal">The goal</dt>
+        <dd data-i18n="kakuro_rules_goal">Fill every white cell with a digit from 1 to 9 so that each run's digits add up to exactly its clue - and, just as important, no digit repeats within the same run (a digit can reappear in a run crossing it, just never twice in the same run).</dd>
+        <dt data-i18n="kakuro_term_input">Entering numbers</dt>
+        <dd data-i18n="kakuro_rules_input">Select a white cell, then pick a digit from the pad below the board (or type a digit on a keyboard). A cell showing a dashed outline currently repeats a digit already used elsewhere in one of its runs, or belongs to a fully-filled run whose total doesn't match its clue yet - use that as a hint that something needs to change.</dd>
+        <dt data-i18n="kakuro_term_difficulty">Difficulty</dt>
+        <dd data-i18n="kakuro_rules_difficulty">Easy, Medium and Hard puzzles use progressively larger grids (7x7, 9x9 and 11x11), which means longer runs and more of them crossing each other - more digits to juggle at once, but the same two rules throughout.</dd>
+      </dl>
+
+      <h2 data-i18n="kakuro_rules_example_title">A worked example</h2>
+      <dl class="rule-list">
+        <dt data-i18n="kakuro_term_example">Two crossing runs</dt>
+        <dd data-i18n="kakuro_rules_example_p1">Say a 2-cell across run is clued 4, and its first cell is also the top of a 2-cell down run clued 3. The across run's two digits must add up to 4 without repeating - only 1+3 or 3+1 can do that (2+2 repeats the 2, so it's not allowed). The down run's two digits must add up to 3 without repeating, which only 1+2 or 2+1 can do.</dd>
+        <dd data-i18n="kakuro_rules_example_p2">The shared cell has to be a digit both runs can use. The across run offers {1, 3} for that cell and the down run offers {1, 2} - the only digit in both sets is 1. So the shared cell must be 1, which pins the across run's other cell to 3 and the down run's other cell to 2. That's the whole puzzle solved by elimination alone, with no guessing needed - the same kind of deduction, just repeated many more times over, that solves every larger Kakuro grid.</dd>
+      </dl>
+
+      <h2 data-i18n="kakuro_rules_end_title">Finishing a puzzle</h2>
+      <dl class="rule-list">
+        <dt data-i18n="kakuro_term_win">Solved</dt>
+        <dd data-i18n="kakuro_rules_win">The puzzle is solved the moment every white cell is filled in with every run summing to its clue and no run repeating a digit.</dd>
+      </dl>
+
+      <p class="about-back"><a href="kakuro.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>
