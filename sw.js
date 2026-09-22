@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "papergames-cache-v44";
+const CACHE_NAME = "papergames-cache-v45";
 
 const APP_SHELL = [
   "./",
@@ -83,6 +83,9 @@ const APP_SHELL = [
   "halma.html",
   "halma-rules.html",
   "halma-history.html",
+  "yatzy.html",
+  "yatzy-rules.html",
+  "yatzy-history.html",
   "guide.html",
   "about.html",
   "stats.html",
@@ -165,6 +168,8 @@ const APP_SHELL = [
   "halma-core.js",
   "halma-ai.js",
   "halma-app.js",
+  "yatzy-core.js",
+  "yatzy-app.js",
   "sw-register.js",
   "game-storage.js",
   "game-stats.js",
