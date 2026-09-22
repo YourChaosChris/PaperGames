@@ -30,7 +30,7 @@
       <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
     </div>
     <div class="user-panel">
-      <button id="menu-toggle" class="secondary">&#9776; Menu</button>
+      <button id="menu-toggle" class="secondary" data-i18n="menu_toggle">&#9776; Menu</button>
     </div>
   </header>
 
@@ -40,24 +40,24 @@
 <section class="mode-section">
   <div class="mode-section-row">
     <div class="mode-buttons">
-      <button id="mode-offline" class="mode-btn secondary">2 Player</button>
-      <button id="mode-offline-ai" class="mode-btn secondary">vs Computer</button>
+      <button id="mode-offline" class="mode-btn secondary" data-i18n="mode_two_player">2 Player (local)</button>
+      <button id="mode-offline-ai" class="mode-btn secondary" data-i18n="vs_computer">vs Computer</button>
     </div>
   </div>
 </section>
 
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
-    <button id="start-xiangqi-game" class="primary">New game</button>
+    <button id="start-xiangqi-game" class="primary" data-i18n="new_game">New game</button>
     <div id="xiangqi-color-choice" class="inline-options">
       <label class="color-choice"><input type="radio" name="xiangqi-color" value="red" checked> <span class="color-choice-icon"><span class="xq-icon-disc xq-icon-disc-red">帥</span></span></label>
       <label class="color-choice"><input type="radio" name="xiangqi-color" value="black"> <span class="color-choice-icon"><span class="xq-icon-disc xq-icon-disc-black">將</span></span></label>
     </div>
     <select id="xiangqi-level-inline">
-        <option value="0">2 Player</option>
-        <option value="1">Easy</option>
-        <option value="2" selected>Medium</option>
-        <option value="3">Hard</option>
+        <option value="0" data-i18n="mode_two_player">2 Player (local)</option>
+        <option value="1" data-i18n="level_easy">Easy</option>
+        <option value="2" selected data-i18n="level_medium">Medium</option>
+        <option value="3" data-i18n="level_hard">Hard</option>
       </select>
   </div>
   <div id="offline-xiangqi-status" class="status-text"></div>

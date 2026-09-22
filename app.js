@@ -812,23 +812,24 @@ function updateUserPanel(extraError) {
   const loginBtn = document.getElementById("login-button");
   const logoutBtn = document.getElementById("logout-button");
 
+  const i18n = (key) => (window.I18n && typeof I18n.t === "function") ? I18n.t(key) : key;
   const token = (window.LichessAuth && window.LichessAuth.getAccessToken) ? window.LichessAuth.getAccessToken() : null;
   if (!token) {
-    userStatus.textContent = extraError || "Online account not connected.";
+    userStatus.textContent = extraError || i18n("not_connected");
     loginBtn.classList.remove("hidden");
     logoutBtn.classList.add("hidden");
   } else if (AppState.account) {
     const a = AppState.account;
     const rapid = a.perfs && a.perfs.rapid ? a.perfs.rapid.rating : null;
     const classical = a.perfs && a.perfs.classical ? a.perfs.classical.rating : null;
-    let txt = "Signed in as " + a.username;
+    let txt = i18n("signed_in_as") + " " + a.username;
     if (rapid) txt += " · Rapid " + rapid;
     if (classical) txt += " · Classical " + classical;
     userStatus.textContent = txt;
     loginBtn.classList.add("hidden");
     logoutBtn.classList.remove("hidden");
   } else {
-    userStatus.textContent = "Online account connected, loading profile…";
+    userStatus.textContent = i18n("loading_profile");
     loginBtn.classList.add("hidden");
     logoutBtn.classList.remove("hidden");
   }
