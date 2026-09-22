@@ -4645,3 +4645,112 @@ margin: 0.5rem auto 0;
   border-style: dashed;
   opacity: 0.5;
 }
+
+/* Dots and Boxes board: percentage-based absolute positioning (the same
+   technique as Quoridor's board), since line segments need clickable
+   targets BETWEEN dots, not just on them - a plain float-grid has
+   nowhere to put those. A fixed 5x5 dot grid (4x4 boxes) throughout,
+   not configurable, like every other board here. Completed boxes are
+   told apart structurally, not by color alone: Player 1 gets a solid
+   fill, Player 2 a hatched fill, the same convention already used
+   elsewhere (see .halma-square-camp-p1/p2) applied to filled areas
+   instead of discs. */
+
+.dab-board {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+}
+
+.dab-box {
+  position: absolute;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.dab-box-p1 {
+  background: #111;
+}
+
+.dab-box-p2 {
+  background: repeating-linear-gradient(45deg, var(--square-light), var(--square-light) 4px, var(--border) 4px, var(--border) 5px);
+}
+
+.dab-line {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.dab-line:disabled {
+  cursor: default;
+}
+
+.dab-line-bar {
+  position: absolute;
+  background: var(--square-dark);
+  pointer-events: none;
+}
+
+.dab-line-bar-h {
+  left: 4%;
+  right: 4%;
+  top: 50%;
+  height: 22%;
+  transform: translateY(-50%);
+}
+
+.dab-line-bar-v {
+  top: 4%;
+  bottom: 4%;
+  left: 50%;
+  width: 22%;
+  transform: translateX(-50%);
+}
+
+.dab-line-drawn .dab-line-bar {
+  background: var(--border);
+}
+
+.dab-line:not(:disabled):hover .dab-line-bar {
+  opacity: 0.7;
+}
+
+.dab-dot {
+  position: absolute;
+  width: 3.5%;
+  height: 3.5%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--border);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Small icons for the player-choice picker and board placeholder,
+   matching the board's own box-fill styling. */
+.dab-icon-swatch {
+  display: inline-flex;
+  width: 1.1em;
+  height: 1.1em;
+  box-sizing: border-box;
+  vertical-align: middle;
+  border: 2px solid var(--border);
+}
+
+.dab-icon-swatch-p1 {
+  background: #111;
+}
+
+.dab-icon-swatch-p2 {
+  background: repeating-linear-gradient(45deg, var(--square-light), var(--square-light) 3px, var(--border) 3px, var(--border) 4px);
+}

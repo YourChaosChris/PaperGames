@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dots and Boxes Rules | PaperGames</title>
+  <meta name="description" content="Complete Dots and Boxes rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/dotsandboxes-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/dotsandboxes-rules.html">
+  <meta property="og:title" content="Dots and Boxes Rules | PaperGames">
+  <meta property="og:description" content="Complete Dots and Boxes rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Dots and Boxes Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Dots and Boxes rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="dotsandboxes_rules_title">Dots and Boxes Rules</h1>
+      <p data-i18n="dotsandboxes_rules_intro">A quick reference for how PaperGames plays Dots and Boxes - useful if you're rusty, or learning.</p>
+
+      <h2 data-i18n="dotsandboxes_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="dab-icon-swatch dab-icon-swatch-p1" aria-hidden="true"></span> <span data-i18n="dotsandboxes_term_board">The board and drawing lines</span></dt>
+        <dd data-i18n="dotsandboxes_rules_board">The board is a 5x5 grid of dots, forming a 4x4 grid of boxes. On your turn, draw one line - horizontal or vertical - connecting two dots that are directly next to each other. Player 1 always moves first.</dd>
+        <dt data-i18n="dotsandboxes_term_completing">Completing a box</dt>
+        <dd data-i18n="dotsandboxes_rules_completing">If the line you draw is the fourth and final side of a box, that box is yours: it's marked with your fill pattern and added to your score. A single line can complete two boxes at once if it's the last missing side for both of them.</dd>
+        <dt data-i18n="dotsandboxes_term_extra_turn">The extra turn</dt>
+        <dd data-i18n="dotsandboxes_rules_extra_turn">Completing at least one box earns you another turn immediately. This can chain: if your next line completes another box too, you go again, and again, for as long as you keep completing boxes. Turn passes to your opponent only once you draw a line that completes nothing.</dd>
+      </dl>
+
+      <h2 data-i18n="dotsandboxes_rules_end_title">How a game ends</h2>
+      <dl class="rule-list">
+        <dt data-i18n="dotsandboxes_term_win">Winning</dt>
+        <dd data-i18n="dotsandboxes_rules_win">The game ends once every line on the board has been drawn (all 16 boxes are then owned). Whoever owns more boxes wins.</dd>
+        <dt data-i18n="dotsandboxes_term_draw">Draw</dt>
+        <dd data-i18n="dotsandboxes_rules_draw">If both players end up owning the same number of boxes, the game is a draw.</dd>
+        <dt data-i18n="dotsandboxes_term_resignation">Resignation</dt>
+        <dd data-i18n="dotsandboxes_rules_resignation">A player can resign at any time, ending the game immediately in the opponent's favor.</dd>
+      </dl>
+
+      <p class="about-back"><a href="dotsandboxes.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>
