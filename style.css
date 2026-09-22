@@ -4516,3 +4516,132 @@ margin: 0.5rem auto 0;
 .yatzy-grand-total-row td {
   font-size: 1.05em;
 }
+
+/* Mastermind: four guess slots, each a button that cycles through the
+   six flat shapes (see mastermind-app.js) on tap - no color, no
+   drag-and-drop, no hover state needed. Feedback pegs below each row of
+   the history are plain filled/hollow circles rather than colored dots. */
+.mastermind-guess-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.mastermind-guess-row > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+.mastermind-guess-row > *:last-child {
+  margin-right: 0;
+}
+
+.mastermind-slot {
+  display: block;
+  width: 3.2rem;
+  height: 3.2rem;
+  padding: 0.3rem;
+  background: var(--square-light);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.mastermind-slot:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.mastermind-slot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mastermind-legend {
+  font-size: 0.85em;
+  color: var(--muted);
+  margin: 0.3rem 0 0.6rem;
+}
+
+.mastermind-legend-row {
+  display: flex;
+  align-items: center;
+  margin: 0.15rem 0;
+}
+
+.mastermind-legend-row .mastermind-peg {
+  margin-right: 0.4em;
+}
+
+.mastermind-history {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mastermind-history-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border-top: 1px solid var(--bg-alt);
+  padding: 0.4rem 0;
+}
+
+.mastermind-history-row:first-child {
+  border-top: none;
+}
+
+.mastermind-history-number {
+  width: 4.2rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.mastermind-history-shapes {
+  display: flex;
+  margin-right: 0.6rem;
+}
+
+.mastermind-history-shape {
+  display: block;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-right: 0.25rem;
+}
+
+.mastermind-history-shape svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mastermind-history-pegs {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 0.2rem;
+  margin-left: auto;
+}
+
+.mastermind-peg {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  box-sizing: border-box;
+}
+
+.mastermind-peg-black {
+  background: var(--text);
+}
+
+.mastermind-peg-white {
+  background: var(--bg);
+}
+
+.mastermind-peg-empty {
+  background: transparent;
+  border-style: dashed;
+  opacity: 0.5;
+}

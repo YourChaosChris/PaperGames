@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mastermind Rules | PaperGames</title>
+  <meta name="description" content="Complete Mastermind rules explained clearly: the secret code, the black and white peg feedback, and the duplicate-shape rule, all with a worked example.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/mastermind-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/mastermind-rules.html">
+  <meta property="og:title" content="Mastermind Rules | PaperGames">
+  <meta property="og:description" content="Complete Mastermind rules explained clearly: the secret code, the black and white peg feedback, and the duplicate-shape rule, all with a worked example.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mastermind Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Mastermind rules explained clearly: the secret code, the black and white peg feedback, and the duplicate-shape rule, all with a worked example.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="mastermind_rules_title">Mastermind Rules</h1>
+      <p data-i18n="mastermind_rules_intro">A quick reference for how PaperGames plays Mastermind - useful if you're rusty, or learning.</p>
+
+      <h2 data-i18n="mastermind_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt data-i18n="mastermind_term_code">The secret code</dt>
+        <dd data-i18n="mastermind_rules_code">At the start of a new game, the computer picks a hidden code of four positions, each set to one of six shapes: circle, square, triangle, diamond, star, or cross. Depending on the difficulty, the same shape may appear more than once in the code.</dd>
+        <dt data-i18n="mastermind_term_guess">Making a guess</dt>
+        <dd data-i18n="mastermind_rules_guess">Tap a slot to cycle it through the six shapes, then tap Submit guess once all four slots show the shapes you want to try. A guess can repeat a shape freely, whether or not the secret code itself has any repeats.</dd>
+        <dt data-i18n="mastermind_term_feedback">Reading the feedback</dt>
+        <dd data-i18n="mastermind_rules_feedback">Each guess gets back a row of pegs: a black peg for every shape that's both correct and in the right position, and a white peg for every shape that's correct but in the wrong position. For example, if the code is circle-circle-square-triangle and you guess circle-square-square-square, you get two black pegs (the first circle and the third square are both exactly right) and no white pegs - the extra squares in the guess have nothing left over in the code to match. The pegs never say which slots they refer to, so working that out from guess to guess is the whole puzzle.</dd>
+      </dl>
+
+      <h2 data-i18n="mastermind_rules_end_title">Finishing a game</h2>
+      <dl class="rule-list">
+        <dt data-i18n="mastermind_term_win">Winning</dt>
+        <dd data-i18n="mastermind_rules_win">You win the moment a guess earns four black pegs - every shape in exactly the right position.</dd>
+        <dt data-i18n="mastermind_term_loss">Running out of guesses</dt>
+        <dd data-i18n="mastermind_rules_loss">Each difficulty level allows a fixed number of guesses. If you use them all without cracking the code, the game ends there and the secret code is revealed.</dd>
+        <dt data-i18n="mastermind_term_levels">Difficulty levels</dt>
+        <dd data-i18n="mastermind_rules_levels">Easy gives you 12 guesses, but the secret code never repeats a shape. Medium gives 10 guesses and allows repeats, the traditional way the game is played. Hard gives only 8 guesses and also allows repeats, so duplicate shapes are something to watch for.</dd>
+      </dl>
+
+      <p class="about-back"><a href="mastermind.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>

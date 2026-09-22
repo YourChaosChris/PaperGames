@@ -28,7 +28,8 @@ const STATS_GAME_NAME_KEY = {
   quoridor: "game_wall_maze",
   hex: "game_hex",
   halma: "game_halma",
-  lightsout: "game_lightsout"
+  lightsout: "game_lightsout",
+  mastermind: "game_mastermind"
 };
 
 function gameDisplayName(game) {
