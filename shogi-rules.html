@@ -2,7 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PaperGames – Shogi Rules</title>
+  <title>Shogi Rules | PaperGames</title>
+  <meta name="description" content="Complete Shogi rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/shogi-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/shogi-rules.html">
+  <meta property="og:title" content="Shogi Rules | PaperGames">
+  <meta property="og:description" content="Complete Shogi rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shogi Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Shogi rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
@@ -38,21 +50,21 @@
       <h2 data-i18n="shogi_rules_basics_title">The basic idea</h2>
       <dl class="rule-list">
         <dt><span class="shogi-icon-piece" aria-hidden="true">王</span> <span data-i18n="shogi_term_board">The board and pieces</span></dt>
-        <dd data-i18n="shogi_rules_board"></dd>
+        <dd data-i18n="shogi_rules_board">Each side has 20 pieces on a 9x9 board: a King, a Rook, a Bishop, two Golds, two Silvers, two Knights, two Lances and nine Pawns. Pieces are plain pentagons pointing toward the opponent - which side a piece belongs to is which way it's facing, not its color. Black always moves first.</dd>
         <dt data-i18n="shogi_term_promotion">Promotion</dt>
-        <dd data-i18n="shogi_rules_promotion"></dd>
+        <dd data-i18n="shogi_rules_promotion">Every piece except the King and Gold can promote to a stronger form when it moves into, out of, or within the farthest three rows of the board. Promotion is optional, except when a Pawn or Lance reaches the very last row, or a Knight reaches either of the last two rows - there it's forced, since the piece would otherwise never have another legal move.</dd>
         <dt data-i18n="shogi_term_drops">Captures and drops</dt>
-        <dd data-i18n="shogi_rules_drops"></dd>
+        <dd data-i18n="shogi_rules_drops">Capturing a piece doesn't remove it from the game: it switches sides, demotes back to its unpromoted form, and joins the capturing player's hand. On a later turn, instead of moving a piece already on the board, that player may drop a piece from their hand onto any empty square - one of Shogi's signature ideas, and the reason games rarely run out of material.</dd>
         <dt data-i18n="shogi_term_drop_limits">Drop restrictions</dt>
-        <dd data-i18n="shogi_rules_drop_limits"></dd>
+        <dd data-i18n="shogi_rules_drop_limits">A Pawn or Lance can't be dropped onto the last row, and a Knight can't be dropped onto either of the last two rows, since they'd have no legal move there. A Pawn can't be dropped onto a file that already has one of your own unpromoted Pawns, and a Pawn drop may never deliver checkmate outright (it may still deliver check, just not a mate).</dd>
       </dl>
 
       <h2 data-i18n="shogi_rules_end_title">How a game ends</h2>
       <dl class="rule-list">
         <dt data-i18n="shogi_term_win">Winning</dt>
-        <dd data-i18n="shogi_rules_win"></dd>
+        <dd data-i18n="shogi_rules_win">A King in check that has no way to escape, block, or capture the checking piece is checkmated - the game ends immediately.</dd>
         <dt data-i18n="shogi_term_resignation">Resignation</dt>
-        <dd data-i18n="shogi_rules_resignation"></dd>
+        <dd data-i18n="shogi_rules_resignation">A player can resign at any time, ending the game immediately in the opponent's favor.</dd>
       </dl>
 
       <p class="about-back"><a href="shogi.html" data-i18n="about_back">&larr; Back to the board</a></p>

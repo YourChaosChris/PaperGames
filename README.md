@@ -1,15 +1,21 @@
 # PaperGames
 
-A collection of classic board, strategy, and puzzle games as a single
+A collection of 25 classic board, strategy, and puzzle games as a single
 offline-capable web app, designed to be readable and usable on e-paper /
 e-ink displays (high contrast, no animation-dependent UI, works without a
 live network connection once loaded). Play at
 [yourchaoschris.github.io/PaperGames](https://yourchaoschris.github.io/PaperGames/).
 
+![Screenshot of the PaperGames home page](screenshot.png)
+
 Every game is playable against a built-in AI opponent, entirely client-side.
 Chess additionally supports playing real opponents online via a
 [Lichess](https://lichess.org) account connection (OAuth) — PaperGames is not
 affiliated with, endorsed by, or connected to Lichess in any way.
+
+Free, no ads, no account, no tracking — everything runs and is stored
+locally in your browser. Once a page has loaded once, it keeps working with
+no internet connection at all.
 
 ## Games
 
@@ -76,3 +82,10 @@ The same notice is shown to users on the [About page](about.html).
 See [Impressum](impressum.html) (legal notice, German law) and
 [Datenschutzerklärung](datenschutz.html) (privacy policy) for operator
 details and data-processing information.
+
+## GitHub topics
+
+Suggested topics for this repository (set under Settings → General → Topics):
+
+`eink` `ereader` `board-games` `pwa` `offline-first` `javascript`
+`no-dependencies` `chess` `tolino` `kobo` `kindle`

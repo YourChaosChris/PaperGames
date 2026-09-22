@@ -2,7 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PaperGames – Guide</title>
+  <title>Setup Guide | PaperGames</title>
+  <meta name="description" content="How to install PaperGames on your e-reader or tablet: open in the browser, add to your home screen, and keep playing fully offline.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/guide.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/guide.html">
+  <meta property="og:title" content="Setup Guide | PaperGames">
+  <meta property="og:description" content="How to install PaperGames on your e-reader or tablet: open in the browser, add to your home screen, and keep playing fully offline.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Setup Guide | PaperGames">
+  <meta name="twitter:description" content="How to install PaperGames on your e-reader or tablet: open in the browser, add to your home screen, and keep playing fully offline.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
@@ -36,19 +48,19 @@
       <p data-i18n="guide_intro">Three ways to get PaperGames onto an e-reader.</p>
 
       <h2 data-i18n="guide_web_title">1. Just open it in the browser</h2>
-      <p data-i18n="guide_web_body"></p>
+      <p data-i18n="guide_web_body">Open this same web address in your e-reader's browser and bookmark it. After the first visit, PaperGames caches itself for offline use automatically - close the WiFi and it keeps working. The only exception is Chess's online Lichess mode, which needs an actual connection; every other game here is offline-only and unaffected.</p>
 
       <h2 data-i18n="guide_pwa_title">2. Add it to the home screen</h2>
-      <p data-i18n="guide_pwa_body"></p>
+      <p data-i18n="guide_pwa_body">If your e-reader's browser offers “Add to Home Screen” or “Install app”, use it. PaperGames then opens like a regular app, full-screen, without browser chrome around it.</p>
 
       <h2 data-i18n="guide_sideload_title">3. Sideload via USB</h2>
-      <p data-i18n="guide_sideload_body"></p>
+      <p data-i18n="guide_sideload_body">Copy all the app's files onto the device over USB and open index.html directly from local storage (a file:// address). Offline play works exactly the same way. The one thing that doesn't work over file:// is Lichess login (OAuth requires a real http/https address) - local 2-player and vs-computer modes are unaffected in every game here.</p>
 
       <h2 data-i18n="guide_offline_title">What works offline</h2>
-      <p data-i18n="guide_offline_body"></p>
+      <p data-i18n="guide_offline_body">Everything except Chess's online Lichess games: local 2-player and the built-in computer opponent at every level, in every game here, run entirely on the device with no server involved.</p>
 
       <h2 data-i18n="guide_update_title">Not seeing the latest version?</h2>
-      <p data-i18n="guide_update_body"></p>
+      <p data-i18n="guide_update_body">PaperGames caches itself so it keeps working offline, which on some e-reader browsers can mean an update takes a while to show up even after a reload. This button clears that cache and forces a fresh copy of every file - you'll need to be online for it to work.</p>
       <p>
         <button id="force-update-button" type="button" class="secondary" data-i18n="guide_update_button">Force update now</button>
       </p>

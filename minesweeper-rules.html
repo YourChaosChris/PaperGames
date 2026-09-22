@@ -2,7 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PaperGames – Minesweeper Rules</title>
+  <title>Minesweeper Rules | PaperGames</title>
+  <meta name="description" content="Complete Minesweeper rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/minesweeper-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/minesweeper-rules.html">
+  <meta property="og:title" content="Minesweeper Rules | PaperGames">
+  <meta property="og:description" content="Complete Minesweeper rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Minesweeper Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Minesweeper rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
@@ -38,19 +50,19 @@
       <h2 data-i18n="minesweeper_rules_basics_title">The basic idea</h2>
       <dl class="rule-list">
         <dt><span class="mine-icon" aria-hidden="true"></span> <span data-i18n="minesweeper_term_board">The grid and the first click</span></dt>
-        <dd data-i18n="minesweeper_rules_board"></dd>
+        <dd data-i18n="minesweeper_rules_board">Hidden mines are scattered across the grid. Your first reveal is always guaranteed safe - the mines are only placed afterward, avoiding that cell and everything around it - so the game never ends before it begins.</dd>
         <dt data-i18n="minesweeper_term_numbers">Reading the numbers</dt>
-        <dd data-i18n="minesweeper_rules_numbers"></dd>
+        <dd data-i18n="minesweeper_rules_numbers">Revealing a safe cell shows a number: how many mines are hiding in its eight neighboring cells. A blank cell means zero, and revealing it automatically opens up every connected blank area for you.</dd>
         <dt data-i18n="minesweeper_term_flags">Flagging</dt>
-        <dd data-i18n="minesweeper_rules_flags"></dd>
+        <dd data-i18n="minesweeper_rules_flags">Mark a cell you believe hides a mine with a flag, using Flag mode (for touchscreens) or a right-click (on a desktop browser) - flagged cells can't be accidentally revealed. Clicking an already-revealed number whose flagged neighbors match its count reveals the rest of its neighbors at once, exactly like a middle-click in the classic desktop game - but a wrongly placed flag can still cost you the game this way.</dd>
       </dl>
 
       <h2 data-i18n="minesweeper_rules_end_title">How a game ends</h2>
       <dl class="rule-list">
         <dt data-i18n="minesweeper_term_win">Winning</dt>
-        <dd data-i18n="minesweeper_rules_win"></dd>
+        <dd data-i18n="minesweeper_rules_win">Reveal every cell that isn't a mine and you've cleared the board.</dd>
         <dt data-i18n="minesweeper_term_loss">Losing</dt>
-        <dd data-i18n="minesweeper_rules_loss"></dd>
+        <dd data-i18n="minesweeper_rules_loss">Reveal a mine and the game ends immediately - every mine on the board is shown, with the one that got you marked apart from the rest.</dd>
       </dl>
 
       <p class="about-back"><a href="minesweeper.html" data-i18n="about_back">&larr; Back to the board</a></p>

@@ -2,7 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PaperGames – Chess Rules</title>
+  <title>Chess Rules | PaperGames</title>
+  <meta name="description" content="Complete Chess rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/chess-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/chess-rules.html">
+  <meta property="og:title" content="Chess Rules | PaperGames">
+  <meta property="og:description" content="Complete Chess rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Chess Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Chess rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
@@ -38,45 +50,45 @@
       <h2 data-i18n="chess_rules_movement_title">How the pieces move</h2>
       <dl class="rule-list">
         <dt>&#9817; <span data-i18n="chess_piece_pawn">Pawn</span></dt>
-        <dd data-i18n="chess_rules_pawn"></dd>
+        <dd data-i18n="chess_rules_pawn">One square forward (two from its starting square), captures one square diagonally forward. Reaching the far side promotes it to any other piece (PaperGames always promotes to a queen).</dd>
         <dt>&#9816; <span data-i18n="chess_piece_knight">Knight</span></dt>
-        <dd data-i18n="chess_rules_knight"></dd>
+        <dd data-i18n="chess_rules_knight">Moves in an L-shape (two squares one way, one square perpendicular) and is the only piece that can jump over others.</dd>
         <dt>&#9815; <span data-i18n="chess_piece_bishop">Bishop</span></dt>
-        <dd data-i18n="chess_rules_bishop"></dd>
+        <dd data-i18n="chess_rules_bishop">Any number of squares diagonally. Stays on one square color for the whole game.</dd>
         <dt>&#9814; <span data-i18n="chess_piece_rook">Rook</span></dt>
-        <dd data-i18n="chess_rules_rook"></dd>
+        <dd data-i18n="chess_rules_rook">Any number of squares horizontally or vertically.</dd>
         <dt>&#9813; <span data-i18n="chess_piece_queen">Queen</span></dt>
-        <dd data-i18n="chess_rules_queen"></dd>
+        <dd data-i18n="chess_rules_queen">Any number of squares in any direction - combines the rook and bishop.</dd>
         <dt>&#9812; <span data-i18n="chess_piece_king">King</span></dt>
-        <dd data-i18n="chess_rules_king"></dd>
+        <dd data-i18n="chess_rules_king">One square in any direction. Can never move into check.</dd>
       </dl>
 
       <h2 data-i18n="chess_rules_special_title">Special moves</h2>
       <dl class="rule-list">
         <dt data-i18n="chess_term_castling">Castling</dt>
-        <dd data-i18n="chess_rules_castling"></dd>
+        <dd data-i18n="chess_rules_castling">The king moves two squares toward a rook, and that rook jumps to the square beside the king. Only if neither piece has moved yet, the squares between them are empty, and the king isn't in, through, or ending in check.</dd>
         <dt data-i18n="chess_term_en_passant">En passant</dt>
-        <dd data-i18n="chess_rules_en_passant"></dd>
+        <dd data-i18n="chess_rules_en_passant">If an enemy pawn advances two squares and lands beside yours, your pawn may capture it as if it had only moved one square - but only immediately on the next move.</dd>
         <dt data-i18n="chess_term_promotion">Promotion</dt>
-        <dd data-i18n="chess_rules_promotion"></dd>
+        <dd data-i18n="chess_rules_promotion">A pawn reaching the last rank becomes another piece, almost always a queen.</dd>
       </dl>
 
       <h2 data-i18n="chess_rules_end_title">How a game ends</h2>
       <dl class="rule-list">
         <dt data-i18n="chess_term_checkmate">Checkmate</dt>
-        <dd data-i18n="chess_rules_checkmate"></dd>
+        <dd data-i18n="chess_rules_checkmate">The king is in check with no legal move to escape it. That side loses.</dd>
         <dt data-i18n="chess_term_stalemate">Stalemate</dt>
-        <dd data-i18n="chess_rules_stalemate"></dd>
+        <dd data-i18n="chess_rules_stalemate">The side to move has no legal move and isn't in check. The game is a draw.</dd>
       </dl>
 
       <h2 data-i18n="chess_rules_draws_title">Draws by rule</h2>
       <dl class="rule-list">
         <dt data-i18n="chess_term_threefold">Threefold repetition</dt>
-        <dd data-i18n="chess_rules_threefold"></dd>
+        <dd data-i18n="chess_rules_threefold">The exact same position occurs three times.</dd>
         <dt data-i18n="chess_term_fifty_move">Fifty-move rule</dt>
-        <dd data-i18n="chess_rules_fifty_move"></dd>
+        <dd data-i18n="chess_rules_fifty_move">Fifty moves pass (by both sides) with no pawn move and no capture.</dd>
         <dt data-i18n="chess_term_insufficient">Insufficient material</dt>
-        <dd data-i18n="chess_rules_insufficient"></dd>
+        <dd data-i18n="chess_rules_insufficient">Neither side has enough pieces left to possibly checkmate (e.g. king vs. king, or king and bishop vs. king).</dd>
       </dl>
 
       <p class="about-back"><a href="chess.html" data-i18n="about_back">&larr; Back to the board</a></p>

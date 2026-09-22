@@ -2,7 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PaperGames – 2048 Rules</title>
+  <title>2048 Rules | PaperGames</title>
+  <meta name="description" content="Complete 2048 rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/twenty48-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/twenty48-rules.html">
+  <meta property="og:title" content="2048 Rules | PaperGames">
+  <meta property="og:description" content="Complete 2048 rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="2048 Rules | PaperGames">
+  <meta name="twitter:description" content="Complete 2048 rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
@@ -38,17 +50,17 @@
       <h2 data-i18n="twenty48_rules_basics_title">The basic idea</h2>
       <dl class="rule-list">
         <dt><span class="twenty48-icon" aria-hidden="true">2048</span> <span data-i18n="twenty48_term_board">The board and sliding</span></dt>
-        <dd data-i18n="twenty48_rules_board"></dd>
+        <dd data-i18n="twenty48_rules_board">Every move slides all the tiles on the 4x4 board as far as they'll go in one direction - up, down, left or right. After every move that actually shifts something, a new tile (usually a 2, occasionally a 4) appears in a random empty cell.</dd>
         <dt data-i18n="twenty48_term_merging">Merging</dt>
-        <dd data-i18n="twenty48_rules_merging"></dd>
+        <dd data-i18n="twenty48_rules_merging">When two tiles of the same value collide while sliding, they merge into one tile worth their sum, adding that new value to your score. Each tile can only merge once per move, so three equal tiles sliding together merge the leading pair and leave the third tile alone rather than cascading.</dd>
       </dl>
 
       <h2 data-i18n="twenty48_rules_end_title">How a game ends</h2>
       <dl class="rule-list">
         <dt data-i18n="twenty48_term_win">Reaching 2048</dt>
-        <dd data-i18n="twenty48_rules_win"></dd>
+        <dd data-i18n="twenty48_rules_win">Merge your way up to a 2048 tile and you've won - but the game doesn't stop there. Keep playing afterward to push your score (and the board) even further.</dd>
         <dt data-i18n="twenty48_term_loss">Running out of moves</dt>
-        <dd data-i18n="twenty48_rules_loss"></dd>
+        <dd data-i18n="twenty48_rules_loss">The game ends the moment the board is completely full and no two adjacent tiles share a value, so no move - in any direction - could change anything.</dd>
       </dl>
 
       <p class="about-back"><a href="twenty48.html" data-i18n="about_back">&larr; Back to the board</a></p>
