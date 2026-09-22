@@ -290,13 +290,13 @@ margin: 0 0 0.6rem;
 .game-section-nav a {
   display: inline-flex;
   align-items: center;
-padding: 0.35rem 0.75rem;
+  padding: 0.4rem 0.85rem;
   border: var(--border-width) solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius);
   background: #fff;
   color: var(--text);
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   text-decoration: none;
 }
 
@@ -1021,9 +1021,10 @@ margin: 0.5rem 0;
 
 .site-nav-link {
   display: inline-block;
-  padding: 0.35rem 0.75rem;
+  padding: 0.4rem 0.85rem;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
+  font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
   color: var(--text);
