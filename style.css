@@ -983,9 +983,31 @@ button:disabled {
   pointer-events: none;
 }
 
+/* A layered look (flat fill plus an inset rim) instead of a single flat
+   disc - the same technique as the Ur pieces (.ur-piece::after): a ring
+   set inside the stone reads as a lacquered highlight/shadow line without
+   an actual gradient, so it stays safe on a 16-level grayscale E-Ink
+   panel. Kept on ::before rather than ::after so ::after stays free for
+   the last-move halo further down. */
+.go-stone::before,
+.go-stone-icon::before {
+  content: "";
+  position: absolute;
+  top: 22%;
+  left: 22%;
+  width: 56%;
+  height: 56%;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
 .go-stone-black {
   background: #111;
   border: 1px solid #000;
+}
+
+.go-stone-black::before {
+  border: 2px solid #555;
 }
 
 .go-stone-white {
@@ -993,12 +1015,18 @@ button:disabled {
   border: 2px solid var(--border);
 }
 
+.go-stone-white::before {
+  border: 2px solid #bbb;
+}
+
 /* Standalone stone icon for use outside the board (color-choice picker,
    home page card, placeholder) - same .go-stone-black/.go-stone-white
-   coloring, but sized/positioned inline rather than absolutely within a
-   .go-point. Avoids relying on Unicode circle glyphs (●/○), whose look
-   varies by device font. */
+   coloring, including the inset rim above, so it reads as the same stone
+   rather than a flatter stand-in, but sized/positioned inline rather than
+   absolutely within a .go-point. Avoids relying on Unicode circle glyphs
+   (●/○), whose look varies by device font. */
 .go-stone-icon {
+  position: relative;
   display: inline-block;
   width: 1em;
   height: 1em;
@@ -1140,9 +1168,31 @@ button:disabled {
   pointer-events: none;
 }
 
+/* Same layered-rim technique as the Go stones (.go-stone::before) and the
+   Ur pieces (.ur-piece::after): a ring inset from the edge rather than a
+   single flat disc, flat shapes only so it stays grayscale-safe. Kept on
+   ::before, not ::after, so ::after/the nested .checkers-king-mark below
+   stay free for the king badge. */
+.checkers-piece::before,
+.checkers-icon-disc::before {
+  content: "";
+  position: absolute;
+  top: 22%;
+  left: 22%;
+  width: 56%;
+  height: 56%;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
 .checkers-piece-black {
   background: #111;
   border: 2px solid #000;
+}
+
+.checkers-piece-black::before,
+.checkers-icon-disc-black::before {
+  border: 2px solid #555;
 }
 
 .checkers-piece-white {
@@ -1150,28 +1200,73 @@ button:disabled {
   border: 2px solid var(--border);
 }
 
-.checkers-piece-king::after {
+.checkers-piece-white::before,
+.checkers-icon-disc-white::before {
+  border: 2px solid #bbb;
+}
+
+/* King mark: a small layered rosette (a diamond behind a ring, the same
+   idea as .ur-square-rosette) instead of a single plain ring, so a
+   crowned piece reads as a deliberate badge rather than a dot dropped on
+   top. This needs its own nested element (added/removed by checkers-
+   app.js's updateCheckersBoard alongside the .checkers-piece-king class)
+   rather than a second pseudo-element on .checkers-piece itself, since
+   ::before is already the depth rim above and an element only has the
+   two pseudo-elements to draw with. */
+.checkers-king-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44%;
+  height: 44%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.checkers-king-mark::before {
   content: "";
   position: absolute;
-  top: 25%;
-  left: 25%;
-  width: 50%;
-  height: 50%;
+  top: 32%;
+  left: 32%;
+  width: 36%;
+  height: 36%;
+  transform: rotate(45deg);
+  box-sizing: border-box;
+}
+
+.checkers-king-mark::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   box-sizing: border-box;
 }
 
-.checkers-piece-black.checkers-piece-king::after {
+/* Contrast the badge against its own piece, same pairing the single-ring
+   king mark used before: white on black, dark on white. */
+.checkers-piece-black .checkers-king-mark::before {
+  background: #fff;
+}
+
+.checkers-piece-black .checkers-king-mark::after {
   border: 2px solid #fff;
 }
 
-.checkers-piece-white.checkers-piece-king::after {
+.checkers-piece-white .checkers-king-mark::before {
+  background: var(--border);
+}
+
+.checkers-piece-white .checkers-king-mark::after {
   border: 2px solid var(--border);
 }
 
 /* Small disc icons for the color-choice picker and board placeholder,
    matching the board's own piece styling. */
 .checkers-icon-disc {
+  position: relative;
   display: inline-block;
   width: 1em;
   height: 1em;
