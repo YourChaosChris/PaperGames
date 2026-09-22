@@ -1094,6 +1094,13 @@ margin: 2rem 0 1rem;
   margin: 0 0 0.75rem;
 }
 
+.home-languages {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
 .home-play-button {
   display: inline-block;
   margin-top: 0.75rem;
