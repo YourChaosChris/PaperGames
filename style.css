@@ -1039,6 +1039,65 @@ margin: 0.5rem 0;
   color: #fff;
 }
 
+/* History library page: a plain, image-free reading list of every game's
+   origin story, roughly in the order each game first appeared. */
+
+.history-intro-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0 0 1.25rem;
+}
+
+.history-timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.history-timeline-item {
+  padding: 1rem 0;
+  border-top: var(--border-width) solid var(--border);
+}
+
+.history-timeline-item:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.history-timeline-era {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.2rem;
+}
+
+.history-timeline-title {
+  font-size: 1.05rem;
+  margin: 0 0 0.35rem;
+}
+
+.history-timeline-title a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.history-timeline-title a:hover {
+  text-decoration: underline;
+}
+
+.history-timeline-desc {
+  margin: 0 0 0.4rem;
+  color: var(--text);
+}
+
+.history-timeline-link {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
 .site-footer {
   display: flex;
   flex-wrap: wrap;

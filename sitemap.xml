@@ -161,6 +161,10 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/history.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://yourchaoschris.github.io/PaperGames/hnefatafl-history.html</loc>
     <priority>0.6</priority>
   </url>
