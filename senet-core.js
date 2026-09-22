@@ -1,7 +1,7 @@
 // senet-core.js
 // Dependency-free rules engine for Senet, the ancient Egyptian race
 // game. No rulebook for Senet has ever been found - everything below is
-// eInkChess's take on the widely used modern reconstruction (based on
+// PaperGames's take on the widely used modern reconstruction (based on
 // the squares' names as recorded on the "Game of Thirty Squares" and
 // on Egyptological work such as Timothy Kendall's), not a claim of
 // verified authenticity. See senet-history.html for the background.

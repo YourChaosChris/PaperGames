@@ -1,5 +1,5 @@
 // ai-engine.js
-// Onboard AI for the offline mode of eInkChess.
+// Onboard AI for the offline mode of PaperGames.
 // Supports all basic chess rules (including castling and en passant) with multiple strength levels.
 // The engine only plays legal moves (its own king is never left in check)
 // and can detect simple checkmate / stalemate situations.

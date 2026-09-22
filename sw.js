@@ -1,9 +1,9 @@
 // sw.js
-// Caches the app shell so eInkChess keeps working with no internet connection
+// Caches the app shell so PaperGames keeps working with no internet connection
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "einkchess-cache-v35";
+const CACHE_NAME = "papergames-cache-v36";
 
 const APP_SHELL = [
   "./",

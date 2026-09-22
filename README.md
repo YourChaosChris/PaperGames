@@ -1,14 +1,14 @@
-# eInkChess
+# PaperGames
 
 A collection of classic board, strategy, and puzzle games as a single
 offline-capable web app, designed to be readable and usable on e-paper /
 e-ink displays (high contrast, no animation-dependent UI, works without a
 live network connection once loaded). Play at
-[yourchaoschris.github.io/eInkChess](https://yourchaoschris.github.io/eInkChess/).
+[yourchaoschris.github.io/PaperGames](https://yourchaoschris.github.io/PaperGames/).
 
 Every game is playable against a built-in AI opponent, entirely client-side.
 Chess additionally supports playing real opponents online via a
-[Lichess](https://lichess.org) account connection (OAuth) — eInkChess is not
+[Lichess](https://lichess.org) account connection (OAuth) — PaperGames is not
 affiliated with, endorsed by, or connected to Lichess in any way.
 
 ## Games
@@ -48,7 +48,7 @@ already-visited games keep working offline.
 
 ## License
 
-The eInkChess source code (HTML, CSS, and JavaScript written for this
+The PaperGames source code (HTML, CSS, and JavaScript written for this
 project) is released under the [MIT License](LICENSE).
 
 ### Third-party assets
