@@ -412,6 +412,40 @@ function updateFreeCellBoard() {
       });
     });
   }
+  ensureFreeCellCardAspectRatio();
+}
+
+// Cards are 5:3 (width:height) - set in JS from the measured column width
+// rather than CSS `aspect-ratio`, which some E-Ink browsers (Tolino
+// confirmed) don't support reliably. Recomputed after every render and on
+// resize.
+let einkFreeCellResizeHandlerAttached = false;
+let einkFreeCellResizeTimeoutId = null;
+
+function ensureFreeCellCardAspectRatio() {
+  const columnsEl = document.getElementById("freecell-columns");
+  if (!columnsEl) return;
+  const firstCol = columnsEl.querySelector(".freecell-column");
+  if (!firstCol) return;
+  const rect = firstCol.getBoundingClientRect();
+  if (!rect || !rect.width) return;
+  const height = Math.round(rect.width * 0.6); // 5:3 width:height
+  columnsEl.querySelectorAll(".freecell-card").forEach((el) => {
+    el.style.height = height + "px";
+  });
+  ensureFreeCellResizeHandler();
+}
+
+function ensureFreeCellResizeHandler() {
+  if (einkFreeCellResizeHandlerAttached) return;
+  einkFreeCellResizeHandlerAttached = true;
+  window.addEventListener("resize", () => {
+    if (einkFreeCellResizeTimeoutId !== null) clearTimeout(einkFreeCellResizeTimeoutId);
+    einkFreeCellResizeTimeoutId = setTimeout(() => {
+      einkFreeCellResizeTimeoutId = null;
+      ensureFreeCellCardAspectRatio();
+    }, 150);
+  });
 }
 
 function updateGameLabelsFreeCell() {
