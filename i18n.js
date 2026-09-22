@@ -9220,6 +9220,16 @@ const I18n = (function () {
     return (table && table[key]) || (STRINGS[DEFAULT_LANG] && STRINGS[DEFAULT_LANG][key]) || key;
   }
 
+  // Other scripts (e.g. game-switcher.js) that build their own UI text
+  // from translated strings can't rely on data-i18n, since their labels
+  // aren't static text nodes. They register here to be told whenever the
+  // active language changes, so they can relabel themselves.
+  const changeListeners = [];
+
+  function onChange(fn) {
+    if (typeof fn === "function") changeListeners.push(fn);
+  }
+
   function apply(lang) {
     const l = lang || getLang();
     if (document.documentElement) document.documentElement.lang = l;
@@ -9240,6 +9250,14 @@ const I18n = (function () {
 
     document.querySelectorAll(".lang-switch select.lang-select").forEach((sel) => {
       if (sel.value !== l) sel.value = l;
+    });
+
+    changeListeners.forEach((fn) => {
+      try {
+        fn(l);
+      } catch (e) {
+        // A listener misbehaving shouldn't break the rest of i18n.
+      }
     });
   }
 
@@ -9288,6 +9306,7 @@ const I18n = (function () {
     setLang: setLang,
     apply: apply,
     init: init,
+    onChange: onChange,
     languages: Object.keys(STRINGS),
     languageName: (code) => LANGUAGE_NAMES[code] || code.toUpperCase()
   };
