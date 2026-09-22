@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "einkchess-cache-v32";
+const CACHE_NAME = "einkchess-cache-v33";
 
 const APP_SHELL = [
   "./",
@@ -77,6 +77,9 @@ const APP_SHELL = [
   "quoridor.html",
   "quoridor-rules.html",
   "quoridor-history.html",
+  "hex.html",
+  "hex-rules.html",
+  "hex-history.html",
   "guide.html",
   "about.html",
   "stats.html",
@@ -149,6 +152,9 @@ const APP_SHELL = [
   "quoridor-core.js",
   "quoridor-ai.js",
   "quoridor-app.js",
+  "hex-core.js",
+  "hex-ai.js",
+  "hex-app.js",
   "sw-register.js",
   "game-storage.js",
   "game-stats.js",

@@ -25,7 +25,8 @@ const STATS_GAME_NAME_KEY = {
   freecell: "game_freecell",
   onitama: "game_onitama",
   hnefatafl: "game_hnefatafl",
-  quoridor: "game_quoridor"
+  quoridor: "game_quoridor",
+  hex: "game_hex"
 };
 
 function gameDisplayName(game) {
