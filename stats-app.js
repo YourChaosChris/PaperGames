@@ -26,7 +26,8 @@ const STATS_GAME_NAME_KEY = {
   onitama: "game_onitama",
   hnefatafl: "game_hnefatafl",
   quoridor: "game_quoridor",
-  hex: "game_hex"
+  hex: "game_hex",
+  halma: "game_halma"
 };
 
 function gameDisplayName(game) {

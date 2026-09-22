@@ -3536,3 +3536,79 @@ button.ur-tray-slot {
   background: var(--square-light);
   border: 2px solid var(--border);
 }
+
+/* Halma board: a 10x10 float-grid (same technique as chess/checkers -
+   note the explicit width override below, since the shared .square
+   base class hardcodes 12.5% for an 8-column board). Sides are told
+   apart structurally, not by color alone (filled vs. outlined disc),
+   and each side's home/goal camp is shaded so it's clear at a glance
+   where pieces still need to travel to. */
+
+#halma-board {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.halma-square {
+  width: calc(100% / 10);
+  background: var(--square-light);
+  border: 1px solid var(--border);
+}
+
+.halma-square-movable {
+  background: var(--square-dark);
+}
+
+.halma-square-camp-p1,
+.halma-square-camp-p2 {
+  background: repeating-linear-gradient(45deg, var(--square-light), var(--square-light) 4px, var(--square-dark) 4px, var(--square-dark) 5px);
+}
+
+.halma-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  height: 70%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.halma-piece-p1 {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.halma-piece-p2 {
+  background: var(--square-light);
+  border: 2px solid var(--border);
+}
+
+/* Small icons for the side-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.halma-icon-piece {
+  display: inline-flex;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.halma-icon-piece-p1 {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.halma-icon-piece-p2 {
+  background: var(--square-light);
+  border: 2px solid var(--border);
+}
