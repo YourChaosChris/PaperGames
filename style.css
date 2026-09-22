@@ -3796,6 +3796,139 @@ max-width: 900px;
   font-weight: 700;
 }
 
+/* Klondike board: stock/waste and foundations in a row above seven
+   cascading tableau columns - the same overlap-via-negative-margin
+   layout as FreeCell's cascade, since a Klondike column is likewise a
+   variable-height stack rather than a fixed board shape. Suits are
+   told apart by glyph shape (spade/club vs. heart/diamond), never by
+   red/black coloring, matching FreeCell. Face-down cards get a
+   hatched back instead of a plain color, the same structural, not
+   color-based, convention used for player fills elsewhere in this
+   app (e.g. Dots and Boxes). */
+
+.klondike-top-row {
+  display: flex;
+  justify-content: space-between;
+max-width: 900px;
+  margin: 0 auto 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.klondike-top-row > * {
+  margin: 0 1rem 1rem 0;
+}
+
+.klondike-top-row > *:last-child {
+  margin-right: 0;
+}
+
+.klondike-stockwaste,
+.klondike-foundations {
+  display: flex;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.klondike-stockwaste > *, .klondike-foundations > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+.klondike-stockwaste > *:last-child, .klondike-foundations > *:last-child {
+  margin-right: 0;
+}
+
+.klondike-cell {
+  width: 2.6rem;
+  height: 3.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.klondike-foundation-empty {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.klondike-card-selected {
+  outline: 3px solid var(--border);
+  outline-offset: 1px;
+}
+
+.klondike-columns {
+  display: flex;
+max-width: 900px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.klondike-columns > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.klondike-columns > *:last-child {
+  margin-right: 0;
+}
+
+.klondike-column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.klondike-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  border: var(--border-width) solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  box-sizing: border-box;
+  margin-top: -1.6rem;
+  padding: 0.2rem 0 0 0.3rem;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.8rem;
+  font-size: clamp(0.65rem, 2.4vw, 0.95rem);
+  cursor: pointer;
+}
+
+.klondike-card:first-child {
+  margin-top: 0;
+}
+
+.klondike-card-back {
+  background: repeating-linear-gradient(45deg, #fff, #fff 4px, var(--border) 4px, var(--border) 5px);
+}
+
+.klondike-empty-slot {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  border: var(--border-width) dashed var(--muted);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.klondike-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8em;
+  height: 1.4em;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
 /* Onitama board: a 5x5 float-grid (same technique as chess/checkers -
    note the explicit width override below, since the shared .square
    base class hardcodes 12.5% for an 8-column board). Sides are told

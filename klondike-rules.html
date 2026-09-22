@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Klondike Solitaire Rules | PaperGames</title>
+  <meta name="description" content="Complete Klondike Solitaire rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/klondike-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/klondike-rules.html">
+  <meta property="og:title" content="Klondike Solitaire Rules | PaperGames">
+  <meta property="og:description" content="Complete Klondike Solitaire rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Klondike Solitaire Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Klondike Solitaire rules explained clearly, with every move and special case covered. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="klondike_rules_title">Klondike Rules</h1>
+      <p data-i18n="klondike_rules_intro">A quick reference for how PaperGames plays Klondike - useful if you're rusty, or learning.</p>
+
+      <h2 data-i18n="klondike_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="klondike-icon" aria-hidden="true">K♦</span> <span data-i18n="klondike_term_layout">The layout</span></dt>
+        <dd data-i18n="klondike_rules_layout">Cards are dealt into 7 tableau columns of 1 through 7 cards each, with only the top card of every column face-up. Four foundations (one per suit) are built up from Ace to King. The rest of the deck sits in a stock pile, drawn one card at a time onto a waste pile.</dd>
+        <dt data-i18n="klondike_term_tableau">Moving cards</dt>
+        <dd data-i18n="klondike_rules_tableau">A card can move onto a tableau column only onto a card exactly one rank higher and the opposite color, or onto any empty column, which accepts a King only. A run of several cards already stacked face-up in that same descending, alternating order can be moved together as one unit onto a valid destination.</dd>
+        <dt data-i18n="klondike_term_foundation">Foundations</dt>
+        <dd data-i18n="klondike_rules_foundation">A foundation only accepts its own suit, starting with the Ace and moving up one rank at a time. Once a card is on a foundation it stays there - foundations only receive cards, they never give them back to the tableau.</dd>
+        <dt data-i18n="klondike_term_stock">The stock and waste</dt>
+        <dd data-i18n="klondike_rules_stock">Tap the stock pile to flip its top card face-up onto the waste pile, one card at a time. Once the stock is empty, tapping it again reshuffles the whole waste pile back into the stock so you can draw through it again - PaperGames doesn't limit how many times you can redeal.</dd>
+      </dl>
+
+      <h2 data-i18n="klondike_rules_end_title">Finishing a game</h2>
+      <dl class="rule-list">
+        <dt data-i18n="klondike_term_win">Winning</dt>
+        <dd data-i18n="klondike_rules_win">The game is won the moment all four foundations are complete, Ace through King. Not every shuffle can be won - unlike FreeCell, a Klondike deal can genuinely become unsolvable partway through, since only the top card of each tableau column is visible up front.</dd>
+      </dl>
+
+      <p class="about-back"><a href="klondike.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>
