@@ -835,8 +835,8 @@ button:disabled {
 }
 
 .home-hero-icon {
-  font-size: 5rem;
-  line-height: 1;
+  width: 5rem;
+  height: 5rem;
   margin-bottom: 0.25rem;
 }
 
