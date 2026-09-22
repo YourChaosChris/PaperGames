@@ -117,6 +117,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/fleetbattle-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/fleetbattle-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/fleetbattle.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://yourchaoschris.github.io/PaperGames/fourinarow-history.html</loc>
     <priority>0.6</priority>
   </url>
@@ -182,6 +194,18 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/halma.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/hashi-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/hashi-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/hashi.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -374,6 +398,18 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/shogi.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/skyscrapers-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/skyscrapers-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/skyscrapers.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
