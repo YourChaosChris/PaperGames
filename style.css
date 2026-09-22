@@ -6885,11 +6885,6 @@ max-width: 900px;
   border-bottom: none;
 }
 
-  --ludo-red: #b23a2e;
-  --ludo-green: #2c8a4b;
-  --ludo-yellow: #c98a12;
-  --ludo-blue: #2f5fa8;
-
 /* Ludo board: a single 15x15 CSS grid (CSS grid `gap` is fine on E-Ink
    browsers - only flexbox `gap` isn't - though this board doesn't use
    even that, every cell is simply placed at its own grid-area). Built
