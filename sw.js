@@ -91,6 +91,7 @@ const APP_SHELL = [
   "donate-qr.png",
   "style.css",
   "i18n.js",
+  "game-switcher.js",
   "chess-core.js",
   "pieces.js",
   "ai-engine.js",

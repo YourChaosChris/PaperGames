@@ -748,7 +748,8 @@ button:disabled {
    control also means the OS/browser draws the actual dropdown list,
    which behaves correctly and predictably on E-Ink browsers without
    any custom popover logic of our own. */
-.lang-select {
+.lang-select,
+.game-select {
   font-family: inherit;
   font-weight: 700;
   font-size: 0.7rem;
@@ -762,6 +763,24 @@ button:disabled {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+}
+
+/* Game switcher: same treatment as the language picker, built at
+   runtime by game-switcher.js on every game/rules/history page (not on
+   the home page, which has no "current game" to switch away from). */
+.game-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.game-switch-icon {
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.game-select {
+  max-width: 11rem;
 }
 
 .site-nav {
