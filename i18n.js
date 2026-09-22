@@ -11,6 +11,7 @@ const STRINGS = {
     nav_guide: "Guide",
     nav_about: "About",
     nav_stats: "Stats",
+    footer_support: "☕ Support",
     toggle_moves_button: "Moves",
 
     home_tagline: "Chess, built for e-readers.",
@@ -772,7 +773,12 @@ const STRINGS = {
     quoridor_history_design_p1: "The entire rule set fits on a single card - move your pawn or place a wall, reach the far side to win - yet the tension between racing ahead and spending a turn to block your opponent instead gives it real strategic depth, and it's frequently cited in game-design writing as an example of elegant minimalism.",
     quoridor_history_design_p2: "Quoridor has also been studied as a computer science problem: because the state space is large but well-structured (pawn positions plus wall placements, with a path-connectivity rule to enforce), it's a popular target for both traditional search-based AI and, more recently, reinforcement-learning agents.",
     quoridor_history_version_title: "This Version",
-    quoridor_history_version_p1: "eInkChess plays the standard rules on the standard 9x9 board with ten walls per player, with wall placements chosen by tapping the small square where the wall would sit rather than dragging a physical piece, to keep it comfortable on a touchscreen.",
+    quoridor_history_version_p1: "eInkChess plays the standard rules on the standard 9x9 board with ten walls per player. Placing a wall is a small mode of its own: tap \"Place a wall\", tap anywhere on the board to preview the nearest legal wall there, and confirm - a deliberately forgiving target on a touchscreen, rather than needing to hit a precise spot.",
+    quoridor_wall_mode_start: "🧱 Place a wall",
+    quoridor_wall_mode_cancel: "✕ Cancel",
+    quoridor_wall_orientation_h: "⬌ Horizontal",
+    quoridor_wall_orientation_v: "⬍ Vertical",
+    quoridor_wall_confirm: "✓ Place",
 
     game_hex: "Hex",
     home_hex_desc: "Connect your two sides of a hexagonal board before your opponent connects theirs. Local 2-player or vs. the built-in engine.",
@@ -881,6 +887,7 @@ const STRINGS = {
     nav_guide: "Anleitung",
     nav_about: "Über",
     nav_stats: "Statistik",
+    footer_support: "☕ Unterstützen",
     toggle_moves_button: "Züge",
 
     home_tagline: "Schach, gemacht für E-Reader.",
@@ -1642,7 +1649,12 @@ const STRINGS = {
     quoridor_history_design_p1: "Das gesamte Regelwerk passt auf eine einzige Karte – bewege deine Figur oder platziere eine Mauer, erreiche die gegenüberliegende Seite und gewinne – doch die Spannung zwischen Vorwärtsrennen und dem Verzicht auf einen Zug, um stattdessen den Gegner zu blockieren, verleiht ihm echte strategische Tiefe, weshalb es in der Spieldesign-Literatur häufig als Beispiel für elegante Schlichtheit angeführt wird.",
     quoridor_history_design_p2: "Quoridor wurde auch als informatisches Problem untersucht: Da der Zustandsraum groß, aber gut strukturiert ist (Figurenpositionen plus Mauerplatzierungen, mit einer Wegverbindungs-Regel, die eingehalten werden muss), ist es ein beliebtes Ziel sowohl für klassische suchbasierte KI als auch, in jüngerer Zeit, für Agenten mit bestärkendem Lernen.",
     quoridor_history_version_title: "Diese Version",
-    quoridor_history_version_p1: "eInkChess spielt die Standardregeln auf dem Standard-9x9-Brett mit zehn Mauern pro Spieler, wobei Mauerplatzierungen durch Antippen des kleinen Quadrats erfolgen, an dem die Mauer sitzen würde, statt ein physisches Teil zu ziehen, um es auf einem Touchscreen komfortabel zu halten.",
+    quoridor_history_version_p1: "eInkChess spielt die Standardregeln auf dem Standard-9x9-Brett mit zehn Mauern pro Spieler. Eine Mauer zu platzieren ist ein eigener kleiner Modus: \"Mauer platzieren\" antippen, irgendwo auf dem Brett antippen, um die nächstgelegene erlaubte Mauer dort in der Vorschau zu sehen, und bestätigen – ein auf einem Touchscreen bewusst großzügiges Ziel, statt eine genaue Stelle treffen zu müssen.",
+    quoridor_wall_mode_start: "🧱 Mauer platzieren",
+    quoridor_wall_mode_cancel: "✕ Abbrechen",
+    quoridor_wall_orientation_h: "⬌ Horizontal",
+    quoridor_wall_orientation_v: "⬍ Vertikal",
+    quoridor_wall_confirm: "✓ Platzieren",
 
     game_hex: "Hex",
     home_hex_desc: "Verbinde deine beiden Seiten eines Sechseck-Bretts, bevor es der Gegner tut. Lokal zu zweit oder gegen die eingebaute KI.",
@@ -1746,6 +1758,26 @@ const STRINGS = {
   }
 };
 
+// Native names, so each language reads correctly to its own speakers
+// regardless of which language the UI happens to be in right now -
+// the classic approach for a language picker (nobody wants to hunt
+// for their language spelled in a language they don't read). Order
+// here is also the order options appear in the picker.
+const LANGUAGE_NAMES = {
+  en: "English",
+  de: "Deutsch",
+  fr: "Français",
+  es: "Español",
+  it: "Italiano",
+  nl: "Nederlands",
+  pl: "Polski",
+  uk: "Українська",
+  ru: "Русский",
+  ja: "日本語",
+  zh: "中文"
+};
+const LANGUAGE_ORDER = ["en", "de", "fr", "es", "it", "nl", "pl", "uk", "ru", "ja", "zh"];
+
 const I18n = (function () {
   const STORAGE_KEY = "einkchess_lang";
   const DEFAULT_LANG = "en";
@@ -1805,8 +1837,8 @@ const I18n = (function () {
       });
     });
 
-    document.querySelectorAll(".lang-switch [data-lang]").forEach((btn) => {
-      btn.classList.toggle("active-mode", btn.getAttribute("data-lang") === l);
+    document.querySelectorAll(".lang-switch select.lang-select").forEach((sel) => {
+      if (sel.value !== l) sel.value = l;
     });
   }
 
@@ -1816,11 +1848,37 @@ const I18n = (function () {
     apply(lang);
   }
 
-  function init() {
-    apply(getLang());
-    document.querySelectorAll(".lang-switch [data-lang]").forEach((btn) => {
-      btn.addEventListener("click", () => setLang(btn.getAttribute("data-lang")));
+  // Builds a single <select> per .lang-switch container, listing every
+  // language STRINGS actually has (in LANGUAGE_ORDER, falling back to
+  // whatever else might exist) by its own native name. This lives here
+  // rather than as static markup in every page so that adding a
+  // language is a one-line change to LANGUAGE_NAMES/LANGUAGE_ORDER plus
+  // its STRINGS entry - no HTML file needs to change, however many
+  // pages there are.
+  function buildLangSwitchUI(container, currentLang) {
+    container.innerHTML = "";
+    const select = document.createElement("select");
+    select.className = "lang-select";
+    select.setAttribute("aria-label", "Language / Sprache");
+    const codes = LANGUAGE_ORDER.filter((code) => STRINGS[code])
+      .concat(Object.keys(STRINGS).filter((code) => LANGUAGE_ORDER.indexOf(code) === -1));
+    codes.forEach((code) => {
+      const opt = document.createElement("option");
+      opt.value = code;
+      opt.textContent = LANGUAGE_NAMES[code] || code.toUpperCase();
+      if (code === currentLang) opt.selected = true;
+      select.appendChild(opt);
     });
+    select.addEventListener("change", () => setLang(select.value));
+    container.appendChild(select);
+  }
+
+  function init() {
+    const lang = getLang();
+    document.querySelectorAll(".lang-switch").forEach((container) => {
+      buildLangSwitchUI(container, lang);
+    });
+    apply(lang);
   }
 
   return {
@@ -1829,7 +1887,8 @@ const I18n = (function () {
     setLang: setLang,
     apply: apply,
     init: init,
-    languages: Object.keys(STRINGS)
+    languages: Object.keys(STRINGS),
+    languageName: (code) => LANGUAGE_NAMES[code] || code.toUpperCase()
   };
 })();
 
