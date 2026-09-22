@@ -8,7 +8,7 @@
 // overwhelming majority of FreeCell deals (all but a handful out of
 // millions, including the original Microsoft FreeCell's famously
 // unsolvable #11982) are solvable, so, exactly like the real game,
-// eInkChess doesn't try to rule out that rare exception.
+// PaperGames doesn't try to rule out that rare exception.
 //
 // A card is { rank, suit } - rank 1-13 (Ace-King), suit one of
 // "S","H","D","C". State: 8 tableau columns, 4 free cells (each holds

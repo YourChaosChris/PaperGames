@@ -11,7 +11,7 @@ var LichessAuth;
     origin = window.location.protocol + "//" + window.location.host;
   }
 
-  const LICHESS_CLIENT_ID = "eInkChess-demo"; // frei wählbar
+  const LICHESS_CLIENT_ID = "PaperGames-demo"; // frei wählbar
   const LICHESS_REDIRECT_URI = origin + window.location.pathname;
   const LICHESS_OAUTH_AUTHORIZE = "https://lichess.org/oauth";
   const LICHESS_OAUTH_TOKEN = "https://lichess.org/api/token";
