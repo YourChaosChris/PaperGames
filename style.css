@@ -2387,11 +2387,12 @@ button.ur-tray-slot {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(0.7rem, 3vw, 1.3rem);
-  font-weight: 700;
-  line-height: 1;
-  color: var(--muted);
   pointer-events: none;
+}
+
+.shogi-piece svg {
+  width: 62%;
+  height: 62%;
 }
 
 .shogi-piece-w {
@@ -2464,8 +2465,11 @@ button.ur-tray-slot {
   background: var(--square-light);
   border: 2px solid var(--border);
   box-sizing: border-box;
-  font-size: 0.85rem;
-  font-weight: 700;
+}
+
+.shogi-hand-piece-label svg {
+  width: 68%;
+  height: 68%;
 }
 
 .shogi-hand-piece.shogi-piece-w .shogi-hand-piece-label {
