@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Surakarta Rules | PaperGames</title>
+  <meta name="description" content="Complete Surakarta rules explained clearly, with a worked example of the board's distinctive looping-track capture. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/surakarta-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/surakarta-rules.html">
+  <meta property="og:title" content="Surakarta Rules | PaperGames">
+  <meta property="og:description" content="Complete Surakarta rules explained clearly, with a worked example of the board's distinctive looping-track capture. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Surakarta Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Surakarta rules explained clearly, with a worked example of the board's distinctive looping-track capture. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="surakarta_rules_title">Surakarta Rules</h1>
+      <p data-i18n="surakarta_rules_intro">A quick reference for how PaperGames plays Surakarta - useful if you're rusty, or learning. The looping-track capture is the one part almost everyone finds confusing at first, so there's a full worked example below.</p>
+
+      <h2 data-i18n="surakarta_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="surakarta-icon-disc surakarta-icon-disc-black" aria-hidden="true"></span> <span data-i18n="surakarta_term_board">The board</span></dt>
+        <dd data-i18n="surakarta_rules_board">A plain 6x6 grid of points. Each player starts with 12 stones filling the two rows nearest their own side (Black on the top two rows, White on the bottom two), with the middle two rows empty. Black moves first.</dd>
+        <dt data-i18n="surakarta_term_movement">Moving</dt>
+        <dd data-i18n="surakarta_rules_movement">On your turn, slide one stone a single step to any adjacent empty point - straight or diagonal, any of the 8 directions. A step like this is always quiet: it never captures anything, even if it lands right next to an enemy stone.</dd>
+        <dt data-i18n="surakarta_term_loop">The loop tracks</dt>
+        <dd data-i18n="surakarta_rules_loop">Four lines on the board - the 2nd and 5th row, and the 2nd and 5th column - don't just stop at the edge: each end of each of these four lines curves outward and connects to the nearest end of the neighboring special line at that same corner, forming a loop around each of the board's 4 corners. A stone sliding along one of these four lines can ride a loop off one edge and reappear travelling along the connected line, still moving in a straight line as far as the track and any further loops allow.</dd>
+        <dt data-i18n="surakarta_term_capture">Capturing</dt>
+        <dd data-i18n="surakarta_rules_capture">Capturing is completely separate from moving, and only works along the loop tracks. Instead of taking a single step, a stone can slide all the way along one of its 8 directions - passing straight over every other stone, friend or foe, without effect - for as long as the line and its loop connections carry it. The moment it has gone around at least one loop AND the next stone it reaches is an enemy stone, that stone is captured and the slider lands on its square, ending the move right there. If the line runs off the board with no loop to continue it, or if it loops all the way around without ever meeting a qualifying enemy stone, there's no capture that way. Capturing is optional here: even with a capture available, you may play a quiet step instead.</dd>
+      </dl>
+
+      <h2 data-i18n="surakarta_rules_example_title">Worked example: a loop capture</h2>
+      <p data-i18n="surakarta_rules_example_intro">○ is White (the piece that moves in this example), ● is Black. White's stone at A sits on one of the four loop-carrying lines. There's nothing blocking it all the way to the edge, so instead of a quiet step, White plays a full capturing slide.</p>
+      <figure class="surakarta-example-figure">
+        <svg viewBox="0 0 220 220" width="220" height="220" role="img" aria-label="Loop capture example">
+          <defs>
+            <marker id="surakartaArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#000"/>
+            </marker>
+          </defs>
+          <!-- the row line White starts on, and the arrow showing the slide direction -->
+          <line x1="30" y1="30" x2="150" y2="30" stroke="#000" stroke-width="2"/>
+          <path d="M140,16 L36,16" stroke="#000" stroke-width="2" marker-end="url(#surakartaArrow)"/>
+          <!-- the loop arc curving from the row's edge around the corner into the column -->
+          <path d="M30,30 Q10,90 70,90" stroke="#000" stroke-width="2" fill="none" stroke-dasharray="4,3"/>
+          <!-- the column line the slide continues down after the loop -->
+          <line x1="70" y1="90" x2="70" y2="180" stroke="#000" stroke-width="2"/>
+          <circle cx="150" cy="30" r="12" fill="none" stroke="#000" stroke-width="2"/>
+          <circle cx="70" cy="180" r="12" fill="#000"/>
+          <circle cx="70" cy="180" r="17" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="3,3"/>
+          <text x="150" y="18" text-anchor="middle" font-size="13">A</text>
+          <text x="16" y="34" text-anchor="middle" font-size="13">loop</text>
+          <text x="70" y="202" text-anchor="middle" font-size="13">B</text>
+        </svg>
+        <figcaption data-i18n="surakarta_rules_example_caption">White's stone at A slides left along the row. It runs off the edge, rides the loop track around the corner, and re-enters travelling down the connected column. The first stone it meets after using that loop is Black's stone at B - so B is captured, and White's stone lands on B's now-empty square (dashed circle). If A had instead been just one step from an enemy stone with no loop involved, that adjacent enemy would NOT be captured - only a slide that actually uses a loop can capture.</figcaption>
+      </figure>
+
+      <h2 data-i18n="surakarta_rules_end_title">How a game ends</h2>
+      <dl class="rule-list">
+        <dt data-i18n="surakarta_term_win">Winning</dt>
+        <dd data-i18n="surakarta_rules_win">You win by capturing every one of your opponent's stones, or if your opponent has no legal move at all on their turn.</dd>
+        <dt data-i18n="surakarta_term_resignation">Resignation</dt>
+        <dd data-i18n="surakarta_rules_resignation">A player can resign at any time, ending the game immediately in the opponent's favor.</dd>
+      </dl>
+
+      <p class="about-back"><a href="surakarta.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>

@@ -5759,3 +5759,497 @@ max-width: 900px;
   font-size: 0.65rem;
   font-weight: 700;
 }
+
+/* Tablut board: a 9x9 float-grid (same technique as hnefatafl above -
+   note the explicit width override below, since the shared .square
+   base class hardcodes 12.5% for an 8-column board). Sides are told
+   apart structurally, not by color alone: attackers are a filled
+   disc, defenders an outlined disc, and the king gets his own crown
+   marker on top of a defender disc - the same convention used for
+   the smaller Brandub board. */
+
+#tablut-board {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.tablut-square {
+  width: calc(100% / 9);
+  background: var(--square-light);
+  border: 1px solid var(--border);
+}
+
+.tablut-square-movable {
+  background: var(--square-dark);
+}
+
+.tablut-square.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.tablut-square-throne,
+.tablut-square-corner {
+  background: var(--square-dark);
+}
+
+.tablut-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 74%;
+  height: 74%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.tablut-piece-attacker {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.tablut-piece-defender {
+  background: var(--square-light);
+  border: 2px solid var(--border);
+}
+
+.tablut-piece-king::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 48%;
+  height: 48%;
+  transform: translate(-50%, -50%);
+  clip-path: polygon(0% 100%, 0% 40%, 25% 60%, 50% 30%, 75% 60%, 100% 40%, 100% 100%);
+  background: var(--border);
+  box-sizing: border-box;
+}
+
+/* Small icons for the side-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.tablut-icon-piece {
+  display: inline-flex;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.tablut-icon-piece-attacker {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.tablut-icon-piece-defender {
+  background: var(--square-light);
+  border: 2px solid var(--border);
+}
+
+/* Abalone board: a 61-cell hexagon rendered as plain circular buttons
+   at hex-grid positions (see abalone-app.js's cube-coordinate pixel
+   math) - round holes/marbles read just as clearly on e-ink as true
+   hexagon cells and are far simpler to get pixel-perfect on an old
+   WebView. Height is JS-enforced from the measured width (see
+   ensureAbaloneBoardAspect) rather than via `aspect-ratio`, which some
+   E-Ink browsers silently ignore. */
+.abalone-board-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.abalone-board {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.abalone-cell {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: var(--square-light);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.abalone-cell-movable {
+  background: var(--square-dark);
+}
+
+.abalone-cell-selected {
+  border-color: var(--accent);
+  border-width: 3px;
+}
+
+/* A push destination: dashed border on top of the movable shading, so
+   "this can capture" is conveyed structurally rather than by color
+   alone. */
+.abalone-cell-sumito {
+  border-style: dashed;
+  border-width: 3px;
+  border-color: var(--accent);
+}
+
+.abalone-cell.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.abalone-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 78%;
+  height: 78%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.abalone-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.abalone-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own marble styling. */
+.abalone-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.abalone-icon-disc-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.abalone-icon-disc-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* The current-selection hint and its "Clear selection" button: plain
+   stacked content, margin-based spacing rather than flexbox `gap`
+   (unsupported on the Tolino's Chrome 61 WebView). */
+.abalone-selection-controls {
+  margin-top: 0.6rem;
+}
+
+.abalone-selection-controls button {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+/* Worked-example diagram on the rules page. Flexbox `gap` fallback:
+   margin-based spacing instead, since some E-Ink browsers (Tolino
+   confirmed) don't support `gap` on a flex container and render items
+   with zero space between them. */
+.abalone-example-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 1rem -1.5rem;
+}
+
+.abalone-example-figure {
+  margin: 0 0 1rem 1.5rem;
+  max-width: 300px;
+}
+
+.abalone-example-figure svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.abalone-example-figure figcaption {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+
+
+/* Pyramid Solitaire board: stock/waste/redeal row above a 7-row card
+   triangle. The triangle itself uses absolute positioning sized in
+   pixels by pyramidsolitaire-app.js's layoutPyramidBoard (measure the
+   container's width, then set an explicit pixel height and per-card
+   left/top/width/height) rather than CSS aspect-ratio, which isn't
+   supported on the older E-Ink browsers this app targets. Lower rows
+   get a higher z-index in that same JS so they visually sit in front,
+   overlapping the row above - matching how a real card pyramid looks.
+   Suits are told apart by glyph shape (spade/club vs. heart/diamond),
+   never by red/black coloring, matching Klondike/FreeCell. All 28
+   pyramid cards are dealt face-up (the standard rule for this game),
+   so a covered card just gets a dimmed, non-interactive look instead
+   of a hatched face-down back like the stock pile does. */
+
+.pyramidsolitaire-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 640px;
+  margin: 0 auto 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.pyramidsolitaire-top-row > * {
+  margin: 0 1rem 1rem 0;
+}
+
+.pyramidsolitaire-top-row > *:last-child {
+  margin-right: 0;
+}
+
+.pyramidsolitaire-stockwaste {
+  display: flex;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.pyramidsolitaire-stockwaste > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+.pyramidsolitaire-stockwaste > *:last-child {
+  margin-right: 0;
+}
+
+.pyramidsolitaire-cell {
+  width: 2.6rem;
+  height: 3.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.pyramidsolitaire-cell:disabled {
+  cursor: default;
+}
+
+.pyramidsolitaire-card-back {
+  background: repeating-linear-gradient(45deg, #fff, #fff 4px, var(--border) 4px, var(--border) 5px);
+}
+
+.pyramidsolitaire-board {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.pyramidsolitaire-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-width) solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  box-sizing: border-box;
+  font-weight: 700;
+  font-size: 0.85rem;
+  font-size: clamp(0.6rem, 2.3vw, 0.9rem);
+  padding: 0;
+  cursor: pointer;
+}
+
+.pyramidsolitaire-card-covered {
+  background: var(--square-dark);
+  color: var(--muted);
+  cursor: default;
+}
+
+.pyramidsolitaire-card-selected {
+  outline: 3px solid var(--border);
+  outline-offset: 1px;
+}
+
+.pyramidsolitaire-card-gone {
+  display: none;
+}
+
+.pyramidsolitaire-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8em;
+  height: 1.4em;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+/* Surakarta board: a plain 6x6 grid of points, square (unlike Fanorona's
+   wider-than-tall 5x9), so it reuses the same percentage-based
+   absolute-positioning technique but with equal width/height totals.
+   The board's namesake "loop tracks" - the 4 corner arcs that let a
+   capturing slide curve off one edge and re-enter along a perpendicular
+   line - are drawn as curved SVG paths in the same non-interactive
+   layer as the ordinary grid lines, under the point buttons (see
+   surakarta-app.js's buildSurakartaBoardDOM). Pieces use the same
+   filled-disc-vs-outlined-disc convention as everywhere else in this
+   app. */
+
+.surakarta-board {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+}
+
+.surakarta-lines {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.surakarta-lines line {
+  stroke: var(--border);
+  stroke-width: 2;
+}
+
+/* The 4 corner loop-track arcs, plus their short straight stub lines
+   connecting the board's own edge points out to where each curve
+   begins - drawn a little thicker/lighter than the plain grid lines so
+   the loop tracks read as a visually distinct feature, per the task's
+   emphasis that this is the game's defining (and least obvious)
+   mechanic. */
+.surakarta-loop-arc {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  opacity: 0.75;
+}
+
+.surakarta-loop-stub {
+  stroke: var(--accent);
+  stroke-width: 2;
+  opacity: 0.55;
+}
+
+.surakarta-point {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: var(--square-light);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.surakarta-point-movable {
+  background: var(--square-dark);
+}
+
+.surakarta-point-capturable {
+  box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+.surakarta-point-selected {
+  border-color: var(--accent);
+  border-width: 3px;
+}
+
+.surakarta-point.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.surakarta-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 76%;
+  height: 76%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.surakarta-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.surakarta-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.surakarta-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.surakarta-icon-disc-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.surakarta-icon-disc-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Worked-example loop-capture diagram on the rules page: a single
+   wider figure (the loop makes for a wide diagram) rather than the
+   side-by-side pair Fanorona uses for its two capture types. */
+.surakarta-example-figure {
+  max-width: 100%;
+  margin: 0 0 1rem 0;
+}
+
+.surakarta-example-figure svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.surakarta-example-figure figcaption {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+}

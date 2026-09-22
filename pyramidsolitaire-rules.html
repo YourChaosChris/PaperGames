@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pyramid Solitaire Rules | PaperGames</title>
+  <meta name="description" content="Complete Pyramid Solitaire rules explained clearly: the sum-to-13 pairing rule, King removal, exposure, and the redeal limit, with a worked example.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/pyramidsolitaire-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/pyramidsolitaire-rules.html">
+  <meta property="og:title" content="Pyramid Solitaire Rules | PaperGames">
+  <meta property="og:description" content="Complete Pyramid Solitaire rules explained clearly: the sum-to-13 pairing rule, King removal, exposure, and the redeal limit, with a worked example.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pyramid Solitaire Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Pyramid Solitaire rules explained clearly: the sum-to-13 pairing rule, King removal, exposure, and the redeal limit, with a worked example.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="pyramidsolitaire_rules_title">Pyramid Solitaire Rules</h1>
+      <p data-i18n="pyramidsolitaire_rules_intro">A quick reference for how PaperGames plays Pyramid Solitaire - useful if you're rusty, or learning.</p>
+
+      <h2 data-i18n="pyramidsolitaire_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="pyramidsolitaire-icon" aria-hidden="true">13</span> <span data-i18n="pyramidsolitaire_term_layout">The layout</span></dt>
+        <dd data-i18n="pyramidsolitaire_rules_layout">28 cards are dealt face-up into a triangle of 7 rows: 1 card at the top, 2 below it, and so on down to 7 cards in the bottom row, each card resting above and between the two cards below it. The remaining 24 cards form the stock, dealt one at a time face-up onto a waste pile.</dd>
+        <dt data-i18n="pyramidsolitaire_term_pairing">Pairing to 13</dt>
+        <dd data-i18n="pyramidsolitaire_rules_pairing">Cards are worth their face value for this: Ace = 1, 2 through 10 as printed, Jack = 11, Queen = 12, King = 13. Remove any two available cards whose values add up to exactly 13 - for example a 5 and an 8, a 9 and a 4, or a Jack (11) and a 2. A King is already worth 13 on its own, so it's removed alone, with no partner needed.</dd>
+        <dt data-i18n="pyramidsolitaire_term_exposed">Exposed cards</dt>
+        <dd data-i18n="pyramidsolitaire_rules_exposed">A card in the pyramid can only be picked once both cards resting on it in the row below are gone - the bottom row starts already exposed, since nothing is below it. Only the pyramid's exposed cards and the waste pile's current top card can ever be removed; a covered pyramid card is shown dimmed and can't be picked yet, even though you can see what it is.</dd>
+        <dt data-i18n="pyramidsolitaire_term_stock">The stock, waste, and redeals</dt>
+        <dd data-i18n="pyramidsolitaire_rules_stock">Tap the stock pile to flip its top card face-up onto the waste pile, one card at a time - only the waste's current top card is available for pairing. Once the stock runs out, tapping it again redeals the whole waste pile back into the stock so you can draw through it again, up to 2 times per game. The remaining redeal count is always shown next to the stock.</dd>
+      </dl>
+
+      <h2 data-i18n="pyramidsolitaire_rules_example_title">A worked example</h2>
+      <dl class="rule-list">
+        <dt data-i18n="pyramidsolitaire_term_example">Clearing a pair</dt>
+        <dd data-i18n="pyramidsolitaire_rules_example">Say the bottom row has an exposed 9 and, elsewhere in the pyramid, an exposed 4 - clicking the 9 and then the 4 removes them both, since 9 + 4 = 13. If that 4 was the only card resting on a 6 in the row above, and its neighbor below the 6 is also already gone, the 6 becomes exposed and can now be paired too - say with a 7 sitting on the waste pile's top. Clearing cards this way keeps opening up the rows above until, ideally, the whole pyramid is gone.</dd>
+      </dl>
+
+      <h2 data-i18n="pyramidsolitaire_rules_end_title">Finishing a game</h2>
+      <dl class="rule-list">
+        <dt data-i18n="pyramidsolitaire_term_win">Winning</dt>
+        <dd data-i18n="pyramidsolitaire_rules_win">The game is won the moment all 28 pyramid cards are cleared - the stock and waste piles don't need to be emptied too, which is the standard win condition most versions of this game use.</dd>
+        <dt data-i18n="pyramidsolitaire_term_lose">Getting stuck</dt>
+        <dd data-i18n="pyramidsolitaire_rules_lose">If the stock is empty, no redeals are left, and no King or sum-to-13 pair is available among the exposed pyramid cards and the waste's top card, the game is over as a loss - PaperGames shows this clearly rather than leaving you stuck with no moves and no explanation.</dd>
+      </dl>
+
+      <p class="about-back"><a href="pyramidsolitaire.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>

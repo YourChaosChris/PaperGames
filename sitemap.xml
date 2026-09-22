@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/abalone-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/abalone-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/abalone.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://yourchaoschris.github.io/PaperGames/about.html</loc>
     <priority>0.7</priority>
   </url>
@@ -317,6 +329,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/pyramidsolitaire-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/pyramidsolitaire-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/pyramidsolitaire.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://yourchaoschris.github.io/PaperGames/reversi-history.html</loc>
     <priority>0.6</priority>
   </url>
@@ -390,6 +414,30 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/sudoku.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/surakarta-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/surakarta-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/surakarta.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/tablut-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/tablut-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/tablut.html</loc>
     <priority>0.8</priority>
   </url>
   <url>

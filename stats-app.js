@@ -35,7 +35,11 @@ const STATS_GAME_NAME_KEY = {
   kakuro: "game_kakuro",
   fanorona: "game_fanorona",
   sternhalma: "game_sternhalma",
-  baghchal: "game_baghchal"
+  baghchal: "game_baghchal",
+  tablut: "game_tablut",
+  abalone: "game_abalone",
+  pyramidsolitaire: "game_pyramidsolitaire",
+  surakarta: "game_surakarta"
 };
 
 function gameDisplayName(game) {
