@@ -1305,12 +1305,85 @@ margin: 2rem 0 1rem;
 }
 
 .game-select-item {
+  position: relative;
   background: #fff;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   padding: 0.75rem;
   display: flex;
   flex-direction: column;
+}
+
+/* Favorite star toggle: filled vs. outline glyph (★/☆) rather
+   than color, so it stays legible in grayscale on e-ink. Positioned over
+   the card's own top-right corner rather than taking up layout space. */
+.favorite-toggle {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+  text-align: center;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.favorite-toggle.is-favorite {
+  color: var(--text);
+}
+
+.games-group-title {
+  margin: 1rem 0 0.4rem;
+}
+
+.games-group-title:first-child {
+  margin-top: 0;
+}
+
+.games-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0.6rem 0;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.games-toolbar > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+.games-toolbar > *:last-child {
+  margin-right: 0;
+}
+
+.games-search-input {
+  flex: 1 1 220px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.95rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--text);
+  box-sizing: border-box;
+}
+
+.games-sort-select {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.95rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--text);
+}
+
+.games-no-results {
+  color: var(--muted);
+  font-style: italic;
 }
 
 .game-select-title {

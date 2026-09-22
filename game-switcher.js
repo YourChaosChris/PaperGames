@@ -47,7 +47,11 @@
     ["mahjong", "game_mahjong_solitaire"],
     ["nonogram", "game_nonograms"],
     ["pegsolitaire", "game_peg_solitaire"],
+    ["yatzy", "game_yatzy"],
+    ["lightsout", "game_lightsout"],
+    ["mastermind", "game_mastermind"],
     ["dotsandboxes", "game_dotsandboxes"],
+    ["klondike", "game_klondike"],
     ["amazons", "game_amazons"]
   ];
 
