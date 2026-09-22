@@ -2056,6 +2056,152 @@ margin-top: 0.5rem;
   border: 2px solid var(--border);
 }
 
+/* Fanorona board: 45 points in a 5x9 grid (wider than tall, unlike most
+   boards here), so it uses the same percentage-based absolute-positioning
+   technique as Quoridor/Hex/Go rather than a plain float-grid, with a
+   JS-enforced non-square aspect ratio (see ensureFanoronaBoardAspect in
+   fanorona-app.js). Connections are drawn as one non-interactive SVG
+   layer UNDER the point buttons - simpler and more reliable across an
+   old E-Ink WebView than rotated divs, since roughly half the board's
+   lines are diagonal (see fanorona-core.js for the "strong"/"weak"
+   point pattern that decides which). Pieces are told apart structurally,
+   not by color alone: Black is a filled disc, White an outlined disc,
+   the same convention used everywhere else in this app. */
+
+.fanorona-board {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+}
+
+.fanorona-lines {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.fanorona-lines line {
+  stroke: var(--border);
+  stroke-width: 2;
+}
+
+.fanorona-point {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: var(--square-light);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.fanorona-point-movable {
+  background: var(--square-dark);
+}
+
+.fanorona-point-selected {
+  border-color: var(--accent);
+  border-width: 3px;
+}
+
+.fanorona-point.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.fanorona-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 76%;
+  height: 76%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.fanorona-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.fanorona-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.fanorona-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.fanorona-icon-disc-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.fanorona-icon-disc-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* The approach-vs-withdrawal choice and the "continue or stop" capture
+   chain prompt: plain stacked buttons, margin-based spacing rather than
+   flexbox `gap` (unsupported on the Tolino's Chrome 61 WebView). */
+.fanorona-capture-choice,
+.fanorona-chain-controls {
+  margin-top: 0.6rem;
+}
+
+.fanorona-capture-choice button,
+.fanorona-chain-controls button {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+/* Worked-example diagrams on the rules page: two small SVG figures side
+   by side on wide screens, stacked on narrow ones. Flexbox `gap`
+   fallback (margin-based spacing) - same reason as above. */
+.fanorona-example-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 1rem -1.5rem;
+}
+
+.fanorona-example-figure {
+  margin: 0 0 1rem 1.5rem;
+  max-width: 260px;
+}
+
+.fanorona-example-figure svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.fanorona-example-figure figcaption {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+
 /* Backgammon board: a 13-column x 2-row CSS grid (12 point lanes per
    row plus a middle bar column spanning both rows), every cell placed
    explicitly by grid-column/grid-row rather than relying on auto-flow.

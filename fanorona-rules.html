@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fanorona Rules | PaperGames</title>
+  <meta name="description" content="Complete Fanorona rules explained clearly, with a worked example of approach and withdrawal captures. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/fanorona-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/fanorona-rules.html">
+  <meta property="og:title" content="Fanorona Rules | PaperGames">
+  <meta property="og:description" content="Complete Fanorona rules explained clearly, with a worked example of approach and withdrawal captures. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Fanorona Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Fanorona rules explained clearly, with a worked example of approach and withdrawal captures. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="fanorona_rules_title">Fanorona Rules</h1>
+      <p data-i18n="fanorona_rules_intro">A quick reference for how PaperGames plays Fanorona - useful if you're rusty, or learning.</p>
+
+      <h2 data-i18n="fanorona_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="fanorona-icon-disc fanorona-icon-disc-white" aria-hidden="true"></span> <span data-i18n="fanorona_term_board">The board</span></dt>
+        <dd data-i18n="fanorona_rules_board">45 points in a 5x9 grid, connected by horizontal, vertical, and some diagonal lines - the diagonals alternate direction from cell to cell, so about half the points ('strong' points) connect to all 8 neighbors while the rest ('weak' points) connect only orthogonally. Each player starts with 22 pieces filling their two nearest rows plus half of the middle row, alternating colors, with the very center point left empty. White moves first.</dd>
+        <dt data-i18n="fanorona_term_capture">Capturing</dt>
+        <dd data-i18n="fanorona_rules_capture">Slide a piece along a line to an adjacent empty point. Depending on the direction you moved, this can capture a straight line of enemy pieces by approach, by withdrawal, or (if both are possible) your choice of either - see the examples below. Capturing is mandatory: if any capturing move is available anywhere on the board, you must play one instead of a quiet (paika) move.</dd>
+        <dt data-i18n="fanorona_term_approach">Capture by approach</dt>
+        <dd data-i18n="fanorona_rules_approach">Move a piece so that the point immediately beyond your new position, in the same direction you just moved, holds an enemy piece. That piece, and every enemy piece directly behind it in an unbroken line, is captured.</dd>
+        <dt data-i18n="fanorona_term_withdrawal">Capture by withdrawal</dt>
+        <dd data-i18n="fanorona_rules_withdrawal">Move a piece away from an enemy piece that was sitting right behind its old position, in the exact opposite direction of your move. That piece, and every enemy piece directly behind it in an unbroken line, is captured.</dd>
+      </dl>
+
+      <h2 data-i18n="fanorona_rules_example_title">Worked example</h2>
+      <p data-i18n="fanorona_rules_example_intro">In the mini-diagrams below, ● is White, ○ is Black, and the dashed circle is the point White is about to move to.</p>
+      <div class="fanorona-example-row">
+        <figure class="fanorona-example-figure">
+          <svg viewBox="0 0 220 90" width="220" height="90" role="img" aria-label="Approach capture example">
+            <defs>
+              <marker id="fanoronaArrowA" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#000"/>
+              </marker>
+            </defs>
+            <line x1="20" y1="45" x2="180" y2="45" stroke="#000" stroke-width="2"/>
+            <path d="M20,18 L58,18" stroke="#000" stroke-width="2" marker-end="url(#fanoronaArrowA)"/>
+            <circle cx="20" cy="45" r="12" fill="#fff" stroke="#000" stroke-width="2"/>
+            <circle cx="60" cy="45" r="12" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="3,3"/>
+            <circle cx="100" cy="45" r="12" fill="#000"/>
+            <circle cx="140" cy="45" r="12" fill="#000"/>
+            <text x="20" y="78" text-anchor="middle" font-size="13">A</text>
+            <text x="60" y="78" text-anchor="middle" font-size="13">B</text>
+            <text x="100" y="78" text-anchor="middle" font-size="13">C</text>
+            <text x="140" y="78" text-anchor="middle" font-size="13">D</text>
+            <text x="180" y="78" text-anchor="middle" font-size="13">E</text>
+          </svg>
+          <figcaption data-i18n="fanorona_rules_example_approach_caption">Approach: White slides A→B. Since Black pieces sit on the continuation of that same line just beyond B, they're captured.</figcaption>
+        </figure>
+        <figure class="fanorona-example-figure">
+          <svg viewBox="0 0 220 90" width="220" height="90" role="img" aria-label="Withdrawal capture example">
+            <defs>
+              <marker id="fanoronaArrowW" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#000"/>
+              </marker>
+            </defs>
+            <line x1="20" y1="45" x2="180" y2="45" stroke="#000" stroke-width="2"/>
+            <path d="M62,18 L98,18" stroke="#000" stroke-width="2" marker-end="url(#fanoronaArrowW)"/>
+            <circle cx="20" cy="45" r="12" fill="#000"/>
+            <circle cx="60" cy="45" r="12" fill="#fff" stroke="#000" stroke-width="2"/>
+            <circle cx="100" cy="45" r="12" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="3,3"/>
+            <text x="20" y="78" text-anchor="middle" font-size="13">A</text>
+            <text x="60" y="78" text-anchor="middle" font-size="13">B</text>
+            <text x="100" y="78" text-anchor="middle" font-size="13">C</text>
+            <text x="140" y="78" text-anchor="middle" font-size="13">D</text>
+            <text x="180" y="78" text-anchor="middle" font-size="13">E</text>
+          </svg>
+          <figcaption data-i18n="fanorona_rules_example_withdrawal_caption">Withdrawal: White slides A→B, moving directly away from Black pieces that were sitting behind A. Because White is now moving away from them along that same line, they're captured too.</figcaption>
+        </figure>
+      </div>
+
+      <dl class="rule-list">
+        <dt data-i18n="fanorona_term_chain">Continuing a capture</dt>
+        <dd data-i18n="fanorona_rules_chain">After capturing, the same piece may keep capturing again from its new position - but unlike checkers, you're never forced to: you can stop after any capture. Two extra rules apply while chaining: the piece can't slide in the exact same direction twice in a row, and it can never land on a point it has already visited earlier in the same turn.</dd>
+      </dl>
+
+      <h2 data-i18n="fanorona_rules_end_title">How a game ends</h2>
+      <dl class="rule-list">
+        <dt data-i18n="fanorona_term_win">Winning</dt>
+        <dd data-i18n="fanorona_rules_win">You win by capturing every one of your opponent's pieces, or if your opponent has no legal move at all on their turn.</dd>
+        <dt data-i18n="fanorona_term_resignation">Resignation</dt>
+        <dd data-i18n="fanorona_rules_resignation">A player can resign at any time, ending the game immediately in the opponent's favor.</dd>
+      </dl>
+
+      <p class="about-back"><a href="fanorona.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>

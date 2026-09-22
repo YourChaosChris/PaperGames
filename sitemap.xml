@@ -81,6 +81,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/fanorona-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/fanorona-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/fanorona.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://yourchaoschris.github.io/PaperGames/fourinarow-history.html</loc>
     <priority>0.6</priority>
   </url>

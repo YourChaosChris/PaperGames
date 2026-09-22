@@ -327,4 +327,14 @@ const GAMES_CATALOG = [
     popular: false,
     icon: "<span class=\"kakuro-icon\" aria-hidden=\"true\"></span>"
   },
+  {
+    slug: "fanorona",
+    category: "strategy",
+    nameKey: "game_fanorona",
+    nameText: "Fanorona",
+    descKey: "home_fanorona_desc",
+    descText: "Madagascar's national board game: slide pieces along a 5x9 grid of lines to capture by approach or withdrawal. Local 2-player or vs. the built-in engine.",
+    popular: false,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><line x1=\"12\" y1=\"20\" x2=\"88\" y2=\"20\"/><line x1=\"12\" y1=\"50\" x2=\"88\" y2=\"50\"/><line x1=\"12\" y1=\"80\" x2=\"88\" y2=\"80\"/><line x1=\"12\" y1=\"20\" x2=\"12\" y2=\"80\"/><line x1=\"31\" y1=\"20\" x2=\"31\" y2=\"80\"/><line x1=\"50\" y1=\"20\" x2=\"50\" y2=\"80\"/><line x1=\"69\" y1=\"20\" x2=\"69\" y2=\"80\"/><line x1=\"88\" y1=\"20\" x2=\"88\" y2=\"80\"/><line x1=\"12\" y1=\"20\" x2=\"31\" y2=\"50\"/><line x1=\"50\" y1=\"20\" x2=\"69\" y2=\"50\"/><line x1=\"50\" y1=\"20\" x2=\"31\" y2=\"50\"/><line x1=\"88\" y1=\"20\" x2=\"69\" y2=\"50\"/><line x1=\"31\" y1=\"50\" x2=\"50\" y2=\"80\"/><line x1=\"31\" y1=\"50\" x2=\"12\" y2=\"80\"/><line x1=\"69\" y1=\"50\" x2=\"88\" y2=\"80\"/><line x1=\"69\" y1=\"50\" x2=\"50\" y2=\"80\"/></g><g fill=\"#000\"><circle cx=\"12\" cy=\"20\" r=\"5\"/><circle cx=\"31\" cy=\"20\" r=\"5\"/><circle cx=\"50\" cy=\"20\" r=\"5\"/><circle cx=\"69\" cy=\"20\" r=\"5\"/><circle cx=\"88\" cy=\"20\" r=\"5\"/><circle cx=\"12\" cy=\"50\" r=\"5\"/><circle cx=\"31\" cy=\"50\" r=\"5\"/><circle cx=\"50\" cy=\"50\" r=\"5\"/><circle cx=\"69\" cy=\"50\" r=\"5\"/><circle cx=\"88\" cy=\"50\" r=\"5\"/><circle cx=\"12\" cy=\"80\" r=\"5\"/><circle cx=\"31\" cy=\"80\" r=\"5\"/><circle cx=\"50\" cy=\"80\" r=\"5\"/><circle cx=\"69\" cy=\"80\" r=\"5\"/><circle cx=\"88\" cy=\"80\" r=\"5\"/></g></svg></span>"
+  },
 ];
