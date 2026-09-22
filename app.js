@@ -1581,7 +1581,7 @@ async function aiMoveOffline() {
 
   const endForHuman = AiEngine.detectGameEnd(AppState.board, AppState.turn);
   if (endForHuman.status === "checkmate") {
-    const result = aiColor === "white" ? "0-1" : "1-0";
+    const result = aiColor === "white" ? "1-0" : "0-1";
     announceGameResult(result, "Checkmate! The computer wins.");
     recordChessStatsIfVsAi("loss");
   } else if (endForHuman.status === "stalemate") {
