@@ -1,6 +1,6 @@
 # PaperGames
 
-A collection of 33 classic board, strategy, and puzzle games as a single
+A collection of 36 classic board, strategy, and puzzle games as a single
 offline-capable web app, designed to be readable and usable on e-paper /
 e-ink displays (high contrast, no animation-dependent UI, works without a
 live network connection once loaded). Play at
@@ -52,6 +52,9 @@ no internet connection at all.
 - Amazons
 - Kakuro
 - Fanorona
+- Chinese Checkers
+- Spider Solitaire
+- Bagh-Chal
 
 ## Languages
 

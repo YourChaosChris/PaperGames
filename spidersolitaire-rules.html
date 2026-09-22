@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spider Solitaire Rules | PaperGames</title>
+  <meta name="description" content="Complete Spider Solitaire rules explained clearly: how tableau moves and same-suit run moves work, when the stock can be dealt, and how sequences are completed and cleared.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/spidersolitaire-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/spidersolitaire-rules.html">
+  <meta property="og:title" content="Spider Solitaire Rules | PaperGames">
+  <meta property="og:description" content="Complete Spider Solitaire rules explained clearly: how tableau moves and same-suit run moves work, when the stock can be dealt, and how sequences are completed and cleared.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Spider Solitaire Rules | PaperGames">
+  <meta name="twitter:description" content="Complete Spider Solitaire rules explained clearly: how tableau moves and same-suit run moves work, when the stock can be dealt, and how sequences are completed and cleared.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="spidersolitaire_rules_title">Spider Solitaire Rules</h1>
+      <p data-i18n="spidersolitaire_rules_intro">A quick reference for how PaperGames plays Spider Solitaire - useful if you're rusty, or learning.</p>
+
+      <h2 data-i18n="spidersolitaire_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="spider-icon" aria-hidden="true">K♠</span> <span data-i18n="spidersolitaire_term_layout">The layout</span></dt>
+        <dd data-i18n="spidersolitaire_rules_layout">Two full decks (104 cards) are dealt into 10 tableau columns - the first 4 columns get 6 cards each, the other 6 get 5 cards each - with only the top card of every column face-up. There are no foundations. The remaining 50 cards sit in the stock, dealt out later in batches of 10.</dd>
+        <dt data-i18n="spidersolitaire_term_difficulty">Choosing a difficulty</dt>
+        <dd data-i18n="spidersolitaire_rules_difficulty">Before starting, pick how many suits are in play: 1 suit is easiest (every card of the right rank can extend any run), 2 suits is medium, and 4 suits is the traditional, hardest version - exactly like two real decks shuffled together.</dd>
+        <dt data-i18n="spidersolitaire_term_tableau">Moving a single card</dt>
+        <dd data-i18n="spidersolitaire_rules_tableau">A card can move onto a tableau column only onto a card exactly one rank higher - suit doesn't matter for this. An empty column accepts any card, or any valid run, with no rank restriction at all.</dd>
+        <dt data-i18n="spidersolitaire_term_group">Moving a group of cards</dt>
+        <dd data-i18n="spidersolitaire_rules_group">Several cards already stacked together can only be moved as one unit if they're already sitting in a properly descending run of the SAME suit (for example a 5-4-3 of Hearts, in that exact order) - moving a run that mixes suits, even if the ranks descend correctly, isn't allowed. Moving a group still follows the same-rank-higher placement rule above. Once cards move away, the card newly exposed on top of its column automatically turns face-up.</dd>
+        <dt data-i18n="spidersolitaire_term_stock">The stock</dt>
+        <dd data-i18n="spidersolitaire_rules_stock">Tap the stock to deal its next batch of 10 cards, one face-up card onto each of the 10 columns. Dealing is blocked while any column is empty - clear it first (by moving its cards elsewhere or completing a run through it) before the stock can be dealt again.</dd>
+        <dt data-i18n="spidersolitaire_term_sequences">Completing a sequence</dt>
+        <dd data-i18n="spidersolitaire_rules_sequences">Whenever a complete run from King down to Ace, all the same suit and in order, ends up contiguous in a column, it's detected automatically and removed - no need for it to be the only cards in that column, just properly stacked at the point where they'd naturally lift off together. Each completed run adds one to the counter above the board.</dd>
+      </dl>
+
+      <h2 data-i18n="spidersolitaire_rules_end_title">Finishing a game</h2>
+      <dl class="rule-list">
+        <dt data-i18n="spidersolitaire_term_win">Winning</dt>
+        <dd data-i18n="spidersolitaire_rules_win">The game is won once all 8 King-to-Ace runs have been assembled and removed - that's 104 cards / 13, the same total regardless of which suit-count difficulty you picked.</dd>
+      </dl>
+
+      <p class="about-back"><a href="spidersolitaire.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>
