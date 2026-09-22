@@ -90,11 +90,18 @@ function setGameResultMorris(text) {
   }
 }
 
+function resultTitleMorris(winner) {
+  if (AppStateMorris.mode === "offline-ai") {
+    return winner === AppStateMorris.humanColor ? "You win!" : "You lose";
+  }
+  return colorNameMorris(winner) + " wins";
+}
+
 function announceGameResultMorris(resultCode, message) {
   setGameResultMorris(message);
   setStatusMorris("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -248,7 +255,7 @@ function initMorrisApp() {
       const loser = AppStateMorris.turn;
       const winner = MorrisCore.otherColor(loser);
       AppStateMorris.gameOver = true;
-      announceGameResultMorris(colorNameMorris(winner) + " wins", colorNameMorris(winner) + " wins by resignation.");
+      announceGameResultMorris(resultTitleMorris(winner), colorNameMorris(winner) + " wins by resignation.");
       recordMorrisStatsIfVsAi("loss");
       updateGameLabelsMorris();
     });
@@ -412,7 +419,7 @@ function applyMorrisMove(move) {
     const winnerName = colorNameMorris(end.winner);
     const reason = end.status === "reduced" ? "reduced to two pieces" : "no legal moves left";
     AppStateMorris.gameOver = true;
-    announceGameResultMorris(winnerName + " wins", winnerName + " wins (" + reason + ").");
+    announceGameResultMorris(resultTitleMorris(end.winner), winnerName + " wins (" + reason + ").");
     recordMorrisStatsIfVsAi(end.winner === AppStateMorris.humanColor ? "win" : "loss");
     updateGameLabelsMorris();
     return;

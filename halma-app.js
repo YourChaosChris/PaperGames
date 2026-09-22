@@ -73,11 +73,18 @@ function setGameResultHalma(text) {
   }
 }
 
+function resultTitleHalma(winner) {
+  if (AppStateHalma.mode === "offline-ai") {
+    return winner === AppStateHalma.humanSide ? "You win!" : "You lose";
+  }
+  return sideNameHalma(winner) + " wins";
+}
+
 function announceGameResultHalma(resultCode, message) {
   setGameResultHalma(message);
   setStatusHalma("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -206,7 +213,7 @@ function initHalmaApp() {
       const loser = AppStateHalma.turn;
       const winner = HalmaCore.otherPlayer(loser);
       AppStateHalma.gameOver = true;
-      announceGameResultHalma(sideNameHalma(winner) + " wins", sideNameHalma(winner) + " wins by resignation.");
+      announceGameResultHalma(resultTitleHalma(winner), sideNameHalma(winner) + " wins by resignation.");
       recordHalmaStatsIfVsAi("loss");
       updateGameLabelsHalma();
     });
@@ -307,7 +314,7 @@ function applyHalmaMove(move) {
   if (AppStateHalma.state.gameOver) {
     AppStateHalma.gameOver = true;
     const winnerName = sideNameHalma(AppStateHalma.state.winner);
-    announceGameResultHalma(winnerName + " wins", winnerName + " wins by filling the opposite camp!");
+    announceGameResultHalma(resultTitleHalma(AppStateHalma.state.winner), winnerName + " wins by filling the opposite camp!");
     recordHalmaStatsIfVsAi(AppStateHalma.state.winner === AppStateHalma.humanSide ? "win" : "loss");
     updateGameLabelsHalma();
     return;

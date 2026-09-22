@@ -69,11 +69,18 @@ function setGameResultHex(text) {
   }
 }
 
+function resultTitleHex(winner) {
+  if (AppStateHex.mode === "offline-ai") {
+    return winner === AppStateHex.humanColor ? "You win!" : "You lose";
+  }
+  return colorNameHex(winner) + " wins";
+}
+
 function announceGameResultHex(resultCode, message) {
   setGameResultHex(message);
   setStatusHex("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -200,7 +207,7 @@ function initHexApp() {
       const loser = AppStateHex.turn;
       const winner = HexCore.otherPlayer(loser);
       AppStateHex.gameOver = true;
-      announceGameResultHex(colorNameHex(winner) + " wins", colorNameHex(winner) + " wins by resignation.");
+      announceGameResultHex(resultTitleHex(winner), colorNameHex(winner) + " wins by resignation.");
       recordHexStatsIfVsAi("loss");
       updateGameLabelsHex();
     });
@@ -265,7 +272,7 @@ function applyHexMove(move) {
   if (AppStateHex.state.gameOver) {
     AppStateHex.gameOver = true;
     const winnerName = colorNameHex(AppStateHex.state.winner);
-    announceGameResultHex(winnerName + " wins", winnerName + " wins by connecting both sides!");
+    announceGameResultHex(resultTitleHex(AppStateHex.state.winner), winnerName + " wins by connecting both sides!");
     recordHexStatsIfVsAi(AppStateHex.state.winner === AppStateHex.humanColor ? "win" : "loss");
     updateGameLabelsHex();
     return;

@@ -69,11 +69,21 @@ function setGameResultCheckers(text) {
   }
 }
 
+// Builds a short, prominent modal title. In local 2-player games there's no
+// single "you", so it's color-based; against the built-in AI it's framed
+// from the human's perspective, which is more immediately meaningful.
+function resultTitleCheckers(winner) {
+  if (AppStateCheckers.mode === "offline-ai") {
+    return winner === AppStateCheckers.humanColor ? "You win!" : "You lose";
+  }
+  return colorNameCheckers(winner) + " wins";
+}
+
 function announceGameResultCheckers(resultCode, message) {
   setGameResultCheckers(message);
   setStatusCheckers("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -205,7 +215,7 @@ function initCheckersApp() {
       const loser = AppStateCheckers.turn;
       const winner = CheckersCore.otherColor(loser);
       AppStateCheckers.gameOver = true;
-      announceGameResultCheckers(colorNameCheckers(winner) + " wins", colorNameCheckers(winner) + " wins by resignation.");
+      announceGameResultCheckers(resultTitleCheckers(winner), colorNameCheckers(winner) + " wins by resignation.");
       recordCheckersStatsIfVsAi("loss");
       updateGameLabelsCheckers();
     });
@@ -337,7 +347,7 @@ function applyCheckersMove(move) {
     const winnerName = colorNameCheckers(end.winner);
     const reason = end.status === "no-pieces" ? "no pieces left" : "no legal moves";
     AppStateCheckers.gameOver = true;
-    announceGameResultCheckers(winnerName + " wins", winnerName + " wins (" + reason + ").");
+    announceGameResultCheckers(resultTitleCheckers(end.winner), winnerName + " wins (" + reason + ").");
     recordCheckersStatsIfVsAi(end.winner === AppStateCheckers.humanColor ? "win" : "loss");
     updateGameLabelsCheckers();
     return;
@@ -381,7 +391,7 @@ function aiMoveOfflineCheckers() {
     const winnerName = colorNameCheckers(end.winner);
     const reason = end.status === "no-pieces" ? "no pieces left" : "no legal moves";
     AppStateCheckers.gameOver = true;
-    announceGameResultCheckers(winnerName + " wins", winnerName + " wins (" + reason + ").");
+    announceGameResultCheckers(resultTitleCheckers(end.winner), winnerName + " wins (" + reason + ").");
     recordCheckersStatsIfVsAi(end.winner === AppStateCheckers.humanColor ? "win" : "loss");
     updateGameLabelsCheckers();
     return;

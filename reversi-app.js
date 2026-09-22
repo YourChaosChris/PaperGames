@@ -64,11 +64,21 @@ function setGameResultOthello(text) {
   }
 }
 
+// winner is null/undefined for a draw. Kept short for the modal title even
+// where the message body includes the disc count.
+function resultTitleOthello(winner) {
+  if (!winner) return "Draw";
+  if (AppStateOthello.mode === "offline-ai") {
+    return winner === AppStateOthello.humanColor ? "You win!" : "You lose";
+  }
+  return colorNameOthello(winner) + " wins";
+}
+
 function announceGameResultOthello(resultCode, message) {
   setGameResultOthello(message);
   setStatusOthello("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -193,7 +203,7 @@ function initOthelloApp() {
       const loser = AppStateOthello.turn;
       const winner = OthelloCore.otherColor(loser);
       AppStateOthello.gameOver = true;
-      announceGameResultOthello(colorNameOthello(winner) + " wins", colorNameOthello(winner) + " wins by resignation.");
+      announceGameResultOthello(resultTitleOthello(winner), colorNameOthello(winner) + " wins by resignation.");
       recordOthelloStatsIfVsAi("loss");
       updateGameLabelsOthello();
     });
@@ -293,7 +303,7 @@ function endGameOthello() {
   const message = winner
     ? colorNameOthello(winner) + " wins " + Math.max(b, w) + "-" + Math.min(b, w) + "!"
     : "It's a draw, " + b + "-" + w + "!";
-  announceGameResultOthello(message, message);
+  announceGameResultOthello(resultTitleOthello(winner), message);
   if (winner) {
     recordOthelloStatsIfVsAi(winner === AppStateOthello.humanColor ? "win" : "loss");
   } else {

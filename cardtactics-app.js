@@ -72,11 +72,18 @@ function setGameResultOnitama(text) {
   }
 }
 
+function resultTitleOnitama(winner) {
+  if (AppStateOnitama.mode === "offline-ai") {
+    return winner === AppStateOnitama.humanColor ? "You win!" : "You lose";
+  }
+  return colorNameOnitama(winner) + " wins";
+}
+
 function announceGameResultOnitama(resultCode, message) {
   setGameResultOnitama(message);
   setStatusOnitama("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -205,7 +212,7 @@ function initOnitamaApp() {
       const loser = AppStateOnitama.turn;
       const winner = OnitamaCore.otherPlayer(loser);
       AppStateOnitama.gameOver = true;
-      announceGameResultOnitama(colorNameOnitama(winner) + " wins", colorNameOnitama(winner) + " wins by resignation.");
+      announceGameResultOnitama(resultTitleOnitama(winner), colorNameOnitama(winner) + " wins by resignation.");
       recordOnitamaStatsIfVsAi("loss");
       updateGameLabelsOnitama();
     });
@@ -334,7 +341,7 @@ function applyOnitamaMove(move) {
     AppStateOnitama.gameOver = true;
     const winnerName = colorNameOnitama(AppStateOnitama.state.winner);
     const reason = AppStateOnitama.state.winReason === "shrine" ? " by reaching the shrine!" : " by capturing the master!";
-    announceGameResultOnitama(winnerName + " wins", winnerName + " wins" + reason);
+    announceGameResultOnitama(resultTitleOnitama(AppStateOnitama.state.winner), winnerName + " wins" + reason);
     recordOnitamaStatsIfVsAi(AppStateOnitama.state.winner === AppStateOnitama.humanColor ? "win" : "loss");
     updateGameLabelsOnitama();
     return;

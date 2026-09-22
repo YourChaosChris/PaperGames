@@ -76,11 +76,18 @@ function setGameResultSenet(text) {
   }
 }
 
+function resultTitleSenet(winner) {
+  if (AppStateSenet.mode === "offline-ai") {
+    return winner === AppStateSenet.humanColor ? "You win!" : "You lose";
+  }
+  return colorNameSenet(winner) + " wins";
+}
+
 function announceGameResultSenet(resultCode, message) {
   setGameResultSenet(message);
   setStatusSenet("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -208,7 +215,7 @@ function initSenetApp() {
       const loser = AppStateSenet.turn;
       const winner = SenetCore.otherPlayer(loser);
       AppStateSenet.gameOver = true;
-      announceGameResultSenet(colorNameSenet(winner) + " wins", colorNameSenet(winner) + " wins by resignation.");
+      announceGameResultSenet(resultTitleSenet(winner), colorNameSenet(winner) + " wins by resignation.");
       recordSenetStatsIfVsAi("loss");
       updateGameLabelsSenet();
     });
@@ -335,7 +342,7 @@ function applySenetMove(fromIndex) {
   if (AppStateSenet.state.gameOver) {
     AppStateSenet.gameOver = true;
     const winnerName = colorNameSenet(mover);
-    announceGameResultSenet(winnerName + " wins", winnerName + " wins - all pieces borne off!");
+    announceGameResultSenet(resultTitleSenet(mover), winnerName + " wins - all pieces borne off!");
     recordSenetStatsIfVsAi(mover === AppStateSenet.humanColor ? "win" : "loss");
     updateGameLabelsSenet();
     return;

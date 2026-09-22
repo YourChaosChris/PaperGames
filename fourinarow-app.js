@@ -58,11 +58,18 @@ function setGameResultConnectFour(text) {
   }
 }
 
+function resultTitleConnectFour(winner) {
+  if (AppStateConnectFour.mode === "offline-ai") {
+    return winner === AppStateConnectFour.humanColor ? "You win!" : "You lose";
+  }
+  return colorNameConnectFour(winner) + " wins";
+}
+
 function announceGameResultConnectFour(resultCode, message) {
   setGameResultConnectFour(message);
   setStatusConnectFour("board-info", message);
   if (window.ResultModal) {
-    window.ResultModal.show("Game Over", message);
+    window.ResultModal.show(resultCode, message);
   }
 }
 
@@ -187,7 +194,7 @@ function initConnectFourApp() {
       const loser = AppStateConnectFour.turn;
       const winner = ConnectFourCore.otherColor(loser);
       AppStateConnectFour.gameOver = true;
-      announceGameResultConnectFour(colorNameConnectFour(winner) + " wins", colorNameConnectFour(winner) + " wins by resignation.");
+      announceGameResultConnectFour(resultTitleConnectFour(winner), colorNameConnectFour(winner) + " wins by resignation.");
       recordConnectFourStatsIfVsAi("loss");
       updateGameLabelsConnectFour();
     });
@@ -255,7 +262,7 @@ function applyConnectFourMove(col) {
   if (winner) {
     AppStateConnectFour.gameOver = true;
     const winnerName = colorNameConnectFour(winner);
-    announceGameResultConnectFour(winnerName + " wins", winnerName + " wins - four in a row!");
+    announceGameResultConnectFour(resultTitleConnectFour(winner), winnerName + " wins - four in a row!");
     recordConnectFourStatsIfVsAi(winner === AppStateConnectFour.humanColor ? "win" : "loss");
     updateGameLabelsConnectFour();
     return;
