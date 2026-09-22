@@ -2,109 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>eInkChess – Onitama for E‑Ink</title>
   <link rel="icon" href="favicon.png" type="image/png">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <title>eInkChess – Card Tactics (formerly Onitama)</title>
+  <meta http-equiv="refresh" content="0; url=cardtactics.html">
+  <link rel="canonical" href="cardtactics.html">
+  <meta name="robots" content="noindex">
 </head>
 <body>
-<div id="app">
-  <header class="app-header">
-    <div class="title-wrap app-title-row">
-      <h1><a href="index.html" class="app-title-link">♞ eInkChess</a></h1>
-      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
-    </div>
-    <div class="user-panel">
-      <button id="menu-toggle" class="secondary">&#9776; Menu</button>
-    </div>
-  </header>
-
-  <nav class="site-nav">
-    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
-    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
-    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
-  </nav>
-
-  <main>
-
-<div id="settings-panel">
-<section class="mode-section">
-  <div class="mode-section-row">
-    <div class="mode-buttons">
-      <button id="mode-offline" class="mode-btn secondary">2 Player</button>
-      <button id="mode-offline-ai" class="mode-btn secondary">vs Computer</button>
-    </div>
-  </div>
-</section>
-
-    <section id="offline-ai-controls" class="card hidden">
-  <div class="field-row">
-    <button id="start-onitama-game" class="primary">New game</button>
-    <div id="onitama-color-choice" class="inline-options">
-      <label class="color-choice"><input type="radio" name="onitama-color" value="blue" checked> <span class="color-choice-icon onitama-icon-piece onitama-icon-piece-blue"></span></label>
-      <label class="color-choice"><input type="radio" name="onitama-color" value="red"> <span class="color-choice-icon onitama-icon-piece onitama-icon-piece-red"></span></label>
-    </div>
-    <select id="onitama-level-inline">
-        <option value="0">2 Player</option>
-        <option value="1">Easy</option>
-        <option value="2" selected>Medium</option>
-        <option value="3">Hard</option>
-      </select>
-  </div>
-  <div id="offline-onitama-status" class="status-text"></div>
-</section>
-</div>
-
-
-<section id="board-section" class="card">
-  <div class="board-header">
-    <div id="game-label"></div>
-    <div id="game-meta"></div>
-    <div id="game-result" aria-live="assertive"></div>
-
-    <div id="board-info" class="status-text" aria-live="polite"></div>
-  </div>
-  <div id="board-placeholder" class="board-placeholder">
-    <span class="board-placeholder-icon onitama-icon-piece onitama-icon-piece-blue"></span>
-    <div class="board-placeholder-text">
-      <span class="board-placeholder-title" data-i18n="game_onitama">Onitama</span>
-      <span class="board-placeholder-subtitle">eInkChess</span>
-    </div>
-  </div>
-  <div id="board-container" class="hidden">
-    <div id="onitama-cards-red" class="onitama-cards-row"></div>
-    <div id="onitama-board-wrap" class="onitama-board-wrap">
-      <div id="onitama-board" class="onitama-board" role="group" aria-label="Onitama board"></div>
-    </div>
-    <div id="onitama-cards-blue" class="onitama-cards-row"></div>
-    <div id="onitama-neutral-row" class="onitama-neutral-row">
-      <span data-i18n="onitama_neutral_card">Next card:</span>
-      <div id="onitama-neutral-card" class="onitama-card"></div>
-    </div>
-  </div>
-  <div id="board-actions" class="board-actions">
-    <button id="undo-btn" class="secondary small hidden" onclick="undoLastMove()">Undo</button>
-    <button id="resign-button" class="secondary small hidden">Resign 🏳</button>
-  </div>
-</section>
-  </main>
-  <footer class="site-footer">
-    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
-    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
-  </footer>
-</div>
-
-<script src="i18n.js"></script>
-<script src="onitama-core.js"></script>
-<script src="onitama-ai.js"></script>
-<script src="result-modal.js"></script>
-<script src="game-storage.js"></script>
-<script src="game-stats.js"></script>
-<script src="board-a11y.js"></script>
-<script src="onitama-app.js"></script>
-<script src="sw-register.js"></script>
+  <p>This page moved. Continuing to <a href="cardtactics.html">Card Tactics</a>&hellip;</p>
 </body>
 </html>

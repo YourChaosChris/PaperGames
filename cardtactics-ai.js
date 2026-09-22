@@ -7,7 +7,7 @@
 //                budget AND a wall-clock deadline (the branching factor
 //                here is small, but the deadline is still the real
 //                safety net across very different devices - the same
-//                lesson learned tuning the Othello AI)
+//                lesson learned tuning the Reversi AI)
 
 const OnitamaAi = (function () {
   const INF = 1e9;

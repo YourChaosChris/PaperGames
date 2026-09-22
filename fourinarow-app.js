@@ -1,6 +1,6 @@
 // connectfour-app.js
 // Wires ConnectFourCore/ConnectFourAi to the connectfour.html UI. The
-// board is a plain 6x7 grid of uniform squares (mirrors othello-app.js
+// board is a plain 6x7 grid of uniform squares (mirrors reversi-app.js
 // - a real Connect Four board isn't checkered either). Clicking any
 // cell in a column drops a disc into that column's lowest empty slot,
 // regardless of which row was actually clicked.
@@ -329,7 +329,7 @@ function showBoardSectionConnectFour() {
   if (menuToggle) menuToggle.textContent = "☰ Menu";
 }
 
-/*** Board rendering (mirrors othello-app.js's uniform float-grid approach) ***/
+/*** Board rendering (mirrors reversi-app.js's uniform float-grid approach) ***/
 
 function buildConnectFourBoardDOM() {
   const boardEl = document.getElementById("connectfour-board");

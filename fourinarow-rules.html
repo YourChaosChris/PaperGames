@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>eInkChess – Four in a Row Rules</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link">♞ eInkChess</a>
+    </div>
+    <div class="user-panel">
+      <div class="lang-switch">
+        <button type="button" data-lang="en" class="secondary small">EN</button>
+        <button type="button" data-lang="de" class="secondary small">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="fourinarow_rules_title">Four in a Row Rules</h1>
+      <p data-i18n="fourinarow_rules_intro">A quick reference for how eInkChess plays Four in a Row (also sold as Connect Four) - useful if you're rusty, or learning.</p>
+
+      <h2 data-i18n="fourinarow_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="c4-icon-disc c4-icon-disc-black" aria-hidden="true"></span> <span data-i18n="fourinarow_term_board">The board and dropping discs</span></dt>
+        <dd data-i18n="fourinarow_rules_board"></dd>
+      </dl>
+
+      <h2 data-i18n="fourinarow_rules_end_title">How a game ends</h2>
+      <dl class="rule-list">
+        <dt data-i18n="fourinarow_term_win">Winning</dt>
+        <dd data-i18n="fourinarow_rules_win"></dd>
+        <dt data-i18n="fourinarow_term_draw">Draw</dt>
+        <dd data-i18n="fourinarow_rules_draw"></dd>
+        <dt data-i18n="fourinarow_term_resignation">Resignation</dt>
+        <dd data-i18n="fourinarow_rules_resignation"></dd>
+      </dl>
+
+      <p class="about-back"><a href="fourinarow.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="i18n.js"></script>
+<script src="sw-register.js"></script>
+</body>
+</html>

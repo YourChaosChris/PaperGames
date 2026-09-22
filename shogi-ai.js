@@ -5,7 +5,7 @@
 // larger than Xiangqi's once both hands fill up with captured pieces,
 // so search stays shallow and leans on a wall-clock deadline as the
 // real safety net - node count alone doesn't reliably bound time when
-// per-node cost varies, the same lesson learned tuning the Othello AI):
+// per-node cost varies, the same lesson learned tuning the Reversi AI):
 //   1 = easy   - random legal action (move or drop)
 //   2 = medium - 1-ply material evaluation with light randomness
 //   3 = hard   - shallow alpha-beta search over moves and drops alike,
