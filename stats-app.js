@@ -23,7 +23,8 @@ const STATS_GAME_NAME_KEY = {
   twenty48: "game_2048",
   mahjong: "game_mahjong_solitaire",
   freecell: "game_freecell",
-  onitama: "game_onitama"
+  onitama: "game_onitama",
+  hnefatafl: "game_hnefatafl"
 };
 
 function gameDisplayName(game) {
