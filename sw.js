@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "papergames-cache-v64";
+const CACHE_NAME = "papergames-cache-v65";
 
 const APP_SHELL = [
   "./",
@@ -293,6 +293,7 @@ const APP_SHELL = [
   "stats-app.js",
   "board-a11y.js",
   "confirm-actions.js",
+  "font-size-toggle.js",
   "force-update.js",
   "games-catalog.js",
   "favorites.js",

@@ -31,6 +31,23 @@ html, body {
   font-weight: 500;
 }
 
+/* Larger text sizes toggled by font-size-toggle.js. Tolino's own
+   system-wide font size setting only affects the e-book reader, not
+   this app's own web pages, so it needs its own independent control.
+   Scaling the root font-size rather than adding a separate CSS variable
+   works site-wide for free everywhere text is already sized in
+   rem/em (nearly everywhere in this file), while leaving fixed-px board
+   /card layouts (already sized to fit the viewport, board-a11y.js's
+   float-grids, etc.) untouched, since those are unrelated to reading
+   comfort and enlarging them would just waste screen space. */
+html.text-size-large {
+  font-size: 112.5%;
+}
+
+html.text-size-xlarge {
+  font-size: 125%;
+}
+
 #app {
   max-width: 900px;
   margin: 0 auto;
