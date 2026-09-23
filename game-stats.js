@@ -25,7 +25,7 @@ const GameStats = (function () {
   }
 
   function emptyRecord() {
-    return { wins: 0, losses: 0, draws: 0 };
+    return { wins: 0, losses: 0, draws: 0, streak: 0, bestStreak: 0 };
   }
 
   // outcome is from the human player's perspective: "win" | "loss" | "draw"
@@ -34,16 +34,35 @@ const GameStats = (function () {
     if (outcome !== "win" && outcome !== "loss" && outcome !== "draw") return;
     const all = loadAll();
     if (!all[game]) all[game] = emptyRecord();
-    if (outcome === "win") all[game].wins++;
-    else if (outcome === "loss") all[game].losses++;
-    else all[game].draws++;
+    const rec = all[game];
+    // A record saved before this field existed has `streak`/`bestStreak`
+    // undefined, not 0 - treat that the same as a fresh record rather
+    // than letting NaN leak into the running count.
+    if (typeof rec.streak !== "number") rec.streak = 0;
+    if (typeof rec.bestStreak !== "number") rec.bestStreak = 0;
+    if (outcome === "win") {
+      rec.wins++;
+      rec.streak = rec.streak > 0 ? rec.streak + 1 : 1;
+      if (rec.streak > rec.bestStreak) rec.bestStreak = rec.streak;
+    } else if (outcome === "loss") {
+      rec.losses++;
+      rec.streak = rec.streak < 0 ? rec.streak - 1 : -1;
+    } else {
+      rec.draws++;
+      rec.streak = 0;
+    }
     saveAll(all);
   }
 
   function getAll() {
     const all = loadAll();
     const result = {};
-    GAMES.forEach((g) => { result[g] = all[g] || emptyRecord(); });
+    GAMES.forEach((g) => {
+      // Spread a real saved record over emptyRecord() rather than using it
+      // directly, so a record saved before streak/bestStreak existed still
+      // reads as 0 for those instead of undefined.
+      result[g] = Object.assign(emptyRecord(), all[g] || {});
+    });
     return result;
   }
 

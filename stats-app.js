@@ -75,10 +75,16 @@ function renderStats() {
     lossesTd.textContent = String(rec.losses);
     const drawsTd = document.createElement("td");
     drawsTd.textContent = String(rec.draws);
+    const streakTd = document.createElement("td");
+    // A live win streak (rec.streak > 0) is shown with a small flame mark
+    // so it stands out from the permanent best-streak number - both are
+    // plain text/Unicode, no color, so they read the same on E-Ink.
+    streakTd.textContent = rec.streak > 0 ? rec.bestStreak + " (\u{1F525}" + rec.streak + ")" : String(rec.bestStreak);
     tr.appendChild(nameTd);
     tr.appendChild(winsTd);
     tr.appendChild(lossesTd);
     tr.appendChild(drawsTd);
+    tr.appendChild(streakTd);
     body.appendChild(tr);
   });
 
