@@ -32,9 +32,19 @@
     GamesRender.translateInto(grid);
   }
 
+  function goToRandomGame() {
+    const games = GAMES_CATALOG;
+    if (!games.length) return;
+    const pick = games[Math.floor(Math.random() * games.length)];
+    window.location.href = pick.slug + ".html";
+  }
+
   function init() {
     renderFavorites();
     GamesRender.updateFavoriteButtons(document);
+
+    const surpriseBtn = document.getElementById("home-surprise-button");
+    if (surpriseBtn) surpriseBtn.addEventListener("click", goToRandomGame);
 
     document.addEventListener("click", (evt) => {
       const btn = evt.target.closest(".favorite-toggle");
