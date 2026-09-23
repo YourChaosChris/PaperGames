@@ -490,6 +490,20 @@ function buildMorrisBoardDOM() {
   if (!boardEl) return;
   boardEl.innerHTML = "";
 
+  // Points/lines are positioned with 0%-100% coordinates, which for an
+  // absolutely positioned element resolve against the parent's PADDING
+  // box - meaning a point at the 100% edge sits flush against the
+  // parent's border, with no allowance for the point's own radius
+  // sticking out past it. .morris-board's padding can't fix that (the
+  // padding is already inside the padding box the percentages use), so
+  // - same as go-app.js's separate #go-grid - points/lines go in their
+  // own 100%x100% wrapper INSIDE the padding instead of directly in
+  // .morris-board, so their coordinate space is the padded content area
+  // and the padding finally acts as the intended margin for the radius.
+  const gridEl = document.createElement("div");
+  gridEl.className = "morris-grid";
+  boardEl.appendChild(gridEl);
+
   const seenEdges = new Set();
   for (let i = 0; i < MorrisCore.TOTAL_POINTS; i++) {
     for (const j of MorrisCore.ADJACENCY[i]) {
@@ -497,7 +511,7 @@ function buildMorrisBoardDOM() {
       const key = i + "-" + j;
       if (seenEdges.has(key)) continue;
       seenEdges.add(key);
-      boardEl.appendChild(buildMorrisLine(morrisPointCoordByIndex(i), morrisPointCoordByIndex(j)));
+      gridEl.appendChild(buildMorrisLine(morrisPointCoordByIndex(i), morrisPointCoordByIndex(j)));
     }
   }
 
@@ -513,7 +527,7 @@ function buildMorrisBoardDOM() {
     piece.className = "morris-piece";
     point.appendChild(piece);
     point.addEventListener("click", () => onMorrisPointClick(i));
-    boardEl.appendChild(point);
+    gridEl.appendChild(point);
   }
 
   ensureMorrisBoardSquare();
