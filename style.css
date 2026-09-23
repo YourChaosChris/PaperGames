@@ -1971,6 +1971,16 @@ margin-top: 0.5rem;
   padding: 7%;
 }
 
+/* Points/lines are positioned inside this, not directly inside
+   .morris-board - see the comment in morris-app.js's buildMorrisBoardDOM
+   for why the padding above only acts as a margin for the outer ring of
+   points' own radius when they're one level further in like this. */
+.morris-grid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .morris-line {
   position: absolute;
   background: var(--border);
@@ -2264,7 +2274,7 @@ margin-top: 0.5rem;
 }
 
 .bg-point-label {
-  font-size: 0.55rem;
+  font-size: 0.7rem;
   color: var(--muted);
   line-height: 1;
 }
@@ -5643,8 +5653,12 @@ margin: 0.5rem auto 0;
    `.spider-empty-slot` do NOT use CSS `aspect-ratio` - their height is
    set explicitly in JS from the measured column width instead
    (spidersolitaire-app.js: ensureSpiderCardAspectRatio), since
-   `aspect-ratio` is unreliable on E-Ink browsers; the fixed
-   min-height below is only a pre-JS fallback. */
+   `aspect-ratio` is unreliable on E-Ink browsers. No CSS min-height
+   fallback here (Klondike/FreeCell have none either): `min-height`
+   always wins over a smaller explicit `height`, so on a narrow board
+   (a column under 80px wide, well within Tolino-class screen widths)
+   it silently overrode the correctly-computed, narrower aspect-ratio
+   height and stretched every card. */
 
 .spider-top-row {
   display: flex;
@@ -5717,7 +5731,6 @@ max-width: 900px;
 .spider-card {
   position: relative;
   width: 100%;
-  min-height: 3rem;
   border: var(--border-width) solid var(--border);
   border-radius: 4px;
   background: #fff;
@@ -5747,7 +5760,6 @@ max-width: 900px;
 .spider-empty-slot {
   display: block;
   width: 100%;
-  min-height: 3rem;
   border: var(--border-width) dashed var(--muted);
   border-radius: 4px;
   box-sizing: border-box;
@@ -7064,7 +7076,7 @@ max-width: 900px;
 
 .ludo-finished-tally {
   text-align: center;
-  font-size: 0.42rem;
+  font-size: 0.5rem;
   font-weight: 700;
   color: var(--text);
   line-height: 1.1;
