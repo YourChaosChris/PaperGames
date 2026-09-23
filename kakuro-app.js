@@ -17,6 +17,7 @@
 
 const AppStateKakuro = {
   difficulty: "medium",
+  isDaily: false,    // true when the current puzzle is today's Daily Challenge
   size: 9,
   layout: null,      // 2D "black" | "white"
   clues: null,       // 2D {right, down} | null, matching layout's black cells
@@ -112,15 +113,16 @@ function initKakuroApp() {
     });
   }
 
-  function startNewGameKakuro(difficulty) {
+  function startNewGameKakuro(difficulty, rng, isDaily) {
     setStatusKakuro("offline-kakuro-status", (window.I18n && I18n.t("kakuro_generating")) || "Generating puzzle…");
     setStatusKakuro("board-info", (window.I18n && I18n.t("kakuro_generating")) || "Generating puzzle…");
     // Generation is a couple of milliseconds even on "hard", but
     // yielding a tick keeps the "Generating…" status visible instead of
     // the click feeling unresponsive.
     setTimeout(() => {
-      const puzzle = KakuroPuzzles.generatePuzzle(difficulty);
+      const puzzle = KakuroPuzzles.generatePuzzle(difficulty, rng);
       AppStateKakuro.difficulty = difficulty;
+      AppStateKakuro.isDaily = !!isDaily;
       AppStateKakuro.size = puzzle.size;
       AppStateKakuro.layout = puzzle.layout;
       AppStateKakuro.clues = puzzle.clues;
@@ -137,7 +139,9 @@ function initKakuroApp() {
       updateKakuroBoard();
       updateGameLabelsKakuro();
       setStatusKakuro("offline-kakuro-status", "");
-      setStatusKakuro("board-info", (window.I18n && I18n.t("kakuro_hint")) || "Select a cell, then pick a number.");
+      setStatusKakuro("board-info", isDaily
+        ? "Daily Challenge (" + DailyChallenge.todayKey() + "). Select a cell, then pick a number."
+        : ((window.I18n && I18n.t("kakuro_hint")) || "Select a cell, then pick a number."));
     }, 10);
   }
 
@@ -145,6 +149,13 @@ function initKakuroApp() {
     const difficulty = levelInline ? levelInline.value : "medium";
     startNewGameKakuro(difficulty);
   });
+
+  const dailyBtn = document.getElementById("daily-kakuro-button");
+  if (dailyBtn) {
+    dailyBtn.addEventListener("click", () => {
+      startNewGameKakuro("medium", DailyChallenge.makeTodaysRng("kakuro"), true);
+    });
+  }
 
   if (eraseBtn) {
     eraseBtn.addEventListener("click", () => enterDigitKakuro(0));

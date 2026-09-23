@@ -18,8 +18,16 @@ const AppState2048 = {
   wonAnnounced: false,
   moveCount: 0,
   undoStack: [],
-  bestScore: 0
+  bestScore: 0,
+  isDaily: false
 };
+
+// Only set while a Daily Challenge is in progress, so every tile spawn -
+// the initial board and every move afterwards - draws from the same
+// seeded stream and the puzzle stays identical for every player today.
+// A plain "New game" leaves this null, so Twenty48Core falls back to
+// Math.random as usual.
+let dailyRng2048 = null;
 
 const TWENTY48_SAVE_KEY = "einkchess_save_2048";
 const TWENTY48_BEST_KEY = "einkchess_best_2048";
@@ -29,7 +37,8 @@ function save2048Game() {
   GameStorage.save(TWENTY48_SAVE_KEY, {
     state: AppState2048.state,
     moveCount: AppState2048.moveCount,
-    wonAnnounced: AppState2048.wonAnnounced
+    wonAnnounced: AppState2048.wonAnnounced,
+    isDaily: AppState2048.isDaily
   });
 }
 
@@ -119,8 +128,10 @@ function initTwenty48App() {
     });
   }
 
-  function startNewGame2048() {
-    AppState2048.state = Twenty48Core.createInitialState();
+  function startNewGame2048(isDaily) {
+    dailyRng2048 = isDaily ? DailyChallenge.makeTodaysRng("twenty48") : null;
+    AppState2048.state = Twenty48Core.createInitialState(dailyRng2048);
+    AppState2048.isDaily = !!isDaily;
     AppState2048.gameOver = false;
     AppState2048.wonAnnounced = false;
     AppState2048.moveCount = 0;
@@ -130,10 +141,17 @@ function initTwenty48App() {
     buildTwenty48BoardDOM();
     updateTwenty48Board();
     updateGameLabels2048();
-    setStatus2048("board-info", "Swipe, use the arrow keys, or tap a direction button.");
+    setStatus2048("board-info", isDaily
+      ? "Daily Challenge (" + DailyChallenge.todayKey() + "). Swipe, use the arrow keys, or tap a direction button."
+      : "Swipe, use the arrow keys, or tap a direction button.");
   }
 
-  startGameBtn.addEventListener("click", startNewGame2048);
+  startGameBtn.addEventListener("click", () => startNewGame2048(false));
+
+  const dailyBtn = document.getElementById("daily-twenty48-button");
+  if (dailyBtn) {
+    dailyBtn.addEventListener("click", () => startNewGame2048(true));
+  }
 
   document.addEventListener("keydown", (e) => {
     const map = { ArrowLeft: "left", ArrowRight: "right", ArrowUp: "up", ArrowDown: "down" };
@@ -176,6 +194,11 @@ function initTwenty48App() {
     AppState2048.state = savedGame.state;
     AppState2048.moveCount = savedGame.moveCount;
     AppState2048.wonAnnounced = savedGame.wonAnnounced;
+    AppState2048.isDaily = !!savedGame.isDaily;
+    // A seeded RNG closure can't be persisted across a reload, so a
+    // resumed Daily Challenge continues with fresh randomness rather
+    // than replaying the exact same seeded stream from the start.
+    dailyRng2048 = null;
     AppState2048.gameOver = savedGame.state.over;
     resetUndoStack2048();
     setGameResult2048("");
@@ -192,7 +215,7 @@ function initTwenty48App() {
 function applyMove2048(direction) {
   if (!AppState2048.state || AppState2048.gameOver) return;
   const before = AppState2048.state;
-  const next = Twenty48Core.move(before, direction);
+  const next = Twenty48Core.move(before, direction, dailyRng2048);
   if (next === before) return; // no-op move - nothing slid
 
   pushUndoSnapshot2048();

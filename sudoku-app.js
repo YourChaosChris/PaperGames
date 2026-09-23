@@ -15,6 +15,7 @@
 
 const AppStateSudoku = {
   difficulty: "medium",
+  isDaily: false,    // true when the current puzzle is today's Daily Challenge
   puzzle: null,      // the original generated puzzle (0 = empty givens)
   solution: null,
   grid: null,        // current state, including the player's entries
@@ -107,15 +108,16 @@ function initSudokuApp() {
     });
   }
 
-  function startNewGameSudoku(difficulty) {
+  function startNewGameSudoku(difficulty, rng, isDaily) {
     setStatusSudoku("offline-sudoku-status", "Generating puzzle…");
     setStatusSudoku("board-info", "Generating puzzle…");
     // Generation is a few milliseconds even on "hard", but yielding a
     // tick keeps the "Generating…" status visible instead of the click
     // feeling unresponsive.
     setTimeout(() => {
-      const { puzzle, solution } = SudokuCore.generatePuzzle(difficulty);
+      const { puzzle, solution } = SudokuCore.generatePuzzle(difficulty, rng);
       AppStateSudoku.difficulty = difficulty;
+      AppStateSudoku.isDaily = !!isDaily;
       AppStateSudoku.puzzle = puzzle;
       AppStateSudoku.solution = solution;
       AppStateSudoku.grid = puzzle.slice();
@@ -131,7 +133,9 @@ function initSudokuApp() {
       updateSudokuBoard();
       updateGameLabelsSudoku();
       setStatusSudoku("offline-sudoku-status", "");
-      setStatusSudoku("board-info", "Select a cell, then pick a number.");
+      setStatusSudoku("board-info", isDaily
+        ? "Daily Challenge (" + DailyChallenge.todayKey() + "). Select a cell, then pick a number."
+        : "Select a cell, then pick a number.");
     }, 10);
   }
 
@@ -139,6 +143,13 @@ function initSudokuApp() {
     const difficulty = levelInline ? levelInline.value : "medium";
     startNewGameSudoku(difficulty);
   });
+
+  const dailyBtn = document.getElementById("daily-sudoku-button");
+  if (dailyBtn) {
+    dailyBtn.addEventListener("click", () => {
+      startNewGameSudoku("medium", DailyChallenge.makeTodaysRng("sudoku"), true);
+    });
+  }
 
   if (eraseBtn) {
     eraseBtn.addEventListener("click", () => enterDigitSudoku(0));
