@@ -6939,10 +6939,20 @@ max-width: 900px;
   background: var(--square-dark);
 }
 
+/* Width/height 100% here is load-bearing, not decorative: .ludo-token
+   below sizes itself as a PERCENTAGE of this element, and a percentage
+   only resolves against a definite parent size. Without an explicit
+   size here this box has none (absolute positioning alone doesn't give
+   it one), so every on-board token was silently collapsing to its
+   `min-width`/`min-height` floor - tiny and the same size regardless of
+   the board's actual size - instead of scaling with the cell like every
+   other board element. */
 .ludo-cell-tokens {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 100%;
+  height: 100%;
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
