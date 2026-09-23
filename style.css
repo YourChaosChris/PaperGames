@@ -1486,10 +1486,10 @@ margin: 2rem 0 1rem;
 }
 
 
-/* End-of-game result popup, shared by chess.html and go.html via
-   result-modal.js. Longhand top/right/bottom/left rather than the
-   `inset` shorthand - a real device in this project's own test history
-   silently ignores that shorthand entirely. */
+/* End-of-game result popup, shared by every game via result-modal.js.
+   Longhand top/right/bottom/left rather than the `inset` shorthand - a
+   real device in this project's own test history silently ignores that
+   shorthand entirely. */
 .result-modal-overlay {
   position: fixed;
   top: 0;
@@ -1516,6 +1516,29 @@ margin: 2rem 0 1rem;
   max-width: 320px;
   width: 100%;
   text-align: center;
+}
+
+/* Hidden by default; only .result-modal-win (a real win, not a loss or
+   a draw - see classifyOutcome() in result-modal.js) shows it. A plain
+   Unicode star rather than a drawn shape, matching how this project
+   already uses a handful of Unicode symbols elsewhere (e.g. the resign
+   button's flag) instead of an icon font. */
+.result-modal-ornament {
+  display: none;
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.result-modal-win .result-modal-ornament {
+  display: block;
+}
+
+/* A real win also gets a slightly heavier frame - still just a border
+   weight/style change, no color, so it reads the same on a monochrome
+   E-Ink panel as anywhere else. */
+.result-modal-win {
+  border-width: calc(var(--border-width) * 2);
 }
 
 .result-modal-title {

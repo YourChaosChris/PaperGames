@@ -1,9 +1,29 @@
 // result-modal.js
-// Shared end-of-game popup for both chess.html and go.html: a centered,
-// dismissible overlay announcing the result, built once and reused so
-// neither page needs its own copy of this markup/CSS.
+// Shared end-of-game popup for every game: a centered, dismissible
+// overlay announcing the result, built once and reused so no game needs
+// its own copy of this markup/CSS.
 
 const ResultModal = (function () {
+  // Every game's own result title (see e.g. abalone-app.js's
+  // resultTitleAbalone, or the various fixed puzzle-win/-lose titles in
+  // i18n.js) is one of a small, consistent set of English phrasings -
+  // this reads that title text to decide whether a small celebratory
+  // mark belongs on the popup, rather than adding an outcome parameter
+  // every one of those call sites (46 games' worth) would need to pass.
+  function classifyOutcome(title) {
+    const t = (title || "").toLowerCase();
+    if (t.indexOf("you lose") !== -1 || t.indexOf("the computer wins") !== -1 ||
+        t.indexOf("boom") !== -1 || t.indexOf("defeat") !== -1 || t.indexOf("no moves left") !== -1) {
+      return "loss";
+    }
+    if (t.indexOf("draw") !== -1) return "draw";
+    if (t.indexOf("win") !== -1 || t.indexOf("solved") !== -1 || t.indexOf("cleared") !== -1 ||
+        t.indexOf("victory") !== -1 || t.indexOf("well done") !== -1 || t.indexOf("2048") !== -1) {
+      return "win";
+    }
+    return "neutral";
+  }
+
   function ensureModal() {
     let overlay = document.getElementById("result-modal-overlay");
     if (overlay) return overlay;
@@ -13,6 +33,7 @@ const ResultModal = (function () {
     overlay.className = "result-modal-overlay hidden";
     overlay.innerHTML =
       '<div class="result-modal" role="dialog" aria-modal="true" aria-labelledby="result-modal-title">' +
+        '<div class="result-modal-ornament" aria-hidden="true">&#9733;</div>' +
         '<div id="result-modal-title" class="result-modal-title"></div>' +
         '<div id="result-modal-message" class="result-modal-message"></div>' +
         '<button type="button" class="primary result-modal-close">OK</button>' +
@@ -31,6 +52,8 @@ const ResultModal = (function () {
     const overlay = ensureModal();
     overlay.querySelector("#result-modal-title").textContent = title || "";
     overlay.querySelector("#result-modal-message").textContent = message || "";
+    const modal = overlay.querySelector(".result-modal");
+    modal.className = "result-modal result-modal-" + classifyOutcome(title);
     overlay.classList.remove("hidden");
   }
 
