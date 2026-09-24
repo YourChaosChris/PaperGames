@@ -49,16 +49,16 @@
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
     <select id="go-size-inline">
-      <option value="9">9 × 9 (fast)</option>
+      <option value="9" data-i18n="go_board_size_9">9 × 9 (fast)</option>
       <option value="13">13 × 13</option>
-      <option value="19">19 × 19 (full size)</option>
+      <option value="19" data-i18n="go_board_size_19">19 × 19 (full size)</option>
     </select>
   </div>
   <div class="field-row">
     <button id="start-go-game" class="primary" data-i18n="new_game">New game</button>
     <div id="go-color-choice" class="inline-options">
-      <label class="color-choice"><input type="radio" name="go-color" value="black" checked> <span class="color-choice-icon"><span class="go-stone-icon go-stone-black"></span></span> Black</label>
-      <label class="color-choice"><input type="radio" name="go-color" value="white"> <span class="color-choice-icon"><span class="go-stone-icon go-stone-white"></span></span> White</label>
+      <label class="color-choice"><input type="radio" name="go-color" value="black" checked> <span class="color-choice-icon"><span class="go-stone-icon go-stone-black"></span></span> <span data-i18n="go_color_black">Black</span></label>
+      <label class="color-choice"><input type="radio" name="go-color" value="white"> <span class="color-choice-icon"><span class="go-stone-icon go-stone-white"></span></span> <span data-i18n="go_color_white">White</span></label>
     </div>
     <select id="go-level-inline">
         <option value="0" data-i18n="mode_two_player">2 Player (local)</option>
@@ -91,9 +91,9 @@
     <div id="go-board" class="go-board" role="group" aria-label="Go board"><div id="go-grid" class="go-grid"></div></div>
   </div>
   <div id="board-actions" class="board-actions">
-    <button id="undo-btn" class="secondary small hidden" onclick="undoLastMove()">Undo</button>
-    <button id="pass-button" class="secondary small hidden">Pass</button>
-    <button id="resign-button" class="secondary small hidden">Resign 🏳</button>
+    <button id="undo-btn" class="secondary small hidden" data-i18n="undo_button" onclick="undoLastMove()">Undo</button>
+    <button id="pass-button" class="secondary small hidden" data-i18n="go_pass_button">Pass</button>
+    <button id="resign-button" class="secondary small hidden" data-i18n="resign_button">Resign 🏳</button>
   </div>
   <div id="score-line" class="score-line hidden"><span id="score-captures" class="score-line-captures"></span></div>
 </section>
