@@ -95,7 +95,14 @@ const AppStateXiangqi = {
   moveCount: 0,
   undoStack: [],
   pieceStyle: "classic",  // "classic" | "symbols"
-  moveHistory: []
+  moveHistory: [],
+  // Occurrence count per position (see XiangqiCore.positionKey) reached
+  // after a move, plus whether the side to move was in check every
+  // single time - a simple, advisory-only heuristic for perpetual
+  // check (see recordXiangqiPositionXq). Reset whenever the board is
+  // set directly (new game, loaded game, undo) rather than reached by
+  // playing a move, so it never spans across those jumps.
+  positionHistory: {}
 };
 
 const XQ_STYLE_KEY = "einkchess_xiangqi_piece_style";
@@ -186,6 +193,25 @@ function announceGameResultXq(resultCode, message) {
 
 function resetUndoStackXq() {
   AppStateXiangqi.undoStack = [];
+}
+
+function resetPositionHistoryXq() {
+  AppStateXiangqi.positionHistory = {};
+}
+
+// Records the position just reached (after a move) and reports whether
+// it has now recurred a 3rd time with the side to move in check every
+// single time - a sign of perpetual check. This is advisory only: it
+// shows a warning in the status text, never blocks a move or ends the
+// game, since fully implementing Xiangqi's perpetual-check/perpetual-
+// chase rules is a much larger undertaking than this heuristic.
+function recordXiangqiPositionXq(inCheck) {
+  const key = XiangqiCore.positionKey(AppStateXiangqi.board, AppStateXiangqi.turn);
+  const entry = AppStateXiangqi.positionHistory[key] || { count: 0, allChecked: true };
+  entry.count++;
+  entry.allChecked = entry.allChecked && inCheck;
+  AppStateXiangqi.positionHistory[key] = entry;
+  return entry.count >= 3 && entry.allChecked;
 }
 
 function pushUndoSnapshotXq() {
@@ -285,6 +311,7 @@ function initXiangqiApp() {
     AppStateXiangqi.moveCount = 0;
     resetUndoStackXq();
     resetMoveHistoryXq();
+    resetPositionHistoryXq();
     setGameResultXq("");
     showBoardSectionXq();
     buildXiangqiBoardDOM();
@@ -378,6 +405,7 @@ function initXiangqiApp() {
     AppStateXiangqi.moveHistory = savedGame.moveHistory || [];
     AppStateXiangqi.gameOver = false;
     resetUndoStackXq();
+    resetPositionHistoryXq();
     renderMoveListXq();
     setActiveModeButtonXq(AppStateXiangqi.mode);
     setGameResultXq("");
@@ -477,7 +505,12 @@ function applyXiangqiMove(move) {
   }
 
   const inCheck = XiangqiCore.isInCheck(AppStateXiangqi.board, AppStateXiangqi.turn);
-  setStatusXq("board-info", colorNameXq(mover) + " played." + (inCheck ? " Check!" : "") + " " + colorNameXq(AppStateXiangqi.turn) + " to move.");
+  const perpetualCheckWarning = recordXiangqiPositionXq(inCheck);
+  let message = colorNameXq(mover) + " played." + (inCheck ? " Check!" : "") + " " + colorNameXq(AppStateXiangqi.turn) + " to move.";
+  if (perpetualCheckWarning) {
+    message += " Perpetual check is not allowed - please vary your move.";
+  }
+  setStatusXq("board-info", message);
 }
 
 function aiMoveOfflineXq() {
@@ -506,6 +539,7 @@ function undoLastMove() {
   AppStateXiangqi.lastMove = prev.lastMove;
   AppStateXiangqi.selected = null;
   AppStateXiangqi.moveHistory.length = AppStateXiangqi.moveCount;
+  resetPositionHistoryXq();
   renderMoveListXq();
   setGameResultXq("");
   updateXiangqiBoard();
@@ -559,6 +593,12 @@ function buildXiangqiBoardDOM() {
   river.style.height = stepY + "%";
   grid.appendChild(river);
 
+  // The palace's own diagonals ("the cross") - drawn as an inline SVG
+  // rather than rotated divs, since a viewBox-based line always hits
+  // the rectangle's exact corners regardless of pixel rounding. The
+  // palace itself is pixel-square (ensureXiangqiBoardSquare() forces
+  // the board's aspect ratio to match the grid's row/col count), so
+  // the two diagonals are true 45-degree lines, not a skewed X.
   [[0, 2], [7, 9]].forEach(([r0, r1]) => {
     const palace = document.createElement("div");
     palace.className = "xq-palace";
@@ -566,6 +606,11 @@ function buildXiangqiBoardDOM() {
     palace.style.height = ((r1 - r0) * stepY) + "%";
     palace.style.left = (3 * stepX) + "%";
     palace.style.width = (2 * stepX) + "%";
+    palace.innerHTML =
+      '<svg class="xq-palace-diag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">' +
+        '<line x1="0" y1="0" x2="100" y2="100" vector-effect="non-scaling-stroke"></line>' +
+        '<line x1="100" y1="0" x2="0" y2="100" vector-effect="non-scaling-stroke"></line>' +
+      '</svg>';
     grid.appendChild(palace);
   });
 

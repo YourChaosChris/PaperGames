@@ -220,6 +220,21 @@ const XiangqiCore = (function () {
     return legal;
   }
 
+  // A compact string identifying this exact position (board layout plus
+  // whose turn it is), for spotting a recurring position - e.g. to warn
+  // about perpetual check. Not used for legality at all, only for that
+  // advisory hint.
+  function positionKey(board, colorToMove) {
+    let key = colorToMove;
+    for (let r = 0; r < ROWS; r++) {
+      for (let c = 0; c < COLS; c++) {
+        const cell = board[r][c];
+        key += cell ? cell.color + cell.type : ".";
+      }
+    }
+    return key;
+  }
+
   // { status: "normal" | "checkmate" | "no-moves", winner: color|null }
   // Unlike international chess, Xiangqi has no stalemate draw: a player
   // with no legal move loses whether or not they're in check.
@@ -247,6 +262,7 @@ const XiangqiCore = (function () {
     applyMove,
     isInCheck,
     getLegalMoves,
+    positionKey,
     detectGameEnd
   };
 })();
