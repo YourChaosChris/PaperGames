@@ -21,6 +21,7 @@
 
 const AppStateSlitherlink = {
   difficulty: "easy",
+  isDaily: false,  // true when the current puzzle is today's Daily Challenge
   rows: 5,
   cols: 5,
   clues: null,     // 2D clue (0-3) | null
@@ -120,7 +121,7 @@ function initSlitherlinkApp() {
     });
   }
 
-  function startNewGameSlitherlink(difficulty) {
+  function startNewGameSlitherlink(difficulty, rng, isDaily) {
     setStatusSlitherlink("offline-slitherlink-status", (window.I18n && I18n.t("slitherlink_generating")) || "Generating puzzle…");
     setStatusSlitherlink("board-info", (window.I18n && I18n.t("slitherlink_generating")) || "Generating puzzle…");
     // Generation can take up to a couple of seconds on "hard" (a real
@@ -128,8 +129,9 @@ function initSlitherlinkApp() {
     // slitherlink-puzzles.js) - yielding a tick first keeps the
     // "Generating…" status visible instead of the tap feeling stuck.
     setTimeout(() => {
-      const puzzle = SlitherlinkPuzzles.generatePuzzle(difficulty);
+      const puzzle = SlitherlinkPuzzles.generatePuzzle(difficulty, rng);
       AppStateSlitherlink.difficulty = difficulty;
+      AppStateSlitherlink.isDaily = !!isDaily;
       AppStateSlitherlink.rows = puzzle.rows;
       AppStateSlitherlink.cols = puzzle.cols;
       AppStateSlitherlink.clues = puzzle.clues;
@@ -144,7 +146,9 @@ function initSlitherlinkApp() {
       updateSlitherlinkBoard();
       updateGameLabelsSlitherlink();
       setStatusSlitherlink("offline-slitherlink-status", "");
-      setStatusSlitherlink("board-info", hintTextSlitherlink());
+      setStatusSlitherlink("board-info", isDaily
+        ? "Daily Challenge (" + DailyChallenge.todayKey() + "). " + hintTextSlitherlink()
+        : hintTextSlitherlink());
     }, 10);
   }
 
@@ -152,6 +156,13 @@ function initSlitherlinkApp() {
     const difficulty = levelInline ? levelInline.value : "easy";
     startNewGameSlitherlink(difficulty);
   });
+
+  const dailyBtn = document.getElementById("daily-slitherlink-button");
+  if (dailyBtn) {
+    dailyBtn.addEventListener("click", () => {
+      startNewGameSlitherlink("easy", DailyChallenge.makeTodaysRng("slitherlink"), true);
+    });
+  }
 
   if (clearBtn) {
     clearBtn.addEventListener("click", () => {

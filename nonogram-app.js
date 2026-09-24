@@ -21,7 +21,8 @@ const AppStateNonogram = {
   mode: "fill",        // "fill" | "mark"
   gameOver: false,
   moveCount: 0,
-  undoStack: []
+  undoStack: [],
+  isDaily: false
 };
 
 const NONOGRAM_SAVE_KEY = "einkchess_save_nonogram";
@@ -116,9 +117,12 @@ function initNonogramApp() {
   if (modeFillBtn) modeFillBtn.addEventListener("click", () => setModeNonogram("fill"));
   if (modeMarkBtn) modeMarkBtn.addEventListener("click", () => setModeNonogram("mark"));
 
-  function startNewGameNonogram(difficulty) {
+  function startNewGameNonogram(difficulty, isDaily) {
     const pool = NonogramPuzzles[difficulty] || NonogramPuzzles.medium;
-    const chosen = pool[Math.floor(Math.random() * pool.length)];
+    const index = isDaily
+      ? DailyChallenge.nonogramIndexForToday("nonogram-" + difficulty, pool.length)
+      : Math.floor(Math.random() * pool.length);
+    const chosen = pool[index];
     const solution = nonogramGridFromStrings(chosen.grid);
 
     AppStateNonogram.difficulty = difficulty;
@@ -126,6 +130,7 @@ function initNonogramApp() {
     AppStateNonogram.solution = solution;
     AppStateNonogram.clues = NonogramCore.computeClues(solution);
     AppStateNonogram.playerGrid = NonogramCore.createEmptyPlayerGrid(solution.length, solution[0].length);
+    AppStateNonogram.isDaily = !!isDaily;
     AppStateNonogram.gameOver = false;
     AppStateNonogram.moveCount = 0;
     resetUndoStackNonogram();
@@ -135,13 +140,23 @@ function initNonogramApp() {
     buildNonogramBoardDOM();
     updateNonogramBoard();
     updateGameLabelsNonogram();
-    setStatusNonogram("board-info", "Fill in the cells the clues describe.");
+    setStatusNonogram("board-info", isDaily
+      ? "Daily Challenge (" + DailyChallenge.todayKey() + "). Fill in the cells the clues describe."
+      : "Fill in the cells the clues describe.");
   }
 
   startGameBtn.addEventListener("click", () => {
     const difficulty = levelInline ? levelInline.value : "medium";
     startNewGameNonogram(difficulty);
   });
+
+  const dailyBtn = document.getElementById("daily-nonogram-button");
+  if (dailyBtn) {
+    dailyBtn.addEventListener("click", () => {
+      const difficulty = levelInline ? levelInline.value : "medium";
+      startNewGameNonogram(difficulty, true);
+    });
+  }
 
   const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(NONOGRAM_SAVE_KEY) : null;
   if (savedGame && savedGame.solution) {
