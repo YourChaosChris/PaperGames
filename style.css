@@ -7331,3 +7331,36 @@ max-width: 900px;
     display: none !important;
   }
 }
+
+/* "New version available" banner - see update-banner.js. A normal,
+   in-flow element at the very top of <body> rather than position:fixed,
+   so it never overlaps the header underneath it and needs no dynamic
+   height bookkeeping - it just pushes the rest of the page down while
+   it's shown. */
+.update-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background: #fff;
+  border-bottom: var(--border-width) solid var(--border);
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.update-banner > * {
+  margin: 0 0.5rem 0 0;
+}
+
+.update-banner > *:last-child {
+  margin-right: 0;
+}
+
+.update-banner-text {
+  flex: 1 1 auto;
+  font-size: 0.85rem;
+}
+
+.update-banner-close {
+  padding: 0 0.5rem;
+  line-height: 1.4;
+}
