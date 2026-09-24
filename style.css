@@ -7364,3 +7364,21 @@ max-width: 900px;
   padding: 0 0.5rem;
   line-height: 1.4;
 }
+
+/* Opt-in high-contrast mode for low-light e-ink reading conditions -
+   see high-contrast.js. Overrides the same shared CSS custom
+   properties every card, button and board grid line across all 46
+   games already draws from, so this needs no per-component styling. */
+:root.high-contrast {
+  --bg: #ffffff;
+  --bg-alt: #ffffff;
+  --muted: #000000;
+  --border-width: 3px;
+  --square-dark: #bdbdbd;
+  --square-selected: #999999;
+}
+
+#high-contrast-toggle-button.active {
+  border-width: 3px;
+  font-weight: 800;
+}
