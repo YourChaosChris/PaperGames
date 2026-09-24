@@ -7387,7 +7387,115 @@ max-width: 900px;
   --square-selected: #999999;
 }
 
-#high-contrast-toggle-button.active {
-  border-width: 3px;
+/* Settings menu - see settings-menu.js. Same fixed-overlay technique as
+   .result-modal-overlay (already proven on a real Tolino: longhand
+   top/right/bottom/left rather than the `inset` shorthand, which that
+   device silently ignores), and the same card look as .result-modal,
+   just taller and scrollable since this holds several sections instead
+   of one message. */
+.settings-modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.settings-modal-overlay.hidden {
+  display: none !important;
+}
+
+.settings-modal {
+  background: #fff;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  max-width: 420px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.settings-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.settings-modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.settings-modal-close {
+  min-width: 2rem;
+  padding: 0.2rem 0.5rem;
+}
+
+.settings-section {
+  margin-bottom: 1.25rem;
+}
+
+.settings-section:last-child {
+  margin-bottom: 0;
+}
+
+.settings-section h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+
+.settings-section .lang-switch select {
+  width: 100%;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.settings-segmented {
+  display: flex;
+}
+
+.settings-segmented > * {
+  margin: 0 0.3rem 0 0;
+}
+
+.settings-segmented > *:last-child {
+  margin-right: 0;
+}
+
+.settings-segmented button {
+  flex: 1;
+}
+
+.settings-segmented button.active {
+  border-width: calc(var(--border-width) * 2);
   font-weight: 800;
+}
+
+.settings-checkbox-row {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.settings-checkbox-row input {
+  margin-right: 0.5rem;
+}
+
+.settings-hint {
+  color: var(--muted);
+  margin: 0 0 0.75rem 0;
 }
