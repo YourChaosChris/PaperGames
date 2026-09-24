@@ -754,9 +754,12 @@ function updateLudoBoard() {
 
   const tally = document.getElementById("ludo-finished-tally");
   if (tally) {
-    tally.textContent = LudoCore.COLOR_ORDER.filter((c) => state.activeColors.indexOf(c) !== -1)
-      .map((c) => ludoColorName(c)[0] + ":" + LudoCore.tokensFinished(state, c))
-      .join(" ");
+    tally.innerHTML = "";
+    LudoCore.COLOR_ORDER.filter((c) => state.activeColors.indexOf(c) !== -1).forEach((c) => {
+      const item = document.createElement("span");
+      item.textContent = ludoColorName(c)[0] + LudoCore.tokensFinished(state, c);
+      tally.appendChild(item);
+    });
   }
 
   updateLudoAriaLabels();

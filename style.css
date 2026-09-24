@@ -7191,18 +7191,27 @@ max-width: 900px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   background: var(--square-light);
   border: 1px solid var(--border);
   box-sizing: border-box;
   pointer-events: none;
 }
 
+/* One <span> per active color, wrapped into a 2-column grid (2x1 for a
+   2-player game, 2x2 for 3-4 players) rather than one long space-joined
+   line - that's what lets this sit at a readable font-size instead of
+   the illegibly tiny one a single "R:0 G:0 Y:0 B:0" line would need to
+   fit this single board cell. */
 .ludo-finished-tally {
-  text-align: center;
-  font-size: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  align-items: center;
+  font-size: 0.65rem;
   font-weight: 700;
   color: var(--text);
-  line-height: 1.1;
+  line-height: 1.15;
 }
 
 /* Turn indicator: one chip per active color, the current player's chip
