@@ -151,6 +151,11 @@ function initSudokuApp() {
     });
   }
 
+  const printBtn = document.getElementById("print-puzzle-button");
+  if (printBtn) {
+    printBtn.addEventListener("click", () => window.print());
+  }
+
   if (eraseBtn) {
     eraseBtn.addEventListener("click", () => enterDigitSudoku(0));
   }
