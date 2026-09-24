@@ -92,10 +92,45 @@ function renderStats() {
   if (empty) empty.classList.toggle("hidden", totalGames > 0);
 }
 
+function renderAchievements() {
+  const grid = document.getElementById("achievements-grid");
+  if (!grid || typeof Achievements === "undefined") return;
+
+  grid.innerHTML = "";
+  Achievements.getStatus().forEach((a) => {
+    const badge = document.createElement("div");
+    badge.className = "achievement-badge" + (a.unlocked ? "" : " locked");
+
+    const icon = document.createElement("span");
+    icon.className = "achievement-badge-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = a.unlocked ? a.icon : "\u{1F512}";
+
+    const text = document.createElement("div");
+    text.className = "achievement-badge-text";
+    const name = document.createElement("span");
+    name.className = "achievement-badge-name";
+    name.textContent = (window.I18n && window.I18n.t(a.nameKey)) || a.id;
+    const desc = document.createElement("span");
+    desc.className = "achievement-badge-desc";
+    desc.textContent = (window.I18n && window.I18n.t(a.descKey)) || "";
+    text.appendChild(name);
+    text.appendChild(desc);
+
+    badge.appendChild(icon);
+    badge.appendChild(text);
+    grid.appendChild(badge);
+  });
+}
+
 function initStatsApp() {
   renderStats();
+  renderAchievements();
   document.querySelectorAll(".lang-switch [data-lang]").forEach((btn) => {
-    btn.addEventListener("click", renderStats);
+    btn.addEventListener("click", () => {
+      renderStats();
+      renderAchievements();
+    });
   });
   const resetBtn = document.getElementById("stats-reset");
   if (resetBtn) {
@@ -104,6 +139,7 @@ function initStatsApp() {
       if (window.confirm(msg)) {
         GameStats.reset();
         renderStats();
+        renderAchievements();
       }
     });
   }

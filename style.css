@@ -1424,6 +1424,52 @@ margin: 2rem 0 1rem;
   color: var(--text);
 }
 
+/* Stats page: achievement badges, derived from GameStats rather than
+   their own storage - locked ones stay visible (not hidden) so the
+   player can see what's still ahead, just faded via opacity like every
+   other "inactive" state in this app (:disabled buttons, etc.), since a
+   color-only distinction wouldn't read on grayscale e-ink. */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.6rem;
+  margin: 0.6rem 0;
+}
+
+.achievement-badge {
+  display: flex;
+  align-items: flex-start;
+  background: #fff;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+}
+
+.achievement-badge.locked {
+  opacity: 0.5;
+}
+
+.achievement-badge-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-right: 0.6rem;
+  flex-shrink: 0;
+}
+
+.achievement-badge-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.achievement-badge-name {
+  font-weight: 600;
+}
+
+.achievement-badge-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
 .games-group-title {
   margin: 1rem 0 0.4rem;
 }
