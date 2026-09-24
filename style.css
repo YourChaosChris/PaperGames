@@ -7364,9 +7364,26 @@ max-width: 900px;
   margin-right: 0;
 }
 
+/* Also used directly (not inside .update-banner-lines) by
+   error-banner.js's single-line message - keep its own flex sizing so
+   that usage keeps working unchanged. */
 .update-banner-text {
   flex: 1 1 auto;
   font-size: 0.85rem;
+}
+
+/* Wraps the main message and the optional "what's new" line as two
+   stacked lines inside the same flex slot the plain text span used to
+   occupy - see update-banner.js. */
+.update-banner-lines {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.update-banner-whats-new {
+  font-size: 0.75rem;
+  color: var(--muted);
 }
 
 .update-banner-close {
