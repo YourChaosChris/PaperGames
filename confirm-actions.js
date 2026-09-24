@@ -24,6 +24,10 @@
 // the game's own click handler from running at all when the player
 // cancels.
 (function () {
+  function label(key, fallback) {
+    return (window.I18n && typeof I18n.t === "function") ? I18n.t(key) : fallback;
+  }
+
   function isGameInProgress() {
     const btn = document.getElementById("resign-button");
     if (!btn) return false;
@@ -35,7 +39,7 @@
     if (!target || !target.id) return;
 
     if (target.id === "resign-button") {
-      if (!window.confirm("Resign this game?")) {
+      if (!window.confirm(label("resign_confirm_dialog", "Resign this game?"))) {
         e.stopPropagation();
         e.preventDefault();
       }
@@ -47,9 +51,16 @@
     // "Offline" mode's button, which - unlike "Offline (vs Computer)" -
     // starts a 2-player game immediately on click rather than revealing a
     // setup form first (see e.g. abalone-app.js's modeOffline handler).
+    //
+    // Unlike resigning, starting fresh never gets recorded as a loss -
+    // every <game>-app.js's own recordXStatsIfVsAi() is only ever called
+    // from win/loss/draw detection and the Resign handler, never from a
+    // "start-*" click - so the confirmation says so explicitly, since a
+    // player might otherwise avoid restarting a bad game out of a
+    // reasonable but mistaken fear that it would count against them.
     const startsGameNow = (target.id.indexOf("start-") === 0 && target.id !== "start-seek-button") || target.id === "mode-offline";
     if (startsGameNow && isGameInProgress()) {
-      if (!window.confirm("Start a new game? Your current game will be lost.")) {
+      if (!window.confirm(label("new_game_confirm_dialog", "Start a new game? Your current game will be lost, but it won't count as a loss in your stats."))) {
         e.stopPropagation();
         e.preventDefault();
       }
