@@ -123,9 +123,53 @@ function renderAchievements() {
   });
 }
 
+function setBackupStatus(text) {
+  const el = document.getElementById("backup-status");
+  if (el) el.textContent = text || "";
+}
+
+function initBackupControls() {
+  const exportBtn = document.getElementById("backup-export-button");
+  const importBtn = document.getElementById("backup-import-button");
+  const importInput = document.getElementById("backup-import-input");
+  if (!exportBtn || !importBtn || !importInput || typeof Backup === "undefined") return;
+
+  exportBtn.addEventListener("click", () => {
+    Backup.exportBackup();
+  });
+
+  importBtn.addEventListener("click", () => {
+    importInput.click();
+  });
+
+  importInput.addEventListener("change", () => {
+    const file = importInput.files && importInput.files[0];
+    if (!file) return;
+
+    const confirmMsg = (window.I18n && window.I18n.t("backup_import_confirm")) ||
+      "Import this backup? It will overwrite your current stats, achievements progress and saved games. This cannot be undone.";
+    if (!window.confirm(confirmMsg)) {
+      importInput.value = "";
+      return;
+    }
+
+    Backup.importBackup(file, (err) => {
+      importInput.value = "";
+      if (err) {
+        setBackupStatus((window.I18n && window.I18n.t("backup_import_error")) ||
+          "Could not read that file. Make sure it's a PaperGames backup file exported from this page.");
+        return;
+      }
+      setBackupStatus((window.I18n && window.I18n.t("backup_import_success")) || "Backup imported. Reloading…");
+      setTimeout(() => window.location.reload(), 800);
+    });
+  });
+}
+
 function initStatsApp() {
   renderStats();
   renderAchievements();
+  initBackupControls();
   document.querySelectorAll(".lang-switch [data-lang]").forEach((btn) => {
     btn.addEventListener("click", () => {
       renderStats();

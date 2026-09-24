@@ -67,6 +67,15 @@
       <p data-i18n="achv_intro">Badges you've unlocked from your own local stats, above.</p>
       <div id="achievements-grid" class="achievements-grid"></div>
 
+      <h2 data-i18n="backup_section_title">Backup</h2>
+      <p data-i18n="backup_intro">Back up your stats, achievements and saved games to a file, or restore them from one.</p>
+      <p class="stats-actions">
+        <button id="backup-export-button" type="button" class="secondary small" data-i18n="backup_export_button">💾 Export backup</button>
+        <button id="backup-import-button" type="button" class="secondary small" data-i18n="backup_import_button">📂 Import backup</button>
+        <input type="file" id="backup-import-input" accept="application/json" class="hidden">
+      </p>
+      <div id="backup-status" class="status-text" aria-live="polite"></div>
+
       <p class="stats-actions">
         <button id="stats-reset" type="button" class="secondary small" data-i18n="stats_reset_button">Reset stats</button>
       </p>
@@ -90,6 +99,7 @@
 <script src="font-size-toggle.js"></script>
 <script src="game-stats.js"></script>
 <script src="achievements.js"></script>
+<script src="backup.js"></script>
 <script src="sw-register.js"></script>
 <script src="update-banner.js"></script>
 <script src="stats-app.js"></script>
