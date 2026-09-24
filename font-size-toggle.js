@@ -21,11 +21,14 @@ const FontSizeToggle = (function () {
     }
   }
 
+  // The button that used to live here now lives in the unified Settings
+  // menu (settings-menu.js), which calls setLevel() directly - this
+  // module keeps only the state and the class application, since that
+  // still has to run unconditionally on every page load regardless of
+  // whether the user ever opens Settings.
   function apply(level) {
     LEVELS.forEach((l) => document.documentElement.classList.remove("text-size-" + l));
     if (level !== "normal") document.documentElement.classList.add("text-size-" + level);
-    const btn = document.getElementById("font-size-toggle-button");
-    if (btn) btn.textContent = LABELS[level];
   }
 
   function setLevel(level) {
@@ -36,33 +39,13 @@ const FontSizeToggle = (function () {
     } catch (e) { /* storage unavailable - just don't persist */ }
   }
 
-  function cycle() {
-    const current = getLevel();
-    setLevel(LEVELS[(LEVELS.indexOf(current) + 1) % LEVELS.length]);
-  }
-
-  function injectButton() {
-    const panel = document.querySelector(".user-panel");
-    if (!panel || document.getElementById("font-size-toggle-button")) return;
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.id = "font-size-toggle-button";
-    btn.className = "secondary small";
-    btn.title = "Text size";
-    btn.setAttribute("aria-label", "Text size");
-    btn.textContent = LABELS[getLevel()];
-    btn.addEventListener("click", cycle);
-    panel.insertBefore(btn, panel.firstChild);
-  }
-
   function init() {
     apply(getLevel());
-    injectButton();
   }
 
   document.addEventListener("DOMContentLoaded", init);
 
-  return { getLevel, setLevel };
+  return { getLevel, setLevel, LEVELS, LABELS };
 })();
 
 if (typeof window !== "undefined") {

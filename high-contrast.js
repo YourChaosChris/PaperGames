@@ -19,13 +19,13 @@ const HighContrast = (function () {
     }
   }
 
+  // The button that used to live here now lives in the unified Settings
+  // menu (settings-menu.js), which calls setEnabled() directly - this
+  // module keeps only the state and the class application, since that
+  // still has to run unconditionally on every page load regardless of
+  // whether the user ever opens Settings.
   function apply(enabled) {
     document.documentElement.classList.toggle("high-contrast", enabled);
-    const btn = document.getElementById("high-contrast-toggle-button");
-    if (btn) {
-      btn.setAttribute("aria-pressed", enabled ? "true" : "false");
-      btn.classList.toggle("active", enabled);
-    }
   }
 
   function setEnabled(enabled) {
@@ -39,40 +39,13 @@ const HighContrast = (function () {
     setEnabled(!isEnabled());
   }
 
-  function injectButton() {
-    const panel = document.querySelector(".user-panel");
-    if (!panel || document.getElementById("high-contrast-toggle-button")) return;
-
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.id = "high-contrast-toggle-button";
-    btn.className = "secondary";
-    btn.textContent = "◑"; // circle half black - a plain, language-independent contrast glyph
-
-    function setLabel() {
-      const title = (window.I18n && typeof I18n.t === "function") ? I18n.t("high_contrast_toggle") : "High contrast";
-      btn.title = title;
-      btn.setAttribute("aria-label", title);
-    }
-    setLabel();
-    btn.setAttribute("aria-pressed", isEnabled() ? "true" : "false");
-    btn.classList.toggle("active", isEnabled());
-    btn.addEventListener("click", toggle);
-    panel.insertBefore(btn, panel.firstChild);
-
-    if (window.I18n && typeof I18n.onChange === "function") {
-      I18n.onChange(setLabel);
-    }
-  }
-
   function init() {
     apply(isEnabled());
-    injectButton();
   }
 
   document.addEventListener("DOMContentLoaded", init);
 
-  return { isEnabled, setEnabled };
+  return { isEnabled, setEnabled, toggle };
 })();
 
 if (typeof window !== "undefined") {
