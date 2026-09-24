@@ -22,7 +22,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="printable-puzzle">
 <div id="app">
   <header class="app-header">
     <div class="title-wrap app-title-row">
@@ -48,6 +48,7 @@
   <div class="field-row">
     <button id="start-sudoku-game" class="primary" data-i18n="sudoku_new_game">New puzzle</button>
     <button id="daily-sudoku-button" class="secondary" data-i18n="daily_challenge_button">🗓 Daily Challenge</button>
+    <button id="print-puzzle-button" class="secondary" data-i18n="print_puzzle_button">🖨 Print</button>
     <select id="sudoku-level-inline">
         <option value="easy" data-i18n="level_easy">Easy</option>
         <option value="medium" selected data-i18n="level_medium">Medium</option>

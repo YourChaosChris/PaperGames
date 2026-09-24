@@ -158,6 +158,11 @@ function initNonogramApp() {
     });
   }
 
+  const printBtn = document.getElementById("print-puzzle-button");
+  if (printBtn) {
+    printBtn.addEventListener("click", () => window.print());
+  }
+
   const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(NONOGRAM_SAVE_KEY) : null;
   if (savedGame && savedGame.solution) {
     AppStateNonogram.difficulty = savedGame.difficulty;

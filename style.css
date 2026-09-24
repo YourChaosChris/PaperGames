@@ -7285,3 +7285,23 @@ max-width: 900px;
 .ludo-icon-disc-green { background: var(--square-light); }
 .ludo-icon-disc-yellow { background: var(--square-light); border-style: dashed; }
 .ludo-icon-disc-blue { background: var(--square-light); border-style: dotted; }
+
+/* Print view for the grid puzzles (Sudoku/Kakuro/Nonogram): print exactly
+   the puzzle grid, nothing else - not the site chrome around it, not the
+   on-screen number pad / mode toggle a sheet of paper has no use for.
+   Scoped to body.printable-puzzle so it can't affect any other page. */
+@media print {
+  body.printable-puzzle .app-header,
+  body.printable-puzzle .site-nav,
+  body.printable-puzzle #settings-panel,
+  body.printable-puzzle #board-actions,
+  body.printable-puzzle #game-result,
+  body.printable-puzzle #board-info,
+  body.printable-puzzle .site-footer,
+  body.printable-puzzle #print-puzzle-button,
+  body.printable-puzzle #sudoku-numpad,
+  body.printable-puzzle #kakuro-numpad,
+  body.printable-puzzle #nonogram-mode-toggle {
+    display: none !important;
+  }
+}
