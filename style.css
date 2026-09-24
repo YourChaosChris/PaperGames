@@ -2602,6 +2602,22 @@ max-width: 760px;
   background: #eadfc4;
 }
 
+/* The palace's diagonal cross - same stroke color and thickness as
+   the board's own grid lines (.xq-line), so it stays clearly visible
+   in grayscale on E-Ink rather than reading as a faint decoration. */
+.xq-palace-diag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.xq-palace-diag line {
+  stroke: var(--border);
+  stroke-width: 2;
+}
+
 .xq-point {
   position: absolute;
   transform: translate(-50%, -50%);
