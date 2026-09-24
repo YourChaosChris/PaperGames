@@ -3,27 +3,28 @@
 // header (same technique as rules-link.js/game-switcher.js - injected
 // at runtime rather than hand-written into ~150 static pages) opening a
 // single modal that gathers every on-device setting this app has -
-// language, text size, high contrast, and backup/restore - instead of
-// each living as its own separate icon button in the header. This also
-// gives the 46 game pages a language switcher for the first time: the
-// old static ".lang-switch" markup only ever existed on the ~100 hub
-// pages (home, guide, about, stats, rules/history pages), never on the
-// pages people actually spend most of their time on.
+// language, text size and high contrast - instead of each living as
+// its own separate icon button in the header. This also gives the 46
+// game pages a language switcher for the first time: the old static
+// ".lang-switch" markup only ever existed on the ~100 hub pages (home,
+// guide, about, stats, rules/history pages), never on the pages people
+// actually spend most of their time on.
 //
 // This module owns none of the underlying settings themselves - it's
-// purely the shared UI shell around FontSizeToggle, HighContrast, I18n
-// and Backup, each of which stays fully usable on its own (e.g. still
+// purely the shared UI shell around FontSizeToggle, HighContrast and
+// I18n, each of which stays fully usable on its own (e.g. still
 // applies its persisted state on every page load) even if this script
 // somehow failed to load.
+//
+// Backup/restore used to live here too, but Tolino's own browser
+// refuses the file download outright ("Dateiformat wird nicht
+// unterstützt") - confirmed on real hardware - and has no real way to
+// receive an imported file either, so the feature was removed rather
+// than kept as something that only worked on other devices.
 
 const SettingsMenu = (function () {
   function t(key, fallback) {
     return (window.I18n && typeof I18n.t === "function") ? I18n.t(key) : fallback;
-  }
-
-  function setBackupStatus(overlay, text) {
-    const el = overlay.querySelector("#backup-status");
-    if (el) el.textContent = text || "";
   }
 
   function wireTextSize(overlay) {
@@ -60,44 +61,6 @@ const SettingsMenu = (function () {
     });
   }
 
-  function wireBackup(overlay) {
-    const exportBtn = overlay.querySelector("#backup-export-button");
-    const importBtn = overlay.querySelector("#backup-import-button");
-    const importInput = overlay.querySelector("#backup-import-input");
-    if (!exportBtn || !importBtn || !importInput || typeof Backup === "undefined") return;
-
-    exportBtn.addEventListener("click", () => {
-      Backup.exportBackup();
-    });
-
-    importBtn.addEventListener("click", () => {
-      importInput.click();
-    });
-
-    importInput.addEventListener("change", () => {
-      const file = importInput.files && importInput.files[0];
-      if (!file) return;
-
-      const confirmMsg = t("backup_import_confirm",
-        "Import this backup? It will overwrite your current stats, achievements progress and saved games. This cannot be undone.");
-      if (!window.confirm(confirmMsg)) {
-        importInput.value = "";
-        return;
-      }
-
-      Backup.importBackup(file, (err) => {
-        importInput.value = "";
-        if (err) {
-          setBackupStatus(overlay, t("backup_import_error",
-            "Could not read that file. Make sure it's a PaperGames backup file exported from this page."));
-          return;
-        }
-        setBackupStatus(overlay, t("backup_import_success", "Backup imported. Reloading…"));
-        setTimeout(() => window.location.reload(), 800);
-      });
-    });
-  }
-
   function buildModal() {
     if (document.getElementById("settings-modal-overlay")) return;
 
@@ -129,16 +92,6 @@ const SettingsMenu = (function () {
             '<span data-i18n="high_contrast_toggle">High contrast</span>' +
           '</label>' +
         '</section>' +
-        '<section class="settings-section">' +
-          '<h3 data-i18n="settings_section_data">Your data</h3>' +
-          '<p class="settings-hint" data-i18n="backup_intro">Back up your stats, achievements and saved games to a file, or restore them from one.</p>' +
-          '<div class="field-row">' +
-            '<button type="button" id="backup-export-button" class="secondary small" data-i18n="backup_export_button">💾 Export backup</button>' +
-            '<button type="button" id="backup-import-button" class="secondary small" data-i18n="backup_import_button">📂 Import backup</button>' +
-            '<input type="file" id="backup-import-input" accept="application/json" class="hidden">' +
-          '</div>' +
-          '<div id="backup-status" class="status-text" aria-live="polite"></div>' +
-        '</section>' +
       '</div>';
     document.body.appendChild(overlay);
 
@@ -152,7 +105,6 @@ const SettingsMenu = (function () {
 
     wireTextSize(overlay);
     wireHighContrast(overlay);
-    wireBackup(overlay);
 
     // Populates the freshly-inserted .lang-switch <select> and translates
     // every data-i18n/data-i18n-attr element just added above - both are
