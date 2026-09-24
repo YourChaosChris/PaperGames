@@ -35,7 +35,9 @@ const GameStorage = (function () {
     try {
       if (window.localStorage) window.localStorage.setItem(key, JSON.stringify(data));
       touchRecent(slugFromKey(key));
-    } catch (e) { /* storage unavailable or full - just don't persist */ }
+    } catch (e) {
+      if (window.StorageWarning && typeof StorageWarning.show === "function") StorageWarning.show();
+    }
   }
 
   function load(key) {

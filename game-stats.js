@@ -21,7 +21,9 @@ const GameStats = (function () {
   function saveAll(data) {
     try {
       if (window.localStorage) window.localStorage.setItem(KEY, JSON.stringify(data));
-    } catch (e) { /* storage unavailable or full - just don't persist */ }
+    } catch (e) {
+      if (window.StorageWarning && typeof StorageWarning.show === "function") StorageWarning.show();
+    }
   }
 
   function emptyRecord() {
