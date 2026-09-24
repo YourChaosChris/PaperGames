@@ -12,6 +12,12 @@
 // registered worker taking control of a page that had no controller
 // yet, not a real update - so that first change is swallowed before any
 // later one is treated as an actual update.
+//
+// update_banner_whats_new (i18n.js) is a short one-line summary of the
+// latest release, shown as a second, smaller line under the main
+// message - update it (all 11 languages) alongside bumping sw.js's
+// CACHE_NAME, so a player who reloads knows what actually changed
+// instead of just "something did".
 
 (function () {
   if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
@@ -31,8 +37,14 @@
     bar.className = "update-banner";
     bar.setAttribute("role", "status");
 
+    const lines = document.createElement("div");
+    lines.className = "update-banner-lines";
+
     const text = document.createElement("span");
     text.className = "update-banner-text";
+
+    const whatsNew = document.createElement("span");
+    whatsNew.className = "update-banner-whats-new";
 
     const reloadBtn = document.createElement("button");
     reloadBtn.type = "button";
@@ -47,6 +59,7 @@
 
     function setLabels() {
       text.textContent = label("update_banner_text", "A new version of PaperGames is available.");
+      whatsNew.textContent = label("update_banner_whats_new", "");
       reloadBtn.textContent = label("update_banner_reload", "Reload now");
       closeBtn.setAttribute("aria-label", label("update_banner_dismiss", "Dismiss"));
     }
@@ -55,7 +68,9 @@
       I18n.onChange(setLabels);
     }
 
-    bar.appendChild(text);
+    lines.appendChild(text);
+    if (whatsNew.textContent) lines.appendChild(whatsNew);
+    bar.appendChild(lines);
     bar.appendChild(reloadBtn);
     bar.appendChild(closeBtn);
     document.body.insertBefore(bar, document.body.firstChild);
