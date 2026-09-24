@@ -6,7 +6,7 @@
 // Strategy/Race/Puzzles headings the home page itself uses.
 
 (function () {
-  const state = { query: "", sort: "alpha" };
+  const state = { query: "", sort: "alpha", category: "all" };
   const CATEGORY_ORDER = ["strategy", "race", "puzzles"];
   const CATEGORY_LABEL_KEY = {
     strategy: "home_section_strategy",
@@ -27,13 +27,17 @@
     return displayName(game).toLowerCase().indexOf(q) !== -1;
   }
 
+  function matchesCategory(game) {
+    return state.category === "all" || game.category === state.category;
+  }
+
   function render() {
     const grid = document.getElementById("games-grid");
     const noResults = document.getElementById("games-no-results");
     if (!grid) return;
 
     const q = state.query.trim().toLowerCase();
-    const filtered = GAMES_CATALOG.filter((g) => matchesQuery(g, q));
+    const filtered = GAMES_CATALOG.filter((g) => matchesQuery(g, q) && matchesCategory(g));
 
     if (!filtered.length) {
       grid.innerHTML = "";
@@ -42,7 +46,10 @@
     }
     if (noResults) noResults.classList.add("hidden");
 
-    if (state.sort === "type") {
+    // Grouped-by-type headings only make sense across all categories at
+    // once - a single category chip already says what group this is, so
+    // that selection always renders as a flat, alphabetical list instead.
+    if (state.sort === "type" && state.category === "all") {
       let html = "";
       CATEGORY_ORDER.forEach((cat) => {
         const group = filtered.filter((g) => g.category === cat).sort(byDisplayName);
@@ -63,6 +70,7 @@
   function init() {
     const searchInput = document.getElementById("games-search");
     const sortSelect = document.getElementById("games-sort");
+    const categoryChips = document.getElementById("games-category-chips");
 
     if (searchInput) {
       searchInput.addEventListener("input", () => {
@@ -73,6 +81,17 @@
     if (sortSelect) {
       sortSelect.addEventListener("change", () => {
         state.sort = sortSelect.value;
+        render();
+      });
+    }
+    if (categoryChips) {
+      categoryChips.addEventListener("click", (evt) => {
+        const btn = evt.target.closest(".mode-btn");
+        if (!btn) return;
+        state.category = btn.getAttribute("data-category");
+        categoryChips.querySelectorAll(".mode-btn").forEach((b) => {
+          b.classList.toggle("active-mode", b === btn);
+        });
         render();
       });
     }
