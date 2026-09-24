@@ -1,7 +1,7 @@
 // home-app.js
 // Renders the personalized "My Favorites" section on the home page
-// (hidden entirely when empty, since it could be any of the 31+ games,
-// not just the curated "Popular Games" set below it) and keeps every
+// (always visible, with an empty-state message when there are none yet,
+// so its permanent nav link is never dead) and keeps every
 // favorite-toggle star - on both the static Popular section and the
 // dynamically-rendered Favorites section - in sync with the shared
 // Favorites module.
@@ -27,6 +27,7 @@
   function renderContinuePlaying() {
     const section = document.getElementById("section-continue");
     const grid = document.getElementById("continue-grid");
+    const navLink = document.getElementById("nav-link-continue");
     if (!section || !grid || typeof GameStorage === "undefined") return;
 
     const games = GameStorage.getRecentSlugs()
@@ -36,29 +37,31 @@
 
     if (!games.length) {
       section.classList.add("hidden");
+      if (navLink) navLink.classList.add("hidden");
       grid.innerHTML = "";
       return;
     }
 
     section.classList.remove("hidden");
+    if (navLink) navLink.classList.remove("hidden");
     grid.innerHTML = games.map(GamesRender.buildGameCardHTML).join("");
     GamesRender.updateFavoriteButtons(grid);
     GamesRender.translateInto(grid);
   }
 
   function renderFavorites() {
-    const section = document.getElementById("section-favorites");
     const grid = document.getElementById("favorites-grid");
-    if (!section || !grid) return;
+    const emptyState = document.getElementById("favorites-empty");
+    if (!grid) return;
 
     const favGames = Favorites.getAll().map(catalogEntry).filter(Boolean);
     if (!favGames.length) {
-      section.classList.add("hidden");
       grid.innerHTML = "";
+      if (emptyState) emptyState.classList.remove("hidden");
       return;
     }
 
-    section.classList.remove("hidden");
+    if (emptyState) emptyState.classList.add("hidden");
     grid.innerHTML = favGames.map(GamesRender.buildGameCardHTML).join("");
     GamesRender.updateFavoriteButtons(grid);
     GamesRender.translateInto(grid);

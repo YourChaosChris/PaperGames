@@ -71,7 +71,7 @@
     </section>
 
     <nav class="game-section-nav" aria-label="Jump to game category">
-      <a href="#section-continue"><span aria-hidden="true">↻</span> <span data-i18n="home_section_continue">Continue Playing</span></a>
+      <a href="#section-continue" id="nav-link-continue" class="hidden"><span aria-hidden="true">↻</span> <span data-i18n="home_section_continue">Continue Playing</span></a>
       <a href="#section-favorites"><span aria-hidden="true">★</span> <span data-i18n="home_section_favorites">My Favorites</span></a>
       <a href="#section-popular"><span aria-hidden="true">♟</span> <span data-i18n="home_section_popular">Popular Games</span></a>
       <a href="games.html"><span aria-hidden="true">▦</span> <span data-i18n="nav_all_games">All Games</span></a>
@@ -82,8 +82,9 @@
       <div class="game-select-grid" id="continue-grid"></div>
     </section>
 
-    <section id="section-favorites" class="card hidden">
+    <section id="section-favorites" class="card">
       <h2 data-i18n="home_section_favorites">My Favorites</h2>
+      <p id="favorites-empty" class="section-empty-state" data-i18n="home_favorites_empty">Tap the star on any game to add it here.</p>
       <div class="game-select-grid" id="favorites-grid"></div>
     </section>
 
