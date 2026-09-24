@@ -1391,6 +1391,15 @@ margin: 2rem 0 1rem;
   margin: 0.6rem 0;
 }
 
+/* Empty-state message for a section whose nav link always points
+   somewhere real (e.g. My Favorites) - plain page text, not a muted
+   gray, since faint tones are hard to read on E-Ink. */
+.section-empty-state {
+  color: var(--text);
+  padding: 0.75rem 0;
+  margin: 0;
+}
+
 .game-select-item {
   position: relative;
   background: #fff;
