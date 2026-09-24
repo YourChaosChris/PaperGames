@@ -1424,6 +1424,32 @@ margin: 2rem 0 1rem;
   color: var(--text);
 }
 
+/* Opt-in "suggest difficulty" toggle, on its own row below every AI
+   opponent's level select rather than squeezed into that row (which is
+   already tight with the New game button, color choice, and the level
+   select's often-long option text, and .field-row doesn't wrap) - and
+   the small note shown when it has just nudged the selection.
+   See adaptive-difficulty.js. */
+.adaptive-difficulty-row {
+  flex-wrap: wrap;
+}
+
+.adaptive-difficulty-toggle {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.adaptive-difficulty-toggle input {
+  margin-right: 0.3rem;
+}
+
+.adaptive-difficulty-note {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
 /* Stats page: achievement badges, derived from GameStats rather than
    their own storage - locked ones stay visible (not hidden) so the
    player can see what's still ahead, just faded via opacity like every
