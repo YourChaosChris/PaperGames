@@ -464,7 +464,7 @@ function updateHalmaBoard() {
 
 function updateGameLabelsHalma() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateHalma.moveCount ? "Move " + AppStateHalma.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateHalma.moveCount ? "Move " + AppStateHalma.moveCount : "");
   updateUndoButtonVisibilityHalma();
   updateResignVisibilityHalma();
 

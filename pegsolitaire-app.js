@@ -316,7 +316,7 @@ function updatePegSolitaireBoard() {
 function updateGameLabelsPegSolitaire() {
   const meta = document.getElementById("game-meta");
   if (meta && AppStatePegSolitaire.board) {
-    meta.textContent = PegSolitaireCore.countPegs(AppStatePegSolitaire.board) + " pegs";
+    I18n.setMsg(meta, PegSolitaireCore.countPegs(AppStatePegSolitaire.board) + " pegs");
   }
   updateUndoButtonVisibilityPegSolitaire();
 

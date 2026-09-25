@@ -558,16 +558,16 @@ function updateScoreLineBaghChal() {
   const state = AppStateBaghChal.state;
   container.classList.remove("hidden");
   if (state.phase === "placement") {
-    capturesEl.textContent = "Goats placed: " + state.placedGoats + "/" + BaghChalCore.TOTAL_GOATS +
-      " · Captured: " + state.capturedGoats + "/" + BaghChalCore.CAPTURE_TARGET;
+    I18n.setMsg(capturesEl, "Goats placed: " + state.placedGoats + "/" + BaghChalCore.TOTAL_GOATS +
+      " · Captured: " + state.capturedGoats + "/" + BaghChalCore.CAPTURE_TARGET);
   } else {
-    capturesEl.textContent = "Movement phase · Captured: " + state.capturedGoats + "/" + BaghChalCore.CAPTURE_TARGET;
+    I18n.setMsg(capturesEl, "Movement phase · Captured: " + state.capturedGoats + "/" + BaghChalCore.CAPTURE_TARGET);
   }
 }
 
 function updateGameLabelsBaghChal() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateBaghChal.moveCount ? "Move " + AppStateBaghChal.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateBaghChal.moveCount ? "Move " + AppStateBaghChal.moveCount : "");
   updateUndoButtonVisibilityBaghChal();
   updateResignVisibilityBaghChal();
 

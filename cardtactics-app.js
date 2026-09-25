@@ -557,7 +557,7 @@ function updateOnitamaCards() {
 
 function updateGameLabelsOnitama() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateOnitama.moveCount ? "Move " + AppStateOnitama.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateOnitama.moveCount ? "Move " + AppStateOnitama.moveCount : "");
   updateUndoButtonVisibilityOnitama();
   updateResignVisibilityOnitama();
 

@@ -798,7 +798,7 @@ function updateTurnIndicatorLudo() {
     chip.className = "ludo-turn-chip ludo-turn-chip-" + color;
     if (color === current) chip.classList.add("ludo-turn-chip-active");
     if (isAiColorLudo(color)) chip.classList.add("ludo-turn-chip-ai");
-    chip.title = ludoColorName(color) + (isAiColorLudo(color) ? " (computer)" : (AppStateLudo.mode === "vs-ai" ? " (you)" : ""));
+    chip.title = I18n.msg(ludoColorName(color) + (isAiColorLudo(color) ? " (computer)" : (AppStateLudo.mode === "vs-ai" ? " (you)" : "")));
     el.appendChild(chip);
   });
 }
@@ -816,7 +816,7 @@ function updateDiceDisplayLudo(roll) {
 
 function updateGameLabelsLudo() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateLudo.moveCount ? "Move " + AppStateLudo.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateLudo.moveCount ? "Move " + AppStateLudo.moveCount : "");
   updateUndoButtonVisibilityLudo();
   updateResignVisibilityLudo();
   updateThrowButtonVisibilityLudo();

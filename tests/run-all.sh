@@ -27,6 +27,10 @@ echo "=== static-checks.js ==="
 node "$ROOT/tests/static-checks.js" || status=1
 echo ""
 
+echo "=== i18n-messages.js ==="
+node "$ROOT/tests/i18n-messages.js" || status=1
+echo ""
+
 echo "=== css-check.js ==="
 node "$ROOT/tests/css-check.js" || status=1
 echo ""

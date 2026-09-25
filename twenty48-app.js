@@ -356,7 +356,7 @@ function updateTwenty48Board() {
 function updateGameLabels2048() {
   const meta = document.getElementById("game-meta");
   if (meta && AppState2048.state) {
-    meta.textContent = "Score: " + AppState2048.state.score + "   Best: " + AppState2048.bestScore;
+    I18n.setMsg(meta, "Score: " + AppState2048.state.score + "   Best: " + AppState2048.bestScore);
   }
   updateUndoButtonVisibility2048();
 

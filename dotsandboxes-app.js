@@ -510,12 +510,12 @@ function updateScoreLineDotsAndBoxes() {
     return;
   }
   container.classList.remove("hidden");
-  scoreEl.textContent = "Boxes – Player 1: " + state.scores["1"] + " · Player 2: " + state.scores["2"];
+  I18n.setMsg(scoreEl, "Boxes – Player 1: " + state.scores["1"] + " · Player 2: " + state.scores["2"]);
 }
 
 function updateGameLabelsDotsAndBoxes() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateDotsAndBoxes.moveCount ? "Move " + AppStateDotsAndBoxes.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateDotsAndBoxes.moveCount ? "Move " + AppStateDotsAndBoxes.moveCount : "");
   updateUndoButtonVisibilityDotsAndBoxes();
   updateResignVisibilityDotsAndBoxes();
 

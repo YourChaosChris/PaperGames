@@ -432,7 +432,7 @@ function updateHexBoard() {
 
 function updateGameLabelsHex() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateHex.moveCount ? "Move " + AppStateHex.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateHex.moveCount ? "Move " + AppStateHex.moveCount : "");
   updateUndoButtonVisibilityHex();
   updateResignVisibilityHex();
 

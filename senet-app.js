@@ -545,7 +545,7 @@ function updateBorneOffDisplaySenet() {
   const el = document.getElementById("senet-borne-off");
   if (!el) return;
   const off = AppStateSenet.state.borneOff;
-  el.textContent = "Black borne off: " + off.a + " / 5     White borne off: " + off.b + " / 5";
+  I18n.setMsg(el, "Black borne off: " + off.a + " / 5     White borne off: " + off.b + " / 5");
 }
 
 function updateSticksDisplaySenet(roll) {
@@ -569,7 +569,7 @@ function updateSticksDisplaySenet(roll) {
 
 function updateGameLabelsSenet() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateSenet.moveCount ? "Move " + AppStateSenet.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateSenet.moveCount ? "Move " + AppStateSenet.moveCount : "");
   updateUndoButtonVisibilitySenet();
   updateResignVisibilitySenet();
   updateThrowButtonVisibilitySenet();

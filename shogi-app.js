@@ -719,7 +719,7 @@ function updateShogiHands() {
 
 function updateGameLabelsShogi() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateShogi.moveCount ? "Move " + AppStateShogi.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateShogi.moveCount ? "Move " + AppStateShogi.moveCount : "");
   updateUndoButtonVisibilityShogi();
   updateResignVisibilityShogi();
 

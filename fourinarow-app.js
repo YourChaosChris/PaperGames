@@ -427,7 +427,7 @@ function updateConnectFourBoard() {
 
 function updateGameLabelsConnectFour() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateConnectFour.moveCount ? "Move " + AppStateConnectFour.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateConnectFour.moveCount ? "Move " + AppStateConnectFour.moveCount : "");
   updateUndoButtonVisibilityConnectFour();
   updateResignVisibilityConnectFour();
 

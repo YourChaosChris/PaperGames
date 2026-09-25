@@ -62,7 +62,8 @@ const ResultModal = (function () {
       messageEl.textContent = message || "";
     }
     const modal = overlay.querySelector(".result-modal");
-    modal.className = "result-modal result-modal-" + classifyOutcome(title);
+    const englishTitle = window.I18n && I18n.sourceText ? I18n.sourceText(title || "") : title;
+    modal.className = "result-modal result-modal-" + classifyOutcome(englishTitle);
     overlay.classList.remove("hidden");
   }
 

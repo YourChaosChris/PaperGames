@@ -560,12 +560,12 @@ function updateScoreLineCheckers() {
     return;
   }
   container.classList.remove("hidden");
-  capturesEl.textContent = "Captured – Black: " + AppStateCheckers.captures.b + " · White: " + AppStateCheckers.captures.w;
+  I18n.setMsg(capturesEl, "Captured – Black: " + AppStateCheckers.captures.b + " · White: " + AppStateCheckers.captures.w);
 }
 
 function updateGameLabelsCheckers() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateCheckers.moveCount ? "Move " + AppStateCheckers.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateCheckers.moveCount ? "Move " + AppStateCheckers.moveCount : "");
   updateUndoButtonVisibilityCheckers();
   updateResignVisibilityCheckers();
 
