@@ -151,7 +151,7 @@ function initGomokuApp() {
 
     if (mode === "offline-ai" && humanColor !== "b") {
       setStatusGomoku("board-info", "Computer thinking…");
-      setTimeout(aiTurnGomoku, 300);
+      setTimeout(aiTurnGomoku, AiPacing.delay(300));
     } else {
       setStatusGomoku("board-info", colorNameGomoku(AppStateGomoku.turn) + " to move.");
     }
@@ -227,7 +227,7 @@ function initGomokuApp() {
     updateGameLabelsGomoku();
     if (AppStateGomoku.mode === "offline-ai" && AppStateGomoku.turn !== AppStateGomoku.humanColor) {
       setStatusGomoku("board-info", "Computer thinking…");
-      setTimeout(aiTurnGomoku, 300);
+      setTimeout(aiTurnGomoku, AiPacing.delay(300));
     } else {
       setStatusGomoku("board-info", colorNameGomoku(AppStateGomoku.turn) + " to move.");
     }
@@ -295,7 +295,7 @@ function applyGomokuMove(r, c) {
 function maybeTriggerAiTurnGomoku() {
   if (AppStateGomoku.gameOver) return;
   if (AppStateGomoku.mode === "offline-ai" && AppStateGomoku.turn !== AppStateGomoku.humanColor) {
-    setTimeout(aiTurnGomoku, 400);
+    setTimeout(aiTurnGomoku, AiPacing.delay(400));
   }
 }
 
@@ -309,7 +309,7 @@ function aiTurnGomoku() {
     const move = GomokuAi.chooseMove(AppStateGomoku.board, aiColor, AppStateGomoku.aiLevel);
     if (!move) return;
     applyGomokuMove(move[0], move[1]);
-  }, 200);
+  }, AiPacing.delay(200));
 }
 
 function undoLastMove() {

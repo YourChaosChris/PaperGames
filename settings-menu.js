@@ -3,7 +3,8 @@
 // header (same technique as rules-link.js/game-switcher.js - injected
 // at runtime rather than hand-written into ~150 static pages) opening a
 // single modal that gathers every on-device setting this app has -
-// language, text size and high contrast - instead of each living as
+// language, text size, high contrast and (on pages with a computer
+// opponent) the computer's move speed - instead of each living as
 // its own separate icon button in the header. This also gives the 46
 // game pages a language switcher for the first time: the old static
 // ".lang-switch" markup only ever existed on the ~100 hub pages (home,
@@ -11,8 +12,8 @@
 // actually spend most of their time on.
 //
 // This module owns none of the underlying settings themselves - it's
-// purely the shared UI shell around FontSizeToggle, HighContrast and
-// I18n, each of which stays fully usable on its own (e.g. still
+// purely the shared UI shell around FontSizeToggle, HighContrast,
+// AiPacing and I18n, each of which stays fully usable on its own (e.g. still
 // applies its persisted state on every page load) even if this script
 // somehow failed to load.
 //
@@ -45,6 +46,30 @@ const SettingsMenu = (function () {
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
         FontSizeToggle.setLevel(btn.getAttribute("data-level"));
+        refresh();
+      });
+    });
+    refresh();
+  }
+
+  function wireAiPacing(overlay) {
+    if (typeof AiPacing === "undefined") return;
+    const group = overlay.querySelector("#settings-ai-pacing-group");
+    if (!group) return;
+    const buttons = Array.prototype.slice.call(group.querySelectorAll("button[data-mode]"));
+
+    function refresh() {
+      const current = AiPacing.getMode();
+      buttons.forEach((btn) => {
+        const active = btn.getAttribute("data-mode") === current;
+        btn.classList.toggle("active", active);
+        btn.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+    }
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        AiPacing.setMode(btn.getAttribute("data-mode"));
         refresh();
       });
     });
@@ -91,6 +116,15 @@ const SettingsMenu = (function () {
             '<input type="checkbox" id="settings-high-contrast-checkbox">' +
             '<span data-i18n="high_contrast_toggle">High contrast</span>' +
           '</label>' +
+          // Only on pages with a computer opponent (they load ai-pacing.js).
+          (typeof AiPacing !== "undefined"
+            ? '<h3 class="settings-subheading" data-i18n="settings_section_ai_pacing">Computer speed</h3>' +
+              '<div class="settings-segmented" id="settings-ai-pacing-group" role="group">' +
+                '<button type="button" class="secondary" data-mode="fast" data-i18n="settings_ai_pacing_fast">Fast</button>' +
+                '<button type="button" class="secondary" data-mode="normal" data-i18n="settings_ai_pacing_normal">Normal</button>' +
+                '<button type="button" class="secondary" data-mode="slow" data-i18n="settings_ai_pacing_slow">Slow</button>' +
+              '</div>'
+            : '') +
         '</section>' +
       '</div>';
     document.body.appendChild(overlay);
@@ -105,6 +139,7 @@ const SettingsMenu = (function () {
 
     wireTextSize(overlay);
     wireHighContrast(overlay);
+    wireAiPacing(overlay);
 
     // Populates the freshly-inserted .lang-switch <select> and translates
     // every data-i18n/data-i18n-attr element just added above - both are

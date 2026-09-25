@@ -211,7 +211,7 @@ function initGoApp() {
 
     if (mode === "offline-ai" && humanColor !== "b") {
       setStatusGo("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineGo, 10);
+      setTimeout(aiMoveOfflineGo, AiPacing.delay(10));
     } else {
       setStatusGo("board-info", colorNameGo(AppStateGo.turn) + " to move.");
     }
@@ -274,7 +274,7 @@ function initGoApp() {
 
       if (AppStateGo.mode === "offline-ai" && AppStateGo.turn !== AppStateGo.humanColor) {
         setStatusGo("board-info", "Computer thinking…");
-        setTimeout(aiMoveOfflineGo, 10);
+        setTimeout(aiMoveOfflineGo, AiPacing.delay(10));
       }
     });
   }
@@ -319,7 +319,7 @@ function initGoApp() {
     updateGameLabelsGo();
     if (AppStateGo.mode === "offline-ai" && AppStateGo.turn !== AppStateGo.humanColor) {
       setStatusGo("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineGo, 10);
+      setTimeout(aiMoveOfflineGo, AiPacing.delay(10));
     } else {
       setStatusGo("board-info", colorNameGo(AppStateGo.turn) + " to move.");
     }
@@ -351,7 +351,7 @@ function onGoPointClick(e) {
 
   if (AppStateGo.mode === "offline-ai" && !AppStateGo.gameOver && AppStateGo.turn !== AppStateGo.humanColor) {
     setStatusGo("board-info", "Computer thinking…");
-    setTimeout(aiMoveOfflineGo, 10);
+    setTimeout(aiMoveOfflineGo, AiPacing.delay(10));
   }
 }
 

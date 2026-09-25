@@ -163,7 +163,7 @@ function initOnitamaApp() {
 
     if (mode === "offline-ai" && humanColor !== "blue") {
       setStatusOnitama("board-info", "Computer thinking…");
-      setTimeout(aiTurnOnitama, 300);
+      setTimeout(aiTurnOnitama, AiPacing.delay(300));
     } else {
       setStatusOnitama("board-info", colorNameOnitama(AppStateOnitama.turn) + " to move. Choose a card.");
     }
@@ -242,7 +242,7 @@ function initOnitamaApp() {
     updateGameLabelsOnitama();
     if (AppStateOnitama.mode === "offline-ai" && AppStateOnitama.turn !== AppStateOnitama.humanColor) {
       setStatusOnitama("board-info", "Computer thinking…");
-      setTimeout(aiTurnOnitama, 300);
+      setTimeout(aiTurnOnitama, AiPacing.delay(300));
     } else {
       setStatusOnitama("board-info", colorNameOnitama(AppStateOnitama.turn) + " to move. Choose a card.");
     }
@@ -360,7 +360,7 @@ function applyOnitamaMove(move) {
 function maybeTriggerAiTurnOnitama() {
   if (AppStateOnitama.gameOver) return;
   if (AppStateOnitama.mode === "offline-ai" && AppStateOnitama.turn !== AppStateOnitama.humanColor) {
-    setTimeout(aiTurnOnitama, 400);
+    setTimeout(aiTurnOnitama, AiPacing.delay(400));
   }
 }
 
@@ -374,7 +374,7 @@ function aiTurnOnitama() {
     const move = OnitamaAi.chooseMove(AppStateOnitama.state, aiColor, AppStateOnitama.aiLevel);
     if (!move) return;
     applyOnitamaMove(move);
-  }, 350);
+  }, AiPacing.delay(350));
 }
 
 function undoLastMove() {

@@ -190,7 +190,7 @@ function initQuoridorApp() {
 
     if (mode === "offline-ai" && humanSide !== "p1") {
       setStatusQuoridor("board-info", "Computer thinking…");
-      setTimeout(aiTurnQuoridor, 300);
+      setTimeout(aiTurnQuoridor, AiPacing.delay(300));
     } else {
       setStatusQuoridor("board-info", sideNameQuoridor(AppStateQuoridor.turn) + " to move.");
     }
@@ -268,7 +268,7 @@ function initQuoridorApp() {
     updateGameLabelsQuoridor();
     if (AppStateQuoridor.mode === "offline-ai" && AppStateQuoridor.turn !== AppStateQuoridor.humanSide) {
       setStatusQuoridor("board-info", "Computer thinking…");
-      setTimeout(aiTurnQuoridor, 300);
+      setTimeout(aiTurnQuoridor, AiPacing.delay(300));
     } else {
       setStatusQuoridor("board-info", sideNameQuoridor(AppStateQuoridor.turn) + " to move.");
     }
@@ -415,7 +415,7 @@ function applyQuoridorMove(move) {
 
   if (AppStateQuoridor.mode === "offline-ai" && AppStateQuoridor.turn !== AppStateQuoridor.humanSide) {
     setStatusQuoridor("board-info", "Computer thinking…");
-    setTimeout(aiTurnQuoridor, 350);
+    setTimeout(aiTurnQuoridor, AiPacing.delay(350));
   }
 }
 

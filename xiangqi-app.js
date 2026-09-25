@@ -320,7 +320,7 @@ function initXiangqiApp() {
 
     if (mode === "offline-ai" && humanColor !== "r") {
       setStatusXq("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineXq, 300);
+      setTimeout(aiMoveOfflineXq, AiPacing.delay(300));
     } else {
       setStatusXq("board-info", colorNameXq(AppStateXiangqi.turn) + " to move.");
     }
@@ -415,7 +415,7 @@ function initXiangqiApp() {
     updateGameLabelsXq();
     if (AppStateXiangqi.mode === "offline-ai" && AppStateXiangqi.turn !== AppStateXiangqi.humanColor) {
       setStatusXq("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineXq, 300);
+      setTimeout(aiMoveOfflineXq, AiPacing.delay(300));
     } else {
       setStatusXq("board-info", colorNameXq(AppStateXiangqi.turn) + " to move.");
     }
@@ -477,7 +477,7 @@ function onXiangqiPointClick(r, c) {
 
   if (AppStateXiangqi.mode === "offline-ai" && !AppStateXiangqi.gameOver && AppStateXiangqi.turn !== AppStateXiangqi.humanColor) {
     setStatusXq("board-info", "Computer thinking…");
-    setTimeout(aiMoveOfflineXq, 10);
+    setTimeout(aiMoveOfflineXq, AiPacing.delay(10));
   }
 }
 

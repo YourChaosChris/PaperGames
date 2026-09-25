@@ -166,7 +166,7 @@ function initSenetApp() {
 
     if (mode === "offline-ai" && humanColor !== "a") {
       setStatusSenet("board-info", "Computer thinking…");
-      setTimeout(aiTurnSenet, 300);
+      setTimeout(aiTurnSenet, AiPacing.delay(300));
     } else {
       setStatusSenet("board-info", colorNameSenet(AppStateSenet.turn) + " to move. Throw the sticks.");
     }
@@ -250,7 +250,7 @@ function initSenetApp() {
     updateGameLabelsSenet();
     if (AppStateSenet.mode === "offline-ai" && AppStateSenet.turn !== AppStateSenet.humanColor) {
       setStatusSenet("board-info", "Computer thinking…");
-      setTimeout(aiTurnSenet, 300);
+      setTimeout(aiTurnSenet, AiPacing.delay(300));
     } else if (AppStateSenet.roll !== null) {
       setStatusSenet("board-info", colorNameSenet(AppStateSenet.turn) + " threw " + AppStateSenet.roll.value + ". Choose a piece to move.");
     } else {
@@ -276,7 +276,7 @@ function throwSticksSenet() {
 
   if (!AppStateSenet.legalMoves.length) {
     setStatusSenet("board-info", colorNameSenet(AppStateSenet.turn) + " threw " + roll.value + ". No legal move - turn passes.");
-    setTimeout(passTurnSenet, 700);
+    setTimeout(passTurnSenet, AiPacing.delay(700));
     return;
   }
 
@@ -299,7 +299,7 @@ function passTurnSenet() {
 function maybeTriggerAiTurnSenet() {
   if (AppStateSenet.gameOver) return;
   if (AppStateSenet.mode === "offline-ai" && AppStateSenet.turn !== AppStateSenet.humanColor) {
-    setTimeout(aiTurnSenet, 400);
+    setTimeout(aiTurnSenet, AiPacing.delay(400));
   }
 }
 
@@ -378,7 +378,7 @@ function aiTurnSenet() {
 
   if (!legalMoves.length) {
     setStatusSenet("board-info", "Computer threw " + roll.value + ". No legal move - turn passes.");
-    setTimeout(passTurnSenet, 700);
+    setTimeout(passTurnSenet, AiPacing.delay(700));
     return;
   }
 
@@ -387,7 +387,7 @@ function aiTurnSenet() {
     const from = SenetAi.chooseMove(AppStateSenet.state, aiColor, roll.value, AppStateSenet.aiLevel);
     if (from === null || from === undefined) return;
     applySenetMove(from);
-  }, 350);
+  }, AiPacing.delay(350));
 }
 
 function undoLastMove() {

@@ -251,7 +251,7 @@ function initFleetBattleApp() {
         setStatusFb("board-info", msg);
       } else if (AppStateFleetBattle.turn === "computer") {
         setStatusFb("board-info", t18nFb("fleetbattle_computer_thinking"));
-        setTimeout(computerTakesTurnFb, 350);
+        setTimeout(computerTakesTurnFb, AiPacing.delay(350));
       } else {
         setStatusFb("board-info", t18nFb("fleetbattle_your_turn"));
       }
@@ -370,7 +370,7 @@ function onFbEnemyCellClick(r, c) {
   renderFbEnemyGrid();
   saveFleetBattleGame();
   setStatusFb("board-info", t18nFb("fleetbattle_computer_thinking"));
-  setTimeout(computerTakesTurnFb, 350);
+  setTimeout(computerTakesTurnFb, AiPacing.delay(350));
 }
 
 function computerTakesTurnFb() {

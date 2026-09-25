@@ -208,7 +208,7 @@ function initKonaneApp() {
     setStatusKonane("board-info", "Black: remove one of the highlighted stones to begin.");
     if (mode === "offline-ai" && humanColor !== "b") {
       setStatusKonane("board-info", "Computer thinking…");
-      setTimeout(aiActKonane, 10);
+      setTimeout(aiActKonane, AiPacing.delay(10));
     }
   }
 
@@ -298,7 +298,7 @@ function initKonaneApp() {
       setStatusKonane("board-info", colorNameKonane(AppStateKonane.turn) + " can continue jumping, or press Done.");
     } else if (!isHumanTurnKonane()) {
       setStatusKonane("board-info", "Computer thinking…");
-      setTimeout(aiActKonane, 10);
+      setTimeout(aiActKonane, AiPacing.delay(10));
     } else {
       setStatusKonane("board-info", colorNameKonane(currentActorKonane()) + " to move.");
     }
@@ -347,7 +347,7 @@ function onKonaneOpeningBlackClick(r, c) {
 
   if (!isHumanTurnKonane()) {
     setStatusKonane("board-info", "Computer thinking…");
-    setTimeout(aiActKonane, 250);
+    setTimeout(aiActKonane, AiPacing.delay(250));
   } else {
     setStatusKonane("board-info", "White: remove one of the highlighted stones next to the empty square.");
   }
@@ -385,7 +385,7 @@ function finishKonaneOpeningOrTurn() {
 
   if (!isHumanTurnKonane()) {
     setStatusKonane("board-info", "Computer thinking…");
-    setTimeout(aiActKonane, 250);
+    setTimeout(aiActKonane, AiPacing.delay(250));
   } else {
     setStatusKonane("board-info", "Board ready. " + colorNameKonane(AppStateKonane.turn) + " to move.");
   }
@@ -506,7 +506,7 @@ function finalizeKonaneTurn(steps) {
 
   if (AppStateKonane.mode === "offline-ai" && !AppStateKonane.gameOver && AppStateKonane.turn !== AppStateKonane.humanColor) {
     setStatusKonane("board-info", "Computer thinking…");
-    setTimeout(aiActKonane, 250);
+    setTimeout(aiActKonane, AiPacing.delay(250));
   }
 }
 
@@ -531,7 +531,7 @@ function aiActKonane() {
     updateGameLabelsKonane();
     if (!isHumanTurnKonane()) {
       setStatusKonane("board-info", "Computer thinking…");
-      setTimeout(aiActKonane, 250);
+      setTimeout(aiActKonane, AiPacing.delay(250));
     } else {
       setStatusKonane("board-info", "White: remove one of the highlighted stones next to the empty square.");
     }

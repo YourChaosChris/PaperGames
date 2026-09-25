@@ -165,7 +165,7 @@ function initBaghChalApp() {
     const turn = AppStateBaghChal.state.currentPlayer;
     if (mode === "offline-ai" && humanSide !== turn) {
       setStatusBaghChal("board-info", "Computer thinking…");
-      setTimeout(aiTurnBaghChal, 300);
+      setTimeout(aiTurnBaghChal, AiPacing.delay(300));
     } else {
       setStatusBaghChal("board-info", sideNameBaghChal(turn) + " to move.");
     }
@@ -243,7 +243,7 @@ function initBaghChalApp() {
     const turn = AppStateBaghChal.state.currentPlayer;
     if (AppStateBaghChal.mode === "offline-ai" && turn !== AppStateBaghChal.humanSide) {
       setStatusBaghChal("board-info", "Computer thinking…");
-      setTimeout(aiTurnBaghChal, 300);
+      setTimeout(aiTurnBaghChal, AiPacing.delay(300));
     } else {
       setStatusBaghChal("board-info", sideNameBaghChal(turn) + " to move.");
     }
@@ -346,7 +346,7 @@ function applyBaghChalMove(move) {
 
   if (AppStateBaghChal.mode === "offline-ai" && nextTurn !== AppStateBaghChal.humanSide) {
     setStatusBaghChal("board-info", "Computer thinking…");
-    setTimeout(aiTurnBaghChal, 350);
+    setTimeout(aiTurnBaghChal, AiPacing.delay(350));
   }
 }
 

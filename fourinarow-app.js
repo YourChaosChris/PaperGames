@@ -145,7 +145,7 @@ function initConnectFourApp() {
 
     if (mode === "offline-ai" && humanColor !== "b") {
       setStatusConnectFour("board-info", "Computer thinking…");
-      setTimeout(aiTurnConnectFour, 300);
+      setTimeout(aiTurnConnectFour, AiPacing.delay(300));
     } else {
       setStatusConnectFour("board-info", colorNameConnectFour(AppStateConnectFour.turn) + " to move.");
     }
@@ -220,7 +220,7 @@ function initConnectFourApp() {
     updateGameLabelsConnectFour();
     if (AppStateConnectFour.mode === "offline-ai" && AppStateConnectFour.turn !== AppStateConnectFour.humanColor) {
       setStatusConnectFour("board-info", "Computer thinking…");
-      setTimeout(aiTurnConnectFour, 300);
+      setTimeout(aiTurnConnectFour, AiPacing.delay(300));
     } else {
       setStatusConnectFour("board-info", colorNameConnectFour(AppStateConnectFour.turn) + " to move.");
     }
@@ -287,7 +287,7 @@ function applyConnectFourMove(col) {
 function maybeTriggerAiTurnConnectFour() {
   if (AppStateConnectFour.gameOver) return;
   if (AppStateConnectFour.mode === "offline-ai" && AppStateConnectFour.turn !== AppStateConnectFour.humanColor) {
-    setTimeout(aiTurnConnectFour, 400);
+    setTimeout(aiTurnConnectFour, AiPacing.delay(400));
   }
 }
 
@@ -301,7 +301,7 @@ function aiTurnConnectFour() {
     const col = ConnectFourAi.chooseMove(AppStateConnectFour.board, aiColor, AppStateConnectFour.aiLevel);
     if (col === null || col === undefined) return;
     applyConnectFourMove(col);
-  }, 300);
+  }, AiPacing.delay(300));
 }
 
 function undoLastMove() {

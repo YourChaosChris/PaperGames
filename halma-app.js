@@ -164,7 +164,7 @@ function initHalmaApp() {
 
     if (mode === "offline-ai" && humanSide !== "p1") {
       setStatusHalma("board-info", "Computer thinking…");
-      setTimeout(aiTurnHalma, 300);
+      setTimeout(aiTurnHalma, AiPacing.delay(300));
     } else {
       setStatusHalma("board-info", sideNameHalma(AppStateHalma.turn) + " to move.");
     }
@@ -242,7 +242,7 @@ function initHalmaApp() {
     updateGameLabelsHalma();
     if (AppStateHalma.mode === "offline-ai" && AppStateHalma.turn !== AppStateHalma.humanSide) {
       setStatusHalma("board-info", "Computer thinking…");
-      setTimeout(aiTurnHalma, 300);
+      setTimeout(aiTurnHalma, AiPacing.delay(300));
     } else {
       setStatusHalma("board-info", sideNameHalma(AppStateHalma.turn) + " to move.");
     }
@@ -324,7 +324,7 @@ function applyHalmaMove(move) {
 
   if (AppStateHalma.mode === "offline-ai" && AppStateHalma.turn !== AppStateHalma.humanSide) {
     setStatusHalma("board-info", "Computer thinking…");
-    setTimeout(aiTurnHalma, 350);
+    setTimeout(aiTurnHalma, AiPacing.delay(350));
   }
 }
 

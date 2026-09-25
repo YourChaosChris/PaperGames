@@ -206,7 +206,7 @@ function initMorrisApp() {
 
     if (mode === "offline-ai" && humanColor !== "b") {
       setStatusMorris("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineMorris, 300);
+      setTimeout(aiMoveOfflineMorris, AiPacing.delay(300));
     } else {
       setStatusMorris("board-info", colorNameMorris(AppStateMorris.turn) + " to move: place a piece.");
     }
@@ -302,7 +302,7 @@ function initMorrisApp() {
       setStatusMorris("board-info", colorNameMorris(AppStateMorris.turn) + " formed a mill - choose an opponent piece to remove.");
     } else if (AppStateMorris.mode === "offline-ai" && AppStateMorris.turn !== AppStateMorris.humanColor) {
       setStatusMorris("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineMorris, 300);
+      setTimeout(aiMoveOfflineMorris, AiPacing.delay(300));
     } else {
       setStatusMorris("board-info", colorNameMorris(AppStateMorris.turn) + " to move.");
     }
@@ -430,7 +430,7 @@ function applyMorrisMove(move) {
 
   if (AppStateMorris.mode === "offline-ai" && AppStateMorris.turn !== AppStateMorris.humanColor) {
     setStatusMorris("board-info", "Computer thinking…");
-    setTimeout(aiMoveOfflineMorris, 300);
+    setTimeout(aiMoveOfflineMorris, AiPacing.delay(300));
   }
 }
 

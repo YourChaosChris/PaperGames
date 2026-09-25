@@ -150,7 +150,7 @@ function initMancalaApp() {
 
     if (mode === "offline-ai" && humanSide !== "a") {
       setStatusMancala("board-info", "Computer thinking…");
-      setTimeout(aiTurnMancala, 300);
+      setTimeout(aiTurnMancala, AiPacing.delay(300));
     } else {
       setStatusMancala("board-info", sideNameMancala(AppStateMancala.turn) + " to move.");
     }
@@ -225,7 +225,7 @@ function initMancalaApp() {
     updateGameLabelsMancala();
     if (AppStateMancala.mode === "offline-ai" && AppStateMancala.turn !== AppStateMancala.humanSide) {
       setStatusMancala("board-info", "Computer thinking…");
-      setTimeout(aiTurnMancala, 300);
+      setTimeout(aiTurnMancala, AiPacing.delay(300));
     } else {
       setStatusMancala("board-info", sideNameMancala(AppStateMancala.turn) + " to move.");
     }
@@ -297,7 +297,7 @@ function applyMancalaMove(pit) {
 function maybeTriggerAiTurnMancala() {
   if (AppStateMancala.gameOver) return;
   if (AppStateMancala.mode === "offline-ai" && AppStateMancala.turn !== AppStateMancala.humanSide) {
-    setTimeout(aiTurnMancala, 400);
+    setTimeout(aiTurnMancala, AiPacing.delay(400));
   }
 }
 
@@ -311,7 +311,7 @@ function aiTurnMancala() {
     const pit = MancalaAi.chooseMove(AppStateMancala.state, aiSide, AppStateMancala.aiLevel);
     if (pit === null || pit === undefined) return;
     applyMancalaMove(pit);
-  }, 350);
+  }, AiPacing.delay(350));
 }
 
 function undoLastMove() {

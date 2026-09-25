@@ -547,7 +547,7 @@ startAiGameBtn.addEventListener("click", () => {
   if (color === "black") {
     // AI starts as White
     setStatus("board-info", "Computer thinking…");
-    setTimeout(aiMoveOffline, 10);
+    setTimeout(aiMoveOffline, AiPacing.delay(10));
   } else {
     setStatus("board-info", "Your move.");
   }
@@ -782,7 +782,7 @@ aiLevelInline.addEventListener("change", () => {
     renderMoveList();
     if (savedGame.mode === "offline-ai" && AppState.turn !== AppState.humanColor) {
       setStatus("board-info", "Computer thinking…");
-      setTimeout(aiMoveOffline, 10);
+      setTimeout(aiMoveOffline, AiPacing.delay(10));
     } else {
       setStatus("board-info", (AppState.turn === "white" ? "White" : "Black") + " to move.");
     }
@@ -1366,7 +1366,7 @@ setStatus("board-info", "Move: " + from + "–" + to + ". " + side + " to move."
 
       setStatus("board-info", "Computer thinking…");
       // Let AI move after allowing UI to update
-      setTimeout(aiMoveOffline, 10);
+      setTimeout(aiMoveOffline, AiPacing.delay(10));
     } else if (AppState.mode === "online" && AppState.currentGame) {
       // Online-Zug an Lichess senden
       const promotion = maybeAutoQueen(from, to);

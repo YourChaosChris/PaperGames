@@ -174,7 +174,7 @@ function initSurakartaApp() {
 
     if (mode === "offline-ai" && humanColor !== "b") {
       setStatusSurakarta("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineSurakarta, 10);
+      setTimeout(aiMoveOfflineSurakarta, AiPacing.delay(10));
     } else {
       setStatusSurakarta("board-info", colorNameSurakarta(AppStateSurakarta.turn) + " to move.");
     }
@@ -252,7 +252,7 @@ function initSurakartaApp() {
     updateGameLabelsSurakarta();
     if (AppStateSurakarta.mode === "offline-ai" && AppStateSurakarta.turn !== AppStateSurakarta.humanColor) {
       setStatusSurakarta("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineSurakarta, 10);
+      setTimeout(aiMoveOfflineSurakarta, AiPacing.delay(10));
     } else {
       setStatusSurakarta("board-info", colorNameSurakarta(AppStateSurakarta.turn) + " to move.");
     }
@@ -340,7 +340,7 @@ function applySurakartaMove(move) {
 
   if (AppStateSurakarta.mode === "offline-ai" && !AppStateSurakarta.gameOver && AppStateSurakarta.turn !== AppStateSurakarta.humanColor) {
     setStatusSurakarta("board-info", "Computer thinking…");
-    setTimeout(aiMoveOfflineSurakarta, 250);
+    setTimeout(aiMoveOfflineSurakarta, AiPacing.delay(250));
   }
 }
 

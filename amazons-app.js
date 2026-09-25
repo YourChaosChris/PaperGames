@@ -174,7 +174,7 @@ function initAmazonsApp() {
 
     if (mode === "offline-ai" && humanSide !== "p1") {
       setStatusAmazons("board-info", "Computer thinking…");
-      setTimeout(aiTurnAmazons, 300);
+      setTimeout(aiTurnAmazons, AiPacing.delay(300));
     } else {
       setStatusAmazons("board-info", sideNameAmazons(AppStateAmazons.turn) + " to move.");
     }
@@ -251,7 +251,7 @@ function initAmazonsApp() {
     updateGameLabelsAmazons();
     if (AppStateAmazons.mode === "offline-ai" && AppStateAmazons.turn !== AppStateAmazons.humanSide) {
       setStatusAmazons("board-info", "Computer thinking…");
-      setTimeout(aiTurnAmazons, 300);
+      setTimeout(aiTurnAmazons, AiPacing.delay(300));
     } else {
       setStatusAmazons("board-info", sideNameAmazons(AppStateAmazons.turn) + " to move.");
     }
@@ -377,7 +377,7 @@ function applyAmazonsMove(move) {
 
   if (AppStateAmazons.mode === "offline-ai" && AppStateAmazons.turn !== AppStateAmazons.humanSide) {
     setStatusAmazons("board-info", "Computer thinking…");
-    setTimeout(aiTurnAmazons, 350);
+    setTimeout(aiTurnAmazons, AiPacing.delay(350));
   }
 }
 

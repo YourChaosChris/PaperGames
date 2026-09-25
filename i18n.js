@@ -802,7 +802,7 @@ const STRINGS = {
     adaptive_difficulty_toggle: "🎯 Suggest difficulty",
     adaptive_difficulty_note: "🎯 Difficulty adjusted based on your recent results.",
     update_banner_text: "A new version of PaperGames is available.",
-    update_banner_whats_new: "New: screen-reader descriptions of the boards are now translated too, numbers use your language's decimal separator, and several translation mistakes were fixed.",
+    update_banner_whats_new: "New: you can slow down the computer's moves in Settings, Dots and Boxes marks boxes with a cross or circle and shows the last line drawn, and Ludo marks where a token came from and landed.",
     update_banner_reload: "Reload now",
     update_banner_dismiss: "Dismiss",
     error_banner_text: "Something went wrong. Reloading may fix it.",
@@ -2398,6 +2398,17 @@ const STRINGS = {
 
     // Nonogram label
     msg_aria_marked: "marked",
+
+    // Computer speed setting and Ludo move messages
+    settings_section_ai_pacing: "Computer speed",
+    settings_ai_pacing_fast: "Fast",
+    settings_ai_pacing_normal: "Normal",
+    settings_ai_pacing_slow: "Slow",
+    msg_t_ludo_moved: "{p} moved token {n} forward {m}.",
+    msg_t_ludo_brought: "{p} brought token {n} into play.",
+    msg_t_ludo_moved_captured: "{p} moved token {n} forward {m} and captured {q}!",
+    msg_t_ludo_brought_captured: "{p} brought token {n} into play and captured {q}!",
+    msg_t_ludo_moved_home: "{p} moved token {n} forward {m} and got it home!",
   },
   de: {
     nav_home: "Start",
@@ -3197,7 +3208,7 @@ const STRINGS = {
     adaptive_difficulty_toggle: "🎯 Schwierigkeit vorschlagen",
     adaptive_difficulty_note: "🎯 Schwierigkeit anhand deiner letzten Ergebnisse angepasst.",
     update_banner_text: "Eine neue Version von PaperGames ist verfügbar.",
-    update_banner_whats_new: "Neu: Auch die Screenreader-Beschreibungen der Spielbretter sind jetzt übersetzt, Zahlen erscheinen mit Dezimalkomma, und einige Übersetzungsfehler wurden behoben.",
+    update_banner_whats_new: "Neu: In den Einstellungen lässt sich das Tempo der Computerzüge verlangsamen, Punkte und Kästchen zeigt Kreuze und Kreise sowie den zuletzt gezogenen Strich, und Ludo markiert Start- und Zielfeld jedes Zuges.",
     update_banner_reload: "Jetzt neu laden",
     update_banner_dismiss: "Schließen",
     error_banner_text: "Etwas ist schiefgelaufen. Ein Neuladen könnte helfen.",
@@ -4793,6 +4804,17 @@ const STRINGS = {
 
     // Nonogram label
     msg_aria_marked: "markiert",
+
+    // Computer speed setting and Ludo move messages
+    settings_section_ai_pacing: "Tempo des Computers",
+    settings_ai_pacing_fast: "Schnell",
+    settings_ai_pacing_normal: "Normal",
+    settings_ai_pacing_slow: "Langsam",
+    msg_t_ludo_moved: "{p} zieht Figur {n} um {m} vor.",
+    msg_t_ludo_brought: "{p} bringt Figur {n} ins Spiel.",
+    msg_t_ludo_moved_captured: "{p} zieht Figur {n} um {m} vor und schlägt {q}!",
+    msg_t_ludo_brought_captured: "{p} bringt Figur {n} ins Spiel und schlägt {q}!",
+    msg_t_ludo_moved_home: "{p} zieht Figur {n} um {m} vor und bringt sie ins Ziel!",
   },
   fr: {
     nav_home: "Accueil",
@@ -5540,7 +5562,7 @@ const STRINGS = {
     adaptive_difficulty_toggle: "🎯 Suggérer la difficulté",
     adaptive_difficulty_note: "🎯 Difficulté ajustée en fonction de vos résultats récents.",
     update_banner_text: "Une nouvelle version de PaperGames est disponible.",
-    update_banner_whats_new: "Nouveau : les descriptions des plateaux pour les lecteurs d'écran sont maintenant traduites, les nombres utilisent la virgule décimale et plusieurs erreurs de traduction ont été corrigées.",
+    update_banner_whats_new: "Nouveau : vous pouvez ralentir les coups de l'ordinateur dans les réglages, Points et Carrés marque les cases d'une croix ou d'un cercle et montre le dernier trait, et le Ludo indique d'où vient un pion et où il arrive.",
     update_banner_reload: "Recharger maintenant",
     update_banner_dismiss: "Fermer",
     error_banner_text: "Une erreur s'est produite. Recharger la page peut résoudre le problème.",
@@ -7124,6 +7146,17 @@ const STRINGS = {
 
     // Nonogram label
     msg_aria_marked: "marquée",
+
+    // Computer speed setting and Ludo move messages
+    settings_section_ai_pacing: "Vitesse de l'ordinateur",
+    settings_ai_pacing_fast: "Rapide",
+    settings_ai_pacing_normal: "Normal",
+    settings_ai_pacing_slow: "Lent",
+    msg_t_ludo_moved: "{p} avance le pion {n} de {m}.",
+    msg_t_ludo_brought: "{p} met le pion {n} en jeu.",
+    msg_t_ludo_moved_captured: "{p} avance le pion {n} de {m} et capture {q} !",
+    msg_t_ludo_brought_captured: "{p} met le pion {n} en jeu et capture {q} !",
+    msg_t_ludo_moved_home: "{p} avance le pion {n} de {m} et le mène au but !",
   },
   es: {
     nav_home: "Inicio",
@@ -7871,7 +7904,7 @@ const STRINGS = {
     adaptive_difficulty_toggle: "🎯 Sugerir dificultad",
     adaptive_difficulty_note: "🎯 Dificultad ajustada según tus resultados recientes.",
     update_banner_text: "Hay una nueva versión de PaperGames disponible.",
-    update_banner_whats_new: "Novedad: las descripciones de los tableros para lectores de pantalla ya están traducidas, los números usan la coma decimal y se han corregido varios errores de traducción.",
+    update_banner_whats_new: "Novedad: puedes ralentizar las jugadas del ordenador en Ajustes, Puntos y Cuadrados marca las casillas con una cruz o un círculo y muestra la última línea, y el Ludo marca de dónde viene y adónde llega cada ficha.",
     update_banner_reload: "Recargar ahora",
     update_banner_dismiss: "Cerrar",
     error_banner_text: "Algo salió mal. Recargar la página puede solucionarlo.",
@@ -9455,6 +9488,17 @@ const STRINGS = {
 
     // Nonogram label
     msg_aria_marked: "marcada",
+
+    // Computer speed setting and Ludo move messages
+    settings_section_ai_pacing: "Velocidad del ordenador",
+    settings_ai_pacing_fast: "Rápido",
+    settings_ai_pacing_normal: "Normal",
+    settings_ai_pacing_slow: "Lento",
+    msg_t_ludo_moved: "{p} avanza {m} con la ficha {n}.",
+    msg_t_ludo_brought: "{p} saca la ficha {n} al juego.",
+    msg_t_ludo_moved_captured: "¡{p} avanza {m} con la ficha {n} y captura a {q}!",
+    msg_t_ludo_brought_captured: "¡{p} saca la ficha {n} al juego y captura a {q}!",
+    msg_t_ludo_moved_home: "¡{p} avanza {m} con la ficha {n} y la lleva a casa!",
   },
   it: {
     nav_home: "Home",
@@ -10202,7 +10246,7 @@ const STRINGS = {
     adaptive_difficulty_toggle: "🎯 Suggerisci difficoltà",
     adaptive_difficulty_note: "🎯 Difficoltà adattata in base ai tuoi risultati recenti.",
     update_banner_text: "È disponibile una nuova versione di PaperGames.",
-    update_banner_whats_new: "Novità: anche le descrizioni dei tabelloni per i lettori di schermo sono ora tradotte, i numeri usano la virgola decimale e sono stati corretti diversi errori di traduzione.",
+    update_banner_whats_new: "Novità: nelle Impostazioni puoi rallentare le mosse del computer, Puntini e Quadrati segna le caselle con una croce o un cerchio e mostra l'ultima linea, e il Ludo indica da dove parte e dove arriva ogni pedina.",
     update_banner_reload: "Ricarica ora",
     update_banner_dismiss: "Chiudi",
     error_banner_text: "Qualcosa è andato storto. Ricaricare la pagina potrebbe risolvere il problema.",
@@ -11786,6 +11830,17 @@ const STRINGS = {
 
     // Nonogram label
     msg_aria_marked: "segnata",
+
+    // Computer speed setting and Ludo move messages
+    settings_section_ai_pacing: "Velocità del computer",
+    settings_ai_pacing_fast: "Veloce",
+    settings_ai_pacing_normal: "Normale",
+    settings_ai_pacing_slow: "Lento",
+    msg_t_ludo_moved: "{p} avanza la pedina {n} di {m}.",
+    msg_t_ludo_brought: "{p} mette in gioco la pedina {n}.",
+    msg_t_ludo_moved_captured: "{p} avanza la pedina {n} di {m} e cattura {q}!",
+    msg_t_ludo_brought_captured: "{p} mette in gioco la pedina {n} e cattura {q}!",
+    msg_t_ludo_moved_home: "{p} avanza la pedina {n} di {m} e la porta a casa!",
   },
   nl: {
     nav_home: "Start",
@@ -12498,7 +12553,7 @@ const STRINGS = {
     adaptive_difficulty_toggle: "🎯 Moeilijkheidsgraad voorstellen",
     adaptive_difficulty_note: "🎯 Moeilijkheidsgraad aangepast op basis van je recente resultaten.",
     update_banner_text: "Er is een nieuwe versie van PaperGames beschikbaar.",
-    update_banner_whats_new: "Nieuw: ook de schermlezerbeschrijvingen van de borden zijn nu vertaald, getallen gebruiken de decimale komma en enkele vertaalfouten zijn verbeterd.",
+    update_banner_whats_new: "Nieuw: in de instellingen kun je de zetten van de computer vertragen, Stippen en Vakjes markeert vakjes met een kruis of cirkel en toont de laatste lijn, en Ludo markeert waar een pion vandaan kwam en waar hij landde.",
     update_banner_reload: "Nu vernieuwen",
     update_banner_dismiss: "Sluiten",
     error_banner_text: "Er is iets misgegaan. Opnieuw laden kan helpen.",
@@ -14117,6 +14172,17 @@ const STRINGS = {
 
     // Nonogram label
     msg_aria_marked: "gemarkeerd",
+
+    // Computer speed setting and Ludo move messages
+    settings_section_ai_pacing: "Snelheid van de computer",
+    settings_ai_pacing_fast: "Snel",
+    settings_ai_pacing_normal: "Normaal",
+    settings_ai_pacing_slow: "Langzaam",
+    msg_t_ludo_moved: "{p} zet pion {n} {m} vooruit.",
+    msg_t_ludo_brought: "{p} brengt pion {n} in het spel.",
+    msg_t_ludo_moved_captured: "{p} zet pion {n} {m} vooruit en slaat {q}!",
+    msg_t_ludo_brought_captured: "{p} brengt pion {n} in het spel en slaat {q}!",
+    msg_t_ludo_moved_home: "{p} zet pion {n} {m} vooruit en brengt hem thuis!",
   },
   pl: {
     nav_home: "Start",
@@ -14867,7 +14933,7 @@ const STRINGS = {
     adaptive_difficulty_toggle: "🎯 Sugeruj poziom trudności",
     adaptive_difficulty_note: "🎯 Poziom trudności dostosowany na podstawie Twoich ostatnich wyników.",
     update_banner_text: "Dostępna jest nowa wersja PaperGames.",
-    update_banner_whats_new: "Nowość: opisy plansz dla czytników ekranu są teraz przetłumaczone, liczby używają przecinka dziesiętnego, a kilka błędów w tłumaczeniach poprawiono.",
+    update_banner_whats_new: "Nowość: w ustawieniach możesz spowolnić ruchy komputera, Kropki i Kwadraciki oznaczają pola krzyżykiem lub kółkiem i pokazują ostatnią linię, a Ludo zaznacza, skąd pionek wyszedł i gdzie stanął.",
     update_banner_reload: "Odśwież teraz",
     update_banner_dismiss: "Zamknij",
     error_banner_text: "Coś poszło nie tak. Odświeżenie strony może pomóc.",
@@ -16449,6 +16515,17 @@ const STRINGS = {
 
     // Nonogram label
     msg_aria_marked: "oznaczone",
+
+    // Computer speed setting and Ludo move messages
+    settings_section_ai_pacing: "Szybkość komputera",
+    settings_ai_pacing_fast: "Szybko",
+    settings_ai_pacing_normal: "Normalnie",
+    settings_ai_pacing_slow: "Wolno",
+    msg_t_ludo_moved: "{p}: pionek {n} idzie o {m} do przodu.",
+    msg_t_ludo_brought: "{p}: pionek {n} wchodzi do gry.",
+    msg_t_ludo_moved_captured: "{p}: pionek {n} idzie o {m} do przodu i zbija: {q}!",
+    msg_t_ludo_brought_captured: "{p}: pionek {n} wchodzi do gry i zbija: {q}!",
+    msg_t_ludo_moved_home: "{p}: pionek {n} idzie o {m} do przodu i dociera do domu!",
   },
   uk: {
     nav_home: "Головна",
@@ -17196,7 +17273,7 @@ const STRINGS = {
     adaptive_difficulty_toggle: "🎯 Пропонувати складність",
     adaptive_difficulty_note: "🎯 Складність скориговано на основі ваших останніх результатів.",
     update_banner_text: "Доступна нова версія PaperGames.",
-    update_banner_whats_new: "Нове: описи дошок для екранних читачів тепер теж перекладено, числа використовують десяткову кому, а кілька помилок у перекладах виправлено.",
+    update_banner_whats_new: "Нове: у налаштуваннях можна сповільнити ходи комп'ютера, «Крапки і Квадратики» позначають клітинки хрестиком або колом і показують останню лінію, а в Лудо видно, звідки фішка пішла і куди стала.",
     update_banner_reload: "Оновити зараз",
     update_banner_dismiss: "Закрити",
     error_banner_text: "Щось пішло не так. Перезавантаження може допомогти.",
@@ -18780,6 +18857,17 @@ const STRINGS = {
 
     // Nonogram label
     msg_aria_marked: "позначено",
+
+    // Computer speed setting and Ludo move messages
+    settings_section_ai_pacing: "Швидкість комп'ютера",
+    settings_ai_pacing_fast: "Швидко",
+    settings_ai_pacing_normal: "Звичайно",
+    settings_ai_pacing_slow: "Повільно",
+    msg_t_ludo_moved: "{p}: фішка {n} просувається на {m}.",
+    msg_t_ludo_brought: "{p}: фішка {n} виходить у гру.",
+    msg_t_ludo_moved_captured: "{p}: фішка {n} просувається на {m} і б'є: {q}!",
+    msg_t_ludo_brought_captured: "{p}: фішка {n} виходить у гру і б'є: {q}!",
+    msg_t_ludo_moved_home: "{p}: фішка {n} просувається на {m} і дістається додому!",
   },
   ru: {
     nav_home: "Главная",
@@ -19527,7 +19615,7 @@ const STRINGS = {
     adaptive_difficulty_toggle: "🎯 Предлагать сложность",
     adaptive_difficulty_note: "🎯 Сложность скорректирована на основе ваших последних результатов.",
     update_banner_text: "Доступна новая версия PaperGames.",
-    update_banner_whats_new: "Новое: описания досок для программ чтения с экрана теперь тоже переведены, числа используют десятичную запятую, а несколько ошибок в переводах исправлено.",
+    update_banner_whats_new: "Новое: в настройках можно замедлить ходы компьютера, «Точки и Квадраты» отмечают клетки крестиком или кругом и показывают последнюю линию, а в Лудо видно, откуда фишка ушла и куда встала.",
     update_banner_reload: "Обновить сейчас",
     update_banner_dismiss: "Закрыть",
     error_banner_text: "Что-то пошло не так. Перезагрузка страницы может помочь.",
@@ -21111,6 +21199,17 @@ const STRINGS = {
 
     // Nonogram label
     msg_aria_marked: "отмечено",
+
+    // Computer speed setting and Ludo move messages
+    settings_section_ai_pacing: "Скорость компьютера",
+    settings_ai_pacing_fast: "Быстро",
+    settings_ai_pacing_normal: "Обычно",
+    settings_ai_pacing_slow: "Медленно",
+    msg_t_ludo_moved: "{p}: фишка {n} продвигается на {m}.",
+    msg_t_ludo_brought: "{p}: фишка {n} вводится в игру.",
+    msg_t_ludo_moved_captured: "{p}: фишка {n} продвигается на {m} и бьёт: {q}!",
+    msg_t_ludo_brought_captured: "{p}: фишка {n} вводится в игру и бьёт: {q}!",
+    msg_t_ludo_moved_home: "{p}: фишка {n} продвигается на {m} и добирается до дома!",
   },
   ja: {
     nav_home: "ホーム",
@@ -21823,7 +21922,7 @@ const STRINGS = {
     adaptive_difficulty_toggle: "🎯 難易度を提案",
     adaptive_difficulty_note: "🎯 最近の結果に基づいて難易度を調整しました。",
     update_banner_text: "PaperGamesの新しいバージョンが利用可能です。",
-    update_banner_whats_new: "新機能：スクリーンリーダー向けの盤面の説明も翻訳され、いくつかの翻訳ミスが修正されました。",
+    update_banner_whats_new: "新機能：設定でコンピューターの手を遅くでき、点と箱は箱を×と○で示して最後の線を強調し、ルドーはコマの移動元と移動先を表示します。",
     update_banner_reload: "今すぐ再読み込み",
     update_banner_dismiss: "閉じる",
     error_banner_text: "問題が発生しました。再読み込みで解決する場合があります。",
@@ -23442,6 +23541,17 @@ const STRINGS = {
 
     // Nonogram label
     msg_aria_marked: "×印",
+
+    // Computer speed setting and Ludo move messages
+    settings_section_ai_pacing: "コンピューターの速さ",
+    settings_ai_pacing_fast: "速い",
+    settings_ai_pacing_normal: "普通",
+    settings_ai_pacing_slow: "遅い",
+    msg_t_ludo_moved: "{p}のコマ{n}が{m}マス進みました。",
+    msg_t_ludo_brought: "{p}のコマ{n}が盤上に出ました。",
+    msg_t_ludo_moved_captured: "{p}のコマ{n}が{m}マス進み、{q}を取りました!",
+    msg_t_ludo_brought_captured: "{p}のコマ{n}が盤上に出て、{q}を取りました!",
+    msg_t_ludo_moved_home: "{p}のコマ{n}が{m}マス進んでゴールしました!",
   },
   zh: {
     nav_home: "主页",
@@ -24189,7 +24299,7 @@ const STRINGS = {
     adaptive_difficulty_toggle: "🎯 建议难度",
     adaptive_difficulty_note: "🎯 已根据你最近的战绩调整难度。",
     update_banner_text: "PaperGames 有新版本可用。",
-    update_banner_whats_new: "新功能：棋盘的屏幕阅读器描述现已翻译，并修正了若干翻译错误。",
+    update_banner_whats_new: "新功能：可在设置中放慢电脑走棋速度，点格棋用叉和圈标记方格并显示最后一条线，飞行棋会标出棋子的起点和落点。",
     update_banner_reload: "立即刷新",
     update_banner_dismiss: "关闭",
     error_banner_text: "出现了问题。刷新页面可能会解决。",
@@ -25773,6 +25883,17 @@ const STRINGS = {
 
     // Nonogram label
     msg_aria_marked: "已标记",
+
+    // Computer speed setting and Ludo move messages
+    settings_section_ai_pacing: "电脑速度",
+    settings_ai_pacing_fast: "快",
+    settings_ai_pacing_normal: "正常",
+    settings_ai_pacing_slow: "慢",
+    msg_t_ludo_moved: "{p}的棋子{n}前进{m}步。",
+    msg_t_ludo_brought: "{p}的棋子{n}出发了。",
+    msg_t_ludo_moved_captured: "{p}的棋子{n}前进{m}步,吃掉了{q}!",
+    msg_t_ludo_brought_captured: "{p}的棋子{n}出发,吃掉了{q}!",
+    msg_t_ludo_moved_home: "{p}的棋子{n}前进{m}步,到达终点!",
   }
 };
 
