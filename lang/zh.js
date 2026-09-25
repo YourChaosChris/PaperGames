@@ -2344,4 +2344,28 @@ STRINGS.zh = {
     msg_t_ludo_moved_captured: "{p}的棋子{n}前进{m}步,吃掉了{q}!",
     msg_t_ludo_brought_captured: "{p}的棋子{n}出发,吃掉了{q}!",
     msg_t_ludo_moved_home: "{p}的棋子{n}前进{m}步,到达终点!",
+
+    // Morris placing phase and Ludo token counts (screen reader)
+    msg_t_morris_placing: "布子阶段 – 还剩{n}枚",
+    msg_t_morris_placing_one: "布子阶段 – 还剩{n}枚",
+    msg_t_aria_tokens: "{n}枚棋子",
+    msg_t_aria_token: "{n}枚棋子",
+
+    // Card Tactics card names
+    cardtactics_card_wind: "风",
+    cardtactics_card_wave: "浪",
+    cardtactics_card_stone: "石",
+    cardtactics_card_flame: "焰",
+    cardtactics_card_thunder: "雷",
+    cardtactics_card_frost: "霜",
+    cardtactics_card_mist: "雾",
+    cardtactics_card_shadow: "影",
+    cardtactics_card_ember: "余烬",
+    cardtactics_card_gale: "狂风",
+    cardtactics_card_tide: "潮",
+    cardtactics_card_quake: "震",
+    cardtactics_card_spark: "火花",
+    cardtactics_card_gust: "阵风",
+    cardtactics_card_drift: "漂流",
+    cardtactics_card_blaze: "烈焰",
 };

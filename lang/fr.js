@@ -2344,4 +2344,28 @@ STRINGS.fr = {
     msg_t_ludo_moved_captured: "{p} avance le pion {n} de {m} et capture {q} !",
     msg_t_ludo_brought_captured: "{p} met le pion {n} en jeu et capture {q} !",
     msg_t_ludo_moved_home: "{p} avance le pion {n} de {m} et le mène au but !",
+
+    // Morris placing phase and Ludo token counts (screen reader)
+    msg_t_morris_placing: "Placement – encore {n} pions à poser",
+    msg_t_morris_placing_one: "Placement – encore {n} pion à poser",
+    msg_t_aria_tokens: "{n} pions",
+    msg_t_aria_token: "{n} pion",
+
+    // Card Tactics card names
+    cardtactics_card_wind: "Vent",
+    cardtactics_card_wave: "Vague",
+    cardtactics_card_stone: "Pierre",
+    cardtactics_card_flame: "Flamme",
+    cardtactics_card_thunder: "Tonnerre",
+    cardtactics_card_frost: "Givre",
+    cardtactics_card_mist: "Brume",
+    cardtactics_card_shadow: "Ombre",
+    cardtactics_card_ember: "Braise",
+    cardtactics_card_gale: "Tempête",
+    cardtactics_card_tide: "Marée",
+    cardtactics_card_quake: "Séisme",
+    cardtactics_card_spark: "Étincelle",
+    cardtactics_card_gust: "Rafale",
+    cardtactics_card_drift: "Dérive",
+    cardtactics_card_blaze: "Brasier",
 };

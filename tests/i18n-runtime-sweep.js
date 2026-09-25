@@ -23,7 +23,8 @@ const PER_GAME_MS = 45000;
 
 // Latin words that legitimately appear in the Russian texts.
 const ctx = require("./load-i18n").loadI18n();
-const allowed = new Set(["OK"]);
+// "OK" is universal; the author byline in the header is a name, not a text.
+const allowed = new Set(["OK", "Christopher", "ller"]);
 Object.values(ctx.STRINGS[LANG]).forEach((v) => {
   if (typeof v === "string") (v.match(/[A-Za-z]{3,}/g) || []).forEach((w) => allowed.add(w));
 });
@@ -96,6 +97,9 @@ async function sweep(browser, slug, mode) {
     const out = window.__i18nSeen.slice();
     document.querySelectorAll("[data-i18n-msg]").forEach((el) => out.push(el.textContent));
     document.querySelectorAll("[aria-label]").forEach((el) => out.push(el.getAttribute("aria-label")));
+    // Everything else a player can read, line by line - catches text a
+    // script sets directly instead of through I18n.setMsg().
+    (document.body.innerText || "").split("\n").forEach((line) => { if (line.trim()) out.push(line.trim()); });
     return out;
   }).catch(() => []);
   await page.close();

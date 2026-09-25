@@ -2344,4 +2344,28 @@ STRINGS.ru = {
     msg_t_ludo_moved_captured: "{p}: фишка {n} продвигается на {m} и бьёт: {q}!",
     msg_t_ludo_brought_captured: "{p}: фишка {n} вводится в игру и бьёт: {q}!",
     msg_t_ludo_moved_home: "{p}: фишка {n} продвигается на {m} и добирается до дома!",
+
+    // Morris placing phase and Ludo token counts (screen reader)
+    msg_t_morris_placing: "Расстановка – осталось поставить: {n}",
+    msg_t_morris_placing_one: "Расстановка – осталось поставить: {n}",
+    msg_t_aria_tokens: "фишек: {n}",
+    msg_t_aria_token: "фишек: {n}",
+
+    // Card Tactics card names
+    cardtactics_card_wind: "Ветер",
+    cardtactics_card_wave: "Волна",
+    cardtactics_card_stone: "Камень",
+    cardtactics_card_flame: "Пламя",
+    cardtactics_card_thunder: "Гром",
+    cardtactics_card_frost: "Мороз",
+    cardtactics_card_mist: "Туман",
+    cardtactics_card_shadow: "Тень",
+    cardtactics_card_ember: "Жар",
+    cardtactics_card_gale: "Буря",
+    cardtactics_card_tide: "Прилив",
+    cardtactics_card_quake: "Толчок",
+    cardtactics_card_spark: "Искра",
+    cardtactics_card_gust: "Порыв",
+    cardtactics_card_drift: "Дрейф",
+    cardtactics_card_blaze: "Пожар",
 };

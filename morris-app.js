@@ -649,9 +649,9 @@ function updateGameLabelsMorris() {
   if (meta) {
     const state = AppStateMorris.state;
     const inHand = state.toPlace.b + state.toPlace.w;
-    meta.textContent = inHand > 0
+    I18n.setMsg(meta, inHand > 0
       ? "Placing - " + inHand + " piece" + (inHand === 1 ? "" : "s") + " left to place"
-      : (AppStateMorris.moveCount ? "Move " + AppStateMorris.moveCount : "");
+      : (AppStateMorris.moveCount ? "Move " + AppStateMorris.moveCount : ""));
   }
   updateUndoButtonVisibilityMorris();
   updateResignVisibilityMorris();

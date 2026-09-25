@@ -2344,4 +2344,28 @@ STRINGS.it = {
     msg_t_ludo_moved_captured: "{p} avanza la pedina {n} di {m} e cattura {q}!",
     msg_t_ludo_brought_captured: "{p} mette in gioco la pedina {n} e cattura {q}!",
     msg_t_ludo_moved_home: "{p} avanza la pedina {n} di {m} e la porta a casa!",
+
+    // Morris placing phase and Ludo token counts (screen reader)
+    msg_t_morris_placing: "Piazzamento: restano {n} pedine da piazzare",
+    msg_t_morris_placing_one: "Piazzamento: resta {n} pedina da piazzare",
+    msg_t_aria_tokens: "{n} pedine",
+    msg_t_aria_token: "{n} pedina",
+
+    // Card Tactics card names
+    cardtactics_card_wind: "Vento",
+    cardtactics_card_wave: "Onda",
+    cardtactics_card_stone: "Pietra",
+    cardtactics_card_flame: "Fiamma",
+    cardtactics_card_thunder: "Tuono",
+    cardtactics_card_frost: "Brina",
+    cardtactics_card_mist: "Nebbia",
+    cardtactics_card_shadow: "Ombra",
+    cardtactics_card_ember: "Brace",
+    cardtactics_card_gale: "Burrasca",
+    cardtactics_card_tide: "Marea",
+    cardtactics_card_quake: "Sisma",
+    cardtactics_card_spark: "Scintilla",
+    cardtactics_card_gust: "Raffica",
+    cardtactics_card_drift: "Deriva",
+    cardtactics_card_blaze: "Rogo",
 };

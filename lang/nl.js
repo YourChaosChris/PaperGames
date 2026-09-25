@@ -2344,4 +2344,28 @@ STRINGS.nl = {
     msg_t_ludo_moved_captured: "{p} zet pion {n} {m} vooruit en slaat {q}!",
     msg_t_ludo_brought_captured: "{p} brengt pion {n} in het spel en slaat {q}!",
     msg_t_ludo_moved_home: "{p} zet pion {n} {m} vooruit en brengt hem thuis!",
+
+    // Morris placing phase and Ludo token counts (screen reader)
+    msg_t_morris_placing: "Plaatsen – nog {n} stenen te plaatsen",
+    msg_t_morris_placing_one: "Plaatsen – nog {n} steen te plaatsen",
+    msg_t_aria_tokens: "{n} pionnen",
+    msg_t_aria_token: "{n} pion",
+
+    // Card Tactics card names
+    cardtactics_card_wind: "Wind",
+    cardtactics_card_wave: "Golf",
+    cardtactics_card_stone: "Steen",
+    cardtactics_card_flame: "Vlam",
+    cardtactics_card_thunder: "Donder",
+    cardtactics_card_frost: "Vorst",
+    cardtactics_card_mist: "Nevel",
+    cardtactics_card_shadow: "Schaduw",
+    cardtactics_card_ember: "Gloed",
+    cardtactics_card_gale: "Storm",
+    cardtactics_card_tide: "Getij",
+    cardtactics_card_quake: "Beving",
+    cardtactics_card_spark: "Vonk",
+    cardtactics_card_gust: "Vlaag",
+    cardtactics_card_drift: "Drift",
+    cardtactics_card_blaze: "Vuurzee",
 };
