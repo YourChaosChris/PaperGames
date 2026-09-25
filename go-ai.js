@@ -48,12 +48,12 @@ const GoAi = (function () {
     return score.dame === 0;
   }
 
-  function collectLegalMoves(board, size, color, koPoint) {
+  function collectLegalMoves(board, size, color, koPoint, history) {
     const moves = [];
     for (let r = 0; r < size; r++) {
       for (let c = 0; c < size; c++) {
         if (board[r][c]) continue;
-        const result = GoCore.tryMove(board, size, r, c, color, koPoint);
+        const result = GoCore.tryMove(board, size, r, c, color, koPoint, history);
         if (result.legal) {
           moves.push({ r, c, result, fillsOwnEye: isSimpleEye(board, size, r, c, color) });
         }
@@ -101,18 +101,18 @@ const GoAi = (function () {
     return score;
   }
 
-  function chooseEasyMove(board, size, color, koPoint) {
+  function chooseEasyMove(board, size, color, koPoint, history) {
     if (isBoardSettled(board, size)) return null;
-    const moves = collectLegalMoves(board, size, color, koPoint);
+    const moves = collectLegalMoves(board, size, color, koPoint, history);
     const safe = moves.filter((m) => !m.fillsOwnEye);
     const pool = safe.length ? safe : moves;
     if (!pool.length) return null;
     return pickRandom(pool);
   }
 
-  function chooseMediumMove(board, size, color, koPoint) {
+  function chooseMediumMove(board, size, color, koPoint, history) {
     if (isBoardSettled(board, size)) return null;
-    const moves = collectLegalMoves(board, size, color, koPoint);
+    const moves = collectLegalMoves(board, size, color, koPoint, history);
     if (!moves.length) return null;
     const scored = moves
       .map((m) => ({ move: m, score: scoreCandidateHeuristic(board, size, color, m) }))
@@ -185,9 +185,9 @@ const GoAi = (function () {
     return current;
   }
 
-  function chooseHardMove(board, size, color, koPoint) {
+  function chooseHardMove(board, size, color, koPoint, history) {
     if (isBoardSettled(board, size)) return null;
-    const moves = collectLegalMoves(board, size, color, koPoint);
+    const moves = collectLegalMoves(board, size, color, koPoint, history);
     if (!moves.length) return null;
 
     const scored = moves
@@ -224,10 +224,10 @@ const GoAi = (function () {
   }
 
   // Returns { r, c, result } for the chosen move, or null to mean "pass".
-  function chooseMove(board, size, color, level, koPoint) {
-    if (level === 1) return chooseEasyMove(board, size, color, koPoint);
-    if (level === 3) return chooseHardMove(board, size, color, koPoint);
-    return chooseMediumMove(board, size, color, koPoint);
+  function chooseMove(board, size, color, level, koPoint, history) {
+    if (level === 1) return chooseEasyMove(board, size, color, koPoint, history);
+    if (level === 3) return chooseHardMove(board, size, color, koPoint, history);
+    return chooseMediumMove(board, size, color, koPoint, history);
   }
 
   return {

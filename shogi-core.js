@@ -310,6 +310,23 @@ const ShogiCore = (function () {
     return drops;
   }
 
+  // Identifies a position for the sennichite (repetition) rule: board,
+  // both hands and the side to move - all three must match for two
+  // positions to count as the same.
+  function positionKey(state, colorToMove) {
+    let key = colorToMove + "|";
+    for (let r = 0; r < SIZE; r++) {
+      for (let c = 0; c < SIZE; c++) {
+        const cell = state.board[r][c];
+        key += cell ? cell.color + cell.type + "," : ".,";
+      }
+    }
+    ["b", "w"].forEach((color) => {
+      key += "|" + HAND_TYPES.map((t) => state.hands[color][t] || 0).join(",");
+    });
+    return key;
+  }
+
   // { status: "normal" | "checkmate", winner: color|null }. Shogi has
   // no stalemate: with drops always available for material still in
   // hand, a side with pieces and no legal action only occurs when
@@ -347,6 +364,7 @@ const ShogiCore = (function () {
     legalMoves,
     isLegalDrop,
     legalDrops,
+    positionKey,
     detectGameEnd
   };
 })();

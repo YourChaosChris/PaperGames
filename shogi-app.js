@@ -76,7 +76,11 @@ const AppStateShogi = {
   pendingPromotion: null, // { from, to, captured } while the promote/don't-promote prompt is open
   lastMove: null,         // { from: [r,c]|null, to: [r,c] } for highlighting
   moveCount: 0,
-  undoStack: []
+  undoStack: [],
+  // One entry per position reached, for the sennichite (repetition)
+  // rule: { ply, key, mover, gaveCheck }. Seeded with the starting
+  // position; undo trims it back by ply number.
+  plyLog: []
 };
 
 const SHOGI_SAVE_KEY = "einkchess_save_shogi";
@@ -89,7 +93,8 @@ function saveShogiGame() {
     turn: AppStateShogi.turn,
     humanColor: AppStateShogi.humanColor,
     aiLevel: AppStateShogi.aiLevel,
-    moveCount: AppStateShogi.moveCount
+    moveCount: AppStateShogi.moveCount,
+    plyLog: AppStateShogi.plyLog
   });
 }
 
@@ -138,6 +143,42 @@ function announceGameResultShogi(resultCode, message) {
 
 function resetUndoStackShogi() {
   AppStateShogi.undoStack = [];
+}
+
+function seedPlyLogShogi() {
+  AppStateShogi.plyLog = [{
+    ply: AppStateShogi.moveCount,
+    key: ShogiCore.positionKey(AppStateShogi.state, AppStateShogi.turn),
+    mover: null,
+    gaveCheck: false
+  }];
+}
+
+// Sennichite: the same position (board, both hands, side to move)
+// occurring for the 4th time ends the game as a draw - unless one side
+// gave check with every one of its moves since the first occurrence, in
+// which case that perpetually-checking side loses instead.
+// Returns null (play on), { draw: true } or { loser: color }.
+function recordPlyAndCheckSennichite(mover, gaveCheck) {
+  const log = AppStateShogi.plyLog;
+  const key = ShogiCore.positionKey(AppStateShogi.state, AppStateShogi.turn);
+  log.push({ ply: AppStateShogi.moveCount, key, mover, gaveCheck });
+
+  let firstIdx = -1;
+  let occurrences = 0;
+  for (let i = 0; i < log.length; i++) {
+    if (log[i].key !== key) continue;
+    if (firstIdx < 0) firstIdx = i;
+    occurrences++;
+  }
+  if (occurrences < 4) return null;
+
+  const span = log.slice(firstIdx + 1);
+  for (const color of ["b", "w"]) {
+    const own = span.filter((e) => e.mover === color);
+    if (own.length && own.every((e) => e.gaveCheck)) return { loser: color };
+  }
+  return { draw: true };
 }
 
 function pushUndoSnapshotShogi() {
@@ -207,6 +248,7 @@ function initShogiApp() {
     AppStateShogi.lastMove = null;
     AppStateShogi.moveCount = 0;
     resetUndoStackShogi();
+    seedPlyLogShogi();
     setGameResultShogi("");
     showBoardSectionShogi();
     buildShogiBoardDOM();
@@ -290,6 +332,8 @@ function initShogiApp() {
     AppStateShogi.pendingPromotion = null;
     AppStateShogi.lastMove = null;
     resetUndoStackShogi();
+    if (Array.isArray(savedGame.plyLog) && savedGame.plyLog.length) AppStateShogi.plyLog = savedGame.plyLog;
+    else seedPlyLogShogi();
     setActiveModeButtonShogi(AppStateShogi.mode);
     setGameResultShogi("");
     showBoardSectionShogi();
@@ -440,6 +484,8 @@ function finishShogiTurn(mover) {
   clearSelectionShogi();
   const nextTurn = ShogiCore.otherColor(mover);
   AppStateShogi.turn = nextTurn;
+  const inCheck = ShogiCore.isInCheck(AppStateShogi.state.board, nextTurn);
+  const sennichite = recordPlyAndCheckSennichite(mover, inCheck);
   updateShogiBoard();
   updateShogiHands();
   updateGameLabelsShogi();
@@ -454,7 +500,21 @@ function finishShogiTurn(mover) {
     return;
   }
 
-  const inCheck = ShogiCore.isInCheck(AppStateShogi.state.board, nextTurn);
+  if (sennichite) {
+    AppStateShogi.gameOver = true;
+    if (sennichite.draw) {
+      announceGameResultShogi("Draw", "Draw by repetition (sennichite): the same position occurred four times.");
+      recordShogiStatsIfVsAi("draw");
+    } else {
+      const winner = ShogiCore.otherColor(sennichite.loser);
+      announceGameResultShogi(resultTitleShogi(winner),
+        colorNameShogi(winner) + " wins: " + colorNameShogi(sennichite.loser) + " repeated the position four times by perpetual check (sennichite).");
+      recordShogiStatsIfVsAi(winner === AppStateShogi.humanColor ? "win" : "loss");
+    }
+    updateGameLabelsShogi();
+    return;
+  }
+
   maybeTriggerAiTurnShogi();
   if (!(AppStateShogi.mode === "offline-ai" && nextTurn !== AppStateShogi.humanColor)) {
     setStatusShogi("board-info", colorNameShogi(nextTurn) + " to move." + (inCheck ? " Check!" : ""));
@@ -503,6 +563,8 @@ function undoLastMove() {
   AppStateShogi.moveCount = prev.moveCount;
   AppStateShogi.lastMove = prev.lastMove;
   AppStateShogi.pendingPromotion = null;
+  AppStateShogi.plyLog = (AppStateShogi.plyLog || []).filter((e) => e.ply <= AppStateShogi.moveCount);
+  if (!AppStateShogi.plyLog.length) seedPlyLogShogi();
   clearSelectionShogi();
   setGameResultShogi("");
   const promptEl = document.getElementById("shogi-promotion-prompt");
