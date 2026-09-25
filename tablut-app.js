@@ -162,7 +162,7 @@ function initTablutApp() {
 
     if (mode === "offline-ai" && humanSide !== "attacker") {
       setStatusTablut("board-info", "Computer thinking…");
-      setTimeout(aiTurnTablut, 300);
+      setTimeout(aiTurnTablut, AiPacing.delay(300));
     } else {
       setStatusTablut("board-info", sideNameTablut(AppStateTablut.turn) + " to move.");
     }
@@ -240,7 +240,7 @@ function initTablutApp() {
     updateGameLabelsTablut();
     if (AppStateTablut.mode === "offline-ai" && AppStateTablut.turn !== AppStateTablut.humanSide) {
       setStatusTablut("board-info", "Computer thinking…");
-      setTimeout(aiTurnTablut, 300);
+      setTimeout(aiTurnTablut, AiPacing.delay(300));
     } else {
       setStatusTablut("board-info", sideNameTablut(AppStateTablut.turn) + " to move.");
     }
@@ -330,7 +330,7 @@ function applyTablutMove(move) {
 
   if (AppStateTablut.mode === "offline-ai" && AppStateTablut.turn !== AppStateTablut.humanSide) {
     setStatusTablut("board-info", "Computer thinking…");
-    setTimeout(aiTurnTablut, 350);
+    setTimeout(aiTurnTablut, AiPacing.delay(350));
   }
 }
 

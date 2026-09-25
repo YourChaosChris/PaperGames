@@ -154,7 +154,7 @@ function initOthelloApp() {
 
     if (mode === "offline-ai" && humanColor !== "b") {
       setStatusOthello("board-info", "Computer thinking…");
-      setTimeout(aiTurnOthello, 300);
+      setTimeout(aiTurnOthello, AiPacing.delay(300));
     } else {
       setStatusOthello("board-info", colorNameOthello(AppStateOthello.turn) + " to move.");
     }
@@ -229,7 +229,7 @@ function initOthelloApp() {
     updateGameLabelsOthello();
     if (AppStateOthello.mode === "offline-ai" && AppStateOthello.turn !== AppStateOthello.humanColor) {
       setStatusOthello("board-info", "Computer thinking…");
-      setTimeout(aiTurnOthello, 300);
+      setTimeout(aiTurnOthello, AiPacing.delay(300));
     } else {
       setStatusOthello("board-info", colorNameOthello(AppStateOthello.turn) + " to move.");
     }
@@ -324,7 +324,7 @@ function applyOthelloMove(move) {
 function maybeTriggerAiTurnOthello() {
   if (AppStateOthello.gameOver) return;
   if (AppStateOthello.mode === "offline-ai" && AppStateOthello.turn !== AppStateOthello.humanColor) {
-    setTimeout(aiTurnOthello, 400);
+    setTimeout(aiTurnOthello, AiPacing.delay(400));
   }
 }
 
@@ -338,7 +338,7 @@ function aiTurnOthello() {
     const move = OthelloAi.chooseMove(AppStateOthello.board, aiColor, AppStateOthello.aiLevel);
     if (!move) return;
     applyOthelloMove(move);
-  }, 200);
+  }, AiPacing.delay(200));
 }
 
 function undoLastMove() {

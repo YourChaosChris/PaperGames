@@ -166,7 +166,7 @@ function initCheckersApp() {
 
     if (mode === "offline-ai" && humanColor !== "b") {
       setStatusCheckers("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineCheckers, 10);
+      setTimeout(aiMoveOfflineCheckers, AiPacing.delay(10));
     } else {
       setStatusCheckers("board-info", colorNameCheckers(AppStateCheckers.turn) + " to move.");
     }
@@ -245,7 +245,7 @@ function initCheckersApp() {
     updateGameLabelsCheckers();
     if (AppStateCheckers.mode === "offline-ai" && AppStateCheckers.turn !== AppStateCheckers.humanColor) {
       setStatusCheckers("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineCheckers, 10);
+      setTimeout(aiMoveOfflineCheckers, AiPacing.delay(10));
     } else {
       setStatusCheckers("board-info", colorNameCheckers(AppStateCheckers.turn) + " to move.");
     }
@@ -313,7 +313,7 @@ function onCheckersSquareClick(e) {
 
   if (AppStateCheckers.mode === "offline-ai" && !AppStateCheckers.gameOver && AppStateCheckers.turn !== AppStateCheckers.humanColor) {
     setStatusCheckers("board-info", "Computer thinking…");
-    setTimeout(aiMoveOfflineCheckers, 10);
+    setTimeout(aiMoveOfflineCheckers, AiPacing.delay(10));
   }
 }
 

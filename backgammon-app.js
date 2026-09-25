@@ -214,7 +214,7 @@ function initBackgammonApp() {
 
     if (mode === "offline-ai" && humanColor !== "b") {
       setStatusBg("board-info", "Computer thinking…");
-      setTimeout(aiTurnBg, 300);
+      setTimeout(aiTurnBg, AiPacing.delay(300));
     } else {
       setStatusBg("board-info", colorNameBg(AppStateBackgammon.turn) + " to move. Roll the dice.");
     }
@@ -319,7 +319,7 @@ function initBackgammonApp() {
     updateGameLabelsBg();
     if (AppStateBackgammon.mode === "offline-ai" && AppStateBackgammon.turn !== AppStateBackgammon.humanColor) {
       setStatusBg("board-info", "Computer thinking…");
-      setTimeout(aiTurnBg, 300);
+      setTimeout(aiTurnBg, AiPacing.delay(300));
     } else if (AppStateBackgammon.dice.length) {
       setStatusBg("board-info", colorNameBg(AppStateBackgammon.turn) + " to move. " + AppStateBackgammon.dice.length + " di" + (AppStateBackgammon.dice.length === 1 ? "e" : "ce") + " left to play.");
     } else {
@@ -367,7 +367,7 @@ function offerDoubleBg() {
   if (AppStateBackgammon.mode === "offline-ai" && opponent !== AppStateBackgammon.humanColor) {
     const willAccept = BackgammonAi.shouldAcceptDouble(AppStateBackgammon.state, opponent);
     setStatusBg("board-info", colorNameBg(offerer) + " doubles to " + newValue + ". Computer is thinking…");
-    setTimeout(() => { if (willAccept) accept(); else decline(); }, 400);
+    setTimeout(() => { if (willAccept) accept(); else decline(); }, AiPacing.delay(400));
   } else {
     const accepted = window.confirm(colorNameBg(opponent) + ": accept the double to " + newValue + "?");
     if (accepted) accept(); else decline();
@@ -387,7 +387,7 @@ function rollDiceBg() {
 
   if (!BackgammonCore.hasAnyLegalMove(AppStateBackgammon.state, AppStateBackgammon.turn, dice)) {
     setStatusBg("board-info", colorNameBg(AppStateBackgammon.turn) + " rolled " + dice.join("-") + ". No legal move - turn passes.");
-    setTimeout(endTurnBg, 900);
+    setTimeout(endTurnBg, AiPacing.delay(900));
     return;
   }
   setStatusBg("board-info", colorNameBg(AppStateBackgammon.turn) + " rolled " + dice.join("-") + ". Choose a piece to move.");
@@ -408,7 +408,7 @@ function endTurnBg() {
 function maybeTriggerAiTurnBg() {
   if (AppStateBackgammon.gameOver) return;
   if (AppStateBackgammon.mode === "offline-ai" && AppStateBackgammon.turn !== AppStateBackgammon.humanColor) {
-    setTimeout(aiTurnBg, 400);
+    setTimeout(aiTurnBg, AiPacing.delay(400));
   }
 }
 
@@ -501,14 +501,14 @@ function applyBackgammonMove(move, die) {
 
   if (diceExhausted || stuck) {
     if (stuck) setStatusBg("board-info", colorNameBg(mover) + " played. No further legal move this turn.");
-    setTimeout(endTurnBg, stuck ? 500 : 0);
+    setTimeout(endTurnBg, stuck ? AiPacing.delay(500) : 0);
     return;
   }
 
   setStatusBg("board-info", colorNameBg(mover) + " played. " + AppStateBackgammon.dice.length + " di" + (AppStateBackgammon.dice.length === 1 ? "e" : "ce") + " left to play.");
 
   if (AppStateBackgammon.mode === "offline-ai" && mover === BackgammonCore.otherColor(AppStateBackgammon.humanColor)) {
-    setTimeout(aiTurnBg, 350);
+    setTimeout(aiTurnBg, AiPacing.delay(350));
   }
 }
 
@@ -523,7 +523,7 @@ function aiTurnBg() {
     setStatusBg("board-info", "Computer rolled " + dice.join("-") + ".");
     updateGameLabelsBg();
     if (!BackgammonCore.hasAnyLegalMove(AppStateBackgammon.state, aiColor, dice)) {
-      setTimeout(endTurnBg, 700);
+      setTimeout(endTurnBg, AiPacing.delay(700));
       return;
     }
   }
@@ -542,7 +542,7 @@ function aiTurnBg() {
       }
     }
     endTurnBg(); // shouldn't normally happen given the hasAnyLegalMove guard above, but a safe fallback
-  }, 350);
+  }, AiPacing.delay(350));
 }
 
 function undoLastMove() {

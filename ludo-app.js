@@ -62,7 +62,11 @@ const AppStateLudo = {
   gameOver: false,
   moveCount: 0,
   undoStack: [],
-  started: false
+  started: false,
+  // The latest move, so the board can mark where the token came from and
+  // where it landed (a token otherwise just reappears several squares on,
+  // which read as "squares being skipped"). Display only, never saved.
+  lastMove: null
 };
 
 const LUDO_SAVE_KEY = "einkchess_save_ludo";
@@ -232,6 +236,7 @@ function initLudoApp() {
     AppStateLudo.gameOver = false;
     AppStateLudo.moveCount = 0;
     AppStateLudo.started = true;
+    AppStateLudo.lastMove = null;
     resetUndoStackLudo();
     setGameResultLudo("");
     showBoardSectionLudo();
@@ -242,7 +247,7 @@ function initLudoApp() {
     const first = currentColorLudo();
     if (isAiColorLudo(first)) {
       setStatusLudo("board-info", "Computer thinking…");
-      setTimeout(aiRollLudo, 300);
+      setTimeout(aiRollLudo, AiPacing.delay(300));
     } else {
       setStatusLudo("board-info", ludoColorName(first) + "'s turn. Roll the die.");
     }
@@ -302,6 +307,7 @@ function initLudoApp() {
     AppStateLudo.moveCount = savedGame.moveCount;
     AppStateLudo.gameOver = false;
     AppStateLudo.started = true;
+    AppStateLudo.lastMove = null;
     resetUndoStackLudo();
     pendingMode = AppStateLudo.mode;
     setActiveModeButtonLudo(AppStateLudo.mode);
@@ -315,7 +321,7 @@ function initLudoApp() {
     const cur = currentColorLudo();
     if (isAiColorLudo(cur)) {
       setStatusLudo("board-info", "Computer thinking…");
-      setTimeout(aiRollLudo, 300);
+      setTimeout(aiRollLudo, AiPacing.delay(300));
     } else if (AppStateLudo.roll !== null) {
       setStatusLudo("board-info", ludoColorName(cur) + " rolled " + AppStateLudo.roll + ". Choose a token to move.");
     } else {
@@ -361,7 +367,7 @@ function performRollLudo() {
     updateLudoBoard();
     updateGameLabelsLudo();
     setStatusLudo("board-info", ludoColorName(color) + " rolled a third 6 in a row - turn forfeited!");
-    setTimeout(() => advanceTurnLudo(), 800);
+    setTimeout(() => advanceTurnLudo(), AiPacing.delay(800));
     return;
   }
 
@@ -371,7 +377,7 @@ function performRollLudo() {
 
   if (!AppStateLudo.legalMoves.length) {
     setStatusLudo("board-info", ludoColorName(color) + " rolled " + value + ". No legal move.");
-    setTimeout(() => afterMoveOrPassLudo(value === 6), 700);
+    setTimeout(() => afterMoveOrPassLudo(value === 6), AiPacing.delay(700));
     return;
   }
 
@@ -381,7 +387,7 @@ function performRollLudo() {
       const tokenIndex = LudoAi.chooseMove(AppStateLudo.state, color, value, AppStateLudo.aiLevel);
       if (tokenIndex === null || tokenIndex === undefined) return;
       applyLudoMove(tokenIndex);
-    }, 350);
+    }, AiPacing.delay(350));
   } else {
     setStatusLudo("board-info", ludoColorName(color) + " rolled " + value + ". Choose a token to move.");
   }
@@ -409,9 +415,22 @@ function applyLudoMove(tokenIndex) {
   pushUndoSnapshotLudo();
   const mover = currentColorLudo();
   const roll = AppStateLudo.roll;
+  const before = AppStateLudo.state.tokens[mover][tokenIndex];
+  const fromState = before.state;
+  const fromRel = before.rel;
   const result = LudoCore.applyMove(AppStateLudo.state, mover, tokenIndex, roll);
   AppStateLudo.state = result.state;
   AppStateLudo.moveCount++;
+  const after = AppStateLudo.state.tokens[mover][tokenIndex];
+  AppStateLudo.lastMove = {
+    color: mover,
+    tokenIndex: tokenIndex,
+    roll: roll,
+    fromState: fromState,
+    fromRel: fromRel,
+    toState: after.state,
+    toRel: after.rel
+  };
   AppStateLudo.roll = null;
   AppStateLudo.legalMoves = [];
   updateDiceDisplayLudo(null);
@@ -430,14 +449,20 @@ function applyLudoMove(tokenIndex) {
     return;
   }
 
-  let message = ludoColorName(mover) + " played.";
+  // Name the token and how far it went, so a move can be followed
+  // without having to spot which token changed.
+  const tokenNo = tokenIndex + 1;
+  const what = fromState === "home"
+    ? ludoColorName(mover) + " brought token " + tokenNo + " into play"
+    : ludoColorName(mover) + " moved token " + tokenNo + " forward " + roll;
+  let message = what + ".";
   if (result.captured.length) {
-    message = ludoColorName(mover) + " captured " + result.captured.map((c) => ludoColorName(c.color)).join(", ") + "!";
+    message = what + " and captured " + result.captured.map((c) => ludoColorName(c.color)).join(", ") + "!";
   } else if (result.finished) {
-    message = ludoColorName(mover) + " got a token home!";
+    message = what + " and got it home!";
   }
   setStatusLudo("board-info", message);
-  setTimeout(() => afterMoveOrPassLudo(roll === 6), 500);
+  setTimeout(() => afterMoveOrPassLudo(roll === 6), AiPacing.delay(500));
 }
 
 // `grantExtraTurn` is true when the roll that led here was a 6 (and
@@ -452,7 +477,7 @@ function afterMoveOrPassLudo(grantExtraTurn) {
     const color = currentColorLudo();
     updateGameLabelsLudo();
     if (isAiColorLudo(color)) {
-      setTimeout(aiRollLudo, 350);
+      setTimeout(aiRollLudo, AiPacing.delay(350));
     } else {
       setStatusLudo("board-info", ludoColorName(color) + " rolled a 6 - roll again!");
       updateThrowButtonVisibilityLudo();
@@ -472,7 +497,7 @@ function advanceTurnLudo() {
   updateGameLabelsLudo();
   const color = currentColorLudo();
   if (isAiColorLudo(color)) {
-    setTimeout(aiRollLudo, 400);
+    setTimeout(aiRollLudo, AiPacing.delay(400));
   } else {
     setStatusLudo("board-info", ludoColorName(color) + "'s turn. Roll the die.");
   }
@@ -492,6 +517,7 @@ function undoLastMoveLudo() {
   AppStateLudo.moveCount = prev.moveCount;
   AppStateLudo.roll = null;
   AppStateLudo.legalMoves = [];
+  AppStateLudo.lastMove = null;
   setGameResultLudo("");
   updateDiceDisplayLudo(null);
   updateLudoBoard();
@@ -699,6 +725,34 @@ function findOwnTokenIndexAt(color, wantState, relPredicate) {
   return -1;
 }
 
+// The board element showing a token of `color` at the given position:
+// its start slot while at home, a track cell, or a home-column cell.
+// Finished tokens have no cell of their own, so this returns null.
+function ludoPositionElement(boardEl, color, state, rel, tokenIndex) {
+  if (state === "home") {
+    return boardEl.querySelector(".ludo-home-slot-" + color + "[data-slot='" + tokenIndex + "']");
+  }
+  if (state !== "active") return null;
+  if (rel <= LudoCore.LAST_TRACK_REL) {
+    const abs = LudoCore.absTrackIndex(color, rel);
+    return boardEl.querySelector(".ludo-cell-track[data-track-index='" + abs + "']");
+  }
+  const step = rel - LudoCore.MAIN_TRACK_STEPS;
+  return boardEl.querySelector(".ludo-cell-home-column-" + color + "[data-home-step='" + step + "']");
+}
+
+function markLastMoveLudo(boardEl) {
+  boardEl.querySelectorAll(".ludo-cell-last-from, .ludo-cell-last-to, .ludo-home-slot-last").forEach((el) => {
+    el.classList.remove("ludo-cell-last-from", "ludo-cell-last-to", "ludo-home-slot-last");
+  });
+  const lm = AppStateLudo.lastMove;
+  if (!lm) return;
+  const fromEl = ludoPositionElement(boardEl, lm.color, lm.fromState, lm.fromRel, lm.tokenIndex);
+  if (fromEl) fromEl.classList.add(lm.fromState === "home" ? "ludo-home-slot-last" : "ludo-cell-last-from");
+  const toEl = ludoPositionElement(boardEl, lm.color, lm.toState, lm.toRel, lm.tokenIndex);
+  if (toEl) toEl.classList.add("ludo-cell-last-to");
+}
+
 function updateLudoBoard() {
   const boardEl = document.getElementById("ludo-board");
   if (!boardEl) return;
@@ -762,6 +816,7 @@ function updateLudoBoard() {
     });
   }
 
+  markLastMoveLudo(boardEl);
   updateLudoAriaLabels();
   updateTurnIndicatorLudo();
 }

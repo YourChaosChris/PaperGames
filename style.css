@@ -5483,12 +5483,26 @@ margin: 0.5rem auto 0;
   pointer-events: none;
 }
 
-.dab-box-p1 {
-  background: #111;
+.dab-box-p1,
+.dab-box-p2 {
+  background: none;
 }
 
-.dab-box-p2 {
-  background: repeating-linear-gradient(45deg, var(--square-light), var(--square-light) 4px, var(--border) 4px, var(--border) 5px);
+.dab-box-mark {
+  position: absolute;
+  top: 18%;
+  left: 18%;
+  width: 64%;
+  height: 64%;
+  display: block;
+}
+
+.dab-box-mark line,
+.dab-box-mark circle {
+  stroke: var(--text);
+  stroke-width: 9;
+  stroke-linecap: round;
+  fill: none;
 }
 
 .dab-line {
@@ -5536,6 +5550,18 @@ margin: 0.5rem auto 0;
   opacity: 0.7;
 }
 
+/* Drawn lines are disabled buttons and so render at half opacity (grey);
+   the latest one stays at full strength so it stands out in solid black. */
+.dab-line.dab-line-last {
+  opacity: 1;
+}
+
+.dab-line-last .dab-line-bar {
+  background: var(--text);
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
 .dab-dot {
   position: absolute;
   width: 3.5%;
@@ -5548,7 +5574,7 @@ margin: 0.5rem auto 0;
 }
 
 /* Small icons for the player-choice picker and board placeholder,
-   matching the board's own box-fill styling. */
+   showing the same cross / circle marks as the board. */
 .dab-icon-swatch {
   display: inline-flex;
   width: 1.1em;
@@ -5556,14 +5582,14 @@ margin: 0.5rem auto 0;
   box-sizing: border-box;
   vertical-align: middle;
   border: 2px solid var(--border);
+  position: relative;
 }
 
-.dab-icon-swatch-p1 {
-  background: #111;
-}
-
-.dab-icon-swatch-p2 {
-  background: repeating-linear-gradient(45deg, var(--square-light), var(--square-light) 3px, var(--border) 3px, var(--border) 4px);
+.dab-icon-swatch .dab-box-mark {
+  top: 8%;
+  left: 8%;
+  width: 84%;
+  height: 84%;
 }
 
 /* Amazons board: percentage-based absolute positioning (the same
@@ -7119,7 +7145,28 @@ max-width: 900px;
    `min-width`/`min-height` floor - tiny and the same size regardless of
    the board's actual size - instead of scaling with the cell like every
    other board element. */
+.ludo-cell-last-from::after {
+  content: "";
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  border: 2px dashed var(--text);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ludo-cell-last-to,
+.ludo-home-slot-last {
+  outline: 2px solid var(--text);
+  outline-offset: -2px;
+}
+
 .ludo-cell-tokens {
+  z-index: 1;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -7511,6 +7558,10 @@ max-width: 900px;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   color: var(--muted);
+}
+
+.settings-section .settings-subheading {
+  margin-top: 1rem;
 }
 
 .settings-section .lang-switch select {

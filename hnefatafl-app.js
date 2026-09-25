@@ -160,7 +160,7 @@ function initHnefataflApp() {
 
     if (mode === "offline-ai" && humanSide !== "attacker") {
       setStatusHnefatafl("board-info", "Computer thinking…");
-      setTimeout(aiTurnHnefatafl, 300);
+      setTimeout(aiTurnHnefatafl, AiPacing.delay(300));
     } else {
       setStatusHnefatafl("board-info", sideNameHnefatafl(AppStateHnefatafl.turn) + " to move.");
     }
@@ -238,7 +238,7 @@ function initHnefataflApp() {
     updateGameLabelsHnefatafl();
     if (AppStateHnefatafl.mode === "offline-ai" && AppStateHnefatafl.turn !== AppStateHnefatafl.humanSide) {
       setStatusHnefatafl("board-info", "Computer thinking…");
-      setTimeout(aiTurnHnefatafl, 300);
+      setTimeout(aiTurnHnefatafl, AiPacing.delay(300));
     } else {
       setStatusHnefatafl("board-info", sideNameHnefatafl(AppStateHnefatafl.turn) + " to move.");
     }
@@ -328,7 +328,7 @@ function applyHnefataflMove(move) {
 
   if (AppStateHnefatafl.mode === "offline-ai" && AppStateHnefatafl.turn !== AppStateHnefatafl.humanSide) {
     setStatusHnefatafl("board-info", "Computer thinking…");
-    setTimeout(aiTurnHnefatafl, 350);
+    setTimeout(aiTurnHnefatafl, AiPacing.delay(350));
   }
 }
 

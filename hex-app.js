@@ -158,7 +158,7 @@ function initHexApp() {
 
     if (mode === "offline-ai" && humanColor !== "r") {
       setStatusHex("board-info", "Computer thinking…");
-      setTimeout(aiTurnHex, 300);
+      setTimeout(aiTurnHex, AiPacing.delay(300));
     } else {
       setStatusHex("board-info", colorNameHex(AppStateHex.turn) + " to move.");
     }
@@ -234,7 +234,7 @@ function initHexApp() {
     updateGameLabelsHex();
     if (AppStateHex.mode === "offline-ai" && AppStateHex.turn !== AppStateHex.humanColor) {
       setStatusHex("board-info", "Computer thinking…");
-      setTimeout(aiTurnHex, 300);
+      setTimeout(aiTurnHex, AiPacing.delay(300));
     } else {
       setStatusHex("board-info", colorNameHex(AppStateHex.turn) + " to move.");
     }
@@ -282,7 +282,7 @@ function applyHexMove(move) {
 
   if (AppStateHex.mode === "offline-ai" && AppStateHex.turn !== AppStateHex.humanColor) {
     setStatusHex("board-info", "Computer thinking…");
-    setTimeout(aiTurnHex, 350);
+    setTimeout(aiTurnHex, AiPacing.delay(350));
   }
 }
 

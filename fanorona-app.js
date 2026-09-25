@@ -186,7 +186,7 @@ function initFanoronaApp() {
 
     if (mode === "offline-ai" && humanColor !== "w") {
       setStatusFanorona("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineFanorona, 10);
+      setTimeout(aiMoveOfflineFanorona, AiPacing.delay(10));
     } else {
       setStatusFanorona("board-info", colorNameFanorona(AppStateFanorona.turn) + " to move.");
     }
@@ -292,7 +292,7 @@ function initFanoronaApp() {
       setStatusFanorona("board-info", colorNameFanorona(AppStateFanorona.turn) + " must choose approach or withdrawal above.");
     } else if (AppStateFanorona.mode === "offline-ai" && AppStateFanorona.turn !== AppStateFanorona.humanColor) {
       setStatusFanorona("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineFanorona, 10);
+      setTimeout(aiMoveOfflineFanorona, AiPacing.delay(10));
     } else {
       setStatusFanorona("board-info", colorNameFanorona(AppStateFanorona.turn) + " to move.");
     }
@@ -471,7 +471,7 @@ function finalizeFanoronaTurn(steps) {
 
   if (AppStateFanorona.mode === "offline-ai" && !AppStateFanorona.gameOver && AppStateFanorona.turn !== AppStateFanorona.humanColor) {
     setStatusFanorona("board-info", "Computer thinking…");
-    setTimeout(aiMoveOfflineFanorona, 250);
+    setTimeout(aiMoveOfflineFanorona, AiPacing.delay(250));
   }
 }
 

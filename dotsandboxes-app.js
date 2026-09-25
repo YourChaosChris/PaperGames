@@ -8,10 +8,11 @@
 // plain button - no tap-catcher/preview step needed.
 //
 // Players are told apart structurally, not by color alone: a completed
-// box belonging to Player 1 gets a solid fill, Player 2's gets a
-// hatched fill - the same "structural, not color" convention used for
-// pieces in every other 2-player game here, just applied to filled
-// areas instead of discs.
+// box belonging to Player 1 gets a drawn cross, Player 2's a drawn
+// circle - the same "structural, not color" convention used for pieces
+// in every other 2-player game here. Drawn marks rather than solid or
+// hatched fills, because on e-ink a black fill swallowed the lines
+// around the box.
 
 const AppStateDotsAndBoxes = {
   mode: "offline",        // "offline" | "offline-ai"
@@ -20,7 +21,8 @@ const AppStateDotsAndBoxes = {
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
   gameOver: false,
   moveCount: 0,
-  undoStack: []
+  undoStack: [],
+  lastMove: null          // { type, r, c } of the latest line; not saved
 };
 
 const DOTSANDBOXES_SAVE_KEY = "einkchess_save_dotsandboxes";
@@ -145,6 +147,7 @@ function initDotsAndBoxesApp() {
     AppStateDotsAndBoxes.aiLevel = level;
     AppStateDotsAndBoxes.gameOver = false;
     AppStateDotsAndBoxes.moveCount = 0;
+    AppStateDotsAndBoxes.lastMove = null;
     resetUndoStackDotsAndBoxes();
     setGameResultDotsAndBoxes("");
     showBoardSectionDotsAndBoxes();
@@ -154,7 +157,7 @@ function initDotsAndBoxesApp() {
 
     if (mode === "offline-ai" && humanPlayer !== "1") {
       setStatusDotsAndBoxes("board-info", "Computer thinking…");
-      setTimeout(aiTurnDotsAndBoxes, 300);
+      setTimeout(aiTurnDotsAndBoxes, AiPacing.delay(300));
     } else {
       setStatusDotsAndBoxes("board-info", playerNameDotsAndBoxes(AppStateDotsAndBoxes.state.turn) + " to move.");
     }
@@ -219,6 +222,7 @@ function initDotsAndBoxesApp() {
     AppStateDotsAndBoxes.aiLevel = savedGame.aiLevel;
     AppStateDotsAndBoxes.moveCount = savedGame.moveCount;
     AppStateDotsAndBoxes.gameOver = false;
+    AppStateDotsAndBoxes.lastMove = null;
     resetUndoStackDotsAndBoxes();
     setActiveModeButton(AppStateDotsAndBoxes.mode);
     setGameResultDotsAndBoxes("");
@@ -228,7 +232,7 @@ function initDotsAndBoxesApp() {
     updateGameLabelsDotsAndBoxes();
     if (AppStateDotsAndBoxes.mode === "offline-ai" && AppStateDotsAndBoxes.state.turn !== AppStateDotsAndBoxes.humanPlayer) {
       setStatusDotsAndBoxes("board-info", "Computer thinking…");
-      setTimeout(aiTurnDotsAndBoxes, 300);
+      setTimeout(aiTurnDotsAndBoxes, AiPacing.delay(300));
     } else {
       setStatusDotsAndBoxes("board-info", playerNameDotsAndBoxes(AppStateDotsAndBoxes.state.turn) + " to move.");
     }
@@ -259,6 +263,7 @@ function applyDotsAndBoxesMove(move) {
   const result = DotsAndBoxesCore.applyMove(AppStateDotsAndBoxes.state, move);
   AppStateDotsAndBoxes.state = result.state;
   AppStateDotsAndBoxes.moveCount++;
+  AppStateDotsAndBoxes.lastMove = { type: move.type, r: move.r, c: move.c };
   const scored = result.boxesCompleted.length > 0;
   updateDotsAndBoxesBoard();
   updateGameLabelsDotsAndBoxes();
@@ -291,7 +296,7 @@ function maybeTriggerAiTurnDotsAndBoxes() {
   if (AppStateDotsAndBoxes.gameOver) return;
   if (AppStateDotsAndBoxes.mode === "offline-ai" && AppStateDotsAndBoxes.state.turn !== AppStateDotsAndBoxes.humanPlayer) {
     setStatusDotsAndBoxes("board-info", "Computer thinking…");
-    setTimeout(aiTurnDotsAndBoxes, 350);
+    setTimeout(aiTurnDotsAndBoxes, AiPacing.delay(350));
   }
 }
 
@@ -316,6 +321,7 @@ function undoLastMove() {
   AppStateDotsAndBoxes.state = prev.state;
   AppStateDotsAndBoxes.gameOver = prev.gameOver;
   AppStateDotsAndBoxes.moveCount = prev.moveCount;
+  AppStateDotsAndBoxes.lastMove = null;
   setGameResultDotsAndBoxes("");
   updateDotsAndBoxesBoard();
   updateGameLabelsDotsAndBoxes();
@@ -346,6 +352,12 @@ const DAB_BOXES = DotsAndBoxesCore.BOXES;         // 4
 const DAB_DOTS = DotsAndBoxesCore.DOTS;           // 5
 const DAB_STEP = 100 / DAB_BOXES;                 // 25 (% per box)
 const DAB_LINE_HIT = 12;                          // % thickness of a line's clickable hit area
+// Marks for completed boxes: inline SVG rather than text glyphs, so they
+// don't depend on the reader's font.
+const DAB_MARK_X = '<svg class="dab-box-mark" viewBox="0 0 100 100" aria-hidden="true">' +
+  '<line x1="28" y1="28" x2="72" y2="72"/><line x1="72" y1="28" x2="28" y2="72"/></svg>';
+const DAB_MARK_O = '<svg class="dab-box-mark" viewBox="0 0 100 100" aria-hidden="true">' +
+  '<circle cx="50" cy="50" r="23"/></svg>';
 
 // Clamps a hit-area bar of `thickness` centered on `centerPct` to stay
 // within [0, 100], so edge lines (which would otherwise stick out past
@@ -475,10 +487,16 @@ function updateDotsAndBoxesBoard() {
     const r = parseInt(box.dataset.row, 10);
     const c = parseInt(box.dataset.col, 10);
     const owner = state.boxes[r][c];
+    const mark = owner === "1" ? "x" : owner === "2" ? "o" : "";
+    if (box.dataset.mark === mark) return; // unchanged - avoid needless e-ink redraws
+    box.dataset.mark = mark;
     box.classList.remove("dab-box-p1", "dab-box-p2");
-    if (owner === "1") box.classList.add("dab-box-p1");
-    else if (owner === "2") box.classList.add("dab-box-p2");
+    if (owner === "1") { box.classList.add("dab-box-p1"); box.innerHTML = DAB_MARK_X; }
+    else if (owner === "2") { box.classList.add("dab-box-p2"); box.innerHTML = DAB_MARK_O; }
+    else { box.innerHTML = ""; }
   });
+
+  const lm = AppStateDotsAndBoxes.lastMove;
 
   boardEl.querySelectorAll(".dab-line").forEach((btn) => {
     const type = btn.dataset.type;
@@ -487,6 +505,7 @@ function updateDotsAndBoxesBoard() {
     const move = { type, r, c };
     const owner = type === "h" ? state.hLines[r][c] : state.vLines[r][c];
     btn.classList.toggle("dab-line-drawn", !!owner);
+    btn.classList.toggle("dab-line-last", !!lm && lm.type === type && lm.r === r && lm.c === c);
     btn.disabled = !!owner || !canAct;
 
     const orientation = type === "h" ? "Horizontal" : "Vertical";

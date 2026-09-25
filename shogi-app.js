@@ -258,7 +258,7 @@ function initShogiApp() {
 
     if (mode === "offline-ai" && humanColor !== "b") {
       setStatusShogi("board-info", "Computer thinking…");
-      setTimeout(aiTurnShogi, 300);
+      setTimeout(aiTurnShogi, AiPacing.delay(300));
     } else {
       setStatusShogi("board-info", colorNameShogi(AppStateShogi.turn) + " to move.");
     }
@@ -343,7 +343,7 @@ function initShogiApp() {
     updateGameLabelsShogi();
     if (AppStateShogi.mode === "offline-ai" && AppStateShogi.turn !== AppStateShogi.humanColor) {
       setStatusShogi("board-info", "Computer thinking…");
-      setTimeout(aiTurnShogi, 300);
+      setTimeout(aiTurnShogi, AiPacing.delay(300));
     } else {
       setStatusShogi("board-info", colorNameShogi(AppStateShogi.turn) + " to move.");
     }
@@ -524,7 +524,7 @@ function finishShogiTurn(mover) {
 function maybeTriggerAiTurnShogi() {
   if (AppStateShogi.gameOver) return;
   if (AppStateShogi.mode === "offline-ai" && AppStateShogi.turn !== AppStateShogi.humanColor) {
-    setTimeout(aiTurnShogi, 400);
+    setTimeout(aiTurnShogi, AiPacing.delay(400));
   }
 }
 
@@ -546,7 +546,7 @@ function aiTurnShogi() {
       AppStateShogi.lastMove = { from: null, to: action.to };
     }
     finishShogiTurn(aiColor);
-  }, 350);
+  }, AiPacing.delay(350));
 }
 
 function undoLastMove() {

@@ -171,7 +171,7 @@ function initSternhalmaApp() {
 
     if (mode === "offline-ai" && humanSide !== "p1") {
       setStatusSternhalma("board-info", "Computer thinking…");
-      setTimeout(aiTurnSternhalma, 300);
+      setTimeout(aiTurnSternhalma, AiPacing.delay(300));
     } else {
       setStatusSternhalma("board-info", sideNameSternhalma(AppStateSternhalma.turn) + " to move.");
     }
@@ -249,7 +249,7 @@ function initSternhalmaApp() {
     updateGameLabelsSternhalma();
     if (AppStateSternhalma.mode === "offline-ai" && AppStateSternhalma.turn !== AppStateSternhalma.humanSide) {
       setStatusSternhalma("board-info", "Computer thinking…");
-      setTimeout(aiTurnSternhalma, 300);
+      setTimeout(aiTurnSternhalma, AiPacing.delay(300));
     } else {
       setStatusSternhalma("board-info", sideNameSternhalma(AppStateSternhalma.turn) + " to move.");
     }
@@ -331,7 +331,7 @@ function applySternhalmaMove(move) {
 
   if (AppStateSternhalma.mode === "offline-ai" && AppStateSternhalma.turn !== AppStateSternhalma.humanSide) {
     setStatusSternhalma("board-info", "Computer thinking…");
-    setTimeout(aiTurnSternhalma, 350);
+    setTimeout(aiTurnSternhalma, AiPacing.delay(350));
   }
 }
 

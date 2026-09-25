@@ -192,7 +192,7 @@ function initUrApp() {
 
     if (mode === "offline-ai" && humanColor !== "b") {
       setStatusUr("board-info", "Computer thinking…");
-      setTimeout(aiTurnUr, 300);
+      setTimeout(aiTurnUr, AiPacing.delay(300));
     } else {
       setStatusUr("board-info", colorNameUr(AppStateUr.turn) + " to move. Roll the dice.");
     }
@@ -279,7 +279,7 @@ function initUrApp() {
     updateGameLabelsUr();
     if (AppStateUr.mode === "offline-ai" && AppStateUr.turn !== AppStateUr.humanColor) {
       setStatusUr("board-info", "Computer thinking…");
-      setTimeout(aiTurnUr, 300);
+      setTimeout(aiTurnUr, AiPacing.delay(300));
     } else if (AppStateUr.roll !== null) {
       setStatusUr("board-info", colorNameUr(AppStateUr.turn) + " rolled " + AppStateUr.roll + ". Choose a piece to move.");
     } else {
@@ -305,7 +305,7 @@ function rollDiceUr() {
 
   if (!AppStateUr.legalMoves.length) {
     setStatusUr("board-info", colorNameUr(AppStateUr.turn) + " rolled " + roll + ". No legal move - turn passes.");
-    setTimeout(passTurnUr, 700);
+    setTimeout(passTurnUr, AiPacing.delay(700));
     return;
   }
 
@@ -328,7 +328,7 @@ function passTurnUr() {
 function maybeTriggerAiTurnUr() {
   if (AppStateUr.gameOver) return;
   if (AppStateUr.mode === "offline-ai" && AppStateUr.turn !== AppStateUr.humanColor) {
-    setTimeout(aiTurnUr, 400);
+    setTimeout(aiTurnUr, AiPacing.delay(400));
   }
 }
 
@@ -408,7 +408,7 @@ function aiTurnUr() {
 
   if (!legalMoves.length) {
     setStatusUr("board-info", "Computer rolled " + roll + ". No legal move - turn passes.");
-    setTimeout(passTurnUr, 700);
+    setTimeout(passTurnUr, AiPacing.delay(700));
     return;
   }
 
@@ -417,7 +417,7 @@ function aiTurnUr() {
     const move = UrAi.chooseMove(AppStateUr.state, aiColor, roll, AppStateUr.aiLevel);
     if (!move) return;
     applyUrMove(move);
-  }, 350);
+  }, AiPacing.delay(350));
 }
 
 function undoLastMove() {

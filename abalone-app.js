@@ -171,7 +171,7 @@ function initAbaloneApp() {
 
     if (mode === "offline-ai" && humanColor !== "b") {
       setStatusAbalone("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineAbalone, 250);
+      setTimeout(aiMoveOfflineAbalone, AiPacing.delay(250));
     } else {
       setStatusAbalone("board-info", colorNameAbalone(AppStateAbalone.turn) + " to move.");
     }
@@ -257,7 +257,7 @@ function initAbaloneApp() {
     updateGameLabelsAbalone();
     if (AppStateAbalone.mode === "offline-ai" && AppStateAbalone.turn !== AppStateAbalone.humanColor) {
       setStatusAbalone("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineAbalone, 250);
+      setTimeout(aiMoveOfflineAbalone, AiPacing.delay(250));
     } else {
       setStatusAbalone("board-info", colorNameAbalone(AppStateAbalone.turn) + " to move.");
     }
@@ -361,7 +361,7 @@ function playAbaloneMove(move) {
 
   if (AppStateAbalone.mode === "offline-ai" && !AppStateAbalone.gameOver && AppStateAbalone.turn !== AppStateAbalone.humanColor) {
     setStatusAbalone("board-info", "Computer thinking…");
-    setTimeout(aiMoveOfflineAbalone, 300);
+    setTimeout(aiMoveOfflineAbalone, AiPacing.delay(300));
   }
 }
 
