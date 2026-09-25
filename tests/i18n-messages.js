@@ -13,15 +13,7 @@
 // It also checks that every msg_t_* template has the same placeholders
 // in all 11 languages.
 
-const fs = require("fs");
-const path = require("path");
-const vm = require("vm");
-
-const ROOT = path.join(__dirname, "..");
-const ctx = {};
-vm.createContext(ctx);
-vm.runInContext(fs.readFileSync(path.join(ROOT, "i18n.js"), "utf8") + ";this.I18n = I18n; this.STRINGS = STRINGS;", ctx);
-const { I18n, STRINGS } = ctx;
+const { I18n, STRINGS } = require("./load-i18n").loadI18n();
 
 // One sample per message shape, as the games actually produce them.
 const SAMPLES = [

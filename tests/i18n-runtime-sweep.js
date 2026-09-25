@@ -14,9 +14,6 @@
 // Requires a local server serving the repo root (see README.md) and
 // Playwright with a Chromium browser available.
 
-const fs = require("fs");
-const path = require("path");
-const vm = require("vm");
 const { chromium } = require("playwright");
 const { VIEWPORT, BASE_URL, getGameSlugs, tryStart, runWithConcurrency } = require("./lib");
 
@@ -25,9 +22,7 @@ const CLICKS = +process.env.CLICKS || 60;
 const PER_GAME_MS = 45000;
 
 // Latin words that legitimately appear in the Russian texts.
-const ctx = {};
-vm.createContext(ctx);
-vm.runInContext(fs.readFileSync(path.join(__dirname, "..", "i18n.js"), "utf8") + ";this.STRINGS = STRINGS;", ctx);
+const ctx = require("./load-i18n").loadI18n();
 const allowed = new Set(["OK"]);
 Object.values(ctx.STRINGS[LANG]).forEach((v) => {
   if (typeof v === "string") (v.match(/[A-Za-z]{3,}/g) || []).forEach((w) => allowed.add(w));

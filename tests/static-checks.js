@@ -84,12 +84,12 @@ function checkHtmlWellFormed() {
 // carry the exact same key set as English (missing keys silently fall
 // back to English at runtime instead of erroring, so this is the only
 // thing that would otherwise catch a forgotten translation).
+// Every language in LANGUAGE_ORDER must have its lang/<code>.js file.
 function loadStrings() {
-  const src = fs.readFileSync(path.join(ROOT, "i18n.js"), "utf8");
-  const m = src.match(/const STRINGS = (\{[\s\S]*?\n\});/);
-  if (!m) throw new Error("could not locate STRINGS object in i18n.js");
-  // eslint-disable-next-line no-eval
-  return eval("(" + m[1] + ")");
+  const ctx = require("./load-i18n").loadI18n();
+  const missing = ctx.LANGUAGE_ORDER.filter((code) => !ctx.STRINGS[code]);
+  if (missing.length) throw new Error("no lang/<code>.js for: " + missing.join(", "));
+  return ctx.STRINGS;
 }
 
 function checkI18nParity(STRINGS) {
