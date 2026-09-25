@@ -32,7 +32,8 @@ Set `PORT` to use a port other than 8000 if that one's busy.
 
 - `node tests/static-checks.js` - no server or browser needed. JS
   syntax on every file, HTML well-formedness on every real page, i18n
-  key parity across all 11 languages in `i18n.js`, and no
+  key parity across all 11 languages (`i18n.js` for English,
+  `lang/*.js` for the rest), and no
   `data-i18n`/`data-i18n-attr` reference anywhere (static markup or
   markup a script builds at runtime) pointing at a key that doesn't
   exist.
