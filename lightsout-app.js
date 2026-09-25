@@ -226,7 +226,7 @@ function updateLightsOutBoard() {
 
 function updateGameLabelsLightsOut() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = "Moves: " + AppStateLightsOut.moveCount;
+  if (meta) I18n.setMsg(meta, "Moves: " + AppStateLightsOut.moveCount);
 
   if (AppStateLightsOut.gameOver) clearSavedLightsOutGame();
   else saveLightsOutGame();

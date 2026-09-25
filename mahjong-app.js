@@ -314,7 +314,7 @@ function updateGameLabelsMahjong() {
   const meta = document.getElementById("game-meta");
   if (meta && AppStateMahjong.state) {
     const remaining = AppStateMahjong.state.removed.filter((r) => !r).length;
-    meta.textContent = remaining + " tiles left";
+    I18n.setMsg(meta, remaining + " tiles left");
   }
   updateUndoButtonVisibilityMahjong();
   updateShuffleButtonVisibilityMahjong();

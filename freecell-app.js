@@ -450,7 +450,7 @@ function ensureFreeCellResizeHandler() {
 
 function updateGameLabelsFreeCell() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateFreeCell.moveCount ? "Move " + AppStateFreeCell.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateFreeCell.moveCount ? "Move " + AppStateFreeCell.moveCount : "");
   updateUndoButtonVisibilityFreeCell();
 
   if (AppStateFreeCell.gameOver) clearSavedFreeCellGame();

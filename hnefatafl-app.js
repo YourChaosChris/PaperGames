@@ -475,7 +475,7 @@ function updateHnefataflBoard() {
 
 function updateGameLabelsHnefatafl() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateHnefatafl.moveCount ? "Move " + AppStateHnefatafl.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateHnefatafl.moveCount ? "Move " + AppStateHnefatafl.moveCount : "");
   updateUndoButtonVisibilityHnefatafl();
   updateResignVisibilityHnefatafl();
 

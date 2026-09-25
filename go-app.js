@@ -564,12 +564,12 @@ function updateScoreLineGo() {
     return;
   }
   container.classList.remove("hidden");
-  capturesEl.textContent = "Captured – Black: " + AppStateGo.captures.b + " · White: " + AppStateGo.captures.w;
+  I18n.setMsg(capturesEl, "Captured – Black: " + AppStateGo.captures.b + " · White: " + AppStateGo.captures.w);
 }
 
 function updateGameLabelsGo() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateGo.moveCount ? "Move " + AppStateGo.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateGo.moveCount ? "Move " + AppStateGo.moveCount : "");
   updateUndoButtonVisibilityGo();
   updatePassResignVisibilityGo();
 

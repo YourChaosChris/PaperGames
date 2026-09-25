@@ -530,7 +530,7 @@ function updateSternhalmaBoard() {
 
 function updateGameLabelsSternhalma() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateSternhalma.moveCount ? "Move " + AppStateSternhalma.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateSternhalma.moveCount ? "Move " + AppStateSternhalma.moveCount : "");
   updateUndoButtonVisibilitySternhalma();
   updateResignVisibilitySternhalma();
 

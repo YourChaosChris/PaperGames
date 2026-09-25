@@ -545,12 +545,12 @@ function updateScoreLineAmazons() {
   const board = AppStateAmazons.state.board;
   const p1Mobility = AmazonsAi.totalMobility(board, "p1");
   const p2Mobility = AmazonsAi.totalMobility(board, "p2");
-  infoEl.textContent = "Reachable squares – Player 1: " + p1Mobility + " · Player 2: " + p2Mobility;
+  I18n.setMsg(infoEl, "Reachable squares – Player 1: " + p1Mobility + " · Player 2: " + p2Mobility);
 }
 
 function updateGameLabelsAmazons() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateAmazons.moveCount ? "Move " + AppStateAmazons.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateAmazons.moveCount ? "Move " + AppStateAmazons.moveCount : "");
   updateUndoButtonVisibilityAmazons();
   updateResignVisibilityAmazons();
 

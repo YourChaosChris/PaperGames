@@ -586,12 +586,12 @@ function updateScoreLineAbalone() {
     return;
   }
   container.classList.remove("hidden");
-  capturesEl.textContent = "Pushed off (of 6 to lose) – Black: " + lostB + " · White: " + lostW;
+  I18n.setMsg(capturesEl, "Pushed off (of 6 to lose) – Black: " + lostB + " · White: " + lostW);
 }
 
 function updateGameLabelsAbalone() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateAbalone.moveCount ? "Move " + AppStateAbalone.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateAbalone.moveCount ? "Move " + AppStateAbalone.moveCount : "");
   updateUndoButtonVisibilityAbalone();
   updateResignVisibilityAbalone();
 

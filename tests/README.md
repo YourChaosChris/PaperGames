@@ -35,6 +35,12 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   `data-i18n`/`data-i18n-attr` reference anywhere (static markup or
   markup a script builds at runtime) pointing at a key that doesn't
   exist.
+- `node tests/i18n-messages.js` - no server or browser needed. Runs a
+  sample of every runtime status/result message shape through
+  `I18n.msg()` in all 10 non-English languages and fails on anything
+  left untranslated, unfilled placeholders, or (for uk/ru/ja/zh)
+  leftover English words; also checks `msg_t_*` template placeholders
+  match across languages.
 - `node tests/css-check.js` - needs a browser only (no server): loads
   `style.css` in a real page and confirms it parses cleanly.
 - `node tests/board-sweep.js` - needs a running server (`BASE_URL` env

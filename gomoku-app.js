@@ -446,7 +446,7 @@ function updateGomokuBoard() {
 
 function updateGameLabelsGomoku() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateGomoku.moveCount ? "Move " + AppStateGomoku.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateGomoku.moveCount ? "Move " + AppStateGomoku.moveCount : "");
   updateUndoButtonVisibilityGomoku();
   updateResignVisibilityGomoku();
 

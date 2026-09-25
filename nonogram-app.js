@@ -300,7 +300,7 @@ function updateNonogramBoard() {
 
 function updateGameLabelsNonogram() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateNonogram.puzzleName ? AppStateNonogram.puzzleName : "";
+  if (meta) I18n.setMsg(meta, AppStateNonogram.puzzleName ? AppStateNonogram.puzzleName : "");
   updateUndoButtonVisibilityNonogram();
 
   if (AppStateNonogram.gameOver) clearSavedNonogramGame();

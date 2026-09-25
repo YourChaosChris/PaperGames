@@ -630,12 +630,12 @@ function updateScoreLineSurakarta() {
     return;
   }
   container.classList.remove("hidden");
-  capturesEl.textContent = "Captured – Black: " + AppStateSurakarta.captures.b + " · White: " + AppStateSurakarta.captures.w;
+  I18n.setMsg(capturesEl, "Captured – Black: " + AppStateSurakarta.captures.b + " · White: " + AppStateSurakarta.captures.w);
 }
 
 function updateGameLabelsSurakarta() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateSurakarta.moveCount ? "Move " + AppStateSurakarta.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateSurakarta.moveCount ? "Move " + AppStateSurakarta.moveCount : "");
   updateUndoButtonVisibilitySurakarta();
   updateResignVisibilitySurakarta();
 

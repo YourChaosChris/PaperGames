@@ -632,13 +632,13 @@ function updateScoreLineQuoridor() {
   const wallsEl = document.getElementById("score-captures");
   if (!container || !wallsEl) return;
   container.classList.remove("hidden");
-  wallsEl.textContent = "Walls left – Player 1: " + AppStateQuoridor.state.wallsRemaining.p1 +
-    " · Player 2: " + AppStateQuoridor.state.wallsRemaining.p2;
+  I18n.setMsg(wallsEl, "Walls left – Player 1: " + AppStateQuoridor.state.wallsRemaining.p1 +
+    " · Player 2: " + AppStateQuoridor.state.wallsRemaining.p2);
 }
 
 function updateGameLabelsQuoridor() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateQuoridor.moveCount ? "Move " + AppStateQuoridor.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateQuoridor.moveCount ? "Move " + AppStateQuoridor.moveCount : "");
   updateUndoButtonVisibilityQuoridor();
   updateResignVisibilityQuoridor();
   updateQuoridorWallModeUI();

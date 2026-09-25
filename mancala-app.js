@@ -447,7 +447,7 @@ function updateMancalaBoard() {
 
 function updateGameLabelsMancala() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateMancala.moveCount ? "Move " + AppStateMancala.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateMancala.moveCount ? "Move " + AppStateMancala.moveCount : "");
   updateUndoButtonVisibilityMancala();
   updateResignVisibilityMancala();
 

@@ -401,7 +401,7 @@ function updateGameLabelsHashi() {
       const overfilled = HashiCore.findOverfilledIslands(AppStateHashi.board, AppStateHashi.bridgeCounts);
       let ok = 0;
       satisfied.forEach((id) => { if (!overfilled.has(id)) ok++; });
-      meta.textContent = ok + " / " + AppStateHashi.board.islands.length + " satisfied";
+      I18n.setMsg(meta, ok + " / " + AppStateHashi.board.islands.length + " satisfied");
     } else {
       meta.textContent = "";
     }

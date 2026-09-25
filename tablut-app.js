@@ -477,7 +477,7 @@ function updateTablutBoard() {
 
 function updateGameLabelsTablut() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateTablut.moveCount ? "Move " + AppStateTablut.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateTablut.moveCount ? "Move " + AppStateTablut.moveCount : "");
   updateUndoButtonVisibilityTablut();
   updateResignVisibilityTablut();
 

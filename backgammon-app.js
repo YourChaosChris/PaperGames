@@ -756,8 +756,8 @@ function updateCubeDisplayBg() {
   const el = document.getElementById("backgammon-cube-display");
   if (!el) return;
   const owner = AppStateBackgammon.cubeOwner;
-  el.textContent = "Cube: " + AppStateBackgammon.cubeValue +
-    (owner ? " (" + colorNameBg(owner) + ")" : "");
+  I18n.setMsg(el, "Cube: " + AppStateBackgammon.cubeValue +
+    (owner ? " (" + colorNameBg(owner) + ")" : ""));
 }
 
 function updatePipCountDisplayBg() {
@@ -765,12 +765,12 @@ function updatePipCountDisplayBg() {
   if (!el || typeof BackgammonAi === "undefined") return;
   const blackPips = BackgammonAi.pipCountFor(AppStateBackgammon.state, "b");
   const whitePips = BackgammonAi.pipCountFor(AppStateBackgammon.state, "w");
-  el.textContent = "Pips - Black: " + blackPips + " · White: " + whitePips;
+  I18n.setMsg(el, "Pips - Black: " + blackPips + " · White: " + whitePips);
 }
 
 function updateGameLabelsBg() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateBackgammon.moveCount ? "Move " + AppStateBackgammon.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateBackgammon.moveCount ? "Move " + AppStateBackgammon.moveCount : "");
   updateUndoButtonVisibilityBg();
   updateResignVisibilityBg();
   updateRollButtonVisibilityBg();

@@ -353,7 +353,7 @@ function updateMinesweeperBoard() {
 function updateGameLabelsMinesweeper() {
   const meta = document.getElementById("game-meta");
   if (meta && AppStateMinesweeper.state) {
-    meta.textContent = AppStateMinesweeper.state.revealedCount + " cells revealed";
+    I18n.setMsg(meta, AppStateMinesweeper.state.revealedCount + " cells revealed");
   }
   const counter = document.getElementById("minesweeper-mine-counter");
   if (counter && AppStateMinesweeper.state) {

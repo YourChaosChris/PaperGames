@@ -348,7 +348,7 @@ function updateSudokuBoard() {
 function updateGameLabelsSudoku() {
   const meta = document.getElementById("game-meta");
   const filled = AppStateSudoku.grid ? AppStateSudoku.grid.filter((v) => v !== 0).length : 0;
-  if (meta) meta.textContent = AppStateSudoku.grid ? filled + " / 81 filled" : "";
+  if (meta) I18n.setMsg(meta, AppStateSudoku.grid ? filled + " / 81 filled" : "");
   updateUndoButtonVisibilitySudoku();
   updateEraseButtonVisibilitySudoku();
 

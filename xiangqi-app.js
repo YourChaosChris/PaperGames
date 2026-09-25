@@ -717,7 +717,7 @@ function updateXiangqiBoard() {
 
 function updateGameLabelsXq() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateXiangqi.moveCount ? "Move " + AppStateXiangqi.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateXiangqi.moveCount ? "Move " + AppStateXiangqi.moveCount : "");
   updateUndoButtonVisibilityXq();
   updateResignVisibilityXq();
 

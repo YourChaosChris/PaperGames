@@ -1199,18 +1199,18 @@ function updateGameLabels() {
       : g.opponent ? g.opponent.username : (g.opponent && g.opponent.user && g.opponent.user.name) || "Opponent";
     const myColor = g.color === "white" ? "White" : "Black";
     const speed = g.speed || "";
-    label.textContent = "Online: " + myColor + " vs " + opponent;
-    meta.textContent = "Time control: " + (g.clock && g.clock.initial ? g.clock.initial + "s" : speed);
+    I18n.setMsg(label, "Online: " + myColor + " vs " + opponent);
+    I18n.setMsg(meta, "Time control: " + (g.clock && g.clock.initial ? g.clock.initial + "s" : speed));
 
     if (clocks) {
       // secondsLeft kommt direkt aus /api/account/playing nowPlaying[0]
       const mySeconds = (typeof g.secondsLeft === "number") ? g.secondsLeft : null;
-      clocks.textContent = mySeconds !== null
+      I18n.setMsg(clocks, mySeconds !== null
         ? "Your time: " + formatSecondsToClock(mySeconds)
-        : "";
+        : "");
     }
   } else {
-    label.textContent = "No game active";
+    I18n.setMsg(label, "No game active");
     meta.textContent = "";
     if (clocks) clocks.textContent = "";
   }
@@ -1271,7 +1271,7 @@ function onSquareClick(e) {
 
     AppState.selected = coord;
     updateBoard();
-    setStatus("board-info", "Von " + coord + " ziehen …");
+    setStatus("board-info", "Moving from " + coord + " …");
   } else {
     // Ziel wählen
     const from = AppState.selected;

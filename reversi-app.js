@@ -469,12 +469,12 @@ function updateScoreLineOthello() {
   const w = OthelloCore.countDiscs(AppStateOthello.board, "w");
   const active = AppStateOthello.moveCount > 0;
   container.classList.toggle("hidden", !active);
-  capturesEl.textContent = active ? "Discs – Black: " + b + " · White: " + w : "";
+  I18n.setMsg(capturesEl, active ? "Discs – Black: " + b + " · White: " + w : "");
 }
 
 function updateGameLabelsOthello() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateOthello.moveCount ? "Move " + AppStateOthello.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateOthello.moveCount ? "Move " + AppStateOthello.moveCount : "");
   updateUndoButtonVisibilityOthello();
   updateResignVisibilityOthello();
 

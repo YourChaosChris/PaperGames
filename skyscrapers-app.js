@@ -387,7 +387,7 @@ function updateGameLabelsSkyscrapers() {
     if (AppStateSkyscrapers.grid) {
       const total = AppStateSkyscrapers.n * AppStateSkyscrapers.n;
       const filled = AppStateSkyscrapers.grid.filter((v) => v !== 0).length;
-      meta.textContent = filled + " / " + total + " filled";
+      I18n.setMsg(meta, filled + " / " + total + " filled");
     } else {
       meta.textContent = "";
     }

@@ -617,7 +617,7 @@ function updateDiceDisplayUr(roll) {
 
 function updateGameLabelsUr() {
   const meta = document.getElementById("game-meta");
-  if (meta) meta.textContent = AppStateUr.moveCount ? "Move " + AppStateUr.moveCount : "";
+  if (meta) I18n.setMsg(meta, AppStateUr.moveCount ? "Move " + AppStateUr.moveCount : "");
   updateUndoButtonVisibilityUr();
   updateResignVisibilityUr();
   updateRollButtonVisibilityUr();

@@ -387,7 +387,7 @@ function updateGameLabelsKakuro() {
           }
         }
       }
-      meta.textContent = filled + " / " + total + " filled";
+      I18n.setMsg(meta, filled + " / " + total + " filled");
     } else {
       meta.textContent = "";
     }
