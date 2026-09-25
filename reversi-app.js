@@ -53,12 +53,12 @@ function colorNameOthello(color) {
 
 function setStatusOthello(elementId, text) {
   const el = document.getElementById(elementId);
-  if (el) el.textContent = text || "";
+  if (el) I18n.setMsg(el, text || "");
 }
 
 function setGameResultOthello(text) {
   const el = document.getElementById("game-result");
-  if (el) el.textContent = text || "";
+  if (el) I18n.setMsg(el, text || "");
   if (!text && window.ResultModal) {
     window.ResultModal.hide();
   }
@@ -121,13 +121,13 @@ function initOthelloApp() {
   function closeSettingsPanel() {
     if (!settingsPanel) return;
     settingsPanel.classList.add("hidden");
-    if (menuToggle) menuToggle.textContent = "☰ Menu";
+    if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
   }
 
   function openSettingsPanel() {
     if (!settingsPanel) return;
     settingsPanel.classList.remove("hidden");
-    if (menuToggle) menuToggle.textContent = "✕ Close";
+    if (menuToggle) I18n.setKey(menuToggle, "menu_close");
   }
 
   if (menuToggle && settingsPanel) {
@@ -370,7 +370,7 @@ function showBoardSectionOthello() {
   const settingsPanel = document.getElementById("settings-panel");
   const menuToggle = document.getElementById("menu-toggle");
   if (settingsPanel) settingsPanel.classList.add("hidden");
-  if (menuToggle) menuToggle.textContent = "☰ Menu";
+  if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
 }
 
 /*** Board rendering (mirrors checkers-app.js's per-square float-grid approach) ***/

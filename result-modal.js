@@ -50,8 +50,17 @@ const ResultModal = (function () {
 
   function show(title, message) {
     const overlay = ensureModal();
-    overlay.querySelector("#result-modal-title").textContent = title || "";
-    overlay.querySelector("#result-modal-message").textContent = message || "";
+    const titleEl = overlay.querySelector("#result-modal-title");
+    const messageEl = overlay.querySelector("#result-modal-message");
+    // classifyOutcome reads the English wording, so the outcome is decided
+    // before I18n.msg translates the texts for display.
+    if (window.I18n && I18n.setMsg) {
+      I18n.setMsg(titleEl, title || "");
+      I18n.setMsg(messageEl, message || "");
+    } else {
+      titleEl.textContent = title || "";
+      messageEl.textContent = message || "";
+    }
     const modal = overlay.querySelector(".result-modal");
     modal.className = "result-modal result-modal-" + classifyOutcome(title);
     overlay.classList.remove("hidden");

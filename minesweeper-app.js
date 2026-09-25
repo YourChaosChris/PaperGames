@@ -57,12 +57,12 @@ function recordMinesweeperStats(outcome) {
 
 function setStatusMinesweeper(elementId, text) {
   const el = document.getElementById(elementId);
-  if (el) el.textContent = text || "";
+  if (el) I18n.setMsg(el, text || "");
 }
 
 function setGameResultMinesweeper(text) {
   const el = document.getElementById("game-result");
-  if (el) el.textContent = text || "";
+  if (el) I18n.setMsg(el, text || "");
   if (!text && window.ResultModal) {
     window.ResultModal.hide();
   }
@@ -106,13 +106,13 @@ function initMinesweeperApp() {
   function closeSettingsPanel() {
     if (!settingsPanel) return;
     settingsPanel.classList.add("hidden");
-    if (menuToggle) menuToggle.textContent = "☰ Menu";
+    if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
   }
 
   function openSettingsPanel() {
     if (!settingsPanel) return;
     settingsPanel.classList.remove("hidden");
-    if (menuToggle) menuToggle.textContent = "✕ Close";
+    if (menuToggle) I18n.setKey(menuToggle, "menu_close");
   }
 
   if (menuToggle && settingsPanel) {
