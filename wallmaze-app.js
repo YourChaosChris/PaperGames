@@ -571,7 +571,7 @@ function updateQuoridorBoard() {
     let label = "Row " + (r + 1) + ", column " + (c + 1);
     if (state.pawns.p1[0] === r && state.pawns.p1[1] === c) label += ", Player 1";
     else if (state.pawns.p2[0] === r && state.pawns.p2[1] === c) label += ", Player 2";
-    cell.setAttribute("aria-label", label);
+    I18n.setAria(cell, label);
   });
 
   const tapCatcher = document.getElementById("quoridor-wall-tap-catcher");

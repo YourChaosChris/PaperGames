@@ -535,7 +535,7 @@ function updateSenetBoard() {
     if (pos === SenetCore.HOUSE_OF_WATER) label += ", House of Water";
     label += slot.owner ? ", " + colorNameSenet(slot.owner) + " piece" + (slot.count > 1 ? " (" + slot.count + ")" : "") : ", empty";
     if (isMovable) label += ", movable";
-    sq.setAttribute("aria-label", label);
+    I18n.setAria(sq, label);
   });
 
   updateBorneOffDisplaySenet();

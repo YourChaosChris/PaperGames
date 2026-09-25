@@ -690,7 +690,7 @@ function updateFanoronaBoard() {
     }
     if (isActive) label += ", selected";
     else if (highlightSet.has(i)) label += ", movable";
-    pt.setAttribute("aria-label", label);
+    I18n.setAria(pt, label);
   });
 
   ensureFanoronaBoardAspect();

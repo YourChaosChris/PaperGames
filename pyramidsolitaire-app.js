@@ -409,7 +409,7 @@ function updatePyramidBoard() {
       btn.removeAttribute("aria-hidden");
       const isSelected = !!(sel && sel.type === "pyramid" && sel.row === row && sel.col === col);
       btn.classList.toggle("pyramidsolitaire-card-selected", isSelected);
-      btn.setAttribute("aria-label", pyramidCardLabel(card) + (exposed
+      I18n.setAria(btn, pyramidCardLabel(card) + (exposed
         ? ""
         : ", " + t18nPyramid("pyramidsolitaire_aria_covered")));
     });
@@ -423,7 +423,7 @@ function updatePyramidBoard() {
     stockEl.className = "pyramidsolitaire-cell pyramidsolitaire-stock" + (hasStock ? " pyramidsolitaire-card-back" : "");
     stockEl.textContent = hasStock ? "" : (canRedeal ? "↺" : "");
     stockEl.disabled = !hasStock && !canRedeal;
-    stockEl.setAttribute("aria-label", hasStock
+    I18n.setAria(stockEl, hasStock
       ? t18nPyramid("pyramidsolitaire_aria_stock") + ": " + state.stock.length
       : (canRedeal
         ? t18nPyramid("pyramidsolitaire_aria_stock") + " " + t18nPyramid("pyramidsolitaire_aria_empty") + ", " + t18nPyramid("pyramidsolitaire_aria_tap_redeal")
@@ -436,7 +436,7 @@ function updatePyramidBoard() {
     wasteEl.className = "pyramidsolitaire-cell pyramidsolitaire-waste" + (sel && sel.type === "waste" ? " pyramidsolitaire-card-selected" : "");
     wasteEl.textContent = top ? pyramidCardLabel(top) : "";
     wasteEl.disabled = !top;
-    wasteEl.setAttribute("aria-label", t18nPyramid("pyramidsolitaire_aria_waste") + ", " + (top ? pyramidCardLabel(top) : t18nPyramid("pyramidsolitaire_aria_empty")));
+    I18n.setAria(wasteEl, t18nPyramid("pyramidsolitaire_aria_waste") + ", " + (top ? pyramidCardLabel(top) : t18nPyramid("pyramidsolitaire_aria_empty")));
   }
 
   const redealEl = document.getElementById("pyramidsolitaire-redeal-info");

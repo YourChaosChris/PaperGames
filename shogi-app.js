@@ -684,7 +684,7 @@ function updateShogiBoard() {
 
     let label = "Square " + (r + 1) + "," + (c + 1);
     label += piece ? ", " + colorNameShogi(piece.color) + " " + shogiPieceLabel(piece) : ", empty";
-    sq.setAttribute("aria-label", label);
+    I18n.setAria(sq, label);
   });
 }
 
@@ -710,7 +710,7 @@ function updateShogiHands() {
       countEl.textContent = String(count);
       btn.appendChild(label);
       btn.appendChild(countEl);
-      btn.setAttribute("aria-label", colorNameShogi(color) + " hand, " + type + ", " + count + " available");
+      I18n.setAria(btn, colorNameShogi(color) + " hand, " + type + ", " + count + " available");
       btn.addEventListener("click", () => onShogiHandClick(color, type));
       el.appendChild(btn);
     });

@@ -709,7 +709,7 @@ function updateXiangqiBoard() {
     }
     if (isSelected) label += ", selected";
     else if (isMovable) label += ", movable";
-    pt.setAttribute("aria-label", label);
+    I18n.setAria(pt, label);
   });
 
   ensureXiangqiBoardSquare();

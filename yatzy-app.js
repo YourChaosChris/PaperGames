@@ -245,7 +245,7 @@ function updateYatzyDice() {
     const valueLabel = value >= 1 && value <= 6 ? String(value) : t18n("yatzy_not_rolled");
     let label = t18n("yatzy_die_label") + " " + (i + 1) + ": " + valueLabel;
     if (held) label += ", " + t18n("yatzy_held");
-    btn.setAttribute("aria-label", label);
+    I18n.setAria(btn, label);
     btn.setAttribute("aria-pressed", held ? "true" : "false");
   });
 }
@@ -328,7 +328,7 @@ function updateYatzyScoresheet() {
       btn.disabled = true;
       btn.className = "yatzy-score-btn";
     }
-    btn.setAttribute("aria-label", nameCell ? (nameCell.textContent + ": " + btn.textContent) : btn.textContent);
+    I18n.setAria(btn, nameCell ? (nameCell.textContent + ": " + btn.textContent) : btn.textContent);
   });
 
   body.querySelectorAll("[data-i18n-key]").forEach((cell) => {

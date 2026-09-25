@@ -303,14 +303,14 @@ function updateSpiderBoard() {
     stockEl.textContent = state.stock.length > 0 ? String(deals) : "";
     stockEl.disabled = state.stock.length === 0;
     stockEl.classList.toggle("spider-stock-blocked", state.stock.length > 0 && !canDeal);
-    stockEl.setAttribute("aria-label", t18nSpider("spidersolitaire_aria_stock") + ": " +
+    I18n.setAria(stockEl, t18nSpider("spidersolitaire_aria_stock") + ": " +
       (state.stock.length > 0 ? deals + " " + t18nSpider("spidersolitaire_aria_deals_left") : t18nSpider("spidersolitaire_aria_empty")));
   }
 
   const sequencesEl = document.getElementById("spider-sequences");
   if (sequencesEl) {
     sequencesEl.textContent = state.completed + " / " + SpiderSolitaireCore.TOTAL_SEQUENCES;
-    sequencesEl.setAttribute("aria-label", t18nSpider("spidersolitaire_aria_sequences") + ": " + state.completed + " / " + SpiderSolitaireCore.TOTAL_SEQUENCES);
+    I18n.setAria(sequencesEl, t18nSpider("spidersolitaire_aria_sequences") + ": " + state.completed + " / " + SpiderSolitaireCore.TOTAL_SEQUENCES);
   }
 
   const columnsEl = document.getElementById("spider-columns");
@@ -335,10 +335,10 @@ function updateSpiderBoard() {
           cardEl.textContent = spiderCardLabel(card);
           const isSelected = !!(sel && sel.col === c && index >= sel.index);
           cardEl.classList.toggle("spider-card-selected", isSelected);
-          cardEl.setAttribute("aria-label", spiderCardLabel(card));
+          I18n.setAria(cardEl, spiderCardLabel(card));
         } else {
           cardEl.className = "spider-card spider-card-back";
-          cardEl.setAttribute("aria-label", t18nSpider("spidersolitaire_aria_face_down"));
+          I18n.setAria(cardEl, t18nSpider("spidersolitaire_aria_face_down"));
         }
         cardEl.addEventListener("click", (e) => {
           e.stopPropagation();

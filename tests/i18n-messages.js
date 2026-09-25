@@ -9,6 +9,7 @@
 //  - no {placeholder} is left unfilled,
 //  - for languages without Latin script (uk, ru, ja, zh), no English word
 //    is left over - i.e. every sentence of the message was matched.
+// Screen-reader label samples are checked the same way.
 // It also checks that every msg_t_* template has the same placeholders
 // in all 11 languages.
 
@@ -152,6 +153,38 @@ const SAMPLES = [
   "Black wins (no legal jump available)."
 ];
 
+// Screen-reader labels, translated part by part (I18n.setAria()).
+const ARIA_SAMPLES = [
+  "Row 3, column 4, White stone, movable",
+  "e4, White knight, selected",
+  "Square 3,4, Black 銀",
+  "Square 12, House of Water, empty",
+  "Red Chariot",
+  "Bar, 2 Black checkers",
+  "Borne off, 1 White checker",
+  "Slot 2: Triangle. Tap to cycle through the shapes.",
+  "Go board",
+  "Tile ★, free",
+  "Vertical line, row 2, column 3, drawn by Player 1",
+  "Island 3,4: needs 2",
+  "Row 1, column 2, on",
+  "Free cell 2, empty",
+  "Foundation ♠, up to K♠",
+  "Black start, 3 pieces waiting",
+  "Player 1 pit, 4 seeds",
+  "Black piece (2), movable",
+  "White hand, S, 2 available",
+  "Die 1: 4",
+  "Stock: 3 deals left",
+  "Row 2, column 3, 3 adjacent mines",
+  "top clue, 4, satisfied",
+  "Black's hand",
+  "Red home token, waiting",
+  "Blue master",
+  "Point 7, Tiger, capture available",
+  "Row 4, column 5, King"
+];
+
 // Words that legitimately stay Latin in every language.
 const LATIN_OK = /^(Elo|Lichess|OK|Done|Place|x\d*)$/;
 const NON_LATIN = ["uk", "ru", "ja", "zh"];
@@ -175,6 +208,17 @@ for (const lang of langs) {
   }
 }
 
+for (const lang of langs) {
+  for (const sample of ARIA_SAMPLES) {
+    const out = I18n.msg(sample, lang, { segments: true });
+    if (out === sample) fail(lang + ": label not translated: " + JSON.stringify(sample));
+    else if (NON_LATIN.indexOf(lang) !== -1) {
+      const leftover = (out.match(/[A-Za-z]{3,}/g) || []).filter((w) => !LATIN_OK.test(w));
+      if (leftover.length) fail(lang + ": English left in label " + JSON.stringify(out));
+    }
+  }
+}
+
 // English must pass through unchanged.
 for (const sample of SAMPLES) {
   if (I18n.msg(sample, "en") !== sample) fail("en: changed " + JSON.stringify(sample));
@@ -189,5 +233,5 @@ for (const key of Object.keys(STRINGS.en).filter((k) => k.indexOf("msg_t_") === 
   }
 }
 
-console.log(`=== I18N MESSAGES: ${SAMPLES.length} samples x ${langs.length} languages, ${failures} failure(s) ===`);
+console.log(`=== I18N MESSAGES: ${SAMPLES.length + ARIA_SAMPLES.length} samples x ${langs.length} languages, ${failures} failure(s) ===`);
 process.exit(failures ? 1 : 0);

@@ -220,7 +220,7 @@ function updateLightsOutBoard() {
     const c = parseInt(cell.dataset.col, 10);
     const on = AppStateLightsOut.grid[r][c];
     cell.classList.toggle("lightsout-cell-on", on);
-    cell.setAttribute("aria-label", "Row " + (r + 1) + ", column " + (c + 1) + ", " + (on ? "on" : "off"));
+    I18n.setAria(cell, "Row " + (r + 1) + ", column " + (c + 1) + ", " + (on ? "on" : "off"));
   });
 }
 

@@ -43,6 +43,10 @@ echo "=== interaction-sweep.js ==="
 node "$ROOT/tests/interaction-sweep.js" || status=1
 echo ""
 
+echo "=== i18n-runtime-sweep.js ==="
+node "$ROOT/tests/i18n-runtime-sweep.js" || status=1
+echo ""
+
 if [ "$status" -eq 0 ]; then
   echo "ALL CHECKS PASS"
 else

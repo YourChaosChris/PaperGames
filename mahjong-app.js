@@ -306,7 +306,7 @@ function updateMahjongBoard() {
 
     const label = btn.querySelector(".mahjong-tile-label");
     if (label) label.textContent = state.symbols[id];
-    btn.setAttribute("aria-label", "Tile " + state.symbols[id] + (free ? ", free" : ", blocked"));
+    I18n.setAria(btn, "Tile " + state.symbols[id] + (free ? ", free" : ", blocked"));
   });
 }
 

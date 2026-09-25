@@ -36,9 +36,11 @@ const ResultModal = (function () {
         '<div class="result-modal-ornament" aria-hidden="true">&#9733;</div>' +
         '<div id="result-modal-title" class="result-modal-title"></div>' +
         '<div id="result-modal-message" class="result-modal-message"></div>' +
-        '<button type="button" class="primary result-modal-close">OK</button>' +
+        '<button type="button" class="primary result-modal-close" data-i18n="result_modal_ok">OK</button>' +
       "</div>";
     document.body.appendChild(overlay);
+    const okBtn = overlay.querySelector(".result-modal-close");
+    if (window.I18n) okBtn.textContent = I18n.t("result_modal_ok");
 
     overlay.querySelector(".result-modal-close").addEventListener("click", hide);
     overlay.addEventListener("click", (e) => {

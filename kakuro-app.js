@@ -370,7 +370,7 @@ function updateKakuroBoard() {
     let label2 = "Row " + (r + 1) + ", column " + (c + 1);
     label2 += value ? ", " + value : ", empty";
     if (conflicts.has(key)) label2 += ", conflict";
-    cell.setAttribute("aria-label", label2);
+    I18n.setAria(cell, label2);
   });
 }
 

@@ -542,7 +542,7 @@ function updateCheckersBoard() {
         label += ", empty";
       }
       if (isSelected) label += ", selected";
-      sq.setAttribute("aria-label", label);
+      I18n.setAria(sq, label);
     }
   });
   ensureCheckersSquareAspectRatio();

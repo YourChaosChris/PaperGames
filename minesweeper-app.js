@@ -346,7 +346,7 @@ function updateMinesweeperBoard() {
       }
     }
     if (label) label.textContent = text;
-    sq.setAttribute("aria-label", "Row " + (r + 1) + ", column " + (c + 1) + ariaExtra);
+    I18n.setAria(sq, "Row " + (r + 1) + ", column " + (c + 1) + ariaExtra);
   });
 }
 

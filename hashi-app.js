@@ -383,7 +383,7 @@ function updateHashiBoard() {
     btn.classList.toggle("hashi-island-over", overfilled.has(id));
     const label = "Island " + (isl.row + 1) + "," + (isl.col + 1) + ": needs " + isl.need +
       ", currently " + counts[id] + (overfilled.has(id) ? ", too many" : satisfied.has(id) ? ", satisfied" : "");
-    btn.setAttribute("aria-label", label);
+    I18n.setAria(btn, label);
   });
 
   board.edges.forEach((edge, edgeId) => {

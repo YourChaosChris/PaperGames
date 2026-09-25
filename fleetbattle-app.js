@@ -350,7 +350,7 @@ function onFbEnemyCellClick(r, c) {
 
   if (result.hit) {
     if (result.sunk) {
-      setStatusFb("board-info", t18nFb("fleetbattle_you_sank") + " " + fbShipName(result.ship.id) + "!");
+      setStatusFb("board-info", t18nFb("fleetbattle_you_sank_ship").replace("{ship}", fbShipName(result.ship.id)));
     } else {
       setStatusFb("board-info", t18nFb("fleetbattle_hit"));
     }
@@ -582,7 +582,7 @@ function renderFbOwnGrid() {
     btn.disabled = !isPlacementPhase;
     if (isPlacementPhase) btn.classList.add("fb-clickable");
 
-    btn.setAttribute("aria-label", fbCellAriaLabel(r, c, cellState));
+    I18n.setAria(btn, fbCellAriaLabel(r, c, cellState));
   });
 
   ensureFbSquareCells(grid);
@@ -611,7 +611,7 @@ function renderFbEnemyGrid() {
     btn.disabled = !canFire;
     if (canFire) btn.classList.add("fb-clickable");
 
-    btn.setAttribute("aria-label", fbCellAriaLabel(r, c, cellState));
+    I18n.setAria(btn, fbCellAriaLabel(r, c, cellState));
   });
 
   ensureFbSquareCells(grid);

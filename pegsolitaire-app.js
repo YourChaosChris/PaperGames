@@ -309,7 +309,7 @@ function updatePegSolitaireBoard() {
     sq.classList.toggle("peg-square-movable", !!AppStatePegSolitaire.legalTargets[targetKeyPeg(r, c)]);
 
     let label = "Row " + (r + 1) + ", column " + (c + 1) + (value ? ", peg" : ", empty hole");
-    sq.setAttribute("aria-label", label);
+    I18n.setAria(sq, label);
   });
 }
 

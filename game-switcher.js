@@ -116,7 +116,7 @@
 
     var select = document.createElement("select");
     select.className = "game-select";
-    select.setAttribute("aria-label", "Switch game");
+    I18n.setAria(select, "Switch game");
     populate(select);
     select.value = slug;
     select.addEventListener("change", function () {

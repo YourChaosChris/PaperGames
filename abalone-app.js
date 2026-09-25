@@ -558,7 +558,7 @@ function updateAbaloneBoard() {
     else label += ", empty";
     if (isSelected) label += ", selected";
     else if (highlightSet.has(i)) label += ", movable";
-    cellEl.setAttribute("aria-label", label);
+    I18n.setAria(cellEl, label);
   });
 
   ensureAbaloneBoardAspect();

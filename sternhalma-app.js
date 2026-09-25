@@ -524,7 +524,7 @@ function updateSternhalmaBoard() {
 
     let label = "Hole " + x + "," + y + "," + z;
     label += piece ? ", " + sideNameSternhalma(piece) : ", empty";
-    cell.setAttribute("aria-label", label);
+    I18n.setAria(cell, label);
   });
 }
 
