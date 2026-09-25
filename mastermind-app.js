@@ -246,13 +246,18 @@ function updateMastermindGuessRow() {
 
 /*** Guess history: one row per past guess, shapes plus black/white pegs ***/
 
+// Two counters (symbol + number) instead of four tiny pegs: on a
+// monochrome e-ink screen an empty placeholder peg and a white peg were
+// practically indistinguishable. A count still doesn't reveal which
+// position is meant, so the rules are unchanged.
 function mastermindPegRowMarkup(black, white) {
-  let html = "";
-  for (let i = 0; i < black; i++) html += '<span class="mastermind-peg mastermind-peg-black"></span>';
-  for (let i = 0; i < white; i++) html += '<span class="mastermind-peg mastermind-peg-white"></span>';
-  const empty = MastermindCore.CODE_LENGTH - black - white;
-  for (let i = 0; i < empty; i++) html += '<span class="mastermind-peg mastermind-peg-empty"></span>';
-  return html;
+  function counter(kind, value) {
+    return '<span class="mastermind-score' + (value === 0 ? ' mastermind-score-zero' : '') + '">' +
+      '<span class="mastermind-peg mastermind-peg-' + kind + '" aria-hidden="true"></span>' +
+      '<span class="mastermind-score-num">' + value + '</span>' +
+      '</span>';
+  }
+  return counter("black", black) + counter("white", white);
 }
 
 function renderMastermindHistory() {
