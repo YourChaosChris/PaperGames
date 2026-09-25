@@ -15,6 +15,7 @@ const AppStateMancala = {
   aiLevel: 2,
   gameOver: false,
   moveCount: 0,
+  lastMove: null,         // {from, to, captured} slots of the latest move, for the board marker
   undoStack: []
 };
 
@@ -87,7 +88,8 @@ function pushUndoSnapshotMancala() {
     state: MancalaCore.cloneState(AppStateMancala.state),
     turn: AppStateMancala.turn,
     gameOver: AppStateMancala.gameOver,
-    moveCount: AppStateMancala.moveCount
+    moveCount: AppStateMancala.moveCount,
+    lastMove: AppStateMancala.lastMove
   });
 }
 
@@ -141,6 +143,7 @@ function initMancalaApp() {
     AppStateMancala.aiLevel = level;
     AppStateMancala.gameOver = false;
     AppStateMancala.moveCount = 0;
+    AppStateMancala.lastMove = null;
     resetUndoStackMancala();
     setGameResultMancala("");
     showBoardSectionMancala();
@@ -215,6 +218,7 @@ function initMancalaApp() {
     AppStateMancala.humanSide = savedGame.humanSide;
     AppStateMancala.aiLevel = savedGame.aiLevel;
     AppStateMancala.moveCount = savedGame.moveCount;
+    AppStateMancala.lastMove = null;
     AppStateMancala.gameOver = false;
     resetUndoStackMancala();
     setActiveModeButton(AppStateMancala.mode);
@@ -260,6 +264,12 @@ function applyMancalaMove(pit) {
   const mover = AppStateMancala.turn;
   const result = MancalaCore.applyMove(AppStateMancala.state, mover, pit);
   AppStateMancala.state = result.state;
+  AppStateMancala.lastMove = {
+    from: pit,
+    to: result.landedIn,
+    // A capture empties the pit straight across from the last seed.
+    captured: result.captured ? 12 - result.landedIn : null
+  };
   AppStateMancala.moveCount++;
   updateMancalaBoard();
   updateGameLabelsMancala();
@@ -326,6 +336,7 @@ function undoLastMove() {
   AppStateMancala.turn = prev.turn;
   AppStateMancala.gameOver = prev.gameOver;
   AppStateMancala.moveCount = prev.moveCount;
+  AppStateMancala.lastMove = prev.lastMove || null;
   setGameResultMancala("");
   updateMancalaBoard();
   updateGameLabelsMancala();
@@ -427,6 +438,12 @@ function updateMancalaBoard() {
     ? []
     : MancalaCore.getLegalMoves(AppStateMancala.state, AppStateMancala.turn);
   const movableSet = new Set(legalMoves);
+  const last = AppStateMancala.lastMove;
+  const markLast = (el, i) => {
+    el.classList.toggle("lm-from", !!last && last.from === i);
+    el.classList.toggle("lm-to", !!last && last.to === i);
+    el.classList.toggle("lm-changed", !!last && last.captured === i);
+  };
 
   pitsEl.querySelectorAll(".mancala-pit").forEach((pitEl) => {
     const i = parseInt(pitEl.dataset.pit, 10);
@@ -437,9 +454,14 @@ function updateMancalaBoard() {
     const isMovable = movableSet.has(i);
     pitEl.classList.toggle("mancala-pit-movable", isMovable);
     pitEl.disabled = !isMovable;
+    markLast(pitEl, i);
     I18n.setAria(pitEl, sideNameMancala(owner) + " pit, " + seeds + " seed" + (seeds === 1 ? "" : "s") + (isMovable ? ", your move" : ""));
   });
 
+  const storeA = document.getElementById("mancala-store-a");
+  const storeB = document.getElementById("mancala-store-b");
+  if (storeA) markLast(storeA, MancalaCore.STORE_A);
+  if (storeB) markLast(storeB, MancalaCore.STORE_B);
   setStatusMancala("mancala-store-a-count", String(board[MancalaCore.STORE_A]));
   setStatusMancala("mancala-store-b-count", String(board[MancalaCore.STORE_B]));
 }

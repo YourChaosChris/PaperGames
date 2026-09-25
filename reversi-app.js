@@ -19,6 +19,7 @@ const AppStateOthello = {
   aiLevel: 2,
   gameOver: false,
   moveCount: 0,
+  lastMove: null,         // {row, col, flips} of the latest move, for the board marker
   undoStack: []
 };
 
@@ -91,7 +92,8 @@ function pushUndoSnapshotOthello() {
     board: AppStateOthello.board.map((row) => row.slice()),
     turn: AppStateOthello.turn,
     gameOver: AppStateOthello.gameOver,
-    moveCount: AppStateOthello.moveCount
+    moveCount: AppStateOthello.moveCount,
+    lastMove: AppStateOthello.lastMove
   });
 }
 
@@ -145,6 +147,7 @@ function initOthelloApp() {
     AppStateOthello.aiLevel = level;
     AppStateOthello.gameOver = false;
     AppStateOthello.moveCount = 0;
+    AppStateOthello.lastMove = null;
     resetUndoStackOthello();
     setGameResultOthello("");
     showBoardSectionOthello();
@@ -219,6 +222,7 @@ function initOthelloApp() {
     AppStateOthello.humanColor = savedGame.humanColor;
     AppStateOthello.aiLevel = savedGame.aiLevel;
     AppStateOthello.moveCount = savedGame.moveCount;
+    AppStateOthello.lastMove = null;
     AppStateOthello.gameOver = false;
     resetUndoStackOthello();
     setActiveModeButton(AppStateOthello.mode);
@@ -317,6 +321,7 @@ function applyOthelloMove(move) {
   pushUndoSnapshotOthello();
   const mover = AppStateOthello.turn;
   AppStateOthello.board = OthelloCore.applyMove(AppStateOthello.board, mover, move);
+  AppStateOthello.lastMove = { row: move.row, col: move.col, flips: move.flips };
   AppStateOthello.moveCount++;
   advanceOthelloTurn(mover);
 }
@@ -353,6 +358,7 @@ function undoLastMove() {
   AppStateOthello.turn = prev.turn;
   AppStateOthello.gameOver = prev.gameOver;
   AppStateOthello.moveCount = prev.moveCount;
+  AppStateOthello.lastMove = prev.lastMove || null;
   setGameResultOthello("");
   updateOthelloBoard();
   updateGameLabelsOthello();
@@ -438,6 +444,8 @@ function updateOthelloBoard() {
     ? []
     : OthelloCore.getLegalMoves(AppStateOthello.board, AppStateOthello.turn);
   const movableSet = new Set(legalMoves.map((m) => m.row + "," + m.col));
+  const last = AppStateOthello.lastMove;
+  const flipped = new Set(last ? last.flips.map(([fr, fc]) => fr + "," + fc) : []);
 
   boardEl.querySelectorAll(".othello-square").forEach((sq) => {
     const r = parseInt(sq.dataset.row, 10);
@@ -450,6 +458,9 @@ function updateOthelloBoard() {
     }
     const isMovable = movableSet.has(r + "," + c);
     sq.classList.toggle("othello-square-movable", isMovable);
+    // Latest move: solid frame on the placed disc, dotted on the flipped ones.
+    sq.classList.toggle("lm-to", !!last && last.row === r && last.col === c);
+    sq.classList.toggle("lm-changed", flipped.has(r + "," + c));
     sq.disabled = !isMovable;
 
     let label = "Row " + (r + 1) + ", column " + (c + 1);

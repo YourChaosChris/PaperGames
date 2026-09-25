@@ -29,6 +29,7 @@ const AppStateBackgammon = {
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
   gameOver: false,
   moveCount: 0,
+  lastMove: null,         // {color, moves: [{from, to, hit}]} of the latest turn, for the board marker
   undoStack: [],
   cubeValue: 1,           // 1, 2, 4, 8, ...
   cubeOwner: null,        // null (centered - either side may double) | "b" | "w"
@@ -133,6 +134,7 @@ function pushUndoSnapshotBg() {
     dice: AppStateBackgammon.dice.slice(),
     gameOver: AppStateBackgammon.gameOver,
     moveCount: AppStateBackgammon.moveCount,
+    lastMove: AppStateBackgammon.lastMove,
     cubeValue: AppStateBackgammon.cubeValue,
     cubeOwner: AppStateBackgammon.cubeOwner
   });
@@ -202,6 +204,7 @@ function initBackgammonApp() {
     AppStateBackgammon.aiLevel = level;
     AppStateBackgammon.gameOver = false;
     AppStateBackgammon.moveCount = 0;
+    AppStateBackgammon.lastMove = null;
     AppStateBackgammon.cubeValue = 1;
     AppStateBackgammon.cubeOwner = null;
     resetUndoStackBg();
@@ -305,6 +308,7 @@ function initBackgammonApp() {
     AppStateBackgammon.humanColor = savedGame.humanColor;
     AppStateBackgammon.aiLevel = savedGame.aiLevel;
     AppStateBackgammon.moveCount = savedGame.moveCount;
+    AppStateBackgammon.lastMove = null;
     AppStateBackgammon.cubeValue = savedGame.cubeValue || 1;
     AppStateBackgammon.cubeOwner = savedGame.cubeOwner || null;
     AppStateBackgammon.moveHistory = savedGame.moveHistory || [];
@@ -471,7 +475,15 @@ function onBackgammonDestClick(pointRef, trayColor) {
 function applyBackgammonMove(move, die) {
   pushUndoSnapshotBg();
   const mover = AppStateBackgammon.turn;
+  const target = move.to === "off" ? null : AppStateBackgammon.state.points[move.to];
+  const hit = !!target && target.color !== null && target.color !== mover;
   AppStateBackgammon.state = BackgammonCore.applyMove(AppStateBackgammon.state, mover, move);
+  // The marker keeps every checker moved in the current turn; the list
+  // starts over once the other side moves.
+  const prevLast = AppStateBackgammon.lastMove;
+  const turnMoves = prevLast && prevLast.color === mover ? prevLast.moves.slice() : [];
+  turnMoves.push({ from: move.from, to: move.to, hit });
+  AppStateBackgammon.lastMove = { color: mover, moves: turnMoves };
   AppStateBackgammon.moveCount++;
   recordMoveBg(mover, move);
   AppStateBackgammon.selected = null;
@@ -558,6 +570,7 @@ function undoLastMove() {
   AppStateBackgammon.dice = prev.dice;
   AppStateBackgammon.gameOver = prev.gameOver;
   AppStateBackgammon.moveCount = prev.moveCount;
+  AppStateBackgammon.lastMove = prev.lastMove || null;
   AppStateBackgammon.cubeValue = prev.cubeValue || 1;
   AppStateBackgammon.cubeOwner = prev.cubeOwner || null;
   AppStateBackgammon.selected = null;
@@ -710,6 +723,21 @@ function updateBackgammonBoard() {
   const dests = AppStateBackgammon.selected !== null ? legalDestinationsFrom(AppStateBackgammon.selected) : [];
   const destSet = new Set(dests.map((d) => d.to));
 
+  // Latest turn: dashed where a checker left, solid where it landed; a
+  // point passed through on the way ends up with its last role.
+  const last = AppStateBackgammon.lastMove;
+  const lastRole = {};
+  if (last) {
+    last.moves.forEach((m) => {
+      lastRole[m.from === "bar" ? "bar-" + last.color : m.from] = "lm-from";
+      lastRole[m.to === "off" ? "off-" + last.color : m.to] = "lm-to";
+      if (m.hit) lastRole["bar-" + (last.color === "b" ? "w" : "b")] = "lm-changed";
+    });
+  }
+  const markLast = (el, key) => {
+    ["lm-from", "lm-to", "lm-changed"].forEach((cls) => el.classList.toggle(cls, lastRole[key] === cls));
+  };
+
   boardEl.querySelectorAll(".bg-point").forEach((cell) => {
     const p = parseInt(cell.dataset.point, 10);
     const pt = AppStateBackgammon.state.points[p];
@@ -718,6 +746,7 @@ function updateBackgammonBoard() {
     const isMovable = destSet.has(p);
     cell.classList.toggle("bg-point-selected", isSelected);
     cell.classList.toggle("bg-point-movable", isMovable);
+    markLast(cell, p);
 
     let label = "Point " + p;
     label += pt.color ? ", " + pt.count + " " + (pt.color === "b" ? "Black" : "White") + " checker" + (pt.count === 1 ? "" : "s") : ", empty";
@@ -730,6 +759,10 @@ function updateBackgammonBoard() {
   const barBottom = document.getElementById("backgammon-bar-bottom");
   const offTop = document.getElementById("backgammon-off-top");
   const offBottom = document.getElementById("backgammon-off-bottom");
+  if (barTop) markLast(barTop, "bar-b");
+  if (barBottom) markLast(barBottom, "bar-w");
+  if (offTop) markLast(offTop, "off-b");
+  if (offBottom) markLast(offBottom, "off-w");
   if (barTop) {
     setStatusBg("backgammon-bar-top-count", String(AppStateBackgammon.state.bar.b));
     barTop.classList.toggle("bg-tray-movable", AppStateBackgammon.turn === "b" && AppStateBackgammon.state.bar.b > 0 && legalDestinationsFrom("bar").length > 0 && AppStateBackgammon.selected === null);
