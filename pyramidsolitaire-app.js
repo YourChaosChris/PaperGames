@@ -9,7 +9,7 @@
 // on a monochrome E-Ink display, matching Klondike/FreeCell.
 //
 // All 28 pyramid cards are visible face-up from the start (the
-// standard rule for this game); a covered card just gets a dimmed,
+// standard rule for this game); a covered card just gets a dashed-border,
 // non-interactive look until both cards below it are gone. Click any
 // one exposed card (pyramid or the waste's top card) to select it,
 // then click a second exposed card to remove the pair if the two

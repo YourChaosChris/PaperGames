@@ -3359,8 +3359,19 @@ margin-top: 0.5rem;
 }
 
 .shogi-piece svg {
-  width: 62%;
-  height: 62%;
+  width: 80%;
+  height: 80%;
+  /* The pentagon is wider at the bottom, so the kanji sit a little low. */
+  margin-top: 8%;
+}
+
+/* Etwas kräftigere Striche: feine Pinselstriche (z. B. 金 gegenüber 全)
+   verschwimmen auf E-Ink sonst. !important, weil die Grafiken ihre
+   Strichstärke als Inline-Stil mitbringen. */
+.shogi-piece svg path {
+  stroke: #000 !important;
+  stroke-width: 0.45 !important;
+  stroke-linejoin: round;
 }
 
 .shogi-piece-w {
@@ -6326,9 +6337,14 @@ max-width: 900px;
   cursor: pointer;
 }
 
-.pyramidsolitaire-card-covered {
-  background: var(--square-dark);
-  color: var(--muted);
+/* Noch blockierte Karten: gestrichelter Rahmen statt Abblenden. Ihre
+   Werte muss man zum Vorausplanen lesen können, und halbtransparente
+   graue Schrift auf grauem Grund verschwimmt auf E-Ink. */
+.pyramidsolitaire-card-covered,
+.pyramidsolitaire-card-covered:disabled {
+  border-style: dashed;
+  color: var(--text);
+  opacity: 1;
   cursor: default;
 }
 
