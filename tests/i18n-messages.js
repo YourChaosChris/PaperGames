@@ -17,6 +17,8 @@ const { I18n, STRINGS } = require("./load-i18n").loadI18n();
 
 // One sample per message shape, as the games actually produce them.
 const SAMPLES = [
+  "Placing - 14 pieces left to place",
+  "Placing - 1 piece left to place",
   "Computer thinking…",
   "Black to move.",
   "Move undone. White to move. Roll the dice.",
@@ -152,6 +154,8 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  "Path square 1, safe square, 1 token",
+  "Path square 3, 2 tokens",
   "Row 3, column 4, White stone, movable",
   "e4, White knight, selected",
   "Square 3,4, Black 銀",

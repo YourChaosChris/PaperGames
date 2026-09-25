@@ -2344,4 +2344,28 @@ STRINGS.ja = {
     msg_t_ludo_moved_captured: "{p}のコマ{n}が{m}マス進み、{q}を取りました!",
     msg_t_ludo_brought_captured: "{p}のコマ{n}が盤上に出て、{q}を取りました!",
     msg_t_ludo_moved_home: "{p}のコマ{n}が{m}マス進んでゴールしました!",
+
+    // Morris placing phase and Ludo token counts (screen reader)
+    msg_t_morris_placing: "配置中 – 残り{n}個",
+    msg_t_morris_placing_one: "配置中 – 残り{n}個",
+    msg_t_aria_tokens: "コマ {n}",
+    msg_t_aria_token: "コマ {n}",
+
+    // Card Tactics card names
+    cardtactics_card_wind: "風",
+    cardtactics_card_wave: "波",
+    cardtactics_card_stone: "石",
+    cardtactics_card_flame: "炎",
+    cardtactics_card_thunder: "雷",
+    cardtactics_card_frost: "霜",
+    cardtactics_card_mist: "霧",
+    cardtactics_card_shadow: "影",
+    cardtactics_card_ember: "残り火",
+    cardtactics_card_gale: "疾風",
+    cardtactics_card_tide: "潮",
+    cardtactics_card_quake: "地震",
+    cardtactics_card_spark: "火花",
+    cardtactics_card_gust: "突風",
+    cardtactics_card_drift: "漂流",
+    cardtactics_card_blaze: "業火",
 };

@@ -2412,6 +2412,30 @@ const STRINGS = {
     msg_t_ludo_moved_captured: "{p} moved token {n} forward {m} and captured {q}!",
     msg_t_ludo_brought_captured: "{p} brought token {n} into play and captured {q}!",
     msg_t_ludo_moved_home: "{p} moved token {n} forward {m} and got it home!",
+
+    // Morris placing phase and Ludo token counts (screen reader)
+    msg_t_morris_placing: "Placing - {n} pieces left to place",
+    msg_t_morris_placing_one: "Placing - {n} piece left to place",
+    msg_t_aria_tokens: "{n} tokens",
+    msg_t_aria_token: "{n} token",
+
+    // Card Tactics card names
+    cardtactics_card_wind: "Wind",
+    cardtactics_card_wave: "Wave",
+    cardtactics_card_stone: "Stone",
+    cardtactics_card_flame: "Flame",
+    cardtactics_card_thunder: "Thunder",
+    cardtactics_card_frost: "Frost",
+    cardtactics_card_mist: "Mist",
+    cardtactics_card_shadow: "Shadow",
+    cardtactics_card_ember: "Ember",
+    cardtactics_card_gale: "Gale",
+    cardtactics_card_tide: "Tide",
+    cardtactics_card_quake: "Quake",
+    cardtactics_card_spark: "Spark",
+    cardtactics_card_gust: "Gust",
+    cardtactics_card_drift: "Drift",
+    cardtactics_card_blaze: "Blaze",
   }
 };
 
@@ -2511,6 +2535,8 @@ const I18n = (function () {
   // ("Die Ziegen sind am Zug"); a template may provide a <key>_pl variant.
   const MSG_PLURAL_NAMES = ["Attackers", "Defenders", "Goats", "Tigers"];
   let msgIndex = null;
+  const msgCache = new Map();
+  const MSG_CACHE_LIMIT = 5000;
   let staticAriaCaptured = false;
   let msgSegmentMode = false;
 
@@ -2639,14 +2665,25 @@ const I18n = (function () {
     const l = lang || getLang();
     if (!str || l === DEFAULT_LANG || !STRINGS[l]) return str;
     if (!msgIndex) msgIndex = buildMsgIndex();
-    const s = str.replace(/\u2011/g, "-").trim();
     const segments = !!(opts && opts.segments);
+    // Board games relabel every cell for screen readers after each move
+    // (225 on a Gomoku board), mostly with the same few texts. Matching
+    // each one against every template again took up to half a second
+    // per tap on a slow e-reader, so finished translations are kept.
+    const cacheKey = l + (segments ? "|s|" : "|m|") + str;
+    const cached = msgCache.get(cacheKey);
+    if (cached !== undefined) return cached;
+    const s = str.replace(/\u2011/g, "-").trim();
     msgSegmentMode = segments;
+    let result;
     try {
-      return msgTranslate(str, s, l, segments);
+      result = msgTranslate(str, s, l, segments);
     } finally {
       msgSegmentMode = false;
     }
+    if (msgCache.size >= MSG_CACHE_LIMIT) msgCache.clear();
+    msgCache.set(cacheKey, result);
+    return result;
   }
 
   function msgTranslate(str, s, l, segments) {
@@ -2773,6 +2810,11 @@ const I18n = (function () {
         // A listener misbehaving shouldn't break the rest of i18n.
       }
     });
+
+    // A small inline script in each page's <head> hides the page while
+    // its static English markup waits for another language (see
+    // style.css, .i18n-pending), so an e-ink screen draws it only once.
+    if (document.documentElement) document.documentElement.classList.remove("i18n-pending");
   }
 
   // Directory i18n.js was loaded from, so lang/ resolves the same way

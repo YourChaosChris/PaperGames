@@ -2344,4 +2344,28 @@ STRINGS.uk = {
     msg_t_ludo_moved_captured: "{p}: фішка {n} просувається на {m} і б'є: {q}!",
     msg_t_ludo_brought_captured: "{p}: фішка {n} виходить у гру і б'є: {q}!",
     msg_t_ludo_moved_home: "{p}: фішка {n} просувається на {m} і дістається додому!",
+
+    // Morris placing phase and Ludo token counts (screen reader)
+    msg_t_morris_placing: "Розстановка – залишилось поставити: {n}",
+    msg_t_morris_placing_one: "Розстановка – залишилось поставити: {n}",
+    msg_t_aria_tokens: "фішок: {n}",
+    msg_t_aria_token: "фішок: {n}",
+
+    // Card Tactics card names
+    cardtactics_card_wind: "Вітер",
+    cardtactics_card_wave: "Хвиля",
+    cardtactics_card_stone: "Камінь",
+    cardtactics_card_flame: "Полум'я",
+    cardtactics_card_thunder: "Грім",
+    cardtactics_card_frost: "Мороз",
+    cardtactics_card_mist: "Туман",
+    cardtactics_card_shadow: "Тінь",
+    cardtactics_card_ember: "Жар",
+    cardtactics_card_gale: "Буря",
+    cardtactics_card_tide: "Приплив",
+    cardtactics_card_quake: "Поштовх",
+    cardtactics_card_spark: "Іскра",
+    cardtactics_card_gust: "Порив",
+    cardtactics_card_drift: "Дрейф",
+    cardtactics_card_blaze: "Пожежа",
 };

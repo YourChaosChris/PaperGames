@@ -537,7 +537,7 @@ function buildCardElement(cardId, ownerColor) {
   card.classList.toggle("onitama-card-selected", isSelected);
   const label = document.createElement("div");
   label.className = "onitama-card-name";
-  label.textContent = cardId.charAt(0).toUpperCase() + cardId.slice(1);
+  I18n.setKey(label, "cardtactics_card_" + cardId);
   card.appendChild(label);
   card.appendChild(buildCardDiagram(cardId, ownerColor));
   card.addEventListener("click", () => onOnitamaCardClick(ownerColor, cardId));
@@ -560,7 +560,7 @@ function updateOnitamaCards() {
   neutralEl.appendChild(buildCardDiagram(AppStateOnitama.state.cards.neutral, "blue"));
   const label = document.createElement("div");
   label.className = "onitama-card-name";
-  label.textContent = AppStateOnitama.state.cards.neutral.charAt(0).toUpperCase() + AppStateOnitama.state.cards.neutral.slice(1);
+  I18n.setKey(label, "cardtactics_card_" + AppStateOnitama.state.cards.neutral);
   neutralEl.insertBefore(label, neutralEl.firstChild);
 }
 

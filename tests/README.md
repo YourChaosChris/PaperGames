@@ -62,7 +62,19 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   plausible interactive targets to simulate "make one move", checking
   only that nothing throws.
 
-The game list for the two sweeps comes from `games-catalog.js` (this
+- `node tests/eink-sim.js [outDir]` - same prerequisites. Not part of
+  `run-all.sh` (about 15 minutes). Plays every game on a simulated weak
+  e-reader: CPU throttled 10x (`CPU=`), a slow Wi-Fi link for the cold
+  first load with no cache or service worker, a 758x1024 touch viewport,
+  reduced motion and greyscale rendering, with the page in German
+  (`LANG_CODE=`). Per page it reports load time, main-thread work,
+  longest task, bytes downloaded, the time from a tap on the board to
+  the next frame, and whether English text was painted before the
+  page's language arrived. Screenshots and `results.json` go to
+  `outDir` (default `eink-sim-out/`, ignored by git). `PAGES=chess,go`
+  limits the run.
+
+The game list for the sweeps comes from `games-catalog.js` (this
 project's own single source of truth for which games exist), not a
 hardcoded list here - a new game needs nothing added to this directory
 to be covered.

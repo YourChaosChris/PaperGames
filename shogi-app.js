@@ -662,14 +662,15 @@ function updateShogiBoard() {
     const piece = AppStateShogi.state.board[r][c];
     const pieceEl = sq.querySelector(".shogi-piece");
     if (pieceEl) {
-      if (piece) {
-        pieceEl.innerHTML = shogiPieceSVG(piece);
-        pieceEl.classList.remove("hidden");
-        pieceEl.classList.toggle("shogi-piece-w", piece.color === "w");
-      } else {
-        pieceEl.innerHTML = "";
-        pieceEl.classList.add("hidden");
+      // Re-parsing all 81 piece SVGs on every move was the slowest part
+      // of a tap on e-readers, so only squares whose piece changed are redrawn.
+      const svg = piece ? shogiPieceSVG(piece) : "";
+      if (pieceEl.einkSvg !== svg) {
+        pieceEl.innerHTML = svg;
+        pieceEl.einkSvg = svg;
       }
+      pieceEl.classList.toggle("hidden", !piece);
+      pieceEl.classList.toggle("shogi-piece-w", !!piece && piece.color === "w");
     }
 
     const isSelected = AppStateShogi.selected && AppStateShogi.selected.kind === "square"

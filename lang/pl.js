@@ -2345,4 +2345,28 @@ STRINGS.pl = {
     msg_t_ludo_moved_captured: "{p}: pionek {n} idzie o {m} do przodu i zbija: {q}!",
     msg_t_ludo_brought_captured: "{p}: pionek {n} wchodzi do gry i zbija: {q}!",
     msg_t_ludo_moved_home: "{p}: pionek {n} idzie o {m} do przodu i dociera do domu!",
+
+    // Morris placing phase and Ludo token counts (screen reader)
+    msg_t_morris_placing: "Rozstawianie – do postawienia: {n}",
+    msg_t_morris_placing_one: "Rozstawianie – do postawienia: {n}",
+    msg_t_aria_tokens: "pionki: {n}",
+    msg_t_aria_token: "pionki: {n}",
+
+    // Card Tactics card names
+    cardtactics_card_wind: "Wiatr",
+    cardtactics_card_wave: "Fala",
+    cardtactics_card_stone: "Kamień",
+    cardtactics_card_flame: "Płomień",
+    cardtactics_card_thunder: "Grom",
+    cardtactics_card_frost: "Mróz",
+    cardtactics_card_mist: "Mgła",
+    cardtactics_card_shadow: "Cień",
+    cardtactics_card_ember: "Żar",
+    cardtactics_card_gale: "Wichura",
+    cardtactics_card_tide: "Przypływ",
+    cardtactics_card_quake: "Wstrząs",
+    cardtactics_card_spark: "Iskra",
+    cardtactics_card_gust: "Poryw",
+    cardtactics_card_drift: "Dryf",
+    cardtactics_card_blaze: "Pożoga",
 };

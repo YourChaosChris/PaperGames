@@ -2344,4 +2344,28 @@ STRINGS.es = {
     msg_t_ludo_moved_captured: "¡{p} avanza {m} con la ficha {n} y captura a {q}!",
     msg_t_ludo_brought_captured: "¡{p} saca la ficha {n} al juego y captura a {q}!",
     msg_t_ludo_moved_home: "¡{p} avanza {m} con la ficha {n} y la lleva a casa!",
+
+    // Morris placing phase and Ludo token counts (screen reader)
+    msg_t_morris_placing: "Colocación: quedan {n} fichas por colocar",
+    msg_t_morris_placing_one: "Colocación: queda {n} ficha por colocar",
+    msg_t_aria_tokens: "{n} fichas",
+    msg_t_aria_token: "{n} ficha",
+
+    // Card Tactics card names
+    cardtactics_card_wind: "Viento",
+    cardtactics_card_wave: "Ola",
+    cardtactics_card_stone: "Piedra",
+    cardtactics_card_flame: "Llama",
+    cardtactics_card_thunder: "Trueno",
+    cardtactics_card_frost: "Escarcha",
+    cardtactics_card_mist: "Niebla",
+    cardtactics_card_shadow: "Sombra",
+    cardtactics_card_ember: "Ascua",
+    cardtactics_card_gale: "Vendaval",
+    cardtactics_card_tide: "Marea",
+    cardtactics_card_quake: "Temblor",
+    cardtactics_card_spark: "Chispa",
+    cardtactics_card_gust: "Ráfaga",
+    cardtactics_card_drift: "Deriva",
+    cardtactics_card_blaze: "Hoguera",
 };

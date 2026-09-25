@@ -2408,4 +2408,28 @@ STRINGS.de = {
     msg_t_ludo_moved_captured: "{p} zieht Figur {n} um {m} vor und schlägt {q}!",
     msg_t_ludo_brought_captured: "{p} bringt Figur {n} ins Spiel und schlägt {q}!",
     msg_t_ludo_moved_home: "{p} zieht Figur {n} um {m} vor und bringt sie ins Ziel!",
+
+    // Morris placing phase and Ludo token counts (screen reader)
+    msg_t_morris_placing: "Setzphase – noch {n} Steine zu setzen",
+    msg_t_morris_placing_one: "Setzphase – noch {n} Stein zu setzen",
+    msg_t_aria_tokens: "{n} Figuren",
+    msg_t_aria_token: "{n} Figur",
+
+    // Card Tactics card names
+    cardtactics_card_wind: "Wind",
+    cardtactics_card_wave: "Welle",
+    cardtactics_card_stone: "Stein",
+    cardtactics_card_flame: "Flamme",
+    cardtactics_card_thunder: "Donner",
+    cardtactics_card_frost: "Frost",
+    cardtactics_card_mist: "Nebel",
+    cardtactics_card_shadow: "Schatten",
+    cardtactics_card_ember: "Glut",
+    cardtactics_card_gale: "Sturm",
+    cardtactics_card_tide: "Flut",
+    cardtactics_card_quake: "Beben",
+    cardtactics_card_spark: "Funke",
+    cardtactics_card_gust: "Bö",
+    cardtactics_card_drift: "Strömung",
+    cardtactics_card_blaze: "Lohe",
 };

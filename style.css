@@ -219,6 +219,14 @@ button:disabled {
   display: none !important;
 }
 
+/* Bis die Sprache der Seite angewendet ist, bleibt sie unsichtbar
+   (gesetzt von einem kleinen Skript im <head>, entfernt von i18n.js,
+   spätestens nach 4 Sekunden). Sonst zeichnet ein E-Ink-Display erst
+   den englischen Grundtext und kurz danach alles noch einmal. */
+html.i18n-pending body {
+  visibility: hidden;
+}
+
 .mode-section {
   margin: 0.5rem 0;
 }
@@ -5474,10 +5482,15 @@ margin: 0.5rem auto 0;
 .mastermind-score {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
   min-width: 2.6rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+}
+
+/* Abstand per Rand statt "gap": Flexbox-gap kennen ältere
+   E-Reader-Browser (WebView vor Chrome 84) nicht. */
+.mastermind-score > * + * {
+  margin-left: 0.35rem;
 }
 
 .mastermind-score-num {
