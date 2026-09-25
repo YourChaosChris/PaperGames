@@ -7148,12 +7148,12 @@ max-width: 900px;
 .ludo-cell-last-from::after {
   content: "";
   position: absolute;
-  top: 25%;
-  left: 25%;
-  width: 50%;
-  height: 50%;
+  top: 22%;
+  left: 22%;
+  width: 56%;
+  height: 56%;
   border: 2px dashed var(--text);
-  border-radius: 50%;
+  border-radius: 10%;
   box-sizing: border-box;
   pointer-events: none;
   z-index: 0;
