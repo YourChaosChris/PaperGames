@@ -84,10 +84,25 @@ const GoCore = (function () {
     return getLiberties(board, size, getGroup(board, size, r, c)).size;
   }
 
+  // Compact string for a whole-board position (stones only), used for
+  // the positional superko rule.
+  function boardKey(board) {
+    let key = "";
+    for (let r = 0; r < board.length; r++) {
+      for (let c = 0; c < board[r].length; c++) key += board[r][c] || ".";
+    }
+    return key;
+  }
+
   // Attempts to play `color` at (r, c). Does not mutate `board`.
+  // `history` (optional) is a Set of boardKey()s of every position the
+  // game has already had; passing it enables positional superko - a move
+  // may never recreate an earlier whole-board position. Without it only
+  // simple ko (the koPoint) is checked, which is what the AI's quick
+  // look-ahead rollouts use.
   // Returns { legal: false, reason } or
   // { legal: true, board, captured: [[r,c], ...], koPoint: {r,c}|null }.
-  function tryMove(board, size, r, c, color, koPoint) {
+  function tryMove(board, size, r, c, color, koPoint, history) {
     if (!inBounds(size, r, c)) {
       return { legal: false, reason: "out_of_bounds" };
     }
@@ -120,9 +135,15 @@ const GoCore = (function () {
       return { legal: false, reason: "suicide" };
     }
 
-    // Simple-ko approximation: a single-stone capture of a single-stone
-    // group creates a ko point where immediate recapture is forbidden
-    // for one move. Does not detect longer superko cycles.
+    // Positional superko: only a capturing move can ever recreate an
+    // earlier position (a plain placement adds a stone that wasn't there),
+    // so the lookup is only needed after captures.
+    if (history && captured.length && history.has(boardKey(newBoard))) {
+      return { legal: false, reason: "superko" };
+    }
+
+    // Simple ko: a single-stone capture of a single-stone group creates a
+    // ko point where immediate recapture is forbidden for one move.
     let newKoPoint = null;
     if (captured.length === 1 && ownGroup.stones.length === 1) {
       newKoPoint = { r: captured[0][0], c: captured[0][1] };
@@ -131,11 +152,11 @@ const GoCore = (function () {
     return { legal: true, board: newBoard, captured, koPoint: newKoPoint };
   }
 
-  function hasAnyLegalMove(board, size, color, koPoint) {
+  function hasAnyLegalMove(board, size, color, koPoint, history) {
     for (let r = 0; r < size; r++) {
       for (let c = 0; c < size; c++) {
         if (board[r][c]) continue;
-        if (tryMove(board, size, r, c, color, koPoint).legal) return true;
+        if (tryMove(board, size, r, c, color, koPoint, history).legal) return true;
       }
     }
     return false;
@@ -218,6 +239,7 @@ const GoCore = (function () {
     getGroup,
     getLiberties,
     countLiberties,
+    boardKey,
     tryMove,
     hasAnyLegalMove,
     scoreArea

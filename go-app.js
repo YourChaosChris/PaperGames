@@ -16,8 +16,15 @@ const AppStateGo = {
   consecutivePasses: 0,
   moveCount: 0,
   undoStack: [],
-  captures: { b: 0, w: 0 } // stones captured BY black / BY white
+  captures: { b: 0, w: 0 }, // stones captured BY black / BY white
+  // GoCore.boardKey() of every position the game has had so far, for the
+  // positional superko rule (no move may recreate an earlier position).
+  boardHistory: []
 };
+
+function goHistorySet() {
+  return new Set(AppStateGo.boardHistory || []);
+}
 
 let einkGoResizeHandlerAttached = false;
 let einkGoResizeTimeoutId = null;
@@ -37,7 +44,8 @@ function saveGoGame() {
     aiLevel: AppStateGo.aiLevel,
     consecutivePasses: AppStateGo.consecutivePasses,
     moveCount: AppStateGo.moveCount,
-    captures: AppStateGo.captures
+    captures: AppStateGo.captures,
+    boardHistory: AppStateGo.boardHistory
   });
 }
 
@@ -104,7 +112,8 @@ function pushUndoSnapshotGo() {
     consecutivePasses: AppStateGo.consecutivePasses,
     moveCount: AppStateGo.moveCount,
     captures: { b: AppStateGo.captures.b, w: AppStateGo.captures.w },
-    lastMove: AppStateGo.lastMove
+    lastMove: AppStateGo.lastMove,
+    historyLength: (AppStateGo.boardHistory || []).length
   });
 }
 
@@ -129,6 +138,7 @@ function explainIllegalGoMove(reason) {
   if (reason === "occupied") return "Invalid move: that point is already occupied.";
   if (reason === "suicide") return "Invalid move: that would leave your stones with no liberties.";
   if (reason === "ko") return "Invalid move: forbidden by the ko rule (recaptures immediately).";
+  if (reason === "superko") return "Invalid move: it would repeat an earlier board position (superko rule).";
   return "Invalid move.";
 }
 
@@ -191,6 +201,7 @@ function initGoApp() {
     AppStateGo.consecutivePasses = 0;
     AppStateGo.moveCount = 0;
     AppStateGo.captures = { b: 0, w: 0 };
+    AppStateGo.boardHistory = [GoCore.boardKey(AppStateGo.board)];
     resetUndoStackGo();
     setGameResultGo("");
     showBoardSectionGo();
@@ -295,6 +306,9 @@ function initGoApp() {
     AppStateGo.consecutivePasses = savedGame.consecutivePasses;
     AppStateGo.moveCount = savedGame.moveCount;
     AppStateGo.captures = savedGame.captures;
+    AppStateGo.boardHistory = Array.isArray(savedGame.boardHistory) && savedGame.boardHistory.length
+      ? savedGame.boardHistory
+      : [GoCore.boardKey(AppStateGo.board)];
     AppStateGo.gameOver = false;
     resetUndoStackGo();
     setActiveModeButtonGo(AppStateGo.mode);
@@ -327,7 +341,7 @@ function onGoPointClick(e) {
 
   const r = parseInt(e.currentTarget.dataset.row, 10);
   const c = parseInt(e.currentTarget.dataset.col, 10);
-  const result = GoCore.tryMove(AppStateGo.board, AppStateGo.size, r, c, AppStateGo.turn, AppStateGo.koPoint);
+  const result = GoCore.tryMove(AppStateGo.board, AppStateGo.size, r, c, AppStateGo.turn, AppStateGo.koPoint, goHistorySet());
   if (!result.legal) {
     setStatusGo("board-info", explainIllegalGoMove(result.reason));
     return;
@@ -346,6 +360,7 @@ function applyGoMove(result, r, c) {
   const mover = AppStateGo.turn;
   AppStateGo.board = result.board;
   AppStateGo.koPoint = result.koPoint;
+  AppStateGo.boardHistory.push(GoCore.boardKey(result.board));
   AppStateGo.captures[mover] += result.captured.length;
   AppStateGo.lastMove = { r, c };
   AppStateGo.consecutivePasses = 0;
@@ -361,7 +376,7 @@ function aiMoveOfflineGo() {
   const aiColor = AppStateGo.humanColor === "b" ? "w" : "b";
   if (AppStateGo.turn !== aiColor) return;
 
-  const move = GoAi.chooseMove(AppStateGo.board, AppStateGo.size, aiColor, AppStateGo.aiLevel, AppStateGo.koPoint);
+  const move = GoAi.chooseMove(AppStateGo.board, AppStateGo.size, aiColor, AppStateGo.aiLevel, AppStateGo.koPoint, goHistorySet());
 
   if (!move) {
     pushUndoSnapshotGo();
@@ -379,6 +394,7 @@ function aiMoveOfflineGo() {
   pushUndoSnapshotGo();
   AppStateGo.board = move.result.board;
   AppStateGo.koPoint = move.result.koPoint;
+  AppStateGo.boardHistory.push(GoCore.boardKey(move.result.board));
   AppStateGo.captures[aiColor] += move.result.captured.length;
   AppStateGo.lastMove = { r: move.r, c: move.c };
   AppStateGo.consecutivePasses = 0;
@@ -407,6 +423,7 @@ function undoLastMove() {
   AppStateGo.moveCount = prev.moveCount;
   AppStateGo.captures = prev.captures;
   AppStateGo.lastMove = prev.lastMove;
+  if (typeof prev.historyLength === "number") AppStateGo.boardHistory.length = prev.historyLength;
   setGameResultGo("");
   updateGoBoard();
   updateGameLabelsGo();

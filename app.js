@@ -193,6 +193,7 @@ function announceGameResult(resultCode, message) {
   }
   setGameResult(message);
   setStatus("board-info", message);
+  updateActionButtonsVisibility();
   if (window.ResultModal) {
     window.ResultModal.show(chessResultTitle(resultCode), message);
   }
@@ -627,11 +628,15 @@ aiLevelInline.addEventListener("change", () => {
         return;
       }
 
-      // Offline & Computer
-      const loser = AppState.turn || "white";
+      // Offline & Computer. Against the computer the human always resigns
+      // (even if pressed while the computer is thinking); locally it's the
+      // side to move.
+      const loser = AppState.mode === "offline-ai" ? (AppState.humanColor || "white") : (AppState.turn || "white");
       const result = loser === "white" ? "0-1" : "1-0";
       announceGameResult(result, "Resigned. " + (loser === "white" ? "Black" : "White") + " wins.");
       AppState.gameOver = true;
+      recordChessStatsIfVsAi("loss");
+      updateGameLabels();
     });
   }
 
@@ -1146,16 +1151,22 @@ function formatSecondsToClock(seconds) {
 
 
 function updateActionButtonsVisibility() {
-  // Draw/resign only make sense once an online game is actually running -
-  // showing them beforehand is just clutter with nothing to act on yet.
-  const showGameActions = AppState.mode === "online" && !!AppState.currentGame;
+  // Draw/resign only make sense once a game is actually running - showing
+  // them beforehand is just clutter with nothing to act on yet. Resign is
+  // also offered in offline games (like every other game here), which is
+  // what lets confirm-actions.js recognise a running offline game too.
+  const onlineGameRunning = AppState.mode === "online" && !!AppState.currentGame;
+  const boardContainer = document.getElementById("board-container");
+  const boardShown = !!boardContainer && !boardContainer.classList.contains("hidden");
+  const offlineGameRunning = (AppState.mode === "offline" || AppState.mode === "offline-ai") &&
+    boardShown && !AppState.gameOver;
   const resignBtn = document.getElementById("resign-button");
   const offerDrawBtn = document.getElementById("offer-draw-button");
   if (resignBtn) {
-    resignBtn.classList.toggle("hidden", !showGameActions);
+    resignBtn.classList.toggle("hidden", !(onlineGameRunning || offlineGameRunning));
   }
   if (offerDrawBtn) {
-    offerDrawBtn.classList.toggle("hidden", !showGameActions);
+    offerDrawBtn.classList.toggle("hidden", !onlineGameRunning);
   }
 }
 
@@ -1175,6 +1186,7 @@ function updateGameLabels() {
     meta.textContent = "";
     if (clocks) clocks.textContent = "";
     updateUndoButtonVisibility();
+    updateActionButtonsVisibility();
     if (AppState.gameOver) clearSavedChessGame();
     else saveChessGame();
     return;
@@ -1537,7 +1549,7 @@ function attachGame(game) {
 
 
 async function aiMoveOffline() {
-  if (AppState.mode !== "offline-ai") return;
+  if (AppState.mode !== "offline-ai" || AppState.gameOver) return;
   const aiColor = AppState.humanColor === "white" ? "black" : "white";
   if (AppState.turn !== aiColor) return;
 
