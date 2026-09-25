@@ -30,6 +30,7 @@ const AppStateSenet = {
   roll: null,             // null until thrown this turn, then { value, extraTurn }
   legalMoves: [],
   moveCount: 0,
+  lastMove: null,         // {from, to: [...], changed: [...]} of the latest move, for the board marker
   undoStack: []
 };
 
@@ -100,7 +101,8 @@ function pushUndoSnapshotSenet() {
     state: SenetCore.cloneState(AppStateSenet.state),
     turn: AppStateSenet.turn,
     gameOver: AppStateSenet.gameOver,
-    moveCount: AppStateSenet.moveCount
+    moveCount: AppStateSenet.moveCount,
+    lastMove: AppStateSenet.lastMove
   });
 }
 
@@ -157,6 +159,7 @@ function initSenetApp() {
     AppStateSenet.roll = null;
     AppStateSenet.legalMoves = [];
     AppStateSenet.moveCount = 0;
+    AppStateSenet.lastMove = null;
     resetUndoStackSenet();
     setGameResultSenet("");
     showBoardSectionSenet();
@@ -239,6 +242,7 @@ function initSenetApp() {
     AppStateSenet.humanColor = savedGame.humanColor;
     AppStateSenet.aiLevel = savedGame.aiLevel;
     AppStateSenet.moveCount = savedGame.moveCount;
+    AppStateSenet.lastMove = null;
     AppStateSenet.gameOver = false;
     resetUndoStackSenet();
     setActiveModeButtonSenet(AppStateSenet.mode);
@@ -330,8 +334,19 @@ function applySenetMove(fromIndex) {
   pushUndoSnapshotSenet();
   const mover = AppStateSenet.turn;
   const roll = AppStateSenet.roll;
+  const before = AppStateSenet.state.board;
   const result = SenetCore.applyMove(AppStateSenet.state, mover, fromIndex, roll.value);
   AppStateSenet.state = result.state;
+  // Compared square by square so the marker also covers a piece washed
+  // out of the House of Water and an opposing piece that was displaced.
+  const to = [];
+  const changed = [];
+  result.state.board.forEach((slot, i) => {
+    const old = before[i];
+    if (slot.owner === mover && (old.owner !== mover || slot.count > old.count)) to.push(i);
+    else if (slot.owner && slot.owner !== mover && old.owner !== slot.owner) changed.push(i);
+  });
+  AppStateSenet.lastMove = { from: fromIndex, to, changed };
   AppStateSenet.moveCount++;
   AppStateSenet.roll = null;
   AppStateSenet.legalMoves = [];
@@ -378,16 +393,26 @@ function aiTurnSenet() {
 
   if (!legalMoves.length) {
     setStatusSenet("board-info", "Computer threw " + roll.value + ". No legal move - turn passes.");
-    setTimeout(passTurnSenet, AiPacing.delay(700));
+    setTimeout(() => {
+      if (aiThrowStillCurrentSenet(roll, aiColor)) passTurnSenet();
+    }, AiPacing.delay(700));
     return;
   }
 
   setStatusSenet("board-info", "Computer threw " + roll.value + ", thinking…");
   setTimeout(() => {
+    if (!aiThrowStillCurrentSenet(roll, aiColor)) return;
     const from = SenetAi.chooseMove(AppStateSenet.state, aiColor, roll.value, AppStateSenet.aiLevel);
     if (from === null || from === undefined) return;
     applySenetMove(from);
   }, AiPacing.delay(350));
+}
+
+// An undo or a new game while the computer is still "thinking" replaces
+// the throw its pending timer was scheduled for; that timer must then do
+// nothing instead of moving with a throw that no longer exists.
+function aiThrowStillCurrentSenet(roll, aiColor) {
+  return !AppStateSenet.gameOver && AppStateSenet.roll === roll && AppStateSenet.turn === aiColor;
 }
 
 function undoLastMove() {
@@ -402,6 +427,7 @@ function undoLastMove() {
   AppStateSenet.turn = prev.turn;
   AppStateSenet.gameOver = prev.gameOver;
   AppStateSenet.moveCount = prev.moveCount;
+  AppStateSenet.lastMove = prev.lastMove || null;
   AppStateSenet.roll = null;
   AppStateSenet.legalMoves = [];
   setGameResultSenet("");
@@ -528,6 +554,10 @@ function updateSenetBoard() {
     }
     const isMovable = movableFrom.has(pos);
     sq.classList.toggle("senet-square-movable", isMovable);
+    const last = AppStateSenet.lastMove;
+    sq.classList.toggle("lm-from", !!last && last.from === pos);
+    sq.classList.toggle("lm-to", !!last && last.to.indexOf(pos) !== -1);
+    sq.classList.toggle("lm-changed", !!last && last.changed.indexOf(pos) !== -1);
 
     let label = "Square " + (pos + 1);
     if (pos === SenetCore.HOUSE_OF_REBIRTH) label += ", House of Rebirth";

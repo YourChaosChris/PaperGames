@@ -18,6 +18,7 @@ const AppStateMorris = {
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
   gameOver: false,
   moveCount: 0,
+  lastMove: null,         // {from, to, remove} points of the latest move, for the board marker
   undoStack: [],
   moveHistory: []
 };
@@ -114,7 +115,8 @@ function pushUndoSnapshotMorris() {
     state: MorrisCore.cloneState(AppStateMorris.state),
     turn: AppStateMorris.turn,
     gameOver: AppStateMorris.gameOver,
-    moveCount: AppStateMorris.moveCount
+    moveCount: AppStateMorris.moveCount,
+    lastMove: AppStateMorris.lastMove
   });
 }
 
@@ -196,6 +198,7 @@ function initMorrisApp() {
     AppStateMorris.aiLevel = level;
     AppStateMorris.gameOver = false;
     AppStateMorris.moveCount = 0;
+    AppStateMorris.lastMove = null;
     resetUndoStackMorris();
     resetMoveHistoryMorris();
     setGameResultMorris("");
@@ -288,6 +291,7 @@ function initMorrisApp() {
     AppStateMorris.humanColor = savedGame.humanColor;
     AppStateMorris.aiLevel = savedGame.aiLevel;
     AppStateMorris.moveCount = savedGame.moveCount;
+    AppStateMorris.lastMove = null;
     AppStateMorris.moveHistory = savedGame.moveHistory || [];
     AppStateMorris.gameOver = false;
     resetUndoStackMorris();
@@ -406,6 +410,11 @@ function applyMorrisMove(move) {
   pushUndoSnapshotMorris();
   const mover = AppStateMorris.turn;
   AppStateMorris.state = MorrisCore.applyMove(AppStateMorris.state, mover, move);
+  AppStateMorris.lastMove = {
+    from: move.type === "place" ? null : move.from,
+    to: move.to,
+    remove: move.remove === undefined ? null : move.remove
+  };
   AppStateMorris.moveCount++;
   recordMoveMorris(mover, move);
   AppStateMorris.selected = null;
@@ -457,6 +466,7 @@ function undoLastMove() {
   AppStateMorris.turn = prev.turn;
   AppStateMorris.gameOver = prev.gameOver;
   AppStateMorris.moveCount = prev.moveCount;
+  AppStateMorris.lastMove = prev.lastMove || null;
   AppStateMorris.selected = null;
   AppStateMorris.pendingRemoval = null;
   AppStateMorris.moveHistory.length = AppStateMorris.moveCount;
@@ -618,6 +628,12 @@ function updateMorrisBoard() {
     pt.classList.toggle("morris-point-selected", isSelected);
     pt.classList.toggle("morris-point-movable", isMovable);
     pt.classList.toggle("morris-point-removable", isRemovable);
+    // Latest move: solid on the destination, dashed on the origin,
+    // dotted on the point a mill just cleared.
+    const last = AppStateMorris.lastMove;
+    pt.classList.toggle("lm-to", !!last && last.to === i);
+    pt.classList.toggle("lm-from", !!last && last.from === i);
+    pt.classList.toggle("lm-changed", !!last && last.remove === i);
 
     let label = "Point " + (i + 1);
     label += piece ? ", " + (piece === "b" ? "Black" : "White") + " piece" : ", empty";

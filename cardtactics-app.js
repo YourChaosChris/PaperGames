@@ -27,6 +27,7 @@ const AppStateOnitama = {
   selectedPiece: null,    // [r,c] or null
   legalTargets: {},       // "r,c" -> true, for the current card+piece selection
   moveCount: 0,
+  lastMove: null,         // {from: [r, c], to: [r, c]} of the latest move, for the board marker
   undoStack: []
 };
 
@@ -96,7 +97,8 @@ function pushUndoSnapshotOnitama() {
     state: OnitamaCore.cloneState(AppStateOnitama.state),
     turn: AppStateOnitama.turn,
     gameOver: AppStateOnitama.gameOver,
-    moveCount: AppStateOnitama.moveCount
+    moveCount: AppStateOnitama.moveCount,
+    lastMove: AppStateOnitama.lastMove
   });
 }
 
@@ -153,6 +155,7 @@ function initOnitamaApp() {
     AppStateOnitama.selectedPiece = null;
     AppStateOnitama.legalTargets = {};
     AppStateOnitama.moveCount = 0;
+    AppStateOnitama.lastMove = null;
     resetUndoStackOnitama();
     setGameResultOnitama("");
     showBoardSectionOnitama();
@@ -228,6 +231,7 @@ function initOnitamaApp() {
     AppStateOnitama.humanColor = savedGame.humanColor;
     AppStateOnitama.aiLevel = savedGame.aiLevel;
     AppStateOnitama.moveCount = savedGame.moveCount;
+    AppStateOnitama.lastMove = null;
     AppStateOnitama.gameOver = false;
     AppStateOnitama.selectedCard = null;
     AppStateOnitama.selectedPiece = null;
@@ -329,6 +333,7 @@ function applyOnitamaMove(move) {
   pushUndoSnapshotOnitama();
   const mover = AppStateOnitama.turn;
   AppStateOnitama.state = OnitamaCore.applyMove(AppStateOnitama.state, mover, move);
+  AppStateOnitama.lastMove = { from: move.from.slice(), to: move.to.slice() };
   AppStateOnitama.moveCount++;
   AppStateOnitama.selectedCard = null;
   AppStateOnitama.selectedPiece = null;
@@ -389,6 +394,7 @@ function undoLastMove() {
   AppStateOnitama.turn = prev.turn;
   AppStateOnitama.gameOver = prev.gameOver;
   AppStateOnitama.moveCount = prev.moveCount;
+  AppStateOnitama.lastMove = prev.lastMove || null;
   AppStateOnitama.selectedCard = null;
   AppStateOnitama.selectedPiece = null;
   AppStateOnitama.legalTargets = {};
@@ -495,6 +501,9 @@ function updateOnitamaBoard() {
       && AppStateOnitama.selectedPiece[0] === r && AppStateOnitama.selectedPiece[1] === c;
     sq.classList.toggle("selected", !!isSelected);
     sq.classList.toggle("onitama-square-movable", !!AppStateOnitama.legalTargets[targetKeyOnitama(r, c)]);
+    const last = AppStateOnitama.lastMove;
+    sq.classList.toggle("lm-from", !!last && last.from[0] === r && last.from[1] === c);
+    sq.classList.toggle("lm-to", !!last && last.to[0] === r && last.to[1] === c);
 
     let label = "Row " + (r + 1) + ", column " + (c + 1);
     label += piece ? ", " + colorNameOnitama(piece.color) + (piece.king ? " master" : " pawn") : ", empty";

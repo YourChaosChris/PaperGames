@@ -13,6 +13,7 @@ const AppStateConnectFour = {
   aiLevel: 2,
   gameOver: false,
   moveCount: 0,
+  lastMove: null,         // {row, col} of the latest disc, for the board marker
   undoStack: []
 };
 
@@ -82,7 +83,8 @@ function pushUndoSnapshotConnectFour() {
     board: AppStateConnectFour.board.map((row) => row.slice()),
     turn: AppStateConnectFour.turn,
     gameOver: AppStateConnectFour.gameOver,
-    moveCount: AppStateConnectFour.moveCount
+    moveCount: AppStateConnectFour.moveCount,
+    lastMove: AppStateConnectFour.lastMove
   });
 }
 
@@ -136,6 +138,7 @@ function initConnectFourApp() {
     AppStateConnectFour.aiLevel = level;
     AppStateConnectFour.gameOver = false;
     AppStateConnectFour.moveCount = 0;
+    AppStateConnectFour.lastMove = null;
     resetUndoStackConnectFour();
     setGameResultConnectFour("");
     showBoardSectionConnectFour();
@@ -210,6 +213,7 @@ function initConnectFourApp() {
     AppStateConnectFour.humanColor = savedGame.humanColor;
     AppStateConnectFour.aiLevel = savedGame.aiLevel;
     AppStateConnectFour.moveCount = savedGame.moveCount;
+    AppStateConnectFour.lastMove = null;
     AppStateConnectFour.gameOver = false;
     resetUndoStackConnectFour();
     setActiveModeButton(AppStateConnectFour.mode);
@@ -252,7 +256,9 @@ function attemptConnectFourMove(col) {
 function applyConnectFourMove(col) {
   pushUndoSnapshotConnectFour();
   const mover = AppStateConnectFour.turn;
+  const row = ConnectFourCore.landingRow(AppStateConnectFour.board, col);
   const result = ConnectFourCore.applyMove(AppStateConnectFour.board, mover, col);
+  AppStateConnectFour.lastMove = { row, col };
   AppStateConnectFour.board = result.board;
   AppStateConnectFour.moveCount++;
   updateConnectFourBoard();
@@ -316,6 +322,7 @@ function undoLastMove() {
   AppStateConnectFour.turn = prev.turn;
   AppStateConnectFour.gameOver = prev.gameOver;
   AppStateConnectFour.moveCount = prev.moveCount;
+  AppStateConnectFour.lastMove = prev.lastMove || null;
   setGameResultConnectFour("");
   updateConnectFourBoard();
   updateGameLabelsConnectFour();
@@ -416,6 +423,8 @@ function updateConnectFourBoard() {
     }
     const isLanding = landingSpots.has(r + "," + c);
     sq.classList.toggle("c4-square-movable", isLanding);
+    const last = AppStateConnectFour.lastMove;
+    sq.classList.toggle("lm-to", !!last && last.row === r && last.col === c);
     sq.disabled = !legalCols.includes(c);
 
     let label = "Row " + (r + 1) + ", column " + (c + 1);

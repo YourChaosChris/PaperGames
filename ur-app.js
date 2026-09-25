@@ -26,6 +26,7 @@ const AppStateUr = {
   roll: null,             // null until rolled this turn, then 0-4
   legalMoves: [],
   moveCount: 0,
+  lastMove: null,         // {color, from, to, captured} of the latest move, for the board marker
   undoStack: []
 };
 
@@ -96,7 +97,8 @@ function pushUndoSnapshotUr() {
     state: UrCore.cloneState(AppStateUr.state),
     turn: AppStateUr.turn,
     gameOver: AppStateUr.gameOver,
-    moveCount: AppStateUr.moveCount
+    moveCount: AppStateUr.moveCount,
+    lastMove: AppStateUr.lastMove
   });
 }
 
@@ -183,6 +185,7 @@ function initUrApp() {
     AppStateUr.roll = null;
     AppStateUr.legalMoves = [];
     AppStateUr.moveCount = 0;
+    AppStateUr.lastMove = null;
     resetUndoStackUr();
     setGameResultUr("");
     showBoardSectionUr();
@@ -268,6 +271,7 @@ function initUrApp() {
     AppStateUr.humanColor = savedGame.humanColor;
     AppStateUr.aiLevel = savedGame.aiLevel;
     AppStateUr.moveCount = savedGame.moveCount;
+    AppStateUr.lastMove = null;
     AppStateUr.gameOver = false;
     resetUndoStackUr();
     setActiveModeButtonUr(AppStateUr.mode);
@@ -365,6 +369,7 @@ function applyUrMove(move) {
   pushUndoSnapshotUr();
   const mover = AppStateUr.turn;
   AppStateUr.state = UrCore.applyMove(AppStateUr.state, mover, move);
+  AppStateUr.lastMove = { color: mover, from: move.from, to: move.to, captured: !!move.captured };
   AppStateUr.moveCount++;
   AppStateUr.roll = null;
   AppStateUr.legalMoves = [];
@@ -408,12 +413,16 @@ function aiTurnUr() {
 
   if (!legalMoves.length) {
     setStatusUr("board-info", "Computer rolled " + roll + ". No legal move - turn passes.");
-    setTimeout(passTurnUr, AiPacing.delay(700));
+    setTimeout(() => {
+      if (!AppStateUr.gameOver && AppStateUr.turn === aiColor) passTurnUr();
+    }, AiPacing.delay(700));
     return;
   }
 
   setStatusUr("board-info", "Computer rolled " + roll + ", thinking…");
   setTimeout(() => {
+    // An undo while the computer was thinking hands the turn back.
+    if (AppStateUr.gameOver || AppStateUr.turn !== aiColor) return;
     const move = UrAi.chooseMove(AppStateUr.state, aiColor, roll, AppStateUr.aiLevel);
     if (!move) return;
     applyUrMove(move);
@@ -432,6 +441,7 @@ function undoLastMove() {
   AppStateUr.turn = prev.turn;
   AppStateUr.gameOver = prev.gameOver;
   AppStateUr.moveCount = prev.moveCount;
+  AppStateUr.lastMove = prev.lastMove || null;
   AppStateUr.roll = null;
   AppStateUr.legalMoves = [];
   setGameResultUr("");
@@ -564,6 +574,12 @@ function updateUrBoard() {
     }
     const isMovable = movableFrom.has(pos);
     sq.classList.toggle("ur-square-movable", isMovable);
+    // Positions 1-4 and 13-14 exist once per side, so the row has to
+    // belong to the mover as well (row 1 is the shared middle lane).
+    const last = AppStateUr.lastMove;
+    const moverRow = !!last && (row === 1 || UR_COLOR_FOR_ROW[row] === last.color);
+    sq.classList.toggle("lm-from", moverRow && last.from === pos);
+    sq.classList.toggle("lm-to", moverRow && last.to === pos);
 
     let label = "Path square " + pos;
     if (UrCore.isRosette(pos)) label += ", rosette";
@@ -597,6 +613,21 @@ function updateUrTrays() {
     bottomStartBtn.classList.toggle("ur-tray-slot-movable", movableFromStart && AppStateUr.turn === "w");
     I18n.setAria(bottomStartBtn, "White start, " + bottomStart + " piece" + (bottomStart === 1 ? "" : "s") + " waiting");
   }
+
+  // Latest move off or onto the board: dashed on the start tray a piece
+  // entered from, solid on the home tray it reached, dotted on the
+  // opponent's start tray a captured piece went back to.
+  const last = AppStateUr.lastMove;
+  [["b", topStartBtn, "ur-tray-top-home-count"], ["w", bottomStartBtn, "ur-tray-bottom-home-count"]].forEach(([color, startEl, homeCountId]) => {
+    const homeCount = document.getElementById(homeCountId);
+    const homeEl = homeCount ? homeCount.parentElement : null;
+    const mine = !!last && last.color === color;
+    if (startEl) {
+      startEl.classList.toggle("lm-from", mine && last.from === 0);
+      startEl.classList.toggle("lm-changed", !!last && last.captured && last.color !== color);
+    }
+    if (homeEl) homeEl.classList.toggle("lm-to", mine && last.to === UrCore.HOME);
+  });
 }
 
 function updateDiceDisplayUr(roll) {
