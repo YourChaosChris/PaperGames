@@ -612,7 +612,7 @@ function updateSurakartaBoard() {
     if (isActive) label += ", selected";
     else if (isCapturable) label += ", capture available";
     else if (quietSet.has(i)) label += ", movable";
-    pt.setAttribute("aria-label", label);
+    I18n.setAria(pt, label);
   });
 
   ensureSurakartaBoardAspect();

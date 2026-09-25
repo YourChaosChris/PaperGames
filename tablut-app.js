@@ -471,7 +471,7 @@ function updateTablutBoard() {
     } else {
       label += ", empty";
     }
-    sq.setAttribute("aria-label", label);
+    I18n.setAria(sq, label);
   });
 }
 

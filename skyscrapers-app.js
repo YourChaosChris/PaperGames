@@ -358,7 +358,7 @@ function updateSkyscrapersBoard() {
     let label2 = "Row " + (r + 1) + ", column " + (c + 1);
     label2 += value ? ", height " + value : ", empty";
     if (conflicts.has(index)) label2 += ", conflict";
-    cell.setAttribute("aria-label", label2);
+    I18n.setAria(cell, label2);
   });
 
   boardEl.querySelectorAll(".skyscrapers-clue-cell").forEach((cell) => {
@@ -374,7 +374,7 @@ function updateSkyscrapersBoard() {
       let label2 = side + " clue, " + value;
       if (status === "ok") label2 += ", satisfied";
       else if (status === "violated") label2 += ", not satisfied";
-      cell.setAttribute("aria-label", label2);
+      I18n.setAria(cell, label2);
     } else {
       cell.removeAttribute("aria-label");
     }

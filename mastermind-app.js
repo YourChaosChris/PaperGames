@@ -240,8 +240,7 @@ function updateMastermindGuessRow() {
     const symbol = AppStateMastermind.currentGuess[i];
     btn.innerHTML = mastermindSymbolSvg(symbol, "#141413");
     btn.disabled = gameOver;
-    btn.setAttribute("aria-label",
-      t18nMastermind("mastermind_slot_aria") + " " + (i + 1) + ": " + mastermindSymbolName(symbol) + ". " + t18nMastermind("mastermind_slot_hint"));
+    I18n.setAria(btn, t18nMastermind("mastermind_slot_aria") + " " + (i + 1) + ": " + mastermindSymbolName(symbol) + ". " + t18nMastermind("mastermind_slot_hint"));
   });
 }
 
@@ -276,7 +275,7 @@ function renderMastermindHistory() {
       const shape = document.createElement("span");
       shape.className = "mastermind-history-shape";
       shape.innerHTML = mastermindSymbolSvg(symbol, "#141413");
-      shape.setAttribute("aria-label", mastermindSymbolName(symbol));
+      I18n.setAria(shape, mastermindSymbolName(symbol));
       shapes.appendChild(shape);
     });
     row.appendChild(shapes);
@@ -284,8 +283,7 @@ function renderMastermindHistory() {
     const pegs = document.createElement("div");
     pegs.className = "mastermind-history-pegs";
     pegs.innerHTML = mastermindPegRowMarkup(entry.black, entry.white);
-    pegs.setAttribute("aria-label",
-      t18nMastermind("mastermind_black_pegs_label") + ": " + entry.black + ", " +
+    I18n.setAria(pegs, t18nMastermind("mastermind_black_pegs_label") + ": " + entry.black + ", " +
       t18nMastermind("mastermind_white_pegs_label") + ": " + entry.white);
     row.appendChild(pegs);
 

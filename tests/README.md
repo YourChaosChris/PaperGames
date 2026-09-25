@@ -9,8 +9,9 @@ plain Node scripts, matching the rest of the codebase.
 
 - Node.js.
 - [Playwright](https://playwright.dev/) with a Chromium browser, for
-  `css-check.js`, `board-sweep.js` and `interaction-sweep.js` (not
-  needed for `static-checks.js` alone). If it isn't already installed:
+  `css-check.js`, `board-sweep.js`, `interaction-sweep.js` and
+  `i18n-runtime-sweep.js` (not needed for `static-checks.js` or
+  `i18n-messages.js`). If it isn't already installed:
 
   ```
   npm install -g playwright
@@ -41,6 +42,12 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   left untranslated, unfilled placeholders, or (for uk/ru/ja/zh)
   leftover English words; also checks `msg_t_*` template placeholders
   match across languages.
+- `node tests/i18n-runtime-sweep.js` - needs a running server
+  (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
+  Plays every game in Russian, 2-player and vs-computer, with random
+  clicks (`CLICKS`, default 60), then fails on any status line, result
+  popup, info line or screen-reader label still containing an English
+  word. Takes a few minutes.
 - `node tests/css-check.js` - needs a browser only (no server): loads
   `style.css` in a real page and confirms it parses cleanly.
 - `node tests/board-sweep.js` - needs a running server (`BASE_URL` env

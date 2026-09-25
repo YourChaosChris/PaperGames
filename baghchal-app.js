@@ -544,7 +544,7 @@ function updateBaghChalBoard() {
     if (isSelected) label += ", selected";
     else if (isCaptureTarget) label += ", capture here";
     else if (isTarget || isPlacementSpot) label += ", movable";
-    pt.setAttribute("aria-label", label);
+    I18n.setAria(pt, label);
   });
 
   ensureBaghChalBoardAspect();

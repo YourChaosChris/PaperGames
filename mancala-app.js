@@ -437,8 +437,7 @@ function updateMancalaBoard() {
     const isMovable = movableSet.has(i);
     pitEl.classList.toggle("mancala-pit-movable", isMovable);
     pitEl.disabled = !isMovable;
-    pitEl.setAttribute("aria-label",
-      sideNameMancala(owner) + " pit, " + seeds + " seed" + (seeds === 1 ? "" : "s") + (isMovable ? ", your move" : ""));
+    I18n.setAria(pitEl, sideNameMancala(owner) + " pit, " + seeds + " seed" + (seeds === 1 ? "" : "s") + (isMovable ? ", your move" : ""));
   });
 
   setStatusMancala("mancala-store-a-count", String(board[MancalaCore.STORE_A]));

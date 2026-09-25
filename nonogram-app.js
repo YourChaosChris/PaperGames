@@ -294,7 +294,7 @@ function updateNonogramBoard() {
     cell.classList.toggle("nonogram-cell-marked", value === "marked");
     cell.textContent = value === "marked" ? "×" : "";
     let label = "Row " + (r + 1) + ", column " + (c + 1) + ", " + value;
-    cell.setAttribute("aria-label", label);
+    I18n.setAria(cell, label);
   });
 }
 

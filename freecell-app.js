@@ -379,7 +379,7 @@ function updateFreeCellBoard() {
       const card = state.freeCells[i];
       cell.textContent = card ? freecellCardLabel(card) : "";
       cell.classList.toggle("freecell-cell-selected", !!(sel && sel.type === "freecell" && sel.index === i));
-      cell.setAttribute("aria-label", "Free cell " + (i + 1) + (card ? ", " + freecellCardLabel(card) : ", empty"));
+      I18n.setAria(cell, "Free cell " + (i + 1) + (card ? ", " + freecellCardLabel(card) : ", empty"));
     });
   }
 
@@ -390,7 +390,7 @@ function updateFreeCellBoard() {
       const rank = state.foundations[suit];
       cell.textContent = rank ? freecellCardLabel({ rank, suit }) : SUIT_SYMBOL[suit];
       cell.classList.toggle("freecell-foundation-empty", rank === 0);
-      cell.setAttribute("aria-label", "Foundation " + SUIT_SYMBOL[suit] + (rank ? ", up to " + freecellCardLabel({ rank, suit }) : ", empty"));
+      I18n.setAria(cell, "Foundation " + SUIT_SYMBOL[suit] + (rank ? ", up to " + freecellCardLabel({ rank, suit }) : ", empty"));
     });
   }
 

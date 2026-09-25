@@ -359,7 +359,7 @@ function updateKlondikeBoard() {
     stockEl.className = "klondike-cell klondike-stock" + (hasStock ? " klondike-card-back" : "");
     stockEl.textContent = hasStock ? "" : (hasWaste ? "↺" : "");
     stockEl.disabled = !hasStock && !hasWaste;
-    stockEl.setAttribute("aria-label", hasStock
+    I18n.setAria(stockEl, hasStock
       ? t18nKlondike("klondike_aria_stock") + ": " + state.stock.length
       : (hasWaste
         ? t18nKlondike("klondike_aria_stock") + " " + t18nKlondike("klondike_aria_empty") + ", " + t18nKlondike("klondike_aria_tap_recycle")
@@ -371,7 +371,7 @@ function updateKlondikeBoard() {
     const top = KlondikeCore.topOfColumn(state.waste);
     wasteEl.className = "klondike-cell klondike-waste" + (sel && sel.type === "waste" ? " klondike-card-selected" : "");
     wasteEl.textContent = top ? klondikeCardLabel(top) : "";
-    wasteEl.setAttribute("aria-label", t18nKlondike("klondike_aria_waste") + ", " + (top ? klondikeCardLabel(top) : t18nKlondike("klondike_aria_empty")));
+    I18n.setAria(wasteEl, t18nKlondike("klondike_aria_waste") + ", " + (top ? klondikeCardLabel(top) : t18nKlondike("klondike_aria_empty")));
   }
 
   const foundationsEl = document.getElementById("klondike-foundations");
@@ -381,7 +381,7 @@ function updateKlondikeBoard() {
       const rank = state.foundations[suit];
       cell.textContent = rank ? klondikeCardLabel({ rank, suit }) : SUIT_SYMBOL_K[suit];
       cell.classList.toggle("klondike-foundation-empty", rank === 0);
-      cell.setAttribute("aria-label", t18nKlondike("klondike_aria_foundation") + " " + SUIT_SYMBOL_K[suit] + ", " +
+      I18n.setAria(cell, t18nKlondike("klondike_aria_foundation") + " " + SUIT_SYMBOL_K[suit] + ", " +
         (rank ? t18nKlondike("klondike_aria_up_to") + " " + klondikeCardLabel({ rank, suit }) : t18nKlondike("klondike_aria_empty")));
     });
   }
@@ -408,10 +408,10 @@ function updateKlondikeBoard() {
           cardEl.textContent = klondikeCardLabel(card);
           const isSelected = !!(sel && sel.type === "column" && sel.col === c && index >= sel.index);
           cardEl.classList.toggle("klondike-card-selected", isSelected);
-          cardEl.setAttribute("aria-label", klondikeCardLabel(card));
+          I18n.setAria(cardEl, klondikeCardLabel(card));
         } else {
           cardEl.className = "klondike-card klondike-card-back";
-          cardEl.setAttribute("aria-label", t18nKlondike("klondike_aria_face_down"));
+          I18n.setAria(cardEl, t18nKlondike("klondike_aria_face_down"));
         }
         cardEl.addEventListener("click", (e) => {
           e.stopPropagation();

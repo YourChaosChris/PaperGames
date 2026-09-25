@@ -492,7 +492,7 @@ function updateDotsAndBoxesBoard() {
     const orientation = type === "h" ? "Horizontal" : "Vertical";
     let label = orientation + " line, row " + (r + 1) + ", column " + (c + 1);
     label += owner ? ", drawn by " + playerNameDotsAndBoxes(owner) : ", empty";
-    btn.setAttribute("aria-label", label);
+    I18n.setAria(btn, label);
   });
 
   updateScoreLineDotsAndBoxes();

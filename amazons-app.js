@@ -527,7 +527,7 @@ function updateAmazonsBoard() {
     else if (value === "p2") label += ", Player 2";
     else if (value === "burned") label += ", burned";
     else label += ", empty";
-    cell.setAttribute("aria-label", label);
+    I18n.setAria(cell, label);
   });
 
   updateScoreLineAmazons();

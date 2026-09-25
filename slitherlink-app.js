@@ -438,7 +438,7 @@ function updateSlitherlinkBoard() {
     const label = ref.type === "H"
       ? "Edge between dot row " + ref.r + ", column " + ref.c + " and column " + (ref.c + 1)
       : "Edge between dot row " + ref.r + " and row " + (ref.r + 1) + ", column " + ref.c;
-    btn.setAttribute("aria-label", label + ", " + slitherlinkStateLabel(value));
+    I18n.setAria(btn, label + ", " + slitherlinkStateLabel(value));
     btn.classList.toggle("slitherlink-edge-btn-on", value === SlitherlinkCore.ON);
   });
 

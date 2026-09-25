@@ -1024,7 +1024,7 @@ function updateBoard() {
         (AppState.lastMove.from === coord || AppState.lastMove.to === coord)) {
       sq.classList.add("last-move");
     }
-    sq.setAttribute("aria-label", chessSquareAriaLabel(coord, piece, isSelected));
+    I18n.setAria(sq, chessSquareAriaLabel(coord, piece, isSelected));
   });
   // Keep squares square, in case something changed the board width
   ensureSquareAspectRatio();

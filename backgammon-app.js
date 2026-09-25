@@ -707,7 +707,7 @@ function updateBackgammonBoard() {
     label += pt.color ? ", " + pt.count + " " + (pt.color === "b" ? "Black" : "White") + " checker" + (pt.count === 1 ? "" : "s") : ", empty";
     if (isSelected) label += ", selected";
     else if (isMovable) label += ", movable";
-    cell.setAttribute("aria-label", label);
+    I18n.setAria(cell, label);
   });
 
   const barTop = document.getElementById("backgammon-bar-top");
@@ -717,22 +717,22 @@ function updateBackgammonBoard() {
   if (barTop) {
     setStatusBg("backgammon-bar-top-count", String(AppStateBackgammon.state.bar.b));
     barTop.classList.toggle("bg-tray-movable", AppStateBackgammon.turn === "b" && AppStateBackgammon.state.bar.b > 0 && legalDestinationsFrom("bar").length > 0 && AppStateBackgammon.selected === null);
-    barTop.setAttribute("aria-label", "Bar, " + AppStateBackgammon.state.bar.b + " Black checker" + (AppStateBackgammon.state.bar.b === 1 ? "" : "s"));
+    I18n.setAria(barTop, "Bar, " + AppStateBackgammon.state.bar.b + " Black checker" + (AppStateBackgammon.state.bar.b === 1 ? "" : "s"));
   }
   if (barBottom) {
     setStatusBg("backgammon-bar-bottom-count", String(AppStateBackgammon.state.bar.w));
     barBottom.classList.toggle("bg-tray-movable", AppStateBackgammon.turn === "w" && AppStateBackgammon.state.bar.w > 0 && legalDestinationsFrom("bar").length > 0 && AppStateBackgammon.selected === null);
-    barBottom.setAttribute("aria-label", "Bar, " + AppStateBackgammon.state.bar.w + " White checker" + (AppStateBackgammon.state.bar.w === 1 ? "" : "s"));
+    I18n.setAria(barBottom, "Bar, " + AppStateBackgammon.state.bar.w + " White checker" + (AppStateBackgammon.state.bar.w === 1 ? "" : "s"));
   }
   if (offTop) {
     setStatusBg("backgammon-off-top-count", String(AppStateBackgammon.state.off.b));
     offTop.classList.toggle("bg-tray-movable", destSet.has("off") && AppStateBackgammon.turn === "b");
-    offTop.setAttribute("aria-label", "Borne off, " + AppStateBackgammon.state.off.b + " Black checker" + (AppStateBackgammon.state.off.b === 1 ? "" : "s"));
+    I18n.setAria(offTop, "Borne off, " + AppStateBackgammon.state.off.b + " Black checker" + (AppStateBackgammon.state.off.b === 1 ? "" : "s"));
   }
   if (offBottom) {
     setStatusBg("backgammon-off-bottom-count", String(AppStateBackgammon.state.off.w));
     offBottom.classList.toggle("bg-tray-movable", destSet.has("off") && AppStateBackgammon.turn === "w");
-    offBottom.setAttribute("aria-label", "Borne off, " + AppStateBackgammon.state.off.w + " White checker" + (AppStateBackgammon.state.off.w === 1 ? "" : "s"));
+    I18n.setAria(offBottom, "Borne off, " + AppStateBackgammon.state.off.w + " White checker" + (AppStateBackgammon.state.off.w === 1 ? "" : "s"));
   }
 
   updateDiceDisplayBg();

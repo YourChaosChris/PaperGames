@@ -624,7 +624,7 @@ function updateMorrisBoard() {
     if (isSelected) label += ", selected";
     if (isRemovable) label += ", removable";
     else if (isMovable) label += ", movable";
-    pt.setAttribute("aria-label", label);
+    I18n.setAria(pt, label);
   });
 }
 

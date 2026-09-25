@@ -569,7 +569,7 @@ function updateUrBoard() {
     if (UrCore.isRosette(pos)) label += ", rosette";
     label += occupant ? ", " + (occupant === "b" ? "Black" : "White") + " piece" : ", empty";
     if (isMovable) label += ", movable";
-    sq.setAttribute("aria-label", label);
+    I18n.setAria(sq, label);
   });
 
   updateUrTrays();
@@ -591,11 +591,11 @@ function updateUrTrays() {
   const bottomStartBtn = document.getElementById("ur-tray-bottom-start");
   if (topStartBtn) {
     topStartBtn.classList.toggle("ur-tray-slot-movable", movableFromStart && AppStateUr.turn === "b");
-    topStartBtn.setAttribute("aria-label", "Black start, " + topStart + " piece" + (topStart === 1 ? "" : "s") + " waiting");
+    I18n.setAria(topStartBtn, "Black start, " + topStart + " piece" + (topStart === 1 ? "" : "s") + " waiting");
   }
   if (bottomStartBtn) {
     bottomStartBtn.classList.toggle("ur-tray-slot-movable", movableFromStart && AppStateUr.turn === "w");
-    bottomStartBtn.setAttribute("aria-label", "White start, " + bottomStart + " piece" + (bottomStart === 1 ? "" : "s") + " waiting");
+    I18n.setAria(bottomStartBtn, "White start, " + bottomStart + " piece" + (bottomStart === 1 ? "" : "s") + " waiting");
   }
 }
 

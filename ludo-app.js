@@ -776,7 +776,7 @@ function updateLudoAriaLabels() {
     const count = el.querySelectorAll(".ludo-token").length;
     if (count) label += ", " + count + " token" + (count > 1 ? "s" : "");
     if (el.classList.contains("ludo-cell-movable")) label += ", movable";
-    el.setAttribute("aria-label", label);
+    I18n.setAria(el, label);
   });
   boardEl.querySelectorAll(".ludo-home-slot").forEach((el) => {
     const color = el.dataset.color;
@@ -784,7 +784,7 @@ function updateLudoAriaLabels() {
     if (el.classList.contains("ludo-home-slot-filled")) label += ", waiting";
     else label += ", in play";
     if (el.classList.contains("ludo-home-slot-movable")) label += ", movable";
-    el.setAttribute("aria-label", label);
+    I18n.setAria(el, label);
   });
 }
 

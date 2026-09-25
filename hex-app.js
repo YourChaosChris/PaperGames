@@ -426,7 +426,7 @@ function updateHexBoard() {
 
     let label = "Row " + (r + 1) + ", column " + (c + 1);
     label += piece ? ", " + colorNameHex(piece) : ", empty";
-    cell.setAttribute("aria-label", label);
+    I18n.setAria(cell, label);
   });
 }
 

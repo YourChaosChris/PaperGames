@@ -498,7 +498,7 @@ function updateOnitamaBoard() {
 
     let label = "Row " + (r + 1) + ", column " + (c + 1);
     label += piece ? ", " + colorNameOnitama(piece.color) + (piece.king ? " master" : " pawn") : ", empty";
-    sq.setAttribute("aria-label", label);
+    I18n.setAria(sq, label);
   });
 }
 

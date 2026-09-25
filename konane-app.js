@@ -728,7 +728,7 @@ function updateKonaneBoard() {
     if (isActive) label += ", selected";
     else if (removableSet.has(key)) label += ", removable";
     else if (movableFromSet.has(key) || destinationSet.has(key)) label += ", movable";
-    sq.setAttribute("aria-label", label);
+    I18n.setAria(sq, label);
   });
 
   ensureKonaneSquareAspectRatio();

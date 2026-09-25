@@ -349,7 +349,7 @@ function updateTwenty48Board() {
     const sizeClass = twenty48SizeClass(value);
     if (sizeClass) cell.classList.add(sizeClass);
 
-    cell.setAttribute("aria-label", "Row " + (r + 1) + ", column " + (c + 1) + (value ? ", " + value : ", empty"));
+    I18n.setAria(cell, "Row " + (r + 1) + ", column " + (c + 1) + (value ? ", " + value : ", empty"));
   });
 }
 

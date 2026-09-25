@@ -341,7 +341,7 @@ function updateSudokuBoard() {
     let label2 = "Row " + (Math.floor(index / 9) + 1) + ", column " + (index % 9 + 1);
     label2 += value ? ", " + value + (isGiven ? " (given)" : "") : ", empty";
     if (conflicts.has(index)) label2 += ", conflict";
-    cell.setAttribute("aria-label", label2);
+    I18n.setAria(cell, label2);
   });
 }
 
