@@ -618,19 +618,35 @@ function buildBackgammonBoardDOM() {
 
       cell.addEventListener("click", () => {
         const owner = AppStateBackgammon.state.points[pointNum].color;
-        if (AppStateBackgammon.selected === null) {
+        const sel = AppStateBackgammon.selected;
+
+        if (sel === null) {
           if (owner) onBackgammonSourceClick(pointNum, owner);
-        } else if (AppStateBackgammon.selected === pointNum) {
-          onBackgammonSourceClick(pointNum, owner); // toggles the selection off
-        } else if (owner === AppStateBackgammon.turn) {
-          // Clicking another of your own points re-selects it from
-          // there instead, matching checkers/morris. Moving onto a
-          // point you already occupy is legal but never required, so
-          // this click always means "pick this piece up next."
-          onBackgammonSourceClick(pointNum, owner);
-        } else {
-          onBackgammonDestClick(pointNum, null);
+          return;
         }
+        if (sel === pointNum) {
+          onBackgammonSourceClick(pointNum, owner); // toggles the selection off
+          return;
+        }
+
+        // A selected checker takes priority. Unlike checkers or morris,
+        // moving onto a point you already occupy is the normal case in
+        // backgammon, not the exception, so a click on a legal
+        // destination must always make the move.
+        const isLegalDest = legalDestinationsFrom(sel).some((d) => d.to === pointNum);
+        if (isLegalDest) {
+          onBackgammonDestClick(pointNum, null);
+          return;
+        }
+
+        // Not a legal destination: clicking another of your own points
+        // picks that checker up instead.
+        if (owner === AppStateBackgammon.turn) {
+          onBackgammonSourceClick(pointNum, owner);
+          return;
+        }
+
+        onBackgammonDestClick(pointNum, null); // reports "Invalid move."
       });
       boardEl.appendChild(cell);
     });
