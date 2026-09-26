@@ -2353,6 +2353,7 @@ STRINGS.fr = {
     settings_ai_pacing_slow: "Lent",
     settings_version_label: "Version :",
     settings_version_unknown: "Version inconnue",
+    settings_version_checking: "Vérification…",
     settings_update_hint: "Une connexion Internet est nécessaire.",
     msg_t_ludo_moved: "{p} avance le pion {n} de {m}.",
     msg_t_ludo_brought: "{p} met le pion {n} en jeu.",

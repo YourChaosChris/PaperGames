@@ -2353,6 +2353,7 @@ STRINGS.zh = {
     settings_ai_pacing_slow: "慢",
     settings_version_label: "版本：",
     settings_version_unknown: "版本未知",
+    settings_version_checking: "正在检查…",
     settings_update_hint: "需要连接互联网。",
     msg_t_ludo_moved: "{p}的棋子{n}前进{m}步。",
     msg_t_ludo_brought: "{p}的棋子{n}出发了。",

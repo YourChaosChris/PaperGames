@@ -2421,6 +2421,7 @@ const STRINGS = {
     settings_ai_pacing_slow: "Slow",
     settings_version_label: "Version:",
     settings_version_unknown: "Version unknown",
+    settings_version_checking: "Checking…",
     settings_update_hint: "This needs an internet connection.",
     msg_t_ludo_moved: "{p} moved token {n} forward {m}.",
     msg_t_ludo_brought: "{p} brought token {n} into play.",

@@ -2353,6 +2353,7 @@ STRINGS.uk = {
     settings_ai_pacing_slow: "Повільно",
     settings_version_label: "Версія:",
     settings_version_unknown: "Версія невідома",
+    settings_version_checking: "Перевірка…",
     settings_update_hint: "Для цього потрібне підключення до інтернету.",
     msg_t_ludo_moved: "{p}: фішка {n} просувається на {m}.",
     msg_t_ludo_brought: "{p}: фішка {n} виходить у гру.",

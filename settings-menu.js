@@ -96,43 +96,90 @@ const SettingsMenu = (function () {
     btn.addEventListener("click", () => ForceUpdate.run(overlay.querySelector("#settings-force-update-status"), btn));
   }
 
-  // Asks the service worker for its CACHE_NAME. Shows "Version unknown"
-  // if there is none, or it doesn't answer within two seconds.
+  // Asks the service worker for its CACHE_NAME. On a first visit the worker
+  // is still installing and doesn't control the page yet, so this shows
+  // "Checking…" and asks again once it is ready or takes over. "Version
+  // unknown" appears only without service worker support, when a worker
+  // doesn't answer a single query within two seconds, or when nothing has
+  // happened after 30 seconds in total.
+  let stopVersionCheck = null;
+
   function showVersion() {
     const el = document.getElementById("settings-version-value");
     if (!el) return;
-    let answered = false;
-    function unknown() {
-      if (answered) return;
-      el.setAttribute("data-i18n", "settings_version_unknown");
-      el.textContent = t("settings_version_unknown", "Version unknown");
-    }
+    // Reopening the dialog starts over; drop the previous run's timers and
+    // listeners so they can't run twice.
+    if (stopVersionCheck) stopVersionCheck();
+
     const sw = typeof navigator !== "undefined" && navigator.serviceWorker;
-    const controller = sw && sw.controller;
-    if (!controller) {
-      unknown();
-      return;
+    let finished = false;
+    let pending = false;
+    let queryTimer = null;
+    let totalTimer = null;
+
+    function setKey(key, fallback) {
+      el.setAttribute("data-i18n", key);
+      el.textContent = t(key, fallback);
+    }
+    function stop() {
+      finished = true;
+      clearTimeout(queryTimer);
+      clearTimeout(totalTimer);
+      if (sw) {
+        sw.removeEventListener("message", onMessage);
+        sw.removeEventListener("controllerchange", onControllerChange);
+      }
+      if (stopVersionCheck === stop) stopVersionCheck = null;
+    }
+    function unknown() {
+      if (finished) return;
+      stop();
+      setKey("settings_version_unknown", "Version unknown");
     }
     function onMessage(event) {
       const data = event.data;
-      if (!data || !data.papergamesVersion) return;
-      answered = true;
-      sw.removeEventListener("message", onMessage);
+      if (finished || !data || !data.papergamesVersion) return;
+      stop();
       el.removeAttribute("data-i18n");
       el.textContent = String(data.papergamesVersion);
     }
-    sw.addEventListener("message", onMessage);
-    el.textContent = "…";
-    try {
-      controller.postMessage("papergames-version");
-    } catch (e) {
+    // Sends one query to the given worker (the controller, or the
+    // registration's active worker once it is ready). The reply goes to
+    // this page either way, since sw.js answers event.source.
+    function ask(worker) {
+      if (finished || pending || !worker) return;
+      pending = true;
+      try {
+        worker.postMessage("papergames-version");
+      } catch (e) {
+        unknown();
+        return;
+      }
+      queryTimer = setTimeout(unknown, 2000);
+    }
+    function onControllerChange() {
+      sw.removeEventListener("controllerchange", onControllerChange);
+      ask(sw.controller);
+    }
+
+    if (!sw) {
       unknown();
       return;
     }
-    setTimeout(() => {
-      sw.removeEventListener("message", onMessage);
-      unknown();
-    }, 2000);
+    stopVersionCheck = stop;
+    sw.addEventListener("message", onMessage);
+    if (sw.controller) {
+      el.removeAttribute("data-i18n");
+      el.textContent = "…";
+      ask(sw.controller);
+      return;
+    }
+    setKey("settings_version_checking", "Checking…");
+    sw.addEventListener("controllerchange", onControllerChange);
+    totalTimer = setTimeout(unknown, 30000);
+    sw.ready.then((registration) => {
+      if (!finished) ask(sw.controller || registration.active);
+    }).catch(() => { /* the 30-second limit covers this */ });
   }
 
   function buildModal() {

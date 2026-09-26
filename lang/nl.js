@@ -2353,6 +2353,7 @@ STRINGS.nl = {
     settings_ai_pacing_slow: "Langzaam",
     settings_version_label: "Versie:",
     settings_version_unknown: "Versie onbekend",
+    settings_version_checking: "Bezig met controleren…",
     settings_update_hint: "Hiervoor is een internetverbinding nodig.",
     msg_t_ludo_moved: "{p} zet pion {n} {m} vooruit.",
     msg_t_ludo_brought: "{p} brengt pion {n} in het spel.",
