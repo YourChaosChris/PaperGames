@@ -254,7 +254,7 @@ STRINGS.it = {
     xiangqi_term_perpetual_chase: "Inseguimento perpetuo",
     xiangqi_rules_perpetual_chase: "Inseguire ripetutamente un pezzo indifeso che non può contrattaccare non è consentito allo stesso modo.",
     xiangqi_term_perpetual_note: "Nota",
-    xiangqi_rules_perpetual_note: "PaperGames non controlla ancora automaticamente queste due regole - sta ai giocatori farci attenzione.",
+    xiangqi_rules_perpetual_note: "PaperGames applica entrambe le regole in forma semplificata: se una mossa riproducesse la stessa posizione per la terza volta, il giocatore che da allora ha dato scacco o inseguito un pezzo indifeso con ogni sua mossa deve sceglierne un'altra. Se lo hanno fatto entrambi o nessuno dei due, la partita è patta.",
     mancala_rules_title: "Regole del Mancala",
     mancala_rules_intro: "Una guida rapida alla versione di PaperGames del Mancala - nello specifico il Kalaha, il regolamento standardizzato usato dalla maggior parte dei giochi di mancala digitali - utile se sei arrugginito, o se stai imparando.",
     mancala_rules_basics_title: "L'idea di base",
@@ -2368,4 +2368,10 @@ STRINGS.it = {
     cardtactics_card_gust: "Raffica",
     cardtactics_card_drift: "Deriva",
     cardtactics_card_blaze: "Rogo",
+
+    // Xiangqi perpetual check/chase rule
+    msg_xq_perpetual_check_refused: "Lo scacco perpetuo non è consentito: questa mossa ripeterebbe la posizione per la terza volta. Scegli un'altra mossa.",
+    msg_xq_perpetual_chase_refused: "L'inseguimento perpetuo non è consentito: questa mossa ripeterebbe la posizione per la terza volta. Scegli un'altra mossa.",
+    msg_xq_draw_repetition: "Patta per ripetizione: la stessa posizione si è verificata tre volte.",
+    msg_t_xq_no_escape: "{p} vince: {q} non ha più mosse che evitino lo scacco o l'inseguimento perpetuo.",
 };

@@ -220,6 +220,59 @@ const XiangqiCore = (function () {
     return legal;
   }
 
+  // Rough piece values, only used to tell whether an attack on a
+  // defended piece still counts as a chase (a cheaper piece attacking a
+  // dearer one, e.g. a horse on a chariot).
+  const CHASE_VALUE = { R: 9, C: 4.5, H: 4, E: 2, A: 2 };
+
+  // Squares of `attackerColor`'s opponent pieces that `attackerColor`
+  // currently "chases" in the Xiangqi sense: attacked and either not
+  // defended at all, or attacked by a cheaper piece. The General and the
+  // soldiers are never chased (checks are counted separately; attacking
+  // soldiers is allowed). A simplified form of the Asian rules, enough
+  // to recognise a piece being hounded around the board.
+  function chasedSquares(board, attackerColor) {
+    const defender = otherColor(attackerColor);
+    const attacked = {};
+    for (let pr = 0; pr < ROWS; pr++) {
+      for (let pc = 0; pc < COLS; pc++) {
+        const piece = board[pr][pc];
+        if (!piece || piece.color !== attackerColor) continue;
+        pieceMoves(board, pr, pc).forEach((m) => {
+          const target = board[m.to[0]][m.to[1]];
+          if (!target || target.color !== defender || !CHASE_VALUE[target.type]) return;
+          const k = m.to[0] + "," + m.to[1];
+          const cheapest = attacked[k];
+          const value = piece.type === "G" ? 99 : (CHASE_VALUE[piece.type] || 1);
+          attacked[k] = cheapest === undefined ? value : Math.min(cheapest, value);
+        });
+      }
+    }
+    const chased = new Set();
+    Object.keys(attacked).forEach((k) => {
+      const [r, c] = k.split(",").map(Number);
+      const target = board[r][c];
+      if (attacked[k] < CHASE_VALUE[target.type]) { chased.add(k); return; }
+      // Defended? Pretend the target were an attacker's piece and see
+      // whether any of its own side could then capture on that square.
+      const probe = cloneBoard(board);
+      probe[r][c] = { color: attackerColor, type: target.type };
+      if (!isSquareAttacked(probe, defender, r, c)) chased.add(k);
+    });
+    return chased;
+  }
+
+  // Whether `move` by `color` is "forcing" for the perpetual rules: it
+  // gives check, or it starts chasing a piece that wasn't chased before.
+  function forcingKind(board, move, color) {
+    const next = applyMove(board, move);
+    if (isInCheck(next, otherColor(color))) return "check";
+    const before = chasedSquares(board, color);
+    const after = chasedSquares(next, color);
+    for (const k of after) if (!before.has(k)) return "chase";
+    return null;
+  }
+
   // A compact string identifying this exact position (board layout plus
   // whose turn it is), for spotting a recurring position - e.g. to warn
   // about perpetual check. Not used for legality at all, only for that
@@ -263,6 +316,8 @@ const XiangqiCore = (function () {
     isInCheck,
     getLegalMoves,
     positionKey,
+    chasedSquares,
+    forcingKind,
     detectGameEnd
   };
 })();

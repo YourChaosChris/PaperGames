@@ -130,8 +130,10 @@ const XiangqiAi = (function () {
     3: { style: "search", maxDepth: 3, nodeBudget: 300000 }
   };
 
-  function chooseMove(board, color, level) {
-    const moves = XiangqiCore.getLegalMoves(board, color);
+  // `isAllowed`, if given, filters out moves the game won't accept even
+  // though they are legal on the board (the perpetual check/chase rule).
+  function chooseMove(board, color, level, isAllowed) {
+    const moves = XiangqiCore.getLegalMoves(board, color).filter((m) => !isAllowed || isAllowed(m));
     if (!moves.length) return null;
 
     if (typeof level !== "number" || level < 1) level = 1;

@@ -219,7 +219,7 @@ STRINGS.ja = {
     xiangqi_term_perpetual_chase: "連続追撃",
     xiangqi_rules_perpetual_chase: "反撃できない無防備の駒を何度も追いかけることも同様に禁止されています。",
     xiangqi_term_perpetual_note: "注記",
-    xiangqi_rules_perpetual_note: "PaperGamesはこの2つのルールをまだ自動的にはチェックしていません。プレイヤー自身が注意する必要があります。",
+    xiangqi_rules_perpetual_note: "PaperGamesは両方のルールを簡略化した形で適用します。ある手で同じ局面が3回目になる場合、それ以降のすべての手で王手をかけ続けた側、または守りのない駒を追い続けた側は別の手を選ばなければなりません。両者ともそうしていた場合、またはどちらもしていない場合は引き分けになります。",
     mancala_rules_title: "マンカラのルール",
     mancala_rules_intro: "PaperGamesでのマンカラの遊び方を簡単にまとめました。具体的には、多くのデジタル版マンカラで使われる標準ルール「カラハ」です。ルールを思い出したいときにも、これから覚えるときにもどうぞ。",
     mancala_rules_basics_title: "基本的な考え方",
@@ -2368,4 +2368,10 @@ STRINGS.ja = {
     cardtactics_card_gust: "突風",
     cardtactics_card_drift: "漂流",
     cardtactics_card_blaze: "業火",
+
+    // Xiangqi perpetual check/chase rule
+    msg_xq_perpetual_check_refused: "連続王手は禁止です。この手で同じ局面が3回目になります。別の手を選んでください。",
+    msg_xq_perpetual_chase_refused: "連続追撃は禁止です。この手で同じ局面が3回目になります。別の手を選んでください。",
+    msg_xq_draw_repetition: "同一局面が3回現れたため、千日手で引き分けです。",
+    msg_t_xq_no_escape: "{p}の勝ち:{q}には連続王手・連続追撃を避ける手が残っていません。",
 };

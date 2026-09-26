@@ -3462,8 +3462,8 @@ padding: 0.25rem 0.5rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.3em;
-  height: 1.3em;
+  width: 1.8em;
+  height: 1.8em;
   clip-path: polygon(50% 0%, 92% 26%, 100% 100%, 0% 100%, 8% 26%);
   background: var(--square-light);
   border: 2px solid var(--border);
@@ -3471,8 +3471,19 @@ padding: 0.25rem 0.5rem;
 }
 
 .shogi-hand-piece-label svg {
-  width: 68%;
-  height: 68%;
+  /* The drawings carry generous empty margins of their own, so they are
+     scaled past the label's box; the pentagon clip trims only blank space. */
+  flex: none;
+  width: 118%;
+  height: 118%;
+  margin-top: 12%;
+}
+
+/* Same slightly heavier strokes as on the board (see .shogi-piece svg path). */
+.shogi-hand-piece-label svg path {
+  stroke: #000 !important;
+  stroke-width: 0.45 !important;
+  stroke-linejoin: round;
 }
 
 .shogi-hand-piece.shogi-piece-w .shogi-hand-piece-label {

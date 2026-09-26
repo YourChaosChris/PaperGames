@@ -254,7 +254,7 @@ STRINGS.zh = {
     xiangqi_term_perpetual_chase: "长捉",
     xiangqi_rules_perpetual_chase: "同样不允许反复捉吃一个无法反击的无根子力。",
     xiangqi_term_perpetual_note: "说明",
-    xiangqi_rules_perpetual_note: "PaperGames目前尚未自动判定这两条规则——需要由棋手自己留意。",
+    xiangqi_rules_perpetual_note: "PaperGames 以简化形式执行这两条规则:若某步棋会使同一局面第三次出现,而自那以后每步都在将军或捉无根子的一方必须改走别的着法。若双方都如此或双方都没有,则判为和棋。",
     mancala_rules_title: "曼卡拉规则",
     mancala_rules_intro: "关于 PaperGames 版本曼卡拉的简明参考——具体来说是卡拉哈棋（Kalaha），也是绝大多数数字版曼卡拉游戏采用的标准规则，无论你是想重新捡起来，还是刚开始学习，都能用得上。",
     mancala_rules_basics_title: "基本玩法",
@@ -2368,4 +2368,10 @@ STRINGS.zh = {
     cardtactics_card_gust: "阵风",
     cardtactics_card_drift: "漂流",
     cardtactics_card_blaze: "烈焰",
+
+    // Xiangqi perpetual check/chase rule
+    msg_xq_perpetual_check_refused: "禁止长将:这步棋会使同一局面第三次出现。请换一步棋。",
+    msg_xq_perpetual_chase_refused: "禁止长捉:这步棋会使同一局面第三次出现。请换一步棋。",
+    msg_xq_draw_repetition: "同一局面出现三次,判为和棋。",
+    msg_t_xq_no_escape: "{p}获胜:{q}已没有能避开长将或长捉的着法。",
 };

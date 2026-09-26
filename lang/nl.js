@@ -219,7 +219,7 @@ STRINGS.nl = {
     xiangqi_term_perpetual_chase: "Eeuwige achtervolging",
     xiangqi_rules_perpetual_chase: "Herhaaldelijk een onverdedigd stuk achtervolgen dat niet kan terugslaan, is eveneens niet toegestaan.",
     xiangqi_term_perpetual_note: "Opmerking",
-    xiangqi_rules_perpetual_note: "PaperGames controleert deze twee regels nog niet automatisch - het is aan de spelers om hierop te letten.",
+    xiangqi_rules_perpetual_note: "PaperGames past beide regels in vereenvoudigde vorm toe: als een zet dezelfde stelling voor de derde keer zou opleveren, moet de kant die sindsdien met elke zet schaak gaf of een ongedekt stuk achtervolgde een andere zet kiezen. Hebben beide kanten of geen van beide dat gedaan, dan eindigt de partij in remise.",
     mancala_rules_title: "Mancala-regels",
     mancala_rules_intro: "Een korte samenvatting van PaperGames' versie van Mancala - specifiek Kalaha, het gestandaardiseerde regelwerk dat de meeste digitale mancalaspellen gebruiken - handig als je wat roestig bent, of het net leert.",
     mancala_rules_basics_title: "Het basisidee",
@@ -2368,4 +2368,10 @@ STRINGS.nl = {
     cardtactics_card_gust: "Vlaag",
     cardtactics_card_drift: "Drift",
     cardtactics_card_blaze: "Vuurzee",
+
+    // Xiangqi perpetual check/chase rule
+    msg_xq_perpetual_check_refused: "Eeuwig schaak is niet toegestaan – deze zet zou de stelling voor de derde keer herhalen. Kies een andere zet.",
+    msg_xq_perpetual_chase_refused: "Eeuwige achtervolging is niet toegestaan – deze zet zou de stelling voor de derde keer herhalen. Kies een andere zet.",
+    msg_xq_draw_repetition: "Remise door herhaling: dezelfde stelling is drie keer voorgekomen.",
+    msg_t_xq_no_escape: "{p} wint: {q} heeft geen zet meer die eeuwig schaak of eeuwige achtervolging vermijdt.",
 };

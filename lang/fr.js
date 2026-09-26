@@ -254,7 +254,7 @@ STRINGS.fr = {
     xiangqi_term_perpetual_chase: "Poursuite perpétuelle",
     xiangqi_rules_perpetual_chase: "Poursuivre de manière répétée une pièce non défendue qui ne peut pas riposter n'est pas non plus autorisé.",
     xiangqi_term_perpetual_note: "Remarque",
-    xiangqi_rules_perpetual_note: "PaperGames ne vérifie pas encore ces deux règles automatiquement - c'est aux joueurs d'y veiller.",
+    xiangqi_rules_perpetual_note: "PaperGames applique ces deux règles sous une forme simplifiée : si un coup devait amener la même position pour la troisième fois, le camp qui a donné échec ou poursuivi une pièce non protégée à chacun de ses coups depuis doit jouer un autre coup. Si les deux camps ou aucun ne l'ont fait, la partie est nulle.",
     mancala_rules_title: "Règles du Mancala",
     mancala_rules_intro: "Un aide-mémoire rapide sur la version du Mancala que joue PaperGames - plus précisément le Kalaha, le règlement standardisé qu'utilisent la plupart des jeux de mancala numériques - utile si tu es rouillé, ou si tu apprends.",
     mancala_rules_basics_title: "L'idée de base",
@@ -2368,4 +2368,10 @@ STRINGS.fr = {
     cardtactics_card_gust: "Rafale",
     cardtactics_card_drift: "Dérive",
     cardtactics_card_blaze: "Brasier",
+
+    // Xiangqi perpetual check/chase rule
+    msg_xq_perpetual_check_refused: "L'échec perpétuel est interdit : ce coup répéterait la position une troisième fois. Choisis un autre coup.",
+    msg_xq_perpetual_chase_refused: "La poursuite perpétuelle est interdite : ce coup répéterait la position une troisième fois. Choisis un autre coup.",
+    msg_xq_draw_repetition: "Nulle par répétition : la même position s'est produite trois fois.",
+    msg_t_xq_no_escape: "{p} gagne : {q} n'a plus aucun coup qui évite l'échec ou la poursuite perpétuels.",
 };

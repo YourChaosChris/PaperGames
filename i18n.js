@@ -272,7 +272,7 @@ const STRINGS = {
     xiangqi_term_perpetual_chase: "Perpetual chase",
     xiangqi_rules_perpetual_chase: "Repeatedly chasing an undefended piece that cannot strike back is likewise not allowed.",
     xiangqi_term_perpetual_note: "Note",
-    xiangqi_rules_perpetual_note: "PaperGames does not enforce these two rules automatically yet - it's on the players to watch for them.",
+    xiangqi_rules_perpetual_note: "PaperGames enforces both rules in a simplified form: when a move would bring about the same position for the third time, a side that gave check or chased an undefended piece with every one of its moves since must choose a different move. If both sides or neither side kept forcing, the game ends in a draw.",
 
     mancala_rules_title: "Mancala Rules",
     mancala_rules_intro: "A quick reference for PaperGames's version of Mancala - specifically Kalaha, the standardized ruleset most digital mancala games use - useful if you're rusty, or learning.",
@@ -2436,6 +2436,12 @@ const STRINGS = {
     cardtactics_card_gust: "Gust",
     cardtactics_card_drift: "Drift",
     cardtactics_card_blaze: "Blaze",
+
+    // Xiangqi perpetual check/chase rule
+    msg_xq_perpetual_check_refused: "Perpetual check is not allowed - this move would repeat the position a third time. Choose another move.",
+    msg_xq_perpetual_chase_refused: "Perpetual chase is not allowed - this move would repeat the position a third time. Choose another move.",
+    msg_xq_draw_repetition: "Draw by repetition: the same position occurred three times.",
+    msg_t_xq_no_escape: "{p} wins: {q} has no move left that avoids perpetual check or chase.",
   }
 };
 
