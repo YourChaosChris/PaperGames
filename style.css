@@ -7841,3 +7841,17 @@ max-width: 900px;
   font-size: 0.9rem;
   margin: 0.5rem 0;
 }
+
+/* ---------- Right-to-left languages (Arabic) ----------
+   The page layout mirrors with dir="rtl" (set by i18n.js), but the game
+   boards keep their left-to-right geometry: board coordinates, dice rows
+   and card tableaus are positions, not text. Grid and flex rows would
+   otherwise flip. Text tables (scoresheets) are left to mirror. */
+[dir="rtl"] [id$="-board"]:not(table) {
+  direction: ltr;
+}
+
+[dir="rtl"] .rule-list dd,
+[dir="rtl"] .content-page {
+  text-align: start;
+}

@@ -32,7 +32,7 @@ Set `PORT` to use a port other than 8000 if that one's busy.
 
 - `node tests/static-checks.js` - no server or browser needed. JS
   syntax on every file, HTML well-formedness on every real page, i18n
-  key parity across all 11 languages (`i18n.js` for English,
+  key parity across all 12 languages (`i18n.js` for English,
   `lang/*.js` for the rest), and no
   `data-i18n`/`data-i18n-attr` reference anywhere (static markup or
   markup a script builds at runtime) pointing at a key that doesn't
@@ -47,8 +47,9 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random
   clicks (`CLICKS`, default 60), then fails on any status line, result
-  popup, info line or screen-reader label still containing an English
-  word. Takes a few minutes.
+  popup, info line, screen-reader label or other visible text still
+  containing an English word. Takes a few minutes. `SWEEP_LANG=ar` runs
+  it in another non-Latin language (Arabic, Ukrainian, Japanese ...).
 - `node tests/css-check.js` - needs a browser only (no server): loads
   `style.css` in a real page and confirms it parses cleanly.
 - `node tests/board-sweep.js` - needs a running server (`BASE_URL` env

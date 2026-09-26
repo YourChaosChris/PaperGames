@@ -36,7 +36,9 @@ const CATEGORIES_LETTERS = {
   uk: "АБВГДЕЗІКЛМНОПРСТУФХЦЧШ",
   ru: "АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЭЮЯ",
   ja: "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわ",
-  zh: "ABCDEFGHJKLMNOPQRSTWXYZ"
+  zh: "ABCDEFGHJKLMNOPQRSTWXYZ",
+  // Arabic alphabet without ظ, which almost no everyday word starts with.
+  ar: "ابتثجحخدذرزسشصضطعغفقكلمنهوي"
 };
 
 const AppStateCategories = {

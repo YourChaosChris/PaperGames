@@ -24,7 +24,7 @@ const STRINGS = {
     home_intro: "A small, dependency-free collection of classic board, strategy, and puzzle games made for E-Ink displays like Tolino, Kobo and Kindle: high contrast, no animations, and it keeps working with no internet connection once you've opened it.",
     home_play_button: "▶ Choose a game",
     home_surprise_button: "🎲 Surprise me",
-    home_languages: "Available in 11 languages",
+    home_languages: "Available in 12 languages",
     home_play_desc: "Local 2-player, vs. the built-in engine, or online via Lichess.",
     home_rules_desc: "How the pieces move, check, castling, and the draw rules.",
     home_guide_desc: "Get it onto your e-reader and keep it working offline.",
@@ -805,7 +805,7 @@ const STRINGS = {
     adaptive_difficulty_toggle: "🎯 Suggest difficulty",
     adaptive_difficulty_note: "🎯 Difficulty adjusted based on your recent results.",
     update_banner_text: "A new version of PaperGames is available.",
-    update_banner_whats_new: "New: you can slow down the computer's moves in Settings, Dots and Boxes marks boxes with a cross or circle and shows the last line drawn, and Ludo marks where a token came from and landed.",
+    update_banner_whats_new: "New: PaperGames is now available in Arabic, the new game Categories acts as your game master for the pen-and-paper word game, and Xiangqi now enforces the perpetual check and chase rules.",
     update_banner_reload: "Reload now",
     update_banner_dismiss: "Dismiss",
     error_banner_text: "Something went wrong. Reloading may fix it.",
@@ -2535,9 +2535,12 @@ const LANGUAGE_NAMES = {
   uk: "Українська",
   ru: "Русский",
   ja: "日本語",
-  zh: "中文"
+  zh: "中文",
+  ar: "العربية"
 };
-const LANGUAGE_ORDER = ["en", "de", "fr", "es", "it", "nl", "pl", "uk", "ru", "ja", "zh"];
+const LANGUAGE_ORDER = ["en", "de", "fr", "es", "it", "nl", "pl", "uk", "ru", "ja", "zh", "ar"];
+// Written right to left; every other language is left to right.
+const RTL_LANGUAGES = ["ar"];
 
 const I18n = (function () {
   const STORAGE_KEY = "einkchess_lang";
@@ -2658,7 +2661,12 @@ const I18n = (function () {
 
   function msgExact(s, l) {
     const key = msgIndex.exact[s];
-    return key ? t(key, l) : null;
+    // A language that doesn't have this text yet (Arabic leaves out the
+    // rules pages) must not answer with the English fallback here, or it
+    // would shadow a template that does fit ("Goats win" is also a rules
+    // page term).
+    if (!key || !STRINGS[l] || STRINGS[l][key] === undefined) return null;
+    return t(key, l);
   }
 
   // A name slot may also hold a list ("Red, Blue"), each part a known name.
@@ -2846,10 +2854,38 @@ const I18n = (function () {
 
   function apply(lang) {
     const l = lang || getLang();
-    if (document.documentElement) document.documentElement.lang = l;
+    if (document.documentElement) {
+      document.documentElement.lang = l;
+      // Right-to-left languages mirror the page layout; the game boards
+      // themselves stay left to right (see style.css, [dir="rtl"]).
+      document.documentElement.dir = RTL_LANGUAGES.indexOf(l) !== -1 ? "rtl" : "ltr";
+    }
 
+    const rtl = RTL_LANGUAGES.indexOf(l) !== -1;
     document.querySelectorAll("[data-i18n]").forEach((el) => {
-      el.textContent = t(el.getAttribute("data-i18n"), l);
+      const key = el.getAttribute("data-i18n");
+      el.textContent = t(key, l);
+      // English fallback text inside a right-to-left page (Arabic has no
+      // rules pages yet) is marked as such, so it keeps its own direction
+      // and punctuation instead of being laid out right to left.
+      const fallback = rtl && STRINGS[l] && STRINGS[l][key] === undefined;
+      if (fallback) {
+        el.setAttribute("dir", "ltr");
+        el.setAttribute("lang", DEFAULT_LANG);
+        el.setAttribute("data-i18n-fallback", "");
+      } else if (el.hasAttribute("data-i18n-fallback")) {
+        el.removeAttribute("dir");
+        el.removeAttribute("lang");
+        el.removeAttribute("data-i18n-fallback");
+      }
+    });
+    // A whole rules/history page in the fallback language reads left to
+    // right as one block (its term lists mix symbols and text).
+    document.querySelectorAll(".content-page").forEach((page) => {
+      const title = page.querySelector("h1[data-i18n]");
+      const fallbackPage = !!title && title.hasAttribute("data-i18n-fallback");
+      if (fallbackPage) page.setAttribute("dir", "ltr");
+      else if (page.getAttribute("dir") === "ltr") page.removeAttribute("dir");
     });
 
     document.querySelectorAll("[data-i18n-msg]").forEach((el) => {
