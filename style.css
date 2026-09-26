@@ -8215,3 +8215,19 @@ max-width: 900px;
   font-weight: 400;
   text-decoration: underline;
 }
+
+/* Settings dialog: running version and "force update", kept low-key. */
+.settings-version-section {
+  border-top: 1px dashed var(--border);
+  padding-top: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.settings-version-line {
+  margin: 0 0 0.4rem;
+}
+
+.settings-version-hint {
+  margin: 0.3rem 0 0;
+  font-size: 0.8rem;
+}
