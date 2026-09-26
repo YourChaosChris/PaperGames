@@ -256,7 +256,7 @@ STRINGS.pl = {
     xiangqi_term_perpetual_chase: "Wieczny pościg",
     xiangqi_rules_perpetual_chase: "Wielokrotne atakowanie niebronionej bierki, która nie może odbić, również jest niedozwolone.",
     xiangqi_term_perpetual_note: "Uwaga",
-    xiangqi_rules_perpetual_note: "PaperGames nie sprawdza jeszcze automatycznie tych dwóch zasad - gracze muszą pilnować ich sami.",
+    xiangqi_rules_perpetual_note: "PaperGames stosuje obie zasady w uproszczonej formie: jeśli ruch miałby po raz trzeci doprowadzić do tej samej pozycji, strona, która od tego czasu każdym ruchem szachowała lub ścigała niebronioną bierkę, musi wybrać inny ruch. Jeśli robiły tak obie strony albo żadna, partia kończy się remisem.",
     mancala_rules_title: "Zasady Mancali",
     mancala_rules_intro: "Krótkie przypomnienie zasad wersji Mancali używanej w PaperGames - a konkretnie Kalahy, standardowego zestawu zasad stosowanego w większości cyfrowych mancali - przydatne, jeśli dawno nie grałeś albo dopiero się uczysz.",
     mancala_rules_basics_title: "Podstawowa idea",
@@ -2369,4 +2369,10 @@ STRINGS.pl = {
     cardtactics_card_gust: "Poryw",
     cardtactics_card_drift: "Dryf",
     cardtactics_card_blaze: "Pożoga",
+
+    // Xiangqi perpetual check/chase rule
+    msg_xq_perpetual_check_refused: "Wieczny szach jest niedozwolony – ten ruch powtórzyłby pozycję po raz trzeci. Wybierz inny ruch.",
+    msg_xq_perpetual_chase_refused: "Wieczny pościg jest niedozwolony – ten ruch powtórzyłby pozycję po raz trzeci. Wybierz inny ruch.",
+    msg_xq_draw_repetition: "Remis przez powtórzenie: ta sama pozycja wystąpiła trzy razy.",
+    msg_t_xq_no_escape: "Wygrywa: {p} - {q}: brak ruchu, który unika wiecznego szacha lub pościgu.",
 };

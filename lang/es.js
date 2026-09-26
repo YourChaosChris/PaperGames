@@ -254,7 +254,7 @@ STRINGS.es = {
     xiangqi_term_perpetual_chase: "Persecución perpetua",
     xiangqi_rules_perpetual_chase: "Perseguir repetidamente una pieza indefensa que no puede contraatacar tampoco está permitido.",
     xiangqi_term_perpetual_note: "Nota",
-    xiangqi_rules_perpetual_note: "PaperGames todavía no comprueba estas dos reglas automáticamente - depende de los jugadores vigilarlas.",
+    xiangqi_rules_perpetual_note: "PaperGames aplica ambas reglas de forma simplificada: si una jugada fuera a producir la misma posición por tercera vez, el bando que ha dado jaque o perseguido una pieza sin defensa en cada una de sus jugadas desde entonces debe elegir otra jugada. Si lo han hecho ambos bandos o ninguno, la partida termina en tablas.",
     mancala_rules_title: "Reglas del Mancala",
     mancala_rules_intro: "Una referencia rápida de la versión de PaperGames del Mancala, concretamente Kalaha, el conjunto de reglas estandarizado que usan la mayoría de los juegos de mancala digitales, útil si estás oxidado, o si estás aprendiendo.",
     mancala_rules_basics_title: "La idea básica",
@@ -2368,4 +2368,10 @@ STRINGS.es = {
     cardtactics_card_gust: "Ráfaga",
     cardtactics_card_drift: "Deriva",
     cardtactics_card_blaze: "Hoguera",
+
+    // Xiangqi perpetual check/chase rule
+    msg_xq_perpetual_check_refused: "El jaque perpetuo no está permitido: esta jugada repetiría la posición por tercera vez. Elige otra jugada.",
+    msg_xq_perpetual_chase_refused: "La persecución perpetua no está permitida: esta jugada repetiría la posición por tercera vez. Elige otra jugada.",
+    msg_xq_draw_repetition: "Tablas por repetición: la misma posición se ha dado tres veces.",
+    msg_t_xq_no_escape: "{p} gana: {q} no tiene ninguna jugada que evite el jaque o la persecución perpetuos.",
 };

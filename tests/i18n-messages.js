@@ -17,6 +17,10 @@ const { I18n, STRINGS } = require("./load-i18n").loadI18n();
 
 // One sample per message shape, as the games actually produce them.
 const SAMPLES = [
+  "Perpetual check is not allowed - this move would repeat the position a third time. Choose another move.",
+  "Perpetual chase is not allowed - this move would repeat the position a third time. Choose another move.",
+  "Draw by repetition: the same position occurred three times.",
+  "Red wins: Black has no move left that avoids perpetual check or chase.",
   "Placing - 14 pieces left to place",
   "Placing - 1 piece left to place",
   "Computer thinking…",

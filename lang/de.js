@@ -268,7 +268,7 @@ STRINGS.de = {
     xiangqi_term_perpetual_chase: "Dauerangriff",
     xiangqi_rules_perpetual_chase: "Ein wiederholter Angriff auf eine ungedeckte Figur, die nicht zurückschlagen kann, ist ebenfalls nicht erlaubt.",
     xiangqi_term_perpetual_note: "Hinweis",
-    xiangqi_rules_perpetual_note: "PaperGames prüft diese beiden Regeln derzeit noch nicht automatisch - du musst selbst darauf achten.",
+    xiangqi_rules_perpetual_note: "PaperGames setzt beide Regeln in vereinfachter Form durch: Würde ein Zug dieselbe Stellung zum dritten Mal herbeiführen, muss die Seite, die seitdem mit jedem ihrer Züge Schach geboten oder eine ungedeckte Figur angegriffen hat, einen anderen Zug wählen. Haben beide Seiten oder keine von beiden so gespielt, endet die Partie remis.",
 
     mancala_rules_title: "Mancala-Regeln",
     mancala_rules_intro: "Eine kurze Übersicht über PaperGames' Version von Mancala – genauer Kalaha, das standardisierte Regelwerk, das die meisten digitalen Mancala-Spiele verwenden – nützlich zum Auffrischen oder Lernen.",
@@ -2432,4 +2432,10 @@ STRINGS.de = {
     cardtactics_card_gust: "Bö",
     cardtactics_card_drift: "Strömung",
     cardtactics_card_blaze: "Lohe",
+
+    // Xiangqi perpetual check/chase rule
+    msg_xq_perpetual_check_refused: "Dauerschach ist nicht erlaubt – dieser Zug würde die Stellung zum dritten Mal herbeiführen. Wähle einen anderen Zug.",
+    msg_xq_perpetual_chase_refused: "Dauerangriff ist nicht erlaubt – dieser Zug würde die Stellung zum dritten Mal herbeiführen. Wähle einen anderen Zug.",
+    msg_xq_draw_repetition: "Remis durch Stellungswiederholung: Dieselbe Stellung ist dreimal aufgetreten.",
+    msg_t_xq_no_escape: "{p} gewinnt: {q} hat keinen Zug mehr, der Dauerschach oder Dauerangriff vermeidet.",
 };

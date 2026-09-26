@@ -96,13 +96,11 @@ const AppStateXiangqi = {
   undoStack: [],
   pieceStyle: "classic",  // "classic" | "symbols"
   moveHistory: [],
-  // Occurrence count per position (see XiangqiCore.positionKey) reached
-  // after a move, plus whether the side to move was in check every
-  // single time - a simple, advisory-only heuristic for perpetual
-  // check (see recordXiangqiPositionXq). Reset whenever the board is
-  // set directly (new game, loaded game, undo) rather than reached by
-  // playing a move, so it never spans across those jumps.
-  positionHistory: {}
+  // One entry per position reached, for the perpetual check/chase rule
+  // (see repetitionVerdictXq): { ply, key, mover, forcing } where
+  // forcing is "check", "chase" or null. Seeded with the position the
+  // game (or a loaded game) starts from; undo trims it by ply.
+  plyLog: []
 };
 
 const XQ_STYLE_KEY = "einkchess_xiangqi_piece_style";
@@ -196,22 +194,52 @@ function resetUndoStackXq() {
 }
 
 function resetPositionHistoryXq() {
-  AppStateXiangqi.positionHistory = {};
+  AppStateXiangqi.plyLog = [{
+    ply: AppStateXiangqi.moveCount,
+    key: XiangqiCore.positionKey(AppStateXiangqi.board, AppStateXiangqi.turn),
+    mover: null,
+    forcing: null
+  }];
 }
 
-// Records the position just reached (after a move) and reports whether
-// it has now recurred a 3rd time with the side to move in check every
-// single time - a sign of perpetual check. This is advisory only: it
-// shows a warning in the status text, never blocks a move or ends the
-// game, since fully implementing Xiangqi's perpetual-check/perpetual-
-// chase rules is a much larger undertaking than this heuristic.
-function recordXiangqiPositionXq(inCheck) {
-  const key = XiangqiCore.positionKey(AppStateXiangqi.board, AppStateXiangqi.turn);
-  const entry = AppStateXiangqi.positionHistory[key] || { count: 0, allChecked: true };
-  entry.count++;
-  entry.allChecked = entry.allChecked && inCheck;
-  AppStateXiangqi.positionHistory[key] = entry;
-  return entry.count >= 3 && entry.allChecked;
+// The perpetual check / perpetual chase rule, in the simplified form most
+// Xiangqi programs use: when `move` would bring about the same position a
+// third time, look at every move since its first occurrence. A side that
+// gave check or started chasing an undefended piece with each of its moves
+// there - while the other side did not - must vary, so the move is
+// refused. If both sides or neither side kept forcing, it's a draw.
+// Returns null (play on), { forbidden: "check" | "chase" } or { draw: true }.
+function repetitionVerdictXq(move, mover) {
+  const log = AppStateXiangqi.plyLog || [];
+  const other = XiangqiCore.otherColor(mover);
+  const next = XiangqiCore.applyMove(AppStateXiangqi.board, move);
+  const key = XiangqiCore.positionKey(next, other);
+  let firstIdx = -1;
+  let occurrences = 1;
+  for (let i = 0; i < log.length; i++) {
+    if (log[i].key !== key) continue;
+    if (firstIdx < 0) firstIdx = i;
+    occurrences++;
+  }
+  if (occurrences < 3) return null;
+
+  const span = log.slice(firstIdx + 1).concat([{ mover, forcing: XiangqiCore.forcingKind(AppStateXiangqi.board, move, mover) }]);
+  const forcingMoves = (color) => {
+    const own = span.filter((e) => e.mover === color);
+    return own.length && own.every((e) => e.forcing) ? own : null;
+  };
+  const moverForcing = forcingMoves(mover);
+  const otherForcing = forcingMoves(other);
+  if (moverForcing && !otherForcing) {
+    return { forbidden: moverForcing.every((e) => e.forcing === "check") ? "check" : "chase" };
+  }
+  if (otherForcing && !moverForcing) return null;
+  return { draw: true };
+}
+
+function isMoveAllowedXq(move, mover) {
+  const verdict = repetitionVerdictXq(move, mover);
+  return !(verdict && verdict.forbidden);
 }
 
 function pushUndoSnapshotXq() {
@@ -473,6 +501,16 @@ function onXiangqiPointClick(r, c) {
     return;
   }
 
+  const verdict = repetitionVerdictXq(match, turn);
+  if (verdict && verdict.forbidden) {
+    setStatusXq("board-info", verdict.forbidden === "check"
+      ? "Perpetual check is not allowed - this move would repeat the position a third time. Choose another move."
+      : "Perpetual chase is not allowed - this move would repeat the position a third time. Choose another move.");
+    AppStateXiangqi.selected = null;
+    updateXiangqiBoard();
+    return;
+  }
+
   applyXiangqiMove(match);
 
   if (AppStateXiangqi.mode === "offline-ai" && !AppStateXiangqi.gameOver && AppStateXiangqi.turn !== AppStateXiangqi.humanColor) {
@@ -484,12 +522,20 @@ function onXiangqiPointClick(r, c) {
 function applyXiangqiMove(move) {
   pushUndoSnapshotXq();
   const mover = AppStateXiangqi.turn;
+  const verdict = repetitionVerdictXq(move, mover);
+  const forcing = XiangqiCore.forcingKind(AppStateXiangqi.board, move, mover);
   AppStateXiangqi.board = XiangqiCore.applyMove(AppStateXiangqi.board, move);
   AppStateXiangqi.lastMove = { from: move.from, to: move.to };
   recordMoveXq(mover, move.from, move.to);
   AppStateXiangqi.selected = null;
   AppStateXiangqi.moveCount++;
   AppStateXiangqi.turn = XiangqiCore.otherColor(mover);
+  AppStateXiangqi.plyLog.push({
+    ply: AppStateXiangqi.moveCount,
+    key: XiangqiCore.positionKey(AppStateXiangqi.board, AppStateXiangqi.turn),
+    mover,
+    forcing
+  });
   updateXiangqiBoard();
   updateGameLabelsXq();
 
@@ -504,12 +550,27 @@ function applyXiangqiMove(move) {
     return;
   }
 
-  const inCheck = XiangqiCore.isInCheck(AppStateXiangqi.board, AppStateXiangqi.turn);
-  const perpetualCheckWarning = recordXiangqiPositionXq(inCheck);
-  let message = colorNameXq(mover) + " played." + (inCheck ? " Check!" : "") + " " + colorNameXq(AppStateXiangqi.turn) + " to move.";
-  if (perpetualCheckWarning) {
-    message += " Perpetual check is not allowed - please vary your move.";
+  if (verdict && verdict.draw) {
+    AppStateXiangqi.gameOver = true;
+    announceGameResultXq("Draw", "Draw by repetition: the same position occurred three times.");
+    recordXiangqiStatsIfVsAi("draw");
+    updateGameLabelsXq();
+    return;
   }
+
+  // Every legal move of the side to move would break the perpetual rule:
+  // like having no legal move at all, that loses.
+  const toMove = AppStateXiangqi.turn;
+  if (!XiangqiCore.getLegalMoves(AppStateXiangqi.board, toMove).some((m) => isMoveAllowedXq(m, toMove))) {
+    AppStateXiangqi.gameOver = true;
+    announceGameResultXq(resultTitleXq(mover), colorNameXq(mover) + " wins: " + colorNameXq(toMove) + " has no move left that avoids perpetual check or chase.");
+    recordXiangqiStatsIfVsAi(mover === AppStateXiangqi.humanColor ? "win" : "loss");
+    updateGameLabelsXq();
+    return;
+  }
+
+  const inCheck = XiangqiCore.isInCheck(AppStateXiangqi.board, AppStateXiangqi.turn);
+  const message = colorNameXq(mover) + " played." + (inCheck ? " Check!" : "") + " " + colorNameXq(AppStateXiangqi.turn) + " to move.";
   setStatusXq("board-info", message);
 }
 
@@ -518,7 +579,7 @@ function aiMoveOfflineXq() {
   const aiColor = XiangqiCore.otherColor(AppStateXiangqi.humanColor);
   if (AppStateXiangqi.turn !== aiColor) return;
 
-  const move = XiangqiAi.chooseMove(AppStateXiangqi.board, aiColor, AppStateXiangqi.aiLevel);
+  const move = XiangqiAi.chooseMove(AppStateXiangqi.board, aiColor, AppStateXiangqi.aiLevel, (m) => isMoveAllowedXq(m, aiColor));
   if (!move) return; // detectGameEnd after the human's move already caught a no-moves loss
 
   applyXiangqiMove(move);
@@ -539,7 +600,8 @@ function undoLastMove() {
   AppStateXiangqi.lastMove = prev.lastMove;
   AppStateXiangqi.selected = null;
   AppStateXiangqi.moveHistory.length = AppStateXiangqi.moveCount;
-  resetPositionHistoryXq();
+  AppStateXiangqi.plyLog = (AppStateXiangqi.plyLog || []).filter((e) => e.ply <= AppStateXiangqi.moveCount);
+  if (!AppStateXiangqi.plyLog.length) resetPositionHistoryXq();
   renderMoveListXq();
   setGameResultXq("");
   updateXiangqiBoard();
