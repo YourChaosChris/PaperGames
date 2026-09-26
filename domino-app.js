@@ -520,7 +520,9 @@ function renderEndsDomino(s) {
     if (!btn) return;
     const value = ends ? ends[side] : null;
     btn.textContent = value === null ? "" : String(value);
-    btn.disabled = AppStateDomino.gameOver || !ends;
+    // On an empty line only the end the opening tile may go on is live.
+    const canOpen = !ends && DominoCore.legalMoves(s, s.turn).some((m) => m.side === side);
+    btn.disabled = AppStateDomino.gameOver || (!ends && !canOpen);
     btn.classList.toggle("domino-end-fits", fitting.indexOf(side) !== -1);
     btn.classList.toggle("domino-end-last", last === side);
     let label = (side === "left" ? "Left end " : "Right end ") + (value === null ? "" : value);

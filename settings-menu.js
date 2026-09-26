@@ -86,6 +86,55 @@ const SettingsMenu = (function () {
     });
   }
 
+  function wireUpdate(overlay) {
+    const btn = overlay.querySelector("#settings-force-update");
+    if (!btn) return;
+    if (typeof ForceUpdate === "undefined") {
+      btn.classList.add("hidden");
+      return;
+    }
+    btn.addEventListener("click", () => ForceUpdate.run(overlay.querySelector("#settings-force-update-status"), btn));
+  }
+
+  // Asks the service worker for its CACHE_NAME. Shows "Version unknown"
+  // if there is none, or it doesn't answer within two seconds.
+  function showVersion() {
+    const el = document.getElementById("settings-version-value");
+    if (!el) return;
+    let answered = false;
+    function unknown() {
+      if (answered) return;
+      el.setAttribute("data-i18n", "settings_version_unknown");
+      el.textContent = t("settings_version_unknown", "Version unknown");
+    }
+    const sw = typeof navigator !== "undefined" && navigator.serviceWorker;
+    const controller = sw && sw.controller;
+    if (!controller) {
+      unknown();
+      return;
+    }
+    function onMessage(event) {
+      const data = event.data;
+      if (!data || !data.papergamesVersion) return;
+      answered = true;
+      sw.removeEventListener("message", onMessage);
+      el.removeAttribute("data-i18n");
+      el.textContent = String(data.papergamesVersion);
+    }
+    sw.addEventListener("message", onMessage);
+    el.textContent = "…";
+    try {
+      controller.postMessage("papergames-version");
+    } catch (e) {
+      unknown();
+      return;
+    }
+    setTimeout(() => {
+      sw.removeEventListener("message", onMessage);
+      unknown();
+    }, 2000);
+  }
+
   function buildModal() {
     if (document.getElementById("settings-modal-overlay")) return;
 
@@ -116,7 +165,8 @@ const SettingsMenu = (function () {
             '<input type="checkbox" id="settings-high-contrast-checkbox">' +
             '<span data-i18n="high_contrast_toggle">High contrast</span>' +
           '</label>' +
-          // Only on pages with a computer opponent (they load ai-pacing.js).
+          // Every page loads ai-pacing.js; the check only guards against a
+          // page that doesn't.
           (typeof AiPacing !== "undefined"
             ? '<h3 class="settings-subheading" data-i18n="settings_section_ai_pacing">Computer speed</h3>' +
               '<div class="settings-segmented" id="settings-ai-pacing-group" role="group">' +
@@ -125,6 +175,15 @@ const SettingsMenu = (function () {
                 '<button type="button" class="secondary" data-mode="slow" data-i18n="settings_ai_pacing_slow">Slow</button>' +
               '</div>'
             : '') +
+        '</section>' +
+        // Which version is running (answered by sw.js, the single place it
+        // is kept) and a way to fetch the latest one from any page.
+        '<section class="settings-section settings-version-section">' +
+          '<p class="settings-version-line"><span data-i18n="settings_version_label">Version:</span> ' +
+            '<span id="settings-version-value"></span></p>' +
+          '<button type="button" class="secondary small" id="settings-force-update" data-i18n="guide_update_button">Force update now</button>' +
+          '<p class="settings-version-hint" data-i18n="settings_update_hint">This needs an internet connection.</p>' +
+          '<p id="settings-force-update-status" class="status-text" aria-live="polite"></p>' +
         '</section>' +
       '</div>';
     document.body.appendChild(overlay);
@@ -140,6 +199,7 @@ const SettingsMenu = (function () {
     wireTextSize(overlay);
     wireHighContrast(overlay);
     wireAiPacing(overlay);
+    wireUpdate(overlay);
 
     // Populates the freshly-inserted .lang-switch <select> and translates
     // every data-i18n/data-i18n-attr element just added above - both are
@@ -152,6 +212,7 @@ const SettingsMenu = (function () {
     buildModal();
     const overlay = document.getElementById("settings-modal-overlay");
     if (overlay) overlay.classList.remove("hidden");
+    showVersion();
   }
 
   function hide() {

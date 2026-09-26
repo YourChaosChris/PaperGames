@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "papergames-cache-v105";
+const CACHE_NAME = "papergames-cache-v106";
 
 const APP_SHELL = [
   "./",
@@ -408,4 +408,12 @@ self.addEventListener("fetch", (event) => {
       })
     )
   );
+});
+
+// The settings dialog asks which version is running; CACHE_NAME is the
+// only place the version is kept.
+self.addEventListener("message", (event) => {
+  if (event.data === "papergames-version" && event.source) {
+    event.source.postMessage({ papergamesVersion: CACHE_NAME });
+  }
 });
