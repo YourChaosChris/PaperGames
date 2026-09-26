@@ -7861,3 +7861,375 @@ max-width: 900px;
 [dir="rtl"] .content-page {
   text-align: start;
 }
+
+/* ---- Domino and Mau Mau: shared pieces ----
+   Players with their tile/card counts, the cover that hides a hand while
+   the device is passed on, and a row of action buttons. No flexbox `gap`
+   (Tolino drops it) - spacing comes from margins. */
+.game-players {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 0.5rem;
+}
+
+.game-player {
+  display: inline-block;
+  margin: 0 0.4rem 0.3rem 0;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  background: var(--square-light);
+}
+
+.game-player-active {
+  border-width: 3px;
+  font-weight: 700;
+}
+
+.game-player-active .game-player-name::before {
+  content: "\25B6\00A0";
+}
+
+.game-player-count {
+  margin-left: 0.4rem;
+}
+
+.game-player-stock {
+  border-style: dashed;
+}
+
+.hand-cover {
+  margin: 0.6rem 0;
+  padding: 1rem;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  background: var(--square-light);
+}
+
+.hand-cover p {
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+}
+
+.game-actions-row {
+  margin-top: 0.6rem;
+  text-align: center;
+}
+
+.game-actions-row button {
+  margin: 0 0.3rem 0.3rem;
+}
+
+/* ---- Domino ---- */
+.domino-board {
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.5rem;
+  background: var(--bg-alt);
+}
+
+.domino-ends {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.domino-ends-label {
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0 0.4rem;
+}
+
+.domino-end {
+  width: 4.2rem;
+  height: 4.2rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--square-light);
+  color: var(--text);
+  padding: 0;
+}
+
+.domino-end:disabled {
+  opacity: 1;
+  color: var(--text);
+}
+
+/* A selected tile fits here: thick double border. */
+.domino-end-fits {
+  border: 6px double var(--border);
+}
+
+/* The end where the last tile went: underlined number. */
+.domino-end-last {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+}
+
+.domino-line {
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.3rem 0;
+  min-height: 3.2rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.domino-tile {
+  display: inline-block;
+  vertical-align: middle;
+  color: var(--text);
+}
+
+.domino-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.domino-face {
+  fill: var(--square-light);
+  stroke: currentColor;
+  stroke-width: 3;
+}
+
+.domino-divider {
+  stroke: currentColor;
+  stroke-width: 2.5;
+}
+
+.domino-pip {
+  fill: currentColor;
+}
+
+.domino-line-tile {
+  width: 3.4rem;
+  height: 1.7rem;
+  margin-right: 2px;
+}
+
+.domino-line-tile.domino-tile-double {
+  width: 1.7rem;
+  height: 3.4rem;
+}
+
+/* The tile placed last: a solid bar underneath it. */
+.domino-tile-last {
+  border-bottom: 4px solid var(--border);
+  padding-bottom: 2px;
+}
+
+.domino-hand {
+  margin-top: 0.6rem;
+  text-align: center;
+}
+
+.domino-hand-tile {
+  width: 5rem;
+  height: 2.5rem;
+  margin: 0 0.3rem 0.6rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Tiles that don't fit sit lower and get a dashed outline - never shown
+   by grey alone. */
+.domino-tile-unplayable {
+  position: relative;
+  top: 0.4rem;
+  outline: 2px dashed var(--border);
+  outline-offset: 2px;
+}
+
+.domino-tile-selected {
+  position: relative;
+  top: -0.4rem;
+  outline: 4px solid var(--border);
+  outline-offset: 3px;
+}
+
+/* Icons follow the other games' 1em icon size (game cards, placeholder). */
+.domino-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 2em;
+  height: 1em;
+  color: var(--text);
+}
+
+.domino-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- Mau Mau ---- */
+.maumau-board {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem;
+  background: var(--bg-alt);
+}
+
+.maumau-pile {
+  width: 4.6rem;
+  height: 6.4rem;
+  margin: 0 0.5rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: 6px;
+  background: var(--square-light);
+  box-sizing: border-box;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  text-align: center;
+  padding: 0.4rem 0 0;
+}
+
+.maumau-stock {
+  background: repeating-linear-gradient(45deg, #fff, #fff 4px, var(--border) 4px, var(--border) 5px);
+  font-size: 1rem;
+  padding: 0;
+}
+
+.maumau-stock-count {
+  display: inline-block;
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.35rem;
+}
+
+.maumau-stock:disabled {
+  opacity: 1;
+}
+
+.maumau-discard-last {
+  border-width: 4px;
+}
+
+.maumau-card-rank,
+.maumau-card-suit {
+  display: block;
+}
+
+.maumau-card-suit {
+  font-size: 2rem;
+}
+
+.maumau-wish {
+  margin-left: 0.5rem;
+  padding: 0.3rem 0.5rem;
+  border: 3px double var(--border);
+  border-radius: var(--radius);
+  background: var(--square-light);
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.maumau-wish-suit {
+  display: block;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.maumau-wish-picker {
+  margin: 0.6rem 0;
+  text-align: center;
+}
+
+.maumau-wish-picker p {
+  margin: 0 0 0.4rem;
+  font-weight: 700;
+}
+
+.maumau-wish-btn {
+  width: 4rem;
+  height: 4rem;
+  margin: 0 0.3rem 0.3rem;
+  font-size: 2.4rem;
+  line-height: 1;
+  padding: 0;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--square-light);
+  color: var(--text);
+}
+
+.maumau-hand {
+  margin-top: 0.6rem;
+  text-align: center;
+}
+
+.maumau-card {
+  display: inline-block;
+  vertical-align: top;
+  width: 3.4rem;
+  height: 4.8rem;
+  margin: 0 0.25rem 0.8rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: 5px;
+  background: #fff;
+  color: var(--text);
+  box-sizing: border-box;
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.1;
+  padding: 0.3rem 0 0;
+  cursor: pointer;
+}
+
+.maumau-card .maumau-card-suit {
+  font-size: 1.6rem;
+}
+
+/* Cards that can't be played now sit lower with a dashed border. */
+.maumau-card-unplayable {
+  position: relative;
+  top: 0.5rem;
+  border-style: dashed;
+}
+
+.maumau-card-drawn {
+  outline: 4px double var(--border);
+  outline-offset: 2px;
+}
+
+.maumau-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0.75em;
+  height: 1em;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  box-sizing: border-box;
+  background: #fff;
+  text-align: center;
+  font-size: 1em;
+  line-height: 0.9;
+  color: var(--text);
+}
+
+[dir="rtl"] .game-player-count {
+  margin-left: 0;
+  margin-right: 0.4rem;
+}
+
+.maumau-discard-by {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-decoration: underline;
+}

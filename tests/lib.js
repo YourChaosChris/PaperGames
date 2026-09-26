@@ -34,16 +34,18 @@ function getGameSlugs() {
 
 // Generically "start a game", whatever kind it is: local hotseat/vs-AI
 // picker (most board games), a single "New game"/"Start"-style button
-// (puzzles and solitaires), or - for Ludo specifically - an extra
-// explicit start click even after picking offline mode.
+// (puzzles and solitaires), or - for games with a player-count picker -
+// an extra explicit start click even after picking offline mode.
 async function tryStart(page) {
   const modeOffline = await page.$("#mode-offline");
   if (modeOffline && await modeOffline.isVisible().catch(() => false)) {
     await modeOffline.click().catch(() => {});
     await page.waitForTimeout(200);
-    const ludoStart = await page.$("#start-ludo-game");
-    if (ludoStart && await ludoStart.isVisible().catch(() => false)) {
-      await ludoStart.click().catch(() => {});
+    // Games with a player-count picker (Ludo, Domino, Mau Mau) need an
+    // explicit start click even after picking offline mode.
+    const explicitStart = await page.$("button[id^='start-'][id$='-game']");
+    if (explicitStart && await explicitStart.isVisible().catch(() => false)) {
+      await explicitStart.click().catch(() => {});
       await page.waitForTimeout(250);
     }
     return "mode-offline";

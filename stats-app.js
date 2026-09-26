@@ -45,7 +45,9 @@ const STATS_GAME_NAME_KEY = {
   tablut: "game_tablut",
   abalone: "game_abalone",
   pyramidsolitaire: "game_pyramidsolitaire",
-  surakarta: "game_surakarta"
+  surakarta: "game_surakarta",
+  domino: "game_domino",
+  maumau: "game_maumau"
 };
 
 function gameDisplayName(game) {

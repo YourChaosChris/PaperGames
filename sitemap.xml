@@ -105,6 +105,18 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/domino-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/domino-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/domino.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://yourchaoschris.github.io/PaperGames/dotsandboxes-history.html</loc>
     <priority>0.6</priority>
   </url>
@@ -338,6 +350,18 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/mancala.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/maumau-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/maumau-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/maumau.html</loc>
     <priority>0.8</priority>
   </url>
   <url>

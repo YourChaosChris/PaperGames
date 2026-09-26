@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Domino Rules | PaperGames</title>
+  <meta name="description" content="How to play the classic draw game with a double-six set in PaperGames: dealing, opening, matching the ends, drawing, passing and a blocked line.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/domino-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/domino-rules.html">
+  <meta property="og:title" content="Domino Rules | PaperGames">
+  <meta property="og:description" content="How to play the classic draw game with a double-six set in PaperGames: dealing, opening, matching the ends, drawing, passing and a blocked line.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Domino Rules | PaperGames">
+  <meta name="twitter:description" content="How to play the classic draw game with a double-six set in PaperGames: dealing, opening, matching the ends, drawing, passing and a blocked line.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>try{if((localStorage.getItem("einkchess_lang")||navigator.language||"en").slice(0,2).toLowerCase()!=="en"){document.documentElement.className+=" i18n-pending";setTimeout(function(){document.documentElement.classList.remove("i18n-pending")},4000)}}catch(e){}</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="domino_rules_title">Domino Rules</h1>
+      <p data-i18n="domino_rules_intro">A quick reference for how PaperGames plays the classic draw game with a double-six set - useful if you're rusty, or learning.</p>
+
+      <h2 data-i18n="domino_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt data-i18n="domino_term_set">The tiles</dt>
+        <dd data-i18n="domino_rules_set">A double-six set has 28 tiles. Each tile has two halves showing 0 to 6 pips, and every combination appears exactly once - from 0-0 to 6-6. A tile with the same number on both halves is a double.</dd>
+        <dt data-i18n="domino_term_deal">Dealing</dt>
+        <dd data-i18n="domino_rules_deal">With two players each gets 7 tiles, with three or four players each gets 5. The remaining tiles stay face down as the stock.</dd>
+        <dt data-i18n="domino_term_opening">Who starts</dt>
+        <dd data-i18n="domino_rules_opening">Whoever holds the highest double opens by playing it. If nobody has a double, the highest tile opens (the most pips, then the higher half). PaperGames plays this opening tile automatically.</dd>
+        <dt data-i18n="domino_term_play">Playing a tile</dt>
+        <dd data-i18n="domino_rules_play">On your turn, add one tile to either open end of the line. The touching halves must show the same number, so the tile's other half becomes the new open end.</dd>
+        <dt data-i18n="domino_term_draw">Drawing and passing</dt>
+        <dd data-i18n="domino_rules_draw">If none of your tiles fits, you draw from the stock until you get one that does. Once the stock is empty and nothing fits, you pass.</dd>
+      </dl>
+
+      <h2 data-i18n="domino_rules_end_title">How a round ends</h2>
+      <dl class="rule-list">
+        <dt data-i18n="domino_term_win">Going out</dt>
+        <dd data-i18n="domino_rules_win">The first player to play their last tile wins.</dd>
+        <dt data-i18n="domino_term_blocked">A blocked line</dt>
+        <dd data-i18n="domino_rules_blocked">If every player has to pass in a row, the line is blocked. Then everyone adds up the pips left in their hand: the lowest total wins, and a shared lowest total is a draw. The totals of all players are shown at the end.</dd>
+        <dt data-i18n="domino_term_round">One round</dt>
+        <dd data-i18n="domino_rules_round">A game here is a single round - there's no running score over several rounds, the same way backgammon is handled in this collection.</dd>
+      </dl>
+
+      <h2 data-i18n="domino_rules_screen_title">Playing on the screen</h2>
+      <dl class="rule-list">
+        <dt data-i18n="domino_term_screen">Ends, line and hand</dt>
+        <dd data-i18n="domino_rules_screen">The two open ends are shown at the top as big numbers - they are what you tap to place a tile. Below them, the line played so far runs as one row you can scroll sideways. Your own tiles are at the bottom: tap one to pick it, then tap the end it should go on. Tiles that don't fit sit a little lower with a dashed outline.</dd>
+        <dt data-i18n="domino_term_hotseat">Several people, one device</dt>
+        <dd data-i18n="domino_rules_hotseat">When you play with others on the same device, your tiles are covered after your turn. Hand the device on, and the next player taps "Show my tiles" to see only their own.</dd>
+      </dl>
+
+      <p class="about-back"><a href="domino.html" data-i18n="about_back">&larr; Back to the board</a></p>
+  </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="error-banner.js"></script>
+<script src="i18n.js"></script>
+<script src="font-size-toggle.js"></script>
+<script src="high-contrast.js"></script>
+<script src="settings-menu.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+<script src="update-banner.js"></script>
+</body>
+</html>
