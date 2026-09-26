@@ -7324,9 +7324,15 @@ max-width: 900px;
   box-shadow: 0 0 0 3px var(--square-dark) inset;
 }
 
-/* The center hub's decorative cells (see ludo-app.js for why its 4
-   corners are ordinary track-cell buttons instead, and not part of
-   this overlay). */
+/* The center hub's decorative cells: a closed 3x3 block the track runs
+   around (see ludo-app.js). None of them take clicks. */
+.ludo-hub-corner {
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
 .ludo-hub-wedge {
   border: 1px solid var(--border);
   box-sizing: border-box;

@@ -148,6 +148,22 @@ const LudoCore = (function () {
     return !pathBlocked(state, color, token.rel, roll);
   }
 
+  // Why a move isn't allowed - for the on-screen hint, not for the rules
+  // (isLegalMove above stays the single source of truth). Returns null
+  // when the move is legal.
+  function illegalReason(state, color, tokenIndex, roll) {
+    const token = state.tokens[color] && state.tokens[color][tokenIndex];
+    if (!token) return null;
+    if (token.state === "finished") return "finished";
+    if (token.state === "home") {
+      if (roll !== 6) return "needs-six";
+      return isBlockedForOpponent(state, color, absTrackIndex(color, 0)) ? "blocked" : null;
+    }
+    if (token.rel + roll > FINISH_REL) return "overshoot";
+    if (pathBlocked(state, color, token.rel, roll)) return "blocked";
+    return null;
+  }
+
   function getLegalMoves(state, color, roll) {
     const moves = [];
     for (let i = 0; i < PIECES_PER_COLOR; i++) {
@@ -239,6 +255,7 @@ const LudoCore = (function () {
     colorCountAtAbs,
     isBlockedForOpponent,
     isLegalMove,
+    illegalReason,
     getLegalMoves,
     applyMove,
     getWinner,
