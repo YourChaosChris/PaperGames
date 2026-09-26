@@ -58,7 +58,14 @@ const GamesRender = (function () {
     });
   }
 
-  return { buildGameCardHTML, updateFavoriteButtons, translateInto };
+  // Whether a game is listed in the current language (see hideInLangs in
+  // games-catalog.js).
+  function isListed(game) {
+    const lang = window.I18n ? I18n.getLang() : "en";
+    return !(game.hideInLangs && game.hideInLangs.indexOf(lang) !== -1);
+  }
+
+  return { buildGameCardHTML, updateFavoriteButtons, translateInto, isListed };
 })();
 
 // See favorites.js for why this explicit export is needed: a top-level

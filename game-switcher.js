@@ -67,7 +67,8 @@
     ["tablut", "game_tablut"],
     ["abalone", "game_abalone"],
     ["pyramidsolitaire", "game_pyramidsolitaire"],
-    ["surakarta", "game_surakarta"]
+    ["surakarta", "game_surakarta"],
+    ["categories", "game_categories"]
   ];
 
   var GAME_SLUGS = {};

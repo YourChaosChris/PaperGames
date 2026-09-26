@@ -68,7 +68,7 @@
   }
 
   function goToRandomGame() {
-    const games = GAMES_CATALOG;
+    const games = GAMES_CATALOG.filter(GamesRender.isListed);
     if (!games.length) return;
     const pick = games[Math.floor(Math.random() * games.length)];
     window.location.href = pick.slug + ".html";
