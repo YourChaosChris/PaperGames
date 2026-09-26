@@ -2417,6 +2417,7 @@ STRINGS.de = {
     settings_ai_pacing_slow: "Langsam",
     settings_version_label: "Version:",
     settings_version_unknown: "Version unbekannt",
+    settings_version_checking: "Wird ermittelt…",
     settings_update_hint: "Dafür ist eine Internetverbindung nötig.",
     msg_t_ludo_moved: "{p} zieht Figur {n} um {m} vor.",
     msg_t_ludo_brought: "{p} bringt Figur {n} ins Spiel.",

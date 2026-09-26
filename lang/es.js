@@ -2353,6 +2353,7 @@ STRINGS.es = {
     settings_ai_pacing_slow: "Lento",
     settings_version_label: "Versión:",
     settings_version_unknown: "Versión desconocida",
+    settings_version_checking: "Comprobando…",
     settings_update_hint: "Hace falta conexión a internet.",
     msg_t_ludo_moved: "{p} avanza {m} con la ficha {n}.",
     msg_t_ludo_brought: "{p} saca la ficha {n} al juego.",

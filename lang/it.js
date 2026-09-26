@@ -2353,6 +2353,7 @@ STRINGS.it = {
     settings_ai_pacing_slow: "Lento",
     settings_version_label: "Versione:",
     settings_version_unknown: "Versione sconosciuta",
+    settings_version_checking: "Verifica in corso…",
     settings_update_hint: "Serve una connessione a internet.",
     msg_t_ludo_moved: "{p} avanza la pedina {n} di {m}.",
     msg_t_ludo_brought: "{p} mette in gioco la pedina {n}.",

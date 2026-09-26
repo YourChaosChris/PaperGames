@@ -2270,6 +2270,7 @@ STRINGS.ar = {
     settings_ai_pacing_slow: "بطيئة",
     settings_version_label: "الإصدار:",
     settings_version_unknown: "الإصدار غير معروف",
+    settings_version_checking: "جارٍ التحقق…",
     settings_update_hint: "يتطلب هذا اتصالًا بالإنترنت.",
     msg_t_ludo_moved: "حرّك {p} القطعة {n} مسافة {m} إلى الأمام.",
     msg_t_ludo_brought: "أدخل {p} القطعة {n} إلى اللعب.",

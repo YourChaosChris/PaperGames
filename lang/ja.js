@@ -2353,6 +2353,7 @@ STRINGS.ja = {
     settings_ai_pacing_slow: "遅い",
     settings_version_label: "バージョン:",
     settings_version_unknown: "バージョン不明",
+    settings_version_checking: "確認中…",
     settings_update_hint: "インターネット接続が必要です。",
     msg_t_ludo_moved: "{p}のコマ{n}が{m}マス進みました。",
     msg_t_ludo_brought: "{p}のコマ{n}が盤上に出ました。",

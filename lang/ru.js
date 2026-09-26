@@ -2353,6 +2353,7 @@ STRINGS.ru = {
     settings_ai_pacing_slow: "Медленно",
     settings_version_label: "Версия:",
     settings_version_unknown: "Версия неизвестна",
+    settings_version_checking: "Проверка…",
     settings_update_hint: "Для этого нужно подключение к интернету.",
     msg_t_ludo_moved: "{p}: фишка {n} продвигается на {m}.",
     msg_t_ludo_brought: "{p}: фишка {n} вводится в игру.",

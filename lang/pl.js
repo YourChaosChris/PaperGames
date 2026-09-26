@@ -2354,6 +2354,7 @@ STRINGS.pl = {
     settings_ai_pacing_slow: "Wolno",
     settings_version_label: "Wersja:",
     settings_version_unknown: "Wersja nieznana",
+    settings_version_checking: "Sprawdzanie…",
     settings_update_hint: "Wymaga to połączenia z internetem.",
     msg_t_ludo_moved: "{p}: pionek {n} idzie o {m} do przodu.",
     msg_t_ludo_brought: "{p}: pionek {n} wchodzi do gry.",
