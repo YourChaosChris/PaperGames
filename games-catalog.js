@@ -465,7 +465,7 @@ const GAMES_CATALOG = [
     descKey: "home_ludo_desc",
     descText: "The classic cross-shaped race game descended from ancient Pachisi. Play one color yourself against up to three built-in computer opponents (2-4 players total), or pass the device around in local hotseat.",
     popular: false,
-    icon: "<span class=\"ludo-icon-disc ludo-icon-disc-red\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"ludo-icon-shape\" aria-hidden=\"true\"><svg class=\"ludo-shape\" viewBox=\"0 0 100 100\" aria-hidden=\"true\" focusable=\"false\"><circle cx=\"50\" cy=\"50\" r=\"44\" fill=\"currentColor\"/></svg></span>"
   },
   {
     slug: "categories",

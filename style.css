@@ -7205,8 +7205,15 @@ max-width: 900px;
 .ludo-cell-home-column-yellow { background: #f3e3c4; }
 .ludo-cell-home-column-blue { background: #d8e2f0; }
 
-.ludo-cell-movable {
-  background: var(--square-dark);
+/* A token that may move: a solid black wedge in the cell's bottom-right
+   corner. A light grey fill was invisible on e-ink (213 vs 253 grey), and
+   the wedge can't be mistaken for a token (shape), the last move's origin
+   (dashed square) or its target (thin frame). Drawn as a background
+   gradient so it leaves ::before (safe-square star) and ::after (origin
+   mark) free; it stays clear of the centred token. */
+.ludo-cell-movable,
+.ludo-cell-home-column.ludo-cell-movable {
+  background: var(--square-light) linear-gradient(135deg, transparent 72%, var(--text) 72%) no-repeat;
 }
 
 /* Width/height 100% here is load-bearing, not decorative: .ludo-token
@@ -7266,27 +7273,26 @@ max-width: 900px;
   height: 62%;
   min-width: 8px;
   min-height: 8px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
   box-sizing: border-box;
+  color: var(--text);
+}
+
+/* The color's shape (ludoShapeSvg in ludo-app.js) fills its box. */
+.ludo-shape {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .ludo-token-stacked {
   margin-left: -4px;
 }
 
-/* Four colors are indistinguishable on a grayscale E-Ink panel (Tolino
-   confirmed - no color at all, not even a color->gray conversion), so
-   each color is a distinct fill+border TEXTURE instead of a hue: red is
-   a solid filled disc, the other three are hollow rings with a
-   different border-style each. This same red/green/yellow/blue ->
-   filled/solid-ring/dashed-ring/dotted-ring mapping is reused below for
-   every other per-color indicator (home slots, turn chips, hub wedges,
-   icon discs) so the pattern only needs to be learned once. */
-.ludo-token-red { background: var(--border); }
-.ludo-token-green { background: var(--square-light); }
-.ludo-token-yellow { background: var(--square-light); border-style: dashed; }
-.ludo-token-blue { background: var(--square-light); border-style: dotted; }
+/* Four colors are indistinguishable on a grayscale E-Ink panel, so each
+   color has its own shape wherever it appears - token, home slot, finish
+   count, hub wedge, color picker: red a filled circle, green an open
+   circle, yellow a filled triangle, blue an open square. The tinted
+   backgrounds stay as a help on color screens only. */
 
 .ludo-home-base {
   position: relative;
@@ -7304,24 +7310,29 @@ max-width: 900px;
 .ludo-home-base-yellow { background: #f7ecd4; }
 .ludo-home-base-blue { background: #e3e9f3; }
 
+/* An empty slot is a faint dashed circle; an occupied one shows the
+   color's shape at full strength, so the tokens still waiting can be
+   counted for every color. */
 .ludo-home-slot {
   border-radius: 50%;
-  border: 2px solid var(--border);
-  background: var(--square-light);
+  border: 1px dashed var(--muted);
+  background: transparent;
   box-sizing: border-box;
   padding: 0;
   cursor: pointer;
+  color: var(--text);
 }
 
-/* Same filled/solid-ring/dashed-ring/dotted-ring texture as .ludo-token-*
-   (see comment there) - no color, since a grayscale panel can't show one. */
-.ludo-home-slot-filled.ludo-home-slot-red { background: var(--border); }
-.ludo-home-slot-filled.ludo-home-slot-green { background: var(--square-light); }
-.ludo-home-slot-filled.ludo-home-slot-yellow { background: var(--square-light); border-style: dashed; }
-.ludo-home-slot-filled.ludo-home-slot-blue { background: var(--square-light); border-style: dotted; }
+.ludo-home-slot-filled {
+  border: 0;
+}
 
+
+/* A waiting token that may enter: a thick double frame around it (the
+   last move's mark is a thin single line). */
 .ludo-home-slot-movable {
-  box-shadow: 0 0 0 3px var(--square-dark) inset;
+  outline: 5px double var(--text);
+  outline-offset: 2px;
 }
 
 /* The center hub's decorative cells: a closed 3x3 block the track runs
@@ -7337,16 +7348,11 @@ max-width: 900px;
   border: 1px solid var(--border);
   box-sizing: border-box;
   pointer-events: none;
+  padding: 25%;
+  color: var(--text);
+  background: var(--square-light);
 }
 
-/* Same filled/solid-ring/dashed-ring/dotted-ring texture as .ludo-token-*
-   (see comment there). Border is thickened to 2px so the ring styles
-   still read as a marked wedge rather than blending into the plain
-   1px-bordered cells around it. */
-.ludo-hub-wedge-red { background: var(--border); }
-.ludo-hub-wedge-green { background: var(--square-light); border-width: 2px; }
-.ludo-hub-wedge-yellow { background: var(--square-light); border-width: 2px; border-style: dashed; }
-.ludo-hub-wedge-blue { background: var(--square-light); border-width: 2px; border-style: dotted; }
 
 .ludo-hub-center {
   position: relative;
@@ -7358,22 +7364,6 @@ max-width: 900px;
   border: 1px solid var(--border);
   box-sizing: border-box;
   pointer-events: none;
-}
-
-/* One <span> per active color, wrapped into a 2-column grid (2x1 for a
-   2-player game, 2x2 for 3-4 players) rather than one long space-joined
-   line - that's what lets this sit at a readable font-size instead of
-   the illegibly tiny one a single "R:0 G:0 Y:0 B:0" line would need to
-   fit this single board cell. */
-.ludo-finished-tally {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  justify-items: center;
-  align-items: center;
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.15;
 }
 
 /* Turn indicator: one chip per active color, the current player's chip
@@ -7394,40 +7384,41 @@ max-width: 900px;
   margin-right: 0;
 }
 
+.ludo-turn-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* One chip per color: its shape and the number of its tokens in the
+   finish. The player to move gets a thick frame. */
 .ludo-turn-chip {
   display: inline-block;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--square-light);
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.ludo-turn-chip .ludo-shape {
+  display: inline-block;
+  vertical-align: middle;
   width: 1.1rem;
   height: 1.1rem;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  box-sizing: border-box;
-  opacity: 0.45;
 }
 
-/* Same filled/solid-ring/dashed-ring/dotted-ring texture as .ludo-token-*
-   (see comment there). */
-.ludo-turn-chip-red { background: var(--border); }
-.ludo-turn-chip-green { background: var(--square-light); }
-.ludo-turn-chip-yellow { background: var(--square-light); border-style: dashed; }
-.ludo-turn-chip-blue { background: var(--square-light); border-style: dotted; }
+.ludo-turn-count {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.3rem;
+  font-weight: 700;
+  font-size: 1rem;
+}
 
 .ludo-turn-chip-active {
-  opacity: 1;
-  box-shadow: 0 0 0 3px var(--square-dark);
-}
-
-/* Black text with a white halo reads on both the solid-black (red) chip
-   and the light-filled (green/yellow/blue) chips, unlike a single fixed
-   text color which would only work on one of the two fills. */
-.ludo-turn-chip-ai::after {
-  content: "AI";
-  display: block;
-  font-size: 0.45rem;
-  font-weight: 700;
-  line-height: 1.1rem;
-  text-align: center;
-  color: var(--border);
-  text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
+  border-width: 3px;
+  padding: 0.05rem 0.3rem;
 }
 
 .ludo-dice-area {
@@ -7464,24 +7455,15 @@ max-width: 900px;
   background: #fff;
 }
 
-/* Small disc icons for the color-choice picker and board placeholder,
-   matching the board's own token styling. */
-.ludo-icon-disc {
+/* Small shape icons for the color picker, board placeholder and game
+   card - the same shapes as the tokens. */
+.ludo-icon-shape {
   display: inline-block;
   width: 1em;
   height: 1em;
-  border-radius: 50%;
   vertical-align: middle;
-  box-sizing: border-box;
-  border: 2px solid var(--border);
+  color: var(--text);
 }
-
-/* Same filled/solid-ring/dashed-ring/dotted-ring texture as .ludo-token-*
-   (see comment there). */
-.ludo-icon-disc-red { background: var(--border); }
-.ludo-icon-disc-green { background: var(--square-light); }
-.ludo-icon-disc-yellow { background: var(--square-light); border-style: dashed; }
-.ludo-icon-disc-blue { background: var(--square-light); border-style: dotted; }
 
 /* Print view for the grid puzzles (Sudoku/Kakuro/Nonogram): print exactly
    the puzzle grid, nothing else - not the site chrome around it, not the

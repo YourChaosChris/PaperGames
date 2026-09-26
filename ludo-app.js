@@ -68,9 +68,26 @@ const AppStateLudo = {
 
 const LUDO_SAVE_KEY = "einkchess_save_ludo";
 
+// Each color also has its own shape, because an e-ink screen shows the
+// four colors as nearly the same grey: a filled circle, an open circle,
+// a filled triangle and an open square. Names carry the shape as well, so
+// no text relies on the color alone.
 function ludoColorName(color) {
-  const names = { red: "Red", green: "Green", yellow: "Yellow", blue: "Blue" };
+  const names = { red: "Red \u25CF", green: "Green \u25CB", yellow: "Yellow \u25B2", blue: "Blue \u25A1" };
   return names[color] || color;
+}
+
+const LUDO_SHAPE_MARKUP = {
+  red: '<circle cx="50" cy="50" r="44" fill="currentColor"/>',
+  green: '<circle cx="50" cy="50" r="37" fill="#fff" stroke="currentColor" stroke-width="16"/>',
+  yellow: '<polygon points="50,4 97,92 3,92" fill="currentColor"/>',
+  blue: '<rect x="11" y="11" width="78" height="78" fill="#fff" stroke="currentColor" stroke-width="16"/>'
+};
+
+// The shape of a color as inline SVG in the text colour (same idea as
+// mastermindSymbolSvg in mastermind-app.js).
+function ludoShapeSvg(color) {
+  return '<svg class="ludo-shape" viewBox="0 0 100 100" aria-hidden="true" focusable="false">' + LUDO_SHAPE_MARKUP[color] + "</svg>";
 }
 
 function saveLudoGame() {
@@ -381,8 +398,16 @@ function performRollLudo() {
   if (isAiColorLudo(color)) {
     setStatusLudo("board-info", "Computer (" + ludoColorName(color) + ") rolled " + value + ", thinking…");
     setTimeout(() => {
-      const tokenIndex = LudoAi.chooseMove(AppStateLudo.state, color, value, AppStateLudo.aiLevel);
-      if (tokenIndex === null || tokenIndex === undefined) return;
+      if (AppStateLudo.gameOver || currentColorLudo() !== color) return;
+      let tokenIndex = LudoAi.chooseMove(AppStateLudo.state, color, value, AppStateLudo.aiLevel);
+      if (tokenIndex === null || tokenIndex === undefined) {
+        // Safety net: the computer must never just stop.
+        tokenIndex = AppStateLudo.legalMoves.length ? AppStateLudo.legalMoves[0] : null;
+      }
+      if (tokenIndex === null) {
+        afterMoveOrPassLudo(value === 6);
+        return;
+      }
       applyLudoMove(tokenIndex);
     }, AiPacing.delay(350));
   } else {
@@ -641,6 +666,7 @@ function buildLudoBoardDOM() {
     const wedge = document.createElement("div");
     wedge.className = "ludo-hub-wedge ludo-hub-wedge-" + w.color;
     wedge.style.gridArea = gridArea(w.row, w.col);
+    wedge.innerHTML = ludoShapeSvg(w.color);
     boardEl.appendChild(wedge);
   });
   const HUB_CORNERS = [[6, 6], [6, 8], [8, 6], [8, 8]];
@@ -653,10 +679,6 @@ function buildLudoBoardDOM() {
   const center = document.createElement("div");
   center.className = "ludo-hub-center";
   center.style.gridArea = gridArea(LUDO_HUB_ORIGIN[0] + 1, LUDO_HUB_ORIGIN[1] + 1);
-  const finishedTally = document.createElement("span");
-  finishedTally.id = "ludo-finished-tally";
-  finishedTally.className = "ludo-finished-tally";
-  center.appendChild(finishedTally);
   boardEl.appendChild(center);
 
   ensureLudoBoardSquare();
@@ -767,6 +789,7 @@ function updateLudoBoard() {
   boardEl.querySelectorAll(".ludo-cell").forEach((el) => el.classList.remove("ludo-cell-movable"));
   boardEl.querySelectorAll(".ludo-home-slot").forEach((el) => {
     el.classList.remove("ludo-home-slot-filled", "ludo-home-slot-movable");
+    el.innerHTML = "";
   });
 
   LudoCore.COLOR_ORDER.forEach((color) => {
@@ -778,6 +801,7 @@ function updateLudoBoard() {
         const slot = boardEl.querySelector(".ludo-home-slot-" + color + "[data-slot='" + tokenIndex + "']");
         if (slot) {
           slot.classList.add("ludo-home-slot-filled");
+          slot.innerHTML = ludoShapeSvg(color);
           if (isMovable) slot.classList.add("ludo-home-slot-movable");
         }
       } else if (token.state === "active") {
@@ -792,6 +816,7 @@ function updateLudoBoard() {
         if (cellEl) {
           const dot = document.createElement("span");
           dot.className = "ludo-token ludo-token-" + color;
+          dot.innerHTML = ludoShapeSvg(color);
           cellEl.querySelector(".ludo-cell-tokens").appendChild(dot);
           if (isMovable) cellEl.classList.add("ludo-cell-movable");
         }
@@ -807,16 +832,6 @@ function updateLudoBoard() {
       dots.forEach((d, i) => { if (i > 0) d.classList.add("ludo-token-stacked"); });
     }
   });
-
-  const tally = document.getElementById("ludo-finished-tally");
-  if (tally) {
-    tally.innerHTML = "";
-    LudoCore.COLOR_ORDER.filter((c) => state.activeColors.indexOf(c) !== -1).forEach((c) => {
-      const item = document.createElement("span");
-      item.textContent = ludoColorName(c)[0] + LudoCore.tokensFinished(state, c);
-      tally.appendChild(item);
-    });
-  }
 
   markLastMoveLudo(boardEl);
   updateLudoAriaLabels();
@@ -837,7 +852,9 @@ function updateLudoAriaLabels() {
   });
   boardEl.querySelectorAll(".ludo-home-slot").forEach((el) => {
     const color = el.dataset.color;
-    let label = ludoColorName(color) + " home token";
+    // Screen readers get the plain color name here: "Red home token"
+    // is a known label, and the shape glyph adds nothing when spoken.
+    let label = ludoColorName(color).split(" ")[0] + " home token";
     if (el.classList.contains("ludo-home-slot-filled")) label += ", waiting";
     else label += ", in play";
     if (el.classList.contains("ludo-home-slot-movable")) label += ", movable";
@@ -845,17 +862,32 @@ function updateLudoAriaLabels() {
   });
 }
 
+// One entry per color above the board: its shape and how many of its
+// tokens are already home (finished), the player to move framed.
 function updateTurnIndicatorLudo() {
   const el = document.getElementById("ludo-turn-indicator");
   if (!el) return;
   el.innerHTML = "";
+  const state = AppStateLudo.state;
   const current = currentColorLudo();
+  const label = document.createElement("span");
+  label.className = "ludo-turn-label";
+  I18n.setMsg(label, "In the finish:");
+  el.appendChild(label);
   AppStateLudo.activeColors.forEach((color) => {
     const chip = document.createElement("span");
     chip.className = "ludo-turn-chip ludo-turn-chip-" + color;
-    if (color === current) chip.classList.add("ludo-turn-chip-active");
+    if (color === current && !AppStateLudo.gameOver) chip.classList.add("ludo-turn-chip-active");
     if (isAiColorLudo(color)) chip.classList.add("ludo-turn-chip-ai");
-    chip.title = I18n.msg(ludoColorName(color) + (isAiColorLudo(color) ? " (computer)" : (AppStateLudo.mode === "vs-ai" ? " (you)" : "")));
+    const done = LudoCore.tokensFinished(state, color);
+    chip.innerHTML = ludoShapeSvg(color);
+    const count = document.createElement("span");
+    count.className = "ludo-turn-count";
+    count.textContent = String(done);
+    chip.appendChild(count);
+    const who = ludoColorName(color) + (isAiColorLudo(color) ? " (computer)" : (AppStateLudo.mode === "vs-ai" ? " (you)" : ""));
+    I18n.setAria(chip, who + ", " + done + " in the finish");
+    chip.setAttribute("role", "img");
     el.appendChild(chip);
   });
 }
