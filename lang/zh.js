@@ -507,7 +507,7 @@ STRINGS.zh = {
     backgammon_history_origins_p2: "据说罗马皇帝克劳狄乌斯十分痴迷塔布拉，甚至为它写过一本策略专著（如今已失传），还让人在自己的马车里装了一块棋盘，好在旅途中也能对弈。",
     backgammon_history_spread_title: "“桌戏”、Trictrac，以及英文名字的由来",
     backgammon_history_spread_p1: "在整个中世纪欧洲，各种类似西洋双陆棋的竞速游戏统称为“Tables”（桌戏），法国的 trictrac 等地方变体各自加入了独特的计分方式。英文名“backgammon”最早见于 17 世纪的文献，可能来自“back”（回）和一个古老的表示“游戏”的词——暗指棋子有时需要重新进场、再次走过整个棋盘。",
-    backgammon_history_spread_p2: "加倍骰——让任何一方都能在对局中途提高赌注——诞生于 1920 年代的纽约，把西洋双陆棋从一场单纯的竞速，转变成了如今锦标赛选手所熟知的、充满精密风险计算的博弈（本应用没有加入加倍骰——原因请见其规则页面）。",
+    backgammon_history_spread_p2: "加倍骰——让任何一方都能在对局中途提高赌注——诞生于 1920 年代的纽约，把西洋双陆棋从一场单纯的竞速，转变成了如今锦标赛选手所熟知的、充满精密风险计算的博弈（PaperGames 也包含加倍骰——详见规则页面）。",
     backgammon_history_modern_title: "人工智能的早期胜利",
     backgammon_history_modern_p1: "西洋双陆棋在人工智能发展史上占有特殊地位：1992 年，IBM 研究员杰拉尔德·特索罗（Gerald Tesauro）开发出名为 TD-Gammon 的程序，它通过与自己对弈数百万局来学习，是如今被称为“强化学习”的最早成功案例之一。",
     backgammon_history_modern_p2: "TD-Gammon 达到了足以与世界顶尖人类高手抗衡的水平，这比同类技术攻克国际象棋或围棋要早了许多年，它那些非常规的战略思路，最终也改变了顶尖人类棋手对这项运动的理解方式。",

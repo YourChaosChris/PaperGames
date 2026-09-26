@@ -82,7 +82,7 @@ The interface is available in 12 languages:
 - Russian (Русский)
 - Japanese (日本語)
 - Chinese (中文)
-- Arabic (العربية) - interface and game messages; the rules, history and legal pages are still in English
+- Arabic (العربية) - everything except the legal pages, which stay in English (the German/English versions are binding)
 
 ## Technology
 
