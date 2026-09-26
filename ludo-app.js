@@ -13,12 +13,11 @@
 //     (see the coordinate list below) - 13 cells per color, matching
 //     LudoCore.START_INDEX.
 //   - A 5-cell private "home stretch" per color leading from the track
-//     into the 3x3 center hub (the hub's 4 corner cells are themselves
-//     shared-track cells - the classic cross-shaped board's track bends
-//     through them - while its middle cross-shape is purely decorative).
-//   - Four small always-empty "gap" cells inside the arms that no
-//     color's path touches, rendered as plain filler so the arms read
-//     as solid rectangles (the same idea as ur-app.js's H-shape gaps).
+//     into the 3x3 center hub. The hub is a closed, purely decorative
+//     block (4 corners, 4 color wedges, the finish tally); the track
+//     runs around it, turning a corner at each of its 4 corners, and
+//     includes the 3 cells across the tip of every arm, so each step
+//     on the board is exactly one die pip.
 //
 // Turn flow: whoever's turn it is presses "Roll", then either clicks a
 // highlighted movable token (or its home base, to bring a new token onto
@@ -29,10 +28,10 @@
 // color plays itself the same way, just via LudoAi instead of a click.
 
 const LUDO_TRACK_CELLS = [
-  [6, 1], [6, 2], [6, 3], [6, 4], [6, 5], [6, 6], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 7],
-  [1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 8], [6, 9], [6, 10], [6, 11], [6, 12], [6, 13], [6, 14], [7, 14],
-  [8, 13], [8, 12], [8, 11], [8, 10], [8, 9], [8, 8], [9, 8], [10, 8], [11, 8], [12, 8], [13, 8], [14, 8], [14, 7],
-  [13, 6], [12, 6], [11, 6], [10, 6], [9, 6], [8, 6], [8, 5], [8, 4], [8, 3], [8, 2], [8, 1], [8, 0], [7, 0]
+  [6, 1], [6, 2], [6, 3], [6, 4], [6, 5], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 7], [0, 8],
+  [1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 9], [6, 10], [6, 11], [6, 12], [6, 13], [6, 14], [7, 14], [8, 14],
+  [8, 13], [8, 12], [8, 11], [8, 10], [8, 9], [9, 8], [10, 8], [11, 8], [12, 8], [13, 8], [14, 8], [14, 7], [14, 6],
+  [13, 6], [12, 6], [11, 6], [10, 6], [9, 6], [8, 5], [8, 4], [8, 3], [8, 2], [8, 1], [8, 0], [7, 0], [6, 0]
 ];
 
 const LUDO_HOME_COLUMN_CELLS = {
@@ -41,8 +40,6 @@ const LUDO_HOME_COLUMN_CELLS = {
   yellow: [[7, 13], [7, 12], [7, 11], [7, 10], [7, 9]],
   blue: [[13, 7], [12, 7], [11, 7], [10, 7], [9, 7]]
 };
-
-const LUDO_GAP_CELLS = [[6, 0], [0, 8], [8, 14], [14, 6]];
 
 const LUDO_HOME_BASE_ORIGIN = { red: [0, 0], green: [0, 9], yellow: [9, 9], blue: [9, 0] };
 const LUDO_HUB_ORIGIN = [6, 6];
@@ -407,7 +404,14 @@ function attemptLudoMoveFrom(tokenIndex) {
     setStatusLudo("board-info", "Roll the die first.");
     return;
   }
-  if (AppStateLudo.legalMoves.indexOf(tokenIndex) === -1) return; // not legal - ignore the click
+  if (AppStateLudo.legalMoves.indexOf(tokenIndex) === -1) {
+    const reason = LudoCore.illegalReason(AppStateLudo.state, color, tokenIndex, AppStateLudo.roll);
+    if (reason === "needs-six") setStatusLudo("board-info", "That token needs a 6 to come into play.");
+    else if (reason === "overshoot") setStatusLudo("board-info", "That token needs an exact roll to reach the finish.");
+    else if (reason === "blocked") setStatusLudo("board-info", "Two opposing tokens block that move.");
+    else if (reason === "finished") setStatusLudo("board-info", "That token is already home.");
+    return;
+  }
   applyLudoMove(tokenIndex);
 }
 
@@ -571,15 +575,6 @@ function buildLudoBoardDOM() {
     }
   }
 
-  // Gap cells (unused corners inside the arms) sit on top of the filler,
-  // styled identically - purely cosmetic, non-interactive.
-  LUDO_GAP_CELLS.forEach(([r, c]) => {
-    const el = document.createElement("div");
-    el.className = "ludo-filler";
-    el.style.gridArea = gridArea(r, c);
-    boardEl.appendChild(el);
-  });
-
   // The 52 shared track cells.
   LUDO_TRACK_CELLS.forEach(([r, c], idx) => {
     const btn = document.createElement("button");
@@ -631,15 +626,11 @@ function buildLudoBoardDOM() {
     boardEl.appendChild(base);
   });
 
-  // The center hub. Its 4 corner cells ((6,6)/(6,8)/(8,6)/(8,8)) are
-  // themselves shared-track cells (already built above as ordinary
-  // track buttons - the classic board's track literally bends through
-  // them), so only the remaining 5 cells - the "+"-shaped middle of the
-  // 3x3 hub - are this purely decorative overlay: one color-tinted wedge
-  // next to each color's own home-column entrance, plus the center
-  // finish-tally cell. Each is its own 1x1 grid cell rather than one
-  // big 3x3 div, precisely so it never overlaps (and steals clicks
-  // from) those 4 track-cell corners.
+  // The center hub: a closed 3x3 block the track runs around, never
+  // through - 4 plain corner cells, one color-tinted wedge next to each
+  // color's own home-column entrance, and the center finish-tally cell.
+  // All 9 are purely decorative and ignore clicks; each is its own 1x1
+  // grid cell so the block reads as a solid square.
   const HUB_WEDGES = [
     { row: 7, col: 6, color: "red" },    // beside red's home column (7,5)
     { row: 6, col: 7, color: "green" },  // beside green's home column (5,7)
@@ -651,6 +642,13 @@ function buildLudoBoardDOM() {
     wedge.className = "ludo-hub-wedge ludo-hub-wedge-" + w.color;
     wedge.style.gridArea = gridArea(w.row, w.col);
     boardEl.appendChild(wedge);
+  });
+  const HUB_CORNERS = [[6, 6], [6, 8], [8, 6], [8, 8]];
+  HUB_CORNERS.forEach(([r, c]) => {
+    const corner = document.createElement("div");
+    corner.className = "ludo-hub-corner";
+    corner.style.gridArea = gridArea(r, c);
+    boardEl.appendChild(corner);
   });
   const center = document.createElement("div");
   center.className = "ludo-hub-center";
@@ -715,14 +713,18 @@ function onLudoHomeBaseClick(color) {
   attemptLudoMoveFrom(tokenIndex);
 }
 
+// Prefers a token that can legally move; failing that, returns any own
+// token on the cell, so attemptLudoMoveFrom() can say why it can't move
+// instead of the click doing nothing.
 function findOwnTokenIndexAt(color, wantState, relPredicate) {
   const tokens = AppStateLudo.state.tokens[color];
+  let fallback = -1;
   for (let i = 0; i < tokens.length; i++) {
-    if (tokens[i].state === wantState && relPredicate(tokens[i].rel) && AppStateLudo.legalMoves.indexOf(i) !== -1) {
-      return i;
-    }
+    if (tokens[i].state !== wantState || !relPredicate(tokens[i].rel)) continue;
+    if (AppStateLudo.legalMoves.indexOf(i) !== -1) return i;
+    if (fallback === -1) fallback = i;
   }
-  return -1;
+  return fallback;
 }
 
 // The board element showing a token of `color` at the given position:
