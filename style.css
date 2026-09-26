@@ -340,6 +340,7 @@ margin: 0 0 0.6rem;
 .field-row {
   margin-bottom: 0.5rem;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -841,11 +842,28 @@ font-size: 1.2rem;
   flex-direction: column;
   align-items: flex-start;
   margin-left: 0.4em;
+  min-width: 0;
 }
 
 .board-placeholder-title {
   font-size: 0.35em;
   line-height: 1;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* On narrow screens (phones) the 10rem placeholder pushed long game names
+   past the right edge; step it down so the page never scrolls sideways. */
+@media (max-width: 600px) {
+  .board-placeholder {
+    font-size: 6.5rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .board-placeholder {
+    font-size: 5rem;
+  }
 }
 
 .board-placeholder-subtitle {
@@ -8230,4 +8248,30 @@ max-width: 900px;
 .settings-version-hint {
   margin: 0.3rem 0 0;
   font-size: 0.8rem;
+}
+
+/* Long compound words ("Datenschutzerklärung", long URLs) must not push a
+   text page wider than a phone screen: hyphenate where the browser can,
+   otherwise break inside the word. */
+.content-page h1,
+.content-page h2,
+.content-page p,
+.content-page dd,
+.content-page li {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+/* The example rows use a negative start margin as a gutter; in right-to-
+   left pages that gutter belongs on the right, not past the left edge. */
+[dir="rtl"] .abalone-example-row,
+[dir="rtl"] .fanorona-example-row {
+  margin: 0 -1.5rem 1rem 0;
+}
+
+[dir="rtl"] .abalone-example-figure,
+[dir="rtl"] .fanorona-example-figure {
+  margin: 0 1.5rem 1rem 0;
 }
