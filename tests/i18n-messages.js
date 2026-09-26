@@ -192,7 +192,7 @@ const ARIA_SAMPLES = [
 
 // Words that legitimately stay Latin in every language.
 const LATIN_OK = /^(Elo|Lichess|OK|Done|Place|x\d*)$/;
-const NON_LATIN = ["uk", "ru", "ja", "zh"];
+const NON_LATIN = ["uk", "ru", "ja", "zh", "ar"];
 
 let failures = 0;
 function fail(msg) {

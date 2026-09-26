@@ -17,7 +17,7 @@
 const { chromium } = require("playwright");
 const { VIEWPORT, BASE_URL, getGameSlugs, tryStart, runWithConcurrency } = require("./lib");
 
-const LANG = "ru";
+const LANG = process.env.SWEEP_LANG || "ru";
 const CLICKS = +process.env.CLICKS || 60;
 const PER_GAME_MS = 45000;
 

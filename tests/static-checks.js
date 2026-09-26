@@ -92,14 +92,34 @@ function loadStrings() {
   return ctx.STRINGS;
 }
 
+// Languages still being translated: they may leave out the texts that
+// only appear on the rules/history pages and the legal pages (those fall
+// back to English), but everything a player sees while playing - the
+// interface, game messages, screen-reader labels - must be there.
+const PARTIAL_LANGS = ["ar"];
+
+function documentOnlyKeys(STRINGS) {
+  const docPage = (f) => /-(rules|history)\.html$/.test(f) || ["history.html", "impressum.html", "datenschutz.html"].indexOf(f) !== -1;
+  const usedDoc = new Set();
+  const usedElsewhere = new Set();
+  listFiles(".html").concat(listFiles(".js").filter((f) => f !== "i18n.js")).forEach((f) => {
+    const src = fs.readFileSync(path.join(ROOT, f), "utf8");
+    const set = docPage(f) ? usedDoc : usedElsewhere;
+    (src.match(/[a-z0-9]+(?:_[a-z0-9]+)+/g) || []).forEach((k) => { if (STRINGS.en[k] !== undefined) set.add(k); });
+  });
+  return new Set([...usedDoc].filter((k) => !usedElsewhere.has(k) || /^(impressum|privacy)_/.test(k)));
+}
+
 function checkI18nParity(STRINGS) {
   const langs = Object.keys(STRINGS);
   const enKeys = new Set(Object.keys(STRINGS.en));
+  const docOnly = documentOnlyKeys(STRINGS);
   let bad = [];
   for (const lang of langs) {
     if (lang === "en") continue;
     const keys = new Set(Object.keys(STRINGS[lang]));
-    const missing = [...enKeys].filter((k) => !keys.has(k));
+    const partial = PARTIAL_LANGS.indexOf(lang) !== -1;
+    const missing = [...enKeys].filter((k) => !keys.has(k) && !(partial && docOnly.has(k)));
     const extra = [...keys].filter((k) => !enKeys.has(k));
     if (missing.length) bad.push(`${lang} missing ${missing.length} key(s): ${missing.slice(0, 5).join(", ")}`);
     if (extra.length) bad.push(`${lang} has ${extra.length} extra key(s): ${extra.slice(0, 5).join(", ")}`);
@@ -107,7 +127,8 @@ function checkI18nParity(STRINGS) {
   if (bad.length) {
     bad.forEach((b) => fail("i18n parity - " + b));
   } else {
-    ok(`i18n parity: ${langs.length} languages, ${enKeys.size} keys each`);
+    ok(`i18n parity: ${langs.length} languages, ${enKeys.size} keys each` +
+      (PARTIAL_LANGS.length ? ` (${PARTIAL_LANGS.join(", ")}: rules/history/legal texts fall back to English)` : ""));
   }
 }
 

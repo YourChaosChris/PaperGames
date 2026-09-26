@@ -69,7 +69,7 @@ no internet connection at all.
 
 ## Languages
 
-The interface is available in 11 languages:
+The interface is available in 12 languages:
 
 - English
 - German (Deutsch)
@@ -82,6 +82,7 @@ The interface is available in 11 languages:
 - Russian (Русский)
 - Japanese (日本語)
 - Chinese (中文)
+- Arabic (العربية) - interface and game messages; the rules, history and legal pages are still in English
 
 ## Technology
 
