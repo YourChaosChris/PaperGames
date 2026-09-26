@@ -153,7 +153,28 @@ const SAMPLES = [
   "White wins: Black repeated the position four times by perpetual check (sennichite).",
   "White to move. Check!",
   "Board ready. Black to move.",
-  "Black wins (no legal jump available)."
+  "Black wins (no legal jump available).",
+  // Domino
+  "Player 1 opens with 6-6. Player 2's turn. Choose a tile, then an open end.",
+  "Player 3 drew 2 tiles. Player 3 played 4-1. Pass the device to Player 4.",
+  "Player 2 drew 1 tile. Player 2 passed. The line is blocked. Player 1 wins with the lowest pip total.",
+  "Player 4 passed. The line is blocked. The lowest pip total is shared - it's a draw.",
+  "Player 2 played 0-5. Player 2 played their last tile.",
+  "Player 1 played 3-3. No tile fits - draw from the stock.",
+  "Tile 2-5 fits on both ends - tap one.",
+  "Player 1 resigned. Player 2 wins.",
+  "7 tiles, 23 pips",
+  "Stock: 14 tiles",
+  // Mau Mau
+  "The first card is 10♥. Choose a card to play.",
+  "Player 2 played 7♠. Player 1 must draw 4 cards or play a Seven. Play a Seven or draw 4 cards from the stock.",
+  "Player 1 played J♣. Player 1: Mau! Player 1 asks for Hearts.",
+  "Player 3 played 8♦. Player 4 misses a turn. Pass the device to Player 1.",
+  "Player 2 played A♠. Player 2 plays again.",
+  "The discard pile was shuffled into a new stock. Player 1 drew a card. The drawn card fits: play it or keep it.",
+  "Player 2 drew a card. Player 2 keeps the card.",
+  "Player 1 played Q♦. Mau Mau! Player 1 wins.",
+  "There is no card left to draw. Player 3 passes."
 ];
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
@@ -187,7 +208,13 @@ const ARIA_SAMPLES = [
   "Red home token, waiting",
   "Blue master",
   "Point 7, Tiger, capture available",
-  "Row 4, column 5, King"
+  "Row 4, column 5, King",
+  "Left end 4, fits",
+  "Right end 6",
+  "Tile 3-5, selected",
+  "Card 10♥",
+  "Discard pile 9♣",
+  "Asked for: Spades"
 ];
 
 // Words that legitimately stay Latin in every language.

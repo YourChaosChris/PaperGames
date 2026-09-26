@@ -68,7 +68,9 @@
     ["abalone", "game_abalone"],
     ["pyramidsolitaire", "game_pyramidsolitaire"],
     ["surakarta", "game_surakarta"],
-    ["categories", "game_categories"]
+    ["categories", "game_categories"],
+    ["domino", "game_domino"],
+    ["maumau", "game_maumau"]
   ];
 
   var GAME_SLUGS = {};

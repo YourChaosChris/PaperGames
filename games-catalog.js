@@ -481,4 +481,24 @@ const GAMES_CATALOG = [
     hideInLangs: ["zh"],
     icon: "<span class=\"categories-icon\" aria-hidden=\"true\">A</span>"
   },
+  {
+    slug: "domino",
+    category: "strategy",
+    nameKey: "game_domino",
+    nameText: "Domino",
+    descKey: "home_domino_desc",
+    descText: "The classic draw game with a double-six set: match the pips on either open end, draw when you're stuck, and be the first to play your last tile. Against the computer or with 2-4 players on one device.",
+    popular: false,
+    icon: "<span class=\"domino-icon\" aria-hidden=\"true\"><svg class=\"domino-icon\" viewBox=\"0 0 100 50\" aria-hidden=\"true\" focusable=\"false\"><rect x=\"1.5\" y=\"1.5\" width=\"97\" height=\"47\" rx=\"6\" fill=\"#fff\" stroke=\"currentColor\" stroke-width=\"3\"/><line x1=\"50\" y1=\"6\" x2=\"50\" y2=\"44\" stroke=\"currentColor\" stroke-width=\"2.5\"/><circle cx=\"13\" cy=\"13\" r=\"5\" fill=\"currentColor\"/><circle cx=\"37\" cy=\"13\" r=\"5\" fill=\"currentColor\"/><circle cx=\"25\" cy=\"25\" r=\"5\" fill=\"currentColor\"/><circle cx=\"13\" cy=\"37\" r=\"5\" fill=\"currentColor\"/><circle cx=\"37\" cy=\"37\" r=\"5\" fill=\"currentColor\"/><circle cx=\"63\" cy=\"13\" r=\"5\" fill=\"currentColor\"/><circle cx=\"75\" cy=\"25\" r=\"5\" fill=\"currentColor\"/><circle cx=\"87\" cy=\"37\" r=\"5\" fill=\"currentColor\"/></svg></span>"
+  },
+  {
+    slug: "maumau",
+    category: "party",
+    nameKey: "game_maumau",
+    nameText: "Mau Mau",
+    descKey: "home_maumau_desc",
+    descText: "The traditional card game with a 32-card pack: follow suit or rank, use Sevens, Eights, Jacks and Aces to your advantage, and be the first to get rid of your cards. Against the computer or with 2-4 players on one device.",
+    popular: false,
+    icon: "<span class=\"maumau-icon\" aria-hidden=\"true\">\u2665</span>"
+  },
 ];
