@@ -7,11 +7,12 @@
 
 (function () {
   const state = { query: "", sort: "alpha", category: "all" };
-  const CATEGORY_ORDER = ["strategy", "race", "puzzles"];
+  const CATEGORY_ORDER = ["strategy", "race", "puzzles", "party"];
   const CATEGORY_LABEL_KEY = {
     strategy: "home_section_strategy",
     race: "home_section_race",
-    puzzles: "home_section_puzzles"
+    puzzles: "home_section_puzzles",
+    party: "home_section_party"
   };
 
   function displayName(game) {
@@ -37,7 +38,7 @@
     if (!grid) return;
 
     const q = state.query.trim().toLowerCase();
-    const filtered = GAMES_CATALOG.filter((g) => matchesQuery(g, q) && matchesCategory(g));
+    const filtered = GAMES_CATALOG.filter((g) => GamesRender.isListed(g) && matchesQuery(g, q) && matchesCategory(g));
 
     if (!filtered.length) {
       grid.innerHTML = "";

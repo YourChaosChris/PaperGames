@@ -467,4 +467,18 @@ const GAMES_CATALOG = [
     popular: false,
     icon: "<span class=\"ludo-icon-disc ludo-icon-disc-red\" aria-hidden=\"true\"></span>"
   },
+  {
+    slug: "categories",
+    category: "party",
+    nameKey: "game_categories",
+    nameText: "Categories",
+    descKey: "home_categories_desc",
+    descText: "The classic pen-and-paper word game, with this device as the game master: it draws the letter, keeps time and adds up the points. For 1-8 players, each with paper and a pen.",
+    popular: false,
+    // A letter game needs an alphabet; Chinese has none, so the game is
+    // left out of the lists there (its page still works, with pinyin
+    // initials).
+    hideInLangs: ["zh"],
+    icon: "<span class=\"categories-icon\" aria-hidden=\"true\">A</span>"
+  },
 ];

@@ -7676,3 +7676,168 @@ max-width: 900px;
   color: var(--muted);
   margin: 0 0 0.75rem 0;
 }
+
+/* ---------- Categories (Stadt, Land, Fluss) ---------- */
+
+.categories-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 1em;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.categories-player-names {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0.25rem 0 0.5rem;
+}
+
+/* Margins instead of flexbox gap (older e-reader browsers). */
+.categories-name-input {
+  width: 9rem;
+  margin: 0 0.4rem 0.4rem 0;
+  font: inherit;
+  padding: 0.3rem 0.4rem;
+  border: var(--border-width) solid var(--border);
+  box-sizing: border-box;
+}
+
+.categories-presets {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.categories-preset {
+  display: inline-flex;
+  align-items: center;
+  width: 50%;
+  min-height: 2.4rem;
+  box-sizing: border-box;
+  padding-right: 0.4rem;
+}
+
+.categories-preset input {
+  width: 1.3rem;
+  height: 1.3rem;
+  margin: 0 0.4rem 0 0;
+  flex: none;
+}
+
+.categories-custom-row input {
+  flex: 1 1 12rem;
+  font: inherit;
+  padding: 0.3rem 0.4rem;
+  border: var(--border-width) solid var(--border);
+}
+
+.categories-letter-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.categories-letter {
+  min-width: 6rem;
+  height: 6rem;
+  border: 4px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4.2rem;
+  font-weight: 700;
+  line-height: 1;
+  background: #fff;
+}
+
+.categories-timer {
+  margin-left: 1rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  min-width: 6rem;
+}
+
+.categories-used {
+  text-align: center;
+  font-size: 0.9rem;
+  margin: 0.25rem 0 0.5rem;
+  word-spacing: 0.15em;
+}
+
+/* Up to 8 player columns: the table scrolls inside its own box instead
+   of widening the page. */
+.categories-board-wrap {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.categories-board {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.categories-board th,
+.categories-board td {
+  text-align: center;
+  padding: 0.2rem;
+}
+
+.categories-board tbody th,
+.categories-board tfoot th {
+  text-align: left;
+  font-weight: 600;
+}
+
+.categories-board thead th {
+  max-width: 6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.categories-cell {
+  min-width: 2.8rem;
+  min-height: 2.6rem;
+  padding: 0.2rem 0.4rem;
+  font: inherit;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  background: #fff;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+/* Scored cells invert, so given points stand out in plain black and white. */
+.categories-cell-scored {
+  background: var(--text);
+  color: #fff;
+}
+
+.categories-cell:disabled {
+  opacity: 1;
+  cursor: default;
+  border-style: dashed;
+}
+
+.categories-total-row th,
+.categories-total-row td {
+  font-weight: 700;
+  border-top: 2px solid var(--border);
+}
+
+.categories-score-hint {
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
