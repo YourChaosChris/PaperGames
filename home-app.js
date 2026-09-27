@@ -1,5 +1,7 @@
 // home-app.js
-// Renders the personalized "My Favorites" section on the home page
+// Renders the "New Games" section (the newest games of the last 60 days,
+// from GAMES_CATALOG's `added` dates; hidden when there are none) and the
+// personalized "My Favorites" section on the home page
 // (always visible, with an empty-state message when there are none yet,
 // so its permanent nav link is never dead) and keeps every
 // favorite-toggle star - on both the static Popular section and the
@@ -49,6 +51,35 @@
     GamesRender.translateInto(grid);
   }
 
+  const NEW_GAMES_MAX = 6;
+  const NEW_GAMES_DAYS = 60;
+
+  function renderNewGames() {
+    const section = document.getElementById("section-new");
+    const grid = document.getElementById("new-grid");
+    const navLink = document.getElementById("nav-link-new");
+    if (!section || !grid) return;
+
+    const cutoff = Date.now() - NEW_GAMES_DAYS * 24 * 60 * 60 * 1000;
+    const games = GAMES_CATALOG
+      .filter((g) => GamesRender.isListed(g) && g.added && Date.parse(g.added + "T00:00:00") >= cutoff)
+      .sort((a, b) => b.added.localeCompare(a.added))
+      .slice(0, NEW_GAMES_MAX);
+
+    if (!games.length) {
+      section.classList.add("hidden");
+      if (navLink) navLink.classList.add("hidden");
+      grid.innerHTML = "";
+      return;
+    }
+
+    section.classList.remove("hidden");
+    if (navLink) navLink.classList.remove("hidden");
+    grid.innerHTML = games.map(GamesRender.buildGameCardHTML).join("");
+    GamesRender.updateFavoriteButtons(grid);
+    GamesRender.translateInto(grid);
+  }
+
   function renderFavorites() {
     const grid = document.getElementById("favorites-grid");
     const emptyState = document.getElementById("favorites-empty");
@@ -76,6 +107,7 @@
 
   function init() {
     renderContinuePlaying();
+    renderNewGames();
     renderFavorites();
     GamesRender.updateFavoriteButtons(document);
 
@@ -94,6 +126,7 @@
     if (window.I18n && typeof I18n.onChange === "function") {
       I18n.onChange(() => {
         renderContinuePlaying();
+        renderNewGames();
         renderFavorites();
         GamesRender.updateFavoriteButtons(document);
       });
