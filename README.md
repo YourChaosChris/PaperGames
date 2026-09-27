@@ -1,6 +1,6 @@
 # PaperGames
 
-A collection of 49 classic board, strategy, and puzzle games as a single
+A collection of 52 classic board, strategy, and puzzle games as a single
 offline-capable web app, designed to be readable and usable on e-paper /
 e-ink displays (high contrast, no animation-dependent UI, works without a
 live network connection once loaded). Play at
@@ -68,6 +68,9 @@ no internet connection at all.
 - Categories (Stadt, Land, Fluss) - a game-master helper for the pen-and-paper word game
 - Domino
 - Mau Mau
+- Calcudoku
+- Number Blocks
+- Killer Sudoku
 
 ## Languages
 

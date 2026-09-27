@@ -70,7 +70,10 @@
     ["surakarta", "game_surakarta"],
     ["categories", "game_categories"],
     ["domino", "game_domino"],
-    ["maumau", "game_maumau"]
+    ["maumau", "game_maumau"],
+    ["calcudoku", "game_calcudoku"],
+    ["numberblocks", "game_numberblocks"],
+    ["killersudoku", "game_killersudoku"]
   ];
 
   var GAME_SLUGS = {};
