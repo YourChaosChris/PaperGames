@@ -309,6 +309,14 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/impressum.html</loc>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/index.html</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
     <loc>https://yourchaoschris.github.io/PaperGames/kakuro-history.html</loc>
     <priority>0.6</priority>
   </url>
@@ -369,14 +377,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/impressum.html</loc>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/index.html</loc>
-    <priority>1.0</priority>
-  </url>
-  <url>
     <loc>https://yourchaoschris.github.io/PaperGames/ludo-history.html</loc>
     <priority>0.6</priority>
   </url>
@@ -410,6 +410,18 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/mancala.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/mastermind-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/mastermind-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/mastermind.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -633,6 +645,30 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/trix-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/trix-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/trix-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/trix-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/trix.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/trix.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://yourchaoschris.github.io/PaperGames/twenty48-history.html</loc>
     <priority>0.6</priority>
   </url>
@@ -690,18 +726,6 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/yatzy.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/mastermind-history.html</loc>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/mastermind-rules.html</loc>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/mastermind.html</loc>
     <priority>0.8</priority>
   </url>
 </urlset>

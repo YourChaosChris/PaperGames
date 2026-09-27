@@ -633,4 +633,15 @@ const GAMES_CATALOG = [
     added: "2026-09-27",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"8\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"32\" y=\"16\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><circle cx=\"65\" cy=\"40\" r=\"8\" fill=\"#141413\"/><circle cx=\"56\" cy=\"54\" r=\"8\" fill=\"#141413\"/><circle cx=\"74\" cy=\"54\" r=\"8\" fill=\"#141413\"/><path d=\"M63 52 L60 72 L70 72 L67 52 Z\" fill=\"#141413\"/></svg></span>"
   },
+  {
+    slug: "trix",
+    category: "strategy",
+    nameKey: "game_trix",
+    nameText: "Trix",
+    descKey: "home_trix_desc",
+    descText: "The card game of the Levant for four: four kingdoms of five contracts - avoid the King of Hearts, the Queens, the Diamonds and tricks, then race to empty your hand in Trix. You vs. three computer players or together on one device.",
+    popular: false,
+    added: "2026-09-27",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"8\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"32\" y=\"16\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><text x=\"65\" y=\"62\" text-anchor=\"middle\" font-size=\"26\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">K</text><path d=\"M65 68 C65 68 55 76 55 81 C55 84 58 86 60 86 C62 86 64 85 65 83 C66 85 68 86 70 86 C72 86 75 84 75 81 C75 76 65 68 65 68 Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"3\"/></svg></span>"
+  },
 ];

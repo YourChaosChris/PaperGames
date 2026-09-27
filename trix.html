@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trix on e-ink – play offline, no ads | PaperGames</title>
+  <meta name="description" content="The card game of the Levant for four: four kingdoms of five contracts - avoid the King of Hearts, the Queens, the Diamonds and tricks, then race to empty your hand in Trix. You vs. three computer players or together on one device.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/trix.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/trix.html">
+  <meta property="og:title" content="Trix on e-ink – play offline, no ads | PaperGames">
+  <meta property="og:description" content="The card game of the Levant for four: four kingdoms of five contracts - avoid the King of Hearts, the Queens, the Diamonds and tricks, then race to empty your hand in Trix. You vs. three computer players or together on one device.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Trix on e-ink – play offline, no ads | PaperGames">
+  <meta name="twitter:description" content="The card game of the Levant for four: four kingdoms of five contracts - avoid the King of Hearts, the Queens, the Diamonds and tricks, then race to empty your hand in Trix. You vs. three computer players or together on one device.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>try{if((localStorage.getItem("einkchess_lang")||navigator.language||"en").slice(0,2).toLowerCase()!=="en"){document.documentElement.className+=" i18n-pending";setTimeout(function(){document.documentElement.classList.remove("i18n-pending")},4000)}}catch(e){}</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <h1><a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a></h1>
+      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
+    </div>
+    <div class="user-panel">
+      <button id="menu-toggle" class="secondary" data-i18n="menu_toggle">&#9776; Menu</button>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+
+<div id="settings-panel">
+<section class="mode-section">
+  <div class="mode-section-row">
+    <div class="mode-buttons">
+      <button id="mode-offline" class="mode-btn secondary" data-i18n="maumau_mode_hotseat">Same device</button>
+      <button id="mode-offline-ai" class="mode-btn secondary active-mode" data-i18n="vs_computer">vs Computer</button>
+    </div>
+  </div>
+</section>
+
+    <section id="offline-ai-controls" class="card">
+  <div class="field-row">
+    <button id="start-trix-game" class="primary" data-i18n="new_game">New game</button>
+    <span id="tx-humans-wrap" class="hidden">
+      <label for="tx-humans" data-i18n="dk_humans_label">People on this device:</label>
+      <select id="tx-humans">
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4" selected>4</option>
+      </select>
+    </span>
+    <select id="tx-level-inline">
+      <option value="1" data-i18n="level_easy">Easy</option>
+      <option value="2" selected data-i18n="level_medium">Medium</option>
+      <option value="3" data-i18n="level_hard">Hard</option>
+    </select>
+  </div>
+  <div id="offline-trix-status" class="status-text"></div>
+</section>
+</div>
+
+
+<section id="board-section" class="card">
+  <div class="board-header">
+    <div id="game-label"></div>
+    <div id="game-meta"></div>
+    <div id="game-result" aria-live="assertive"></div>
+
+    <div id="board-info" class="status-text" aria-live="polite"></div>
+  </div>
+  <div id="board-placeholder" class="board-placeholder">
+    <span class="board-placeholder-icon board-placeholder-icon-svg" aria-hidden="true"><svg viewBox="0 0 100 100"><rect x="10" y="12" width="50" height="72" rx="7" fill="#ffffff" stroke="#141413" stroke-width="5"/><rect x="40" y="16" width="50" height="72" rx="7" fill="#ffffff" stroke="#141413" stroke-width="5"/><text x="65" y="50" text-anchor="middle" font-size="24" font-weight="700" font-family="sans-serif" fill="#141413">K</text><path d="M65 56 C65 56 54 64 54 70 C54 74 57 76 60 76 C62 76 64 75 65 73 C66 75 68 76 70 76 C73 76 76 74 76 70 C76 64 65 56 65 56 Z" fill="#fff" stroke="#141413" stroke-width="3"/></svg></span>
+    <div class="board-placeholder-text">
+      <span class="board-placeholder-title" data-i18n="game_trix">Trix</span>
+      <span class="board-placeholder-subtitle">PaperGames</span>
+    </div>
+  </div>
+  <div id="board-container" class="hidden">
+    <div class="tx-top">
+      <div id="tx-contract" class="tx-contract"></div>
+      <div id="tx-kingdom" class="tx-kingdom"></div>
+      <div id="tx-contract-list" class="tx-contract-list"></div>
+    </div>
+    <div id="tx-players" class="tx-players" role="status" aria-live="polite"></div>
+    <div id="tx-choose" class="tx-choose hidden">
+      <p id="tx-choose-text" class="pc-row-label"></p>
+      <div class="game-actions-row">
+        <button id="tx-choose-king" class="secondary" type="button" data-contract="king" data-i18n="tx_contract_king">King of Hearts</button>
+        <button id="tx-choose-queens" class="secondary" type="button" data-contract="queens" data-i18n="tx_contract_queens">Queens</button>
+        <button id="tx-choose-diamonds" class="secondary" type="button" data-contract="diamonds" data-i18n="tx_contract_diamonds">Diamonds</button>
+        <button id="tx-choose-tricks" class="secondary" type="button" data-contract="tricks" data-i18n="tx_contract_tricks">Tricks</button>
+        <button id="tx-choose-trix" class="secondary" type="button" data-contract="trix" data-i18n="tx_contract_trix">Trix</button>
+      </div>
+    </div>
+    <div id="tx-trick" class="dk-trick hidden" role="group" data-i18n-attr="aria-label:dk_trick_label" aria-label="Trick"></div>
+    <div id="tx-rows" class="tx-rows hidden" role="group" data-i18n-attr="aria-label:tx_rows_label" aria-label="Trix rows"></div>
+    <div class="game-actions-row">
+      <button id="tx-pass" class="secondary hidden" type="button" data-i18n="tx_pass">Pass</button>
+      <button id="tx-continue" class="primary hidden" type="button" data-i18n="tx_continue">Continue</button>
+      <button id="tx-next-kingdom" class="primary hidden" type="button" data-i18n="tx_next_kingdom">Next kingdom</button>
+      <button id="tx-end-game" class="secondary hidden" type="button" data-i18n="tx_end_game">End game</button>
+    </div>
+    <div id="tx-hand-cover" class="hand-cover hidden">
+      <p id="tx-hand-cover-text"></p>
+      <button id="tx-show-hand" class="primary" type="button" data-i18n="maumau_show_hand">Show my cards</button>
+    </div>
+    <div id="tx-hand" class="pc-row" role="group" data-i18n-attr="aria-label:schwimmen_hand_label" aria-label="Your cards"></div>
+  </div>
+</section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+
+<script src="error-banner.js"></script>
+<script src="i18n.js"></script>
+<script src="font-size-toggle.js"></script>
+<script src="high-contrast.js"></script>
+<script src="force-update.js"></script>
+<script src="ai-pacing.js"></script>
+<script src="settings-menu.js"></script>
+<script src="rules-link.js"></script>
+<script src="game-switcher.js"></script>
+<script src="card-faces.js"></script>
+<script src="trix-core.js"></script>
+<script src="trix-ai.js"></script>
+<script src="result-modal.js"></script>
+<script src="storage-warning.js"></script>
+<script src="game-storage.js"></script>
+<script src="game-stats.js"></script>
+<script src="adaptive-difficulty.js"></script>
+<script src="board-a11y.js"></script>
+<script src="trix-app.js"></script>
+<script src="confirm-actions.js"></script>
+<script src="sw-register.js"></script>
+<script src="update-banner.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trix Rules | PaperGames</title>
+  <meta name="description" content="How PaperGames plays Trix: the complete rules, explained clearly. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/trix-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/trix-rules.html">
+  <meta property="og:title" content="Trix Rules | PaperGames">
+  <meta property="og:description" content="How PaperGames plays Trix: the complete rules, explained clearly. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Trix Rules | PaperGames">
+  <meta name="twitter:description" content="How PaperGames plays Trix: the complete rules, explained clearly. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>try{if((localStorage.getItem("einkchess_lang")||navigator.language||"en").slice(0,2).toLowerCase()!=="en"){document.documentElement.className+=" i18n-pending";setTimeout(function(){document.documentElement.classList.remove("i18n-pending")},4000)}}catch(e){}</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="trix_rules_title">Trix Rules</h1>
+      <p data-i18n="trix_rules_intro">How PaperGames plays Trix. The game is known in several versions, among them one for partners; the version played here is the one for four single players, described below.</p>
+
+      <h2 data-i18n="sudoku_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt data-i18n="trix_term_setup">Cards and players</dt>
+        <dd data-i18n="trix_rules_setup">Four players, each playing for themselves, and the usual 52-card pack. For every deal each player gets 13 cards. In the trick contracts the Ace is high and there are no trumps.</dd>
+        <dt data-i18n="trix_term_kingdoms">Kingdoms and contracts</dt>
+        <dd data-i18n="trix_rules_kingdoms">A full game has four kingdoms, and every player owns one of them. The player holding the Seven of Hearts in the very first deal owns the first kingdom; after that, ownership passes to the next player. In their kingdom the owner looks at the new cards before each deal and picks one of the five contracts that are still left, until all five have been played. The name of the running contract always stands at the top of the table, and the list below it shows which contracts of the kingdom are done.</dd>
+        <dt data-i18n="trix_term_king">King of Hearts</dt>
+        <dd data-i18n="trix_rules_king">A trick-taking contract: you must follow the suit that was led if you can; the owner leads first and the winner of each trick leads the next. Whoever takes the King of Hearts loses 75 points, and the deal ends at once. If you cannot follow suit and hold the King of Hearts, you must play it.</dd>
+        <dt data-i18n="trix_term_queens">Queens</dt>
+        <dd data-i18n="trix_rules_queens">Trick-taking as above. Each Queen you take costs 25 points. The deal ends as soon as all four Queens have been taken.</dd>
+        <dt data-i18n="trix_term_diamonds">Diamonds</dt>
+        <dd data-i18n="trix_rules_diamonds">Trick-taking as above. Each Diamond you take costs 10 points. The deal ends as soon as all 13 Diamonds have been taken.</dd>
+        <dt data-i18n="trix_term_tricks">Tricks</dt>
+        <dd data-i18n="trix_rules_tricks">Trick-taking as above, and every trick you take costs 15 points. All 13 tricks are played.</dd>
+        <dt data-i18n="trix_term_trix">Trix</dt>
+        <dd data-i18n="trix_rules_trix">No tricks here: the four Jacks start four rows, one per suit. A row grows upwards from the Jack to the Ace and downwards from the Jack to the Two, one card at a time. The owner begins; on your turn you lay one card that fits, and you may only pass when none of your cards fits. The first player to run out of cards gets 200 points, the second 150, the third 100 and the last 50. On your turn every card that fits has a black corner.</dd>
+        <dt data-i18n="trix_term_order">Seeing the score</dt>
+        <dd data-i18n="trix_rules_order">The score board is always visible: every player's total, the points of the running deal, and the penalty cards each player has taken in it. A finished trick stays on the table for a moment so you can see who took it.</dd>
+        <dt data-i18n="trix_term_end">The end</dt>
+        <dd data-i18n="trix_rules_end">The points of one kingdom always add up to zero: minus 75, 100, 130 and 195 for the four penalty contracts against 500 handed out in Trix. After all four kingdoms the player with the most points wins. You can also end the game after any kingdom - the player in front at that moment wins - or stop and carry on later, because the game is saved after every card.</dd>
+        <dt data-i18n="trix_term_variant">The version played here</dt>
+        <dd data-i18n="trix_rules_variant">Trix is played in many forms: with partners, with doubling of the King of Hearts or the Queens, with a combined contract, or with other rules for who starts. PaperGames plays the plain version for four single players without doubling, as described on this page.</dd>
+      </dl>
+
+      <p class="about-back"><a href="trix.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="error-banner.js"></script>
+<script src="i18n.js"></script>
+<script src="font-size-toggle.js"></script>
+<script src="high-contrast.js"></script>
+<script src="ai-pacing.js"></script>
+<script src="force-update.js"></script>
+<script src="settings-menu.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+<script src="update-banner.js"></script>
+</body>
+</html>
