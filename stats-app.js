@@ -53,7 +53,8 @@ const STATS_GAME_NAME_KEY = {
   killersudoku: "game_killersudoku",
   schwimmen: "game_schwimmen",
   durak: "game_durak",
-  concan: "game_concan"
+  concan: "game_concan",
+  doppelkopf: "game_doppelkopf"
 };
 
 function gameDisplayName(game) {
