@@ -589,4 +589,37 @@ const GAMES_CATALOG = [
     added: "2026-09-27",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"6\"/><path d=\"M36 8V92M64 8V92M8 36H92M8 64H92\" stroke=\"#141413\" stroke-width=\"2\" fill=\"none\"/><path d=\"M13 13H59V31H41V59H13Z\" stroke=\"#141413\" stroke-width=\"3\" stroke-dasharray=\"6 4\" fill=\"none\"/><text x=\"16\" y=\"27\" font-size=\"13\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">17</text></svg></span>"
   },
+  {
+    slug: "schwimmen",
+    category: "party",
+    nameKey: "game_schwimmen",
+    nameText: "Thirty-One",
+    descKey: "home_schwimmen_desc",
+    descText: "The card game also called Schwimmen or Schnauz: collect 31 in one suit with three cards, swap with the middle and knock at the right moment. 2-6 players or vs. the computer.",
+    popular: false,
+    added: "2026-09-27",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"8\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"32\" y=\"16\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><text x=\"60\" y=\"66\" text-anchor=\"middle\" font-size=\"30\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">31</text></svg></span>"
+  },
+  {
+    slug: "durak",
+    category: "strategy",
+    nameKey: "game_durak",
+    nameText: "Durak",
+    descKey: "home_durak_desc",
+    descText: "The Russian card game with 36 cards: attack, beat with higher cards or trumps, throw in more of the same ranks - and don't be the last one holding cards. 2-4 players or vs. the computer.",
+    popular: false,
+    added: "2026-09-27",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"8\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"32\" y=\"16\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M60 36 C60 36 44 48 44 58 C44 64 49 68 54 68 C57 68 59 66 60 64 L58 76 L62 76 L60 64 C61 66 63 68 66 68 C71 68 76 64 76 58 C76 48 60 36 60 36 Z\" fill=\"#141413\"/></svg></span>"
+  },
+  {
+    slug: "concan",
+    category: "strategy",
+    nameKey: "game_concan",
+    nameText: "Concan",
+    descKey: "home_concan_desc",
+    descText: "The old Mexican card game at the root of the rummy family: 40 cards, sets and runs, and a discard you must take if you can use it. First to lay out eleven cards wins. 2 players or vs. the computer.",
+    popular: false,
+    added: "2026-09-27",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"8\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"32\" y=\"16\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><text x=\"60\" y=\"50\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">7</text><text x=\"60\" y=\"68\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">J</text><text x=\"60\" y=\"86\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">Q</text></svg></span>"
+  },
 ];

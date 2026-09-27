@@ -113,6 +113,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/concan-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/concan-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/concan.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://yourchaoschris.github.io/PaperGames/datenschutz.html</loc>
     <priority>0.3</priority>
   </url>
@@ -138,6 +150,18 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/dotsandboxes.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/durak-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/durak-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/durak.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -470,6 +494,18 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/reversi.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/schwimmen-history.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/schwimmen-rules.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/schwimmen.html</loc>
     <priority>0.8</priority>
   </url>
   <url>

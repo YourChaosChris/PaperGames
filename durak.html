@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Durak on e-ink – play offline, no ads | PaperGames</title>
+  <meta name="description" content="The Russian card game with 36 cards: attack, beat with higher cards or trumps, throw in more of the same ranks - and do not be the last one holding cards. 2-4 players or vs. the computer.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/durak.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/durak.html">
+  <meta property="og:title" content="Durak on e-ink – play offline, no ads | PaperGames">
+  <meta property="og:description" content="The Russian card game with 36 cards: attack, beat with higher cards or trumps, throw in more of the same ranks - and do not be the last one holding cards. 2-4 players or vs. the computer.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Durak on e-ink – play offline, no ads | PaperGames">
+  <meta name="twitter:description" content="The Russian card game with 36 cards: attack, beat with higher cards or trumps, throw in more of the same ranks - and do not be the last one holding cards. 2-4 players or vs. the computer.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>try{if((localStorage.getItem("einkchess_lang")||navigator.language||"en").slice(0,2).toLowerCase()!=="en"){document.documentElement.className+=" i18n-pending";setTimeout(function(){document.documentElement.classList.remove("i18n-pending")},4000)}}catch(e){}</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <h1><a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a></h1>
+      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
+    </div>
+    <div class="user-panel">
+      <button id="menu-toggle" class="secondary" data-i18n="menu_toggle">&#9776; Menu</button>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+
+<div id="settings-panel">
+<section class="mode-section">
+  <div class="mode-section-row">
+    <div class="mode-buttons">
+      <button id="mode-offline" class="mode-btn secondary" data-i18n="maumau_mode_hotseat">Same device</button>
+      <button id="mode-offline-ai" class="mode-btn secondary active-mode" data-i18n="vs_computer">vs Computer</button>
+    </div>
+  </div>
+</section>
+
+    <section id="offline-ai-controls" class="card">
+  <div class="field-row">
+    <button id="start-durak-game" class="primary" data-i18n="new_game">New game</button>
+    <label for="durak-num-players" data-i18n="maumau_num_players">Players:</label>
+    <select id="durak-num-players">
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    <span id="durak-level-wrap">
+      <select id="durak-level-inline">
+        <option value="1" data-i18n="level_easy">Easy</option>
+        <option value="2" selected data-i18n="level_medium">Medium</option>
+        <option value="3" data-i18n="level_hard">Hard</option>
+      </select>
+    </span>
+    <label class="durak-rule-option"><input type="checkbox" id="durak-transfer-rule"> <span data-i18n="durak_transfer_option">Allow passing the attack on</span></label>
+  </div>
+  <div id="offline-durak-status" class="status-text"></div>
+</section>
+</div>
+
+
+<section id="board-section" class="card">
+  <div class="board-header">
+    <div id="game-label"></div>
+    <div id="game-meta"></div>
+    <div id="game-result" aria-live="assertive"></div>
+
+    <div id="board-info" class="status-text" aria-live="polite"></div>
+  </div>
+  <div id="board-placeholder" class="board-placeholder">
+    <span class="board-placeholder-icon board-placeholder-icon-svg" aria-hidden="true"><svg viewBox="0 0 100 100"><rect x="14" y="8" width="56" height="78" rx="7" fill="#ffffff" stroke="#141413" stroke-width="5"/><rect x="32" y="16" width="56" height="78" rx="7" fill="#ffffff" stroke="#141413" stroke-width="5"/><path d="M60 36 C60 36 44 48 44 58 C44 64 49 68 54 68 C57 68 59 66 60 64 L58 76 L62 76 L60 64 C61 66 63 68 66 68 C71 68 76 64 76 58 C76 48 60 36 60 36 Z" fill="#141413"/></svg></span>
+    <div class="board-placeholder-text">
+      <span class="board-placeholder-title" data-i18n="game_durak">Durak</span>
+      <span class="board-placeholder-subtitle">PaperGames</span>
+    </div>
+  </div>
+  <div id="board-container" class="hidden">
+    <div id="durak-trump" class="durak-trump" role="status"></div>
+    <div id="durak-players" class="game-players" role="status" aria-live="polite"></div>
+    <div class="pc-row">
+      <span id="durak-table-info" class="pc-row-label"></span>
+      <div id="durak-table" class="durak-table"></div>
+    </div>
+    <div id="durak-hand-cover" class="hand-cover hidden">
+      <p id="durak-hand-cover-text"></p>
+      <button id="durak-show-hand" class="primary" type="button" data-i18n="maumau_show_hand">Show my cards</button>
+    </div>
+    <div id="durak-hand" class="pc-row" role="group" data-i18n-attr="aria-label:schwimmen_hand_label" aria-label="Your cards"></div>
+    <div class="game-actions-row">
+      <button id="durak-take" class="secondary hidden" type="button" data-i18n="durak_take">Take the cards</button>
+      <button id="durak-pass" class="secondary hidden" type="button" data-i18n="durak_pass">Pass</button>
+      <button id="durak-transfer" class="secondary hidden" type="button" data-i18n="durak_transfer">Pass the attack on</button>
+    </div>
+  </div>
+  <div id="board-actions" class="board-actions">
+    <button id="resign-button" class="secondary small hidden" data-i18n="resign_button">Resign 🏳</button>
+  </div>
+</section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+
+<script src="error-banner.js"></script>
+<script src="i18n.js"></script>
+<script src="font-size-toggle.js"></script>
+<script src="high-contrast.js"></script>
+<script src="force-update.js"></script>
+<script src="ai-pacing.js"></script>
+<script src="settings-menu.js"></script>
+<script src="rules-link.js"></script>
+<script src="game-switcher.js"></script>
+<script src="card-faces.js"></script>
+<script src="durak-core.js"></script>
+<script src="durak-ai.js"></script>
+<script src="result-modal.js"></script>
+<script src="storage-warning.js"></script>
+<script src="game-storage.js"></script>
+<script src="game-stats.js"></script>
+<script src="adaptive-difficulty.js"></script>
+<script src="board-a11y.js"></script>
+<script src="durak-app.js"></script>
+<script src="confirm-actions.js"></script>
+<script src="sw-register.js"></script>
+<script src="update-banner.js"></script>
+</body>
+</html>

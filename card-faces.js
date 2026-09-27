@@ -47,6 +47,20 @@ const CardFaces = (function () {
     el.innerHTML = '<span class="card-face">' + rankText(card) + suitSvg(card.suit) + "</span>";
   }
 
+  // Replaces el's content with a taller card face - rank on top, a big
+  // suit below - for the card games that show cards as separate tiles
+  // (Schwimmen, Durak, Concan). Ranks above 13 (Durak's Ace = 14) show
+  // as "A".
+  function renderTall(el, card) {
+    const rank = card.rank === 14 ? "A" : rankText(card);
+    el.innerHTML = '<span class="pc-rank">' + rank + "</span>" + suitSvg(card.suit).replace('class="card-suit"', 'class="card-suit pc-suit"');
+  }
+
+  // Plain-text label that also knows Durak's Ace (rank 14).
+  function labelAny(card) {
+    return (card.rank === 14 ? "A" : rankText(card)) + SYMBOL[card.suit];
+  }
+
   // Replaces el's content with just the suit (empty foundations).
   function renderSuit(el, suit) {
     el.innerHTML = '<span class="card-face">' + suitSvg(suit) + "</span>";
@@ -87,7 +101,7 @@ const CardFaces = (function () {
     return true;
   }
 
-  return { SYMBOL, label, suitSvg, render, renderSuit, layoutColumns };
+  return { SYMBOL, label, labelAny, suitSvg, render, renderSuit, renderTall, layoutColumns };
 })();
 
 if (typeof window !== "undefined") {

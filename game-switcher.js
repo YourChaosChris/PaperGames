@@ -73,7 +73,10 @@
     ["maumau", "game_maumau"],
     ["calcudoku", "game_calcudoku"],
     ["numberblocks", "game_numberblocks"],
-    ["killersudoku", "game_killersudoku"]
+    ["killersudoku", "game_killersudoku"],
+    ["schwimmen", "game_schwimmen"],
+    ["durak", "game_durak"],
+    ["concan", "game_concan"]
   ];
 
   var GAME_SLUGS = {};

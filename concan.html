@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Concan on e-ink – play offline, no ads | PaperGames</title>
+  <meta name="description" content="The old Mexican card game that started the rummy family: 40 cards, sets and runs, and a discard you must take if you can use it. First to lay out eleven cards wins. 2 players or vs. the computer.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/concan.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/concan.html">
+  <meta property="og:title" content="Concan on e-ink – play offline, no ads | PaperGames">
+  <meta property="og:description" content="The old Mexican card game that started the rummy family: 40 cards, sets and runs, and a discard you must take if you can use it. First to lay out eleven cards wins. 2 players or vs. the computer.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Concan on e-ink – play offline, no ads | PaperGames">
+  <meta name="twitter:description" content="The old Mexican card game that started the rummy family: 40 cards, sets and runs, and a discard you must take if you can use it. First to lay out eleven cards wins. 2 players or vs. the computer.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>try{if((localStorage.getItem("einkchess_lang")||navigator.language||"en").slice(0,2).toLowerCase()!=="en"){document.documentElement.className+=" i18n-pending";setTimeout(function(){document.documentElement.classList.remove("i18n-pending")},4000)}}catch(e){}</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <h1><a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a></h1>
+      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
+    </div>
+    <div class="user-panel">
+      <button id="menu-toggle" class="secondary" data-i18n="menu_toggle">&#9776; Menu</button>
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+
+<div id="settings-panel">
+<section class="mode-section">
+  <div class="mode-section-row">
+    <div class="mode-buttons">
+      <button id="mode-offline" class="mode-btn secondary" data-i18n="maumau_mode_hotseat">Same device</button>
+      <button id="mode-offline-ai" class="mode-btn secondary active-mode" data-i18n="vs_computer">vs Computer</button>
+    </div>
+  </div>
+</section>
+
+    <section id="offline-ai-controls" class="card">
+  <div class="field-row">
+    <button id="start-concan-game" class="primary" data-i18n="new_game">New game</button>
+    <span id="concan-level-wrap">
+      <select id="concan-level-inline">
+        <option value="1" data-i18n="level_easy">Easy</option>
+        <option value="2" selected data-i18n="level_medium">Medium</option>
+        <option value="3" data-i18n="level_hard">Hard</option>
+      </select>
+    </span>
+  </div>
+  <div id="offline-concan-status" class="status-text"></div>
+</section>
+</div>
+
+
+<section id="board-section" class="card">
+  <div class="board-header">
+    <div id="game-label"></div>
+    <div id="game-meta"></div>
+    <div id="game-result" aria-live="assertive"></div>
+
+    <div id="board-info" class="status-text" aria-live="polite"></div>
+  </div>
+  <div id="board-placeholder" class="board-placeholder">
+    <span class="board-placeholder-icon board-placeholder-icon-svg" aria-hidden="true"><svg viewBox="0 0 100 100"><rect x="14" y="8" width="56" height="78" rx="7" fill="#ffffff" stroke="#141413" stroke-width="5"/><rect x="32" y="16" width="56" height="78" rx="7" fill="#ffffff" stroke="#141413" stroke-width="5"/><text x="60" y="50" text-anchor="middle" font-size="18" font-weight="700" font-family="sans-serif" fill="#141413">7</text><text x="60" y="68" text-anchor="middle" font-size="18" font-weight="700" font-family="sans-serif" fill="#141413">J</text><text x="60" y="86" text-anchor="middle" font-size="18" font-weight="700" font-family="sans-serif" fill="#141413">Q</text></svg></span>
+    <div class="board-placeholder-text">
+      <span class="board-placeholder-title" data-i18n="game_concan">Concan</span>
+      <span class="board-placeholder-subtitle">PaperGames</span>
+    </div>
+  </div>
+  <div id="board-container" class="hidden">
+    <div id="concan-players" class="game-players" role="status" aria-live="polite"></div>
+    <div class="pc-row">
+      <span id="concan-other-label" class="pc-row-label"></span>
+      <div id="concan-other-melds" class="concan-melds"></div>
+    </div>
+    <div class="concan-piles">
+      <button id="concan-stock" class="pc-card pc-card-back concan-stock" type="button"></button>
+      <button id="concan-discard" class="pc-card concan-discard" type="button"></button>
+    </div>
+    <div id="concan-taken" class="pc-row hidden"></div>
+    <div id="concan-hand-cover" class="hand-cover hidden">
+      <p id="concan-hand-cover-text"></p>
+      <button id="concan-show-hand" class="primary" type="button" data-i18n="maumau_show_hand">Show my cards</button>
+    </div>
+    <div id="concan-mine">
+      <div class="pc-row">
+        <span id="concan-my-label" class="pc-row-label"></span>
+        <div id="concan-my-melds" class="concan-melds"></div>
+      </div>
+      <div id="concan-hand" class="pc-row" role="group" data-i18n-attr="aria-label:schwimmen_hand_label" aria-label="Your cards"></div>
+      <div id="concan-actions" class="game-actions-row hidden">
+        <button id="concan-meld-button" class="secondary" type="button" data-i18n="concan_meld_button">Lay out</button>
+        <button id="concan-discard-button" class="secondary" type="button" data-i18n="concan_discard_button">Discard</button>
+      </div>
+    </div>
+  </div>
+  <div id="board-actions" class="board-actions">
+    <button id="resign-button" class="secondary small hidden" data-i18n="resign_button">Resign 🏳</button>
+  </div>
+</section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+
+<script src="error-banner.js"></script>
+<script src="i18n.js"></script>
+<script src="font-size-toggle.js"></script>
+<script src="high-contrast.js"></script>
+<script src="force-update.js"></script>
+<script src="ai-pacing.js"></script>
+<script src="settings-menu.js"></script>
+<script src="rules-link.js"></script>
+<script src="game-switcher.js"></script>
+<script src="card-faces.js"></script>
+<script src="concan-core.js"></script>
+<script src="concan-ai.js"></script>
+<script src="result-modal.js"></script>
+<script src="storage-warning.js"></script>
+<script src="game-storage.js"></script>
+<script src="game-stats.js"></script>
+<script src="adaptive-difficulty.js"></script>
+<script src="board-a11y.js"></script>
+<script src="concan-app.js"></script>
+<script src="confirm-actions.js"></script>
+<script src="sw-register.js"></script>
+<script src="update-banner.js"></script>
+</body>
+</html>
