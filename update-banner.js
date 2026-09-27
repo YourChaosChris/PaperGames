@@ -15,7 +15,7 @@
 //
 // update_banner_whats_new (i18n.js) is a short one-line summary of the
 // latest release, shown as a second, smaller line under the main
-// message - update it (all 11 languages) alongside bumping sw.js's
+// message - update it (all 12 languages) alongside bumping sw.js's
 // CACHE_NAME, so a player who reloads knows what actually changed
 // instead of just "something did".
 

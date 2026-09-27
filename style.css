@@ -4288,10 +4288,11 @@ margin-top: 0.6rem;
    rather than the float-grid/percentage-grid techniques used
    elsewhere, since a solitaire cascade is a variable-height stack, not
    a fixed board shape - the page simply scrolls if a column grows
-   tall. Suits are told apart by their glyph shape (already
-   unambiguous - spade/club vs. heart/diamond), never by the
-   traditional red/black coloring, so this reads fine on a monochrome
-   E-Ink display without needing a color-blindness-style retrofit. */
+   tall. The overlap is set in JS together with the card height
+   (CardFaces.layoutColumns in card-faces.js) so each card's label band
+   stays fully visible at any screen width. The red/black colour the
+   stacking rule depends on is shown by fill instead of colour: red
+   suits are drawn hollow, black suits filled (.card-suit below). */
 
 .freecell-top-row {
   display: flex;
@@ -4302,34 +4303,13 @@ max-width: 900px;
 }
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
-/* FreeCell board: free cells and foundations in a row above eight
-   cascading tableau columns. Cards overlap via a negative margin
-   rather than the float-grid/percentage-grid techniques used
-   elsewhere > *, since a solitaire cascade is a variable-height stack > *, not
-   a fixed board shape - the page simply scrolls if a column grows
-   tall. Suits are told apart by their glyph shape (already
-   unambiguous - spade/club vs. heart/diamond) > *, never by the
-   traditional red/black coloring > *, so this reads fine on a monochrome
-   E-Ink display without needing a color-blindness-style retrofit. */
-
 .freecell-top-row > * {
   margin: 0 1rem 1rem 0;
 }
 
-/* FreeCell board: free cells and foundations in a row above eight
-   cascading tableau columns. Cards overlap via a negative margin
-   rather than the float-grid/percentage-grid techniques used
-   elsewhere > *:last-child, since a solitaire cascade is a variable-height stack > *:last-child, not
-   a fixed board shape - the page simply scrolls if a column grows
-   tall. Suits are told apart by their glyph shape (already
-   unambiguous - spade/club vs. heart/diamond) > *:last-child, never by the
-   traditional red/black coloring > *:last-child, so this reads fine on a monochrome
-   E-Ink display without needing a color-blindness-style retrofit. */
-
 .freecell-top-row > *:last-child {
   margin-right: 0;
 }
-
 
 .freecell-freecells,
 .freecell-foundations {
@@ -4392,10 +4372,12 @@ max-width: 900px;
   flex-direction: column;
 }
 
-/* Height is set in JS from the measured column width (see
-   ensureFreeCellCardAspectRatio in freecell-app.js) rather than CSS
-   `aspect-ratio`, which some E-Ink browsers (Tolino confirmed) don't
-   support reliably. */
+/* Height and overlap (margin-top) are set in JS from the measured
+   column width (CardFaces.layoutColumns in card-faces.js) rather than
+   CSS `aspect-ratio`, which some E-Ink browsers (Tolino confirmed)
+   don't support reliably. display:flex keeps the label at the top of
+   the button - a button centres its content vertically, which pushed
+   the label under the next card. */
 .freecell-card {
   position: relative;
   width: 100%;
@@ -4403,7 +4385,8 @@ max-width: 900px;
   border-radius: 4px;
   background: #fff;
   box-sizing: border-box;
-  margin-top: -1.6rem;
+  display: flex;
+  align-items: flex-start;
   padding: 0.2rem 0 0 0.3rem;
   text-align: left;
   font-weight: 700;
@@ -4414,6 +4397,35 @@ max-width: 900px;
 
 .freecell-card:first-child {
   margin-top: 0;
+}
+
+/* An emptied column: its min-height (set in JS) keeps it tappable, and a
+   dashed outline without fill marks it, like Ludo's empty home slots.
+   Klondike and Spider draw their own .klondike-empty-slot /
+   .spider-empty-slot inside the column instead, so this only ever
+   matches FreeCell in practice. */
+.freecell-column:empty,
+.klondike-column:empty,
+.spider-column:empty {
+  border: 2px dashed var(--border);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Card face from card-faces.js: rank text plus the suit as SVG. The
+   line height matches the label band CardFaces.layoutColumns reserves. */
+.card-face {
+  display: block;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.card-suit {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-left: 0.08em;
+  vertical-align: -0.1em;
 }
 
 .freecell-card-selected {
@@ -4444,8 +4456,8 @@ max-width: 900px;
    cascading tableau columns - the same overlap-via-negative-margin
    layout as FreeCell's cascade, since a Klondike column is likewise a
    variable-height stack rather than a fixed board shape. Suits are
-   told apart by glyph shape (spade/club vs. heart/diamond), never by
-   red/black coloring, matching FreeCell. Face-down cards get a
+   drawn like FreeCell's: red suits hollow, black suits filled, so the
+   red/black colour reads on a monochrome screen. Face-down cards get a
    hatched back instead of a plain color, the same structural, not
    color-based, convention used for player fills elsewhere in this
    app (e.g. Dots and Boxes). */
@@ -4526,10 +4538,8 @@ max-width: 900px;
   flex-direction: column;
 }
 
-/* Height is set in JS from the measured column width (see
-   ensureKlondikeCardAspectRatio in klondike-app.js) rather than CSS
-   `aspect-ratio`, which some E-Ink browsers (Tolino confirmed) don't
-   support reliably. */
+/* Height and overlap (margin-top) are set in JS, like FreeCell's
+   cards (CardFaces.layoutColumns in card-faces.js). */
 .klondike-card {
   position: relative;
   width: 100%;
@@ -4537,7 +4547,8 @@ max-width: 900px;
   border-radius: 4px;
   background: #fff;
   box-sizing: border-box;
-  margin-top: -1.6rem;
+  display: flex;
+  align-items: flex-start;
   padding: 0.2rem 0 0 0.3rem;
   text-align: left;
   font-weight: 700;
@@ -5919,17 +5930,15 @@ margin: 0.5rem auto 0;
    counter in a row above ten cascading tableau columns - the same
    overlap-via-negative-margin cascade layout as Klondike/FreeCell,
    just with more (narrower) columns since Spider deals 10 instead of
-   7/8. Suits are told apart by glyph shape, never red/black coloring,
-   matching Klondike/FreeCell. Unlike those two, `.spider-card` and
-   `.spider-empty-slot` do NOT use CSS `aspect-ratio` - their height is
-   set explicitly in JS from the measured column width instead
-   (spidersolitaire-app.js: ensureSpiderCardAspectRatio), since
-   `aspect-ratio` is unreliable on E-Ink browsers. No CSS min-height
-   fallback here (Klondike/FreeCell have none either): `min-height`
-   always wins over a smaller explicit `height`, so on a narrow board
-   (a column under 80px wide, well within Tolino-class screen widths)
-   it silently overrode the correctly-computed, narrower aspect-ratio
-   height and stretched every card. */
+   7/8. Card faces match Klondike/FreeCell (red suits hollow, black
+   suits filled). Like those two, `.spider-card` and `.spider-empty-slot`
+   get their height and overlap in JS from the measured column width
+   (CardFaces.layoutColumns in card-faces.js), since `aspect-ratio` is
+   unreliable on E-Ink browsers. No CSS min-height on the cards:
+   `min-height` always wins over a smaller explicit `height`, so on a
+   narrow board it silently overrode the computed height and stretched
+   every card. (The JS sets min-height on the columns only, so an empty
+   column can still be tapped.) */
 
 .spider-top-row {
   display: flex;
@@ -6006,7 +6015,8 @@ max-width: 900px;
   border-radius: 4px;
   background: #fff;
   box-sizing: border-box;
-  margin-top: -1.5rem;
+  display: flex;
+  align-items: flex-start;
   padding: 0.15rem 0 0 0.25rem;
   text-align: left;
   font-weight: 700;
