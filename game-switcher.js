@@ -77,7 +77,9 @@
     ["schwimmen", "game_schwimmen"],
     ["durak", "game_durak"],
     ["concan", "game_concan"],
-    ["doppelkopf", "game_doppelkopf"]
+    ["doppelkopf", "game_doppelkopf"],
+    ["trix", "game_trix"],
+    ["trix", "game_trix"]
   ];
 
   var GAME_SLUGS = {};
