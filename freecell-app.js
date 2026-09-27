@@ -4,12 +4,12 @@
 // since a FreeCell deal is just a fresh random shuffle each time (see
 // freecell-core.js for why that's fine here unlike Mahjong's deal).
 //
-// Cards show their rank and suit as plain text - the four suit glyphs
-// (♠ ♥ ♦ ♣) are already shape-distinct from each other, so nothing
-// here needs the traditional red/black suit coloring to stay readable
-// on a monochrome E-Ink display; the game's own alternating-color
-// stacking rule works the same way it always has, just learned by
-// suit shape instead of by color.
+// Cards show their rank as text and their suit as a small SVG from
+// card-faces.js: red suits (hearts, diamonds) hollow, black suits
+// (spades, clubs) filled. The alternating red/black stacking rule needs
+// the colour, and on a monochrome E-Ink display it can't be shown as
+// colour - the suit shapes alone proved too hard to tell apart at card
+// size - so the fill carries it instead.
 //
 // Click a free cell card or a tableau card (the exposed bottom card of
 // a column, or the start of a valid same-suit-alternating run further
@@ -18,12 +18,10 @@
 // while something is already selected just switches the selection,
 // rather than requiring a deselect first.
 
-const SUIT_SYMBOL = { S: "♠", H: "♥", D: "♦", C: "♣" };
-const RANK_LABEL = { 1: "A", 11: "J", 12: "Q", 13: "K" };
+const SUIT_SYMBOL = CardFaces.SYMBOL;
 
 function freecellCardLabel(card) {
-  const rank = RANK_LABEL[card.rank] || String(card.rank);
-  return rank + SUIT_SYMBOL[card.suit];
+  return CardFaces.label(card);
 }
 
 const AppStateFreeCell = {
@@ -194,7 +192,10 @@ function onFreeCellColumnCardClick(colIndex, cardIndex) {
   if (AppStateFreeCell.gameOver || !AppStateFreeCell.state) return;
   const sel = AppStateFreeCell.selected;
 
-  if (sel && sel.type === "column" && selectionsEqual(sel, { type: "column", col: colIndex, index: cardIndex })) {
+  // cardIndex is null when the column itself was clicked (an empty
+  // column, the only place not covered by a card).
+  if (sel && sel.type === "column" && typeof cardIndex === "number" &&
+      selectionsEqual(sel, { type: "column", col: colIndex, index: cardIndex })) {
     AppStateFreeCell.selected = null;
     updateFreeCellBoard();
     setStatusFreeCell("board-info", "Click a card, then click where to move it.");
@@ -220,11 +221,13 @@ function onFreeCellColumnCardClick(colIndex, cardIndex) {
   // picking a new source instead (a single click can both fail a move
   // and immediately start a new one, so re-picking never needs a
   // separate deselect click first).
-  if (trySelectSource("column", colIndex, cardIndex)) {
+  if (typeof cardIndex === "number" && trySelectSource("column", colIndex, cardIndex)) {
     updateFreeCellBoard();
     setStatusFreeCell("board-info", "Now click where to move it.");
-  } else {
+  } else if (typeof cardIndex === "number") {
     setStatusFreeCell("board-info", "That card can't be picked up right now.");
+  } else {
+    setStatusFreeCell("board-info", sel ? "That card can't go there." : "Click a card, then click where to move it.");
   }
 }
 
@@ -363,6 +366,7 @@ function buildFreeCellBoardDOM() {
     const col = document.createElement("div");
     col.className = "freecell-column";
     col.dataset.col = c;
+    col.addEventListener("click", () => onFreeCellColumnCardClick(c, null));
     columnsEl.appendChild(col);
   }
 }
@@ -377,7 +381,8 @@ function updateFreeCellBoard() {
     freeCellsEl.querySelectorAll(".freecell-cell").forEach((cell) => {
       const i = parseInt(cell.dataset.index, 10);
       const card = state.freeCells[i];
-      cell.textContent = card ? freecellCardLabel(card) : "";
+      if (card) CardFaces.render(cell, card);
+      else cell.textContent = "";
       cell.classList.toggle("freecell-cell-selected", !!(sel && sel.type === "freecell" && sel.index === i));
       I18n.setAria(cell, "Free cell " + (i + 1) + (card ? ", " + freecellCardLabel(card) : ", empty"));
     });
@@ -388,7 +393,8 @@ function updateFreeCellBoard() {
     foundationsEl.querySelectorAll(".freecell-foundation").forEach((cell) => {
       const suit = cell.dataset.suit;
       const rank = state.foundations[suit];
-      cell.textContent = rank ? freecellCardLabel({ rank, suit }) : SUIT_SYMBOL[suit];
+      if (rank) CardFaces.render(cell, { rank, suit });
+      else CardFaces.renderSuit(cell, suit);
       cell.classList.toggle("freecell-foundation-empty", rank === 0);
       I18n.setAria(cell, "Foundation " + SUIT_SYMBOL[suit] + (rank ? ", up to " + freecellCardLabel({ rank, suit }) : ", empty"));
     });
@@ -403,11 +409,14 @@ function updateFreeCellBoard() {
         const cardEl = document.createElement("button");
         cardEl.type = "button";
         cardEl.className = "freecell-card";
-        cardEl.textContent = freecellCardLabel(card);
+        CardFaces.render(cardEl, card);
         cardEl.style.zIndex = String(index + 1);
         const isSelected = !!(sel && sel.type === "column" && sel.col === c && index >= sel.index);
         cardEl.classList.toggle("freecell-card-selected", isSelected);
-        cardEl.addEventListener("click", () => onFreeCellColumnCardClick(c, index));
+        cardEl.addEventListener("click", (e) => {
+          e.stopPropagation(); // not also the column's own click handler
+          onFreeCellColumnCardClick(c, index);
+        });
         colEl.appendChild(cardEl);
       });
     });
@@ -415,24 +424,14 @@ function updateFreeCellBoard() {
   ensureFreeCellCardAspectRatio();
 }
 
-// Cards are 5:3 (width:height) - set in JS from the measured column width
-// rather than CSS `aspect-ratio`, which some E-Ink browsers (Tolino
-// confirmed) don't support reliably. Recomputed after every render and on
-// resize.
+// Card height and overlap come from CardFaces.layoutColumns (card-faces.js),
+// recomputed after every render and on resize.
 let einkFreeCellResizeHandlerAttached = false;
 let einkFreeCellResizeTimeoutId = null;
 
 function ensureFreeCellCardAspectRatio() {
   const columnsEl = document.getElementById("freecell-columns");
-  if (!columnsEl) return;
-  const firstCol = columnsEl.querySelector(".freecell-column");
-  if (!firstCol) return;
-  const rect = firstCol.getBoundingClientRect();
-  if (!rect || !rect.width) return;
-  const height = Math.round(rect.width * 0.6); // 5:3 width:height
-  columnsEl.querySelectorAll(".freecell-card").forEach((el) => {
-    el.style.height = height + "px";
-  });
+  if (!CardFaces.layoutColumns(columnsEl, ".freecell-column", ".freecell-card")) return;
   ensureFreeCellResizeHandler();
 }
 

@@ -4,12 +4,13 @@
 // picker (how many suits are in play) chosen before "New game", the
 // same way Kakuro/Mastermind offer a picker before starting.
 //
-// Cards show their rank and suit as plain text - the four suit glyphs
-// (♠ ♥ ♦ ♣) are already shape-distinct from each other, so nothing
-// here needs traditional red/black suit coloring to stay readable on a
-// monochrome E-Ink display. Face-down tableau cards get a hatched
-// back instead of a color, the same "structural, not color"
-// convention used everywhere else in this app.
+// Cards show their rank as text and their suit as a small SVG from
+// card-faces.js: red suits (hearts, diamonds) hollow, black suits
+// (spades, clubs) filled, the same faces as Klondike/FreeCell, so the
+// red/black colour is readable on a monochrome E-Ink display. Spider
+// itself only cares about suits, not colour. Face-down tableau cards
+// get a hatched back instead of a color, the same "structural, not
+// color" convention used everywhere else in this app.
 //
 // Tap-to-select-source, tap-to-select-destination, exactly like
 // Klondike/FreeCell: tap the exposed top card of a column (or the
@@ -21,19 +22,13 @@
 // stock (one face-up card onto each column), which the rules disallow
 // while any column is empty.
 //
-// Card sizing: unlike Klondike/FreeCell's `.klondike-card`/`.freecell-
-// card` (which lean on CSS `aspect-ratio`, unreliable on some E-Ink
-// browsers), `.spider-card` gets its height set explicitly in JS from
-// the measured column width - the same "JS-enforced aspect ratio"
-// technique used for this app's square game boards (see
-// ensureSpiderCardAspectRatio below) - recomputed on resize.
-
-const SUIT_SYMBOL_SP = { S: "♠", H: "♥", D: "♦", C: "♣" };
-const RANK_LABEL_SP = { 1: "A", 11: "J", 12: "Q", 13: "K" };
+// Card sizing: height and overlap are set in JS from the measured column
+// width by CardFaces.layoutColumns (card-faces.js), shared with
+// Klondike/FreeCell, since CSS `aspect-ratio` is unreliable on some
+// E-Ink browsers - recomputed on resize.
 
 function spiderCardLabel(card) {
-  const rank = RANK_LABEL_SP[card.rank] || String(card.rank);
-  return rank + SUIT_SYMBOL_SP[card.suit];
+  return CardFaces.label(card);
 }
 
 function t18nSpider(key) {
@@ -332,7 +327,7 @@ function updateSpiderBoard() {
         cardEl.style.zIndex = String(index + 1);
         if (card.faceUp) {
           cardEl.className = "spider-card";
-          cardEl.textContent = spiderCardLabel(card);
+          CardFaces.render(cardEl, card);
           const isSelected = !!(sel && sel.col === c && index >= sel.index);
           cardEl.classList.toggle("spider-card-selected", isSelected);
           I18n.setAria(cardEl, spiderCardLabel(card));
@@ -358,24 +353,13 @@ function updateSpiderBoard() {
   ensureSpiderResizeHandler();
 }
 
-// Cards are 5:3 (width:height), same proportion as Klondike/FreeCell's
-// cards, but set in JS from the measured column width rather than CSS
-// `aspect-ratio`, which some E-Ink browsers (Tolino confirmed) don't
-// support reliably. Recomputed after every render and on resize.
+// Card height and overlap come from CardFaces.layoutColumns (card-faces.js),
+// recomputed after every render and on resize.
 let einkSpiderResizeHandlerAttached = false;
 let einkSpiderResizeTimeoutId = null;
 
 function ensureSpiderCardAspectRatio() {
-  const columnsEl = document.getElementById("spider-columns");
-  if (!columnsEl) return;
-  const firstCol = columnsEl.querySelector(".spider-column");
-  if (!firstCol) return;
-  const rect = firstCol.getBoundingClientRect();
-  if (!rect || !rect.width) return;
-  const height = Math.round(rect.width * 0.6); // 5:3 width:height
-  columnsEl.querySelectorAll(".spider-card, .spider-empty-slot").forEach((el) => {
-    el.style.height = height + "px";
-  });
+  CardFaces.layoutColumns(document.getElementById("spider-columns"), ".spider-column", ".spider-card", ".spider-empty-slot");
 }
 
 function ensureSpiderResizeHandler() {

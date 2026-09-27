@@ -3,12 +3,12 @@
 // card/tile puzzles here - no opponent, no AI, no difficulty picker,
 // since a Klondike deal is just a fresh random shuffle each time.
 //
-// Cards show their rank and suit as plain text - the four suit glyphs
-// (♠ ♥ ♦ ♣) are already shape-distinct from each other, so nothing
-// here needs the traditional red/black suit coloring to stay readable
-// on a monochrome E-Ink display; the game's own alternating-color
-// stacking rule works the same way it always has, just learned by
-// suit shape instead of by color. Face-down tableau cards get a
+// Cards show their rank as text and their suit as a small SVG from
+// card-faces.js: red suits (hearts, diamonds) hollow, black suits
+// (spades, clubs) filled. The alternating red/black stacking rule needs
+// the colour, and on a monochrome E-Ink display it can't be shown as
+// colour - the suit shapes alone proved too hard to tell apart at card
+// size - so the fill carries it instead. Face-down tableau cards get a
 // hatched back instead of a color, the same "structural, not color"
 // convention used everywhere else in this app.
 //
@@ -21,12 +21,10 @@
 // something is already selected just switches the selection, rather
 // than requiring a deselect first.
 
-const SUIT_SYMBOL_K = { S: "♠", H: "♥", D: "♦", C: "♣" };
-const RANK_LABEL_K = { 1: "A", 11: "J", 12: "Q", 13: "K" };
+const SUIT_SYMBOL_K = CardFaces.SYMBOL;
 
 function klondikeCardLabel(card) {
-  const rank = RANK_LABEL_K[card.rank] || String(card.rank);
-  return rank + SUIT_SYMBOL_K[card.suit];
+  return CardFaces.label(card);
 }
 
 function t18nKlondike(key) {
@@ -370,7 +368,8 @@ function updateKlondikeBoard() {
   if (wasteEl) {
     const top = KlondikeCore.topOfColumn(state.waste);
     wasteEl.className = "klondike-cell klondike-waste" + (sel && sel.type === "waste" ? " klondike-card-selected" : "");
-    wasteEl.textContent = top ? klondikeCardLabel(top) : "";
+    if (top) CardFaces.render(wasteEl, top);
+    else wasteEl.textContent = "";
     I18n.setAria(wasteEl, t18nKlondike("klondike_aria_waste") + ", " + (top ? klondikeCardLabel(top) : t18nKlondike("klondike_aria_empty")));
   }
 
@@ -379,7 +378,8 @@ function updateKlondikeBoard() {
     foundationsEl.querySelectorAll(".klondike-foundation").forEach((cell) => {
       const suit = cell.dataset.suit;
       const rank = state.foundations[suit];
-      cell.textContent = rank ? klondikeCardLabel({ rank, suit }) : SUIT_SYMBOL_K[suit];
+      if (rank) CardFaces.render(cell, { rank, suit });
+      else CardFaces.renderSuit(cell, suit);
       cell.classList.toggle("klondike-foundation-empty", rank === 0);
       I18n.setAria(cell, t18nKlondike("klondike_aria_foundation") + " " + SUIT_SYMBOL_K[suit] + ", " +
         (rank ? t18nKlondike("klondike_aria_up_to") + " " + klondikeCardLabel({ rank, suit }) : t18nKlondike("klondike_aria_empty")));
@@ -405,7 +405,7 @@ function updateKlondikeBoard() {
         cardEl.style.zIndex = String(index + 1);
         if (card.faceUp) {
           cardEl.className = "klondike-card";
-          cardEl.textContent = klondikeCardLabel(card);
+          CardFaces.render(cardEl, card);
           const isSelected = !!(sel && sel.type === "column" && sel.col === c && index >= sel.index);
           cardEl.classList.toggle("klondike-card-selected", isSelected);
           I18n.setAria(cardEl, klondikeCardLabel(card));
@@ -424,24 +424,14 @@ function updateKlondikeBoard() {
   ensureKlondikeCardAspectRatio();
 }
 
-// Cards are 5:3 (width:height) - set in JS from the measured column width
-// rather than CSS `aspect-ratio`, which some E-Ink browsers (Tolino
-// confirmed) don't support reliably. Recomputed after every render and on
-// resize.
+// Card height and overlap come from CardFaces.layoutColumns (card-faces.js),
+// recomputed after every render and on resize.
 let einkKlondikeResizeHandlerAttached = false;
 let einkKlondikeResizeTimeoutId = null;
 
 function ensureKlondikeCardAspectRatio() {
   const columnsEl = document.getElementById("klondike-columns");
-  if (!columnsEl) return;
-  const firstCol = columnsEl.querySelector(".klondike-column");
-  if (!firstCol) return;
-  const rect = firstCol.getBoundingClientRect();
-  if (!rect || !rect.width) return;
-  const height = Math.round(rect.width * 0.6); // 5:3 width:height
-  columnsEl.querySelectorAll(".klondike-card, .klondike-empty-slot").forEach((el) => {
-    el.style.height = height + "px";
-  });
+  if (!CardFaces.layoutColumns(columnsEl, ".klondike-column", ".klondike-card", ".klondike-empty-slot")) return;
   ensureKlondikeResizeHandler();
 }
 
