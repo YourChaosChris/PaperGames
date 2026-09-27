@@ -556,4 +556,37 @@ const GAMES_CATALOG = [
     added: "2026-09-26",
     icon: "<span class=\"maumau-icon\" aria-hidden=\"true\">\u2665</span>"
   },
+  {
+    slug: "calcudoku",
+    category: "puzzles",
+    nameKey: "game_calcudoku",
+    nameText: "Calcudoku",
+    descKey: "home_calcudoku_desc",
+    descText: "Fill the grid so every row and column holds each digit once and every cage hits its target with its operation. Sizes 4x4 to 7x7, three difficulty levels.",
+    popular: false,
+    added: "2026-09-27",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"6\"/><path d=\"M36 8V92M64 8V92M8 36H92M8 64H92\" stroke=\"#141413\" stroke-width=\"2\" fill=\"none\"/><path d=\"M36 8V64H92\" stroke=\"#141413\" stroke-width=\"6\" fill=\"none\"/><path d=\"M15 22H29M22 15V29\" stroke=\"#141413\" stroke-width=\"4\"/><path d=\"M71 71L85 85M85 71L71 85\" stroke=\"#141413\" stroke-width=\"4\"/></svg></span>"
+  },
+  {
+    slug: "numberblocks",
+    category: "puzzles",
+    nameKey: "game_numberblocks",
+    nameText: "Number Blocks",
+    descKey: "home_numberblocks_desc",
+    descText: "Fill every block of n cells with the digits 1 to n - but equal digits may never touch, not even diagonally. Three difficulty levels, unique solution.",
+    popular: false,
+    added: "2026-09-27",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"6\"/><path d=\"M36 8V92M64 8V92M8 36H92M8 64H92\" stroke=\"#141413\" stroke-width=\"2\" fill=\"none\"/><path d=\"M8 64H36V36H64V92M64 36V8\" stroke=\"#141413\" stroke-width=\"6\" fill=\"none\"/><text x=\"22\" y=\"31\" text-anchor=\"middle\" font-size=\"22\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">1</text><text x=\"50\" y=\"87\" text-anchor=\"middle\" font-size=\"22\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">2</text><text x=\"78\" y=\"59\" text-anchor=\"middle\" font-size=\"22\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">3</text></svg></span>"
+  },
+  {
+    slug: "killersudoku",
+    category: "puzzles",
+    nameKey: "game_killersudoku",
+    nameText: "Killer Sudoku",
+    descKey: "home_killersudoku_desc",
+    descText: "Sudoku with almost no givens: dashed cages show sums, and no digit repeats inside a cage. Three difficulty levels, unique solution.",
+    popular: false,
+    added: "2026-09-27",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"6\"/><path d=\"M36 8V92M64 8V92M8 36H92M8 64H92\" stroke=\"#141413\" stroke-width=\"2\" fill=\"none\"/><path d=\"M13 13H59V31H41V59H13Z\" stroke=\"#141413\" stroke-width=\"3\" stroke-dasharray=\"6 4\" fill=\"none\"/><text x=\"16\" y=\"27\" font-size=\"13\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">17</text></svg></span>"
+  },
 ];

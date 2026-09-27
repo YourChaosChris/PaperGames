@@ -47,7 +47,10 @@ const STATS_GAME_NAME_KEY = {
   pyramidsolitaire: "game_pyramidsolitaire",
   surakarta: "game_surakarta",
   domino: "game_domino",
-  maumau: "game_maumau"
+  maumau: "game_maumau",
+  calcudoku: "game_calcudoku",
+  numberblocks: "game_numberblocks",
+  killersudoku: "game_killersudoku"
 };
 
 function gameDisplayName(game) {

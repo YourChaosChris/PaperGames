@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Legal Notice | PaperGames</title>
-  <meta name="description" content="Legal notice (Impressum) for PaperGames, a free collection of 52 offline board games for e-ink readers, operated by Christopher Müller.">
-  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/impressum.html">
+  <title>Killer Sudoku Rules | PaperGames</title>
+  <meta name="description" content="Killer Sudoku rules explained clearly: Sudoku rules plus cage sums. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/killersudoku-rules.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PaperGames">
-  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/impressum.html">
-  <meta property="og:title" content="Legal Notice | PaperGames">
-  <meta property="og:description" content="Legal notice (Impressum) for PaperGames, a free collection of 52 offline board games for e-ink readers, operated by Christopher Müller.">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/killersudoku-rules.html">
+  <meta property="og:title" content="Killer Sudoku Rules | PaperGames">
+  <meta property="og:description" content="Killer Sudoku rules explained clearly: Sudoku rules plus cage sums. Free to play offline on e-ink readers, tablets, and desktop.">
   <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Legal Notice | PaperGames">
-  <meta name="twitter:description" content="Legal notice (Impressum) for PaperGames, a free collection of 52 offline board games for e-ink readers, operated by Christopher Müller.">
+  <meta name="twitter:title" content="Killer Sudoku Rules | PaperGames">
+  <meta name="twitter:description" content="Killer Sudoku rules explained clearly: Sudoku rules plus cage sums. Free to play offline on e-ink readers, tablets, and desktop.">
   <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -42,37 +42,33 @@
 
   <main>
     <section class="card content-page">
-      <h1 data-i18n="nav_impressum">Legal Notice</h1>
+      <h1 data-i18n="killersudoku_rules_title">Killer Sudoku Rules</h1>
+      <p data-i18n="killersudoku_rules_intro">A quick reference for how PaperGames plays Killer Sudoku - useful if you're rusty, or learning.</p>
 
-      <h2 data-i18n="impressum_info_heading">Information pursuant to Section 5 DDG (German Digital Services Act)</h2>
-      <p>
-        Christopher Müller<br>
-        Im Hagen 21<br>
-        59387 Ascheberg<br>
-        <span data-i18n="impressum_country">Germany</span>
-      </p>
-      <p>
-        <span data-i18n="impressum_phone_label">Phone:</span> +49 170 628 11 20<br>
-        <span data-i18n="impressum_email_label">Email:</span> <a href="mailto:yourchaos@googlemail.com">yourchaos@googlemail.com</a>
-      </p>
+      <h2 data-i18n="sudoku_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="rule-term-icon" aria-hidden="true"><svg viewBox="0 0 100 100"><rect x="8" y="8" width="84" height="84" fill="#ffffff" stroke="#141413" stroke-width="6"/><path d="M36 8V92M64 8V92M8 36H92M8 64H92" stroke="#141413" stroke-width="2" fill="none"/><path d="M13 13H59V31H41V59H13Z" stroke="#141413" stroke-width="3" stroke-dasharray="6 4" fill="none"/><text x="16" y="27" font-size="13" font-weight="700" font-family="sans-serif" fill="#141413">17</text></svg></span> <span data-i18n="killersudoku_term_board">The grid</span></dt>
+        <dd data-i18n="killersudoku_rules_board">As in Sudoku, thick lines divide the 9x9 grid into nine 3x3 boxes. Dashed lines also divide it into cages of one to five cells. Few or no cells start filled in.</dd>
+        <dt data-i18n="sudoku_term_goal">The goal</dt>
+        <dd data-i18n="killersudoku_rules_goal">Fill every cell with a digit from 1 to 9 so that each row, each column and each 3x3 box contains every digit exactly once. Every puzzle PaperGames generates has exactly one solution.</dd>
+        <dt data-i18n="killersudoku_term_regions">Cages</dt>
+        <dd data-i18n="killersudoku_rules_regions">The small number in a cage's top-left cell is its sum: the digits in the cage must add up to it. Unlike in Calcudoku, no digit may repeat inside a cage.</dd>
+        <dt data-i18n="sudoku_term_input">Entering numbers</dt>
+        <dd data-i18n="killersudoku_rules_input">Select a cell, then pick a number from the pad below the board (or type a digit on a keyboard). A digit shown white on black repeats in its row, column, box or cage, or completes a cage with the wrong sum.</dd>
+        <dt data-i18n="sudoku_term_difficulty">Difficulty</dt>
+        <dd data-i18n="killersudoku_rules_difficulty">Easy puzzles have mostly small cages and a few more given digits; Hard puzzles have larger cages and only the givens needed for a unique solution, often almost none.</dd>
+      </dl>
 
-      <h2 data-i18n="impressum_responsible_heading">Responsible for content pursuant to Section 18(2) MStV (German Interstate Media Treaty)</h2>
-      <p data-i18n="impressum_responsible_body">Christopher Müller, address as above</p>
+      <h2 data-i18n="sudoku_rules_end_title">Finishing a puzzle</h2>
+      <dl class="rule-list">
+        <dt data-i18n="sudoku_term_win">Solved</dt>
+        <dd data-i18n="killersudoku_rules_win">The puzzle is solved the moment every cell is filled and no row, column, box or cage breaks a rule.</dd>
+      </dl>
 
-      <p data-i18n="impressum_vat_notice">No VAT is shown on this site pursuant to Section 19 UStG (German small business regulation).</p>
-
-      <h2 data-i18n="impressum_disclaimer_heading">Disclaimer</h2>
-      <h3 data-i18n="impressum_liability_links_heading">Liability for links</h3>
-      <p data-i18n="impressum_liability_links_body">This website contains links to external third-party websites, in particular lichess.org and paypal.com, over whose content we have no influence. We therefore cannot accept any liability for this external content. The respective provider or operator of a linked page is always responsible for its content. The linked pages were checked for possible legal violations at the time of linking. No unlawful content was identifiable at that time. However, permanent monitoring of the content of linked pages is not reasonable without concrete evidence of a legal violation. If we become aware of any legal violations, we will remove such links immediately.</p>
-
-      <p class="about-back"><a href="index.html" data-i18n="back_home">&larr; Back to home</a></p>
+      <p class="about-back"><a href="killersudoku.html" data-i18n="about_back">&larr; Back to the board</a></p>
     </section>
   </main>
   <footer class="site-footer">
-    <a href="guide.html" data-i18n="nav_guide">Guide</a>
-    <a href="about.html" data-i18n="nav_about">About</a>
-    <a href="stats.html" data-i18n="nav_stats">Stats</a>
-    <a href="about.html" data-i18n="footer_support">☕ Support</a>
     <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
     <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
   </footer>
@@ -84,6 +80,7 @@
 <script src="ai-pacing.js"></script>
 <script src="force-update.js"></script>
 <script src="settings-menu.js"></script>
+<script src="game-switcher.js"></script>
 <script src="sw-register.js"></script>
 <script src="update-banner.js"></script>
 </body>

@@ -8291,3 +8291,122 @@ max-width: 900px;
 [dir="rtl"] .fanorona-example-figure {
   margin: 0 1.5rem 1rem 0;
 }
+
+/* Region puzzles (Calcudoku, Number Blocks, Killer Sudoku - see
+   region-puzzle.js): a float-grid of square cells like Sudoku's board.
+   Every cell draws only its left and top border; the board's own frame
+   closes the right and bottom edge. Region borders differ from cell
+   borders by line weight (thick 3px vs thin 1px), and Killer Sudoku's
+   cages by line shape (dashed, just inside the cells) - never by grey,
+   so all of it reads on a monochrome E-Ink screen. A conflicting digit
+   is shown inverted (white on black) so it can't be mistaken for a
+   cage line or the selection frame. */
+
+#rp-board {
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.rp-cell {
+  background: var(--square-light);
+  border: 0 solid var(--border);
+  border-left-width: 1px;
+  border-top-width: 1px;
+  color: var(--text);
+}
+
+.rp-cell.rp-edge-l {
+  border-left-width: 0;
+}
+
+.rp-cell.rp-edge-t {
+  border-top-width: 0;
+}
+
+.rp-cell.rp-thick-l {
+  border-left-width: 3px;
+}
+
+.rp-cell.rp-thick-t {
+  border-top-width: 3px;
+}
+
+.rp-value {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 4vw, 1.5rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.rp-board-dashed .rp-value {
+  font-size: clamp(0.85rem, 3.4vw, 1.3rem);
+}
+
+.rp-given .rp-value {
+  font-weight: 700;
+}
+
+.rp-conflict .rp-value {
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 3px;
+  padding: 0.05em 0.2em;
+}
+
+.rp-label {
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  font-size: 0.7rem;
+  font-size: clamp(0.55rem, 2.2vw, 0.8rem);
+  font-weight: 700;
+  line-height: 1;
+  background: var(--square-light);
+  padding: 0 1px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.rp-cage {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  right: 3px;
+  border: 0 dashed var(--text);
+  pointer-events: none;
+}
+
+.rp-cage-top { border-top-width: 1px; }
+.rp-cage-bottom { border-bottom-width: 1px; }
+.rp-cage-left { border-left-width: 1px; }
+.rp-cage-right { border-right-width: 1px; }
+
+/* Small puzzle icon in front of a rules-page term (inline SVG). */
+.rule-term-icon {
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  vertical-align: middle;
+}
+
+.rule-term-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.rp-board-dashed .rp-label {
+  top: 2px;
+  left: 2px;
+}

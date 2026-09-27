@@ -179,6 +179,10 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  // Calcudoku, Number Blocks, Killer Sudoku (region-puzzle.js)
+  "Row 3, column 4, empty, cage 12+",
+  "Row 1, column 1, 5 (given), block of 4 cells, conflict",
+  "Row 9, column 2, 7, cage 23",
   "Path square 1, safe square, 1 token",
   "Path square 3, 2 tokens",
   "Row 3, column 4, White stone, movable",
