@@ -60,7 +60,11 @@
       });
       grid.innerHTML = html;
     } else {
-      const sorted = filtered.slice().sort(byDisplayName);
+      // "newest" orders by publication date (GAMES_CATALOG's `added`),
+      // alphabetical within the same date.
+      const sorted = state.sort === "newest"
+        ? filtered.slice().sort((a, b) => (b.added || "").localeCompare(a.added || "") || byDisplayName(a, b))
+        : filtered.slice().sort(byDisplayName);
       grid.innerHTML = '<div class="game-select-grid">' + sorted.map(GamesRender.buildGameCardHTML).join("") + "</div>";
     }
 
