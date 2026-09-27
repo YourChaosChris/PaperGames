@@ -8631,3 +8631,152 @@ button.concan-meld {
   outline: 4px double var(--border);
   outline-offset: 3px;
 }
+
+/* Doppelkopf: game type and trick number on top, the trump order list
+   behind a button, the trick as four fixed seats (the winning card gets
+   a double frame and "wins" underneath while the trick is still shown),
+   the hand split into a trump row and a plain-suit row. */
+.dk-top {
+  text-align: center;
+  margin: 0 0 0.4rem;
+}
+
+.dk-top > * {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0.15rem 0.3rem;
+}
+
+.dk-game-type {
+  font-weight: 700;
+}
+
+.dk-trump-order {
+  border: 3px double var(--border);
+  border-radius: var(--radius);
+  padding: 0.4rem;
+  margin: 0 0 0.5rem;
+  text-align: center;
+}
+
+.dk-trump-order-note {
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+}
+
+.dk-order-card {
+  cursor: default;
+}
+
+.dk-party {
+  display: inline-block;
+  min-width: 3.6rem;
+  margin: 0 0.4rem;
+  padding: 0 0.3rem;
+  border: 1px solid var(--border);
+  text-align: center;
+  font-weight: 700;
+}
+
+.dk-total {
+  font-weight: 700;
+}
+
+.dk-trick {
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+.dk-slot {
+  display: inline-block;
+  vertical-align: top;
+  width: 4.6rem;
+  margin: 0 0.1rem;
+  padding: 0.2rem 0 0.1rem;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.dk-slot-name {
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+}
+
+.dk-slot .pc-card {
+  cursor: default;
+  margin-bottom: 0.1rem;
+}
+
+.dk-slot-empty {
+  border-style: dotted;
+}
+
+.dk-slot-win {
+  border: 4px double var(--border);
+}
+
+.dk-slot-mark {
+  display: block;
+  min-height: 1.2em;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.dk-score {
+  text-align: center;
+  border: 3px double var(--border);
+  border-radius: var(--radius);
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.dk-score p {
+  margin: 0.2rem 0;
+}
+
+.dk-score-head {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.dk-score-items {
+  list-style: none;
+  margin: 0.3rem auto;
+  padding: 0;
+  display: table;
+}
+
+.dk-score-items li {
+  margin: 0.1rem 0;
+  text-align: left;
+}
+
+[dir="rtl"] .dk-score-items li {
+  text-align: right;
+}
+
+.dk-score-party {
+  display: inline-block;
+  min-width: 4.5rem;
+  margin-right: 0.4rem;
+  font-weight: 700;
+}
+
+[dir="rtl"] .dk-score-party {
+  margin-right: 0;
+  margin-left: 0.4rem;
+}
+
+.dk-score-table {
+  border-collapse: collapse;
+  margin: 0.4rem auto 0;
+}
+
+.dk-score-table th,
+.dk-score-table td {
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.5rem;
+  text-align: center;
+}

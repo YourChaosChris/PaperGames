@@ -622,4 +622,15 @@ const GAMES_CATALOG = [
     added: "2026-09-27",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"8\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"32\" y=\"16\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><text x=\"60\" y=\"50\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">7</text><text x=\"60\" y=\"68\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">J</text><text x=\"60\" y=\"86\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">Q</text></svg></span>"
   },
+  {
+    slug: "doppelkopf",
+    category: "strategy",
+    nameKey: "game_doppelkopf",
+    nameText: "Doppelkopf",
+    descKey: "home_doppelkopf_desc",
+    descText: "The German trick-taking game for four with 48 cards: the two Queens of Clubs play together, and nobody knows who they are. Normal game with marriage, you vs. three computer players or together on one device.",
+    popular: false,
+    added: "2026-09-27",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"8\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"32\" y=\"16\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><circle cx=\"65\" cy=\"40\" r=\"8\" fill=\"#141413\"/><circle cx=\"56\" cy=\"54\" r=\"8\" fill=\"#141413\"/><circle cx=\"74\" cy=\"54\" r=\"8\" fill=\"#141413\"/><path d=\"M63 52 L60 72 L70 72 L67 52 Z\" fill=\"#141413\"/></svg></span>"
+  },
 ];

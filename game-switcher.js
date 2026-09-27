@@ -76,7 +76,8 @@
     ["killersudoku", "game_killersudoku"],
     ["schwimmen", "game_schwimmen"],
     ["durak", "game_durak"],
-    ["concan", "game_concan"]
+    ["concan", "game_concan"],
+    ["doppelkopf", "game_doppelkopf"]
   ];
 
   var GAME_SLUGS = {};
