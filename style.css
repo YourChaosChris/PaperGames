@@ -8410,3 +8410,224 @@ max-width: 900px;
   top: 2px;
   left: 2px;
 }
+
+/* ---- Card games with separate card tiles (Schwimmen, Durak, Concan) ----
+   Faces come from CardFaces.renderTall (card-faces.js): rank on top, the
+   suit below as SVG - hollow for red suits, filled for black - so the
+   colour reads on E-Ink. A selected card is raised with a double outline;
+   a card that can't be used now sits lower with a dashed border. */
+.pc-row {
+  margin: 0.4rem 0;
+  text-align: center;
+}
+
+.pc-row-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem; /* room for a raised, selected card */
+}
+
+.pc-card {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  width: 3.4rem;
+  height: 4.8rem;
+  margin: 0 0.2rem 0.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: 5px;
+  background: #fff;
+  color: var(--text);
+  box-sizing: border-box;
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.1;
+  padding: 0.3rem 0 0;
+  cursor: pointer;
+  text-align: center;
+}
+
+.pc-card .pc-rank {
+  display: block;
+}
+
+.pc-card .pc-suit {
+  display: block;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin: 0.2rem auto 0;
+}
+
+.pc-card-small {
+  width: 2.7rem;
+  height: 3.8rem;
+  font-size: 0.95rem;
+  padding-top: 0.2rem;
+  margin: 0 0.1rem 0.3rem;
+}
+
+.pc-card-small .pc-suit {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.pc-card-selected {
+  top: -0.4rem;
+  outline: 4px double var(--border);
+  outline-offset: 2px;
+}
+
+.pc-card-dim {
+  top: 0.4rem;
+  border-style: dashed;
+}
+
+.pc-card:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.pc-card-back {
+  background: repeating-linear-gradient(45deg, #fff, #fff 4px, var(--border) 4px, var(--border) 5px);
+}
+
+.pc-count {
+  display: inline-block;
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.35rem;
+  font-size: 0.95rem;
+}
+
+.pc-score {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 0.2rem 0 0.4rem;
+}
+
+.pc-life {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  vertical-align: -0.05em;
+  margin-left: 0.15em;
+}
+
+.pc-player-extra {
+  margin-left: 0.3rem;
+}
+
+[dir="rtl"] .pc-player-extra {
+  margin-left: 0;
+  margin-right: 0.3rem;
+}
+
+/* Durak: the trump suit stays visible at the top as symbol, word and
+   the face-up trump card; each beating card lies lower and to the right
+   over its attack card so both ranks stay readable. */
+.durak-trump {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 0.5rem;
+  padding: 0.3rem;
+  border: 3px double var(--border);
+  border-radius: var(--radius);
+  background: var(--square-light);
+}
+
+.durak-trump > * {
+  margin: 0 0.35rem;
+}
+
+.durak-trump-label {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.durak-trump-symbol .card-suit {
+  width: 1.6rem;
+  height: 1.6rem;
+  display: block;
+}
+
+.durak-trump .durak-trump-card {
+  margin-bottom: 0;
+  cursor: default;
+}
+
+.durak-table {
+  min-height: 5.8rem;
+}
+
+.durak-pair {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  width: 4.7rem;
+  height: 5.3rem;
+  margin: 0 0.15rem 0.3rem;
+}
+
+.durak-pair .pc-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  cursor: default;
+}
+
+.durak-pair .durak-defense {
+  left: 1.95rem;
+  top: 1.4rem;
+  border-width: 3px;
+}
+
+.durak-rule-option {
+  display: inline-block;
+  margin: 0.3rem 0 0;
+}
+
+/* Concan: melds as small grouped cards; the discard pile gets a thick
+   double frame while it must be taken. */
+.concan-melds {
+  min-height: 1rem;
+}
+
+.concan-meld {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 0.3rem 0.3rem;
+  padding: 0.15rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--square-light);
+  color: var(--text);
+}
+
+button.concan-meld {
+  border-width: 2px;
+  cursor: pointer;
+}
+
+.concan-meld .pc-card {
+  cursor: inherit;
+  margin-bottom: 0;
+}
+
+.concan-piles {
+  text-align: center;
+  margin: 0.4rem 0;
+}
+
+.concan-stock {
+  padding-top: 1.6rem;
+}
+
+.concan-discard-offer {
+  outline: 4px double var(--border);
+  outline-offset: 3px;
+}
