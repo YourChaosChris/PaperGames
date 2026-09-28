@@ -77,7 +77,29 @@ const BoardA11y = (function () {
     });
   }
 
-  return { enableArrowNav };
+  // For games where the arrow keys move a piece rather than the focus
+  // (Crate Pusher): arrow keys and W/A/S/D call handler("up" | "down" |
+  // "left" | "right"). Keys typed into a form field, or pressed with a
+  // modifier, are left alone. When the handler returns true the key's
+  // default (page scrolling) is suppressed.
+  const DIRECTION_KEYS = {
+    ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right",
+    w: "up", s: "down", a: "left", d: "right",
+    W: "up", S: "down", A: "left", D: "right"
+  };
+
+  function enableDirectionKeys(handler) {
+    document.addEventListener("keydown", (e) => {
+      const dir = DIRECTION_KEYS[e.key];
+      if (!dir || e.altKey || e.ctrlKey || e.metaKey) return;
+      const t = e.target;
+      const tag = t && t.tagName ? t.tagName.toLowerCase() : "";
+      if (tag === "input" || tag === "select" || tag === "textarea" || (t && t.isContentEditable)) return;
+      if (handler(dir)) e.preventDefault();
+    });
+  }
+
+  return { enableArrowNav, enableDirectionKeys };
 })();
 
 if (typeof module !== "undefined" && module.exports) {
