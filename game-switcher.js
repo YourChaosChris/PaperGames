@@ -79,7 +79,9 @@
     ["concan", "game_concan"],
     ["doppelkopf", "game_doppelkopf"],
     ["trix", "game_trix"],
-    ["trix", "game_trix"]
+    ["trix", "game_trix"],
+    ["cratepusher", "game_cratepusher"],
+    ["cratepusher", "game_cratepusher"]
   ];
 
   var GAME_SLUGS = {};

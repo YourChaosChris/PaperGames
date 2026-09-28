@@ -36,7 +36,20 @@
 
   document.addEventListener("click", function (e) {
     const target = e.target && e.target.closest ? e.target.closest("button") : null;
-    if (!target || !target.id) return;
+    if (!target) return;
+    if (!target.id && !target.hasAttribute("data-confirm")) return;
+
+    // Any other button can ask first by carrying data-confirm="<i18n key>"
+    // (Crate Pusher's "Restart level"); the attribute is only present
+    // while the question makes sense.
+    const confirmKey = target.getAttribute("data-confirm");
+    if (confirmKey) {
+      if (!window.confirm(label(confirmKey, "Are you sure?"))) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      return;
+    }
 
     if (target.id === "resign-button") {
       if (!window.confirm(label("resign_confirm_dialog", "Resign this game?"))) {

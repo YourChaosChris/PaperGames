@@ -6,7 +6,7 @@
 
 const GameStats = (function () {
   const KEY = "einkchess_stats";
-  const GAMES = ["chess", "go", "checkers", "ur", "morris", "backgammon", "xiangqi", "mancala", "ludo", "othello", "connectfour", "gomoku", "senet", "shogi", "sudoku", "pegsolitaire", "minesweeper", "nonogram", "twenty48", "mahjong", "freecell", "onitama", "hnefatafl", "quoridor", "hex", "halma", "lightsout", "mastermind", "dotsandboxes", "amazons", "kakuro", "hashi", "skyscrapers", "slitherlink", "fanorona", "fleetbattle", "konane", "sternhalma", "baghchal", "tablut", "abalone", "pyramidsolitaire", "surakarta", "domino", "maumau", "calcudoku", "numberblocks", "killersudoku", "schwimmen", "durak", "concan", "doppelkopf", "trix", "trix"];
+  const GAMES = ["chess", "go", "checkers", "ur", "morris", "backgammon", "xiangqi", "mancala", "ludo", "othello", "connectfour", "gomoku", "senet", "shogi", "sudoku", "pegsolitaire", "minesweeper", "nonogram", "twenty48", "mahjong", "freecell", "onitama", "hnefatafl", "quoridor", "hex", "halma", "lightsout", "mastermind", "dotsandboxes", "amazons", "kakuro", "hashi", "skyscrapers", "slitherlink", "fanorona", "fleetbattle", "konane", "sternhalma", "baghchal", "tablut", "abalone", "pyramidsolitaire", "surakarta", "domino", "maumau", "calcudoku", "numberblocks", "killersudoku", "schwimmen", "durak", "concan", "doppelkopf", "trix", "trix", "cratepusher", "cratepusher"];
 
   function loadAll() {
     try {

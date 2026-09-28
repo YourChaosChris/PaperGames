@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crate Pusher Rules | PaperGames</title>
+  <meta name="description" content="How PaperGames plays Crate Pusher: the complete rules, explained clearly. Free to play offline on e-ink readers, tablets, and desktop.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/cratepusher-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/cratepusher-rules.html">
+  <meta property="og:title" content="Crate Pusher Rules | PaperGames">
+  <meta property="og:description" content="How PaperGames plays Crate Pusher: the complete rules, explained clearly. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Crate Pusher Rules | PaperGames">
+  <meta name="twitter:description" content="How PaperGames plays Crate Pusher: the complete rules, explained clearly. Free to play offline on e-ink readers, tablets, and desktop.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>try{if((localStorage.getItem("einkchess_lang")||navigator.language||"en").slice(0,2).toLowerCase()!=="en"){document.documentElement.className+=" i18n-pending";setTimeout(function(){document.documentElement.classList.remove("i18n-pending")},4000)}}catch(e){}</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+  <main>
+    <section class="card content-page">
+      <h1 data-i18n="cratepusher_rules_title">Crate Pusher Rules</h1>
+      <p data-i18n="cratepusher_rules_intro">How Crate Pusher works on PaperGames: a puzzle for one, about moving crates in a small storeroom.</p>
+
+      <h2 data-i18n="sudoku_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt data-i18n="cratepusher_term_board">The board</dt>
+        <dd data-i18n="cratepusher_rules_board">A rectangular grid of walls (solid black) and floor (white). On the floor stand you (a filled circle), several crates (a square with a cross) and exactly as many targets (a small hollow square). A crate standing on a target turns into a solid square.</dd>
+        <dt data-i18n="cratepusher_term_move">Moving</dt>
+        <dd data-i18n="cratepusher_rules_move">You move one cell at a time, up, down, left or right - never diagonally. You can't walk through walls or crates.</dd>
+        <dt data-i18n="cratepusher_term_push">Pushing</dt>
+        <dd data-i18n="cratepusher_rules_push">Walking into a crate pushes it one cell further, but only if the cell behind it is free: no wall and no second crate. You can only ever push one crate at a time, and you can never pull a crate back towards you.</dd>
+        <dt data-i18n="cratepusher_term_goal">The goal</dt>
+        <dd data-i18n="cratepusher_rules_goal">The level is solved as soon as every crate stands on a target. It doesn't matter which crate goes on which target.</dd>
+        <dt data-i18n="cratepusher_term_stuck">Getting stuck</dt>
+        <dd data-i18n="cratepusher_rules_stuck">Because crates can't be pulled, a careless push can make a level unsolvable - for example a crate pushed into a corner that is not a target. The game warns you when a crate is stuck in such a corner. Other dead ends are not announced: think ahead, and use "Undo move" as often as you like to go back.</dd>
+        <dt data-i18n="cratepusher_term_controls">Controls</dt>
+        <dd data-i18n="cratepusher_rules_controls">Tap a cell next to you to step there (and push a crate standing there). Tap a floor cell further away and you walk there by the shortest way - but only if you can get there without pushing any crate. The arrow keys and W, A, S, D also move you. "Undo move" takes back your moves one by one, as many as you want; "Restart level" starts the level over.</dd>
+        <dt data-i18n="cratepusher_term_levels">The levels</dt>
+        <dd data-i18n="cratepusher_rules_levels">Every level is made by PaperGames itself, fresh each time: easy on a 7x7 grid with 3 crates, medium on 9x9 with 4, hard on 10x10 with 5. The program builds each level backwards from the solved position, so it is always solvable, and then checks it once more with its own solver. The number of pushes the best solution needs is shown above the board, together with your steps, your pushes and how many crates already stand on a target.</dd>
+      </dl>
+
+      <p class="about-back"><a href="cratepusher.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="error-banner.js"></script>
+<script src="i18n.js"></script>
+<script src="font-size-toggle.js"></script>
+<script src="high-contrast.js"></script>
+<script src="ai-pacing.js"></script>
+<script src="force-update.js"></script>
+<script src="settings-menu.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+<script src="update-banner.js"></script>
+</body>
+</html>

@@ -644,4 +644,15 @@ const GAMES_CATALOG = [
     added: "2026-09-27",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"8\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"32\" y=\"16\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><text x=\"65\" y=\"62\" text-anchor=\"middle\" font-size=\"26\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">K</text><path d=\"M65 68 C65 68 55 76 55 81 C55 84 58 86 60 86 C62 86 64 85 65 83 C66 85 68 86 70 86 C72 86 75 84 75 81 C75 76 65 68 65 68 Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"3\"/></svg></span>"
   },
+  {
+    slug: "cratepusher",
+    category: "puzzles",
+    nameKey: "game_cratepusher",
+    nameText: "Crate Pusher",
+    descKey: "home_cratepusher_desc",
+    descText: "Push every crate onto a target - but crates can only be pushed, never pulled. Freshly generated levels, each one checked to be solvable, in three difficulty levels.",
+    popular: false,
+    added: "2026-09-28",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"8\" y=\"8\" width=\"84\" height=\"14\" fill=\"#141413\"/><rect x=\"20\" y=\"36\" width=\"36\" height=\"36\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M20 36 L56 72 M56 36 L20 72\" stroke=\"#141413\" stroke-width=\"4\"/><circle cx=\"74\" cy=\"54\" r=\"10\" fill=\"#141413\"/></svg></span>"
+  },
 ];
