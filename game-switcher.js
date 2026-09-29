@@ -49,7 +49,7 @@
     ["nonogram", "game_nonograms"],
     ["pegsolitaire", "game_peg_solitaire"],
     ["yatzy", "game_yatzy"],
-    ["lightsout", "game_lightsout"],
+    ["lightswitch", "game_lightswitch"],
     ["bullsandcows", "game_bullsandcows"],
     ["dotsandboxes", "game_dotsandboxes"],
     ["klondike", "game_klondike"],

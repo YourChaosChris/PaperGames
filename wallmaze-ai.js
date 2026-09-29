@@ -1,31 +1,31 @@
-// quoridor-ai.js
-// Offline opponent for Quoridor, mirroring the structure used for the
+// wallmaze-ai.js
+// Offline opponent for WallMaze, mirroring the structure used for the
 // other strategy games here:
 //   1 = easy   - random legal move
 //   2 = medium - 1-ply evaluation (shortest-path race + walls left)
 //                with light randomness among the best few
 //   3 = hard   - iterative deepening alpha-beta, but with the branch
 //                list capped to a handful of the most promising moves
-//                per node (a full Quoridor turn can offer over a
+//                per node (a full WallMaze turn can offer over a
 //                hundred legal wall placements alone - searching all
 //                of them several plies deep would blow any node
 //                budget before finding anything useful), plus the
 //                usual node-budget/wall-clock-deadline safety net.
 
-const QuoridorAi = (function () {
+const WallMazeAi = (function () {
   const INF = 1e9;
 
   // Positive is good for `side`: being closer to your own goal than
-  // your opponent is to theirs is what actually wins Quoridor -
+  // your opponent is to theirs is what actually wins WallMaze -
   // material doesn't exist here, it's a pure race complicated by
   // walls, so the evaluation is entirely path-distance based.
   function evaluateFor(side, state) {
     if (state.gameOver) {
       return state.winner === side ? INF / 2 : -INF / 2;
     }
-    const opp = QuoridorCore.otherPlayer(side);
-    const myDist = QuoridorCore.shortestDistanceToRow(state, state.pawns[side], QuoridorCore.GOAL_ROW[side]);
-    const oppDist = QuoridorCore.shortestDistanceToRow(state, state.pawns[opp], QuoridorCore.GOAL_ROW[opp]);
+    const opp = WallMazeCore.otherPlayer(side);
+    const myDist = WallMazeCore.shortestDistanceToRow(state, state.pawns[side], WallMazeCore.GOAL_ROW[side]);
+    const oppDist = WallMazeCore.shortestDistanceToRow(state, state.pawns[opp], WallMazeCore.GOAL_ROW[opp]);
     let score = (oppDist - myDist) * 10;
     score += (state.wallsRemaining[side] - state.wallsRemaining[opp]) * 2;
     return score;
@@ -34,7 +34,7 @@ const QuoridorAi = (function () {
   // A quick, cheap-to-compute score used only to pick which moves are
   // worth exploring further, not the real evaluation.
   function candidateScore(state, player, move) {
-    const next = QuoridorCore.applyMove(state, player, move);
+    const next = WallMazeCore.applyMove(state, player, move);
     return evaluateFor(player, next);
   }
 
@@ -62,14 +62,14 @@ const QuoridorAi = (function () {
       return evaluateFor(perspective, state);
     }
 
-    const allMoves = QuoridorCore.getLegalMoves(state, playerToMove);
+    const allMoves = WallMazeCore.getLegalMoves(state, playerToMove);
     const moves = topCandidates(state, playerToMove, allMoves, branchCap);
     const isMaximizing = playerToMove === perspective;
     let best = isMaximizing ? -INF : INF;
 
     for (const m of moves) {
-      const next = QuoridorCore.applyMove(state, playerToMove, m);
-      const score = minimax(next, QuoridorCore.otherPlayer(playerToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState, branchCap);
+      const next = WallMazeCore.applyMove(state, playerToMove, m);
+      const score = minimax(next, WallMazeCore.otherPlayer(playerToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState, branchCap);
       if (searchState && searchState.aborted) return best;
       if (isMaximizing) {
         if (score > best) best = score;
@@ -96,8 +96,8 @@ const QuoridorAi = (function () {
       let depthAborted = false;
 
       for (const m of ordered) {
-        const next = QuoridorCore.applyMove(state, side, m);
-        const score = minimax(next, QuoridorCore.otherPlayer(side), 1, depth, alpha, INF, side, searchState, branchCap);
+        const next = WallMazeCore.applyMove(state, side, m);
+        const score = minimax(next, WallMazeCore.otherPlayer(side), 1, depth, alpha, INF, side, searchState, branchCap);
         if (searchState.aborted) {
           depthAborted = true;
           break;
@@ -125,7 +125,7 @@ const QuoridorAi = (function () {
   };
 
   function chooseMove(state, side, level) {
-    const moves = QuoridorCore.getLegalMoves(state, side);
+    const moves = WallMazeCore.getLegalMoves(state, side);
     if (!moves.length) return null;
 
     if (typeof level !== "number" || level < 1) level = 1;
@@ -149,8 +149,8 @@ const QuoridorAi = (function () {
 })();
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = QuoridorAi;
+  module.exports = WallMazeAi;
 }
 if (typeof window !== "undefined") {
-  window.QuoridorAi = QuoridorAi;
+  window.WallMazeAi = WallMazeAi;
 }

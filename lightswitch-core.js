@@ -1,5 +1,5 @@
-// lightsout-core.js
-// Dependency-free Lights Out engine. Solitaire, like Sudoku, Minesweeper
+// lightswitch-core.js
+// Dependency-free Light Switch engine. Solitaire, like Sudoku, Minesweeper
 // and the other single-player puzzles here - no opponent, no AI.
 //
 // The board is a 5x5 grid of booleans (true = "on"/lit). Pressing a cell
@@ -19,7 +19,7 @@
 // possible picture's clues are satisfiable at all - here every grid this
 // generator can produce is solvable by construction).
 
-const LightsOutCore = (function () {
+const LightSwitchCore = (function () {
   const DEFAULT_SIZE = 5;
 
   function createEmptyGrid(size) {
@@ -103,8 +103,8 @@ const LightsOutCore = (function () {
 })();
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = LightsOutCore;
+  module.exports = LightSwitchCore;
 }
 if (typeof window !== "undefined") {
-  window.LightsOutCore = LightsOutCore;
+  window.LightSwitchCore = LightSwitchCore;
 }

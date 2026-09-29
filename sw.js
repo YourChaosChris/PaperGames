@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "papergames-cache-v119";
+const CACHE_NAME = "papergames-cache-v120";
 
 const APP_SHELL = [
   "./",
@@ -128,9 +128,9 @@ const APP_SHELL = [
   "yatzy.html",
   "yatzy-rules.html",
   "yatzy-history.html",
-  "lightsout.html",
-  "lightsout-rules.html",
-  "lightsout-history.html",
+  "lightswitch.html",
+  "lightswitch-rules.html",
+  "lightswitch-history.html",
   "bullsandcows.html",
   "bullsandcows-rules.html",
   "bullsandcows-history.html",
@@ -316,8 +316,8 @@ const APP_SHELL = [
   "halma-app.js",
   "yatzy-core.js",
   "yatzy-app.js",
-  "lightsout-core.js",
-  "lightsout-app.js",
+  "lightswitch-core.js",
+  "lightswitch-app.js",
   "bullsandcows-core.js",
   "bullsandcows-app.js",
   "dotsandboxes-core.js",
@@ -401,6 +401,9 @@ const APP_SHELL = [
   "abalone.html",
   "abalone-rules.html",
   "abalone-history.html",
+  "lightsout.html",
+  "lightsout-rules.html",
+  "lightsout-history.html",
   "othello.html",
   "othello-rules.html",
   "othello-history.html",

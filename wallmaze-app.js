@@ -1,6 +1,6 @@
-// quoridor-app.js
-// Wires QuoridorCore/QuoridorAi to the quoridor.html UI. Unlike the
-// float-grid boards elsewhere in this app, Quoridor needs clickable
+// wallmaze-app.js
+// Wires WallMazeCore/WallMazeAi to the wallmaze.html UI. Unlike the
+// float-grid boards elsewhere in this app, WallMaze needs clickable
 // targets BETWEEN cells too (the walls), so the board uses
 // percentage-based absolute positioning instead - the same technique
 // already proven for Go's line-and-point board, with a JS-enforced
@@ -25,9 +25,9 @@
 // wrong first guess is fixed by just tapping again, not by hitting a
 // precise sliver.
 
-const AppStateQuoridor = {
+const AppStateWallMaze = {
   mode: "offline",        // "offline" | "offline-ai"
-  state: QuoridorCore.createInitialState(),
+  state: WallMazeCore.createInitialState(),
   turn: "p1",             // "p1" | "p2" - p1 moves first
   lastMove: null,         // the last applied move, for highlighting
   humanSide: "p1",
@@ -40,42 +40,42 @@ const AppStateQuoridor = {
   pendingWall: null       // { wr, wc, orientation } | null - a wall placement being previewed
 };
 
-const QUORIDOR_SAVE_KEY = "einkchess_save_quoridor";
+const WALLMAZE_SAVE_KEY = "einkchess_save_wallmaze";
 
-function saveQuoridorGame() {
+function saveWallMazeGame() {
   if (typeof GameStorage === "undefined") return;
-  GameStorage.save(QUORIDOR_SAVE_KEY, {
-    mode: AppStateQuoridor.mode,
-    state: AppStateQuoridor.state,
-    turn: AppStateQuoridor.turn,
-    lastMove: AppStateQuoridor.lastMove,
-    humanSide: AppStateQuoridor.humanSide,
-    aiLevel: AppStateQuoridor.aiLevel,
-    moveCount: AppStateQuoridor.moveCount
+  GameStorage.save(WALLMAZE_SAVE_KEY, {
+    mode: AppStateWallMaze.mode,
+    state: AppStateWallMaze.state,
+    turn: AppStateWallMaze.turn,
+    lastMove: AppStateWallMaze.lastMove,
+    humanSide: AppStateWallMaze.humanSide,
+    aiLevel: AppStateWallMaze.aiLevel,
+    moveCount: AppStateWallMaze.moveCount
   });
 }
 
-function clearSavedQuoridorGame() {
+function clearSavedWallMazeGame() {
   if (typeof GameStorage === "undefined") return;
-  GameStorage.clear(QUORIDOR_SAVE_KEY);
+  GameStorage.clear(WALLMAZE_SAVE_KEY);
 }
 
-function recordQuoridorStatsIfVsAi(outcome) {
+function recordWallMazeStatsIfVsAi(outcome) {
   if (typeof GameStats === "undefined") return;
-  if (AppStateQuoridor.mode !== "offline-ai") return;
-  GameStats.record("quoridor", outcome);
+  if (AppStateWallMaze.mode !== "offline-ai") return;
+  GameStats.record("wallmaze", outcome);
 }
 
-function sideNameQuoridor(side) {
+function sideNameWallMaze(side) {
   return side === "p1" ? "Player 1" : "Player 2";
 }
 
-function setStatusQuoridor(elementId, text) {
+function setStatusWallMaze(elementId, text) {
   const el = document.getElementById(elementId);
   if (el) I18n.setMsg(el, text || "");
 }
 
-function setGameResultQuoridor(text) {
+function setGameResultWallMaze(text) {
   const el = document.getElementById("game-result");
   if (el) I18n.setMsg(el, text || "");
   if (!text && window.ResultModal) {
@@ -83,61 +83,61 @@ function setGameResultQuoridor(text) {
   }
 }
 
-function resultTitleQuoridor(winner) {
-  if (AppStateQuoridor.mode === "offline-ai") {
-    return winner === AppStateQuoridor.humanSide ? "You win!" : "You lose";
+function resultTitleWallMaze(winner) {
+  if (AppStateWallMaze.mode === "offline-ai") {
+    return winner === AppStateWallMaze.humanSide ? "You win!" : "You lose";
   }
-  return sideNameQuoridor(winner) + " wins";
+  return sideNameWallMaze(winner) + " wins";
 }
 
-function announceGameResultQuoridor(resultCode, message) {
-  setGameResultQuoridor(message);
-  setStatusQuoridor("board-info", message);
+function announceGameResultWallMaze(resultCode, message) {
+  setGameResultWallMaze(message);
+  setStatusWallMaze("board-info", message);
   if (window.ResultModal) {
     window.ResultModal.show(resultCode, message);
   }
 }
 
-function resetUndoStackQuoridor() {
-  AppStateQuoridor.undoStack = [];
+function resetUndoStackWallMaze() {
+  AppStateWallMaze.undoStack = [];
 }
 
-function pushUndoSnapshotQuoridor() {
-  AppStateQuoridor.undoStack.push({
-    state: QuoridorCore.cloneState(AppStateQuoridor.state),
-    turn: AppStateQuoridor.turn,
-    gameOver: AppStateQuoridor.gameOver,
-    moveCount: AppStateQuoridor.moveCount,
-    lastMove: AppStateQuoridor.lastMove
+function pushUndoSnapshotWallMaze() {
+  AppStateWallMaze.undoStack.push({
+    state: WallMazeCore.cloneState(AppStateWallMaze.state),
+    turn: AppStateWallMaze.turn,
+    gameOver: AppStateWallMaze.gameOver,
+    moveCount: AppStateWallMaze.moveCount,
+    lastMove: AppStateWallMaze.lastMove
   });
 }
 
-function initQuoridorApp() {
+function initWallMazeApp() {
   if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
   const modeOfflineAi = document.getElementById("mode-offline-ai");
   const offlineAiControls = document.getElementById("offline-ai-controls");
-  const sideChoice = document.getElementById("quoridor-side-choice");
-  const levelInline = document.getElementById("quoridor-level-inline");
-  const startGameBtn = document.getElementById("start-quoridor-game");
+  const sideChoice = document.getElementById("wallmaze-side-choice");
+  const levelInline = document.getElementById("wallmaze-level-inline");
+  const startGameBtn = document.getElementById("start-wallmaze-game");
   const resignBtn = document.getElementById("resign-button");
-  const wallModeBtn = document.getElementById("quoridor-wall-mode-btn");
-  const orientationBtn = document.getElementById("quoridor-orientation-btn");
-  const confirmWallBtn = document.getElementById("quoridor-confirm-wall-btn");
+  const wallModeBtn = document.getElementById("wallmaze-wall-mode-btn");
+  const orientationBtn = document.getElementById("wallmaze-orientation-btn");
+  const confirmWallBtn = document.getElementById("wallmaze-confirm-wall-btn");
 
   if (wallModeBtn) {
     wallModeBtn.addEventListener("click", () => {
-      if (AppStateQuoridor.wallMode) exitQuoridorWallMode();
-      else enterQuoridorWallMode();
+      if (AppStateWallMaze.wallMode) exitWallMazeWallMode();
+      else enterWallMazeWallMode();
     });
   }
   if (orientationBtn) {
-    orientationBtn.addEventListener("click", toggleQuoridorWallOrientation);
+    orientationBtn.addEventListener("click", toggleWallMazeWallOrientation);
   }
   if (confirmWallBtn) {
-    confirmWallBtn.addEventListener("click", confirmQuoridorPendingWall);
+    confirmWallBtn.addEventListener("click", confirmWallMazePendingWall);
   }
 
   function updateSideChoiceVisibility() {
@@ -171,28 +171,28 @@ function initQuoridorApp() {
   }
 
   function startNewGame(mode, humanSide, level) {
-    AppStateQuoridor.mode = mode;
-    AppStateQuoridor.state = QuoridorCore.createInitialState();
-    AppStateQuoridor.turn = "p1";
-    AppStateQuoridor.lastMove = null;
-    AppStateQuoridor.humanSide = humanSide;
-    AppStateQuoridor.aiLevel = level;
-    AppStateQuoridor.gameOver = false;
-    AppStateQuoridor.moveCount = 0;
-    AppStateQuoridor.pendingWall = null;
-    AppStateQuoridor.wallMode = false;
-    resetUndoStackQuoridor();
-    setGameResultQuoridor("");
-    showBoardSectionQuoridor();
-    buildQuoridorBoardDOM();
-    updateQuoridorBoard();
-    updateGameLabelsQuoridor();
+    AppStateWallMaze.mode = mode;
+    AppStateWallMaze.state = WallMazeCore.createInitialState();
+    AppStateWallMaze.turn = "p1";
+    AppStateWallMaze.lastMove = null;
+    AppStateWallMaze.humanSide = humanSide;
+    AppStateWallMaze.aiLevel = level;
+    AppStateWallMaze.gameOver = false;
+    AppStateWallMaze.moveCount = 0;
+    AppStateWallMaze.pendingWall = null;
+    AppStateWallMaze.wallMode = false;
+    resetUndoStackWallMaze();
+    setGameResultWallMaze("");
+    showBoardSectionWallMaze();
+    buildWallMazeBoardDOM();
+    updateWallMazeBoard();
+    updateGameLabelsWallMaze();
 
     if (mode === "offline-ai" && humanSide !== "p1") {
-      setStatusQuoridor("board-info", "Computer thinking…");
-      setTimeout(aiTurnQuoridor, AiPacing.delay(300));
+      setStatusWallMaze("board-info", "Computer thinking…");
+      setTimeout(aiTurnWallMaze, AiPacing.delay(300));
     } else {
-      setStatusQuoridor("board-info", sideNameQuoridor(AppStateQuoridor.turn) + " to move.");
+      setStatusWallMaze("board-info", sideNameWallMaze(AppStateWallMaze.turn) + " to move.");
     }
   }
 
@@ -205,9 +205,9 @@ function initQuoridorApp() {
   modeOfflineAi.addEventListener("click", () => {
     setActiveModeButton("offline-ai");
     offlineAiControls.classList.remove("hidden");
-    if (levelInline) levelInline.value = String(AppStateQuoridor.aiLevel || 2);
+    if (levelInline) levelInline.value = String(AppStateWallMaze.aiLevel || 2);
     updateSideChoiceVisibility();
-    setStatusQuoridor("board-info", "");
+    setStatusWallMaze("board-info", "");
   });
 
   if (levelInline) {
@@ -216,61 +216,61 @@ function initQuoridorApp() {
 
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
-    const sideInput = document.querySelector("input[name='quoridor-side']:checked");
+    const sideInput = document.querySelector("input[name='wallmaze-side']:checked");
     const humanSide = sideInput && sideInput.value === "p2" ? "p2" : "p1";
 
     if (level === 0) {
       setActiveModeButton("offline-ai");
       startNewGame("offline", "p1", 0);
-      setStatusQuoridor("offline-quoridor-status", "Local 2-player game (no computer).");
+      setStatusWallMaze("offline-wallmaze-status", "Local 2-player game (no computer).");
       return;
     }
 
     setActiveModeButton("offline-ai");
     startNewGame("offline-ai", humanSide, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
-    setStatusQuoridor("offline-quoridor-status",
-      "You play " + sideNameQuoridor(humanSide) + ", computer level: " + (levelNames[level] || level) + ".");
+    setStatusWallMaze("offline-wallmaze-status",
+      "You play " + sideNameWallMaze(humanSide) + ", computer level: " + (levelNames[level] || level) + ".");
   });
 
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
-      if (AppStateQuoridor.gameOver) return;
-      const loser = AppStateQuoridor.turn;
-      const winner = QuoridorCore.otherPlayer(loser);
-      AppStateQuoridor.gameOver = true;
-      announceGameResultQuoridor(resultTitleQuoridor(winner), sideNameQuoridor(winner) + " wins by resignation.");
-      recordQuoridorStatsIfVsAi("loss");
-      updateGameLabelsQuoridor();
+      if (AppStateWallMaze.gameOver) return;
+      const loser = AppStateWallMaze.turn;
+      const winner = WallMazeCore.otherPlayer(loser);
+      AppStateWallMaze.gameOver = true;
+      announceGameResultWallMaze(resultTitleWallMaze(winner), sideNameWallMaze(winner) + " wins by resignation.");
+      recordWallMazeStatsIfVsAi("loss");
+      updateGameLabelsWallMaze();
     });
   }
 
   updateSideChoiceVisibility();
 
-  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(QUORIDOR_SAVE_KEY) : null;
+  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(WALLMAZE_SAVE_KEY) : null;
   if (savedGame && savedGame.state) {
-    AppStateQuoridor.mode = savedGame.mode;
-    AppStateQuoridor.state = savedGame.state;
-    AppStateQuoridor.turn = savedGame.turn;
-    AppStateQuoridor.lastMove = savedGame.lastMove;
-    AppStateQuoridor.humanSide = savedGame.humanSide;
-    AppStateQuoridor.aiLevel = savedGame.aiLevel;
-    AppStateQuoridor.moveCount = savedGame.moveCount;
-    AppStateQuoridor.gameOver = false;
-    AppStateQuoridor.pendingWall = null;
-    AppStateQuoridor.wallMode = false;
-    resetUndoStackQuoridor();
-    setActiveModeButton(AppStateQuoridor.mode);
-    setGameResultQuoridor("");
-    showBoardSectionQuoridor();
-    buildQuoridorBoardDOM();
-    updateQuoridorBoard();
-    updateGameLabelsQuoridor();
-    if (AppStateQuoridor.mode === "offline-ai" && AppStateQuoridor.turn !== AppStateQuoridor.humanSide) {
-      setStatusQuoridor("board-info", "Computer thinking…");
-      setTimeout(aiTurnQuoridor, AiPacing.delay(300));
+    AppStateWallMaze.mode = savedGame.mode;
+    AppStateWallMaze.state = savedGame.state;
+    AppStateWallMaze.turn = savedGame.turn;
+    AppStateWallMaze.lastMove = savedGame.lastMove;
+    AppStateWallMaze.humanSide = savedGame.humanSide;
+    AppStateWallMaze.aiLevel = savedGame.aiLevel;
+    AppStateWallMaze.moveCount = savedGame.moveCount;
+    AppStateWallMaze.gameOver = false;
+    AppStateWallMaze.pendingWall = null;
+    AppStateWallMaze.wallMode = false;
+    resetUndoStackWallMaze();
+    setActiveModeButton(AppStateWallMaze.mode);
+    setGameResultWallMaze("");
+    showBoardSectionWallMaze();
+    buildWallMazeBoardDOM();
+    updateWallMazeBoard();
+    updateGameLabelsWallMaze();
+    if (AppStateWallMaze.mode === "offline-ai" && AppStateWallMaze.turn !== AppStateWallMaze.humanSide) {
+      setStatusWallMaze("board-info", "Computer thinking…");
+      setTimeout(aiTurnWallMaze, AiPacing.delay(300));
     } else {
-      setStatusQuoridor("board-info", sideNameQuoridor(AppStateQuoridor.turn) + " to move.");
+      setStatusWallMaze("board-info", sideNameWallMaze(AppStateWallMaze.turn) + " to move.");
     }
   }
   // Otherwise no mode is pre-selected and no game auto-starts: the
@@ -278,23 +278,23 @@ function initQuoridorApp() {
   // vs-computer and presses New game, matching chess.html's behavior.
 }
 
-function isHumanTurnQuoridor() {
-  if (AppStateQuoridor.gameOver) return false;
-  if (AppStateQuoridor.mode === "offline-ai" && AppStateQuoridor.turn !== AppStateQuoridor.humanSide) return false;
+function isHumanTurnWallMaze() {
+  if (AppStateWallMaze.gameOver) return false;
+  if (AppStateWallMaze.mode === "offline-ai" && AppStateWallMaze.turn !== AppStateWallMaze.humanSide) return false;
   return true;
 }
 
-function onQuoridorCellClick(r, c) {
-  if (AppStateQuoridor.wallMode) return; // the tap-catcher overlay handles taps in wall mode
-  if (!isHumanTurnQuoridor()) {
-    setStatusQuoridor("board-info", "Computer to move.");
+function onWallMazeCellClick(r, c) {
+  if (AppStateWallMaze.wallMode) return; // the tap-catcher overlay handles taps in wall mode
+  if (!isHumanTurnWallMaze()) {
+    setStatusWallMaze("board-info", "Computer to move.");
     return;
   }
-  const moves = QuoridorCore.getLegalMoves(AppStateQuoridor.state, AppStateQuoridor.turn)
+  const moves = WallMazeCore.getLegalMoves(AppStateWallMaze.state, AppStateWallMaze.turn)
     .filter((m) => m.type === "move");
   const match = moves.find((m) => m.to[0] === r && m.to[1] === c);
   if (!match) return;
-  applyQuoridorMove(match);
+  applyWallMazeMove(match);
 }
 
 // A horizontal and a vertical wall anchored at the same (wr, wc) cross
@@ -302,8 +302,8 @@ function onQuoridorCellClick(r, c) {
 // center-point formula regardless of which is being asked for.
 function wallCenterPct(wr, wc) {
   return {
-    x: wc * QUORIDOR_STEP_PCT + QUORIDOR_CELL_PCT + QUORIDOR_GAP_PCT / 2,
-    y: wr * QUORIDOR_STEP_PCT + QUORIDOR_CELL_PCT + QUORIDOR_GAP_PCT / 2
+    x: wc * WALLMAZE_STEP_PCT + WALLMAZE_CELL_PCT + WALLMAZE_GAP_PCT / 2,
+    y: wr * WALLMAZE_STEP_PCT + WALLMAZE_CELL_PCT + WALLMAZE_GAP_PCT / 2
   };
 }
 
@@ -312,11 +312,11 @@ function wallCenterPct(wr, wc) {
 // previews it - this is what makes the whole board a single forgiving
 // tap target instead of 128 tiny, overlapping candidate buttons.
 function selectNearestWallAtPoint(px, py) {
-  const wallMoves = QuoridorCore.getLegalMoves(AppStateQuoridor.state, AppStateQuoridor.turn)
-    .filter((m) => m.type === "wall" && m.orientation === AppStateQuoridor.wallOrientation);
+  const wallMoves = WallMazeCore.getLegalMoves(AppStateWallMaze.state, AppStateWallMaze.turn)
+    .filter((m) => m.type === "wall" && m.orientation === AppStateWallMaze.wallOrientation);
 
   if (!wallMoves.length) {
-    setStatusQuoridor("board-info", AppStateQuoridor.wallOrientation === "h"
+    setStatusWallMaze("board-info", AppStateWallMaze.wallOrientation === "h"
       ? "No horizontal wall can be placed right now."
       : "No vertical wall can be placed right now.");
     return;
@@ -333,15 +333,15 @@ function selectNearestWallAtPoint(px, py) {
     }
   });
 
-  AppStateQuoridor.pendingWall = { wr: best.row, wc: best.col, orientation: best.orientation };
-  updateQuoridorBoard();
-  updateQuoridorWallModeUI();
-  setStatusQuoridor("board-info", "Tap ✓ Place to confirm, or tap elsewhere to move it.");
+  AppStateWallMaze.pendingWall = { wr: best.row, wc: best.col, orientation: best.orientation };
+  updateWallMazeBoard();
+  updateWallMazeWallModeUI();
+  setStatusWallMaze("board-info", "Tap ✓ Place to confirm, or tap elsewhere to move it.");
 }
 
-function onQuoridorBoardTap(evt) {
-  if (!AppStateQuoridor.wallMode || !isHumanTurnQuoridor()) return;
-  const boardEl = document.getElementById("quoridor-board");
+function onWallMazeBoardTap(evt) {
+  if (!AppStateWallMaze.wallMode || !isHumanTurnWallMaze()) return;
+  const boardEl = document.getElementById("wallmaze-board");
   if (!boardEl) return;
   const rect = boardEl.getBoundingClientRect();
   if (!rect.width || !rect.height) return;
@@ -350,107 +350,107 @@ function onQuoridorBoardTap(evt) {
   selectNearestWallAtPoint(px, py);
 }
 
-function enterQuoridorWallMode() {
-  if (!isHumanTurnQuoridor()) {
-    setStatusQuoridor("board-info", "Computer to move.");
+function enterWallMazeWallMode() {
+  if (!isHumanTurnWallMaze()) {
+    setStatusWallMaze("board-info", "Computer to move.");
     return;
   }
-  AppStateQuoridor.wallMode = true;
-  AppStateQuoridor.pendingWall = null;
-  updateQuoridorBoard();
-  updateQuoridorWallModeUI();
-  setStatusQuoridor("board-info", "Tap anywhere on the board to preview a wall there.");
+  AppStateWallMaze.wallMode = true;
+  AppStateWallMaze.pendingWall = null;
+  updateWallMazeBoard();
+  updateWallMazeWallModeUI();
+  setStatusWallMaze("board-info", "Tap anywhere on the board to preview a wall there.");
 }
 
-function exitQuoridorWallMode() {
-  AppStateQuoridor.wallMode = false;
-  AppStateQuoridor.pendingWall = null;
-  updateQuoridorBoard();
-  updateQuoridorWallModeUI();
-  setStatusQuoridor("board-info", sideNameQuoridor(AppStateQuoridor.turn) + " to move.");
+function exitWallMazeWallMode() {
+  AppStateWallMaze.wallMode = false;
+  AppStateWallMaze.pendingWall = null;
+  updateWallMazeBoard();
+  updateWallMazeWallModeUI();
+  setStatusWallMaze("board-info", sideNameWallMaze(AppStateWallMaze.turn) + " to move.");
 }
 
-function toggleQuoridorWallOrientation() {
-  AppStateQuoridor.wallOrientation = AppStateQuoridor.wallOrientation === "h" ? "v" : "h";
-  const pending = AppStateQuoridor.pendingWall;
-  updateQuoridorWallModeUI();
+function toggleWallMazeWallOrientation() {
+  AppStateWallMaze.wallOrientation = AppStateWallMaze.wallOrientation === "h" ? "v" : "h";
+  const pending = AppStateWallMaze.pendingWall;
+  updateWallMazeWallModeUI();
   if (pending) {
     const center = wallCenterPct(pending.wr, pending.wc);
     selectNearestWallAtPoint(center.x, center.y);
   } else {
-    updateQuoridorBoard();
+    updateWallMazeBoard();
   }
 }
 
-function confirmQuoridorPendingWall() {
-  const pending = AppStateQuoridor.pendingWall;
+function confirmWallMazePendingWall() {
+  const pending = AppStateWallMaze.pendingWall;
   if (!pending) return;
-  applyQuoridorMove({ type: "wall", orientation: pending.orientation, row: pending.wr, col: pending.wc });
-  AppStateQuoridor.wallMode = false;
-  updateQuoridorBoard();
-  updateQuoridorWallModeUI();
+  applyWallMazeMove({ type: "wall", orientation: pending.orientation, row: pending.wr, col: pending.wc });
+  AppStateWallMaze.wallMode = false;
+  updateWallMazeBoard();
+  updateWallMazeWallModeUI();
 }
 
-function applyQuoridorMove(move) {
-  pushUndoSnapshotQuoridor();
-  const mover = AppStateQuoridor.turn;
-  AppStateQuoridor.state = QuoridorCore.applyMove(AppStateQuoridor.state, mover, move);
-  AppStateQuoridor.lastMove = move;
-  AppStateQuoridor.pendingWall = null;
-  AppStateQuoridor.moveCount++;
-  AppStateQuoridor.turn = QuoridorCore.otherPlayer(mover);
-  updateQuoridorBoard();
-  updateGameLabelsQuoridor();
+function applyWallMazeMove(move) {
+  pushUndoSnapshotWallMaze();
+  const mover = AppStateWallMaze.turn;
+  AppStateWallMaze.state = WallMazeCore.applyMove(AppStateWallMaze.state, mover, move);
+  AppStateWallMaze.lastMove = move;
+  AppStateWallMaze.pendingWall = null;
+  AppStateWallMaze.moveCount++;
+  AppStateWallMaze.turn = WallMazeCore.otherPlayer(mover);
+  updateWallMazeBoard();
+  updateGameLabelsWallMaze();
 
-  if (AppStateQuoridor.state.gameOver) {
-    AppStateQuoridor.gameOver = true;
-    const winnerName = sideNameQuoridor(AppStateQuoridor.state.winner);
-    announceGameResultQuoridor(resultTitleQuoridor(AppStateQuoridor.state.winner), winnerName + " wins by reaching the far side!");
-    recordQuoridorStatsIfVsAi(AppStateQuoridor.state.winner === AppStateQuoridor.humanSide ? "win" : "loss");
-    updateGameLabelsQuoridor();
+  if (AppStateWallMaze.state.gameOver) {
+    AppStateWallMaze.gameOver = true;
+    const winnerName = sideNameWallMaze(AppStateWallMaze.state.winner);
+    announceGameResultWallMaze(resultTitleWallMaze(AppStateWallMaze.state.winner), winnerName + " wins by reaching the far side!");
+    recordWallMazeStatsIfVsAi(AppStateWallMaze.state.winner === AppStateWallMaze.humanSide ? "win" : "loss");
+    updateGameLabelsWallMaze();
     return;
   }
 
-  setStatusQuoridor("board-info", sideNameQuoridor(mover) + " played. " + sideNameQuoridor(AppStateQuoridor.turn) + " to move.");
+  setStatusWallMaze("board-info", sideNameWallMaze(mover) + " played. " + sideNameWallMaze(AppStateWallMaze.turn) + " to move.");
 
-  if (AppStateQuoridor.mode === "offline-ai" && AppStateQuoridor.turn !== AppStateQuoridor.humanSide) {
-    setStatusQuoridor("board-info", "Computer thinking…");
-    setTimeout(aiTurnQuoridor, AiPacing.delay(350));
+  if (AppStateWallMaze.mode === "offline-ai" && AppStateWallMaze.turn !== AppStateWallMaze.humanSide) {
+    setStatusWallMaze("board-info", "Computer thinking…");
+    setTimeout(aiTurnWallMaze, AiPacing.delay(350));
   }
 }
 
-function aiTurnQuoridor() {
-  if (AppStateQuoridor.mode !== "offline-ai" || AppStateQuoridor.gameOver) return;
-  const aiSide = QuoridorCore.otherPlayer(AppStateQuoridor.humanSide);
-  if (AppStateQuoridor.turn !== aiSide) return;
+function aiTurnWallMaze() {
+  if (AppStateWallMaze.mode !== "offline-ai" || AppStateWallMaze.gameOver) return;
+  const aiSide = WallMazeCore.otherPlayer(AppStateWallMaze.humanSide);
+  if (AppStateWallMaze.turn !== aiSide) return;
 
-  const move = QuoridorAi.chooseMove(AppStateQuoridor.state, aiSide, AppStateQuoridor.aiLevel);
+  const move = WallMazeAi.chooseMove(AppStateWallMaze.state, aiSide, AppStateWallMaze.aiLevel);
   if (!move) return;
-  applyQuoridorMove(move);
+  applyWallMazeMove(move);
 }
 
 function undoLastMove() {
-  if (!AppStateQuoridor.undoStack || !AppStateQuoridor.undoStack.length) return;
-  let prev = AppStateQuoridor.undoStack.pop();
-  if (AppStateQuoridor.mode === "offline-ai") {
-    while (prev.turn !== AppStateQuoridor.humanSide && AppStateQuoridor.undoStack.length) {
-      prev = AppStateQuoridor.undoStack.pop();
+  if (!AppStateWallMaze.undoStack || !AppStateWallMaze.undoStack.length) return;
+  let prev = AppStateWallMaze.undoStack.pop();
+  if (AppStateWallMaze.mode === "offline-ai") {
+    while (prev.turn !== AppStateWallMaze.humanSide && AppStateWallMaze.undoStack.length) {
+      prev = AppStateWallMaze.undoStack.pop();
     }
   }
-  AppStateQuoridor.state = prev.state;
-  AppStateQuoridor.turn = prev.turn;
-  AppStateQuoridor.gameOver = prev.gameOver;
-  AppStateQuoridor.moveCount = prev.moveCount;
-  AppStateQuoridor.lastMove = prev.lastMove;
-  AppStateQuoridor.pendingWall = null;
-  AppStateQuoridor.wallMode = false;
-  setGameResultQuoridor("");
-  updateQuoridorBoard();
-  updateGameLabelsQuoridor();
-  setStatusQuoridor("board-info", "Move undone. " + sideNameQuoridor(AppStateQuoridor.turn) + " to move.");
+  AppStateWallMaze.state = prev.state;
+  AppStateWallMaze.turn = prev.turn;
+  AppStateWallMaze.gameOver = prev.gameOver;
+  AppStateWallMaze.moveCount = prev.moveCount;
+  AppStateWallMaze.lastMove = prev.lastMove;
+  AppStateWallMaze.pendingWall = null;
+  AppStateWallMaze.wallMode = false;
+  setGameResultWallMaze("");
+  updateWallMazeBoard();
+  updateGameLabelsWallMaze();
+  setStatusWallMaze("board-info", "Move undone. " + sideNameWallMaze(AppStateWallMaze.turn) + " to move.");
 }
 
-function showBoardSectionQuoridor() {
+function showBoardSectionWallMaze() {
   const section = document.getElementById("board-section");
   if (section) section.classList.remove("hidden");
   const placeholder = document.getElementById("board-placeholder");
@@ -468,158 +468,158 @@ function showBoardSectionQuoridor() {
      technique as Go's board), since wall slots need clickable targets
      between cells, not just on them. ***/
 
-const QUORIDOR_N = 9; // cells per side
-const QUORIDOR_GAP_PCT = 1.6;
-const QUORIDOR_CELL_PCT = (100 - (QUORIDOR_N - 1) * QUORIDOR_GAP_PCT) / QUORIDOR_N;
-const QUORIDOR_STEP_PCT = QUORIDOR_CELL_PCT + QUORIDOR_GAP_PCT;
+const WALLMAZE_N = 9; // cells per side
+const WALLMAZE_GAP_PCT = 1.6;
+const WALLMAZE_CELL_PCT = (100 - (WALLMAZE_N - 1) * WALLMAZE_GAP_PCT) / WALLMAZE_N;
+const WALLMAZE_STEP_PCT = WALLMAZE_CELL_PCT + WALLMAZE_GAP_PCT;
 
-function buildQuoridorBoardDOM() {
-  const boardEl = document.getElementById("quoridor-board");
+function buildWallMazeBoardDOM() {
+  const boardEl = document.getElementById("wallmaze-board");
   if (!boardEl) return;
   boardEl.innerHTML = "";
 
-  for (let r = 0; r < QUORIDOR_N; r++) {
-    for (let c = 0; c < QUORIDOR_N; c++) {
+  for (let r = 0; r < WALLMAZE_N; r++) {
+    for (let c = 0; c < WALLMAZE_N; c++) {
       const cell = document.createElement("button");
       cell.type = "button";
-      cell.className = "quoridor-cell";
-      cell.style.left = (c * QUORIDOR_STEP_PCT) + "%";
-      cell.style.top = (r * QUORIDOR_STEP_PCT) + "%";
-      cell.style.width = QUORIDOR_CELL_PCT + "%";
-      cell.style.height = QUORIDOR_CELL_PCT + "%";
+      cell.className = "wallmaze-cell";
+      cell.style.left = (c * WALLMAZE_STEP_PCT) + "%";
+      cell.style.top = (r * WALLMAZE_STEP_PCT) + "%";
+      cell.style.width = WALLMAZE_CELL_PCT + "%";
+      cell.style.height = WALLMAZE_CELL_PCT + "%";
       cell.dataset.row = r;
       cell.dataset.col = c;
       const piece = document.createElement("span");
-      piece.className = "quoridor-piece";
+      piece.className = "wallmaze-piece";
       cell.appendChild(piece);
-      cell.addEventListener("click", () => onQuoridorCellClick(r, c));
+      cell.addEventListener("click", () => onWallMazeCellClick(r, c));
       boardEl.appendChild(cell);
     }
   }
 
   // The 2-cell-long wall bars are drawn as a non-interactive overlay
-  // (see renderQuoridorWallBars below). The single interactive layer
+  // (see renderWallMazeWallBars below). The single interactive layer
   // for walls is the tap-catcher added next: a plain full-board
   // overlay that only becomes clickable while wall mode is active
-  // (see onQuoridorBoardTap), turning the entire board into one big,
+  // (see onWallMazeBoardTap), turning the entire board into one big,
   // forgiving tap target instead of many small, easily-missed ones.
   const wallLayer = document.createElement("div");
-  wallLayer.id = "quoridor-wall-layer";
-  wallLayer.className = "quoridor-wall-layer";
+  wallLayer.id = "wallmaze-wall-layer";
+  wallLayer.className = "wallmaze-wall-layer";
   boardEl.appendChild(wallLayer);
 
   const tapCatcher = document.createElement("div");
-  tapCatcher.id = "quoridor-wall-tap-catcher";
-  tapCatcher.className = "quoridor-wall-tap-catcher";
-  tapCatcher.addEventListener("click", onQuoridorBoardTap);
+  tapCatcher.id = "wallmaze-wall-tap-catcher";
+  tapCatcher.className = "wallmaze-wall-tap-catcher";
+  tapCatcher.addEventListener("click", onWallMazeBoardTap);
   boardEl.appendChild(tapCatcher);
 
-  ensureQuoridorBoardSquare();
+  ensureWallMazeBoardSquare();
   if (window.requestAnimationFrame) {
-    window.requestAnimationFrame(ensureQuoridorBoardSquare);
+    window.requestAnimationFrame(ensureWallMazeBoardSquare);
   } else {
-    setTimeout(ensureQuoridorBoardSquare, 0);
+    setTimeout(ensureWallMazeBoardSquare, 0);
   }
-  ensureQuoridorResizeHandler();
+  ensureWallMazeResizeHandler();
 }
 
-let einkQuoridorResizeHandlerAttached = false;
-let einkQuoridorResizeTimeoutId = null;
+let einkWallMazeResizeHandlerAttached = false;
+let einkWallMazeResizeTimeoutId = null;
 
-function ensureQuoridorBoardSquare() {
-  const boardEl = document.getElementById("quoridor-board");
+function ensureWallMazeBoardSquare() {
+  const boardEl = document.getElementById("wallmaze-board");
   if (!boardEl) return;
   const rect = boardEl.getBoundingClientRect();
   if (!rect || !rect.width) return;
   boardEl.style.height = rect.width + "px";
 }
 
-function ensureQuoridorResizeHandler() {
-  if (einkQuoridorResizeHandlerAttached) return;
-  einkQuoridorResizeHandlerAttached = true;
+function ensureWallMazeResizeHandler() {
+  if (einkWallMazeResizeHandlerAttached) return;
+  einkWallMazeResizeHandlerAttached = true;
   window.addEventListener("resize", () => {
-    if (einkQuoridorResizeTimeoutId !== null) clearTimeout(einkQuoridorResizeTimeoutId);
-    einkQuoridorResizeTimeoutId = setTimeout(() => {
-      einkQuoridorResizeTimeoutId = null;
-      ensureQuoridorBoardSquare();
+    if (einkWallMazeResizeTimeoutId !== null) clearTimeout(einkWallMazeResizeTimeoutId);
+    einkWallMazeResizeTimeoutId = setTimeout(() => {
+      einkWallMazeResizeTimeoutId = null;
+      ensureWallMazeBoardSquare();
     }, 150);
   });
 }
 
-function updateQuoridorBoard() {
-  const boardEl = document.getElementById("quoridor-board");
+function updateWallMazeBoard() {
+  const boardEl = document.getElementById("wallmaze-board");
   if (!boardEl) return;
-  const state = AppStateQuoridor.state;
-  const turn = AppStateQuoridor.turn;
-  const humanCanAct = isHumanTurnQuoridor() && !AppStateQuoridor.wallMode;
-  const legalMoves = humanCanAct ? QuoridorCore.getLegalMoves(state, turn).filter((m) => m.type === "move") : [];
+  const state = AppStateWallMaze.state;
+  const turn = AppStateWallMaze.turn;
+  const humanCanAct = isHumanTurnWallMaze() && !AppStateWallMaze.wallMode;
+  const legalMoves = humanCanAct ? WallMazeCore.getLegalMoves(state, turn).filter((m) => m.type === "move") : [];
   const legalCellKeys = {};
   legalMoves.forEach((m) => {
     legalCellKeys[m.to[0] + "," + m.to[1]] = true;
   });
 
-  boardEl.querySelectorAll(".quoridor-cell").forEach((cell) => {
+  boardEl.querySelectorAll(".wallmaze-cell").forEach((cell) => {
     const r = parseInt(cell.dataset.row, 10);
     const c = parseInt(cell.dataset.col, 10);
-    const pieceEl = cell.querySelector(".quoridor-piece");
-    pieceEl.classList.remove("quoridor-piece-p1", "quoridor-piece-p2");
-    if (state.pawns.p1[0] === r && state.pawns.p1[1] === c) pieceEl.classList.add("quoridor-piece-p1");
-    if (state.pawns.p2[0] === r && state.pawns.p2[1] === c) pieceEl.classList.add("quoridor-piece-p2");
-    cell.classList.toggle("quoridor-cell-movable", !!legalCellKeys[r + "," + c]);
-    cell.classList.toggle("last-move", !!(AppStateQuoridor.lastMove && AppStateQuoridor.lastMove.type === "move" &&
-      AppStateQuoridor.lastMove.to[0] === r && AppStateQuoridor.lastMove.to[1] === c));
+    const pieceEl = cell.querySelector(".wallmaze-piece");
+    pieceEl.classList.remove("wallmaze-piece-p1", "wallmaze-piece-p2");
+    if (state.pawns.p1[0] === r && state.pawns.p1[1] === c) pieceEl.classList.add("wallmaze-piece-p1");
+    if (state.pawns.p2[0] === r && state.pawns.p2[1] === c) pieceEl.classList.add("wallmaze-piece-p2");
+    cell.classList.toggle("wallmaze-cell-movable", !!legalCellKeys[r + "," + c]);
+    cell.classList.toggle("last-move", !!(AppStateWallMaze.lastMove && AppStateWallMaze.lastMove.type === "move" &&
+      AppStateWallMaze.lastMove.to[0] === r && AppStateWallMaze.lastMove.to[1] === c));
     let label = "Row " + (r + 1) + ", column " + (c + 1);
     if (state.pawns.p1[0] === r && state.pawns.p1[1] === c) label += ", Player 1";
     else if (state.pawns.p2[0] === r && state.pawns.p2[1] === c) label += ", Player 2";
     I18n.setAria(cell, label);
   });
 
-  const tapCatcher = document.getElementById("quoridor-wall-tap-catcher");
-  if (tapCatcher) tapCatcher.classList.toggle("active", AppStateQuoridor.wallMode);
+  const tapCatcher = document.getElementById("wallmaze-wall-tap-catcher");
+  if (tapCatcher) tapCatcher.classList.toggle("active", AppStateWallMaze.wallMode);
 
-  renderQuoridorWallBars(state);
-  updateScoreLineQuoridor();
+  renderWallMazeWallBars(state);
+  updateScoreLineWallMaze();
 }
 
-function quoridorWallBarStyle(orientation, wr, wc) {
+function wallmazeWallBarStyle(orientation, wr, wc) {
   if (orientation === "h") {
     return {
-      left: (wc * QUORIDOR_STEP_PCT) + "%",
-      top: (wr * QUORIDOR_STEP_PCT + QUORIDOR_CELL_PCT) + "%",
-      width: (QUORIDOR_CELL_PCT * 2 + QUORIDOR_GAP_PCT) + "%",
-      height: QUORIDOR_GAP_PCT + "%"
+      left: (wc * WALLMAZE_STEP_PCT) + "%",
+      top: (wr * WALLMAZE_STEP_PCT + WALLMAZE_CELL_PCT) + "%",
+      width: (WALLMAZE_CELL_PCT * 2 + WALLMAZE_GAP_PCT) + "%",
+      height: WALLMAZE_GAP_PCT + "%"
     };
   }
   return {
-    left: (wc * QUORIDOR_STEP_PCT + QUORIDOR_CELL_PCT) + "%",
-    top: (wr * QUORIDOR_STEP_PCT) + "%",
-    width: QUORIDOR_GAP_PCT + "%",
-    height: (QUORIDOR_CELL_PCT * 2 + QUORIDOR_GAP_PCT) + "%"
+    left: (wc * WALLMAZE_STEP_PCT + WALLMAZE_CELL_PCT) + "%",
+    top: (wr * WALLMAZE_STEP_PCT) + "%",
+    width: WALLMAZE_GAP_PCT + "%",
+    height: (WALLMAZE_CELL_PCT * 2 + WALLMAZE_GAP_PCT) + "%"
   };
 }
 
-function renderQuoridorWallBars(state) {
-  const layer = document.getElementById("quoridor-wall-layer");
+function renderWallMazeWallBars(state) {
+  const layer = document.getElementById("wallmaze-wall-layer");
   if (!layer) return;
   layer.innerHTML = "";
 
-  for (let wr = 0; wr < QuoridorCore.WALL_GRID; wr++) {
-    for (let wc = 0; wc < QuoridorCore.WALL_GRID; wc++) {
-      if (state.horizontalWalls[wr][wc]) layer.appendChild(makeQuoridorWallBar("h", wr, wc, "quoridor-wall-bar-placed"));
-      if (state.verticalWalls[wr][wc]) layer.appendChild(makeQuoridorWallBar("v", wr, wc, "quoridor-wall-bar-placed"));
+  for (let wr = 0; wr < WallMazeCore.WALL_GRID; wr++) {
+    for (let wc = 0; wc < WallMazeCore.WALL_GRID; wc++) {
+      if (state.horizontalWalls[wr][wc]) layer.appendChild(makeWallMazeWallBar("h", wr, wc, "wallmaze-wall-bar-placed"));
+      if (state.verticalWalls[wr][wc]) layer.appendChild(makeWallMazeWallBar("v", wr, wc, "wallmaze-wall-bar-placed"));
     }
   }
 
-  const pending = AppStateQuoridor.pendingWall;
+  const pending = AppStateWallMaze.pendingWall;
   if (pending) {
-    layer.appendChild(makeQuoridorWallBar(pending.orientation, pending.wr, pending.wc, "quoridor-wall-bar-preview"));
+    layer.appendChild(makeWallMazeWallBar(pending.orientation, pending.wr, pending.wc, "wallmaze-wall-bar-preview"));
   }
 }
 
-function makeQuoridorWallBar(orientation, wr, wc, extraClass) {
+function makeWallMazeWallBar(orientation, wr, wc, extraClass) {
   const bar = document.createElement("div");
-  bar.className = "quoridor-wall-bar " + extraClass;
-  const style = quoridorWallBarStyle(orientation, wr, wc);
+  bar.className = "wallmaze-wall-bar " + extraClass;
+  const style = wallmazeWallBarStyle(orientation, wr, wc);
   bar.style.left = style.left;
   bar.style.top = style.top;
   bar.style.width = style.width;
@@ -627,53 +627,53 @@ function makeQuoridorWallBar(orientation, wr, wc, extraClass) {
   return bar;
 }
 
-function updateScoreLineQuoridor() {
+function updateScoreLineWallMaze() {
   const container = document.getElementById("score-line");
   const wallsEl = document.getElementById("score-captures");
   if (!container || !wallsEl) return;
   container.classList.remove("hidden");
-  I18n.setMsg(wallsEl, "Walls left – Player 1: " + AppStateQuoridor.state.wallsRemaining.p1 +
-    " · Player 2: " + AppStateQuoridor.state.wallsRemaining.p2);
+  I18n.setMsg(wallsEl, "Walls left – Player 1: " + AppStateWallMaze.state.wallsRemaining.p1 +
+    " · Player 2: " + AppStateWallMaze.state.wallsRemaining.p2);
 }
 
-function updateGameLabelsQuoridor() {
+function updateGameLabelsWallMaze() {
   const meta = document.getElementById("game-meta");
-  if (meta) I18n.setMsg(meta, AppStateQuoridor.moveCount ? "Move " + AppStateQuoridor.moveCount : "");
-  updateUndoButtonVisibilityQuoridor();
-  updateResignVisibilityQuoridor();
-  updateQuoridorWallModeUI();
+  if (meta) I18n.setMsg(meta, AppStateWallMaze.moveCount ? "Move " + AppStateWallMaze.moveCount : "");
+  updateUndoButtonVisibilityWallMaze();
+  updateResignVisibilityWallMaze();
+  updateWallMazeWallModeUI();
 
-  if (AppStateQuoridor.gameOver) clearSavedQuoridorGame();
-  else saveQuoridorGame();
+  if (AppStateWallMaze.gameOver) clearSavedWallMazeGame();
+  else saveWallMazeGame();
 }
 
-function updateUndoButtonVisibilityQuoridor() {
+function updateUndoButtonVisibilityWallMaze() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
-  const hasUndo = (AppStateQuoridor.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateQuoridor.gameOver));
+  const hasUndo = (AppStateWallMaze.undoStack || []).length > 0;
+  btn.classList.toggle("hidden", !(hasUndo && !AppStateWallMaze.gameOver));
 }
 
-function updateResignVisibilityQuoridor() {
+function updateResignVisibilityWallMaze() {
   const resignBtn = document.getElementById("resign-button");
-  if (resignBtn) resignBtn.classList.toggle("hidden", AppStateQuoridor.gameOver);
+  if (resignBtn) resignBtn.classList.toggle("hidden", AppStateWallMaze.gameOver);
 }
 
-function updateQuoridorWallModeUI() {
-  const wallModeBtn = document.getElementById("quoridor-wall-mode-btn");
-  const orientationBtn = document.getElementById("quoridor-orientation-btn");
-  const confirmWallBtn = document.getElementById("quoridor-confirm-wall-btn");
+function updateWallMazeWallModeUI() {
+  const wallModeBtn = document.getElementById("wallmaze-wall-mode-btn");
+  const orientationBtn = document.getElementById("wallmaze-orientation-btn");
+  const confirmWallBtn = document.getElementById("wallmaze-confirm-wall-btn");
   if (!wallModeBtn || !orientationBtn || !confirmWallBtn) return;
 
-  const canAct = isHumanTurnQuoridor();
+  const canAct = isHumanTurnWallMaze();
   const t = window.I18n ? window.I18n.t : (key) => key;
-  wallModeBtn.classList.toggle("hidden", AppStateQuoridor.gameOver || (!canAct && !AppStateQuoridor.wallMode));
-  wallModeBtn.textContent = AppStateQuoridor.wallMode ? t("wallmaze_wall_mode_cancel") : t("wallmaze_wall_mode_start");
+  wallModeBtn.classList.toggle("hidden", AppStateWallMaze.gameOver || (!canAct && !AppStateWallMaze.wallMode));
+  wallModeBtn.textContent = AppStateWallMaze.wallMode ? t("wallmaze_wall_mode_cancel") : t("wallmaze_wall_mode_start");
 
-  orientationBtn.classList.toggle("hidden", !AppStateQuoridor.wallMode);
-  orientationBtn.textContent = AppStateQuoridor.wallOrientation === "h" ? t("wallmaze_wall_orientation_h") : t("wallmaze_wall_orientation_v");
+  orientationBtn.classList.toggle("hidden", !AppStateWallMaze.wallMode);
+  orientationBtn.textContent = AppStateWallMaze.wallOrientation === "h" ? t("wallmaze_wall_orientation_h") : t("wallmaze_wall_orientation_v");
 
-  confirmWallBtn.classList.toggle("hidden", !AppStateQuoridor.wallMode || !AppStateQuoridor.pendingWall);
+  confirmWallBtn.classList.toggle("hidden", !AppStateWallMaze.wallMode || !AppStateWallMaze.pendingWall);
 }
 
-document.addEventListener("DOMContentLoaded", initQuoridorApp);
+document.addEventListener("DOMContentLoaded", initWallMazeApp);

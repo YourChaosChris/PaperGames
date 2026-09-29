@@ -2254,7 +2254,7 @@ margin-top: 0.5rem;
 
 /* Fanorona board: 45 points in a 5x9 grid (wider than tall, unlike most
    boards here), so it uses the same percentage-based absolute-positioning
-   technique as Quoridor/Hex/Go rather than a plain float-grid, with a
+   technique as WallMaze/Hex/Go rather than a plain float-grid, with a
    JS-enforced non-square aspect ratio (see ensureFanoronaBoardAspect in
    fanorona-app.js). Connections are drawn as one non-interactive SVG
    layer UNDER the point buttons - simpler and more reliable across an
@@ -2927,11 +2927,11 @@ flex: 0 0 15%;
   color: var(--text);
 }
 
-/* Othello/Reversi board: reuses .square from the chess board (same
+/* Reversi board: reuses .square from the chess board (same
    float-grid technique) but, unlike checkers, every square looks the
-   same - a real Othello board is a uniform grid, not a checkered one. */
+   same - a real Reversi board is a uniform grid, not a checkered one. */
 
-#othello-board {
+#reversi-board {
   display: block;
   width: 100%;
   max-width: 760px;
@@ -2942,24 +2942,24 @@ flex: 0 0 15%;
   margin: 0 auto;
 }
 
-.othello-square {
+.reversi-square {
   background: var(--square-light);
   border: 1px solid var(--border);
 }
 
-.othello-square-movable {
+.reversi-square-movable {
   background: var(--square-dark);
 }
 
 /* Gesperrt heißt hier nur "kein legaler Zug", nicht "inaktiv": ohne
    das würden fast alle Steine halbtransparent und Schwarz sähe grau aus. */
-.othello-square:disabled,
+.reversi-square:disabled,
 .c4-square:disabled {
   cursor: default;
   opacity: 1;
 }
 
-.othello-piece {
+.reversi-piece {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -2971,19 +2971,19 @@ flex: 0 0 15%;
   pointer-events: none;
 }
 
-.othello-piece-black {
+.reversi-piece-black {
   background: #111;
   border: 2px solid #000;
 }
 
-.othello-piece-white {
+.reversi-piece-white {
   background: #fdfdfd;
   border: 2px solid var(--border);
 }
 
 /* Small disc icons for the color-choice picker and board placeholder,
    matching the board's own piece styling. */
-.othello-icon-disc {
+.reversi-icon-disc {
   display: inline-block;
   width: 1em;
   height: 1em;
@@ -2992,17 +2992,17 @@ flex: 0 0 15%;
   box-sizing: border-box;
 }
 
-.othello-icon-disc-black {
+.reversi-icon-disc-black {
   background: #111;
   border: 2px solid #000;
 }
 
-.othello-icon-disc-white {
+.reversi-icon-disc-white {
   background: #fdfdfd;
   border: 2px solid var(--border);
 }
 
-/* Connect Four board: same uniform-grid approach as Othello (a real
+/* Connect Four board: same uniform-grid approach as Reversi (a real
    Connect Four board isn't checkered either) - 6 rows x 7 columns,
    with the whole column clickable, not just the empty landing cell. */
 
@@ -4184,12 +4184,12 @@ margin-top: 0.6rem;
   font-weight: 700;
 }
 
-/* Lights Out board: a fixed 5x5 float-grid (same JS-enforced square cell
+/* Light Switch board: a fixed 5x5 float-grid (same JS-enforced square cell
    size technique as 2048/Minesweeper). Cells are told apart purely by a
    background fill - on (lit) is dark, off is light - never by color, so
    this reads fine on a monochrome E-Ink display. */
 
-#lightsout-board {
+#lightswitch-board {
   display: block;
   width: 100%;
   max-width: 360px;
@@ -4200,7 +4200,7 @@ margin-top: 0.6rem;
   margin: 0 auto;
 }
 
-.lightsout-cell {
+.lightswitch-cell {
   width: 20%;
   background: var(--square-light);
   border: 1px solid var(--border);
@@ -4209,7 +4209,7 @@ margin-top: 0.6rem;
   cursor: pointer;
 }
 
-.lightsout-cell-on {
+.lightswitch-cell-on {
   background: #141413;
 }
 
@@ -4891,14 +4891,14 @@ padding: 0.3rem;
   border: 2px solid var(--border);
 }
 
-/* Quoridor board: percentage-based absolute positioning (the same
+/* WallMaze board: percentage-based absolute positioning (the same
    technique as Go's line-and-point board), since walls need clickable
    targets between cells, not just on them - a plain 9x9 float-grid
    has nowhere to put those. Pawns are told apart structurally, not by
    color alone: Player 1 is a filled disc, Player 2 an outlined disc,
    the same convention used everywhere else in this app. */
 
-.quoridor-board {
+.wallmaze-board {
   position: relative;
   width: 100%;
   max-width: 460px;
@@ -4908,7 +4908,7 @@ padding: 0.3rem;
   box-sizing: border-box;
 }
 
-.quoridor-cell {
+.wallmaze-cell {
   position: absolute;
   box-sizing: border-box;
   border: 1px solid var(--border);
@@ -4917,15 +4917,15 @@ padding: 0.3rem;
   margin: 0;
 }
 
-.quoridor-cell-movable {
+.wallmaze-cell-movable {
   background: var(--square-dark);
 }
 
-.quoridor-cell.last-move {
+.wallmaze-cell.last-move {
   box-shadow: inset 0 0 0 2px var(--accent);
 }
 
-.quoridor-piece {
+.wallmaze-piece {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -4937,17 +4937,17 @@ padding: 0.3rem;
   pointer-events: none;
 }
 
-.quoridor-piece-p1 {
+.wallmaze-piece-p1 {
   background: #111;
   border: 2px solid #000;
 }
 
-.quoridor-piece-p2 {
+.wallmaze-piece-p2 {
   background: var(--square-light);
   border: 2px solid var(--border);
 }
 
-.quoridor-wall-layer {
+.wallmaze-wall-layer {
   position: absolute;
   top: 0;
   right: 0;
@@ -4963,8 +4963,8 @@ padding: 0.3rem;
    board into one forgiving target - rather than 64+ small, easily
    overlapping candidate buttons squeezed between cells - is what
    makes wall placement reliable to tap on a touchscreen; see
-   quoridor-app.js's onQuoridorBoardTap/selectNearestWallAtPoint. */
-.quoridor-wall-tap-catcher {
+   wallmaze-app.js's onWallMazeBoardTap/selectNearestWallAtPoint. */
+.wallmaze-wall-tap-catcher {
   position: absolute;
   top: 0;
   right: 0;
@@ -4974,29 +4974,29 @@ padding: 0.3rem;
   pointer-events: none;
 }
 
-.quoridor-wall-tap-catcher.active {
+.wallmaze-wall-tap-catcher.active {
   pointer-events: auto;
   cursor: crosshair;
   background: rgba(0, 0, 0, 0.03);
 }
 
-.quoridor-wall-bar {
+.wallmaze-wall-bar {
   position: absolute;
   box-sizing: border-box;
 }
 
-.quoridor-wall-bar-placed {
+.wallmaze-wall-bar-placed {
   background: var(--border);
 }
 
-.quoridor-wall-bar-preview {
+.wallmaze-wall-bar-preview {
   background: var(--accent);
   opacity: 0.55;
 }
 
 /* Small icons for the side-choice picker and board placeholder,
    matching the board's own piece styling. */
-.quoridor-icon-piece {
+.wallmaze-icon-piece {
   display: inline-flex;
   width: 1.2em;
   height: 1.2em;
@@ -5005,12 +5005,12 @@ padding: 0.3rem;
   vertical-align: middle;
 }
 
-.quoridor-icon-piece-p1 {
+.wallmaze-icon-piece-p1 {
   background: #111;
   border: 2px solid #000;
 }
 
-.quoridor-icon-piece-p2 {
+.wallmaze-icon-piece-p2 {
   background: var(--square-light);
   border: 2px solid var(--border);
 }
@@ -5560,7 +5560,7 @@ margin: 0.5rem auto 0;
 }
 
 /* Dots and Boxes board: percentage-based absolute positioning (the same
-   technique as Quoridor's board), since line segments need clickable
+   technique as WallMaze's board), since line segments need clickable
    targets BETWEEN dots, not just on them - a plain float-grid has
    nowhere to put those. A fixed 5x5 dot grid (4x4 boxes) throughout,
    not configurable, like every other board here. Completed boxes are
@@ -6565,7 +6565,7 @@ max-width: 900px;
 }
 
 /* Hashiwokakero (Bridges) board: islands scattered over a sparse grid
-   rather than a filled one, so - like Fanorona/Hex/Quoridor/Go - it's
+   rather than a filled one, so - like Fanorona/Hex/WallMaze/Go - it's
    rendered as absolutely-positioned circular island buttons over a
    single SVG line layer, with the container's height JS-enforced from
    its measured width each time it's built or the window resizes (CSS

@@ -1,9 +1,9 @@
 // dotsandboxes-app.js
 // Wires DotsAndBoxesCore/DotsAndBoxesAi to the dotsandboxes.html UI. Like
-// Quoridor's board, this needs clickable targets BETWEEN dots (the line
+// WallMaze's board, this needs clickable targets BETWEEN dots (the line
 // segments), not just on them, so it uses the same percentage-based
 // absolute positioning technique rather than a plain float-grid. Unlike
-// Quoridor's 2-cell-long walls, single-dot-to-dot lines don't overlap
+// WallMaze's 2-cell-long walls, single-dot-to-dot lines don't overlap
 // each other's candidates, so each of the 40 lines just gets its own
 // plain button - no tap-catcher/preview step needed.
 //
@@ -343,7 +343,7 @@ function showBoardSectionDotsAndBoxes() {
 }
 
 /*** Board rendering: percentage-based absolute positioning (the same
-     technique as Go's and Quoridor's boards), since line segments need
+     technique as Go's and WallMaze's boards), since line segments need
      clickable targets BETWEEN dots, not just on them. A fixed 5x5 dot
      grid (4x4 boxes) throughout - not configurable, like every other
      board here. ***/

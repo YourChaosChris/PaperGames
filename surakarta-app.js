@@ -393,7 +393,7 @@ function showBoardSectionSurakarta() {
 
 /*** Board geometry and rendering ***
  * Percentage-based absolute positioning (same technique as Fanorona's/
- * Go's/Quoridor's/Hex's boards): points sit on a UNIT-spaced 6x6 grid
+ * Go's/WallMaze's/Hex's boards): points sit on a UNIT-spaced 6x6 grid
  * with a PAD margin on every side, plus an extra EXT margin beyond that
  * where the 4 corner loop-track arcs curve - so the SVG viewBox has to
  * be a little larger than just the point grid itself. Because the board

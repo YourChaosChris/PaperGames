@@ -1,5 +1,5 @@
-// othello-core.js
-// Dependency-free rules engine for Reversi/Othello. Mirrors the
+// reversi-core.js
+// Dependency-free rules engine for Reversi. Mirrors the
 // separation of concerns in the other <game>-core.js modules: rules
 // only, no DOM/UI.
 //
@@ -12,7 +12,7 @@
 // entirely (there is no voluntary pass); if NEITHER player has a legal
 // move, the game ends and whoever holds more discs wins.
 
-const OthelloCore = (function () {
+const ReversiCore = (function () {
   const SIZE = 8;
   const DIRECTIONS = [
     [-1, -1], [-1, 0], [-1, 1],
@@ -112,8 +112,8 @@ const OthelloCore = (function () {
 })();
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = OthelloCore;
+  module.exports = ReversiCore;
 }
 if (typeof window !== "undefined") {
-  window.OthelloCore = OthelloCore;
+  window.ReversiCore = ReversiCore;
 }

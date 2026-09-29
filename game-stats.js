@@ -6,11 +6,11 @@
 
 const GameStats = (function () {
   const KEY = "einkchess_stats";
-  const GAMES = ["chess", "go", "checkers", "ur", "morris", "backgammon", "xiangqi", "mancala", "ludo", "othello", "connectfour", "gomoku", "senet", "shogi", "sudoku", "pegsolitaire", "minesweeper", "nonogram", "twenty48", "mahjong", "freecell", "onitama", "hnefatafl", "quoridor", "hex", "halma", "lightsout", "bullsandcows", "dotsandboxes", "amazons", "kakuro", "hashi", "skyscrapers", "slitherlink", "fanorona", "fleetbattle", "konane", "sternhalma", "baghchal", "tablut", "marblepush", "pyramidsolitaire", "surakarta", "domino", "maumau", "calcudoku", "numberblocks", "killersudoku", "schwimmen", "durak", "concan", "doppelkopf", "trix", "cratepusher"];
+  const GAMES = ["chess", "go", "checkers", "ur", "morris", "backgammon", "xiangqi", "mancala", "ludo", "reversi", "connectfour", "gomoku", "senet", "shogi", "sudoku", "pegsolitaire", "minesweeper", "nonogram", "twenty48", "mahjong", "freecell", "onitama", "hnefatafl", "wallmaze", "hex", "halma", "lightswitch", "bullsandcows", "dotsandboxes", "amazons", "kakuro", "hashi", "skyscrapers", "slitherlink", "fanorona", "fleetbattle", "konane", "sternhalma", "baghchal", "tablut", "marblepush", "pyramidsolitaire", "surakarta", "domino", "maumau", "calcudoku", "numberblocks", "killersudoku", "schwimmen", "durak", "concan", "doppelkopf", "trix", "cratepusher"];
 
   // Games renamed for trademark reasons: new name -> old name. Results
   // recorded under the old name are carried over once.
-  const RENAMED = { bullsandcows: "mastermind", marblepush: "abalone" };
+  const RENAMED = { bullsandcows: "mastermind", marblepush: "abalone", lightswitch: "lightsout", reversi: "othello", wallmaze: "quoridor" };
 
   function loadAll() {
     try {

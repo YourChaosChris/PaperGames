@@ -21,9 +21,9 @@ const ROOT = path.join(__dirname, "..");
 // Real pages only - excludes the Google Search Console verification
 // stub (a bare text file with an .html extension, not a document) and
 // the meta-refresh redirect stubs left at the pre-rename URLs for
-// Othello/Connect Four/Onitama/Quoridor (see the trademark-safe rename
+// renamed games (see the trademark-safe renames
 // in git history) - those intentionally have no <head>/scripts/i18n.
-const REDIRECT_STUB_PREFIXES = ["othello", "connectfour", "onitama", "quoridor", "mastermind", "abalone"];
+const REDIRECT_STUB_PREFIXES = ["othello", "connectfour", "onitama", "quoridor", "mastermind", "abalone", "lightsout"];
 const NON_DOCUMENT_FILES = new Set(["google5b539baba76c839b.html"]);
 
 function isRedirectStub(file) {
