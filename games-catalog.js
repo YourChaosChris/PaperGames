@@ -426,7 +426,7 @@ const GAMES_CATALOG = [
     nameKey: "game_marblepush",
     nameText: "Marble Push",
     descKey: "home_marblepush_desc",
-    descText: "Push 6 of your opponent's marbles off the hexagonal board to win. Local 2-player or vs. the built-in engine, with full sumito push and broadside move rules.",
+    descText: "Push 6 of your opponent's marbles off the hexagonal board to win. Local 2-player or vs. the built-in engine, with full rules for pushing and for sideways line moves.",
     popular: false,
     added: "2026-07-01",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><polygon points=\"50,6 87,28 87,72 50,94 13,72 13,28\" fill=\"none\" stroke=\"#000\" stroke-width=\"3\"/><circle cx=\"35\" cy=\"30\" r=\"9\" fill=\"#000\"/><circle cx=\"55\" cy=\"22\" r=\"9\" fill=\"#000\"/><circle cx=\"70\" cy=\"35\" r=\"9\" fill=\"#000\"/><circle cx=\"30\" cy=\"70\" r=\"9\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"50\" cy=\"78\" r=\"9\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"68\" cy=\"66\" r=\"9\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/></svg></span>"
