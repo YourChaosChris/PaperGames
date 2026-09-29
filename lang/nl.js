@@ -1329,6 +1329,8 @@ STRINGS.nl = {
     nav_privacy: "Privacybeleid",
     about_lichess_disclaimer: "De online schaakfunctie van PaperGames draait op de openbare API van lichess.org. PaperGames is een onafhankelijk project en is niet verbonden aan, onderschreven door, of beoordeeld door Lichess.",
     about_trademarks: "Op de geschiedenispagina's worden namen van commerciële spellen genoemd om de herkomst van een spelprincipe zakelijk te plaatsen. Sommige van deze namen zijn geregistreerde merken van hun respectieve houders. PaperGames heeft geen band met deze houders en wordt niet door hen gesteund, gesponsord of gecontroleerd. Alle spellen hier zijn zelfstandige uitwerkingen; er wordt geen materiaal uit commerciële uitgaven gebruikt.",
+    nikoli_trademark_heading: "Een opmerking over de namen",
+    nikoli_trademark_notice: "De namen 数独 (Sudoku), カックロ (Kakuro) en スリザーリンク (Slitherlink) zijn in Japan geregistreerde merken van uitgever Nikoli, en 橋をかけろ (Hashiwokakero) is de naam waaronder Nikoli die puzzel uitgeeft. PaperGames heeft geen band met Nikoli, wordt niet door Nikoli gesteund of gecontroleerd en gebruikt daarom in de Japanse versie andere namen. De puzzelsoorten zelf zijn vrij; elke puzzel hier wordt op het apparaat nieuw gemaakt.",
 
     game_yatzy: "Yatzy",
     home_yatzy_desc: "Het klassieke puntenspel met 5 dobbelstenen. Gooi tot drie keer per beurt, houd de dobbelstenen vast die je wilt bewaren, en vul alle 15 categorieën op het scoreformulier in voor de hoogste score.",

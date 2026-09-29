@@ -1329,6 +1329,8 @@ STRINGS.zh = {
     nav_privacy: "隐私政策",
     about_lichess_disclaimer: "PaperGames的在线国际象棋功能通过lichess.org的公开API运行。PaperGames是一个独立项目,与Lichess没有关联,也未获得Lichess的认可或审查。",
     about_trademarks: "历史页面会提到一些商业游戏的名称，以客观说明某种玩法的来源。其中一些名称是其各自所有者的注册商标。PaperGames 与这些所有者没有任何关联，也未获得他们的认可、赞助或审核。这里的所有游戏都是独立实现的，没有使用任何商业版本的素材。",
+    nikoli_trademark_heading: "关于名称的说明",
+    nikoli_trademark_notice: "数独（Sudoku）、カックロ（Kakuro）和スリザーリンク（Slitherlink）这些名称是出版社 Nikoli 在日本的注册商标，橋をかけろ（Hashiwokakero）则是 Nikoli 发表该谜题时使用的名称。PaperGames 与 Nikoli 没有任何关联，也未获得 Nikoli 的支持或审核，因此在日文版中使用其他名称。这些谜题类型本身是自由的；这里的每个谜题都在设备上重新生成。",
 
     game_yatzy: "快艇骰子",
     home_yatzy_desc: "经典的5骰计分游戏。每回合最多掷骰3次，留下想保留的骰子，填满记分表上全部15个项目，争取最高总分。",

@@ -1329,6 +1329,8 @@ STRINGS.fr = {
     nav_privacy: "Confidentialité",
     about_lichess_disclaimer: "La fonction d'échecs en ligne de PaperGames utilise l'API publique de lichess.org. PaperGames est un projet indépendant qui n'est ni affilié à Lichess, ni approuvé ou évalué par Lichess.",
     about_trademarks: "Les pages d'histoire citent des noms de jeux commerciaux pour situer objectivement l'origine d'un principe de jeu. Certains de ces noms sont des marques déposées de leurs titulaires respectifs. PaperGames n'a aucun lien avec ces titulaires et n'est ni soutenu, ni sponsorisé, ni vérifié par eux. Tous les jeux ici sont des réalisations indépendantes ; aucun matériel d'éditions commerciales n'est utilisé.",
+    nikoli_trademark_heading: "À propos des noms",
+    nikoli_trademark_notice: "Les noms 数独 (Sudoku), カックロ (Kakuro) et スリザーリンク (Slitherlink) sont des marques déposées de l'éditeur Nikoli au Japon, et 橋をかけろ (Hashiwokakero) est le nom sous lequel Nikoli publie ce casse-tête. PaperGames n'a aucun lien avec Nikoli, n'est ni soutenu ni vérifié par Nikoli et utilise donc d'autres noms dans sa version japonaise. Les types de casse-tête eux-mêmes sont libres ; chaque grille ici est générée à neuf sur l'appareil.",
 
     game_yatzy: "Yatzy",
     home_yatzy_desc: "Le classique jeu de dés à 5 dés. Lancez jusqu'à trois fois par tour, conservez les dés que vous voulez garder, et remplissez les 15 catégories de la feuille de score pour obtenir le meilleur total.",

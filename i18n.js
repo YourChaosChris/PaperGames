@@ -776,6 +776,8 @@ const STRINGS = {
     privacy_complaint_body: "You have the right to lodge a complaint with a data protection supervisory authority regarding our processing of your personal data. The competent authority is: Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen (LDI NRW), Kavalleriestraße 2–4, 40213 Düsseldorf, Germany, poststelle@ldi.nrw.de, https://www.ldi.nrw.de.",
     about_lichess_disclaimer: "PaperGames's online chess feature runs on lichess.org's public API. PaperGames is an independent project and is not affiliated with, endorsed by, or reviewed by Lichess.",
     about_trademarks: "The history pages mention names of commercial games to place the origin of a game principle in context. Some of these names are registered trademarks of their respective owners. PaperGames is not affiliated with these owners and is not endorsed, sponsored or reviewed by them. All games here are independent implementations; no material from commercial editions is used.",
+    nikoli_trademark_heading: "A Note on the Names",
+    nikoli_trademark_notice: "The names 数独 (Sudoku), カックロ (Kakuro) and スリザーリンク (Slitherlink) are registered trademarks of the publisher Nikoli in Japan, and 橋をかけろ (Hashiwokakero) is the name under which Nikoli publishes that puzzle. PaperGames is not affiliated with Nikoli, is not endorsed or reviewed by Nikoli, and therefore uses other names in its Japanese version. The puzzle types themselves are free; every puzzle here is generated fresh on the device.",
     about_back: "← Back to the board",
 
     stats_title: "Your Stats",

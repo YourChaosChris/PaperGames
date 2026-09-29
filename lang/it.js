@@ -1329,6 +1329,8 @@ STRINGS.it = {
     nav_privacy: "Privacy",
     about_lichess_disclaimer: "La funzione di scacchi online di PaperGames si basa sull'API pubblica di lichess.org. PaperGames è un progetto indipendente e non è affiliato, sostenuto o recensito da Lichess.",
     about_trademarks: "Le pagine di storia citano nomi di giochi commerciali per inquadrare in modo oggettivo l'origine di un principio di gioco. Alcuni di questi nomi sono marchi registrati dei rispettivi titolari. PaperGames non ha alcun legame con questi titolari e non è sostenuto, sponsorizzato né verificato da loro. Tutti i giochi qui sono realizzazioni indipendenti; non viene usato materiale di edizioni commerciali.",
+    nikoli_trademark_heading: "Una nota sui nomi",
+    nikoli_trademark_notice: "I nomi 数独 (Sudoku), カックロ (Kakuro) e スリザーリンク (Slitherlink) sono marchi registrati dell'editore Nikoli in Giappone, e 橋をかけろ (Hashiwokakero) è il nome con cui Nikoli pubblica quel rompicapo. PaperGames non ha alcun legame con Nikoli, non è sostenuto né verificato da Nikoli e usa quindi altri nomi nella versione giapponese. I tipi di rompicapo in sé sono liberi; ogni rompicapo qui viene generato da capo sul dispositivo.",
 
     game_yatzy: "Yatzy",
     home_yatzy_desc: "Il classico gioco di punteggio con 5 dadi. Tira fino a tre volte per turno, tieni da parte i dadi che vuoi conservare e completa tutte le 15 categorie della scheda punti per ottenere il totale più alto.",

@@ -772,6 +772,8 @@ STRINGS.de = {
     privacy_complaint_body: "Sie haben das Recht, sich bei einer Datenschutzaufsichtsbehörde über die Verarbeitung Ihrer personenbezogenen Daten zu beschweren. Zuständig ist: Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen (LDI NRW), Kavalleriestraße 2–4, 40213 Düsseldorf, poststelle@ldi.nrw.de, https://www.ldi.nrw.de.",
     about_lichess_disclaimer: "Die Online-Schachfunktion von PaperGames läuft über die öffentliche API von lichess.org. PaperGames ist ein unabhängiges Projekt und steht in keiner Verbindung zu Lichess; es wird nicht von Lichess unterstützt, gesponsert oder geprüft.",
     about_trademarks: "Auf den Geschichtsseiten werden Namen kommerzieller Spiele genannt, um die Herkunft eines Spielprinzips sachlich einzuordnen. Diese Namen sind teilweise eingetragene Marken ihrer jeweiligen Inhaber. PaperGames steht in keiner Verbindung zu diesen Inhabern und wird von ihnen weder unterstützt noch gesponsert oder geprüft. Alle Spiele hier sind eigenständige Umsetzungen; es wird kein Material aus kommerziellen Ausgaben verwendet.",
+    nikoli_trademark_heading: "Ein Hinweis zu den Namen",
+    nikoli_trademark_notice: "Die Namen 数独 (Sudoku), カックロ (Kakuro) und スリザーリンク (Slitherlink) sind in Japan eingetragene Marken des Verlags Nikoli, und 橋をかけろ (Hashiwokakero) ist der Name, unter dem Nikoli dieses Rätsel veröffentlicht. PaperGames steht in keiner Verbindung zu Nikoli, wird von Nikoli nicht unterstützt oder geprüft und verwendet in der japanischen Fassung deshalb andere Namen. Die Rätselarten selbst sind frei; jedes Rätsel hier wird auf dem Gerät neu erzeugt.",
     about_back: "← Zurück zum Brett",
 
     stats_title: "Deine Statistik",
