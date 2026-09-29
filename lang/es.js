@@ -1329,6 +1329,8 @@ STRINGS.es = {
     nav_privacy: "Privacidad",
     about_lichess_disclaimer: "La función de ajedrez en línea de PaperGames funciona a través de la API pública de lichess.org. PaperGames es un proyecto independiente y no está afiliado, respaldado ni revisado por Lichess.",
     about_trademarks: "Las páginas de historia mencionan nombres de juegos comerciales para situar de forma objetiva el origen de un principio de juego. Algunos de estos nombres son marcas registradas de sus respectivos titulares. PaperGames no tiene relación con estos titulares y no está respaldado, patrocinado ni revisado por ellos. Todos los juegos aquí son implementaciones independientes; no se usa material de ediciones comerciales.",
+    nikoli_trademark_heading: "Una nota sobre los nombres",
+    nikoli_trademark_notice: "Los nombres 数独 (Sudoku), カックロ (Kakuro) y スリザーリンク (Slitherlink) son marcas registradas de la editorial Nikoli en Japón, y 橋をかけろ (Hashiwokakero) es el nombre con el que Nikoli publica ese pasatiempo. PaperGames no tiene relación con Nikoli, no está respaldado ni revisado por Nikoli y por eso usa otros nombres en su versión japonesa. Los tipos de pasatiempo en sí son libres; cada puzle se genera de nuevo en el dispositivo.",
 
     game_yatzy: "Yatzy",
     home_yatzy_desc: "El clásico juego de puntuación con 5 dados. Tira hasta tres veces por turno, conserva los dados que quieras guardar y completa las 15 categorías de la hoja de puntuación para conseguir el total más alto.",
