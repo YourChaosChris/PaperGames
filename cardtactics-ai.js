@@ -1,5 +1,5 @@
-// onitama-ai.js
-// Offline opponent for the Onitama-style duel, mirroring xiangqi-ai.js's
+// cardtactics-ai.js
+// Offline opponent for the Card Tactics duel, mirroring xiangqi-ai.js's
 // structure:
 //   1 = easy   - random legal move
 //   2 = medium - 1-ply material/positional evaluation with light randomness
@@ -9,7 +9,7 @@
 //                safety net across very different devices - the same
 //                lesson learned tuning the Reversi AI)
 
-const OnitamaAi = (function () {
+const CardTacticsAi = (function () {
   const INF = 1e9;
   const PAWN_VALUE = 100;
   const KING_VALUE = 100000;
@@ -29,10 +29,10 @@ const OnitamaAi = (function () {
       if (state.winner === color) return INF / 2;
       if (state.winner) return -INF / 2;
     }
-    const opp = OnitamaCore.otherPlayer(color);
+    const opp = CardTacticsCore.otherPlayer(color);
     let score = 0;
-    for (let r = 0; r < OnitamaCore.SIZE; r++) {
-      for (let c = 0; c < OnitamaCore.SIZE; c++) {
+    for (let r = 0; r < CardTacticsCore.SIZE; r++) {
+      for (let c = 0; c < CardTacticsCore.SIZE; c++) {
         const piece = state.board[r][c];
         if (!piece) continue;
         const sign = piece.color === color ? 1 : -1;
@@ -46,7 +46,7 @@ const OnitamaAi = (function () {
     [color, opp].forEach((who) => {
       const king = findKing(state, who);
       if (!king) return;
-      const [sr, sc] = OnitamaCore.shrineFor(who);
+      const [sr, sc] = CardTacticsCore.shrineFor(who);
       const dist = Math.abs(king[0] - sr) + Math.abs(king[1] - sc);
       const sign = who === color ? 1 : -1;
       score += sign * (8 - dist) * 3;
@@ -55,8 +55,8 @@ const OnitamaAi = (function () {
   }
 
   function findKing(state, color) {
-    for (let r = 0; r < OnitamaCore.SIZE; r++) {
-      for (let c = 0; c < OnitamaCore.SIZE; c++) {
+    for (let r = 0; r < CardTacticsCore.SIZE; r++) {
+      for (let c = 0; c < CardTacticsCore.SIZE; c++) {
         const piece = state.board[r][c];
         if (piece && piece.color === color && piece.king) return [r, c];
       }
@@ -88,7 +88,7 @@ const OnitamaAi = (function () {
         : (state.winner === perspective ? INF / 2 : -INF / 2);
     }
 
-    const moves = OnitamaCore.getLegalMoves(state, colorToMove);
+    const moves = CardTacticsCore.getLegalMoves(state, colorToMove);
     if (!moves.length) {
       return colorToMove === perspective ? -INF / 2 : INF / 2;
     }
@@ -101,8 +101,8 @@ const OnitamaAi = (function () {
     let best = isMaximizing ? -INF : INF;
 
     for (const m of ordered) {
-      const next = OnitamaCore.applyMove(state, colorToMove, m);
-      const score = minimax(next, OnitamaCore.otherPlayer(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState);
+      const next = CardTacticsCore.applyMove(state, colorToMove, m);
+      const score = minimax(next, CardTacticsCore.otherPlayer(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState);
       if (searchState && searchState.aborted) return best;
       if (isMaximizing) {
         if (score > best) best = score;
@@ -122,7 +122,7 @@ const OnitamaAi = (function () {
 
     const rootScored = ordered.map((m) => ({
       move: m,
-      score: evaluateFor(color, OnitamaCore.applyMove(state, color, m)) + (Math.random() - 0.5) * 2
+      score: evaluateFor(color, CardTacticsCore.applyMove(state, color, m)) + (Math.random() - 0.5) * 2
     }));
     rootScored.sort((a, b) => b.score - a.score);
     ordered = rootScored.map((e) => e.move);
@@ -136,8 +136,8 @@ const OnitamaAi = (function () {
       let depthAborted = false;
 
       for (const m of ordered) {
-        const next = OnitamaCore.applyMove(state, color, m);
-        const score = minimax(next, OnitamaCore.otherPlayer(color), 1, depth, alpha, INF, color, searchState);
+        const next = CardTacticsCore.applyMove(state, color, m);
+        const score = minimax(next, CardTacticsCore.otherPlayer(color), 1, depth, alpha, INF, color, searchState);
         if (searchState.aborted) {
           depthAborted = true;
           break;
@@ -165,7 +165,7 @@ const OnitamaAi = (function () {
   };
 
   function chooseMove(state, color, level) {
-    const moves = OnitamaCore.getLegalMoves(state, color);
+    const moves = CardTacticsCore.getLegalMoves(state, color);
     if (!moves.length) return null;
 
     if (typeof level !== "number" || level < 1) level = 1;
@@ -178,7 +178,7 @@ const OnitamaAi = (function () {
     if (config.style === "greedy") {
       const scored = moves.map((m) => ({
         move: m,
-        score: evaluateFor(color, OnitamaCore.applyMove(state, color, m))
+        score: evaluateFor(color, CardTacticsCore.applyMove(state, color, m))
       }));
       scored.sort((a, b) => b.score - a.score);
       const topN = Math.min(config.topN, scored.length);
@@ -192,8 +192,8 @@ const OnitamaAi = (function () {
 })();
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = OnitamaAi;
+  module.exports = CardTacticsAi;
 }
 if (typeof window !== "undefined") {
-  window.OnitamaAi = OnitamaAi;
+  window.CardTacticsAi = CardTacticsAi;
 }

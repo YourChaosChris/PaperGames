@@ -1,6 +1,6 @@
 // hnefatafl-ai.js
 // Offline opponent for Hnefatafl, mirroring the structure used for the
-// other asymmetric-goal games here (Xiangqi, Onitama):
+// other asymmetric-goal games here (Xiangqi, Card Tactics):
 //   1 = easy   - random legal move
 //   2 = medium - 1-ply material/positional evaluation with light
 //                randomness

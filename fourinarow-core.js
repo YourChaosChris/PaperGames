@@ -1,4 +1,4 @@
-// connectfour-core.js
+// fourinarow-core.js
 // Dependency-free rules engine for Connect Four. Mirrors the separation
 // of concerns in the other <game>-core.js modules: rules only, no
 // DOM/UI.
@@ -9,7 +9,7 @@
 // (highest row index) empty cell in that column, exactly like the
 // physical game. Black always moves first.
 
-const ConnectFourCore = (function () {
+const FourInARowCore = (function () {
   const ROWS = 6;
   const COLS = 7;
   const WIN_LENGTH = 4;
@@ -92,8 +92,8 @@ const ConnectFourCore = (function () {
 })();
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = ConnectFourCore;
+  module.exports = FourInARowCore;
 }
 if (typeof window !== "undefined") {
-  window.ConnectFourCore = ConnectFourCore;
+  window.FourInARowCore = FourInARowCore;
 }

@@ -3006,7 +3006,7 @@ flex: 0 0 15%;
    Connect Four board isn't checkered either) - 6 rows x 7 columns,
    with the whole column clickable, not just the empty landing cell. */
 
-#connectfour-board {
+#fourinarow-board {
   display: block;
   width: 100%;
   max-width: 760px;
@@ -4586,14 +4586,14 @@ max-width: 900px;
   font-weight: 700;
 }
 
-/* Onitama board: a 5x5 float-grid (same technique as chess/checkers -
+/* Card Tactics board: a 5x5 float-grid (same technique as chess/checkers -
    note the explicit width override below, since the shared .square
    base class hardcodes 12.5% for an 8-column board). Sides are told
    apart structurally, not by color alone: Blue is a filled disc, Red
    is an outlined disc, and either side's master gets its own ring
    marker on top - the same convention used for checkers kings. */
 
-#onitama-board {
+#cardtactics-board {
   display: block;
   width: 100%;
   max-width: 460px;
@@ -4604,17 +4604,17 @@ max-width: 900px;
   margin: 0 auto;
 }
 
-.onitama-square {
+.cardtactics-square {
   width: calc(100% / 5);
   background: var(--square-light);
   border: 1px solid var(--border);
 }
 
-.onitama-square-movable {
+.cardtactics-square-movable {
   background: var(--square-dark);
 }
 
-.onitama-square-shrine::before {
+.cardtactics-square-shrine::before {
   content: "";
   position: absolute;
   top: 8%;
@@ -4626,7 +4626,7 @@ max-width: 900px;
   pointer-events: none;
 }
 
-.onitama-piece {
+.cardtactics-piece {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -4638,17 +4638,17 @@ max-width: 900px;
   pointer-events: none;
 }
 
-.onitama-piece-blue {
+.cardtactics-piece-blue {
   background: #111;
   border: 2px solid #000;
 }
 
-.onitama-piece-red {
+.cardtactics-piece-red {
   background: var(--square-light);
   border: 2px solid var(--border);
 }
 
-.onitama-piece-king::after {
+.cardtactics-piece-king::after {
   content: "";
   position: absolute;
   top: 25%;
@@ -4659,17 +4659,17 @@ max-width: 900px;
   box-sizing: border-box;
 }
 
-.onitama-piece-blue.onitama-piece-king::after {
+.cardtactics-piece-blue.cardtactics-piece-king::after {
   border: 2px solid #fff;
 }
 
-.onitama-piece-red.onitama-piece-king::after {
+.cardtactics-piece-red.cardtactics-piece-king::after {
   border: 2px solid var(--border);
 }
 
 /* Small icons for the color-choice picker and board placeholder,
    matching the board's own piece styling. */
-.onitama-icon-piece {
+.cardtactics-icon-piece {
   display: inline-flex;
   width: 1.2em;
   height: 1.2em;
@@ -4678,12 +4678,12 @@ max-width: 900px;
   vertical-align: middle;
 }
 
-.onitama-icon-piece-blue {
+.cardtactics-icon-piece-blue {
   background: #111;
   border: 2px solid #000;
 }
 
-.onitama-icon-piece-red {
+.cardtactics-icon-piece-red {
   background: var(--square-light);
   border: 2px solid var(--border);
 }
@@ -4693,7 +4693,7 @@ max-width: 900px;
    a name and a tiny 5x5 dot-diagram of that card's actual move
    offsets, so a player can read a card's moves without memorizing
    names. */
-.onitama-cards-row {
+.cardtactics-cards-row {
   display: flex;
   justify-content: center;
 margin: 0 auto 0.4rem;
@@ -4706,7 +4706,7 @@ margin: 0 auto 0.4rem;
    a name and a tiny 5x5 dot-diagram of that card's actual move
    offsets > *, so a player can read a card's moves without memorizing
    names. */
-.onitama-cards-row > * {
+.cardtactics-cards-row > * {
   margin: 0 0.6rem 0.6rem 0;
 }
 
@@ -4715,12 +4715,12 @@ margin: 0 auto 0.4rem;
    a name and a tiny 5x5 dot-diagram of that card's actual move
    offsets > *:last-child, so a player can read a card's moves without memorizing
    names. */
-.onitama-cards-row > *:last-child {
+.cardtactics-cards-row > *:last-child {
   margin-right: 0;
 }
 
 
-.onitama-neutral-row {
+.cardtactics-neutral-row {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4731,16 +4731,16 @@ margin: 0.4rem auto 0;
 }
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
-.onitama-neutral-row > * {
+.cardtactics-neutral-row > * {
   margin: 0 0.5rem 0.5rem 0;
 }
 
-.onitama-neutral-row > *:last-child {
+.cardtactics-neutral-row > *:last-child {
   margin-right: 0;
 }
 
 
-.onitama-card {
+.cardtactics-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -4753,28 +4753,28 @@ padding: 0.3rem;
 }
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
-.onitama-card > * {
+.cardtactics-card > * {
   margin: 0 0.2rem 0.2rem 0;
 }
 
-.onitama-card > *:last-child {
+.cardtactics-card > *:last-child {
   margin-right: 0;
 }
 
 
-.onitama-card-selected {
+.cardtactics-card-selected {
   outline: 3px solid var(--border);
   outline-offset: -2px;
   background: var(--square-dark);
 }
 
-.onitama-card-name {
+.cardtactics-card-name {
   font-weight: 700;
   font-size: 0.7rem;
   font-size: clamp(0.6rem, 2.2vw, 0.8rem);
 }
 
-.onitama-card-diagram {
+.cardtactics-card-diagram {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
@@ -4784,15 +4784,15 @@ padding: 0.3rem;
   background: var(--border);
 }
 
-.onitama-card-cell {
+.cardtactics-card-cell {
   background: var(--square-light);
 }
 
-.onitama-card-cell-center {
+.cardtactics-card-cell-center {
   background: var(--muted);
 }
 
-.onitama-card-cell-move {
+.cardtactics-card-cell-move {
   background: #111;
 }
 

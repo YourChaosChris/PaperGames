@@ -66,7 +66,7 @@ const GAMES_CATALOG = [
     descText: "A fast, elegant duel decided by five shifting move cards.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"onitama-icon-piece onitama-icon-piece-blue\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"cardtactics-icon-piece cardtactics-icon-piece-blue\" aria-hidden=\"true\"></span>"
   },
   {
     slug: "hnefatafl",

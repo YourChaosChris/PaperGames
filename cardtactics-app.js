@@ -1,5 +1,5 @@
-// onitama-app.js
-// Wires OnitamaCore/OnitamaAi to the onitama.html UI. The board is a
+// cardtactics-app.js
+// Wires CardTacticsCore/CardTacticsAi to the cardtactics.html UI. The board is a
 // 5x5 float-grid (same technique as chess/checkers, with the width
 // override the Connect Four lesson calls for whenever a board isn't 8
 // columns wide). Pieces are told apart by fill (Blue solid, Red
@@ -14,11 +14,11 @@
 // hand in its place - shown directly by redrawing all three card rows
 // after every move rather than animating the exchange.
 
-const ONITAMA_KANJI = {}; // reserved, not currently used - cards render as small move-diagrams instead of text
+const CARDTACTICS_KANJI = {}; // reserved, not currently used - cards render as small move-diagrams instead of text
 
-const AppStateOnitama = {
+const AppStateCardTactics = {
   mode: "offline",        // "offline" | "offline-ai"
-  state: OnitamaCore.createInitialState(),
+  state: CardTacticsCore.createInitialState(),
   turn: "blue",           // "blue" | "red" - Blue always moves first
   humanColor: "blue",
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
@@ -31,41 +31,41 @@ const AppStateOnitama = {
   undoStack: []
 };
 
-const ONITAMA_SAVE_KEY = "einkchess_save_onitama";
+const CARDTACTICS_SAVE_KEY = "einkchess_save_cardtactics";
 
-function saveOnitamaGame() {
+function saveCardTacticsGame() {
   if (typeof GameStorage === "undefined") return;
-  GameStorage.save(ONITAMA_SAVE_KEY, {
-    mode: AppStateOnitama.mode,
-    state: AppStateOnitama.state,
-    turn: AppStateOnitama.turn,
-    humanColor: AppStateOnitama.humanColor,
-    aiLevel: AppStateOnitama.aiLevel,
-    moveCount: AppStateOnitama.moveCount
+  GameStorage.save(CARDTACTICS_SAVE_KEY, {
+    mode: AppStateCardTactics.mode,
+    state: AppStateCardTactics.state,
+    turn: AppStateCardTactics.turn,
+    humanColor: AppStateCardTactics.humanColor,
+    aiLevel: AppStateCardTactics.aiLevel,
+    moveCount: AppStateCardTactics.moveCount
   });
 }
 
-function clearSavedOnitamaGame() {
+function clearSavedCardTacticsGame() {
   if (typeof GameStorage === "undefined") return;
-  GameStorage.clear(ONITAMA_SAVE_KEY);
+  GameStorage.clear(CARDTACTICS_SAVE_KEY);
 }
 
-function recordOnitamaStatsIfVsAi(outcome) {
+function recordCardTacticsStatsIfVsAi(outcome) {
   if (typeof GameStats === "undefined") return;
-  if (AppStateOnitama.mode !== "offline-ai") return;
-  GameStats.record("onitama", outcome);
+  if (AppStateCardTactics.mode !== "offline-ai") return;
+  GameStats.record("cardtactics", outcome);
 }
 
-function colorNameOnitama(color) {
+function colorNameCardTactics(color) {
   return color === "blue" ? "Blue" : "Red";
 }
 
-function setStatusOnitama(elementId, text) {
+function setStatusCardTactics(elementId, text) {
   const el = document.getElementById(elementId);
   if (el) I18n.setMsg(el, text || "");
 }
 
-function setGameResultOnitama(text) {
+function setGameResultCardTactics(text) {
   const el = document.getElementById("game-result");
   if (el) I18n.setMsg(el, text || "");
   if (!text && window.ResultModal) {
@@ -73,53 +73,53 @@ function setGameResultOnitama(text) {
   }
 }
 
-function resultTitleOnitama(winner) {
-  if (AppStateOnitama.mode === "offline-ai") {
-    return winner === AppStateOnitama.humanColor ? "You win!" : "You lose";
+function resultTitleCardTactics(winner) {
+  if (AppStateCardTactics.mode === "offline-ai") {
+    return winner === AppStateCardTactics.humanColor ? "You win!" : "You lose";
   }
-  return colorNameOnitama(winner) + " wins";
+  return colorNameCardTactics(winner) + " wins";
 }
 
-function announceGameResultOnitama(resultCode, message) {
-  setGameResultOnitama(message);
-  setStatusOnitama("board-info", message);
+function announceGameResultCardTactics(resultCode, message) {
+  setGameResultCardTactics(message);
+  setStatusCardTactics("board-info", message);
   if (window.ResultModal) {
     window.ResultModal.show(resultCode, message);
   }
 }
 
-function resetUndoStackOnitama() {
-  AppStateOnitama.undoStack = [];
+function resetUndoStackCardTactics() {
+  AppStateCardTactics.undoStack = [];
 }
 
-function pushUndoSnapshotOnitama() {
-  AppStateOnitama.undoStack.push({
-    state: OnitamaCore.cloneState(AppStateOnitama.state),
-    turn: AppStateOnitama.turn,
-    gameOver: AppStateOnitama.gameOver,
-    moveCount: AppStateOnitama.moveCount,
-    lastMove: AppStateOnitama.lastMove
+function pushUndoSnapshotCardTactics() {
+  AppStateCardTactics.undoStack.push({
+    state: CardTacticsCore.cloneState(AppStateCardTactics.state),
+    turn: AppStateCardTactics.turn,
+    gameOver: AppStateCardTactics.gameOver,
+    moveCount: AppStateCardTactics.moveCount,
+    lastMove: AppStateCardTactics.lastMove
   });
 }
 
-function initOnitamaApp() {
+function initCardTacticsApp() {
   if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
   const modeOfflineAi = document.getElementById("mode-offline-ai");
   const offlineAiControls = document.getElementById("offline-ai-controls");
-  const colorChoice = document.getElementById("onitama-color-choice");
-  const levelInline = document.getElementById("onitama-level-inline");
-  const startGameBtn = document.getElementById("start-onitama-game");
+  const colorChoice = document.getElementById("cardtactics-color-choice");
+  const levelInline = document.getElementById("cardtactics-level-inline");
+  const startGameBtn = document.getElementById("start-cardtactics-game");
   const resignBtn = document.getElementById("resign-button");
 
-  function updateColorChoiceVisibilityOnitama() {
+  function updateColorChoiceVisibilityCardTactics() {
     if (!colorChoice || !levelInline) return;
     colorChoice.classList.toggle("hidden", levelInline.value === "0");
   }
 
-  function setActiveModeButtonOnitama(mode) {
+  function setActiveModeButtonCardTactics(mode) {
     if (!modeOffline || !modeOfflineAi) return;
     modeOffline.classList.toggle("active-mode", mode === "offline");
     modeOfflineAi.classList.toggle("active-mode", mode === "offline-ai");
@@ -144,111 +144,111 @@ function initOnitamaApp() {
     });
   }
 
-  function startNewGameOnitama(mode, humanColor, level) {
-    AppStateOnitama.mode = mode;
-    AppStateOnitama.state = OnitamaCore.createInitialState();
-    AppStateOnitama.turn = "blue";
-    AppStateOnitama.humanColor = humanColor;
-    AppStateOnitama.aiLevel = level;
-    AppStateOnitama.gameOver = false;
-    AppStateOnitama.selectedCard = null;
-    AppStateOnitama.selectedPiece = null;
-    AppStateOnitama.legalTargets = {};
-    AppStateOnitama.moveCount = 0;
-    AppStateOnitama.lastMove = null;
-    resetUndoStackOnitama();
-    setGameResultOnitama("");
-    showBoardSectionOnitama();
-    buildOnitamaBoardDOM();
-    updateOnitamaBoard();
-    updateOnitamaCards();
-    updateGameLabelsOnitama();
+  function startNewGameCardTactics(mode, humanColor, level) {
+    AppStateCardTactics.mode = mode;
+    AppStateCardTactics.state = CardTacticsCore.createInitialState();
+    AppStateCardTactics.turn = "blue";
+    AppStateCardTactics.humanColor = humanColor;
+    AppStateCardTactics.aiLevel = level;
+    AppStateCardTactics.gameOver = false;
+    AppStateCardTactics.selectedCard = null;
+    AppStateCardTactics.selectedPiece = null;
+    AppStateCardTactics.legalTargets = {};
+    AppStateCardTactics.moveCount = 0;
+    AppStateCardTactics.lastMove = null;
+    resetUndoStackCardTactics();
+    setGameResultCardTactics("");
+    showBoardSectionCardTactics();
+    buildCardTacticsBoardDOM();
+    updateCardTacticsBoard();
+    updateCardTacticsCards();
+    updateGameLabelsCardTactics();
 
     if (mode === "offline-ai" && humanColor !== "blue") {
-      setStatusOnitama("board-info", "Computer thinking…");
-      setTimeout(aiTurnOnitama, AiPacing.delay(300));
+      setStatusCardTactics("board-info", "Computer thinking…");
+      setTimeout(aiTurnCardTactics, AiPacing.delay(300));
     } else {
-      setStatusOnitama("board-info", colorNameOnitama(AppStateOnitama.turn) + " to move. Choose a card.");
+      setStatusCardTactics("board-info", colorNameCardTactics(AppStateCardTactics.turn) + " to move. Choose a card.");
     }
   }
 
   modeOffline.addEventListener("click", () => {
-    setActiveModeButtonOnitama("offline");
+    setActiveModeButtonCardTactics("offline");
     offlineAiControls.classList.add("hidden");
-    startNewGameOnitama("offline", "blue", 0);
+    startNewGameCardTactics("offline", "blue", 0);
   });
 
   modeOfflineAi.addEventListener("click", () => {
-    setActiveModeButtonOnitama("offline-ai");
+    setActiveModeButtonCardTactics("offline-ai");
     offlineAiControls.classList.remove("hidden");
-    if (levelInline) levelInline.value = String(AppStateOnitama.aiLevel || 2);
-    updateColorChoiceVisibilityOnitama();
-    setStatusOnitama("board-info", "");
+    if (levelInline) levelInline.value = String(AppStateCardTactics.aiLevel || 2);
+    updateColorChoiceVisibilityCardTactics();
+    setStatusCardTactics("board-info", "");
   });
 
   if (levelInline) {
-    levelInline.addEventListener("change", updateColorChoiceVisibilityOnitama);
+    levelInline.addEventListener("change", updateColorChoiceVisibilityCardTactics);
   }
 
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
-    const colorInput = document.querySelector("input[name='onitama-color']:checked");
+    const colorInput = document.querySelector("input[name='cardtactics-color']:checked");
     const humanColor = colorInput && colorInput.value === "red" ? "red" : "blue";
 
     if (level === 0) {
-      setActiveModeButtonOnitama("offline-ai");
-      startNewGameOnitama("offline", "blue", 0);
-      setStatusOnitama("offline-onitama-status", "Local 2-player game (no computer).");
+      setActiveModeButtonCardTactics("offline-ai");
+      startNewGameCardTactics("offline", "blue", 0);
+      setStatusCardTactics("offline-cardtactics-status", "Local 2-player game (no computer).");
       return;
     }
 
-    setActiveModeButtonOnitama("offline-ai");
-    startNewGameOnitama("offline-ai", humanColor, level);
+    setActiveModeButtonCardTactics("offline-ai");
+    startNewGameCardTactics("offline-ai", humanColor, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
-    setStatusOnitama("offline-onitama-status",
-      "You play " + colorNameOnitama(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
+    setStatusCardTactics("offline-cardtactics-status",
+      "You play " + colorNameCardTactics(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
   });
 
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
-      if (AppStateOnitama.gameOver) return;
-      const loser = AppStateOnitama.turn;
-      const winner = OnitamaCore.otherPlayer(loser);
-      AppStateOnitama.gameOver = true;
-      announceGameResultOnitama(resultTitleOnitama(winner), colorNameOnitama(winner) + " wins by resignation.");
-      recordOnitamaStatsIfVsAi("loss");
-      updateGameLabelsOnitama();
+      if (AppStateCardTactics.gameOver) return;
+      const loser = AppStateCardTactics.turn;
+      const winner = CardTacticsCore.otherPlayer(loser);
+      AppStateCardTactics.gameOver = true;
+      announceGameResultCardTactics(resultTitleCardTactics(winner), colorNameCardTactics(winner) + " wins by resignation.");
+      recordCardTacticsStatsIfVsAi("loss");
+      updateGameLabelsCardTactics();
     });
   }
 
-  updateColorChoiceVisibilityOnitama();
+  updateColorChoiceVisibilityCardTactics();
 
-  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(ONITAMA_SAVE_KEY) : null;
+  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(CARDTACTICS_SAVE_KEY) : null;
   if (savedGame && savedGame.state) {
-    AppStateOnitama.mode = savedGame.mode;
-    AppStateOnitama.state = savedGame.state;
-    AppStateOnitama.turn = savedGame.turn;
-    AppStateOnitama.humanColor = savedGame.humanColor;
-    AppStateOnitama.aiLevel = savedGame.aiLevel;
-    AppStateOnitama.moveCount = savedGame.moveCount;
-    AppStateOnitama.lastMove = null;
-    AppStateOnitama.gameOver = false;
-    AppStateOnitama.selectedCard = null;
-    AppStateOnitama.selectedPiece = null;
-    AppStateOnitama.legalTargets = {};
-    resetUndoStackOnitama();
-    setActiveModeButtonOnitama(AppStateOnitama.mode);
-    setGameResultOnitama("");
-    showBoardSectionOnitama();
-    buildOnitamaBoardDOM();
-    updateOnitamaBoard();
-    updateOnitamaCards();
-    updateGameLabelsOnitama();
-    if (AppStateOnitama.mode === "offline-ai" && AppStateOnitama.turn !== AppStateOnitama.humanColor) {
-      setStatusOnitama("board-info", "Computer thinking…");
-      setTimeout(aiTurnOnitama, AiPacing.delay(300));
+    AppStateCardTactics.mode = savedGame.mode;
+    AppStateCardTactics.state = savedGame.state;
+    AppStateCardTactics.turn = savedGame.turn;
+    AppStateCardTactics.humanColor = savedGame.humanColor;
+    AppStateCardTactics.aiLevel = savedGame.aiLevel;
+    AppStateCardTactics.moveCount = savedGame.moveCount;
+    AppStateCardTactics.lastMove = null;
+    AppStateCardTactics.gameOver = false;
+    AppStateCardTactics.selectedCard = null;
+    AppStateCardTactics.selectedPiece = null;
+    AppStateCardTactics.legalTargets = {};
+    resetUndoStackCardTactics();
+    setActiveModeButtonCardTactics(AppStateCardTactics.mode);
+    setGameResultCardTactics("");
+    showBoardSectionCardTactics();
+    buildCardTacticsBoardDOM();
+    updateCardTacticsBoard();
+    updateCardTacticsCards();
+    updateGameLabelsCardTactics();
+    if (AppStateCardTactics.mode === "offline-ai" && AppStateCardTactics.turn !== AppStateCardTactics.humanColor) {
+      setStatusCardTactics("board-info", "Computer thinking…");
+      setTimeout(aiTurnCardTactics, AiPacing.delay(300));
     } else {
-      setStatusOnitama("board-info", colorNameOnitama(AppStateOnitama.turn) + " to move. Choose a card.");
+      setStatusCardTactics("board-info", colorNameCardTactics(AppStateCardTactics.turn) + " to move. Choose a card.");
     }
   }
   // Otherwise no mode is pre-selected and no game auto-starts: the
@@ -256,160 +256,160 @@ function initOnitamaApp() {
   // vs-computer and presses New game, matching chess.html's behavior.
 }
 
-function targetKeyOnitama(r, c) {
+function targetKeyCardTactics(r, c) {
   return r + "," + c;
 }
 
-function computeLegalTargetsOnitama() {
+function computeLegalTargetsCardTactics() {
   const targets = {};
-  const sel = AppStateOnitama.selectedPiece;
-  const card = AppStateOnitama.selectedCard;
+  const sel = AppStateCardTactics.selectedPiece;
+  const card = AppStateCardTactics.selectedCard;
   if (!sel || !card) return targets;
-  OnitamaCore.getLegalMoves(AppStateOnitama.state, AppStateOnitama.turn)
+  CardTacticsCore.getLegalMoves(AppStateCardTactics.state, AppStateCardTactics.turn)
     .filter((m) => m.from[0] === sel[0] && m.from[1] === sel[1] && m.card === card)
-    .forEach((m) => { targets[targetKeyOnitama(m.to[0], m.to[1])] = true; });
+    .forEach((m) => { targets[targetKeyCardTactics(m.to[0], m.to[1])] = true; });
   return targets;
 }
 
-function onOnitamaCardClick(color, cardId) {
-  if (AppStateOnitama.gameOver) return;
-  if (color !== AppStateOnitama.turn) return;
-  if (AppStateOnitama.mode === "offline-ai" && AppStateOnitama.turn !== AppStateOnitama.humanColor) return;
+function onCardTacticsCardClick(color, cardId) {
+  if (AppStateCardTactics.gameOver) return;
+  if (color !== AppStateCardTactics.turn) return;
+  if (AppStateCardTactics.mode === "offline-ai" && AppStateCardTactics.turn !== AppStateCardTactics.humanColor) return;
 
-  if (AppStateOnitama.selectedCard === cardId) {
-    AppStateOnitama.selectedCard = null;
-    AppStateOnitama.selectedPiece = null;
-    AppStateOnitama.legalTargets = {};
+  if (AppStateCardTactics.selectedCard === cardId) {
+    AppStateCardTactics.selectedCard = null;
+    AppStateCardTactics.selectedPiece = null;
+    AppStateCardTactics.legalTargets = {};
   } else {
-    AppStateOnitama.selectedCard = cardId;
-    AppStateOnitama.selectedPiece = null;
-    AppStateOnitama.legalTargets = {};
+    AppStateCardTactics.selectedCard = cardId;
+    AppStateCardTactics.selectedPiece = null;
+    AppStateCardTactics.legalTargets = {};
   }
-  updateOnitamaBoard();
-  updateOnitamaCards();
-  setStatusOnitama("board-info", AppStateOnitama.selectedCard
+  updateCardTacticsBoard();
+  updateCardTacticsCards();
+  setStatusCardTactics("board-info", AppStateCardTactics.selectedCard
     ? "Choose one of your pieces to move with this card."
-    : colorNameOnitama(AppStateOnitama.turn) + " to move. Choose a card.");
+    : colorNameCardTactics(AppStateCardTactics.turn) + " to move. Choose a card.");
 }
 
-function onOnitamaSquareClick(r, c) {
-  if (AppStateOnitama.gameOver) return;
-  if (AppStateOnitama.mode === "offline-ai" && AppStateOnitama.turn !== AppStateOnitama.humanColor) {
-    setStatusOnitama("board-info", "Computer to move.");
+function onCardTacticsSquareClick(r, c) {
+  if (AppStateCardTactics.gameOver) return;
+  if (AppStateCardTactics.mode === "offline-ai" && AppStateCardTactics.turn !== AppStateCardTactics.humanColor) {
+    setStatusCardTactics("board-info", "Computer to move.");
     return;
   }
-  const piece = AppStateOnitama.state.board[r][c];
-  const key = targetKeyOnitama(r, c);
+  const piece = AppStateCardTactics.state.board[r][c];
+  const key = targetKeyCardTactics(r, c);
 
-  if (AppStateOnitama.selectedPiece && AppStateOnitama.legalTargets[key]) {
-    applyOnitamaMove({ from: AppStateOnitama.selectedPiece, to: [r, c], card: AppStateOnitama.selectedCard });
-    return;
-  }
-
-  if (!AppStateOnitama.selectedCard) {
-    setStatusOnitama("board-info", "Choose a card first.");
+  if (AppStateCardTactics.selectedPiece && AppStateCardTactics.legalTargets[key]) {
+    applyCardTacticsMove({ from: AppStateCardTactics.selectedPiece, to: [r, c], card: AppStateCardTactics.selectedCard });
     return;
   }
 
-  if (piece && piece.color === AppStateOnitama.turn) {
-    const hasMove = OnitamaCore.getLegalMoves(AppStateOnitama.state, AppStateOnitama.turn)
-      .some((m) => m.from[0] === r && m.from[1] === c && m.card === AppStateOnitama.selectedCard);
+  if (!AppStateCardTactics.selectedCard) {
+    setStatusCardTactics("board-info", "Choose a card first.");
+    return;
+  }
+
+  if (piece && piece.color === AppStateCardTactics.turn) {
+    const hasMove = CardTacticsCore.getLegalMoves(AppStateCardTactics.state, AppStateCardTactics.turn)
+      .some((m) => m.from[0] === r && m.from[1] === c && m.card === AppStateCardTactics.selectedCard);
     if (!hasMove) {
-      setStatusOnitama("board-info", "That piece has no legal move with this card.");
+      setStatusCardTactics("board-info", "That piece has no legal move with this card.");
       return;
     }
-    AppStateOnitama.selectedPiece = [r, c];
-    AppStateOnitama.legalTargets = computeLegalTargetsOnitama();
-    updateOnitamaBoard();
-    setStatusOnitama("board-info", "Choose where to move it.");
+    AppStateCardTactics.selectedPiece = [r, c];
+    AppStateCardTactics.legalTargets = computeLegalTargetsCardTactics();
+    updateCardTacticsBoard();
+    setStatusCardTactics("board-info", "Choose where to move it.");
   } else {
-    AppStateOnitama.selectedPiece = null;
-    AppStateOnitama.legalTargets = {};
-    updateOnitamaBoard();
+    AppStateCardTactics.selectedPiece = null;
+    AppStateCardTactics.legalTargets = {};
+    updateCardTacticsBoard();
   }
 }
 
-function applyOnitamaMove(move) {
-  pushUndoSnapshotOnitama();
-  const mover = AppStateOnitama.turn;
-  AppStateOnitama.state = OnitamaCore.applyMove(AppStateOnitama.state, mover, move);
-  AppStateOnitama.lastMove = { from: move.from.slice(), to: move.to.slice() };
-  AppStateOnitama.moveCount++;
-  AppStateOnitama.selectedCard = null;
-  AppStateOnitama.selectedPiece = null;
-  AppStateOnitama.legalTargets = {};
-  updateOnitamaBoard();
-  updateOnitamaCards();
-  updateGameLabelsOnitama();
+function applyCardTacticsMove(move) {
+  pushUndoSnapshotCardTactics();
+  const mover = AppStateCardTactics.turn;
+  AppStateCardTactics.state = CardTacticsCore.applyMove(AppStateCardTactics.state, mover, move);
+  AppStateCardTactics.lastMove = { from: move.from.slice(), to: move.to.slice() };
+  AppStateCardTactics.moveCount++;
+  AppStateCardTactics.selectedCard = null;
+  AppStateCardTactics.selectedPiece = null;
+  AppStateCardTactics.legalTargets = {};
+  updateCardTacticsBoard();
+  updateCardTacticsCards();
+  updateGameLabelsCardTactics();
 
-  if (AppStateOnitama.state.gameOver) {
-    AppStateOnitama.gameOver = true;
-    const winnerName = colorNameOnitama(AppStateOnitama.state.winner);
-    const reason = AppStateOnitama.state.winReason === "shrine" ? " by reaching the shrine!" : " by capturing the master!";
-    announceGameResultOnitama(resultTitleOnitama(AppStateOnitama.state.winner), winnerName + " wins" + reason);
-    recordOnitamaStatsIfVsAi(AppStateOnitama.state.winner === AppStateOnitama.humanColor ? "win" : "loss");
-    updateGameLabelsOnitama();
+  if (AppStateCardTactics.state.gameOver) {
+    AppStateCardTactics.gameOver = true;
+    const winnerName = colorNameCardTactics(AppStateCardTactics.state.winner);
+    const reason = AppStateCardTactics.state.winReason === "shrine" ? " by reaching the shrine!" : " by capturing the master!";
+    announceGameResultCardTactics(resultTitleCardTactics(AppStateCardTactics.state.winner), winnerName + " wins" + reason);
+    recordCardTacticsStatsIfVsAi(AppStateCardTactics.state.winner === AppStateCardTactics.humanColor ? "win" : "loss");
+    updateGameLabelsCardTactics();
     return;
   }
 
-  AppStateOnitama.turn = OnitamaCore.otherPlayer(mover);
-  updateOnitamaBoard();
-  updateOnitamaCards();
-  updateGameLabelsOnitama();
-  maybeTriggerAiTurnOnitama();
-  if (!(AppStateOnitama.mode === "offline-ai" && AppStateOnitama.turn !== AppStateOnitama.humanColor)) {
-    setStatusOnitama("board-info", colorNameOnitama(mover) + " played. " + colorNameOnitama(AppStateOnitama.turn) + " to move. Choose a card.");
+  AppStateCardTactics.turn = CardTacticsCore.otherPlayer(mover);
+  updateCardTacticsBoard();
+  updateCardTacticsCards();
+  updateGameLabelsCardTactics();
+  maybeTriggerAiTurnCardTactics();
+  if (!(AppStateCardTactics.mode === "offline-ai" && AppStateCardTactics.turn !== AppStateCardTactics.humanColor)) {
+    setStatusCardTactics("board-info", colorNameCardTactics(mover) + " played. " + colorNameCardTactics(AppStateCardTactics.turn) + " to move. Choose a card.");
   }
 }
 
-function maybeTriggerAiTurnOnitama() {
-  if (AppStateOnitama.gameOver) return;
-  if (AppStateOnitama.mode === "offline-ai" && AppStateOnitama.turn !== AppStateOnitama.humanColor) {
-    setTimeout(aiTurnOnitama, AiPacing.delay(400));
+function maybeTriggerAiTurnCardTactics() {
+  if (AppStateCardTactics.gameOver) return;
+  if (AppStateCardTactics.mode === "offline-ai" && AppStateCardTactics.turn !== AppStateCardTactics.humanColor) {
+    setTimeout(aiTurnCardTactics, AiPacing.delay(400));
   }
 }
 
-function aiTurnOnitama() {
-  if (AppStateOnitama.mode !== "offline-ai" || AppStateOnitama.gameOver) return;
-  const aiColor = OnitamaCore.otherPlayer(AppStateOnitama.humanColor);
-  if (AppStateOnitama.turn !== aiColor) return;
+function aiTurnCardTactics() {
+  if (AppStateCardTactics.mode !== "offline-ai" || AppStateCardTactics.gameOver) return;
+  const aiColor = CardTacticsCore.otherPlayer(AppStateCardTactics.humanColor);
+  if (AppStateCardTactics.turn !== aiColor) return;
 
-  setStatusOnitama("board-info", "Computer thinking…");
+  setStatusCardTactics("board-info", "Computer thinking…");
   // The position this search is for: if it has changed by the time the
   // pause is over (undo, new game), the computer must not move.
-  const scheduledFor = AppStateOnitama.state;
+  const scheduledFor = AppStateCardTactics.state;
   setTimeout(() => {
-    if (AppStateOnitama.gameOver || AppStateOnitama.state !== scheduledFor || AppStateOnitama.turn !== aiColor) return;
-    const move = OnitamaAi.chooseMove(AppStateOnitama.state, aiColor, AppStateOnitama.aiLevel);
+    if (AppStateCardTactics.gameOver || AppStateCardTactics.state !== scheduledFor || AppStateCardTactics.turn !== aiColor) return;
+    const move = CardTacticsAi.chooseMove(AppStateCardTactics.state, aiColor, AppStateCardTactics.aiLevel);
     if (!move) return;
-    applyOnitamaMove(move);
+    applyCardTacticsMove(move);
   }, AiPacing.delay(350));
 }
 
 function undoLastMove() {
-  if (!AppStateOnitama.undoStack || !AppStateOnitama.undoStack.length) return;
-  let prev = AppStateOnitama.undoStack.pop();
-  if (AppStateOnitama.mode === "offline-ai") {
-    while (prev.turn !== AppStateOnitama.humanColor && AppStateOnitama.undoStack.length) {
-      prev = AppStateOnitama.undoStack.pop();
+  if (!AppStateCardTactics.undoStack || !AppStateCardTactics.undoStack.length) return;
+  let prev = AppStateCardTactics.undoStack.pop();
+  if (AppStateCardTactics.mode === "offline-ai") {
+    while (prev.turn !== AppStateCardTactics.humanColor && AppStateCardTactics.undoStack.length) {
+      prev = AppStateCardTactics.undoStack.pop();
     }
   }
-  AppStateOnitama.state = prev.state;
-  AppStateOnitama.turn = prev.turn;
-  AppStateOnitama.gameOver = prev.gameOver;
-  AppStateOnitama.moveCount = prev.moveCount;
-  AppStateOnitama.lastMove = prev.lastMove || null;
-  AppStateOnitama.selectedCard = null;
-  AppStateOnitama.selectedPiece = null;
-  AppStateOnitama.legalTargets = {};
-  setGameResultOnitama("");
-  updateOnitamaBoard();
-  updateOnitamaCards();
-  updateGameLabelsOnitama();
-  setStatusOnitama("board-info", "Move undone. " + colorNameOnitama(AppStateOnitama.turn) + " to move. Choose a card.");
+  AppStateCardTactics.state = prev.state;
+  AppStateCardTactics.turn = prev.turn;
+  AppStateCardTactics.gameOver = prev.gameOver;
+  AppStateCardTactics.moveCount = prev.moveCount;
+  AppStateCardTactics.lastMove = prev.lastMove || null;
+  AppStateCardTactics.selectedCard = null;
+  AppStateCardTactics.selectedPiece = null;
+  AppStateCardTactics.legalTargets = {};
+  setGameResultCardTactics("");
+  updateCardTacticsBoard();
+  updateCardTacticsCards();
+  updateGameLabelsCardTactics();
+  setStatusCardTactics("board-info", "Move undone. " + colorNameCardTactics(AppStateCardTactics.turn) + " to move. Choose a card.");
 }
 
-function showBoardSectionOnitama() {
+function showBoardSectionCardTactics() {
   const section = document.getElementById("board-section");
   if (section) section.classList.remove("hidden");
   const placeholder = document.getElementById("board-placeholder");
@@ -425,92 +425,92 @@ function showBoardSectionOnitama() {
 
 /*** Board rendering (float-grid, same technique as chess/checkers) ***/
 
-function buildOnitamaBoardDOM() {
-  const boardEl = document.getElementById("onitama-board");
+function buildCardTacticsBoardDOM() {
+  const boardEl = document.getElementById("cardtactics-board");
   if (!boardEl) return;
   boardEl.innerHTML = "";
 
-  for (let r = 0; r < OnitamaCore.SIZE; r++) {
-    for (let c = 0; c < OnitamaCore.SIZE; c++) {
+  for (let r = 0; r < CardTacticsCore.SIZE; r++) {
+    for (let c = 0; c < CardTacticsCore.SIZE; c++) {
       const square = document.createElement("button");
-      square.className = "square onitama-square";
+      square.className = "square cardtactics-square";
       square.type = "button";
       square.dataset.row = r;
       square.dataset.col = c;
-      if (r === OnitamaCore.RED_SHRINE[0] && c === OnitamaCore.RED_SHRINE[1]) square.classList.add("onitama-square-shrine");
-      if (r === OnitamaCore.BLUE_SHRINE[0] && c === OnitamaCore.BLUE_SHRINE[1]) square.classList.add("onitama-square-shrine");
+      if (r === CardTacticsCore.RED_SHRINE[0] && c === CardTacticsCore.RED_SHRINE[1]) square.classList.add("cardtactics-square-shrine");
+      if (r === CardTacticsCore.BLUE_SHRINE[0] && c === CardTacticsCore.BLUE_SHRINE[1]) square.classList.add("cardtactics-square-shrine");
 
       const piece = document.createElement("span");
-      piece.className = "onitama-piece";
+      piece.className = "cardtactics-piece";
       square.appendChild(piece);
 
-      square.addEventListener("click", () => onOnitamaSquareClick(r, c));
+      square.addEventListener("click", () => onCardTacticsSquareClick(r, c));
       boardEl.appendChild(square);
     }
   }
 
-  ensureOnitamaSquareAspectRatio();
+  ensureCardTacticsSquareAspectRatio();
   if (window.requestAnimationFrame) {
-    window.requestAnimationFrame(ensureOnitamaSquareAspectRatio);
+    window.requestAnimationFrame(ensureCardTacticsSquareAspectRatio);
   } else {
-    setTimeout(ensureOnitamaSquareAspectRatio, 0);
+    setTimeout(ensureCardTacticsSquareAspectRatio, 0);
   }
-  ensureOnitamaResizeHandler();
+  ensureCardTacticsResizeHandler();
 }
 
-let einkOnitamaResizeHandlerAttached = false;
-let einkOnitamaResizeTimeoutId = null;
+let einkCardTacticsResizeHandlerAttached = false;
+let einkCardTacticsResizeTimeoutId = null;
 
-function ensureOnitamaSquareAspectRatio() {
-  const boardEl = document.getElementById("onitama-board");
+function ensureCardTacticsSquareAspectRatio() {
+  const boardEl = document.getElementById("cardtactics-board");
   if (!boardEl) return;
   const rect = boardEl.getBoundingClientRect();
   if (!rect || !rect.width) return;
-  const squareSize = rect.width / OnitamaCore.SIZE;
-  boardEl.querySelectorAll(".onitama-square").forEach((sq) => {
+  const squareSize = rect.width / CardTacticsCore.SIZE;
+  boardEl.querySelectorAll(".cardtactics-square").forEach((sq) => {
     sq.style.height = squareSize + "px";
   });
 }
 
-function ensureOnitamaResizeHandler() {
-  if (einkOnitamaResizeHandlerAttached) return;
-  einkOnitamaResizeHandlerAttached = true;
+function ensureCardTacticsResizeHandler() {
+  if (einkCardTacticsResizeHandlerAttached) return;
+  einkCardTacticsResizeHandlerAttached = true;
   window.addEventListener("resize", () => {
-    if (einkOnitamaResizeTimeoutId !== null) clearTimeout(einkOnitamaResizeTimeoutId);
-    einkOnitamaResizeTimeoutId = setTimeout(() => {
-      einkOnitamaResizeTimeoutId = null;
-      ensureOnitamaSquareAspectRatio();
+    if (einkCardTacticsResizeTimeoutId !== null) clearTimeout(einkCardTacticsResizeTimeoutId);
+    einkCardTacticsResizeTimeoutId = setTimeout(() => {
+      einkCardTacticsResizeTimeoutId = null;
+      ensureCardTacticsSquareAspectRatio();
     }, 150);
   });
 }
 
-function updateOnitamaBoard() {
-  const boardEl = document.getElementById("onitama-board");
+function updateCardTacticsBoard() {
+  const boardEl = document.getElementById("cardtactics-board");
   if (!boardEl) return;
 
-  boardEl.querySelectorAll(".onitama-square").forEach((sq) => {
+  boardEl.querySelectorAll(".cardtactics-square").forEach((sq) => {
     const r = parseInt(sq.dataset.row, 10);
     const c = parseInt(sq.dataset.col, 10);
-    const piece = AppStateOnitama.state.board[r][c];
-    const pieceEl = sq.querySelector(".onitama-piece");
+    const piece = AppStateCardTactics.state.board[r][c];
+    const pieceEl = sq.querySelector(".cardtactics-piece");
     if (pieceEl) {
-      pieceEl.classList.remove("onitama-piece-blue", "onitama-piece-red", "onitama-piece-king");
+      pieceEl.classList.remove("cardtactics-piece-blue", "cardtactics-piece-red", "cardtactics-piece-king");
       if (piece) {
-        pieceEl.classList.add(piece.color === "blue" ? "onitama-piece-blue" : "onitama-piece-red");
-        if (piece.king) pieceEl.classList.add("onitama-piece-king");
+        pieceEl.classList.add(piece.color === "blue" ? "cardtactics-piece-blue" : "cardtactics-piece-red");
+        if (piece.king) pieceEl.classList.add("cardtactics-piece-king");
       }
     }
 
-    const isSelected = AppStateOnitama.selectedPiece
-      && AppStateOnitama.selectedPiece[0] === r && AppStateOnitama.selectedPiece[1] === c;
+    const isSelected = AppStateCardTactics.selectedPiece
+      && AppStateCardTactics.selectedPiece[0] === r && AppStateCardTactics.selectedPiece[1] === c;
     sq.classList.toggle("selected", !!isSelected);
-    sq.classList.toggle("onitama-square-movable", !!AppStateOnitama.legalTargets[targetKeyOnitama(r, c)]);
-    const last = AppStateOnitama.lastMove;
+    sq.classList.toggle("cardtactics-square-movable", !!AppStateCardTactics.legalTargets[targetKeyCardTactics(r, c)]);
+    const last = AppStateCardTactics.lastMove;
     sq.classList.toggle("lm-from", !!last && last.from[0] === r && last.from[1] === c);
     sq.classList.toggle("lm-to", !!last && last.to[0] === r && last.to[1] === c);
 
     let label = "Row " + (r + 1) + ", column " + (c + 1);
-    label += piece ? ", " + colorNameOnitama(piece.color) + (piece.king ? " master" : " pawn") : ", empty";
+    label += piece ? ", " + colorNameCardTactics(piece.color) + (piece.king ? " master" : " pawn") : ", empty";
     I18n.setAria(sq, label);
   });
 }
@@ -519,14 +519,14 @@ function updateOnitamaBoard() {
 
 function buildCardDiagram(cardId, forColor) {
   const wrap = document.createElement("div");
-  wrap.className = "onitama-card-diagram";
-  const moves = OnitamaCore.cardMovesFor(cardId, forColor);
+  wrap.className = "cardtactics-card-diagram";
+  const moves = CardTacticsCore.cardMovesFor(cardId, forColor);
   for (let r = -2; r <= 2; r++) {
     for (let c = -2; c <= 2; c++) {
       const cell = document.createElement("span");
-      cell.className = "onitama-card-cell";
-      if (r === 0 && c === 0) cell.classList.add("onitama-card-cell-center");
-      else if (moves.some(([dr, dc]) => dr === r && dc === c)) cell.classList.add("onitama-card-cell-move");
+      cell.className = "cardtactics-card-cell";
+      if (r === 0 && c === 0) cell.classList.add("cardtactics-card-cell-center");
+      else if (moves.some(([dr, dc]) => dr === r && dc === c)) cell.classList.add("cardtactics-card-cell-move");
       wrap.appendChild(cell);
     }
   }
@@ -536,58 +536,58 @@ function buildCardDiagram(cardId, forColor) {
 function buildCardElement(cardId, ownerColor) {
   const card = document.createElement("button");
   card.type = "button";
-  card.className = "onitama-card";
-  const isSelected = AppStateOnitama.selectedCard === cardId && AppStateOnitama.turn === ownerColor;
-  card.classList.toggle("onitama-card-selected", isSelected);
+  card.className = "cardtactics-card";
+  const isSelected = AppStateCardTactics.selectedCard === cardId && AppStateCardTactics.turn === ownerColor;
+  card.classList.toggle("cardtactics-card-selected", isSelected);
   const label = document.createElement("div");
-  label.className = "onitama-card-name";
+  label.className = "cardtactics-card-name";
   I18n.setKey(label, "cardtactics_card_" + cardId);
   card.appendChild(label);
   card.appendChild(buildCardDiagram(cardId, ownerColor));
-  card.addEventListener("click", () => onOnitamaCardClick(ownerColor, cardId));
+  card.addEventListener("click", () => onCardTacticsCardClick(ownerColor, cardId));
   return card;
 }
 
-function updateOnitamaCards() {
-  const redRow = document.getElementById("onitama-cards-red");
-  const blueRow = document.getElementById("onitama-cards-blue");
-  const neutralEl = document.getElementById("onitama-neutral-card");
+function updateCardTacticsCards() {
+  const redRow = document.getElementById("cardtactics-cards-red");
+  const blueRow = document.getElementById("cardtactics-cards-blue");
+  const neutralEl = document.getElementById("cardtactics-neutral-card");
   if (!redRow || !blueRow || !neutralEl) return;
 
   redRow.innerHTML = "";
-  AppStateOnitama.state.cards.red.forEach((id) => redRow.appendChild(buildCardElement(id, "red")));
+  AppStateCardTactics.state.cards.red.forEach((id) => redRow.appendChild(buildCardElement(id, "red")));
 
   blueRow.innerHTML = "";
-  AppStateOnitama.state.cards.blue.forEach((id) => blueRow.appendChild(buildCardElement(id, "blue")));
+  AppStateCardTactics.state.cards.blue.forEach((id) => blueRow.appendChild(buildCardElement(id, "blue")));
 
   neutralEl.innerHTML = "";
-  neutralEl.appendChild(buildCardDiagram(AppStateOnitama.state.cards.neutral, "blue"));
+  neutralEl.appendChild(buildCardDiagram(AppStateCardTactics.state.cards.neutral, "blue"));
   const label = document.createElement("div");
-  label.className = "onitama-card-name";
-  I18n.setKey(label, "cardtactics_card_" + AppStateOnitama.state.cards.neutral);
+  label.className = "cardtactics-card-name";
+  I18n.setKey(label, "cardtactics_card_" + AppStateCardTactics.state.cards.neutral);
   neutralEl.insertBefore(label, neutralEl.firstChild);
 }
 
-function updateGameLabelsOnitama() {
+function updateGameLabelsCardTactics() {
   const meta = document.getElementById("game-meta");
-  if (meta) I18n.setMsg(meta, AppStateOnitama.moveCount ? "Move " + AppStateOnitama.moveCount : "");
-  updateUndoButtonVisibilityOnitama();
-  updateResignVisibilityOnitama();
+  if (meta) I18n.setMsg(meta, AppStateCardTactics.moveCount ? "Move " + AppStateCardTactics.moveCount : "");
+  updateUndoButtonVisibilityCardTactics();
+  updateResignVisibilityCardTactics();
 
-  if (AppStateOnitama.gameOver) clearSavedOnitamaGame();
-  else saveOnitamaGame();
+  if (AppStateCardTactics.gameOver) clearSavedCardTacticsGame();
+  else saveCardTacticsGame();
 }
 
-function updateUndoButtonVisibilityOnitama() {
+function updateUndoButtonVisibilityCardTactics() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
-  const hasUndo = (AppStateOnitama.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateOnitama.gameOver));
+  const hasUndo = (AppStateCardTactics.undoStack || []).length > 0;
+  btn.classList.toggle("hidden", !(hasUndo && !AppStateCardTactics.gameOver));
 }
 
-function updateResignVisibilityOnitama() {
+function updateResignVisibilityCardTactics() {
   const resignBtn = document.getElementById("resign-button");
-  if (resignBtn) resignBtn.classList.toggle("hidden", AppStateOnitama.gameOver);
+  if (resignBtn) resignBtn.classList.toggle("hidden", AppStateCardTactics.gameOver);
 }
 
-document.addEventListener("DOMContentLoaded", initOnitamaApp);
+document.addEventListener("DOMContentLoaded", initCardTacticsApp);

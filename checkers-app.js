@@ -484,8 +484,11 @@ function buildCheckersBoardDOM() {
   if (!boardEl) return;
   boardEl.innerHTML = "";
 
+  // Columns are drawn mirrored (c 7 on the left) so a dark, playable
+  // square sits in each player's bottom-left corner as on a real board.
+  // Only the display is mirrored - core coordinates and saves are unchanged.
   for (let r = 7; r >= 0; r--) {
-    for (let c = 0; c < 8; c++) {
+    for (let c = 7; c >= 0; c--) {
       const square = document.createElement("button");
       square.className = "square checkers-square";
       const isDark = (r + c) % 2 === 1;

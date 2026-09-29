@@ -9,13 +9,9 @@
 // Favorites module.
 
 (function () {
-  // A handful of trademark-safe renames kept their original internal
-  // slug for the localStorage save key (see game-storage.js/game-stats.js)
-  // even though the game's own URL/GAMES_CATALOG slug changed; 2048 has
-  // always saved under its number rather than its slug.
+  // 2048 has always saved under its number rather than its slug. Save
+  // keys of renamed games are migrated once in game-storage.js.
   const SAVE_SLUG_TO_CATALOG_SLUG = {
-    connectfour: "fourinarow",
-    onitama: "cardtactics",
     "2048": "twenty48"
   };
 

@@ -1,5 +1,5 @@
-// onitama-core.js
-// Dependency-free rules engine for an Onitama-style card-driven duel.
+// cardtactics-core.js
+// Dependency-free rules engine for a card-driven duel (Card Tactics).
 // Mirrors the separation of concerns in the other <game>-core.js
 // modules: rules only, no DOM/UI.
 //
@@ -18,7 +18,7 @@
 // for Blue); Red uses the same card rotated 180 degrees, i.e. every
 // offset negated on both axes.
 
-const OnitamaCore = (function () {
+const CardTacticsCore = (function () {
   const SIZE = 5;
   const BLUE_SHRINE = [4, 2]; // Blue's own home shrine - Red wins by reaching it
   const RED_SHRINE = [0, 2]; // Red's own home shrine - Blue wins by reaching it
@@ -173,7 +173,7 @@ const OnitamaCore = (function () {
     return next;
   }
 
-  // Onitama has no stalemate - a side with no legal move (all its
+  // Card Tactics has no stalemate - a side with no legal move (all its
   // pieces boxed in by its own pieces on both cards, and this is
   // strictly a legality corner case that can happen very rarely) still
   // just forfeits its turn's action, but for simplicity - matching the
@@ -207,8 +207,8 @@ const OnitamaCore = (function () {
 })();
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = OnitamaCore;
+  module.exports = CardTacticsCore;
 }
 if (typeof window !== "undefined") {
-  window.OnitamaCore = OnitamaCore;
+  window.CardTacticsCore = CardTacticsCore;
 }
