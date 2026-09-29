@@ -11,12 +11,14 @@
 (function () {
   // A handful of trademark-safe renames kept their original internal
   // slug for the localStorage save key (see game-storage.js/game-stats.js)
-  // even though the game's own URL/GAMES_CATALOG slug changed.
+  // even though the game's own URL/GAMES_CATALOG slug changed; 2048 has
+  // always saved under its number rather than its slug.
   const SAVE_SLUG_TO_CATALOG_SLUG = {
     othello: "reversi",
     connectfour: "fourinarow",
     onitama: "cardtactics",
-    quoridor: "wallmaze"
+    quoridor: "wallmaze",
+    "2048": "twenty48"
   };
 
   function catalogEntry(slug) {

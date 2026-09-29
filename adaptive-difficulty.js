@@ -16,7 +16,8 @@
 // strength, live in a differently-named container) and the level
 // select's id, which always ends in "-level-inline" and - stripped of
 // that suffix - matches the game's own slug in game-stats.js (chess is
-// the one legacy exception, "ai-level-inline").
+// the one legacy exception, "ai-level-inline"; Doppelkopf and Trix use
+// the short prefixes "dk" and "tx", mapped in SLUG_BY_PREFIX).
 
 const AdaptiveDifficulty = (function () {
   const KEY = "einkchess_adaptive_difficulty";
@@ -36,9 +37,13 @@ const AdaptiveDifficulty = (function () {
     } catch (e) { /* storage unavailable - just don't persist */ }
   }
 
+  // Selects whose id prefix isn't the stats slug.
+  const SLUG_BY_PREFIX = { dk: "doppelkopf", tx: "trix" };
+
   function slugForSelect(select) {
     if (select.id === "ai-level-inline") return "chess";
-    return select.id.replace(/-level-inline$/, "");
+    const prefix = select.id.replace(/-level-inline$/, "");
+    return SLUG_BY_PREFIX[prefix] || prefix;
   }
 
   function removeNote() {

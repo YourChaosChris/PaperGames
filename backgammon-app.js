@@ -13,8 +13,8 @@
 // The doubling cube is a stakes multiplier only - this app has no
 // match/score play across games, so accepting/declining just changes
 // how many points the announced winner is credited with for this one
-// game. See backgammon-core.js for the note on the "maximize dice
-// usage" rule this app also doesn't enforce.
+// game. The rule that as many dice as possible (and otherwise the larger
+// one) must be played is enforced in backgammon-core.js.
 
 const TOP_ROW = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
 const BOTTOM_ROW = [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
@@ -371,7 +371,7 @@ function offerDoubleBg() {
   if (AppStateBackgammon.mode === "offline-ai" && opponent !== AppStateBackgammon.humanColor) {
     const willAccept = BackgammonAi.shouldAcceptDouble(AppStateBackgammon.state, opponent);
     setStatusBg("board-info", colorNameBg(offerer) + " doubles to " + newValue + ". Computer is thinking…");
-    setTimeout(() => { if (willAccept) accept(); else decline(); }, AiPacing.delay(400));
+    laterIfUnchangedBg(() => { if (willAccept) accept(); else decline(); }, AiPacing.delay(400));
   } else {
     const accepted = window.confirm(colorNameBg(opponent) + ": accept the double to " + newValue + "?");
     if (accepted) accept(); else decline();
@@ -391,10 +391,25 @@ function rollDiceBg() {
 
   if (!BackgammonCore.hasAnyLegalMove(AppStateBackgammon.state, AppStateBackgammon.turn, dice)) {
     setStatusBg("board-info", colorNameBg(AppStateBackgammon.turn) + " rolled " + dice.join("-") + ". No legal move - turn passes.");
-    setTimeout(endTurnBg, AiPacing.delay(900));
+    laterIfUnchangedBg(endTurnBg, AiPacing.delay(900));
     return;
   }
   setStatusBg("board-info", colorNameBg(AppStateBackgammon.turn) + " rolled " + dice.join("-") + ". Choose a piece to move.");
+}
+
+// Runs fn after ms, but only if the game is still where it was when this
+// was scheduled - an undo, a new game or a finished game in between
+// cancels it. Without this, a pending "turn passes" or computer decision
+// from an old position would act on the new one.
+function laterIfUnchangedBg(fn, ms) {
+  const st = AppStateBackgammon.state;
+  const dice = AppStateBackgammon.dice.join(",");
+  const turn = AppStateBackgammon.turn;
+  setTimeout(() => {
+    if (AppStateBackgammon.gameOver || AppStateBackgammon.state !== st ||
+        AppStateBackgammon.dice.join(",") !== dice || AppStateBackgammon.turn !== turn) return;
+    fn();
+  }, ms);
 }
 
 function endTurnBg() {
@@ -416,21 +431,34 @@ function maybeTriggerAiTurnBg() {
   }
 }
 
+// Every move the rules allow right now (see getPlayableMovesForDie),
+// each tagged with the die value it uses. Worked out once per position
+// and roll: the board render asks for it for every point.
+let bgPlayableCache = { state: null, dice: "", turn: null, moves: [] };
+
+function playableMovesBg() {
+  const s = AppStateBackgammon;
+  const diceKey = s.dice.join(",");
+  if (bgPlayableCache.state !== s.state || bgPlayableCache.dice !== diceKey || bgPlayableCache.turn !== s.turn) {
+    const moves = [];
+    const seenDieValues = new Set();
+    s.dice.forEach((die) => {
+      if (seenDieValues.has(die)) return;
+      seenDieValues.add(die);
+      BackgammonCore.getPlayableMovesForDie(s.state, s.turn, s.dice, die).forEach((m) => {
+        moves.push({ from: m.from, to: m.to, die });
+      });
+    });
+    bgPlayableCache = { state: s.state, dice: diceKey, turn: s.turn, moves };
+  }
+  return bgPlayableCache.moves;
+}
+
 // Every currently-reachable destination from `src` (either 'bar' or a
 // point number) given the remaining dice, each tagged with which die
 // value would be used.
 function legalDestinationsFrom(src) {
-  const dests = [];
-  const seenDieValues = new Set();
-  AppStateBackgammon.dice.forEach((die) => {
-    if (seenDieValues.has(die)) return;
-    seenDieValues.add(die);
-    const moves = BackgammonCore.getLegalMovesForDie(AppStateBackgammon.state, AppStateBackgammon.turn, die);
-    moves.forEach((m) => {
-      if (m.from === src) dests.push({ to: m.to, die });
-    });
-  });
-  return dests;
+  return playableMovesBg().filter((m) => m.from === src).map((m) => ({ to: m.to, die: m.die }));
 }
 
 function onBackgammonSourceClick(pointRef, ownerColor) {
@@ -513,7 +541,7 @@ function applyBackgammonMove(move, die) {
 
   if (diceExhausted || stuck) {
     if (stuck) setStatusBg("board-info", colorNameBg(mover) + " played. No further legal move this turn.");
-    setTimeout(endTurnBg, stuck ? AiPacing.delay(500) : 0);
+    laterIfUnchangedBg(endTurnBg, stuck ? AiPacing.delay(500) : 0);
     return;
   }
 
@@ -535,19 +563,19 @@ function aiTurnBg() {
     setStatusBg("board-info", "Computer rolled " + dice.join("-") + ".");
     updateGameLabelsBg();
     if (!BackgammonCore.hasAnyLegalMove(AppStateBackgammon.state, aiColor, dice)) {
-      setTimeout(endTurnBg, AiPacing.delay(700));
+      laterIfUnchangedBg(endTurnBg, AiPacing.delay(700));
       return;
     }
   }
 
-  setTimeout(() => {
+  laterIfUnchangedBg(() => {
     if (AppStateBackgammon.gameOver || AppStateBackgammon.turn !== aiColor) return;
     // Play exactly one die here; applyBackgammonMove is the single
     // authority that decides whether to end the turn or schedule the
     // next aiTurnBg step for the remaining dice.
     for (let i = 0; i < AppStateBackgammon.dice.length; i++) {
       const die = AppStateBackgammon.dice[i];
-      const move = BackgammonAi.chooseMove(AppStateBackgammon.state, aiColor, die, AppStateBackgammon.aiLevel);
+      const move = BackgammonAi.chooseMove(AppStateBackgammon.state, aiColor, die, AppStateBackgammon.aiLevel, AppStateBackgammon.dice);
       if (move) {
         applyBackgammonMove(move, die);
         return;

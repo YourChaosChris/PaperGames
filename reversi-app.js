@@ -339,7 +339,11 @@ function aiTurnOthello() {
   if (AppStateOthello.turn !== aiColor) return;
 
   setStatusOthello("board-info", "Computer thinking…");
+  // The position this search is for: if it has changed by the time the
+  // pause is over (undo, new game), the computer must not move.
+  const scheduledFor = AppStateOthello.board;
   setTimeout(() => {
+    if (AppStateOthello.gameOver || AppStateOthello.board !== scheduledFor || AppStateOthello.turn !== aiColor) return;
     const move = OthelloAi.chooseMove(AppStateOthello.board, aiColor, AppStateOthello.aiLevel);
     if (!move) return;
     applyOthelloMove(move);

@@ -38,7 +38,8 @@ function saveChessGame() {
     viewColor: AppState.viewColor,
     positionHistory: AppState.positionHistory,
     halfmoveClock: AppState.halfmoveClock,
-    moveHistory: AppState.moveHistory
+    moveHistory: AppState.moveHistory,
+    rules: ChessCore.getRulesState()
   });
 }
 
@@ -133,7 +134,8 @@ function pushUndoSnapshot() {
     turn: AppState.turn,
     gameOver: AppState.gameOver,
     halfmoveClock: AppState.halfmoveClock,
-    positionHistory: (AppState.positionHistory || []).slice()
+    positionHistory: (AppState.positionHistory || []).slice(),
+    rules: ChessCore.getRulesState()
   });
 }
 
@@ -236,6 +238,32 @@ function explainIllegalMove(movingColor, from, to) {
     return;
   }
 
+  // Rochadeversuch (König zwei Felder seitwärts von e1/e8): sagen, welche
+  // Bedingung fehlt, statt nur "kein gültiger Zug".
+  const homeRank = movingColor === "white" ? 0 : 7;
+  if (piece.toLowerCase() === "k" && idxFrom.file === 4 && idxFrom.rank === homeRank &&
+      idxTo.rank === homeRank && (idxTo.file === 6 || idxTo.file === 2)) {
+    const shortSide = idxTo.file === 6;
+    const rights = ChessCore.getCastlingRights();
+    const hasRight = movingColor === "white" ? (shortSide ? rights.K : rights.Q) : (shortSide ? rights.k : rights.q);
+    if (!hasRight) {
+      setStatus("board-info", "Invalid move: castling is no longer allowed, because the king or that rook has already moved.");
+      return;
+    }
+    const rook = board[homeRank][shortSide ? 7 : 0];
+    const ownRook = !!rook && rook.toLowerCase() === "r" && ChessCore.isWhitePiece(rook) === (movingColor === "white");
+    const pathClear = ownRook && (shortSide ? !board[homeRank][5] && !board[homeRank][6]
+      : !board[homeRank][1] && !board[homeRank][2] && !board[homeRank][3]);
+    if (pathClear && AiEngine.isKingInCheck(board, movingColor)) {
+      setStatus("board-info", "Invalid move: you cannot castle while your king is in check.");
+      return;
+    }
+    if (pathClear && !pseudoTo) {
+      setStatus("board-info", "Invalid move: when castling, the king may not pass over a square that is under attack.");
+      return;
+    }
+  }
+
   if (!pseudoTo) {
     if (target && ((movingColor === "white" && ChessCore.isWhitePiece(target)) ||
                    (movingColor === "black" && ChessCore.isBlackPiece(target)))) {
@@ -262,7 +290,10 @@ function computePositionKey(board, turn) {
     }
     rows.push(row);
   }
-  return rows.join("/") + " " + turn;
+  // Gleiche Stellung heißt auch gleiche Rochaderechte.
+  const cr = ChessCore.getCastlingRights ? ChessCore.getCastlingRights() : null;
+  const rights = cr ? (cr.K ? "K" : "") + (cr.Q ? "Q" : "") + (cr.k ? "k" : "") + (cr.q ? "q" : "") : "";
+  return rows.join("/") + " " + turn + " " + (rights || "-");
 }
 
 function resetPositionHistory() {
@@ -432,6 +463,7 @@ modeOffline.addEventListener("click", () => {
   AppState.viewColor = "white";
   setActiveModeButton("offline");
   AppState.board = ChessCore.createInitialBoard();
+  ChessCore.resetRulesState();
   AppState.turn = "white";
   AppState.selected = null;
   AppState.lastMove = null;
@@ -495,6 +527,7 @@ startAiGameBtn.addEventListener("click", () => {
     updateActionButtonsVisibility();
     setActiveModeButton("offline-ai");
     AppState.board = ChessCore.createInitialBoard();
+    ChessCore.resetRulesState();
     updateAiColorChoiceVisibility();
     AppState.turn = "white";
     AppState.selected = null;
@@ -526,6 +559,7 @@ startAiGameBtn.addEventListener("click", () => {
   const hintText = thinkHints[level] || "";
 
   AppState.board = ChessCore.createInitialBoard();
+  ChessCore.resetRulesState();
   updateAiColorChoiceVisibility();
   AppState.turn = "white";
   AppState.selected = null;
@@ -763,6 +797,8 @@ aiLevelInline.addEventListener("change", () => {
     AppState.positionHistory = savedGame.positionHistory || [];
     AppState.halfmoveClock = savedGame.halfmoveClock || 0;
     AppState.moveHistory = savedGame.moveHistory || [];
+    if (savedGame.rules) ChessCore.setRulesState(savedGame.rules);
+    else ChessCore.setRulesState({ ep: null, castling: ChessCore.rightsFromBoard(savedGame.board) });
     AppState.currentGame = null;
     AppState.gameOver = false;
     resetUndoStack();
@@ -1649,6 +1685,8 @@ function undoLastMove() {
   AppState.gameOver = !!prev.gameOver;
   AppState.halfmoveClock = typeof prev.halfmoveClock === "number" ? prev.halfmoveClock : 0;
   AppState.positionHistory = prev.positionHistory ? prev.positionHistory.slice() : [];
+  if (prev.rules) ChessCore.setRulesState(prev.rules);
+  else ChessCore.setRulesState({ ep: null, castling: ChessCore.rightsFromBoard(prev.board) });
   AppState.selected = null;
   AppState.lastMove = null; // Last-move-Markierung im Brett entfernen
   updateBoard();

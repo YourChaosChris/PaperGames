@@ -44,6 +44,12 @@ const GameStorage = (function () {
     try {
       if (!window.localStorage) return null;
       const raw = window.localStorage.getItem(key);
+      // Remembered for error-banner.js: if restoring this save crashes
+      // the page while it starts, that save is set aside.
+      if (raw && slugFromKey(key)) {
+        window.__pgSavesLoaded = window.__pgSavesLoaded || [];
+        if (window.__pgSavesLoaded.indexOf(key) === -1) window.__pgSavesLoaded.push(key);
+      }
       return raw ? JSON.parse(raw) : null;
     } catch (e) {
       return null;

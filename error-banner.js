@@ -62,6 +62,40 @@
     document.body.insertBefore(bar, document.body.firstChild);
   }
 
-  window.addEventListener("error", showBanner);
-  window.addEventListener("unhandledrejection", showBanner);
+  // A saved game that no longer fits the game's code (an older format,
+  // or a write cut off halfway) would otherwise crash the page on every
+  // single load. If the page breaks while it is still starting up and a
+  // saved game was just read (game-storage.js notes which), that save is
+  // moved aside to einkchess_broken_<game> - kept, not deleted, but no
+  // longer loaded - and the page reloads once with a fresh game.
+  let startingUp = true;
+  window.addEventListener("load", () => setTimeout(() => { startingUp = false; }, 2000));
+
+  function setAsideBrokenSave() {
+    try {
+      const keys = window.__pgSavesLoaded || [];
+      if (!startingUp || !keys.length || !window.localStorage || !window.sessionStorage) return false;
+      const flag = "pg_save_set_aside:" + keys.join("|");
+      if (window.sessionStorage.getItem(flag)) return false; // once only - no reload loop
+      window.sessionStorage.setItem(flag, "1");
+      keys.forEach((key) => {
+        const raw = window.localStorage.getItem(key);
+        if (raw === null) return;
+        window.localStorage.setItem(key.replace("einkchess_save_", "einkchess_broken_"), raw);
+        window.localStorage.removeItem(key);
+      });
+      window.location.reload();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function onError() {
+    if (setAsideBrokenSave()) return;
+    showBanner();
+  }
+
+  window.addEventListener("error", onError);
+  window.addEventListener("unhandledrejection", onError);
 })();

@@ -534,7 +534,11 @@ function aiTurnShogi() {
   if (AppStateShogi.turn !== aiColor) return;
 
   setStatusShogi("board-info", "Computer thinking…");
+  // The position this search is for: if it has changed by the time the
+  // pause is over (undo, new game), the computer must not move.
+  const scheduledFor = AppStateShogi.state;
   setTimeout(() => {
+    if (AppStateShogi.gameOver || AppStateShogi.state !== scheduledFor || AppStateShogi.turn !== aiColor) return;
     const action = ShogiAi.chooseAction(AppStateShogi.state, aiColor, AppStateShogi.aiLevel);
     if (!action) return;
     pushUndoSnapshotShogi();

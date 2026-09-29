@@ -4,6 +4,10 @@
 
 const ChessCore = (function () {
   let enPassantSquare = null;
+  // Rochaderechte: K/Q = Weiß kurz/lang, k/q = Schwarz kurz/lang. Gehen
+  // verloren, sobald der König oder der betreffende Turm zieht oder der
+  // Turm auf seinem Ausgangsfeld geschlagen wird.
+  let castlingRights = { K: true, Q: true, k: true, q: true };
   const FILES = ['a','b','c','d','e','f','g','h'];
 
   function createInitialBoard() {
@@ -154,6 +158,15 @@ const ChessCore = (function () {
         }
     }
     board[to.rank][to.file] = newPiece;
+
+    if (piece === 'K') { castlingRights.K = false; castlingRights.Q = false; }
+    if (piece === 'k') { castlingRights.k = false; castlingRights.q = false; }
+    [from, to].forEach((sq) => {
+      if (sq.rank === 0 && sq.file === 0) castlingRights.Q = false;
+      if (sq.rank === 0 && sq.file === 7) castlingRights.K = false;
+      if (sq.rank === 7 && sq.file === 0) castlingRights.q = false;
+      if (sq.rank === 7 && sq.file === 7) castlingRights.k = false;
+    });
   }
 
 
@@ -168,6 +181,45 @@ const ChessCore = (function () {
     } else {
       enPassantSquare = null;
     }
+  }
+
+  function getCastlingRights() {
+    return { K: castlingRights.K, Q: castlingRights.Q, k: castlingRights.k, q: castlingRights.q };
+  }
+
+  function setCastlingRights(rights) {
+    if (rights && typeof rights === "object") {
+      castlingRights = { K: !!rights.K, Q: !!rights.Q, k: !!rights.k, q: !!rights.q };
+    } else {
+      castlingRights = { K: true, Q: true, k: true, q: true };
+    }
+  }
+
+  // Rochaderechte, die zur Stellung passen, wenn keine gespeichert sind
+  // (Spielstände von vor dieser Regel): ein Recht besteht nur, solange
+  // König und Turm noch auf ihren Ausgangsfeldern stehen.
+  function rightsFromBoard(board) {
+    return {
+      K: board[0][4] === 'K' && board[0][7] === 'R',
+      Q: board[0][4] === 'K' && board[0][0] === 'R',
+      k: board[7][4] === 'k' && board[7][7] === 'r',
+      q: board[7][4] === 'k' && board[7][0] === 'r'
+    };
+  }
+
+  // Alles, was außer dem Brett zur Stellung gehört (En-passant-Feld und
+  // Rochaderechte) - für Rücknahme, Speichern und die KI-Suche.
+  function getRulesState() {
+    return { ep: enPassantSquare ? { rank: enPassantSquare.rank, file: enPassantSquare.file } : null, castling: getCastlingRights() };
+  }
+
+  function setRulesState(state) {
+    setEnPassantSquare(state ? state.ep : null);
+    setCastlingRights(state ? state.castling : null);
+  }
+
+  function resetRulesState() {
+    setRulesState(null);
   }
 
   function isWhitePiece(piece) {
@@ -187,6 +239,12 @@ const ChessCore = (function () {
     applyMove,
     getEnPassantSquare,
     setEnPassantSquare,
+    getCastlingRights,
+    setCastlingRights,
+    rightsFromBoard,
+    getRulesState,
+    setRulesState,
+    resetRulesState,
     isWhitePiece,
     isBlackPiece
   };

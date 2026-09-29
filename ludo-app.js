@@ -334,6 +334,9 @@ function initLudoApp() {
     updateGameLabelsLudo();
     const cur = currentColorLudo();
     if (isAiColorLudo(cur)) {
+      // The computer simply rolls again for a turn saved mid-way.
+      AppStateLudo.roll = null;
+      AppStateLudo.legalMoves = [];
       setStatusLudo("board-info", "Computer thinking…");
       setTimeout(aiRollLudo, AiPacing.delay(300));
     } else if (AppStateLudo.roll !== null) {
@@ -359,6 +362,7 @@ function humanRollLudo() {
 
 function aiRollLudo() {
   if (AppStateLudo.gameOver || !AppStateLudo.started) return;
+  if (AppStateLudo.roll !== null) return; // already rolled (a second, stale timer)
   const color = currentColorLudo();
   if (!isAiColorLudo(color)) return;
   performRollLudo();
@@ -381,7 +385,10 @@ function performRollLudo() {
     updateLudoBoard();
     updateGameLabelsLudo();
     setStatusLudo("board-info", ludoColorName(color) + " rolled a third 6 in a row - turn forfeited!");
-    setTimeout(() => advanceTurnLudo(), AiPacing.delay(800));
+    const forfeitFrom = AppStateLudo.state;
+    setTimeout(() => {
+      if (!AppStateLudo.gameOver && AppStateLudo.state === forfeitFrom && AppStateLudo.roll === value) advanceTurnLudo();
+    }, AiPacing.delay(800));
     return;
   }
 
@@ -391,14 +398,18 @@ function performRollLudo() {
 
   if (!AppStateLudo.legalMoves.length) {
     setStatusLudo("board-info", ludoColorName(color) + " rolled " + value + ". No legal move.");
-    setTimeout(() => afterMoveOrPassLudo(value === 6), AiPacing.delay(700));
+    const passFrom = AppStateLudo.state;
+    setTimeout(() => {
+      if (AppStateLudo.state === passFrom && AppStateLudo.roll === value) afterMoveOrPassLudo(value === 6);
+    }, AiPacing.delay(700));
     return;
   }
 
   if (isAiColorLudo(color)) {
     setStatusLudo("board-info", "Computer (" + ludoColorName(color) + ") rolled " + value + ", thinking…");
+    const thinkFrom = AppStateLudo.state;
     setTimeout(() => {
-      if (AppStateLudo.gameOver || currentColorLudo() !== color) return;
+      if (AppStateLudo.gameOver || currentColorLudo() !== color || AppStateLudo.state !== thinkFrom || AppStateLudo.roll !== value) return;
       let tokenIndex = LudoAi.chooseMove(AppStateLudo.state, color, value, AppStateLudo.aiLevel);
       if (tokenIndex === null || tokenIndex === undefined) {
         // Safety net: the computer must never just stop.
@@ -491,7 +502,10 @@ function applyLudoMove(tokenIndex) {
     message = what + " and got it home!";
   }
   setStatusLudo("board-info", message);
-  setTimeout(() => afterMoveOrPassLudo(roll === 6), AiPacing.delay(500));
+  const movedTo = AppStateLudo.state;
+  setTimeout(() => {
+    if (AppStateLudo.state === movedTo) afterMoveOrPassLudo(roll === 6);
+  }, AiPacing.delay(500));
 }
 
 // `grantExtraTurn` is true when the roll that led here was a 6 (and

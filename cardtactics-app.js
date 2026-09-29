@@ -375,7 +375,11 @@ function aiTurnOnitama() {
   if (AppStateOnitama.turn !== aiColor) return;
 
   setStatusOnitama("board-info", "Computer thinking…");
+  // The position this search is for: if it has changed by the time the
+  // pause is over (undo, new game), the computer must not move.
+  const scheduledFor = AppStateOnitama.state;
   setTimeout(() => {
+    if (AppStateOnitama.gameOver || AppStateOnitama.state !== scheduledFor || AppStateOnitama.turn !== aiColor) return;
     const move = OnitamaAi.chooseMove(AppStateOnitama.state, aiColor, AppStateOnitama.aiLevel);
     if (!move) return;
     applyOnitamaMove(move);

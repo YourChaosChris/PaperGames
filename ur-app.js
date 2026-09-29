@@ -309,7 +309,11 @@ function rollDiceUr() {
 
   if (!AppStateUr.legalMoves.length) {
     setStatusUr("board-info", colorNameUr(AppStateUr.turn) + " rolled " + roll + ". No legal move - turn passes.");
-    setTimeout(passTurnUr, AiPacing.delay(700));
+    const passFrom = AppStateUr.state;
+    setTimeout(() => {
+      // Not if the game was undone or restarted in the meantime.
+      if (!AppStateUr.gameOver && AppStateUr.state === passFrom && AppStateUr.roll === roll) passTurnUr();
+    }, AiPacing.delay(700));
     return;
   }
 
@@ -407,6 +411,7 @@ function aiTurnUr() {
   if (AppStateUr.turn !== aiColor) return;
 
   const roll = UrCore.rollDice();
+  const rolledFor = AppStateUr.state;
   updateDiceDisplayUr(roll);
   const legalMoves = UrCore.getLegalMoves(AppStateUr.state, aiColor, roll);
   setStatusUr("board-info", "Computer rolled " + roll + ".");
@@ -414,7 +419,7 @@ function aiTurnUr() {
   if (!legalMoves.length) {
     setStatusUr("board-info", "Computer rolled " + roll + ". No legal move - turn passes.");
     setTimeout(() => {
-      if (!AppStateUr.gameOver && AppStateUr.turn === aiColor) passTurnUr();
+      if (!AppStateUr.gameOver && AppStateUr.turn === aiColor && AppStateUr.state === rolledFor) passTurnUr();
     }, AiPacing.delay(700));
     return;
   }
@@ -422,7 +427,7 @@ function aiTurnUr() {
   setStatusUr("board-info", "Computer rolled " + roll + ", thinking…");
   setTimeout(() => {
     // An undo while the computer was thinking hands the turn back.
-    if (AppStateUr.gameOver || AppStateUr.turn !== aiColor) return;
+    if (AppStateUr.gameOver || AppStateUr.turn !== aiColor || AppStateUr.state !== rolledFor) return;
     const move = UrAi.chooseMove(AppStateUr.state, aiColor, roll, AppStateUr.aiLevel);
     if (!move) return;
     applyUrMove(move);

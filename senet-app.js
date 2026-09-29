@@ -280,7 +280,10 @@ function throwSticksSenet() {
 
   if (!AppStateSenet.legalMoves.length) {
     setStatusSenet("board-info", colorNameSenet(AppStateSenet.turn) + " threw " + roll.value + ". No legal move - turn passes.");
-    setTimeout(passTurnSenet, AiPacing.delay(700));
+    setTimeout(() => {
+      // Not if the game was undone or restarted in the meantime.
+      if (!AppStateSenet.gameOver && AppStateSenet.roll === roll) passTurnSenet();
+    }, AiPacing.delay(700));
     return;
   }
 

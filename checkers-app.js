@@ -16,6 +16,7 @@ const AppStateCheckers = {
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
   gameOver: false,
   moveCount: 0,
+  pendingChains: null,   // { board, turn, chains } while the player picks between jump chains
   movesSinceCapture: 0,   // draw-by-inactivity counter, mirrors chess's 50-move rule
   undoStack: [],
   captures: { b: 0, w: 0 } // pieces captured BY black / BY white
@@ -274,6 +275,22 @@ function onCheckersSquareClick(e) {
   const board = AppStateCheckers.board;
   const turn = AppStateCheckers.turn;
 
+  const pending = AppStateCheckers.pendingChains;
+  AppStateCheckers.pendingChains = null;
+  if (pending && pending.board === board && pending.turn === turn) {
+    const left = pending.chains.filter((m) => m.captured.some(([cr, cc]) => cr === r && cc === c));
+    if (left.length === 1) {
+      applyCheckersMoveFromClick(left[0]);
+      return;
+    }
+    if (left.length > 1) {
+      AppStateCheckers.pendingChains = { board, turn, chains: left };
+      setStatusCheckers("board-info", "Several capture paths lead there. Tap a piece you want to jump over.");
+      return;
+    }
+    // Tapped elsewhere: the choice is dropped and the tap counts as usual.
+  }
+
   if (!AppStateCheckers.selected) {
     const piece = board[r][c];
     if (!isPieceOfTurn(piece, turn)) return;
@@ -298,7 +315,15 @@ function onCheckersSquareClick(e) {
   }
 
   const legalMoves = CheckersCore.getLegalMoves(board, turn);
-  const match = legalMoves.find((m) => m.from[0] === sr && m.from[1] === sc && m.to[0] === r && m.to[1] === c);
+  const matches = legalMoves.filter((m) => m.from[0] === sr && m.from[1] === sc && m.to[0] === r && m.to[1] === c);
+  const match = matches[0];
+  if (distinctChainsCheckers(matches).length > 1) {
+    // Two jump chains end on the same square but take different pieces:
+    // the player picks by tapping a piece to jump over.
+    AppStateCheckers.pendingChains = { board, turn, chains: distinctChainsCheckers(matches) };
+    setStatusCheckers("board-info", "Several capture paths lead there. Tap a piece you want to jump over.");
+    return;
+  }
   if (!match) {
     const hadCaptures = legalMoves.some((m) => m.captured.length > 0);
     setStatusCheckers("board-info", hadCaptures
@@ -309,7 +334,23 @@ function onCheckersSquareClick(e) {
     return;
   }
 
-  applyCheckersMove(match);
+  applyCheckersMoveFromClick(match);
+}
+
+// Jump chains that differ in which pieces they take (two chains taking
+// the same pieces end in the same position, so one of them is enough).
+function distinctChainsCheckers(moves) {
+  const seen = new Set();
+  return moves.filter((m) => {
+    const key = m.captured.map(([cr, cc]) => cr + "," + cc).sort().join(";");
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function applyCheckersMoveFromClick(move) {
+  applyCheckersMove(move);
 
   if (AppStateCheckers.mode === "offline-ai" && !AppStateCheckers.gameOver && AppStateCheckers.turn !== AppStateCheckers.humanColor) {
     setStatusCheckers("board-info", "Computer thinking…");

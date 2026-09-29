@@ -169,6 +169,19 @@ const AiEngine = (function () {
 
   /* ---------- PSEUDO-LEGALE ZÜGE (Königsschutz noch ignoriert) ---------- */
 
+  // En-passant-Feld und Rochaderechte liegen als Zustand in ChessCore und
+  // werden von jedem applyMove verändert. Jeder Suchknoten merkt sich
+  // deshalb den Zustand seiner Stellung und stellt ihn vor jedem
+  // Probezug wieder her - sonst hinge das Ergebnis davon ab, welcher
+  // Geschwisterzug zuletzt durchgerechnet wurde.
+  function saveRules() {
+    return ChessCore.getRulesState ? ChessCore.getRulesState() : null;
+  }
+
+  function restoreRules(rules) {
+    if (rules && ChessCore.setRulesState) ChessCore.setRulesState(rules);
+  }
+
   function generatePseudoMovesForColor(board, color) {
     const moves = [];
     const wantWhite = (color === "white");
@@ -319,38 +332,37 @@ const AiEngine = (function () {
       }
     }
 
-    // Einfache Rochade-Unterstützung:
-    // - König steht auf dem Ausgangsfeld (e1/e8)
-    // - Felder zwischen König und Turm sind leer
-    // - An der Ecke steht ein Turm derselben Farbe
-    // (Wir prüfen hier NICHT, ob der König im/ durch/aus dem Schach zieht –
-    //  das wird grob über die Legalitätsprüfung nach dem Zug abgedeckt.)
+    // Rochade: König und Turm stehen auf ihren Ausgangsfeldern und haben
+    // ihr Rochaderecht noch (siehe ChessCore), die Felder dazwischen sind
+    // leer, und der König steht weder im Schach noch überquert er ein
+    // angegriffenes Feld. Ob das Zielfeld selbst angegriffen ist, prüft
+    // wie bei jedem Zug die Legalitätsprüfung danach.
     const isWhite = (color === "white");
     const homeRank = isWhite ? 0 : 7;
+    const rights = ChessCore.getCastlingRights ? ChessCore.getCastlingRights() : { K: true, Q: true, k: true, q: true };
+    const opp = otherColor(color);
 
     if (r === homeRank && f === 4) {
+      const ownRook = (p) => !!p && p.toLowerCase() === 'r' &&
+        ((isWhite && ChessCore.isWhitePiece(p)) || (!isWhite && ChessCore.isBlackPiece(p)));
+      const shortRight = isWhite ? rights.K : rights.k;
+      const longRight = isWhite ? rights.Q : rights.q;
+      let kingSafe = null; // erst prüfen, wenn eine Rochade überhaupt in Frage kommt
+      const notInCheck = () => {
+        if (kingSafe === null) kingSafe = !isSquareAttacked(board, 4, homeRank, opp);
+        return kingSafe;
+      };
+
       // kurze Rochade: e1 -> g1, e8 -> g8
-      const rookShortFile = 7;
-      if (!board[homeRank][5] && !board[homeRank][6]) {
-        const rook = board[homeRank][rookShortFile];
-        if (rook && rook.toLowerCase() === 'r' &&
-            ((isWhite && ChessCore.isWhitePiece(rook)) ||
-             (!isWhite && ChessCore.isBlackPiece(rook)))) {
-          const toCoordShort = ChessCore.indexToCoord(6, homeRank);
-          moves.push({ from: fromCoord, to: toCoordShort, promotion: null });
-        }
+      if (shortRight && !board[homeRank][5] && !board[homeRank][6] && ownRook(board[homeRank][7]) &&
+          notInCheck() && !isSquareAttacked(board, 5, homeRank, opp)) {
+        moves.push({ from: fromCoord, to: ChessCore.indexToCoord(6, homeRank), promotion: null });
       }
 
       // lange Rochade: e1 -> c1, e8 -> c8
-      const rookLongFile = 0;
-      if (!board[homeRank][1] && !board[homeRank][2] && !board[homeRank][3]) {
-        const rook = board[homeRank][rookLongFile];
-        if (rook && rook.toLowerCase() === 'r' &&
-            ((isWhite && ChessCore.isWhitePiece(rook)) ||
-             (!isWhite && ChessCore.isBlackPiece(rook)))) {
-          const toCoordLong = ChessCore.indexToCoord(2, homeRank);
-          moves.push({ from: fromCoord, to: toCoordLong, promotion: null });
-        }
+      if (longRight && !board[homeRank][1] && !board[homeRank][2] && !board[homeRank][3] && ownRook(board[homeRank][0]) &&
+          notInCheck() && !isSquareAttacked(board, 3, homeRank, opp)) {
+        moves.push({ from: fromCoord, to: ChessCore.indexToCoord(2, homeRank), promotion: null });
       }
     }
   }
@@ -460,23 +472,18 @@ const AiEngine = (function () {
       pseudo = pseudo.filter(pseudoFilter);
     }
     const legal = [];
-    const hasEpHelpers = !!(ChessCore.getEnPassantSquare && ChessCore.setEnPassantSquare);
-    const originalEp = hasEpHelpers ? ChessCore.getEnPassantSquare() : null;
+    const rules = saveRules();
 
     for (const m of pseudo) {
       const b2 = cloneBoard(board);
-      if (hasEpHelpers) {
-        ChessCore.setEnPassantSquare(originalEp);
-      }
+      restoreRules(rules);
       ChessCore.applyMove(b2, m.from, m.to, m.promotion);
       if (!isKingInCheck(b2, color)) {
         legal.push(m);
       }
     }
 
-    if (hasEpHelpers) {
-      ChessCore.setEnPassantSquare(originalEp);
-    }
+    restoreRules(rules);
     return legal;
   }
 
@@ -525,6 +532,15 @@ const AiEngine = (function () {
   };
 
   function chooseMove(board, color, level) {
+    const rules = saveRules();
+    try {
+      return chooseMoveInner(board, color, level, rules);
+    } finally {
+      restoreRules(rules);
+    }
+  }
+
+  function chooseMoveInner(board, color, level, rules) {
     const moves = generateLegalMoves(board, color);
     if (!moves.length) return null;
 
@@ -540,6 +556,7 @@ const AiEngine = (function () {
       const scored = [];
       for (const m of moves) {
         const b2 = cloneBoard(board);
+        restoreRules(rules);
         ChessCore.applyMove(b2, m.from, m.to, m.promotion);
         scored.push({ move: m, score: evaluateBoardFor(color, b2) });
       }
@@ -548,7 +565,7 @@ const AiEngine = (function () {
       return scored[Math.floor(Math.random() * topN)].move;
     }
 
-    return searchBestMove(board, color, moves, config.maxDepth, config.nodeBudget);
+    return searchBestMove(board, color, moves, config.maxDepth, config.nodeBudget, rules);
   }
 
   // Iterative deepening: searches depth 1, 2, 3, ... up to maxDepth,
@@ -559,12 +576,13 @@ const AiEngine = (function () {
   // result is discarded and the last fully completed depth's move is kept -
   // this bounds worst-case time on slow hardware instead of the search
   // just taking however long a given position happens to need.
-  function searchBestMove(board, color, moves, maxDepth, nodeBudget) {
+  function searchBestMove(board, color, moves, maxDepth, nodeBudget, rules) {
     const searchState = { nodes: 0, budget: nodeBudget, aborted: false };
     let orderedMoves = moves.slice();
 
     const rootScored = orderedMoves.map((m) => {
       const b2 = cloneBoard(board);
+      restoreRules(rules);
       ChessCore.applyMove(b2, m.from, m.to, m.promotion);
       return { move: m, score: evaluateBoardFor(color, b2) };
     });
@@ -585,6 +603,7 @@ const AiEngine = (function () {
 
       for (const m of orderedMoves) {
         const b2 = cloneBoard(board);
+        restoreRules(rules);
         ChessCore.applyMove(b2, m.from, m.to, m.promotion);
         const score = minimax(b2, otherColor(color), 1, depth, alpha, INF, color, searchState);
         if (searchState.aborted) {
@@ -658,6 +677,7 @@ const AiEngine = (function () {
 
     if (qDepth <= 0) return standPat;
 
+    const rules = saveRules();
     const captures = generateLegalCaptures(board, colorToMove);
     if (!captures.length) return standPat;
 
@@ -665,6 +685,7 @@ const AiEngine = (function () {
     let best = standPat;
     for (const m of ordered) {
       const b2 = cloneBoard(board);
+      restoreRules(rules);
       ChessCore.applyMove(b2, m.from, m.to, m.promotion);
       const score = quiescence(b2, otherColor(colorToMove), alpha, beta, perspective, qDepth - 1, searchState);
       if (searchState && searchState.aborted) return best;
@@ -697,6 +718,7 @@ const AiEngine = (function () {
     if (depth >= maxDepth) {
       return quiescence(board, colorToMove, alpha, beta, perspective, QUIESCENCE_MAX_DEPTH, searchState);
     }
+    const rules = saveRules();
     let moves = generateLegalMoves(board, colorToMove);
     moves = orderMoves(board, moves);
     if (!moves.length) {
@@ -712,6 +734,7 @@ const AiEngine = (function () {
       let best = -INF;
       for (const m of moves) {
         const b2 = cloneBoard(board);
+        restoreRules(rules);
         ChessCore.applyMove(b2, m.from, m.to, m.promotion);
         const score = minimax(b2, otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState);
         if (searchState && searchState.aborted) return best;
@@ -724,6 +747,7 @@ const AiEngine = (function () {
       let best = INF;
       for (const m of moves) {
         const b2 = cloneBoard(board);
+        restoreRules(rules);
         ChessCore.applyMove(b2, m.from, m.to, m.promotion);
         const score = minimax(b2, otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState);
         if (searchState && searchState.aborted) return best;
