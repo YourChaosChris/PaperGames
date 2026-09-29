@@ -999,7 +999,7 @@ STRINGS.nl = {
     fanorona_capture_withdrawal_btn: "Slaan door terugtrekking",
     fanorona_continue_capturing: "Je kunt met dit stuk doorslaan, of hier stoppen.",
     fanorona_done_capturing_btn: "Klaar met slaan",
-    game_ludo: "Ludo (Mens erger je niet)",
+    game_ludo: "Ludo",
     home_ludo_desc: "Het klassieke kruisvormige racespel, afstammeling van het oude Indiase Pachisi. Speel zelf één kleur tegen maximaal drie computertegenstanders (2 tot 4 spelers in totaal), of speel lokaal om de beurt op hetzelfde apparaat.",
     ludo_mode_hotseat: "Lokaal (om de beurt)",
     ludo_num_players: "Spelers:",
