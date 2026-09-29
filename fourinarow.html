@@ -49,19 +49,19 @@
 
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
-    <button id="start-connectfour-game" class="primary" data-i18n="new_game">New game</button>
-    <div id="connectfour-color-choice" class="inline-options">
-      <label class="color-choice"><input type="radio" name="connectfour-color" value="black" checked> <span class="color-choice-icon"><span class="c4-icon-disc c4-icon-disc-black"></span></span></label>
-      <label class="color-choice"><input type="radio" name="connectfour-color" value="white"> <span class="color-choice-icon"><span class="c4-icon-disc c4-icon-disc-white"></span></span></label>
+    <button id="start-fourinarow-game" class="primary" data-i18n="new_game">New game</button>
+    <div id="fourinarow-color-choice" class="inline-options">
+      <label class="color-choice"><input type="radio" name="fourinarow-color" value="black" checked> <span class="color-choice-icon"><span class="c4-icon-disc c4-icon-disc-black"></span></span></label>
+      <label class="color-choice"><input type="radio" name="fourinarow-color" value="white"> <span class="color-choice-icon"><span class="c4-icon-disc c4-icon-disc-white"></span></span></label>
     </div>
-    <select id="connectfour-level-inline">
+    <select id="fourinarow-level-inline">
         <option value="0" data-i18n="mode_two_player">2 Player (local)</option>
         <option value="1" data-i18n="level_easy">Easy</option>
         <option value="2" selected data-i18n="level_medium">Medium</option>
         <option value="3" data-i18n="level_hard">Hard</option>
       </select>
   </div>
-  <div id="offline-connectfour-status" class="status-text"></div>
+  <div id="offline-fourinarow-status" class="status-text"></div>
 </section>
 </div>
 
@@ -82,7 +82,7 @@
     </div>
   </div>
   <div id="board-container" class="hidden">
-    <div id="connectfour-board" role="group" aria-label="Four in a Row board"></div>
+    <div id="fourinarow-board" role="group" aria-label="Four in a Row board"></div>
   </div>
   <div id="board-actions" class="board-actions">
     <button id="undo-btn" class="secondary small hidden" data-i18n="undo_button" onclick="undoLastMove()">Undo</button>

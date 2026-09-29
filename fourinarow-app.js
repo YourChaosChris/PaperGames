@@ -1,13 +1,13 @@
-// connectfour-app.js
-// Wires ConnectFourCore/ConnectFourAi to the connectfour.html UI. The
+// fourinarow-app.js
+// Wires FourInARowCore/FourInARowAi to the fourinarow.html UI. The
 // board is a plain 6x7 grid of uniform squares (mirrors reversi-app.js
 // - a real Connect Four board isn't checkered either). Clicking any
 // cell in a column drops a disc into that column's lowest empty slot,
 // regardless of which row was actually clicked.
 
-const AppStateConnectFour = {
+const AppStateFourInARow = {
   mode: "offline",        // "offline" | "offline-ai"
-  board: ConnectFourCore.createInitialBoard(),
+  board: FourInARowCore.createInitialBoard(),
   turn: "b",              // "b" | "w" - Black always moves first
   humanColor: "b",
   aiLevel: 2,
@@ -17,41 +17,41 @@ const AppStateConnectFour = {
   undoStack: []
 };
 
-const CONNECTFOUR_SAVE_KEY = "einkchess_save_connectfour";
+const FOURINAROW_SAVE_KEY = "einkchess_save_fourinarow";
 
-function saveConnectFourGame() {
+function saveFourInARowGame() {
   if (typeof GameStorage === "undefined") return;
-  GameStorage.save(CONNECTFOUR_SAVE_KEY, {
-    mode: AppStateConnectFour.mode,
-    board: AppStateConnectFour.board,
-    turn: AppStateConnectFour.turn,
-    humanColor: AppStateConnectFour.humanColor,
-    aiLevel: AppStateConnectFour.aiLevel,
-    moveCount: AppStateConnectFour.moveCount
+  GameStorage.save(FOURINAROW_SAVE_KEY, {
+    mode: AppStateFourInARow.mode,
+    board: AppStateFourInARow.board,
+    turn: AppStateFourInARow.turn,
+    humanColor: AppStateFourInARow.humanColor,
+    aiLevel: AppStateFourInARow.aiLevel,
+    moveCount: AppStateFourInARow.moveCount
   });
 }
 
-function clearSavedConnectFourGame() {
+function clearSavedFourInARowGame() {
   if (typeof GameStorage === "undefined") return;
-  GameStorage.clear(CONNECTFOUR_SAVE_KEY);
+  GameStorage.clear(FOURINAROW_SAVE_KEY);
 }
 
-function recordConnectFourStatsIfVsAi(outcome) {
+function recordFourInARowStatsIfVsAi(outcome) {
   if (typeof GameStats === "undefined") return;
-  if (AppStateConnectFour.mode !== "offline-ai") return;
-  GameStats.record("connectfour", outcome);
+  if (AppStateFourInARow.mode !== "offline-ai") return;
+  GameStats.record("fourinarow", outcome);
 }
 
-function colorNameConnectFour(color) {
+function colorNameFourInARow(color) {
   return color === "b" ? "Black" : "White";
 }
 
-function setStatusConnectFour(elementId, text) {
+function setStatusFourInARow(elementId, text) {
   const el = document.getElementById(elementId);
   if (el) I18n.setMsg(el, text || "");
 }
 
-function setGameResultConnectFour(text) {
+function setGameResultFourInARow(text) {
   const el = document.getElementById("game-result");
   if (el) I18n.setMsg(el, text || "");
   if (!text && window.ResultModal) {
@@ -59,45 +59,45 @@ function setGameResultConnectFour(text) {
   }
 }
 
-function resultTitleConnectFour(winner) {
-  if (AppStateConnectFour.mode === "offline-ai") {
-    return winner === AppStateConnectFour.humanColor ? "You win!" : "You lose";
+function resultTitleFourInARow(winner) {
+  if (AppStateFourInARow.mode === "offline-ai") {
+    return winner === AppStateFourInARow.humanColor ? "You win!" : "You lose";
   }
-  return colorNameConnectFour(winner) + " wins";
+  return colorNameFourInARow(winner) + " wins";
 }
 
-function announceGameResultConnectFour(resultCode, message) {
-  setGameResultConnectFour(message);
-  setStatusConnectFour("board-info", message);
+function announceGameResultFourInARow(resultCode, message) {
+  setGameResultFourInARow(message);
+  setStatusFourInARow("board-info", message);
   if (window.ResultModal) {
     window.ResultModal.show(resultCode, message);
   }
 }
 
-function resetUndoStackConnectFour() {
-  AppStateConnectFour.undoStack = [];
+function resetUndoStackFourInARow() {
+  AppStateFourInARow.undoStack = [];
 }
 
-function pushUndoSnapshotConnectFour() {
-  AppStateConnectFour.undoStack.push({
-    board: AppStateConnectFour.board.map((row) => row.slice()),
-    turn: AppStateConnectFour.turn,
-    gameOver: AppStateConnectFour.gameOver,
-    moveCount: AppStateConnectFour.moveCount,
-    lastMove: AppStateConnectFour.lastMove
+function pushUndoSnapshotFourInARow() {
+  AppStateFourInARow.undoStack.push({
+    board: AppStateFourInARow.board.map((row) => row.slice()),
+    turn: AppStateFourInARow.turn,
+    gameOver: AppStateFourInARow.gameOver,
+    moveCount: AppStateFourInARow.moveCount,
+    lastMove: AppStateFourInARow.lastMove
   });
 }
 
-function initConnectFourApp() {
+function initFourInARowApp() {
   if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
   const modeOfflineAi = document.getElementById("mode-offline-ai");
   const offlineAiControls = document.getElementById("offline-ai-controls");
-  const colorChoice = document.getElementById("connectfour-color-choice");
-  const levelInline = document.getElementById("connectfour-level-inline");
-  const startGameBtn = document.getElementById("start-connectfour-game");
+  const colorChoice = document.getElementById("fourinarow-color-choice");
+  const levelInline = document.getElementById("fourinarow-level-inline");
+  const startGameBtn = document.getElementById("start-fourinarow-game");
   const resignBtn = document.getElementById("resign-button");
 
   function updateColorChoiceVisibility() {
@@ -130,42 +130,42 @@ function initConnectFourApp() {
     });
   }
 
-  function startNewGameConnectFour(mode, humanColor, level) {
-    AppStateConnectFour.mode = mode;
-    AppStateConnectFour.board = ConnectFourCore.createInitialBoard();
-    AppStateConnectFour.turn = "b";
-    AppStateConnectFour.humanColor = humanColor;
-    AppStateConnectFour.aiLevel = level;
-    AppStateConnectFour.gameOver = false;
-    AppStateConnectFour.moveCount = 0;
-    AppStateConnectFour.lastMove = null;
-    resetUndoStackConnectFour();
-    setGameResultConnectFour("");
-    showBoardSectionConnectFour();
-    buildConnectFourBoardDOM();
-    updateConnectFourBoard();
-    updateGameLabelsConnectFour();
+  function startNewGameFourInARow(mode, humanColor, level) {
+    AppStateFourInARow.mode = mode;
+    AppStateFourInARow.board = FourInARowCore.createInitialBoard();
+    AppStateFourInARow.turn = "b";
+    AppStateFourInARow.humanColor = humanColor;
+    AppStateFourInARow.aiLevel = level;
+    AppStateFourInARow.gameOver = false;
+    AppStateFourInARow.moveCount = 0;
+    AppStateFourInARow.lastMove = null;
+    resetUndoStackFourInARow();
+    setGameResultFourInARow("");
+    showBoardSectionFourInARow();
+    buildFourInARowBoardDOM();
+    updateFourInARowBoard();
+    updateGameLabelsFourInARow();
 
     if (mode === "offline-ai" && humanColor !== "b") {
-      setStatusConnectFour("board-info", "Computer thinking…");
-      setTimeout(aiTurnConnectFour, AiPacing.delay(300));
+      setStatusFourInARow("board-info", "Computer thinking…");
+      setTimeout(aiTurnFourInARow, AiPacing.delay(300));
     } else {
-      setStatusConnectFour("board-info", colorNameConnectFour(AppStateConnectFour.turn) + " to move.");
+      setStatusFourInARow("board-info", colorNameFourInARow(AppStateFourInARow.turn) + " to move.");
     }
   }
 
   modeOffline.addEventListener("click", () => {
     setActiveModeButton("offline");
     offlineAiControls.classList.add("hidden");
-    startNewGameConnectFour("offline", "b", 0);
+    startNewGameFourInARow("offline", "b", 0);
   });
 
   modeOfflineAi.addEventListener("click", () => {
     setActiveModeButton("offline-ai");
     offlineAiControls.classList.remove("hidden");
-    if (levelInline) levelInline.value = String(AppStateConnectFour.aiLevel || 2);
+    if (levelInline) levelInline.value = String(AppStateFourInARow.aiLevel || 2);
     updateColorChoiceVisibility();
-    setStatusConnectFour("board-info", "");
+    setStatusFourInARow("board-info", "");
   });
 
   if (levelInline) {
@@ -174,59 +174,59 @@ function initConnectFourApp() {
 
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
-    const colorInput = document.querySelector("input[name='connectfour-color']:checked");
+    const colorInput = document.querySelector("input[name='fourinarow-color']:checked");
     const humanColor = colorInput && colorInput.value === "white" ? "w" : "b";
 
     if (level === 0) {
       setActiveModeButton("offline-ai");
-      startNewGameConnectFour("offline", "b", 0);
-      setStatusConnectFour("offline-connectfour-status", "Local 2-player game (no computer).");
+      startNewGameFourInARow("offline", "b", 0);
+      setStatusFourInARow("offline-fourinarow-status", "Local 2-player game (no computer).");
       return;
     }
 
     setActiveModeButton("offline-ai");
-    startNewGameConnectFour("offline-ai", humanColor, level);
+    startNewGameFourInARow("offline-ai", humanColor, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
-    setStatusConnectFour("offline-connectfour-status",
-      "You play " + colorNameConnectFour(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
+    setStatusFourInARow("offline-fourinarow-status",
+      "You play " + colorNameFourInARow(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
   });
 
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
-      if (AppStateConnectFour.gameOver) return;
-      const loser = AppStateConnectFour.turn;
-      const winner = ConnectFourCore.otherColor(loser);
-      AppStateConnectFour.gameOver = true;
-      announceGameResultConnectFour(resultTitleConnectFour(winner), colorNameConnectFour(winner) + " wins by resignation.");
-      recordConnectFourStatsIfVsAi("loss");
-      updateGameLabelsConnectFour();
+      if (AppStateFourInARow.gameOver) return;
+      const loser = AppStateFourInARow.turn;
+      const winner = FourInARowCore.otherColor(loser);
+      AppStateFourInARow.gameOver = true;
+      announceGameResultFourInARow(resultTitleFourInARow(winner), colorNameFourInARow(winner) + " wins by resignation.");
+      recordFourInARowStatsIfVsAi("loss");
+      updateGameLabelsFourInARow();
     });
   }
 
   updateColorChoiceVisibility();
 
-  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(CONNECTFOUR_SAVE_KEY) : null;
+  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(FOURINAROW_SAVE_KEY) : null;
   if (savedGame && savedGame.board) {
-    AppStateConnectFour.mode = savedGame.mode;
-    AppStateConnectFour.board = savedGame.board;
-    AppStateConnectFour.turn = savedGame.turn;
-    AppStateConnectFour.humanColor = savedGame.humanColor;
-    AppStateConnectFour.aiLevel = savedGame.aiLevel;
-    AppStateConnectFour.moveCount = savedGame.moveCount;
-    AppStateConnectFour.lastMove = null;
-    AppStateConnectFour.gameOver = false;
-    resetUndoStackConnectFour();
-    setActiveModeButton(AppStateConnectFour.mode);
-    setGameResultConnectFour("");
-    showBoardSectionConnectFour();
-    buildConnectFourBoardDOM();
-    updateConnectFourBoard();
-    updateGameLabelsConnectFour();
-    if (AppStateConnectFour.mode === "offline-ai" && AppStateConnectFour.turn !== AppStateConnectFour.humanColor) {
-      setStatusConnectFour("board-info", "Computer thinking…");
-      setTimeout(aiTurnConnectFour, AiPacing.delay(300));
+    AppStateFourInARow.mode = savedGame.mode;
+    AppStateFourInARow.board = savedGame.board;
+    AppStateFourInARow.turn = savedGame.turn;
+    AppStateFourInARow.humanColor = savedGame.humanColor;
+    AppStateFourInARow.aiLevel = savedGame.aiLevel;
+    AppStateFourInARow.moveCount = savedGame.moveCount;
+    AppStateFourInARow.lastMove = null;
+    AppStateFourInARow.gameOver = false;
+    resetUndoStackFourInARow();
+    setActiveModeButton(AppStateFourInARow.mode);
+    setGameResultFourInARow("");
+    showBoardSectionFourInARow();
+    buildFourInARowBoardDOM();
+    updateFourInARowBoard();
+    updateGameLabelsFourInARow();
+    if (AppStateFourInARow.mode === "offline-ai" && AppStateFourInARow.turn !== AppStateFourInARow.humanColor) {
+      setStatusFourInARow("board-info", "Computer thinking…");
+      setTimeout(aiTurnFourInARow, AiPacing.delay(300));
     } else {
-      setStatusConnectFour("board-info", colorNameConnectFour(AppStateConnectFour.turn) + " to move.");
+      setStatusFourInARow("board-info", colorNameFourInARow(AppStateFourInARow.turn) + " to move.");
     }
   }
   // Otherwise no mode is pre-selected and no game auto-starts: the
@@ -234,106 +234,106 @@ function initConnectFourApp() {
   // vs-computer and presses New game, matching the other games here.
 }
 
-function onConnectFourSquareClick(e) {
+function onFourInARowSquareClick(e) {
   const col = parseInt(e.currentTarget.dataset.col, 10);
-  attemptConnectFourMove(col);
+  attemptFourInARowMove(col);
 }
 
-function attemptConnectFourMove(col) {
-  if (AppStateConnectFour.gameOver) {
-    setStatusConnectFour("board-info", "Game is over. Start a new game to play again.");
+function attemptFourInARowMove(col) {
+  if (AppStateFourInARow.gameOver) {
+    setStatusFourInARow("board-info", "Game is over. Start a new game to play again.");
     return;
   }
-  if (AppStateConnectFour.mode === "offline-ai" && AppStateConnectFour.turn !== AppStateConnectFour.humanColor) {
-    setStatusConnectFour("board-info", "Computer to move.");
+  if (AppStateFourInARow.mode === "offline-ai" && AppStateFourInARow.turn !== AppStateFourInARow.humanColor) {
+    setStatusFourInARow("board-info", "Computer to move.");
     return;
   }
-  if (ConnectFourCore.landingRow(AppStateConnectFour.board, col) === -1) return; // column full - silently ignore
+  if (FourInARowCore.landingRow(AppStateFourInARow.board, col) === -1) return; // column full - silently ignore
 
-  applyConnectFourMove(col);
+  applyFourInARowMove(col);
 }
 
-function applyConnectFourMove(col) {
-  pushUndoSnapshotConnectFour();
-  const mover = AppStateConnectFour.turn;
-  const row = ConnectFourCore.landingRow(AppStateConnectFour.board, col);
-  const result = ConnectFourCore.applyMove(AppStateConnectFour.board, mover, col);
-  AppStateConnectFour.lastMove = { row, col };
-  AppStateConnectFour.board = result.board;
-  AppStateConnectFour.moveCount++;
-  updateConnectFourBoard();
-  updateGameLabelsConnectFour();
+function applyFourInARowMove(col) {
+  pushUndoSnapshotFourInARow();
+  const mover = AppStateFourInARow.turn;
+  const row = FourInARowCore.landingRow(AppStateFourInARow.board, col);
+  const result = FourInARowCore.applyMove(AppStateFourInARow.board, mover, col);
+  AppStateFourInARow.lastMove = { row, col };
+  AppStateFourInARow.board = result.board;
+  AppStateFourInARow.moveCount++;
+  updateFourInARowBoard();
+  updateGameLabelsFourInARow();
 
-  const winner = ConnectFourCore.getWinner(AppStateConnectFour.board);
+  const winner = FourInARowCore.getWinner(AppStateFourInARow.board);
   if (winner) {
-    AppStateConnectFour.gameOver = true;
-    const winnerName = colorNameConnectFour(winner);
-    announceGameResultConnectFour(resultTitleConnectFour(winner), winnerName + " wins - four in a row!");
-    recordConnectFourStatsIfVsAi(winner === AppStateConnectFour.humanColor ? "win" : "loss");
-    updateGameLabelsConnectFour();
+    AppStateFourInARow.gameOver = true;
+    const winnerName = colorNameFourInARow(winner);
+    announceGameResultFourInARow(resultTitleFourInARow(winner), winnerName + " wins - four in a row!");
+    recordFourInARowStatsIfVsAi(winner === AppStateFourInARow.humanColor ? "win" : "loss");
+    updateGameLabelsFourInARow();
     return;
   }
-  if (ConnectFourCore.isFull(AppStateConnectFour.board)) {
-    AppStateConnectFour.gameOver = true;
-    announceGameResultConnectFour("Draw", "It's a draw - the board is full!");
-    recordConnectFourStatsIfVsAi("draw");
-    updateGameLabelsConnectFour();
+  if (FourInARowCore.isFull(AppStateFourInARow.board)) {
+    AppStateFourInARow.gameOver = true;
+    announceGameResultFourInARow("Draw", "It's a draw - the board is full!");
+    recordFourInARowStatsIfVsAi("draw");
+    updateGameLabelsFourInARow();
     return;
   }
 
-  AppStateConnectFour.turn = ConnectFourCore.otherColor(mover);
-  updateConnectFourBoard();
-  updateGameLabelsConnectFour();
-  maybeTriggerAiTurnConnectFour();
-  if (!(AppStateConnectFour.mode === "offline-ai" && AppStateConnectFour.turn !== AppStateConnectFour.humanColor)) {
-    setStatusConnectFour("board-info", colorNameConnectFour(mover) + " played. " + colorNameConnectFour(AppStateConnectFour.turn) + " to move.");
+  AppStateFourInARow.turn = FourInARowCore.otherColor(mover);
+  updateFourInARowBoard();
+  updateGameLabelsFourInARow();
+  maybeTriggerAiTurnFourInARow();
+  if (!(AppStateFourInARow.mode === "offline-ai" && AppStateFourInARow.turn !== AppStateFourInARow.humanColor)) {
+    setStatusFourInARow("board-info", colorNameFourInARow(mover) + " played. " + colorNameFourInARow(AppStateFourInARow.turn) + " to move.");
   }
 }
 
-function maybeTriggerAiTurnConnectFour() {
-  if (AppStateConnectFour.gameOver) return;
-  if (AppStateConnectFour.mode === "offline-ai" && AppStateConnectFour.turn !== AppStateConnectFour.humanColor) {
-    setTimeout(aiTurnConnectFour, AiPacing.delay(400));
+function maybeTriggerAiTurnFourInARow() {
+  if (AppStateFourInARow.gameOver) return;
+  if (AppStateFourInARow.mode === "offline-ai" && AppStateFourInARow.turn !== AppStateFourInARow.humanColor) {
+    setTimeout(aiTurnFourInARow, AiPacing.delay(400));
   }
 }
 
-function aiTurnConnectFour() {
-  if (AppStateConnectFour.mode !== "offline-ai" || AppStateConnectFour.gameOver) return;
-  const aiColor = ConnectFourCore.otherColor(AppStateConnectFour.humanColor);
-  if (AppStateConnectFour.turn !== aiColor) return;
+function aiTurnFourInARow() {
+  if (AppStateFourInARow.mode !== "offline-ai" || AppStateFourInARow.gameOver) return;
+  const aiColor = FourInARowCore.otherColor(AppStateFourInARow.humanColor);
+  if (AppStateFourInARow.turn !== aiColor) return;
 
-  setStatusConnectFour("board-info", "Computer thinking…");
+  setStatusFourInARow("board-info", "Computer thinking…");
   // The position this search is for: if it has changed by the time the
   // pause is over (undo, new game), the computer must not move.
-  const scheduledFor = AppStateConnectFour.board;
+  const scheduledFor = AppStateFourInARow.board;
   setTimeout(() => {
-    if (AppStateConnectFour.gameOver || AppStateConnectFour.board !== scheduledFor || AppStateConnectFour.turn !== aiColor) return;
-    const col = ConnectFourAi.chooseMove(AppStateConnectFour.board, aiColor, AppStateConnectFour.aiLevel);
+    if (AppStateFourInARow.gameOver || AppStateFourInARow.board !== scheduledFor || AppStateFourInARow.turn !== aiColor) return;
+    const col = FourInARowAi.chooseMove(AppStateFourInARow.board, aiColor, AppStateFourInARow.aiLevel);
     if (col === null || col === undefined) return;
-    applyConnectFourMove(col);
+    applyFourInARowMove(col);
   }, AiPacing.delay(300));
 }
 
 function undoLastMove() {
-  if (!AppStateConnectFour.undoStack || !AppStateConnectFour.undoStack.length) return;
-  let prev = AppStateConnectFour.undoStack.pop();
-  if (AppStateConnectFour.mode === "offline-ai") {
-    while (prev.turn !== AppStateConnectFour.humanColor && AppStateConnectFour.undoStack.length) {
-      prev = AppStateConnectFour.undoStack.pop();
+  if (!AppStateFourInARow.undoStack || !AppStateFourInARow.undoStack.length) return;
+  let prev = AppStateFourInARow.undoStack.pop();
+  if (AppStateFourInARow.mode === "offline-ai") {
+    while (prev.turn !== AppStateFourInARow.humanColor && AppStateFourInARow.undoStack.length) {
+      prev = AppStateFourInARow.undoStack.pop();
     }
   }
-  AppStateConnectFour.board = prev.board;
-  AppStateConnectFour.turn = prev.turn;
-  AppStateConnectFour.gameOver = prev.gameOver;
-  AppStateConnectFour.moveCount = prev.moveCount;
-  AppStateConnectFour.lastMove = prev.lastMove || null;
-  setGameResultConnectFour("");
-  updateConnectFourBoard();
-  updateGameLabelsConnectFour();
-  setStatusConnectFour("board-info", "Move undone. " + colorNameConnectFour(AppStateConnectFour.turn) + " to move.");
+  AppStateFourInARow.board = prev.board;
+  AppStateFourInARow.turn = prev.turn;
+  AppStateFourInARow.gameOver = prev.gameOver;
+  AppStateFourInARow.moveCount = prev.moveCount;
+  AppStateFourInARow.lastMove = prev.lastMove || null;
+  setGameResultFourInARow("");
+  updateFourInARowBoard();
+  updateGameLabelsFourInARow();
+  setStatusFourInARow("board-info", "Move undone. " + colorNameFourInARow(AppStateFourInARow.turn) + " to move.");
 }
 
-function showBoardSectionConnectFour() {
+function showBoardSectionFourInARow() {
   const section = document.getElementById("board-section");
   if (section) section.classList.remove("hidden");
   const placeholder = document.getElementById("board-placeholder");
@@ -349,13 +349,13 @@ function showBoardSectionConnectFour() {
 
 /*** Board rendering (mirrors reversi-app.js's uniform float-grid approach) ***/
 
-function buildConnectFourBoardDOM() {
-  const boardEl = document.getElementById("connectfour-board");
+function buildFourInARowBoardDOM() {
+  const boardEl = document.getElementById("fourinarow-board");
   if (!boardEl) return;
   boardEl.innerHTML = "";
 
-  for (let r = 0; r < ConnectFourCore.ROWS; r++) {
-    for (let c = 0; c < ConnectFourCore.COLS; c++) {
+  for (let r = 0; r < FourInARowCore.ROWS; r++) {
+    for (let c = 0; c < FourInARowCore.COLS; c++) {
       const square = document.createElement("button");
       square.type = "button";
       square.className = "square c4-square";
@@ -364,62 +364,62 @@ function buildConnectFourBoardDOM() {
       const piece = document.createElement("span");
       piece.className = "c4-piece";
       square.appendChild(piece);
-      square.addEventListener("click", onConnectFourSquareClick);
+      square.addEventListener("click", onFourInARowSquareClick);
       boardEl.appendChild(square);
     }
   }
 
-  ensureConnectFourSquareAspectRatio();
+  ensureFourInARowSquareAspectRatio();
   if (window.requestAnimationFrame) {
-    window.requestAnimationFrame(ensureConnectFourSquareAspectRatio);
+    window.requestAnimationFrame(ensureFourInARowSquareAspectRatio);
   } else {
-    setTimeout(ensureConnectFourSquareAspectRatio, 0);
+    setTimeout(ensureFourInARowSquareAspectRatio, 0);
   }
-  ensureConnectFourResizeHandler();
+  ensureFourInARowResizeHandler();
 }
 
-let einkConnectFourResizeHandlerAttached = false;
-let einkConnectFourResizeTimeoutId = null;
+let einkFourInARowResizeHandlerAttached = false;
+let einkFourInARowResizeTimeoutId = null;
 
-function ensureConnectFourSquareAspectRatio() {
-  const boardEl = document.getElementById("connectfour-board");
+function ensureFourInARowSquareAspectRatio() {
+  const boardEl = document.getElementById("fourinarow-board");
   if (!boardEl) return;
   const rect = boardEl.getBoundingClientRect();
   if (!rect || !rect.width) return;
-  const squareSize = rect.width / ConnectFourCore.COLS;
+  const squareSize = rect.width / FourInARowCore.COLS;
   boardEl.querySelectorAll(".c4-square").forEach((sq) => {
     sq.style.height = squareSize + "px";
   });
 }
 
-function ensureConnectFourResizeHandler() {
-  if (einkConnectFourResizeHandlerAttached) return;
-  einkConnectFourResizeHandlerAttached = true;
+function ensureFourInARowResizeHandler() {
+  if (einkFourInARowResizeHandlerAttached) return;
+  einkFourInARowResizeHandlerAttached = true;
   window.addEventListener("resize", () => {
-    if (einkConnectFourResizeTimeoutId !== null) clearTimeout(einkConnectFourResizeTimeoutId);
-    einkConnectFourResizeTimeoutId = setTimeout(() => {
-      einkConnectFourResizeTimeoutId = null;
-      ensureConnectFourSquareAspectRatio();
+    if (einkFourInARowResizeTimeoutId !== null) clearTimeout(einkFourInARowResizeTimeoutId);
+    einkFourInARowResizeTimeoutId = setTimeout(() => {
+      einkFourInARowResizeTimeoutId = null;
+      ensureFourInARowSquareAspectRatio();
     }, 150);
   });
 }
 
-function updateConnectFourBoard() {
-  const boardEl = document.getElementById("connectfour-board");
+function updateFourInARowBoard() {
+  const boardEl = document.getElementById("fourinarow-board");
   if (!boardEl) return;
 
-  const legalCols = AppStateConnectFour.gameOver
+  const legalCols = AppStateFourInARow.gameOver
     ? []
-    : ConnectFourCore.getLegalMoves(AppStateConnectFour.board, AppStateConnectFour.turn);
+    : FourInARowCore.getLegalMoves(AppStateFourInARow.board, AppStateFourInARow.turn);
   // Only the topmost empty cell of each playable column is highlighted
   // as the "drop here" landing spot, even though clicking anywhere in
   // that column works.
-  const landingSpots = new Set(legalCols.map((c) => ConnectFourCore.landingRow(AppStateConnectFour.board, c) + "," + c));
+  const landingSpots = new Set(legalCols.map((c) => FourInARowCore.landingRow(AppStateFourInARow.board, c) + "," + c));
 
   boardEl.querySelectorAll(".c4-square").forEach((sq) => {
     const r = parseInt(sq.dataset.row, 10);
     const c = parseInt(sq.dataset.col, 10);
-    const piece = AppStateConnectFour.board[r][c];
+    const piece = AppStateFourInARow.board[r][c];
     const pieceEl = sq.querySelector(".c4-piece");
     if (pieceEl) {
       pieceEl.classList.remove("c4-piece-black", "c4-piece-white");
@@ -427,7 +427,7 @@ function updateConnectFourBoard() {
     }
     const isLanding = landingSpots.has(r + "," + c);
     sq.classList.toggle("c4-square-movable", isLanding);
-    const last = AppStateConnectFour.lastMove;
+    const last = AppStateFourInARow.lastMove;
     sq.classList.toggle("lm-to", !!last && last.row === r && last.col === c);
     sq.disabled = !legalCols.includes(c);
 
@@ -438,26 +438,26 @@ function updateConnectFourBoard() {
   });
 }
 
-function updateGameLabelsConnectFour() {
+function updateGameLabelsFourInARow() {
   const meta = document.getElementById("game-meta");
-  if (meta) I18n.setMsg(meta, AppStateConnectFour.moveCount ? "Move " + AppStateConnectFour.moveCount : "");
-  updateUndoButtonVisibilityConnectFour();
-  updateResignVisibilityConnectFour();
+  if (meta) I18n.setMsg(meta, AppStateFourInARow.moveCount ? "Move " + AppStateFourInARow.moveCount : "");
+  updateUndoButtonVisibilityFourInARow();
+  updateResignVisibilityFourInARow();
 
-  if (AppStateConnectFour.gameOver) clearSavedConnectFourGame();
-  else saveConnectFourGame();
+  if (AppStateFourInARow.gameOver) clearSavedFourInARowGame();
+  else saveFourInARowGame();
 }
 
-function updateUndoButtonVisibilityConnectFour() {
+function updateUndoButtonVisibilityFourInARow() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
-  const hasUndo = (AppStateConnectFour.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateConnectFour.gameOver));
+  const hasUndo = (AppStateFourInARow.undoStack || []).length > 0;
+  btn.classList.toggle("hidden", !(hasUndo && !AppStateFourInARow.gameOver));
 }
 
-function updateResignVisibilityConnectFour() {
+function updateResignVisibilityFourInARow() {
   const resignBtn = document.getElementById("resign-button");
-  if (resignBtn) resignBtn.classList.toggle("hidden", AppStateConnectFour.gameOver);
+  if (resignBtn) resignBtn.classList.toggle("hidden", AppStateFourInARow.gameOver);
 }
 
-document.addEventListener("DOMContentLoaded", initConnectFourApp);
+document.addEventListener("DOMContentLoaded", initFourInARowApp);

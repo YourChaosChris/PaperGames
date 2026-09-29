@@ -56,19 +56,19 @@
 
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
-    <button id="start-onitama-game" class="primary" data-i18n="new_game">New game</button>
-    <div id="onitama-color-choice" class="inline-options">
-      <label class="color-choice"><input type="radio" name="onitama-color" value="blue" checked> <span class="color-choice-icon onitama-icon-piece onitama-icon-piece-blue"></span></label>
-      <label class="color-choice"><input type="radio" name="onitama-color" value="red"> <span class="color-choice-icon onitama-icon-piece onitama-icon-piece-red"></span></label>
+    <button id="start-cardtactics-game" class="primary" data-i18n="new_game">New game</button>
+    <div id="cardtactics-color-choice" class="inline-options">
+      <label class="color-choice"><input type="radio" name="cardtactics-color" value="blue" checked> <span class="color-choice-icon cardtactics-icon-piece cardtactics-icon-piece-blue"></span></label>
+      <label class="color-choice"><input type="radio" name="cardtactics-color" value="red"> <span class="color-choice-icon cardtactics-icon-piece cardtactics-icon-piece-red"></span></label>
     </div>
-    <select id="onitama-level-inline">
+    <select id="cardtactics-level-inline">
         <option value="0" data-i18n="mode_two_player">2 Player (local)</option>
         <option value="1" data-i18n="level_easy">Easy</option>
         <option value="2" selected data-i18n="level_medium">Medium</option>
         <option value="3" data-i18n="level_hard">Hard</option>
       </select>
   </div>
-  <div id="offline-onitama-status" class="status-text"></div>
+  <div id="offline-cardtactics-status" class="status-text"></div>
 </section>
 </div>
 
@@ -82,21 +82,21 @@
     <div id="board-info" class="status-text" aria-live="polite"></div>
   </div>
   <div id="board-placeholder" class="board-placeholder">
-    <span class="board-placeholder-icon onitama-icon-piece onitama-icon-piece-blue"></span>
+    <span class="board-placeholder-icon cardtactics-icon-piece cardtactics-icon-piece-blue"></span>
     <div class="board-placeholder-text">
       <span class="board-placeholder-title" data-i18n="game_card_tactics">Card Tactics</span>
       <span class="board-placeholder-subtitle">PaperGames</span>
     </div>
   </div>
   <div id="board-container" class="hidden">
-    <div id="onitama-cards-red" class="onitama-cards-row"></div>
-    <div id="onitama-board-wrap" class="onitama-board-wrap">
-      <div id="onitama-board" class="onitama-board" role="group" aria-label="Card Tactics board"></div>
+    <div id="cardtactics-cards-red" class="cardtactics-cards-row"></div>
+    <div id="cardtactics-board-wrap" class="cardtactics-board-wrap">
+      <div id="cardtactics-board" class="cardtactics-board" role="group" aria-label="Card Tactics board"></div>
     </div>
-    <div id="onitama-cards-blue" class="onitama-cards-row"></div>
-    <div id="onitama-neutral-row" class="onitama-neutral-row">
+    <div id="cardtactics-cards-blue" class="cardtactics-cards-row"></div>
+    <div id="cardtactics-neutral-row" class="cardtactics-neutral-row">
       <span data-i18n="cardtactics_neutral_card">Next card:</span>
-      <div id="onitama-neutral-card" class="onitama-card"></div>
+      <div id="cardtactics-neutral-card" class="cardtactics-card"></div>
     </div>
   </div>
   <div id="board-actions" class="board-actions">

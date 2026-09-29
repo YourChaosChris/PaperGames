@@ -4,7 +4,7 @@
 // by four defenders, besieged by eight attackers from the four edges.
 // This is a real, ancient game (the Tafl family predates written
 // record in parts of Scandinavia and the British Isles), so - unlike
-// Onitama - there's no IP-safety reason to invent anything here; this
+// Card Tactics - there's no IP-safety reason to invent anything here; this
 // module implements a clearly-documented, self-consistent simplified
 // ruleset rather than any one strict historical reconstruction (real
 // Tafl rulesets vary a lot on capture edge-cases between sources).

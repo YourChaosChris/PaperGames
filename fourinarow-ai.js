@@ -1,6 +1,6 @@
-// connectfour-ai.js
+// fourinarow-ai.js
 // Offline Connect Four opponent, three strength levels built on
-// connectfour-core.js, mirroring the structure of checkers-ai.js. The
+// fourinarow-core.js, mirroring the structure of checkers-ai.js. The
 // board is tiny (6x7) with a branching factor of at most 7, so a plain
 // iterative-deepening alpha-beta search goes comfortably deep within
 // budget - no special-casing needed the way Ur or Backgammon need for
@@ -9,7 +9,7 @@
 //   2 = medium - 1-ply window-scoring evaluation with light randomness
 //   3 = hard   - iterative deepening alpha-beta
 
-const ConnectFourAi = (function () {
+const FourInARowAi = (function () {
   const INF = 1e9;
 
   // Scores one 4-cell window for `color`: strongly rewards windows
@@ -17,7 +17,7 @@ const ConnectFourAi = (function () {
   // which is an immediate threat) and only counts a window at all if
   // the opponent hasn't already blocked it.
   function scoreWindow(cells, color) {
-    const opp = ConnectFourCore.otherColor(color);
+    const opp = FourInARowCore.otherColor(color);
     const mine = cells.filter((c) => c === color).length;
     const theirs = cells.filter((c) => c === opp).length;
     const empty = cells.filter((c) => c === null).length;
@@ -31,14 +31,14 @@ const ConnectFourAi = (function () {
 
   function evaluateFor(color, board) {
     let score = 0;
-    const rows = ConnectFourCore.ROWS;
-    const cols = ConnectFourCore.COLS;
+    const rows = FourInARowCore.ROWS;
+    const cols = FourInARowCore.COLS;
 
     // Center column control is a well-known strong Connect Four heuristic.
     const centerCol = Math.floor(cols / 2);
     for (let r = 0; r < rows; r++) {
       if (board[r][centerCol] === color) score += 3;
-      else if (board[r][centerCol] === ConnectFourCore.otherColor(color)) score -= 3;
+      else if (board[r][centerCol] === FourInARowCore.otherColor(color)) score -= 3;
     }
 
     function addWindow(cells) {
@@ -82,25 +82,25 @@ const ConnectFourAi = (function () {
       }
     }
 
-    const winner = ConnectFourCore.getWinner(board);
+    const winner = FourInARowCore.getWinner(board);
     if (winner) {
       const bonus = (maxDepth - depth); // prefer a faster win / slower loss
       return winner === perspective ? INF / 2 + bonus : -INF / 2 - bonus;
     }
-    const moves = ConnectFourCore.getLegalMoves(board, colorToMove);
+    const moves = FourInARowCore.getLegalMoves(board, colorToMove);
     if (!moves.length) return 0; // board full, draw
 
     if (depth >= maxDepth) {
       return evaluateFor(perspective, board);
     }
 
-    const ordered = orderMoves(moves, ConnectFourCore.COLS);
+    const ordered = orderMoves(moves, FourInARowCore.COLS);
     const isMaximizing = colorToMove === perspective;
     let best = isMaximizing ? -INF : INF;
 
     for (const col of ordered) {
-      const { board: b2 } = ConnectFourCore.applyMove(board, colorToMove, col);
-      const score = minimax(b2, ConnectFourCore.otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState);
+      const { board: b2 } = FourInARowCore.applyMove(board, colorToMove, col);
+      const score = minimax(b2, FourInARowCore.otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState);
       if (searchState && searchState.aborted) return best;
       if (isMaximizing) {
         if (score > best) best = score;
@@ -116,7 +116,7 @@ const ConnectFourAi = (function () {
 
   function searchBestMove(board, color, moves, maxDepth, nodeBudget) {
     const searchState = { nodes: 0, budget: nodeBudget, aborted: false };
-    let orderedMoves = orderMoves(moves, ConnectFourCore.COLS);
+    let orderedMoves = orderMoves(moves, FourInARowCore.COLS);
 
     let lastCompleteBestMove = null;
 
@@ -127,8 +127,8 @@ const ConnectFourAi = (function () {
       let depthAborted = false;
 
       for (const col of orderedMoves) {
-        const { board: b2 } = ConnectFourCore.applyMove(board, color, col);
-        const score = minimax(b2, ConnectFourCore.otherColor(color), 1, depth, alpha, INF, color, searchState);
+        const { board: b2 } = FourInARowCore.applyMove(board, color, col);
+        const score = minimax(b2, FourInARowCore.otherColor(color), 1, depth, alpha, INF, color, searchState);
         if (searchState.aborted) {
           depthAborted = true;
           break;
@@ -156,7 +156,7 @@ const ConnectFourAi = (function () {
   };
 
   function chooseMove(board, color, level) {
-    const moves = ConnectFourCore.getLegalMoves(board, color);
+    const moves = FourInARowCore.getLegalMoves(board, color);
     if (!moves.length) return null;
 
     if (typeof level !== "number" || level < 1) level = 1;
@@ -169,7 +169,7 @@ const ConnectFourAi = (function () {
     if (config.style === "greedy") {
       const scored = moves.map((col) => ({
         col,
-        score: evaluateFor(color, ConnectFourCore.applyMove(board, color, col).board)
+        score: evaluateFor(color, FourInARowCore.applyMove(board, color, col).board)
       }));
       scored.sort((a, b) => b.score - a.score);
       const topN = Math.min(config.topN, scored.length);
@@ -186,8 +186,8 @@ const ConnectFourAi = (function () {
 })();
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = ConnectFourAi;
+  module.exports = FourInARowAi;
 }
 if (typeof window !== "undefined") {
-  window.ConnectFourAi = ConnectFourAi;
+  window.FourInARowAi = FourInARowAi;
 }
