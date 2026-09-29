@@ -955,7 +955,7 @@ function buildBoardDOM() {
     fileIndices.forEach((file, colIndex) => {
       const square = document.createElement("button");
       square.className = "square";
-      const isDark = (rank + file) % 2 === 1;
+      const isDark = (rank + file) % 2 === 0; // a1 (rank 0, file 0) ist dunkel
       square.classList.add(isDark ? "dark" : "light");
       const coord = ChessCore.indexToCoord(file, rank);
       square.dataset.coord = coord;
