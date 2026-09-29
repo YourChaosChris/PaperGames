@@ -5413,26 +5413,26 @@ margin: 0.5rem auto 0;
   font-size: 1.05em;
 }
 
-/* Mastermind: four guess slots, each a button that cycles through the
-   six flat shapes (see mastermind-app.js) on tap - no color, no
+/* Bulls and Cows: four guess slots, each a button that cycles through the
+   six flat shapes (see bullsandcows-app.js) on tap - no color, no
    drag-and-drop, no hover state needed. Feedback pegs below each row of
    the history are plain filled/hollow circles rather than colored dots. */
-.mastermind-guess-row {
+.bullsandcows-guess-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin: 0.5rem 0;
 }
 
-.mastermind-guess-row > * {
+.bullsandcows-guess-row > * {
   margin: 0 0.5rem 0.5rem 0;
 }
 
-.mastermind-guess-row > *:last-child {
+.bullsandcows-guess-row > *:last-child {
   margin-right: 0;
 }
 
-.mastermind-slot {
+.bullsandcows-slot {
   display: block;
   width: 3.2rem;
   height: 3.2rem;
@@ -5443,40 +5443,40 @@ margin: 0.5rem auto 0;
   cursor: pointer;
 }
 
-.mastermind-slot:disabled {
+.bullsandcows-slot:disabled {
   cursor: default;
   opacity: 0.6;
 }
 
-.mastermind-slot svg {
+.bullsandcows-slot svg {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.mastermind-legend {
+.bullsandcows-legend {
   font-size: 0.85em;
   color: var(--muted);
   margin: 0.3rem 0 0.6rem;
 }
 
-.mastermind-legend-row {
+.bullsandcows-legend-row {
   display: flex;
   align-items: center;
   margin: 0.15rem 0;
 }
 
-.mastermind-legend-row .mastermind-peg {
+.bullsandcows-legend-row .bullsandcows-peg {
   margin-right: 0.4em;
 }
 
-.mastermind-history {
+.bullsandcows-history {
   margin-top: 0.75rem;
   display: flex;
   flex-direction: column;
 }
 
-.mastermind-history-row {
+.bullsandcows-history-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -5484,42 +5484,42 @@ margin: 0.5rem auto 0;
   padding: 0.4rem 0;
 }
 
-.mastermind-history-row:first-child {
+.bullsandcows-history-row:first-child {
   border-top: none;
 }
 
-.mastermind-history-number {
+.bullsandcows-history-number {
   width: 4.2rem;
   font-weight: 700;
   flex-shrink: 0;
 }
 
-.mastermind-history-shapes {
+.bullsandcows-history-shapes {
   display: flex;
   margin-right: 0.6rem;
 }
 
-.mastermind-history-shape {
+.bullsandcows-history-shape {
   display: block;
   width: 1.6rem;
   height: 1.6rem;
   margin-right: 0.25rem;
 }
 
-.mastermind-history-shape svg {
+.bullsandcows-history-shape svg {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.mastermind-history-pegs {
+.bullsandcows-history-pegs {
   display: grid;
   grid-template-columns: repeat(2, auto);
   gap: 0.9rem;
   margin-left: auto;
 }
 
-.mastermind-peg {
+.bullsandcows-peg {
   display: inline-block;
   width: 1rem;
   height: 1rem;
@@ -5528,15 +5528,15 @@ margin: 0.5rem auto 0;
   box-sizing: border-box;
 }
 
-.mastermind-peg-black {
+.bullsandcows-peg-black {
   background: var(--text);
 }
 
-.mastermind-peg-white {
+.bullsandcows-peg-white {
   background: var(--bg);
 }
 
-.mastermind-score {
+.bullsandcows-score {
   display: inline-flex;
   align-items: center;
   min-width: 2.6rem;
@@ -5546,16 +5546,16 @@ margin: 0.5rem auto 0;
 
 /* Abstand per Rand statt "gap": Flexbox-gap kennen ältere
    E-Reader-Browser (WebView vor Chrome 84) nicht. */
-.mastermind-score > * + * {
+.bullsandcows-score > * + * {
   margin-left: 0.35rem;
 }
 
-.mastermind-score-num {
+.bullsandcows-score-num {
   font-size: 1rem;
   line-height: 1;
 }
 
-.mastermind-score-zero {
+.bullsandcows-score-zero {
   opacity: 0.45;
 }
 
@@ -6159,25 +6159,25 @@ max-width: 900px;
   border: 2px solid var(--border);
 }
 
-/* Abalone board: a 61-cell hexagon rendered as plain circular buttons
-   at hex-grid positions (see abalone-app.js's cube-coordinate pixel
+/* Marble Push board: a 61-cell hexagon rendered as plain circular buttons
+   at hex-grid positions (see marblepush-app.js's cube-coordinate pixel
    math) - round holes/marbles read just as clearly on e-ink as true
    hexagon cells and are far simpler to get pixel-perfect on an old
    WebView. Height is JS-enforced from the measured width (see
-   ensureAbaloneBoardAspect) rather than via `aspect-ratio`, which some
+   ensureMarblePushBoardAspect) rather than via `aspect-ratio`, which some
    E-Ink browsers silently ignore. */
-.abalone-board-wrap {
+.marblepush-board-wrap {
   max-width: 640px;
   margin: 0 auto;
 }
 
-.abalone-board {
+.marblepush-board {
   position: relative;
   width: 100%;
   box-sizing: border-box;
 }
 
-.abalone-cell {
+.marblepush-cell {
   position: absolute;
   transform: translate(-50%, -50%);
   background: var(--square-light);
@@ -6189,11 +6189,11 @@ max-width: 900px;
   z-index: 2;
 }
 
-.abalone-cell-movable {
+.marblepush-cell-movable {
   background: var(--square-dark);
 }
 
-.abalone-cell-selected {
+.marblepush-cell-selected {
   border-color: var(--accent);
   border-width: 3px;
 }
@@ -6201,17 +6201,17 @@ max-width: 900px;
 /* A push destination: dashed border on top of the movable shading, so
    "this can capture" is conveyed structurally rather than by color
    alone. */
-.abalone-cell-sumito {
+.marblepush-cell-sumito {
   border-style: dashed;
   border-width: 3px;
   border-color: var(--accent);
 }
 
-.abalone-cell.last-move {
+.marblepush-cell.last-move {
   box-shadow: inset 0 0 0 2px var(--accent);
 }
 
-.abalone-piece {
+.marblepush-piece {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -6223,19 +6223,19 @@ max-width: 900px;
   pointer-events: none;
 }
 
-.abalone-piece-black {
+.marblepush-piece-black {
   background: #111;
   border: 2px solid #000;
 }
 
-.abalone-piece-white {
+.marblepush-piece-white {
   background: #fdfdfd;
   border: 2px solid var(--border);
 }
 
 /* Small disc icons for the color-choice picker and board placeholder,
    matching the board's own marble styling. */
-.abalone-icon-disc {
+.marblepush-icon-disc {
   display: inline-block;
   width: 1em;
   height: 1em;
@@ -6244,12 +6244,12 @@ max-width: 900px;
   box-sizing: border-box;
 }
 
-.abalone-icon-disc-black {
+.marblepush-icon-disc-black {
   background: #111;
   border: 2px solid #000;
 }
 
-.abalone-icon-disc-white {
+.marblepush-icon-disc-white {
   background: #fdfdfd;
   border: 2px solid var(--border);
 }
@@ -6257,11 +6257,11 @@ max-width: 900px;
 /* The current-selection hint and its "Clear selection" button: plain
    stacked content, margin-based spacing rather than flexbox `gap`
    (unsupported on the Tolino's Chrome 61 WebView). */
-.abalone-selection-controls {
+.marblepush-selection-controls {
   margin-top: 0.6rem;
 }
 
-.abalone-selection-controls button {
+.marblepush-selection-controls button {
   margin: 0 0.5rem 0.5rem 0;
 }
 
@@ -6269,24 +6269,24 @@ max-width: 900px;
    margin-based spacing instead, since some E-Ink browsers (Tolino
    confirmed) don't support `gap` on a flex container and render items
    with zero space between them. */
-.abalone-example-row {
+.marblepush-example-row {
   display: flex;
   flex-wrap: wrap;
   margin: 0 0 1rem -1.5rem;
 }
 
-.abalone-example-figure {
+.marblepush-example-figure {
   margin: 0 0 1rem 1.5rem;
   max-width: 300px;
 }
 
-.abalone-example-figure svg {
+.marblepush-example-figure svg {
   display: block;
   max-width: 100%;
   height: auto;
 }
 
-.abalone-example-figure figcaption {
+.marblepush-example-figure figcaption {
   font-size: 0.85rem;
   color: var(--muted);
   margin-top: 0.4rem;
@@ -8282,12 +8282,12 @@ max-width: 900px;
 
 /* The example rows use a negative start margin as a gutter; in right-to-
    left pages that gutter belongs on the right, not past the left edge. */
-[dir="rtl"] .abalone-example-row,
+[dir="rtl"] .marblepush-example-row,
 [dir="rtl"] .fanorona-example-row {
   margin: 0 -1.5rem 1rem 0;
 }
 
-[dir="rtl"] .abalone-example-figure,
+[dir="rtl"] .marblepush-example-figure,
 [dir="rtl"] .fanorona-example-figure {
   margin: 0 1.5rem 1rem 0;
 }

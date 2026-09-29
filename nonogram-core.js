@@ -1,5 +1,5 @@
 // nonogram-core.js
-// Dependency-free Nonogram (Picross) engine: computing row/column clues
+// Dependency-free Nonogram engine: computing row/column clues
 // from a solved picture, checking a player's grid against it, and a
 // real constraint-propagation-plus-backtracking solver used (offline,
 // while authoring puzzles) to confirm each curated picture has one and

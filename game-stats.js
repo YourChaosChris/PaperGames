@@ -6,13 +6,27 @@
 
 const GameStats = (function () {
   const KEY = "einkchess_stats";
-  const GAMES = ["chess", "go", "checkers", "ur", "morris", "backgammon", "xiangqi", "mancala", "ludo", "othello", "connectfour", "gomoku", "senet", "shogi", "sudoku", "pegsolitaire", "minesweeper", "nonogram", "twenty48", "mahjong", "freecell", "onitama", "hnefatafl", "quoridor", "hex", "halma", "lightsout", "mastermind", "dotsandboxes", "amazons", "kakuro", "hashi", "skyscrapers", "slitherlink", "fanorona", "fleetbattle", "konane", "sternhalma", "baghchal", "tablut", "abalone", "pyramidsolitaire", "surakarta", "domino", "maumau", "calcudoku", "numberblocks", "killersudoku", "schwimmen", "durak", "concan", "doppelkopf", "trix", "cratepusher"];
+  const GAMES = ["chess", "go", "checkers", "ur", "morris", "backgammon", "xiangqi", "mancala", "ludo", "othello", "connectfour", "gomoku", "senet", "shogi", "sudoku", "pegsolitaire", "minesweeper", "nonogram", "twenty48", "mahjong", "freecell", "onitama", "hnefatafl", "quoridor", "hex", "halma", "lightsout", "bullsandcows", "dotsandboxes", "amazons", "kakuro", "hashi", "skyscrapers", "slitherlink", "fanorona", "fleetbattle", "konane", "sternhalma", "baghchal", "tablut", "marblepush", "pyramidsolitaire", "surakarta", "domino", "maumau", "calcudoku", "numberblocks", "killersudoku", "schwimmen", "durak", "concan", "doppelkopf", "trix", "cratepusher"];
+
+  // Games renamed for trademark reasons: new name -> old name. Results
+  // recorded under the old name are carried over once.
+  const RENAMED = { bullsandcows: "mastermind", marblepush: "abalone" };
 
   function loadAll() {
     try {
       if (!window.localStorage) return {};
       const raw = window.localStorage.getItem(KEY);
-      return raw ? JSON.parse(raw) : {};
+      const all = raw ? JSON.parse(raw) : {};
+      let moved = false;
+      Object.keys(RENAMED).forEach((name) => {
+        const old = RENAMED[name];
+        if (!all[old]) return;
+        if (!all[name]) all[name] = all[old];
+        delete all[old];
+        moved = true;
+      });
+      if (moved) window.localStorage.setItem(KEY, JSON.stringify(all));
+      return all;
     } catch (e) {
       return {};
     }

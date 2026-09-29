@@ -4,8 +4,8 @@
 // its own copy of this markup/CSS.
 
 const ResultModal = (function () {
-  // Every game's own result title (see e.g. abalone-app.js's
-  // resultTitleAbalone, or the various fixed puzzle-win/-lose titles in
+  // Every game's own result title (see e.g. marblepush-app.js's
+  // resultTitleMarblePush, or the various fixed puzzle-win/-lose titles in
   // i18n.js) is one of a small, consistent set of English phrasings -
   // this reads that title text to decide whether a small celebratory
   // mark belongs on the popup, rather than adding an outcome parameter

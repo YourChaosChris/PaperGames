@@ -85,7 +85,7 @@ const LUDO_SHAPE_MARKUP = {
 };
 
 // The shape of a color as inline SVG in the text colour (same idea as
-// mastermindSymbolSvg in mastermind-app.js).
+// bullsandcowsSymbolSvg in bullsandcows-app.js).
 function ludoShapeSvg(color) {
   return '<svg class="ludo-shape" viewBox="0 0 100 100" aria-hidden="true" focusable="false">' + LUDO_SHAPE_MARKUP[color] + "</svg>";
 }

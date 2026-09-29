@@ -1,22 +1,22 @@
-// abalone-ai.js
-// Offline Abalone opponent, three strength levels built on
-// abalone-core.js, mirroring fanorona-ai.js's/checkers-ai.js's
+// marblepush-ai.js
+// Offline MarblePush opponent, three strength levels built on
+// marblepush-core.js, mirroring fanorona-ai.js's/checkers-ai.js's
 // structure:
 //   1 = easy   - random legal move
 //   2 = medium - 1-ply material/positional evaluation with light
 //                randomness among the top candidates
 //   3 = hard   - 2-ply minimax with alpha-beta pruning and a shared
-//                node budget (Abalone's branching factor - up to ~40-50
+//                node budget (MarblePush's branching factor - up to ~40-50
 //                moves per position - makes a deep full search
 //                expensive, so this stays intentionally shallow; see
 //                the evaluation function below for the heuristics that
 //                make it play sensibly anyway)
 //
-// Unlike Fanorona/checkers, an Abalone move is always a single atomic
+// Unlike Fanorona/checkers, an MarblePush move is always a single atomic
 // step (there are no capture chains), so a "move" here is exactly one
-// of AbaloneCore.getLegalMoves()'s results.
+// of MarblePushCore.getLegalMoves()'s results.
 
-const AbaloneAi = (function () {
+const MarblePushAi = (function () {
   const INF = 1e9;
 
   function otherColor(color) {
@@ -36,21 +36,21 @@ const AbaloneAi = (function () {
   function evaluateFor(color, board) {
     const opp = otherColor(color);
     let score = 0;
-    for (let i = 0; i < AbaloneCore.TOTAL_CELLS; i++) {
+    for (let i = 0; i < MarblePushCore.TOTAL_CELLS; i++) {
       const piece = board[i];
       if (!piece) continue;
       const sign = piece === color ? 1 : -1;
       score += sign * 100; // material
-      score += sign * (4 - AbaloneCore.CELLS[i].dist) * 3; // center control
+      score += sign * (4 - MarblePushCore.CELLS[i].dist) * 3; // center control
       let sameNeighbors = 0;
       for (let d = 0; d < 6; d++) {
-        const n = AbaloneCore.NEIGHBORS[i][d];
+        const n = MarblePushCore.NEIGHBORS[i][d];
         if (n !== null && board[n] === piece) sameNeighbors++;
       }
       score += sign * sameNeighbors * 2; // cohesion
     }
-    const myThreats = AbaloneCore.getLegalMoves(board, color).filter((m) => m.capturedCount > 0).length;
-    const oppThreats = AbaloneCore.getLegalMoves(board, opp).filter((m) => m.capturedCount > 0).length;
+    const myThreats = MarblePushCore.getLegalMoves(board, color).filter((m) => m.capturedCount > 0).length;
+    const oppThreats = MarblePushCore.getLegalMoves(board, opp).filter((m) => m.capturedCount > 0).length;
     score += (myThreats - oppThreats) * 25;
     return score;
   }
@@ -71,7 +71,7 @@ const AbaloneAi = (function () {
       }
     }
 
-    const end = AbaloneCore.detectGameEnd(board, colorToMove);
+    const end = MarblePushCore.detectGameEnd(board, colorToMove);
     if (end.status !== "normal") {
       return end.winner === perspective ? INF / 2 : -INF / 2;
     }
@@ -79,7 +79,7 @@ const AbaloneAi = (function () {
       return evaluateFor(perspective, board);
     }
 
-    const moves = AbaloneCore.getLegalMoves(board, colorToMove);
+    const moves = MarblePushCore.getLegalMoves(board, colorToMove);
     if (!moves.length) {
       return colorToMove === perspective ? -INF / 2 : INF / 2;
     }
@@ -89,7 +89,7 @@ const AbaloneAi = (function () {
     let best = isMaximizing ? -INF : INF;
 
     for (const m of ordered) {
-      const b2 = AbaloneCore.applyMove(board, colorToMove, m);
+      const b2 = MarblePushCore.applyMove(board, colorToMove, m);
       const score = minimax(b2, otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState);
       if (searchState && searchState.aborted) return best;
       if (isMaximizing) {
@@ -112,7 +112,7 @@ const AbaloneAi = (function () {
     let alpha = -INF;
 
     for (const m of ordered) {
-      const b2 = AbaloneCore.applyMove(board, color, m);
+      const b2 = MarblePushCore.applyMove(board, color, m);
       const score = minimax(b2, otherColor(color), 1, maxDepth, alpha, INF, color, searchState);
       if (score > bestScore || bestMove === null) {
         bestScore = score;
@@ -132,7 +132,7 @@ const AbaloneAi = (function () {
 
   // Returns one legal move (a single atomic step - see file header).
   function chooseMove(board, color, level) {
-    const moves = AbaloneCore.getLegalMoves(board, color);
+    const moves = MarblePushCore.getLegalMoves(board, color);
     if (!moves.length) return null;
 
     if (typeof level !== "number" || level < 1) level = 1;
@@ -145,7 +145,7 @@ const AbaloneAi = (function () {
     if (config.style === "greedy") {
       const scored = moves.map((m) => ({
         move: m,
-        score: evaluateFor(color, AbaloneCore.applyMove(board, color, m))
+        score: evaluateFor(color, MarblePushCore.applyMove(board, color, m))
       }));
       scored.sort((a, b) => b.score - a.score);
       const topN = Math.min(config.topN, scored.length);
@@ -162,8 +162,8 @@ const AbaloneAi = (function () {
 })();
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = AbaloneAi;
+  module.exports = MarblePushAi;
 }
 if (typeof window !== "undefined") {
-  window.AbaloneAi = AbaloneAi;
+  window.MarblePushAi = MarblePushAi;
 }

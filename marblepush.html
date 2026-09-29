@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nonograms on e-ink – play offline, no ads | PaperGames</title>
-  <meta name="description" content="Use row and column number clues to reveal a hidden picture, one cell at a time. A fresh, uniquely-solvable puzzle in three sizes.">
-  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/nonogram.html">
+  <title>Marble Push on e-ink – play offline, no ads | PaperGames</title>
+  <meta name="description" content="Push 6 of your opponent\'s marbles off the hexagonal board to win. Local 2-player or vs. the built-in engine, with full rules for pushing and for sideways line moves.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/marblepush.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PaperGames">
-  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/nonogram.html">
-  <meta property="og:title" content="Nonograms on e-ink – play offline, no ads | PaperGames">
-  <meta property="og:description" content="Use row and column number clues to reveal a hidden picture, one cell at a time. A fresh, uniquely-solvable puzzle in three sizes.">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/marblepush.html">
+  <meta property="og:title" content="Marble Push on e-ink – play offline, no ads | PaperGames">
+  <meta property="og:description" content="Push 6 of your opponent\'s marbles off the hexagonal board to win. Local 2-player or vs. the built-in engine, with full rules for pushing and for sideways line moves.">
   <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Nonograms on e-ink – play offline, no ads | PaperGames">
-  <meta name="twitter:description" content="Use row and column number clues to reveal a hidden picture, one cell at a time. A fresh, uniquely-solvable puzzle in three sizes.">
+  <meta name="twitter:title" content="Marble Push on e-ink – play offline, no ads | PaperGames">
+  <meta name="twitter:description" content="Push 6 of your opponent\'s marbles off the hexagonal board to win. Local 2-player or vs. the built-in engine, with full rules for pushing and for sideways line moves.">
   <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -23,7 +23,7 @@
   <script>try{if((localStorage.getItem("einkchess_lang")||navigator.language||"en").slice(0,2).toLowerCase()!=="en"){document.documentElement.className+=" i18n-pending";setTimeout(function(){document.documentElement.classList.remove("i18n-pending")},4000)}}catch(e){}</script>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="printable-puzzle">
+<body>
 <div id="app">
   <header class="app-header">
     <div class="title-wrap app-title-row">
@@ -35,28 +35,33 @@
     </div>
   </header>
 
-  <nav class="site-nav">
-    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
-    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
-    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
-    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
-  </nav>
-
   <main>
 
 <div id="settings-panel">
-    <section id="nonogram-controls" class="card">
+<section class="mode-section">
+  <div class="mode-section-row">
+    <div class="mode-buttons">
+      <button id="mode-offline" class="mode-btn secondary" data-i18n="mode_two_player">2 Player (local)</button>
+      <button id="mode-offline-ai" class="mode-btn secondary" data-i18n="vs_computer">vs Computer</button>
+    </div>
+  </div>
+</section>
+
+    <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
-    <button id="start-nonogram-game" class="primary" data-i18n="nonogram_new_game">New puzzle</button>
-    <button id="daily-nonogram-button" class="secondary" data-i18n="daily_challenge_button">🗓 Daily Challenge</button>
-    <button id="print-puzzle-button" class="secondary" data-i18n="print_puzzle_button">🖨 Print</button>
-    <select id="nonogram-level-inline">
-        <option value="easy" data-i18n="nonogram_level_easy">Easy (5x5)</option>
-        <option value="medium" selected data-i18n="nonogram_level_medium">Medium (10x10)</option>
-        <option value="hard" data-i18n="nonogram_level_hard">Hard (15x15)</option>
+    <button id="start-marblepush-game" class="primary" data-i18n="new_game">New game</button>
+    <div id="marblepush-color-choice" class="inline-options">
+      <label class="color-choice"><input type="radio" name="marblepush-color" value="black" checked> <span class="color-choice-icon"><span class="marblepush-icon-disc marblepush-icon-disc-black"></span></span></label>
+      <label class="color-choice"><input type="radio" name="marblepush-color" value="white"> <span class="color-choice-icon"><span class="marblepush-icon-disc marblepush-icon-disc-white"></span></span></label>
+    </div>
+    <select id="marblepush-level-inline">
+        <option value="0" data-i18n="mode_two_player">2 Player (local)</option>
+        <option value="1" data-i18n="level_easy">Easy</option>
+        <option value="2" selected data-i18n="level_medium">Medium</option>
+        <option value="3" data-i18n="level_hard">Hard</option>
       </select>
   </div>
-  <div id="offline-nonogram-status" class="status-text"></div>
+  <div id="offline-marblepush-status" class="status-text"></div>
 </section>
 </div>
 
@@ -70,24 +75,26 @@
     <div id="board-info" class="status-text" aria-live="polite"></div>
   </div>
   <div id="board-placeholder" class="board-placeholder">
-    <span class="board-placeholder-icon nonogram-icon" aria-hidden="true"></span>
+    <span class="board-placeholder-icon marblepush-icon-disc marblepush-icon-disc-black"></span>
     <div class="board-placeholder-text">
-      <span class="board-placeholder-title" data-i18n="game_nonograms">Nonograms</span>
+      <span class="board-placeholder-title" data-i18n="game_marblepush">Marble Push</span>
       <span class="board-placeholder-subtitle">PaperGames</span>
     </div>
   </div>
   <div id="board-container" class="hidden">
-    <div id="nonogram-mode-toggle" class="nonogram-mode-toggle">
-      <button id="nonogram-mode-fill" type="button" class="secondary small active-mode" data-i18n="nonogram_mode_fill">Fill</button>
-      <button id="nonogram-mode-mark" type="button" class="secondary small" data-i18n="nonogram_mode_mark">Mark X</button>
+    <div class="marblepush-board-wrap">
+      <div id="marblepush-board" class="marblepush-board" role="group" aria-label="Marble Push board"></div>
     </div>
-    <div id="nonogram-wrap" class="nonogram-wrap">
-      <div id="nonogram-grid" class="nonogram-grid"></div>
-    </div>
+  </div>
+  <div id="marblepush-selection-controls" class="marblepush-selection-controls hidden">
+    <span data-i18n="marblepush_selection_hint">Tap a highlighted cell to move this selection, or clear it below.</span><br>
+    <button id="marblepush-clear-selection-btn" class="secondary small" type="button" data-i18n="marblepush_clear_selection_btn">Clear selection</button>
   </div>
   <div id="board-actions" class="board-actions">
     <button id="undo-btn" class="secondary small hidden" data-i18n="undo_button" onclick="undoLastMove()">Undo</button>
+    <button id="resign-button" class="secondary small hidden" data-i18n="resign_button">Resign 🏳</button>
   </div>
+  <div id="score-line" class="score-line hidden"><span id="score-captures" class="score-line-captures"></span></div>
 </section>
   </main>
   <footer class="site-footer">
@@ -100,20 +107,20 @@
 <script src="i18n.js"></script>
 <script src="font-size-toggle.js"></script>
 <script src="high-contrast.js"></script>
-<script src="ai-pacing.js"></script>
 <script src="force-update.js"></script>
+<script src="ai-pacing.js"></script>
 <script src="settings-menu.js"></script>
 <script src="rules-link.js"></script>
 <script src="game-switcher.js"></script>
-<script src="nonogram-core.js"></script>
-<script src="nonogram-puzzles.js"></script>
+<script src="marblepush-core.js"></script>
+<script src="marblepush-ai.js"></script>
 <script src="result-modal.js"></script>
 <script src="storage-warning.js"></script>
 <script src="game-storage.js"></script>
 <script src="game-stats.js"></script>
+<script src="adaptive-difficulty.js"></script>
 <script src="board-a11y.js"></script>
-<script src="daily-challenge.js"></script>
-<script src="nonogram-app.js"></script>
+<script src="marblepush-app.js"></script>
 <script src="confirm-actions.js"></script>
 <script src="sw-register.js"></script>
 <script src="update-banner.js"></script>

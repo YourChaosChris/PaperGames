@@ -46,7 +46,7 @@ no internet connection at all.
 - Wall Maze
 - Hex
 - Halma
-- Mastermind
+- Bulls and Cows
 - Dots and Boxes
 - Klondike
 - Amazons
@@ -56,7 +56,7 @@ no internet connection at all.
 - Spider Solitaire
 - Bagh-Chal
 - Tablut
-- Abalone
+- Marble Push
 - Pyramid Solitaire
 - Surakarta
 - Hashiwokakero

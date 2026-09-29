@@ -17,6 +17,33 @@ const GameStorage = (function () {
   const RECENT_KEY = "einkchess_recent_games";
   const SAVE_PREFIX = "einkchess_save_";
 
+  // Games renamed for trademark reasons: new slug -> old slug. A save
+  // (and its "recently played" entry) still under the old slug is moved
+  // to the new one once, on the first page load after the rename.
+  const RENAMED_SLUGS = { bullsandcows: "mastermind", marblepush: "abalone" };
+
+  function migrateRenamedSaves() {
+    try {
+      if (!window.localStorage) return;
+      Object.keys(RENAMED_SLUGS).forEach((slug) => {
+        const oldKey = SAVE_PREFIX + RENAMED_SLUGS[slug];
+        const newKey = SAVE_PREFIX + slug;
+        const raw = window.localStorage.getItem(oldKey);
+        if (raw === null) return;
+        if (window.localStorage.getItem(newKey) === null) window.localStorage.setItem(newKey, raw);
+        window.localStorage.removeItem(oldKey);
+        const recentRaw = window.localStorage.getItem(RECENT_KEY);
+        const recent = recentRaw ? JSON.parse(recentRaw) : {};
+        if (recent[RENAMED_SLUGS[slug]] !== undefined) {
+          if (recent[slug] === undefined) recent[slug] = recent[RENAMED_SLUGS[slug]];
+          delete recent[RENAMED_SLUGS[slug]];
+          window.localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
+        }
+      });
+    } catch (e) { /* ignore */ }
+  }
+  migrateRenamedSaves();
+
   function slugFromKey(key) {
     return key && key.indexOf(SAVE_PREFIX) === 0 ? key.slice(SAVE_PREFIX.length) : null;
   }
