@@ -75,8 +75,11 @@ const BackgammonAi = (function () {
     return score;
   }
 
-  function chooseMove(state, color, die, level) {
-    const moves = BackgammonCore.getLegalMovesForDie(state, color, die);
+  // `dice` (all dice still to play this turn) is optional; with it only
+  // moves that keep the most dice playable are considered.
+  function chooseMove(state, color, die, level, dice) {
+    const moves = dice ? BackgammonCore.getPlayableMovesForDie(state, color, dice, die)
+      : BackgammonCore.getLegalMovesForDie(state, color, die);
     if (!moves.length) return null;
 
     if (typeof level !== "number" || level < 1) level = 1;

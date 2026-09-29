@@ -13,13 +13,11 @@
 // player can make any other move.
 //
 // Each turn's two (or, on doubles, four) die values are played one at a
-// time: call getLegalMovesForDie for whichever die the player wants to
-// use next, apply one of the returned moves, then move on to the next
-// die. This app deliberately doesn't enforce the tournament-precision
-// "you must maximize how many dice you use, and play the larger die if
-// only one can be played" edge case - if a legal move exists for a
-// remaining die, the player may use it in any order; a die that has no
-// legal move once it's its turn is simply forfeited.
+// time: call getPlayableMovesForDie for whichever die the player wants
+// to use next, apply one of the returned moves, then move on to the next
+// die. It enforces the rule that as many dice as possible must be
+// played, and that the larger die must be played if only one of two can
+// be: a move that would leave a playable die unplayable is not offered.
 
 const BackgammonCore = (function () {
   const POINTS = 24;
@@ -153,6 +151,49 @@ const BackgammonCore = (function () {
     return newState;
   }
 
+  // The most dice from `dice` that can still be played, in any order.
+  // Stops searching as soon as every die can be used (the normal case),
+  // so it stays cheap even for doubles.
+  function maxDiceUsable(state, color, dice) {
+    if (!dice.length) return 0;
+    let best = 0;
+    const tried = new Set();
+    for (let i = 0; i < dice.length; i++) {
+      const die = dice[i];
+      if (tried.has(die)) continue;
+      tried.add(die);
+      const rest = dice.slice(0, i).concat(dice.slice(i + 1));
+      const moves = getLegalMovesForDie(state, color, die);
+      for (const m of moves) {
+        const used = 1 + maxDiceUsable(applyMove(state, color, m), color, rest);
+        if (used > best) best = used;
+        if (best === dice.length) return best;
+      }
+    }
+    return best;
+  }
+
+  // Legal moves with `die` that keep the most dice playable: a move after
+  // which fewer of the remaining dice could be played than otherwise is
+  // left out. With two different dice of which only one can be played,
+  // only the larger one may be used (if it can be).
+  function getPlayableMovesForDie(state, color, dice, die) {
+    const idx = dice.indexOf(die);
+    if (idx === -1) return [];
+    const moves = getLegalMovesForDie(state, color, die);
+    if (!moves.length) return moves;
+    const target = maxDiceUsable(state, color, dice);
+    if (target <= 1) {
+      if (dice.length === 2 && dice[0] !== dice[1]) {
+        const other = dice[1 - idx];
+        if (other > die && getLegalMovesForDie(state, color, other).length) return [];
+      }
+      return moves;
+    }
+    const rest = dice.slice(0, idx).concat(dice.slice(idx + 1));
+    return moves.filter((m) => 1 + maxDiceUsable(applyMove(state, color, m), color, rest) === target);
+  }
+
   function rollDice(rng) {
     const random = rng || Math.random;
     const d1 = 1 + Math.floor(random() * 6);
@@ -194,6 +235,8 @@ const BackgammonCore = (function () {
     cloneState,
     allCheckersHome,
     getLegalMovesForDie,
+    getPlayableMovesForDie,
+    maxDiceUsable,
     applyMove,
     rollDice,
     hasAnyLegalMove,

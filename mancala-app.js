@@ -317,7 +317,11 @@ function aiTurnMancala() {
   if (AppStateMancala.turn !== aiSide) return;
 
   setStatusMancala("board-info", "Computer thinking…");
+  // The position this search is for: if it has changed by the time the
+  // pause is over (undo, new game), the computer must not move.
+  const scheduledFor = AppStateMancala.state;
   setTimeout(() => {
+    if (AppStateMancala.gameOver || AppStateMancala.state !== scheduledFor || AppStateMancala.turn !== aiSide) return;
     const pit = MancalaAi.chooseMove(AppStateMancala.state, aiSide, AppStateMancala.aiLevel);
     if (pit === null || pit === undefined) return;
     applyMancalaMove(pit);

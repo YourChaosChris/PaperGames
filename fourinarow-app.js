@@ -303,7 +303,11 @@ function aiTurnConnectFour() {
   if (AppStateConnectFour.turn !== aiColor) return;
 
   setStatusConnectFour("board-info", "Computer thinking…");
+  // The position this search is for: if it has changed by the time the
+  // pause is over (undo, new game), the computer must not move.
+  const scheduledFor = AppStateConnectFour.board;
   setTimeout(() => {
+    if (AppStateConnectFour.gameOver || AppStateConnectFour.board !== scheduledFor || AppStateConnectFour.turn !== aiColor) return;
     const col = ConnectFourAi.chooseMove(AppStateConnectFour.board, aiColor, AppStateConnectFour.aiLevel);
     if (col === null || col === undefined) return;
     applyConnectFourMove(col);

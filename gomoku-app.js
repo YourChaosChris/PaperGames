@@ -305,7 +305,11 @@ function aiTurnGomoku() {
   if (AppStateGomoku.turn !== aiColor) return;
 
   setStatusGomoku("board-info", "Computer thinking…");
+  // The position this search is for: if it has changed by the time the
+  // pause is over (undo, new game), the computer must not move.
+  const scheduledFor = AppStateGomoku.board;
   setTimeout(() => {
+    if (AppStateGomoku.gameOver || AppStateGomoku.board !== scheduledFor || AppStateGomoku.turn !== aiColor) return;
     const move = GomokuAi.chooseMove(AppStateGomoku.board, aiColor, AppStateGomoku.aiLevel);
     if (!move) return;
     applyGomokuMove(move[0], move[1]);
