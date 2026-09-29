@@ -99,7 +99,7 @@ const GAMES_CATALOG = [
     descText: "Flip the board's colour by flanking your opponent's discs. Local 2-player or vs. the built-in engine.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"othello-icon-disc othello-icon-disc-black\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"reversi-icon-disc reversi-icon-disc-black\" aria-hidden=\"true\"></span>"
   },
   {
     slug: "fourinarow",
@@ -154,7 +154,7 @@ const GAMES_CATALOG = [
     descText: "Race to the far side of the board while building walls to block your opponent.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"quoridor-icon-piece quoridor-icon-piece-p1\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"wallmaze-icon-piece wallmaze-icon-piece-p1\" aria-hidden=\"true\"></span>"
   },
   {
     slug: "halma",
@@ -333,11 +333,11 @@ const GAMES_CATALOG = [
     icon: "<span class=\"peg-icon\" aria-hidden=\"true\"></span>"
   },
   {
-    slug: "lightsout",
+    slug: "lightswitch",
     category: "puzzles",
-    nameKey: "game_lightsout",
-    nameText: "Lights Out",
-    descKey: "home_lightsout_desc",
+    nameKey: "game_lightswitch",
+    nameText: "Light Switch",
+    descKey: "home_lightswitch_desc",
     descText: "Press a cell to toggle it and its neighbors on and off. Turn off every light to win - every puzzle is generated to always have a solution.",
     popular: false,
     added: "2026-07-01",

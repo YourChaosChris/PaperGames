@@ -38,7 +38,7 @@ no internet connection at all.
 - Nonograms
 - 2048
 - Yatzy
-- Lights Out
+- Light Switch
 - Mahjong Solitaire
 - FreeCell
 - Card Tactics

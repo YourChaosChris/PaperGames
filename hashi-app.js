@@ -6,7 +6,7 @@
 // The board isn't a plain filled grid - islands sit at scattered
 // positions on a size x size grid, most cells empty - so it's rendered
 // with the same percentage-based absolute-positioning technique used for
-// Fanorona/Hex/Quoridor/Go (a JS-enforced square-ish aspect ratio, since
+// Fanorona/Hex/WallMaze/Go (a JS-enforced square-ish aspect ratio, since
 // CSS `aspect-ratio` is unreliable on E-Ink browsers), with every
 // candidate bridge connection drawn as an SVG line UNDER the island
 // buttons - but unlike Fanorona's fixed, purely decorative connection

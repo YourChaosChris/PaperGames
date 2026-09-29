@@ -1,5 +1,5 @@
-// othello-app.js
-// Wires OthelloCore/OthelloAi to the othello.html UI. The board is a
+// reversi-app.js
+// Wires ReversiCore/ReversiAi to the reversi.html UI. The board is a
 // plain 8x8 grid of uniform squares (mirrors checkers-app.js's
 // per-square float-grid approach), and a move is a single click on a
 // legal empty square - closer to go-app.js's "click to place a stone"
@@ -11,9 +11,9 @@
 // checking both sides' legal moves and, if neither has one, ending the
 // game by disc count.
 
-const AppStateOthello = {
+const AppStateReversi = {
   mode: "offline",        // "offline" | "offline-ai"
-  board: OthelloCore.createInitialBoard(),
+  board: ReversiCore.createInitialBoard(),
   turn: "b",              // "b" | "w" - Black always moves first
   humanColor: "b",
   aiLevel: 2,
@@ -23,41 +23,41 @@ const AppStateOthello = {
   undoStack: []
 };
 
-const OTHELLO_SAVE_KEY = "einkchess_save_othello";
+const REVERSI_SAVE_KEY = "einkchess_save_reversi";
 
-function saveOthelloGame() {
+function saveReversiGame() {
   if (typeof GameStorage === "undefined") return;
-  GameStorage.save(OTHELLO_SAVE_KEY, {
-    mode: AppStateOthello.mode,
-    board: AppStateOthello.board,
-    turn: AppStateOthello.turn,
-    humanColor: AppStateOthello.humanColor,
-    aiLevel: AppStateOthello.aiLevel,
-    moveCount: AppStateOthello.moveCount
+  GameStorage.save(REVERSI_SAVE_KEY, {
+    mode: AppStateReversi.mode,
+    board: AppStateReversi.board,
+    turn: AppStateReversi.turn,
+    humanColor: AppStateReversi.humanColor,
+    aiLevel: AppStateReversi.aiLevel,
+    moveCount: AppStateReversi.moveCount
   });
 }
 
-function clearSavedOthelloGame() {
+function clearSavedReversiGame() {
   if (typeof GameStorage === "undefined") return;
-  GameStorage.clear(OTHELLO_SAVE_KEY);
+  GameStorage.clear(REVERSI_SAVE_KEY);
 }
 
-function recordOthelloStatsIfVsAi(outcome) {
+function recordReversiStatsIfVsAi(outcome) {
   if (typeof GameStats === "undefined") return;
-  if (AppStateOthello.mode !== "offline-ai") return;
-  GameStats.record("othello", outcome);
+  if (AppStateReversi.mode !== "offline-ai") return;
+  GameStats.record("reversi", outcome);
 }
 
-function colorNameOthello(color) {
+function colorNameReversi(color) {
   return color === "b" ? "Black" : "White";
 }
 
-function setStatusOthello(elementId, text) {
+function setStatusReversi(elementId, text) {
   const el = document.getElementById(elementId);
   if (el) I18n.setMsg(el, text || "");
 }
 
-function setGameResultOthello(text) {
+function setGameResultReversi(text) {
   const el = document.getElementById("game-result");
   if (el) I18n.setMsg(el, text || "");
   if (!text && window.ResultModal) {
@@ -67,46 +67,46 @@ function setGameResultOthello(text) {
 
 // winner is null/undefined for a draw. Kept short for the modal title even
 // where the message body includes the disc count.
-function resultTitleOthello(winner) {
+function resultTitleReversi(winner) {
   if (!winner) return "Draw";
-  if (AppStateOthello.mode === "offline-ai") {
-    return winner === AppStateOthello.humanColor ? "You win!" : "You lose";
+  if (AppStateReversi.mode === "offline-ai") {
+    return winner === AppStateReversi.humanColor ? "You win!" : "You lose";
   }
-  return colorNameOthello(winner) + " wins";
+  return colorNameReversi(winner) + " wins";
 }
 
-function announceGameResultOthello(resultCode, message) {
-  setGameResultOthello(message);
-  setStatusOthello("board-info", message);
+function announceGameResultReversi(resultCode, message) {
+  setGameResultReversi(message);
+  setStatusReversi("board-info", message);
   if (window.ResultModal) {
     window.ResultModal.show(resultCode, message);
   }
 }
 
-function resetUndoStackOthello() {
-  AppStateOthello.undoStack = [];
+function resetUndoStackReversi() {
+  AppStateReversi.undoStack = [];
 }
 
-function pushUndoSnapshotOthello() {
-  AppStateOthello.undoStack.push({
-    board: AppStateOthello.board.map((row) => row.slice()),
-    turn: AppStateOthello.turn,
-    gameOver: AppStateOthello.gameOver,
-    moveCount: AppStateOthello.moveCount,
-    lastMove: AppStateOthello.lastMove
+function pushUndoSnapshotReversi() {
+  AppStateReversi.undoStack.push({
+    board: AppStateReversi.board.map((row) => row.slice()),
+    turn: AppStateReversi.turn,
+    gameOver: AppStateReversi.gameOver,
+    moveCount: AppStateReversi.moveCount,
+    lastMove: AppStateReversi.lastMove
   });
 }
 
-function initOthelloApp() {
+function initReversiApp() {
   if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
   const modeOfflineAi = document.getElementById("mode-offline-ai");
   const offlineAiControls = document.getElementById("offline-ai-controls");
-  const colorChoice = document.getElementById("othello-color-choice");
-  const levelInline = document.getElementById("othello-level-inline");
-  const startGameBtn = document.getElementById("start-othello-game");
+  const colorChoice = document.getElementById("reversi-color-choice");
+  const levelInline = document.getElementById("reversi-level-inline");
+  const startGameBtn = document.getElementById("start-reversi-game");
   const resignBtn = document.getElementById("resign-button");
 
   function updateColorChoiceVisibility() {
@@ -139,42 +139,42 @@ function initOthelloApp() {
     });
   }
 
-  function startNewGameOthello(mode, humanColor, level) {
-    AppStateOthello.mode = mode;
-    AppStateOthello.board = OthelloCore.createInitialBoard();
-    AppStateOthello.turn = "b";
-    AppStateOthello.humanColor = humanColor;
-    AppStateOthello.aiLevel = level;
-    AppStateOthello.gameOver = false;
-    AppStateOthello.moveCount = 0;
-    AppStateOthello.lastMove = null;
-    resetUndoStackOthello();
-    setGameResultOthello("");
-    showBoardSectionOthello();
-    buildOthelloBoardDOM();
-    updateOthelloBoard();
-    updateGameLabelsOthello();
+  function startNewGameReversi(mode, humanColor, level) {
+    AppStateReversi.mode = mode;
+    AppStateReversi.board = ReversiCore.createInitialBoard();
+    AppStateReversi.turn = "b";
+    AppStateReversi.humanColor = humanColor;
+    AppStateReversi.aiLevel = level;
+    AppStateReversi.gameOver = false;
+    AppStateReversi.moveCount = 0;
+    AppStateReversi.lastMove = null;
+    resetUndoStackReversi();
+    setGameResultReversi("");
+    showBoardSectionReversi();
+    buildReversiBoardDOM();
+    updateReversiBoard();
+    updateGameLabelsReversi();
 
     if (mode === "offline-ai" && humanColor !== "b") {
-      setStatusOthello("board-info", "Computer thinking…");
-      setTimeout(aiTurnOthello, AiPacing.delay(300));
+      setStatusReversi("board-info", "Computer thinking…");
+      setTimeout(aiTurnReversi, AiPacing.delay(300));
     } else {
-      setStatusOthello("board-info", colorNameOthello(AppStateOthello.turn) + " to move.");
+      setStatusReversi("board-info", colorNameReversi(AppStateReversi.turn) + " to move.");
     }
   }
 
   modeOffline.addEventListener("click", () => {
     setActiveModeButton("offline");
     offlineAiControls.classList.add("hidden");
-    startNewGameOthello("offline", "b", 0);
+    startNewGameReversi("offline", "b", 0);
   });
 
   modeOfflineAi.addEventListener("click", () => {
     setActiveModeButton("offline-ai");
     offlineAiControls.classList.remove("hidden");
-    if (levelInline) levelInline.value = String(AppStateOthello.aiLevel || 2);
+    if (levelInline) levelInline.value = String(AppStateReversi.aiLevel || 2);
     updateColorChoiceVisibility();
-    setStatusOthello("board-info", "");
+    setStatusReversi("board-info", "");
   });
 
   if (levelInline) {
@@ -183,59 +183,59 @@ function initOthelloApp() {
 
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
-    const colorInput = document.querySelector("input[name='othello-color']:checked");
+    const colorInput = document.querySelector("input[name='reversi-color']:checked");
     const humanColor = colorInput && colorInput.value === "white" ? "w" : "b";
 
     if (level === 0) {
       setActiveModeButton("offline-ai");
-      startNewGameOthello("offline", "b", 0);
-      setStatusOthello("offline-othello-status", "Local 2-player game (no computer).");
+      startNewGameReversi("offline", "b", 0);
+      setStatusReversi("offline-reversi-status", "Local 2-player game (no computer).");
       return;
     }
 
     setActiveModeButton("offline-ai");
-    startNewGameOthello("offline-ai", humanColor, level);
+    startNewGameReversi("offline-ai", humanColor, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
-    setStatusOthello("offline-othello-status",
-      "You play " + colorNameOthello(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
+    setStatusReversi("offline-reversi-status",
+      "You play " + colorNameReversi(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
   });
 
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
-      if (AppStateOthello.gameOver) return;
-      const loser = AppStateOthello.turn;
-      const winner = OthelloCore.otherColor(loser);
-      AppStateOthello.gameOver = true;
-      announceGameResultOthello(resultTitleOthello(winner), colorNameOthello(winner) + " wins by resignation.");
-      recordOthelloStatsIfVsAi("loss");
-      updateGameLabelsOthello();
+      if (AppStateReversi.gameOver) return;
+      const loser = AppStateReversi.turn;
+      const winner = ReversiCore.otherColor(loser);
+      AppStateReversi.gameOver = true;
+      announceGameResultReversi(resultTitleReversi(winner), colorNameReversi(winner) + " wins by resignation.");
+      recordReversiStatsIfVsAi("loss");
+      updateGameLabelsReversi();
     });
   }
 
   updateColorChoiceVisibility();
 
-  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(OTHELLO_SAVE_KEY) : null;
+  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(REVERSI_SAVE_KEY) : null;
   if (savedGame && savedGame.board) {
-    AppStateOthello.mode = savedGame.mode;
-    AppStateOthello.board = savedGame.board;
-    AppStateOthello.turn = savedGame.turn;
-    AppStateOthello.humanColor = savedGame.humanColor;
-    AppStateOthello.aiLevel = savedGame.aiLevel;
-    AppStateOthello.moveCount = savedGame.moveCount;
-    AppStateOthello.lastMove = null;
-    AppStateOthello.gameOver = false;
-    resetUndoStackOthello();
-    setActiveModeButton(AppStateOthello.mode);
-    setGameResultOthello("");
-    showBoardSectionOthello();
-    buildOthelloBoardDOM();
-    updateOthelloBoard();
-    updateGameLabelsOthello();
-    if (AppStateOthello.mode === "offline-ai" && AppStateOthello.turn !== AppStateOthello.humanColor) {
-      setStatusOthello("board-info", "Computer thinking…");
-      setTimeout(aiTurnOthello, AiPacing.delay(300));
+    AppStateReversi.mode = savedGame.mode;
+    AppStateReversi.board = savedGame.board;
+    AppStateReversi.turn = savedGame.turn;
+    AppStateReversi.humanColor = savedGame.humanColor;
+    AppStateReversi.aiLevel = savedGame.aiLevel;
+    AppStateReversi.moveCount = savedGame.moveCount;
+    AppStateReversi.lastMove = null;
+    AppStateReversi.gameOver = false;
+    resetUndoStackReversi();
+    setActiveModeButton(AppStateReversi.mode);
+    setGameResultReversi("");
+    showBoardSectionReversi();
+    buildReversiBoardDOM();
+    updateReversiBoard();
+    updateGameLabelsReversi();
+    if (AppStateReversi.mode === "offline-ai" && AppStateReversi.turn !== AppStateReversi.humanColor) {
+      setStatusReversi("board-info", "Computer thinking…");
+      setTimeout(aiTurnReversi, AiPacing.delay(300));
     } else {
-      setStatusOthello("board-info", colorNameOthello(AppStateOthello.turn) + " to move.");
+      setStatusReversi("board-info", colorNameReversi(AppStateReversi.turn) + " to move.");
     }
   }
   // Otherwise no mode is pre-selected and no game auto-starts: the
@@ -243,133 +243,133 @@ function initOthelloApp() {
   // vs-computer and presses New game, matching the other games here.
 }
 
-function onOthelloSquareClick(e) {
+function onReversiSquareClick(e) {
   const row = parseInt(e.currentTarget.dataset.row, 10);
   const col = parseInt(e.currentTarget.dataset.col, 10);
-  attemptOthelloMove(row, col);
+  attemptReversiMove(row, col);
 }
 
-function attemptOthelloMove(row, col) {
-  if (AppStateOthello.gameOver) {
-    setStatusOthello("board-info", "Game is over. Start a new game to play again.");
+function attemptReversiMove(row, col) {
+  if (AppStateReversi.gameOver) {
+    setStatusReversi("board-info", "Game is over. Start a new game to play again.");
     return;
   }
-  if (AppStateOthello.mode === "offline-ai" && AppStateOthello.turn !== AppStateOthello.humanColor) {
-    setStatusOthello("board-info", "Computer to move.");
+  if (AppStateReversi.mode === "offline-ai" && AppStateReversi.turn !== AppStateReversi.humanColor) {
+    setStatusReversi("board-info", "Computer to move.");
     return;
   }
-  const flips = OthelloCore.flipsForMove(AppStateOthello.board, AppStateOthello.turn, row, col);
+  const flips = ReversiCore.flipsForMove(AppStateReversi.board, AppStateReversi.turn, row, col);
   if (!flips.length) return; // not a legal square - silently ignore the click
 
-  applyOthelloMove({ row, col, flips });
+  applyReversiMove({ row, col, flips });
 }
 
 // After `mover`'s move, hands the turn to the opponent - unless the
 // opponent has no legal move at all, in which case their turn is
 // skipped automatically and it comes back to `mover`, exactly as real
-// Othello rules require. If NEITHER side can move, the game is over.
-function advanceOthelloTurn(mover) {
-  const opponent = OthelloCore.otherColor(mover);
-  const opponentMoves = OthelloCore.getLegalMoves(AppStateOthello.board, opponent);
+// Reversi rules require. If NEITHER side can move, the game is over.
+function advanceReversiTurn(mover) {
+  const opponent = ReversiCore.otherColor(mover);
+  const opponentMoves = ReversiCore.getLegalMoves(AppStateReversi.board, opponent);
   if (opponentMoves.length) {
-    AppStateOthello.turn = opponent;
-    updateOthelloBoard();
-    updateGameLabelsOthello();
-    maybeTriggerAiTurnOthello();
-    if (!(AppStateOthello.mode === "offline-ai" && AppStateOthello.turn !== AppStateOthello.humanColor)) {
-      setStatusOthello("board-info", colorNameOthello(mover) + " played. " + colorNameOthello(opponent) + " to move.");
+    AppStateReversi.turn = opponent;
+    updateReversiBoard();
+    updateGameLabelsReversi();
+    maybeTriggerAiTurnReversi();
+    if (!(AppStateReversi.mode === "offline-ai" && AppStateReversi.turn !== AppStateReversi.humanColor)) {
+      setStatusReversi("board-info", colorNameReversi(mover) + " played. " + colorNameReversi(opponent) + " to move.");
     }
     return;
   }
 
-  const moverMoves = OthelloCore.getLegalMoves(AppStateOthello.board, mover);
+  const moverMoves = ReversiCore.getLegalMoves(AppStateReversi.board, mover);
   if (!moverMoves.length) {
-    endGameOthello();
+    endGameReversi();
     return;
   }
 
   // Opponent has no legal move at all - their turn is skipped and it
   // stays with the mover.
-  AppStateOthello.turn = mover;
-  updateOthelloBoard();
-  updateGameLabelsOthello();
-  maybeTriggerAiTurnOthello();
-  if (!(AppStateOthello.mode === "offline-ai" && AppStateOthello.turn !== AppStateOthello.humanColor)) {
-    setStatusOthello("board-info", colorNameOthello(opponent) + " has no legal move and passes. " + colorNameOthello(mover) + " to move again.");
+  AppStateReversi.turn = mover;
+  updateReversiBoard();
+  updateGameLabelsReversi();
+  maybeTriggerAiTurnReversi();
+  if (!(AppStateReversi.mode === "offline-ai" && AppStateReversi.turn !== AppStateReversi.humanColor)) {
+    setStatusReversi("board-info", colorNameReversi(opponent) + " has no legal move and passes. " + colorNameReversi(mover) + " to move again.");
   }
 }
 
-function endGameOthello() {
-  AppStateOthello.gameOver = true;
-  const winner = OthelloCore.getWinner(AppStateOthello.board);
-  const b = OthelloCore.countDiscs(AppStateOthello.board, "b");
-  const w = OthelloCore.countDiscs(AppStateOthello.board, "w");
+function endGameReversi() {
+  AppStateReversi.gameOver = true;
+  const winner = ReversiCore.getWinner(AppStateReversi.board);
+  const b = ReversiCore.countDiscs(AppStateReversi.board, "b");
+  const w = ReversiCore.countDiscs(AppStateReversi.board, "w");
   const message = winner
-    ? colorNameOthello(winner) + " wins " + Math.max(b, w) + "-" + Math.min(b, w) + "!"
+    ? colorNameReversi(winner) + " wins " + Math.max(b, w) + "-" + Math.min(b, w) + "!"
     : "It's a draw, " + b + "-" + w + "!";
-  announceGameResultOthello(resultTitleOthello(winner), message);
+  announceGameResultReversi(resultTitleReversi(winner), message);
   if (winner) {
-    recordOthelloStatsIfVsAi(winner === AppStateOthello.humanColor ? "win" : "loss");
+    recordReversiStatsIfVsAi(winner === AppStateReversi.humanColor ? "win" : "loss");
   } else {
-    recordOthelloStatsIfVsAi("draw");
+    recordReversiStatsIfVsAi("draw");
   }
-  updateOthelloBoard();
-  updateGameLabelsOthello();
+  updateReversiBoard();
+  updateGameLabelsReversi();
 }
 
-function applyOthelloMove(move) {
-  pushUndoSnapshotOthello();
-  const mover = AppStateOthello.turn;
-  AppStateOthello.board = OthelloCore.applyMove(AppStateOthello.board, mover, move);
-  AppStateOthello.lastMove = { row: move.row, col: move.col, flips: move.flips };
-  AppStateOthello.moveCount++;
-  advanceOthelloTurn(mover);
+function applyReversiMove(move) {
+  pushUndoSnapshotReversi();
+  const mover = AppStateReversi.turn;
+  AppStateReversi.board = ReversiCore.applyMove(AppStateReversi.board, mover, move);
+  AppStateReversi.lastMove = { row: move.row, col: move.col, flips: move.flips };
+  AppStateReversi.moveCount++;
+  advanceReversiTurn(mover);
 }
 
-function maybeTriggerAiTurnOthello() {
-  if (AppStateOthello.gameOver) return;
-  if (AppStateOthello.mode === "offline-ai" && AppStateOthello.turn !== AppStateOthello.humanColor) {
-    setTimeout(aiTurnOthello, AiPacing.delay(400));
+function maybeTriggerAiTurnReversi() {
+  if (AppStateReversi.gameOver) return;
+  if (AppStateReversi.mode === "offline-ai" && AppStateReversi.turn !== AppStateReversi.humanColor) {
+    setTimeout(aiTurnReversi, AiPacing.delay(400));
   }
 }
 
-function aiTurnOthello() {
-  if (AppStateOthello.mode !== "offline-ai" || AppStateOthello.gameOver) return;
-  const aiColor = OthelloCore.otherColor(AppStateOthello.humanColor);
-  if (AppStateOthello.turn !== aiColor) return;
+function aiTurnReversi() {
+  if (AppStateReversi.mode !== "offline-ai" || AppStateReversi.gameOver) return;
+  const aiColor = ReversiCore.otherColor(AppStateReversi.humanColor);
+  if (AppStateReversi.turn !== aiColor) return;
 
-  setStatusOthello("board-info", "Computer thinking…");
+  setStatusReversi("board-info", "Computer thinking…");
   // The position this search is for: if it has changed by the time the
   // pause is over (undo, new game), the computer must not move.
-  const scheduledFor = AppStateOthello.board;
+  const scheduledFor = AppStateReversi.board;
   setTimeout(() => {
-    if (AppStateOthello.gameOver || AppStateOthello.board !== scheduledFor || AppStateOthello.turn !== aiColor) return;
-    const move = OthelloAi.chooseMove(AppStateOthello.board, aiColor, AppStateOthello.aiLevel);
+    if (AppStateReversi.gameOver || AppStateReversi.board !== scheduledFor || AppStateReversi.turn !== aiColor) return;
+    const move = ReversiAi.chooseMove(AppStateReversi.board, aiColor, AppStateReversi.aiLevel);
     if (!move) return;
-    applyOthelloMove(move);
+    applyReversiMove(move);
   }, AiPacing.delay(200));
 }
 
 function undoLastMove() {
-  if (!AppStateOthello.undoStack || !AppStateOthello.undoStack.length) return;
-  let prev = AppStateOthello.undoStack.pop();
-  if (AppStateOthello.mode === "offline-ai") {
-    while (prev.turn !== AppStateOthello.humanColor && AppStateOthello.undoStack.length) {
-      prev = AppStateOthello.undoStack.pop();
+  if (!AppStateReversi.undoStack || !AppStateReversi.undoStack.length) return;
+  let prev = AppStateReversi.undoStack.pop();
+  if (AppStateReversi.mode === "offline-ai") {
+    while (prev.turn !== AppStateReversi.humanColor && AppStateReversi.undoStack.length) {
+      prev = AppStateReversi.undoStack.pop();
     }
   }
-  AppStateOthello.board = prev.board;
-  AppStateOthello.turn = prev.turn;
-  AppStateOthello.gameOver = prev.gameOver;
-  AppStateOthello.moveCount = prev.moveCount;
-  AppStateOthello.lastMove = prev.lastMove || null;
-  setGameResultOthello("");
-  updateOthelloBoard();
-  updateGameLabelsOthello();
-  setStatusOthello("board-info", "Move undone. " + colorNameOthello(AppStateOthello.turn) + " to move.");
+  AppStateReversi.board = prev.board;
+  AppStateReversi.turn = prev.turn;
+  AppStateReversi.gameOver = prev.gameOver;
+  AppStateReversi.moveCount = prev.moveCount;
+  AppStateReversi.lastMove = prev.lastMove || null;
+  setGameResultReversi("");
+  updateReversiBoard();
+  updateGameLabelsReversi();
+  setStatusReversi("board-info", "Move undone. " + colorNameReversi(AppStateReversi.turn) + " to move.");
 }
 
-function showBoardSectionOthello() {
+function showBoardSectionReversi() {
   const section = document.getElementById("board-section");
   if (section) section.classList.remove("hidden");
   const placeholder = document.getElementById("board-placeholder");
@@ -385,83 +385,83 @@ function showBoardSectionOthello() {
 
 /*** Board rendering (mirrors checkers-app.js's per-square float-grid approach) ***/
 
-function buildOthelloBoardDOM() {
-  const boardEl = document.getElementById("othello-board");
+function buildReversiBoardDOM() {
+  const boardEl = document.getElementById("reversi-board");
   if (!boardEl) return;
   boardEl.innerHTML = "";
 
-  for (let r = 0; r < OthelloCore.SIZE; r++) {
-    for (let c = 0; c < OthelloCore.SIZE; c++) {
+  for (let r = 0; r < ReversiCore.SIZE; r++) {
+    for (let c = 0; c < ReversiCore.SIZE; c++) {
       const square = document.createElement("button");
       square.type = "button";
-      square.className = "square othello-square";
+      square.className = "square reversi-square";
       square.dataset.row = r;
       square.dataset.col = c;
       const piece = document.createElement("span");
-      piece.className = "othello-piece";
+      piece.className = "reversi-piece";
       square.appendChild(piece);
-      square.addEventListener("click", onOthelloSquareClick);
+      square.addEventListener("click", onReversiSquareClick);
       boardEl.appendChild(square);
     }
   }
 
-  ensureOthelloSquareAspectRatio();
+  ensureReversiSquareAspectRatio();
   if (window.requestAnimationFrame) {
-    window.requestAnimationFrame(ensureOthelloSquareAspectRatio);
+    window.requestAnimationFrame(ensureReversiSquareAspectRatio);
   } else {
-    setTimeout(ensureOthelloSquareAspectRatio, 0);
+    setTimeout(ensureReversiSquareAspectRatio, 0);
   }
-  ensureOthelloResizeHandler();
+  ensureReversiResizeHandler();
 }
 
-let einkOthelloResizeHandlerAttached = false;
-let einkOthelloResizeTimeoutId = null;
+let einkReversiResizeHandlerAttached = false;
+let einkReversiResizeTimeoutId = null;
 
-function ensureOthelloSquareAspectRatio() {
-  const boardEl = document.getElementById("othello-board");
+function ensureReversiSquareAspectRatio() {
+  const boardEl = document.getElementById("reversi-board");
   if (!boardEl) return;
   const rect = boardEl.getBoundingClientRect();
   if (!rect || !rect.width) return;
-  const squareSize = rect.width / OthelloCore.SIZE;
-  boardEl.querySelectorAll(".othello-square").forEach((sq) => {
+  const squareSize = rect.width / ReversiCore.SIZE;
+  boardEl.querySelectorAll(".reversi-square").forEach((sq) => {
     sq.style.height = squareSize + "px";
   });
 }
 
-function ensureOthelloResizeHandler() {
-  if (einkOthelloResizeHandlerAttached) return;
-  einkOthelloResizeHandlerAttached = true;
+function ensureReversiResizeHandler() {
+  if (einkReversiResizeHandlerAttached) return;
+  einkReversiResizeHandlerAttached = true;
   window.addEventListener("resize", () => {
-    if (einkOthelloResizeTimeoutId !== null) clearTimeout(einkOthelloResizeTimeoutId);
-    einkOthelloResizeTimeoutId = setTimeout(() => {
-      einkOthelloResizeTimeoutId = null;
-      ensureOthelloSquareAspectRatio();
+    if (einkReversiResizeTimeoutId !== null) clearTimeout(einkReversiResizeTimeoutId);
+    einkReversiResizeTimeoutId = setTimeout(() => {
+      einkReversiResizeTimeoutId = null;
+      ensureReversiSquareAspectRatio();
     }, 150);
   });
 }
 
-function updateOthelloBoard() {
-  const boardEl = document.getElementById("othello-board");
+function updateReversiBoard() {
+  const boardEl = document.getElementById("reversi-board");
   if (!boardEl) return;
 
-  const legalMoves = AppStateOthello.gameOver
+  const legalMoves = AppStateReversi.gameOver
     ? []
-    : OthelloCore.getLegalMoves(AppStateOthello.board, AppStateOthello.turn);
+    : ReversiCore.getLegalMoves(AppStateReversi.board, AppStateReversi.turn);
   const movableSet = new Set(legalMoves.map((m) => m.row + "," + m.col));
-  const last = AppStateOthello.lastMove;
+  const last = AppStateReversi.lastMove;
   const flipped = new Set(last ? last.flips.map(([fr, fc]) => fr + "," + fc) : []);
 
-  boardEl.querySelectorAll(".othello-square").forEach((sq) => {
+  boardEl.querySelectorAll(".reversi-square").forEach((sq) => {
     const r = parseInt(sq.dataset.row, 10);
     const c = parseInt(sq.dataset.col, 10);
-    const piece = AppStateOthello.board[r][c];
-    const pieceEl = sq.querySelector(".othello-piece");
+    const piece = AppStateReversi.board[r][c];
+    const pieceEl = sq.querySelector(".reversi-piece");
     if (pieceEl) {
-      pieceEl.classList.remove("othello-piece-black", "othello-piece-white");
-      if (piece) pieceEl.classList.add(piece === "b" ? "othello-piece-black" : "othello-piece-white");
+      pieceEl.classList.remove("reversi-piece-black", "reversi-piece-white");
+      if (piece) pieceEl.classList.add(piece === "b" ? "reversi-piece-black" : "reversi-piece-white");
     }
     const isMovable = movableSet.has(r + "," + c);
-    sq.classList.toggle("othello-square-movable", isMovable);
+    sq.classList.toggle("reversi-square-movable", isMovable);
     // Latest move: solid frame on the placed disc, dotted on the flipped ones.
     sq.classList.toggle("lm-to", !!last && last.row === r && last.col === c);
     sq.classList.toggle("lm-changed", flipped.has(r + "," + c));
@@ -473,40 +473,40 @@ function updateOthelloBoard() {
     I18n.setAria(sq, label);
   });
 
-  updateScoreLineOthello();
+  updateScoreLineReversi();
 }
 
-function updateScoreLineOthello() {
+function updateScoreLineReversi() {
   const container = document.getElementById("score-line");
   const capturesEl = document.getElementById("score-captures");
   if (!container || !capturesEl) return;
-  const b = OthelloCore.countDiscs(AppStateOthello.board, "b");
-  const w = OthelloCore.countDiscs(AppStateOthello.board, "w");
-  const active = AppStateOthello.moveCount > 0;
+  const b = ReversiCore.countDiscs(AppStateReversi.board, "b");
+  const w = ReversiCore.countDiscs(AppStateReversi.board, "w");
+  const active = AppStateReversi.moveCount > 0;
   container.classList.toggle("hidden", !active);
   I18n.setMsg(capturesEl, active ? "Discs – Black: " + b + " · White: " + w : "");
 }
 
-function updateGameLabelsOthello() {
+function updateGameLabelsReversi() {
   const meta = document.getElementById("game-meta");
-  if (meta) I18n.setMsg(meta, AppStateOthello.moveCount ? "Move " + AppStateOthello.moveCount : "");
-  updateUndoButtonVisibilityOthello();
-  updateResignVisibilityOthello();
+  if (meta) I18n.setMsg(meta, AppStateReversi.moveCount ? "Move " + AppStateReversi.moveCount : "");
+  updateUndoButtonVisibilityReversi();
+  updateResignVisibilityReversi();
 
-  if (AppStateOthello.gameOver) clearSavedOthelloGame();
-  else saveOthelloGame();
+  if (AppStateReversi.gameOver) clearSavedReversiGame();
+  else saveReversiGame();
 }
 
-function updateUndoButtonVisibilityOthello() {
+function updateUndoButtonVisibilityReversi() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
-  const hasUndo = (AppStateOthello.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateOthello.gameOver));
+  const hasUndo = (AppStateReversi.undoStack || []).length > 0;
+  btn.classList.toggle("hidden", !(hasUndo && !AppStateReversi.gameOver));
 }
 
-function updateResignVisibilityOthello() {
+function updateResignVisibilityReversi() {
   const resignBtn = document.getElementById("resign-button");
-  if (resignBtn) resignBtn.classList.toggle("hidden", AppStateOthello.gameOver);
+  if (resignBtn) resignBtn.classList.toggle("hidden", AppStateReversi.gameOver);
 }
 
-document.addEventListener("DOMContentLoaded", initOthelloApp);
+document.addEventListener("DOMContentLoaded", initReversiApp);

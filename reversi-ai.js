@@ -1,6 +1,6 @@
-// othello-ai.js
-// Offline Reversi/Othello opponent, three strength levels built on
-// othello-core.js, mirroring the structure of checkers-ai.js:
+// reversi-ai.js
+// Offline Reversi opponent, three strength levels built on
+// reversi-core.js, mirroring the structure of checkers-ai.js:
 //   1 = easy   - random legal move
 //   2 = medium - 1-ply positional evaluation with light randomness
 //   3 = hard   - iterative deepening alpha-beta with root-level pruning
@@ -12,7 +12,7 @@
 // as the game actually ending, scored by final disc count rather than
 // searched any further.
 
-const OthelloAi = (function () {
+const ReversiAi = (function () {
   const INF = 1e9;
 
   // Classic static weight table: corners are extremely valuable (and,
@@ -33,8 +33,8 @@ const OthelloAi = (function () {
 
   function positionalScore(board, color) {
     let score = 0;
-    for (let r = 0; r < OthelloCore.SIZE; r++) {
-      for (let c = 0; c < OthelloCore.SIZE; c++) {
+    for (let r = 0; r < ReversiCore.SIZE; r++) {
+      for (let c = 0; c < ReversiCore.SIZE; c++) {
         if (board[r][c] === color) score += WEIGHTS[r][c];
       }
     }
@@ -42,19 +42,19 @@ const OthelloAi = (function () {
   }
 
   function evaluateFor(color, board) {
-    const opp = OthelloCore.otherColor(color);
+    const opp = ReversiCore.otherColor(color);
     let score = positionalScore(board, color) - positionalScore(board, opp);
     // Mobility matters more than raw disc count for most of the game -
     // having more available moves than your opponent keeps pressure on
     // and denies them good squares.
-    const myMoves = OthelloCore.getLegalMoves(board, color).length;
-    const oppMoves = OthelloCore.getLegalMoves(board, opp).length;
+    const myMoves = ReversiCore.getLegalMoves(board, color).length;
+    const oppMoves = ReversiCore.getLegalMoves(board, opp).length;
     score += (myMoves - oppMoves) * 3;
     return score;
   }
 
   function terminalScore(board, perspective) {
-    const winner = OthelloCore.getWinner(board);
+    const winner = ReversiCore.getWinner(board);
     if (winner === perspective) return INF / 2;
     if (winner === null) return 0;
     return -INF / 2;
@@ -77,10 +77,10 @@ const OthelloAi = (function () {
       }
     }
 
-    const moves = OthelloCore.getLegalMoves(board, colorToMove);
+    const moves = ReversiCore.getLegalMoves(board, colorToMove);
     if (!moves.length) {
       if (justPassed) return terminalScore(board, perspective); // neither side can move
-      return minimax(board, OthelloCore.otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState, true);
+      return minimax(board, ReversiCore.otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState, true);
     }
     if (depth >= maxDepth) {
       return evaluateFor(perspective, board);
@@ -90,8 +90,8 @@ const OthelloAi = (function () {
     let best = isMaximizing ? -INF : INF;
 
     for (const m of moves) {
-      const b2 = OthelloCore.applyMove(board, colorToMove, m);
-      const score = minimax(b2, OthelloCore.otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState, false);
+      const b2 = ReversiCore.applyMove(board, colorToMove, m);
+      const score = minimax(b2, ReversiCore.otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState, false);
       if (searchState && searchState.aborted) return best;
       if (isMaximizing) {
         if (score > best) best = score;
@@ -111,7 +111,7 @@ const OthelloAi = (function () {
 
     const rootScored = orderedMoves.map((m) => ({
       move: m,
-      score: evaluateFor(color, OthelloCore.applyMove(board, color, m)) + (Math.random() - 0.5) * 2
+      score: evaluateFor(color, ReversiCore.applyMove(board, color, m)) + (Math.random() - 0.5) * 2
     }));
     rootScored.sort((a, b) => b.score - a.score);
     orderedMoves = rootScored.map((e) => e.move);
@@ -125,8 +125,8 @@ const OthelloAi = (function () {
       let depthAborted = false;
 
       for (const m of orderedMoves) {
-        const b2 = OthelloCore.applyMove(board, color, m);
-        const score = minimax(b2, OthelloCore.otherColor(color), 1, depth, alpha, INF, color, searchState, false);
+        const b2 = ReversiCore.applyMove(board, color, m);
+        const score = minimax(b2, ReversiCore.otherColor(color), 1, depth, alpha, INF, color, searchState, false);
         if (searchState.aborted) {
           depthAborted = true;
           break;
@@ -154,7 +154,7 @@ const OthelloAi = (function () {
   };
 
   function chooseMove(board, color, level) {
-    const moves = OthelloCore.getLegalMoves(board, color);
+    const moves = ReversiCore.getLegalMoves(board, color);
     if (!moves.length) return null;
 
     if (typeof level !== "number" || level < 1) level = 1;
@@ -167,7 +167,7 @@ const OthelloAi = (function () {
     if (config.style === "greedy") {
       const scored = moves.map((m) => ({
         move: m,
-        score: evaluateFor(color, OthelloCore.applyMove(board, color, m))
+        score: evaluateFor(color, ReversiCore.applyMove(board, color, m))
       }));
       scored.sort((a, b) => b.score - a.score);
       const topN = Math.min(config.topN, scored.length);
@@ -184,8 +184,8 @@ const OthelloAi = (function () {
 })();
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = OthelloAi;
+  module.exports = ReversiAi;
 }
 if (typeof window !== "undefined") {
-  window.OthelloAi = OthelloAi;
+  window.ReversiAi = ReversiAi;
 }

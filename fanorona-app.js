@@ -3,7 +3,7 @@
 // plain rectangular grid - points sit on a 5x9 grid where roughly half of
 // them ("strong" points) also connect diagonally - so it's rendered with
 // the same percentage-based absolute-positioning technique used for
-// Quoridor/Hex/Go (a JS-enforced non-square aspect ratio, since the board
+// WallMaze/Hex/Go (a JS-enforced non-square aspect ratio, since the board
 // is noticeably wider than tall), with the point-to-point connections
 // drawn as a single non-interactive SVG layer UNDER the point buttons,
 // the way morris-app.js draws Nine Men's Morris's fixed board lines (SVG
@@ -532,7 +532,7 @@ function showBoardSectionFanorona() {
 
 /*** Board geometry and rendering ***
  * Percentage-based absolute positioning (the same technique as Go's/
- * Quoridor's/Hex's boards): points sit on a UNIT-spaced grid with a PAD
+ * WallMaze's/Hex's boards): points sit on a UNIT-spaced grid with a PAD
  * margin on every side, so a point never touches the board's own edge.
  * Because the board is 9 columns by 5 rows (wider than tall), the width
  * and height percentages are computed against different totals - the

@@ -7,8 +7,8 @@
 // most people know today under the trademarked name "Battleship" - under
 // a generic name, matching how this collection already handles a few
 // other games with well-known trademarked names (see fleetbattle-history.html
-// for the full explanation: Reversi/Othello, Four in a Row/Connect Four,
-// Wall Maze/Quoridor, Card Tactics/Onitama).
+// for the full explanation: Reversi, Four in a Row, Wall Maze,
+// Card Tactics).
 //
 // Ruleset (see fleetbattle-rules.html for the player-facing version):
 //  - Two 10x10 grids (columns A-J, rows 1-10), one per player.

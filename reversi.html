@@ -49,19 +49,19 @@
 
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
-    <button id="start-othello-game" class="primary" data-i18n="new_game">New game</button>
-    <div id="othello-color-choice" class="inline-options">
-      <label class="color-choice"><input type="radio" name="othello-color" value="black" checked> <span class="color-choice-icon"><span class="othello-icon-disc othello-icon-disc-black"></span></span></label>
-      <label class="color-choice"><input type="radio" name="othello-color" value="white"> <span class="color-choice-icon"><span class="othello-icon-disc othello-icon-disc-white"></span></span></label>
+    <button id="start-reversi-game" class="primary" data-i18n="new_game">New game</button>
+    <div id="reversi-color-choice" class="inline-options">
+      <label class="color-choice"><input type="radio" name="reversi-color" value="black" checked> <span class="color-choice-icon"><span class="reversi-icon-disc reversi-icon-disc-black"></span></span></label>
+      <label class="color-choice"><input type="radio" name="reversi-color" value="white"> <span class="color-choice-icon"><span class="reversi-icon-disc reversi-icon-disc-white"></span></span></label>
     </div>
-    <select id="othello-level-inline">
+    <select id="reversi-level-inline">
         <option value="0" data-i18n="mode_two_player">2 Player (local)</option>
         <option value="1" data-i18n="level_easy">Easy</option>
         <option value="2" selected data-i18n="level_medium">Medium</option>
         <option value="3" data-i18n="level_hard">Hard</option>
       </select>
   </div>
-  <div id="offline-othello-status" class="status-text"></div>
+  <div id="offline-reversi-status" class="status-text"></div>
 </section>
 </div>
 
@@ -75,14 +75,14 @@
     <div id="board-info" class="status-text" aria-live="polite"></div>
   </div>
   <div id="board-placeholder" class="board-placeholder">
-    <span class="board-placeholder-icon othello-icon-disc othello-icon-disc-black"></span>
+    <span class="board-placeholder-icon reversi-icon-disc reversi-icon-disc-black"></span>
     <div class="board-placeholder-text">
       <span class="board-placeholder-title" data-i18n="game_reversi">Reversi</span>
       <span class="board-placeholder-subtitle">PaperGames</span>
     </div>
   </div>
   <div id="board-container" class="hidden">
-    <div id="othello-board" role="group" aria-label="Reversi board"></div>
+    <div id="reversi-board" role="group" aria-label="Reversi board"></div>
   </div>
   <div id="board-actions" class="board-actions">
     <button id="undo-btn" class="secondary small hidden" data-i18n="undo_button" onclick="undoLastMove()">Undo</button>

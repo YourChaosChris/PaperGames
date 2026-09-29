@@ -14,10 +14,8 @@
   // even though the game's own URL/GAMES_CATALOG slug changed; 2048 has
   // always saved under its number rather than its slug.
   const SAVE_SLUG_TO_CATALOG_SLUG = {
-    othello: "reversi",
     connectfour: "fourinarow",
     onitama: "cardtactics",
-    quoridor: "wallmaze",
     "2048": "twenty48"
   };
 

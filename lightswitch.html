@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Wall Maze on e-ink – play offline, no ads | PaperGames</title>
-  <meta name="description" content="Race to the far side of the board while building walls to block your opponent. Local 2-player or vs. the built-in engine.">
-  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/wallmaze.html">
+  <title>Light Switch on e-ink – play offline, no ads | PaperGames</title>
+  <meta name="description" content="Turn off every light on a 5x5 grid. Pressing a cell toggles it and its neighbors, so every scrambled puzzle is guaranteed solvable.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/lightswitch.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PaperGames">
-  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/wallmaze.html">
-  <meta property="og:title" content="Wall Maze on e-ink – play offline, no ads | PaperGames">
-  <meta property="og:description" content="Race to the far side of the board while building walls to block your opponent. Local 2-player or vs. the built-in engine.">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/lightswitch.html">
+  <meta property="og:title" content="Light Switch on e-ink – play offline, no ads | PaperGames">
+  <meta property="og:description" content="Turn off every light on a 5x5 grid. Pressing a cell toggles it and its neighbors, so every scrambled puzzle is guaranteed solvable.">
   <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Wall Maze on e-ink – play offline, no ads | PaperGames">
-  <meta name="twitter:description" content="Race to the far side of the board while building walls to block your opponent. Local 2-player or vs. the built-in engine.">
+  <meta name="twitter:title" content="Light Switch on e-ink – play offline, no ads | PaperGames">
+  <meta name="twitter:description" content="Turn off every light on a 5x5 grid. Pressing a cell toggles it and its neighbors, so every scrambled puzzle is guaranteed solvable.">
   <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -45,30 +45,16 @@
   <main>
 
 <div id="settings-panel">
-<section class="mode-section">
-  <div class="mode-section-row">
-    <div class="mode-buttons">
-      <button id="mode-offline" class="mode-btn secondary" data-i18n="mode_two_player">2 Player (local)</button>
-      <button id="mode-offline-ai" class="mode-btn secondary" data-i18n="vs_computer">vs Computer</button>
-    </div>
-  </div>
-</section>
-
-    <section id="offline-ai-controls" class="card hidden">
+    <section id="lightswitch-controls" class="card">
   <div class="field-row">
-    <button id="start-wallmaze-game" class="primary" data-i18n="new_game">New game</button>
-    <div id="wallmaze-side-choice" class="inline-options">
-      <label class="color-choice"><input type="radio" name="wallmaze-side" value="p1" checked> <span class="color-choice-icon wallmaze-icon-piece wallmaze-icon-piece-p1"></span></label>
-      <label class="color-choice"><input type="radio" name="wallmaze-side" value="p2"> <span class="color-choice-icon wallmaze-icon-piece wallmaze-icon-piece-p2"></span></label>
-    </div>
-    <select id="wallmaze-level-inline">
-        <option value="0" data-i18n="mode_two_player">2 Player (local)</option>
-        <option value="1" data-i18n="level_easy">Easy</option>
-        <option value="2" selected data-i18n="level_medium">Medium</option>
-        <option value="3" data-i18n="level_hard">Hard</option>
+    <button id="start-lightswitch-game" class="primary" data-i18n="lightswitch_new_game">New game</button>
+    <select id="lightswitch-level-inline">
+        <option value="easy" data-i18n="lightswitch_level_easy">Easy (5 presses)</option>
+        <option value="medium" selected data-i18n="lightswitch_level_medium">Medium (10 presses)</option>
+        <option value="hard" data-i18n="lightswitch_level_hard">Hard (20 presses)</option>
       </select>
   </div>
-  <div id="offline-wallmaze-status" class="status-text"></div>
+  <div id="offline-lightswitch-status" class="status-text"></div>
 </section>
 </div>
 
@@ -82,23 +68,17 @@
     <div id="board-info" class="status-text" aria-live="polite"></div>
   </div>
   <div id="board-placeholder" class="board-placeholder">
-    <span class="board-placeholder-icon wallmaze-icon-piece wallmaze-icon-piece-p1"></span>
+    <span class="board-placeholder-icon board-placeholder-icon-svg" aria-hidden="true"><svg viewBox="0 0 100 100"><rect x="20" y="20" width="20" height="20" fill="#fff"/><rect x="40" y="20" width="20" height="20" fill="#141413"/><rect x="60" y="20" width="20" height="20" fill="#fff"/><rect x="20" y="40" width="20" height="20" fill="#141413"/><rect x="40" y="40" width="20" height="20" fill="#141413"/><rect x="60" y="40" width="20" height="20" fill="#141413"/><rect x="20" y="60" width="20" height="20" fill="#fff"/><rect x="40" y="60" width="20" height="20" fill="#141413"/><rect x="60" y="60" width="20" height="20" fill="#fff"/><rect x="20" y="20" width="60" height="60" fill="none" stroke="#141413" stroke-width="4"/><path d="M40 20V80M60 20V80M20 40H80M20 60H80" stroke="#141413" stroke-width="1.5"/></svg></span>
     <div class="board-placeholder-text">
-      <span class="board-placeholder-title" data-i18n="game_wall_maze">Wall Maze</span>
+      <span class="board-placeholder-title" data-i18n="game_lightswitch">Light Switch</span>
       <span class="board-placeholder-subtitle">PaperGames</span>
     </div>
   </div>
   <div id="board-container" class="hidden">
-    <div id="wallmaze-board" class="wallmaze-board" role="group" aria-label="Wall Maze board"></div>
+    <div id="lightswitch-board" class="lightswitch-board" role="group" aria-label="Light Switch board"></div>
   </div>
   <div id="board-actions" class="board-actions">
-    <button id="undo-btn" class="secondary small hidden" data-i18n="undo_button" onclick="undoLastMove()">Undo</button>
-    <button id="wallmaze-wall-mode-btn" class="secondary small hidden">🧱 Place a wall</button>
-    <button id="wallmaze-orientation-btn" class="secondary small hidden">⬌ Horizontal</button>
-    <button id="wallmaze-confirm-wall-btn" class="primary small hidden" data-i18n="wallmaze_wall_confirm">✓ Place</button>
-    <button id="resign-button" class="secondary small hidden" data-i18n="resign_button">Resign 🏳</button>
   </div>
-  <div id="score-line" class="score-line hidden"><span id="score-captures" class="score-line-captures"></span></div>
 </section>
   </main>
   <footer class="site-footer">
@@ -111,20 +91,18 @@
 <script src="i18n.js"></script>
 <script src="font-size-toggle.js"></script>
 <script src="high-contrast.js"></script>
-<script src="force-update.js"></script>
 <script src="ai-pacing.js"></script>
+<script src="force-update.js"></script>
 <script src="settings-menu.js"></script>
 <script src="rules-link.js"></script>
 <script src="game-switcher.js"></script>
-<script src="wallmaze-core.js"></script>
-<script src="wallmaze-ai.js"></script>
+<script src="lightswitch-core.js"></script>
 <script src="result-modal.js"></script>
 <script src="storage-warning.js"></script>
 <script src="game-storage.js"></script>
 <script src="game-stats.js"></script>
-<script src="adaptive-difficulty.js"></script>
 <script src="board-a11y.js"></script>
-<script src="wallmaze-app.js"></script>
+<script src="lightswitch-app.js"></script>
 <script src="confirm-actions.js"></script>
 <script src="sw-register.js"></script>
 <script src="update-banner.js"></script>

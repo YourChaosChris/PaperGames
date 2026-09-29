@@ -1,5 +1,5 @@
-// quoridor-core.js
-// Dependency-free rules engine for Quoridor: a 9x9 board, two pawns
+// wallmaze-core.js
+// Dependency-free rules engine for WallMaze: a 9x9 board, two pawns
 // racing for the opposite edge, and ten walls per player that can
 // slow the opponent down but must never fully block either player's
 // path to their goal.
@@ -15,9 +15,9 @@
 // blocks horizontal movement between column wc/wc+1 at both row wr
 // and row wr+1. Two walls may never overlap the same edge segment,
 // and a horizontal and vertical wall may never cross at the same
-// intersection - both standard Quoridor rules.
+// intersection - both standard WallMaze rules.
 
-const QuoridorCore = (function () {
+const WallMazeCore = (function () {
   const SIZE = 9;
   const WALL_GRID = 8;
   const GOAL_ROW = { p1: 8, p2: 0 };
@@ -221,8 +221,8 @@ const QuoridorCore = (function () {
 })();
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = QuoridorCore;
+  module.exports = WallMazeCore;
 }
 if (typeof window !== "undefined") {
-  window.QuoridorCore = QuoridorCore;
+  window.WallMazeCore = WallMazeCore;
 }

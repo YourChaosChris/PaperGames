@@ -20,7 +20,7 @@ const GameStorage = (function () {
   // Games renamed for trademark reasons: new slug -> old slug. A save
   // (and its "recently played" entry) still under the old slug is moved
   // to the new one once, on the first page load after the rename.
-  const RENAMED_SLUGS = { bullsandcows: "mastermind", marblepush: "abalone" };
+  const RENAMED_SLUGS = { bullsandcows: "mastermind", marblepush: "abalone", lightswitch: "lightsout", reversi: "othello", wallmaze: "quoridor" };
 
   function migrateRenamedSaves() {
     try {
