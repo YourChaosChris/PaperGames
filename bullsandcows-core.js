@@ -1,5 +1,5 @@
-// mastermind-core.js
-// Dependency-free Mastermind engine. No DOM/UI here, same separation of
+// bullsandcows-core.js
+// Dependency-free BullsAndCows engine. No DOM/UI here, same separation of
 // concerns as every other <game>-core.js - and, like Sudoku, Minesweeper
 // and Peg Solitaire, this is solitaire: the "opponent" is just a fixed
 // secret code chosen once at the start, not something that reacts to you.
@@ -13,7 +13,7 @@
 // scoring algorithm that never lets one peg in the secret satisfy more
 // than one peg in the guess.
 
-const MastermindCore = (function () {
+const BullsAndCowsCore = (function () {
   const SYMBOLS = ["circle", "square", "triangle", "diamond", "star", "cross"];
   const CODE_LENGTH = 4;
 
@@ -77,7 +77,7 @@ const MastermindCore = (function () {
     };
   }
 
-  // Standard two-pass Mastermind scoring. First pass: count exact
+  // Standard two-pass BullsAndCows scoring. First pass: count exact
   // position+symbol matches (black pegs) and set those positions aside
   // on both sides. Second pass: for what's left, count symbols that
   // appear on both sides regardless of position (white pegs), consuming
@@ -149,8 +149,8 @@ const MastermindCore = (function () {
 })();
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = MastermindCore;
+  module.exports = BullsAndCowsCore;
 }
 if (typeof window !== "undefined") {
-  window.MastermindCore = MastermindCore;
+  window.BullsAndCowsCore = BullsAndCowsCore;
 }

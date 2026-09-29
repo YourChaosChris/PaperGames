@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nonograms on e-ink – play offline, no ads | PaperGames</title>
-  <meta name="description" content="Use row and column number clues to reveal a hidden picture, one cell at a time. A fresh, uniquely-solvable puzzle in three sizes.">
-  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/nonogram.html">
+  <title>Bulls and Cows on e-ink – play offline, no ads | PaperGames</title>
+  <meta name="description" content="Crack the hidden four-shape code within a limited number of guesses, guided by black and white peg feedback. A colorless take on the classic logic game.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/bullsandcows.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PaperGames">
-  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/nonogram.html">
-  <meta property="og:title" content="Nonograms on e-ink – play offline, no ads | PaperGames">
-  <meta property="og:description" content="Use row and column number clues to reveal a hidden picture, one cell at a time. A fresh, uniquely-solvable puzzle in three sizes.">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/bullsandcows.html">
+  <meta property="og:title" content="Bulls and Cows on e-ink – play offline, no ads | PaperGames">
+  <meta property="og:description" content="Crack the hidden four-shape code within a limited number of guesses, guided by black and white peg feedback. A colorless take on the classic logic game.">
   <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Nonograms on e-ink – play offline, no ads | PaperGames">
-  <meta name="twitter:description" content="Use row and column number clues to reveal a hidden picture, one cell at a time. A fresh, uniquely-solvable puzzle in three sizes.">
+  <meta name="twitter:title" content="Bulls and Cows on e-ink – play offline, no ads | PaperGames">
+  <meta name="twitter:description" content="Crack the hidden four-shape code within a limited number of guesses, guided by black and white peg feedback. A colorless take on the classic logic game.">
   <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -23,7 +23,7 @@
   <script>try{if((localStorage.getItem("einkchess_lang")||navigator.language||"en").slice(0,2).toLowerCase()!=="en"){document.documentElement.className+=" i18n-pending";setTimeout(function(){document.documentElement.classList.remove("i18n-pending")},4000)}}catch(e){}</script>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="printable-puzzle">
+<body>
 <div id="app">
   <header class="app-header">
     <div class="title-wrap app-title-row">
@@ -45,18 +45,16 @@
   <main>
 
 <div id="settings-panel">
-    <section id="nonogram-controls" class="card">
+    <section id="bullsandcows-controls" class="card">
   <div class="field-row">
-    <button id="start-nonogram-game" class="primary" data-i18n="nonogram_new_game">New puzzle</button>
-    <button id="daily-nonogram-button" class="secondary" data-i18n="daily_challenge_button">🗓 Daily Challenge</button>
-    <button id="print-puzzle-button" class="secondary" data-i18n="print_puzzle_button">🖨 Print</button>
-    <select id="nonogram-level-inline">
-        <option value="easy" data-i18n="nonogram_level_easy">Easy (5x5)</option>
-        <option value="medium" selected data-i18n="nonogram_level_medium">Medium (10x10)</option>
-        <option value="hard" data-i18n="nonogram_level_hard">Hard (15x15)</option>
+    <button id="start-bullsandcows-game" class="primary" data-i18n="bullsandcows_new_game">New game</button>
+    <select id="bullsandcows-level-inline">
+        <option value="easy" data-i18n="level_easy">Easy</option>
+        <option value="medium" selected data-i18n="level_medium">Medium</option>
+        <option value="hard" data-i18n="level_hard">Hard</option>
       </select>
   </div>
-  <div id="offline-nonogram-status" class="status-text"></div>
+  <div id="offline-bullsandcows-status" class="status-text"></div>
 </section>
 </div>
 
@@ -70,23 +68,22 @@
     <div id="board-info" class="status-text" aria-live="polite"></div>
   </div>
   <div id="board-placeholder" class="board-placeholder">
-    <span class="board-placeholder-icon nonogram-icon" aria-hidden="true"></span>
+    <span class="board-placeholder-icon board-placeholder-icon-svg" aria-hidden="true"><svg viewBox="0 0 100 100"><rect x="4" y="4" width="92" height="92" rx="12" fill="#ffffff" stroke="#141413" stroke-width="6"/><circle cx="20" cy="50" r="10" fill="#141413"/><rect x="31" y="41" width="18" height="18" fill="#141413"/><polygon points="60,38 70,60 50,60" fill="#141413"/><polygon points="80,38 92,50 80,62 68,50" fill="#141413"/></svg></span>
     <div class="board-placeholder-text">
-      <span class="board-placeholder-title" data-i18n="game_nonograms">Nonograms</span>
+      <span class="board-placeholder-title" data-i18n="game_bullsandcows">Bulls and Cows</span>
       <span class="board-placeholder-subtitle">PaperGames</span>
     </div>
   </div>
   <div id="board-container" class="hidden">
-    <div id="nonogram-mode-toggle" class="nonogram-mode-toggle">
-      <button id="nonogram-mode-fill" type="button" class="secondary small active-mode" data-i18n="nonogram_mode_fill">Fill</button>
-      <button id="nonogram-mode-mark" type="button" class="secondary small" data-i18n="nonogram_mode_mark">Mark X</button>
+    <div id="bullsandcows-guess-row" class="bullsandcows-guess-row" role="group" aria-label="Current guess"></div>
+    <div id="board-actions" class="board-actions">
+      <button id="bullsandcows-submit-btn" type="button" class="primary" data-i18n="bullsandcows_submit_guess">Submit guess</button>
     </div>
-    <div id="nonogram-wrap" class="nonogram-wrap">
-      <div id="nonogram-grid" class="nonogram-grid"></div>
+    <div class="bullsandcows-legend">
+      <div class="bullsandcows-legend-row"><span class="bullsandcows-peg bullsandcows-peg-black"></span> <span data-i18n="bullsandcows_legend_black">Right shape, right position</span></div>
+      <div class="bullsandcows-legend-row"><span class="bullsandcows-peg bullsandcows-peg-white"></span> <span data-i18n="bullsandcows_legend_white">Right shape, wrong position</span></div>
     </div>
-  </div>
-  <div id="board-actions" class="board-actions">
-    <button id="undo-btn" class="secondary small hidden" data-i18n="undo_button" onclick="undoLastMove()">Undo</button>
+    <div id="bullsandcows-history" class="bullsandcows-history" aria-label="Guess history"></div>
   </div>
 </section>
   </main>
@@ -105,15 +102,12 @@
 <script src="settings-menu.js"></script>
 <script src="rules-link.js"></script>
 <script src="game-switcher.js"></script>
-<script src="nonogram-core.js"></script>
-<script src="nonogram-puzzles.js"></script>
+<script src="bullsandcows-core.js"></script>
 <script src="result-modal.js"></script>
 <script src="storage-warning.js"></script>
 <script src="game-storage.js"></script>
 <script src="game-stats.js"></script>
-<script src="board-a11y.js"></script>
-<script src="daily-challenge.js"></script>
-<script src="nonogram-app.js"></script>
+<script src="bullsandcows-app.js"></script>
 <script src="confirm-actions.js"></script>
 <script src="sw-register.js"></script>
 <script src="update-banner.js"></script>

@@ -1,5 +1,5 @@
-// abalone-core.js
-// Dependency-free rules engine for Abalone: two players push marbles
+// marblepush-core.js
+// Dependency-free rules engine for MarblePush: two players push marbles
 // around a hexagonal board of 61 cells (rows of 5,6,7,8,9,8,7,6,5),
 // trying to shove 6 of the opponent's marbles off the edge. Mirrors the
 // separation of concerns in fanorona-core.js/hex-core.js: rules only,
@@ -13,7 +13,7 @@
 // also carries a (row, col) pair, with row 0 at one edge of the
 // hexagon (5 cells) widening to row 4 in the middle (9 cells) and back
 // down to row 8 (5 cells) - this is only used for a11y labels and
-// pixel layout in abalone-app.js; all rules logic uses the cube
+// pixel layout in marblepush-app.js; all rules logic uses the cube
 // coordinates and the precomputed NEIGHBORS table below.
 //
 // Moves: a "group" is 1, 2 or 3 of the mover's own marbles, contiguous
@@ -30,7 +30,7 @@
 // it pushes can be eliminated. Game ends when either side has lost 6
 // marbles.
 
-const AbaloneCore = (function () {
+const MarblePushCore = (function () {
   const ROWS_LENGTHS = [5, 6, 7, 8, 9, 8, 7, 6, 5];
   const ROWS = ROWS_LENGTHS.length;
   const TOTAL_CELLS = ROWS_LENGTHS.reduce((a, b) => a + b, 0); // 61
@@ -337,8 +337,8 @@ const AbaloneCore = (function () {
 })();
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = AbaloneCore;
+  module.exports = MarblePushCore;
 }
 if (typeof window !== "undefined") {
-  window.AbaloneCore = AbaloneCore;
+  window.MarblePushCore = MarblePushCore;
 }

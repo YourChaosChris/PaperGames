@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "papergames-cache-v116";
+const CACHE_NAME = "papergames-cache-v117";
 
 const APP_SHELL = [
   "./",
@@ -131,9 +131,9 @@ const APP_SHELL = [
   "lightsout.html",
   "lightsout-rules.html",
   "lightsout-history.html",
-  "mastermind.html",
-  "mastermind-rules.html",
-  "mastermind-history.html",
+  "bullsandcows.html",
+  "bullsandcows-rules.html",
+  "bullsandcows-history.html",
   "dotsandboxes.html",
   "dotsandboxes-rules.html",
   "dotsandboxes-history.html",
@@ -173,9 +173,9 @@ const APP_SHELL = [
   "tablut.html",
   "tablut-rules.html",
   "tablut-history.html",
-  "abalone.html",
-  "abalone-rules.html",
-  "abalone-history.html",
+  "marblepush.html",
+  "marblepush-rules.html",
+  "marblepush-history.html",
   "pyramidsolitaire.html",
   "pyramidsolitaire-rules.html",
   "pyramidsolitaire-history.html",
@@ -318,8 +318,8 @@ const APP_SHELL = [
   "yatzy-app.js",
   "lightsout-core.js",
   "lightsout-app.js",
-  "mastermind-core.js",
-  "mastermind-app.js",
+  "bullsandcows-core.js",
+  "bullsandcows-app.js",
   "dotsandboxes-core.js",
   "dotsandboxes-ai.js",
   "dotsandboxes-app.js",
@@ -358,9 +358,9 @@ const APP_SHELL = [
   "tablut-core.js",
   "tablut-ai.js",
   "tablut-app.js",
-  "abalone-core.js",
-  "abalone-ai.js",
-  "abalone-app.js",
+  "marblepush-core.js",
+  "marblepush-ai.js",
+  "marblepush-app.js",
   "pyramidsolitaire-core.js",
   "pyramidsolitaire-app.js",
   "surakarta-core.js",
@@ -395,6 +395,12 @@ const APP_SHELL = [
 
   // Redirect stubs at old, pre-rename URLs (kept so previously shared
   // links still resolve - see the trademark-safe rename in git history).
+  "mastermind.html",
+  "mastermind-rules.html",
+  "mastermind-history.html",
+  "abalone.html",
+  "abalone-rules.html",
+  "abalone-history.html",
   "othello.html",
   "othello-rules.html",
   "othello-history.html",

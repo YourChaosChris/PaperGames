@@ -2,7 +2,7 @@
 // Wires SpiderSolitaireCore to the spidersolitaire.html UI. Solitaire,
 // like Klondike/FreeCell here - no opponent, no AI, just a difficulty
 // picker (how many suits are in play) chosen before "New game", the
-// same way Kakuro/Mastermind offer a picker before starting.
+// same way Kakuro/Bulls and Cows offer a picker before starting.
 //
 // Cards show their rank as text and their suit as a small SVG from
 // card-faces.js: red suits (hearts, diamonds) hollow, black suits

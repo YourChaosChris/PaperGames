@@ -1,5 +1,5 @@
 // nonogram-puzzles.js
-// A small curated set of Nonogram (Picross) pictures - simple
+// A small curated set of Nonogram pictures - simple
 // geometric shapes rather than photo-realistic pixel art, since a
 // clean symmetric shape is far easier to guarantee has one and only
 // one solution than an arbitrary hand-drawn picture. Every grid below

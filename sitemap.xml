@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/abalone-history.html</loc>
+    <loc>https://yourchaoschris.github.io/PaperGames/marblepush-history.html</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/abalone-rules.html</loc>
+    <loc>https://yourchaoschris.github.io/PaperGames/marblepush-rules.html</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/abalone.html</loc>
+    <loc>https://yourchaoschris.github.io/PaperGames/marblepush.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -425,15 +425,15 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/mastermind-history.html</loc>
+    <loc>https://yourchaoschris.github.io/PaperGames/bullsandcows-history.html</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/mastermind-rules.html</loc>
+    <loc>https://yourchaoschris.github.io/PaperGames/bullsandcows-rules.html</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/mastermind.html</loc>
+    <loc>https://yourchaoschris.github.io/PaperGames/bullsandcows.html</loc>
     <priority>0.8</priority>
   </url>
   <url>

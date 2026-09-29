@@ -10,7 +10,7 @@
 // "Is a game currently in progress" is read off #resign-button's own
 // visibility: every two-player/vs-AI game already shows that button
 // only while a game is live and hides it once it's over (see e.g.
-// abalone-app.js's `resignBtn.classList.toggle("hidden", ...gameOver)`),
+// marblepush-app.js's `resignBtn.classList.toggle("hidden", ...gameOver)`),
 // so it's already exactly the signal this needs - no new per-game state
 // to track. Games without a #resign-button (the solitaire/puzzle games)
 // are unaffected: isGameInProgress() then always reads false, so their
@@ -63,7 +63,7 @@
     // the configured vs-AI/vs-human "New game" buttons (id^="start-"), and
     // "Offline" mode's button, which - unlike "Offline (vs Computer)" -
     // starts a 2-player game immediately on click rather than revealing a
-    // setup form first (see e.g. abalone-app.js's modeOffline handler).
+    // setup form first (see e.g. marblepush-app.js's modeOffline handler).
     //
     // Unlike resigning, starting fresh never gets recorded as a loss -
     // every <game>-app.js's own recordXStatsIfVsAi() is only ever called
