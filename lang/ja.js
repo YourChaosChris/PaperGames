@@ -999,7 +999,7 @@ STRINGS.ja = {
     fanorona_capture_withdrawal_btn: "後退で取る",
     fanorona_continue_capturing: "この駒でさらに取り続けることも、ここで止めることもできます。",
     fanorona_done_capturing_btn: "取り終える",
-    game_ludo: "ルド (人生ゲーム風すごろく)",
+    game_ludo: "ルド",
     home_ludo_desc: "古代インドのパチーシに由来する、十字形のクラシックなすごろくレースゲーム。自分は1色を操作し、最大3体のコンピューター対戦相手と対戦(合計2~4人)、またはローカルで端末を順番に回して遊べます。",
     ludo_mode_hotseat: "ローカル対戦(順番に)",
     ludo_num_players: "プレイヤー数:",
