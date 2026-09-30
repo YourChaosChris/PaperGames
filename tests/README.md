@@ -17,6 +17,8 @@ plain Node scripts, matching the rest of the codebase.
   npm install -g playwright
   npx playwright install chromium
   ```
+- `python3`, for the throwaway web server that `run-all.sh`
+  starts. Not needed when running a single check by hand.
 
 ## Running everything
 
