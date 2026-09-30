@@ -99,8 +99,10 @@ The interface is available in 12 languages:
 
 Plain HTML, CSS, and JavaScript — no build step, no framework, no backend.
 Game state, settings, and stats are kept in the browser's `localStorage` /
-`sessionStorage`. A service worker (`sw.js`) precaches the app shell so
-already-visited games keep working offline.
+`sessionStorage`. A service worker (`sw.js`) precaches the whole app shell on its
+first install, so every game keeps working offline afterwards,
+including ones that have never been opened. The home page shows
+whether that has finished.
 
 ## License
 
