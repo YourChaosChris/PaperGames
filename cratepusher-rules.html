@@ -51,6 +51,7 @@
         <dd data-i18n="cratepusher_rules_board">A rectangular grid of walls (solid black) and floor (white). On the floor stand you (a filled circle), several crates (a square with a cross) and exactly as many targets (a small hollow square). A crate standing on a target turns into a solid square.</dd>
         <dt data-i18n="cratepusher_term_move">Moving</dt>
         <dd data-i18n="cratepusher_rules_move">You move one cell at a time, up, down, left or right - never diagonally. You can't walk through walls or crates.</dd>
+        <dd data-i18n="cratepusher_rules_move_targets">You may walk across empty targets; only walls and crates block your way.</dd>
         <dt data-i18n="cratepusher_term_push">Pushing</dt>
         <dd data-i18n="cratepusher_rules_push">Walking into a crate pushes it one cell further, but only if the cell behind it is free: no wall and no second crate. You can only ever push one crate at a time, and you can never pull a crate back towards you.</dd>
         <dt data-i18n="cratepusher_term_goal">The goal</dt>
@@ -59,6 +60,8 @@
         <dd data-i18n="cratepusher_rules_stuck">Because crates can't be pulled, a careless push can make a level unsolvable - for example a crate pushed into a corner that is not a target. The game warns you when a crate is stuck in such a corner. Other dead ends are not announced: think ahead, and use "Undo move" as often as you like to go back.</dd>
         <dt data-i18n="cratepusher_term_controls">Controls</dt>
         <dd data-i18n="cratepusher_rules_controls">Tap a cell next to you to step there (and push a crate standing there). Tap a floor cell further away and you walk there by the shortest way - but only if you can get there without pushing any crate. The arrow keys and W, A, S, D also move you. "Undo move" takes back your moves one by one, as many as you want; "Restart level" starts the level over.</dd>
+        <dt data-i18n="cp_hint">Hint</dt>
+        <dd data-i18n="cratepusher_rules_hint">"Hint" shows you exactly one push: the first push of a shortest solution from where you stand now. The crate to push gets a dashed frame, the cell it should go to a solid frame, and a sentence below the board names the row, column and direction (counted without the outer wall). The hint only shows the push - you make it yourself. For the next one, tap "Hint" again. If there is no solution left from your position, the hint tells you so. Hints are not saved and don't affect your statistics.</dd>
         <dt data-i18n="cratepusher_term_levels">The levels</dt>
         <dd data-i18n="cratepusher_rules_levels">Every level is made by PaperGames itself, fresh each time: easy on a 7x7 grid with 3 crates, medium on 9x9 with 4, hard on 10x10 with 5. The program builds each level backwards from the solved position, so it is always solvable, and then checks it once more with its own solver. The number of pushes the best solution needs is shown above the board, together with your steps, your pushes and how many crates already stand on a target.</dd>
       </dl>
