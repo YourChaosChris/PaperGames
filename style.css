@@ -1231,6 +1231,24 @@ margin: 2rem 0 1rem;
   margin: 0 0 0.5rem;
 }
 
+/* Offline status line under the home intro (home-app.js, offline-status.js):
+   plain full-contrast text, a check mark or a dot as the only mark, no box.
+   The reserved height keeps the buttons below from jumping when the text
+   arrives. */
+.offline-status {
+  min-height: 1.5em;
+  margin: 0.25rem 0 0;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.offline-status-icon svg {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  margin-right: 0.35em;
+}
+
 .home-hero-actions {
   display: flex;
   flex-wrap: wrap;

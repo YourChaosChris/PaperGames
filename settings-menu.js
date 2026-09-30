@@ -96,12 +96,12 @@ const SettingsMenu = (function () {
     btn.addEventListener("click", () => ForceUpdate.run(overlay.querySelector("#settings-force-update-status"), btn));
   }
 
-  // Asks the service worker for its CACHE_NAME. On a first visit the worker
-  // is still installing and doesn't control the page yet, so this shows
-  // "Checking…" and asks again once it is ready or takes over. "Version
-  // unknown" appears only without service worker support, when a worker
-  // doesn't answer a single query within two seconds, or when nothing has
-  // happened after 30 seconds in total.
+  // Shows the running version, as answered by the service worker via
+  // offline-status.js (shared with the home page's offline line). On a
+  // first visit the worker is still installing, so this shows "Checking…"
+  // until it is ready. "Version unknown" appears without service worker
+  // support, on a file:// copy, when a worker doesn't answer within two
+  // seconds, or when nothing has happened after 30 seconds in total.
   let stopVersionCheck = null;
 
   function showVersion() {
@@ -110,76 +110,29 @@ const SettingsMenu = (function () {
     // Reopening the dialog starts over; drop the previous run's timers and
     // listeners so they can't run twice.
     if (stopVersionCheck) stopVersionCheck();
-
-    const sw = typeof navigator !== "undefined" && navigator.serviceWorker;
-    let finished = false;
-    let pending = false;
-    let queryTimer = null;
-    let totalTimer = null;
+    stopVersionCheck = null;
 
     function setKey(key, fallback) {
       el.setAttribute("data-i18n", key);
       el.textContent = t(key, fallback);
     }
-    function stop() {
-      finished = true;
-      clearTimeout(queryTimer);
-      clearTimeout(totalTimer);
-      if (sw) {
-        sw.removeEventListener("message", onMessage);
-        sw.removeEventListener("controllerchange", onControllerChange);
-      }
-      if (stopVersionCheck === stop) stopVersionCheck = null;
-    }
-    function unknown() {
-      if (finished) return;
-      stop();
+    if (typeof OfflineStatus === "undefined") {
       setKey("settings_version_unknown", "Version unknown");
+      return;
     }
-    function onMessage(event) {
-      const data = event.data;
-      if (finished || !data || !data.papergamesVersion) return;
-      stop();
-      el.removeAttribute("data-i18n");
-      el.textContent = String(data.papergamesVersion);
-    }
-    // Sends one query to the given worker (the controller, or the
-    // registration's active worker once it is ready). The reply goes to
-    // this page either way, since sw.js answers event.source.
-    function ask(worker) {
-      if (finished || pending || !worker) return;
-      pending = true;
-      try {
-        worker.postMessage("papergames-version");
-      } catch (e) {
-        unknown();
-        return;
+    stopVersionCheck = OfflineStatus.watch((state, detail) => {
+      if (state === "ready") {
+        el.removeAttribute("data-i18n");
+        el.textContent = detail.version;
+      } else if (state === "loading" && detail.controlled) {
+        el.removeAttribute("data-i18n");
+        el.textContent = "…";
+      } else if (state === "loading") {
+        setKey("settings_version_checking", "Checking…");
+      } else {
+        setKey("settings_version_unknown", "Version unknown");
       }
-      queryTimer = setTimeout(unknown, 2000);
-    }
-    function onControllerChange() {
-      sw.removeEventListener("controllerchange", onControllerChange);
-      ask(sw.controller);
-    }
-
-    if (!sw) {
-      unknown();
-      return;
-    }
-    stopVersionCheck = stop;
-    sw.addEventListener("message", onMessage);
-    if (sw.controller) {
-      el.removeAttribute("data-i18n");
-      el.textContent = "…";
-      ask(sw.controller);
-      return;
-    }
-    setKey("settings_version_checking", "Checking…");
-    sw.addEventListener("controllerchange", onControllerChange);
-    totalTimer = setTimeout(unknown, 30000);
-    sw.ready.then((registration) => {
-      if (!finished) ask(sw.controller || registration.active);
-    }).catch(() => { /* the 30-second limit covers this */ });
+    });
   }
 
   function buildModal() {
