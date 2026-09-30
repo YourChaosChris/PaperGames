@@ -18,6 +18,9 @@ STRINGS.de = {
 
     home_tagline: "58 klassische Spiele, gemacht für E-Reader.",
     home_intro: "Eine kleine, unabhängige Sammlung klassischer Brett-, Strategie- und Knobelspiele, gebaut für E-Ink-Displays wie Tolino, Kobo und Kindle: hoher Kontrast, keine Animationen, und funktioniert nach dem ersten Öffnen auch ohne Internetverbindung weiter.",
+    offline_ready: "Offline bereit. Du kannst das WLAN ausschalten, die Spiele laufen weiter.",
+    offline_loading: "Wird gerade auf dein Gerät geladen. Lass die Seite kurz offen.",
+    offline_unavailable: "Dein Browser kann die Seite nicht ablegen. Sie läuft nur mit Internet.",
     home_play_button: "▶ Spiel wählen",
     home_surprise_button: "🎲 Überrasch mich",
     home_languages: "Verfügbar in 12 Sprachen",
@@ -723,7 +726,7 @@ STRINGS.de = {
     guide_title: "Anleitung: PaperGames auf deinem Gerät",
     guide_intro: "Drei Wege, PaperGames auf einen E-Reader zu bekommen – ungefähr vom einfachsten zum manuellsten sortiert.",
     guide_web_title: "1. Einfach im Browser öffnen",
-    guide_web_body: "Öffne genau diese Adresse im Browser deines E-Readers und setze ein Lesezeichen. Nach dem ersten Besuch cached sich PaperGames automatisch für die Offline-Nutzung – WLAN aus, und es funktioniert weiter. Die einzige Ausnahme ist der Online-Modus mit Lichess bei Schach, der eine echte Verbindung braucht; jedes andere Spiel hier ist reines Offline-Spiel und davon nicht betroffen.",
+    guide_web_body: "Es gibt nichts herunterzuladen und nichts zu installieren. Öffne genau diese Adresse im Browser deines E-Readers und setze ein Lesezeichen. Nach dem ersten Besuch cached sich PaperGames automatisch für die Offline-Nutzung – WLAN aus, und es funktioniert weiter. Das Ablegen kann ein bis zwei Minuten dauern; lass die Seite so lange offen. Auf der Startseite steht, wann es fertig ist („Offline bereit“). Die einzige Ausnahme ist der Online-Modus mit Lichess bei Schach, der eine echte Verbindung braucht; jedes andere Spiel hier ist reines Offline-Spiel und davon nicht betroffen.",
     guide_pwa_title: "2. Zum Homescreen hinzufügen",
     guide_pwa_body: "Bietet der Browser deines E-Readers “Zum Startbildschirm hinzufügen” oder “App installieren” an, nutze das. PaperGames öffnet sich dann wie eine normale App, im Vollbild, ohne Browser-Leiste drumherum.",
     guide_sideload_title: "3. Per USB seitladen",

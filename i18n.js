@@ -22,6 +22,9 @@ const STRINGS = {
 
     home_tagline: "58 classic games, built for e-readers.",
     home_intro: "A small, dependency-free collection of classic board, strategy, and puzzle games made for E-Ink displays like Tolino, Kobo and Kindle: high contrast, no animations, and it keeps working with no internet connection once you've opened it.",
+    offline_ready: "Ready offline. You can switch off the WiFi and the games keep running.",
+    offline_loading: "Being stored on your device right now. Keep this page open for a moment.",
+    offline_unavailable: "Your browser can't store this site. It only runs with an internet connection.",
     home_play_button: "▶ Choose a game",
     home_surprise_button: "🎲 Surprise me",
     home_languages: "Available in 12 languages",
@@ -727,7 +730,7 @@ const STRINGS = {
     guide_title: "Guide: PaperGames on your device",
     guide_intro: "Three ways to get PaperGames onto an e-reader, roughly from easiest to most manual.",
     guide_web_title: "1. Just open it in the browser",
-    guide_web_body: "Open this same web address in your e-reader's browser and bookmark it. After the first visit, PaperGames caches itself for offline use automatically - close the WiFi and it keeps working. The only exception is Chess's online Lichess mode, which needs an actual connection; every other game here is offline-only and unaffected.",
+    guide_web_body: "There's nothing to download and nothing to install. Open this same web address in your e-reader's browser and bookmark it. After the first visit, PaperGames caches itself for offline use automatically - close the WiFi and it keeps working. Storing it can take a minute or two; keep the page open until then. The home page shows when it's done (\"Ready offline\"). The only exception is Chess's online Lichess mode, which needs an actual connection; every other game here is offline-only and unaffected.",
     guide_pwa_title: "2. Add it to the home screen",
     guide_pwa_body: "If your e-reader's browser offers “Add to Home Screen” or “Install app”, use it. PaperGames then opens like a regular app, full-screen, without browser chrome around it.",
     guide_sideload_title: "3. Sideload via USB",

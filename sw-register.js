@@ -21,7 +21,10 @@
       // registered worker (which can otherwise wait quite a while).
       registration.update().catch(function () { /* best effort */ });
     }).catch(function () {
-      // Offline caching just won't be available on this device/browser; the app still works.
+      // Offline caching just won't be available on this device/browser; the
+      // app still works. offline-status.js shows this on the home page.
+      window.__pgSwRegisterFailed = true;
+      try { document.dispatchEvent(new Event("papergames-sw-failed")); } catch (e) { /* old browser */ }
     });
   });
 })();

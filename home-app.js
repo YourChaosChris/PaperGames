@@ -94,6 +94,55 @@
     GamesRender.translateInto(grid);
   }
 
+  // The offline status line under the intro: whether the service worker
+  // has stored the app on this device (offline-status.js). It stays on the
+  // page for good, so anyone can check it later too.
+  const OFFLINE_ICON = {
+    check: '<svg viewBox="0 0 16 16" focusable="false"><path d="M2 8.5 L6.2 12.5 L14 3.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>',
+    dot: '<svg viewBox="0 0 16 16" focusable="false"><circle cx="8" cy="8" r="3.5" fill="currentColor"/></svg>'
+  };
+  // Storing 400-odd files on a slow reader takes a minute or two, so the
+  // home page waits longer than the Settings dialog's 30 seconds before
+  // it calls the device unable to store the app.
+  const OFFLINE_WAIT_MS = 180000;
+
+  function showOfflineStatus(key, icon) {
+    const text = document.getElementById("offline-status-text");
+    const mark = document.querySelector("#offline-status .offline-status-icon");
+    if (!text || !mark) return;
+    mark.innerHTML = key ? OFFLINE_ICON[icon] : "";
+    if (!key) {
+      text.removeAttribute("data-i18n");
+      text.textContent = "";
+    } else if (window.I18n && typeof I18n.setKey === "function") {
+      I18n.setKey(text, key);
+    }
+  }
+
+  function watchOfflineStatus() {
+    if (typeof OfflineStatus === "undefined" || !document.getElementById("offline-status")) return;
+    OfflineStatus.watch((state, detail) => {
+      if (state === "ready") {
+        showOfflineStatus("offline_ready", "check");
+      } else if (state === "loading" && detail.controlled) {
+        // A worker already controls this page, so the files are stored and
+        // its answer is a few milliseconds away - don't flash "loading" on
+        // an e-ink screen for that.
+        showOfflineStatus("", "");
+      } else if (state === "loading") {
+        showOfflineStatus("offline_loading", "dot");
+      } else {
+        showOfflineStatus("offline_unavailable", "dot");
+        // A very slow first install can still finish after the time limit;
+        // when a worker takes over after all, ask again.
+        const sw = navigator.serviceWorker;
+        if (sw && (location.protocol === "http:" || location.protocol === "https:")) {
+          sw.addEventListener("controllerchange", watchOfflineStatus, { once: true });
+        }
+      }
+    }, { limit: OFFLINE_WAIT_MS });
+  }
+
   function goToRandomGame() {
     const games = GAMES_CATALOG.filter(GamesRender.isListed);
     if (!games.length) return;
@@ -106,6 +155,7 @@
     renderNewGames();
     renderFavorites();
     GamesRender.updateFavoriteButtons(document);
+    watchOfflineStatus();
 
     const surpriseBtn = document.getElementById("home-surprise-button");
     if (surpriseBtn) surpriseBtn.addEventListener("click", goToRandomGame);
