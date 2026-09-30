@@ -15,6 +15,15 @@
 // crate. Arrow keys and W/A/S/D work too (board-a11y.js). "Undo move"
 // takes back as many moves as you like; "Restart level" asks first
 // (confirm-actions.js). The level in progress is saved after every move.
+//
+// "Hint" runs the core's solver from the current position - in small
+// steps like the level generator, so a slow reader never freezes - and
+// shows the first push of a shortest solution: the crate's cell and its
+// destination get the shared last-move frames (.lm-from dashed, .lm-to
+// solid) and #board-info names row, column and direction. It only shows
+// the push, never makes it. Any move, undo, restart or new level bumps
+// AppStateCp.token, which drops a hint still being worked out. Hints are
+// neither saved nor counted in the statistics.
 
 const CP_SAVE_KEY = "einkchess_save_cratepusher";
 const CP_MIN_CELL = 32;
@@ -53,12 +62,23 @@ const AppStateCp = {
   token: 0,
   kinds: [],
   cells: [],
-  cellSize: 0
+  cellSize: 0,
+  hinting: false,
+  hintCells: [],
+  hint: null // { row, col, dir } while a hint sentence is shown
 };
 
 function setStatusCp(text) {
   const el = document.getElementById("board-info");
+  AppStateCp.hint = null;
   if (el) I18n.setMsg(el, text || "");
+}
+
+// A fixed hint sentence, by key, so a language change retranslates it.
+function setStatusKeyCp(key) {
+  const el = document.getElementById("board-info");
+  AppStateCp.hint = null;
+  if (el) I18n.setKey(el, key);
 }
 
 function saveCp() {
@@ -95,6 +115,8 @@ function initCratePusherApp() {
   });
   document.getElementById("undo-btn").addEventListener("click", undoCp);
   document.getElementById("cp-restart").addEventListener("click", restartCp);
+  document.getElementById("cp-hint").addEventListener("click", hintCp);
+  if (I18n.onChange) I18n.onChange(renderHintCp);
   if (typeof BoardA11y !== "undefined" && BoardA11y.enableDirectionKeys) {
     BoardA11y.enableDirectionKeys((dir) => {
       if (!AppStateCp.level || AppStateCp.solved || AppStateCp.generating) return false;
@@ -139,6 +161,8 @@ function newLevelCp(difficulty) {
   const token = ++AppStateCp.token;
   AppStateCp.difficulty = difficulty;
   AppStateCp.generating = true;
+  AppStateCp.hinting = false;
+  document.getElementById("cp-hint").disabled = true;
   setStatusCp("Building a level…");
   const status = document.getElementById("offline-cratepusher-status");
   if (status) I18n.setMsg(status, "Building a level…");
@@ -257,6 +281,11 @@ function undoCp() {
 function afterChangeCp(message) {
   const s = AppStateCp;
   const lvl = s.level;
+  // The position changed: a hint still being worked out no longer fits.
+  // (While a level is being built the token belongs to the generator.)
+  if (!s.generating) s.token++;
+  s.hinting = false;
+  clearHintMarksCp();
   updateCellsCp();
   const total = s.crates.length;
   const on = CratePusherCore.cratesOnTargets(lvl, s.crates);
@@ -266,9 +295,12 @@ function afterChangeCp(message) {
   I18n.setMsg(document.getElementById("cp-best"), "Shortest solution: " + lvl.minPushes + " pushes");
   const undoBtn = document.getElementById("undo-btn");
   const restartBtn = document.getElementById("cp-restart");
+  const hintBtn = document.getElementById("cp-hint");
   undoBtn.classList.remove("hidden");
   restartBtn.classList.remove("hidden");
+  hintBtn.classList.remove("hidden");
   undoBtn.disabled = s.undo.length === 0;
+  hintBtn.disabled = s.generating || CratePusherCore.isSolved(lvl, s.crates);
   // Ask before throwing away a level in progress.
   const startBtn = document.getElementById("start-cratepusher-game");
   const inProgress = s.undo.length > 0 && !s.solved;
@@ -299,6 +331,79 @@ function afterChangeCp(message) {
   saveCp();
 }
 
+/*** Hint ***/
+
+function hintCp() {
+  const s = AppStateCp;
+  if (!s.level || s.solved || s.generating || s.hinting) return;
+  const lvl = s.level;
+  // Cheap check first: a crate in a non-target corner can never move.
+  if (CratePusherCore.cornerStuck(lvl, s.crates).length) {
+    setStatusKeyCp("cp_hint_stuck");
+    return;
+  }
+  const token = s.token;
+  const cfg = CratePusherCore.LEVELS[lvl.difficulty] || CratePusherCore.LEVELS[s.difficulty] || CratePusherCore.LEVELS.medium;
+  const solver = CratePusherCore.createSolver(CratePusherCore.roomOf(lvl), lvl.targets,
+    { crates: s.crates.slice(), pusher: s.pusher }, cfg.solveBudget);
+  const hintBtn = document.getElementById("cp-hint");
+  s.hinting = true;
+  hintBtn.disabled = true;
+  setStatusKeyCp("cp_hint_thinking");
+  function tick() {
+    if (token !== s.token) return; // the position changed - drop this hint
+    if (!solver.run(CratePusherCore.STEP_NODES)) {
+      setTimeout(tick, 0);
+      return;
+    }
+    s.hinting = false;
+    hintBtn.disabled = false;
+    const res = solver.result;
+    if (res.solvable && res.first) showHintCp(res.first);
+    else if (res.solvable) setStatusCp("");
+    else setStatusKeyCp(res.aborted ? "cp_hint_unknown" : "cp_hint_stuck");
+  }
+  // Let "Thinking…" reach the screen before the work starts.
+  setTimeout(tick, 30);
+}
+
+function showHintCp(first) {
+  const s = AppStateCp;
+  const w = s.level.width;
+  const d = first.to - first.from;
+  const dir = d === -w ? "up" : d === w ? "down" : d === -1 ? "left" : "right";
+  clearHintMarksCp();
+  s.cells[first.from].classList.add("lm-from");
+  s.cells[first.to].classList.add("lm-to");
+  s.hintCells = [first.from, first.to];
+  // Row and column as a person reads the board: the outer wall ring is
+  // not counted, so the first floor row is row 1.
+  s.hint = { row: Math.floor(first.from / w), col: first.from % w, dir };
+  renderHintCp();
+}
+
+// Writes the hint sentence in the current language (again after a
+// language change, as long as the hint is still showing).
+function renderHintCp() {
+  const h = AppStateCp.hint;
+  const el = document.getElementById("board-info");
+  if (!h || !el) return;
+  el.removeAttribute("data-i18n");
+  el.removeAttribute("data-i18n-msg");
+  el.textContent = I18n.t("cp_hint_move")
+    .replace("{row}", h.row)
+    .replace("{col}", h.col)
+    .replace("{dir}", I18n.t("cp_dir_" + h.dir));
+}
+
+function clearHintMarksCp() {
+  const s = AppStateCp;
+  s.hintCells.forEach((i) => {
+    if (s.cells[i]) s.cells[i].classList.remove("lm-from", "lm-to");
+  });
+  s.hintCells = [];
+}
+
 /*** Board ***/
 
 function kindAt(cell) {
@@ -318,6 +423,7 @@ function buildBoardCp() {
   board.innerHTML = "";
   s.cells = [];
   s.kinds = [];
+  s.hintCells = [];
   for (let y = 0; y < lvl.height; y++) {
     const row = document.createElement("div");
     row.className = "cp-row";

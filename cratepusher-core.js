@@ -303,7 +303,10 @@ const CratePusherCore = (function () {
 
   // Breadth-first search over pushes from a position to any solved one.
   // Resumable like the reverse search. result: null while running, then
-  // { solvable, pushes } or { solvable: false, aborted: true }.
+  // { solvable, pushes, first } or { solvable: false, aborted: true }.
+  // `first` is the first push of that shortest solution, { from, to }
+  // (the crate's cell and the cell it goes to); null when already solved.
+  // The pusher can always walk to the cell behind `from` without pushing.
   function createSolver(room, targets, start, budget) {
     const n = room.walls.length;
     const ds = dirs(room.width);
@@ -313,11 +316,11 @@ const CratePusherCore = (function () {
     const seenKeys = new Set();
     const crates0 = start.crates.slice().sort((a, b) => a - b);
     const r0 = reach(room, occupancy(n, crates0), start.pusher);
-    const queue = [{ crates: crates0, pusher: r0.min, depth: 0 }];
+    const queue = [{ crates: crates0, pusher: r0.min, depth: 0, first: null }];
     seenKeys.add(keyOf(crates0, r0.min));
     let head = 0;
     let result = null;
-    if (onTargets(crates0, targetSet) === crates0.length) result = { solvable: true, pushes: 0 };
+    if (onTargets(crates0, targetSet) === crates0.length) result = { solvable: true, pushes: 0, first: null };
     if (!result && crates0.some((c) => !live[c])) result = { solvable: false };
 
     function run(maxNodes) {
@@ -338,8 +341,9 @@ const CratePusherCore = (function () {
             const crates = s.crates.slice();
             crates[i] = to;
             crates.sort((x, y) => x - y);
+            const first = s.first || { from: b, to };
             if (onTargets(crates, targetSet) === crates.length) {
-              result = { solvable: true, pushes: s.depth + 1 };
+              result = { solvable: true, pushes: s.depth + 1, first };
               return true;
             }
             occ[b] = 0; occ[to] = 1;
@@ -348,7 +352,7 @@ const CratePusherCore = (function () {
             const key = keyOf(crates, min2);
             if (seenKeys.has(key)) continue;
             seenKeys.add(key);
-            queue.push({ crates, pusher: b, depth: s.depth + 1 });
+            queue.push({ crates, pusher: b, depth: s.depth + 1, first });
           }
         }
       }
@@ -527,6 +531,7 @@ const CratePusherCore = (function () {
 
   return {
     LEVELS,
+    STEP_NODES,
     makeRng,
     makeRoom,
     liveCells,
