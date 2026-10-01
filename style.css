@@ -1110,6 +1110,66 @@ margin: 0.5rem 0;
   color: #fff;
 }
 
+/* Narrow readers (Tolino Vision 6: 632 px, PocketBook Era, Tolino Vision
+   Color): the header stacked its four controls (game switcher, Rules,
+   Settings, Menu) on top of each other and took 171 px before the nav.
+   Here they sit side by side and wrap only when they must, the title is
+   smaller, the author line is left out, the spacing is tighter - and
+   every control you tap in the header and the nav is at least 44 px
+   high. Wider screens keep the layout above unchanged. */
+@media (max-width: 800px) {
+  .app-header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .app-header > * {
+    margin: 0 0.3rem 0.3rem 0;
+  }
+  .app-title-row > * {
+    margin: 0 0.3rem 0.3rem 0;
+  }
+  .title-wrap h1 {
+    font-size: 1.1rem;
+  }
+  .app-title-author {
+    display: none;
+  }
+  .user-panel {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+  }
+  .user-panel > * {
+    margin: 0 0.3rem 0.3rem 0;
+  }
+  .user-panel button,
+  .user-panel a,
+  .user-panel select {
+    box-sizing: border-box;
+    min-height: 44px;
+  }
+  .user-panel a {
+    display: inline-flex;
+    align-items: center;
+  }
+  .site-nav {
+    margin: 0.25rem 0;
+  }
+  .site-nav > * {
+    margin: 0 0.3rem 0.3rem 0;
+  }
+  .site-nav-link {
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 0.25rem 0.6rem;
+  }
+}
+
 /* History library page: a plain, image-free reading list of every game's
    origin story, roughly in the order each game first appeared. */
 
