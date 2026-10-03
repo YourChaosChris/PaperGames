@@ -2513,6 +2513,7 @@ STRINGS.uk = {
     msg_checkmate_computer_mated: "Шах і мат! Комп'ютеру поставлено мат.",
     msg_mill_removed: "Млин! Одну фішку прибрано.",
     msg_marble_off: "Кульку виштовхнуто!",
+    msg_t_marble_off_count: "Кульку виштовхнуто – {p}: втрачено {n} з 6.",
     msg_goat_captured: "Козу захоплено!",
     msg_choose_opponent_remove: "Обери підсвічену фішку суперника, щоб її прибрати.",
     msg_reason_no_legal_moves: "немає допустимих ходів",

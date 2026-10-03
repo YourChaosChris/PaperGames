@@ -2446,6 +2446,7 @@ STRINGS.ar = {
     msg_checkmate_computer_mated: "كش مات! هُزم الكمبيوتر.",
     msg_mill_removed: "طاحونة! أُزيلت قطعة.",
     msg_marble_off: "دُفعت كرة إلى الخارج!",
+    msg_t_marble_off_count: "دُفعت كرة إلى الخارج – {p}: خُسرت {n} من 6.",
     msg_goat_captured: "أُسرت ماعز!",
     msg_choose_opponent_remove: "اختر قطعة مميزة للخصم لإزالتها.",
     msg_reason_no_legal_moves: "لا توجد نقلات ممكنة",

@@ -2513,6 +2513,7 @@ STRINGS.ja = {
     msg_checkmate_computer_mated: "チェックメイト!コンピューターを詰ませました。",
     msg_mill_removed: "ミル!駒を1つ取り除きました。",
     msg_marble_off: "玉を押し出しました!",
+    msg_t_marble_off_count: "玉を押し出しました – {p}：6個中{n}個を失いました。",
     msg_goat_captured: "ヤギが取られました!",
     msg_choose_opponent_remove: "取り除く相手の駒(強調表示)を選んでください。",
     msg_reason_no_legal_moves: "指せる手なし",

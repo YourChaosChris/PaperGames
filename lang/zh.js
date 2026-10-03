@@ -2513,6 +2513,7 @@ STRINGS.zh = {
     msg_checkmate_computer_mated: "将死!电脑被将死了。",
     msg_mill_removed: "成三!移除了一枚棋子。",
     msg_marble_off: "弹珠被推出!",
+    msg_t_marble_off_count: "弹珠被推出——{p}：6颗中已失去{n}颗。",
     msg_goat_captured: "一只山羊被吃掉了!",
     msg_choose_opponent_remove: "选择一枚高亮的对方棋子移除。",
     msg_reason_no_legal_moves: "无合法走法",

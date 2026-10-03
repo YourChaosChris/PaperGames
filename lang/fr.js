@@ -2513,6 +2513,7 @@ STRINGS.fr = {
     msg_checkmate_computer_mated: "Échec et mat ! L'ordinateur est mat.",
     msg_mill_removed: "Moulin ! Une pièce a été retirée.",
     msg_marble_off: "Bille éjectée !",
+    msg_t_marble_off_count: "Bille éjectée – {p} : {n} sur 6 perdues.",
     msg_goat_captured: "Une chèvre a été capturée !",
     msg_choose_opponent_remove: "Choisissez une pièce adverse en surbrillance à retirer.",
     msg_reason_no_legal_moves: "aucun coup légal",

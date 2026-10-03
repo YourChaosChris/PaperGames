@@ -2577,6 +2577,7 @@ STRINGS.de = {
     msg_checkmate_computer_mated: "Schachmatt! Der Computer ist matt.",
     msg_mill_removed: "Mühle! Ein Stein wurde entfernt.",
     msg_marble_off: "Kugel hinausgeschoben!",
+    msg_t_marble_off_count: "Kugel hinausgeschoben – {p}: {n} von 6 verloren.",
     msg_goat_captured: "Eine Ziege wurde geschlagen!",
     msg_choose_opponent_remove: "Wähle einen markierten gegnerischen Stein zum Entfernen.",
     msg_reason_no_legal_moves: "keine gültigen Züge",

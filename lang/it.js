@@ -2513,6 +2513,7 @@ STRINGS.it = {
     msg_checkmate_computer_mated: "Scacco matto! Il computer ha perso.",
     msg_mill_removed: "Mulino! Un pezzo è stato rimosso.",
     msg_marble_off: "Biglia spinta fuori!",
+    msg_t_marble_off_count: "Biglia spinta fuori – {p}: {n} su 6 perse.",
     msg_goat_captured: "Una capra è stata catturata!",
     msg_choose_opponent_remove: "Scegli un pezzo avversario evidenziato da rimuovere.",
     msg_reason_no_legal_moves: "nessuna mossa valida",

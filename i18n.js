@@ -2581,6 +2581,7 @@ const STRINGS = {
     msg_checkmate_computer_mated: "Checkmate! The computer is mated.",
     msg_mill_removed: "Mill! A piece was removed.",
     msg_marble_off: "Marble pushed off!",
+    msg_t_marble_off_count: "Marble pushed off – {p}: {n} of 6 lost.",
     msg_goat_captured: "A goat was captured!",
     msg_choose_opponent_remove: "Choose a highlighted opponent piece to remove.",
     msg_reason_no_legal_moves: "no legal moves",

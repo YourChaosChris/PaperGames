@@ -2513,6 +2513,7 @@ STRINGS.nl = {
     msg_checkmate_computer_mated: "Schaakmat! De computer staat mat.",
     msg_mill_removed: "Molen! Er is een stuk weggenomen.",
     msg_marble_off: "Knikker eraf geduwd!",
+    msg_t_marble_off_count: "Knikker eraf geduwd – {p}: {n} van 6 verloren.",
     msg_goat_captured: "Er is een geit geslagen!",
     msg_choose_opponent_remove: "Kies een gemarkeerd stuk van de tegenstander om weg te nemen.",
     msg_reason_no_legal_moves: "geen geldige zetten",

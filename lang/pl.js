@@ -2514,6 +2514,7 @@ STRINGS.pl = {
     msg_checkmate_computer_mated: "Szach mat! Komputer dostał mata.",
     msg_mill_removed: "Młynek! Usunięto pionek.",
     msg_marble_off: "Kulka wypchnięta!",
+    msg_t_marble_off_count: "Kulka wypchnięta – {p}: {n} z 6 straconych.",
     msg_goat_captured: "Koza została zbita!",
     msg_choose_opponent_remove: "Wybierz podświetlony pionek przeciwnika do usunięcia.",
     msg_reason_no_legal_moves: "brak dozwolonych ruchów",

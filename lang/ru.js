@@ -2513,6 +2513,7 @@ STRINGS.ru = {
     msg_checkmate_computer_mated: "Шах и мат! Компьютеру поставлен мат.",
     msg_mill_removed: "Мельница! Одна фишка снята.",
     msg_marble_off: "Шарик вытолкнут!",
+    msg_t_marble_off_count: "Шарик вытолкнут – {p}: потеряно {n} из 6.",
     msg_goat_captured: "Коза захвачена!",
     msg_choose_opponent_remove: "Выберите подсвеченную фишку соперника, чтобы снять её.",
     msg_reason_no_legal_moves: "нет допустимых ходов",

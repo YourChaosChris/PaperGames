@@ -356,7 +356,14 @@ function playMarblePushMove(move) {
     return;
   }
 
-  const capturedNote = move.capturedCount > 0 ? " Marble pushed off!" : "";
+  // After a push-off, name the score too: whose marble went and how
+  // many of the 6 that side has lost so far.
+  let capturedNote = "";
+  if (move.capturedCount > 0) {
+    const victim = MarblePushCore.otherColor(mover);
+    const lost = MarblePushCore.PIECES_PER_PLAYER - MarblePushCore.countColor(AppStateMarblePush.board, victim);
+    capturedNote = " Marble pushed off – " + colorNameMarblePush(victim) + ": " + lost + " of 6 lost.";
+  }
   setStatusMarblePush("board-info", colorNameMarblePush(mover) + " played." + capturedNote + " " + colorNameMarblePush(AppStateMarblePush.turn) + " to move.");
 
   if (AppStateMarblePush.mode === "offline-ai" && !AppStateMarblePush.gameOver && AppStateMarblePush.turn !== AppStateMarblePush.humanColor) {

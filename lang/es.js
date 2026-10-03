@@ -2513,6 +2513,7 @@ STRINGS.es = {
     msg_checkmate_computer_mated: "¡Jaque mate! El ordenador está mate.",
     msg_mill_removed: "¡Molino! Se ha retirado una pieza.",
     msg_marble_off: "¡Canica expulsada!",
+    msg_t_marble_off_count: "Canica expulsada – {p}: {n} de 6 perdidas.",
     msg_goat_captured: "¡Se ha capturado una cabra!",
     msg_choose_opponent_remove: "Elige una pieza rival resaltada para retirarla.",
     msg_reason_no_legal_moves: "sin jugadas legales",
