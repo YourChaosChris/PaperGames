@@ -272,13 +272,16 @@ function initLudoApp() {
       const numPlayers = numPlayersSelect ? parseInt(numPlayersSelect.value, 10) : 4;
       const level = levelInline ? parseInt(levelInline.value, 10) : 2;
       const colorInput = document.querySelector("input[name='ludo-color']:checked");
-      const humanColor = colorInput ? colorInput.value : "red";
+      const chosenColor = colorInput ? colorInput.value : "red";
+      // The colors on offer come from the page's own radio group.
+      const colorOptions = Array.prototype.map.call(document.querySelectorAll("input[name='ludo-color']"), (el) => el.value);
+      const humanColor = pendingMode === "vs-ai" ? RandomStart.choose(chosenColor, colorOptions) : chosenColor;
       setActiveModeButtonLudo(pendingMode);
       startNewGameLudo(pendingMode, numPlayers, humanColor, level);
       if (pendingMode === "vs-ai") {
         const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
         setStatusLudo("offline-ludo-status",
-          "You play " + ludoColorName(humanColor) + " against " + (numPlayers - 1) + " computer player(s), level: " + (levelNames[level] || level) + ".");
+          RandomStart.label("You play " + ludoColorName(humanColor) + " against " + (numPlayers - 1) + " computer player(s), level: " + (levelNames[level] || level) + "."));
       } else {
         setStatusLudo("offline-ludo-status", "Local " + numPlayers + "-player hotseat game (no computer).");
       }

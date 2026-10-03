@@ -198,7 +198,7 @@ function initMarblePushApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const colorInput = document.querySelector("input[name='marblepush-color']:checked");
-    const humanColor = colorInput && colorInput.value === "white" ? "w" : "b";
+    const humanColor = RandomStart.choose(colorInput && colorInput.value === "white" ? "w" : "b", ["b", "w"]);
 
     if (level === 0) {
       setActiveModeButton("offline-ai");
@@ -211,7 +211,7 @@ function initMarblePushApp() {
     startNewGame("offline-ai", humanColor, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusMarblePush("offline-marblepush-status",
-      "You play " + colorNameMarblePush(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + colorNameMarblePush(humanColor) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (resignBtn) {

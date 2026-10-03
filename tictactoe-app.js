@@ -186,7 +186,7 @@ function initTicTacToeApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const playerInput = document.querySelector("input[name='tictactoe-player']:checked");
-    const humanPlayer = playerInput && playerInput.value === "2" ? "2" : "1";
+    const humanPlayer = RandomStart.choose(playerInput && playerInput.value === "2" ? "2" : "1", ["1", "2"]);
 
     if (level === 0) {
       setActiveModeButton("offline-ai");
@@ -201,7 +201,7 @@ function initTicTacToeApp() {
     // On Hard the hint also stays in this line: if the computer moves
     // first, its move replaces the board status within a moment.
     setStatusTicTacToe("offline-tictactoe-status",
-      "You play " + playerNameTicTacToe(humanPlayer) + ", computer level: " + (levelNames[level] || level) + "." +
+      RandomStart.label("You play " + playerNameTicTacToe(humanPlayer) + ", computer level: " + (levelNames[level] || level) + ".") +
       (level === 3 ? " On Hard the computer solves the game completely – a draw is the best you can get." : ""));
   });
 

@@ -508,7 +508,7 @@ modeOffline.addEventListener("click", () => {
 startAiGameBtn.addEventListener("click", () => {
   AppState.gameOver = false;
   const colorInput = document.querySelector("input[name='ai-color']:checked");
-  const color = colorInput ? colorInput.value : "white";
+  const chosenColor = colorInput ? colorInput.value : "white";
   let level = (typeof AppState.aiLevel === "number") ? AppState.aiLevel : 2;
   if (aiLevelInline) {
     const parsed = parseInt(aiLevelInline.value, 10);
@@ -517,6 +517,9 @@ startAiGameBtn.addEventListener("click", () => {
     }
   }
 
+  // Against the computer the "Who moves first" setting may draw the side
+  // by lot; White still moves first.
+  const color = level === 0 ? chosenColor : RandomStart.choose(chosenColor, ["white", "black"]);
   AppState.humanColor = color;
   AppState.aiLevel = level;
   AppState.viewColor = color; // Brett-Perspektive an Spielerfarbe anpassen
@@ -576,7 +579,7 @@ startAiGameBtn.addEventListener("click", () => {
 
   const humanText = (color === "white" ? "White" : "Black");
   const statusText = "You play " + humanText + ", computer level " + level + (hintText ? " (" + hintText + ")." : ".");
-  setStatus("offline-ai-status", statusText);
+  setStatus("offline-ai-status", RandomStart.label(statusText));
 
   if (color === "black") {
     // AI starts as White

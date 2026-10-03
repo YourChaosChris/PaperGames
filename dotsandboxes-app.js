@@ -195,7 +195,7 @@ function initDotsAndBoxesApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const playerInput = document.querySelector("input[name='dotsandboxes-player']:checked");
-    const humanPlayer = playerInput && playerInput.value === "2" ? "2" : "1";
+    const humanPlayer = RandomStart.choose(playerInput && playerInput.value === "2" ? "2" : "1", ["1", "2"]);
 
     if (level === 0) {
       setActiveModeButton("offline-ai");
@@ -208,7 +208,7 @@ function initDotsAndBoxesApp() {
     startNewGame("offline-ai", humanPlayer, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusDotsAndBoxes("offline-dotsandboxes-status",
-      "You play " + playerNameDotsAndBoxes(humanPlayer) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + playerNameDotsAndBoxes(humanPlayer) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (resignBtn) {

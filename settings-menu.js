@@ -76,6 +76,30 @@ const SettingsMenu = (function () {
     refresh();
   }
 
+  function wireRandomStart(overlay) {
+    if (typeof RandomStart === "undefined") return;
+    const group = overlay.querySelector("#settings-random-start-group");
+    if (!group) return;
+    const buttons = Array.prototype.slice.call(group.querySelectorAll("button[data-random]"));
+
+    function refresh() {
+      const current = RandomStart.enabled() ? "1" : "0";
+      buttons.forEach((btn) => {
+        const active = btn.getAttribute("data-random") === current;
+        btn.classList.toggle("active", active);
+        btn.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+    }
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        RandomStart.setEnabled(btn.getAttribute("data-random") === "1");
+        refresh();
+      });
+    });
+    refresh();
+  }
+
   function wireHighContrast(overlay) {
     if (typeof HighContrast === "undefined") return;
     const checkbox = overlay.querySelector("#settings-high-contrast-checkbox");
@@ -175,6 +199,14 @@ const SettingsMenu = (function () {
                 '<button type="button" class="secondary" data-mode="slow" data-i18n="settings_ai_pacing_slow">Slow</button>' +
               '</div>'
             : '') +
+          // Only game pages with a side choice load random-start.js.
+          (typeof RandomStart !== "undefined"
+            ? '<h3 class="settings-subheading" data-i18n="settings_section_random_start">Who moves first</h3>' +
+              '<div class="settings-segmented" id="settings-random-start-group" role="group">' +
+                '<button type="button" class="secondary" data-random="0" data-i18n="settings_random_start_chosen">As chosen</button>' +
+                '<button type="button" class="secondary" data-random="1" data-i18n="settings_random_start_random">Random</button>' +
+              '</div>'
+            : '') +
         '</section>' +
         // Which version is running (answered by sw.js, the single place it
         // is kept) and a way to fetch the latest one from any page.
@@ -199,6 +231,7 @@ const SettingsMenu = (function () {
     wireTextSize(overlay);
     wireHighContrast(overlay);
     wireAiPacing(overlay);
+    wireRandomStart(overlay);
     wireUpdate(overlay);
 
     // Populates the freshly-inserted .lang-switch <select> and translates
