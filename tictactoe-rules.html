@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>All Games – PaperGames</title>
-  <meta name="description" content="Browse, search, and sort all 59 free board and puzzle games in PaperGames, alphabetically or by type.">
-  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/games.html">
+  <title>Tic-Tac-Toe Rules | PaperGames</title>
+  <meta name="description" content="How Tic-Tac-Toe works: take turns marking a 3x3 grid; three in a row wins, a full board is a draw.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/tictactoe-rules.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PaperGames">
-  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/games.html">
-  <meta property="og:title" content="All Games – PaperGames">
-  <meta property="og:description" content="Browse, search, and sort all 59 free board and puzzle games in PaperGames, alphabetically or by type.">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/tictactoe-rules.html">
+  <meta property="og:title" content="Tic-Tac-Toe Rules – how to play | PaperGames">
+  <meta property="og:description" content="How Tic-Tac-Toe works: take turns marking a 3x3 grid; three in a row wins, a full board is a draw.">
   <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="All Games – PaperGames">
-  <meta name="twitter:description" content="Browse, search, and sort all 59 free board and puzzle games in PaperGames, alphabetically or by type.">
+  <meta name="twitter:title" content="Tic-Tac-Toe Rules – how to play | PaperGames">
+  <meta name="twitter:description" content="How Tic-Tac-Toe works: take turns marking a 3x3 grid; three in a row wins, a full board is a draw.">
   <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -28,7 +28,6 @@
   <header class="app-header">
     <div class="title-wrap app-title-row">
       <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
-      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
     </div>
     <div class="user-panel">
     </div>
@@ -42,39 +41,30 @@
   </nav>
 
   <main>
-    <section class="card">
-      <h1 data-i18n="nav_all_games">All Games</h1>
-      <p data-i18n="all_games_intro">Every game in PaperGames, in one place. Search by name, sort alphabetically or by type, and tap the star to add a game to your Favorites on the home page.</p>
+    <section class="card content-page">
+      <h1 data-i18n="tictactoe_rules_title">Tic-Tac-Toe Rules</h1>
+      <p data-i18n="tictactoe_rules_intro">A quick reference for how PaperGames plays Tic-Tac-Toe, also known as Noughts and Crosses.</p>
 
-      <div class="games-toolbar">
-        <input type="search" id="games-search" class="games-search-input" data-i18n-attr="placeholder:all_games_search_placeholder" placeholder="Search games…" aria-label="Search games">
-        <label for="games-sort" class="games-sort-label" data-i18n="all_games_sort_label">Sort by:</label>
-        <select id="games-sort" class="games-sort-select" aria-label="Sort games">
-          <option value="alpha" data-i18n="all_games_sort_alpha">Alphabetical</option>
-          <option value="type" data-i18n="all_games_sort_type">Type</option>
-          <option value="newest" data-i18n="games_sort_newest">Newest first</option>
-        </select>
-      </div>
+      <h2 data-i18n="tictactoe_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt><span class="ttt-term-icon" aria-hidden="true"><svg class="ttt-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><line x1="24" y1="24" x2="76" y2="76"/><line x1="76" y1="24" x2="24" y2="76"/></svg></span> <span data-i18n="tictactoe_term_board">The board and marks</span></dt>
+        <dd data-i18n="tictactoe_rules_board">The board is a 3x3 grid of nine cells. Players take turns putting their mark in an empty cell: a cross for Player 1, a circle for Player 2. Player 1 always moves first. A mark stays where it is for the rest of the game.</dd>
+      </dl>
 
-      <div id="games-category-chips" class="mode-buttons" role="group" aria-label="Filter by category">
-        <button type="button" class="mode-btn secondary active-mode" data-category="all" data-i18n="all_games_category_all">All</button>
-        <button type="button" class="mode-btn secondary" data-category="strategy" data-i18n="home_section_strategy">Strategy Games</button>
-        <button type="button" class="mode-btn secondary" data-category="race" data-i18n="home_section_race">Dice &amp; Race Games</button>
-        <button type="button" class="mode-btn secondary" data-category="puzzles" data-i18n="home_section_puzzles">Solo Puzzles</button>
-        <button type="button" class="mode-btn secondary" data-category="party" data-i18n="home_section_party">Party &amp; Word Games</button>
-      </div>
+      <h2 data-i18n="tictactoe_rules_end_title">How a game ends</h2>
+      <dl class="rule-list">
+        <dt data-i18n="tictactoe_term_win">Winning</dt>
+        <dd data-i18n="tictactoe_rules_win">The first player to get three of their own marks in a row - across, down or diagonally - wins at once. The winning line is shown in solid black.</dd>
+        <dt data-i18n="tictactoe_term_draw">Draw</dt>
+        <dd data-i18n="tictactoe_rules_draw">If all nine cells are filled and nobody has three in a row, the game is a draw. Two players who make no mistakes always draw - so on the Hard level the computer never loses, and the best you can get against it is a draw.</dd>
+        <dt data-i18n="tictactoe_term_resignation">Resignation</dt>
+        <dd data-i18n="tictactoe_rules_resignation">A player can resign at any time, ending the game immediately in the opponent's favor.</dd>
+      </dl>
 
-      <p id="games-no-results" class="games-no-results hidden" data-i18n="all_games_no_results">No games match your search.</p>
-      <div id="games-grid"></div>
+      <p class="about-back"><a href="tictactoe.html" data-i18n="about_back">&larr; Back to the board</a></p>
     </section>
-
-    <p class="about-back"><a href="index.html" data-i18n="back_home">&larr; Back to home</a></p>
   </main>
   <footer class="site-footer">
-    <a href="guide.html" data-i18n="nav_guide">Guide</a>
-    <a href="about.html" data-i18n="nav_about">About</a>
-    <a href="stats.html" data-i18n="nav_stats">Stats</a>
-    <a href="about.html" data-i18n="footer_support">☕ Support</a>
     <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
     <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
   </footer>
@@ -87,10 +77,7 @@
 <script src="force-update.js"></script>
 <script src="offline-status.js"></script>
 <script src="settings-menu.js"></script>
-<script src="games-catalog.js"></script>
-<script src="favorites.js"></script>
-<script src="games-render.js"></script>
-<script src="games-app.js"></script>
+<script src="game-switcher.js"></script>
 <script src="sw-register.js"></script>
 <script src="update-banner.js"></script>
 </body>

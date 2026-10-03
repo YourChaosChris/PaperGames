@@ -655,4 +655,15 @@ const GAMES_CATALOG = [
     added: "2026-09-28",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"8\" y=\"8\" width=\"84\" height=\"14\" fill=\"#141413\"/><rect x=\"20\" y=\"36\" width=\"36\" height=\"36\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M20 36 L56 72 M56 36 L20 72\" stroke=\"#141413\" stroke-width=\"4\"/><circle cx=\"74\" cy=\"54\" r=\"10\" fill=\"#141413\"/></svg></span>"
   },
+  {
+    slug: "tictactoe",
+    category: "strategy",
+    nameKey: "game_tictactoe",
+    nameText: "Tic-Tac-Toe",
+    descKey: "home_tictactoe_desc",
+    descText: "Three in a row on a 3x3 grid - the classic pencil-and-paper game. Local 2-player or vs. the built-in engine, which never loses on Hard.",
+    popular: false,
+    added: "2026-10-03",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M37 10 V90 M63 10 V90 M10 37 H90 M10 63 H90\" stroke=\"#141413\" stroke-width=\"6\" fill=\"none\"/><path d=\"M42 42 L58 58 M58 42 L42 58\" stroke=\"#141413\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg></span>"
+  },
 ];
