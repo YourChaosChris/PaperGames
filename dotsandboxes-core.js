@@ -3,8 +3,8 @@
 // of concerns in the other <game>-core.js modules: rules only, no
 // DOM/UI.
 //
-// Board: a square grid of 5, 6 or 7 dots per side (4x4, 5x5 or 6x6
-// boxes), chosen when a game starts and kept in the state as `dots`;
+// Board: a square grid of 5, 6, 7 or 9 dots per side (4x4, 5x5, 6x6
+// or 8x8 boxes), chosen when a game starts and kept in the state as `dots`;
 // every function reads the size from the state it is given. A state
 // saved before sizes existed has no `dots` and is read as 5 (its grid
 // is 5x5). Players take turns drawing one horizontal or
@@ -17,7 +17,7 @@
 // is a draw.
 //
 // State shape:
-//   dots         - dots per side (5, 6 or 7)
+//   dots         - dots per side (5, 6, 7 or 9)
 //   hLines[r][c] - the horizontal line between dot(r,c) and dot(r,c+1);
 //                  r: 0..dots-1, c: 0..dots-2
 //   vLines[r][c] - the vertical line between dot(r,c) and dot(r+1,c);
@@ -28,12 +28,16 @@
 //   turn         - "1" | "2", whose move it is now.
 //   scores       - { "1": n, "2": n } boxes completed so far.
 //   linesDrawn   - count of lines drawn so far (game ends once all
-//                  dots * (dots - 1) * 2 lines are drawn: 40, 60 or 84).
+//                  dots * (dots - 1) * 2 lines are drawn: 40, 60, 84 or 144).
 //   gameOver     - true once every line is drawn.
 //   winner       - "1" | "2" | "draw" | null (null until gameOver).
 
 const DotsAndBoxesCore = (function () {
-  const SIZES = [5, 6, 7];        // allowed dots per side (4x4, 5x5, 6x6 boxes)
+  // Allowed dots per side (4x4, 5x5, 6x6, 8x8 boxes). Deliberately no
+  // 10x10 (11 dots): on a 632 px reader a line's tap area would shrink
+  // to about 38 px, too small to hit reliably with a finger (the floor
+  // here is 44 px). Don't add it without solving that first.
+  const SIZES = [5, 6, 7, 9];
   const DEFAULT_DOTS = 5;
 
   function makeGrid(rows, cols, fill) {

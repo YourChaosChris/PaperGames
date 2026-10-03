@@ -364,13 +364,14 @@ function showBoardSectionDotsAndBoxes() {
      comes from the running game's state. ***/
 
 // Geometry of the current board, all in % of the board's width:
-// step - one box; hit - thickness of a line's clickable area, shrinking
-// with the boxes so neighbouring parallel lines never overlap.
+// step - one box; hit - thickness of a line's clickable area: 0.6 of a
+// box, capped at 12 %, so neighbouring parallel lines never overlap
+// (they are a whole box apart). At 632 px that is 44 px even on 8x8.
 function dabGeometry() {
   const dots = DotsAndBoxesCore.dotsOf(AppStateDotsAndBoxes.state);
   const boxes = dots - 1;
   const step = 100 / boxes;
-  return { dots, boxes, step, hit: Math.min(12, step * 0.5) };
+  return { dots, boxes, step, hit: Math.min(12, step * 0.6) };
 }
 // Marks for completed boxes: inline SVG rather than text glyphs, so they
 // don't depend on the reader's font.
@@ -382,14 +383,50 @@ const DAB_MARK_O = '<svg class="dab-box-mark" viewBox="0 0 100 100" aria-hidden=
 // Places a hit-area bar of `thickness` around the line at `centerPct`.
 // Edge lines would stick out past the board, so their bar is moved
 // inwards instead - full thickness, flush with the border, never
-// reaching the next parallel line (that one starts half a box further
-// in, and the bar is at most half a box thick). `mid` is where the line
-// itself sits inside the bar, in % of the bar.
+// reaching the next parallel line (the bar is at most 0.6 of a box
+// thick, so it ends by 0.6 of a box; the next one starts at 0.7).
+// `mid` is where the line itself sits inside the bar, in % of the bar.
 function dabPlaceBar(centerPct, thickness) {
   let start = centerPct - thickness / 2;
   if (start < 0) start = 0;
   if (start + thickness > 100) start = 100 - thickness;
   return { start, size: thickness, mid: (centerPct - start) / thickness * 100 };
+}
+
+// Around every dot a horizontal and a vertical hit area cross, and the
+// vertical one (added later) lies on top - left alone it would swallow
+// the ends of the horizontal lines, on 8x8 most of them. So a tap that
+// falls inside several hit areas goes to the undrawn line drawn closest
+// to it: along a line the whole length is that line's, across its
+// middle the full hit area. Keyboard activation (no pointer position)
+// keeps the focused line.
+function dabTapTarget(e, own) {
+  if (!e || !e.detail) return own;
+  const boardEl = document.getElementById("dotsandboxes-board");
+  const rect = boardEl.getBoundingClientRect();
+  if (!boardEl.clientWidth || !boardEl.clientHeight) return own;
+  const x = (e.clientX - rect.left - boardEl.clientLeft) / boardEl.clientWidth * 100;
+  const y = (e.clientY - rect.top - boardEl.clientTop) / boardEl.clientHeight * 100;
+  const g = dabGeometry();
+  const state = AppStateDotsAndBoxes.state;
+  const candidates = [];
+  // Horizontal lines of the box column under the tap and vertical lines
+  // of its box row whose hit area holds the tap; distance is measured to
+  // the line itself.
+  const c = Math.min(g.boxes - 1, Math.max(0, Math.floor(x / g.step)));
+  const r = Math.min(g.boxes - 1, Math.max(0, Math.floor(y / g.step)));
+  for (let i = 0; i < g.dots; i++) {
+    const bar = dabPlaceBar(i * g.step, g.hit);
+    const line = i * g.step;
+    if (y >= bar.start && y <= bar.start + bar.size) candidates.push({ move: { type: "h", r: i, c }, d: Math.abs(y - line) });
+    if (x >= bar.start && x <= bar.start + bar.size) candidates.push({ move: { type: "v", r, c: i }, d: Math.abs(x - line) });
+  }
+  let best = null;
+  candidates.forEach((cand) => {
+    if (!DotsAndBoxesCore.isLegalMove(state, cand.move)) return;
+    if (!best || cand.d < best.d) best = cand;
+  });
+  return best ? best.move : own;
 }
 
 function buildDotsAndBoxesBoardDOM() {
@@ -434,7 +471,7 @@ function buildDotsAndBoxesBoardDOM() {
       inner.className = "dab-line-bar dab-line-bar-h";
       inner.style.top = bar.mid + "%";
       btn.appendChild(inner);
-      btn.addEventListener("click", () => onDotsAndBoxesLineClick({ type: "h", r, c }));
+      btn.addEventListener("click", (e) => onDotsAndBoxesLineClick(dabTapTarget(e, { type: "h", r, c })));
       boardEl.appendChild(btn);
     }
   }
@@ -457,7 +494,7 @@ function buildDotsAndBoxesBoardDOM() {
       inner.className = "dab-line-bar dab-line-bar-v";
       inner.style.left = bar.mid + "%";
       btn.appendChild(inner);
-      btn.addEventListener("click", () => onDotsAndBoxesLineClick({ type: "v", r, c }));
+      btn.addEventListener("click", (e) => onDotsAndBoxesLineClick(dabTapTarget(e, { type: "v", r, c })));
       boardEl.appendChild(btn);
     }
   }
@@ -534,6 +571,9 @@ function updateDotsAndBoxesBoard() {
     const move = { type, r, c };
     const owner = type === "h" ? state.hLines[r][c] : state.vLines[r][c];
     btn.classList.toggle("dab-line-drawn", !!owner);
+    // Who drew it, told apart by shape: solid for Player 1, dotted for 2.
+    btn.classList.toggle("dab-line-p1", owner === "1");
+    btn.classList.toggle("dab-line-p2", owner === "2");
     btn.classList.toggle("dab-line-last", !!lm && lm.type === type && lm.r === r && lm.c === c);
     btn.disabled = !!owner || !canAct;
 

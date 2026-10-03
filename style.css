@@ -5640,19 +5640,18 @@ margin: 0.5rem auto 0;
 /* Dots and Boxes board: percentage-based absolute positioning (the same
    technique as WallMaze's board), since line segments need clickable
    targets BETWEEN dots, not just on them - a plain float-grid has
-   nowhere to put those. A fixed 5x5 dot grid (4x4 boxes) throughout,
-   not configurable, like every other board here. Completed boxes are
-   told apart structurally, not by color alone: Player 1 gets a solid
-   fill, Player 2 a hatched fill, the same convention already used
-   elsewhere (see .halma-square-camp-p1/p2) applied to filled areas
-   instead of discs. */
+   nowhere to put those. The grid size (4x4 to 8x8 boxes) is chosen per
+   game. Both players are told apart by shape, not by colour: Player 1
+   draws solid lines and gets a cross in completed boxes, Player 2
+   draws dotted lines and gets a circle. */
 
-/* Up to 560 px wide: on a 632 px reader a line's tap area stays at least
-   44 px thick even on the 6x6 board (half a box, 1/12 of the width). */
+/* Up to 600 px wide, so on a 632 px reader the board fills its card
+   (594 px): a line's tap area (0.6 of a box) then stays at least 44 px
+   thick even on the 8x8 board. */
 .dab-board {
   position: relative;
   width: 100%;
-  max-width: 560px;
+  max-width: 600px;
   margin: 0 auto;
   background: var(--square-light);
   border: 3px solid var(--border);
@@ -5700,6 +5699,8 @@ margin: 0.5rem auto 0;
 
 .dab-line:disabled {
   cursor: default;
+  /* A drawn line lets taps through to the undrawn line it overlaps. */
+  pointer-events: none;
 }
 
 .dab-line-bar {
@@ -5728,6 +5729,17 @@ margin: 0.5rem auto 0;
   background: var(--border);
 }
 
+/* Who drew a line is told apart by shape, not shade: Player 1 solid,
+   Player 2 dotted - full squares of about 6 px with 6 px gaps (a
+   dotted border on a bar this thin would be too fine for e-ink). */
+.dab-line-p2 .dab-line-bar-h {
+  background: repeating-linear-gradient(to right, var(--border) 0, var(--border) 6px, transparent 6px, transparent 12px);
+}
+
+.dab-line-p2 .dab-line-bar-v {
+  background: repeating-linear-gradient(to bottom, var(--border) 0, var(--border) 6px, transparent 6px, transparent 12px);
+}
+
 .dab-line:not(:disabled):hover .dab-line-bar {
   opacity: 0.7;
 }
@@ -5742,6 +5754,43 @@ margin: 0.5rem auto 0;
   background: var(--text);
   outline: 2px solid var(--text);
   outline-offset: 2px;
+}
+
+/* The latest line by Player 2 stays dotted inside the same frame. */
+.dab-line-last.dab-line-p2 .dab-line-bar-h {
+  background: repeating-linear-gradient(to right, var(--text) 0, var(--text) 6px, transparent 6px, transparent 12px);
+}
+
+.dab-line-last.dab-line-p2 .dab-line-bar-v {
+  background: repeating-linear-gradient(to bottom, var(--text) 0, var(--text) 6px, transparent 6px, transparent 12px);
+}
+
+/* Legend under the board: line style and box mark per player. */
+.dab-legend {
+  max-width: 600px;
+  margin: 0.5rem auto 0;
+}
+
+.dab-legend-item {
+  margin: 0.25rem 0;
+}
+
+.dab-legend-line {
+  display: inline-block;
+  width: 2.4em;
+  height: 6px;
+  margin-right: 0.4em;
+  vertical-align: middle;
+  background: var(--text);
+}
+
+.dab-legend-line-p2 {
+  background: repeating-linear-gradient(to right, var(--text) 0, var(--text) 6px, transparent 6px, transparent 12px);
+}
+
+[dir="rtl"] .dab-legend-line {
+  margin-right: 0;
+  margin-left: 0.4em;
 }
 
 .dab-dot {

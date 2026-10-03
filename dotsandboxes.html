@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Dots and Boxes on e-ink – play offline, no ads | PaperGames</title>
-  <meta name="description" content="Draw lines between dots to complete boxes and claim them. Whoever completes a box goes again. Play on 4 × 4, 5 × 5 or 6 × 6 boxes, local 2-player or vs. the built-in engine.">
+  <meta name="description" content="Draw lines between dots to complete boxes and claim them. Whoever completes a box goes again. Play on 4 × 4, 5 × 5, 6 × 6 or 8 × 8 boxes, local 2-player or vs. the built-in engine.">
   <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/dotsandboxes.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PaperGames">
   <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/dotsandboxes.html">
   <meta property="og:title" content="Dots and Boxes on e-ink – play offline, no ads | PaperGames">
-  <meta property="og:description" content="Draw lines between dots to complete boxes and claim them. Whoever completes a box goes again. Play on 4 × 4, 5 × 5 or 6 × 6 boxes, local 2-player or vs. the built-in engine.">
+  <meta property="og:description" content="Draw lines between dots to complete boxes and claim them. Whoever completes a box goes again. Play on 4 × 4, 5 × 5, 6 × 6 or 8 × 8 boxes, local 2-player or vs. the built-in engine.">
   <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Dots and Boxes on e-ink – play offline, no ads | PaperGames">
-  <meta name="twitter:description" content="Draw lines between dots to complete boxes and claim them. Whoever completes a box goes again. Play on 4 × 4, 5 × 5 or 6 × 6 boxes, local 2-player or vs. the built-in engine.">
+  <meta name="twitter:description" content="Draw lines between dots to complete boxes and claim them. Whoever completes a box goes again. Play on 4 × 4, 5 × 5, 6 × 6 or 8 × 8 boxes, local 2-player or vs. the built-in engine.">
   <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -72,6 +72,7 @@
       <option value="5" data-i18n="dotsandboxes_board_size_4">4 × 4 boxes (short game)</option>
       <option value="6" data-i18n="dotsandboxes_board_size_5">5 × 5 boxes</option>
       <option value="7" selected data-i18n="dotsandboxes_board_size_6">6 × 6 boxes (long game)</option>
+      <option value="9" data-i18n="dotsandboxes_board_size_8">8 × 8 boxes (very long game)</option>
     </select>
   </div>
   <div id="offline-dotsandboxes-status" class="status-text"></div>
@@ -96,6 +97,10 @@
   </div>
   <div id="board-container" class="hidden">
     <div id="dotsandboxes-board" class="dab-board" role="group" aria-label="Dots and Boxes board"></div>
+    <div id="dotsandboxes-legend" class="dab-legend">
+      <div class="dab-legend-item"><span class="dab-legend-line dab-legend-line-p1" aria-hidden="true"></span><span class="dab-icon-swatch"><svg class="dab-box-mark" viewBox="0 0 100 100" aria-hidden="true"><line x1="28" y1="28" x2="72" y2="72"/><line x1="72" y1="28" x2="28" y2="72"/></svg></span> <span data-i18n="dotsandboxes_legend_p1">Player 1: solid lines, boxes marked with a cross</span></div>
+      <div class="dab-legend-item"><span class="dab-legend-line dab-legend-line-p2" aria-hidden="true"></span><span class="dab-icon-swatch"><svg class="dab-box-mark" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="23"/></svg></span> <span data-i18n="dotsandboxes_legend_p2">Player 2: dotted lines, boxes marked with a circle</span></div>
+    </div>
   </div>
   <div id="board-actions" class="board-actions">
     <button id="undo-btn" class="secondary small hidden" data-i18n="undo_button" onclick="undoLastMove()">Undo</button>
