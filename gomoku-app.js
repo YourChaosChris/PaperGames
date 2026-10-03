@@ -178,7 +178,7 @@ function initGomokuApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const colorInput = document.querySelector("input[name='gomoku-color']:checked");
-    const humanColor = colorInput && colorInput.value === "white" ? "w" : "b";
+    const humanColor = RandomStart.choose(colorInput && colorInput.value === "white" ? "w" : "b", ["w", "b"]);
 
     if (level === 0) {
       setActiveModeButton("offline-ai");
@@ -191,7 +191,7 @@ function initGomokuApp() {
     startNewGameGomoku("offline-ai", humanColor, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusGomoku("offline-gomoku-status",
-      "You play " + colorNameGomoku(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + colorNameGomoku(humanColor) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (resignBtn) {

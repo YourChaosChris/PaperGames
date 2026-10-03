@@ -193,7 +193,7 @@ function initCardTacticsApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const colorInput = document.querySelector("input[name='cardtactics-color']:checked");
-    const humanColor = colorInput && colorInput.value === "red" ? "red" : "blue";
+    const humanColor = RandomStart.choose(colorInput && colorInput.value === "red" ? "red" : "blue", ["red", "blue"]);
 
     if (level === 0) {
       setActiveModeButtonCardTactics("offline-ai");
@@ -206,7 +206,7 @@ function initCardTacticsApp() {
     startNewGameCardTactics("offline-ai", humanColor, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusCardTactics("offline-cardtactics-status",
-      "You play " + colorNameCardTactics(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + colorNameCardTactics(humanColor) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (resignBtn) {

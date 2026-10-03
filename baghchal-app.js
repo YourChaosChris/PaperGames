@@ -192,7 +192,7 @@ function initBaghChalApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const sideInput = document.querySelector("input[name='baghchal-side']:checked");
-    const humanSide = sideInput && sideInput.value === "tiger" ? "tiger" : "goat";
+    const humanSide = RandomStart.choose(sideInput && sideInput.value === "tiger" ? "tiger" : "goat", ["tiger", "goat"]);
 
     if (level === 0) {
       setActiveModeButton("offline-ai");
@@ -205,7 +205,7 @@ function initBaghChalApp() {
     startNewGame("offline-ai", humanSide, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusBaghChal("offline-baghchal-status",
-      "You play " + sideNameBaghChal(humanSide) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + sideNameBaghChal(humanSide) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (resignBtn) {

@@ -196,7 +196,7 @@ function initSenetApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const colorInput = document.querySelector("input[name='senet-color']:checked");
-    const humanColor = colorInput && colorInput.value === "b" ? "b" : "a";
+    const humanColor = RandomStart.choose(colorInput && colorInput.value === "b" ? "b" : "a", ["b", "a"]);
 
     if (level === 0) {
       setActiveModeButtonSenet("offline-ai");
@@ -209,7 +209,7 @@ function initSenetApp() {
     startNewGameSenet("offline-ai", humanColor, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusSenet("offline-senet-status",
-      "You play " + colorNameSenet(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + colorNameSenet(humanColor) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (resignBtn) {

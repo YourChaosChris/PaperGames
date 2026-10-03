@@ -180,7 +180,7 @@ function initMancalaApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const sideInput = document.querySelector("input[name='mancala-side']:checked");
-    const humanSide = sideInput && sideInput.value === "b" ? "b" : "a";
+    const humanSide = RandomStart.choose(sideInput && sideInput.value === "b" ? "b" : "a", ["b", "a"]);
 
     if (level === 0) {
       setActiveModeButton("offline-ai");
@@ -193,7 +193,7 @@ function initMancalaApp() {
     startNewGameMancala("offline-ai", humanSide, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusMancala("offline-mancala-status",
-      "You play " + sideNameMancala(humanSide) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + sideNameMancala(humanSide) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (resignBtn) {

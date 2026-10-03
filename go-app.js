@@ -239,7 +239,7 @@ function initGoApp() {
     const size = goSizeInline ? parseInt(goSizeInline.value, 10) : 9;
     const level = goLevelInline ? parseInt(goLevelInline.value, 10) : 2;
     const colorInput = document.querySelector("input[name='go-color']:checked");
-    const humanColor = colorInput && colorInput.value === "white" ? "w" : "b";
+    const humanColor = RandomStart.choose(colorInput && colorInput.value === "white" ? "w" : "b", ["w", "b"]);
 
     if (level === 0) {
       setActiveModeButtonGo("offline-ai");
@@ -252,7 +252,7 @@ function initGoApp() {
     startNewGame(size, "offline-ai", humanColor, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusGo("offline-go-status",
-      "You play " + colorNameGo(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + colorNameGo(humanColor) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (passBtn) {

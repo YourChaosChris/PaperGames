@@ -187,7 +187,7 @@ function initHnefataflApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const sideInput = document.querySelector("input[name='hnefatafl-side']:checked");
-    const humanSide = sideInput && sideInput.value === "attacker" ? "attacker" : "defender";
+    const humanSide = RandomStart.choose(sideInput && sideInput.value === "attacker" ? "attacker" : "defender", ["attacker", "defender"]);
 
     if (level === 0) {
       setActiveModeButton("offline-ai");
@@ -200,7 +200,7 @@ function initHnefataflApp() {
     startNewGame("offline-ai", humanSide, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusHnefatafl("offline-hnefatafl-status",
-      "You play " + sideNameHnefatafl(humanSide) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + sideNameHnefatafl(humanSide) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (resignBtn) {

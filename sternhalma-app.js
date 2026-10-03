@@ -198,7 +198,7 @@ function initSternhalmaApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const sideInput = document.querySelector("input[name='sternhalma-side']:checked");
-    const humanSide = sideInput && sideInput.value === "p2" ? "p2" : "p1";
+    const humanSide = RandomStart.choose(sideInput && sideInput.value === "p2" ? "p2" : "p1", ["p2", "p1"]);
 
     if (level === 0) {
       setActiveModeButton("offline-ai");
@@ -211,7 +211,7 @@ function initSternhalmaApp() {
     startNewGame("offline-ai", humanSide, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusSternhalma("offline-sternhalma-status",
-      "You play " + sideNameSternhalma(humanSide) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + sideNameSternhalma(humanSide) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (resignBtn) {

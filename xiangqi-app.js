@@ -375,7 +375,7 @@ function initXiangqiApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const colorInput = document.querySelector("input[name='xiangqi-color']:checked");
-    const humanColor = colorInput && colorInput.value === "black" ? "b" : "r";
+    const humanColor = RandomStart.choose(colorInput && colorInput.value === "black" ? "b" : "r", ["b", "r"]);
 
     if (level === 0) {
       setActiveModeButtonXq("offline-ai");
@@ -388,7 +388,7 @@ function initXiangqiApp() {
     startNewGameXq("offline-ai", humanColor, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusXq("offline-xiangqi-status",
-      "You play " + colorNameXq(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + colorNameXq(humanColor) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (resignBtn) {

@@ -222,7 +222,7 @@ function initUrApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const colorInput = document.querySelector("input[name='ur-color']:checked");
-    const humanColor = colorInput && colorInput.value === "white" ? "w" : "b";
+    const humanColor = RandomStart.choose(colorInput && colorInput.value === "white" ? "w" : "b", ["w", "b"]);
 
     if (level === 0) {
       setActiveModeButtonUr("offline-ai");
@@ -235,7 +235,7 @@ function initUrApp() {
     startNewGameUr("offline-ai", humanColor, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusUr("offline-ur-status",
-      "You play " + colorNameUr(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + colorNameUr(humanColor) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (resignBtn) {

@@ -285,7 +285,7 @@ function initShogiApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const colorInput = document.querySelector("input[name='shogi-color']:checked");
-    const humanColor = colorInput && colorInput.value === "w" ? "w" : "b";
+    const humanColor = RandomStart.choose(colorInput && colorInput.value === "w" ? "w" : "b", ["w", "b"]);
 
     if (level === 0) {
       setActiveModeButtonShogi("offline-ai");
@@ -298,7 +298,7 @@ function initShogiApp() {
     startNewGameShogi("offline-ai", humanColor, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusShogi("offline-shogi-status",
-      "You play " + colorNameShogi(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + colorNameShogi(humanColor) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (resignBtn) {

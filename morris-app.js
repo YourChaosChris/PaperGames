@@ -236,7 +236,7 @@ function initMorrisApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const colorInput = document.querySelector("input[name='morris-color']:checked");
-    const humanColor = colorInput && colorInput.value === "white" ? "w" : "b";
+    const humanColor = RandomStart.choose(colorInput && colorInput.value === "white" ? "w" : "b", ["w", "b"]);
 
     if (level === 0) {
       setActiveModeButtonMorris("offline-ai");
@@ -249,7 +249,7 @@ function initMorrisApp() {
     startNewGameMorris("offline-ai", humanColor, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     setStatusMorris("offline-morris-status",
-      "You play " + colorNameMorris(humanColor) + ", computer level: " + (levelNames[level] || level) + ".");
+      RandomStart.label("You play " + colorNameMorris(humanColor) + ", computer level: " + (levelNames[level] || level) + "."));
   });
 
   if (resignBtn) {
