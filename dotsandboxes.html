@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Dots and Boxes on e-ink – play offline, no ads | PaperGames</title>
-  <meta name="description" content="Draw lines between dots to complete boxes and claim them. Whoever completes a box goes again. Local 2-player or vs. the built-in engine.">
+  <meta name="description" content="Draw lines between dots to complete boxes and claim them. Whoever completes a box goes again. Play on 4 × 4, 5 × 5 or 6 × 6 boxes, local 2-player or vs. the built-in engine.">
   <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/dotsandboxes.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PaperGames">
   <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/dotsandboxes.html">
   <meta property="og:title" content="Dots and Boxes on e-ink – play offline, no ads | PaperGames">
-  <meta property="og:description" content="Draw lines between dots to complete boxes and claim them. Whoever completes a box goes again. Local 2-player or vs. the built-in engine.">
+  <meta property="og:description" content="Draw lines between dots to complete boxes and claim them. Whoever completes a box goes again. Play on 4 × 4, 5 × 5 or 6 × 6 boxes, local 2-player or vs. the built-in engine.">
   <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Dots and Boxes on e-ink – play offline, no ads | PaperGames">
-  <meta name="twitter:description" content="Draw lines between dots to complete boxes and claim them. Whoever completes a box goes again. Local 2-player or vs. the built-in engine.">
+  <meta name="twitter:description" content="Draw lines between dots to complete boxes and claim them. Whoever completes a box goes again. Play on 4 × 4, 5 × 5 or 6 × 6 boxes, local 2-player or vs. the built-in engine.">
   <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -67,6 +67,12 @@
         <option value="2" selected data-i18n="level_medium">Medium</option>
         <option value="3" data-i18n="level_hard">Hard</option>
       </select>
+    <label for="dotsandboxes-size-inline" data-i18n="dotsandboxes_board_size_label">Board size</label>
+    <select id="dotsandboxes-size-inline">
+      <option value="5" data-i18n="dotsandboxes_board_size_4">4 × 4 boxes (short game)</option>
+      <option value="6" data-i18n="dotsandboxes_board_size_5">5 × 5 boxes</option>
+      <option value="7" selected data-i18n="dotsandboxes_board_size_6">6 × 6 boxes (long game)</option>
+    </select>
   </div>
   <div id="offline-dotsandboxes-status" class="status-text"></div>
 </section>

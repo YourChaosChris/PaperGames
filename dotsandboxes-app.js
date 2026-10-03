@@ -4,8 +4,10 @@
 // segments), not just on them, so it uses the same percentage-based
 // absolute positioning technique rather than a plain float-grid. Unlike
 // WallMaze's 2-cell-long walls, single-dot-to-dot lines don't overlap
-// each other's candidates, so each of the 40 lines just gets its own
-// plain button - no tap-catcher/preview step needed.
+// each other's candidates, so each line just gets its own plain button -
+// no tap-catcher/preview step needed. The board size (4x4, 5x5 or 6x6
+// boxes) is picked before a game starts and lives in the core state;
+// the board is rebuilt from it on every start and restore.
 //
 // Players are told apart structurally, not by color alone: a completed
 // box belonging to Player 1 gets a drawn cross, Player 2's a drawn
@@ -14,9 +16,12 @@
 // hatched fills, because on e-ink a black fill swallowed the lines
 // around the box.
 
+// Board size for a new game: 7 dots per side, 6x6 boxes.
+const DAB_DEFAULT_DOTS = 7;
+
 const AppStateDotsAndBoxes = {
   mode: "offline",        // "offline" | "offline-ai"
-  state: DotsAndBoxesCore.createInitialState(),
+  state: DotsAndBoxesCore.createInitialState(DAB_DEFAULT_DOTS),
   humanPlayer: "1",       // "1" | "2" - which side the human plays vs. the AI
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
   gameOver: false,
@@ -140,9 +145,15 @@ function initDotsAndBoxesApp() {
     });
   }
 
+  function chosenDots() {
+    const sizeSel = document.getElementById("dotsandboxes-size-inline");
+    const dots = sizeSel ? parseInt(sizeSel.value, 10) : DAB_DEFAULT_DOTS;
+    return DotsAndBoxesCore.SIZES.indexOf(dots) !== -1 ? dots : DAB_DEFAULT_DOTS;
+  }
+
   function startNewGame(mode, humanPlayer, level) {
     AppStateDotsAndBoxes.mode = mode;
-    AppStateDotsAndBoxes.state = DotsAndBoxesCore.createInitialState();
+    AppStateDotsAndBoxes.state = DotsAndBoxesCore.createInitialState(chosenDots());
     AppStateDotsAndBoxes.humanPlayer = humanPlayer;
     AppStateDotsAndBoxes.aiLevel = level;
     AppStateDotsAndBoxes.gameOver = false;
@@ -218,6 +229,11 @@ function initDotsAndBoxesApp() {
   if (savedGame && savedGame.state) {
     AppStateDotsAndBoxes.mode = savedGame.mode;
     AppStateDotsAndBoxes.state = savedGame.state;
+    // A game saved before board sizes existed has no `dots`: it is 5x5
+    // dots (4x4 boxes) and carries on as such.
+    AppStateDotsAndBoxes.state.dots = DotsAndBoxesCore.dotsOf(savedGame.state);
+    const sizeSel = document.getElementById("dotsandboxes-size-inline");
+    if (sizeSel) sizeSel.value = String(AppStateDotsAndBoxes.state.dots);
     AppStateDotsAndBoxes.humanPlayer = savedGame.humanPlayer;
     AppStateDotsAndBoxes.aiLevel = savedGame.aiLevel;
     AppStateDotsAndBoxes.moveCount = savedGame.moveCount;
@@ -344,14 +360,18 @@ function showBoardSectionDotsAndBoxes() {
 
 /*** Board rendering: percentage-based absolute positioning (the same
      technique as Go's and WallMaze's boards), since line segments need
-     clickable targets BETWEEN dots, not just on them. A fixed 5x5 dot
-     grid (4x4 boxes) throughout - not configurable, like every other
-     board here. ***/
+     clickable targets BETWEEN dots, not just on them. The grid size
+     comes from the running game's state. ***/
 
-const DAB_BOXES = DotsAndBoxesCore.BOXES;         // 4
-const DAB_DOTS = DotsAndBoxesCore.DOTS;           // 5
-const DAB_STEP = 100 / DAB_BOXES;                 // 25 (% per box)
-const DAB_LINE_HIT = 12;                          // % thickness of a line's clickable hit area
+// Geometry of the current board, all in % of the board's width:
+// step - one box; hit - thickness of a line's clickable area, shrinking
+// with the boxes so neighbouring parallel lines never overlap.
+function dabGeometry() {
+  const dots = DotsAndBoxesCore.dotsOf(AppStateDotsAndBoxes.state);
+  const boxes = dots - 1;
+  const step = 100 / boxes;
+  return { dots, boxes, step, hit: Math.min(12, step * 0.5) };
+}
 // Marks for completed boxes: inline SVG rather than text glyphs, so they
 // don't depend on the reader's font.
 const DAB_MARK_X = '<svg class="dab-box-mark" viewBox="0 0 100 100" aria-hidden="true">' +
@@ -359,19 +379,26 @@ const DAB_MARK_X = '<svg class="dab-box-mark" viewBox="0 0 100 100" aria-hidden=
 const DAB_MARK_O = '<svg class="dab-box-mark" viewBox="0 0 100 100" aria-hidden="true">' +
   '<circle cx="50" cy="50" r="23"/></svg>';
 
-// Clamps a hit-area bar of `thickness` centered on `centerPct` to stay
-// within [0, 100], so edge lines (which would otherwise stick out past
-// the board) just get a smaller hit area flush with the border instead.
-function dabClampBar(centerPct, thickness) {
-  const start = Math.max(0, centerPct - thickness / 2);
-  const end = Math.min(100, centerPct + thickness / 2);
-  return { start, size: end - start };
+// Places a hit-area bar of `thickness` around the line at `centerPct`.
+// Edge lines would stick out past the board, so their bar is moved
+// inwards instead - full thickness, flush with the border, never
+// reaching the next parallel line (that one starts half a box further
+// in, and the bar is at most half a box thick). `mid` is where the line
+// itself sits inside the bar, in % of the bar.
+function dabPlaceBar(centerPct, thickness) {
+  let start = centerPct - thickness / 2;
+  if (start < 0) start = 0;
+  if (start + thickness > 100) start = 100 - thickness;
+  return { start, size: thickness, mid: (centerPct - start) / thickness * 100 };
 }
 
 function buildDotsAndBoxesBoardDOM() {
   const boardEl = document.getElementById("dotsandboxes-board");
   if (!boardEl) return;
   boardEl.innerHTML = "";
+  const g = dabGeometry();
+  const DAB_DOTS = g.dots, DAB_BOXES = g.boxes, DAB_STEP = g.step, DAB_LINE_HIT = g.hit;
+  boardEl.dataset.boxes = DAB_BOXES;
 
   // Box fill layer first (bottom), so lines and dots draw on top of it.
   for (let br = 0; br < DAB_BOXES; br++) {
@@ -392,7 +419,7 @@ function buildDotsAndBoxesBoardDOM() {
   // Horizontal lines.
   for (let r = 0; r < DAB_DOTS; r++) {
     for (let c = 0; c < DAB_DOTS - 1; c++) {
-      const bar = dabClampBar(r * DAB_STEP, DAB_LINE_HIT);
+      const bar = dabPlaceBar(r * DAB_STEP, DAB_LINE_HIT);
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "dab-line dab-line-h";
@@ -405,6 +432,7 @@ function buildDotsAndBoxesBoardDOM() {
       btn.style.height = bar.size + "%";
       const inner = document.createElement("span");
       inner.className = "dab-line-bar dab-line-bar-h";
+      inner.style.top = bar.mid + "%";
       btn.appendChild(inner);
       btn.addEventListener("click", () => onDotsAndBoxesLineClick({ type: "h", r, c }));
       boardEl.appendChild(btn);
@@ -414,7 +442,7 @@ function buildDotsAndBoxesBoardDOM() {
   // Vertical lines.
   for (let r = 0; r < DAB_DOTS - 1; r++) {
     for (let c = 0; c < DAB_DOTS; c++) {
-      const bar = dabClampBar(c * DAB_STEP, DAB_LINE_HIT);
+      const bar = dabPlaceBar(c * DAB_STEP, DAB_LINE_HIT);
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "dab-line dab-line-v";
@@ -427,6 +455,7 @@ function buildDotsAndBoxesBoardDOM() {
       btn.style.width = bar.size + "%";
       const inner = document.createElement("span");
       inner.className = "dab-line-bar dab-line-bar-v";
+      inner.style.left = bar.mid + "%";
       btn.appendChild(inner);
       btn.addEventListener("click", () => onDotsAndBoxesLineClick({ type: "v", r, c }));
       boardEl.appendChild(btn);

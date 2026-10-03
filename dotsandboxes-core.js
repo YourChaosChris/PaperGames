@@ -3,8 +3,11 @@
 // of concerns in the other <game>-core.js modules: rules only, no
 // DOM/UI.
 //
-// Board: a fixed 5x5 grid of dots (4x4 boxes) - not configurable, like
-// every other game here. Players take turns drawing one horizontal or
+// Board: a square grid of 5, 6 or 7 dots per side (4x4, 5x5 or 6x6
+// boxes), chosen when a game starts and kept in the state as `dots`;
+// every function reads the size from the state it is given. A state
+// saved before sizes existed has no `dots` and is read as 5 (its grid
+// is 5x5). Players take turns drawing one horizontal or
 // vertical line segment between two adjacent dots. Completing the 4th
 // side of a box scores that box for whoever drew the completing line,
 // and that player immediately moves again - which can chain through
@@ -14,33 +17,49 @@
 // is a draw.
 //
 // State shape:
+//   dots         - dots per side (5, 6 or 7)
 //   hLines[r][c] - the horizontal line between dot(r,c) and dot(r,c+1);
-//                  r: 0..DOTS-1 (5), c: 0..DOTS-2 (4) -> 20 lines
+//                  r: 0..dots-1, c: 0..dots-2
 //   vLines[r][c] - the vertical line between dot(r,c) and dot(r+1,c);
-//                  r: 0..DOTS-2 (4), c: 0..DOTS-1 (5) -> 20 lines
+//                  r: 0..dots-2, c: 0..dots-1
 //   Both hold null (undrawn) or the player id ("1"/"2") who drew it.
 //   boxes[r][c]  - box (r,c) (top-left dot at (r,c)), null until
 //                  completed, then the player id who completed it.
 //   turn         - "1" | "2", whose move it is now.
 //   scores       - { "1": n, "2": n } boxes completed so far.
-//   linesDrawn   - count of lines drawn so far (game ends at 40).
+//   linesDrawn   - count of lines drawn so far (game ends once all
+//                  dots * (dots - 1) * 2 lines are drawn: 40, 60 or 84).
 //   gameOver     - true once every line is drawn.
 //   winner       - "1" | "2" | "draw" | null (null until gameOver).
 
 const DotsAndBoxesCore = (function () {
-  const DOTS = 5;                 // dots per side
-  const BOXES = DOTS - 1;         // 4 boxes per side
-  const TOTAL_LINES = DOTS * (DOTS - 1) * 2; // 40
+  const SIZES = [5, 6, 7];        // allowed dots per side (4x4, 5x5, 6x6 boxes)
+  const DEFAULT_DOTS = 5;
 
   function makeGrid(rows, cols, fill) {
     return Array.from({ length: rows }, () => new Array(cols).fill(fill));
   }
 
-  function createInitialState() {
+  // Dots per side of a state; a state saved before sizes existed has no
+  // `dots`, its grid (5 rows of horizontal lines) tells.
+  function dotsOf(state) {
+    if (state && SIZES.indexOf(state.dots) !== -1) return state.dots;
+    if (state && state.hLines && SIZES.indexOf(state.hLines.length) !== -1) return state.hLines.length;
+    return DEFAULT_DOTS;
+  }
+
+  function totalLines(state) {
+    const d = dotsOf(state);
+    return d * (d - 1) * 2;
+  }
+
+  function createInitialState(dots) {
+    const d = SIZES.indexOf(dots) !== -1 ? dots : DEFAULT_DOTS;
     return {
-      hLines: makeGrid(DOTS, DOTS - 1, null),
-      vLines: makeGrid(DOTS - 1, DOTS, null),
-      boxes: makeGrid(BOXES, BOXES, null),
+      dots: d,
+      hLines: makeGrid(d, d - 1, null),
+      vLines: makeGrid(d - 1, d, null),
+      boxes: makeGrid(d - 1, d - 1, null),
       turn: "1",
       scores: { "1": 0, "2": 0 },
       linesDrawn: 0,
@@ -51,6 +70,7 @@ const DotsAndBoxesCore = (function () {
 
   function cloneState(state) {
     return {
+      dots: dotsOf(state),
       hLines: state.hLines.map((row) => row.slice()),
       vLines: state.vLines.map((row) => row.slice()),
       boxes: state.boxes.map((row) => row.slice()),
@@ -66,9 +86,10 @@ const DotsAndBoxesCore = (function () {
     return p === "1" ? "2" : "1";
   }
 
-  function inBoundsMove(move) {
-    if (move.type === "h") return move.r >= 0 && move.r < DOTS && move.c >= 0 && move.c < DOTS - 1;
-    if (move.type === "v") return move.r >= 0 && move.r < DOTS - 1 && move.c >= 0 && move.c < DOTS;
+  function inBoundsMove(move, state) {
+    const d = dotsOf(state);
+    if (move.type === "h") return move.r >= 0 && move.r < d && move.c >= 0 && move.c < d - 1;
+    if (move.type === "v") return move.r >= 0 && move.r < d - 1 && move.c >= 0 && move.c < d;
     return false;
   }
 
@@ -78,19 +99,20 @@ const DotsAndBoxesCore = (function () {
   }
 
   function isLegalMove(state, move) {
-    return !state.gameOver && inBoundsMove(move) && !isLineDrawn(state, move);
+    return !state.gameOver && inBoundsMove(move, state) && !isLineDrawn(state, move);
   }
 
   function getLegalMoves(state) {
     const moves = [];
     if (state.gameOver) return moves;
-    for (let r = 0; r < DOTS; r++) {
-      for (let c = 0; c < DOTS - 1; c++) {
+    const d = dotsOf(state);
+    for (let r = 0; r < d; r++) {
+      for (let c = 0; c < d - 1; c++) {
         if (!state.hLines[r][c]) moves.push({ type: "h", r, c });
       }
     }
-    for (let r = 0; r < DOTS - 1; r++) {
-      for (let c = 0; c < DOTS; c++) {
+    for (let r = 0; r < d - 1; r++) {
+      for (let c = 0; c < d; c++) {
         if (!state.vLines[r][c]) moves.push({ type: "v", r, c });
       }
     }
@@ -99,19 +121,20 @@ const DotsAndBoxesCore = (function () {
 
   // The box(es) - zero, one, or two - that touch a given line. An edge
   // line touches only one box; every interior line touches the two
-  // boxes on either side of it.
-  function adjacentBoxes(move) {
+  // boxes on either side of it. The board size comes from `state`.
+  function adjacentBoxes(move, state) {
+    const lastBox = dotsOf(state) - 2;
     const boxes = [];
     if (move.type === "h") {
       // Horizontal line at dot-row r spans dot(r,c)-dot(r,c+1): the box
       // above it is box(r-1,c), the box below it is box(r,c).
       if (move.r - 1 >= 0) boxes.push([move.r - 1, move.c]);
-      if (move.r <= BOXES - 1) boxes.push([move.r, move.c]);
+      if (move.r <= lastBox) boxes.push([move.r, move.c]);
     } else {
       // Vertical line at dot-col c spans dot(r,c)-dot(r+1,c): the box
       // to its left is box(r,c-1), the box to its right is box(r,c).
       if (move.c - 1 >= 0) boxes.push([move.r, move.c - 1]);
-      if (move.c <= BOXES - 1) boxes.push([move.r, move.c]);
+      if (move.c <= lastBox) boxes.push([move.r, move.c]);
     }
     return boxes;
   }
@@ -142,7 +165,7 @@ const DotsAndBoxesCore = (function () {
     newState.linesDrawn++;
 
     const boxesCompleted = [];
-    adjacentBoxes(move).forEach(([br, bc]) => {
+    adjacentBoxes(move, newState).forEach(([br, bc]) => {
       if (newState.boxes[br][bc] == null && isBoxComplete(newState, br, bc)) {
         newState.boxes[br][bc] = mover;
         newState.scores[mover]++;
@@ -150,7 +173,7 @@ const DotsAndBoxesCore = (function () {
       }
     });
 
-    if (newState.linesDrawn >= TOTAL_LINES) {
+    if (newState.linesDrawn >= totalLines(newState)) {
       newState.gameOver = true;
       if (newState.scores["1"] > newState.scores["2"]) newState.winner = "1";
       else if (newState.scores["2"] > newState.scores["1"]) newState.winner = "2";
@@ -172,7 +195,7 @@ const DotsAndBoxesCore = (function () {
   // capture next turn. A move that completes a box itself (bringing it
   // to 4) is never "unsafe" by this definition.
   function wouldCreateThreeSideBox(state, move) {
-    return adjacentBoxes(move).some(([br, bc]) => {
+    return adjacentBoxes(move, state).some(([br, bc]) => {
       if (state.boxes[br][bc] != null) return false;
       return boxSidesDrawn(state, br, bc) + 1 === 3;
     });
@@ -181,7 +204,7 @@ const DotsAndBoxesCore = (function () {
   // True if drawing `move` completes at least one box outright (it's
   // already sitting at 3 drawn sides).
   function moveCompletesBox(state, move) {
-    return adjacentBoxes(move).some(([br, bc]) => {
+    return adjacentBoxes(move, state).some(([br, bc]) => {
       if (state.boxes[br][bc] != null) return false;
       return boxSidesDrawn(state, br, bc) === 3;
     });
@@ -196,9 +219,10 @@ const DotsAndBoxesCore = (function () {
   }
 
   return {
-    DOTS,
-    BOXES,
-    TOTAL_LINES,
+    SIZES,
+    DEFAULT_DOTS,
+    dotsOf,
+    totalLines,
     createInitialState,
     cloneState,
     otherPlayer,

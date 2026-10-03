@@ -5647,10 +5647,12 @@ margin: 0.5rem auto 0;
    elsewhere (see .halma-square-camp-p1/p2) applied to filled areas
    instead of discs. */
 
+/* Up to 560 px wide: on a 632 px reader a line's tap area stays at least
+   44 px thick even on the 6x6 board (half a box, 1/12 of the width). */
 .dab-board {
   position: relative;
   width: 100%;
-  max-width: 460px;
+  max-width: 560px;
   margin: 0 auto;
   background: var(--square-light);
   border: 3px solid var(--border);

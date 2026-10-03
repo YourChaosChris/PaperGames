@@ -24,7 +24,7 @@ const DotsAndBoxesAi = (function () {
   // more natural, alert-looking capture when the choice is free.
   function preferDoubleCaptures(state, captures) {
     const doubles = captures.filter((m) =>
-      DotsAndBoxesCore.adjacentBoxes(m).filter(([br, bc]) =>
+      DotsAndBoxesCore.adjacentBoxes(m, state).filter(([br, bc]) =>
         state.boxes[br][bc] == null && DotsAndBoxesCore.boxSidesDrawn(state, br, bc) === 3
       ).length === 2
     );

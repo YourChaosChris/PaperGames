@@ -184,7 +184,7 @@ const GAMES_CATALOG = [
     nameKey: "game_dotsandboxes",
     nameText: "Dots and Boxes",
     descKey: "home_dotsandboxes_desc",
-    descText: "Draw lines between dots to complete boxes and claim them - whoever completes a box goes again. Local 2-player or vs. the built-in engine.",
+    descText: "Draw lines between dots to complete boxes and claim them - whoever completes a box goes again. Play on 4 × 4, 5 × 5 or 6 × 6 boxes, local 2-player or vs. the built-in engine.",
     popular: false,
     added: "2026-07-01",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"14\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"43\" y=\"14\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"72\" y=\"14\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"14\" y=\"43\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"43\" y=\"43\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"72\" y=\"43\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"14\" y=\"72\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"43\" y=\"72\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"72\" y=\"72\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"28\" y=\"17\" width=\"15\" height=\"8\" fill=\"#000\"/></svg></span>"
