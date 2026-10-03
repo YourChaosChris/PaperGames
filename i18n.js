@@ -350,6 +350,8 @@ const STRINGS = {
     tictactoe_rules_draw: "If all nine cells are filled and nobody has three in a row, the game is a draw. Two players who make no mistakes always draw - so on the Hard level the computer never loses, and the best you can get against it is a draw.",
     tictactoe_term_resignation: "Resignation",
     tictactoe_rules_resignation: "A player can resign at any time, ending the game immediately in the opponent's favor.",
+    tictactoe_rules_hard_title: "The Hard level",
+    tictactoe_rules_hard: "On Hard the computer works through every possible continuation and never makes a mistake. For the 3x3 board it has been proven by checking every possible game that two flawless players always draw, so a draw is the best you can get against it - one mistake and you lose.",
 
     senet_throw_sticks: "Throw sticks",
     senet_rules_title: "Senet Rules",
@@ -2582,6 +2584,7 @@ const STRINGS = {
     msg_mill_removed: "Mill! A piece was removed.",
     msg_marble_off: "Marble pushed off!",
     msg_t_marble_off_count: "Marble pushed off – {p}: {n} of 6 lost.",
+    msg_ttt_hard_hint: "On Hard the computer solves the game completely – a draw is the best you can get.",
     msg_goat_captured: "A goat was captured!",
     msg_choose_opponent_remove: "Choose a highlighted opponent piece to remove.",
     msg_reason_no_legal_moves: "no legal moves",

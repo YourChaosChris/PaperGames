@@ -346,6 +346,8 @@ STRINGS.de = {
     tictactoe_rules_draw: "Sind alle neun Felder belegt und hat niemand drei in einer Reihe, endet die Partie unentschieden. Zwei Spieler ohne Fehler spielen immer unentschieden – auf der Stufe „Schwer“ verliert der Computer deshalb nie, mehr als ein Unentschieden ist gegen ihn nicht drin.",
     tictactoe_term_resignation: "Aufgeben",
     tictactoe_rules_resignation: "Jeder kann jederzeit aufgeben; die Partie endet dann sofort zugunsten des Gegners.",
+    tictactoe_rules_hard_title: "Die Stufe Schwer",
+    tictactoe_rules_hard: "Auf Schwer rechnet der Computer jede mögliche Fortsetzung durch und macht nie einen Fehler. Für das 3x3-Feld ist bewiesen – durch Durchrechnen aller möglichen Partien –, dass zwei fehlerfreie Spieler immer unentschieden spielen. Mehr als ein Unentschieden ist gegen diese Stufe also nicht zu holen; ein Fehler, und du verlierst.",
 
     senet_throw_sticks: "Stäbchen werfen",
     senet_rules_title: "Senet-Regeln",
@@ -2578,6 +2580,7 @@ STRINGS.de = {
     msg_mill_removed: "Mühle! Ein Stein wurde entfernt.",
     msg_marble_off: "Kugel hinausgeschoben!",
     msg_t_marble_off_count: "Kugel hinausgeschoben – {p}: {n} von 6 verloren.",
+    msg_ttt_hard_hint: "Auf Schwer rechnet der Computer das Spiel vollständig durch – mehr als ein Unentschieden ist nicht zu holen.",
     msg_goat_captured: "Eine Ziege wurde geschlagen!",
     msg_choose_opponent_remove: "Wähle einen markierten gegnerischen Stein zum Entfernen.",
     msg_reason_no_legal_moves: "keine gültigen Züge",

@@ -151,11 +151,17 @@ function initTicTacToeApp() {
     updateTicTacToeBoard();
     updateGameLabelsTicTacToe();
 
+    // Hard is a perfect player; say so once, before the first move, so a
+    // lost game reads as a solved game rather than an unfair one. The
+    // first move's status message replaces it.
+    const hint = mode === "offline-ai" && level === 3
+      ? "On Hard the computer solves the game completely – a draw is the best you can get. "
+      : "";
     if (mode === "offline-ai" && humanPlayer !== "1") {
-      setStatusTicTacToe("board-info", "Computer thinking…");
+      setStatusTicTacToe("board-info", hint + "Computer thinking…");
       setTimeout(aiTurnTicTacToe, AiPacing.delay(300));
     } else {
-      setStatusTicTacToe("board-info", playerNameTicTacToe(AppStateTicTacToe.state.turn) + " to move.");
+      setStatusTicTacToe("board-info", hint + playerNameTicTacToe(AppStateTicTacToe.state.turn) + " to move.");
     }
   }
 
@@ -192,8 +198,11 @@ function initTicTacToeApp() {
     setActiveModeButton("offline-ai");
     startNewGameTicTacToe("offline-ai", humanPlayer, level);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
+    // On Hard the hint also stays in this line: if the computer moves
+    // first, its move replaces the board status within a moment.
     setStatusTicTacToe("offline-tictactoe-status",
-      "You play " + playerNameTicTacToe(humanPlayer) + ", computer level: " + (levelNames[level] || level) + ".");
+      "You play " + playerNameTicTacToe(humanPlayer) + ", computer level: " + (levelNames[level] || level) + "." +
+      (level === 3 ? " On Hard the computer solves the game completely – a draw is the best you can get." : ""));
   });
 
   if (resignBtn) {
