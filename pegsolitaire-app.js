@@ -1,10 +1,10 @@
 // pegsolitaire-app.js
 // Wires PegSolitaireCore to the pegsolitaire.html UI. Solitaire, like
-// Sudoku - no opponent, no color, no difficulty even: the classic
-// 33-hole board always starts the same way, so the only control is
-// "New game" (to try again) alongside Undo.
+// Sudoku - no opponent, no color, no difficulty even. The only choice
+// is the board (English 33, European 37 or Wiegleb's 45 holes, see
+// PegSolitaireCore.BOARDS), taken when "New game" is pressed.
 //
-// The board is a 7x7 float-grid (same JS-enforced square cell size
+// The board is a 7x7 or 9x9 float-grid (same JS-enforced square cell size
 // technique as the chess/checkers/Connect Four boards), with the four
 // off-board corners left as invisible gaps - the same approach used for
 // the Royal Game of Ur's H-shaped board, just without needing a
@@ -17,6 +17,7 @@
 
 const AppStatePegSolitaire = {
   board: null,
+  variant: "english", // key of PegSolitaireCore.BOARDS
   selected: null,   // [r, c] or null
   legalTargets: {}, // "r,c" -> the move that lands there
   gameOver: false,
@@ -29,6 +30,7 @@ const PEGSOLITAIRE_SAVE_KEY = "einkchess_save_pegsolitaire";
 function savePegSolitaireGame() {
   if (typeof GameStorage === "undefined") return;
   GameStorage.save(PEGSOLITAIRE_SAVE_KEY, {
+    variant: AppStatePegSolitaire.variant,
     board: AppStatePegSolitaire.board,
     moveCount: AppStatePegSolitaire.moveCount
   });
@@ -101,8 +103,14 @@ function initPegSolitaireApp() {
     });
   }
 
+  function chosenVariantPegSolitaire() {
+    const sel = document.getElementById("pegsolitaire-board-inline");
+    return PegSolitaireCore.variantOf(sel ? sel.value : "");
+  }
+
   function startNewGamePegSolitaire() {
-    AppStatePegSolitaire.board = PegSolitaireCore.createInitialBoard();
+    AppStatePegSolitaire.variant = chosenVariantPegSolitaire();
+    AppStatePegSolitaire.board = PegSolitaireCore.createInitialBoard(AppStatePegSolitaire.variant);
     AppStatePegSolitaire.selected = null;
     AppStatePegSolitaire.legalTargets = {};
     AppStatePegSolitaire.gameOver = false;
@@ -120,7 +128,11 @@ function initPegSolitaireApp() {
 
   const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(PEGSOLITAIRE_SAVE_KEY) : null;
   if (savedGame && savedGame.board) {
+    // A save from before the board choice has no variant: English.
+    AppStatePegSolitaire.variant = PegSolitaireCore.variantOf(savedGame.variant);
     AppStatePegSolitaire.board = savedGame.board;
+    const sel = document.getElementById("pegsolitaire-board-inline");
+    if (sel) sel.value = AppStatePegSolitaire.variant;
     AppStatePegSolitaire.moveCount = savedGame.moveCount;
     AppStatePegSolitaire.selected = null;
     AppStatePegSolitaire.legalTargets = {};
@@ -232,15 +244,18 @@ function buildPegSolitaireBoardDOM() {
   if (!boardEl) return;
   boardEl.innerHTML = "";
 
-  for (let r = 0; r < PegSolitaireCore.SIZE; r++) {
-    for (let c = 0; c < PegSolitaireCore.SIZE; c++) {
+  const size = AppStatePegSolitaire.board.length;
+  boardEl.dataset.size = size;
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
       const cell = document.createElement("button");
       cell.className = "square peg-square";
       cell.type = "button";
       cell.dataset.row = r;
       cell.dataset.col = c;
+      cell.style.width = (100 / size) + "%";
 
-      if (!PegSolitaireCore.isOnBoard(r, c)) {
+      if (AppStatePegSolitaire.board[r][c] === null) {
         cell.classList.add("peg-square-gap");
         cell.disabled = true;
         cell.setAttribute("aria-hidden", "true");
@@ -273,7 +288,7 @@ function ensurePegSolitaireSquareAspectRatio() {
   if (!boardEl) return;
   const rect = boardEl.getBoundingClientRect();
   if (!rect || !rect.width) return;
-  const squareSize = rect.width / PegSolitaireCore.SIZE;
+  const squareSize = rect.width / (AppStatePegSolitaire.board ? AppStatePegSolitaire.board.length : 7);
   boardEl.querySelectorAll(".peg-square").forEach((sq) => {
     sq.style.height = squareSize + "px";
   });

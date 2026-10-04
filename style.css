@@ -3827,11 +3827,12 @@ max-width: 540px;
   background: linear-gradient(to top right, var(--border) 0%, var(--border) 50%, transparent 50%, transparent 100%);
 }
 
-/* Peg Solitaire board: a 7x7 float-grid (same technique as the chess/
-   checkers/Connect Four boards - a JS-enforced square cell size, since
-   CSS `aspect-ratio` is unreliable on E-Ink browsers), with the four
-   2x2 corners left as invisible gaps to form the classic cross shape -
-   the same gap technique used for the Royal Game of Ur's board. */
+/* Peg Solitaire board: a 7x7 or 9x9 float-grid (same technique as the
+   chess/checkers/Connect Four boards - a JS-enforced square cell size,
+   since CSS `aspect-ratio` is unreliable on E-Ink browsers; the cell
+   width is set inline from the board size), with the off-board corners
+   left as invisible gaps - the same gap technique used for the Royal
+   Game of Ur's board. */
 
 #pegsolitaire-board {
   display: block;
@@ -3841,6 +3842,12 @@ max-width: 540px;
   box-sizing: border-box;
   overflow: hidden;
   margin: 0 auto;
+}
+
+/* The 9x9 Wiegleb board gets more room, so its holes stay as big as
+   the 7x7 boards' (about 66 px on a 632 px reader). */
+#pegsolitaire-board[data-size="9"] {
+  max-width: 600px;
 }
 
 .peg-square {

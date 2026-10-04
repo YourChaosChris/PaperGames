@@ -410,16 +410,26 @@ STRINGS.de = {
     sudoku_rules_difficulty: "Leichte, mittlere und schwere Rätsel unterscheiden sich nur darin, wie viele der 81 Felder zu Beginn schon ausgefüllt sind – weniger Vorgaben bedeuten, dass mehr logisches Schließen nötig ist, um voranzukommen.",
 
     pegsolitaire_new_game: "Neues Spiel",
+
+    pegsolitaire_board_label: "Brett",
+
+    pegsolitaire_board_english: "Englisch (33 Felder)",
+
+    pegsolitaire_board_european: "Europäisch (37 Felder)",
+
+    pegsolitaire_board_wiegleb: "Deutsch, Wiegleb 1779 (45 Felder)",
     pegsolitaire_rules_title: "Solitär-Regeln",
     pegsolitaire_rules_intro: "Eine kurze Übersicht darüber, wie PaperGames Solitär (Peg Solitaire) spielt – nützlich, wenn man aus der Übung ist oder es gerade lernt.",
     pegsolitaire_rules_basics_title: "Die Grundidee",
     pegsolitaire_term_board: "Das Brett und die Startaufstellung",
-    pegsolitaire_rules_board: "Das klassische englische Brett hat 33 Löcher in Kreuzform. Jedes Loch beginnt mit einem Stift gefüllt, außer dem mittleren, das leer bleibt.",
+    pegsolitaire_rules_board: "Vor der Partie wählst du das Brett: Englisch (33 Felder, voreingestellt), Europäisch (37) oder Deutsch nach Wiegleb (45). Jedes Loch beginnt mit einem Stift gefüllt, bis auf eines: beim englischen und beim deutschen Brett die Mitte; beim europäischen Brett, das von der Mitte aus nicht lösbar ist, das Loch direkt über der Mitte.",
     pegsolitaire_term_jump: "Springen",
     pegsolitaire_rules_jump: "Einen Stift auswählen und dann ein leeres Loch zwei Felder entfernt in gerader Linie (hoch, runter, links oder rechts – nie diagonal) wählen, wobei direkt dazwischen ein weiterer Stift steht. Der Stift springt ins leere Loch, und der übersprungene Stift wird vom Brett entfernt.",
     pegsolitaire_rules_end_title: "Eine Partie abschließen",
     pegsolitaire_term_win: "Gelöst",
     pegsolitaire_rules_win: "Das klassische Ziel ist, sich bis auf einen einzigen übrig bleibenden Stift durchzuspringen. Die Partie endet auch unlösbar, sobald kein legaler Sprung mehr möglich ist, egal wie viele Stifte noch auf dem Brett sind.",
+    pegsolitaire_rules_boards_title: "Die drei Bretter",
+    pegsolitaire_rules_boards: "Englisch: ein 7x7-Raster ohne die vier 2x2-Ecken, 33 Felder. Europäisch: ein 7x7-Raster, an jeder Ecke sind nur drei Felder abgeschnitten, 37 Felder. Deutsch (J. C. Wiegleb, 1779): ein 9x9-Raster ohne die vier 3x3-Ecken, 45 Felder. Auf allen drei Brettern wird nur waagerecht und senkrecht gesprungen, nie diagonal.",
 
     minesweeper_new_game: "Neues Spiel",
     minesweeper_level_easy: "Leicht (9x9, 10 Minen)",
@@ -681,6 +691,7 @@ STRINGS.de = {
     pegsolitaire_history_origins_p2: "Das in Frankreich zum Standard gewordene Brett hat 37 Löcher (vier zusätzliche Ecken am schlichten Kreuz), während die nach England verbreitete Version – das hier verwendete 33-Loch-Kreuz – im englischsprachigen Raum zum gebräuchlicheren Standard wurde und sich im 19. Jahrhundert in Großbritannien durchsetzte.",
     pegsolitaire_history_spread_title: "Ein Spielprinzip, viele Formen",
     pegsolitaire_history_spread_p1: "Neben dem klassischen Kreuz wurden Solitär-Bretter auch in Dreiecksform (mit einer eigenen 15-Stift-Version, jahrzehntelang fester Bestandteil amerikanischer Restauranttische), Rautenform und weiteren Anordnungen gebaut – die Sprungregel bleibt dabei immer dieselbe, ganz gleich, in welcher Form die Löcher angeordnet sind.",
+    pegsolitaire_history_wiegleb: "Ein größeres Kreuz mit 45 Feldern auf einem 9x9-Raster beschrieb J. C. Wiegleb 1779 in seinem Buch „Unterricht in der natürlichen Magie“.",
     pegsolitaire_history_spread_p2: "Da jeder Zug genau einen Stift entfernt, braucht eine vollständige Partie von n Stiften bis zu einem einzigen immer genau n-1 Sprünge – eines der wenigen Brettspiele, bei denen die Zuganzahl einer gewonnenen Partie von vornherein feststeht, unabhängig davon, welche konkrete Sprungfolge dorthin führt.",
     pegsolitaire_history_modern_title: "Ein gelöstes Rätsel mit einer Pointe",
     pegsolitaire_history_modern_p1: "Peg Solitaire zog ab den 1960er- und 70er-Jahren ernsthafte mathematische Aufmerksamkeit auf sich, als Forscher wie John Conway es mit Werkzeugen wie Widerstandsnetzwerk- und gruppentheoretischen Argumenten analysierten, um genau zu bestimmen, welche letzten Ein-Stift-Positionen von der Standard-Ausgangsstellung aus erreichbar sind – die Mitte ist eine davon, aber bei Weitem nicht die einzige.",
@@ -1360,7 +1371,7 @@ STRINGS.de = {
     game_sudoku: "Sudoku",
     home_sudoku_desc: "Fülle ein 9x9-Gitter mit Ziffern, sodass jede Zeile, Spalte und jedes 3x3-Feld die Zahlen 1–9 genau einmal enthält. Frisch erzeugt mit eindeutiger Lösung, in drei Schwierigkeitsgraden.",
     game_peg_solitaire: "Solitär",
-    home_peg_solitaire_desc: "Springe auf einem kreuzförmigen Brett über Stifte, bis nur noch einer übrig ist.",
+    home_peg_solitaire_desc: "Springe mit Stiften übereinander, bis nur noch einer übrig ist – auf dem englischen (33 Felder), dem europäischen (37) oder dem deutschen Brett nach Wiegleb (45).",
     game_minesweeper: "Minesweeper",
     home_minesweeper_desc: "Decke mit Hilfe der Zahlenhinweise alle sicheren Felder auf, ohne eine versteckte Mine auszulösen.",
     game_nonograms: "Nonogramme",

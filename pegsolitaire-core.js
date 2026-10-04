@@ -1,37 +1,76 @@
 // pegsolitaire-core.js
-// Dependency-free rules engine for Peg Solitaire, using the classic
-// English 33-hole cross board. Solitaire, like Sudoku - no opponent, no
-// AI, just the puzzle itself - so this is simpler than the two-player
-// cores: no color, no turn order, just pegs and jumps.
+// Dependency-free rules engine for Peg Solitaire on three square-grid
+// boards. Solitaire, like Sudoku - no opponent, no AI, just the puzzle
+// itself - so this is simpler than the two-player cores: no color, no
+// turn order, just pegs and jumps.
 //
-// Board: a 7x7 grid where the four 2x2 corners are off the board,
-// leaving a plus/cross shape of 33 valid holes. A cell is null when
-// it's off the board, otherwise a boolean - true for a peg, false for
-// an empty hole. Jumps are orthogonal only (no diagonals): a peg jumps
-// over an adjacent peg into an empty hole two cells further in the same
-// direction, and the jumped-over peg is removed.
+// Boards (BOARDS), all played with the same orthogonal jumps:
+//   english  - 7x7 without the four 2x2 corners, 33 holes (the default)
+//   european - 7x7 without a three-hole corner at each corner, 37 holes
+//   wiegleb  - 9x9 without the four 3x3 corners, 45 holes (J. C.
+//              Wiegleb, 1779)
+// Each board's starting hole was checked with a depth-first search to
+// be solvable down to a single peg. The European board is not solvable
+// from its centre, so it starts with the hole directly above the centre.
+//
+// A board is a size x size grid; a cell is null when it's off the board,
+// otherwise a boolean - true for a peg, false for an empty hole. Every
+// function reads the grid size from the board it is given. Jumps are
+// orthogonal only (no diagonals): a peg jumps over an adjacent peg into
+// an empty hole two cells further in the same direction, and the
+// jumped-over peg is removed.
 
 const PegSolitaireCore = (function () {
-  const SIZE = 7;
   const DIRECTIONS = [{ dr: -1, dc: 0 }, { dr: 1, dc: 0 }, { dr: 0, dc: -1 }, { dr: 0, dc: 1 }];
+  const DEFAULT_VARIANT = "english";
 
-  function isOnBoard(r, c) {
-    if (r < 0 || r >= SIZE || c < 0 || c >= SIZE) return false;
-    const rowOk = r >= 2 && r <= 4;
-    const colOk = c >= 2 && c <= 4;
-    return rowOk || colOk;
+  const BOARDS = {
+    english: {
+      size: 7,
+      holes: 33,
+      contains: (r, c) => (r >= 2 && r <= 4) || (c >= 2 && c <= 4),
+      start: [3, 3]
+    },
+    european: {
+      size: 7,
+      holes: 37,
+      // A corner cell and its two neighbours along the edges are cut off.
+      contains: (r, c) => Math.min(r, 6 - r) + Math.min(c, 6 - c) >= 2,
+      start: [2, 3]
+    },
+    wiegleb: {
+      size: 9,
+      holes: 45,
+      contains: (r, c) => (r >= 3 && r <= 5) || (c >= 3 && c <= 5),
+      start: [4, 4]
+    }
+  };
+  const VARIANTS = Object.keys(BOARDS);
+
+  // A saved game from before the board choice existed has no variant and
+  // is the English board.
+  function variantOf(value) {
+    return BOARDS[value] ? value : DEFAULT_VARIANT;
   }
 
-  function createInitialBoard() {
+  function isOnBoard(r, c, variant) {
+    const b = BOARDS[variantOf(variant)];
+    if (r < 0 || r >= b.size || c < 0 || c >= b.size) return false;
+    return b.contains(r, c);
+  }
+
+  function createInitialBoard(variant) {
+    const v = variantOf(variant);
+    const b = BOARDS[v];
     const board = [];
-    for (let r = 0; r < SIZE; r++) {
+    for (let r = 0; r < b.size; r++) {
       const row = [];
-      for (let c = 0; c < SIZE; c++) {
-        row.push(isOnBoard(r, c) ? true : null);
+      for (let c = 0; c < b.size; c++) {
+        row.push(isOnBoard(r, c, v) ? true : null);
       }
       board.push(row);
     }
-    board[3][3] = false; // the center hole starts empty
+    board[b.start[0]][b.start[1]] = false; // the starting hole
     return board;
   }
 
@@ -39,22 +78,25 @@ const PegSolitaireCore = (function () {
     return board.map((row) => row.slice());
   }
 
+  function cellAt(board, r, c) {
+    if (r < 0 || r >= board.length || c < 0 || c >= board[r].length) return null;
+    return board[r][c];
+  }
+
   function isLegalMove(board, fr, fc, tr, tc) {
-    if (!isOnBoard(fr, fc) || !isOnBoard(tr, tc)) return false;
-    if (board[fr][fc] !== true) return false;
-    if (board[tr][tc] !== false) return false;
+    if (cellAt(board, fr, fc) !== true) return false;
+    if (cellAt(board, tr, tc) !== false) return false;
     const dr = tr - fr, dc = tc - fc;
     const isJump = DIRECTIONS.some((d) => d.dr * 2 === dr && d.dc * 2 === dc);
     if (!isJump) return false;
-    const mr = fr + dr / 2, mc = fc + dc / 2;
-    return board[mr][mc] === true;
+    return cellAt(board, fr + dr / 2, fc + dc / 2) === true;
   }
 
   // Every legal move for the current board - {from:[r,c], to:[r,c], over:[r,c]}.
   function getLegalMoves(board) {
     const moves = [];
-    for (let r = 0; r < SIZE; r++) {
-      for (let c = 0; c < SIZE; c++) {
+    for (let r = 0; r < board.length; r++) {
+      for (let c = 0; c < board[r].length; c++) {
         if (board[r][c] !== true) continue;
         DIRECTIONS.forEach(({ dr, dc }) => {
           const tr = r + dr * 2, tc = c + dc * 2;
@@ -80,9 +122,19 @@ const PegSolitaireCore = (function () {
 
   function countPegs(board) {
     let count = 0;
-    for (let r = 0; r < SIZE; r++) {
-      for (let c = 0; c < SIZE; c++) {
+    for (let r = 0; r < board.length; r++) {
+      for (let c = 0; c < board[r].length; c++) {
         if (board[r][c] === true) count++;
+      }
+    }
+    return count;
+  }
+
+  function countHoles(board) {
+    let count = 0;
+    for (let r = 0; r < board.length; r++) {
+      for (let c = 0; c < board[r].length; c++) {
+        if (board[r][c] !== null) count++;
       }
     }
     return count;
@@ -102,7 +154,10 @@ const PegSolitaireCore = (function () {
   }
 
   return {
-    SIZE,
+    BOARDS,
+    VARIANTS,
+    DEFAULT_VARIANT,
+    variantOf,
     isOnBoard,
     createInitialBoard,
     cloneBoard,
@@ -110,6 +165,7 @@ const PegSolitaireCore = (function () {
     getLegalMoves,
     applyMove,
     countPegs,
+    countHoles,
     evaluateBoard
   };
 })();
