@@ -199,14 +199,11 @@ const SettingsMenu = (function () {
                 '<button type="button" class="secondary" data-mode="slow" data-i18n="settings_ai_pacing_slow">Slow</button>' +
               '</div>'
             : '') +
-          // Only game pages with a side choice load random-start.js.
-          (typeof RandomStart !== "undefined"
-            ? '<h3 class="settings-subheading" data-i18n="settings_section_random_start">Who moves first</h3>' +
-              '<div class="settings-segmented" id="settings-random-start-group" role="group">' +
-                '<button type="button" class="secondary" data-random="0" data-i18n="settings_random_start_chosen">As chosen</button>' +
-                '<button type="button" class="secondary" data-random="1" data-i18n="settings_random_start_random">Random</button>' +
-              '</div>'
-            : '') +
+          '<h3 class="settings-subheading" data-i18n="settings_section_random_start">Who moves first</h3>' +
+          '<div class="settings-segmented" id="settings-random-start-group" role="group">' +
+            '<button type="button" class="secondary" data-random="0" data-i18n="settings_random_start_chosen">As chosen</button>' +
+            '<button type="button" class="secondary" data-random="1" data-i18n="settings_random_start_random">Random</button>' +
+          '</div>' +
         '</section>' +
         // Which version is running (answered by sw.js, the single place it
         // is kept) and a way to fetch the latest one from any page.
