@@ -155,7 +155,7 @@ function targetKeyPeg(r, c) {
 
 function computeLegalTargetsPegSolitaire(r, c) {
   const targets = {};
-  PegSolitaireCore.getLegalMoves(AppStatePegSolitaire.board)
+  PegSolitaireCore.getLegalMoves(AppStatePegSolitaire.board, AppStatePegSolitaire.variant)
     .filter((m) => m.from[0] === r && m.from[1] === c)
     .forEach((m) => { targets[targetKeyPeg(m.to[0], m.to[1])] = m; });
   return targets;
@@ -197,7 +197,7 @@ function applyPegSolitaireMove(move) {
   updatePegSolitaireBoard();
   updateGameLabelsPegSolitaire();
 
-  const result = PegSolitaireCore.evaluateBoard(AppStatePegSolitaire.board);
+  const result = PegSolitaireCore.evaluateBoard(AppStatePegSolitaire.board, AppStatePegSolitaire.variant);
   if (result.over) {
     AppStatePegSolitaire.gameOver = true;
     if (result.won) {
@@ -247,8 +247,23 @@ function buildPegSolitaireBoardDOM() {
   const size = AppStatePegSolitaire.board.length;
   boardEl.dataset.size = size;
   boardEl.style.setProperty("--peg-cols", String(size));
+  // The triangle's rows are shifted by half a hole per missing hole and
+  // padded with invisible spacers on both sides, so each row still adds
+  // up to the full width and the board reads as a triangle, not a stair.
+  const offsetRows = !!PegSolitaireCore.BOARDS[AppStatePegSolitaire.variant].offsetRows;
+  function addSpacer(halfCells) {
+    if (halfCells <= 0) return;
+    const sp = document.createElement("span");
+    sp.className = "square peg-square peg-square-gap peg-spacer";
+    sp.setAttribute("aria-hidden", "true");
+    sp.style.width = (100 / size * halfCells / 2) + "%";
+    boardEl.appendChild(sp);
+  }
   for (let r = 0; r < size; r++) {
+    const rowHoles = offsetRows ? AppStatePegSolitaire.board[r].filter((v) => v !== null).length : size;
+    if (offsetRows) addSpacer(size - rowHoles);
     for (let c = 0; c < size; c++) {
+      if (offsetRows && AppStatePegSolitaire.board[r][c] === null) continue;
       const cell = document.createElement("button");
       cell.className = "square peg-square";
       cell.type = "button";
@@ -269,6 +284,7 @@ function buildPegSolitaireBoardDOM() {
       cell.addEventListener("click", () => onPegSolitaireCellClick(r, c));
       boardEl.appendChild(cell);
     }
+    if (offsetRows) addSpacer(size - rowHoles);
   }
 
   ensurePegSolitaireSquareAspectRatio();

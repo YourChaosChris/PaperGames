@@ -422,18 +422,20 @@ STRINGS.de = {
     pegsolitaire_board_square36: "Quadrat (36 Felder)",
 
     pegsolitaire_board_diamond41: "Große Raute (41 Felder)",
+
+    pegsolitaire_board_triangle15: "Dreieck (15 Felder)",
     pegsolitaire_rules_title: "Solitär-Regeln",
     pegsolitaire_rules_intro: "Eine kurze Übersicht darüber, wie PaperGames Solitär (Peg Solitaire) spielt – nützlich, wenn man aus der Übung ist oder es gerade lernt.",
     pegsolitaire_rules_basics_title: "Die Grundidee",
     pegsolitaire_term_board: "Das Brett und die Startaufstellung",
     pegsolitaire_rules_board: "Vor der Partie wählst du das Brett; voreingestellt ist das englische (33 Felder). Jedes Loch beginnt mit einem Stift gefüllt, bis auf eines – welches, steht für jedes Brett unter „Die Bretter“.",
     pegsolitaire_term_jump: "Springen",
-    pegsolitaire_rules_jump: "Einen Stift auswählen und dann ein leeres Loch zwei Felder entfernt in gerader Linie (hoch, runter, links oder rechts – nie diagonal) wählen, wobei direkt dazwischen ein weiterer Stift steht. Der Stift springt ins leere Loch, und der übersprungene Stift wird vom Brett entfernt.",
+    pegsolitaire_rules_jump: "Einen Stift auswählen und dann ein leeres Loch zwei Felder entfernt in gerader Linie (hoch, runter, links oder rechts – nie diagonal) wählen, wobei direkt dazwischen ein weiterer Stift steht. Der Stift springt ins leere Loch, und der übersprungene Stift wird vom Brett entfernt. Ausnahme: Auf dem Dreiecksbrett darf zusätzlich schräg gesprungen werden, entlang seiner schrägen Linien.",
     pegsolitaire_rules_end_title: "Eine Partie abschließen",
     pegsolitaire_term_win: "Gelöst",
     pegsolitaire_rules_win: "Das klassische Ziel ist, sich bis auf einen einzigen übrig bleibenden Stift durchzuspringen. Die Partie endet auch unlösbar, sobald kein legaler Sprung mehr möglich ist, egal wie viele Stifte noch auf dem Brett sind.",
     pegsolitaire_rules_boards_title: "Die Bretter",
-    pegsolitaire_rules_boards: "Englisch: ein 7x7-Raster ohne die vier 2x2-Ecken, 33 Felder; die Mitte ist leer. Europäisch: ein 7x7-Raster, an jeder Ecke sind nur drei Felder abgeschnitten, 37 Felder; leer ist das Loch direkt über der Mitte, denn von der Mitte aus ist es nicht lösbar. Deutsch (J. C. Wiegleb, 1779): ein 9x9-Raster ohne die vier 3x3-Ecken, 45 Felder; die Mitte ist leer. Quadrat: das volle 6x6-Raster, 36 Felder; leer ist das obere linke der vier mittleren Löcher. Große Raute: eine Raute aus 41 Feldern auf einem 9x9-Raster; leer ist das Loch zwei Reihen über der Mitte – auf diesem Brett sind überhaupt nur sehr wenige Startlöcher lösbar. Auf allen diesen Brettern wird nur waagerecht und senkrecht gesprungen, nie diagonal.",
+    pegsolitaire_rules_boards: "Englisch: ein 7x7-Raster ohne die vier 2x2-Ecken, 33 Felder; die Mitte ist leer. Europäisch: ein 7x7-Raster, an jeder Ecke sind nur drei Felder abgeschnitten, 37 Felder; leer ist das Loch direkt über der Mitte, denn von der Mitte aus ist es nicht lösbar. Deutsch (J. C. Wiegleb, 1779): ein 9x9-Raster ohne die vier 3x3-Ecken, 45 Felder; die Mitte ist leer. Quadrat: das volle 6x6-Raster, 36 Felder; leer ist das obere linke der vier mittleren Löcher. Große Raute: eine Raute aus 41 Feldern auf einem 9x9-Raster; leer ist das Loch zwei Reihen über der Mitte – auf diesem Brett sind überhaupt nur sehr wenige Startlöcher lösbar. Dreieck: fünf Reihen mit 1 bis 5 Löchern, jede Reihe um ein halbes Loch versetzt, 15 Felder; leer ist das obere linke der drei Löcher in der Mitte. Auf allen Brettern mit quadratischem Raster wird nur waagerecht und senkrecht gesprungen, nie diagonal. Nur auf dem Dreieck darf zusätzlich schräg gesprungen werden, entlang seiner schrägen Linien – insgesamt in sechs Richtungen.",
 
     minesweeper_new_game: "Neues Spiel",
     minesweeper_level_easy: "Leicht (9x9, 10 Minen)",

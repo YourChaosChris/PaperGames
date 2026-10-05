@@ -11,6 +11,8 @@
 //               Wiegleb, 1779)
 //   square36  - the full 6x6 grid, 36 holes
 //   diamond41 - a diamond on a 9x9 grid, |r-4| + |c-4| <= 4, 41 holes
+//   triangle15 - five rows of 1 to 5 holes, row r holding c = 0..r,
+//               15 holes; the only board with diagonal jumps (below)
 // The 13-hole diamond (5x5) is missing on purpose: no starting hole on
 // it can be solved down to one peg with orthogonal jumps (5 is the best).
 // Each board's starting hole was checked with a depth-first search to
@@ -19,24 +21,37 @@
 //
 // A board is a size x size grid; a cell is null when it's off the board,
 // otherwise a boolean - true for a peg, false for an empty hole. Every
-// function reads the grid size from the board it is given. Jumps are
-// orthogonal only (no diagonals): a peg jumps over an adjacent peg into
-// an empty hole two cells further in the same direction, and the
-// jumped-over peg is removed.
+// function reads the grid size from the board it is given. A peg jumps
+// over an adjacent peg into an empty hole two cells further in the same
+// direction, and the jumped-over peg is removed. The directions belong
+// to the board (BOARDS[v].dirs): the square-grid boards use the four
+// orthogonal ones only, never diagonals; the triangle uses its six
+// edge directions - along a row, and both slants up and down. Every
+// move function takes the variant, defaulting to English (orthogonal).
 
 const PegSolitaireCore = (function () {
-  const DIRECTIONS = [{ dr: -1, dc: 0 }, { dr: 1, dc: 0 }, { dr: 0, dc: -1 }, { dr: 0, dc: 1 }];
+  const ORTHOGONAL = [{ dr: -1, dc: 0 }, { dr: 1, dc: 0 }, { dr: 0, dc: -1 }, { dr: 0, dc: 1 }];
+  // Two holes of the triangle are neighbours when they share an edge:
+  // (r, c +- 1) in the row, (r - 1, c - 1) and (r - 1, c) above,
+  // (r + 1, c) and (r + 1, c + 1) below.
+  const TRIANGULAR = [
+    { dr: 0, dc: -1 }, { dr: 0, dc: 1 },
+    { dr: -1, dc: -1 }, { dr: -1, dc: 0 },
+    { dr: 1, dc: 0 }, { dr: 1, dc: 1 }
+  ];
   const DEFAULT_VARIANT = "english";
 
   const BOARDS = {
     english: {
       size: 7,
+      dirs: ORTHOGONAL,
       holes: 33,
       contains: (r, c) => (r >= 2 && r <= 4) || (c >= 2 && c <= 4),
       start: [3, 3]
     },
     european: {
       size: 7,
+      dirs: ORTHOGONAL,
       holes: 37,
       // A corner cell and its two neighbours along the edges are cut off.
       contains: (r, c) => Math.min(r, 6 - r) + Math.min(c, 6 - c) >= 2,
@@ -44,23 +59,38 @@ const PegSolitaireCore = (function () {
     },
     wiegleb: {
       size: 9,
+      dirs: ORTHOGONAL,
       holes: 45,
       contains: (r, c) => (r >= 3 && r <= 5) || (c >= 3 && c <= 5),
       start: [4, 4]
     },
     square36: {
       size: 6,
+      dirs: ORTHOGONAL,
       holes: 36,
       contains: () => true,
       start: [2, 2] // upper left of the four middle holes
     },
     diamond41: {
       size: 9,
+      dirs: ORTHOGONAL,
       holes: 41,
       contains: (r, c) => Math.abs(r - 4) + Math.abs(c - 4) <= 4,
       // Only two starting holes (up to symmetry) can be solved down to a
       // single peg on this board; this is the one nearer the centre.
       start: [2, 4]
+    },
+    triangle15: {
+      size: 5,
+      dirs: TRIANGULAR,
+      // Drawn with each row shifted by half a hole, so it looks like a
+      // triangle (see pegsolitaire-app.js).
+      offsetRows: true,
+      holes: 15,
+      contains: (r, c) => r < 5 && c <= r,
+      // Every hole of this board can be solved; of the three holes
+      // nearest the middle this is the upper left one.
+      start: [2, 1]
     }
   };
   const VARIANTS = Object.keys(BOARDS);
@@ -101,24 +131,29 @@ const PegSolitaireCore = (function () {
     return board[r][c];
   }
 
-  function isLegalMove(board, fr, fc, tr, tc) {
+  function directionsOf(variant) {
+    return BOARDS[variantOf(variant)].dirs;
+  }
+
+  function isLegalMove(board, fr, fc, tr, tc, variant) {
     if (cellAt(board, fr, fc) !== true) return false;
     if (cellAt(board, tr, tc) !== false) return false;
     const dr = tr - fr, dc = tc - fc;
-    const isJump = DIRECTIONS.some((d) => d.dr * 2 === dr && d.dc * 2 === dc);
+    const isJump = directionsOf(variant).some((d) => d.dr * 2 === dr && d.dc * 2 === dc);
     if (!isJump) return false;
     return cellAt(board, fr + dr / 2, fc + dc / 2) === true;
   }
 
   // Every legal move for the current board - {from:[r,c], to:[r,c], over:[r,c]}.
-  function getLegalMoves(board) {
+  function getLegalMoves(board, variant) {
+    const dirs = directionsOf(variant);
     const moves = [];
     for (let r = 0; r < board.length; r++) {
       for (let c = 0; c < board[r].length; c++) {
         if (board[r][c] !== true) continue;
-        DIRECTIONS.forEach(({ dr, dc }) => {
+        dirs.forEach(({ dr, dc }) => {
           const tr = r + dr * 2, tc = c + dc * 2;
-          if (isLegalMove(board, r, c, tr, tc)) {
+          if (isLegalMove(board, r, c, tr, tc, variant)) {
             moves.push({ from: [r, c], to: [tr, tc], over: [r + dr, c + dc] });
           }
         });
@@ -161,9 +196,9 @@ const PegSolitaireCore = (function () {
   // { over: boolean, won: boolean, pegs: number }. `won` means the
   // puzzle is solved down to the traditional single peg; `over` means
   // no legal move remains, win or not.
-  function evaluateBoard(board) {
+  function evaluateBoard(board, variant) {
     const pegs = countPegs(board);
-    const hasMove = getLegalMoves(board).length > 0;
+    const hasMove = getLegalMoves(board, variant).length > 0;
     return {
       over: !hasMove,
       won: !hasMove && pegs === 1,

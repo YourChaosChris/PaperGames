@@ -426,18 +426,20 @@ const STRINGS = {
     pegsolitaire_board_square36: "Square (36 holes)",
 
     pegsolitaire_board_diamond41: "Large diamond (41 holes)",
+
+    pegsolitaire_board_triangle15: "Triangle (15 holes)",
     pegsolitaire_rules_title: "Peg Solitaire Rules",
     pegsolitaire_rules_intro: "A quick reference for how PaperGames plays Peg Solitaire - useful if you're rusty, or learning.",
     pegsolitaire_rules_basics_title: "The basic idea",
     pegsolitaire_term_board: "The board and starting position",
     pegsolitaire_rules_board: "Before a game you choose the board; the English board (33 holes) is preset. Every hole starts filled with a peg except one - which one is listed for each board under \"The boards\".",
     pegsolitaire_term_jump: "Jumping",
-    pegsolitaire_rules_jump: "Select a peg, then choose an empty hole two spaces away in a straight line (up, down, left or right - never diagonally) with another peg sitting directly between them. The peg jumps into the empty hole, and the peg it jumped over is removed from the board.",
+    pegsolitaire_rules_jump: "Select a peg, then choose an empty hole two spaces away in a straight line (up, down, left or right - never diagonally) with another peg sitting directly between them. The peg jumps into the empty hole, and the peg it jumped over is removed from the board. Exception: on the triangle board pegs may also jump diagonally, along its slanted lines.",
     pegsolitaire_rules_end_title: "Finishing a game",
     pegsolitaire_term_win: "Solved",
     pegsolitaire_rules_win: "The classic goal is to jump your way down to a single peg. The game also ends, unsolved, the moment no legal jump remains, however many pegs are still on the board.",
     pegsolitaire_rules_boards_title: "The boards",
-    pegsolitaire_rules_boards: "English: a 7x7 grid without the four 2x2 corners, 33 holes; the centre is empty. European: a 7x7 grid with only three holes cut off at each corner, 37 holes; the hole directly above the centre is empty, because the centre itself can't be solved. German (J. C. Wiegleb, 1779): a 9x9 grid without the four 3x3 corners, 45 holes; the centre is empty. Square: the full 6x6 grid, 36 holes; the upper left of the four middle holes is empty. Large diamond: a diamond of 41 holes on a 9x9 grid; the hole two rows above the centre is empty - on this board only very few starting holes can be solved at all. On all these boards pegs jump only horizontally or vertically, never diagonally.",
+    pegsolitaire_rules_boards: "English: a 7x7 grid without the four 2x2 corners, 33 holes; the centre is empty. European: a 7x7 grid with only three holes cut off at each corner, 37 holes; the hole directly above the centre is empty, because the centre itself can't be solved. German (J. C. Wiegleb, 1779): a 9x9 grid without the four 3x3 corners, 45 holes; the centre is empty. Square: the full 6x6 grid, 36 holes; the upper left of the four middle holes is empty. Large diamond: a diamond of 41 holes on a 9x9 grid; the hole two rows above the centre is empty - on this board only very few starting holes can be solved at all. Triangle: five rows of 1 to 5 holes, each row shifted by half a hole, 15 holes; the upper left of the three holes nearest the middle is empty. On all square-grid boards pegs jump only horizontally or vertically, never diagonally. Only on the triangle may pegs also jump diagonally, along its slanted lines - six directions in all.",
 
     minesweeper_new_game: "New game",
     minesweeper_level_easy: "Easy (9x9, 10 mines)",
