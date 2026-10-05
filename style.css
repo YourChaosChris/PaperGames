@@ -3834,24 +3834,25 @@ max-width: 540px;
    left as invisible gaps - the same gap technique used for the Royal
    Game of Ur's board. */
 
+/* --peg-cols is the board's grid size (5 to 9), set by
+   pegsolitaire-app.js. Each hole is at most 66 px wide, so a small
+   board stays small and the 9x9 one reaches 594 px - on a 632 px reader
+   every hole is about 66 px. The first lines are the fallback for a
+   browser without custom properties (the 7x7 boards). */
 #pegsolitaire-board {
   display: block;
   width: 100%;
   max-width: 460px;
+  max-width: calc(var(--peg-cols, 7) * 66px);
   background: var(--square-light);
   box-sizing: border-box;
   overflow: hidden;
   margin: 0 auto;
 }
 
-/* The 9x9 Wiegleb board gets more room, so its holes stay as big as
-   the 7x7 boards' (about 66 px on a 632 px reader). */
-#pegsolitaire-board[data-size="9"] {
-  max-width: 600px;
-}
-
 .peg-square {
   width: calc(100% / 7);
+  width: calc(100% / var(--peg-cols, 7));
   background: var(--square-light);
   border: 1px solid var(--border);
 }

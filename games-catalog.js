@@ -327,7 +327,7 @@ const GAMES_CATALOG = [
     nameKey: "game_peg_solitaire",
     nameText: "Peg Solitaire",
     descKey: "home_peg_solitaire_desc",
-    descText: "Jump pegs over each other until only one remains - on the English (33 holes), European (37) or German Wiegleb board (45).",
+    descText: "Jump pegs over each other until only one remains - on the English cross or one of several other boards, from a 6x6 square to Wiegleb's 45-hole cross.",
     popular: false,
     added: "2026-07-01",
     icon: "<span class=\"peg-icon\" aria-hidden=\"true\"></span>"

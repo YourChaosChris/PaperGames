@@ -246,6 +246,7 @@ function buildPegSolitaireBoardDOM() {
 
   const size = AppStatePegSolitaire.board.length;
   boardEl.dataset.size = size;
+  boardEl.style.setProperty("--peg-cols", String(size));
   for (let r = 0; r < size; r++) {
     for (let c = 0; c < size; c++) {
       const cell = document.createElement("button");
@@ -253,7 +254,6 @@ function buildPegSolitaireBoardDOM() {
       cell.type = "button";
       cell.dataset.row = r;
       cell.dataset.col = c;
-      cell.style.width = (100 / size) + "%";
 
       if (AppStatePegSolitaire.board[r][c] === null) {
         cell.classList.add("peg-square-gap");

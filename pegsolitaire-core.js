@@ -5,10 +5,14 @@
 // turn order, just pegs and jumps.
 //
 // Boards (BOARDS), all played with the same orthogonal jumps:
-//   english  - 7x7 without the four 2x2 corners, 33 holes (the default)
-//   european - 7x7 without a three-hole corner at each corner, 37 holes
-//   wiegleb  - 9x9 without the four 3x3 corners, 45 holes (J. C.
-//              Wiegleb, 1779)
+//   english   - 7x7 without the four 2x2 corners, 33 holes (the default)
+//   european  - 7x7 without a three-hole corner at each corner, 37 holes
+//   wiegleb   - 9x9 without the four 3x3 corners, 45 holes (J. C.
+//               Wiegleb, 1779)
+//   square36  - the full 6x6 grid, 36 holes
+//   diamond41 - a diamond on a 9x9 grid, |r-4| + |c-4| <= 4, 41 holes
+// The 13-hole diamond (5x5) is missing on purpose: no starting hole on
+// it can be solved down to one peg with orthogonal jumps (5 is the best).
 // Each board's starting hole was checked with a depth-first search to
 // be solvable down to a single peg. The European board is not solvable
 // from its centre, so it starts with the hole directly above the centre.
@@ -43,6 +47,20 @@ const PegSolitaireCore = (function () {
       holes: 45,
       contains: (r, c) => (r >= 3 && r <= 5) || (c >= 3 && c <= 5),
       start: [4, 4]
+    },
+    square36: {
+      size: 6,
+      holes: 36,
+      contains: () => true,
+      start: [2, 2] // upper left of the four middle holes
+    },
+    diamond41: {
+      size: 9,
+      holes: 41,
+      contains: (r, c) => Math.abs(r - 4) + Math.abs(c - 4) <= 4,
+      // Only two starting holes (up to symmetry) can be solved down to a
+      // single peg on this board; this is the one nearer the centre.
+      start: [2, 4]
     }
   };
   const VARIANTS = Object.keys(BOARDS);
