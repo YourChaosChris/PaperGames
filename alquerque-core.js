@@ -44,8 +44,12 @@
 // longest.
 //
 // The game ends when the side to move has no piece left or no legal
-// move; that side loses. Since no piece can step backward, every game
-// runs towards that end by itself; there is no draw rule.
+// move; that side loses. It also ends in a "dead position" (PaperGames
+// rule): every Light piece stands at least two rows further up the board
+// than every Dark piece. Light only moves up or sideways and Dark only
+// down or sideways, so the two sides can never stand next to each other
+// again, nobody can capture, and both would only shuffle sideways for
+// ever. Then the side with more pieces wins; equal numbers are a draw.
 
 const AlquerqueCore = (function () {
   const ROWS = 5;
@@ -179,10 +183,27 @@ const AlquerqueCore = (function () {
     return next;
   }
 
+  // True when the sides can never meet again (see the header): the
+  // lowest Light row is at least two rows above the highest Dark row.
+  function isDeadPosition(board) {
+    let lowestW = -1, highestB = ROWS;
+    for (let i = 0; i < TOTAL_POINTS; i++) {
+      if (board[i] === "w") lowestW = Math.max(lowestW, rowOf(i));
+      else if (board[i] === "b") highestB = Math.min(highestB, rowOf(i));
+    }
+    if (lowestW < 0 || highestB === ROWS) return false;
+    return highestB - lowestW >= 2;
+  }
+
   // { status: "normal" } or { status: "no-pieces" | "no-moves", winner }
-  // for the side about to move.
+  // for the side about to move, or { status: "dead", winner (null for a
+  // draw), pieces: { b, w } }.
   function detectGameEnd(board, toMove) {
     if (!countPieces(board, toMove)) return { status: "no-pieces", winner: otherColor(toMove) };
+    if (isDeadPosition(board)) {
+      const pieces = { b: countPieces(board, "b"), w: countPieces(board, "w") };
+      return { status: "dead", winner: pieces.w > pieces.b ? "w" : pieces.b > pieces.w ? "b" : null, pieces };
+    }
     if (!getLegalMoves(board, toMove).length) return { status: "no-moves", winner: otherColor(toMove) };
     return { status: "normal" };
   }
@@ -191,7 +212,7 @@ const AlquerqueCore = (function () {
     ROWS, COLS, TOTAL_POINTS, PIECES_PER_SIDE, CENTER, DIRS, NEIGHBORS, JUMPS,
     idx, rowOf, colOf, inBounds, hasDiagonals, countConnections, otherColor, forwardDr,
     createInitialBoard, cloneBoard, countPieces, jumpSequences, getLegalMoves,
-    applyMove, detectGameEnd
+    applyMove, isDeadPosition, detectGameEnd
   };
 })();
 

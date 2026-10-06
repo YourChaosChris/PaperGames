@@ -368,9 +368,23 @@ function endIfOverAlquerque() {
   const end = AlquerqueCore.detectGameEnd(AppStateAlquerque.board, AppStateAlquerque.turn);
   if (end.status === "normal") return false;
   AppStateAlquerque.gameOver = true;
-  const reason = end.status === "no-pieces" ? "no pieces left" : "no legal moves";
-  announceGameResultAlquerque(resultTitleAlquerque(end.winner), colorNameAlquerque(end.winner) + " wins (" + reason + ").");
-  recordAlquerqueStatsIfVsAi(end.winner === AppStateAlquerque.humanColor ? "win" : "loss");
+  if (end.status === "dead") {
+    // The sides can never meet again: more pieces wins, equal is a draw.
+    const p = end.pieces;
+    if (end.winner === null) {
+      announceGameResultAlquerque("Draw", "The sides can no longer meet - a draw with " + p.w + " pieces each.");
+      recordAlquerqueStatsIfVsAi("draw");
+    } else {
+      const loser = AlquerqueCore.otherColor(end.winner);
+      announceGameResultAlquerque(resultTitleAlquerque(end.winner), "The sides can no longer meet - " + colorNameAlquerque(end.winner) +
+        " wins with " + p[end.winner] + " to " + p[loser] + " pieces.");
+      recordAlquerqueStatsIfVsAi(end.winner === AppStateAlquerque.humanColor ? "win" : "loss");
+    }
+  } else {
+    const reason = end.status === "no-pieces" ? "no pieces left" : "no legal moves";
+    announceGameResultAlquerque(resultTitleAlquerque(end.winner), colorNameAlquerque(end.winner) + " wins (" + reason + ").");
+    recordAlquerqueStatsIfVsAi(end.winner === AppStateAlquerque.humanColor ? "win" : "loss");
+  }
   updateAlquerqueBoard();
   updateGameLabelsAlquerque();
   return true;

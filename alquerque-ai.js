@@ -7,7 +7,9 @@
 //                own open to an immediate capture
 //   3 = hard   - like medium, plus one level of look-ahead: every
 //                candidate is scored by what it takes minus what the
-//                opponent's best answer takes back
+//                opponent's best answer takes back; a move that ends the
+//                game counts as a win, a loss or a draw (a dead position
+//                is won by the side with more pieces)
 // Ties are broken at random, so the computer doesn't always play the
 // same game.
 
@@ -50,7 +52,10 @@ const AlquerqueAi = (function () {
     const enemy = CORE.otherColor(color);
     return bestBy(moves, (m) => {
       const after = CORE.applyMove(board, m);
-      if (!CORE.countPieces(after, enemy) || !CORE.getLegalMoves(after, enemy).length) return 1000;
+      const end = CORE.detectGameEnd(after, enemy);
+      // A finished game: won (also a dead position with more pieces),
+      // lost (dead position with fewer) or drawn.
+      if (end.status !== "normal") return end.winner === color ? 1000 : end.winner === null ? 0 : -1000;
       return m.captured.length * 10 - bestCaptureCount(after, enemy) * 10;
     });
   }
