@@ -6287,6 +6287,55 @@ margin: 0.5rem auto 0;
   border: 3px solid #111;
 }
 
+/* Pairs (pairs-app.js): cards as buttons placed by percentage in a box
+   whose height JS sets from its width (square cards). Face down: a card
+   with a diagonal hatch; face up: white with a heavy frame and a black
+   SVG shape; a taken pair leaves an empty dashed slot. All three states
+   differ in line and shape, none by a grey fill. */
+.pairs-board {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.pairs-card {
+  position: absolute;
+  box-sizing: border-box;
+  border: 4px solid var(--square-light);
+  border-radius: 10px;
+  padding: 0;
+  background-clip: padding-box;
+  cursor: pointer;
+}
+
+.pairs-card-down {
+  background-color: #fff;
+  background-image: repeating-linear-gradient(45deg, #111 0, #111 2px, #fff 2px, #fff 10px);
+  outline: 2px solid #111;
+  outline-offset: -6px;
+}
+
+.pairs-card-open {
+  background: #fff;
+  outline: 5px solid #111;
+  outline-offset: -9px;
+}
+
+.pairs-card-taken {
+  background: transparent;
+  outline: 2px dashed #111;
+  outline-offset: -8px;
+  cursor: default;
+}
+
+.pairs-symbol {
+  display: block;
+  width: 70%;
+  height: 70%;
+  margin: 15%;
+}
+
 /* Spider Solitaire board: a stock indicator and completed-sequences
    counter in a row above ten cascading tableau columns - the same
    overlap-via-negative-margin cascade layout as Klondike/FreeCell,

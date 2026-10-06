@@ -677,4 +677,15 @@ const GAMES_CATALOG = [
     added: "2026-10-06",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><rect x=\"12\" y=\"12\" width=\"76\" height=\"76\"/><line x1=\"12\" y1=\"50\" x2=\"88\" y2=\"50\"/><line x1=\"50\" y1=\"12\" x2=\"50\" y2=\"88\"/><line x1=\"12\" y1=\"12\" x2=\"88\" y2=\"88\"/><line x1=\"88\" y1=\"12\" x2=\"12\" y2=\"88\"/><line x1=\"50\" y1=\"12\" x2=\"88\" y2=\"50\"/><line x1=\"88\" y1=\"50\" x2=\"50\" y2=\"88\"/><line x1=\"50\" y1=\"88\" x2=\"12\" y2=\"50\"/><line x1=\"12\" y1=\"50\" x2=\"50\" y2=\"12\"/></g><circle cx=\"12\" cy=\"12\" r=\"8\" fill=\"#111\"/><circle cx=\"50\" cy=\"12\" r=\"8\" fill=\"#111\"/><circle cx=\"88\" cy=\"12\" r=\"8\" fill=\"#111\"/><circle cx=\"12\" cy=\"88\" r=\"7\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"4\"/><circle cx=\"50\" cy=\"88\" r=\"7\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"4\"/><circle cx=\"88\" cy=\"88\" r=\"7\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"4\"/></svg></span>"
   },
+  {
+    slug: "pairs",
+    category: "party",
+    nameKey: "game_pairs",
+    nameText: "Pairs",
+    descKey: "home_pairs_desc",
+    descText: "Turn over two cards and find the pairs: the classic card-matching game with simple black-and-white shapes. Solo against the move count, two players on one device, or vs. the built-in engine.",
+    popular: false,
+    added: "2026-10-06",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"14\" width=\"38\" height=\"50\" rx=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"54\" y=\"36\" width=\"38\" height=\"50\" rx=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"5\"/><circle cx=\"27\" cy=\"39\" r=\"10\" fill=\"#141413\"/><circle cx=\"73\" cy=\"61\" r=\"10\" fill=\"#141413\"/></svg></span>"
+  },
 ];

@@ -81,7 +81,8 @@
     ["trix", "game_trix"],
     ["cratepusher", "game_cratepusher"],
     ["tictactoe", "game_tictactoe"],
-    ["alquerque", "game_alquerque"]
+    ["alquerque", "game_alquerque"],
+    ["pairs", "game_pairs"]
   ];
 
   var GAME_SLUGS = {};

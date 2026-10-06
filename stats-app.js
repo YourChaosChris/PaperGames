@@ -58,7 +58,8 @@ const STATS_GAME_NAME_KEY = {
   trix: "game_trix",
   cratepusher: "game_cratepusher",
   tictactoe: "game_tictactoe",
-  alquerque: "game_alquerque"
+  alquerque: "game_alquerque",
+  pairs: "game_pairs"
 };
 
 function gameDisplayName(game) {
