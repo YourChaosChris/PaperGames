@@ -3,8 +3,8 @@
 // header (same technique as rules-link.js/game-switcher.js - injected
 // at runtime rather than hand-written into ~150 static pages) opening a
 // single modal that gathers every on-device setting this app has -
-// language, text size, high contrast and (on pages with a computer
-// opponent) the computer's move speed - instead of each living as
+// language, text size, high contrast, spacing density (density.js) and
+// (on pages with a computer opponent) the computer's move speed - instead of each living as
 // its own separate icon button in the header. This also gives the 46
 // game pages a language switcher for the first time: the old static
 // ".lang-switch" markup only ever existed on the ~100 hub pages (home,
@@ -70,6 +70,30 @@ const SettingsMenu = (function () {
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
         AiPacing.setMode(btn.getAttribute("data-mode"));
+        refresh();
+      });
+    });
+    refresh();
+  }
+
+  function wireDensity(overlay) {
+    if (typeof Density === "undefined") return;
+    const group = overlay.querySelector("#settings-density-group");
+    if (!group) return;
+    const buttons = Array.prototype.slice.call(group.querySelectorAll("button[data-density]"));
+
+    function refresh() {
+      const current = Density.getLevel();
+      buttons.forEach((btn) => {
+        const active = btn.getAttribute("data-density") === current;
+        btn.classList.toggle("active", active);
+        btn.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+    }
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        Density.setLevel(btn.getAttribute("data-density"));
         refresh();
       });
     });
@@ -189,6 +213,16 @@ const SettingsMenu = (function () {
             '<input type="checkbox" id="settings-high-contrast-checkbox">' +
             '<span data-i18n="high_contrast_toggle">High contrast</span>' +
           '</label>' +
+          // Every page that loads this menu also loads density.js; the
+          // check only guards against one that doesn't.
+          (typeof Density !== "undefined"
+            ? '<h3 class="settings-subheading" data-i18n="settings_section_density">Spacing</h3>' +
+              '<div class="settings-segmented" id="settings-density-group" role="group">' +
+                '<button type="button" class="secondary" data-density="compact" data-i18n="settings_density_compact">Compact</button>' +
+                '<button type="button" class="secondary" data-density="normal" data-i18n="settings_density_normal">Normal</button>' +
+                '<button type="button" class="secondary" data-density="spacious" data-i18n="settings_density_spacious">Spacious</button>' +
+              '</div>'
+            : '') +
           // Every page loads ai-pacing.js; the check only guards against a
           // page that doesn't.
           (typeof AiPacing !== "undefined"
@@ -227,6 +261,7 @@ const SettingsMenu = (function () {
 
     wireTextSize(overlay);
     wireHighContrast(overlay);
+    wireDensity(overlay);
     wireAiPacing(overlay);
     wireRandomStart(overlay);
     wireUpdate(overlay);

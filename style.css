@@ -8247,6 +8247,39 @@ max-width: 900px;
   line-height: 1.4;
 }
 
+/* Display density (density.js): the spacing scale times 0.75 (compact)
+   or 1.5 (spacious). Only the scale changes; boards don't use it. */
+:root[data-density="compact"] {
+  --space-1: 0.1875rem;
+  --space-2: 0.375rem;
+  --space-3: 0.5625rem;
+  --space-4: 0.75rem;
+  --space-5: 1.125rem;
+}
+
+:root[data-density="spacious"] {
+  --space-1: 0.375rem;
+  --space-2: 0.75rem;
+  --space-3: 1.125rem;
+  --space-4: 1.5rem;
+  --space-5: 2.25rem;
+}
+
+/* The board fills the width of its card, so the side spacing on its way
+   to the screen edge (#app's --space-1 plus the card's --space-3, 1rem
+   at normal) must stay 1rem in every density, or the squares would grow
+   or shrink. Only the board card's left/right padding makes up for it;
+   the space above and below still follows the density. */
+:root[data-density="compact"] #board-section {
+  padding-left: 0.8125rem;
+  padding-right: 0.8125rem;
+}
+
+:root[data-density="spacious"] #board-section {
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+}
+
 /* Opt-in high-contrast mode for low-light e-ink reading conditions -
    see high-contrast.js. Overrides the same shared CSS custom
    properties every card, button and board grid line across all 46
