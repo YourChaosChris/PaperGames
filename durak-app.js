@@ -31,8 +31,16 @@ const AppStateDurak = {
   busy: false
 };
 
+// Against the computer the human is "You" and the computers "Computer 1"
+// and so on; on one device the seats are "Player 1" and so on. Sentences
+// about the human have their own wording, they are not built from the name.
 function playerNameDurak(i) {
+  if (AppStateDurak.mode === "vs-ai") return i === 0 ? "You" : "Computer " + i;
   return "Player " + (i + 1);
+}
+
+function isYouDurak(i) {
+  return AppStateDurak.mode === "vs-ai" && i === 0;
 }
 
 function isAiDurak(i) {
@@ -106,7 +114,7 @@ function initDurakApp() {
     if (status) {
       const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
       I18n.setMsg(status, pendingMode === "vs-ai"
-        ? "You play Player 1, computer level: " + levelNames[level] + "."
+        ? "Computer opponents: " + (n - 1) + " · computer level: " + levelNames[level]
         : "Local " + n + "-player hotseat game (no computer).");
     }
   });
@@ -178,8 +186,8 @@ function startGameDurak(mode, numPlayers, level, transfer) {
   const s = AppStateDurak.state;
   let msg = "Trump is " + DURAK_SUIT_NAME[s.trumpSuit] + ".";
   msg += s.firstTrump
-    ? " " + playerNameDurak(s.firstAttacker) + " has the lowest trump and attacks first."
-    : " Nobody has a trump - Player 1 attacks first.";
+    ? (isYouDurak(s.firstAttacker) ? " You have the lowest trump and attack first." : " " + playerNameDurak(s.firstAttacker) + " has the lowest trump and attacks first.")
+    : (AppStateDurak.mode === "vs-ai" ? " Nobody has a trump - you attack first." : " Nobody has a trump - Player 1 attacks first.");
   saveDurak();
   announceTurnDurak(msg);
 }
@@ -217,7 +225,7 @@ function announceTurnDurak(prefix) {
     renderDurak();
     return;
   }
-  setStatusDurak(pre + playerNameDurak(s.actor) + "'s turn. " + promptTextDurak());
+  setStatusDurak(pre + (isYouDurak(s.actor) ? "Your turn. " : playerNameDurak(s.actor) + "'s turn. ") + promptTextDurak());
   renderDurak();
 }
 
@@ -238,7 +246,14 @@ function aiTurnDurak() {
 function describeDurak(before, after, move) {
   const who = playerNameDurak(before.actor);
   let msg;
-  if (move.type === "lead") msg = who + " attacks with " + cardTextDurak(move.card) + ".";
+  if (isYouDurak(before.actor)) {
+    if (move.type === "lead") msg = "You attack with " + cardTextDurak(move.card) + ".";
+    else if (move.type === "defend") msg = "You beat " + cardTextDurak(before.table[DurakCore.unbeatenIndex(before)].attack) + " with " + cardTextDurak(move.card) + ".";
+    else if (move.type === "throw") msg = "You throw in " + cardTextDurak(move.card) + ".";
+    else if (move.type === "take") msg = "You take the cards.";
+    else if (move.type === "transfer") msg = "You pass the attack on with " + cardTextDurak(move.card) + ".";
+    else msg = "You passed.";
+  } else if (move.type === "lead") msg = who + " attacks with " + cardTextDurak(move.card) + ".";
   else if (move.type === "defend") {
     const i = DurakCore.unbeatenIndex(before);
     msg = who + " beats " + cardTextDurak(before.table[i].attack) + " with " + cardTextDurak(move.card) + ".";
@@ -250,9 +265,10 @@ function describeDurak(before, after, move) {
   const ev = after.lastEvent;
   if (ev && (ev.type === "defended" || ev.type === "took")) {
     if (ev.type === "defended") msg += " Everything is beaten - the cards leave the game.";
+    else if (isYouDurak(ev.defender)) msg += ev.count === 1 ? " You pick up 1 card." : " You pick up " + ev.count + " cards.";
     else msg += " " + playerNameDurak(ev.defender) + (ev.count === 1 ? " picks up 1 card." : " picks up " + ev.count + " cards.");
     for (let p = 0; p < after.numPlayers; p++) {
-      if (after.outPlayers.indexOf(p) !== -1 && before.outPlayers.indexOf(p) === -1) msg += " " + playerNameDurak(p) + " has no cards left.";
+      if (after.outPlayers.indexOf(p) !== -1 && before.outPlayers.indexOf(p) === -1) msg += isYouDurak(p) ? " You have no cards left." : " " + playerNameDurak(p) + " has no cards left.";
     }
   }
   return msg;
@@ -279,7 +295,7 @@ function endGameDurak(prefix) {
     title = "Draw";
     if (AppStateDurak.mode === "vs-ai" && typeof GameStats !== "undefined") GameStats.record("durak", "draw");
   } else {
-    full = prefix + playerNameDurak(s.loser) + " is left holding cards and is the durak.";
+    full = prefix + (isYouDurak(s.loser) ? "You are left holding cards and are the durak." : playerNameDurak(s.loser) + " is left holding cards and is the durak.");
     if (AppStateDurak.mode === "vs-ai") {
       title = s.loser === 0 ? "You lose" : "You win!";
       if (typeof GameStats !== "undefined") GameStats.record("durak", s.loser === 0 ? "loss" : "win");
@@ -301,7 +317,7 @@ function resignDurak() {
   s.gameOver = true;
   s.loser = loser;
   AppStateDurak.gameOver = true;
-  const msg = playerNameDurak(loser) + " resigned and is the durak.";
+  const msg = isYouDurak(loser) ? "You resigned and are the durak." : playerNameDurak(loser) + " resigned and is the durak.";
   if (AppStateDurak.mode === "vs-ai" && typeof GameStats !== "undefined") GameStats.record("durak", "loss");
   setResultDurak(msg);
   setStatusDurak(msg);
@@ -420,8 +436,7 @@ function renderDurak() {
     row.className = "game-player" + (p === s.actor && !over ? " game-player-active" : "") + (out ? " game-player-stock" : "");
     const name = document.createElement("span");
     name.className = "game-player-name";
-    let nm = playerNameDurak(p);
-    if (AppStateDurak.mode === "vs-ai") nm = p === 0 ? nm + " (you)" : nm + " (computer)";
+    const nm = playerNameDurak(p);
     I18n.setMsg(name, nm);
     row.appendChild(name);
     const count = document.createElement("span");

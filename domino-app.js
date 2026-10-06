@@ -30,8 +30,17 @@ const AppStateDomino = {
   result: null         // final message, kept for re-rendering
 };
 
+// Against the computer the human is "You" and the computers "Computer 1"
+// and so on; on one device the seats are "Player 1" and so on. Sentences
+// about the human have their own wording ("You passed."), they are not
+// built from the name.
 function playerNameDomino(i) {
+  if (AppStateDomino.mode === "vs-ai") return i === 0 ? "You" : "Computer " + i;
   return "Player " + (i + 1);
+}
+
+function isYouDomino(i) {
+  return AppStateDomino.mode === "vs-ai" && i === 0;
 }
 
 function isAiPlayerDomino(i) {
@@ -151,7 +160,7 @@ function initDominoApp() {
       if (status) {
         const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
         I18n.setMsg(status, pendingMode === "vs-ai"
-          ? "You play Player 1, computer level: " + levelNames[level] + "."
+          ? "Computer opponents: " + (n - 1) + " · computer level: " + levelNames[level]
           : "Local " + n + "-player hotseat game (no computer).");
       }
     });
@@ -222,7 +231,7 @@ function startNewGameDomino(mode, numPlayers, level) {
   AppStateDomino.state = r.state;
   AppStateDomino.lastPlaced = { side: "right" };
   AppStateDomino.revealed = mode !== "hotseat";
-  afterActionDomino(opener, playerNameDomino(opener) + " opens with " + tileTextDomino(r.tile) + ".");
+  afterActionDomino(opener, (isYouDomino(opener) ? "You open with " : playerNameDomino(opener) + " opens with ") + tileTextDomino(r.tile) + ".");
 }
 
 // Starts whatever the player to move has to do next.
@@ -245,10 +254,10 @@ function continueTurnDomino() {
 function promptHumanDomino() {
   const s = AppStateDomino.state;
   const action = DominoCore.requiredAction(s);
-  const who = playerNameDomino(s.turn);
-  if (action === "play") setStatusDomino(who + "'s turn. Choose a tile, then an open end.");
-  else if (action === "draw") setStatusDomino(who + "'s turn. No tile fits - draw from the stock.");
-  else if (action === "pass") setStatusDomino(who + "'s turn. No tile fits and the stock is empty - pass.");
+  const who = isYouDomino(s.turn) ? "Your turn. " : playerNameDomino(s.turn) + "'s turn. ";
+  if (action === "play") setStatusDomino(who + "Choose a tile, then an open end.");
+  else if (action === "draw") setStatusDomino(who + "No tile fits - draw from the stock.");
+  else if (action === "pass") setStatusDomino(who + "No tile fits and the stock is empty - pass.");
   renderDomino();
 }
 
@@ -257,7 +266,6 @@ function aiTurnDomino() {
   if (AppStateDomino.gameOver || !AppStateDomino.started) return;
   let s = AppStateDomino.state;
   if (!isAiPlayerDomino(s.turn)) return;
-  const who = playerNameDomino(s.turn);
   let action = DominoCore.requiredAction(s);
   let drawn = 0;
   while (action === "draw") {
@@ -267,35 +275,37 @@ function aiTurnDomino() {
   }
   AppStateDomino.state = s;
   if (action === "pass") {
-    finishPassDomino(who, drawn);
+    finishPassDomino(drawn);
     return;
   }
   const move = DominoAi.chooseMove(s, AppStateDomino.aiLevel);
   playMoveDomino(move.index, move.side, drawn);
 }
 
-function drawNoteDomino(who, drawn) {
+function drawNoteDomino(player, drawn) {
   if (!drawn) return "";
+  if (isYouDomino(player)) return drawn === 1 ? "You drew 1 tile. " : "You drew " + drawn + " tiles. ";
+  const who = playerNameDomino(player);
   return drawn === 1 ? who + " drew 1 tile. " : who + " drew " + drawn + " tiles. ";
 }
 
 function playMoveDomino(index, side, drawn) {
   const s = AppStateDomino.state;
   const player = s.turn;
-  const who = playerNameDomino(player);
   const r = DominoCore.applyMove(s, index, side);
   AppStateDomino.state = r.state;
   AppStateDomino.lastPlaced = { side: side };
   AppStateDomino.selected = null;
-  const msg = drawNoteDomino(who, drawn) + who + " played " + tileTextDomino(r.tile) + ".";
+  const played = isYouDomino(player) ? "You played " : playerNameDomino(player) + " played ";
+  const msg = drawNoteDomino(player, drawn) + played + tileTextDomino(r.tile) + ".";
   afterActionDomino(player, msg);
 }
 
-function finishPassDomino(who, drawn) {
+function finishPassDomino(drawn) {
   const player = AppStateDomino.state.turn;
   AppStateDomino.state = DominoCore.pass(AppStateDomino.state);
   AppStateDomino.selected = null;
-  afterActionDomino(player, drawNoteDomino(who, drawn) + who + " passed.");
+  afterActionDomino(player, drawNoteDomino(player, drawn) + (isYouDomino(player) ? "You passed." : playerNameDomino(player) + " passed."));
 }
 
 function afterActionDomino(player, msg) {
@@ -332,9 +342,10 @@ function endGameDomino(lastMsg) {
   if (s.blocked) {
     msg = lastMsg + " The line is blocked.";
     if (s.draw) msg += " The lowest pip total is shared - it's a draw.";
+    else if (isYouDomino(s.winner)) msg += " You win with the lowest pip total.";
     else msg += " " + playerNameDomino(s.winner) + " wins with the lowest pip total.";
   } else {
-    msg = lastMsg + " " + playerNameDomino(s.winner) + " played their last tile.";
+    msg = lastMsg + (isYouDomino(s.winner) ? " You played your last tile." : " " + playerNameDomino(s.winner) + " played their last tile.");
   }
   if (s.draw) {
     title = "Draw";
@@ -368,7 +379,7 @@ function resignDomino() {
   s.gameOver = true;
   s.winner = winner;
   AppStateDomino.gameOver = true;
-  const msg = playerNameDomino(loser) + " resigned. " + playerNameDomino(winner) + " wins.";
+  const msg = (isYouDomino(loser) ? "You resigned. " : playerNameDomino(loser) + " resigned. ") + playerNameDomino(winner) + " wins.";
   const title = AppStateDomino.mode === "vs-ai" ? "You lose" : playerNameDomino(winner) + " wins";
   recordStatsDomino("loss");
   setGameResultDomino(msg);
@@ -437,7 +448,7 @@ function onDrawClickDomino() {
     setStatusDomino(DominoCore.canPlay(s, s.turn) ? "You have a tile that fits - no need to draw." : "The stock is empty.");
     return;
   }
-  const who = playerNameDomino(s.turn);
+  const player = s.turn;
   let drawn = 0;
   while (DominoCore.requiredAction(s) === "draw") {
     s = DominoCore.drawTile(s).state;
@@ -445,7 +456,7 @@ function onDrawClickDomino() {
   }
   AppStateDomino.state = s;
   AppStateDomino.selected = null;
-  const note = drawNoteDomino(who, drawn);
+  const note = drawNoteDomino(player, drawn);
   if (DominoCore.requiredAction(s) === "pass") setStatusDomino(note + "No tile fits and the stock is empty - pass.");
   else setStatusDomino(note + "Choose a tile, then an open end.");
   renderDomino();
@@ -459,7 +470,7 @@ function onPassClickDomino() {
     setStatusDomino(DominoCore.canPlay(s, s.turn) ? "You have a tile that fits - no need to pass." : "Draw from the stock first.");
     return;
   }
-  finishPassDomino(playerNameDomino(s.turn), 0);
+  finishPassDomino(0);
 }
 
 /*** Rendering ***/
@@ -485,9 +496,7 @@ function renderPlayersDomino(s) {
     row.className = "game-player" + (i === s.turn && !AppStateDomino.gameOver ? " game-player-active" : "");
     const name = document.createElement("span");
     name.className = "game-player-name";
-    let label = playerNameDomino(i);
-    if (AppStateDomino.mode === "vs-ai") label += i === 0 ? " (you)" : " (computer)";
-    I18n.setMsg(name, label);
+    I18n.setMsg(name, playerNameDomino(i));
     const count = document.createElement("span");
     count.className = "game-player-count";
     if (AppStateDomino.gameOver) {

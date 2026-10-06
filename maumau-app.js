@@ -31,8 +31,16 @@ const AppStateMauMau = {
   busy: false
 };
 
+// Against the computer the human is "You" and the computers "Computer 1"
+// and so on; on one device the seats are "Player 1" and so on. Sentences
+// about the human have their own wording, they are not built from the name.
 function playerNameMauMau(i) {
+  if (AppStateMauMau.mode === "vs-ai") return i === 0 ? "You" : "Computer " + i;
   return "Player " + (i + 1);
+}
+
+function isYouMauMau(i) {
+  return AppStateMauMau.mode === "vs-ai" && i === 0;
 }
 
 function isAiPlayerMauMau(i) {
@@ -117,7 +125,7 @@ function initMauMauApp() {
       if (status) {
         const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
         I18n.setMsg(status, pendingMode === "vs-ai"
-          ? "You play Player 1, computer level: " + levelNames[level] + "."
+          ? "Computer opponents: " + (n - 1) + " · computer level: " + levelNames[level]
           : "Local " + n + "-player hotseat game (no computer).");
       }
     });
@@ -219,7 +227,7 @@ function continueTurnMauMau() {
 
 function promptHumanMauMau() {
   const s = AppStateMauMau.state;
-  setStatusMauMau(playerNameMauMau(s.turn) + "'s turn. " + promptTextMauMau());
+  setStatusMauMau((isYouMauMau(s.turn) ? "Your turn. " : playerNameMauMau(s.turn) + "'s turn. ") + promptTextMauMau());
   renderMauMau();
 }
 
@@ -255,17 +263,19 @@ function playCardMauMau(index, wish, prefix) {
   AppStateMauMau.lastPlayer = player;
   AppStateMauMau.pendingJack = null;
   const ns = r.state;
-  let msg = (prefix || "") + who + " played " + cardTextMauMau(r.card) + ".";
+  const you = isYouMauMau(player);
+  let msg = (prefix || "") + (you ? "You played " + cardTextMauMau(r.card) + "." : who + " played " + cardTextMauMau(r.card) + ".");
   if (r.effect === "win") {
     renderMauMau();
     endGameMauMau(player, msg + " Mau Mau!");
     return;
   }
   if (ns.hands[player].length === 1) msg += " " + who + ": Mau!";
-  if (r.effect === "seven") msg += " " + playerNameMauMau(ns.turn) + " must draw " + ns.pendingDraw + " cards or play a Seven.";
-  else if (r.effect === "eight") msg += " " + playerNameMauMau((player + 1) % ns.numPlayers) + " misses a turn.";
-  else if (r.effect === "jack") msg += " " + who + " asks for " + MAUMAU_SUIT_NAME[ns.wishSuit] + ".";
-  else if (r.effect === "ace") msg += " " + who + " plays again.";
+  const skipped = (player + 1) % ns.numPlayers;
+  if (r.effect === "seven") msg += isYouMauMau(ns.turn) ? " You must draw " + ns.pendingDraw + " cards or play a Seven." : " " + playerNameMauMau(ns.turn) + " must draw " + ns.pendingDraw + " cards or play a Seven.";
+  else if (r.effect === "eight") msg += isYouMauMau(skipped) ? " You miss a turn." : " " + playerNameMauMau(skipped) + " misses a turn.";
+  else if (r.effect === "jack") msg += you ? " You ask for " + MAUMAU_SUIT_NAME[ns.wishSuit] + "." : " " + who + " asks for " + MAUMAU_SUIT_NAME[ns.wishSuit] + ".";
+  else if (r.effect === "ace") msg += you ? " You play again." : " " + who + " plays again.";
   afterTurnPartMauMau(player, msg);
 }
 
@@ -277,8 +287,10 @@ function drawMauMau() {
   AppStateMauMau.state = r.state;
   let msg = "";
   if (r.reshuffled) msg += "The discard pile was shuffled into a new stock. ";
-  if (r.penalty) msg += who + " drew " + r.count + " cards.";
-  else if (!r.count) msg += "There is no card left to draw. " + who + " passes.";
+  const you = isYouMauMau(player);
+  const drewOne = you ? "You drew a card." : who + " drew a card.";
+  if (r.penalty) msg += you ? "You drew " + r.count + " cards." : who + " drew " + r.count + " cards.";
+  else if (!r.count) msg += you ? "There is no card left to draw. You pass." : "There is no card left to draw. " + who + " passes.";
   else if (r.playable) {
     // The drawn card fits: a person decides, the computer decides now.
     if (isAiPlayerMauMau(player)) {
@@ -288,11 +300,11 @@ function drawMauMau() {
       setTimeout(aiTurnMauMau, AiPacing.delay(500));
       return;
     }
-    setStatusMauMau(msg + who + " drew a card. " + promptTextMauMau());
+    setStatusMauMau(msg + drewOne + " " + promptTextMauMau());
     renderMauMau();
     saveMauMauGame();
     return;
-  } else msg += who + " drew a card.";
+  } else msg += drewOne;
   afterTurnPartMauMau(player, msg);
 }
 
@@ -304,7 +316,7 @@ function keepDrawnMauMau(prefix) {
   // (no card there any more: "Cannot read properties of undefined").
   AppStateMauMau.pendingJack = null;
   AppStateMauMau.state = MauMauCore.keepDrawn(AppStateMauMau.state);
-  afterTurnPartMauMau(player, (prefix || "") + playerNameMauMau(player) + " keeps the card.");
+  afterTurnPartMauMau(player, (prefix || "") + (isYouMauMau(player) ? "You keep the card." : playerNameMauMau(player) + " keeps the card."));
 }
 
 function afterTurnPartMauMau(player, msg) {
@@ -330,7 +342,7 @@ function endGameMauMau(winner, msg) {
   } else {
     title = playerNameMauMau(winner) + " wins";
   }
-  const full = msg + " " + playerNameMauMau(winner) + " wins.";
+  const full = msg + (isYouMauMau(winner) ? " You win." : " " + playerNameMauMau(winner) + " wins.");
   setGameResultMauMau(full);
   setStatusMauMau(full);
   if (window.ResultModal) window.ResultModal.show(title, full);
@@ -352,7 +364,7 @@ function resignMauMau() {
   s.winner = winner;
   AppStateMauMau.gameOver = true;
   AppStateMauMau.pendingJack = null;
-  const msg = playerNameMauMau(loser) + " resigned. " + playerNameMauMau(winner) + " wins.";
+  const msg = (isYouMauMau(loser) ? "You resigned. " : playerNameMauMau(loser) + " resigned. ") + playerNameMauMau(winner) + " wins.";
   const title = AppStateMauMau.mode === "vs-ai" ? "You lose" : playerNameMauMau(winner) + " wins";
   recordStatsMauMau("loss");
   setGameResultMauMau(msg);
@@ -455,8 +467,7 @@ function renderPlayersMauMau(s) {
     row.className = "game-player" + (i === s.turn && !AppStateMauMau.gameOver ? " game-player-active" : "");
     const name = document.createElement("span");
     name.className = "game-player-name";
-    let label = playerNameMauMau(i);
-    if (AppStateMauMau.mode === "vs-ai") label += i === 0 ? " (you)" : " (computer)";
+    const label = playerNameMauMau(i);
     I18n.setMsg(name, label);
     const count = document.createElement("span");
     count.className = "game-player-count";

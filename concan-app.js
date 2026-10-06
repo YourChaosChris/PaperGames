@@ -26,8 +26,16 @@ const AppStateConcan = {
   busy: false
 };
 
+// Against the computer the human is "You" and the computer "Computer 1";
+// on one device the seats are "Player 1" and "Player 2". Sentences about
+// the human have their own wording, they are not built from the name.
 function playerNameConcan(i) {
+  if (AppStateConcan.mode === "vs-ai") return i === 0 ? "You" : "Computer " + i;
   return "Player " + (i + 1);
+}
+
+function isYouConcan(i) {
+  return AppStateConcan.mode === "vs-ai" && i === 0;
 }
 
 function isAiConcan(i) {
@@ -92,7 +100,7 @@ function initConcanApp() {
     if (status) {
       const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
       I18n.setMsg(status, pendingMode === "vs-ai"
-        ? "You play Player 1, computer level: " + levelNames[level] + "."
+        ? "Computer opponents: 1 · computer level: " + levelNames[level]
         : "Local 2-player hotseat game (no computer).");
     }
   });
@@ -171,7 +179,7 @@ function promptConcan(prefix) {
   const s = AppStateConcan.state;
   const pre = prefix ? prefix + " " : "";
   if (isAiConcan(s.turn)) setStatusConcan(pre + playerNameConcan(s.turn) + "'s turn.");
-  else setStatusConcan(pre + playerNameConcan(s.turn) + "'s turn. " + promptTextConcan());
+  else setStatusConcan(pre + (isYouConcan(s.turn) ? "Your turn. " : playerNameConcan(s.turn) + "'s turn. ") + promptTextConcan());
   renderConcan();
 }
 
@@ -211,6 +219,13 @@ function aiStepConcan() {
 function describeConcan(before, after, move) {
   const who = playerNameConcan(before.turn);
   const ev = after.lastEvent;
+  if (isYouConcan(before.turn)) {
+    if (move.type === "takeDiscard") return "You take the " + CardFaces.label(ev.card) + ".";
+    if (move.type === "draw") return ev.type === "stock-empty" ? "" : "You draw a card.";
+    if (move.type === "meld") return "You lay out " + cardsTextConcan(ev.cards) + ".";
+    if (move.type === "extend") return "You add the " + CardFaces.label(ev.card) + " to a meld.";
+    if (move.type === "discard") return "You discard the " + CardFaces.label(ev.card) + ".";
+  }
   if (move.type === "takeDiscard") return who + " takes the " + CardFaces.label(ev.card) + ".";
   if (move.type === "draw") return ev.type === "stock-empty" ? "" : who + " draws a card.";
   if (move.type === "meld") return who + " lays out " + cardsTextConcan(ev.cards) + ".";
@@ -239,7 +254,7 @@ function endGameConcan(prefix) {
     title = "Draw";
     if (AppStateConcan.mode === "vs-ai" && typeof GameStats !== "undefined") GameStats.record("concan", "draw");
   } else {
-    full = pre + playerNameConcan(s.winner) + " has eleven cards laid out and wins.";
+    full = pre + (isYouConcan(s.winner) ? "You have eleven cards laid out and win." : playerNameConcan(s.winner) + " has eleven cards laid out and wins.");
     if (AppStateConcan.mode === "vs-ai") {
       title = s.winner === 0 ? "You win!" : "You lose";
       if (typeof GameStats !== "undefined") GameStats.record("concan", s.winner === 0 ? "win" : "loss");
@@ -261,7 +276,7 @@ function resignConcan() {
   s.gameOver = true;
   s.winner = 1 - loser;
   AppStateConcan.gameOver = true;
-  const msg = playerNameConcan(loser) + " resigned. " + playerNameConcan(1 - loser) + " wins.";
+  const msg = (isYouConcan(loser) ? "You resigned. " : playerNameConcan(loser) + " resigned. ") + playerNameConcan(1 - loser) + " wins.";
   if (AppStateConcan.mode === "vs-ai" && typeof GameStats !== "undefined") GameStats.record("concan", "loss");
   setResultConcan(msg);
   setStatusConcan(msg);
@@ -419,8 +434,7 @@ function renderConcan() {
     row.className = "game-player" + (p === s.turn && !over ? " game-player-active" : "");
     const name = document.createElement("span");
     name.className = "game-player-name";
-    let nm = playerNameConcan(p);
-    if (AppStateConcan.mode === "vs-ai") nm = p === 0 ? nm + " (you)" : nm + " (computer)";
+    const nm = playerNameConcan(p);
     I18n.setMsg(name, nm);
     row.appendChild(name);
     const count = document.createElement("span");

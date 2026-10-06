@@ -32,8 +32,17 @@ const AppStateDk = {
   shownFor: null
 };
 
+// Against the computer the human is "You" and the computers "Computer 1"
+// to "Computer 3"; on one device the seats are "Player 1" to "Player 4"
+// (also the seats the computer fills there). Sentences about the human
+// have their own wording, they are not built from the name.
 function playerNameDk(i) {
+  if (AppStateDk.mode === "vs-ai") return i === 0 ? "You" : "Computer " + i;
   return "Player " + (i + 1);
+}
+
+function isYouDk(i) {
+  return AppStateDk.mode === "vs-ai" && i === 0;
 }
 
 function isAiDk(i) {
@@ -112,7 +121,7 @@ function initDoppelkopfApp() {
     if (status) {
       const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
       I18n.setMsg(status, pendingMode === "vs-ai"
-        ? "You play Player 1, computer level: " + levelNames[level] + "."
+        ? "Computer opponents: 3 · computer level: " + levelNames[level]
         : (humans === 4 ? "Four players on this device." : humans + " players on this device, the computer plays the other seats."));
     }
   });
@@ -185,7 +194,7 @@ function dealDk(dealer) {
   const s = AppStateDk.state;
   let msg = "Deal " + AppStateDk.dealNo + ".";
   if (s.marriage) {
-    msg += " " + playerNameDk(s.marriage.player) + " has both Queens of Clubs: marriage.";
+    msg += isYouDk(s.marriage.player) ? " You have both Queens of Clubs: marriage." : " " + playerNameDk(s.marriage.player) + " has both Queens of Clubs: marriage.";
   }
   saveDk();
   announceTurnDk(msg);
@@ -234,7 +243,7 @@ function announceTurnDk(prefix) {
     renderDk();
     return;
   }
-  setStatusDk(pre + playerNameDk(s.turn) + "'s turn. " + promptTextDk());
+  setStatusDk(pre + (isYouDk(s.turn) ? "Your turn. " : playerNameDk(s.turn) + "'s turn. ") + promptTextDk());
   renderDk();
 }
 
@@ -257,9 +266,10 @@ function playDk(card) {
   const r = DoppelkopfCore.playCard(before, card);
   if (!r.ok) return false;
   AppStateDk.state = r.state;
-  let msg = playerNameDk(before.turn) + " plays " + cardTextDk(card) + ".";
+  const you = isYouDk(before.turn);
+  let msg = you ? "You play " + cardTextDk(card) + "." : playerNameDk(before.turn) + " plays " + cardTextDk(card) + ".";
   if (DoppelkopfCore.isClubQueen(card) && !before.marriage && !before.revealed[before.turn]) {
-    msg += " " + playerNameDk(before.turn) + " plays Re.";
+    msg += you ? " You play Re." : " " + playerNameDk(before.turn) + " plays Re.";
   }
   saveDk();
   if (!r.trickDone) {
@@ -268,9 +278,9 @@ function playDk(card) {
   }
   // The trick stays on the table for a moment.
   const lt = r.state.lastTrick;
-  msg += " " + playerNameDk(lt.winner) + " wins the trick with " + lt.points + " points.";
-  if (lt.partnerFound !== undefined) msg += " " + playerNameDk(lt.partnerFound) + " becomes the partner of the marriage.";
-  if (lt.marriageAlone) msg += " No partner within three tricks: " + playerNameDk(before.marriage.player) + " plays alone against the other three.";
+  msg += isYouDk(lt.winner) ? " You win the trick with " + lt.points + " points." : " " + playerNameDk(lt.winner) + " wins the trick with " + lt.points + " points.";
+  if (lt.partnerFound !== undefined) msg += isYouDk(lt.partnerFound) ? " You become the partner of the marriage." : " " + playerNameDk(lt.partnerFound) + " becomes the partner of the marriage.";
+  if (lt.marriageAlone) msg += isYouDk(before.marriage.player) ? " No partner within three tricks: you play alone against the other three." : " No partner within three tricks: " + playerNameDk(before.marriage.player) + " plays alone against the other three.";
   AppStateDk.showTrick = lt;
   setStatusDk(msg);
   renderDk();
@@ -364,8 +374,8 @@ function renderDk() {
   const typeEl = document.getElementById("dk-game-type");
   let type = "Normal game";
   if (s.marriage) {
-    if (s.marriage.open) type = "Marriage: " + playerNameDk(s.marriage.player) + " is looking for a partner";
-    else if (s.marriage.alone) type = "Marriage: " + playerNameDk(s.marriage.player) + " plays alone";
+    if (s.marriage.open) type = isYouDk(s.marriage.player) ? "Marriage: you are looking for a partner" : "Marriage: " + playerNameDk(s.marriage.player) + " is looking for a partner";
+    else if (s.marriage.alone) type = isYouDk(s.marriage.player) ? "Marriage: you play alone" : "Marriage: " + playerNameDk(s.marriage.player) + " plays alone";
     else type = "Marriage: " + playerNameDk(s.marriage.player) + " and " + playerNameDk(s.marriage.partner);
   }
   I18n.setMsg(typeEl, type);
@@ -382,8 +392,8 @@ function renderDk() {
     const name = document.createElement("span");
     name.className = "game-player-name";
     let nm = playerNameDk(p);
-    if (AppStateDk.mode === "vs-ai") nm = p === 0 ? nm + " (you)" : nm + " (computer)";
-    else if (isAiDk(p)) nm = nm + " (computer)";
+    // On one device the seats the computer fills are still marked.
+    if (AppStateDk.mode !== "vs-ai" && isAiDk(p)) nm = nm + " (computer)";
     I18n.setMsg(name, nm);
     row.appendChild(name);
     row.appendChild(document.createTextNode(" "));

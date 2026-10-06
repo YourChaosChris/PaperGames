@@ -43,8 +43,17 @@ const AppStateTx = {
   recorded: false
 };
 
+// Against the computer the human is "You" and the computers "Computer 1"
+// to "Computer 3"; on one device the seats are "Player 1" to "Player 4"
+// (also the seats the computer fills there). Sentences about the human
+// have their own wording, they are not built from the name.
 function playerNameTx(i) {
+  if (AppStateTx.mode === "vs-ai") return i === 0 ? "You" : "Computer " + i;
   return "Player " + (i + 1);
+}
+
+function isYouTx(i) {
+  return AppStateTx.mode === "vs-ai" && i === 0;
 }
 
 function isAiTx(i) {
@@ -125,7 +134,7 @@ function initTrixApp() {
     if (status) {
       const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
       I18n.setMsg(status, pendingMode === "vs-ai"
-        ? "You play Player 1, computer level: " + levelNames[level] + "."
+        ? "Computer opponents: 3 · computer level: " + levelNames[level]
         : (humans === 4 ? "Four players on this device." : humans + " players on this device, the computer plays the other seats."));
     }
   });
@@ -197,7 +206,9 @@ function startGameTx(mode, humans, level) {
   AppStateTx.shownFor = null;
   showBoardTx();
   saveTx();
-  announceTx("Kingdom 1 / 4. " + playerNameTx(AppStateTx.game.owner) + " holds the Seven of Hearts and owns the first kingdom.");
+  announceTx(isYouTx(AppStateTx.game.owner)
+    ? "Kingdom 1 / 4. You hold the Seven of Hearts and own the first kingdom."
+    : "Kingdom 1 / 4. " + playerNameTx(AppStateTx.game.owner) + " holds the Seven of Hearts and owns the first kingdom.");
 }
 
 function promptTx() {
@@ -240,7 +251,7 @@ function announceTx(prefix) {
     renderTx();
     return;
   }
-  setStatusTx(pre + playerNameTx(actor) + "'s turn. " + promptTx());
+  setStatusTx(pre + (isYouTx(actor) ? "Your turn. " : playerNameTx(actor) + "'s turn. ") + promptTx());
   renderTx();
 }
 
@@ -266,7 +277,7 @@ function chooseTx(contract) {
   if (!r.ok) return;
   AppStateTx.game = r.game;
   saveTx();
-  announceTx(playerNameTx(g.owner) + " chooses " + TX_CONTRACT_NAME[contract] + ".");
+  announceTx(isYouTx(g.owner) ? "You choose " + TX_CONTRACT_NAME[contract] + "." : playerNameTx(g.owner) + " chooses " + TX_CONTRACT_NAME[contract] + ".");
 }
 
 function moveTx(move) {
@@ -276,16 +287,18 @@ function moveTx(move) {
   const r = TrixCore.play(before, move);
   if (!r.ok) return false;
   AppStateTx.game = r.game;
-  let msg = move.pass ? playerNameTx(p) + " passed." : playerNameTx(p) + " plays " + cardTextTx(move.card) + ".";
+  const you = isYouTx(p);
+  let msg = move.pass ? (you ? "You passed." : playerNameTx(p) + " passed.") : (you ? "You play " + cardTextTx(move.card) + "." : playerNameTx(p) + " plays " + cardTextTx(move.card) + ".");
   const g = r.game;
   if (d0.contract === "trix" && !move.pass) {
     const d = r.dealDone ? null : g.deal;
     const place = d ? d.lastMove.finishedPlace : null;
-    if (place) msg += " " + playerNameTx(p) + " has no cards left and gets " + TrixCore.TRIX_POINTS[place - 1] + " points.";
+    if (place) msg += you ? " You have no cards left and get " + TrixCore.TRIX_POINTS[place - 1] + " points." : " " + playerNameTx(p) + " has no cards left and gets " + TrixCore.TRIX_POINTS[place - 1] + " points.";
   }
   if (r.trickDone || (r.dealDone && d0.contract !== "trix")) {
     const lt = r.dealDone ? lastTrickOf(before, move) : g.deal.lastTrick;
-    msg += " " + playerNameTx(lt.winner) + (lt.points ? " takes the trick with " + (-lt.points) + " penalty points." : " takes the trick.");
+    if (isYouTx(lt.winner)) msg += lt.points ? " You take the trick with " + (-lt.points) + " penalty points." : " You take the trick.";
+    else msg += " " + playerNameTx(lt.winner) + (lt.points ? " takes the trick with " + (-lt.points) + " penalty points." : " takes the trick.");
     AppStateTx.showTrick = lt;
   }
   if (r.dealDone) {
@@ -333,7 +346,11 @@ function endGameTx(prefix) {
   const top = Math.max.apply(null, g.totals);
   const winners = [0, 1, 2, 3].filter((p) => g.totals[p] === top);
   const names = winners.map(playerNameTx).join(", ");
-  const text = pre + (winners.length === 1 ? names + " wins the game." : "Draw: " + names + " share first place.");
+  const others = winners.filter((p) => !isYouTx(p)).map(playerNameTx).join(", ");
+  let text;
+  if (winners.length === 1) text = pre + (isYouTx(winners[0]) ? "You win the game." : names + " wins the game.");
+  else if (winners.some(isYouTx)) text = pre + "Draw: you share first place with " + others + ".";
+  else text = pre + "Draw: " + names + " share first place.";
   if (!AppStateTx.recorded) {
     AppStateTx.recorded = true;
     if (AppStateTx.mode === "vs-ai" && typeof GameStats !== "undefined") {
@@ -462,8 +479,8 @@ function renderTx() {
     const name = document.createElement("span");
     name.className = "tx-player-name";
     let nm = playerNameTx(p);
-    if (AppStateTx.mode === "vs-ai") nm = p === 0 ? nm + " (you)" : nm + " (computer)";
-    else if (isAiTx(p)) nm = nm + " (computer)";
+    // On one device the seats the computer fills are still marked.
+    if (AppStateTx.mode !== "vs-ai" && isAiTx(p)) nm = nm + " (computer)";
     if (active) {
       const arrow = document.createElement("span");
       arrow.setAttribute("aria-hidden", "true");

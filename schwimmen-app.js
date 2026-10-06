@@ -27,8 +27,17 @@ const AppStateSchwimmen = {
   busy: false
 };
 
+// Against the computer the human is "You" and the computers "Computer 1"
+// and so on; on one device the seats are "Player 1" and so on. Sentences
+// about the human have their own wording ("You knocked."), they are not
+// built from the name.
 function playerNameSchwimmen(i) {
+  if (AppStateSchwimmen.mode === "vs-ai") return i === 0 ? "You" : "Computer " + i;
   return "Player " + (i + 1);
+}
+
+function isYouSchwimmen(i) {
+  return AppStateSchwimmen.mode === "vs-ai" && i === 0;
 }
 
 function isAiSchwimmen(i) {
@@ -104,7 +113,7 @@ function initSchwimmenApp() {
     if (status) {
       const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
       I18n.setMsg(status, pendingMode === "vs-ai"
-        ? "You play Player 1, computer level: " + levelNames[level] + "."
+        ? "Computer opponents: " + (n - 1) + " · computer level: " + levelNames[level]
         : "Local " + n + "-player hotseat game (no computer).");
     }
   });
@@ -201,7 +210,7 @@ function promptSchwimmen() {
   if (isAiSchwimmen(s.turn)) {
     setStatusSchwimmen(playerNameSchwimmen(s.turn) + "'s turn.");
   } else {
-    setStatusSchwimmen(playerNameSchwimmen(s.turn) + "'s turn. " + promptTextSchwimmen());
+    setStatusSchwimmen((isYouSchwimmen(s.turn) ? "Your turn. " : playerNameSchwimmen(s.turn) + "'s turn. ") + promptTextSchwimmen());
   }
   renderSchwimmen();
 }
@@ -222,6 +231,12 @@ function aiTurnSchwimmen() {
 
 function describeMoveSchwimmen(player, move, before) {
   const who = playerNameSchwimmen(player);
+  if (isYouSchwimmen(player)) {
+    if (move.type === "swap") return "You swapped " + CardFaces.label(before.hands[player][move.hand]) + " for " + CardFaces.label(before.table[move.table]) + ".";
+    if (move.type === "swapAll") return "You swapped all three cards.";
+    if (move.type === "knock") return "You knocked.";
+    return "You passed.";
+  }
   if (move.type === "swap") {
     return who + " swapped " + CardFaces.label(before.hands[player][move.hand]) + " for " + CardFaces.label(before.table[move.table]) + ".";
   }
@@ -266,11 +281,15 @@ function roundSummarySchwimmen() {
   const s = AppStateSchwimmen.state;
   const lr = s.lastRound;
   const parts = [];
-  if (lr.reason === "thirtyone") parts.push(playerNameSchwimmen(lr.player) + " has 31!");
+  if (lr.reason === "thirtyone") parts.push(isYouSchwimmen(lr.player) ? "You have 31!" : playerNameSchwimmen(lr.player) + " has 31!");
   else if (lr.reason === "knock") parts.push("Showdown.");
   else parts.push("The stock is used up - showdown.");
   lr.events.forEach((e) => {
     const who = playerNameSchwimmen(e.player);
+    if (isYouSchwimmen(e.player)) {
+      parts.push(e.type === "life" ? "You lose a life." : e.type === "swims" ? "You are swimming." : "You are out.");
+      return;
+    }
     if (e.type === "life") parts.push(who + " loses a life.");
     else if (e.type === "swims") parts.push(who + " is swimming.");
     else parts.push(who + " is out.");
@@ -307,7 +326,7 @@ function endGameSchwimmen(summary) {
     title = "Draw";
     if (AppStateSchwimmen.mode === "vs-ai" && typeof GameStats !== "undefined") GameStats.record("schwimmen", "draw");
   } else {
-    full = summary + " " + playerNameSchwimmen(s.winner) + " wins.";
+    full = summary + (isYouSchwimmen(s.winner) ? " You win." : " " + playerNameSchwimmen(s.winner) + " wins.");
     if (AppStateSchwimmen.mode === "vs-ai") {
       title = s.winner === 0 ? "You win!" : "You lose";
       if (typeof GameStats !== "undefined") GameStats.record("schwimmen", s.winner === 0 ? "win" : "loss");
@@ -335,7 +354,7 @@ function resignSchwimmen() {
   s.gameOver = true;
   s.winner = winner;
   AppStateSchwimmen.gameOver = true;
-  const msg = playerNameSchwimmen(loser) + " resigned. " + playerNameSchwimmen(winner) + " wins.";
+  const msg = (isYouSchwimmen(loser) ? "You resigned. " : playerNameSchwimmen(loser) + " resigned. ") + playerNameSchwimmen(winner) + " wins.";
   if (AppStateSchwimmen.mode === "vs-ai" && typeof GameStats !== "undefined") GameStats.record("schwimmen", "loss");
   setResultSchwimmen(msg);
   setStatusSchwimmen(msg);
@@ -418,8 +437,7 @@ function renderSchwimmen() {
     row.className = "game-player" + (p === s.turn && !showAll ? " game-player-active" : "") + (s.out[p] ? " game-player-stock" : "");
     const name = document.createElement("span");
     name.className = "game-player-name";
-    let label = playerNameSchwimmen(p);
-    if (AppStateSchwimmen.mode === "vs-ai") label = p === 0 ? label + " (you)" : label + " (computer)";
+    const label = playerNameSchwimmen(p);
     I18n.setMsg(name, label);
     row.appendChild(name);
     const lives = document.createElement("span");
