@@ -122,10 +122,19 @@ function initMinesweeperApp() {
     });
   }
 
-  function startNewGameMinesweeper(preset) {
+  // rng/isDaily: today's board. Normally the mines are laid on the first
+  // tap (so it is always safe), which would give every player a
+  // different board; the daily board instead lays them right away from
+  // today's seed and opens the centre cell, so everyone starts from the
+  // same opened position.
+  function startNewGameMinesweeper(preset, rng, isDaily) {
     const cfg = MINESWEEPER_PRESETS[preset] || MINESWEEPER_PRESETS.intermediate;
     AppStateMinesweeper.preset = preset;
     AppStateMinesweeper.state = MinesweeperCore.createState(cfg.rows, cfg.cols, cfg.mines);
+    if (isDaily) {
+      AppStateMinesweeper.state = MinesweeperCore.reveal(AppStateMinesweeper.state,
+        Math.floor(cfg.rows / 2), Math.floor(cfg.cols / 2), rng);
+    }
     AppStateMinesweeper.flagMode = false;
     AppStateMinesweeper.gameOver = false;
     AppStateMinesweeper.elapsedSeconds = 0;
@@ -137,7 +146,17 @@ function initMinesweeperApp() {
     updateGameLabelsMinesweeper();
     updateTimerDisplayMinesweeper();
     updateFlagModeButtonMinesweeper();
-    setStatusMinesweeper("board-info", "Reveal a cell to begin.");
+    // The daily board starts already opened, so its clock starts now
+    // rather than on the first tap.
+    if (isDaily) startMinesweeperTimer();
+    setStatusMinesweeper("board-info", isDaily ? "Daily Challenge (" + DailyChallenge.todayKey() + "). " + "Reveal a cell to begin." : "Reveal a cell to begin.");
+  }
+
+  const dailyBtn = document.getElementById("daily-minesweeper-button");
+  if (dailyBtn) {
+    dailyBtn.addEventListener("click", () => {
+      startNewGameMinesweeper("intermediate", DailyChallenge.makeTodaysRng("minesweeper"), true);
+    });
   }
 
   startGameBtn.addEventListener("click", () => {

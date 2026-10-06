@@ -120,14 +120,15 @@ function initHashiApp() {
     });
   }
 
-  function startNewGameHashi(difficulty) {
+  // rng/isDaily: today's puzzle (seeded from the UTC date) instead of a random one.
+  function startNewGameHashi(difficulty, rng, isDaily) {
     setStatusHashi("offline-hashi-status", (window.I18n && I18n.t("hashi_generating")) || "Generating puzzle…");
     setStatusHashi("board-info", (window.I18n && I18n.t("hashi_generating")) || "Generating puzzle…");
     // Generation involves a real uniqueness-verifying search and can take
     // up to roughly a second on "hard" - yielding a tick first keeps the
     // "Generating…" status visible instead of the click feeling stuck.
     setTimeout(() => {
-      const puzzle = HashiPuzzles.generatePuzzle(difficulty);
+      const puzzle = HashiPuzzles.generatePuzzle(difficulty, rng);
       AppStateHashi.difficulty = difficulty;
       AppStateHashi.size = puzzle.size;
       AppStateHashi.board = HashiCore.buildBoard(puzzle.size, puzzle.size, puzzle.islands);
@@ -142,8 +143,15 @@ function initHashiApp() {
       updateHashiBoard();
       updateGameLabelsHashi();
       setStatusHashi("offline-hashi-status", "");
-      setStatusHashi("board-info", hintTextHashi());
+      setStatusHashi("board-info", isDaily ? "Daily Challenge (" + DailyChallenge.todayKey() + "). " + hintTextHashi() : hintTextHashi());
     }, 10);
+  }
+
+  const dailyBtn = document.getElementById("daily-hashi-button");
+  if (dailyBtn) {
+    dailyBtn.addEventListener("click", () => {
+      startNewGameHashi("medium", DailyChallenge.makeTodaysRng("hashi"), true);
+    });
   }
 
   startGameBtn.addEventListener("click", () => {

@@ -113,6 +113,12 @@ function initCratePusherApp() {
   document.getElementById("start-cratepusher-game").addEventListener("click", () => {
     newLevelCp(document.getElementById("cratepusher-level-inline").value);
   });
+  const dailyBtn = document.getElementById("daily-cratepusher-button");
+  if (dailyBtn) {
+    dailyBtn.addEventListener("click", () => {
+      newLevelCp("medium", DailyChallenge.makeTodaysRng("cratepusher"), true);
+    });
+  }
   document.getElementById("undo-btn").addEventListener("click", undoCp);
   document.getElementById("cp-restart").addEventListener("click", restartCp);
   document.getElementById("cp-hint").addEventListener("click", hintCp);
@@ -157,7 +163,8 @@ function showBoardCp() {
   if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
 }
 
-function newLevelCp(difficulty) {
+// rng/isDaily: today's level (seeded from the UTC date) instead of a random one.
+function newLevelCp(difficulty, rng, isDaily) {
   const token = ++AppStateCp.token;
   AppStateCp.difficulty = difficulty;
   AppStateCp.generating = true;
@@ -168,10 +175,10 @@ function newLevelCp(difficulty) {
   if (status) I18n.setMsg(status, "Building a level…");
   // Let the status text reach the screen before the work starts.
   setTimeout(() => {
-    CratePusherCore.generateLevelAsync(difficulty, null, (level) => {
+    CratePusherCore.generateLevelAsync(difficulty, rng || null, (level) => {
       if (token !== AppStateCp.token) return; // a newer request replaced this one
       AppStateCp.generating = false;
-      if (status) I18n.setMsg(status, "");
+      if (status) I18n.setMsg(status, isDaily ? "Daily Challenge (" + DailyChallenge.todayKey() + ")." : "");
       startLevelCp(level);
     });
   }, 30);

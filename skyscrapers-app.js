@@ -115,14 +115,15 @@ function initSkyscrapersApp() {
     });
   }
 
-  function startNewGameSkyscrapers(difficulty) {
+  // rng/isDaily: today's puzzle (seeded from the UTC date) instead of a random one.
+  function startNewGameSkyscrapers(difficulty, rng, isDaily) {
     setStatusSkyscrapers("offline-skyscrapers-status", (window.I18n && I18n.t("skyscrapers_generating")) || "Generating puzzle…");
     setStatusSkyscrapers("board-info", (window.I18n && I18n.t("skyscrapers_generating")) || "Generating puzzle…");
     // Generation can take up to a second or so on the largest (6x6)
     // grid, so yield a tick first to let the "Generating…" status
     // actually paint before the (synchronous) generator runs.
     setTimeout(() => {
-      const puzzle = SkyscrapersPuzzles.generatePuzzle(difficulty);
+      const puzzle = SkyscrapersPuzzles.generatePuzzle(difficulty, rng);
       AppStateSkyscrapers.difficulty = difficulty;
       AppStateSkyscrapers.n = puzzle.n;
       AppStateSkyscrapers.solution = puzzle.solution;
@@ -139,8 +140,16 @@ function initSkyscrapersApp() {
       updateSkyscrapersBoard();
       updateGameLabelsSkyscrapers();
       setStatusSkyscrapers("offline-skyscrapers-status", "");
-      setStatusSkyscrapers("board-info", (window.I18n && I18n.t("skyscrapers_hint")) || "Select a cell, then pick a height.");
+      const hint = (window.I18n && I18n.t("skyscrapers_hint")) || "Select a cell, then pick a height.";
+      setStatusSkyscrapers("board-info", isDaily ? "Daily Challenge (" + DailyChallenge.todayKey() + "). " + hint : hint);
     }, 10);
+  }
+
+  const dailyBtn = document.getElementById("daily-skyscrapers-button");
+  if (dailyBtn) {
+    dailyBtn.addEventListener("click", () => {
+      startNewGameSkyscrapers("medium", DailyChallenge.makeTodaysRng("skyscrapers"), true);
+    });
   }
 
   startGameBtn.addEventListener("click", () => {

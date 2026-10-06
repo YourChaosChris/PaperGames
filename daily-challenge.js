@@ -1,6 +1,8 @@
 // daily-challenge.js
 // Shared "puzzle of the day" helper for the generated puzzle games
-// (Sudoku, Kakuro, Slitherlink, 2048, Nonogram). No server involved: a
+// (Sudoku, Kakuro, Slitherlink, 2048, Nonogram, Killer Sudoku, Calcudoku,
+// Number Blocks, Hashi, Skyscrapers, Minesweeper, Lights Out, Crate
+// Pusher, Bulls and Cows). No server involved: a
 // small seeded PRNG (mulberry32 - deterministic, tiny, public domain)
 // takes the place of Math.random() in each game's own generator, seeded
 // from today's UTC date plus the game's own slug, so every player sees

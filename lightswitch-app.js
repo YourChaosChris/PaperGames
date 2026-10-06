@@ -91,9 +91,10 @@ function initLightSwitchApp() {
     });
   }
 
-  function startNewGameLightSwitch(difficulty) {
+  // rng/isDaily: today's puzzle (seeded from the UTC date) instead of a random one.
+  function startNewGameLightSwitch(difficulty, rng, isDaily) {
     const presses = LIGHTSWITCH_PRESETS[difficulty] || LIGHTSWITCH_PRESETS.medium;
-    const generated = LightSwitchCore.generatePuzzle(LIGHTSWITCH_SIZE, presses);
+    const generated = LightSwitchCore.generatePuzzle(LIGHTSWITCH_SIZE, presses, rng);
 
     AppStateLightSwitch.difficulty = difficulty;
     AppStateLightSwitch.grid = generated.grid;
@@ -104,7 +105,14 @@ function initLightSwitchApp() {
     buildLightSwitchBoardDOM();
     updateLightSwitchBoard();
     updateGameLabelsLightSwitch();
-    setStatusLightSwitch("board-info", "Turn off every light to win.");
+    setStatusLightSwitch("board-info", isDaily ? "Daily Challenge (" + DailyChallenge.todayKey() + "). " + "Turn off every light to win." : "Turn off every light to win.");
+  }
+
+  const dailyBtn = document.getElementById("daily-lightswitch-button");
+  if (dailyBtn) {
+    dailyBtn.addEventListener("click", () => {
+      startNewGameLightSwitch("medium", DailyChallenge.makeTodaysRng("lightswitch"), true);
+    });
   }
 
   startGameBtn.addEventListener("click", () => {

@@ -125,14 +125,23 @@ function initBullsAndCowsApp() {
     return new Array(BullsAndCowsCore.CODE_LENGTH).fill(BullsAndCowsCore.SYMBOLS[0]);
   }
 
-  function startNewGameBullsAndCows(level) {
-    AppStateBullsAndCows.state = BullsAndCowsCore.createState(level);
+  // rng/isDaily: today's secret (seeded from the UTC date) instead of a random one.
+  function startNewGameBullsAndCows(level, rng, isDaily) {
+    AppStateBullsAndCows.state = BullsAndCowsCore.createState(level, rng);
     AppStateBullsAndCows.currentGuess = defaultGuess();
     setGameResultBullsAndCows("");
     showBoardSectionBullsAndCows();
     buildBullsAndCowsGuessRowDOM();
     updateBullsAndCowsBoard();
-    setStatusBullsAndCows("board-info", t18nBullsAndCows("bullsandcows_hint_start"));
+    const hint = t18nBullsAndCows("bullsandcows_hint_start");
+    setStatusBullsAndCows("board-info", isDaily ? "Daily Challenge (" + DailyChallenge.todayKey() + "). " + hint : hint);
+  }
+
+  const dailyBtn = document.getElementById("daily-bullsandcows-button");
+  if (dailyBtn) {
+    dailyBtn.addEventListener("click", () => {
+      startNewGameBullsAndCows("medium", DailyChallenge.makeTodaysRng("bullsandcows"), true);
+    });
   }
 
   startGameBtn.addEventListener("click", () => {

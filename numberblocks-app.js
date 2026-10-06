@@ -39,8 +39,9 @@
       statusId: "offline-numberblocks-status",
       readOptions,
       applyOptions,
-      generate(options, done) {
-        done(toRegionPuzzle(NumberBlocksCore.generatePuzzle(options.difficulty)));
+      daily: { buttonId: "daily-numberblocks-button", options: { difficulty: "medium" } },
+      generate(options, done, rng) {
+        done(toRegionPuzzle(NumberBlocksCore.generatePuzzle(options.difficulty, rng)));
       },
       findConflicts: (p, grid) => NumberBlocksCore.findConflicts(p.rows, p.cols, p.regions, grid),
       isComplete: (p, grid) => NumberBlocksCore.isComplete(p.rows, p.cols, p.regions, grid),

@@ -97,8 +97,12 @@ const RegionPuzzle = (function () {
     updateLabels();
   }
 
-  function startNewGame() {
-    const options = cfg.readOptions();
+  // daily: today's puzzle (cfg.daily.options, seeded from the UTC date
+  // via DailyChallenge) instead of the options picked on the page.
+  function startNewGame(daily) {
+    const isDaily = daily === true && !!cfg.daily && typeof DailyChallenge !== "undefined";
+    const options = isDaily ? Object.assign({}, cfg.daily.options) : cfg.readOptions();
+    const rng = isDaily ? DailyChallenge.makeTodaysRng(cfg.statsKey) : undefined;
     const generating = tr(cfg.prefix + "_generating", "Generating puzzle…");
     setStatus(cfg.statusId, generating);
     setStatus("board-info", generating);
@@ -108,8 +112,8 @@ const RegionPuzzle = (function () {
       cfg.generate(options, (puzzle) => {
         load(puzzle, null, options, 0);
         setStatus(cfg.statusId, "");
-        setStatus("board-info", hint());
-      });
+        setStatus("board-info", isDaily ? "Daily Challenge (" + DailyChallenge.todayKey() + "). " + hint() : hint());
+      }, rng);
     }, 10);
   }
 
@@ -312,7 +316,9 @@ const RegionPuzzle = (function () {
       });
     }
     const startBtn = document.getElementById(cfg.startButtonId);
-    if (startBtn) startBtn.addEventListener("click", startNewGame);
+    if (startBtn) startBtn.addEventListener("click", () => startNewGame(false));
+    const dailyBtn = cfg.daily ? document.getElementById(cfg.daily.buttonId) : null;
+    if (dailyBtn) dailyBtn.addEventListener("click", () => startNewGame(true));
     const eraseBtn = document.getElementById("rp-erase-button");
     if (eraseBtn) eraseBtn.addEventListener("click", () => enterDigit(0));
 

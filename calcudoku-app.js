@@ -45,8 +45,9 @@
       statusId: "offline-calcudoku-status",
       readOptions,
       applyOptions,
-      generate(options, done) {
-        done(toRegionPuzzle(CalcudokuCore.generatePuzzle(options.size, options.difficulty)));
+      daily: { buttonId: "daily-calcudoku-button", options: { size: 5, difficulty: "medium" } },
+      generate(options, done, rng) {
+        done(toRegionPuzzle(CalcudokuCore.generatePuzzle(options.size, options.difficulty, rng)));
       },
       findConflicts: (p, grid) => CalcudokuCore.findConflicts(p.rows, p.cages, grid),
       isComplete: (p, grid) => CalcudokuCore.isComplete(p.rows, p.cages, grid),

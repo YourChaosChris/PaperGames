@@ -41,9 +41,10 @@
       statusId: "offline-killersudoku-status",
       readOptions,
       applyOptions,
-      generate(options, done) {
-        KillerSudokuCore.generatePuzzleAsync(options.difficulty, null, (p) => done(toRegionPuzzle(p)));
+      generate(options, done, rng) {
+        KillerSudokuCore.generatePuzzleAsync(options.difficulty, rng || null, (p) => done(toRegionPuzzle(p)));
       },
+      daily: { buttonId: "daily-killersudoku-button", options: { difficulty: "medium" } },
       findConflicts: (p, grid) => KillerSudokuCore.findConflicts(p.cages, grid),
       isComplete: (p, grid) => KillerSudokuCore.isComplete(p.cages, grid),
       regionAria: (p, region) => "cage " + p.labels[region]
