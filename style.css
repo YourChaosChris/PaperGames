@@ -11,6 +11,11 @@
   --square-light: #fdfdfd;
   --square-dark: #d5d5d5;
   --square-selected: #bbb;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
   --radius: 4px;
   --border-width: 2px;
   --shadow: 0 0 0 1px #000;
@@ -50,21 +55,21 @@ html.text-size-xlarge {
 #app {
   max-width: 900px;
   margin: 0 auto;
-  padding: 0.3rem;
+  padding: var(--space-1);
 }
 
 .app-header {
   display: flex;
   justify-content: space-between;
 align-items: center;
-  margin-bottom: 0.3rem;
+  margin-bottom: var(--space-1);
   border-bottom: var(--border-width) solid var(--border);
-  padding-bottom: 0.3rem;
+  padding-bottom: var(--space-1);
 }
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .app-header > * {
-  margin: 0 1rem 1rem 0;
+  margin: 0 var(--space-4) var(--space-4) 0;
 }
 
 .app-header > *:last-child {
@@ -121,7 +126,7 @@ align-items: center;
 
 
 .subtitle {
-  margin: 0.1rem 0 0;
+  margin: var(--space-1) 0 0;
   font-size: 0.8rem;
   color: var(--muted);
 }
@@ -135,7 +140,7 @@ font-size: 0.8rem;
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .user-panel > * {
-  margin: 0 0.25rem 0.25rem 0;
+  margin: 0 var(--space-1) var(--space-1) 0;
 }
 
 .user-panel > *:last-child {
@@ -158,7 +163,7 @@ font-size: 0.8rem;
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .user-panel-buttons > * {
-  margin: 0 0.4rem 0.4rem 0;
+  margin: 0 var(--space-2) var(--space-2) 0;
 }
 
 .user-panel-buttons > *:last-child {
@@ -171,7 +176,7 @@ font-size: 0.8rem;
 }
 
 #settings-panel {
-  margin-bottom: 0.4rem;
+  margin-bottom: var(--space-2);
 }
 
 button,
@@ -181,7 +186,7 @@ a.secondary {
   border-radius: var(--radius);
   border: var(--border-width) solid var(--border);
   background: #fff;
-  padding: 0.4rem 0.85rem;
+  padding: var(--space-2) var(--space-3);
   font-size: 0.9rem;
   font-weight: 700;
   line-height: 1.2;
@@ -205,7 +210,7 @@ a.secondary {
 button.small,
 a.small {
   font-size: 0.7rem;
-  padding: 0.25rem 0.5rem;
+  padding: var(--space-1) var(--space-2);
 }
 
 
@@ -227,12 +232,12 @@ html.i18n-pending body {
 }
 
 .mode-section {
-  margin: 0.5rem 0;
+  margin: var(--space-2) 0;
 }
 
 .mode-section h2 {
   font-size: 1rem;
-  margin: 0 0 0.35rem;
+  margin: 0 0 var(--space-1);
 }
 
 .mode-section-row {
@@ -244,7 +249,7 @@ flex-wrap: wrap;
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .mode-section-row > * {
-  margin: 0 0.5rem 0.5rem 0;
+  margin: 0 var(--space-2) var(--space-2) 0;
 }
 
 .mode-section-row > *:last-child {
@@ -259,7 +264,7 @@ flex-wrap: wrap;
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .mode-buttons > * {
-  margin: 0 0.5rem 0.5rem 0;
+  margin: 0 var(--space-2) var(--space-2) 0;
 }
 
 .mode-buttons > *:last-child {
@@ -283,8 +288,8 @@ flex-wrap: wrap;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   box-shadow: none;
-  padding: 0.65rem 0.75rem;
-  margin-bottom: 0.6rem;
+  padding: var(--space-3) var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
 /* A quick way to skip past 25 games' worth of cards to the category
@@ -293,7 +298,7 @@ flex-wrap: wrap;
 .game-section-nav {
   display: flex;
   flex-wrap: wrap;
-margin: 0 0 0.6rem;
+margin: 0 0 var(--space-2);
 }
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
@@ -301,7 +306,7 @@ margin: 0 0 0.6rem;
    you actually want - three plain anchor jumps > *, not JS > *, so they work
    the same with scripting on or off and cost nothing on E-Ink. */
 .game-section-nav > * {
-  margin: 0 0.5rem 0.5rem 0;
+  margin: 0 var(--space-2) var(--space-2) 0;
 }
 
 /* A quick way to skip past 25 games' worth of cards to the category
@@ -315,7 +320,7 @@ margin: 0 0 0.6rem;
 .game-section-nav a {
   display: inline-flex;
   align-items: center;
-  padding: 0.4rem 0.85rem;
+  padding: var(--space-2) var(--space-3);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   background: #fff;
@@ -328,7 +333,7 @@ margin: 0 0 0.6rem;
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .game-section-nav a > * {
-  margin: 0 0.35rem 0.35rem 0;
+  margin: 0 var(--space-1) var(--space-1) 0;
 }
 
 .game-section-nav a > *:last-child {
@@ -337,7 +342,7 @@ margin: 0 0 0.6rem;
 
 
 .field-row {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -345,7 +350,7 @@ margin: 0 0 0.6rem;
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .field-row > * {
-  margin: 0 0.5rem 0.5rem 0;
+  margin: 0 var(--space-2) var(--space-2) 0;
 }
 
 .field-row > *:last-child {
@@ -359,7 +364,7 @@ margin: 0 0 0.6rem;
 
 .field-row select {
   flex: 1;
-  padding: 0.3rem 0.4rem;
+  padding: var(--space-1) var(--space-2);
   border-radius: var(--radius);
   border: var(--border-width) solid var(--border);
   background: #fff;
@@ -373,7 +378,7 @@ margin: 0 0 0.6rem;
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .checkbox-label > * {
-  margin: 0 0.4rem 0.4rem 0;
+  margin: 0 var(--space-2) var(--space-2) 0;
 }
 
 .checkbox-label > *:last-child {
@@ -639,7 +644,7 @@ margin-top: 0.15rem;
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 /* Mode-Header mit About rechts */
 .mode-header > * {
-  margin: 0 0.5rem 0.5rem 0;
+  margin: 0 var(--space-2) var(--space-2) 0;
 }
 
 /* Mode-Header mit About rechts */
@@ -666,7 +671,7 @@ margin-top: 0.15rem;
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .app-title-row > * {
-  margin: 0 0.5rem 0.5rem 0;
+  margin: 0 var(--space-2) var(--space-2) 0;
 }
 
 .app-title-row > *:last-child {
@@ -682,12 +687,12 @@ margin-top: 0.15rem;
 
 .inline-options {
   display: inline-flex;
-margin-left: 0.5rem;
+margin-left: var(--space-2);
 }
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .inline-options > * {
-  margin: 0 0.25rem 0.25rem 0;
+  margin: 0 var(--space-1) var(--space-1) 0;
 }
 
 .inline-options > *:last-child {
@@ -723,7 +728,7 @@ margin-left: 0.5rem;
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 #online-controls .online-inline-row .online-action-right > * {
-  margin: 0 0.5rem 0.5rem 0;
+  margin: 0 var(--space-2) var(--space-2) 0;
 }
 
 #online-controls .online-inline-row .online-action-right > *:last-child {
@@ -740,7 +745,7 @@ margin-left: 0.5rem;
    rule above) - this class is combined with .mode-buttons on the same
    element (see chess.html), it just overrides the gap value. */
 .online-sub-tabs > * {
-  margin: 0 0.35rem 0.35rem 0;
+  margin: 0 var(--space-1) var(--space-1) 0;
 }
 
 .online-sub-tabs > *:last-child {
@@ -804,8 +809,8 @@ font-size: 1.2rem;
 
 
 #undo-btn {
-  padding-left: 0.2rem;
-  padding-right: 0.2rem;
+  padding-left: var(--space-1);
+  padding-right: var(--space-1);
 }
 
 
@@ -879,9 +884,9 @@ font-size: 1.2rem;
   font-size: 0.7rem;
   line-height: 1.3;
   border-top: 1px solid var(--border);
-  padding-top: 0.15rem;
+  padding-top: var(--space-1);
   color: var(--muted);
-  column-gap: 0.5rem;
+  column-gap: var(--space-2);
 }
 
 .score-line.hidden {
@@ -901,13 +906,13 @@ font-size: 1.2rem;
 
 /* About page */
 .about-donate {
-  margin-top: 1rem;
+  margin-top: var(--space-4);
   font-size: 0.9rem;
 }
 
 .btn-donate {
   display: inline-block;
-  padding: 0.4rem 0.75rem;
+  padding: var(--space-2) var(--space-3);
   border-radius: 4px;
   background: var(--accent);
   color: #fff;
@@ -933,7 +938,7 @@ font-size: 1.2rem;
 }
 
 .about-qr {
-  margin-top: 0.75rem;
+  margin-top: var(--space-3);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -941,7 +946,7 @@ font-size: 1.2rem;
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .about-qr > * {
-  margin: 0 0.25rem 0.25rem 0;
+  margin: 0 var(--space-1) var(--space-1) 0;
 }
 
 .about-qr > *:last-child {
@@ -953,31 +958,31 @@ font-size: 1.2rem;
   max-width: 180px;
   height: auto;
   border: 1px solid var(--border);
-  padding: 0.25rem;
+  padding: var(--space-1);
   border-radius: 4px;
 }
 
 .about-credits {
-  margin-top: 1.25rem;
+  margin-top: var(--space-4);
   font-size: 0.75rem;
   color: var(--muted);
 }
 
 .about-back {
-  margin-top: 1.25rem;
+  margin-top: var(--space-4);
   font-size: 0.85rem;
 }
 
 .stats-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  margin-top: var(--space-4);
 }
 
 .stats-table th,
 .stats-table td {
   border: var(--border-width) solid var(--border);
-  padding: 0.4rem 0.6rem;
+  padding: var(--space-2) var(--space-2);
   text-align: left;
 }
 
@@ -991,12 +996,12 @@ font-size: 1.2rem;
 }
 
 .stats-empty {
-  margin-top: 1rem;
+  margin-top: var(--space-4);
   color: var(--muted);
 }
 
 .stats-actions {
-  margin-top: 1.25rem;
+  margin-top: var(--space-4);
 }
 
 /* Site-wide nav bar and language switch (home/rules/guide/about pages) */
@@ -1009,7 +1014,7 @@ font-size: 1.2rem;
 /* Site-wide nav bar and language switch (home/rules/guide/about pages) */
 
 .lang-switch > * {
-  margin: 0 0.3rem 0.3rem 0;
+  margin: 0 var(--space-1) var(--space-1) 0;
 }
 
 /* Site-wide nav bar and language switch (home/rules/guide/about pages) */
@@ -1030,7 +1035,7 @@ font-size: 1.2rem;
   font-family: inherit;
   font-weight: 700;
   font-size: 0.7rem;
-  padding: 0.25rem 1.5rem 0.25rem 0.5rem;
+  padding: var(--space-1) var(--space-5) var(--space-1) var(--space-2);
   border-radius: var(--radius);
   border: var(--border-width) solid var(--border);
   background: var(--bg-alt) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23111' d='M1 1l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 0.5rem center;
@@ -1055,7 +1060,7 @@ font-size: 1.2rem;
    runtime by game-switcher.js on every game/rules/history page (not on
    the home page > *, which has no "current game" to switch away from). */
 .game-switch > * {
-  margin: 0 0.3rem 0.3rem 0;
+  margin: 0 var(--space-1) var(--space-1) 0;
 }
 
 /* Game switcher: same treatment as the language picker > *:last-child, built at
@@ -1078,12 +1083,12 @@ font-size: 1.2rem;
 .site-nav {
   display: flex;
   flex-wrap: wrap;
-margin: 0.5rem 0;
+margin: var(--space-2) 0;
 }
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .site-nav > * {
-  margin: 0 0.4rem 0.4rem 0;
+  margin: 0 var(--space-2) var(--space-2) 0;
 }
 
 .site-nav > *:last-child {
@@ -1093,7 +1098,7 @@ margin: 0.5rem 0;
 
 .site-nav-link {
   display: inline-block;
-  padding: 0.4rem 0.85rem;
+  padding: var(--space-2) var(--space-3);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   font-size: 0.9rem;
@@ -1123,10 +1128,10 @@ margin: 0.5rem 0;
     align-items: center;
   }
   .app-header > * {
-    margin: 0 0.3rem 0.3rem 0;
+    margin: 0 var(--space-1) var(--space-1) 0;
   }
   .app-title-row > * {
-    margin: 0 0.3rem 0.3rem 0;
+    margin: 0 var(--space-1) var(--space-1) 0;
   }
   .title-wrap h1 {
     font-size: 1.1rem;
@@ -1142,7 +1147,7 @@ margin: 0.5rem 0;
     margin-left: auto;
   }
   .user-panel > * {
-    margin: 0 0.3rem 0.3rem 0;
+    margin: 0 var(--space-1) var(--space-1) 0;
   }
   .user-panel button,
   .user-panel a,
@@ -1155,17 +1160,17 @@ margin: 0.5rem 0;
     align-items: center;
   }
   .site-nav {
-    margin: 0.25rem 0;
+    margin: var(--space-1) 0;
   }
   .site-nav > * {
-    margin: 0 0.3rem 0.3rem 0;
+    margin: 0 var(--space-1) var(--space-1) 0;
   }
   .site-nav-link {
     display: inline-flex;
     align-items: center;
     box-sizing: border-box;
     min-height: 44px;
-    padding: 0.25rem 0.6rem;
+    padding: var(--space-1) var(--space-2);
   }
 }
 
@@ -1176,7 +1181,7 @@ margin: 0.5rem 0;
   font-size: 0.8rem;
   color: var(--muted);
   font-style: italic;
-  margin: 0 0 1.25rem;
+  margin: 0 0 var(--space-4);
 }
 
 .history-timeline {
@@ -1186,7 +1191,7 @@ margin: 0.5rem 0;
 }
 
 .history-timeline-item {
-  padding: 1rem 0;
+  padding: var(--space-4) 0;
   border-top: var(--border-width) solid var(--border);
 }
 
@@ -1201,12 +1206,12 @@ margin: 0.5rem 0;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 0.2rem;
+  margin-bottom: var(--space-1);
 }
 
 .history-timeline-title {
   font-size: 1.05rem;
-  margin: 0 0 0.35rem;
+  margin: 0 0 var(--space-1);
 }
 
 .history-timeline-title a {
@@ -1219,7 +1224,7 @@ margin: 0.5rem 0;
 }
 
 .history-timeline-desc {
-  margin: 0 0 0.4rem;
+  margin: 0 0 var(--space-2);
   color: var(--text);
 }
 
@@ -1232,14 +1237,14 @@ margin: 0.5rem 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-margin: 2rem 0 1rem;
-  padding-top: 1rem;
+margin: 2rem 0 var(--space-4);
+  padding-top: var(--space-4);
   border-top: 1px solid var(--border);
 }
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .site-footer > * {
-  margin: 0 1rem 0.3rem 0;
+  margin: 0 var(--space-4) var(--space-1) 0;
 }
 
 .site-footer > *:last-child {
@@ -1262,7 +1267,7 @@ margin: 2rem 0 1rem;
 
 .home-hero {
   text-align: center;
-  padding: 1rem;
+  padding: var(--space-4);
 }
 
 /* Icon and heading share one line, so the hero leaves room for the
@@ -1271,13 +1276,13 @@ margin: 2rem 0 1rem;
   display: inline-block;
   width: 2.5rem;
   height: 2.5rem;
-  margin-right: 0.5rem;
+  margin-right: var(--space-2);
   vertical-align: middle;
 }
 
 .home-hero h1 {
   display: inline-block;
-  margin: 0.25rem 0;
+  margin: var(--space-1) 0;
   font-size: 2rem;
   font-weight: 800;
   vertical-align: middle;
@@ -1286,14 +1291,14 @@ margin: 2rem 0 1rem;
 .home-tagline {
   color: var(--muted);
   font-weight: 700;
-  margin: 0 0 0.75rem;
+  margin: 0 0 var(--space-3);
 }
 
 .home-languages {
   color: var(--muted);
   font-size: 0.8rem;
   font-weight: 600;
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--space-2);
 }
 
 /* What PaperGames doesn't do (home-app.js): plain sentences under the
@@ -1302,7 +1307,7 @@ margin: 2rem 0 1rem;
    and e-ink - so the first row of game tiles still fits on the screen. */
 .home-pitch {
   max-width: 34rem;
-  margin: 0.25rem auto 0.5rem;
+  margin: var(--space-1) auto var(--space-2);
   font-size: 0.95rem;
   line-height: 1.4;
   color: var(--text);
@@ -1316,11 +1321,11 @@ margin: 2rem 0 1rem;
    three plain sentences and two buttons, in the normal page flow - it
    pushes the board down a little but never covers it. */
 .quick-rules {
-  padding: 0.75rem 1rem;
+  padding: var(--space-3) var(--space-4);
 }
 
 .quick-rules-sentence {
-  margin: 0 0 0.4rem;
+  margin: 0 0 var(--space-2);
   line-height: 1.4;
 }
 
@@ -1328,12 +1333,12 @@ margin: 2rem 0 1rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-top: 0.6rem;
+  margin-top: var(--space-2);
 }
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .quick-rules-actions > * {
-  margin: 0 0.5rem 0 0;
+  margin: 0 var(--space-2) 0 0;
 }
 
 .quick-rules-actions > *:last-child {
@@ -1346,7 +1351,7 @@ margin: 2rem 0 1rem;
    arrives. */
 .offline-status {
   min-height: 1.5em;
-  margin: 0.25rem 0 0;
+  margin: var(--space-1) 0 0;
   font-weight: 700;
   color: var(--text);
 }
@@ -1367,21 +1372,21 @@ margin: 2rem 0 1rem;
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .home-hero-actions > * {
-  margin: 0.75rem 0.5rem 0 0.5rem;
+  margin: var(--space-3) var(--space-2) 0 var(--space-2);
 }
 
 .home-play-button {
   display: inline-block;
   text-decoration: none;
   font-size: 1.1rem;
-  padding: 0.6rem 1.4rem;
+  padding: var(--space-2) var(--space-5);
 }
 
 .nav-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 0.6rem;
-  margin: 0.6rem 0;
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
 }
 
 .nav-card {
@@ -1393,7 +1398,7 @@ margin: 2rem 0 1rem;
 .nav-card-title {
   font-weight: 800;
   font-size: 1.05rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: var(--space-1);
 }
 
 .nav-card-desc {
@@ -1406,7 +1411,7 @@ margin: 2rem 0 1rem;
 
 .content-page h2 {
   font-size: 1.1rem;
-  margin: 1rem 0 0.4rem;
+  margin: var(--space-4) 0 var(--space-2);
 }
 
 .content-page h2:first-child {
@@ -1414,16 +1419,16 @@ margin: 2rem 0 1rem;
 }
 
 .rule-list {
-  margin: 0 0 0.75rem;
+  margin: 0 0 var(--space-3);
 }
 
 .rule-list dt {
   font-weight: 800;
-  margin-top: 0.5rem;
+  margin-top: var(--space-2);
 }
 
 .rule-list dd {
-  margin: 0.15rem 0 0;
+  margin: var(--space-1) 0 0;
   color: var(--text);
 }
 
@@ -1568,8 +1573,8 @@ margin: 2rem 0 1rem;
 .game-select-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0.6rem;
-  margin: 0.6rem 0;
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
 }
 
 /* Empty-state message for a section whose nav link always points
@@ -1577,7 +1582,7 @@ margin: 2rem 0 1rem;
    gray, since faint tones are hard to read on E-Ink. */
 .section-empty-state {
   color: var(--text);
-  padding: 0.75rem 0;
+  padding: var(--space-3) 0;
   margin: 0;
 }
 
@@ -1586,7 +1591,7 @@ margin: 2rem 0 1rem;
   background: #fff;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  padding: 0.75rem;
+  padding: var(--space-3);
   display: flex;
   flex-direction: column;
 }
@@ -1632,7 +1637,7 @@ margin: 2rem 0 1rem;
 }
 
 .adaptive-difficulty-toggle input {
-  margin-right: 0.3rem;
+  margin-right: var(--space-1);
 }
 
 .adaptive-difficulty-note {
@@ -1648,8 +1653,8 @@ margin: 2rem 0 1rem;
 .achievements-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 0.6rem;
-  margin: 0.6rem 0;
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
 }
 
 .achievement-badge {
@@ -1658,7 +1663,7 @@ margin: 2rem 0 1rem;
   background: #fff;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  padding: 0.6rem 0.75rem;
+  padding: var(--space-2) var(--space-3);
 }
 
 .achievement-badge.locked {
@@ -1668,7 +1673,7 @@ margin: 2rem 0 1rem;
 .achievement-badge-icon {
   font-size: 1.5rem;
   line-height: 1;
-  margin-right: 0.6rem;
+  margin-right: var(--space-2);
   flex-shrink: 0;
 }
 
@@ -1687,7 +1692,7 @@ margin: 2rem 0 1rem;
 }
 
 .games-group-title {
-  margin: 1rem 0 0.4rem;
+  margin: var(--space-4) 0 var(--space-2);
 }
 
 .games-group-title:first-child {
@@ -1698,12 +1703,12 @@ margin: 2rem 0 1rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin: 0.6rem 0;
+  margin: var(--space-2) 0;
 }
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .games-toolbar > * {
-  margin: 0 0.5rem 0.5rem 0;
+  margin: 0 var(--space-2) var(--space-2) 0;
 }
 
 .games-toolbar > *:last-child {
@@ -1712,7 +1717,7 @@ margin: 2rem 0 1rem;
 
 .games-search-input {
   flex: 1 1 220px;
-  padding: 0.4rem 0.6rem;
+  padding: var(--space-2) var(--space-2);
   font-size: 0.95rem;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
@@ -1722,7 +1727,7 @@ margin: 2rem 0 1rem;
 }
 
 .games-sort-select {
-  padding: 0.4rem 0.6rem;
+  padding: var(--space-2) var(--space-2);
   font-size: 0.95rem;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
@@ -1738,7 +1743,7 @@ margin: 2rem 0 1rem;
 .game-select-title {
   font-weight: 800;
   font-size: 1.15rem;
-  margin-bottom: 0.3rem;
+  margin-bottom: var(--space-1);
 }
 
 /* Every game icon sits in the same square box: 1.5rem is 24 px at the
@@ -1763,7 +1768,7 @@ margin: 2rem 0 1rem;
 .game-select-desc {
   font-size: 0.85rem;
   color: var(--muted);
-  margin: 0 0 0.6rem;
+  margin: 0 0 var(--space-2);
 }
 
 .game-select-actions {
@@ -1774,7 +1779,7 @@ margin: 2rem 0 1rem;
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .game-select-actions > * {
-  margin: 0 0.5rem 0.5rem 0;
+  margin: 0 var(--space-2) var(--space-2) 0;
 }
 
 .game-select-actions > *:last-child {
@@ -1796,7 +1801,7 @@ margin: 2rem 0 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: var(--space-4);
   z-index: 1000;
 }
 
@@ -1808,7 +1813,7 @@ margin: 2rem 0 1rem;
   background: #fff;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  padding: 1.5rem;
+  padding: var(--space-5);
   max-width: 320px;
   width: 100%;
   text-align: center;
@@ -1823,7 +1828,7 @@ margin: 2rem 0 1rem;
   display: none;
   font-size: 2rem;
   line-height: 1;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .result-modal-win .result-modal-ornament {
@@ -1840,13 +1845,13 @@ margin: 2rem 0 1rem;
 .result-modal-title {
   font-size: 1.5rem;
   font-weight: 800;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .result-modal-message {
   font-size: 1rem;
   color: var(--muted);
-  margin-bottom: 1.25rem;
+  margin-bottom: var(--space-4);
 }
 
 .result-modal .result-modal-close {
@@ -3052,13 +3057,13 @@ flex: 0 0 15%;
    page - deliberately undecorated (no icons, no action buttons) so it
    never looks like it could be tapped, unlike the playable games above. */
 .coming-soon-list {
-  margin: 0.5rem 0 0;
-  padding-left: 1.2rem;
+  margin: var(--space-2) 0 0;
+  padding-left: var(--space-4);
   color: var(--muted);
 }
 
 .coming-soon-list li {
-  margin-bottom: 0.4rem;
+  margin-bottom: var(--space-2);
 }
 
 .coming-soon-list strong {
@@ -8201,14 +8206,14 @@ max-width: 900px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-2) var(--space-3);
   background: #fff;
   border-bottom: var(--border-width) solid var(--border);
 }
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
 .update-banner > * {
-  margin: 0 0.5rem 0 0;
+  margin: 0 var(--space-2) 0 0;
 }
 
 .update-banner > *:last-child {
@@ -8238,7 +8243,7 @@ max-width: 900px;
 }
 
 .update-banner-close {
-  padding: 0 0.5rem;
+  padding: 0 var(--space-2);
   line-height: 1.4;
 }
 
@@ -8271,7 +8276,7 @@ max-width: 900px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: var(--space-4);
   z-index: 1000;
 }
 
@@ -8283,7 +8288,7 @@ max-width: 900px;
   background: #fff;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  padding: 1.5rem;
+  padding: var(--space-5);
   max-width: 420px;
   width: 100%;
   max-height: 90vh;
@@ -8295,8 +8300,8 @@ max-width: 900px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 0 1rem 0;
-  padding-bottom: 0.5rem;
+  margin: 0 0 var(--space-4) 0;
+  padding-bottom: var(--space-2);
   border-bottom: 1px solid var(--border);
 }
 
@@ -8307,11 +8312,11 @@ max-width: 900px;
 
 .settings-modal-close {
   min-width: 2rem;
-  padding: 0.2rem 0.5rem;
+  padding: var(--space-1) var(--space-2);
 }
 
 .settings-section {
-  margin-bottom: 1.25rem;
+  margin-bottom: var(--space-4);
 }
 
 .settings-section:last-child {
@@ -8319,7 +8324,7 @@ max-width: 900px;
 }
 
 .settings-section h3 {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 var(--space-2) 0;
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -8328,7 +8333,7 @@ max-width: 900px;
 }
 
 .settings-section .settings-subheading {
-  margin-top: 1rem;
+  margin-top: var(--space-4);
 }
 
 .settings-section .lang-switch select {
@@ -8341,7 +8346,7 @@ max-width: 900px;
 }
 
 .settings-segmented > * {
-  margin: 0 0.3rem 0 0;
+  margin: 0 var(--space-1) 0 0;
 }
 
 .settings-segmented > *:last-child {
@@ -8364,12 +8369,12 @@ max-width: 900px;
 }
 
 .settings-checkbox-row input {
-  margin-right: 0.5rem;
+  margin-right: var(--space-2);
 }
 
 .settings-hint {
   color: var(--muted);
-  margin: 0 0 0.75rem 0;
+  margin: 0 0 var(--space-3) 0;
 }
 
 /* ---------- Categories (Stadt, Land, Fluss) ---------- */
@@ -8558,13 +8563,13 @@ max-width: 900px;
 .game-players {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--space-2);
 }
 
 .game-player {
   display: inline-block;
-  margin: 0 0.4rem 0.3rem 0;
-  padding: 0.2rem 0.5rem;
+  margin: 0 var(--space-2) var(--space-1) 0;
+  padding: var(--space-1) var(--space-2);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   font-size: 0.9rem;
@@ -8581,7 +8586,7 @@ max-width: 900px;
 }
 
 .game-player-count {
-  margin-left: 0.4rem;
+  margin-left: var(--space-2);
 }
 
 .game-player-stock {
@@ -8603,12 +8608,12 @@ max-width: 900px;
 }
 
 .game-actions-row {
-  margin-top: 0.6rem;
+  margin-top: var(--space-2);
   text-align: center;
 }
 
 .game-actions-row button {
-  margin: 0 0.3rem 0.3rem;
+  margin: 0 var(--space-1) var(--space-1);
 }
 
 /* ---- Domino ---- */
@@ -8912,7 +8917,7 @@ max-width: 900px;
 
 [dir="rtl"] .game-player-count {
   margin-left: 0;
-  margin-right: 0.4rem;
+  margin-right: var(--space-2);
 }
 
 .maumau-discard-by {
@@ -8926,16 +8931,16 @@ max-width: 900px;
 /* Settings dialog: running version and "force update", kept low-key. */
 .settings-version-section {
   border-top: 1px dashed var(--border);
-  padding-top: 0.5rem;
+  padding-top: var(--space-2);
   font-size: 0.85rem;
 }
 
 .settings-version-line {
-  margin: 0 0 0.4rem;
+  margin: 0 0 var(--space-2);
 }
 
 .settings-version-hint {
-  margin: 0.3rem 0 0;
+  margin: var(--space-1) 0 0;
   font-size: 0.8rem;
 }
 
