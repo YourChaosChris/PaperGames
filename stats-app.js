@@ -83,6 +83,12 @@ function renderStats() {
     nameTd.textContent = gameDisplayName(game);
     const winsTd = document.createElement("td");
     winsTd.textContent = String(rec.wins);
+    // Wins made with the hint button are part of the wins; how many of
+    // them there were is added in brackets, never subtracted.
+    if (rec.hintedWins > 0) {
+      const withHints = ((window.I18n && window.I18n.t("stats_with_hints")) || "{n} with hints").replace("{n}", String(rec.hintedWins));
+      winsTd.textContent += " (" + withHints + ")";
+    }
     const lossesTd = document.createElement("td");
     lossesTd.textContent = String(rec.losses);
     const drawsTd = document.createElement("td");

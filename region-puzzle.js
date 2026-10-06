@@ -29,8 +29,13 @@ const RegionPuzzle = (function () {
     gameOver: false,
     moveCount: 0,
     undoStack: [],
-    regionOf: null
+    regionOf: null,
+    hinted: false,     // the hint button was used on this puzzle
+    hintCells: [],     // cells the current hint marks
+    hintModel: null,   // HintEngine model, built on the first hint
+    hintSolution: null
   };
+  const hintSession = typeof HintEngine !== "undefined" ? HintEngine.createSession() : null;
 
   function tr(key, fallback) {
     return (window.I18n && I18n.t(key)) || fallback;
@@ -57,7 +62,8 @@ const RegionPuzzle = (function () {
       options: state.options,
       puzzle: state.puzzle,
       grid: state.grid,
-      moveCount: state.moveCount
+      moveCount: state.moveCount,
+      hinted: state.hinted
     });
   }
 
@@ -80,7 +86,7 @@ const RegionPuzzle = (function () {
     if (container) container.classList.remove("hidden");
   }
 
-  function load(puzzle, grid, options, moveCount) {
+  function load(puzzle, grid, options, moveCount, hinted) {
     state.puzzle = puzzle;
     state.options = options;
     state.grid = grid || puzzle.givens.slice();
@@ -89,6 +95,10 @@ const RegionPuzzle = (function () {
     state.gameOver = false;
     state.moveCount = moveCount || 0;
     state.undoStack = [];
+    state.hinted = !!hinted;
+    clearHint();
+    state.hintModel = null;
+    state.hintSolution = null;
     setResult("");
     showBoard();
     buildBoard();
@@ -233,6 +243,7 @@ const RegionPuzzle = (function () {
       cell.classList.toggle("rp-given", given);
       cell.classList.toggle("selected", state.selected === i);
       cell.classList.toggle("rp-conflict", conflicts.has(i));
+      cell.classList.toggle("hint-cell", state.hintCells.indexOf(i) !== -1);
       let aria = "Row " + (Math.floor(i / p.cols) + 1) + ", column " + (i % p.cols + 1);
       aria += v ? ", " + v + (given ? " (given)" : "") : ", empty";
       const regionText = cfg.regionAria(p, state.regionOf[i]);
@@ -256,6 +267,8 @@ const RegionPuzzle = (function () {
     if (undoBtn) undoBtn.classList.toggle("hidden", !(state.undoStack.length && !state.gameOver));
     const eraseBtn = document.getElementById("rp-erase-button");
     if (eraseBtn) eraseBtn.classList.toggle("hidden", state.gameOver || !state.puzzle);
+    const hintBtn = document.getElementById("hint-btn");
+    if (hintBtn) hintBtn.classList.toggle("hidden", state.gameOver || !state.puzzle || !cfg.hint || !hintSession);
     if (state.gameOver) clearSave();
     else save();
   }
@@ -266,13 +279,14 @@ const RegionPuzzle = (function () {
     updateBoard();
   }
 
-  function enterDigit(d) {
+  function enterDigit(d, fromHint) {
     const i = state.selected;
     if (i === null || state.gameOver || !state.puzzle) return;
     if (state.puzzle.givens[i]) return;
     if (d > state.puzzle.maxDigit) return;
     if (state.grid[i] === d) return;
     state.undoStack.push({ grid: state.grid.slice(), moveCount: state.moveCount });
+    if (!fromHint) clearHint();
     state.grid[i] = d;
     state.moveCount++;
     updateBoard();
@@ -284,7 +298,7 @@ const RegionPuzzle = (function () {
       setResult(message);
       setStatus("board-info", message);
       if (window.ResultModal) window.ResultModal.show(tr(cfg.prefix + "_win_title", "Solved!"), message);
-      if (typeof GameStats !== "undefined") GameStats.record(cfg.statsKey, "win");
+      if (typeof GameStats !== "undefined") GameStats.record(cfg.statsKey, "win", { hinted: state.hinted });
     } else {
       setStatus("board-info", hint());
     }
@@ -297,10 +311,57 @@ const RegionPuzzle = (function () {
     state.grid = prev.grid;
     state.moveCount = prev.moveCount;
     state.gameOver = false;
+    clearHint();
     setResult("");
     updateBoard();
     updateLabels();
     setStatus("board-info", tr(cfg.prefix + "_undone", "Move undone."));
+  }
+
+  /*** Hint (hint-engine.js) ***/
+
+  function clearHint() {
+    state.hintCells = [];
+    if (hintSession) hintSession.reset();
+  }
+
+  // Each press goes one stage further: 1 marks the cell, 2 gives the
+  // reason, 3 enters the number. A wrong entry or a broken rule is
+  // reported instead; with no step left that follows without trying
+  // things out, the hint says so rather than guessing.
+  function onHint() {
+    if (!state.puzzle || state.gameOver || !cfg.hint || !hintSession) return;
+    const p = state.puzzle;
+    if (!state.hintModel) state.hintModel = cfg.hint.model(p);
+    const model = state.hintModel;
+    state.hinted = true;
+    const res = hintSession.next(state.grid.join(","), () => {
+      if (!state.hintSolution) state.hintSolution = HintEngine.solve(model, p.givens);
+      return HintEngine.findHint(model, state.grid, p.givens, state.hintSolution);
+    });
+    const h = res.hint;
+    const text = HintEngine.describe(h, res.stage, {
+      cols: p.cols,
+      flavor: cfg.hint.flavor,
+      cageLabel: (cage) => {
+        const k = p.regions.findIndex((cells) => cells.length === cage.cells.length && cells.every((x) => cage.cells.indexOf(x) !== -1));
+        return k === -1 ? "" : p.labels[k];
+      }
+    });
+    if (h.kind === "step" && res.stage === 3) {
+      state.selected = h.cell;
+      state.hintCells = [h.cell];
+      enterDigit(h.value, true);
+      if (!state.gameOver) setStatus("board-info", text);
+      updateBoard();
+      return;
+    }
+    if (h.kind === "conflict") state.hintCells = h.cells.slice();
+    else if (h.kind === "wrong" || h.kind === "step") state.hintCells = [h.cell];
+    else state.hintCells = [];
+    updateBoard();
+    setStatus("board-info", text);
+    save();
   }
 
   function init(config) {
@@ -321,6 +382,8 @@ const RegionPuzzle = (function () {
     if (dailyBtn) dailyBtn.addEventListener("click", () => startNewGame(true));
     const eraseBtn = document.getElementById("rp-erase-button");
     if (eraseBtn) eraseBtn.addEventListener("click", () => enterDigit(0));
+    const hintBtn = document.getElementById("hint-btn");
+    if (hintBtn) hintBtn.addEventListener("click", onHint);
 
     document.addEventListener("keydown", (e) => {
       if (state.selected === null || state.gameOver) return;
@@ -331,7 +394,7 @@ const RegionPuzzle = (function () {
     const saved = typeof GameStorage !== "undefined" ? GameStorage.load(cfg.saveKey) : null;
     if (saved && saved.puzzle && saved.grid) {
       if (cfg.applyOptions && saved.options) cfg.applyOptions(saved.options);
-      load(saved.puzzle, saved.grid, saved.options, saved.moveCount);
+      load(saved.puzzle, saved.grid, saved.options, saved.moveCount, saved.hinted);
       setStatus("board-info", hint());
     }
     // Otherwise no puzzle is pre-generated: the placeholder shows until
@@ -339,7 +402,7 @@ const RegionPuzzle = (function () {
   }
 
   // For tests and the page's own undo button.
-  return { init, undo, enterDigit, state };
+  return { init, undo, enterDigit, hint: onHint, state };
 })();
 
 if (typeof window !== "undefined") {

@@ -41,11 +41,14 @@ const GameStats = (function () {
   }
 
   function emptyRecord() {
-    return { wins: 0, losses: 0, draws: 0, streak: 0, bestStreak: 0 };
+    return { wins: 0, losses: 0, draws: 0, streak: 0, bestStreak: 0, hintedWins: 0 };
   }
 
   // outcome is from the human player's perspective: "win" | "loss" | "draw"
-  function record(game, outcome) {
+  // opts.hinted: the puzzle was solved with the help of the hint button.
+  // Such a win counts like any other win; hintedWins only notes how many
+  // of the wins were made with hints (shown on stats.html).
+  function record(game, outcome, opts) {
     if (GAMES.indexOf(game) === -1) return;
     if (outcome !== "win" && outcome !== "loss" && outcome !== "draw") return;
     const all = loadAll();
@@ -58,6 +61,7 @@ const GameStats = (function () {
     if (typeof rec.bestStreak !== "number") rec.bestStreak = 0;
     if (outcome === "win") {
       rec.wins++;
+      if (opts && opts.hinted) rec.hintedWins = (rec.hintedWins || 0) + 1;
       rec.streak = rec.streak > 0 ? rec.streak + 1 : 1;
       if (rec.streak > rec.bestStreak) rec.bestStreak = rec.streak;
     } else if (outcome === "loss") {

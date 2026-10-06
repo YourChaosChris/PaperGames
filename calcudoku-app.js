@@ -46,9 +46,14 @@
       readOptions,
       applyOptions,
       daily: { buttonId: "daily-calcudoku-button", options: { size: 5, difficulty: "medium" } },
+      // A puzzle that the hint could not finish without trying things
+      // out is passed over (rare; see hint-engine.js).
       generate(options, done, rng) {
-        done(toRegionPuzzle(CalcudokuCore.generatePuzzle(options.size, options.difficulty, rng)));
+        done(toRegionPuzzle(HintEngine.pickSolvable(
+          () => CalcudokuCore.generatePuzzle(options.size, options.difficulty, rng),
+          (p) => HintEngine.solvable(HintEngine.calcudokuModel(p.size, p.cages), new Array(p.size * p.size).fill(0)))));
       },
+      hint: { flavor: "calcudoku", model: (p) => HintEngine.calcudokuModel(p.rows, p.cages) },
       findConflicts: (p, grid) => CalcudokuCore.findConflicts(p.rows, p.cages, grid),
       isComplete: (p, grid) => CalcudokuCore.isComplete(p.rows, p.cages, grid),
       regionAria: (p, region) => "cage " + p.labels[region]

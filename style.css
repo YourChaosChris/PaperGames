@@ -9220,3 +9220,24 @@ button.concan-meld {
   outline: 3px double var(--border);
   outline-offset: -4px;
 }
+
+/* Tipp-Knopf der Zahlenrätsel und Hashi (hint-engine.js): mindestens
+   44 CSS-Pixel hoch, damit er auf dem Touchscreen sicher zu treffen ist. */
+.board-actions .hint-btn {
+  min-height: 44px;
+}
+
+/* Vom Tipp markiertes Feld bzw. markierte Insel: ein doppelter Rahmen -
+   eine andere Form als die einfache Auswahl (.selected) und der
+   gestrichelte Konfliktrahmen, also auch ohne Farbe oder Grau zu
+   erkennen. */
+.sudoku-cell.hint-cell,
+.rp-cell.hint-cell {
+  outline: 6px double var(--text);
+  outline-offset: -7px;
+}
+
+.hashi-island.hint-cell {
+  outline: 6px double var(--text);
+  outline-offset: 2px;
+}

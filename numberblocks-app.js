@@ -40,9 +40,14 @@
       readOptions,
       applyOptions,
       daily: { buttonId: "daily-numberblocks-button", options: { difficulty: "medium" } },
+      // A puzzle that the hint could not finish without trying things
+      // out is passed over (see hint-engine.js).
       generate(options, done, rng) {
-        done(toRegionPuzzle(NumberBlocksCore.generatePuzzle(options.difficulty, rng)));
+        done(toRegionPuzzle(HintEngine.pickSolvable(
+          () => NumberBlocksCore.generatePuzzle(options.difficulty, rng),
+          (p) => HintEngine.solvable(HintEngine.numberBlocksModel(p.rows, p.cols, p.blocks), p.puzzle))));
       },
+      hint: { flavor: "numberblocks", model: (p) => HintEngine.numberBlocksModel(p.rows, p.cols, p.regions) },
       findConflicts: (p, grid) => NumberBlocksCore.findConflicts(p.rows, p.cols, p.regions, grid),
       isComplete: (p, grid) => NumberBlocksCore.isComplete(p.rows, p.cols, p.regions, grid),
       regionAria: (p, region) => "block of " + p.regions[region].length + " cells"

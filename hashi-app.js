@@ -31,8 +31,13 @@ const AppStateHashi = {
   selectedIsland: null, // island id, or null
   gameOver: false,
   moveCount: 0,
-  undoStack: []
+  undoStack: [],
+  hinted: false,        // the hint button was used on this puzzle
+  hintIslands: [],      // islands the current hint marks
+  hintSolution: null
 };
+
+const hashiHintSession = typeof HintEngine !== "undefined" ? HintEngine.createSession() : null;
 
 const HASHI_SAVE_KEY = "einkchess_save_hashi";
 
@@ -43,7 +48,8 @@ function saveHashiGame() {
     size: AppStateHashi.size,
     islands: AppStateHashi.board ? AppStateHashi.board.islands : null,
     bridgeCounts: AppStateHashi.bridgeCounts,
-    moveCount: AppStateHashi.moveCount
+    moveCount: AppStateHashi.moveCount,
+    hinted: AppStateHashi.hinted
   });
 }
 
@@ -54,7 +60,7 @@ function clearSavedHashiGame() {
 
 function recordHashiStats() {
   if (typeof GameStats === "undefined") return;
-  GameStats.record("hashi", "win");
+  GameStats.record("hashi", "win", { hinted: AppStateHashi.hinted });
 }
 
 function setStatusHashi(elementId, text) {
@@ -128,14 +134,25 @@ function initHashiApp() {
     // up to roughly a second on "hard" - yielding a tick first keeps the
     // "Generating…" status visible instead of the click feeling stuck.
     setTimeout(() => {
-      const puzzle = HashiPuzzles.generatePuzzle(difficulty, rng);
+      // A puzzle that the hint could not finish without trying things
+      // out is passed over (about one hard puzzle in seven; see
+      // hint-engine.js), at most 20 times.
+      let board = null, puzzle = null;
+      for (let k = 0; k < 20; k++) {
+        puzzle = HashiPuzzles.generatePuzzle(difficulty, rng);
+        board = HashiCore.buildBoard(puzzle.size, puzzle.size, puzzle.islands);
+        if (typeof HintEngine === "undefined" || HintEngine.hashiSolvable(board)) break;
+      }
       AppStateHashi.difficulty = difficulty;
       AppStateHashi.size = puzzle.size;
-      AppStateHashi.board = HashiCore.buildBoard(puzzle.size, puzzle.size, puzzle.islands);
+      AppStateHashi.board = board;
       AppStateHashi.bridgeCounts = HashiCore.createEmptyBridgeCounts(AppStateHashi.board);
       AppStateHashi.selectedIsland = null;
       AppStateHashi.gameOver = false;
       AppStateHashi.moveCount = 0;
+      AppStateHashi.hinted = false;
+      AppStateHashi.hintSolution = null;
+      clearHintHashi();
       resetUndoStackHashi();
       setGameResultHashi("");
       showBoardSectionHashi();
@@ -159,6 +176,9 @@ function initHashiApp() {
     startNewGameHashi(difficulty);
   });
 
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.addEventListener("click", hintHashi);
+
   const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(HASHI_SAVE_KEY) : null;
   if (savedGame && savedGame.islands) {
     AppStateHashi.difficulty = savedGame.difficulty;
@@ -166,6 +186,9 @@ function initHashiApp() {
     AppStateHashi.board = HashiCore.buildBoard(savedGame.size, savedGame.size, savedGame.islands);
     AppStateHashi.bridgeCounts = savedGame.bridgeCounts;
     AppStateHashi.moveCount = savedGame.moveCount;
+    AppStateHashi.hinted = !!savedGame.hinted;
+    AppStateHashi.hintSolution = null;
+    clearHintHashi();
     AppStateHashi.selectedIsland = null;
     AppStateHashi.gameOver = false;
     resetUndoStackHashi();
@@ -183,7 +206,7 @@ function initHashiApp() {
 
 /*** Move handling ***/
 
-function applyHashiEdgeAttempt(edgeId) {
+function applyHashiEdgeAttempt(edgeId, fromHint) {
   if (AppStateHashi.gameOver || edgeId === -1 || edgeId === undefined) {
     if (edgeId === -1) {
       setStatusHashi("board-info", (window.I18n && I18n.t("hashi_msg_no_line")) || "No clear line between those islands.");
@@ -191,6 +214,7 @@ function applyHashiEdgeAttempt(edgeId) {
     return;
   }
   pushUndoSnapshotHashi();
+  if (!fromHint) clearHintHashi();
   const result = HashiCore.cycleBridge(AppStateHashi.board, AppStateHashi.bridgeCounts, edgeId);
   if (result === null) {
     AppStateHashi.undoStack.pop(); // nothing actually changed - drop the snapshot
@@ -243,10 +267,46 @@ function undoLastMove() {
   AppStateHashi.bridgeCounts = prev.bridgeCounts;
   AppStateHashi.moveCount = prev.moveCount;
   AppStateHashi.selectedIsland = null;
+  clearHintHashi();
   setGameResultHashi("");
   updateHashiBoard();
   updateGameLabelsHashi();
   setStatusHashi("board-info", (window.I18n && I18n.t("hashi_undone")) || "Move undone.");
+}
+
+/*** Hint (hint-engine.js) ***/
+
+function clearHintHashi() {
+  AppStateHashi.hintIslands = [];
+  if (hashiHintSession) hashiHintSession.reset();
+}
+
+// Each press goes one stage further: 1 marks the two islands, 2 gives
+// the reason, 3 adds the bridge. A bridge that is not part of the
+// solution is reported instead; with no step left that follows without
+// trying things out, the hint says so rather than guessing.
+function hintHashi() {
+  if (!hashiHintSession || !AppStateHashi.board || AppStateHashi.gameOver) return;
+  const board = AppStateHashi.board;
+  AppStateHashi.hinted = true;
+  const res = hashiHintSession.next(AppStateHashi.bridgeCounts.join(""), () => {
+    if (!AppStateHashi.hintSolution) AppStateHashi.hintSolution = HashiCore.solve(board);
+    return HintEngine.hashiHint(HashiCore, board, AppStateHashi.bridgeCounts, AppStateHashi.hintSolution);
+  });
+  const h = res.hint;
+  const text = HintEngine.describeHashi(h, res.stage, board);
+  const edge = h.edge !== undefined ? board.edges[h.edge] : null;
+  AppStateHashi.hintIslands = edge ? [edge.a, edge.b] : [];
+  AppStateHashi.selectedIsland = null;
+  if (h.kind === "step" && res.stage === 3) {
+    applyHashiEdgeAttempt(h.edge, true);
+    if (!AppStateHashi.gameOver) setStatusHashi("board-info", text);
+    updateHashiBoard();
+    return;
+  }
+  updateHashiBoard();
+  setStatusHashi("board-info", text);
+  saveHashiGame();
 }
 
 function showBoardSectionHashi() {
@@ -389,6 +449,7 @@ function updateHashiBoard() {
     btn.classList.toggle("hashi-island-selected", id === selected);
     btn.classList.toggle("hashi-island-satisfied", satisfied.has(id) && !overfilled.has(id));
     btn.classList.toggle("hashi-island-over", overfilled.has(id));
+    btn.classList.toggle("hint-cell", AppStateHashi.hintIslands.indexOf(id) !== -1);
     const label = "Island " + (isl.row + 1) + "," + (isl.col + 1) + ": needs " + isl.need +
       ", currently " + counts[id] + (overfilled.has(id) ? ", too many" : satisfied.has(id) ? ", satisfied" : "");
     I18n.setAria(btn, label);
@@ -425,6 +486,8 @@ function updateUndoButtonVisibilityHashi() {
   if (!btn) return;
   const hasUndo = (AppStateHashi.undoStack || []).length > 0;
   btn.classList.toggle("hidden", !(hasUndo && !AppStateHashi.gameOver));
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.classList.toggle("hidden", AppStateHashi.gameOver || !AppStateHashi.board || !hashiHintSession);
 }
 
 document.addEventListener("DOMContentLoaded", initHashiApp);

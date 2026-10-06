@@ -41,9 +41,20 @@
       statusId: "offline-killersudoku-status",
       readOptions,
       applyOptions,
+      // A puzzle that the hint could not finish without trying things
+      // out is passed over (about one in twenty; see hint-engine.js), at
+      // most 20 times.
       generate(options, done, rng) {
-        KillerSudokuCore.generatePuzzleAsync(options.difficulty, rng || null, (p) => done(toRegionPuzzle(p)));
+        let tries = 0;
+        (function attempt() {
+          KillerSudokuCore.generatePuzzleAsync(options.difficulty, rng || null, (p) => {
+            tries++;
+            if (tries >= 20 || HintEngine.solvable(HintEngine.killerModel(p.cages), p.givens)) done(toRegionPuzzle(p));
+            else attempt();
+          });
+        })();
       },
+      hint: { flavor: "killer", model: (p) => HintEngine.killerModel(p.cages) },
       daily: { buttonId: "daily-killersudoku-button", options: { difficulty: "medium" } },
       findConflicts: (p, grid) => KillerSudokuCore.findConflicts(p.cages, grid),
       isComplete: (p, grid) => KillerSudokuCore.isComplete(p.cages, grid),

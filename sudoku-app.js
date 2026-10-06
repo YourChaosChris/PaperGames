@@ -23,8 +23,14 @@ const AppStateSudoku = {
   selected: null,    // cell index or null
   gameOver: false,
   moveCount: 0,
-  undoStack: []
+  undoStack: [],
+  hinted: false,     // the hint button was used on this puzzle
+  hintCells: [],     // cells the current hint marks
+  hintSolution: null
 };
+
+const sudokuHintModel = typeof HintEngine !== "undefined" ? HintEngine.sudokuModel() : null;
+const sudokuHintSession = typeof HintEngine !== "undefined" ? HintEngine.createSession() : null;
 
 const SUDOKU_SAVE_KEY = "einkchess_save_sudoku";
 
@@ -35,7 +41,8 @@ function saveSudokuGame() {
     puzzle: AppStateSudoku.puzzle,
     solution: AppStateSudoku.solution,
     grid: AppStateSudoku.grid,
-    moveCount: AppStateSudoku.moveCount
+    moveCount: AppStateSudoku.moveCount,
+    hinted: AppStateSudoku.hinted
   });
 }
 
@@ -46,7 +53,7 @@ function clearSavedSudokuGame() {
 
 function recordSudokuStats() {
   if (typeof GameStats === "undefined") return;
-  GameStats.record("sudoku", "win");
+  GameStats.record("sudoku", "win", { hinted: AppStateSudoku.hinted });
 }
 
 function setStatusSudoku(elementId, text) {
@@ -115,7 +122,11 @@ function initSudokuApp() {
     // tick keeps the "Generating…" status visible instead of the click
     // feeling unresponsive.
     setTimeout(() => {
-      const { puzzle, solution } = SudokuCore.generatePuzzle(difficulty, rng);
+      // A puzzle that the hint could not finish without trying things
+      // out is passed over (rare; see hint-engine.js).
+      const { puzzle, solution } = sudokuHintModel
+        ? HintEngine.pickSolvable(() => SudokuCore.generatePuzzle(difficulty, rng), (p) => HintEngine.solvable(sudokuHintModel, p.puzzle))
+        : SudokuCore.generatePuzzle(difficulty, rng);
       AppStateSudoku.difficulty = difficulty;
       AppStateSudoku.isDaily = !!isDaily;
       AppStateSudoku.puzzle = puzzle;
@@ -125,6 +136,9 @@ function initSudokuApp() {
       AppStateSudoku.selected = null;
       AppStateSudoku.gameOver = false;
       AppStateSudoku.moveCount = 0;
+      AppStateSudoku.hinted = false;
+      AppStateSudoku.hintSolution = null;
+      clearHintSudoku();
       resetUndoStackSudoku();
       setGameResultSudoku("");
       showBoardSectionSudoku();
@@ -160,6 +174,9 @@ function initSudokuApp() {
     eraseBtn.addEventListener("click", () => enterDigitSudoku(0));
   }
 
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.addEventListener("click", hintSudoku);
+
   document.addEventListener("keydown", (e) => {
     if (AppStateSudoku.selected === null || AppStateSudoku.gameOver) return;
     if (e.key >= "1" && e.key <= "9") {
@@ -177,6 +194,9 @@ function initSudokuApp() {
     AppStateSudoku.grid = savedGame.grid;
     AppStateSudoku.givenMask = savedGame.puzzle.map((v) => v !== 0);
     AppStateSudoku.moveCount = savedGame.moveCount;
+    AppStateSudoku.hinted = !!savedGame.hinted;
+    AppStateSudoku.hintSolution = null;
+    clearHintSudoku();
     AppStateSudoku.selected = null;
     AppStateSudoku.gameOver = false;
     resetUndoStackSudoku();
@@ -203,13 +223,14 @@ function onSudokuCellClick(index) {
   updateSudokuBoard();
 }
 
-function enterDigitSudoku(digit) {
+function enterDigitSudoku(digit, fromHint) {
   const index = AppStateSudoku.selected;
   if (index === null || AppStateSudoku.gameOver) return;
   if (AppStateSudoku.givenMask[index]) return;
   if (AppStateSudoku.grid[index] === digit) return;
 
   pushUndoSnapshotSudoku();
+  if (!fromHint) clearHintSudoku();
   AppStateSudoku.grid[index] = digit;
   AppStateSudoku.moveCount++;
   updateSudokuBoard();
@@ -230,10 +251,47 @@ function undoLastMove() {
   const prev = AppStateSudoku.undoStack.pop();
   AppStateSudoku.grid = prev.grid;
   AppStateSudoku.moveCount = prev.moveCount;
+  clearHintSudoku();
   setGameResultSudoku("");
   updateSudokuBoard();
   updateGameLabelsSudoku();
   setStatusSudoku("board-info", "Move undone.");
+}
+
+/*** Hint (hint-engine.js) ***/
+
+function clearHintSudoku() {
+  AppStateSudoku.hintCells = [];
+  if (sudokuHintSession) sudokuHintSession.reset();
+}
+
+// Each press goes one stage further: 1 marks the cell, 2 gives the
+// reason, 3 enters the number. A wrong entry or a broken rule is
+// reported instead; with no step left that follows without trying
+// things out, the hint says so rather than guessing.
+function hintSudoku() {
+  if (!sudokuHintModel || !AppStateSudoku.grid || AppStateSudoku.gameOver) return;
+  AppStateSudoku.hinted = true;
+  const res = sudokuHintSession.next(AppStateSudoku.grid.join(""), () => {
+    if (!AppStateSudoku.hintSolution) AppStateSudoku.hintSolution = HintEngine.solve(sudokuHintModel, AppStateSudoku.puzzle);
+    return HintEngine.findHint(sudokuHintModel, AppStateSudoku.grid, AppStateSudoku.puzzle, AppStateSudoku.hintSolution);
+  });
+  const h = res.hint;
+  const text = HintEngine.describe(h, res.stage, { cols: 9, flavor: "sudoku" });
+  if (h.kind === "step" && res.stage === 3) {
+    AppStateSudoku.selected = h.cell;
+    AppStateSudoku.hintCells = [h.cell];
+    enterDigitSudoku(h.value, true);
+    if (!AppStateSudoku.gameOver) setStatusSudoku("board-info", text);
+    updateSudokuBoard();
+    return;
+  }
+  if (h.kind === "conflict") AppStateSudoku.hintCells = h.cells.slice();
+  else if (h.kind === "wrong" || h.kind === "step") AppStateSudoku.hintCells = [h.cell];
+  else AppStateSudoku.hintCells = [];
+  updateSudokuBoard();
+  setStatusSudoku("board-info", text);
+  saveSudokuGame();
 }
 
 function showBoardSectionSudoku() {
@@ -337,6 +395,7 @@ function updateSudokuBoard() {
     cell.classList.toggle("sudoku-cell-given", isGiven);
     cell.classList.toggle("selected", AppStateSudoku.selected === index);
     cell.classList.toggle("sudoku-cell-conflict", conflicts.has(index));
+    cell.classList.toggle("hint-cell", AppStateSudoku.hintCells.indexOf(index) !== -1);
 
     let label2 = "Row " + (Math.floor(index / 9) + 1) + ", column " + (index % 9 + 1);
     label2 += value ? ", " + value + (isGiven ? " (given)" : "") : ", empty";
@@ -351,6 +410,8 @@ function updateGameLabelsSudoku() {
   if (meta) I18n.setMsg(meta, AppStateSudoku.grid ? filled + " / 81 filled" : "");
   updateUndoButtonVisibilitySudoku();
   updateEraseButtonVisibilitySudoku();
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.classList.toggle("hidden", AppStateSudoku.gameOver || !AppStateSudoku.grid || !sudokuHintModel);
 
   if (AppStateSudoku.gameOver) clearSavedSudokuGame();
   else saveSudokuGame();
