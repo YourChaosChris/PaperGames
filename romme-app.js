@@ -40,7 +40,8 @@ const AppStateRomme = {
   revealed: true,
   selected: [],         // card ids
   busy: false,
-  recorded: false       // statistics recorded for the current round
+  recorded: false,      // statistics recorded for the current round
+  choice: null          // house rule "split runs": { meld, id } while asking "add or split?"
 };
 
 // Against the computer the human is "You" and the computers "Computer 1"
@@ -115,8 +116,10 @@ function initRommeApp() {
     const takeRule = !!(takeEl && takeEl.checked);
     const discEl = document.getElementById("romme-discard-rule");
     const discardRule = !!(discEl && discEl.checked);
+    const splitEl = document.getElementById("romme-split-rule");
+    const splitRule = !!(splitEl && splitEl.checked);
     const players = pendingMode === "vs-ai" ? opponents + 1 : seats;
-    startGameRomme(pendingMode, level, players, threshold, rounds, takeRule, discardRule);
+    startGameRomme(pendingMode, level, players, threshold, rounds, takeRule, discardRule, splitRule);
     const status = document.getElementById("offline-romme-status");
     if (status) {
       const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
@@ -133,6 +136,8 @@ function initRommeApp() {
   document.getElementById("romme-confirm-button").addEventListener("click", () => humanMoveRomme({ type: "confirmOpen" }));
   document.getElementById("romme-cancel-button").addEventListener("click", () => humanMoveRomme({ type: "cancelPending" }));
   document.getElementById("romme-return-button").addEventListener("click", () => humanMoveRomme({ type: "returnDiscard" }));
+  document.getElementById("romme-choice-extend").addEventListener("click", () => onChoiceRomme(false));
+  document.getElementById("romme-choice-split").addEventListener("click", () => onChoiceRomme(true));
   document.getElementById("romme-sort-button").addEventListener("click", () => {
     setSortRomme(getSortRomme() === "rank" ? "suit" : "rank");
     renderRomme();
@@ -174,11 +179,11 @@ function showBoardRomme() {
   if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
 }
 
-function startGameRomme(mode, level, players, threshold, rounds, takeRule, discardRule) {
+function startGameRomme(mode, level, players, threshold, rounds, takeRule, discardRule, splitRule) {
   AppStateRomme.mode = mode;
   AppStateRomme.aiLevel = level;
   const dealer = typeof RandomStart !== "undefined" ? RandomStart.choose(0, Array.from({ length: players }, (_, i) => i)) : 0;
-  AppStateRomme.state = RommeCore.createInitialState({ players, threshold, dealer, rounds: rounds || 1, takeRule: !!takeRule, discardRule: !!discardRule });
+  AppStateRomme.state = RommeCore.createInitialState({ players, threshold, dealer, rounds: rounds || 1, takeRule: !!takeRule, discardRule: !!discardRule, splitRule: !!splitRule });
   AppStateRomme.started = true;
   AppStateRomme.busy = false;
   AppStateRomme.recorded = false;
@@ -286,6 +291,7 @@ function describeRomme(before, after, move) {
   if (move.type === "extend") return who + " adds the " + cardLabelRomme(ev.card) + " to a meld.";
   if (move.type === "swapJoker") return who + " swaps the " + cardLabelRomme(ev.card) + " for a joker.";
   if (move.type === "take") return who + " takes the " + cardLabelRomme(ev.card) + " from a meld.";
+  if (move.type === "split") return who + " splits a run with the " + cardLabelRomme(ev.card) + ".";
   if (move.type === "returnDiscard") return who + " puts the " + cardLabelRomme(ev.card) + " back and draws from the stock.";
   if (move.type === "discard") return who + " discards the " + cardLabelRomme(ev.card) + ".";
   return "";
@@ -301,6 +307,7 @@ function describeYouRomme(before, after, move, ev) {
   if (move.type === "extend") return "You add the " + card + " to a meld.";
   if (move.type === "swapJoker") return "You swap the " + card + " for a joker.";
   if (move.type === "take") return "You take the " + card + " from a meld.";
+  if (move.type === "split") return "You split a run with the " + card + ".";
   if (move.type === "returnDiscard") return "You put the " + card + " back and draw from the stock.";
   if (move.type === "discard") return "You discard the " + card + ".";
   return "";
@@ -312,6 +319,7 @@ function applyRomme(move) {
   if (!r.ok) return r.reason;
   AppStateRomme.state = r.state;
   AppStateRomme.selected = [];
+  AppStateRomme.choice = null;
   afterStepRomme(describeRomme(before, r.state, move), r.state.turn !== before.turn);
   return null;
 }
@@ -398,7 +406,10 @@ const ROMME_REASON_TEXT = {
   "take-joker": "Jokers can't be taken - swap them instead.",
   "taken-first": "Lay out the card you took in a new meld first, or take it back.",
   "taken-new-meld": "A card taken from the table must go into a new meld.",
-  "discard-card-first": "Lay out the card from the discard pile in a meld first - or put it back and draw from the stock."
+  "discard-card-first": "Lay out the card from the discard pile in a meld first - or put it back and draw from the stock.",
+  "split-set": "Sets can't be split.",
+  "split-short": "Both runs must have at least three cards after the split.",
+  "split-joker": "A joker stands for that card - the run can't be split there."
 };
 
 // Hand order: "suit" (suit, then rank - the default) or "rank" (equal
@@ -432,6 +443,7 @@ function humanMoveRomme(move) {
 
 function onHandCardRomme(id) {
   if (!humanCanActRomme()) return;
+  AppStateRomme.choice = null;
   const sel = AppStateRomme.selected;
   const k = sel.indexOf(id);
   if (k === -1) sel.push(id); else sel.splice(k, 1);
@@ -451,8 +463,38 @@ function onTableMeldRomme(index) {
   const id = AppStateRomme.selected[0];
   const card = s.players[s.turn].hand.find((c) => c.id === id);
   const meld = s.melds[index];
+  // House rule "split runs": a card that only splits the run splits it;
+  // one that could also be added there asks which is meant.
+  const canSplit = !!(s.splitRule && card && meld && RommeCore.splitIndex(meld, card) !== -1);
+  const canAdd = !!(card && meld && (RommeCore.extendMeld(meld, card) || RommeCore.jokerSlotFor(meld, card) !== -1));
+  if (canSplit && canAdd) {
+    AppStateRomme.choice = { meld: index, id };
+    setStatusRomme("This card fits both ways: add it to the meld or split the run?");
+    renderRomme();
+    return;
+  }
+  if (canSplit) { humanMoveRomme({ type: "split", meld: index, id }); return; }
+  if (s.splitRule && card && meld && meld.type === "run" && !canAdd) {
+    // Let the rules say why a split is not possible here.
+    const r = RommeCore.applyMove(s, { type: "split", meld: index, id });
+    if (r.reason === "split-short" || r.reason === "split-joker") { setStatusRomme(ROMME_REASON_TEXT[r.reason]); return; }
+  }
   if (card && meld && RommeCore.jokerSlotFor(meld, card) !== -1) humanMoveRomme({ type: "swapJoker", meld: index, id });
   else humanMoveRomme({ type: "extend", meld: index, id });
+}
+
+// The answer to "add or split?".
+function onChoiceRomme(split) {
+  const c = AppStateRomme.choice;
+  AppStateRomme.choice = null;
+  if (!c || !humanCanActRomme()) { renderRomme(); return; }
+  const s = AppStateRomme.state;
+  const card = s.players[s.turn].hand.find((x) => x.id === c.id);
+  const meld = s.melds[c.meld];
+  if (split) humanMoveRomme({ type: "split", meld: c.meld, id: c.id });
+  else if (card && meld && RommeCore.jokerSlotFor(meld, card) !== -1) humanMoveRomme({ type: "swapJoker", meld: c.meld, id: c.id });
+  else humanMoveRomme({ type: "extend", meld: c.meld, id: c.id });
+  renderRomme();
 }
 
 function onDiscardButtonRomme() {
@@ -651,6 +693,9 @@ function renderRomme() {
   document.getElementById("romme-return-button").classList.toggle("hidden", !(myTurn && s.phase === "play" && RommeCore.discardCardOpen(s)));
   I18n.setKey(document.getElementById("romme-sort-button"), getSortRomme() === "rank" ? "romme_sort_by_suit" : "romme_sort_by_rank");
   document.getElementById("romme-cancel-button").classList.toggle("hidden", !s.pending.length && !(s.takenIds && s.takenIds.length));
+  const asking = !!AppStateRomme.choice;
+  document.getElementById("romme-choice-extend").classList.toggle("hidden", !asking);
+  document.getElementById("romme-choice-split").classList.toggle("hidden", !asking);
   document.getElementById("romme-confirm-button").classList.toggle("hidden", !s.pending.length);
 
   // Round end

@@ -329,6 +329,14 @@ const SAMPLES = [
   "Player 2 drew a card. Player 2 keeps the card.",
   "Player 1 played Q♦. Mau Mau! Player 1 wins.",
   "There is no card left to draw. Player 3 passes.",
+  // Rommé, house rule "split runs"
+  "Computer 1 splits a run with the 4♠. Computer 1 discards the 9♥.",
+  "You split a run with the 4♠.",
+  "Player 2 splits a run with the 8♥.",
+  "Sets can't be split.",
+  "Both runs must have at least three cards after the split.",
+  "A joker stands for that card - the run can't be split there.",
+  "This card fits both ways: add it to the meld or split the run?",
   // Against the computer: "You" and "Computer n" (Schwimmen, Durak, Concan,
   // Doppelkopf, Trix, Mau Mau, Domino)
   "Computer opponents: 2 · computer level: Medium",

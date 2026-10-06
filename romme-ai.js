@@ -12,6 +12,8 @@
 //                on the table - the next player could use it.
 // With the house rule "take cards from melds" switched on, every level
 // takes a table card when it forms a new meld with two of its own cards.
+// With the house rule "split runs" switched on, every level splits a run
+// with a card it can neither lay out in a meld nor add anywhere.
 // chooseMove returns one step at a time; the page calls it until the
 // computer has discarded or the round is over.
 
@@ -253,6 +255,18 @@ const RommeAi = (function () {
               if (C.jokerUsable(hand.filter((c) => c.id !== card.id).concat([joker]), joker)) return { type: "swapJoker", meld: i, id: card.id };
             }
           }
+        }
+      }
+    }
+
+    // House rule (only when switched on): split a run with a card that
+    // fits nowhere else. Reached only when no meld, extension or joker
+    // swap was found above, so every hand card here is otherwise stuck.
+    if (s.splitRule && pl.opened && s.pendingJoker === null) {
+      for (let i = 0; i < s.melds.length; i++) {
+        for (const card of hand) {
+          if ((s.takenIds || []).includes(card.id)) continue;
+          if (C.splitIndex(s.melds[i], card) !== -1) return { type: "split", meld: i, id: card.id };
         }
       }
     }

@@ -51,6 +51,15 @@
 //     on the table the player may not discard. PaperGames rule: if that
 //     doesn't work out, "returnDiscard" puts it back on the discard pile
 //     (dissolving staged melds that hold it) and draws from the stock.
+//   - splitRule, a house rule (default off, not usual Rommé; asked for by a
+//     player on 06.10.2026): after the first meld a player may split a run
+//     on the table, their own or another player's, with a hand card of the
+//     same rank and suit as a natural card in it (the second pack makes
+//     that possible). The first run ends with the card already there, the
+//     second starts with the new one; both need at least three cards and
+//     both belong to the owner of the old run. Not where a joker stands
+//     for that card; sets are never split. Like adding a card, a split is
+//     allowed several times per turn.
 //
 // Card: { id, rank 1..13, suit "C"|"S"|"H"|"D" } or { id, joker: true }.
 // Meld on the table: { owner, type: "set"|"run", entries: [{ card, rank,
@@ -219,6 +228,7 @@ const RommeCore = (function () {
       rounds: ROUND_CHOICES.indexOf(o.rounds) !== -1 ? o.rounds : 1,
       takeRule: !!o.takeRule,
       discardRule: !!o.discardRule,
+      splitRule: !!o.splitRule,
       scores: new Array(n).fill(0),
       round: 0,
       dealer: o.dealer !== undefined ? o.dealer : 0
@@ -240,6 +250,7 @@ const RommeCore = (function () {
       rounds: base.rounds || 1,
       takeRule: !!base.takeRule,
       discardRule: !!base.discardRule,
+      splitRule: !!base.splitRule,
       scores: base.scores.slice(),
       round: base.round + 1,
       dealer: base.dealer,
@@ -265,7 +276,7 @@ const RommeCore = (function () {
   }
 
   function nextRound(s, rng) {
-    return startRound({ n: s.n, threshold: s.threshold, rounds: s.rounds || 1, takeRule: !!s.takeRule, discardRule: !!s.discardRule, scores: s.scores,
+    return startRound({ n: s.n, threshold: s.threshold, rounds: s.rounds || 1, takeRule: !!s.takeRule, discardRule: !!s.discardRule, splitRule: !!s.splitRule, scores: s.scores,
       round: s.round, dealer: (s.dealer + 1) % s.n }, rng);
   }
 
@@ -294,6 +305,32 @@ const RommeCore = (function () {
     if (meld.type === "run" && index !== 0 && index !== meld.entries.length - 1) return false;
     const rest = meld.entries.filter((_, i) => i !== index);
     return rest.some((x) => !x.card.joker);
+  }
+
+  // House rule: where `card` would split `meld` - the index of the natural
+  // card of the same rank and suit that ends the first run - or -1.
+  function splitIndex(meld, card) {
+    if (!meld || meld.type !== "run" || !card || card.joker) return -1;
+    const n = meld.entries.length;
+    for (let i = 0; i < n; i++) {
+      const e = meld.entries[i];
+      if (e.suit !== card.suit) continue;
+      if (!(e.rank === card.rank || (card.rank === 1 && e.rank === 14))) continue;
+      // A joker standing for this card: no split here.
+      if (e.card.joker) return -1;
+      // First run entries 0..i, second the new card plus entries i+1..
+      if (i + 1 < 3 || n - i < 3) return -1;
+      return i;
+    }
+    return -1;
+  }
+
+  // The two runs a split makes: [first, second], both owned like `meld`.
+  function splitMeld(meld, card, i) {
+    const first = { owner: meld.owner, type: "run", entries: clone(meld.entries.slice(0, i + 1)) };
+    const e = meld.entries[i];
+    const second = { owner: meld.owner, type: "run", entries: [{ card, rank: e.rank, suit: e.suit }].concat(clone(meld.entries.slice(i + 1))) };
+    return [first, second];
   }
 
   // Every card the side to move may take now: [{ meld, id }].
@@ -360,6 +397,7 @@ const RommeCore = (function () {
   //   { type: "swapJoker", meld, id } exchange a table joker for the card
   //   { type: "take", meld, id }  house rule: take a card from a table meld
   //   { type: "returnDiscard" }   variant: put the taken discard back, draw
+  //   { type: "split", meld, id } house rule: split a run with a hand card
   //   { type: "discard", id }     end the turn
   // Returns { ok, state, reason }.
   function applyMove(state, move) {
@@ -499,6 +537,31 @@ const RommeCore = (function () {
       return { ok: true, state: s };
     }
 
+    if (move.type === "split") {
+      if (!s.splitRule) return { ok: false, state, reason: "bad-move" };
+      if (!pl.opened) return { ok: false, state, reason: "open-first" };
+      if (s.pendingJoker !== null) return { ok: false, state, reason: "joker-first" };
+      if ((s.takenIds || []).includes(move.id)) return { ok: false, state, reason: "taken-new-meld" };
+      const meld = s.melds[move.meld];
+      const i = findInHand(pl.hand, move.id);
+      if (!meld || i === -1) return { ok: false, state, reason: "not-in-hand" };
+      const card = pl.hand[i];
+      if (meld.type !== "run") return { ok: false, state, reason: "split-set" };
+      const at = splitIndex(meld, card);
+      if (at === -1) {
+        const twin = card.joker ? -1 : meld.entries.findIndex((e) => e.suit === card.suit && (e.rank === card.rank || (card.rank === 1 && e.rank === 14)));
+        if (twin !== -1 && meld.entries[twin].card.joker) return { ok: false, state, reason: "split-joker" };
+        if (twin !== -1) return { ok: false, state, reason: "split-short" };
+        return { ok: false, state, reason: "doesnt-fit" };
+      }
+      pl.hand.splice(i, 1);
+      const parts = splitMeld(meld, card, at);
+      s.melds.splice(move.meld, 1, parts[0], parts[1]);
+      s.lastEvent = { type: "split", player: p, card, owner: meld.owner };
+      if (!pl.hand.length) return { ok: true, state: endRound(s, p) };
+      return { ok: true, state: s };
+    }
+
     if (move.type === "swapJoker") {
       if (!pl.opened) return { ok: false, state, reason: "open-first" };
       if (s.pendingJoker !== null) return { ok: false, state, reason: "joker-first" };
@@ -560,7 +623,7 @@ const RommeCore = (function () {
 
   return {
     SUITS, JOKERS, THRESHOLDS, DEFAULT_THRESHOLD, ROUND_CHOICES, MAX_RESHUFFLES, makeDeck, handValue, entryValue, meldValue, buildMeld,
-    extendMeld, jokerSlotFor, jokerUsable, createInitialState, nextRound, matchResult, canTakeFrom, takeOptions, discardCardOpen, topDiscard, pendingValue,
+    extendMeld, jokerSlotFor, jokerUsable, createInitialState, nextRound, matchResult, canTakeFrom, takeOptions, splitIndex, discardCardOpen, topDiscard, pendingValue,
     applyMove, cardCount, clone
   };
 })();
