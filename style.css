@@ -1313,6 +1313,34 @@ margin: 2rem 0 1rem;
   display: none;
 }
 
+/* Quick rules box above the board on a game page (quick-rules.js): up to
+   three plain sentences and two buttons, in the normal page flow - it
+   pushes the board down a little but never covers it. */
+.quick-rules {
+  padding: 0.75rem 1rem;
+}
+
+.quick-rules-sentence {
+  margin: 0 0 0.4rem;
+  line-height: 1.4;
+}
+
+.quick-rules-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 0.6rem;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.quick-rules-actions > * {
+  margin: 0 0.5rem 0 0;
+}
+
+.quick-rules-actions > *:last-child {
+  margin-right: 0;
+}
+
 /* Offline status line under the home intro (home-app.js, offline-status.js):
    plain full-contrast text, a check mark or a dot as the only mark, no box.
    The reserved height keeps the buttons below from jumping when the text
