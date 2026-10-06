@@ -849,8 +849,16 @@ font-size: 1.2rem;
   min-width: 0;
 }
 
+/* The title is a flex item of a column with align-items: flex-start, so
+   without max-width it took the width of its text and pushed the page
+   wider than the screen (Hashiwokakero, Minesweeper at 632px). Capped to
+   the space left of the icon it wraps; clamp() also scales it down with
+   the viewport so long single words fit whole - browsers without clamp()
+   keep the 0.35em line and break such a word instead. */
 .board-placeholder-title {
+  max-width: 100%;
   font-size: 0.35em;
+  font-size: clamp(1rem, calc(9vw - 1.6rem), 0.35em);
   line-height: 1;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -862,18 +870,29 @@ font-size: 1.2rem;
   .board-placeholder {
     font-size: 6.5rem;
   }
+
+  .board-placeholder-title {
+    font-size: clamp(1rem, calc(13vw - 2rem), 0.35em);
+  }
 }
 
 @media (max-width: 420px) {
   .board-placeholder {
     font-size: 5rem;
   }
+
+  .board-placeholder-title {
+    font-size: clamp(1rem, calc(13vw - 1.5rem), 0.35em);
+  }
 }
 
 .board-placeholder-subtitle {
+  max-width: 100%;
   font-size: 0.18em;
   line-height: 1.1;
   opacity: 0.8;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 
