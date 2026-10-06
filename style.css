@@ -9878,3 +9878,95 @@ button.concan-meld {
   border-right: 0.55em solid transparent;
   border-bottom: 1em solid #111;
 }
+
+/* Seega board (seega-app.js): 5x5 square cells in a CSS grid, the row
+   height set from the width in JS. Black stones are filled discs, White
+   stones thick rings; the centre square is marked by a diagonal cross so
+   it reads without grey. Squares you can use now get a dashed border,
+   the stone being moved a heavy solid one. */
+.seega-board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+}
+
+.seega-cell {
+  position: relative;
+  border: 1px solid var(--border);
+  background: var(--square-light);
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.seega-cell-center {
+  background-image: linear-gradient(45deg, transparent 48.5%, var(--border) 48.5%, var(--border) 51.5%, transparent 51.5%),
+    linear-gradient(-45deg, transparent 48.5%, var(--border) 48.5%, var(--border) 51.5%, transparent 51.5%);
+}
+
+.seega-cell-selectable,
+.seega-cell-target {
+  outline: 3px dashed var(--border);
+  outline-offset: -6px;
+}
+
+.seega-cell-selected {
+  outline: 5px solid var(--accent);
+  outline-offset: -6px;
+}
+
+.seega-cell.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.seega-stone {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 66%;
+  height: 66%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.seega-stone-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.seega-stone-white {
+  background: #fff;
+  border: 7px solid #111;
+}
+
+.seega-icon-stone {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.seega-icon-stone-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.seega-icon-stone-white {
+  background: #fff;
+  border: 3px solid #111;
+}
+
+.seega-phase-line {
+  font-weight: 700;
+}

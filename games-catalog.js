@@ -710,4 +710,15 @@ const GAMES_CATALOG = [
     added: "2026-10-06",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M37 8 H63 V37 H92 V63 H63 V92 H37 V63 H8 V37 H37 Z\" fill=\"none\" stroke=\"#000\" stroke-width=\"3\"/><path d=\"M50 28 L66 56 L34 56 Z\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"5\" stroke-linejoin=\"round\"/><circle cx=\"38\" cy=\"78\" r=\"7\" fill=\"#111\"/><circle cx=\"62\" cy=\"78\" r=\"7\" fill=\"#111\"/><circle cx=\"20\" cy=\"70\" r=\"6\" fill=\"#111\"/><circle cx=\"80\" cy=\"70\" r=\"6\" fill=\"#111\"/></svg></span>"
   },
+  {
+    slug: "seega",
+    category: "strategy",
+    nameKey: "game_seega",
+    nameText: "Seega",
+    descKey: "home_seega_desc",
+    descText: "An Egyptian game of placing and trapping on a 5x5 board: first both sides place their 12 stones, then capture by enclosing. Local 2-player or vs. the built-in engine.",
+    popular: false,
+    added: "2026-10-06",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><rect x=\"10\" y=\"10\" width=\"80\" height=\"80\"/><path d=\"M26 10V90M42 10V90M58 10V90M74 10V90M10 26H90M10 42H90M10 58H90M10 74H90\"/></g><circle cx=\"34\" cy=\"50\" r=\"6\" fill=\"#111\"/><circle cx=\"66\" cy=\"50\" r=\"6\" fill=\"#111\"/><circle cx=\"50\" cy=\"50\" r=\"5.5\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"3\"/><circle cx=\"18\" cy=\"18\" r=\"5.5\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"3\"/><circle cx=\"82\" cy=\"82\" r=\"6\" fill=\"#111\"/></svg></span>"
+  },
 ];

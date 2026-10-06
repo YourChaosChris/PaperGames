@@ -17,6 +17,22 @@ const { I18n, STRINGS } = require("./load-i18n").loadI18n();
 
 // One sample per message shape, as the games actually produce them.
 const SAMPLES = [
+  "White: place a stone (1 of 2).",
+  "Black: place a stone (2 of 2).",
+  "Black can capture again with the same stone. Tap it to end the turn.",
+  "White: move a stone onto the centre.",
+  "Black: move a stone.",
+  "White cannot move and passes. Black: move a stone.",
+  "Black captured 2. White: move a stone.",
+  "Placing phase · stones to place – Black: 12 · White: 10",
+  "Moving phase · stones – Black: 11 · White: 9 · turns without capture: 3 of 40",
+  "White wins: every stone of the other side is captured.",
+  "Black wins on stones (7 to 5) after 40 turns without a capture.",
+  "White wins on stones (9 to 4): neither side can move.",
+  "Draw: 6 stones each after 40 turns without a capture.",
+  "Draw: 3 stones each, neither side can move.",
+  "White cannot move and passes. Computer thinking…",
+  "Move undone. White: move a stone.",
   "Fox to move.",
   "Geese to move.",
   "Fox played. Geese to move.",
