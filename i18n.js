@@ -215,7 +215,7 @@ const STRINGS = {
     quickrules_futoshiki_1: "Fill the grid so that every row and every column contains each number exactly once.",
     quickrules_futoshiki_2: "Select a cell, then pick a number; a few numbers may already be given.",
     quickrules_futoshiki_3: "Every sign between two cells must hold: its narrow tip points to the smaller number.",
-    quickrules_foxandgeese_1: "The geese win by shutting the fox in so that it cannot move; the fox wins once only 5 geese are left.",
+    quickrules_foxandgeese_1: "The geese win by shutting the fox in so that it cannot move; the fox wins once only 2 geese are left.",
     quickrules_foxandgeese_2: "Move one step along a line. The fox captures by jumping over a goose to the empty point behind it, and may jump again.",
     quickrules_foxandgeese_3: "Geese move forward or sideways, never back, and they cannot capture.",
     offline_ready: "Ready offline. You can switch off the WiFi and the games keep running.",

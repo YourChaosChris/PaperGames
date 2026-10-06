@@ -201,7 +201,7 @@ STRINGS.zh = {
     quickrules_futoshiki_1: "填满方格，使每一行和每一列都恰好包含每个数字一次。",
     quickrules_futoshiki_2: "先选择一个格子，再选择一个数字；有些数字可能已经给出。",
     quickrules_futoshiki_3: "两格之间的每个符号都必须成立：它窄的尖端指向较小的数字。",
-    quickrules_foxandgeese_1: "鹅把狐狸围住、让它无法移动就获胜；只剩5只鹅时狐狸获胜。",
+    quickrules_foxandgeese_1: "鹅把狐狸围住、让它无法移动就获胜；只剩2只鹅时狐狸获胜。",
     quickrules_foxandgeese_2: "沿着线走一步。狐狸跳过一只鹅落到它身后的空点上即可吃掉它，并且可以继续跳。",
     quickrules_foxandgeese_3: "鹅只能向前或向侧面走，不能后退，也不能吃子。",
     offline_ready: "已可离线使用。你可以关掉 WiFi，游戏照常运行。",

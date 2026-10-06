@@ -201,7 +201,7 @@ STRINGS.it = {
     quickrules_futoshiki_1: "Riempi la griglia in modo che ogni riga e ogni colonna contenga ogni numero esattamente una volta.",
     quickrules_futoshiki_2: "Seleziona una casella, poi scegli un numero; alcuni numeri possono essere già dati.",
     quickrules_futoshiki_3: "Ogni segno tra due caselle deve essere rispettato: la sua punta stretta indica il numero minore.",
-    quickrules_foxandgeese_1: "Le oche vincono chiudendo la volpe in modo che non possa più muoversi; la volpe vince appena restano solo 5 oche.",
+    quickrules_foxandgeese_1: "Le oche vincono chiudendo la volpe in modo che non possa più muoversi; la volpe vince appena restano solo 2 oche.",
     quickrules_foxandgeese_2: "Muovi di un passo lungo una linea. La volpe cattura saltando sopra un'oca sul punto libero subito dietro, e può saltare di nuovo.",
     quickrules_foxandgeese_3: "Le oche avanzano o si spostano di lato, mai indietro, e non possono catturare.",
     offline_ready: "Pronto offline. Puoi spegnere il WiFi, i giochi continuano a funzionare.",

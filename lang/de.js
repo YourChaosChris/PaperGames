@@ -204,7 +204,7 @@ STRINGS.de = {
     quickrules_futoshiki_1: "Fülle das Gitter so, dass jede Zeile und jede Spalte jede Zahl genau einmal enthält.",
     quickrules_futoshiki_2: "Wähle ein Feld und dann eine Zahl; ein paar Zahlen können schon vorgegeben sein.",
     quickrules_futoshiki_3: "Jedes Zeichen zwischen zwei Feldern muss stimmen: Seine schmale Spitze zeigt auf die kleinere Zahl.",
-    quickrules_foxandgeese_1: "Die Gänse gewinnen, wenn sie den Fuchs so einschließen, dass er nicht mehr ziehen kann; der Fuchs gewinnt, sobald nur noch 5 Gänse übrig sind.",
+    quickrules_foxandgeese_1: "Die Gänse gewinnen, wenn sie den Fuchs so einschließen, dass er nicht mehr ziehen kann; der Fuchs gewinnt, sobald nur noch 2 Gänse übrig sind.",
     quickrules_foxandgeese_2: "Zieh einen Schritt entlang einer Linie. Der Fuchs schlägt, indem er über eine Gans auf den leeren Punkt dahinter springt, und darf weiterspringen.",
     quickrules_foxandgeese_3: "Gänse ziehen vorwärts oder seitwärts, nie zurück, und sie können nicht schlagen.",
     offline_ready: "Offline bereit. Du kannst das WLAN ausschalten, die Spiele laufen weiter.",

@@ -201,7 +201,7 @@ STRINGS.es = {
     quickrules_futoshiki_1: "Rellena la cuadrícula para que cada fila y cada columna contenga cada número exactamente una vez.",
     quickrules_futoshiki_2: "Selecciona una casilla y luego elige un número; puede que algunos números ya vengan dados.",
     quickrules_futoshiki_3: "Todo signo entre dos casillas debe cumplirse: su punta estrecha señala el número menor.",
-    quickrules_foxandgeese_1: "Las ocas ganan si encierran al zorro de modo que no pueda moverse; el zorro gana en cuanto solo quedan 5 ocas.",
+    quickrules_foxandgeese_1: "Las ocas ganan si encierran al zorro de modo que no pueda moverse; el zorro gana en cuanto solo quedan 2 ocas.",
     quickrules_foxandgeese_2: "Mueve un paso a lo largo de una línea. El zorro captura saltando sobre una oca al punto vacío justo detrás, y puede volver a saltar.",
     quickrules_foxandgeese_3: "Las ocas avanzan o se mueven de lado, nunca hacia atrás, y no pueden capturar.",
     offline_ready: "Listo sin conexión. Puedes apagar el WiFi y los juegos seguirán funcionando.",

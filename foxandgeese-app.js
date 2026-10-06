@@ -17,7 +17,7 @@
 const AppStateFoxGeese = {
   mode: "offline",        // "offline" | "offline-ai"
   board: FoxAndGeeseCore.createInitialBoard(),
-  turn: "fox",            // the fox moves first
+  turn: "geese",          // the geese move first
   path: null,             // points entered so far in this move: [from, ...]
   lastMove: null,         // { from, to }
   humanSide: "geese",
@@ -129,7 +129,7 @@ function initFoxGeeseApp() {
   function startNewGame(mode, humanSide, level) {
     AppStateFoxGeese.mode = mode;
     AppStateFoxGeese.board = FoxAndGeeseCore.createInitialBoard();
-    AppStateFoxGeese.turn = "fox";
+    AppStateFoxGeese.turn = "geese";
     AppStateFoxGeese.path = null;
     AppStateFoxGeese.lastMove = null;
     AppStateFoxGeese.humanSide = humanSide;

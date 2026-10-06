@@ -201,7 +201,7 @@ STRINGS.nl = {
     quickrules_futoshiki_1: "Vul het rooster zo dat elke rij en elke kolom elk getal precies één keer bevat.",
     quickrules_futoshiki_2: "Selecteer een vakje en kies dan een cijfer; een paar getallen kunnen al gegeven zijn.",
     quickrules_futoshiki_3: "Elk teken tussen twee vakjes moet kloppen: de smalle punt wijst naar het kleinere getal.",
-    quickrules_foxandgeese_1: "De ganzen winnen door de vos zo in te sluiten dat hij niet meer kan zetten; de vos wint zodra er nog maar 5 ganzen over zijn.",
+    quickrules_foxandgeese_1: "De ganzen winnen door de vos zo in te sluiten dat hij niet meer kan zetten; de vos wint zodra er nog maar 2 ganzen over zijn.",
     quickrules_foxandgeese_2: "Zet één stap langs een lijn. De vos slaat door over een gans naar het lege punt erachter te springen, en mag opnieuw springen.",
     quickrules_foxandgeese_3: "Ganzen gaan vooruit of opzij, nooit terug, en ze kunnen niet slaan.",
     offline_ready: "Offline klaar. Je kunt de WiFi uitzetten, de spellen blijven werken.",

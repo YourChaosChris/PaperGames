@@ -11,12 +11,17 @@
 //
 // Setup (the oldest form, with 13 geese): the fox stands on the centre
 // point; the geese fill the bottom arm of the cross (6 points) and the
-// whole row above it (7 points).
+// whole row above it (7 points). The geese move first.
+//
+// Rules as decided for PaperGames on 06.10.2026, after Wikipedia, "Fox
+// games" (https://en.wikipedia.org/wiki/Fox_games) and Masters of Games,
+// "The Rules of Fox & Geese"
+// (https://www.mastersofgames.com/rules/fox-geese-rules.htm).
 //
 // Moves, one step along a line to an empty neighbouring point:
 //   - the fox in any of the four directions;
-//   - a goose straight ahead (up) or sideways, never back (down).
-// The fox moves first.
+//   - a goose straight ahead (up, towards the far side of the cross) or
+//     sideways, never back (down).
 //
 // Capturing: the fox jumps over a neighbouring goose to the empty point
 // directly beyond it and removes that goose. After a jump it may jump
@@ -26,13 +31,13 @@
 // legal move. Geese never capture or jump.
 //
 // End: the geese win when the fox cannot move on its turn. The fox wins
-// when only GEESE_TO_LOSE (5) or fewer geese are left - too few to shut
+// when only GEESE_TO_LOSE (2) or fewer geese are left - too few to shut
 // it in - or when the geese cannot move on their turn.
 
 const FoxAndGeeseCore = (function () {
   const SIZE = 7;
   const TOTAL_GEESE = 13;
-  const GEESE_TO_LOSE = 5;
+  const GEESE_TO_LOSE = 2;
   const CENTER = 3 * SIZE + 3;
 
   function idx(r, c) { return r * SIZE + c; }

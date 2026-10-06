@@ -203,7 +203,7 @@ STRINGS.pl = {
     quickrules_futoshiki_1: "Wypełnij diagram tak, aby każdy wiersz i każda kolumna zawierały każdą liczbę dokładnie raz.",
     quickrules_futoshiki_2: "Wybierz pole, a następnie wybierz cyfrę; kilka liczb może być już podanych.",
     quickrules_futoshiki_3: "Każdy znak między dwoma polami musi się zgadzać: jego wąski czubek wskazuje mniejszą liczbę.",
-    quickrules_foxandgeese_1: "Gęsi wygrywają, gdy osaczą lisa tak, że nie może się ruszyć; lis wygrywa, gdy zostanie tylko 5 gęsi.",
+    quickrules_foxandgeese_1: "Gęsi wygrywają, gdy osaczą lisa tak, że nie może się ruszyć; lis wygrywa, gdy zostaną tylko 2 gęsi.",
     quickrules_foxandgeese_2: "Przesuń pionek o jeden krok wzdłuż linii. Lis bije, przeskakując gęś na wolny punkt tuż za nią, i może skakać dalej.",
     quickrules_foxandgeese_3: "Gęsi idą do przodu lub w bok, nigdy do tyłu, i nie mogą bić.",
     offline_ready: "Gotowe offline. Możesz wyłączyć WiFi, gry nadal będą działać.",

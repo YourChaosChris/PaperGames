@@ -201,7 +201,7 @@ STRINGS.fr = {
     quickrules_futoshiki_1: "Remplissez la grille pour que chaque ligne et chaque colonne contienne chaque chiffre exactement une fois.",
     quickrules_futoshiki_2: "Sélectionnez une case, puis choisissez un chiffre ; quelques chiffres peuvent déjà être donnés.",
     quickrules_futoshiki_3: "Chaque signe entre deux cases doit être respecté : sa pointe étroite désigne le plus petit chiffre.",
-    quickrules_foxandgeese_1: "Les oies gagnent en enfermant le renard pour qu'il ne puisse plus bouger ; le renard gagne dès qu'il ne reste que 5 oies.",
+    quickrules_foxandgeese_1: "Les oies gagnent en enfermant le renard pour qu'il ne puisse plus bouger ; le renard gagne dès qu'il ne reste que 2 oies.",
     quickrules_foxandgeese_2: "Avance d'un pas le long d'une ligne. Le renard prend en sautant par-dessus une oie vers le point libre juste derrière, et peut sauter de nouveau.",
     quickrules_foxandgeese_3: "Les oies avancent ou vont de côté, jamais en arrière, et elles ne peuvent pas prendre.",
     offline_ready: "Prêt hors ligne. Tu peux couper le WiFi, les jeux continuent de fonctionner.",
