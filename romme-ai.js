@@ -10,6 +10,8 @@
 //                discarded (a card whose partners are gone is worth less)
 //                and never discards a card that could be added to a meld
 //                on the table - the next player could use it.
+// With the house rule "take cards from melds" switched on, every level
+// takes a table card when it forms a new meld with two of its own cards.
 // chooseMove returns one step at a time; the page calls it until the
 // computer has discarded or the round is over.
 
@@ -156,6 +158,20 @@ const RommeAi = (function () {
       }
     }
 
+    // House rule: a card taken from the table goes into a new meld first;
+    // if none can be built after all, take everything back.
+    if (s.takenIds && s.takenIds.length) {
+      const taken = s.takenIds[0];
+      const others = hand.filter((c) => c.id !== taken);
+      const card = hand.find((c) => c.id === taken);
+      for (let a = 0; a < others.length; a++) {
+        for (let b = a + 1; b < others.length; b++) {
+          if (C.buildMeld([card, others[a], others[b]])) return { type: "meld", ids: [taken, others[a].id, others[b].id] };
+        }
+      }
+      return { type: "cancelPending" };
+    }
+
     if (!pl.opened) {
       // Stage the melds of the best split one by one, then lay them out
       // together once they reach the threshold.
@@ -191,6 +207,21 @@ const RommeAi = (function () {
               const joker = s.melds[i].entries[C.jokerSlotFor(s.melds[i], card)].card;
               if (C.jokerUsable(hand.filter((c) => c.id !== card.id).concat([joker]), joker)) return { type: "swapJoker", meld: i, id: card.id };
             }
+          }
+        }
+      }
+    }
+
+    // House rule (only when switched on): take a card from the table if
+    // it makes a new meld with two cards from the hand.
+    if (s.takeRule && pl.opened) {
+      const opts = C.takeOptions(s);
+      for (const o of opts) {
+        const card = s.melds[o.meld].entries.find((e) => e.card.id === o.id).card;
+        const plain = hand.filter((c) => !c.joker);
+        for (let a = 0; a < plain.length; a++) {
+          for (let b = a + 1; b < plain.length; b++) {
+            if (C.buildMeld([card, plain[a], plain[b]])) return { type: "take", meld: o.meld, id: o.id };
           }
         }
       }

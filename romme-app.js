@@ -18,6 +18,14 @@
 // the joker, which then has to go into a new meld at once. Select one
 // card and press "Discard" to end the turn.
 //
+// Settings: number of rounds (penalty points add up; after the last round
+// the fewest points win the game - statistics then count only the whole
+// game) and the house rule "take cards from melds": with no hand card
+// selected, the cards that may be taken show a corner triangle and are
+// buttons; a taken card must go into a new meld before discarding, and
+// "Take back" restores table and hand. Melds on the table are grouped by
+// the player who laid them out.
+//
 // Against the computer the human is Player 1, with one to three computer
 // opponents. With two to four people on one device each hand is covered
 // between turns ("Show my cards"). Computer steps wait AiPacing.delay().
@@ -92,8 +100,12 @@ function initRommeApp() {
     const opponents = parseInt(document.getElementById("romme-opponents-inline").value, 10) || 1;
     const seats = parseInt(document.getElementById("romme-seats-inline").value, 10) || 2;
     const threshold = parseInt(document.getElementById("romme-threshold-inline").value, 10) || RommeCore.DEFAULT_THRESHOLD;
+    const roundsEl = document.getElementById("romme-rounds-inline");
+    const rounds = roundsEl ? parseInt(roundsEl.value, 10) || 1 : 1;
+    const takeEl = document.getElementById("romme-take-rule");
+    const takeRule = !!(takeEl && takeEl.checked);
     const players = pendingMode === "vs-ai" ? opponents + 1 : seats;
-    startGameRomme(pendingMode, level, players, threshold);
+    startGameRomme(pendingMode, level, players, threshold, rounds, takeRule);
     const status = document.getElementById("offline-romme-status");
     if (status) {
       const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
@@ -146,11 +158,11 @@ function showBoardRomme() {
   if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
 }
 
-function startGameRomme(mode, level, players, threshold) {
+function startGameRomme(mode, level, players, threshold, rounds, takeRule) {
   AppStateRomme.mode = mode;
   AppStateRomme.aiLevel = level;
   const dealer = typeof RandomStart !== "undefined" ? RandomStart.choose(0, Array.from({ length: players }, (_, i) => i)) : 0;
-  AppStateRomme.state = RommeCore.createInitialState({ players, threshold, dealer });
+  AppStateRomme.state = RommeCore.createInitialState({ players, threshold, dealer, rounds: rounds || 1, takeRule: !!takeRule });
   AppStateRomme.started = true;
   AppStateRomme.busy = false;
   AppStateRomme.recorded = false;
@@ -170,7 +182,7 @@ function startGameRomme(mode, level, players, threshold) {
 
 function nextRoundRomme() {
   const s = AppStateRomme.state;
-  if (!s || !s.over) return;
+  if (!s || !s.over || RommeCore.matchResult(s).over) return;
   AppStateRomme.state = RommeCore.nextRound(s);
   AppStateRomme.recorded = false;
   AppStateRomme.selected = [];
@@ -191,6 +203,7 @@ function promptTextRomme() {
   const who = playerNameRomme(s.turn);
   if (s.phase === "draw") return who + ": draw a card from the stock or take the top discard.";
   if (s.pendingJoker !== null) return "Lay out the joker you took back in a new meld first.";
+  if (s.takenIds && s.takenIds.length) return "Lay out the card you took in a new meld first, or take it back.";
   if (s.pending.length) return "Staged for the first meld: " + RommeCore.pendingValue(s) + " of " + s.threshold + " points.";
   if (s.firstTurn && s.turn === s.dealer) return who + ": start the round by discarding a card (you may lay out melds first).";
   if (!s.players[s.turn].opened) return who + ": your first meld needs at least " + s.threshold + " points - lay out melds or discard a card.";
@@ -253,6 +266,7 @@ function describeRomme(before, after, move) {
   if (move.type === "confirmOpen") return who + " makes the first meld with " + ev.points + " points.";
   if (move.type === "extend") return who + " adds the " + cardLabelRomme(ev.card) + " to a meld.";
   if (move.type === "swapJoker") return who + " swaps the " + cardLabelRomme(ev.card) + " for a joker.";
+  if (move.type === "take") return who + " takes the " + cardLabelRomme(ev.card) + " from a meld.";
   if (move.type === "discard") return who + " discards the " + cardLabelRomme(ev.card) + ".";
   return "";
 }
@@ -270,7 +284,9 @@ function applyRomme(move) {
 function showRoundEndRomme(prefix) {
   const s = AppStateRomme.state;
   const pre = prefix ? prefix + " " : "";
-  let msg, title;
+  const multi = (s.rounds || 1) > 1;
+  const match = RommeCore.matchResult(s);
+  let msg, title, outcome = null;
   if (s.winner === null) {
     msg = pre + "Nothing is left to draw - the round ends without a winner.";
     title = "Draw";
@@ -278,8 +294,25 @@ function showRoundEndRomme(prefix) {
     msg = pre + playerNameRomme(s.winner) + " has no cards left and wins the round.";
     title = AppStateRomme.mode === "vs-ai" ? (s.winner === 0 ? "You win!" : "You lose") : playerNameRomme(s.winner) + " wins";
   }
-  if (AppStateRomme.mode === "vs-ai" && !AppStateRomme.recorded && typeof GameStats !== "undefined") {
-    GameStats.record("romme", s.winner === null ? "draw" : s.winner === 0 ? "win" : "loss");
+  if (!multi) {
+    outcome = s.winner === null ? "draw" : s.winner === 0 ? "win" : "loss";
+  } else if (match.over) {
+    // The whole game: fewest penalty points over all rounds.
+    const best = Math.min.apply(null, s.scores);
+    if (match.winner === null) {
+      msg += " Game over after " + s.rounds + " rounds: a draw at " + best + " penalty points.";
+      title = "Draw";
+      outcome = "draw";
+    } else {
+      msg += " Game over after " + s.rounds + " rounds: " + playerNameRomme(match.winner) + " wins with " + best + " penalty points.";
+      title = AppStateRomme.mode === "vs-ai" ? (match.winner === 0 ? "You win!" : "You lose") : playerNameRomme(match.winner) + " wins";
+      outcome = match.winner === 0 ? "win" : "loss";
+    }
+  } else {
+    title = "Round " + s.round + " of " + s.rounds;
+  }
+  if (outcome && AppStateRomme.mode === "vs-ai" && !AppStateRomme.recorded && typeof GameStats !== "undefined") {
+    GameStats.record("romme", outcome);
     AppStateRomme.recorded = true;
     saveRomme();
   }
@@ -323,7 +356,11 @@ const ROMME_REASON_TEXT = {
   "staged-open": "Lay out the staged melds or take them back before discarding.",
   "draw-first": "Draw a card first.",
   "not-now": "You have already drawn a card this turn.",
-  "no-discard": "The discard pile is empty."
+  "no-discard": "The discard pile is empty.",
+  "take-breaks-meld": "At least three cards must stay in the meld - from a run only the first or the last card.",
+  "take-joker": "Jokers can't be taken - swap them instead.",
+  "taken-first": "Lay out the card you took in a new meld first, or take it back.",
+  "taken-new-meld": "A card taken from the table must go into a new meld."
 };
 
 function humanMoveRomme(move) {
@@ -394,18 +431,39 @@ function meldTextRomme(meld) {
   return text + meld.entries.filter((e) => e.card.joker).map((e) => ", joker as " + stands(e)).join("");
 }
 
-function renderMeldRomme(meld, tappable, onTap) {
+// A meld: one button (add to it / swap its joker) when `tappable`; with
+// the house rule, the cards in `takeIds` are buttons of their own that
+// take the card (marked by a corner triangle, not by grey).
+function renderMeldRomme(meld, tappable, onTap, takeIds, onTake) {
+  const takes = takeIds || [];
   const group = document.createElement(tappable ? "button" : "span");
   if (tappable) {
     group.type = "button";
     group.addEventListener("click", onTap);
-  } else {
+  } else if (!takes.length) {
     group.setAttribute("role", "img");
+  } else {
+    group.setAttribute("role", "group");
   }
   group.className = "concan-meld romme-meld";
-  meld.entries.forEach((e) => group.appendChild(cardElRomme(e.card, "span", "pc-card-small", e.card.joker ? e : null)));
+  meld.entries.forEach((e) => {
+    if (takes.indexOf(e.card.id) !== -1) {
+      const btn = cardElRomme(e.card, "button", "pc-card-small romme-takeable", null);
+      I18n.setAria(btn, "Take " + cardLabelRomme(e.card));
+      btn.addEventListener("click", () => onTake(e.card.id));
+      group.appendChild(btn);
+    } else {
+      group.appendChild(cardElRomme(e.card, "span", "pc-card-small", e.card.joker ? e : null));
+    }
+  });
   I18n.setAria(group, "Meld " + meldTextRomme(meld));
   return group;
+}
+
+// Heading of a player's area on the table.
+function ownerLabelRomme(p) {
+  if (AppStateRomme.mode === "vs-ai") return p === 0 ? "You" : playerNameRomme(p) + " (computer)";
+  return playerNameRomme(p);
 }
 
 function renderRomme() {
@@ -439,28 +497,45 @@ function renderRomme() {
     row.appendChild(st);
     playersEl.appendChild(row);
   }
-  I18n.setMsg(document.getElementById("romme-round-line"), "Round " + s.round + " · first meld: at least " + s.threshold + " points");
+  I18n.setMsg(document.getElementById("romme-round-line"), (s.rounds || 1) > 1
+    ? "Round " + s.round + " of " + s.rounds + " · first meld: at least " + s.threshold + " points"
+    : "Round " + s.round + " · first meld: at least " + s.threshold + " points");
 
-  // Table
+  // Table: one area per player with their melds (adding to any meld is
+  // still allowed; an added card stays in its owner's meld).
   const tableEl = document.getElementById("romme-table");
   tableEl.innerHTML = "";
   const canTap = myTurn && s.phase === "play" && me.opened;
+  const takeOpts = canTap && AppStateRomme.selected.length === 0 ? RommeCore.takeOptions(s) : [];
   if (!s.melds.length) {
     const empty = document.createElement("span");
     empty.className = "romme-empty";
     I18n.setMsg(empty, "No melds on the table yet.");
     tableEl.appendChild(empty);
+  } else {
+    for (let owner = 0; owner < s.n; owner++) {
+      const area = document.createElement("div");
+      area.className = "romme-owner-area";
+      const head = document.createElement("span");
+      head.className = "romme-owner-name";
+      I18n.setMsg(head, ownerLabelRomme(owner));
+      area.appendChild(head);
+      let any = false;
+      s.melds.forEach((meld, i) => {
+        if (meld.owner !== owner) return;
+        any = true;
+        const takeIds = takeOpts.filter((o) => o.meld === i).map((o) => o.id);
+        area.appendChild(renderMeldRomme(meld, canTap && !takeIds.length, () => onTableMeldRomme(i), takeIds, (id) => humanMoveRomme({ type: "take", meld: i, id })));
+      });
+      if (!any) {
+        const none = document.createElement("span");
+        none.className = "romme-empty";
+        I18n.setMsg(none, "No melds yet.");
+        area.appendChild(none);
+      }
+      tableEl.appendChild(area);
+    }
   }
-  s.melds.forEach((meld, i) => {
-    const wrap = document.createElement("span");
-    wrap.className = "romme-meld-wrap";
-    const owner = document.createElement("span");
-    owner.className = "romme-meld-owner";
-    I18n.setMsg(owner, playerNameRomme(meld.owner));
-    wrap.appendChild(owner);
-    wrap.appendChild(renderMeldRomme(meld, canTap, () => onTableMeldRomme(i)));
-    tableEl.appendChild(wrap);
-  });
 
   // Piles
   const stock = document.getElementById("romme-stock");
@@ -518,12 +593,13 @@ function renderRomme() {
     });
   }
   document.getElementById("romme-actions").classList.toggle("hidden", !(myTurn && s.phase === "play"));
-  document.getElementById("romme-cancel-button").classList.toggle("hidden", !s.pending.length);
+  document.getElementById("romme-cancel-button").classList.toggle("hidden", !s.pending.length && !(s.takenIds && s.takenIds.length));
   document.getElementById("romme-confirm-button").classList.toggle("hidden", !s.pending.length);
 
   // Round end
   const endEl = document.getElementById("romme-round-end");
   endEl.classList.toggle("hidden", !s.over);
+  document.getElementById("romme-next-round").classList.toggle("hidden", !s.over || RommeCore.matchResult(s).over);
   if (s.over && s.penalties) {
     const list = document.getElementById("romme-round-scores");
     list.innerHTML = "";

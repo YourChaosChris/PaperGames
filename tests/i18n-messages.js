@@ -80,6 +80,17 @@ const SAMPLES = [
   "The sides can no longer meet - White wins with 5 to 3 pieces.",
   "The sides can no longer meet - Black wins with 4 to 2 pieces.",
   "The sides can no longer meet - a draw with 3 pieces each.",
+  "Lay out the card you took in a new meld first, or take it back.",
+  "Player 2 takes the 7♠ from a meld.",
+  "At least three cards must stay in the meld - from a run only the first or the last card.",
+  "Jokers can't be taken - swap them instead.",
+  "A card taken from the table must go into a new meld.",
+  "Round 3 of 10 · first meld: at least 40 points",
+  "Player 2 has no cards left and wins the round. Game over after 3 rounds: Player 1 wins with 25 penalty points.",
+  "Nothing is left to draw - the round ends without a winner. Game over after 5 rounds: a draw at 40 penalty points.",
+  "Round 2 of 3",
+  "No melds yet.",
+  "You",
   "Fox to move.",
   "Geese to move.",
   "Fox played. Geese to move.",
@@ -282,6 +293,7 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  "Take 5♥",
   "Card 7♣, selected",
   "Joker, selected",
   "Meld 6♠ 6♥ 6♣, joker as 6",

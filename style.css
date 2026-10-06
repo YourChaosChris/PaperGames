@@ -10031,17 +10031,32 @@ button.concan-meld {
   text-align: center;
 }
 
-.romme-meld-wrap {
-  display: inline-block;
-  vertical-align: top;
-  margin: 0 0.2rem 0.3rem;
-  text-align: center;
+/* One area per player on the table: the name above, the melds below,
+   wrapping inside the card so four players never need sideways scrolling. */
+.romme-owner-area {
+  margin: 0 0 0.4rem;
+  padding-top: 0.3rem;
+  border-top: 1px solid var(--border);
 }
 
-.romme-meld-owner {
+.romme-owner-area:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.romme-owner-name {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+/* House rule: a card that may be taken from a meld - a button with the
+   corner triangle used for "can move" elsewhere. */
+.pc-card.romme-takeable {
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 9px, transparent 9px) #fff;
+  border-width: 2px;
+  cursor: pointer;
 }
 
 .romme-empty {

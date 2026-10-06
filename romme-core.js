@@ -33,6 +33,18 @@
 //   - Only a player who has made the first meld may swap a joker.
 //   - If the stock runs out, the discard pile except its top card is
 //     shuffled and becomes the new stock.
+// Settings (06.10.2026, players' wishes):
+//   - rounds: 1, 3, 5, 10, 20 or 25 (default 1). Penalty points add up
+//     over the rounds; after the last one the fewest points win, a tie at
+//     the top is a draw (matchResult).
+//   - takeRule, a house rule (default off, not usual Rommé): after the
+//     first meld a player may take a natural card from any meld on the
+//     table as long as at least three cards stay there as a valid meld -
+//     from a run only the first or the last card, from a set of four any
+//     one; never a joker. The taken card must go into a NEW meld in the
+//     same turn; while one is still in hand the player may not discard.
+//     "Take back" (cancelPending) puts table and hand back as they were
+//     before the first take of the turn.
 //
 // Card: { id, rank 1..13, suit "C"|"S"|"H"|"D" } or { id, joker: true }.
 // Meld on the table: { owner, type: "set"|"run", entries: [{ card, rank,
@@ -45,6 +57,7 @@ const RommeCore = (function () {
   const JOKERS = 6;
   const THRESHOLDS = [30, 40, 51];
   const DEFAULT_THRESHOLD = 40;
+  const ROUND_CHOICES = [1, 3, 5, 10, 20, 25];
 
   function shuffle(arr, rng) {
     const random = rng || Math.random;
@@ -197,13 +210,16 @@ const RommeCore = (function () {
     return startRound({
       n,
       threshold: THRESHOLDS.indexOf(o.threshold) !== -1 ? o.threshold : DEFAULT_THRESHOLD,
+      rounds: ROUND_CHOICES.indexOf(o.rounds) !== -1 ? o.rounds : 1,
+      takeRule: !!o.takeRule,
       scores: new Array(n).fill(0),
       round: 0,
       dealer: o.dealer !== undefined ? o.dealer : 0
     }, o.rng);
   }
 
-  // Deals a new round; `base` carries n, threshold, scores, round, dealer.
+  // Deals a new round; `base` carries n, threshold, rounds, takeRule,
+  // scores, round, dealer.
   function startRound(base, rng) {
     const deck = shuffle(makeDeck(), rng);
     const n = base.n;
@@ -214,6 +230,8 @@ const RommeCore = (function () {
     return {
       n,
       threshold: base.threshold,
+      rounds: base.rounds || 1,
+      takeRule: !!base.takeRule,
       scores: base.scores.slice(),
       round: base.round + 1,
       dealer: base.dealer,
@@ -228,6 +246,8 @@ const RommeCore = (function () {
       firstTurn: true,
       pending: [],       // melds staged this turn by a player before the first meld
       pendingJoker: null, // id of a swapped joker that must be laid out again
+      takenIds: [],      // house rule: cards taken from the table, still to be laid out
+      takeUndo: null,    // house rule: { melds, hand, pendingJoker } before the first take
       over: false,
       winner: null,
       penalties: null,
@@ -236,7 +256,37 @@ const RommeCore = (function () {
   }
 
   function nextRound(s, rng) {
-    return startRound({ n: s.n, threshold: s.threshold, scores: s.scores, round: s.round, dealer: (s.dealer + 1) % s.n }, rng);
+    return startRound({ n: s.n, threshold: s.threshold, rounds: s.rounds || 1, takeRule: !!s.takeRule, scores: s.scores,
+      round: s.round, dealer: (s.dealer + 1) % s.n }, rng);
+  }
+
+  // After a finished round: { over: false } while rounds are left, else
+  // { over: true, winner } - the player with the fewest penalty points,
+  // or null when several share the fewest.
+  function matchResult(s) {
+    if (!s.over || s.round < (s.rounds || 1)) return { over: false, winner: null };
+    const best = Math.min.apply(null, s.scores);
+    const leaders = s.scores.map((v, i) => (v === best ? i : -1)).filter((i) => i !== -1);
+    return { over: true, winner: leaders.length === 1 ? leaders[0] : null };
+  }
+
+  // House rule: may the natural card at `index` be taken out of `meld`?
+  // At least three cards must stay as a valid meld of the same kind.
+  function canTakeFrom(meld, index) {
+    const e = meld.entries[index];
+    if (!e || e.card.joker || meld.entries.length < 4) return false;
+    if (meld.type === "run" && index !== 0 && index !== meld.entries.length - 1) return false;
+    const rest = meld.entries.filter((_, i) => i !== index);
+    return rest.some((x) => !x.card.joker);
+  }
+
+  // Every card the side to move may take now: [{ meld, id }].
+  function takeOptions(s) {
+    const pl = s.players[s.turn];
+    if (!s.takeRule || !pl.opened || s.phase !== "play" || s.pendingJoker !== null) return [];
+    const out = [];
+    s.melds.forEach((m, mi) => m.entries.forEach((e, ei) => { if (canTakeFrom(m, ei)) out.push({ meld: mi, id: e.card.id }); }));
+    return out;
   }
 
   function topDiscard(s) { return s.discard.length ? s.discard[s.discard.length - 1] : null; }
@@ -292,6 +342,7 @@ const RommeCore = (function () {
   //   { type: "cancelPending" }   take the staged melds back
   //   { type: "extend", meld, id } add a hand card to any table meld
   //   { type: "swapJoker", meld, id } exchange a table joker for the card
+  //   { type: "take", meld, id }  house rule: take a card from a table meld
   //   { type: "discard", id }     end the turn
   // Returns { ok, state, reason }.
   function applyMove(state, move) {
@@ -334,6 +385,10 @@ const RommeCore = (function () {
       }
       s.melds.push(meld);
       if (s.pendingJoker !== null && move.ids.includes(s.pendingJoker)) s.pendingJoker = null;
+      if (s.takenIds && s.takenIds.length) {
+        s.takenIds = s.takenIds.filter((id) => !move.ids.includes(id));
+        if (!s.takenIds.length) s.takeUndo = null;
+      }
       s.lastEvent = { type: "meld", player: p, cards };
       if (!pl.hand.length) return { ok: true, state: endRound(s, p) };
       return { ok: true, state: s };
@@ -352,15 +407,43 @@ const RommeCore = (function () {
     }
 
     if (move.type === "cancelPending") {
+      if (s.takeUndo) {
+        // House rule: table and hand as before the first take this turn.
+        s.melds = s.takeUndo.melds;
+        pl.hand = s.takeUndo.hand;
+        s.pendingJoker = s.takeUndo.pendingJoker;
+        s.takenIds = [];
+        s.takeUndo = null;
+        s.lastEvent = { type: "untake", player: p };
+        return { ok: true, state: s };
+      }
       s.pending.forEach((m) => m.entries.forEach((e) => pl.hand.push(e.card)));
       s.pending = [];
       s.lastEvent = { type: "unstage", player: p };
       return { ok: true, state: s };
     }
 
+    if (move.type === "take") {
+      if (!s.takeRule) return { ok: false, state, reason: "bad-move" };
+      if (!pl.opened) return { ok: false, state, reason: "open-first" };
+      if (s.pendingJoker !== null) return { ok: false, state, reason: "joker-first" };
+      const meld = s.melds[move.meld];
+      const idx = meld ? meld.entries.findIndex((e) => e.card.id === move.id) : -1;
+      if (idx === -1) return { ok: false, state, reason: "not-in-meld" };
+      if (meld.entries[idx].card.joker) return { ok: false, state, reason: "take-joker" };
+      if (!canTakeFrom(meld, idx)) return { ok: false, state, reason: "take-breaks-meld" };
+      if (!s.takeUndo) s.takeUndo = { melds: clone(s.melds), hand: clone(pl.hand), pendingJoker: s.pendingJoker };
+      const card = meld.entries.splice(idx, 1)[0].card;
+      pl.hand.push(card);
+      s.takenIds = (s.takenIds || []).concat([card.id]);
+      s.lastEvent = { type: "take", player: p, card, owner: meld.owner };
+      return { ok: true, state: s };
+    }
+
     if (move.type === "extend") {
       if (!pl.opened) return { ok: false, state, reason: "open-first" };
       if (s.pendingJoker !== null) return { ok: false, state, reason: "joker-first" };
+      if ((s.takenIds || []).includes(move.id)) return { ok: false, state, reason: "taken-new-meld" };
       const meld = s.melds[move.meld];
       const i = findInHand(pl.hand, move.id);
       if (!meld || i === -1) return { ok: false, state, reason: "not-in-hand" };
@@ -376,6 +459,7 @@ const RommeCore = (function () {
     if (move.type === "swapJoker") {
       if (!pl.opened) return { ok: false, state, reason: "open-first" };
       if (s.pendingJoker !== null) return { ok: false, state, reason: "joker-first" };
+      if ((s.takenIds || []).includes(move.id)) return { ok: false, state, reason: "taken-new-meld" };
       const meld = s.melds[move.meld];
       const i = findInHand(pl.hand, move.id);
       if (!meld || i === -1) return { ok: false, state, reason: "not-in-hand" };
@@ -402,6 +486,7 @@ const RommeCore = (function () {
     if (move.type === "discard") {
       if (s.pending.length) return { ok: false, state, reason: "staged-open" };
       if (s.pendingJoker !== null) return { ok: false, state, reason: "joker-first" };
+      if ((s.takenIds || []).length) return { ok: false, state, reason: "taken-first" };
       const i = findInHand(pl.hand, move.id);
       if (i === -1) return { ok: false, state, reason: "not-in-hand" };
       const card = pl.hand.splice(i, 1)[0];
@@ -429,8 +514,8 @@ const RommeCore = (function () {
   }
 
   return {
-    SUITS, JOKERS, THRESHOLDS, DEFAULT_THRESHOLD, MAX_RESHUFFLES, makeDeck, handValue, entryValue, meldValue, buildMeld,
-    extendMeld, jokerSlotFor, jokerUsable, createInitialState, nextRound, topDiscard, pendingValue,
+    SUITS, JOKERS, THRESHOLDS, DEFAULT_THRESHOLD, ROUND_CHOICES, MAX_RESHUFFLES, makeDeck, handValue, entryValue, meldValue, buildMeld,
+    extendMeld, jokerSlotFor, jokerUsable, createInitialState, nextRound, matchResult, canTakeFrom, takeOptions, topDiscard, pendingValue,
     applyMove, cardCount, clone
   };
 })();
