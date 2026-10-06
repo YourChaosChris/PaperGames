@@ -15,6 +15,8 @@ STRINGS.zh = {
     toggle_moves_button: "着法",
     home_tagline: "59款经典游戏，专为电子阅读器打造。",
     home_intro: "一个小巧、无依赖的经典棋盘、策略与益智游戏合集，专为 Tolino、Kobo、Kindle 等电子墨水屏设备打造：高对比度、无动画效果，首次打开后即使没有网络连接也能继续使用。",
+    home_pitch: "没有广告，无需账号，也不会记录你的任何信息。加载一次之后，没有网络也能继续使用。电脑绝不会自己接着下：随时可以停下，几小时后从原处继续。源代码是公开的。",
+    home_pitch_link: "这里有什么不同",
     offline_ready: "已可离线使用。你可以关掉 WiFi，游戏照常运行。",
     offline_loading: "正在保存到你的设备上。请让页面再开一会儿。",
     offline_unavailable: "你的浏览器无法保存本网站。它只能在联网时运行。",

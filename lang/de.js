@@ -18,6 +18,8 @@ STRINGS.de = {
 
     home_tagline: "59 klassische Spiele, gemacht für E-Reader.",
     home_intro: "Eine kleine, unabhängige Sammlung klassischer Brett-, Strategie- und Knobelspiele, gebaut für E-Ink-Displays wie Tolino, Kobo und Kindle: hoher Kontrast, keine Animationen, und funktioniert nach dem ersten Öffnen auch ohne Internetverbindung weiter.",
+    home_pitch: "Keine Werbung, kein Konto, und über dich wird nichts mitgeschrieben. Einmal geladen, läuft alles auch ohne Internet weiter. Der Computer spielt nie von allein weiter: Du kannst jederzeit aufhören und Stunden später genau dort weitermachen. Der Quellcode ist offen.",
+    home_pitch_link: "Was hier anders ist",
     offline_ready: "Offline bereit. Du kannst das WLAN ausschalten, die Spiele laufen weiter.",
     offline_loading: "Wird gerade auf dein Gerät geladen. Lass die Seite kurz offen.",
     offline_unavailable: "Dein Browser kann die Seite nicht ablegen. Sie läuft nur mit Internet.",

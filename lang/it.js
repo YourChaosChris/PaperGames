@@ -15,6 +15,8 @@ STRINGS.it = {
     toggle_moves_button: "Mosse",
     home_tagline: "59 giochi classici, pensati per gli e-reader.",
     home_intro: "Una piccola collezione indipendente di giochi da tavolo, di strategia e di rompicapo classici, pensata per display E-Ink come Tolino, Kobo e Kindle: alto contrasto, nessuna animazione, e continua a funzionare senza connessione a Internet una volta aperta.",
+    home_pitch: "Niente pubblicità, nessun account e nulla viene registrato su di te. Una volta caricato, tutto continua a funzionare senza internet. Il computer non va mai avanti da solo: puoi smettere quando vuoi e riprendere ore dopo esattamente da dove avevi lasciato. Il codice sorgente è aperto.",
+    home_pitch_link: "Cosa c'è di diverso",
     offline_ready: "Pronto offline. Puoi spegnere il WiFi, i giochi continuano a funzionare.",
     offline_loading: "Salvataggio sul tuo dispositivo in corso. Lascia la pagina aperta ancora un momento.",
     offline_unavailable: "Il tuo browser non può salvare questo sito. Funziona solo con Internet.",

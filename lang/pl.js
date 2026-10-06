@@ -17,6 +17,8 @@ STRINGS.pl = {
     toggle_moves_button: "Ruchy",
     home_tagline: "59 klasycznych gier, stworzonych dla czytników e-booków.",
     home_intro: "Niewielka, niezależna kolekcja klasycznych gier planszowych, strategicznych i logicznych, stworzona dla wyświetlaczy E-Ink, takich jak Tolino, Kobo i Kindle: wysoki kontrast, brak animacji, i działa bez połączenia z internetem po pierwszym otwarciu.",
+    home_pitch: "Bez reklam, bez konta i nic o tobie nie jest zapisywane. Po jednorazowym wczytaniu wszystko działa dalej bez internetu. Komputer nigdy nie gra dalej sam: przerwij, kiedy chcesz, i wróć po kilku godzinach dokładnie tam, gdzie skończyłeś. Kod źródłowy jest otwarty.",
+    home_pitch_link: "Co tu jest inaczej",
     offline_ready: "Gotowe offline. Możesz wyłączyć WiFi, gry nadal będą działać.",
     offline_loading: "Trwa zapisywanie na twoim urządzeniu. Zostaw stronę na chwilę otwartą.",
     offline_unavailable: "Twoja przeglądarka nie może zapisać tej strony. Działa ona tylko z internetem.",

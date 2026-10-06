@@ -29,6 +29,8 @@ const STRINGS = {
 
     home_tagline: "59 classic games, built for e-readers.",
     home_intro: "A small, dependency-free collection of classic board, strategy, and puzzle games made for E-Ink displays like Tolino, Kobo and Kindle: high contrast, no animations, and it keeps working with no internet connection once you've opened it.",
+    home_pitch: "No ads, no account, and nothing about you is recorded. Once it has loaded, everything keeps working without internet. The computer never plays on by itself: stop whenever you like and carry on hours later, exactly where you left off. The source code is open.",
+    home_pitch_link: "What makes this different",
     offline_ready: "Ready offline. You can switch off the WiFi and the games keep running.",
     offline_loading: "Being stored on your device right now. Keep this page open for a moment.",
     offline_unavailable: "Your browser can't store this site. It only runs with an internet connection.",

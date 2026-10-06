@@ -15,6 +15,8 @@ STRINGS.es = {
     toggle_moves_button: "Movimientos",
     home_tagline: "59 juegos clásicos, hechos para lectores electrónicos.",
     home_intro: "Una pequeña colección independiente de juegos clásicos de mesa, estrategia y rompecabezas, hecha para pantallas E-Ink como Tolino, Kobo y Kindle: alto contraste, sin animaciones, y sigue funcionando sin conexión a internet una vez que la has abierto.",
+    home_pitch: "Sin anuncios, sin cuenta y sin registrar nada sobre ti. Una vez cargado, todo sigue funcionando sin internet. El ordenador nunca sigue jugando por su cuenta: para cuando quieras y continúa horas después justo donde lo dejaste. El código fuente es abierto.",
+    home_pitch_link: "Qué tiene de diferente",
     offline_ready: "Listo sin conexión. Puedes apagar el WiFi y los juegos seguirán funcionando.",
     offline_loading: "Guardándose ahora en tu dispositivo. Deja la página abierta un momento.",
     offline_unavailable: "Tu navegador no puede guardar este sitio. Solo funciona con Internet.",

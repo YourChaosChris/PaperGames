@@ -15,6 +15,8 @@ STRINGS.fr = {
     toggle_moves_button: "Coups",
     home_tagline: "59 jeux classiques, pensés pour les liseuses.",
     home_intro: "Une petite collection indépendante de jeux de plateau, de stratégie et de réflexion classiques, conçue pour les écrans E Ink comme Tolino, Kobo et Kindle : contraste élevé, aucune animation, et elle continue de fonctionner sans connexion internet une fois ouverte.",
+    home_pitch: "Pas de publicité, pas de compte, et rien n'est enregistré à votre sujet. Une fois chargé, tout continue de fonctionner sans internet. L'ordinateur ne joue jamais tout seul : arrêtez quand vous voulez et reprenez des heures plus tard, exactement là où vous en étiez. Le code source est ouvert.",
+    home_pitch_link: "Ce qui est différent ici",
     offline_ready: "Prêt hors ligne. Tu peux couper le WiFi, les jeux continuent de fonctionner.",
     offline_loading: "Enregistrement sur ton appareil en cours. Laisse la page ouverte un instant.",
     offline_unavailable: "Ton navigateur ne peut pas enregistrer ce site. Il ne fonctionne qu'avec Internet.",

@@ -3,7 +3,8 @@
 // from GAMES_CATALOG's `added` dates; hidden when there are none) and the
 // personalized "My Favorites" section on the home page
 // (always visible, with an empty-state message when there are none yet,
-// so its permanent nav link is never dead) and keeps every
+// so its permanent nav link is never dead - the empty one further down
+// the page, see placeFavoritesSection) and keeps every
 // favorite-toggle star - on both the static Popular section and the
 // dynamically-rendered Favorites section - in sync with the shared
 // Favorites module.
@@ -76,12 +77,24 @@
     GamesRender.translateInto(grid);
   }
 
+  // While there are no favorites the section is only a hint ("tap the
+  // star"), and on a first visit it would push every game tile below the
+  // fold - so it waits under Popular Games until the first star is set,
+  // then moves back up under Continue Playing.
+  function placeFavoritesSection(hasFavorites) {
+    const section = document.getElementById("section-favorites");
+    const anchor = document.getElementById(hasFavorites ? "section-continue" : "section-popular");
+    if (!section || !anchor || anchor.nextElementSibling === section) return;
+    anchor.parentNode.insertBefore(section, anchor.nextElementSibling);
+  }
+
   function renderFavorites() {
     const grid = document.getElementById("favorites-grid");
     const emptyState = document.getElementById("favorites-empty");
     if (!grid) return;
 
     const favGames = Favorites.getAll().map(catalogEntry).filter(Boolean);
+    placeFavoritesSection(favGames.length > 0);
     if (!favGames.length) {
       grid.innerHTML = "";
       if (emptyState) emptyState.classList.remove("hidden");
@@ -143,6 +156,44 @@
     }, { limit: OFFLINE_WAIT_MS });
   }
 
+  // The short "no ads, no account, ..." block under the heading. Shown on
+  // the first two visits to the home page; from the third on it stays
+  // hidden and only the footer link brings it back. The visit counter is
+  // guarded like favorites.js - without storage it just keeps showing.
+  const HOME_VISITS_KEY = "papergames_home_visits";
+  const PITCH_VISITS = 2;
+
+  function countHomeVisit() {
+    try {
+      if (!window.localStorage) return 1;
+      const visits = (parseInt(window.localStorage.getItem(HOME_VISITS_KEY), 10) || 0) + 1;
+      window.localStorage.setItem(HOME_VISITS_KEY, String(visits));
+      return visits;
+    } catch (e) {
+      return 1;
+    }
+  }
+
+  function showPitch(show) {
+    const pitch = document.getElementById("home-pitch");
+    const hero = document.querySelector(".home-hero");
+    if (!pitch || !hero) return;
+    pitch.classList.toggle("hidden", !show);
+    hero.classList.toggle("home-pitch-shown", show);
+  }
+
+  function initPitch() {
+    showPitch(countHomeVisit() <= PITCH_VISITS);
+    const link = document.getElementById("home-pitch-link");
+    if (!link) return;
+    link.addEventListener("click", (evt) => {
+      evt.preventDefault();
+      showPitch(true);
+      const pitch = document.getElementById("home-pitch");
+      if (pitch) pitch.scrollIntoView();
+    });
+  }
+
   function goToRandomGame() {
     const games = GAMES_CATALOG.filter(GamesRender.isListed);
     if (!games.length) return;
@@ -151,6 +202,7 @@
   }
 
   function init() {
+    initPitch();
     renderContinuePlaying();
     renderNewGames();
     renderFavorites();

@@ -15,6 +15,8 @@ STRINGS.nl = {
     toggle_moves_button: "Zetten",
     home_tagline: "59 klassieke spellen, gemaakt voor e-readers.",
     home_intro: "Een kleine, onafhankelijke verzameling klassieke bord-, strategie- en puzzelspellen, gemaakt voor E-Ink-schermen zoals Tolino, Kobo en Kindle: hoog contrast, geen animaties, en blijft werken zonder internetverbinding zodra je het hebt geopend.",
+    home_pitch: "Geen reclame, geen account, en er wordt niets over je bijgehouden. Eenmaal geladen werkt alles ook zonder internet. De computer speelt nooit uit zichzelf verder: stop wanneer je wilt en ga uren later precies verder waar je was. De broncode is open.",
+    home_pitch_link: "Wat hier anders is",
     offline_ready: "Offline klaar. Je kunt de WiFi uitzetten, de spellen blijven werken.",
     offline_loading: "Wordt nu op je apparaat opgeslagen. Laat de pagina even open.",
     offline_unavailable: "Je browser kan deze site niet opslaan. Hij werkt alleen met internet.",

@@ -1263,19 +1263,25 @@ margin: 2rem 0 1rem;
 
 .home-hero {
   text-align: center;
-  padding: 1.5rem 1rem;
+  padding: 1rem;
 }
 
+/* Icon and heading share one line, so the hero leaves room for the
+   first row of game tiles on a 632x840 e-reader screen. */
 .home-hero-icon {
-  width: 5rem;
-  height: 5rem;
-  margin-bottom: 0.25rem;
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
 }
 
 .home-hero h1 {
+  display: inline-block;
   margin: 0.25rem 0;
   font-size: 2rem;
   font-weight: 800;
+  vertical-align: middle;
 }
 
 .home-tagline {
@@ -1289,6 +1295,22 @@ margin: 2rem 0 1rem;
   font-size: 0.8rem;
   font-weight: 600;
   margin: 0 0 0.5rem;
+}
+
+/* What PaperGames doesn't do (home-app.js): plain sentences under the
+   heading on the first visits. While it shows, it stands in for the
+   general intro paragraph, which says much the same about offline play
+   and e-ink - so the first row of game tiles still fits on the screen. */
+.home-pitch {
+  max-width: 34rem;
+  margin: 0.25rem auto 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.home-hero.home-pitch-shown .home-intro {
+  display: none;
 }
 
 /* Offline status line under the home intro (home-app.js, offline-status.js):
