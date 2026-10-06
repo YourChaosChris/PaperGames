@@ -7704,23 +7704,177 @@ max-width: 900px;
   color: var(--text);
 }
 
-/* Print view for the grid puzzles (Sudoku/Kakuro/Nonogram): print exactly
-   the puzzle grid, nothing else - not the site chrome around it, not the
-   on-screen number pad / mode toggle a sheet of paper has no use for.
-   Scoped to body.printable-puzzle so it can't affect any other page. */
+/* Print view for the paper puzzles (Sudoku, Kakuro, Nonogram, Slitherlink,
+   Killer Sudoku, Calcudoku, Number Blocks, Hashi, Skyscrapers - every
+   page with body.printable-puzzle, see print-puzzle.js): one A4 portrait
+   sheet with a title line and the EMPTY puzzle, black on white. Only the
+   board survives - not the site chrome around it, not the number pad,
+   and none of the player's own entries, selection or conflict marks, so
+   the sheet can be solved with a pen. The title line is filled in by
+   print-puzzle.js and never shown on screen. */
+.print-puzzle-title {
+  display: none;
+}
+
+@page puzzle {
+  size: A4 portrait;
+  margin: 12mm;
+}
+
 @media print {
-  body.printable-puzzle .app-header,
-  body.printable-puzzle .site-nav,
-  body.printable-puzzle #settings-panel,
-  body.printable-puzzle #board-actions,
-  body.printable-puzzle #game-result,
-  body.printable-puzzle #board-info,
-  body.printable-puzzle .site-footer,
-  body.printable-puzzle #print-puzzle-button,
-  body.printable-puzzle #sudoku-numpad,
-  body.printable-puzzle #kakuro-numpad,
+  html:has(body.printable-puzzle) {
+    background: #fff !important;
+  }
+
+  body.printable-puzzle {
+    page: puzzle;
+    --bg: #fff;
+    --bg-alt: #fff;
+    --text: #000;
+    --border: #000;
+    --muted: #000;
+    --accent: #000;
+    --danger: #000;
+    --square-light: #fff;
+    --square-selected: #fff;
+    background: #fff !important;
+    color: #000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body.printable-puzzle > *:not(#app),
+  body.printable-puzzle #app > *:not(main),
+  body.printable-puzzle main > *:not(#board-section),
+  body.printable-puzzle #board-section > *:not(#board-container):not(.print-puzzle-title),
+  body.printable-puzzle #board-container > [id$="-numpad"],
   body.printable-puzzle #nonogram-mode-toggle {
     display: none !important;
+  }
+
+  body.printable-puzzle #app,
+  body.printable-puzzle main,
+  body.printable-puzzle #board-section {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+
+  body.printable-puzzle .print-puzzle-title {
+    display: block;
+    margin: 0 0 6mm;
+    font-size: 14pt;
+    font-weight: 700;
+    text-align: center;
+    color: #000;
+  }
+
+  body.printable-puzzle #board-container {
+    width: var(--print-board-width, auto);
+    max-width: none;
+    margin: 0 auto;
+    zoom: var(--print-zoom, 1);
+    break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body.printable-puzzle #board-container * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    outline: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+  }
+
+  body.printable-puzzle .nonogram-wrap {
+    overflow: visible !important;
+  }
+
+  /* The player's own entries: digits, bridges, loop lines, filled and
+     crossed-out nonogram cells. Givens stay. */
+  body.printable-puzzle .sudoku-cell:not(.sudoku-cell-given) .sudoku-cell-value,
+  body.printable-puzzle .rp-cell:not(.rp-given) .rp-value,
+  body.printable-puzzle .kakuro-cell-value,
+  body.printable-puzzle .skyscrapers-cell-value,
+  body.printable-puzzle .hashi-edge-line,
+  body.printable-puzzle .hashi-edge-hit,
+  body.printable-puzzle .slitherlink-edge-line,
+  body.printable-puzzle .slitherlink-edge-btn {
+    display: none !important;
+  }
+
+  body.printable-puzzle .nonogram-cell {
+    background: #fff !important;
+    color: transparent !important;
+    border-radius: 0 !important;
+  }
+
+  /* Skyscrapers draws its grid lines as a black board showing through
+     1px gaps, which would print the whole clue frame black. On paper:
+     white everywhere, each fillable cell outlined instead (the outlines
+     of two neighbours share the same 1px gap, so lines stay 1px). */
+  body.printable-puzzle #skyscrapers-board {
+    background: #fff !important;
+    border: none !important;
+  }
+
+  body.printable-puzzle .skyscrapers-cell {
+    background: #fff !important;
+    border-radius: 0 !important;
+  }
+
+  body.printable-puzzle #skyscrapers-board .skyscrapers-cell-board {
+    outline: 1px solid #000 !important;
+    outline-offset: 0 !important;
+  }
+
+  /* Kakuro's blocked cells: a diagonal on white instead of a solid
+     black block - same shape as the on-screen split clue cell, a
+     fraction of the ink. */
+  body.printable-puzzle .kakuro-cell-black {
+    background:
+      linear-gradient(to top right,
+        #fff 0%, #fff calc(50% - 0.75px),
+        #000 calc(50% - 0.75px), #000 calc(50% + 0.75px),
+        #fff calc(50% + 0.75px), #fff 100%) !important;
+  }
+
+  body.printable-puzzle .kakuro-clue {
+    color: #000 !important;
+  }
+
+  /* Status decorations that would give away progress. */
+  body.printable-puzzle .rp-conflict .rp-value {
+    background: none !important;
+    color: #000 !important;
+    padding: 0 !important;
+  }
+
+  body.printable-puzzle .hashi-island {
+    background: #fff !important;
+    border: 3px solid #000 !important;
+  }
+
+  body.printable-puzzle .hashi-island-value {
+    color: #000 !important;
+  }
+
+  body.printable-puzzle .slitherlink-dot {
+    fill: #000 !important;
+    stroke: none !important;
+  }
+
+  body.printable-puzzle .slitherlink-clue-ring {
+    stroke: none !important;
+  }
+
+  body.printable-puzzle .slitherlink-clue-text {
+    fill: #000 !important;
   }
 }
 

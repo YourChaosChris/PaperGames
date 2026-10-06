@@ -160,6 +160,7 @@ function initHashiApp() {
       updateHashiBoard();
       updateGameLabelsHashi();
       setStatusHashi("offline-hashi-status", "");
+      if (window.PrintPuzzle) PrintPuzzle.setDaily(isDaily);
       setStatusHashi("board-info", isDaily ? "Daily Challenge (" + DailyChallenge.todayKey() + "). " + hintTextHashi() : hintTextHashi());
     }, 10);
   }

@@ -141,6 +141,7 @@ function initSkyscrapersApp() {
       updateGameLabelsSkyscrapers();
       setStatusSkyscrapers("offline-skyscrapers-status", "");
       const hint = (window.I18n && I18n.t("skyscrapers_hint")) || "Select a cell, then pick a height.";
+      if (window.PrintPuzzle) PrintPuzzle.setDaily(isDaily);
       setStatusSkyscrapers("board-info", isDaily ? "Daily Challenge (" + DailyChallenge.todayKey() + "). " + hint : hint);
     }, 10);
   }

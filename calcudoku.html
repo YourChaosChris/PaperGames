@@ -23,7 +23,7 @@
   <script>try{if((localStorage.getItem("einkchess_lang")||navigator.language||"en").slice(0,2).toLowerCase()!=="en"){document.documentElement.className+=" i18n-pending";setTimeout(function(){document.documentElement.classList.remove("i18n-pending")},4000)}}catch(e){}</script>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="printable-puzzle">
 <div id="app">
   <header class="app-header">
     <div class="title-wrap app-title-row">
@@ -49,6 +49,7 @@
   <div class="field-row">
     <button id="start-calcudoku-game" class="primary" data-i18n="sudoku_new_game">New puzzle</button>
     <button id="daily-calcudoku-button" class="secondary" data-i18n="daily_challenge_button">🗓 Daily Challenge</button>
+    <button id="print-puzzle-button" class="secondary" data-i18n="print_puzzle_button">🖨 Print</button>
     <select id="calcudoku-size-inline" data-i18n-attr="aria-label:calcudoku_size_label" aria-label="Grid size">
         <option value="4">4 × 4</option>
         <option value="5" selected>5 × 5</option>
@@ -110,6 +111,7 @@
 <script src="rules-link.js"></script>
 <script src="game-switcher.js"></script>
 <script src="daily-challenge.js"></script>
+<script src="print-puzzle.js"></script>
 <script src="calcudoku-core.js"></script>
 <script src="result-modal.js"></script>
 <script src="storage-warning.js"></script>

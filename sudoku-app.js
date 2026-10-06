@@ -147,6 +147,7 @@ function initSudokuApp() {
       updateSudokuBoard();
       updateGameLabelsSudoku();
       setStatusSudoku("offline-sudoku-status", "");
+      if (window.PrintPuzzle) PrintPuzzle.setDaily(isDaily);
       setStatusSudoku("board-info", isDaily
         ? "Daily Challenge (" + DailyChallenge.todayKey() + "). Select a cell, then pick a number."
         : "Select a cell, then pick a number.");
@@ -163,11 +164,6 @@ function initSudokuApp() {
     dailyBtn.addEventListener("click", () => {
       startNewGameSudoku("medium", DailyChallenge.makeTodaysRng("sudoku"), true);
     });
-  }
-
-  const printBtn = document.getElementById("print-puzzle-button");
-  if (printBtn) {
-    printBtn.addEventListener("click", () => window.print());
   }
 
   if (eraseBtn) {

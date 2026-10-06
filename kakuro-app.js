@@ -139,6 +139,7 @@ function initKakuroApp() {
       updateKakuroBoard();
       updateGameLabelsKakuro();
       setStatusKakuro("offline-kakuro-status", "");
+      if (window.PrintPuzzle) PrintPuzzle.setDaily(isDaily);
       setStatusKakuro("board-info", isDaily
         ? "Daily Challenge (" + DailyChallenge.todayKey() + "). Select a cell, then pick a number."
         : ((window.I18n && I18n.t("kakuro_hint")) || "Select a cell, then pick a number."));
@@ -155,11 +156,6 @@ function initKakuroApp() {
     dailyBtn.addEventListener("click", () => {
       startNewGameKakuro("medium", DailyChallenge.makeTodaysRng("kakuro"), true);
     });
-  }
-
-  const printBtn = document.getElementById("print-puzzle-button");
-  if (printBtn) {
-    printBtn.addEventListener("click", () => window.print());
   }
 
   if (eraseBtn) {

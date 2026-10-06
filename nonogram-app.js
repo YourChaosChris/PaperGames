@@ -140,6 +140,7 @@ function initNonogramApp() {
     buildNonogramBoardDOM();
     updateNonogramBoard();
     updateGameLabelsNonogram();
+    if (window.PrintPuzzle) PrintPuzzle.setDaily(isDaily);
     setStatusNonogram("board-info", isDaily
       ? "Daily Challenge (" + DailyChallenge.todayKey() + "). Fill in the cells the clues describe."
       : "Fill in the cells the clues describe.");
@@ -156,11 +157,6 @@ function initNonogramApp() {
       const difficulty = levelInline ? levelInline.value : "medium";
       startNewGameNonogram(difficulty, true);
     });
-  }
-
-  const printBtn = document.getElementById("print-puzzle-button");
-  if (printBtn) {
-    printBtn.addEventListener("click", () => window.print());
   }
 
   const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(NONOGRAM_SAVE_KEY) : null;

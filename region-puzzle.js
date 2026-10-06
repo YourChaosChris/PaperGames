@@ -122,6 +122,7 @@ const RegionPuzzle = (function () {
       cfg.generate(options, (puzzle) => {
         load(puzzle, null, options, 0);
         setStatus(cfg.statusId, "");
+        if (window.PrintPuzzle) PrintPuzzle.setDaily(isDaily);
         setStatus("board-info", isDaily ? "Daily Challenge (" + DailyChallenge.todayKey() + "). " + hint() : hint());
       }, rng);
     }, 10);

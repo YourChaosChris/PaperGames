@@ -23,7 +23,7 @@
   <script>try{if((localStorage.getItem("einkchess_lang")||navigator.language||"en").slice(0,2).toLowerCase()!=="en"){document.documentElement.className+=" i18n-pending";setTimeout(function(){document.documentElement.classList.remove("i18n-pending")},4000)}}catch(e){}</script>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="printable-puzzle">
 <div id="app">
   <header class="app-header">
     <div class="title-wrap app-title-row">
@@ -49,6 +49,7 @@
   <div class="field-row">
     <button id="start-killersudoku-game" class="primary" data-i18n="sudoku_new_game">New puzzle</button>
     <button id="daily-killersudoku-button" class="secondary" data-i18n="daily_challenge_button">🗓 Daily Challenge</button>
+    <button id="print-puzzle-button" class="secondary" data-i18n="print_puzzle_button">🖨 Print</button>
     <select id="killersudoku-level-inline">
         <option value="easy" data-i18n="level_easy">Easy</option>
         <option value="medium" selected data-i18n="level_medium">Medium</option>
@@ -105,6 +106,7 @@
 <script src="game-switcher.js"></script>
 <script src="sudoku-core.js"></script>
 <script src="daily-challenge.js"></script>
+<script src="print-puzzle.js"></script>
 <script src="killersudoku-core.js"></script>
 <script src="result-modal.js"></script>
 <script src="storage-warning.js"></script>

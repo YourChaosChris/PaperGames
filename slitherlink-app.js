@@ -146,6 +146,7 @@ function initSlitherlinkApp() {
       updateSlitherlinkBoard();
       updateGameLabelsSlitherlink();
       setStatusSlitherlink("offline-slitherlink-status", "");
+      if (window.PrintPuzzle) PrintPuzzle.setDaily(isDaily);
       setStatusSlitherlink("board-info", isDaily
         ? "Daily Challenge (" + DailyChallenge.todayKey() + "). " + hintTextSlitherlink()
         : hintTextSlitherlink());
