@@ -12,8 +12,21 @@
 // Screen-reader label samples are checked the same way.
 // It also checks that every msg_t_* template has the same placeholders
 // in all 11 languages.
+//
+// A game page loads only i18n.js and lang/xx.js; the rules/history texts
+// (i18n-text.js, lang/xx-text.js) come only on rules and history pages.
+// So the messages, which games show, are checked against the main files
+// alone - otherwise a rules-page text that happens to match a message
+// would count as its translation although the game page stays English.
+// The texts each page refers to (data-i18n, data-i18n-attr) are checked
+// against what that page loads: game and other pages against the main
+// files, rules and history pages against both.
 
-const { I18n, STRINGS } = require("./load-i18n").loadI18n();
+const fs = require("fs");
+const path = require("path");
+const { loadI18n } = require("./load-i18n");
+const { I18n, STRINGS } = loadI18n({ texts: false });
+const FULL = loadI18n();
 
 // One sample per message shape, as the games actually produce them.
 const SAMPLES = [
@@ -488,12 +501,47 @@ for (const sample of SAMPLES) {
 
 // Template placeholders must match across languages.
 const placeholders = (s) => (s.match(/\{\w+\}/g) || []).sort().join(",");
-for (const key of Object.keys(STRINGS.en).filter((k) => k.indexOf("msg_t_") === 0)) {
-  const want = placeholders(STRINGS.en[key]);
+for (const key of Object.keys(FULL.STRINGS.en).filter((k) => k.indexOf("msg_t_") === 0)) {
+  const want = placeholders(FULL.STRINGS.en[key]);
   for (const lang of langs) {
-    if (placeholders(STRINGS[lang][key] || "") !== want) fail(lang + ": placeholders differ in " + key);
+    if (placeholders(FULL.STRINGS[lang][key] || "") !== want) fail(lang + ": placeholders differ in " + key);
   }
 }
 
-console.log(`=== I18N MESSAGES: ${SAMPLES.length + ARIA_SAMPLES.length} samples x ${langs.length} languages, ${failures} failure(s) ===`);
+// Every text a page refers to must be there in every language, among the
+// files that page loads. Arabic keeps the legal pages in English on
+// purpose (see static-checks.js).
+const ROOT = path.join(__dirname, "..");
+const LEGAL_ENGLISH = { ar: /^(impressum|privacy)_/ };
+const KEY_RE = /^[A-Za-z_][A-Za-z0-9_]*$/;
+function pageKeys(content) {
+  const keys = new Set();
+  let m;
+  const plain = /data-i18n="([^"]+)"/g;
+  while ((m = plain.exec(content))) if (KEY_RE.test(m[1])) keys.add(m[1]);
+  const attr = /data-i18n-attr="([^"]+)"/g;
+  while ((m = attr.exec(content))) {
+    m[1].split(",").forEach((pair) => {
+      const key = (pair.split(":")[1] || "").trim();
+      if (KEY_RE.test(key)) keys.add(key);
+    });
+  }
+  return keys;
+}
+const pageCount = { game: 0, text: 0 };
+fs.readdirSync(ROOT).filter((f) => f.endsWith(".html")).sort().forEach((f) => {
+  const content = fs.readFileSync(path.join(ROOT, f), "utf8");
+  const textPage = /<html[^>]*\sdata-i18n-text=/.test(content);
+  const table = textPage ? FULL.STRINGS : STRINGS;
+  const keys = pageKeys(content);
+  if (!keys.size) return;
+  pageCount[textPage ? "text" : "game"]++;
+  for (const lang of Object.keys(table)) {
+    const missing = [...keys].filter((k) => typeof table[lang][k] !== "string" && !(LEGAL_ENGLISH[lang] && LEGAL_ENGLISH[lang].test(k)));
+    if (missing.length) fail(`${lang}: ${f} (${textPage ? "main and text files" : "main files only"}) lacks ${missing.slice(0, 5).join(", ")}`);
+  }
+});
+
+console.log(`=== I18N MESSAGES: ${SAMPLES.length + ARIA_SAMPLES.length} samples x ${langs.length} languages (main files only), ` +
+  `page texts on ${pageCount.game} other and ${pageCount.text} rules/history pages, ${failures} failure(s) ===`);
 process.exit(failures ? 1 : 0);

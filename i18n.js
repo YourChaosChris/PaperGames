@@ -2387,9 +2387,23 @@ const I18n = (function () {
       });
       if (!ok) continue;
       const key = plural && STRINGS[DEFAULT_LANG][tpl.key + "_pl"] ? tpl.key + "_pl" : tpl.key;
-      return t(key, l).replace(/\{(\w+)\}/g, (m0, n) => (n in values ? values[n] : m0));
+      const filled = t(key, l).replace(/\{(\w+)\}/g, (m0, n) => {
+        if (!(n in values)) return m0;
+        // French elides before a name that starts with a vowel; mark
+        // where a name goes in so only those spots are touched.
+        return (l === "fr" && (n.charAt(0) === "p" || n.charAt(0) === "q") ? "\u0002" : "") + values[n];
+      });
+      return l === "fr" ? msgElideFr(filled) : filled;
     }
     return null;
+  }
+
+  // "Au tour de Ordinateur 1" -> "Au tour d'Ordinateur 1", "que Ordinateur"
+  // -> "qu'Ordinateur". Only right before an inserted name (marked with
+  // \u0002 by msgSentence); a leading h is left alone, it may be aspirated.
+  function msgElideFr(s) {
+    return s.replace(/(^|[^A-Za-z\u00C0-\u00FF])(de|que|le|la|jusque|lorsque|puisque) \u0002(?=[AEIOUYaeiouy\u00C0-\u00C6\u00C8-\u00CF\u00D2-\u00D6\u00D9-\u00DC\u00E0-\u00E6\u00E8-\u00EF\u00F2-\u00F6\u00F9-\u00FC\u0152\u0153])/gi,
+      (m, pre, word) => pre + word.slice(0, -1) + "'").replace(/\u0002/g, "");
   }
 
   // Screen-reader labels are comma-separated parts ("Row 3, column 4,

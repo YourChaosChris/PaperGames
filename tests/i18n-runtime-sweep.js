@@ -21,8 +21,9 @@ const LANG = process.env.SWEEP_LANG || "ru";
 const CLICKS = +process.env.CLICKS || 60;
 const PER_GAME_MS = 45000;
 
-// Latin words that legitimately appear in the Russian texts.
-const ctx = require("./load-i18n").loadI18n();
+// Latin words that legitimately appear in the Russian texts - of the
+// main files only, which is what a game page loads.
+const ctx = require("./load-i18n").loadI18n({ texts: false });
 // "OK" is universal; the author byline in the header is a name, not a text.
 const allowed = new Set(["OK", "Christopher", "ller"]);
 Object.values(ctx.STRINGS[LANG]).forEach((v) => {
