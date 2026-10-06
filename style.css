@@ -8247,6 +8247,32 @@ max-width: 900px;
   line-height: 1.4;
 }
 
+/* Tested devices (devices.html, devices-list.js): a plain bordered table
+   that wraps its text instead of scrolling sideways on a narrow reader. */
+.devices-table-wrap {
+  max-width: 100%;
+}
+
+.devices-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.9rem;
+}
+
+.devices-table th,
+.devices-table td {
+  border: 1px solid var(--border);
+  padding: var(--space-1) var(--space-2);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: break-word;
+}
+
+.devices-table th {
+  font-weight: 700;
+}
+
 /* Display density (density.js): the spacing scale times 0.75 (compact)
    or 1.5 (spacious). Only the scale changes; boards don't use it. */
 :root[data-density="compact"] {

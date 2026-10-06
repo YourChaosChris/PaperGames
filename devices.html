@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Your Stats | PaperGames</title>
-  <meta name="description" content="Your win, loss, and draw record across every game in the PaperGames collection, tracked locally on your own device.">
-  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/stats.html">
+  <title>Tested devices – which e-readers PaperGames runs on | PaperGames</title>
+  <meta name="description" content="Which e-readers PaperGames is known to run on, what has not been tested, and how to check your own device and report back - no form, no account.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/devices.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PaperGames">
-  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/stats.html">
-  <meta property="og:title" content="Your Stats | PaperGames">
-  <meta property="og:description" content="Your win, loss, and draw record across every game in the PaperGames collection, tracked locally on your own device.">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/devices.html">
+  <meta property="og:title" content="Tested devices – which e-readers PaperGames runs on | PaperGames">
+  <meta property="og:description" content="Which e-readers PaperGames is known to run on, what has not been tested, and how to check your own device and report back - no form, no account.">
   <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Your Stats | PaperGames">
-  <meta name="twitter:description" content="Your win, loss, and draw record across every game in the PaperGames collection, tracked locally on your own device.">
+  <meta name="twitter:title" content="Tested devices – which e-readers PaperGames runs on | PaperGames">
+  <meta name="twitter:description" content="Which e-readers PaperGames is known to run on, what has not been tested, and how to check your own device and report back - no form, no account.">
   <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -40,33 +40,45 @@
     <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
   </nav>
 
-  <main>
+    <main>
     <section class="card content-page">
-      <h1 data-i18n="stats_title">Your Stats</h1>
-      <p data-i18n="stats_intro">Results against the built-in computer, kept on this device only.</p>
+      <h1 data-i18n="nav_devices">Tested devices</h1>
+      <p data-i18n="devices_intro">PaperGames runs in the web browser of an e-reader. Which readers it really works on is only known where someone has tried it and reported back. This page lists those devices, and it says just as clearly what has not been tested.</p>
 
-      <table class="stats-table">
-        <thead>
-          <tr>
-            <th data-i18n="stats_col_game">Game</th>
-            <th data-i18n="stats_col_wins">Wins</th>
-            <th data-i18n="stats_col_losses">Losses</th>
-            <th data-i18n="stats_col_draws">Draws</th>
-            <th data-i18n="stats_col_streak">Best streak</th>
-          </tr>
-        </thead>
-        <tbody id="stats-body"></tbody>
-      </table>
+      <h2 data-i18n="devices_list_title">Devices with a report</h2>
+      <div class="devices-table-wrap">
+        <table class="devices-table">
+          <thead>
+            <tr>
+              <th data-i18n="devices_col_device">Device</th>
+              <th data-i18n="devices_col_screen">Screen</th>
+              <th data-i18n="devices_col_checked">What was checked</th>
+              <th data-i18n="devices_col_date">Date</th>
+            </tr>
+          </thead>
+          <tbody id="devices-table-body"></tbody>
+        </table>
+      </div>
+      <p data-i18n="devices_untested">Every other device is untested. PaperGames may well work on it, but nobody has reported back yet.</p>
 
-      <p id="stats-empty" class="stats-empty hidden" data-i18n="stats_empty">No games played against the computer yet.</p>
+      <h2 data-i18n="devices_check_title">Check it on your own device</h2>
+      <dl class="rule-list">
+        <dt data-i18n="devices_step1_title">1. Open the page</dt>
+        <dd data-i18n="devices_step1_text">Open PaperGames in your reader's own browser. Look out for: the page loads, the text is sharp and nothing is cut off at the side.</dd>
+        <dt data-i18n="devices_step2_title">2. Start a game</dt>
+        <dd data-i18n="devices_step2_text">Start a game, for example Sudoku or Chess, and make a few moves. Look out for: every tap lands on the square you meant, and the board fits on the screen without scrolling sideways.</dd>
+        <dt data-i18n="devices_step3_title">3. Open the settings</dt>
+        <dd data-i18n="devices_step3_text">Open Settings and switch the text size and high contrast. Look out for: the page changes at once and everything stays readable.</dd>
+        <dt data-i18n="devices_step4_title">4. Go offline</dt>
+        <dd data-i18n="devices_step4_text">Wait until the home page says that PaperGames is ready offline, then switch off Wi-Fi and reload the page. Look out for: the page and a game still open.</dd>
+        <dt data-i18n="devices_step5_title">5. Come back later</dt>
+        <dd data-i18n="devices_step5_text">Leave a game in the middle, close the browser and open it again later. Look out for: the game is exactly where you left it.</dd>
+      </dl>
 
-      <h2 data-i18n="achv_section_title">Achievements</h2>
-      <p data-i18n="achv_intro">Badges you've unlocked from your own local stats, above.</p>
-      <div id="achievements-grid" class="achievements-grid"></div>
-
-      <p class="stats-actions">
-        <button id="stats-reset" type="button" class="secondary small" data-i18n="stats_reset_button">Reset stats</button>
-      </p>
+      <h2 data-i18n="devices_report_title">Report back</h2>
+      <p data-i18n="devices_report_text">Send the name of your device and, if you can, a screenshot of what you saw to this address:</p>
+      <p><a href="mailto:yourchaos@googlemail.com">yourchaos@googlemail.com</a></p>
+      <p data-i18n="devices_report_note">There is no form and no account, and nothing is recorded - it is just an e-mail.</p>
 
       <p class="about-back">
         <a href="index.html" data-i18n="back_home">&larr; Back to home</a>
@@ -78,7 +90,6 @@
     <a href="about.html" data-i18n="nav_about">About</a>
     <a href="stats.html" data-i18n="nav_stats">Stats</a>
     <a href="devices.html" data-i18n="nav_devices">Tested devices</a>
-    <a href="about.html" data-i18n="footer_support">☕ Support</a>
     <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
     <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
   </footer>
@@ -93,10 +104,8 @@
 <script src="offline-status.js"></script>
 <script src="density.js"></script>
 <script src="settings-menu.js"></script>
-<script src="game-stats.js"></script>
-<script src="achievements.js"></script>
+<script src="devices-list.js"></script>
 <script src="sw-register.js"></script>
 <script src="update-banner.js"></script>
-<script src="stats-app.js"></script>
 </body>
 </html>
