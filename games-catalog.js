@@ -699,4 +699,15 @@ const GAMES_CATALOG = [
     added: "2026-10-06",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"7\" width=\"8\" height=\"8\"/><rect x=\"13.5\" y=\"7\" width=\"8\" height=\"8\"/><path d=\"M10.8 11L13.2 9V13Z\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
+  {
+    slug: "foxandgeese",
+    category: "strategy",
+    nameKey: "game_foxandgeese",
+    nameText: "Fox and Geese",
+    descKey: "home_foxandgeese_desc",
+    descText: "The medieval hunt game on the 33-point cross: one fox against 13 geese. Play either side, local 2-player or vs. the built-in engine.",
+    popular: false,
+    added: "2026-10-06",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M37 8 H63 V37 H92 V63 H63 V92 H37 V63 H8 V37 H37 Z\" fill=\"none\" stroke=\"#000\" stroke-width=\"3\"/><path d=\"M50 28 L66 56 L34 56 Z\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"5\" stroke-linejoin=\"round\"/><circle cx=\"38\" cy=\"78\" r=\"7\" fill=\"#111\"/><circle cx=\"62\" cy=\"78\" r=\"7\" fill=\"#111\"/><circle cx=\"20\" cy=\"70\" r=\"6\" fill=\"#111\"/><circle cx=\"80\" cy=\"70\" r=\"6\" fill=\"#111\"/></svg></span>"
+  },
 ];

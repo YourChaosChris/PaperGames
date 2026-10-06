@@ -9773,3 +9773,108 @@ button.concan-meld {
   outline: 6px double var(--text);
   outline-offset: 2px;
 }
+
+/* Fox and Geese board (foxandgeese-app.js): the 33-point cross, drawn
+   with the point-and-line technique of Alquerque - an SVG line layer
+   under round point buttons. The sides differ by shape: a goose is a
+   filled disc, the fox a triangle; points you can use right now get a
+   dashed border, the piece being moved a heavy solid one - never grey
+   alone. */
+.foxandgeese-board {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+}
+
+.foxandgeese-lines {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.foxandgeese-lines line {
+  stroke: var(--border);
+  stroke-width: 3;
+}
+
+.foxandgeese-point {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: var(--square-light);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.foxandgeese-point-selectable,
+.foxandgeese-point-movable {
+  border: 3px dashed var(--border);
+}
+
+.foxandgeese-point-selected {
+  border: 5px solid var(--accent);
+}
+
+.foxandgeese-point.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.foxandgeese-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 72%;
+  height: 72%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.foxandgeese-piece svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.foxandgeese-piece-goose {
+  border-radius: 50%;
+  background: #111;
+  border: 2px solid #000;
+}
+
+.foxandgeese-icon-goose,
+.foxandgeese-icon-fox {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.foxandgeese-icon-goose {
+  border-radius: 50%;
+  background: #111;
+  border: 2px solid #000;
+}
+
+/* The fox icon: a triangle outline drawn with borders (no SVG needed). */
+.foxandgeese-icon-fox {
+  width: 0;
+  height: 0;
+  border-left: 0.55em solid transparent;
+  border-right: 0.55em solid transparent;
+  border-bottom: 1em solid #111;
+}

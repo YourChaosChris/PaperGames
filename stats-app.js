@@ -60,7 +60,8 @@ const STATS_GAME_NAME_KEY = {
   tictactoe: "game_tictactoe",
   alquerque: "game_alquerque",
   pairs: "game_pairs",
-  futoshiki: "game_futoshiki"
+  futoshiki: "game_futoshiki",
+  foxandgeese: "game_foxandgeese"
 };
 
 function gameDisplayName(game) {

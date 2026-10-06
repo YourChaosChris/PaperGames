@@ -27,7 +27,7 @@ const STRINGS = {
     nav_privacy: "Privacy Policy",
     toggle_moves_button: "Moves",
 
-    home_tagline: "62 classic games, built for e-readers.",
+    home_tagline: "63 classic games, built for e-readers.",
     home_intro: "A small, dependency-free collection of classic board, strategy, and puzzle games made for E-Ink displays like Tolino, Kobo and Kindle: high contrast, no animations, and it keeps working with no internet connection once you've opened it.",
     home_pitch: "No ads, no account, and nothing about you is recorded. Once it has loaded, everything keeps working without internet. The computer never plays on by itself: stop whenever you like and carry on hours later, exactly where you left off. The source code is open.",
     home_pitch_link: "What makes this different",
@@ -215,6 +215,9 @@ const STRINGS = {
     quickrules_futoshiki_1: "Fill the grid so that every row and every column contains each number exactly once.",
     quickrules_futoshiki_2: "Select a cell, then pick a number; a few numbers may already be given.",
     quickrules_futoshiki_3: "Every sign between two cells must hold: its narrow tip points to the smaller number.",
+    quickrules_foxandgeese_1: "The geese win by shutting the fox in so that it cannot move; the fox wins once only 5 geese are left.",
+    quickrules_foxandgeese_2: "Move one step along a line. The fox captures by jumping over a goose to the empty point behind it, and may jump again.",
+    quickrules_foxandgeese_3: "Geese move forward or sideways, never back, and they cannot capture.",
     offline_ready: "Ready offline. You can switch off the WiFi and the games keep running.",
     offline_loading: "Being stored on your device right now. Keep this page open for a moment.",
     offline_unavailable: "Your browser can't store this site. It only runs with an internet connection.",
@@ -274,7 +277,7 @@ const STRINGS = {
     home_section_popular: "Popular Games",
     home_section_new: "New Games",
     home_all_games_title: "Looking for something else?",
-    home_all_games_desc: "Browse and search all 62 games, sortable alphabetically or by type.",
+    home_all_games_desc: "Browse and search all 63 games, sortable alphabetically or by type.",
     nav_all_games: "All Games",
     all_games_intro: "Every game in PaperGames, in one place. Search by name, sort alphabetically or by type, and tap the star to add a game to your Favorites on the home page.",
     all_games_search_placeholder: "Search games…",
@@ -573,6 +576,23 @@ const STRINGS = {
     futoshiki_board_label: "Futoshiki board",
     futoshiki_size_label: "Grid size",
     futoshiki_history_intro: "A Japanese number puzzle whose name simply means inequality: a Latin square with small signs between the cells.",
+    game_foxandgeese: "Fox and Geese",
+    home_foxandgeese_desc: "The medieval hunt game on the 33-point cross: one fox against 13 geese. Play either side, local 2-player or vs. the built-in engine.",
+    foxandgeese_board_label: "Fox and Geese board",
+    foxandgeese_history_intro: "A hunt game from medieval Europe: one fox, a flock of geese and a cross-shaped board.",
+    msg_name_fox: "Fox",
+    msg_name_geese: "Geese",
+    msg_fg_jump_on: "Jump on, or tap the fox to stop here.",
+    msg_fg_end_trapped: "The geese win: the fox cannot move.",
+    msg_fg_end_stuck: "The fox wins: the geese cannot move.",
+    msg_fg_end_few: "The fox wins: too few geese are left to trap it.",
+    msg_fg_resign_fox: "The fox wins by resignation.",
+    msg_fg_resign_geese: "The geese win by resignation.",
+    msg_fg_title_fox: "The fox wins",
+    msg_fg_title_geese: "The geese win",
+    msg_t_fg_score: "Geese left: {n} of {m} · the fox wins at {k}.",
+    msg_fg_aria_fox: "fox",
+    msg_fg_aria_goose: "goose",
     msg_t_fs_hint_sign1: "A sign next to the marked cell (row {n}, column {m}) leaves only one number for it.",
     msg_t_fs_hint_sign2: "The sign between this cell and its neighbour, together with the numbers still possible there, allows only the {n} here.",
     pairs_board_label: "Pairs board",
@@ -2090,7 +2110,7 @@ const I18n = (function () {
   const MSG_DECIMAL_COMMA = ["de", "fr", "es", "it", "nl", "pl", "uk", "ru"];
   // Sides named in the plural need a plural verb in some languages
   // ("Die Ziegen sind am Zug"); a template may provide a <key>_pl variant.
-  const MSG_PLURAL_NAMES = ["Attackers", "Defenders", "Goats", "Tigers"];
+  const MSG_PLURAL_NAMES = ["Attackers", "Defenders", "Goats", "Tigers", "Geese"];
   let msgIndex = null;
   const msgCache = new Map();
   const MSG_CACHE_LIMIT = 5000;

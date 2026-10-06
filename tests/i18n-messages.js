@@ -17,6 +17,21 @@ const { I18n, STRINGS } = require("./load-i18n").loadI18n();
 
 // One sample per message shape, as the games actually produce them.
 const SAMPLES = [
+  "Fox to move.",
+  "Geese to move.",
+  "Fox played. Geese to move.",
+  "Geese played. Fox to move.",
+  "You play Geese, computer level: Hard.",
+  "You play Fox, computer level: Easy.",
+  "Jump on, or tap the fox to stop here.",
+  "The geese win: the fox cannot move.",
+  "The fox wins: the geese cannot move.",
+  "The fox wins: too few geese are left to trap it.",
+  "The fox wins by resignation.",
+  "The geese win by resignation.",
+  "The fox wins",
+  "The geese win",
+  "Geese left: 12 of 13 · the fox wins at 5.",
   "In row 3, one number has only one cell left. The cell is marked.",
   "In column 7, one number has only one cell left. The cell is marked.",
   "In this box, one number has only one cell left. The cell is marked.",
