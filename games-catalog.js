@@ -688,4 +688,15 @@ const GAMES_CATALOG = [
     added: "2026-10-06",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"14\" width=\"38\" height=\"50\" rx=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"54\" y=\"36\" width=\"38\" height=\"50\" rx=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"5\"/><circle cx=\"27\" cy=\"39\" r=\"10\" fill=\"#141413\"/><circle cx=\"73\" cy=\"61\" r=\"10\" fill=\"#141413\"/></svg></span>"
   },
+  {
+    slug: "futoshiki",
+    category: "puzzles",
+    nameKey: "game_futoshiki",
+    nameText: "Futoshiki",
+    descKey: "home_futoshiki_desc",
+    descText: "Fill the grid so every row and column holds each number once - and every sign between two cells points to the smaller number. 4x4 to 6x6, freshly generated with a unique solution.",
+    popular: false,
+    added: "2026-10-06",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"6\" y=\"30\" width=\"36\" height=\"36\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"58\" y=\"30\" width=\"36\" height=\"36\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"5\"/><polygon points=\"44,48 56,40 56,56\" fill=\"#141413\"/><text x=\"24\" y=\"57\" text-anchor=\"middle\" font-size=\"24\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">2</text></svg></span>"
+  },
 ];

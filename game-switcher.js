@@ -82,7 +82,8 @@
     ["cratepusher", "game_cratepusher"],
     ["tictactoe", "game_tictactoe"],
     ["alquerque", "game_alquerque"],
-    ["pairs", "game_pairs"]
+    ["pairs", "game_pairs"],
+    ["futoshiki", "game_futoshiki"]
   ];
 
   var GAME_SLUGS = {};

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-i18n-text="1">
+<head>
+  <meta charset="UTF-8">
+  <title>Futoshiki Rules | PaperGames</title>
+  <meta name="description" content="How Futoshiki works: fill a Latin square so that every row and column holds each number once and every sign between two cells points to the smaller number.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/futoshiki-rules.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/futoshiki-rules.html">
+  <meta property="og:title" content="Futoshiki Rules | PaperGames">
+  <meta property="og:description" content="How Futoshiki works: fill a Latin square so that every row and column holds each number once and every sign between two cells points to the smaller number.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Futoshiki Rules | PaperGames">
+  <meta name="twitter:description" content="How Futoshiki works: fill a Latin square so that every row and column holds each number once and every sign between two cells points to the smaller number.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>try{if((localStorage.getItem("einkchess_lang")||navigator.language||"en").slice(0,2).toLowerCase()!=="en"){document.documentElement.className+=" i18n-pending";setTimeout(function(){document.documentElement.classList.remove("i18n-pending")},4000)}}catch(e){}</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a>
+    </div>
+    <div class="user-panel">
+    </div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav-link" data-i18n="nav_home">Home</a>
+    <a href="guide.html" class="site-nav-link" data-i18n="nav_guide">Guide</a>
+    <a href="about.html" class="site-nav-link" data-i18n="nav_about">About</a>
+    <a href="history.html" class="site-nav-link" data-i18n="nav_history">History</a>
+  </nav>
+
+    <main>
+    <section class="card content-page">
+      <h1 data-i18n="futoshiki_rules_title">Futoshiki Rules</h1>
+      <p data-i18n="futoshiki_rules_intro">A quick reference for how PaperGames plays Futoshiki, the Japanese inequality puzzle.</p>
+
+      <h2 data-i18n="futoshiki_rules_basics_title">The basic idea</h2>
+      <dl class="rule-list">
+        <dt data-i18n="futoshiki_term_grid">The grid</dt>
+        <dd data-i18n="futoshiki_rules_grid">The grid has 4 x 4, 5 x 5 or 6 x 6 cells. Fill it with the numbers 1 up to the grid size, so that each of them appears exactly once in every row and exactly once in every column.</dd>
+        <dt data-i18n="futoshiki_term_signs">The signs</dt>
+        <dd data-i18n="futoshiki_rules_signs">Between some neighbouring cells there is a small triangle. It works like a less-than sign: its narrow tip points to the cell with the smaller number, its wide end to the cell with the larger one. Every sign must hold in the finished grid.</dd>
+        <dt data-i18n="futoshiki_term_givens">Given numbers</dt>
+        <dd data-i18n="futoshiki_rules_givens">Some puzzles start with a few numbers already filled in, shown in bold; many have none at all. Given numbers can't be changed.</dd>
+        <dt data-i18n="futoshiki_term_unique">One solution</dt>
+        <dd data-i18n="futoshiki_rules_unique">Every puzzle is freshly generated and checked to have exactly one solution, which can be found step by step without guessing.</dd>
+      </dl>
+
+      <h2 data-i18n="futoshiki_rules_play_title">Playing</h2>
+      <dl class="rule-list">
+        <dt data-i18n="futoshiki_term_entering">Entering numbers</dt>
+        <dd data-i18n="futoshiki_rules_entering">Select a cell, then pick a number below the grid. Erase clears the selected cell, Undo takes back your last entry. A number that repeats in its row or column, or two numbers that break a sign, are shown inverted.</dd>
+        <dt data-i18n="futoshiki_term_hint">Hint</dt>
+        <dd data-i18n="futoshiki_rules_hint">Hint shows the next step in three presses: the first marks a cell, the second gives the reason, the third enters the number. It never guesses. A win with a hint counts separately in the statistics.</dd>
+        <dt data-i18n="futoshiki_term_daily">Daily Challenge and printing</dt>
+        <dd data-i18n="futoshiki_rules_daily">The Daily Challenge is a 5 x 5 puzzle that is the same for everyone on the same day. Print puts the empty puzzle on one A4 page, to solve on paper.</dd>
+      </dl>
+
+      <h2 data-i18n="futoshiki_rules_end_title">How a game ends</h2>
+      <dl class="rule-list">
+        <dt data-i18n="futoshiki_term_win">Solved</dt>
+        <dd data-i18n="futoshiki_rules_win">The puzzle is solved as soon as every cell is filled, no number repeats in a row or column, and every sign holds.</dd>
+      </dl>
+
+      <p class="about-back"><a href="futoshiki.html" data-i18n="about_back">&larr; Back to the board</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+<script src="error-banner.js"></script>
+<script src="i18n.js"></script>
+<script src="font-size-toggle.js"></script>
+<script src="high-contrast.js"></script>
+<script src="ai-pacing.js"></script>
+<script src="random-start.js"></script>
+<script src="force-update.js"></script>
+<script src="offline-status.js"></script>
+<script src="settings-menu.js"></script>
+<script src="game-switcher.js"></script>
+<script src="sw-register.js"></script>
+<script src="update-banner.js"></script>
+</body>
+</html>

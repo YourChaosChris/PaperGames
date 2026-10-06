@@ -6336,6 +6336,79 @@ margin: 0.5rem auto 0;
   margin: 15%;
 }
 
+/* Futoshiki (futoshiki-app.js): square cells with half a cell of space
+   between them, placed by percentage in a square box (height set by JS).
+   The "less than" signs sit in that space as filled SVG triangles, tip
+   towards the smaller number - drawn, not typed, so they never depend
+   on the device font. Given numbers are bold; a selected cell has a
+   heavy frame, a hinted one a double frame, a conflict is shown
+   inverted - shape and weight only, never grey. */
+.futoshiki-board {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.fs-cell {
+  position: absolute;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background: var(--square-light);
+  border: 2px solid var(--border);
+  border-radius: 0;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.fs-cell.selected {
+  border-width: 5px;
+}
+
+.fs-cell.hint-cell {
+  outline: 6px double var(--text);
+  outline-offset: -9px;
+}
+
+.fs-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 5vw, 1.8rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.fs-given .fs-value {
+  font-weight: 800;
+}
+
+.fs-conflict .fs-value {
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 3px;
+  padding: 0.05em 0.2em;
+}
+
+.fs-sign {
+  position: absolute;
+  pointer-events: none;
+}
+
+.fs-sign svg {
+  display: block;
+  width: 94%;
+  height: 94%;
+  margin: 3%;
+}
+
+.fs-sign polygon {
+  fill: var(--text);
+}
+
 /* Spider Solitaire board: a stock indicator and completed-sequences
    counter in a row above ten cascading tableau columns - the same
    overlap-via-negative-margin cascade layout as Klondike/FreeCell,
@@ -7997,6 +8070,7 @@ max-width: 900px;
   /* The player's own entries: digits, bridges, loop lines, filled and
      crossed-out nonogram cells. Givens stay. */
   body.printable-puzzle .sudoku-cell:not(.sudoku-cell-given) .sudoku-cell-value,
+  body.printable-puzzle .fs-cell:not(.fs-given) .fs-value,
   body.printable-puzzle .rp-cell:not(.rp-given) .rp-value,
   body.printable-puzzle .kakuro-cell-value,
   body.printable-puzzle .skyscrapers-cell-value,
@@ -8048,10 +8122,15 @@ max-width: 900px;
   }
 
   /* Status decorations that would give away progress. */
-  body.printable-puzzle .rp-conflict .rp-value {
+  body.printable-puzzle .rp-conflict .rp-value,
+  body.printable-puzzle .fs-conflict .fs-value {
     background: none !important;
     color: #000 !important;
     padding: 0 !important;
+  }
+
+  body.printable-puzzle .fs-cell {
+    border-width: 2px !important;
   }
 
   body.printable-puzzle .hashi-island {
