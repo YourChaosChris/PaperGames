@@ -219,6 +219,15 @@ button:disabled {
   cursor: default;
 }
 
+/* A greyed-out control button (Roll, Discard, ...) also gets its label
+   struck through, so "not available now" doesn't rest on paleness alone.
+   Only the labelled control buttons - board cells that are buttons keep
+   their own markings. */
+button.primary:disabled,
+button.secondary:disabled {
+  text-decoration: line-through;
+}
+
 .hidden {
   display: none !important;
 }
@@ -2121,8 +2130,13 @@ margin: 2rem 0 var(--space-4);
   pointer-events: none;
 }
 
+/* "Can move" (here and in Mancala, Mühle, Backgammon, Shogi, Hnefatafl,
+   Konane): the grey tint plus a shape, so it never rests on grey alone -
+   a small black triangle in the top-left corner of square cells, a ring
+   with a white gap around round points. Neither looks like "last move"
+   (thin frame/outline) or "selected" (3 px frame). */
 .ur-square-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 .ur-piece {
@@ -2237,7 +2251,7 @@ button.ur-tray-slot {
 }
 
 .ur-tray-slot-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 .ur-tray-slot-count {
@@ -2354,6 +2368,7 @@ margin-top: 0.5rem;
 
 .morris-point-movable {
   background: var(--square-dark);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--text);
 }
 
 .morris-point-selected {
@@ -2611,7 +2626,7 @@ margin-top: 0.5rem;
 }
 
 .bg-point-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 .bg-point-selected {
@@ -2709,7 +2724,7 @@ max-width: 760px;
 }
 
 .bg-tray-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 .bg-tray-slot-count {
@@ -3053,6 +3068,7 @@ flex: 0 0 15%;
 
 .mancala-pit-movable {
   background: var(--square-dark);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--text);
 }
 
 .mancala-pit-count {
@@ -3509,7 +3525,7 @@ margin-top: 0.5rem;
 }
 
 .shogi-square-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 .shogi-square-last-from,
@@ -4992,7 +5008,7 @@ padding: 0.3rem;
 }
 
 .hnefatafl-square-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 .hnefatafl-square-last-from,
@@ -7538,7 +7554,7 @@ max-width: 900px;
 }
 
 .konane-square.konane-square-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 /* Small disc icons for the color-choice picker and board placeholder,
