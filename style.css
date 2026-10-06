@@ -2485,6 +2485,7 @@ margin-top: 0.5rem;
 
 .fanorona-point-movable {
   background: var(--square-dark);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--text);
 }
 
 .fanorona-point-selected {
@@ -3133,7 +3134,7 @@ flex: 0 0 15%;
 }
 
 .reversi-square-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 /* Gesperrt heißt hier nur "kein legaler Zug", nicht "inaktiv": ohne
@@ -3212,7 +3213,7 @@ flex: 0 0 15%;
 }
 
 .c4-square-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 .c4-piece {
@@ -3388,8 +3389,9 @@ flex: 0 0 15%;
   background: repeating-linear-gradient(90deg, var(--square-light), var(--square-light) 4px, #d8d8d8 4px, #d8d8d8 6px);
 }
 
+/* Senet: the square numbers sit top left, so the triangle goes top right. */
 .senet-square-movable {
-  background: var(--square-dark);
+  background: linear-gradient(225deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 .senet-piece {
@@ -3657,8 +3659,13 @@ padding: 0.25rem 0.5rem;
   cursor: default;
 }
 
+/* Selected hand piece: the grey plus the site's usual selection frame
+   (3 px solid, like .square.selected) - neither the corner triangle of
+   "can move" nor the thin inner frame of "last move". */
 .shogi-hand-piece-selected {
   background: var(--square-dark);
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
 }
 
 .shogi-hand-piece-label {
@@ -3971,7 +3978,7 @@ max-width: 540px;
 }
 
 .peg-square-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 .peg-piece {
@@ -4804,7 +4811,7 @@ max-width: 900px;
 }
 
 .cardtactics-square-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 .cardtactics-square-shrine::before {
@@ -5111,7 +5118,7 @@ padding: 0.3rem;
 }
 
 .wallmaze-cell-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 .wallmaze-cell.last-move {
@@ -5371,7 +5378,7 @@ margin: 0.5rem auto 0;
 }
 
 .halma-square-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 .halma-square-camp-p1,
@@ -5454,6 +5461,7 @@ margin: 0.5rem auto 0;
 
 .sternhalma-cell-movable {
   background: var(--square-dark);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--text);
 }
 
 .sternhalma-cell-home-p1,
@@ -6050,7 +6058,7 @@ margin: 0.5rem auto 0;
 
 /* Step 2: legal move destinations for the amazon already selected. */
 .amazons-cell-movable {
-  background-color: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 /* Step 3: legal arrow landings from the amazon's new square - a
@@ -6186,6 +6194,7 @@ margin: 0.5rem auto 0;
 
 .baghchal-point-movable {
   background: var(--square-dark);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--text);
 }
 
 .baghchal-point-selectable {
@@ -6632,7 +6641,7 @@ max-width: 900px;
 }
 
 .tablut-square-movable {
-  background: var(--square-dark);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
 .tablut-square.last-move {
@@ -6732,6 +6741,7 @@ max-width: 900px;
 
 .marblepush-cell-movable {
   background: var(--square-dark);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--text);
 }
 
 .marblepush-cell-selected {
@@ -7027,6 +7037,7 @@ max-width: 900px;
 
 .surakarta-point-movable {
   background: var(--square-dark);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--text);
 }
 
 .surakarta-point-capturable {
@@ -10070,4 +10081,26 @@ button.concan-meld {
 
 [dir="rtl"] .romme-player-status {
   margin: 0;
+}
+
+/* Last move and "can move" on the same round point: keep both shapes
+   (after the games' own .last-move rules, which would win otherwise). */
+.fanorona-point-movable.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent), 0 0 0 3px #fff, 0 0 0 6px var(--text);
+}
+
+.sternhalma-cell-movable.last-move {
+  box-shadow: inset 0 0 0 3px var(--accent), 0 0 0 3px #fff, 0 0 0 6px var(--text);
+}
+
+.baghchal-point-movable.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent), 0 0 0 3px #fff, 0 0 0 6px var(--text);
+}
+
+.marblepush-cell-movable.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent), 0 0 0 3px #fff, 0 0 0 6px var(--text);
+}
+
+.surakarta-point-movable.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent), 0 0 0 3px #fff, 0 0 0 6px var(--text);
 }
