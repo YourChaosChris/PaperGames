@@ -165,11 +165,37 @@ function checkOrphanRefs(STRINGS) {
   }
 }
 
+// 5. Rules and history texts live in i18n-text.js / lang/xx-text.js and
+// are only loaded on pages marked <html data-i18n-text>. Any other page
+// referring to one of those keys would show a missing text, so it is
+// an error; and every page that does refer to them must carry the mark.
+function checkTextSplit() {
+  const vm = require("vm");
+  const ctx = { STRINGS: { en: {} }, I18n: { markTextLoaded() {} } };
+  vm.createContext(ctx);
+  vm.runInContext(fs.readFileSync(path.join(ROOT, "i18n-text.js"), "utf8").replace(/^const /m, "var "), ctx);
+  const textKeys = new Set(Object.keys(ctx.STRINGS.en));
+  const problems = [];
+  for (const f of listFiles(".html")) {
+    const content = fs.readFileSync(path.join(ROOT, f), "utf8");
+    const marked = /<html[^>]*\sdata-i18n-text=/.test(content);
+    const used = [...extractRefs(content)].filter((k) => textKeys.has(k));
+    if (used.length && !marked) problems.push(f + " uses " + used.slice(0, 3).join(", ") + " without data-i18n-text");
+  }
+  for (const f of listFiles(".js").filter((f) => f !== "i18n-text.js" && !/^lang\//.test(f))) {
+    const content = fs.readFileSync(path.join(ROOT, f), "utf8");
+    for (const k of textKeys) if (content.indexOf('"' + k + '"') !== -1 || content.indexOf("'" + k + "'") !== -1) problems.push(f + " refers to " + k);
+  }
+  if (problems.length) problems.forEach((p) => fail("text split - " + p));
+  else ok(`rules/history texts only on marked pages (${textKeys.size} keys in i18n-text.js)`);
+}
+
 checkJsSyntax();
 checkHtmlWellFormed();
 const STRINGS = loadStrings();
 checkI18nParity(STRINGS);
 checkOrphanRefs(STRINGS);
+checkTextSplit();
 
 console.log("");
 if (failures) {
