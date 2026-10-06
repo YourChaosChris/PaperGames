@@ -239,6 +239,7 @@ STRINGS.es = {
     devices_col_checked: "Qué se comprobó",
     devices_col_date: "Fecha",
     devices_checked_user_report: "Jugado en el propio navegador del dispositivo; se informó de los problemas encontrados",
+    devices_checked_dev_device: "Dispositivo de desarrollo: cada cambio se comprueba en él",
     devices_screen_unknown: "modelo no indicado",
     devices_untested: "Todos los demás dispositivos están sin probar. Puede que PaperGames funcione bien en ellos, pero nadie ha informado todavía.",
     devices_check_title: "Compruébalo en tu propio dispositivo",

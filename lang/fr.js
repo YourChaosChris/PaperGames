@@ -248,6 +248,7 @@ STRINGS.fr = {
     devices_col_checked: "Ce qui a été vérifié",
     devices_col_date: "Date",
     devices_checked_user_report: "Joué dans le navigateur de l'appareil ; les problèmes trouvés ont été signalés",
+    devices_checked_dev_device: "Appareil de développement : chaque modification y est vérifiée",
     devices_screen_unknown: "modèle non indiqué",
     devices_untested: "Tous les autres appareils sont non testés. PaperGames y fonctionne peut-être très bien, mais personne n'a encore fait de retour.",
     devices_check_title: "Vérifie-le sur ton propre appareil",

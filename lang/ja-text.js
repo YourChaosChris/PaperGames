@@ -542,7 +542,7 @@ Object.assign(STRINGS.ja, {
     futoshiki_rules_hint: "「ヒント」は次の一手を3回の押下で示します。1回目でマスに印を付け、2回目で理由を示し、3回目で数字を入れます。当てずっぽうは決してしません。ヒントを使った勝ちは統計で別に数えられます。",
     futoshiki_term_daily: "今日の課題と印刷",
     futoshiki_rules_daily: "今日の課題は、同じ日なら誰にとっても同じ5 x 5の問題です。「印刷」を使うと、空の問題がA4用紙1枚に収まり、紙の上で解けます。",
-    futoshiki_rules_end_title: "ゲームの終わり方",
+    futoshiki_rules_end_title: "問題を解き終える",
     futoshiki_term_win: "完成",
     futoshiki_rules_win: "すべてのマスが埋まり、どの行や列にも同じ数字が重ならず、すべての記号が成り立った時点で完成です。",
     futoshiki_history_title: "不等式の歴史",

@@ -253,6 +253,7 @@ const STRINGS = {
     devices_col_checked: "What was checked",
     devices_col_date: "Date",
     devices_checked_user_report: "Played in the device's own browser; the problems found were reported",
+    devices_checked_dev_device: "Development device: every change is checked on it",
     devices_screen_unknown: "model not reported",
     devices_untested: "Every other device is untested. PaperGames may well work on it, but nobody has reported back yet.",
     devices_check_title: "Check it on your own device",

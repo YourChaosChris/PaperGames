@@ -542,7 +542,7 @@ Object.assign(STRINGS.nl, {
     futoshiki_rules_hint: "Tip toont de volgende stap in drie keer drukken: de eerste keer markeert een vakje, de tweede geeft de reden, de derde vult het getal in. Hij gokt nooit. Een overwinning met een tip telt apart mee in de statistieken.",
     futoshiki_term_daily: "Dagelijkse uitdaging en afdrukken",
     futoshiki_rules_daily: "De Dagelijkse uitdaging is een puzzel van 5 x 5 die op dezelfde dag voor iedereen gelijk is. Afdrukken zet de lege puzzel op één A4-pagina, om op papier op te lossen.",
-    futoshiki_rules_end_title: "Hoe een partij eindigt",
+    futoshiki_rules_end_title: "Een puzzel afronden",
     futoshiki_term_win: "Opgelost",
     futoshiki_rules_win: "De puzzel is opgelost zodra elk vakje gevuld is, geen getal in een rij of kolom terugkomt en elk teken klopt.",
     futoshiki_history_title: "De geschiedenis van Futoshiki",

@@ -179,6 +179,13 @@ font-size: 0.8rem;
   margin-bottom: var(--space-2);
 }
 
+/* Text links in the text colour instead of the browser's blue (and
+   purple once visited); the underline stays as the sign of a link. Links
+   styled as buttons or nav entries keep their own, more specific rules. */
+a {
+  color: var(--text);
+}
+
 button,
 a.primary,
 a.secondary {

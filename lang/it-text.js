@@ -542,7 +542,7 @@ Object.assign(STRINGS.it, {
     futoshiki_rules_hint: "Suggerimento mostra il passo successivo in tre pressioni: la prima segna una casella, la seconda dà il motivo, la terza inserisce il numero. Non tira mai a indovinare. Una vittoria con suggerimento viene contata a parte nelle statistiche.",
     futoshiki_term_daily: "Sfida del giorno e stampa",
     futoshiki_rules_daily: "La Sfida del giorno è un rompicapo 5 x 5 uguale per tutti nello stesso giorno. Stampa mette il rompicapo vuoto su una pagina A4, da risolvere su carta.",
-    futoshiki_rules_end_title: "Come finisce una partita",
+    futoshiki_rules_end_title: "Completare uno schema",
     futoshiki_term_win: "Risolto",
     futoshiki_rules_win: "Il rompicapo è risolto appena ogni casella è piena, nessun numero si ripete in una riga o colonna e ogni segno è rispettato.",
     futoshiki_history_title: "La storia del Futoshiki",

@@ -685,6 +685,7 @@ STRINGS.nl = {
     devices_col_checked: "Wat er gecontroleerd is",
     devices_col_date: "Datum",
     devices_checked_user_report: "Gespeeld in de eigen browser van het apparaat; gevonden problemen zijn gemeld",
+    devices_checked_dev_device: "Ontwikkelapparaat: elke wijziging wordt erop gecontroleerd",
     devices_screen_unknown: "model niet vermeld",
     devices_untested: "Alle andere apparaten zijn niet getest. PaperGames werkt er misschien prima op, maar niemand heeft zich nog gemeld.",
     devices_check_title: "Controleer het op je eigen apparaat",

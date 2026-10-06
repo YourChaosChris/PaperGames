@@ -542,7 +542,7 @@ Object.assign(STRINGS.es, {
     futoshiki_rules_hint: "Pista muestra el siguiente paso en tres pulsaciones: la primera marca una casilla, la segunda da el motivo y la tercera anota el número. Nunca adivina. Una victoria con pista se cuenta aparte en las estadísticas.",
     futoshiki_term_daily: "Reto diario e impresión",
     futoshiki_rules_daily: "El Reto diario es un puzle de 5 x 5 que es el mismo para todos el mismo día. Imprimir pone el puzle vacío en una página A4 para resolverlo en papel.",
-    futoshiki_rules_end_title: "Cómo termina una partida",
+    futoshiki_rules_end_title: "Terminar un puzle",
     futoshiki_term_win: "Resuelto",
     futoshiki_rules_win: "El puzle está resuelto en cuanto todas las casillas están llenas, ningún número se repite en una fila o columna y todos los signos se cumplen.",
     futoshiki_history_title: "La historia del Futoshiki",

@@ -239,6 +239,7 @@ STRINGS.it = {
     devices_col_checked: "Cosa è stato verificato",
     devices_col_date: "Data",
     devices_checked_user_report: "Giocato nel browser del dispositivo; i problemi trovati sono stati segnalati",
+    devices_checked_dev_device: "Dispositivo di sviluppo: ogni modifica viene verificata su di esso",
     devices_screen_unknown: "modello non indicato",
     devices_untested: "Tutti gli altri dispositivi non sono testati. PaperGames potrebbe funzionarci benissimo, ma nessuno ha ancora dato un riscontro.",
     devices_check_title: "Verificalo sul tuo dispositivo",

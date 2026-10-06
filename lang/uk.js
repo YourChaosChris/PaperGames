@@ -239,6 +239,7 @@ STRINGS.uk = {
     devices_col_checked: "Що перевірялося",
     devices_col_date: "Дата",
     devices_checked_user_report: "Гра у вбудованому браузері пристрою; про знайдені проблеми повідомлено",
+    devices_checked_dev_device: "Пристрій розробки: кожну зміну перевіряють на ньому",
     devices_screen_unknown: "модель не вказано",
     devices_untested: "Усі інші пристрої не перевірені. PaperGames цілком може на них працювати, але поки що ніхто про це не повідомив.",
     devices_check_title: "Перевірте на своєму пристрої",

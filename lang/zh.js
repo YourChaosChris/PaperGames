@@ -239,6 +239,7 @@ STRINGS.zh = {
     devices_col_checked: "检查内容",
     devices_col_date: "日期",
     devices_checked_user_report: "在设备自带的浏览器中游玩；发现的问题已反馈",
+    devices_checked_dev_device: "开发用设备：每项改动都在这台设备上检查",
     devices_screen_unknown: "未提供型号",
     devices_untested: "其他所有设备均未测试。PaperGames 在上面很可能可以运行，但还没有人反馈。",
     devices_check_title: "在你自己的设备上检查",

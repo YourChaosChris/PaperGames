@@ -542,7 +542,7 @@ Object.assign(STRINGS.zh, {
     futoshiki_rules_hint: "“提示”分三次按下显示下一步：第一次标出一个格子，第二次给出理由，第三次填入数字。它从不猜测。使用提示取得的胜利会在统计中单独计数。",
     futoshiki_term_daily: "每日挑战和打印",
     futoshiki_rules_daily: "每日挑战是一道5 x 5的题目，同一天对所有人都相同。“打印”会把空白题目放在一张A4纸上，供你在纸上解答。",
-    futoshiki_rules_end_title: "对局如何结束",
+    futoshiki_rules_end_title: "完成一局",
     futoshiki_term_win: "已解出",
     futoshiki_rules_win: "当每个格子都已填满、任何行或列中都没有重复数字，并且每个符号都成立时，题目就解出了。",
     futoshiki_history_title: "不等式数独的历史",

@@ -685,6 +685,7 @@ STRINGS.ja = {
     devices_col_checked: "確認した内容",
     devices_col_date: "日付",
     devices_checked_user_report: "端末の内蔵ブラウザでプレイし、見つかった問題を報告",
+    devices_checked_dev_device: "開発用端末：すべての変更をこの端末で確認",
     devices_screen_unknown: "モデル未報告",
     devices_untested: "その他の端末はすべて未確認です。PaperGamesが問題なく動く可能性はありますが、まだ誰からも報告がありません。",
     devices_check_title: "お使いの端末で確認する",

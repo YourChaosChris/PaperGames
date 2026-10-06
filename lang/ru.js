@@ -239,6 +239,7 @@ STRINGS.ru = {
     devices_col_checked: "Что проверялось",
     devices_col_date: "Дата",
     devices_checked_user_report: "Игра во встроенном браузере устройства; найденные проблемы были сообщены",
+    devices_checked_dev_device: "Устройство разработки: каждое изменение проверяется на нём",
     devices_screen_unknown: "модель не указана",
     devices_untested: "Все остальные устройства не проверены. PaperGames вполне может на них работать, но пока никто об этом не сообщил.",
     devices_check_title: "Проверьте на своём устройстве",

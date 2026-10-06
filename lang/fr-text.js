@@ -542,7 +542,7 @@ Object.assign(STRINGS.fr, {
     futoshiki_rules_hint: "Indice montre l'étape suivante en trois appuis : le premier marque une case, le deuxième donne la raison, le troisième inscrit le chiffre. Il ne devine jamais. Une victoire avec indice est comptée à part dans les statistiques.",
     futoshiki_term_daily: "Défi du jour et impression",
     futoshiki_rules_daily: "Le Défi du jour est une grille 5 x 5, la même pour tout le monde le même jour. Imprimer place la grille vide sur une page A4, pour la résoudre sur papier.",
-    futoshiki_rules_end_title: "Comment une partie se termine",
+    futoshiki_rules_end_title: "Terminer une grille",
     futoshiki_term_win: "Résolue",
     futoshiki_rules_win: "La grille est résolue dès que chaque case est remplie, qu'aucun chiffre ne se répète dans une ligne ou une colonne et que chaque signe est respecté.",
     futoshiki_history_title: "L'histoire du Futoshiki",

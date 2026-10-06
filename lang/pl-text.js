@@ -542,7 +542,7 @@ Object.assign(STRINGS.pl, {
     futoshiki_rules_hint: "Podpowiedź pokazuje następny krok w trzech naciśnięciach: pierwsze zaznacza pole, drugie podaje powód, trzecie wpisuje liczbę. Nigdy nie zgaduje. Wygrana z podpowiedzią liczy się w statystykach osobno.",
     futoshiki_term_daily: "Wyzwanie dnia i drukowanie",
     futoshiki_rules_daily: "Wyzwanie dnia to łamigłówka 5 x 5, taka sama dla wszystkich danego dnia. Drukuj umieszcza pustą łamigłówkę na jednej stronie A4, do rozwiązania na papierze.",
-    futoshiki_rules_end_title: "Jak kończy się partia",
+    futoshiki_rules_end_title: "Kończenie łamigłówki",
     futoshiki_term_win: "Rozwiązane",
     futoshiki_rules_win: "Łamigłówka jest rozwiązana, gdy każde pole jest wypełnione, żadna liczba nie powtarza się w wierszu ani kolumnie, a każdy znak się zgadza.",
     futoshiki_history_title: "Historia Futoshiki",

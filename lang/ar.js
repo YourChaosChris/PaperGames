@@ -242,6 +242,7 @@ STRINGS.ar = {
     devices_col_checked: "ما تم التحقق منه",
     devices_col_date: "التاريخ",
     devices_checked_user_report: "اللعب في المتصفح المدمج في الجهاز؛ وأُبلغ عن المشكلات التي وُجدت",
+    devices_checked_dev_device: "جهاز التطوير: يُفحص عليه كل تغيير",
     devices_screen_unknown: "لم يُذكر الطراز",
     devices_untested: "جميع الأجهزة الأخرى غير مختبَرة. قد تعمل PaperGames عليها جيدًا، لكن لم يُبلغ أحد بعد.",
     devices_check_title: "تحقق منها على جهازك",

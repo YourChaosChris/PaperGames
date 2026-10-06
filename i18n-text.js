@@ -543,7 +543,7 @@ Object.assign(STRINGS.en, {
     futoshiki_rules_hint: "Hint shows the next step in three presses: the first marks a cell, the second gives the reason, the third enters the number. It never guesses. A win with a hint counts separately in the statistics.",
     futoshiki_term_daily: "Daily Challenge and printing",
     futoshiki_rules_daily: "The Daily Challenge is a 5 x 5 puzzle that is the same for everyone on the same day. Print puts the empty puzzle on one A4 page, to solve on paper.",
-    futoshiki_rules_end_title: "How a game ends",
+    futoshiki_rules_end_title: "Finishing a puzzle",
     futoshiki_term_win: "Solved",
     futoshiki_rules_win: "The puzzle is solved as soon as every cell is filled, no number repeats in a row or column, and every sign holds.",
     futoshiki_history_title: "The History of Futoshiki",

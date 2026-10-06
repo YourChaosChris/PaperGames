@@ -242,6 +242,7 @@ STRINGS.de = {
     devices_col_checked: "Was geprüft wurde",
     devices_col_date: "Datum",
     devices_checked_user_report: "Im eigenen Browser des Geräts gespielt; gefundene Fehler wurden gemeldet",
+    devices_checked_dev_device: "Entwicklungsgerät, jede Änderung wird darauf geprüft",
     devices_screen_unknown: "Modell nicht genannt",
     devices_untested: "Alle anderen Geräte sind ungeprüft. PaperGames läuft dort vielleicht, aber es hat sich noch niemand gemeldet.",
     devices_check_title: "Prüf es auf deinem eigenen Gerät",

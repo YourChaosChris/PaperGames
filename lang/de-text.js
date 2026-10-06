@@ -542,7 +542,7 @@ Object.assign(STRINGS.de, {
     futoshiki_rules_hint: "Tipp zeigt den nächsten Schritt mit drei Drücken: Der erste markiert ein Feld, der zweite nennt den Grund, der dritte trägt die Zahl ein. Er rät nie. Ein Sieg mit Tipp zählt in der Statistik getrennt.",
     futoshiki_term_daily: "Tagesrätsel und Drucken",
     futoshiki_rules_daily: "Das Tagesrätsel ist ein 5 x 5-Rätsel, das am selben Tag für alle gleich ist. Drucken bringt das leere Rätsel auf eine A4-Seite, zum Lösen auf Papier.",
-    futoshiki_rules_end_title: "Wie eine Partie endet",
+    futoshiki_rules_end_title: "Ein Rätsel abschließen",
     futoshiki_term_win: "Gelöst",
     futoshiki_rules_win: "Das Rätsel ist gelöst, sobald jedes Feld ausgefüllt ist, sich keine Zahl in einer Zeile oder Spalte wiederholt und jedes Zeichen stimmt.",
     futoshiki_history_title: "Die Geschichte von Futoshiki",

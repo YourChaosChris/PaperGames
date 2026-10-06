@@ -14,7 +14,8 @@
 const DEVICES_LIST = [
   { device: "PocketBook Era", screen: "7″", checkedKey: "devices_checked_user_report", dates: "2026-09-28, 2026-09-30" },
   { device: "Tolino Vision Color", screen: "7″", checkedKey: "devices_checked_user_report", dates: "2026-09-30" },
-  { device: "Boox", screen: null, checkedKey: "devices_checked_user_report", dates: "2026-09-25 – 2026-10-05" }
+  { device: "Boox Go 7", screen: "7″", checkedKey: "devices_checked_user_report", dates: "2026-09-25 – 2026-10-05" },
+  { device: "Tolino Vision 6", screen: "7″", checkedKey: "devices_checked_dev_device", dates: "2026-10-06" }
 ];
 
 (function () {

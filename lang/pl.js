@@ -241,6 +241,7 @@ STRINGS.pl = {
     devices_col_checked: "Co sprawdzono",
     devices_col_date: "Data",
     devices_checked_user_report: "Granie we własnej przeglądarce urządzenia; znalezione problemy zostały zgłoszone",
+    devices_checked_dev_device: "Urządzenie deweloperskie: każda zmiana jest na nim sprawdzana",
     devices_screen_unknown: "model nie podany",
     devices_untested: "Wszystkie inne urządzenia są nieprzetestowane. PaperGames może na nich dobrze działać, ale nikt jeszcze nie dał znać.",
     devices_check_title: "Sprawdź na swoim urządzeniu",
