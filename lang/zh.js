@@ -193,7 +193,7 @@ STRINGS.zh = {
     quickrules_tictactoe_1: "先把自己的三个记号连成一线——横、竖或斜。",
     quickrules_tictactoe_2: "双方轮流在空格中画上自己的记号：玩家1画叉并总是先走，玩家2画圈。",
     quickrules_alquerque_1: "吃光对方所有棋子，或让对方无棋可走。",
-    quickrules_alquerque_2: "沿画出的线把棋子移到下一个空点；跳过一枚敌方棋子、落在其正后方的空点上即可吃子。",
+    quickrules_alquerque_2: "沿线把棋子移到下一个空点——向前、向侧面或斜向前，绝不后退。跳过对方棋子落到紧后面的空点即可吃子，跳的方向不限。",
     quickrules_alquerque_3: "吃子是强制性的：能吃就必须吃，而且能继续跳吃的棋子必须继续跳吃。",
     quickrules_pairs_1: "找到比对手更多的配对——单人游戏时，则用尽可能少的步数找出所有配对。",
     quickrules_pairs_2: "先后翻开两张牌；相同的一对归你，并且你再走一次，否则你的下一次点击会把两张牌都翻回去。",

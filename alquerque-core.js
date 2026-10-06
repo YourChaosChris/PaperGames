@@ -25,9 +25,15 @@
 // half on its left, is the same game reflected left-to-right: the board's
 // lines are symmetric under c -> 4-c because 4 is even.)
 //
-// Moves: a piece steps along a line to an adjacent empty point, in any
-// direction. A capture jumps along a line over an adjacent enemy piece
-// to the empty point directly beyond it, removing the jumped piece.
+// Moves: a piece steps along a line to an adjacent empty point forward,
+// sideways or diagonally forward - never backward, not even diagonally
+// backward. Forward means towards the opponent's home rows: down the
+// board (rising r) for Dark, up the board for Light. A capture jumps
+// along a line over an adjacent enemy piece to the empty point directly
+// beyond it, removing the jumped piece; jumps go in every direction,
+// backward too (PaperGames rule - the source only forbids moving
+// backward). Source: Wikipedia, "Alquerque", section Rules ("A piece
+// cannot move backward."), retrieved 2026-10-06.
 //
 // Capturing is compulsory: whenever the side to move has a capture, only
 // capturing moves are legal (the "simple" handling of a missed capture -
@@ -38,7 +44,8 @@
 // longest.
 //
 // The game ends when the side to move has no piece left or no legal
-// move; that side loses.
+// move; that side loses. Since no piece can step backward, every game
+// runs towards that end by itself; there is no draw rule.
 
 const AlquerqueCore = (function () {
   const ROWS = 5;
@@ -97,6 +104,9 @@ const AlquerqueCore = (function () {
 
   function otherColor(color) { return color === "b" ? "w" : "b"; }
 
+  // Row direction of a forward step: Dark starts at the top.
+  function forwardDr(color) { return color === "b" ? 1 : -1; }
+
   function createInitialBoard() {
     const board = new Array(TOTAL_POINTS).fill(null);
     for (let i = 0; i < TOTAL_POINTS; i++) {
@@ -140,7 +150,8 @@ const AlquerqueCore = (function () {
   }
 
   // All legal moves for `color`: only capture sequences if any exist,
-  // otherwise plain steps { from, to, path: [from, to], captured: [] }.
+  // otherwise plain steps { from, to, path: [from, to], captured: [] } -
+  // forward or sideways, never backward.
   function getLegalMoves(board, color) {
     const captures = [];
     for (let i = 0; i < TOTAL_POINTS; i++) {
@@ -148,9 +159,12 @@ const AlquerqueCore = (function () {
     }
     if (captures.length) return captures;
     const steps = [];
+    const fwd = forwardDr(color);
     for (let i = 0; i < TOTAL_POINTS; i++) {
       if (board[i] !== color) continue;
-      NEIGHBORS[i].forEach(({ to }) => {
+      NEIGHBORS[i].forEach(({ to, dir }) => {
+        const dr = DIRS[dir].dr;
+        if (dr !== 0 && dr !== fwd) return;
         if (board[to] === null) steps.push({ from: i, to, path: [i, to], captured: [] });
       });
     }
@@ -175,7 +189,7 @@ const AlquerqueCore = (function () {
 
   return {
     ROWS, COLS, TOTAL_POINTS, PIECES_PER_SIDE, CENTER, DIRS, NEIGHBORS, JUMPS,
-    idx, rowOf, colOf, inBounds, hasDiagonals, countConnections, otherColor,
+    idx, rowOf, colOf, inBounds, hasDiagonals, countConnections, otherColor, forwardDr,
     createInitialBoard, cloneBoard, countPieces, jumpSequences, getLegalMoves,
     applyMove, detectGameEnd
   };

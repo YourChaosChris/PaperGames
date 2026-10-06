@@ -193,7 +193,7 @@ STRINGS.nl = {
     quickrules_tictactoe_1: "Zet als eerste drie eigen tekens op een rij – horizontaal, verticaal of diagonaal.",
     quickrules_tictactoe_2: "Om de beurt zet je je teken in een leeg vakje: een kruis voor speler 1, die altijd begint, een rondje voor speler 2.",
     quickrules_alquerque_1: "Sla alle stukken van je tegenstander, of laat hem zonder legale zet.",
-    quickrules_alquerque_2: "Verplaats een stuk langs een getekende lijn naar het volgende lege punt; je slaat door over een vijandelijk stuk naar het lege punt direct erachter te springen.",
+    quickrules_alquerque_2: "Zet een steen langs een lijn naar het volgende vrije punt – vooruit, opzij of schuin vooruit, nooit achteruit. Slaan doe je door over een steen van de tegenstander naar het vrije punt erachter te springen, in elke richting.",
     quickrules_alquerque_3: "Slaan is verplicht: als je kunt slaan, moet je dat doen, en een stuk dat kan blijven springen, moet blijven springen.",
     quickrules_pairs_1: "Vind meer paren dan je tegenstander - of, solo, alle paren in zo weinig mogelijk zetten.",
     quickrules_pairs_2: "Draai twee kaarten na elkaar om; een passend paar is van jou en je bent nog eens aan de beurt, anders draait je volgende tik ze allebei terug.",

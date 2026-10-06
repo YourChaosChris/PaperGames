@@ -193,7 +193,7 @@ STRINGS.it = {
     quickrules_tictactoe_1: "Sii il primo a mettere in fila tre dei tuoi segni, in orizzontale, in verticale o in diagonale.",
     quickrules_tictactoe_2: "A turno, ogni giocatore mette il proprio segno in una casella libera: una croce il giocatore 1, che inizia sempre, un cerchio il giocatore 2.",
     quickrules_alquerque_1: "Cattura tutte le pedine dell'avversario oppure lascialo senza alcuna mossa legale.",
-    quickrules_alquerque_2: "Muovi una pedina lungo una linea tracciata fino al punto vuoto successivo; si cattura saltando sopra una pedina nemica fino al punto vuoto subito dietro di essa.",
+    quickrules_alquerque_2: "Sposta una pedina lungo una linea sul punto libero successivo: in avanti, di lato o in diagonale in avanti, mai indietro. Si cattura saltando una pedina avversaria fino al punto libero subito dietro, in qualsiasi direzione.",
     quickrules_alquerque_3: "Catturare è obbligatorio: se puoi catturare, devi farlo, e una pedina che può continuare a saltare deve continuare a saltare.",
     quickrules_pairs_1: "Trova più coppie del tuo avversario - oppure, da solo, tutte le coppie nel minor numero di mosse possibile.",
     quickrules_pairs_2: "Scopri due carte una dopo l'altra; se formano una coppia è tua e giochi ancora, altrimenti il tuo tocco successivo le rigira entrambe.",

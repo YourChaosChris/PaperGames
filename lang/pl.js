@@ -195,7 +195,7 @@ STRINGS.pl = {
     quickrules_tictactoe_1: "Jako pierwszy ustaw trzy swoje znaki w rzędzie – poziomo, pionowo lub po przekątnej.",
     quickrules_tictactoe_2: "Gracze na zmianę stawiają swój znak na wolnym polu: krzyżyk gracz 1, który zawsze zaczyna, kółko gracz 2.",
     quickrules_alquerque_1: "Zbij wszystkie pionki przeciwnika albo pozostaw go bez legalnego ruchu.",
-    quickrules_alquerque_2: "Przesuń pionek wzdłuż narysowanej linii na następny pusty punkt; bijesz, przeskakując nad pionkiem przeciwnika na pusty punkt tuż za nim.",
+    quickrules_alquerque_2: "Przesuń pion wzdłuż linii na najbliższy wolny punkt – do przodu, w bok lub ukośnie do przodu, nigdy do tyłu. Bije się skokiem nad pionem przeciwnika na wolny punkt tuż za nim, w dowolnym kierunku.",
     quickrules_alquerque_3: "Bicie jest obowiązkowe: jeśli możesz bić, musisz to zrobić, a pionek, który może skakać dalej, musi skakać dalej.",
     quickrules_pairs_1: "Znajdź więcej par niż przeciwnik - albo, grając solo, wszystkie pary w jak najmniejszej liczbie ruchów.",
     quickrules_pairs_2: "Odkryj dwie karty jedna po drugiej; pasująca para jest twoja i grasz ponownie, w przeciwnym razie twoje następne dotknięcie zakrywa obie.",

@@ -193,7 +193,7 @@ STRINGS.es = {
     quickrules_tictactoe_1: "Sé el primero en conseguir tres marcas propias en línea, en horizontal, en vertical o en diagonal.",
     quickrules_tictactoe_2: "Por turnos, cada jugador pone su marca en una casilla vacía: una cruz el jugador 1, que siempre empieza, y un círculo el jugador 2.",
     quickrules_alquerque_1: "Captura todas las fichas de tu oponente o déjalo sin ningún movimiento legal.",
-    quickrules_alquerque_2: "Mueve una ficha por una línea dibujada hasta el siguiente punto vacío; se captura saltando sobre una ficha enemiga hasta el punto vacío justo detrás de ella.",
+    quickrules_alquerque_2: "Mueve una pieza por una línea al siguiente punto libre: hacia delante, de lado o en diagonal hacia delante, nunca hacia atrás. Se captura saltando sobre una pieza rival al punto libre justo detrás, en cualquier dirección.",
     quickrules_alquerque_3: "Capturar es obligatorio: si puedes capturar, debes hacerlo, y una ficha que puede seguir saltando debe seguir saltando.",
     quickrules_pairs_1: "Encuentra más parejas que tu oponente - o, en solitario, todas las parejas en el menor número de movimientos posible.",
     quickrules_pairs_2: "Da la vuelta a dos cartas, una tras otra; una pareja que coincide es tuya y vuelves a jugar; si no, tu siguiente toque vuelve a poner ambas boca abajo.",

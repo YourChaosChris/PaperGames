@@ -229,7 +229,9 @@ function initAlquerqueApp() {
     buildAlquerqueBoardDOM();
     updateAlquerqueBoard();
     updateGameLabelsAlquerque();
-    if (AppStateAlquerque.mode === "offline-ai" && AppStateAlquerque.turn !== AppStateAlquerque.humanColor) {
+    if (endIfOverAlquerque()) {
+      // finished under the current rules
+    } else if (AppStateAlquerque.mode === "offline-ai" && AppStateAlquerque.turn !== AppStateAlquerque.humanColor) {
       setStatusAlquerque("board-info", "Computer thinking…");
       setTimeout(aiMoveAlquerque, AiPacing.delay(300));
     } else {
@@ -350,22 +352,28 @@ function applyAlquerqueMove(move) {
   updateAlquerqueBoard();
   updateGameLabelsAlquerque();
 
-  const end = AlquerqueCore.detectGameEnd(AppStateAlquerque.board, AppStateAlquerque.turn);
-  if (end.status !== "normal") {
-    AppStateAlquerque.gameOver = true;
-    const reason = end.status === "no-pieces" ? "no pieces left" : "no legal moves";
-    announceGameResultAlquerque(resultTitleAlquerque(end.winner), colorNameAlquerque(end.winner) + " wins (" + reason + ").");
-    recordAlquerqueStatsIfVsAi(end.winner === AppStateAlquerque.humanColor ? "win" : "loss");
-    updateAlquerqueBoard();
-    updateGameLabelsAlquerque();
-    return;
-  }
+  if (endIfOverAlquerque()) return;
 
   setStatusAlquerque("board-info", colorNameAlquerque(mover) + " played. " + colorNameAlquerque(AppStateAlquerque.turn) + " to move.");
   if (AppStateAlquerque.mode === "offline-ai" && AppStateAlquerque.turn !== AppStateAlquerque.humanColor) {
     setStatusAlquerque("board-info", "Computer thinking…");
     setTimeout(aiMoveAlquerque, AiPacing.delay(300));
   }
+}
+
+// Ends the game if the side to move has no piece or no legal move.
+// Also run on a restored game: a position saved before pieces were
+// barred from moving backwards may have no legal move any more.
+function endIfOverAlquerque() {
+  const end = AlquerqueCore.detectGameEnd(AppStateAlquerque.board, AppStateAlquerque.turn);
+  if (end.status === "normal") return false;
+  AppStateAlquerque.gameOver = true;
+  const reason = end.status === "no-pieces" ? "no pieces left" : "no legal moves";
+  announceGameResultAlquerque(resultTitleAlquerque(end.winner), colorNameAlquerque(end.winner) + " wins (" + reason + ").");
+  recordAlquerqueStatsIfVsAi(end.winner === AppStateAlquerque.humanColor ? "win" : "loss");
+  updateAlquerqueBoard();
+  updateGameLabelsAlquerque();
+  return true;
 }
 
 function aiMoveAlquerque() {

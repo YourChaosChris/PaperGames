@@ -196,7 +196,7 @@ STRINGS.de = {
     quickrules_tictactoe_1: "Bring als Erster drei eigene Zeichen in eine Reihe – waagerecht, senkrecht oder diagonal.",
     quickrules_tictactoe_2: "Abwechselnd setzt jeder sein Zeichen in ein freies Feld: ein Kreuz für Spieler 1, der immer beginnt, ein Kreis für Spieler 2.",
     quickrules_alquerque_1: "Schlage alle gegnerischen Steine oder lass deinem Gegner keinen legalen Zug mehr.",
-    quickrules_alquerque_2: "Ziehe einen Stein entlang einer gezeichneten Linie auf den nächsten leeren Punkt; geschlagen wird, indem du über einen gegnerischen Stein auf den leeren Punkt direkt dahinter springst.",
+    quickrules_alquerque_2: "Zieh einen Stein entlang einer Linie auf den nächsten freien Punkt – vorwärts, seitwärts oder schräg vorwärts, nie rückwärts. Geschlagen wird durch einen Sprung über einen gegnerischen Stein auf den freien Punkt dahinter, in jede Richtung.",
     quickrules_alquerque_3: "Schlagen ist Pflicht: Kannst du schlagen, musst du es tun, und ein Stein, der weiterspringen kann, muss weiterspringen.",
     quickrules_pairs_1: "Finde mehr Paare als dein Gegner – oder allein alle Paare in so wenigen Zügen wie möglich.",
     quickrules_pairs_2: "Decke nacheinander zwei Karten auf; ein passendes Paar gehört dir und du bist noch einmal dran, sonst dreht dein nächstes Tippen beide wieder um.",

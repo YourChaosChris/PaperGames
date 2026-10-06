@@ -193,7 +193,7 @@ STRINGS.fr = {
     quickrules_tictactoe_1: "Soyez le premier à aligner trois de vos marques – en ligne, en colonne ou en diagonale.",
     quickrules_tictactoe_2: "Chacun à son tour pose sa marque dans une case vide : une croix pour le joueur 1, qui commence toujours, un rond pour le joueur 2.",
     quickrules_alquerque_1: "Capturez tous les pions de votre adversaire, ou laissez-le sans aucun coup légal.",
-    quickrules_alquerque_2: "Déplacez un pion le long d'une ligne tracée vers le point vide suivant ; on capture en sautant par-dessus un pion ennemi vers le point vide juste derrière lui.",
+    quickrules_alquerque_2: "Déplace un pion le long d'une ligne vers le point libre suivant – en avant, de côté ou en diagonale vers l'avant, jamais en arrière. On prend en sautant par-dessus un pion adverse vers le point libre juste derrière, dans n'importe quelle direction.",
     quickrules_alquerque_3: "La capture est obligatoire : si vous pouvez capturer, vous devez le faire, et un pion qui peut continuer à sauter doit continuer à sauter.",
     quickrules_pairs_1: "Trouvez plus de paires que votre adversaire - ou, en solo, toutes les paires en aussi peu de coups que possible.",
     quickrules_pairs_2: "Retournez deux cartes l'une après l'autre ; une paire assortie est à vous et vous rejouez, sinon votre prochaine touche les retourne toutes les deux.",

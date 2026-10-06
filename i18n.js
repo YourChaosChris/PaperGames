@@ -207,7 +207,7 @@ const STRINGS = {
     quickrules_tictactoe_1: "Be the first to get three of your own marks in a row – across, down or diagonally.",
     quickrules_tictactoe_2: "Take turns putting your mark in an empty cell: a cross for Player 1, who always moves first, and a circle for Player 2.",
     quickrules_alquerque_1: "Capture all of your opponent's pieces, or leave them with no legal move.",
-    quickrules_alquerque_2: "Move a piece along a drawn line to the next empty point; capture by jumping over an enemy piece to the empty point right behind it.",
+    quickrules_alquerque_2: "Move a piece along a line to the next empty point - forward, sideways or diagonally forward, never backwards. Capture by jumping over an enemy piece to the empty point right behind it, in any direction.",
     quickrules_alquerque_3: "Capturing is compulsory: if you can capture, you must, and a piece that can keep jumping must go on jumping.",
     quickrules_pairs_1: "Find more pairs than your opponent - or, playing solo, all pairs in as few moves as you can.",
     quickrules_pairs_2: "Turn over two cards one after the other; a matching pair is yours and you go again, otherwise your next tap turns both back.",
