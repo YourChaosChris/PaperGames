@@ -45,6 +45,12 @@
 //     same turn; while one is still in hand the player may not discard.
 //     "Take back" (cancelPending) puts table and hand back as they were
 //     before the first take of the turn.
+//   - discardRule, a variant (default off; Wikipedia, "Rommé"): the top
+//     discard may only be taken to be laid out in a meld in the same turn
+//     (before the first meld it belongs to the first meld). Until it lies
+//     on the table the player may not discard. PaperGames rule: if that
+//     doesn't work out, "returnDiscard" puts it back on the discard pile
+//     (dissolving staged melds that hold it) and draws from the stock.
 //
 // Card: { id, rank 1..13, suit "C"|"S"|"H"|"D" } or { id, joker: true }.
 // Meld on the table: { owner, type: "set"|"run", entries: [{ card, rank,
@@ -212,6 +218,7 @@ const RommeCore = (function () {
       threshold: THRESHOLDS.indexOf(o.threshold) !== -1 ? o.threshold : DEFAULT_THRESHOLD,
       rounds: ROUND_CHOICES.indexOf(o.rounds) !== -1 ? o.rounds : 1,
       takeRule: !!o.takeRule,
+      discardRule: !!o.discardRule,
       scores: new Array(n).fill(0),
       round: 0,
       dealer: o.dealer !== undefined ? o.dealer : 0
@@ -232,6 +239,7 @@ const RommeCore = (function () {
       threshold: base.threshold,
       rounds: base.rounds || 1,
       takeRule: !!base.takeRule,
+      discardRule: !!base.discardRule,
       scores: base.scores.slice(),
       round: base.round + 1,
       dealer: base.dealer,
@@ -248,6 +256,7 @@ const RommeCore = (function () {
       pendingJoker: null, // id of a swapped joker that must be laid out again
       takenIds: [],      // house rule: cards taken from the table, still to be laid out
       takeUndo: null,    // house rule: { melds, hand, pendingJoker } before the first take
+      discardTakenId: null, // variant: id of the discard taken this turn, to be laid out
       over: false,
       winner: null,
       penalties: null,
@@ -256,7 +265,7 @@ const RommeCore = (function () {
   }
 
   function nextRound(s, rng) {
-    return startRound({ n: s.n, threshold: s.threshold, rounds: s.rounds || 1, takeRule: !!s.takeRule, scores: s.scores,
+    return startRound({ n: s.n, threshold: s.threshold, rounds: s.rounds || 1, takeRule: !!s.takeRule, discardRule: !!s.discardRule, scores: s.scores,
       round: s.round, dealer: (s.dealer + 1) % s.n }, rng);
   }
 
@@ -268,6 +277,13 @@ const RommeCore = (function () {
     const best = Math.min.apply(null, s.scores);
     const leaders = s.scores.map((v, i) => (v === best ? i : -1)).filter((i) => i !== -1);
     return { over: true, winner: leaders.length === 1 ? leaders[0] : null };
+  }
+
+  // Variant: does the discard taken this turn still have to be laid out?
+  function discardCardOpen(s) {
+    const id = s.discardTakenId;
+    if (id === null || id === undefined) return false;
+    return !s.melds.some((m) => m.entries.some((e) => e.card.id === id));
   }
 
   // House rule: may the natural card at `index` be taken out of `meld`?
@@ -343,6 +359,7 @@ const RommeCore = (function () {
   //   { type: "extend", meld, id } add a hand card to any table meld
   //   { type: "swapJoker", meld, id } exchange a table joker for the card
   //   { type: "take", meld, id }  house rule: take a card from a table meld
+  //   { type: "returnDiscard" }   variant: put the taken discard back, draw
   //   { type: "discard", id }     end the turn
   // Returns { ok, state, reason }.
   function applyMove(state, move) {
@@ -364,6 +381,7 @@ const RommeCore = (function () {
       }
       pl.hand.push(card);
       s.phase = "play";
+      s.discardTakenId = move.type === "takeDiscard" && s.discardRule ? card.id : null;
       s.lastEvent = { type: move.type, player: p, card: move.type === "takeDiscard" ? card : null };
       return { ok: true, state: s };
     }
@@ -420,6 +438,31 @@ const RommeCore = (function () {
       s.pending.forEach((m) => m.entries.forEach((e) => pl.hand.push(e.card)));
       s.pending = [];
       s.lastEvent = { type: "unstage", player: p };
+      return { ok: true, state: s };
+    }
+
+    if (move.type === "returnDiscard") {
+      // Variant, PaperGames rule: put the discard back and draw instead.
+      if (!discardCardOpen(s)) return { ok: false, state, reason: "not-now" };
+      const id = s.discardTakenId;
+      let card = null;
+      const hi = findInHand(pl.hand, id);
+      if (hi !== -1) card = pl.hand.splice(hi, 1)[0];
+      const keep = [];
+      s.pending.forEach((m) => {
+        if (m.entries.some((e) => e.card.id === id)) {
+          m.entries.forEach((e) => { if (e.card.id === id) card = e.card; else pl.hand.push(e.card); });
+        } else keep.push(m);
+      });
+      s.pending = keep;
+      if (!card) return { ok: false, state, reason: "not-in-hand" };
+      s.discard.push(card);
+      refillStock(s);
+      if (!s.stock.length) return { ok: false, state, reason: "no-stock" };
+      const drawn = s.stock.pop();
+      pl.hand.push(drawn);
+      s.discardTakenId = null;
+      s.lastEvent = { type: "returnDiscard", player: p, card };
       return { ok: true, state: s };
     }
 
@@ -487,11 +530,13 @@ const RommeCore = (function () {
       if (s.pending.length) return { ok: false, state, reason: "staged-open" };
       if (s.pendingJoker !== null) return { ok: false, state, reason: "joker-first" };
       if ((s.takenIds || []).length) return { ok: false, state, reason: "taken-first" };
+      if (discardCardOpen(s)) return { ok: false, state, reason: "discard-card-first" };
       const i = findInHand(pl.hand, move.id);
       if (i === -1) return { ok: false, state, reason: "not-in-hand" };
       const card = pl.hand.splice(i, 1)[0];
       s.discard.push(card);
       s.seen.push(card);
+      s.discardTakenId = null;
       s.lastEvent = { type: "discard", player: p, card };
       s.firstTurn = false;
       if (!pl.hand.length) return { ok: true, state: endRound(s, p) };
@@ -515,7 +560,7 @@ const RommeCore = (function () {
 
   return {
     SUITS, JOKERS, THRESHOLDS, DEFAULT_THRESHOLD, ROUND_CHOICES, MAX_RESHUFFLES, makeDeck, handValue, entryValue, meldValue, buildMeld,
-    extendMeld, jokerSlotFor, jokerUsable, createInitialState, nextRound, matchResult, canTakeFrom, takeOptions, topDiscard, pendingValue,
+    extendMeld, jokerSlotFor, jokerUsable, createInitialState, nextRound, matchResult, canTakeFrom, takeOptions, discardCardOpen, topDiscard, pendingValue,
     applyMove, cardCount, clone
   };
 })();

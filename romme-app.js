@@ -104,8 +104,10 @@ function initRommeApp() {
     const rounds = roundsEl ? parseInt(roundsEl.value, 10) || 1 : 1;
     const takeEl = document.getElementById("romme-take-rule");
     const takeRule = !!(takeEl && takeEl.checked);
+    const discEl = document.getElementById("romme-discard-rule");
+    const discardRule = !!(discEl && discEl.checked);
     const players = pendingMode === "vs-ai" ? opponents + 1 : seats;
-    startGameRomme(pendingMode, level, players, threshold, rounds, takeRule);
+    startGameRomme(pendingMode, level, players, threshold, rounds, takeRule, discardRule);
     const status = document.getElementById("offline-romme-status");
     if (status) {
       const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
@@ -121,6 +123,11 @@ function initRommeApp() {
   document.getElementById("romme-discard-button").addEventListener("click", onDiscardButtonRomme);
   document.getElementById("romme-confirm-button").addEventListener("click", () => humanMoveRomme({ type: "confirmOpen" }));
   document.getElementById("romme-cancel-button").addEventListener("click", () => humanMoveRomme({ type: "cancelPending" }));
+  document.getElementById("romme-return-button").addEventListener("click", () => humanMoveRomme({ type: "returnDiscard" }));
+  document.getElementById("romme-sort-button").addEventListener("click", () => {
+    setSortRomme(getSortRomme() === "rank" ? "suit" : "rank");
+    renderRomme();
+  });
   document.getElementById("romme-next-round").addEventListener("click", nextRoundRomme);
   document.getElementById("romme-show-hand").addEventListener("click", () => {
     AppStateRomme.revealed = true;
@@ -158,11 +165,11 @@ function showBoardRomme() {
   if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
 }
 
-function startGameRomme(mode, level, players, threshold, rounds, takeRule) {
+function startGameRomme(mode, level, players, threshold, rounds, takeRule, discardRule) {
   AppStateRomme.mode = mode;
   AppStateRomme.aiLevel = level;
   const dealer = typeof RandomStart !== "undefined" ? RandomStart.choose(0, Array.from({ length: players }, (_, i) => i)) : 0;
-  AppStateRomme.state = RommeCore.createInitialState({ players, threshold, dealer, rounds: rounds || 1, takeRule: !!takeRule });
+  AppStateRomme.state = RommeCore.createInitialState({ players, threshold, dealer, rounds: rounds || 1, takeRule: !!takeRule, discardRule: !!discardRule });
   AppStateRomme.started = true;
   AppStateRomme.busy = false;
   AppStateRomme.recorded = false;
@@ -204,6 +211,7 @@ function promptTextRomme() {
   if (s.phase === "draw") return who + ": draw a card from the stock or take the top discard.";
   if (s.pendingJoker !== null) return "Lay out the joker you took back in a new meld first.";
   if (s.takenIds && s.takenIds.length) return "Lay out the card you took in a new meld first, or take it back.";
+  if (RommeCore.discardCardOpen(s) && !s.pending.length) return "Lay out the card from the discard pile in a meld first - or put it back and draw from the stock.";
   if (s.pending.length) return "Staged for the first meld: " + RommeCore.pendingValue(s) + " of " + s.threshold + " points.";
   if (s.firstTurn && s.turn === s.dealer) return who + ": start the round by discarding a card (you may lay out melds first).";
   if (!s.players[s.turn].opened) return who + ": your first meld needs at least " + s.threshold + " points - lay out melds or discard a card.";
@@ -267,6 +275,7 @@ function describeRomme(before, after, move) {
   if (move.type === "extend") return who + " adds the " + cardLabelRomme(ev.card) + " to a meld.";
   if (move.type === "swapJoker") return who + " swaps the " + cardLabelRomme(ev.card) + " for a joker.";
   if (move.type === "take") return who + " takes the " + cardLabelRomme(ev.card) + " from a meld.";
+  if (move.type === "returnDiscard") return who + " puts the " + cardLabelRomme(ev.card) + " back and draws from the stock.";
   if (move.type === "discard") return who + " discards the " + cardLabelRomme(ev.card) + ".";
   return "";
 }
@@ -360,8 +369,29 @@ const ROMME_REASON_TEXT = {
   "take-breaks-meld": "At least three cards must stay in the meld - from a run only the first or the last card.",
   "take-joker": "Jokers can't be taken - swap them instead.",
   "taken-first": "Lay out the card you took in a new meld first, or take it back.",
-  "taken-new-meld": "A card taken from the table must go into a new meld."
+  "taken-new-meld": "A card taken from the table must go into a new meld.",
+  "discard-card-first": "Lay out the card from the discard pile in a meld first - or put it back and draw from the stock."
 };
+
+// Hand order: "suit" (suit, then rank - the default) or "rank" (equal
+// ranks side by side, then suit); jokers last either way. Remembered on
+// this device.
+const ROMME_SORT_KEY = "papergames_romme_sort";
+
+function getSortRomme() {
+  try { return window.localStorage && window.localStorage.getItem(ROMME_SORT_KEY) === "rank" ? "rank" : "suit"; } catch (e) { return "suit"; }
+}
+
+function setSortRomme(order) {
+  try { if (window.localStorage) window.localStorage.setItem(ROMME_SORT_KEY, order); } catch (e) { /* not remembered then */ }
+}
+
+function sortHandRomme(hand) {
+  const suitIdx = (c) => RommeCore.SUITS.indexOf(c.suit);
+  const byRank = getSortRomme() === "rank";
+  return hand.slice().sort((a, b) => (a.joker ? 1 : 0) - (b.joker ? 1 : 0) ||
+    (byRank ? (a.rank - b.rank || suitIdx(a) - suitIdx(b)) : (suitIdx(a) - suitIdx(b) || a.rank - b.rank)));
+}
 
 function humanMoveRomme(move) {
   if (!humanCanActRomme()) return;
@@ -581,8 +611,7 @@ function renderRomme() {
   const handEl = document.getElementById("romme-hand");
   handEl.innerHTML = "";
   if (!hidden) {
-    const sorted = me.hand.slice().sort((a, b) => (a.joker ? 1 : 0) - (b.joker ? 1 : 0) ||
-      RommeCore.SUITS.indexOf(a.suit) - RommeCore.SUITS.indexOf(b.suit) || a.rank - b.rank);
+    const sorted = sortHandRomme(me.hand);
     sorted.forEach((c) => {
       const sel = AppStateRomme.selected.indexOf(c.id) !== -1;
       const btn = cardElRomme(c, "button", sel ? "pc-card-selected" : "");
@@ -593,6 +622,8 @@ function renderRomme() {
     });
   }
   document.getElementById("romme-actions").classList.toggle("hidden", !(myTurn && s.phase === "play"));
+  document.getElementById("romme-return-button").classList.toggle("hidden", !(myTurn && s.phase === "play" && RommeCore.discardCardOpen(s)));
+  I18n.setKey(document.getElementById("romme-sort-button"), getSortRomme() === "rank" ? "romme_sort_by_suit" : "romme_sort_by_rank");
   document.getElementById("romme-cancel-button").classList.toggle("hidden", !s.pending.length && !(s.takenIds && s.takenIds.length));
   document.getElementById("romme-confirm-button").classList.toggle("hidden", !s.pending.length);
 

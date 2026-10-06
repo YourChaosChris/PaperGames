@@ -10119,3 +10119,13 @@ button.concan-meld {
 .surakarta-point-movable.last-move {
   box-shadow: inset 0 0 0 2px var(--accent), 0 0 0 3px #fff, 0 0 0 6px var(--text);
 }
+
+/* Rommé: switch the hand order (suit / rank) - a full-size touch target. */
+.romme-sort-row {
+  text-align: center;
+  margin: 0 0 0.4rem;
+}
+
+.romme-sort-button {
+  min-height: 44px;
+}

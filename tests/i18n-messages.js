@@ -91,6 +91,8 @@ const SAMPLES = [
   "Round 2 of 3",
   "No melds yet.",
   "You",
+  "Lay out the card from the discard pile in a meld first - or put it back and draw from the stock.",
+  "Player 2 puts the 10♥ back and draws from the stock.",
   "Fox to move.",
   "Geese to move.",
   "Fox played. Geese to move.",

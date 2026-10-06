@@ -103,6 +103,33 @@ const RommeAi = (function () {
     return { melds, value };
   }
 
+  // Ids of a new meld from `card` and two other hand cards, or null.
+  function meldWith(hand, card) {
+    const others = hand.filter((c) => c.id !== card.id);
+    for (let a = 0; a < others.length; a++) {
+      for (let b = a + 1; b < others.length; b++) {
+        if (C.buildMeld([card, others[a], others[b]])) return [card.id, others[a].id, others[b].id];
+      }
+    }
+    return null;
+  }
+
+  // Before the first meld: does the staging plan (made from the whole hand
+  // incl. staged cards) reach the minimum and hold card `id`?
+  function planHolds(s, hand, id, level) {
+    const staged = s.pending.reduce((a, m) => a.concat(m.entries.map((e) => e.card)), []);
+    const whole = hand.concat(staged).sort((a, b) => a.id - b.id);
+    const plan = level <= 1 ? greedySplit(whole) : bestSplit(whole);
+    return plan.value >= s.threshold && plan.melds.some((m) => m.ids.includes(id));
+  }
+
+  // Variant: could `top` be laid out this turn after taking it?
+  function canLayOut(s, hand, top, level) {
+    const pl = s.players[s.turn];
+    if (pl.opened) return !!meldWith(hand.concat([top]), top) || canExtendAny(s, top);
+    return planHolds(s, hand.concat([top]), top.id, level);
+  }
+
   function canExtendAny(s, card) {
     return s.melds.some((m) => C.extendMeld(m, card));
   }
@@ -139,6 +166,10 @@ const RommeAi = (function () {
 
     if (s.phase === "draw") {
       const top = C.topDiscard(s);
+      if (top && level >= 2 && s.discardRule) {
+        // Variant: take the discard only if it can be laid out this turn.
+        return { type: canLayOut(s, hand, top, level) ? "takeDiscard" : "draw" };
+      }
       if (top && level >= 2) {
         if (pl.opened && (canExtendAny(s, top) || top.joker)) return { type: "takeDiscard" };
         const withTop = bestSplit(hand.concat([top]), 2000), without = bestSplit(hand, 2000);
@@ -156,6 +187,20 @@ const RommeAi = (function () {
           if (C.buildMeld([joker, others[a], others[b]])) return { type: "meld", ids: [joker.id, others[a].id, others[b].id] };
         }
       }
+    }
+
+    // Variant: the discard taken this turn has to go on the table; if it
+    // can't, put it back and draw from the stock.
+    if (C.discardCardOpen(s)) {
+      const card = hand.find((c) => c.id === s.discardTakenId) ||
+        s.pending.reduce((a, m) => a.concat(m.entries.map((e) => e.card)), []).find((c) => c.id === s.discardTakenId);
+      if (pl.opened) {
+        const meldIds = meldWith(hand, card);
+        if (meldIds) return { type: "meld", ids: meldIds };
+        for (let i = 0; i < s.melds.length; i++) if (C.extendMeld(s.melds[i], card)) return { type: "extend", meld: i, id: card.id };
+        return { type: "returnDiscard" };
+      }
+      else if (!planHolds(s, hand, card.id, level)) return { type: "returnDiscard" };
     }
 
     // House rule: a card taken from the table goes into a new meld first;
@@ -226,6 +271,8 @@ const RommeAi = (function () {
         }
       }
     }
+
+    if (C.discardCardOpen(s)) return { type: "returnDiscard" };
 
     // Discard. A joker that fits nowhere is useless at the very end: with
     // every meld on the table full it would block going out for good.

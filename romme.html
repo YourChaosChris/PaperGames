@@ -87,6 +87,7 @@
         <option value="25">25</option>
       </select></label>
     <label class="romme-take-rule-label"><input type="checkbox" id="romme-take-rule"> <span data-i18n="romme_take_rule_label">House rule: take cards from melds</span></label>
+    <label class="romme-take-rule-label"><input type="checkbox" id="romme-discard-rule"> <span data-i18n="romme_discard_rule_label">Variant: take the discard only to lay it out</span></label>
   </div>
   <div id="offline-romme-status" class="status-text"></div>
 </section>
@@ -129,11 +130,13 @@
     </div>
     <div id="romme-mine">
       <span id="romme-my-label" class="pc-row-label"></span>
+      <div class="romme-sort-row"><button id="romme-sort-button" class="secondary romme-sort-button" type="button" data-i18n="romme_sort_by_rank">Sort by rank</button></div>
       <div id="romme-hand" class="pc-row romme-hand" role="group" data-i18n-attr="aria-label:schwimmen_hand_label" aria-label="Your cards"></div>
       <div id="romme-actions" class="game-actions-row hidden">
         <button id="romme-meld-button" class="secondary" type="button" data-i18n="romme_meld_button">Lay out</button>
         <button id="romme-confirm-button" class="secondary hidden" type="button" data-i18n="romme_confirm_button">Lay out first meld</button>
         <button id="romme-cancel-button" class="secondary hidden" type="button" data-i18n="romme_cancel_button">Take back</button>
+        <button id="romme-return-button" class="secondary hidden" type="button" data-i18n="romme_return_button">Put back and draw from the stock</button>
         <button id="romme-discard-button" class="secondary" type="button" data-i18n="romme_discard_button">Discard</button>
       </div>
     </div>
