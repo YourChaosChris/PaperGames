@@ -298,6 +298,11 @@ function drawMauMau() {
 
 function keepDrawnMauMau(prefix) {
   const player = AppStateMauMau.state.turn;
+  // A drawn Jack may already wait for its suit (tapped before "Keep").
+  // Keeping it ends the turn, so that choice is void - left standing, the
+  // suit picker stayed open and a later tap played the stale hand index
+  // (no card there any more: "Cannot read properties of undefined").
+  AppStateMauMau.pendingJack = null;
   AppStateMauMau.state = MauMauCore.keepDrawn(AppStateMauMau.state);
   afterTurnPartMauMau(player, (prefix || "") + playerNameMauMau(player) + " keeps the card.");
 }
@@ -392,6 +397,12 @@ function onHandCardClickMauMau(index) {
 
 function onWishClickMauMau(suit) {
   if (!humanCanActMauMau() || AppStateMauMau.pendingJack === null) return;
+  // Only a Jack that may be played right now can take a suit.
+  if (MauMauCore.legalMoves(AppStateMauMau.state).indexOf(AppStateMauMau.pendingJack) === -1) {
+    AppStateMauMau.pendingJack = null;
+    renderMauMau();
+    return;
+  }
   playCardMauMau(AppStateMauMau.pendingJack, suit, "");
 }
 
