@@ -26,7 +26,7 @@
 // "Take back" restores table and hand. Melds on the table are grouped by
 // the player who laid them out.
 //
-// Against the computer the human is Player 1, with one to three computer
+// Against the computer the human is "You" (seat 0), with one to three computer
 // opponents. With two to four people on one device each hand is covered
 // between turns ("Show my cards"). Computer steps wait AiPacing.delay().
 
@@ -43,7 +43,16 @@ const AppStateRomme = {
   recorded: false       // statistics recorded for the current round
 };
 
-function playerNameRomme(i) { return "Player " + (i + 1); }
+// Against the computer the human is "You" and the computers "Computer 1"
+// to "Computer 3"; on one device the seats are "Player 1" to "Player 4".
+// Sentences about the human have their own wording ("You draw a card."),
+// they are not built from the name.
+function playerNameRomme(i) {
+  if (AppStateRomme.mode === "vs-ai") return i === 0 ? "You" : "Computer " + i;
+  return "Player " + (i + 1);
+}
+
+function isYouRomme(i) { return AppStateRomme.mode === "vs-ai" && i === 0; }
 
 function isAiRomme(i) { return AppStateRomme.mode === "vs-ai" && i !== 0; }
 
@@ -112,7 +121,7 @@ function initRommeApp() {
     if (status) {
       const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
       I18n.setMsg(status, pendingMode === "vs-ai"
-        ? "You play Player 1, computer level: " + levelNames[level] + "."
+        ? "Computer opponents: " + opponents + " · computer level: " + levelNames[level]
         : "Game on one device for " + players + " players (no computer).");
     }
   });
@@ -208,14 +217,15 @@ function nextRoundRomme() {
 function promptTextRomme() {
   const s = AppStateRomme.state;
   const who = playerNameRomme(s.turn);
-  if (s.phase === "draw") return who + ": draw a card from the stock or take the top discard.";
+  const you = isYouRomme(s.turn);
+  if (s.phase === "draw") return you ? "Your turn: draw a card from the stock or take the top discard." : who + ": draw a card from the stock or take the top discard.";
   if (s.pendingJoker !== null) return "Lay out the joker you took back in a new meld first.";
   if (s.takenIds && s.takenIds.length) return "Lay out the card you took in a new meld first, or take it back.";
   if (RommeCore.discardCardOpen(s) && !s.pending.length) return "Lay out the card from the discard pile in a meld first - or put it back and draw from the stock.";
   if (s.pending.length) return "Staged for the first meld: " + RommeCore.pendingValue(s) + " of " + s.threshold + " points.";
-  if (s.firstTurn && s.turn === s.dealer) return who + ": start the round by discarding a card (you may lay out melds first).";
-  if (!s.players[s.turn].opened) return who + ": your first meld needs at least " + s.threshold + " points - lay out melds or discard a card.";
-  return who + ": lay out melds or add to melds, then discard a card.";
+  if (s.firstTurn && s.turn === s.dealer) return you ? "Your turn: start the round by discarding a card (you may lay out melds first)." : who + ": start the round by discarding a card (you may lay out melds first).";
+  if (!s.players[s.turn].opened) return you ? "Your turn: your first meld needs at least " + s.threshold + " points - lay out melds or discard a card." : who + ": your first meld needs at least " + s.threshold + " points - lay out melds or discard a card.";
+  return you ? "Your turn: lay out melds or add to melds, then discard a card." : who + ": lay out melds or add to melds, then discard a card.";
 }
 
 function promptRomme(prefix) {
@@ -268,6 +278,7 @@ function aiStepRomme() {
 function describeRomme(before, after, move) {
   const who = playerNameRomme(before.turn);
   const ev = after.lastEvent || {};
+  if (isYouRomme(before.turn)) return describeYouRomme(before, after, move, ev);
   if (move.type === "draw") return (ev.type === "reshuffle" ? "The discard pile is shuffled into a new stock. " : "") + who + " draws a card.";
   if (move.type === "takeDiscard") return who + " takes the " + cardLabelRomme(ev.card) + ".";
   if (move.type === "meld") return after.players[before.turn].opened && before.players[before.turn].opened ? who + " lays out a meld." : "";
@@ -277,6 +288,21 @@ function describeRomme(before, after, move) {
   if (move.type === "take") return who + " takes the " + cardLabelRomme(ev.card) + " from a meld.";
   if (move.type === "returnDiscard") return who + " puts the " + cardLabelRomme(ev.card) + " back and draws from the stock.";
   if (move.type === "discard") return who + " discards the " + cardLabelRomme(ev.card) + ".";
+  return "";
+}
+
+// The same events in the human's own words.
+function describeYouRomme(before, after, move, ev) {
+  const card = ev.card ? cardLabelRomme(ev.card) : "";
+  if (move.type === "draw") return (ev.type === "reshuffle" ? "The discard pile is shuffled into a new stock. " : "") + "You draw a card.";
+  if (move.type === "takeDiscard") return "You take the " + card + ".";
+  if (move.type === "meld") return after.players[before.turn].opened && before.players[before.turn].opened ? "You lay out a meld." : "";
+  if (move.type === "confirmOpen") return "You make the first meld with " + ev.points + " points.";
+  if (move.type === "extend") return "You add the " + card + " to a meld.";
+  if (move.type === "swapJoker") return "You swap the " + card + " for a joker.";
+  if (move.type === "take") return "You take the " + card + " from a meld.";
+  if (move.type === "returnDiscard") return "You put the " + card + " back and draw from the stock.";
+  if (move.type === "discard") return "You discard the " + card + ".";
   return "";
 }
 
@@ -300,7 +326,7 @@ function showRoundEndRomme(prefix) {
     msg = pre + "Nothing is left to draw - the round ends without a winner.";
     title = "Draw";
   } else {
-    msg = pre + playerNameRomme(s.winner) + " has no cards left and wins the round.";
+    msg = pre + (isYouRomme(s.winner) ? "You have no cards left and win the round." : playerNameRomme(s.winner) + " has no cards left and wins the round.");
     title = AppStateRomme.mode === "vs-ai" ? (s.winner === 0 ? "You win!" : "You lose") : playerNameRomme(s.winner) + " wins";
   }
   if (!multi) {
@@ -313,7 +339,9 @@ function showRoundEndRomme(prefix) {
       title = "Draw";
       outcome = "draw";
     } else {
-      msg += " Game over after " + s.rounds + " rounds: " + playerNameRomme(match.winner) + " wins with " + best + " penalty points.";
+      msg += isYouRomme(match.winner)
+        ? " Game over after " + s.rounds + " rounds: you win with " + best + " penalty points."
+        : " Game over after " + s.rounds + " rounds: " + playerNameRomme(match.winner) + " wins with " + best + " penalty points.";
       title = AppStateRomme.mode === "vs-ai" ? (match.winner === 0 ? "You win!" : "You lose") : playerNameRomme(match.winner) + " wins";
       outcome = match.winner === 0 ? "win" : "loss";
     }
@@ -335,7 +363,7 @@ function resignRomme() {
   const s = AppStateRomme.state;
   if (!AppStateRomme.started || !s || s.over) return;
   const loser = AppStateRomme.mode === "vs-ai" ? 0 : s.turn;
-  const msg = playerNameRomme(loser) + " resigned.";
+  const msg = isYouRomme(loser) ? "You resigned." : playerNameRomme(loser) + " resigned.";
   if (AppStateRomme.mode === "vs-ai" && typeof GameStats !== "undefined") GameStats.record("romme", "loss");
   AppStateRomme.started = false;
   if (typeof GameStorage !== "undefined") GameStorage.clear(ROMME_SAVE_KEY);
@@ -492,7 +520,6 @@ function renderMeldRomme(meld, tappable, onTap, takeIds, onTake) {
 
 // Heading of a player's area on the table.
 function ownerLabelRomme(p) {
-  if (AppStateRomme.mode === "vs-ai") return p === 0 ? "You" : playerNameRomme(p) + " (computer)";
   return playerNameRomme(p);
 }
 
@@ -513,8 +540,7 @@ function renderRomme() {
     row.className = "game-player" + (p === s.turn && !over ? " game-player-active" : "");
     const name = document.createElement("span");
     name.className = "game-player-name";
-    let nm = playerNameRomme(p);
-    if (AppStateRomme.mode === "vs-ai") nm = p === 0 ? nm + " (you)" : nm + " (computer)";
+    const nm = playerNameRomme(p);
     I18n.setMsg(name, nm);
     row.appendChild(name);
     const cnt = document.createElement("span");
@@ -607,7 +633,7 @@ function renderRomme() {
   if (hidden) I18n.setMsg(document.getElementById("romme-hand-cover-text"), "Pass the device to " + playerNameRomme(s.turn) + ".");
   const mine = document.getElementById("romme-mine");
   mine.classList.toggle("hidden", hidden);
-  I18n.setMsg(document.getElementById("romme-my-label"), playerNameRomme(viewer) + ": your cards");
+  I18n.setMsg(document.getElementById("romme-my-label"), isYouRomme(viewer) ? "Your cards" : playerNameRomme(viewer) + ": your cards");
   const handEl = document.getElementById("romme-hand");
   handEl.innerHTML = "";
   if (!hidden) {
