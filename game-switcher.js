@@ -85,7 +85,8 @@
     ["pairs", "game_pairs"],
     ["futoshiki", "game_futoshiki"],
     ["foxandgeese", "game_foxandgeese"],
-    ["seega", "game_seega"]
+    ["seega", "game_seega"],
+    ["romme", "game_romme"]
   ];
 
   var GAME_SLUGS = {};

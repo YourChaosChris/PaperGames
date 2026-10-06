@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rummy (Rommé) on e-ink – play offline, no ads | PaperGames</title>
+  <meta name="description" content="The German rummy with two packs and six jokers: lay out sets and runs, add to any meld on the table, and get rid of all your cards. 2 to 4 players, vs. the computer or on one device.">
+  <link rel="canonical" href="https://yourchaoschris.github.io/PaperGames/romme.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperGames">
+  <meta property="og:url" content="https://yourchaoschris.github.io/PaperGames/romme.html">
+  <meta property="og:title" content="Rummy (Rommé) on e-ink – play offline, no ads | PaperGames">
+  <meta property="og:description" content="The German rummy with two packs and six jokers: lay out sets and runs, add to any meld on the table, and get rid of all your cards. 2 to 4 players, vs. the computer or on one device.">
+  <meta property="og:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Rummy (Rommé) on e-ink – play offline, no ads | PaperGames">
+  <meta name="twitter:description" content="The German rummy with two packs and six jokers: lay out sets and runs, add to any meld on the table, and get rid of all your cards. 2 to 4 players, vs. the computer or on one device.">
+  <meta name="twitter:image" content="https://yourchaoschris.github.io/PaperGames/og-image.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>try{if((localStorage.getItem("einkchess_lang")||navigator.language||"en").slice(0,2).toLowerCase()!=="en"){document.documentElement.className+=" i18n-pending";setTimeout(function(){document.documentElement.classList.remove("i18n-pending")},4000)}}catch(e){}</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="title-wrap app-title-row">
+      <h1><a href="index.html" class="app-title-link"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg> PaperGames</a></h1>
+      <a href="about.html" class="app-title-author app-title-author-link">by Christopher Müller</a>
+    </div>
+    <div class="user-panel">
+      <button id="menu-toggle" class="secondary" data-i18n="menu_toggle">&#9776; Menu</button>
+    </div>
+  </header>
+
+  <main>
+
+<div id="settings-panel">
+<section class="mode-section">
+  <div class="mode-section-row">
+    <div class="mode-buttons">
+      <button id="mode-offline" class="mode-btn secondary" data-i18n="maumau_mode_hotseat">Same device</button>
+      <button id="mode-offline-ai" class="mode-btn secondary active-mode" data-i18n="vs_computer">vs Computer</button>
+    </div>
+  </div>
+</section>
+
+    <section id="offline-ai-controls" class="card">
+  <div class="field-row">
+    <button id="start-romme-game" class="primary" data-i18n="new_game">New game</button>
+    <span id="romme-ai-wrap">
+      <label><span data-i18n="romme_opponents_label">Computer opponents:</span>
+        <select id="romme-opponents-inline">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select></label>
+      <select id="romme-level-inline">
+        <option value="1" data-i18n="level_easy">Easy</option>
+        <option value="2" selected data-i18n="level_medium">Medium</option>
+        <option value="3" data-i18n="level_hard">Hard</option>
+      </select>
+    </span>
+    <span id="romme-seats-wrap" class="hidden">
+      <label><span data-i18n="romme_seats_label">Players:</span>
+        <select id="romme-seats-inline">
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select></label>
+    </span>
+    <label><span data-i18n="romme_threshold_label">First meld at least:</span>
+      <select id="romme-threshold-inline">
+        <option value="30" data-i18n="romme_points_30">30 points</option>
+        <option value="40" selected data-i18n="romme_points_40">40 points</option>
+        <option value="51" data-i18n="romme_points_51">51 points</option>
+      </select></label>
+  </div>
+  <div id="offline-romme-status" class="status-text"></div>
+</section>
+</div>
+
+
+<section id="board-section" class="card">
+  <div class="board-header">
+    <div id="game-label"></div>
+    <div id="game-meta"></div>
+    <div id="game-result" aria-live="assertive"></div>
+
+    <div id="board-info" class="status-text" aria-live="polite"></div>
+  </div>
+  <div id="board-placeholder" class="board-placeholder">
+    <span class="board-placeholder-icon board-placeholder-icon-svg" aria-hidden="true"><svg viewBox="0 0 100 100"><rect x="8" y="14" width="40" height="58" rx="5" fill="#fff" stroke="#111" stroke-width="3"/><rect x="30" y="20" width="40" height="58" rx="5" fill="#fff" stroke="#111" stroke-width="3"/><rect x="52" y="26" width="40" height="58" rx="5" fill="#fff" stroke="#111" stroke-width="3"/><text x="72" y="62" text-anchor="middle" font-size="24" font-weight="700" font-family="sans-serif" fill="#111">7</text></svg></span>
+    <div class="board-placeholder-text">
+      <span class="board-placeholder-title" data-i18n="game_romme">Rummy (Rommé)</span>
+      <span class="board-placeholder-subtitle">PaperGames</span>
+    </div>
+  </div>
+  <div id="board-container" class="hidden">
+    <div id="romme-players" class="game-players" role="status" aria-live="polite"></div>
+    <div id="romme-round-line" class="status-text"></div>
+    <div class="pc-row">
+      <span class="pc-row-label" data-i18n="romme_label_table">Table</span>
+      <div id="romme-table" class="concan-melds romme-table"></div>
+    </div>
+    <div class="concan-piles">
+      <button id="romme-stock" class="pc-card pc-card-back concan-stock" type="button"></button>
+      <button id="romme-discard" class="pc-card romme-discard" type="button"></button>
+    </div>
+    <div id="romme-staged" class="pc-row hidden">
+      <span id="romme-staged-label" class="pc-row-label"></span>
+      <div id="romme-staged-melds" class="concan-melds"></div>
+    </div>
+    <div id="romme-hand-cover" class="hand-cover hidden">
+      <p id="romme-hand-cover-text"></p>
+      <button id="romme-show-hand" class="primary" type="button" data-i18n="maumau_show_hand">Show my cards</button>
+    </div>
+    <div id="romme-mine">
+      <span id="romme-my-label" class="pc-row-label"></span>
+      <div id="romme-hand" class="pc-row romme-hand" role="group" data-i18n-attr="aria-label:schwimmen_hand_label" aria-label="Your cards"></div>
+      <div id="romme-actions" class="game-actions-row hidden">
+        <button id="romme-meld-button" class="secondary" type="button" data-i18n="romme_meld_button">Lay out</button>
+        <button id="romme-confirm-button" class="secondary hidden" type="button" data-i18n="romme_confirm_button">Lay out first meld</button>
+        <button id="romme-cancel-button" class="secondary hidden" type="button" data-i18n="romme_cancel_button">Take back</button>
+        <button id="romme-discard-button" class="secondary" type="button" data-i18n="romme_discard_button">Discard</button>
+      </div>
+    </div>
+    <div id="romme-round-end" class="romme-round-end hidden">
+      <h2 data-i18n="romme_round_end_title">End of the round</h2>
+      <ul id="romme-round-scores"></ul>
+      <button id="romme-next-round" class="primary" type="button" data-i18n="romme_next_round">Next round</button>
+    </div>
+  </div>
+  <div id="board-actions" class="board-actions">
+    <button id="resign-button" class="secondary small hidden" data-i18n="resign_button">Resign 🏳</button>
+  </div>
+</section>
+  </main>
+  <footer class="site-footer">
+    <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
+    <a href="datenschutz.html" data-i18n="nav_privacy">Privacy Policy</a>
+  </footer>
+</div>
+
+<script src="error-banner.js"></script>
+<script src="i18n.js"></script>
+<script src="font-size-toggle.js"></script>
+<script src="high-contrast.js"></script>
+<script src="force-update.js"></script>
+<script src="ai-pacing.js"></script>
+<script src="random-start.js"></script>
+<script src="offline-status.js"></script>
+<script src="density.js"></script>
+<script src="settings-menu.js"></script>
+<script src="rules-link.js"></script>
+<script src="quick-rules.js"></script>
+<script src="game-switcher.js"></script>
+<script src="card-faces.js"></script>
+<script src="romme-core.js"></script>
+<script src="romme-ai.js"></script>
+<script src="result-modal.js"></script>
+<script src="storage-warning.js"></script>
+<script src="game-storage.js"></script>
+<script src="game-stats.js"></script>
+<script src="adaptive-difficulty.js"></script>
+<script src="board-a11y.js"></script>
+<script src="romme-app.js"></script>
+<script src="confirm-actions.js"></script>
+<script src="sw-register.js"></script>
+<script src="update-banner.js"></script>
+</body>
+</html>

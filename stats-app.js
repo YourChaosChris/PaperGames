@@ -62,7 +62,8 @@ const STATS_GAME_NAME_KEY = {
   pairs: "game_pairs",
   futoshiki: "game_futoshiki",
   foxandgeese: "game_foxandgeese",
-  seega: "game_seega"
+  seega: "game_seega",
+  romme: "game_romme"
 };
 
 function gameDisplayName(game) {

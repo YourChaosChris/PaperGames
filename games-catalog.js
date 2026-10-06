@@ -721,4 +721,15 @@ const GAMES_CATALOG = [
     added: "2026-10-06",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><rect x=\"10\" y=\"10\" width=\"80\" height=\"80\"/><path d=\"M26 10V90M42 10V90M58 10V90M74 10V90M10 26H90M10 42H90M10 58H90M10 74H90\"/></g><circle cx=\"34\" cy=\"50\" r=\"6\" fill=\"#111\"/><circle cx=\"66\" cy=\"50\" r=\"6\" fill=\"#111\"/><circle cx=\"50\" cy=\"50\" r=\"5.5\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"3\"/><circle cx=\"18\" cy=\"18\" r=\"5.5\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"3\"/><circle cx=\"82\" cy=\"82\" r=\"6\" fill=\"#111\"/></svg></span>"
   },
+  {
+    slug: "romme",
+    category: "strategy",
+    nameKey: "game_romme",
+    nameText: "Rummy (Rommé)",
+    descKey: "home_romme_desc",
+    descText: "The German rummy with two packs and six jokers: lay out sets and runs, add to any meld on the table, and get rid of all your cards. 2 to 4 players, vs. the computer or on one device.",
+    popular: false,
+    added: "2026-10-06",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"14\" width=\"40\" height=\"58\" rx=\"5\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"3\"/><rect x=\"30\" y=\"20\" width=\"40\" height=\"58\" rx=\"5\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"3\"/><rect x=\"52\" y=\"26\" width=\"40\" height=\"58\" rx=\"5\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"3\"/><text x=\"72\" y=\"62\" text-anchor=\"middle\" font-size=\"24\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#111\">7</text></svg></span>"
+  },
 ];

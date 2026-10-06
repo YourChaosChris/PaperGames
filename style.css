@@ -9970,3 +9970,62 @@ button.concan-meld {
 .seega-phase-line {
   font-weight: 700;
 }
+
+/* Rommé: melds on the table carry the name of whoever laid them out; the
+   hand wraps into two rows so every card stays whole and readable; a
+   joker shows a star and a double frame. */
+.romme-table {
+  text-align: center;
+}
+
+.romme-meld-wrap {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 0.2rem 0.3rem;
+  text-align: center;
+}
+
+.romme-meld-owner {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.romme-empty {
+  display: block;
+  font-style: italic;
+  margin: 0.3rem 0;
+}
+
+.romme-hand {
+  max-width: 34rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pc-card.romme-joker {
+  border-style: double;
+  border-width: 4px;
+}
+
+.romme-round-end {
+  margin: 0.6rem 0;
+  padding: 0.5rem;
+  border: var(--border-width) solid var(--border);
+  text-align: center;
+}
+
+.romme-round-end ul {
+  text-align: left;
+  margin: 0.4rem 0;
+}
+
+.romme-player-status {
+  display: block;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+[dir="rtl"] .romme-player-status {
+  margin: 0;
+}
