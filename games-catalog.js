@@ -33,7 +33,7 @@ const GAMES_CATALOG = [
     descText: "The classic jump-and-capture game. Local 2-player or vs. the built-in engine, three difficulty levels.",
     popular: true,
     added: "2026-07-01",
-    icon: "<span class=\"checkers-icon-disc checkers-icon-disc-black\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9.5\"/><circle cx=\"12\" cy=\"12\" r=\"5.5\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "xiangqi",
@@ -44,7 +44,7 @@ const GAMES_CATALOG = [
     descText: "Chinese chess: generals, elephants, cannons and more on a 9x10 grid. Local 2-player or vs. the built-in engine, with a toggle between classic characters and Western-style symbols.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"xq-icon-disc xq-icon-disc-red\" aria-hidden=\"true\">\u5e25</span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9.5\"/><circle cx=\"12\" cy=\"12\" r=\"5.5\"/><path d=\"M12 8.5V15.5M9 12H15\"/></svg></span>"
   },
   {
     slug: "shogi",
@@ -55,7 +55,7 @@ const GAMES_CATALOG = [
     descText: "Japanese chess, where captured pieces switch sides and rejoin the battle. Local 2-player or vs. the built-in engine.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"shogi-icon-piece\" aria-hidden=\"true\">\u738b</span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2.5L18 5.5L20.5 21.5H3.5L6 5.5Z\"/><path d=\"M9 11H15M9 15.5H15\"/></svg></span>"
   },
   {
     slug: "cardtactics",
@@ -66,7 +66,7 @@ const GAMES_CATALOG = [
     descText: "A fast, elegant duel decided by five shifting move cards.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"cardtactics-icon-piece cardtactics-icon-piece-blue\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"2.5\" width=\"14\" height=\"19\" rx=\"2\"/><circle cx=\"12\" cy=\"12\" r=\"2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"8.5\" cy=\"8\" r=\"1.5\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"15.5\" cy=\"8\" r=\"1.5\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"17\" r=\"1.5\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "hnefatafl",
@@ -77,7 +77,7 @@ const GAMES_CATALOG = [
     descText: "An asymmetric Norse game: the king must escape, the attackers must trap him.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"hnefatafl-icon-piece hnefatafl-icon-piece-defender\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><path d=\"M7 16.5V9L9.5 11.5L12 7.5L14.5 11.5L17 9V16.5Z\" fill=\"#141413\"/></svg></span>"
   },
   {
     slug: "go",
@@ -88,7 +88,7 @@ const GAMES_CATALOG = [
     descText: "The ancient territory game. Local 2-player or vs. the built-in engine, three board sizes, three difficulty levels.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"go-stone-icon go-stone-black\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2.5 8H21.5M2.5 16H21.5M8 2.5V21.5M16 2.5V21.5\"/><circle cx=\"8\" cy=\"8\" r=\"4\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"16\" cy=\"16\" r=\"4\" fill=\"#fff\"/></svg></span>"
   },
   {
     slug: "reversi",
@@ -99,7 +99,7 @@ const GAMES_CATALOG = [
     descText: "Flip the board's colour by flanking your opponent's discs. Local 2-player or vs. the built-in engine.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"reversi-icon-disc reversi-icon-disc-black\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9.5\"/><path d=\"M12 2.5A9.5 9.5 0 0 1 12 21.5Z\" fill=\"#141413\"/></svg></span>"
   },
   {
     slug: "fourinarow",
@@ -110,7 +110,7 @@ const GAMES_CATALOG = [
     descText: "Drop discs to connect four in a row before your opponent does. Local 2-player or vs. the built-in engine.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"c4-icon-disc c4-icon-disc-black\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\" rx=\"2\"/><circle cx=\"7\" cy=\"17\" r=\"2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"10.3\" cy=\"13.7\" r=\"2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"13.7\" cy=\"10.3\" r=\"2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"17\" cy=\"7\" r=\"2\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "gomoku",
@@ -121,7 +121,7 @@ const GAMES_CATALOG = [
     descText: "Get five stones in a row first, on a Go-sized board. Local 2-player or vs. the built-in engine.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"go-stone-icon go-stone-black\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2.5 12H21.5M7 2.5V21.5M17 2.5V21.5\"/><circle cx=\"4\" cy=\"20\" r=\"1.8\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"8\" cy=\"16\" r=\"1.8\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"12\" r=\"1.8\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"16\" cy=\"8\" r=\"1.8\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"20\" cy=\"4\" r=\"1.8\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "hex",
@@ -132,7 +132,7 @@ const GAMES_CATALOG = [
     descText: "Connect your two sides of a hexagonal board before your opponent connects theirs.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"hex-icon-piece hex-icon-piece-r\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2.5L20.5 7.25V16.75L12 21.5L3.5 16.75V7.25Z\"/><path d=\"M12 8L15.5 10V14L12 16L8.5 14V10Z\" fill=\"#141413\"/></svg></span>"
   },
   {
     slug: "morris",
@@ -143,7 +143,7 @@ const GAMES_CATALOG = [
     descText: "A centuries-old strategy game of placing and sliding pieces to form mills. Local 2-player or vs. the built-in engine, with the classic flying endgame rule.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"morris-icon-disc morris-icon-disc-black\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><rect x=\"7.5\" y=\"7.5\" width=\"9\" height=\"9\"/><path d=\"M12 2.5V7.5M12 16.5V21.5M2.5 12H7.5M16.5 12H21.5\"/><circle cx=\"12\" cy=\"2.5\" r=\"2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"21.5\" cy=\"12\" r=\"2\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "wallmaze",
@@ -154,7 +154,7 @@ const GAMES_CATALOG = [
     descText: "Race to the far side of the board while building walls to block your opponent.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"wallmaze-icon-piece wallmaze-icon-piece-p1\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><rect x=\"8\" y=\"10.25\" width=\"13.5\" height=\"3.5\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"17\" r=\"2.5\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "halma",
@@ -165,7 +165,7 @@ const GAMES_CATALOG = [
     descText: "Race all your pieces across the board into your opponent's starting camp.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"halma-icon-piece halma-icon-piece-p1\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><circle cx=\"7\" cy=\"7\" r=\"2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"7\" r=\"2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"7\" cy=\"12\" r=\"2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"17\" cy=\"17\" r=\"2\"/></svg></span>"
   },
   {
     slug: "sternhalma",
@@ -176,7 +176,7 @@ const GAMES_CATALOG = [
     descText: "Race all ten of your marbles across the star-shaped board into the point opposite yours.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"sternhalma-icon-piece sternhalma-icon-piece-p1\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2.5L14.75 7.25H20.25L17.5 12L20.25 16.75H14.75L12 21.5L9.25 16.75H3.75L6.5 12L3.75 7.25H9.25Z\"/><circle cx=\"12\" cy=\"12\" r=\"2\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "dotsandboxes",
@@ -187,7 +187,7 @@ const GAMES_CATALOG = [
     descText: "Draw lines between dots to complete boxes and claim them - whoever completes a box goes again. Play on 4 × 4, 5 × 5, 6 × 6 or 8 × 8 boxes, local 2-player or vs. the built-in engine.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"14\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"43\" y=\"14\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"72\" y=\"14\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"14\" y=\"43\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"43\" y=\"43\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"72\" y=\"43\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"14\" y=\"72\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"43\" y=\"72\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"72\" y=\"72\" width=\"14\" height=\"14\" fill=\"#000\"/><rect x=\"28\" y=\"17\" width=\"15\" height=\"8\" fill=\"#000\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 4H12V12H4Z\" fill=\"#141413\"/><path d=\"M12 4H20M12 12H20M4 12V20\"/><circle cx=\"4\" cy=\"4\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"4\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"20\" cy=\"4\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"4\" cy=\"12\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"12\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"20\" cy=\"12\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"4\" cy=\"20\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"20\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"20\" cy=\"20\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "amazons",
@@ -198,7 +198,7 @@ const GAMES_CATALOG = [
     descText: "Move a queen-like amazon, then shoot a permanent arrow from its new square to slowly wall off the board.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 100 100\"><circle cx=\"30\" cy=\"70\" r=\"10\" fill=\"#000\"/><line x1=\"38\" y1=\"62\" x2=\"78\" y2=\"22\" stroke=\"#000\" stroke-width=\"4\"/><polygon points=\"78,22 62,26 74,34\" fill=\"#000\"/><rect x=\"14\" y=\"80\" width=\"16\" height=\"16\" fill=\"#000\" opacity=\"0.35\"/><rect x=\"70\" y=\"14\" width=\"16\" height=\"16\" fill=\"#000\" opacity=\"0.35\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3.5 20.5L15 9M15 9H10M15 9V14\"/><rect x=\"15\" y=\"15\" width=\"6\" height=\"6\" fill=\"#141413\" stroke=\"none\"/><path d=\"M13 3.5L15 6.5L17 4L19 6.5L21 3.5V8H13Z\" fill=\"#141413\"/></svg></span>"
   },
   {
     slug: "backgammon",
@@ -209,7 +209,7 @@ const GAMES_CATALOG = [
     descText: "The classic dice race game. Local 2-player or vs. the built-in engine, with the bar, bearing off, and blot-hitting.",
     popular: true,
     added: "2026-07-01",
-    icon: "<span class=\"bg-icon-checker bg-icon-checker-black\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 2.5L7 12L11 2.5M13 21.5L17 12L21 21.5\"/><circle cx=\"7\" cy=\"18\" r=\"3\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"17\" cy=\"6\" r=\"3\"/></svg></span>"
   },
   {
     slug: "ur",
@@ -220,7 +220,7 @@ const GAMES_CATALOG = [
     descText: "A 4,600-year-old race game rediscovered from ancient Mesopotamia. Local 2-player or vs. the built-in engine, with rosette squares and capture-by-landing.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"ur-piece-icon ur-piece-icon-black\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><path d=\"M12 5V19M5 12H19\" stroke-width=\"2\"/><path d=\"M12 9.5L14.5 12L12 14.5L9.5 12Z\" fill=\"#141413\"/></svg></span>"
   },
   {
     slug: "senet",
@@ -231,7 +231,7 @@ const GAMES_CATALOG = [
     descText: "One of the oldest known board games, from ancient Egypt. Local 2-player or vs. the built-in engine.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"senet-icon-disc senet-icon-disc-a\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"5.5\" width=\"19\" height=\"13\"/><path d=\"M2.5 12H21.5M8.83 5.5V18.5M15.17 5.5V18.5\"/><path d=\"M5.6 7.2L7.2 10.3H4Z\" fill=\"#141413\"/><circle cx=\"18.3\" cy=\"15.2\" r=\"1.7\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "mancala",
@@ -242,7 +242,7 @@ const GAMES_CATALOG = [
     descText: "One of the world's oldest game families: sow seeds around the board to fill your own store. Local 2-player or vs. the built-in engine, with captures and extra turns.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"mancala-seed-icon\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"6\" width=\"20\" height=\"12\" rx=\"6\"/><circle cx=\"8\" cy=\"10\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"10\" r=\"1.6\"/><circle cx=\"16\" cy=\"10\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"8\" cy=\"14\" r=\"1.6\"/><circle cx=\"12\" cy=\"14\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"16\" cy=\"14\" r=\"1.6\"/></svg></span>"
   },
   {
     slug: "yatzy",
@@ -253,7 +253,7 @@ const GAMES_CATALOG = [
     descText: "The classic 5-dice scoring game. Roll up to three times a turn, hold the dice you want to keep, and fill in all 15 categories on the scoresheet for the highest total.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 100 100\"><rect x=\"6\" y=\"6\" width=\"88\" height=\"88\" rx=\"16\" fill=\"#ffffff\" stroke=\"#000\" stroke-width=\"6\"/><circle cx=\"27\" cy=\"27\" r=\"9\" fill=\"#000\"/><circle cx=\"50\" cy=\"50\" r=\"9\" fill=\"#000\"/><circle cx=\"73\" cy=\"27\" r=\"9\" fill=\"#000\"/><circle cx=\"27\" cy=\"73\" r=\"9\" fill=\"#000\"/><circle cx=\"73\" cy=\"73\" r=\"9\" fill=\"#000\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"3\"/><circle cx=\"8\" cy=\"8\" r=\"1.7\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"16\" cy=\"8\" r=\"1.7\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"12\" r=\"1.7\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"8\" cy=\"16\" r=\"1.7\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"16\" cy=\"16\" r=\"1.7\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "sudoku",
@@ -264,7 +264,7 @@ const GAMES_CATALOG = [
     descText: "Fill a 9x9 grid with digits so every row, column and 3x3 box contains 1-9 exactly once. Freshly generated with a unique solution, in three difficulty levels.",
     popular: true,
     added: "2026-07-01",
-    icon: "<span class=\"sudoku-icon\" aria-hidden=\"true\">9</span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><path d=\"M8.83 2.5V21.5M15.17 2.5V21.5M2.5 8.83H21.5M2.5 15.17H21.5\" stroke-width=\"2\"/></svg></span>"
   },
   {
     slug: "minesweeper",
@@ -275,7 +275,7 @@ const GAMES_CATALOG = [
     descText: "Uncover every safe square using the number clues, without triggering a hidden mine.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 512 512\"><path fill=\"#000\" d=\"M179.323 82.448c-5.76 2.304-11.519 4.965-18.43 7.856V34.068c0-5.092 4.607-9.216 9.699-9.216h156.325a9.135 9.135 0 0 1 9.066 9.216v49.854a143.988 143.988 0 0 0-18.43-6.335V43.283h-138.23zm105.17 192.91c-2.431-5.852-.346-12.314 1.497-18.005l.092-.276-.276.092c-5.702 1.843-12.153 3.928-18.005 1.498-5.851-2.43-8.593-8.064-11.38-13.535l-.415-.807-.415.807c-2.788 5.483-5.667 11.162-11.38 13.535-5.714 2.373-12.303.345-18.005-1.498l-.277-.092.093.276c1.843 5.702 3.916 12.165 1.497 18.005-2.419 5.84-8.063 8.593-13.535 11.38l-.806.415.806.415c5.495 2.788 11.162 5.667 13.535 11.38 2.373 5.714.346 12.315-1.497 18.005l-.093.277.277-.093c3.847-1.244 8.063-2.591 12.164-2.591a15.078 15.078 0 0 1 5.84 1.152c5.76 2.373 8.593 8.063 11.381 13.534l.415.807.414-.807c2.788-5.483 5.668-11.162 11.381-13.534 5.714-2.373 12.303-.346 18.005 1.497l.276.092-.092-.276c-1.843-5.702-3.917-12.164-1.498-18.005 2.42-5.84 8.064-8.593 13.535-11.38l.807-.415-.807-.415c-5.494-2.88-11.173-5.76-13.535-11.473zm59.277 11.795a87.764 87.764 0 1 1-87.764-87.764 87.868 87.868 0 0 1 87.752 87.73zm-22.382 0c0-9.215-8.674-13.627-14.975-16.84-1.313-.669-3.087-1.567-4.32-2.304.346-1.498 1.026-3.583 1.475-4.988 2.143-6.635 5.068-15.724-1.29-22.082-6.359-6.359-15.447-3.456-22.082-1.29-1.406.449-3.456 1.152-4.988 1.474-.749-1.232-1.647-3.006-2.304-4.32-3.214-6.335-7.625-14.974-16.84-14.974-9.216 0-13.628 8.674-16.842 14.974-.668 1.314-1.566 3.088-2.303 4.32-1.498-.345-3.583-1.025-4.988-1.474-6.635-2.143-15.724-5.069-22.082 1.301-6.359 6.37-3.456 15.447-1.302 22.082.45 1.406 1.152 3.456 1.475 4.988-1.233.749-3.007 1.647-4.32 2.304-6.336 3.214-14.975 7.626-14.975 16.84 0 9.216 8.674 13.628 14.975 16.842 1.313.668 3.087 1.566 4.32 2.304-.346 1.497-1.026 3.582-1.475 4.987-2.142 6.635-5.068 15.724 1.302 22.082 6.37 6.359 15.447 3.456 22.082 1.302 1.405-.46 3.456-1.152 4.988-1.474.748 1.232 1.647 3.006 2.303 4.32 3.214 6.335 7.626 14.974 16.841 14.974 9.216 0 13.627-8.674 16.841-14.975.668-1.313 1.567-3.087 2.304-4.32 1.498.358 3.582 1.026 4.988 1.475 6.635 2.143 15.723 5.068 22.082-1.29 6.358-6.359 3.456-15.447 1.302-22.082-.45-1.405-1.152-3.456-1.475-4.988 1.233-.737 3.007-1.647 4.32-2.304 6.278-3.271 14.952-7.683 14.952-16.898zm134.612 0c0 110.272-89.71 199.995-199.994 199.995S56 397.39 56 287.118c0-110.271 89.722-199.993 199.994-199.993s199.994 89.71 199.994 199.994zm-93.788 0a106.194 106.194 0 1 0-106.195 106.195 106.321 106.321 0 0 0 106.172-106.23z\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"5.5\" fill=\"#141413\" stroke=\"none\"/><path d=\"M12 2.5V6.5M12 17.5V21.5M2.5 12H6.5M17.5 12H21.5M5.3 5.3L8.1 8.1M15.9 15.9L18.7 18.7M18.7 5.3L15.9 8.1M8.1 15.9L5.3 18.7\"/></svg></span>"
   },
   {
     slug: "twenty48",
@@ -286,7 +286,7 @@ const GAMES_CATALOG = [
     descText: "Slide and merge numbered tiles to reach 2048 before the board fills up. Keep playing afterward to push your best score even higher.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"twenty48-icon\" aria-hidden=\"true\">2048</span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"8.5\" height=\"8.5\" rx=\"1.5\"/><rect x=\"13\" y=\"2.5\" width=\"8.5\" height=\"8.5\" rx=\"1.5\"/><rect x=\"2.5\" y=\"13\" width=\"8.5\" height=\"8.5\" rx=\"1.5\"/><rect x=\"13\" y=\"13\" width=\"8.5\" height=\"8.5\" rx=\"1.5\"/><rect x=\"15.5\" y=\"15.5\" width=\"3.5\" height=\"3.5\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "freecell",
@@ -297,7 +297,7 @@ const GAMES_CATALOG = [
     descText: "The classic card solitaire where nearly every deal can be won with the right moves. Full supermoves and a one-click collect to the foundations.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 512 512\"><path fill=\"#000\" d=\"M119.436 36c-16.126 0-29.2 17.237-29.2 38.5v363c0 21.263 13.074 38.5 29.2 38.5h275.298c16.126 0 29.198-17.237 29.198-38.5v-363c0-21.263-13.072-38.5-29.198-38.5H119.436zm26.654 8.047s46.338 33.838 47.271 63.068c.776 24.287-25.024 32.122-40.775 18.586l13.633 32.653h-40.117l13.613-32.635c-15.535 13.88-40.006 5.349-40.758-18.604-.88-28.01 47.133-63.068 47.133-63.068zm95.646 120.957h7.963l63.121 160.834c2.536 6.498 7.727 9.748 15.573 9.748h5.468v8.916h-70.134v-8.916h5.587c7.291 0 12.442-.792 15.454-2.377 2.06-1.11 3.09-2.813 3.09-5.111 0-1.347-.278-2.774-.833-4.28l-14.62-37.326h-69.423l-8.2 21.397c-2.14 5.706-3.21 10.222-3.21 13.55 0 3.884 1.782 7.213 5.348 9.987 3.645 2.774 8.916 4.16 15.81 4.16h5.944v8.916h-63.715v-8.916c6.815 0 12.204-1.466 16.166-4.399 3.962-3.011 7.61-8.676 10.938-16.998l59.673-149.185zm-3.447 33.879l-31.502 78.338h62.17l-30.668-78.338zm107.49 154.765h40.116l-13.633 32.653c15.75-13.536 41.551-5.701 40.775 18.586-.933 29.23-47.27 63.068-47.27 63.068s-48.011-35.058-47.132-63.068c.751-23.953 25.222-32.485 40.758-18.604l-13.614-32.635z\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"4\" width=\"11\" height=\"16\" rx=\"1.5\"/><rect x=\"10.5\" y=\"6\" width=\"11\" height=\"16\" rx=\"1.5\" fill=\"#fff\"/><path d=\"M16 9.5C14 12 12.5 13 12.5 14.6C12.5 16 14.5 16.6 16 15.2C17.5 16.6 19.5 16 19.5 14.6C19.5 13 18 12 16 9.5Z\" fill=\"#141413\" stroke=\"none\"/><path d=\"M16 15V18.5\"/></svg></span>"
   },
   {
     slug: "mahjong",
@@ -308,7 +308,7 @@ const GAMES_CATALOG = [
     descText: "Clear the layered tile layout by matching identical pairs. Every deal is generated to always have a solution.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"mahjong-icon\" aria-hidden=\"true\">\u9ebb</span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"5.5\" width=\"12\" height=\"16\" rx=\"2\"/><rect x=\"8.5\" y=\"2.5\" width=\"13\" height=\"16\" rx=\"2\" fill=\"#fff\"/><circle cx=\"15\" cy=\"10.5\" r=\"3.5\"/><circle cx=\"15\" cy=\"10.5\" r=\"1.2\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "nonogram",
@@ -319,7 +319,7 @@ const GAMES_CATALOG = [
     descText: "Use row and column number clues to reveal a hidden picture, one cell at a time. A fresh, uniquely-solvable puzzle in three sizes.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"nonogram-icon\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"8.5\" y=\"8.5\" width=\"13\" height=\"13\"/><path d=\"M15 8.5V21.5M8.5 15H21.5\" stroke-width=\"2\"/><rect x=\"8.5\" y=\"8.5\" width=\"6.5\" height=\"6.5\" fill=\"#141413\" stroke=\"none\"/><rect x=\"15\" y=\"15\" width=\"6.5\" height=\"6.5\" fill=\"#141413\" stroke=\"none\"/><path d=\"M3 11.75H5.5M3 18.25H5.5M11.75 3V5.5M18.25 3V5.5\"/></svg></span>"
   },
   {
     slug: "pegsolitaire",
@@ -330,7 +330,7 @@ const GAMES_CATALOG = [
     descText: "Jump pegs over each other until only one remains - on the English cross or one of several other boards, from a 6x6 square to Wiegleb's 45-hole cross.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"peg-icon\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8.5 2.5H15.5V8.5H21.5V15.5H15.5V21.5H8.5V15.5H2.5V8.5H8.5Z\"/><circle cx=\"12\" cy=\"6\" r=\"1.4\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"6\" cy=\"12\" r=\"1.4\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"18\" cy=\"12\" r=\"1.4\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"18\" r=\"1.4\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"12\" r=\"1.4\"/></svg></span>"
   },
   {
     slug: "lightswitch",
@@ -341,7 +341,7 @@ const GAMES_CATALOG = [
     descText: "Press a cell to toggle it and its neighbors on and off. Turn off every light to win - every puzzle is generated to always have a solution.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 100 100\"><rect x=\"20\" y=\"20\" width=\"20\" height=\"20\" fill=\"#fff\"/><rect x=\"40\" y=\"20\" width=\"20\" height=\"20\" fill=\"#141413\"/><rect x=\"60\" y=\"20\" width=\"20\" height=\"20\" fill=\"#fff\"/><rect x=\"20\" y=\"40\" width=\"20\" height=\"20\" fill=\"#141413\"/><rect x=\"40\" y=\"40\" width=\"20\" height=\"20\" fill=\"#141413\"/><rect x=\"60\" y=\"40\" width=\"20\" height=\"20\" fill=\"#141413\"/><rect x=\"20\" y=\"60\" width=\"20\" height=\"20\" fill=\"#fff\"/><rect x=\"40\" y=\"60\" width=\"20\" height=\"20\" fill=\"#141413\"/><rect x=\"60\" y=\"60\" width=\"20\" height=\"20\" fill=\"#fff\"/><rect x=\"20\" y=\"20\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#141413\" stroke-width=\"4\"/><path d=\"M40 20V80M60 20V80M20 40H80M20 60H80\" stroke=\"#141413\" stroke-width=\"1.5\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8.5 15.5C6.5 14 5.5 12 5.5 10A6.5 6.5 0 0 1 18.5 10C18.5 12 17.5 14 15.5 15.5V17.5H8.5Z\"/><path d=\"M9.5 20.5H14.5\"/><path d=\"M10.5 12L12 9.5L13.5 12\" stroke-width=\"2\"/></svg></span>"
   },
   {
     slug: "bullsandcows",
@@ -352,7 +352,7 @@ const GAMES_CATALOG = [
     descText: "Crack a hidden 4-shape code within a limited number of guesses, using black and white peg feedback. Repeats may be allowed, depending on the difficulty.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 100 100\"><rect x=\"4\" y=\"4\" width=\"92\" height=\"92\" rx=\"12\" fill=\"#ffffff\" stroke=\"#000\" stroke-width=\"6\"/><circle cx=\"20\" cy=\"50\" r=\"10\" fill=\"#000\"/><rect x=\"31\" y=\"41\" width=\"18\" height=\"18\" fill=\"#000\"/><polygon points=\"60,38 70,60 50,60\" fill=\"#000\"/><polygon points=\"80,38 92,50 80,62 68,50\" fill=\"#000\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"7\" width=\"19\" height=\"10\" rx=\"2\"/><circle cx=\"6.5\" cy=\"12\" r=\"1.8\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"10.2\" cy=\"12\" r=\"1.8\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"13.8\" cy=\"12\" r=\"1.8\"/><circle cx=\"17.5\" cy=\"12\" r=\"1.8\"/></svg></span>"
   },
   {
     slug: "klondike",
@@ -363,7 +363,7 @@ const GAMES_CATALOG = [
     descText: "The original patience game solitaire is named after - seven cascading tableau columns, four foundations, and a draw pile to work through. The game Windows made famous.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 100 100\"><g><rect x=\"16\" y=\"24\" width=\"34\" height=\"48\" rx=\"4\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"3.5\" transform=\"rotate(-14 50 60)\"/><g clip-path=\"url(#klondike-back-clip)\" transform=\"rotate(-14 50 60)\"><line x1=\"10\" y1=\"30\" x2=\"56\" y2=\"76\" stroke=\"#000\" stroke-width=\"3\"/><line x1=\"10\" y1=\"42\" x2=\"44\" y2=\"76\" stroke=\"#000\" stroke-width=\"3\"/><line x1=\"10\" y1=\"54\" x2=\"32\" y2=\"76\" stroke=\"#000\" stroke-width=\"3\"/><line x1=\"22\" y1=\"24\" x2=\"56\" y2=\"58\" stroke=\"#000\" stroke-width=\"3\"/><line x1=\"34\" y1=\"24\" x2=\"56\" y2=\"46\" stroke=\"#000\" stroke-width=\"3\"/></g></g><defs><clipPath id=\"klondike-back-clip\"><rect x=\"16\" y=\"24\" width=\"34\" height=\"48\" rx=\"4\"/></clipPath></defs><g transform=\"rotate(14 50 60)\"><rect x=\"50\" y=\"24\" width=\"34\" height=\"48\" rx=\"4\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"3.5\"/><path d=\"M67 34c-5 5-9 9-9 14a9 9 0 0 0 18 0c0-5-4-9-9-14z\" fill=\"#000\"/></g><rect x=\"33\" y=\"20\" width=\"34\" height=\"48\" rx=\"4\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"3.5\"/><path d=\"M50 30c-6 6-11 11-11 17a11 11 0 0 0 22 0c0-6-5-11-11-17z\" fill=\"none\" stroke=\"#000\" stroke-width=\"3\"/><rect x=\"47\" y=\"44\" width=\"6\" height=\"10\" fill=\"#000\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"11\" height=\"15\" rx=\"1.5\"/><rect x=\"6.5\" y=\"5\" width=\"11\" height=\"15\" rx=\"1.5\" fill=\"#fff\"/><rect x=\"10.5\" y=\"7.5\" width=\"11\" height=\"14\" rx=\"1.5\" fill=\"#fff\"/><path d=\"M16 11L18.5 14.5L16 18L13.5 14.5Z\" fill=\"#141413\"/></svg></span>"
   },
   {
     slug: "spidersolitaire",
@@ -374,7 +374,7 @@ const GAMES_CATALOG = [
     descText: "Two decks, ten tableau columns, no foundations - build same-suit King-to-Ace runs to clear them. Choose 1, 2, or 4 suits for an easier or harder deal.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 100 100\"><ellipse cx=\"50\" cy=\"58\" rx=\"18\" ry=\"14\" fill=\"#000\"/><circle cx=\"50\" cy=\"36\" r=\"10\" fill=\"#000\"/><g stroke=\"#000\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"><path d=\"M35 46 L10 30\"/><path d=\"M33 56 L6 52\"/><path d=\"M35 66 L10 80\"/><path d=\"M40 74 L25 94\"/><path d=\"M65 46 L90 30\"/><path d=\"M67 56 L94 52\"/><path d=\"M65 66 L90 80\"/><path d=\"M60 74 L75 94\"/></g></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><ellipse cx=\"12\" cy=\"13\" rx=\"3.5\" ry=\"4.5\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"7\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/><path d=\"M8.5 11L3 7.5M8.5 13L2.5 13M8.5 15L3.5 19M15.5 11L21 7.5M15.5 13L21.5 13M15.5 15L20.5 19\"/></svg></span>"
   },
   {
     slug: "kakuro",
@@ -385,7 +385,7 @@ const GAMES_CATALOG = [
     descText: "Fill white cells with digits 1-9 so every run sums to its clue, with no digit repeated within a run. Freshly generated, in three difficulty levels.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"kakuro-icon\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><path d=\"M12 2.5V21.5M2.5 12H21.5\"/><path d=\"M2.5 2.5H12V12H2.5Z\" fill=\"#141413\"/><path d=\"M3.5 3.5L11 11\" stroke=\"#fff\" stroke-width=\"2\"/></svg></span>"
   },
   {
     slug: "fanorona",
@@ -396,7 +396,7 @@ const GAMES_CATALOG = [
     descText: "Madagascar's national board game: slide pieces along a 5x9 grid of lines to capture by approach or withdrawal. Local 2-player or vs. the built-in engine.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><line x1=\"12\" y1=\"20\" x2=\"88\" y2=\"20\"/><line x1=\"12\" y1=\"50\" x2=\"88\" y2=\"50\"/><line x1=\"12\" y1=\"80\" x2=\"88\" y2=\"80\"/><line x1=\"12\" y1=\"20\" x2=\"12\" y2=\"80\"/><line x1=\"31\" y1=\"20\" x2=\"31\" y2=\"80\"/><line x1=\"50\" y1=\"20\" x2=\"50\" y2=\"80\"/><line x1=\"69\" y1=\"20\" x2=\"69\" y2=\"80\"/><line x1=\"88\" y1=\"20\" x2=\"88\" y2=\"80\"/><line x1=\"12\" y1=\"20\" x2=\"31\" y2=\"50\"/><line x1=\"50\" y1=\"20\" x2=\"69\" y2=\"50\"/><line x1=\"50\" y1=\"20\" x2=\"31\" y2=\"50\"/><line x1=\"88\" y1=\"20\" x2=\"69\" y2=\"50\"/><line x1=\"31\" y1=\"50\" x2=\"50\" y2=\"80\"/><line x1=\"31\" y1=\"50\" x2=\"12\" y2=\"80\"/><line x1=\"69\" y1=\"50\" x2=\"88\" y2=\"80\"/><line x1=\"69\" y1=\"50\" x2=\"50\" y2=\"80\"/></g><g fill=\"#000\"><circle cx=\"12\" cy=\"20\" r=\"5\"/><circle cx=\"31\" cy=\"20\" r=\"5\"/><circle cx=\"50\" cy=\"20\" r=\"5\"/><circle cx=\"69\" cy=\"20\" r=\"5\"/><circle cx=\"88\" cy=\"20\" r=\"5\"/><circle cx=\"12\" cy=\"50\" r=\"5\"/><circle cx=\"31\" cy=\"50\" r=\"5\"/><circle cx=\"50\" cy=\"50\" r=\"5\"/><circle cx=\"69\" cy=\"50\" r=\"5\"/><circle cx=\"88\" cy=\"50\" r=\"5\"/><circle cx=\"12\" cy=\"80\" r=\"5\"/><circle cx=\"31\" cy=\"80\" r=\"5\"/><circle cx=\"50\" cy=\"80\" r=\"5\"/><circle cx=\"69\" cy=\"80\" r=\"5\"/><circle cx=\"88\" cy=\"80\" r=\"5\"/></g></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"6\" width=\"19\" height=\"12\"/><path d=\"M2.5 12H21.5M8.83 6V18M15.17 6V18M2.5 6L8.83 12L2.5 18M8.83 12L15.17 6M8.83 12L15.17 18M15.17 6L21.5 12L15.17 18\"/></svg></span>"
   },
   {
     slug: "baghchal",
@@ -407,7 +407,7 @@ const GAMES_CATALOG = [
     descText: "Nepal's traditional hunt game: 4 tigers vs. 20 goats on an alquerque-style 5x5 board of lines. Local 2-player or vs. the built-in engine, playing either side.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><line x1=\"10\" y1=\"10\" x2=\"90\" y2=\"10\"/><line x1=\"10\" y1=\"50\" x2=\"90\" y2=\"50\"/><line x1=\"10\" y1=\"90\" x2=\"90\" y2=\"90\"/><line x1=\"10\" y1=\"10\" x2=\"10\" y2=\"90\"/><line x1=\"50\" y1=\"10\" x2=\"50\" y2=\"90\"/><line x1=\"90\" y1=\"10\" x2=\"90\" y2=\"90\"/><line x1=\"10\" y1=\"10\" x2=\"90\" y2=\"90\"/><line x1=\"90\" y1=\"10\" x2=\"10\" y2=\"90\"/></g><polygon points=\"10,17 3,3 17,3\" fill=\"#141413\" stroke=\"#000\" stroke-width=\"2\"/><polygon points=\"90,17 83,3 97,3\" fill=\"#141413\" stroke=\"#000\" stroke-width=\"2\"/><polygon points=\"10,97 3,83 17,83\" fill=\"#141413\" stroke=\"#000\" stroke-width=\"2\"/><polygon points=\"90,97 83,83 97,83\" fill=\"#141413\" stroke=\"#000\" stroke-width=\"2\"/><circle cx=\"50\" cy=\"50\" r=\"7\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"30\" cy=\"30\" r=\"6\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"70\" r=\"6\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\"/><path d=\"M4 4L20 20M20 4L4 20M12 4V20M4 12H20\"/><path d=\"M4 8L1 2H7Z\" fill=\"#141413\"/><path d=\"M20 22L17 16H23Z\" fill=\"#141413\"/><circle cx=\"12\" cy=\"12\" r=\"2.6\" fill=\"#fff\"/></svg></span>"
   },
   {
     slug: "tablut",
@@ -418,7 +418,7 @@ const GAMES_CATALOG = [
     descText: "The largest and best-documented Tafl game: a 9x9 board where the king must reach a corner and the attackers must trap him first.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"tablut-icon-piece tablut-icon-piece-defender\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><rect x=\"8.5\" y=\"8.5\" width=\"7\" height=\"7\" fill=\"#141413\"/><path d=\"M2.5 6.5H6.5V2.5M21.5 17.5H17.5V21.5\"/></svg></span>"
   },
   {
     slug: "marblepush",
@@ -429,7 +429,7 @@ const GAMES_CATALOG = [
     descText: "Push 6 of your opponent's marbles off the hexagonal board to win. Local 2-player or vs. the built-in engine, with full rules for pushing and for sideways line moves.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><polygon points=\"50,6 87,28 87,72 50,94 13,72 13,28\" fill=\"none\" stroke=\"#000\" stroke-width=\"3\"/><circle cx=\"35\" cy=\"30\" r=\"9\" fill=\"#000\"/><circle cx=\"55\" cy=\"22\" r=\"9\" fill=\"#000\"/><circle cx=\"70\" cy=\"35\" r=\"9\" fill=\"#000\"/><circle cx=\"30\" cy=\"70\" r=\"9\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"50\" cy=\"78\" r=\"9\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"68\" cy=\"66\" r=\"9\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 3H17L22 12L17 21H7L2 12Z\"/><circle cx=\"9\" cy=\"12\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"15\" cy=\"12\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"7.5\" r=\"2.2\"/><circle cx=\"12\" cy=\"16.5\" r=\"2.2\"/></svg></span>"
   },
   {
     slug: "pyramidsolitaire",
@@ -440,7 +440,7 @@ const GAMES_CATALOG = [
     descText: "Clear the 28-card pyramid by removing exposed pairs that add up to 13, or a lone King. A stock/waste pile with two redeals to work through.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"pyramidsolitaire-icon\" aria-hidden=\"true\">13</span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"9\" y=\"2.5\" width=\"6\" height=\"6\" rx=\"1\"/><rect x=\"5.5\" y=\"9\" width=\"6\" height=\"6\" rx=\"1\"/><rect x=\"12.5\" y=\"9\" width=\"6\" height=\"6\" rx=\"1\"/><rect x=\"2\" y=\"15.5\" width=\"6\" height=\"6\" rx=\"1\" fill=\"#141413\"/><rect x=\"9\" y=\"15.5\" width=\"6\" height=\"6\" rx=\"1\"/><rect x=\"16\" y=\"15.5\" width=\"6\" height=\"6\" rx=\"1\"/></svg></span>"
   },
   {
     slug: "surakarta",
@@ -451,7 +451,7 @@ const GAMES_CATALOG = [
     descText: "The Indonesian looping-track capture game: quiet steps never capture, only a slide that rides one of the board's 4 corner loop tracks does. Local 2-player or vs. the built-in engine.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><line x1=\"25\" y1=\"18\" x2=\"75\" y2=\"18\"/><line x1=\"25\" y1=\"38\" x2=\"75\" y2=\"38\"/><line x1=\"25\" y1=\"62\" x2=\"75\" y2=\"62\"/><line x1=\"25\" y1=\"82\" x2=\"75\" y2=\"82\"/><line x1=\"18\" y1=\"25\" x2=\"18\" y2=\"75\"/><line x1=\"38\" y1=\"25\" x2=\"38\" y2=\"75\"/><line x1=\"62\" y1=\"25\" x2=\"62\" y2=\"75\"/><line x1=\"82\" y1=\"25\" x2=\"82\" y2=\"75\"/></g><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><path d=\"M18,25 Q6,6 38,6\"/><path d=\"M82,25 Q94,6 62,6\"/><path d=\"M18,75 Q6,94 38,94\"/><path d=\"M82,75 Q94,94 62,94\"/></g><g fill=\"#000\"><circle cx=\"38\" cy=\"6\" r=\"5\"/><circle cx=\"62\" cy=\"6\" r=\"5\"/><circle cx=\"38\" cy=\"94\" r=\"5\"/><circle cx=\"62\" cy=\"94\" r=\"5\"/></g><g fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"><circle cx=\"18\" cy=\"25\" r=\"5\"/><circle cx=\"82\" cy=\"25\" r=\"5\"/><circle cx=\"18\" cy=\"75\" r=\"5\"/><circle cx=\"82\" cy=\"75\" r=\"5\"/></g></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"7\" y=\"7\" width=\"10\" height=\"10\"/><path d=\"M12 7V17M7 12H17\"/><path d=\"M12 7A5 5 0 1 0 7 12M12 17A5 5 0 1 0 17 12\"/><circle cx=\"12\" cy=\"12\" r=\"2\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "hashi",
@@ -462,7 +462,7 @@ const GAMES_CATALOG = [
     descText: "Connect every numbered island with straight single or double bridges so the whole network joins together and every island's count matches its number. Freshly generated, in three difficulty levels.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"hashi-icon\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"6\" cy=\"6\" r=\"3.5\"/><circle cx=\"18\" cy=\"6\" r=\"3.5\"/><circle cx=\"6\" cy=\"18\" r=\"3.5\" fill=\"#141413\"/><path d=\"M9.5 4.8H14.5M9.5 7.2H14.5M6 9.5V14.5\"/></svg></span>"
   },
   {
     slug: "fleetbattle",
@@ -473,7 +473,7 @@ const GAMES_CATALOG = [
     descText: "Sink the computer's hidden fleet before it sinks yours - classic grid-guessing naval combat, one shot per turn.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g fill=\"#000\"><polygon points=\"8,68 20,55 80,55 92,68 78,84 22,84\"/><rect x=\"36\" y=\"36\" width=\"9\" height=\"22\"/><rect x=\"57\" y=\"30\" width=\"9\" height=\"28\"/></g><g stroke=\"#000\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\"><path d=\"M4,92 q9,-7 18,0 t18,0 t18,0 t18,0 t18,0\"/></g></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2.5 14H21.5L18.5 20H5.5Z\" fill=\"#141413\"/><path d=\"M8 14V9H14V14M11 9V3.5M11 3.5L16 6.5L11 6.5\"/></svg></span>"
   },
   {
     slug: "skyscrapers",
@@ -484,7 +484,7 @@ const GAMES_CATALOG = [
     descText: "Fill an NxN grid with building heights 1-N so every row and column has each height once, matching how many are visible from the numbered clues around the edge. Freshly generated, in three difficulty levels.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"skyscrapers-icon\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2.5 21.5H21.5\"/><rect x=\"3.5\" y=\"13\" width=\"4.5\" height=\"8.5\"/><rect x=\"9.75\" y=\"4\" width=\"4.5\" height=\"17.5\" fill=\"#141413\"/><rect x=\"16\" y=\"9\" width=\"4.5\" height=\"12.5\"/></svg></span>"
   },
   {
     slug: "konane",
@@ -495,7 +495,7 @@ const GAMES_CATALOG = [
     descText: "Hawaiian checkers: a full board of alternating stones and orthogonal jump chains, opening with a unique two-stone removal ritual. Local 2-player or vs. the built-in engine.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"4\" y=\"4\" width=\"92\" height=\"92\" fill=\"none\" stroke=\"#000\" stroke-width=\"4\"/><g stroke=\"#000\" stroke-width=\"2\"><line x1=\"27\" y1=\"4\" x2=\"27\" y2=\"96\"/><line x1=\"50\" y1=\"4\" x2=\"50\" y2=\"96\"/><line x1=\"73\" y1=\"4\" x2=\"73\" y2=\"96\"/><line x1=\"4\" y1=\"27\" x2=\"96\" y2=\"27\"/><line x1=\"4\" y1=\"50\" x2=\"96\" y2=\"50\"/><line x1=\"4\" y1=\"73\" x2=\"96\" y2=\"73\"/></g><circle cx=\"15.5\" cy=\"15.5\" r=\"8\" fill=\"#000\"/><circle cx=\"38.5\" cy=\"15.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"61.5\" cy=\"15.5\" r=\"8\" fill=\"#000\"/><circle cx=\"84.5\" cy=\"15.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"15.5\" cy=\"38.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"61.5\" cy=\"38.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"84.5\" cy=\"38.5\" r=\"8\" fill=\"#000\"/><circle cx=\"38.5\" cy=\"61.5\" r=\"8\" fill=\"#000\"/><circle cx=\"15.5\" cy=\"61.5\" r=\"8\" fill=\"#000\"/><circle cx=\"84.5\" cy=\"61.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"38.5\" cy=\"84.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/><circle cx=\"61.5\" cy=\"84.5\" r=\"8\" fill=\"#000\"/><circle cx=\"84.5\" cy=\"84.5\" r=\"8\" fill=\"#fff\" stroke=\"#000\" stroke-width=\"2.5\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"5.5\" cy=\"5.5\" r=\"3\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"5.5\" r=\"2.6\"/><circle cx=\"18.5\" cy=\"5.5\" r=\"3\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"5.5\" cy=\"12\" r=\"2.6\"/><circle cx=\"12\" cy=\"12\" r=\"3\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"18.5\" cy=\"12\" r=\"2.6\"/><circle cx=\"5.5\" cy=\"18.5\" r=\"3\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"18.5\" r=\"2.6\"/><circle cx=\"18.5\" cy=\"18.5\" r=\"3\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "slitherlink",
@@ -506,7 +506,7 @@ const GAMES_CATALOG = [
     descText: "Draw a single loop between the dots so every numbered cell has exactly that many edges on its sides. Freshly generated, in three difficulty levels.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"slitherlink-icon\" aria-hidden=\"true\"></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 4H12V12H20V20H4Z\"/><circle cx=\"20\" cy=\"4\" r=\"1.4\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"20\" r=\"1.4\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"4\" r=\"1.4\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"4\" cy=\"12\" r=\"1.4\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"20\" cy=\"12\" r=\"1.4\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "ludo",
@@ -517,7 +517,7 @@ const GAMES_CATALOG = [
     descText: "The classic cross-shaped race game descended from ancient Pachisi. Play one color yourself against up to three built-in computer opponents (2-4 players total), or pass the device around in local hotseat.",
     popular: false,
     added: "2026-07-01",
-    icon: "<span class=\"ludo-icon-shape\" aria-hidden=\"true\"><svg class=\"ludo-shape\" viewBox=\"0 0 100 100\" aria-hidden=\"true\" focusable=\"false\"><circle cx=\"50\" cy=\"50\" r=\"44\" fill=\"currentColor\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><circle cx=\"7.25\" cy=\"7.25\" r=\"2.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"16.75\" cy=\"7.25\" r=\"2.2\"/><path d=\"M7.25 14.5L9.8 19.2H4.7Z\" fill=\"#141413\" stroke=\"none\"/><rect x=\"14.6\" y=\"14.6\" width=\"4.3\" height=\"4.3\"/></svg></span>"
   },
   {
     slug: "categories",
@@ -532,7 +532,7 @@ const GAMES_CATALOG = [
     // left out of the lists there (its page still works, with pinyin
     // initials).
     hideInLangs: ["zh"],
-    icon: "<span class=\"categories-icon\" aria-hidden=\"true\">A</span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"2.5\" width=\"14\" height=\"19\" rx=\"1.5\"/><path d=\"M6.5 7.5H13.5M6.5 11.5H13.5M6.5 15.5H10.5\"/><path d=\"M20.5 9L14 19.5L13 22L15.5 20.5L22 10Z\" fill=\"#141413\"/></svg></span>"
   },
   {
     slug: "domino",
@@ -543,7 +543,7 @@ const GAMES_CATALOG = [
     descText: "The classic draw game with a double-six set: match the pips on either open end, draw when you're stuck, and be the first to play your last tile. Against the computer or with 2-4 players on one device.",
     popular: false,
     added: "2026-09-26",
-    icon: "<span class=\"domino-icon\" aria-hidden=\"true\"><svg class=\"domino-icon\" viewBox=\"0 0 100 50\" aria-hidden=\"true\" focusable=\"false\"><rect x=\"1.5\" y=\"1.5\" width=\"97\" height=\"47\" rx=\"6\" fill=\"#fff\" stroke=\"currentColor\" stroke-width=\"3\"/><line x1=\"50\" y1=\"6\" x2=\"50\" y2=\"44\" stroke=\"currentColor\" stroke-width=\"2.5\"/><circle cx=\"13\" cy=\"13\" r=\"5\" fill=\"currentColor\"/><circle cx=\"37\" cy=\"13\" r=\"5\" fill=\"currentColor\"/><circle cx=\"25\" cy=\"25\" r=\"5\" fill=\"currentColor\"/><circle cx=\"13\" cy=\"37\" r=\"5\" fill=\"currentColor\"/><circle cx=\"37\" cy=\"37\" r=\"5\" fill=\"currentColor\"/><circle cx=\"63\" cy=\"13\" r=\"5\" fill=\"currentColor\"/><circle cx=\"75\" cy=\"25\" r=\"5\" fill=\"currentColor\"/><circle cx=\"87\" cy=\"37\" r=\"5\" fill=\"currentColor\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"6.5\" y=\"2.5\" width=\"11\" height=\"19\" rx=\"2\"/><path d=\"M6.5 12H17.5\"/><circle cx=\"12\" cy=\"7.25\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"9.5\" cy=\"15\" r=\"1.4\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"14.5\" cy=\"18.5\" r=\"1.4\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "maumau",
@@ -554,7 +554,7 @@ const GAMES_CATALOG = [
     descText: "The traditional card game with a 32-card pack: follow suit or rank, use Sevens, Eights, Jacks and Aces to your advantage, and be the first to get rid of your cards. Against the computer or with 2-4 players on one device.",
     popular: false,
     added: "2026-09-26",
-    icon: "<span class=\"maumau-icon\" aria-hidden=\"true\">\u2665</span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"4.5\" width=\"11\" height=\"15\" rx=\"1.5\" transform=\"rotate(-10 8 12)\"/><rect x=\"10\" y=\"3.5\" width=\"11\" height=\"16\" rx=\"1.5\" fill=\"#fff\"/><path d=\"M15.5 7.5L18.5 11.5L15.5 15.5L12.5 11.5Z\" fill=\"#141413\"/></svg></span>"
   },
   {
     slug: "calcudoku",
@@ -565,7 +565,7 @@ const GAMES_CATALOG = [
     descText: "Fill the grid so every row and column holds each digit once and every cage hits its target with its operation. Sizes 4x4 to 7x7, three difficulty levels.",
     popular: false,
     added: "2026-09-27",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"6\"/><path d=\"M36 8V92M64 8V92M8 36H92M8 64H92\" stroke=\"#141413\" stroke-width=\"2\" fill=\"none\"/><path d=\"M36 8V64H92\" stroke=\"#141413\" stroke-width=\"6\" fill=\"none\"/><path d=\"M15 22H29M22 15V29\" stroke=\"#141413\" stroke-width=\"4\"/><path d=\"M71 71L85 85M85 71L71 85\" stroke=\"#141413\" stroke-width=\"4\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><path d=\"M10.25 2.5H13.75V13.75H2.5V10.25H10.25Z\" fill=\"#141413\" stroke=\"none\"/><path d=\"M15.5 6.5H19.5M17.5 4.5V8.5M15.5 17.5H19.5\"/></svg></span>"
   },
   {
     slug: "numberblocks",
@@ -576,7 +576,7 @@ const GAMES_CATALOG = [
     descText: "Fill every block of n cells with the digits 1 to n - but equal digits may never touch, not even diagonally. Three difficulty levels, unique solution.",
     popular: false,
     added: "2026-09-27",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"6\"/><path d=\"M36 8V92M64 8V92M8 36H92M8 64H92\" stroke=\"#141413\" stroke-width=\"2\" fill=\"none\"/><path d=\"M8 64H36V36H64V92M64 36V8\" stroke=\"#141413\" stroke-width=\"6\" fill=\"none\"/><text x=\"22\" y=\"31\" text-anchor=\"middle\" font-size=\"22\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">1</text><text x=\"50\" y=\"87\" text-anchor=\"middle\" font-size=\"22\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">2</text><text x=\"78\" y=\"59\" text-anchor=\"middle\" font-size=\"22\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">3</text></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><path d=\"M7.08 2.5H10.58V13.42H21.5V16.92H2.5V13.42H7.08Z\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "killersudoku",
@@ -587,7 +587,7 @@ const GAMES_CATALOG = [
     descText: "Sudoku with almost no givens: dashed cages show sums, and no digit repeats inside a cage. Three difficulty levels, unique solution.",
     popular: false,
     added: "2026-09-27",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"6\"/><path d=\"M36 8V92M64 8V92M8 36H92M8 64H92\" stroke=\"#141413\" stroke-width=\"2\" fill=\"none\"/><path d=\"M13 13H59V31H41V59H13Z\" stroke=\"#141413\" stroke-width=\"3\" stroke-dasharray=\"6 4\" fill=\"none\"/><text x=\"16\" y=\"27\" font-size=\"13\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">17</text></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><path d=\"M12 2.5V21.5M2.5 12H21.5\" stroke-width=\"2\"/><rect x=\"5\" y=\"5\" width=\"14\" height=\"4.5\" stroke-dasharray=\"2 1.6\" stroke-width=\"2\"/></svg></span>"
   },
   {
     slug: "schwimmen",
@@ -598,7 +598,7 @@ const GAMES_CATALOG = [
     descText: "The card game also called Schwimmen or Schnauz: collect 31 in one suit with three cards, swap with the middle and knock at the right moment. 2-6 players or vs. the computer.",
     popular: false,
     added: "2026-09-27",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"8\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"32\" y=\"16\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><text x=\"60\" y=\"66\" text-anchor=\"middle\" font-size=\"30\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">31</text></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"2.5\" width=\"9\" height=\"13\" rx=\"1.5\"/><rect x=\"12\" y=\"2.5\" width=\"9\" height=\"13\" rx=\"1.5\"/><path d=\"M2.5 19C5 17 7 21 9.5 19S14 21 16.5 19S19.5 17.5 21.5 19\"/></svg></span>"
   },
   {
     slug: "durak",
@@ -609,7 +609,7 @@ const GAMES_CATALOG = [
     descText: "The Russian card game with 36 cards: attack, beat with higher cards or trumps, throw in more of the same ranks - and don't be the last one holding cards. 2-4 players or vs. the computer.",
     popular: false,
     added: "2026-09-27",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"8\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"32\" y=\"16\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M60 36 C60 36 44 48 44 58 C44 64 49 68 54 68 C57 68 59 66 60 64 L58 76 L62 76 L60 64 C61 66 63 68 66 68 C71 68 76 64 76 58 C76 48 60 36 60 36 Z\" fill=\"#141413\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"3.5\" width=\"10\" height=\"14\" rx=\"1.5\"/><rect x=\"11\" y=\"6.5\" width=\"10\" height=\"14\" rx=\"1.5\" transform=\"rotate(20 16 13.5)\" fill=\"#fff\"/><path d=\"M16.3 10L18.6 13.5L16.3 17L14 13.5Z\" fill=\"#141413\" transform=\"rotate(20 16 13.5)\"/></svg></span>"
   },
   {
     slug: "concan",
@@ -620,7 +620,7 @@ const GAMES_CATALOG = [
     descText: "The old Mexican card game at the root of the rummy family: 40 cards, sets and runs, and a discard you must take if you can use it. First to lay out eleven cards wins. 2 players or vs. the computer.",
     popular: false,
     added: "2026-09-27",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"8\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"32\" y=\"16\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><text x=\"60\" y=\"50\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">7</text><text x=\"60\" y=\"68\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">J</text><text x=\"60\" y=\"86\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">Q</text></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"6\" width=\"6.5\" height=\"10\" rx=\"1\"/><rect x=\"8.75\" y=\"6\" width=\"6.5\" height=\"10\" rx=\"1\"/><rect x=\"15.5\" y=\"6\" width=\"6.5\" height=\"10\" rx=\"1\" fill=\"#141413\"/><path d=\"M2 20H22\"/></svg></span>"
   },
   {
     slug: "doppelkopf",
@@ -631,7 +631,7 @@ const GAMES_CATALOG = [
     descText: "The German trick-taking game for four with 48 cards: the two Queens of Clubs play together, and nobody knows who they are. Normal game with marriage, you vs. three computer players or together on one device.",
     popular: false,
     added: "2026-09-27",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"8\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"32\" y=\"16\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><circle cx=\"65\" cy=\"40\" r=\"8\" fill=\"#141413\"/><circle cx=\"56\" cy=\"54\" r=\"8\" fill=\"#141413\"/><circle cx=\"74\" cy=\"54\" r=\"8\" fill=\"#141413\"/><path d=\"M63 52 L60 72 L70 72 L67 52 Z\" fill=\"#141413\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"12\" height=\"16\" rx=\"1.5\"/><rect x=\"9.5\" y=\"5.5\" width=\"12\" height=\"16\" rx=\"1.5\" fill=\"#fff\"/><circle cx=\"15.5\" cy=\"10.5\" r=\"1.8\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"13.6\" cy=\"13.5\" r=\"1.8\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"17.4\" cy=\"13.5\" r=\"1.8\" fill=\"#141413\" stroke=\"none\"/><path d=\"M15.5 13V17.5\"/></svg></span>"
   },
   {
     slug: "trix",
@@ -642,7 +642,7 @@ const GAMES_CATALOG = [
     descText: "The card game of the Levant for four: four kingdoms of five contracts - avoid the King of Hearts, the Queens, the Diamonds and tricks, then race to empty your hand in Trix. You vs. three computer players or together on one device.",
     popular: false,
     added: "2026-09-27",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"14\" y=\"8\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"32\" y=\"16\" width=\"56\" height=\"78\" rx=\"7\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><text x=\"65\" y=\"62\" text-anchor=\"middle\" font-size=\"26\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">K</text><path d=\"M65 68 C65 68 55 76 55 81 C55 84 58 86 60 86 C62 86 64 85 65 83 C66 85 68 86 70 86 C72 86 75 84 75 81 C75 76 65 68 65 68 Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"3\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"12\" height=\"16\" rx=\"1.5\"/><rect x=\"9.5\" y=\"5.5\" width=\"12\" height=\"16\" rx=\"1.5\" fill=\"#fff\"/><path d=\"M15.5 17C15.5 17 12.5 14.5 12.5 12.6C12.5 11.4 13.4 10.6 14.3 10.6C14.9 10.6 15.3 10.9 15.5 11.4C15.7 10.9 16.1 10.6 16.7 10.6C17.6 10.6 18.5 11.4 18.5 12.6C18.5 14.5 15.5 17 15.5 17Z\" fill=\"#141413\"/></svg></span>"
   },
   {
     slug: "cratepusher",
@@ -653,7 +653,7 @@ const GAMES_CATALOG = [
     descText: "Push every crate onto a target - but crates can only be pushed, never pulled. Freshly generated levels, each one checked to be solvable, in three difficulty levels.",
     popular: false,
     added: "2026-09-28",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"8\" y=\"8\" width=\"84\" height=\"14\" fill=\"#141413\"/><rect x=\"20\" y=\"36\" width=\"36\" height=\"36\" fill=\"#ffffff\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M20 36 L56 72 M56 36 L20 72\" stroke=\"#141413\" stroke-width=\"4\"/><circle cx=\"74\" cy=\"54\" r=\"10\" fill=\"#141413\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"8.5\" width=\"11\" height=\"11\"/><path d=\"M2.5 8.5L13.5 19.5M13.5 8.5L2.5 19.5\"/><circle cx=\"18.5\" cy=\"14\" r=\"3\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "tictactoe",
@@ -664,7 +664,7 @@ const GAMES_CATALOG = [
     descText: "Three in a row on a 3x3 grid - the classic pencil-and-paper game. Local 2-player or vs. the built-in engine, which never loses on Hard.",
     popular: false,
     added: "2026-10-03",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M37 10 V90 M63 10 V90 M10 37 H90 M10 63 H90\" stroke=\"#141413\" stroke-width=\"6\" fill=\"none\"/><path d=\"M42 42 L58 58 M58 42 L42 58\" stroke=\"#141413\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 2.5V21.5M15 2.5V21.5M2.5 9H21.5M2.5 15H21.5\"/><path d=\"M3.8 3.8L7.7 7.7M7.7 3.8L3.8 7.7\"/><circle cx=\"12\" cy=\"12\" r=\"1.9\"/></svg></span>"
   },
   {
     slug: "alquerque",
@@ -675,7 +675,7 @@ const GAMES_CATALOG = [
     descText: "The medieval ancestor of checkers: 12 pieces each on a 5x5 board of lines, jump to capture, and capturing is compulsory. Local 2-player or vs. the built-in engine.",
     popular: false,
     added: "2026-10-06",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"#000\" stroke-width=\"2.5\" fill=\"none\"><rect x=\"12\" y=\"12\" width=\"76\" height=\"76\"/><line x1=\"12\" y1=\"50\" x2=\"88\" y2=\"50\"/><line x1=\"50\" y1=\"12\" x2=\"50\" y2=\"88\"/><line x1=\"12\" y1=\"12\" x2=\"88\" y2=\"88\"/><line x1=\"88\" y1=\"12\" x2=\"12\" y2=\"88\"/><line x1=\"50\" y1=\"12\" x2=\"88\" y2=\"50\"/><line x1=\"88\" y1=\"50\" x2=\"50\" y2=\"88\"/><line x1=\"50\" y1=\"88\" x2=\"12\" y2=\"50\"/><line x1=\"12\" y1=\"50\" x2=\"50\" y2=\"12\"/></g><circle cx=\"12\" cy=\"12\" r=\"8\" fill=\"#111\"/><circle cx=\"50\" cy=\"12\" r=\"8\" fill=\"#111\"/><circle cx=\"88\" cy=\"12\" r=\"8\" fill=\"#111\"/><circle cx=\"12\" cy=\"88\" r=\"7\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"4\"/><circle cx=\"50\" cy=\"88\" r=\"7\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"4\"/><circle cx=\"88\" cy=\"88\" r=\"7\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"4\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\"/><path d=\"M4 4L20 20M20 4L4 20M12 4V20M4 12H20\"/><circle cx=\"4\" cy=\"4\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"20\" cy=\"20\" r=\"2.2\" fill=\"#fff\"/></svg></span>"
   },
   {
     slug: "pairs",
@@ -686,7 +686,7 @@ const GAMES_CATALOG = [
     descText: "Turn over two cards and find the pairs: the classic card-matching game with simple black-and-white shapes. Solo against the move count, two players on one device, or vs. the built-in engine.",
     popular: false,
     added: "2026-10-06",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"14\" width=\"38\" height=\"50\" rx=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"54\" y=\"36\" width=\"38\" height=\"50\" rx=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"5\"/><circle cx=\"27\" cy=\"39\" r=\"10\" fill=\"#141413\"/><circle cx=\"73\" cy=\"61\" r=\"10\" fill=\"#141413\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"4\" width=\"8.5\" height=\"12\" rx=\"1.5\"/><rect x=\"13\" y=\"8\" width=\"8.5\" height=\"12\" rx=\"1.5\"/><circle cx=\"6.75\" cy=\"10\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"17.25\" cy=\"14\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
   {
     slug: "futoshiki",
@@ -697,6 +697,6 @@ const GAMES_CATALOG = [
     descText: "Fill the grid so every row and column holds each number once - and every sign between two cells points to the smaller number. 4x4 to 6x6, freshly generated with a unique solution.",
     popular: false,
     added: "2026-10-06",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"6\" y=\"30\" width=\"36\" height=\"36\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"5\"/><rect x=\"58\" y=\"30\" width=\"36\" height=\"36\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"5\"/><polygon points=\"44,48 56,40 56,56\" fill=\"#141413\"/><text x=\"24\" y=\"57\" text-anchor=\"middle\" font-size=\"24\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">2</text></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"7\" width=\"8\" height=\"8\"/><rect x=\"13.5\" y=\"7\" width=\"8\" height=\"8\"/><path d=\"M10.8 11L13.2 9V13Z\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
 ];

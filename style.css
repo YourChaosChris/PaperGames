@@ -1741,11 +1741,17 @@ margin: 2rem 0 1rem;
   margin-bottom: 0.3rem;
 }
 
+/* Every game icon sits in the same square box: 1.5rem is 24 px at the
+   normal text size, and rem (not px) so the icons grow with the A+/A++
+   text size setting (font-size-toggle.js scales the root) - icon, line
+   width and text stay in proportion. The catalog icons are drawn on one
+   24-unit grid with 2-2.25 unit lines, i.e. 2-2.25 px at this size. */
 .game-select-icon-svg {
   display: inline-block;
-  width: 1em;
-  height: 1em;
+  width: 1.5rem;
+  height: 1.5rem;
   vertical-align: middle;
+  flex-shrink: 0;
 }
 
 .game-select-icon-svg svg {
