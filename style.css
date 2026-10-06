@@ -7,11 +7,10 @@
   --text: #111;
   --muted: #333;
   --accent: #111;
-  --danger: #900;
+  --danger: var(--text);
   --square-light: #fdfdfd;
   --square-dark: #d5d5d5;
   --square-selected: #bbb;
-  --square-last: #c5e1ff;
   --radius: 4px;
   --border-width: 2px;
   --shadow: 0 0 0 1px #000;
@@ -2050,11 +2049,11 @@ margin: 2rem 0 1rem;
   border: 1px solid var(--border);
 }
 
-/* The shared lane (middle row) is where captures can happen - a warm
-   tint sets it visually apart from each player's own safe private
-   squares, so the "contested" zone reads at a glance. */
+/* The shared lane (middle row) is where captures can happen. It is set
+   apart from each player's own safe squares by a second, inner frame
+   line - shape, not a tint, which e-ink can't show. */
 .ur-square-shared {
-  background: #efe6d3;
+  box-shadow: inset 0 0 0 4px var(--square-light), inset 0 0 0 5px var(--border);
 }
 
 .ur-square-gap {
@@ -2332,9 +2331,10 @@ margin-top: 0.5rem;
   border-width: 3px;
 }
 
+/* A piece that may be removed after a mill: a dashed ring (the reddish
+   tint it used to have was invisible on e-ink). */
 .morris-point-removable {
-  background: #f3d4d4;
-  border-color: #a33;
+  border: 3px dashed var(--border);
 }
 
 .morris-piece {
@@ -2548,7 +2548,7 @@ margin-top: 0.5rem;
 }
 
 .bg-bar {
-  background: #d9cba8;
+  background: var(--square-dark);
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
 }
@@ -2574,8 +2574,10 @@ margin-top: 0.5rem;
   justify-content: flex-end;
 }
 
+/* Every other point gets a line down each side instead of a beige tint,
+   so neighbouring points stay apart on a grey screen. */
 .bg-point-alt {
-  background: #efe6d3;
+  box-shadow: inset 1px 0 0 var(--border), inset -1px 0 0 var(--border);
 }
 
 .bg-point-movable {
@@ -2741,7 +2743,7 @@ max-width: 760px;
   width: 100%;
   max-width: 640px;
   margin: 0 auto;
-  background: #f3ead9;
+  background: var(--square-light);
   border: 3px solid var(--border);
   box-sizing: border-box;
   padding: 6%;
@@ -2772,16 +2774,18 @@ max-width: 760px;
   transform: translateX(-1px);
 }
 
+/* The river is a band without vertical lines (it covers them), the
+   palaces are told apart by their diagonal cross - neither needs a tint. */
 .xq-river {
   position: absolute;
   left: 0;
   right: 0;
-  background: #dce8ec;
+  background: var(--square-light);
 }
 
 .xq-palace {
   position: absolute;
-  background: #eadfc4;
+  background: transparent;
 }
 
 /* The palace's diagonal cross - same stroke color and thickness as
@@ -2859,7 +2863,7 @@ max-width: 760px;
 }
 
 .xq-piece-filled {
-  background: #f3ead9;
+  background: #fdfdfd;
   border: 2px solid var(--border);
 }
 
@@ -2901,7 +2905,7 @@ max-width: 760px;
   border-radius: 50%;
   vertical-align: middle;
   box-sizing: border-box;
-  background: #f3ead9;
+  background: #fdfdfd;
   border: 2px solid var(--border);
   font-size: 0.7em;
   font-weight: 700;
@@ -5539,8 +5543,12 @@ margin: 0.5rem auto 0;
   background: var(--bg-alt);
 }
 
+/* The score a category would get right now: a frame around the button
+   (the Dots and Boxes "latest line" frame), not a tint - a pale blue was
+   all but white on e-ink. */
 .yatzy-score-preview {
-  background: var(--square-last);
+  outline: 3px solid var(--text);
+  outline-offset: 3px;
 }
 
 .yatzy-subtotal-row td {
@@ -6156,8 +6164,11 @@ margin: 0.5rem auto 0;
   pointer-events: none;
 }
 
+/* Tigers are filled black discs, goats outlined white ones - the
+   filled-vs-outlined convention of the other games, instead of a brown
+   that turned into a middling grey on e-ink. */
 .baghchal-piece-tiger {
-  background: #b5651d;
+  background: #111;
   border: 2px solid #000;
 }
 
@@ -6178,7 +6189,7 @@ margin: 0.5rem auto 0;
 }
 
 .baghchal-icon-disc-tiger {
-  background: #b5651d;
+  background: #111;
   border: 2px solid #000;
 }
 
@@ -7488,12 +7499,12 @@ max-width: 900px;
   border: 2px solid var(--border);
 }
 
-/* Opening-ritual removal targets: a distinct reddish tint (the same
-   "about to be removed" convention morris-app.js uses for its own mill-
-   capture phase, see .morris-point-removable), so the two-stone opening
-   ritual reads as visually different from an ordinary jump destination. */
+/* Opening-ritual removal targets: a heavy inner frame (a reddish tint
+   before, invisible on e-ink), so the two-stone opening ritual reads as
+   different from an ordinary jump destination (grey) and from the last
+   move's thin frame. */
 .konane-square.konane-square-removable {
-  background: #f3d4d4;
+  box-shadow: inset 0 0 0 5px var(--text);
 }
 
 .konane-square.konane-square-movable {
@@ -7709,12 +7720,35 @@ max-width: 900px;
   pointer-events: none;
 }
 
-/* Plain fixed tint colors rather than color-mix() (unsupported on the
-   Chrome 61 WebView this project targets - see CLAUDE conventions). */
-.ludo-cell-home-column-red { background: #f0d9d5; }
-.ludo-cell-home-column-green { background: #d7ecdd; }
-.ludo-cell-home-column-yellow { background: #f3e3c4; }
-.ludo-cell-home-column-blue { background: #d8e2f0; }
+/* Whose home column and home base it is: a small copy of the colour's
+   shape in the corner (the same shapes as the tokens), instead of the
+   pale tints these used to have, which no e-ink screen can tell apart. */
+.ludo-cell-home-column::before,
+.ludo-home-base::before {
+  content: "";
+  position: absolute;
+  top: 6%;
+  left: 6%;
+  width: 24%;
+  height: 24%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+}
+
+.ludo-home-base::before {
+  width: 12%;
+  height: 12%;
+}
+
+.ludo-cell-home-column-red::before,
+.ludo-home-base-red::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='44' fill='%23111'/%3E%3C/svg%3E"); }
+.ludo-cell-home-column-green::before,
+.ludo-home-base-green::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='37' fill='%23fff' stroke='%23111' stroke-width='16'/%3E%3C/svg%3E"); }
+.ludo-cell-home-column-yellow::before,
+.ludo-home-base-yellow::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,4 97,92 3,92' fill='%23111'/%3E%3C/svg%3E"); }
+.ludo-cell-home-column-blue::before,
+.ludo-home-base-blue::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='11' y='11' width='78' height='78' fill='%23fff' stroke='%23111' stroke-width='16'/%3E%3C/svg%3E"); }
 
 /* A token that may move: a solid black wedge in the cell's bottom-right
    corner. A light grey fill was invisible on e-ink (213 vs 253 grey), and
@@ -7802,8 +7836,8 @@ max-width: 900px;
 /* Four colors are indistinguishable on a grayscale E-Ink panel, so each
    color has its own shape wherever it appears - token, home slot, finish
    count, hub wedge, color picker: red a filled circle, green an open
-   circle, yellow a filled triangle, blue an open square. The tinted
-   backgrounds stay as a help on color screens only. */
+   circle, yellow a filled triangle, blue an open square. Home columns
+   and bases carry the same shape in a corner. */
 
 .ludo-home-base {
   position: relative;
@@ -7816,10 +7850,6 @@ max-width: 900px;
   border: 1px solid var(--border);
 }
 
-.ludo-home-base-red { background: #f5e5e2; }
-.ludo-home-base-green { background: #e2f0e6; }
-.ludo-home-base-yellow { background: #f7ecd4; }
-.ludo-home-base-blue { background: #e3e9f3; }
 
 /* An empty slot is a faint dashed circle; an occupied one shows the
    color's shape at full strength, so the tokens still waiting can be
