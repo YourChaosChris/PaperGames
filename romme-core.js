@@ -60,6 +60,13 @@
 //     both belong to the owner of the old run. Not where a joker stands
 //     for that card; sets are never split. Like adding a card, a split is
 //     allowed several times per turn.
+//   - jokerLayoffRule, a house rule (default off; asked for by a player on
+//     06.10.2026): a joker won by a swap must still go on the table in the
+//     same turn, but it may also be added to any meld on the table, own or
+//     another player's, the one it came from included. The swap is then
+//     allowed when the joker fits into a new meld or onto at least one
+//     meld on the table. Until it lies there, nothing else may be added
+//     and no card discarded; it can't be used to split a run.
 //
 // Card: { id, rank 1..13, suit "C"|"S"|"H"|"D" } or { id, joker: true }.
 // Meld on the table: { owner, type: "set"|"run", entries: [{ card, rank,
@@ -219,6 +226,19 @@ const RommeCore = (function () {
     return false;
   }
 
+  // House rule "add the swapped joker": could `joker` be added to some
+  // meld on the table once `card` has taken its place in melds[mi]?
+  function jokerFitsTable(melds, mi, slot, card, joker) {
+    return melds.some((m, i) => {
+      if (i !== mi) return !!extendMeld(m, joker);
+      const after = clone(m);
+      const e = after.entries[slot];
+      after.entries[slot] = { card, rank: e.rank, suit: card.suit };
+      if (after.type === "set") after.entries = after.entries.filter((x) => !x.card.joker).concat(after.entries.filter((x) => x.card.joker));
+      return !!extendMeld(after, joker);
+    });
+  }
+
   function createInitialState(opts) {
     const o = opts || {};
     const n = Math.max(2, Math.min(4, o.players || 2));
@@ -229,6 +249,7 @@ const RommeCore = (function () {
       takeRule: !!o.takeRule,
       discardRule: !!o.discardRule,
       splitRule: !!o.splitRule,
+      jokerLayoffRule: !!o.jokerLayoffRule,
       scores: new Array(n).fill(0),
       round: 0,
       dealer: o.dealer !== undefined ? o.dealer : 0
@@ -251,6 +272,7 @@ const RommeCore = (function () {
       takeRule: !!base.takeRule,
       discardRule: !!base.discardRule,
       splitRule: !!base.splitRule,
+      jokerLayoffRule: !!base.jokerLayoffRule,
       scores: base.scores.slice(),
       round: base.round + 1,
       dealer: base.dealer,
@@ -276,7 +298,7 @@ const RommeCore = (function () {
   }
 
   function nextRound(s, rng) {
-    return startRound({ n: s.n, threshold: s.threshold, rounds: s.rounds || 1, takeRule: !!s.takeRule, discardRule: !!s.discardRule, splitRule: !!s.splitRule, scores: s.scores,
+    return startRound({ n: s.n, threshold: s.threshold, rounds: s.rounds || 1, takeRule: !!s.takeRule, discardRule: !!s.discardRule, splitRule: !!s.splitRule, jokerLayoffRule: !!s.jokerLayoffRule, scores: s.scores,
       round: s.round, dealer: (s.dealer + 1) % s.n }, rng);
   }
 
@@ -523,7 +545,9 @@ const RommeCore = (function () {
 
     if (move.type === "extend") {
       if (!pl.opened) return { ok: false, state, reason: "open-first" };
-      if (s.pendingJoker !== null) return { ok: false, state, reason: "joker-first" };
+      // House rule: the swapped joker itself may be added to a meld.
+      const layoff = s.pendingJoker !== null && s.jokerLayoffRule && move.id === s.pendingJoker;
+      if (s.pendingJoker !== null && !layoff) return { ok: false, state, reason: "joker-first" };
       if ((s.takenIds || []).includes(move.id)) return { ok: false, state, reason: "taken-new-meld" };
       const meld = s.melds[move.meld];
       const i = findInHand(pl.hand, move.id);
@@ -532,6 +556,7 @@ const RommeCore = (function () {
       if (!grown) return { ok: false, state, reason: "doesnt-fit" };
       const card = pl.hand.splice(i, 1)[0];
       s.melds[move.meld] = grown;
+      if (layoff) s.pendingJoker = null;
       s.lastEvent = { type: "extend", player: p, card, owner: meld.owner };
       if (!pl.hand.length) return { ok: true, state: endRound(s, p) };
       return { ok: true, state: s };
@@ -574,7 +599,9 @@ const RommeCore = (function () {
       if (slot === -1) return { ok: false, state, reason: "no-joker-for-card" };
       const joker = meld.entries[slot].card;
       const handAfter = pl.hand.filter((c) => c.id !== card.id).concat([joker]);
-      if (!jokerUsable(handAfter, joker)) return { ok: false, state, reason: "joker-unusable" };
+      if (!jokerUsable(handAfter, joker) && !(s.jokerLayoffRule && jokerFitsTable(s.melds, move.meld, slot, card, joker))) {
+        return { ok: false, state, reason: "joker-unusable" };
+      }
       pl.hand.splice(i, 1);
       const e = meld.entries[slot];
       meld.entries[slot] = { card, rank: e.rank, suit: card.suit };
@@ -623,7 +650,7 @@ const RommeCore = (function () {
 
   return {
     SUITS, JOKERS, THRESHOLDS, DEFAULT_THRESHOLD, ROUND_CHOICES, MAX_RESHUFFLES, makeDeck, handValue, entryValue, meldValue, buildMeld,
-    extendMeld, jokerSlotFor, jokerUsable, createInitialState, nextRound, matchResult, canTakeFrom, takeOptions, splitIndex, discardCardOpen, topDiscard, pendingValue,
+    extendMeld, jokerSlotFor, jokerUsable, jokerFitsTable, createInitialState, nextRound, matchResult, canTakeFrom, takeOptions, splitIndex, discardCardOpen, topDiscard, pendingValue,
     applyMove, cardCount, clone
   };
 })();

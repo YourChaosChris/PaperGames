@@ -14,6 +14,9 @@
 // takes a table card when it forms a new meld with two of its own cards.
 // With the house rule "split runs" switched on, every level splits a run
 // with a card it can neither lay out in a meld nor add anywhere.
+// With the house rule "add the swapped joker" switched on, a swapped joker
+// that fits no new meld is added to a meld on the table instead, and a
+// swap is made when that is possible.
 // chooseMove returns one step at a time; the page calls it until the
 // computer has discarded or the round is over.
 
@@ -189,6 +192,9 @@ const RommeAi = (function () {
           if (C.buildMeld([joker, others[a], others[b]])) return { type: "meld", ids: [joker.id, others[a].id, others[b].id] };
         }
       }
+      if (s.jokerLayoffRule) {
+        for (let i = 0; i < s.melds.length; i++) if (C.extendMeld(s.melds[i], joker)) return { type: "extend", meld: i, id: joker.id };
+      }
     }
 
     // Variant: the discard taken this turn has to go on the table; if it
@@ -252,7 +258,9 @@ const RommeAi = (function () {
           for (const card of hand) {
             if (C.jokerSlotFor(s.melds[i], card) !== -1) {
               const joker = s.melds[i].entries[C.jokerSlotFor(s.melds[i], card)].card;
-              if (C.jokerUsable(hand.filter((c) => c.id !== card.id).concat([joker]), joker)) return { type: "swapJoker", meld: i, id: card.id };
+              const slot = C.jokerSlotFor(s.melds[i], card);
+              if (C.jokerUsable(hand.filter((c) => c.id !== card.id).concat([joker]), joker) ||
+                (s.jokerLayoffRule && C.jokerFitsTable(s.melds, i, slot, card, joker))) return { type: "swapJoker", meld: i, id: card.id };
             }
           }
         }

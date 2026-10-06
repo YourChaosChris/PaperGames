@@ -118,8 +118,10 @@ function initRommeApp() {
     const discardRule = !!(discEl && discEl.checked);
     const splitEl = document.getElementById("romme-split-rule");
     const splitRule = !!(splitEl && splitEl.checked);
+    const layoffEl = document.getElementById("romme-joker-layoff-rule");
+    const jokerLayoffRule = !!(layoffEl && layoffEl.checked);
     const players = pendingMode === "vs-ai" ? opponents + 1 : seats;
-    startGameRomme(pendingMode, level, players, threshold, rounds, takeRule, discardRule, splitRule);
+    startGameRomme(pendingMode, level, players, threshold, rounds, takeRule, discardRule, splitRule, jokerLayoffRule);
     const status = document.getElementById("offline-romme-status");
     if (status) {
       const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
@@ -179,11 +181,11 @@ function showBoardRomme() {
   if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
 }
 
-function startGameRomme(mode, level, players, threshold, rounds, takeRule, discardRule, splitRule) {
+function startGameRomme(mode, level, players, threshold, rounds, takeRule, discardRule, splitRule, jokerLayoffRule) {
   AppStateRomme.mode = mode;
   AppStateRomme.aiLevel = level;
   const dealer = typeof RandomStart !== "undefined" ? RandomStart.choose(0, Array.from({ length: players }, (_, i) => i)) : 0;
-  AppStateRomme.state = RommeCore.createInitialState({ players, threshold, dealer, rounds: rounds || 1, takeRule: !!takeRule, discardRule: !!discardRule, splitRule: !!splitRule });
+  AppStateRomme.state = RommeCore.createInitialState({ players, threshold, dealer, rounds: rounds || 1, takeRule: !!takeRule, discardRule: !!discardRule, splitRule: !!splitRule, jokerLayoffRule: !!jokerLayoffRule });
   AppStateRomme.started = true;
   AppStateRomme.busy = false;
   AppStateRomme.recorded = false;
@@ -224,7 +226,7 @@ function promptTextRomme() {
   const who = playerNameRomme(s.turn);
   const you = isYouRomme(s.turn);
   if (s.phase === "draw") return you ? "Your turn: draw a card from the stock or take the top discard." : who + ": draw a card from the stock or take the top discard.";
-  if (s.pendingJoker !== null) return "Lay out the joker you took back in a new meld first.";
+  if (s.pendingJoker !== null) return s.jokerLayoffRule ? "Lay out the joker you took back in a new meld or add it to a meld first." : "Lay out the joker you took back in a new meld first.";
   if (s.takenIds && s.takenIds.length) return "Lay out the card you took in a new meld first, or take it back.";
   if (RommeCore.discardCardOpen(s) && !s.pending.length) return "Lay out the card from the discard pile in a meld first - or put it back and draw from the stock.";
   if (s.pending.length) return "Staged for the first meld: " + RommeCore.pendingValue(s) + " of " + s.threshold + " points.";
@@ -288,7 +290,7 @@ function describeRomme(before, after, move) {
   if (move.type === "takeDiscard") return who + " takes the " + cardLabelRomme(ev.card) + ".";
   if (move.type === "meld") return after.players[before.turn].opened && before.players[before.turn].opened ? who + " lays out a meld." : "";
   if (move.type === "confirmOpen") return who + " makes the first meld with " + ev.points + " points.";
-  if (move.type === "extend") return who + " adds the " + cardLabelRomme(ev.card) + " to a meld.";
+  if (move.type === "extend") return ev.card && ev.card.joker ? who + " adds the joker to a meld." : who + " adds the " + cardLabelRomme(ev.card) + " to a meld.";
   if (move.type === "swapJoker") return who + " swaps the " + cardLabelRomme(ev.card) + " for a joker.";
   if (move.type === "take") return who + " takes the " + cardLabelRomme(ev.card) + " from a meld.";
   if (move.type === "split") return who + " splits a run with the " + cardLabelRomme(ev.card) + ".";
@@ -304,7 +306,7 @@ function describeYouRomme(before, after, move, ev) {
   if (move.type === "takeDiscard") return "You take the " + card + ".";
   if (move.type === "meld") return after.players[before.turn].opened && before.players[before.turn].opened ? "You lay out a meld." : "";
   if (move.type === "confirmOpen") return "You make the first meld with " + ev.points + " points.";
-  if (move.type === "extend") return "You add the " + card + " to a meld.";
+  if (move.type === "extend") return ev.card && ev.card.joker ? "You add the joker to a meld." : "You add the " + card + " to a meld.";
   if (move.type === "swapJoker") return "You swap the " + card + " for a joker.";
   if (move.type === "take") return "You take the " + card + " from a meld.";
   if (move.type === "split") return "You split a run with the " + card + ".";
@@ -438,6 +440,7 @@ function humanMoveRomme(move) {
   const reason = applyRomme(move);
   if (!reason) return;
   if (reason === "below-threshold") setStatusRomme("Not enough yet: the first meld needs at least " + s.threshold + " points.");
+  else if (reason === "joker-first" && s.jokerLayoffRule) setStatusRomme("Lay out the joker you took back in a new meld or add it to a meld first.");
   else setStatusRomme(ROMME_REASON_TEXT[reason] || "That isn't possible right now.");
 }
 

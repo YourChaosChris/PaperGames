@@ -329,6 +329,10 @@ const SAMPLES = [
   "Player 2 drew a card. Player 2 keeps the card.",
   "Player 1 played Q♦. Mau Mau! Player 1 wins.",
   "There is no card left to draw. Player 3 passes.",
+  // Rommé, house rule "add the swapped joker"
+  "You swap the J♣ for a joker. Lay out the joker you took back in a new meld or add it to a meld first.",
+  "You add the joker to a meld.",
+  "Computer 1 adds the joker to a meld.",
   // Rommé, house rule "split runs"
   "Computer 1 splits a run with the 4♠. Computer 1 discards the 9♥.",
   "You split a run with the 4♠.",
