@@ -23,8 +23,24 @@ const AppStateConcan = {
   gameOver: false,
   revealed: true,
   selected: [],   // indices into the current hand
-  busy: false
+  busy: false,
+  newKeys: []     // the card the human just drew from the stock ("7H"), marked in the hand
 };
+
+function cardKeyConcan(c) { return c.rank + c.suit; }
+
+// A drawn card is named (and marked) only for whoever may see that hand:
+// the human against the computer, or the player at the device, whose
+// hand is open during their own turn.
+function showDrawnConcan(player) {
+  return isYouConcan(player) || AppStateConcan.mode === "hotseat";
+}
+
+function drawnCardsConcan(before, after, move) {
+  if (move.type !== "draw") return [];
+  const had = new Set(before.hands[before.turn].map(cardKeyConcan));
+  return after.hands[before.turn].filter((c) => !had.has(cardKeyConcan(c)));
+}
 
 // Against the computer the human is "You" and the computer "Computer 1";
 // on one device the seats are "Player 1" and "Player 2". Sentences about
@@ -219,6 +235,10 @@ function aiStepConcan() {
 function describeConcan(before, after, move) {
   const who = playerNameConcan(before.turn);
   const ev = after.lastEvent;
+  const drawn = drawnCardsConcan(before, after, move);
+  if (drawn.length === 1 && showDrawnConcan(before.turn)) {
+    return isYouConcan(before.turn) ? "You draw the " + CardFaces.label(drawn[0]) + "." : who + " draws the " + CardFaces.label(drawn[0]) + ".";
+  }
   if (isYouConcan(before.turn)) {
     if (move.type === "takeDiscard") return "You take the " + CardFaces.label(ev.card) + ".";
     if (move.type === "draw") return ev.type === "stock-empty" ? "" : "You draw a card.";
@@ -240,6 +260,7 @@ function applyConcan(move) {
   if (!r.ok) return r.reason;
   AppStateConcan.state = r.state;
   AppStateConcan.selected = [];
+  AppStateConcan.newKeys = showDrawnConcan(before.turn) && r.state.turn === before.turn ? drawnCardsConcan(before, r.state, move).map(cardKeyConcan) : [];
   afterStepConcan(describeConcan(before, r.state, move), r.state.turn !== before.turn);
   return null;
 }
@@ -336,6 +357,7 @@ function onDiscardPileConcan() {
 
 function onHandCardConcan(i) {
   if (!humanCanActConcan()) return;
+  AppStateConcan.newKeys = [];
   const sel = AppStateConcan.selected;
   const k = sel.indexOf(i);
   if (k === -1) sel.push(i); else sel.splice(k, 1);
@@ -502,9 +524,10 @@ function renderConcan() {
     order.sort((a, b) => ConcanCore.SUITS.indexOf(a.c.suit) - ConcanCore.SUITS.indexOf(b.c.suit) || ConcanCore.order(a.c.rank) - ConcanCore.order(b.c.rank));
     order.forEach(({ c, i }) => {
       const sel = AppStateConcan.selected.indexOf(i) !== -1;
-      const btn = cardElConcan(c, "button", sel ? "pc-card-selected" : "");
+      const fresh = (AppStateConcan.newKeys || []).indexOf(cardKeyConcan(c)) !== -1;
+      const btn = cardElConcan(c, "button", (sel ? "pc-card-selected" : "") + (fresh ? " card-new" : ""));
       btn.disabled = !myTurn || s.phase !== "meld";
-      I18n.setAria(btn, "Card " + CardFaces.label(c) + (sel ? ", selected" : ""));
+      I18n.setAria(btn, "Card " + CardFaces.label(c) + (sel ? ", selected" : "") + (fresh ? ", new" : ""));
       btn.addEventListener("click", () => onHandCardConcan(i));
       handEl.appendChild(btn);
     });

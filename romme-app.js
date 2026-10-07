@@ -41,7 +41,8 @@ const AppStateRomme = {
   selected: [],         // card ids
   busy: false,
   recorded: false,      // statistics recorded for the current round
-  choice: null          // house rule "split runs": { meld, id } while asking "add or split?"
+  choice: null,         // house rule "split runs": { meld, id } while asking "add or split?"
+  newIds: []            // cards the human just drew from the stock, marked in the hand
 };
 
 // Against the computer the human is "You" and the computers "Computer 1"
@@ -282,9 +283,31 @@ function aiStepRomme() {
   }
 }
 
+// The cards a draw from the stock put into the hand of the side to move.
+function drawnCardsRomme(before, after, move) {
+  if (move.type !== "draw" && move.type !== "returnDiscard") return [];
+  const had = new Set(before.players[before.turn].hand.map((c) => c.id));
+  return after.players[before.turn].hand.filter((c) => !had.has(c.id));
+}
+
+// A drawn card is named (and marked) only for whoever may see that hand:
+// the human against the computer, or the player at the device, whose
+// hand is open during their own turn.
+function showDrawnRomme(player) {
+  return isYouRomme(player) || AppStateRomme.mode === "hotseat";
+}
+
 function describeRomme(before, after, move) {
   const who = playerNameRomme(before.turn);
   const ev = after.lastEvent || {};
+  const drawn = drawnCardsRomme(before, after, move);
+  if (drawn.length === 1 && showDrawnRomme(before.turn)) {
+    const card = cardLabelRomme(drawn[0]), you = isYouRomme(before.turn);
+    const pre = ev.type === "reshuffle" ? "The discard pile is shuffled into a new stock. " : "";
+    if (move.type === "draw") return pre + (you ? "You draw the " + card + "." : who + " draws the " + card + ".");
+    return you ? "You put the " + cardLabelRomme(ev.card) + " back and draw the " + card + "."
+      : who + " puts the " + cardLabelRomme(ev.card) + " back and draws the " + card + ".";
+  }
   if (isYouRomme(before.turn)) return describeYouRomme(before, after, move, ev);
   if (move.type === "draw") return (ev.type === "reshuffle" ? "The discard pile is shuffled into a new stock. " : "") + who + " draws a card.";
   if (move.type === "takeDiscard") return who + " takes the " + cardLabelRomme(ev.card) + ".";
@@ -322,6 +345,7 @@ function applyRomme(move) {
   AppStateRomme.state = r.state;
   AppStateRomme.selected = [];
   AppStateRomme.choice = null;
+  AppStateRomme.newIds = showDrawnRomme(before.turn) && r.state.turn === before.turn ? drawnCardsRomme(before, r.state, move).map((c) => c.id) : [];
   afterStepRomme(describeRomme(before, r.state, move), r.state.turn !== before.turn);
   return null;
 }
@@ -452,6 +476,7 @@ function humanMoveRomme(move) {
 function onHandCardRomme(id) {
   if (!humanCanActRomme()) return;
   AppStateRomme.choice = null;
+  AppStateRomme.newIds = [];
   const sel = AppStateRomme.selected;
   const k = sel.indexOf(id);
   if (k === -1) sel.push(id); else sel.splice(k, 1);
@@ -690,9 +715,10 @@ function renderRomme() {
     const sorted = sortHandRomme(me.hand);
     sorted.forEach((c) => {
       const sel = AppStateRomme.selected.indexOf(c.id) !== -1;
-      const btn = cardElRomme(c, "button", sel ? "pc-card-selected" : "");
+      const fresh = (AppStateRomme.newIds || []).indexOf(c.id) !== -1;
+      const btn = cardElRomme(c, "button", (sel ? "pc-card-selected" : "") + (fresh ? " card-new" : ""));
       btn.disabled = !(myTurn && s.phase === "play");
-      I18n.setAria(btn, (c.joker ? "Joker" : "Card " + cardLabelRomme(c)) + (sel ? ", selected" : ""));
+      I18n.setAria(btn, (c.joker ? "Joker" : "Card " + cardLabelRomme(c)) + (sel ? ", selected" : "") + (fresh ? ", new" : ""));
       btn.addEventListener("click", () => onHandCardRomme(c.id));
       handEl.appendChild(btn);
     });

@@ -27,7 +27,8 @@ const AppStateDomino = {
   revealed: true,      // hotseat: whether the current hand is uncovered
   lastPlaced: null,    // { side } of the latest tile, for the last-move mark
   busy: false,         // a computer move is scheduled
-  result: null         // final message, kept for re-rendering
+  result: null,        // final message, kept for re-rendering
+  newKeys: []          // tiles the human just drew ("4-1"), marked in the hand
 };
 
 // Against the computer the human is "You" and the computers "Computer 1"
@@ -282,6 +283,13 @@ function aiTurnDomino() {
   playMoveDomino(move.index, move.side, drawn);
 }
 
+function drewTilesTextDomino(player, keys) {
+  const one = keys.length === 1, s = keys.slice(0, -1).join(", "), r = keys[keys.length - 1];
+  if (isYouDomino(player)) return one ? "You drew the tile " + r + "." : "You drew the tiles " + s + " and " + r + ".";
+  const who = playerNameDomino(player);
+  return one ? who + " drew the tile " + r + "." : who + " drew the tiles " + s + " and " + r + ".";
+}
+
 function drawNoteDomino(player, drawn) {
   if (!drawn) return "";
   if (isYouDomino(player)) return drawn === 1 ? "You drew 1 tile. " : "You drew " + drawn + " tiles. ";
@@ -317,6 +325,7 @@ function afterActionDomino(player, msg) {
   }
   if (AppStateDomino.mode === "hotseat") {
     AppStateDomino.revealed = false;
+    AppStateDomino.newKeys = [];
     msg += " Pass the device to " + playerNameDomino(s.turn) + ".";
   }
   if (AppStateDomino.mode === "vs-ai" && !isAiPlayerDomino(s.turn)) msg += " " + statusPromptDomino();
@@ -404,6 +413,7 @@ function humanCanActDomino() {
 
 function onHandTileClickDomino(index) {
   if (!humanCanActDomino()) return;
+  AppStateDomino.newKeys = [];
   const s = AppStateDomino.state;
   const tile = s.hands[s.turn][index];
   if (!tile) return;
@@ -449,6 +459,7 @@ function onDrawClickDomino() {
     return;
   }
   const player = s.turn;
+  const had = new Set(s.hands[player].map(tileTextDomino));
   let drawn = 0;
   while (DominoCore.requiredAction(s) === "draw") {
     s = DominoCore.drawTile(s).state;
@@ -456,7 +467,11 @@ function onDrawClickDomino() {
   }
   AppStateDomino.state = s;
   AppStateDomino.selected = null;
-  const note = drawNoteDomino(player, drawn);
+  // The drawer's hand stays open (the turn goes on with a play or a pass),
+  // so the new tiles are named and marked - on one device too.
+  const fresh = s.hands[player].map(tileTextDomino).filter((k) => !had.has(k));
+  AppStateDomino.newKeys = fresh;
+  const note = fresh.length ? drewTilesTextDomino(player, fresh) + " " : drawNoteDomino(player, drawn);
   if (DominoCore.requiredAction(s) === "pass") setStatusDomino(note + "No tile fits and the stock is empty - pass.");
   else setStatusDomino(note + "Choose a tile, then an open end.");
   renderDomino();
@@ -465,6 +480,7 @@ function onDrawClickDomino() {
 
 function onPassClickDomino() {
   if (!humanCanActDomino()) return;
+  AppStateDomino.newKeys = [];
   const s = AppStateDomino.state;
   if (DominoCore.requiredAction(s) !== "pass") {
     setStatusDomino(DominoCore.canPlay(s, s.turn) ? "You have a tile that fits - no need to pass." : "Draw from the stock first.");
@@ -579,9 +595,12 @@ function renderHandDomino(s) {
     const fits = myTurn && DominoCore.sidesForTile(s, tile).length > 0;
     if (!fits) btn.classList.add("domino-tile-unplayable");
     if (AppStateDomino.selected === i) btn.classList.add("domino-tile-selected");
+    const fresh = (AppStateDomino.newKeys || []).indexOf(tileTextDomino(tile)) !== -1;
+    if (fresh) btn.classList.add("card-new");
     btn.innerHTML = tileSvgDomino(tile, false);
     let label = "Tile " + tileTextDomino(tile);
     if (AppStateDomino.selected === i) label += ", selected";
+    if (fresh) label += ", new";
     I18n.setAria(btn, label);
     btn.addEventListener("click", () => onHandTileClickDomino(i));
     handEl.appendChild(btn);

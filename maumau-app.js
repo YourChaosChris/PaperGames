@@ -28,8 +28,24 @@ const AppStateMauMau = {
   revealed: true,      // hotseat: whether the current hand is uncovered
   pendingJack: null,   // hand index of a Jack waiting for its suit
   lastPlayer: null,    // who played the card on top, for the last-move mark
-  busy: false
+  busy: false,
+  newKeys: []          // cards the human just drew ("7H"), marked in the hand
 };
+
+function cardKeyMauMau(c) { return c.rank + c.suit; }
+
+// "7♥" / "7♥ and K♠" style list of drawn cards, as { one } or { s, r }.
+function drawnListMauMau(cards) {
+  const labels = cards.map(cardTextMauMau);
+  return labels.length === 1 ? { one: labels[0] } : { s: labels.slice(0, -1).join(", "), r: labels[labels.length - 1] };
+}
+
+function drewTextMauMau(player, cards) {
+  const l = drawnListMauMau(cards);
+  if (isYouMauMau(player)) return l.one ? "You drew the " + l.one + "." : "You drew " + l.s + " and " + l.r + ".";
+  const who = playerNameMauMau(player);
+  return l.one ? who + " drew the " + l.one + "." : who + " drew " + l.s + " and " + l.r + ".";
+}
 
 // Against the computer the human is "You" and the computers "Computer 1"
 // and so on; on one device the seats are "Player 1" and so on. Sentences
@@ -285,11 +301,20 @@ function drawMauMau() {
   const who = playerNameMauMau(player);
   const r = MauMauCore.draw(s);
   AppStateMauMau.state = r.state;
+  // The cards just drawn are the last ones in the hand. They are named
+  // and marked for the human against the computer; on one device only
+  // while the drawer's hand stays open (the drawn card fits).
+  const drawn = r.count ? r.state.hands[player].slice(-r.count) : [];
+  const show = drawn.length && (isYouMauMau(player) || (AppStateMauMau.mode === "hotseat" && r.state.turn === player));
+  // A computer's draw leaves the human's marks alone.
+  if (show) AppStateMauMau.newKeys = drawn.map(cardKeyMauMau);
+  else if (!isAiPlayerMauMau(player)) AppStateMauMau.newKeys = [];
   let msg = "";
   if (r.reshuffled) msg += "The discard pile was shuffled into a new stock. ";
   const you = isYouMauMau(player);
-  const drewOne = you ? "You drew a card." : who + " drew a card.";
-  if (r.penalty) msg += you ? "You drew " + r.count + " cards." : who + " drew " + r.count + " cards.";
+  const drewOne = show ? drewTextMauMau(player, drawn) : (you ? "You drew a card." : who + " drew a card.");
+  if (r.penalty && show) msg += drewTextMauMau(player, drawn);
+  else if (r.penalty) msg += you ? "You drew " + r.count + " cards." : who + " drew " + r.count + " cards.";
   else if (!r.count) msg += you ? "There is no card left to draw. You pass." : "There is no card left to draw. " + who + " passes.";
   else if (r.playable) {
     // The drawn card fits: a person decides, the computer decides now.
@@ -323,6 +348,7 @@ function afterTurnPartMauMau(player, msg) {
   const s = AppStateMauMau.state;
   if (AppStateMauMau.mode === "hotseat" && s.turn !== player) {
     AppStateMauMau.revealed = false;
+    AppStateMauMau.newKeys = [];
     msg += " Pass the device to " + playerNameMauMau(s.turn) + ".";
   } else if (!isAiPlayerMauMau(s.turn)) {
     msg += " " + promptTextMauMau();
@@ -389,6 +415,7 @@ function humanCanActMauMau() {
 
 function onHandCardClickMauMau(index) {
   if (!humanCanActMauMau()) return;
+  AppStateMauMau.newKeys = [];
   const s = AppStateMauMau.state;
   const legal = MauMauCore.legalMoves(s);
   if (legal.indexOf(index) === -1) {
@@ -431,12 +458,14 @@ function onStockClickMauMau() {
     return;
   }
   AppStateMauMau.pendingJack = null;
+  AppStateMauMau.newKeys = [];
   drawMauMau();
 }
 
 function onKeepClickMauMau() {
   if (!humanCanActMauMau()) return;
   if (AppStateMauMau.state.drawnIndex === null) return;
+  AppStateMauMau.newKeys = [];
   keepDrawnMauMau("");
 }
 
@@ -558,9 +587,12 @@ function renderHandMauMau(s) {
     if (legal.indexOf(i) === -1) btn.classList.add("maumau-card-unplayable");
     if (myTurn && s.drawnIndex === i) btn.classList.add("maumau-card-drawn");
     if (AppStateMauMau.pendingJack === i) btn.classList.add("maumau-card-drawn");
+    const fresh = (AppStateMauMau.newKeys || []).indexOf(cardKeyMauMau(card)) !== -1;
+    if (fresh) btn.classList.add("card-new");
     fillCardMauMau(btn, card);
     let label = "Card " + cardTextMauMau(card);
     if (AppStateMauMau.pendingJack === i) label += ", selected";
+    if (fresh) label += ", new";
     I18n.setAria(btn, label);
     btn.addEventListener("click", () => onHandCardClickMauMau(i));
     handEl.appendChild(btn);

@@ -329,6 +329,23 @@ const SAMPLES = [
   "Player 2 drew a card. Player 2 keeps the card.",
   "Player 1 played Q♦. Mau Mau! Player 1 wins.",
   "There is no card left to draw. Player 3 passes.",
+  // Drawn cards named (Rommé, Concan, Mau Mau, Durak, Domino)
+  "You draw the 7♥. Your turn: lay out melds or add to melds, then discard a card.",
+  "Player 2 draws the K♠. Player 2: lay out melds or add to melds, then discard a card.",
+  "You put the 9♠ back and draw the 4♦.",
+  "Player 1 puts the 9♠ back and draws the 4♦.",
+  "You draw the 5♣. Your turn. Lay out melds or add to yours, then select a card and discard it.",
+  "You drew the 7♥. The drawn card fits: play it or keep it.",
+  "Player 1 drew the 7♥. The drawn card fits: play it or keep it.",
+  "Computer 1 played 7♠. You must draw 2 cards or play a Seven.",
+  "You drew 8♣ and K♦. Computer 1's turn.",
+  "You drew 8♣, Q♥ and K♦.",
+  "Computer 1 takes the cards. You draw the 9♥.",
+  "Computer 1 takes the cards. You draw 6♠, 9♥ and A♣.",
+  "You drew the tile 4-1. Choose a tile, then an open end.",
+  "You drew the tiles 2-2, 0-5 and 6-3. Choose a tile, then an open end.",
+  "Player 2 drew the tile 4-1. Choose a tile, then an open end.",
+  "Player 2 drew the tiles 2-2 and 6-3. No tile fits and the stock is empty - pass.",
   // Rommé, taken card swapped for a joker
   "You swap the 6♥ for a joker. Lay out the joker you took back in a new meld first.",
   "A joker freed by a card you took must go into a new meld - you have no cards for one.",
@@ -472,7 +489,10 @@ const ARIA_SAMPLES = [
   "Tile 3-5, selected",
   "Card 10♥",
   "Discard pile 9♣",
-  "Asked for: Spades"
+  "Asked for: Spades",
+  "Card 7♥, new",
+  "Card 7♥, selected, new",
+  "Tile 4-1, new"
 ];
 
 // Words that legitimately stay Latin in every language.

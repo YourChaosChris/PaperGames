@@ -9268,6 +9268,27 @@ max-width: 900px;
   outline-offset: 2px;
 }
 
+/* A card (or domino tile) just drawn from the stock, in any card game: a
+   bold ring in its top right corner - a shape, not grey, so it shows on
+   black-and-white e-ink. Removed with the player's next action. */
+.card-new {
+  position: relative;
+}
+
+.card-new::after {
+  content: "";
+  position: absolute;
+  top: 0.15rem;
+  right: 0.15rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  box-sizing: border-box;
+  border: 0.27rem solid var(--text);
+  border-radius: 50%;
+  background: #fff;
+  pointer-events: none;
+}
+
 .pc-card-dim {
   top: 0.4rem;
   border-style: dashed;

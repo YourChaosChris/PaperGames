@@ -28,8 +28,23 @@ const AppStateDurak = {
   revealed: true,
   shownFor: null,     // hotseat: whose hand is uncovered
   transferMode: false,
-  busy: false
+  busy: false,
+  newKeys: []         // cards the human just drew from the stock ("7H"), marked in the hand
 };
+
+function cardKeyDurak(c) { return c.rank + c.suit; }
+
+// Cards the human drew from the stock when a round ended (not the table
+// cards they picked up). Only against the computer: on one device the
+// refill happens while the hands are covered, so nothing is named.
+function drawnByYouDurak(before, after) {
+  if (AppStateDurak.mode !== "vs-ai") return [];
+  const ev = after.lastEvent;
+  if (!ev || (ev.type !== "defended" && ev.type !== "took")) return [];
+  const known = new Set(before.hands[0].map(cardKeyDurak));
+  before.table.forEach((pair) => { known.add(cardKeyDurak(pair.attack)); if (pair.defense) known.add(cardKeyDurak(pair.defense)); });
+  return after.hands[0].filter((c) => !known.has(cardKeyDurak(c)));
+}
 
 // Against the computer the human is "You" and the computers "Computer 1"
 // and so on; on one device the seats are "Player 1" and so on. Sentences
@@ -267,6 +282,11 @@ function describeDurak(before, after, move) {
     if (ev.type === "defended") msg += " Everything is beaten - the cards leave the game.";
     else if (isYouDurak(ev.defender)) msg += ev.count === 1 ? " You pick up 1 card." : " You pick up " + ev.count + " cards.";
     else msg += " " + playerNameDurak(ev.defender) + (ev.count === 1 ? " picks up 1 card." : " picks up " + ev.count + " cards.");
+    const drawn = drawnByYouDurak(before, after);
+    if (drawn.length) {
+      const labels = drawn.map(cardTextDurak);
+      msg += labels.length === 1 ? " You draw the " + labels[0] + "." : " You draw " + labels.slice(0, -1).join(", ") + " and " + labels[labels.length - 1] + ".";
+    }
     for (let p = 0; p < after.numPlayers; p++) {
       if (after.outPlayers.indexOf(p) !== -1 && before.outPlayers.indexOf(p) === -1) msg += isYouDurak(p) ? " You have no cards left." : " " + playerNameDurak(p) + " has no cards left.";
     }
@@ -280,6 +300,10 @@ function applyMoveDurak(move) {
   if (!r.ok) return false;
   AppStateDurak.state = r.state;
   AppStateDurak.transferMode = false;
+  // Marks stay until the human's next action, also through computer moves.
+  const drawn = drawnByYouDurak(before, r.state);
+  if (drawn.length) AppStateDurak.newKeys = drawn.map(cardKeyDurak);
+  else if (!isAiDurak(before.actor)) AppStateDurak.newKeys = [];
   const msg = describeDurak(before, r.state, move);
   saveDurak();
   announceTurnDurak(msg);
@@ -355,6 +379,7 @@ function humanMoveDurak(move) {
 
 function onHandCardDurak(index) {
   if (!humanCanActDurak()) return;
+  AppStateDurak.newKeys = [];
   const s = AppStateDurak.state;
   const card = s.hands[s.actor][index];
   if (s.phase === "lead") {
@@ -489,9 +514,10 @@ function renderDurak() {
     hand.sort((x, y) => (x.c.suit === s.trumpSuit) - (y.c.suit === s.trumpSuit) ||
       DurakCore.SUITS.indexOf(x.c.suit) - DurakCore.SUITS.indexOf(y.c.suit) || x.c.rank - y.c.rank);
     hand.forEach(({ c, i }) => {
-      const btn = cardElDurak(c, "button", myTurn && !usableDurak(s, c) ? "pc-card-dim" : "");
+      const fresh = AppStateDurak.mode === "vs-ai" && (AppStateDurak.newKeys || []).indexOf(cardKeyDurak(c)) !== -1;
+      const btn = cardElDurak(c, "button", (myTurn && !usableDurak(s, c) ? "pc-card-dim" : "") + (fresh ? " card-new" : ""));
       btn.disabled = !myTurn;
-      I18n.setAria(btn, "Card " + cardTextDurak(c));
+      I18n.setAria(btn, "Card " + cardTextDurak(c) + (fresh ? ", new" : ""));
       btn.addEventListener("click", () => onHandCardDurak(i));
       handEl.appendChild(btn);
     });
