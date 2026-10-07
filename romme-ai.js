@@ -163,6 +163,18 @@ const RommeAi = (function () {
     return score;
   }
 
+  // House rule "take cards": a swap of the taken `card` for a table joker
+  // that can then go into a new meld, or null.
+  function swapForNewMeld(s, hand, card) {
+    for (let i = 0; i < s.melds.length; i++) {
+      const slot = C.jokerSlotFor(s.melds[i], card);
+      if (slot === -1) continue;
+      const joker = s.melds[i].entries[slot].card;
+      if (C.jokerUsable(hand.filter((c) => c.id !== card.id).concat([joker]), joker)) return { type: "swapJoker", meld: i, id: card.id };
+    }
+    return null;
+  }
+
   function chooseMove(s, level, rng) {
     const random = rng || Math.random;
     const p = s.turn;
@@ -192,14 +204,16 @@ const RommeAi = (function () {
           if (C.buildMeld([joker, others[a], others[b]])) return { type: "meld", ids: [joker.id, others[a].id, others[b].id] };
         }
       }
-      if (s.jokerLayoffRule) {
+      // A joker freed by a taken card must go into a new meld.
+      if (s.jokerLayoffRule && !(s.takenIds || []).includes(joker.id)) {
         for (let i = 0; i < s.melds.length; i++) if (C.extendMeld(s.melds[i], joker)) return { type: "extend", meld: i, id: joker.id };
       }
     }
 
     // Variant: the discard taken this turn has to go on the table; if it
     // can't, put it back and draw from the stock.
-    if (C.discardCardOpen(s)) {
+    // (A discard taken back from the table counts as taken: see below.)
+    if (C.discardCardOpen(s) && !(s.takenIds || []).includes(s.discardTakenId)) {
       const card = hand.find((c) => c.id === s.discardTakenId) ||
         s.pending.reduce((a, m) => a.concat(m.entries.map((e) => e.card)), []).find((c) => c.id === s.discardTakenId);
       if (pl.opened) {
@@ -222,6 +236,9 @@ const RommeAi = (function () {
           if (C.buildMeld([card, others[a], others[b]])) return { type: "meld", ids: [taken, others[a].id, others[b].id] };
         }
       }
+      // Or swap it for a joker on the table that then forms a new meld.
+      const sw = swapForNewMeld(s, hand, card);
+      if (sw) return sw;
       return { type: "cancelPending" };
     }
 
@@ -291,6 +308,10 @@ const RommeAi = (function () {
             if (C.buildMeld([card, plain[a], plain[b]])) return { type: "take", meld: o.meld, id: o.id };
           }
         }
+        // Also when the card frees a joker on another meld that then
+        // forms a new meld with cards from the hand.
+        const after = Object.assign({}, s, { melds: s.melds.map((m, i) => (i === o.meld ? { owner: m.owner, type: m.type, entries: m.entries.filter((e) => e.card.id !== o.id) } : m)) });
+        if (swapForNewMeld(after, hand.concat([card]), card)) return { type: "take", meld: o.meld, id: o.id };
       }
     }
 

@@ -507,6 +507,7 @@ STRINGS.nl = {
     msg_t_rm_takes: "{p} neemt de {s} uit een combinatie.",
     msg_rm_err_take_breaks: "In de combinatie moeten minstens drie kaarten blijven – uit een reeks alleen de eerste of de laatste kaart.",
     msg_rm_err_take_joker: "Jokers kun je niet nemen – ruil ze in plaats daarvan.",
+    msg_rm_taken_joker_unusable: "Een joker die vrijkomt door een genomen kaart moet in een nieuwe combinatie – daarvoor heb je de kaarten niet.",
     romme_split_rule_label: "Huisregel: reeksen splitsen",
     romme_choice_extend: "Aanleggen bij de combinatie",
     romme_choice_split: "Reeks splitsen",

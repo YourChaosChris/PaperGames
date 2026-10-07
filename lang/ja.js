@@ -507,6 +507,7 @@ STRINGS.ja = {
     msg_t_rm_takes: "{p}がメルドから{s}を取りました。",
     msg_rm_err_take_breaks: "メルドには3枚以上残す必要があります。ランからは最初か最後のカードだけです。",
     msg_rm_err_take_joker: "ジョーカーは取れません。代わりに交換してください。",
+    msg_rm_taken_joker_unusable: "取ったカードで空いたジョーカーは新しいメルドに入れなければなりませんが、そのためのカードがありません。",
     romme_split_rule_label: "ハウスルール：ランを分ける",
     romme_choice_extend: "メルドに付ける",
     romme_choice_split: "ランを分ける",

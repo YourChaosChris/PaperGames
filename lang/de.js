@@ -637,6 +637,7 @@ STRINGS.de = {
     msg_t_rm_takes: "{p} nimmt die {s} aus einer Auslage.",
     msg_rm_err_take_breaks: "In der Auslage müssen mindestens drei Karten bleiben – aus einer Folge nur die erste oder die letzte Karte.",
     msg_rm_err_take_joker: "Joker können nicht genommen werden – tausche sie stattdessen.",
+    msg_rm_taken_joker_unusable: "Ein Joker, den eine genommene Karte freimacht, muss in eine neue Meldung – dafür fehlen dir die Karten.",
     romme_split_rule_label: "Hausregel: Folgen teilen",
     romme_choice_extend: "An die Auslage anlegen",
     romme_choice_split: "Folge teilen",

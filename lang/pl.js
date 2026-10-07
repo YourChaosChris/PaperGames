@@ -580,6 +580,7 @@ STRINGS.pl = {
     msg_t_rm_takes: "{p} bierze {s} z układu.",
     msg_rm_err_take_breaks: "W układzie muszą zostać co najmniej trzy karty – z sekwensu tylko pierwsza albo ostatnia karta.",
     msg_rm_err_take_joker: "Jokerów nie można brać – zamiast tego je wymień.",
+    msg_rm_taken_joker_unusable: "Joker uwolniony przez wziętą kartę musi trafić do nowego układu – nie masz do tego kart.",
     romme_split_rule_label: "Zasada domowa: dzielenie sekwensów",
     romme_choice_extend: "Dołóż do układu",
     romme_choice_split: "Podziel sekwens",

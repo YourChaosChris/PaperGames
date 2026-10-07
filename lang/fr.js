@@ -574,6 +574,7 @@ STRINGS.fr = {
     msg_t_rm_takes: "{p} prend le {s} dans une combinaison.",
     msg_rm_err_take_breaks: "Il doit rester au moins trois cartes dans la combinaison – dans une suite, seulement la première ou la dernière carte.",
     msg_rm_err_take_joker: "Les jokers ne peuvent pas être pris – échangez-les plutôt.",
+    msg_rm_taken_joker_unusable: "Un joker libéré par une carte prise doit aller dans une nouvelle combinaison - vous n'avez pas les cartes pour cela.",
     romme_split_rule_label: "Règle maison : partager les suites",
     romme_choice_extend: "Ajouter à la combinaison",
     romme_choice_split: "Partager la suite",

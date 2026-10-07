@@ -648,6 +648,7 @@ const STRINGS = {
     msg_t_rm_takes: "{p} takes the {s} from a meld.",
     msg_rm_err_take_breaks: "At least three cards must stay in the meld - from a run only the first or the last card.",
     msg_rm_err_take_joker: "Jokers can't be taken - swap them instead.",
+    msg_rm_taken_joker_unusable: "A joker freed by a card you took must go into a new meld - you have no cards for one.",
     romme_split_rule_label: "House rule: split runs",
     romme_choice_extend: "Add to the meld",
     romme_choice_split: "Split the run",

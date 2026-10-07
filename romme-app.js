@@ -226,7 +226,7 @@ function promptTextRomme() {
   const who = playerNameRomme(s.turn);
   const you = isYouRomme(s.turn);
   if (s.phase === "draw") return you ? "Your turn: draw a card from the stock or take the top discard." : who + ": draw a card from the stock or take the top discard.";
-  if (s.pendingJoker !== null) return s.jokerLayoffRule ? "Lay out the joker you took back in a new meld or add it to a meld first." : "Lay out the joker you took back in a new meld first.";
+  if (s.pendingJoker !== null) return s.jokerLayoffRule && !(s.takenIds || []).includes(s.pendingJoker) ? "Lay out the joker you took back in a new meld or add it to a meld first." : "Lay out the joker you took back in a new meld first.";
   if (s.takenIds && s.takenIds.length) return "Lay out the card you took in a new meld first, or take it back.";
   if (RommeCore.discardCardOpen(s) && !s.pending.length) return "Lay out the card from the discard pile in a meld first - or put it back and draw from the stock.";
   if (s.pending.length) return "Staged for the first meld: " + RommeCore.pendingValue(s) + " of " + s.threshold + " points.";
@@ -408,6 +408,7 @@ const ROMME_REASON_TEXT = {
   "take-joker": "Jokers can't be taken - swap them instead.",
   "taken-first": "Lay out the card you took in a new meld first, or take it back.",
   "taken-new-meld": "A card taken from the table must go into a new meld.",
+  "taken-joker-unusable": "A joker freed by a card you took must go into a new meld - you have no cards for one.",
   "discard-card-first": "Lay out the card from the discard pile in a meld first - or put it back and draw from the stock.",
   "split-set": "Sets can't be split.",
   "split-short": "Both runs must have at least three cards after the split.",
@@ -439,8 +440,12 @@ function humanMoveRomme(move) {
   const s = AppStateRomme.state;
   const reason = applyRomme(move);
   if (!reason) return;
+  if (s.pendingJoker !== null && (s.takenIds || []).includes(s.pendingJoker) && (reason === "taken-new-meld" || reason === "joker-first")) {
+    setStatusRomme("Lay out the joker you took back in a new meld first.");
+    return;
+  }
   if (reason === "below-threshold") setStatusRomme("Not enough yet: the first meld needs at least " + s.threshold + " points.");
-  else if (reason === "joker-first" && s.jokerLayoffRule) setStatusRomme("Lay out the joker you took back in a new meld or add it to a meld first.");
+  else if (reason === "joker-first" && s.jokerLayoffRule && !(s.takenIds || []).includes(s.pendingJoker)) setStatusRomme("Lay out the joker you took back in a new meld or add it to a meld first.");
   else setStatusRomme(ROMME_REASON_TEXT[reason] || "That isn't possible right now.");
 }
 

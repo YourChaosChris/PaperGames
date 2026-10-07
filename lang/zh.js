@@ -574,6 +574,7 @@ STRINGS.zh = {
     msg_t_rm_takes: "{p}从一个牌组中取走{s}。",
     msg_rm_err_take_breaks: "牌组中至少要留下三张牌——顺子只能取第一张或最后一张。",
     msg_rm_err_take_joker: "王牌不能取走——请改为交换。",
+    msg_rm_taken_joker_unusable: "用取来的牌换出的王牌必须放进新牌组——你没有能组成新牌组的牌。",
     romme_split_rule_label: "家规：拆分顺子",
     romme_choice_extend: "加到牌组上",
     romme_choice_split: "拆分顺子",

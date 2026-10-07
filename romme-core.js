@@ -45,6 +45,11 @@
 //     same turn; while one is still in hand the player may not discard.
 //     "Take back" (cancelPending) puts table and hand back as they were
 //     before the first take of the turn.
+//     A taken card may also be swapped for a joker on the table (asked
+//     for by a player on 07.10.2026); the duty then passes to the joker:
+//     it must go into a NEW meld in the same turn - it may not be added
+//     to a meld, not even with jokerLayoffRule - so the swap is only
+//     allowed when the joker can form such a meld.
 //   - discardRule, a variant (default off; Wikipedia, "Rommé"): the top
 //     discard may only be taken to be laid out in a meld in the same turn
 //     (before the first meld it belongs to the first meld). Until it lies
@@ -590,7 +595,8 @@ const RommeCore = (function () {
     if (move.type === "swapJoker") {
       if (!pl.opened) return { ok: false, state, reason: "open-first" };
       if (s.pendingJoker !== null) return { ok: false, state, reason: "joker-first" };
-      if ((s.takenIds || []).includes(move.id)) return { ok: false, state, reason: "taken-new-meld" };
+      const taken = (s.takenIds || []).includes(move.id);
+      if (taken && !s.takeRule) return { ok: false, state, reason: "taken-new-meld" };
       const meld = s.melds[move.meld];
       const i = findInHand(pl.hand, move.id);
       if (!meld || i === -1) return { ok: false, state, reason: "not-in-hand" };
@@ -599,6 +605,8 @@ const RommeCore = (function () {
       if (slot === -1) return { ok: false, state, reason: "no-joker-for-card" };
       const joker = meld.entries[slot].card;
       const handAfter = pl.hand.filter((c) => c.id !== card.id).concat([joker]);
+      // Freed by a taken card, the joker must go into a new meld.
+      if (taken && !jokerUsable(handAfter, joker)) return { ok: false, state, reason: "taken-joker-unusable" };
       if (!jokerUsable(handAfter, joker) && !(s.jokerLayoffRule && jokerFitsTable(s.melds, move.meld, slot, card, joker))) {
         return { ok: false, state, reason: "joker-unusable" };
       }
@@ -612,6 +620,7 @@ const RommeCore = (function () {
       }
       pl.hand.push(joker);
       s.pendingJoker = joker.id;
+      if (taken) s.takenIds = s.takenIds.filter((id) => id !== card.id).concat([joker.id]);
       s.lastEvent = { type: "swap", player: p, card, owner: meld.owner };
       return { ok: true, state: s };
     }

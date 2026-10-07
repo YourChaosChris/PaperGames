@@ -329,6 +329,9 @@ const SAMPLES = [
   "Player 2 drew a card. Player 2 keeps the card.",
   "Player 1 played Q♦. Mau Mau! Player 1 wins.",
   "There is no card left to draw. Player 3 passes.",
+  // Rommé, taken card swapped for a joker
+  "You swap the 6♥ for a joker. Lay out the joker you took back in a new meld first.",
+  "A joker freed by a card you took must go into a new meld - you have no cards for one.",
   // Rommé, house rule "add the swapped joker"
   "You swap the J♣ for a joker. Lay out the joker you took back in a new meld or add it to a meld first.",
   "You add the joker to a meld.",

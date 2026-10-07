@@ -574,6 +574,7 @@ STRINGS.it = {
     msg_t_rm_takes: "{p} prende il {s} da una combinazione.",
     msg_rm_err_take_breaks: "Nella combinazione devono restare almeno tre carte: da una scala solo la prima o l'ultima.",
     msg_rm_err_take_joker: "I jolly non si possono prendere: scambiali invece.",
+    msg_rm_taken_joker_unusable: "Un jolly liberato da una carta presa deve andare in una nuova combinazione: non hai le carte per farla.",
     romme_split_rule_label: "Regola della casa: dividere le scale",
     romme_choice_extend: "Aggiungere alla combinazione",
     romme_choice_split: "Dividere la scala",

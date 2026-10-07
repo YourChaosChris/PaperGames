@@ -574,6 +574,7 @@ STRINGS.es = {
     msg_t_rm_takes: "{p} toma el {s} de una combinación.",
     msg_rm_err_take_breaks: "En la combinación deben quedar al menos tres cartas: de una escalera solo la primera o la última.",
     msg_rm_err_take_joker: "Los comodines no se pueden tomar: cámbialos en su lugar.",
+    msg_rm_taken_joker_unusable: "Un comodín liberado por una carta tomada debe ir a una combinación nueva: no tienes cartas para ello.",
     romme_split_rule_label: "Regla de la casa: dividir escaleras",
     romme_choice_extend: "Añadir a la combinación",
     romme_choice_split: "Dividir la escalera",
