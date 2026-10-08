@@ -4385,9 +4385,10 @@ margin-top: 0.6rem;
 }
 
 /* Light Switch board: a fixed 5x5 float-grid (same JS-enforced square cell
-   size technique as 2048/Minesweeper). Cells are told apart purely by a
-   background fill - on (lit) is dark, off is light - never by color, so
-   this reads fine on a monochrome E-Ink display. */
+   size technique as 2048/Minesweeper). A cell whose light is on shows a
+   bold lamp (bulb with rays), an off cell is empty - a shape, not a fill
+   or a color, so it reads at a glance on black-and-white E-Ink. Both stay
+   light: a dark cell for "on" read as "light off" to players. */
 
 #lightswitch-board {
   display: block;
@@ -4410,7 +4411,35 @@ margin-top: 0.6rem;
 }
 
 .lightswitch-cell-on {
-  background: #141413;
+  background: var(--square-light) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg stroke='%23141413' stroke-width='7' stroke-linecap='round'%3E%3Cpath d='M50 6V16M17 18L24 25M83 18L76 25M6 46H16M84 46H94M20 72L26 66M80 72L74 66'/%3E%3Cpath d='M40 80H60M42 90H58'/%3E%3C/g%3E%3Cpath d='M50 24C37 24 28 33 28 45C28 54 34 59 38 64V72H62V64C66 59 72 54 72 45C72 33 63 24 50 24Z' fill='%23141413'/%3E%3C/svg%3E") center / 78% no-repeat;
+}
+
+/* Light Switch rules page: the table of bottom-row patterns. Each pattern
+   is a drawn row of five cells, lamps where a light is on. */
+.lightswitch-solve-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1rem;
+}
+
+.lightswitch-solve-table th,
+.lightswitch-solve-table td {
+  border: 1px solid var(--border);
+  padding: var(--space-1) var(--space-2);
+  text-align: start;
+  vertical-align: middle;
+}
+
+.lightswitch-solve-table td:last-child {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.lightswitch-solve-row {
+  display: block;
+  width: 9rem;
+  max-width: 100%;
+  height: 1.8rem;
 }
 
 /* Mahjong Solitaire board: absolute positioning on a percentage grid

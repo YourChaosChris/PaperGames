@@ -228,13 +228,18 @@ function updateLightSwitchBoard() {
     const c = parseInt(cell.dataset.col, 10);
     const on = AppStateLightSwitch.grid[r][c];
     cell.classList.toggle("lightswitch-cell-on", on);
-    I18n.setAria(cell, "Row " + (r + 1) + ", column " + (c + 1) + ", " + (on ? "on" : "off"));
+    I18n.setAria(cell, "Row " + (r + 1) + ", column " + (c + 1) + ", " + (on ? "light on" : "light off"));
   });
 }
 
 function updateGameLabelsLightSwitch() {
   const meta = document.getElementById("game-meta");
-  if (meta) I18n.setMsg(meta, "Moves: " + AppStateLightSwitch.moveCount);
+  if (meta) {
+    // How many lights are still on, then the move count: "7 lights still on. Moves: 3"
+    const left = AppStateLightSwitch.grid ? LightSwitchCore.countOn(AppStateLightSwitch.grid) : 0;
+    const lightsText = left === 1 ? "1 light still on." : left + " lights still on.";
+    I18n.setMsg(meta, (left > 0 ? lightsText + " " : "") + "Moves: " + AppStateLightSwitch.moveCount);
+  }
 
   if (AppStateLightSwitch.gameOver) clearSavedLightSwitchGame();
   else saveLightSwitchGame();
