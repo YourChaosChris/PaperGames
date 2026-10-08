@@ -9269,7 +9269,7 @@ max-width: 900px;
 }
 
 /* A card (or domino tile) just drawn from the stock, in any card game: a
-   bold ring in its top right corner - a shape, not grey, so it shows on
+   bold ring in its bottom right corner - a shape, not grey, so it shows on
    black-and-white e-ink. Removed with the player's next action. */
 .card-new {
   position: relative;
@@ -9278,7 +9278,7 @@ max-width: 900px;
 .card-new::after {
   content: "";
   position: absolute;
-  top: 0.15rem;
+  bottom: 0.15rem;
   right: 0.15rem;
   width: 0.95rem;
   height: 0.95rem;
@@ -9287,6 +9287,14 @@ max-width: 900px;
   border-radius: 50%;
   background: #fff;
   pointer-events: none;
+}
+
+/* On a domino tile a ring in a half reads like a pip: put it at the bottom,
+   centred on the dividing line, where no pip ever sits. */
+.domino-tile.card-new::after {
+  right: auto;
+  left: 50%;
+  margin-left: -0.475rem;
 }
 
 .pc-card-dim {

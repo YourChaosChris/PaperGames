@@ -2482,7 +2482,13 @@ const I18n = (function () {
   // \u0002 by msgSentence); a leading h is left alone, it may be aspirated.
   function msgElideFr(s) {
     return s.replace(/(^|[^A-Za-z\u00C0-\u00FF])(de|que|le|la|jusque|lorsque|puisque) \u0002(?=[AEIOUYaeiouy\u00C0-\u00C6\u00C8-\u00CF\u00D2-\u00D6\u00D9-\u00DC\u00E0-\u00E6\u00E8-\u00EF\u00F2-\u00F6\u00F9-\u00FC\u0152\u0153])/gi,
-      (m, pre, word) => pre + word.slice(0, -1) + "'").replace(/\u0002/g, "");
+      (m, pre, word) => pre + word.slice(0, -1) + "'")
+      // "Au tour de Joueur 1" -> "Au tour du Joueur 1", "à Joueur 2" -> "au Joueur 2".
+      .replace(/(^|[^A-Za-z\u00C0-\u00FF])(de|à) \u0002(?=Joueur\b)/gi, (m, pre, word) => {
+        const art = word.toLowerCase() === "de" ? "du" : "au";
+        return pre + (word.charAt(0) === word.charAt(0).toUpperCase() ? art.charAt(0).toUpperCase() + art.slice(1) : art) + " ";
+      })
+      .replace(/\u0002/g, "");
   }
 
   // Screen-reader labels are comma-separated parts ("Row 3, column 4,
