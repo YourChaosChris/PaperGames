@@ -663,6 +663,25 @@ const STRINGS = {
     msg_t_do_p_drew_tile: "{p} drew the tile {s}.",
     msg_t_do_p_drew_tiles: "{p} drew the tiles {s} and {r}.",
     msg_aria_card_new: "new",
+    seo_t_game: "{s} on e-ink – play offline, no ads",
+    seo_title_index: "PaperGames – 65 free board games for e-ink readers",
+    seo_desc_index: "65 classic board games made for e-ink readers and tablets. Chess, Go, Backgammon, Sudoku and more. Free, offline, no ads, in 12 languages.",
+    seo_title_about: "About PaperGames – 65 free board games for e-ink",
+    seo_desc_about: "Why PaperGames exists, how it's built, and how to support the project. A free, offline, ad-free collection of 65 classic board and puzzle games.",
+    seo_title_games: "All Games – PaperGames",
+    seo_desc_games: "Browse, search, and sort all 65 free board and puzzle games in PaperGames, alphabetically or by type.",
+    seo_title_guide: "Setup Guide | PaperGames",
+    seo_desc_guide: "How to install PaperGames on your e-reader or tablet: open in the browser, add to your home screen, and keep playing fully offline.",
+    seo_title_devices: "Tested devices – which e-readers PaperGames runs on | PaperGames",
+    seo_desc_devices: "Which e-readers PaperGames is known to run on, what has not been tested, and how to check your own device and report back - no form, no account.",
+    seo_title_impressum: "Legal Notice | PaperGames",
+    seo_desc_impressum: "Legal notice (Impressum) for PaperGames, a free collection of 65 offline board games for e-ink readers, operated by Christopher Müller.",
+    seo_title_datenschutz: "Privacy Policy | PaperGames",
+    seo_desc_datenschutz: "Privacy policy for PaperGames: no cookies, no analytics, no ads. Local storage only, plus optional Lichess sign-in for online chess.",
+    seo_title_stats: "Your Stats | PaperGames",
+    seo_desc_stats: "Your win, loss, and draw record across every game in the PaperGames collection, tracked locally on your own device.",
+    seo_title_history: "Game History Library | PaperGames",
+    seo_desc_history: "The origin story of every game in the PaperGames collection, from ancient Egypt to the last decade, in roughly chronological order.",
     romme_split_rule_label: "House rule: split runs",
     romme_choice_extend: "Add to the meld",
     romme_choice_split: "Split the run",
@@ -2260,7 +2279,39 @@ const I18n = (function () {
     }
   }
 
+  // ?lang=xx in the address gives every page its own address per language
+  // for search engines (see tools/seo.js). It wins over the saved choice
+  // and the browser language without replacing the saved choice; picking
+  // a language in the menu ends it for this page.
+  let paramDropped = false;
+  function paramLang() {
+    if (paramDropped) return null;
+    try {
+      const m = /[?&]lang=([a-z]{2})(?:&|$)/.exec(window.location.search);
+      return m && LANGUAGE_NAMES[m[1]] ? m[1] : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Drops ?lang=xx from the address (after a choice in the menu), and with
+  // it the language-specific canonical address.
+  function dropParam() {
+    if (!paramLang()) return;
+    paramDropped = true;
+    try {
+      const url = window.location.pathname + window.location.search.replace(/([?&])lang=[a-z]{2}(&|$)/, (m, a, b) => (b ? a : "")).replace(/[?&]$/, "") + window.location.hash;
+      if (window.history && window.history.replaceState) window.history.replaceState(window.history.state, "", url);
+      const link = document.querySelector('link[rel="canonical"]');
+      if (link) link.href = link.href.replace(/\?lang=[a-z]{2}$/, "");
+    } catch (e) {
+      // the address keeps its parameter; the menu choice still applies
+    }
+  }
+
   function getLang() {
+    const param = paramLang();
+    if (param) return param;
     const saved = safeGet(STORAGE_KEY);
     if (saved && LANGUAGE_NAMES[saved]) return saved;
     return detectBrowserLang();
@@ -2555,8 +2606,34 @@ const I18n = (function () {
     if (typeof fn === "function") changeListeners.push(fn);
   }
 
+  // Title and description of the page in the language of its ?lang=xx
+  // address (data-seo-title / data-seo-desc, written by tools/seo.js).
+  // Without the parameter the page keeps its English title as before.
+  const seoOriginal = {};
+  function seoText(spec, l, isTitle) {
+    const parts = (spec || "").split(":");
+    const kind = parts[0], key = parts[1];
+    if (!key || !STRINGS[l] || STRINGS[l][key] === undefined) return null;
+    if (kind === "game") return t("seo_t_game", l).replace("{s}", t(key, l)) + " | PaperGames";
+    if (kind === "key" && isTitle) return t(key, l) + " | PaperGames";
+    return t(key, l);
+  }
+  function applySeo(l) {
+    const titleEl = document.querySelector("title[data-seo-title]");
+    const descEl = document.querySelector('meta[name="description"][data-seo-desc]');
+    if (!titleEl && !descEl) return;
+    if (seoOriginal.title === undefined) {
+      seoOriginal.title = document.title;
+      seoOriginal.desc = descEl ? descEl.getAttribute("content") : null;
+    }
+    const active = !!paramLang() && l !== DEFAULT_LANG;
+    if (titleEl) document.title = (active && seoText(titleEl.getAttribute("data-seo-title"), l, true)) || seoOriginal.title;
+    if (descEl) descEl.setAttribute("content", (active && seoText(descEl.getAttribute("data-seo-desc"), l, false)) || seoOriginal.desc);
+  }
+
   function apply(lang) {
     const l = lang || getLang();
+    applySeo(l);
     if (document.documentElement) {
       document.documentElement.lang = l;
       // Right-to-left languages mirror the page layout; the game boards
@@ -2704,13 +2781,22 @@ const I18n = (function () {
     });
   }
 
+  // A language picked in the menu: saved, and it replaces a ?lang=xx.
   function setLang(lang) {
     if (!LANGUAGE_NAMES[lang]) return;
     loadLanguage(lang, (ok) => {
       if (!ok) return; // file unavailable (offline, not cached yet): keep the current language
+      dropParam();
       safeSet(STORAGE_KEY, lang);
       apply(lang);
     });
+  }
+
+  // Loads and shows a language without saving it (the start-up fallback,
+  // which must not turn a ?lang=xx into a saved choice).
+  function useLang(lang) {
+    if (!LANGUAGE_NAMES[lang]) return;
+    loadLanguage(lang, (ok) => { if (ok) apply(lang); });
   }
 
   // Builds a single <select> per .lang-switch container, listing every
@@ -2754,6 +2840,8 @@ const I18n = (function () {
     setKey: setKey,
     getLang: getLang,
     setLang: setLang,
+    useLang: useLang,
+    paramLang: paramLang,
     apply: apply,
     init: init,
     onChange: onChange,
@@ -2793,6 +2881,6 @@ if (typeof window !== "undefined") {
     // Fallback in case the synchronous load above could not run: load the
     // missing files now and switch over once they are there.
     const lang = I18n.getLang();
-    if (!I18n.isReady(lang)) I18n.setLang(lang);
+    if (!I18n.isReady(lang)) I18n.useLang(lang);
   });
 }

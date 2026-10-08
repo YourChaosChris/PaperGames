@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "papergames-cache-v174";
+const CACHE_NAME = "papergames-cache-v175";
 
 const APP_SHELL = [
   "./",
@@ -514,13 +514,21 @@ self.addEventListener("fetch", (event) => {
   // never reaching the network at all - the background "revalidation"
   // would then just re-store the same stale response, and updates would
   // only ever appear once that HTTP cache entry happens to expire.
+  //
+  // page.html?lang=xx is page.html shown in another language (the page picks
+  // the language itself, see tools/seo.js): all of them share the cache
+  // entry of page.html, so they open offline too and the cache doesn't fill
+  // up with twelve copies of every page.
+  const url = new URL(req.url);
+  const langPage = /[?&]lang=/.test(url.search);
+  const key = langPage ? url.origin + url.pathname : req;
   event.respondWith(
     caches.open(CACHE_NAME).then((cache) =>
-      cache.match(req).then((cached) => {
+      cache.match(key, langPage ? { ignoreSearch: true } : undefined).then((cached) => {
         const networkUpdate = fetch(req, { cache: "reload" })
           .then((resp) => {
             if (resp && resp.ok) {
-              cache.put(req, resp.clone());
+              cache.put(key, resp.clone());
             }
             return resp;
           })
