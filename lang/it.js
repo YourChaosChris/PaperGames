@@ -607,7 +607,7 @@ STRINGS.it = {
     calm_point_7: "Dopo la prima apertura tutto funziona senza internet, se il browser lo supporta, tranne gli scacchi online.",
     calm_point_8: "Anche per bambini: nei giochi non c'è niente da comprare né da condividere. La pagina «Informazioni» ha un link facoltativo per donare tramite PayPal.",
     seo_title_calm: "Giocare con calma – giochi senza pubblicità né animazioni | PaperGames",
-    seo_desc_calm: "PaperGames si gioca con calma: niente animazioni, suoni, pubblicità, notifiche, account o tracciamento. Fatto per l'e-ink, funziona offline.",
+    seo_desc_calm: "PaperGames si gioca con calma: niente animazioni, suoni, pubblicità, notifiche o tracciamento, e nessun account necessario. Fatto per l'e-ink, funziona offline.",
     seo_title_games: "Tutti i giochi – PaperGames",
     seo_desc_games: "Sfoglia, cerca e ordina tutti i 65 giochi da tavolo e rompicapi gratuiti di PaperGames, in ordine alfabetico o per tipo.",
     seo_title_guide: "Guida all'installazione | PaperGames",

@@ -607,7 +607,7 @@ STRINGS.fr = {
     calm_point_7: "Après la première visite, tout fonctionne hors ligne si le navigateur le permet, sauf les échecs en ligne.",
     calm_point_8: "Aussi pour les enfants : rien à acheter ni à partager dans les jeux. La page « À propos » propose un lien de don facultatif vers PayPal.",
     seo_title_calm: "Jouer au calme – jeux sans publicité ni animations | PaperGames",
-    seo_desc_calm: "PaperGames se joue au calme : pas d'animations, pas de sons, pas de publicité, pas de notifications, pas de compte, pas de pistage. Pour l'encre électronique, hors ligne.",
+    seo_desc_calm: "PaperGames se joue au calme : pas d'animations, pas de sons, pas de publicité, pas de notifications, aucun compte nécessaire, pas de pistage. Pour l'encre électronique, hors ligne.",
     seo_title_games: "Tous les jeux – PaperGames",
     seo_desc_games: "Parcourez, recherchez et triez les 65 jeux de société et casse-tête gratuits de PaperGames, par ordre alphabétique ou par type.",
     seo_title_guide: "Guide d'installation | PaperGames",

@@ -540,7 +540,7 @@ STRINGS.nl = {
     calm_point_7: "Na het eerste bezoek werkt alles zonder internet, als de browser dat ondersteunt – behalve online schaken.",
     calm_point_8: "Ook voor kinderen: in de spellen valt niets te kopen en niets te delen. De pagina ‘Over’ bevat een vrijwillige donatielink naar PayPal.",
     seo_title_calm: "Rustig spelen – spellen zonder reclame en animaties | PaperGames",
-    seo_desc_calm: "PaperGames speelt rustig: geen animaties, geluid, reclame, meldingen, account of tracking. Gemaakt voor e-ink, werkt offline.",
+    seo_desc_calm: "PaperGames speelt rustig: geen animaties, geluid, reclame, meldingen of tracking, en geen account nodig. Gemaakt voor e-ink, werkt offline.",
     seo_title_games: "Alle spellen – PaperGames",
     seo_desc_games: "Blader door alle 65 gratis bord- en puzzelspellen van PaperGames, zoek en sorteer ze op alfabet of op soort.",
     seo_title_guide: "Installatiegids | PaperGames",

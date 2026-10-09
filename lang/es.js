@@ -607,7 +607,7 @@ STRINGS.es = {
     calm_point_7: "Tras la primera visita, todo funciona sin internet si el navegador lo admite, excepto el ajedrez en línea.",
     calm_point_8: "También para niños: en los juegos no hay nada que comprar ni que compartir. La página «Acerca de» tiene un enlace voluntario de donación a PayPal.",
     seo_title_calm: "Jugar con calma – juegos sin publicidad ni animaciones | PaperGames",
-    seo_desc_calm: "PaperGames se juega con calma: sin animaciones, sonidos, publicidad, notificaciones, cuenta ni rastreo. Hecho para tinta electrónica, funciona sin conexión.",
+    seo_desc_calm: "PaperGames se juega con calma: sin animaciones, sonidos, publicidad, notificaciones ni rastreo, y sin necesidad de cuenta. Hecho para tinta electrónica, funciona sin conexión.",
     seo_title_games: "Todos los juegos – PaperGames",
     seo_desc_games: "Explora, busca y ordena los 65 juegos de mesa y rompecabezas gratuitos de PaperGames, por orden alfabético o por tipo.",
     seo_title_guide: "Guía de instalación | PaperGames",

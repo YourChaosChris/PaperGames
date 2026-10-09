@@ -607,7 +607,7 @@ STRINGS.zh = {
     calm_point_7: "第一次打开之后，只要浏览器支持，一切都能离线使用，在线国际象棋除外。",
     calm_point_8: "也适合孩子：游戏里没有可以购买或分享的东西。“关于”页面有一个通往 PayPal 的自愿捐赠链接。",
     seo_title_calm: "安静地玩 – 没有广告和动画的游戏 | PaperGames",
-    seo_desc_calm: "PaperGames 安静可玩：没有动画、声音、广告、通知、账号和跟踪。为电子墨水而做，可离线使用。",
+    seo_desc_calm: "PaperGames 安静可玩：没有动画、声音、广告、通知和跟踪，也不需要账号。为电子墨水而做，可离线使用。",
     seo_title_games: "全部游戏——PaperGames",
     seo_desc_games: "浏览、搜索并排序 PaperGames 中全部65款免费棋盘与益智游戏，可按字母或类型排列。",
     seo_title_guide: "安装指南 | PaperGames",

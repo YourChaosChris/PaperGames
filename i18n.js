@@ -681,7 +681,7 @@ const STRINGS = {
     calm_point_7: "After the first visit everything works without internet in browsers that support it, except online chess.",
     calm_point_8: "For children too: there is nothing to buy and nothing to share in the games. The About page has a voluntary donation link to PayPal.",
     seo_title_calm: "Calm play – quiet, ad-free games without animations | PaperGames",
-    seo_desc_calm: "PaperGames plays quietly: no animations, no sounds, no ads, no notifications, no account, no tracking. Made for e-ink, works offline.",
+    seo_desc_calm: "PaperGames plays quietly: no animations, no sounds, no ads, no notifications, no account needed, no tracking. Made for e-ink, works offline.",
     seo_title_games: "All Games – PaperGames",
     seo_desc_games: "Browse, search, and sort all 65 free board and puzzle games in PaperGames, alphabetically or by type.",
     seo_title_guide: "Setup Guide | PaperGames",

@@ -613,7 +613,7 @@ STRINGS.pl = {
     calm_point_7: "Po pierwszym otwarciu wszystko działa bez internetu, jeśli przeglądarka to obsługuje – poza szachami online.",
     calm_point_8: "Także dla dzieci: w grach nie ma nic do kupienia ani do udostępniania. Strona „O projekcie” zawiera dobrowolny link do darowizny przez PayPal.",
     seo_title_calm: "Spokojna gra – gry bez reklam i animacji | PaperGames",
-    seo_desc_calm: "PaperGames to spokojna gra: bez animacji, dźwięków, reklam, powiadomień, konta i śledzenia. Dla e-ink, działa offline.",
+    seo_desc_calm: "PaperGames to spokojna gra: bez animacji, dźwięków, reklam, powiadomień i śledzenia, bez potrzeby zakładania konta. Dla e-ink, działa offline.",
     seo_title_games: "Wszystkie gry – PaperGames",
     seo_desc_games: "Przeglądaj, wyszukuj i sortuj wszystkie 65 darmowych gier planszowych i łamigłówek PaperGames, alfabetycznie lub według rodzaju.",
     seo_title_guide: "Przewodnik instalacji | PaperGames",
