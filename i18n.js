@@ -1438,7 +1438,7 @@ const STRINGS = {
     cake_dog_sits: "The dog sits",
 
 
-    cake_win_dog: "Found it! The dog took the cake.",
+    cake_win_dog: "The dog took the cake.",
 
 
     cake_cat_name: "Cat",
@@ -1459,7 +1459,7 @@ const STRINGS = {
     cake_cat_sits: "The cat sits",
 
 
-    cake_win_cat: "Found it! The cat took the cake.",
+    cake_win_cat: "The cat took the cake.",
 
 
     cake_rabbit_name: "Rabbit",
@@ -1480,7 +1480,7 @@ const STRINGS = {
     cake_rabbit_sits: "The rabbit sits",
 
 
-    cake_win_rabbit: "Found it! The rabbit took the cake.",
+    cake_win_rabbit: "The rabbit took the cake.",
 
 
     cake_mouse_name: "Mouse",
@@ -1501,7 +1501,7 @@ const STRINGS = {
     cake_mouse_sits: "The mouse sits",
 
 
-    cake_win_mouse: "Found it! The mouse took the cake.",
+    cake_win_mouse: "The mouse took the cake.",
 
 
     cake_hedgehog_name: "Hedgehog",
@@ -1522,7 +1522,7 @@ const STRINGS = {
     cake_hedgehog_sits: "The hedgehog sits",
 
 
-    cake_win_hedgehog: "Found it! The hedgehog took the cake.",
+    cake_win_hedgehog: "The hedgehog took the cake.",
 
 
     cake_room_kitchen_name: "Kitchen",

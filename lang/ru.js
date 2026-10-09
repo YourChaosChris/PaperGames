@@ -1356,7 +1356,7 @@ STRINGS.ru = {
     cake_dog_sits: "Собака сидит",
 
 
-    cake_win_dog: "Найдено! Собака взяла торт.",
+    cake_win_dog: "Собака взяла торт.",
 
 
     cake_cat_name: "Кошка",
@@ -1377,7 +1377,7 @@ STRINGS.ru = {
     cake_cat_sits: "Кошка сидит",
 
 
-    cake_win_cat: "Найдено! Кошка взяла торт.",
+    cake_win_cat: "Кошка взяла торт.",
 
 
     cake_rabbit_name: "Кролик",
@@ -1398,7 +1398,7 @@ STRINGS.ru = {
     cake_rabbit_sits: "Кролик сидит",
 
 
-    cake_win_rabbit: "Найдено! Кролик взял торт.",
+    cake_win_rabbit: "Кролик взял торт.",
 
 
     cake_mouse_name: "Мышь",
@@ -1419,7 +1419,7 @@ STRINGS.ru = {
     cake_mouse_sits: "Мышь сидит",
 
 
-    cake_win_mouse: "Найдено! Мышь взяла торт.",
+    cake_win_mouse: "Мышь взяла торт.",
 
 
     cake_hedgehog_name: "Ёж",
@@ -1440,7 +1440,7 @@ STRINGS.ru = {
     cake_hedgehog_sits: "Ёж сидит",
 
 
-    cake_win_hedgehog: "Найдено! Ёж взял торт.",
+    cake_win_hedgehog: "Ёж взял торт.",
 
 
     cake_room_kitchen_name: "Кухня",

@@ -1427,7 +1427,7 @@ STRINGS.de = {
     cake_dog_sits: "Der Hund sitzt",
 
 
-    cake_win_dog: "Gefunden! Der Hund hat den Kuchen genommen.",
+    cake_win_dog: "Der Hund hat den Kuchen genommen.",
 
 
     cake_cat_name: "Katze",
@@ -1448,7 +1448,7 @@ STRINGS.de = {
     cake_cat_sits: "Die Katze sitzt",
 
 
-    cake_win_cat: "Gefunden! Die Katze hat den Kuchen genommen.",
+    cake_win_cat: "Die Katze hat den Kuchen genommen.",
 
 
     cake_rabbit_name: "Hase",
@@ -1469,7 +1469,7 @@ STRINGS.de = {
     cake_rabbit_sits: "Der Hase sitzt",
 
 
-    cake_win_rabbit: "Gefunden! Der Hase hat den Kuchen genommen.",
+    cake_win_rabbit: "Der Hase hat den Kuchen genommen.",
 
 
     cake_mouse_name: "Maus",
@@ -1490,7 +1490,7 @@ STRINGS.de = {
     cake_mouse_sits: "Die Maus sitzt",
 
 
-    cake_win_mouse: "Gefunden! Die Maus hat den Kuchen genommen.",
+    cake_win_mouse: "Die Maus hat den Kuchen genommen.",
 
 
     cake_hedgehog_name: "Igel",
@@ -1511,7 +1511,7 @@ STRINGS.de = {
     cake_hedgehog_sits: "Der Igel sitzt",
 
 
-    cake_win_hedgehog: "Gefunden! Der Igel hat den Kuchen genommen.",
+    cake_win_hedgehog: "Der Igel hat den Kuchen genommen.",
 
 
     cake_room_kitchen_name: "Küche",
@@ -1520,7 +1520,7 @@ STRINGS.de = {
     cake_room_kitchen_in: "in der Küche",
 
 
-    cake_room_living_name: "Wohn\u00adzimmer",
+    cake_room_living_name: "Wohnzimmer",
 
 
     cake_room_living_in: "im Wohnzimmer",
@@ -1538,7 +1538,7 @@ STRINGS.de = {
     cake_room_bath_in: "im Bad",
 
 
-    cake_room_bedroom_name: "Schlaf\u00adzimmer",
+    cake_room_bedroom_name: "Schlafzimmer",
 
 
     cake_room_bedroom_in: "im Schlafzimmer",

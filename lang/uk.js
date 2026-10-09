@@ -1356,7 +1356,7 @@ STRINGS.uk = {
     cake_dog_sits: "Пес сидить",
 
 
-    cake_win_dog: "Знайдено! Пес узяв торт.",
+    cake_win_dog: "Пес узяв торт.",
 
 
     cake_cat_name: "Кіт",
@@ -1377,7 +1377,7 @@ STRINGS.uk = {
     cake_cat_sits: "Кіт сидить",
 
 
-    cake_win_cat: "Знайдено! Кіт узяв торт.",
+    cake_win_cat: "Кіт узяв торт.",
 
 
     cake_rabbit_name: "Кролик",
@@ -1398,7 +1398,7 @@ STRINGS.uk = {
     cake_rabbit_sits: "Кролик сидить",
 
 
-    cake_win_rabbit: "Знайдено! Кролик узяв торт.",
+    cake_win_rabbit: "Кролик узяв торт.",
 
 
     cake_mouse_name: "Миша",
@@ -1419,7 +1419,7 @@ STRINGS.uk = {
     cake_mouse_sits: "Миша сидить",
 
 
-    cake_win_mouse: "Знайдено! Миша взяла торт.",
+    cake_win_mouse: "Миша взяла торт.",
 
 
     cake_hedgehog_name: "Їжак",
@@ -1440,7 +1440,7 @@ STRINGS.uk = {
     cake_hedgehog_sits: "Їжак сидить",
 
 
-    cake_win_hedgehog: "Знайдено! Їжак узяв торт.",
+    cake_win_hedgehog: "Їжак узяв торт.",
 
 
     cake_room_kitchen_name: "Кухня",

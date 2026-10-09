@@ -1356,7 +1356,7 @@ STRINGS.nl = {
     cake_dog_sits: "De hond zit",
 
 
-    cake_win_dog: "Gevonden! De hond heeft de taart gepakt.",
+    cake_win_dog: "De hond heeft de taart gepakt.",
 
 
     cake_cat_name: "Kat",
@@ -1377,7 +1377,7 @@ STRINGS.nl = {
     cake_cat_sits: "De kat zit",
 
 
-    cake_win_cat: "Gevonden! De kat heeft de taart gepakt.",
+    cake_win_cat: "De kat heeft de taart gepakt.",
 
 
     cake_rabbit_name: "Konijn",
@@ -1398,7 +1398,7 @@ STRINGS.nl = {
     cake_rabbit_sits: "Het konijn zit",
 
 
-    cake_win_rabbit: "Gevonden! Het konijn heeft de taart gepakt.",
+    cake_win_rabbit: "Het konijn heeft de taart gepakt.",
 
 
     cake_mouse_name: "Muis",
@@ -1419,7 +1419,7 @@ STRINGS.nl = {
     cake_mouse_sits: "De muis zit",
 
 
-    cake_win_mouse: "Gevonden! De muis heeft de taart gepakt.",
+    cake_win_mouse: "De muis heeft de taart gepakt.",
 
 
     cake_hedgehog_name: "Egel",
@@ -1440,7 +1440,7 @@ STRINGS.nl = {
     cake_hedgehog_sits: "De egel zit",
 
 
-    cake_win_hedgehog: "Gevonden! De egel heeft de taart gepakt.",
+    cake_win_hedgehog: "De egel heeft de taart gepakt.",
 
 
     cake_room_kitchen_name: "Keuken",
@@ -1449,7 +1449,7 @@ STRINGS.nl = {
     cake_room_kitchen_in: "in de keuken",
 
 
-    cake_room_living_name: "Woon\u00adkamer",
+    cake_room_living_name: "Woonkamer",
 
 
     cake_room_living_in: "in de woonkamer",
@@ -1461,13 +1461,13 @@ STRINGS.nl = {
     cake_room_hall_in: "in de gang",
 
 
-    cake_room_bath_name: "Bad\u00adkamer",
+    cake_room_bath_name: "Badkamer",
 
 
     cake_room_bath_in: "in de badkamer",
 
 
-    cake_room_bedroom_name: "Slaap\u00adkamer",
+    cake_room_bedroom_name: "Slaapkamer",
 
 
     cake_room_bedroom_in: "in de slaapkamer",

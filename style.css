@@ -10208,9 +10208,11 @@ button.concan-meld {
 /* Who Took the Cake? (cake-app.js): a floor plan of square cells
    (float-grid, height set from JS like the other boards). Rooms are told
    apart by wall thickness - thick lines between rooms, thin ones inside -
-   never by grey. The room's name sits in a strip at the top of its first
-   cell; furniture is drawn small in the bottom left corner, a placed thing
-   large on the right, so neither ever covers the name. The window hangs
+   never by grey. The room's name sits on one line in the top strip of a
+   run of its cells wide enough for it (else a number, spelled out in the
+   legend under the board); furniture is drawn small in the bottom left
+   corner, a placed thing large on the right below that strip, so neither
+   ever covers the name. The window hangs
    outside the board on the left or right wall of its row. */
 .cake-board-wrap {
   position: relative;
@@ -10257,16 +10259,28 @@ button.concan-meld {
 .cake-room-label {
   position: absolute;
   box-sizing: border-box;
-  padding: 4px 3px 0 5px;
+  padding: 3px 3px 0 5px;
   font-size: 0.7rem;
   line-height: 1.1;
   font-weight: 700;
   text-align: start;
-  overflow-wrap: break-word;
-  -webkit-hyphens: manual;
-  hyphens: manual;
-  max-height: calc(2.2em + 4px);
+  white-space: nowrap;
   overflow: hidden;
+}
+
+/* A room whose name fits nowhere in its cells shows a number; the legend
+   under the board spells it out. */
+.cake-legend {
+  margin: 0.4rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.cake-legend-item {
+  display: inline-block;
+  margin: 0 0.6rem;
+  white-space: nowrap;
 }
 
 .cake-furn,
@@ -10285,9 +10299,9 @@ button.concan-meld {
 
 .cake-thing {
   right: 4%;
-  bottom: 6%;
-  width: 60%;
-  height: 60%;
+  bottom: 5%;
+  width: 56%;
+  height: 56%;
 }
 
 .cake-furn svg,

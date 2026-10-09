@@ -1356,7 +1356,7 @@ STRINGS.es = {
     cake_dog_sits: "El perro está",
 
 
-    cake_win_dog: "¡Encontrado! El perro se llevó el pastel.",
+    cake_win_dog: "El perro se llevó el pastel.",
 
 
     cake_cat_name: "Gato",
@@ -1377,7 +1377,7 @@ STRINGS.es = {
     cake_cat_sits: "El gato está",
 
 
-    cake_win_cat: "¡Encontrado! El gato se llevó el pastel.",
+    cake_win_cat: "El gato se llevó el pastel.",
 
 
     cake_rabbit_name: "Conejo",
@@ -1398,7 +1398,7 @@ STRINGS.es = {
     cake_rabbit_sits: "El conejo está",
 
 
-    cake_win_rabbit: "¡Encontrado! El conejo se llevó el pastel.",
+    cake_win_rabbit: "El conejo se llevó el pastel.",
 
 
     cake_mouse_name: "Ratón",
@@ -1419,7 +1419,7 @@ STRINGS.es = {
     cake_mouse_sits: "El ratón está",
 
 
-    cake_win_mouse: "¡Encontrado! El ratón se llevó el pastel.",
+    cake_win_mouse: "El ratón se llevó el pastel.",
 
 
     cake_hedgehog_name: "Erizo",
@@ -1440,7 +1440,7 @@ STRINGS.es = {
     cake_hedgehog_sits: "El erizo está",
 
 
-    cake_win_hedgehog: "¡Encontrado! El erizo se llevó el pastel.",
+    cake_win_hedgehog: "El erizo se llevó el pastel.",
 
 
     cake_room_kitchen_name: "Cocina",

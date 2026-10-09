@@ -163,20 +163,18 @@ function buildCakeBoardDOM() {
     cell.addEventListener("click", () => onCakeCellClick(i));
     boardEl.appendChild(cell);
   }
-  // Room names: one label per room, at the start of the room's longest
-  // run of cells in one row (topmost first), as wide as that run. The
-  // labels sit in the top strip of the cells, which furniture and placed
-  // things leave free.
+  // Room names: one label per room in the top strip of a run of the
+  // room's cells in one row - a strip furniture and placed things leave
+  // free. Which run is picked once the text and cell size are known
+  // (fitCakeLabels).
   const labels = document.createElement("div");
   labels.className = "cake-labels";
   labels.setAttribute("aria-hidden", "true");
-  cakeLabelSpots(p).forEach((spot) => {
+  const rooms = Array.from(new Set(p.rooms)).sort((a, b) => a - b);
+  rooms.forEach((room) => {
     const el = document.createElement("span");
     el.className = "cake-room-label";
-    el.dataset.room = spot.room;
-    el.style.left = (spot.col * 100 / n) + "%";
-    el.style.top = (spot.row * 100 / n) + "%";
-    el.style.width = (spot.len * 100 / n) + "%";
+    el.dataset.room = room;
     labels.appendChild(el);
   });
   boardEl.appendChild(labels);
@@ -233,9 +231,13 @@ function sizeCakeBoard() {
     side = Math.min(w, Math.max(room, n * 48));
   }
   if (side < w) wrap.style.maxWidth = Math.floor(side + (wrap.offsetWidth - w)) + "px";
-  const size = Math.floor(side / n);
+  // The board's frame is part of its height (border-box), so it is added
+  // on top of the cells - otherwise the bottom row is cut off and the
+  // room names, placed in percent, drift upwards.
+  const frame = boardEl.offsetWidth - boardEl.clientWidth;
+  const size = Math.floor((side - frame) / n);
   boardEl.querySelectorAll(".cake-cell").forEach((cell) => { cell.style.height = size + "px"; });
-  boardEl.style.height = (size * AppStateCake.puzzle.n) + "px";
+  boardEl.style.height = (size * n + frame) + "px";
   fitCakeLabels();
 }
 
@@ -262,19 +264,22 @@ function buildCakePalette() {
   });
 }
 
-function cakeLabelSpots(p) {
-  const n = p.n, best = {};
+// Every run of one room's cells in a row, per room: longest first, then
+// topmost, then leftmost.
+function cakeLabelRuns(p) {
+  const n = p.n, runs = {};
   for (let r = 0; r < n; r++) {
     let c = 0;
     while (c < n) {
       const room = p.rooms[r * n + c];
       let len = 1;
       while (c + len < n && p.rooms[r * n + c + len] === room) len++;
-      if (!best[room] || len > best[room].len) best[room] = { room, row: r, col: c, len };
+      (runs[room] = runs[room] || []).push({ row: r, col: c, len });
       c += len;
     }
   }
-  return Object.keys(best).map((k) => best[k]);
+  Object.keys(runs).forEach((k) => runs[k].sort((a, b) => b.len - a.len || a.row - b.row || a.col - b.col));
+  return runs;
 }
 
 function cakeThingAt(i) {
@@ -318,26 +323,56 @@ function renderCakeBoard() {
     if (AppStateCake.hintCell === i) parts.unshift(tCake("cake_aria_hint"));
     cell.setAttribute("aria-label", parts.join(", "));
   });
-  document.querySelectorAll("#cake-board .cake-room-label").forEach((el) => {
-    el.textContent = tCake("cake_room_" + p.roomNames[parseInt(el.dataset.room, 10)] + "_name");
-  });
   fitCakeLabels();
 }
 
-// A room name stays on one line in its strip: too long, and the font
-// gets smaller (down to 9px); still too long, and it may wrap onto a
-// second line (long compounds carry soft hyphens in the language files).
+// A room name is written out in full, on one line, at the normal size,
+// on the first run of its cells that is wide enough. A room with no such
+// run gets a number instead, and the legend under the board says which
+// room the number stands for.
 function fitCakeLabels() {
+  const p = AppStateCake.puzzle;
+  const legend = document.getElementById("cake-legend");
+  if (!p) return;
+  const n = p.n;
+  const runs = cakeLabelRuns(p);
+  const keyed = [];
   document.querySelectorAll("#cake-board .cake-room-label").forEach((el) => {
-    el.style.fontSize = "";
-    el.style.whiteSpace = "nowrap";
-    let fs = parseFloat(window.getComputedStyle(el).fontSize) || 11;
-    while (el.scrollWidth > el.clientWidth && fs > 9) {
-      fs -= 0.5;
-      el.style.fontSize = fs + "px";
-    }
-    if (el.scrollWidth > el.clientWidth) el.style.whiteSpace = "";
+    const room = parseInt(el.dataset.room, 10);
+    const name = tCake("cake_room_" + p.roomNames[room] + "_name");
+    const place = (run) => {
+      el.style.left = (run.col * 100 / n) + "%";
+      el.style.top = (run.row * 100 / n) + "%";
+      el.style.width = (run.len * 100 / n) + "%";
+    };
+    el.textContent = name;
+    el.classList.remove("cake-room-key");
+    const fits = runs[room].some((run) => {
+      place(run);
+      return el.scrollWidth <= el.clientWidth;
+    });
+    if (fits) return;
+    place(runs[room][0]);
+    keyed.push({ el, name });
   });
+  // Numbers follow the board from top to bottom, left to right.
+  keyed.sort((a, b) => parseFloat(a.el.style.top) - parseFloat(b.el.style.top) || parseFloat(a.el.style.left) - parseFloat(b.el.style.left));
+  keyed.forEach((k, idx) => {
+    k.el.textContent = String(idx + 1);
+    k.el.classList.add("cake-room-key");
+  });
+  if (!legend) return;
+  legend.innerHTML = "";
+  keyed.forEach((k, idx) => {
+    const item = document.createElement("span");
+    item.className = "cake-legend-item";
+    const key = document.createElement("b");
+    key.textContent = String(idx + 1);
+    item.appendChild(key);
+    item.appendChild(document.createTextNode("\u00a0" + k.name));
+    legend.appendChild(item);
+  });
+  legend.classList.toggle("hidden", !keyed.length);
 }
 
 function renderCakePalette() {

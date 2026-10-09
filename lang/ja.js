@@ -1356,7 +1356,7 @@ STRINGS.ja = {
     cake_dog_sits: "犬は",
 
 
-    cake_win_dog: "見つけた!ケーキを取ったのは犬です。",
+    cake_win_dog: "ケーキを取ったのは犬です。",
 
 
     cake_cat_name: "ネコ",
@@ -1377,7 +1377,7 @@ STRINGS.ja = {
     cake_cat_sits: "ネコは",
 
 
-    cake_win_cat: "見つけた!ケーキを取ったのはネコです。",
+    cake_win_cat: "ケーキを取ったのはネコです。",
 
 
     cake_rabbit_name: "ウサギ",
@@ -1398,7 +1398,7 @@ STRINGS.ja = {
     cake_rabbit_sits: "ウサギは",
 
 
-    cake_win_rabbit: "見つけた!ケーキを取ったのはウサギです。",
+    cake_win_rabbit: "ケーキを取ったのはウサギです。",
 
 
     cake_mouse_name: "ネズミ",
@@ -1419,7 +1419,7 @@ STRINGS.ja = {
     cake_mouse_sits: "ネズミは",
 
 
-    cake_win_mouse: "見つけた!ケーキを取ったのはネズミです。",
+    cake_win_mouse: "ケーキを取ったのはネズミです。",
 
 
     cake_hedgehog_name: "ハリネズミ",
@@ -1440,7 +1440,7 @@ STRINGS.ja = {
     cake_hedgehog_sits: "ハリネズミは",
 
 
-    cake_win_hedgehog: "見つけた!ケーキを取ったのはハリネズミです。",
+    cake_win_hedgehog: "ケーキを取ったのはハリネズミです。",
 
 
     cake_room_kitchen_name: "台所",

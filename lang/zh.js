@@ -1356,7 +1356,7 @@ STRINGS.zh = {
     cake_dog_sits: "狗坐在",
 
 
-    cake_win_dog: "找到了！是狗拿走了蛋糕。",
+    cake_win_dog: "是狗拿走了蛋糕。",
 
 
     cake_cat_name: "猫",
@@ -1377,7 +1377,7 @@ STRINGS.zh = {
     cake_cat_sits: "猫坐在",
 
 
-    cake_win_cat: "找到了！是猫拿走了蛋糕。",
+    cake_win_cat: "是猫拿走了蛋糕。",
 
 
     cake_rabbit_name: "兔子",
@@ -1398,7 +1398,7 @@ STRINGS.zh = {
     cake_rabbit_sits: "兔子坐在",
 
 
-    cake_win_rabbit: "找到了！是兔子拿走了蛋糕。",
+    cake_win_rabbit: "是兔子拿走了蛋糕。",
 
 
     cake_mouse_name: "老鼠",
@@ -1419,7 +1419,7 @@ STRINGS.zh = {
     cake_mouse_sits: "老鼠坐在",
 
 
-    cake_win_mouse: "找到了！是老鼠拿走了蛋糕。",
+    cake_win_mouse: "是老鼠拿走了蛋糕。",
 
 
     cake_hedgehog_name: "刺猬",
@@ -1440,7 +1440,7 @@ STRINGS.zh = {
     cake_hedgehog_sits: "刺猬坐在",
 
 
-    cake_win_hedgehog: "找到了！是刺猬拿走了蛋糕。",
+    cake_win_hedgehog: "是刺猬拿走了蛋糕。",
 
 
     cake_room_kitchen_name: "厨房",
