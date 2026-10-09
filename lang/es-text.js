@@ -1565,7 +1565,7 @@ Object.assign(STRINGS.es, {
     cake_term_culprit: "¿Quién se llevó el pastel?",
     cake_rules_culprit: "Exactamente un animal está en la misma habitación que el pastel. Ese animal se lo llevó.",
     cake_term_input: "Cómo se juega",
-    cake_rules_input: "Elige un botón bajo el plano - un animal, el pastel o X para «aquí no hay nada» - y toca una casilla. Si vuelves a tocar la misma casilla con la misma elección, se quita. Toca un indicio para marcarlo. El botón «Pista» muestra primero un error; si no hay, coloca una cosa correctamente.",
+    cake_rules_input: "Elige un botón bajo el plano - un animal, el pastel o X para «aquí no hay nada» - y toca una casilla. Si vuelves a tocar la misma casilla con la misma elección, se quita. Toca un indicio para marcarlo. El botón «Pista» muestra primero un error; si no hay, coloca el animal que se puede deducir a continuación. El pastel lo colocas tú: cuando todos los animales están en su sitio, la pista solo te dice que quedan una fila y una columna.",
     cake_term_levels: "Niveles",
     cake_rules_levels: "Fácil: 4x4 con 3 animales y deducciones sencillas. Medio: 5x5 con 4 animales. Difícil: 6x6 con 5 animales y cadenas de razonamiento más largas.",
     cake_rules_example_title: "Un ejemplo resuelto",

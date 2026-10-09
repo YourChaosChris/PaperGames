@@ -1520,7 +1520,7 @@ STRINGS.de = {
     cake_room_kitchen_in: "in der Küche",
 
 
-    cake_room_living_name: "Wohnzimmer",
+    cake_room_living_name: "Wohn\u00adzimmer",
 
 
     cake_room_living_in: "im Wohnzimmer",
@@ -1538,7 +1538,7 @@ STRINGS.de = {
     cake_room_bath_in: "im Bad",
 
 
-    cake_room_bedroom_name: "Schlafzimmer",
+    cake_room_bedroom_name: "Schlaf\u00adzimmer",
 
 
     cake_room_bedroom_in: "im Schlafzimmer",
@@ -1644,6 +1644,7 @@ STRINGS.de = {
 
 
     cake_hint_step: "{THING}: Zeile {R}, Spalte {C}.",
+    cake_hint_last: "Alle Tiere stehen richtig. Nur noch eine Zeile und eine Spalte sind frei - dort steht der Kuchen.",
 
 
     cake_aria_cell: "Zeile {R}, Spalte {C}",

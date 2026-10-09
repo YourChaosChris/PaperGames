@@ -207,14 +207,36 @@ function buildCakeBoardDOM() {
 }
 
 // Square cells by explicit pixel height (no CSS aspect-ratio on e-ink).
+// The board also shrinks so that the info line, board, buttons and clues
+// fit on one screen together where possible - on an e-reader every scroll
+// is a page turn - but never below 48px cells.
 function sizeCakeBoard() {
   const boardEl = document.getElementById("cake-board");
-  if (!boardEl || !AppStateCake.puzzle) return;
+  const wrap = document.getElementById("cake-board-wrap");
+  if (!boardEl || !wrap || !AppStateCake.puzzle) return;
+  const n = AppStateCake.puzzle.n;
+  wrap.style.maxWidth = "";
   const w = boardEl.getBoundingClientRect().width;
   if (!w) return;
-  const size = w / AppStateCake.puzzle.n;
+  let side = w;
+  const info = document.getElementById("board-info");
+  const last = document.getElementById("cake-clues");
+  const viewH = window.innerHeight || document.documentElement.clientHeight;
+  if (info && last && viewH) {
+    // First choice: the whole page down to the last clue on one screen;
+    // if that would make the cells too small, from the info line down.
+    const boardH = boardEl.getBoundingClientRect().height;
+    const scrollY = window.pageYOffset || 0;
+    const lastBottom = last.getBoundingClientRect().bottom + scrollY;
+    let room = viewH - (lastBottom - boardH) - 16;
+    if (room < n * 60) room = viewH - (last.getBoundingClientRect().bottom - info.getBoundingClientRect().top - boardH) - 16;
+    side = Math.min(w, Math.max(room, n * 48));
+  }
+  if (side < w) wrap.style.maxWidth = Math.floor(side + (wrap.offsetWidth - w)) + "px";
+  const size = Math.floor(side / n);
   boardEl.querySelectorAll(".cake-cell").forEach((cell) => { cell.style.height = size + "px"; });
   boardEl.style.height = (size * AppStateCake.puzzle.n) + "px";
+  fitCakeLabels();
 }
 
 function buildCakePalette() {
@@ -298,6 +320,23 @@ function renderCakeBoard() {
   });
   document.querySelectorAll("#cake-board .cake-room-label").forEach((el) => {
     el.textContent = tCake("cake_room_" + p.roomNames[parseInt(el.dataset.room, 10)] + "_name");
+  });
+  fitCakeLabels();
+}
+
+// A room name stays on one line in its strip: too long, and the font
+// gets smaller (down to 9px); still too long, and it may wrap onto a
+// second line (long compounds carry soft hyphens in the language files).
+function fitCakeLabels() {
+  document.querySelectorAll("#cake-board .cake-room-label").forEach((el) => {
+    el.style.fontSize = "";
+    el.style.whiteSpace = "nowrap";
+    let fs = parseFloat(window.getComputedStyle(el).fontSize) || 11;
+    while (el.scrollWidth > el.clientWidth && fs > 9) {
+      fs -= 0.5;
+      el.style.fontSize = fs + "px";
+    }
+    if (el.scrollWidth > el.clientWidth) el.style.whiteSpace = "";
   });
 }
 
@@ -415,6 +454,10 @@ function hintCake() {
   } else if (h.kind === "wrongx") {
     AppStateCake.hintCell = h.cell;
     setCakeStatus("cake_hint_wrongx");
+    renderCakeAll();
+  } else if (h.kind === "last") {
+    AppStateCake.hintCell = -1;
+    setCakeStatus("cake_hint_last");
     renderCakeAll();
   } else if (h.kind === "step") {
     const k = cakeThingAt(h.cell);

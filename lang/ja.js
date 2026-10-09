@@ -1573,6 +1573,7 @@ STRINGS.ja = {
 
 
     cake_hint_step: "{THING}: {R}行目、{C}列目。",
+    cake_hint_last: "動物はすべて正しい場所にいます。空いているのは1つの行と1つの列だけです。そこにケーキがあります。",
 
 
     cake_aria_cell: "{R}行目、{C}列目",

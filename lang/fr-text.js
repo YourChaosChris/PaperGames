@@ -1565,7 +1565,7 @@ Object.assign(STRINGS.fr, {
     cake_term_culprit: "Qui a pris le gâteau ?",
     cake_rules_culprit: "Exactement un animal se trouve dans la même pièce que le gâteau. C'est lui qui l'a pris.",
     cake_term_input: "Comment jouer",
-    cake_rules_input: "Choisissez un bouton sous le plan - un animal, le gâteau ou X pour « rien ici » - puis touchez une case. Toucher à nouveau la même case avec le même choix le retire. Touchez une piste pour la cocher. Le bouton « Indice » montre d'abord une erreur, sinon il place une chose correctement.",
+    cake_rules_input: "Choisissez un bouton sous le plan - un animal, le gâteau ou X pour « rien ici » - puis touchez une case. Toucher à nouveau la même case avec le même choix le retire. Touchez une piste pour la cocher. Le bouton « Indice » montre d'abord une erreur, sinon il place l'animal que l'on peut déduire ensuite. Le gâteau, c'est vous qui le placez : quand tous les animaux sont en place, l'indice dit seulement qu'il reste une ligne et une colonne.",
     cake_term_levels: "Niveaux",
     cake_rules_levels: "Facile : 4x4 avec 3 animaux et des déductions simples. Moyen : 5x5 avec 4 animaux. Difficile : 6x6 avec 5 animaux et des raisonnements plus longs.",
     cake_rules_example_title: "Un exemple résolu",

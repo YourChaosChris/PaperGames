@@ -1573,6 +1573,7 @@ STRINGS.zh = {
 
 
     cake_hint_step: "{THING}：第{R}行，第{C}列。",
+    cake_hint_last: "所有动物都放对了。只剩一行和一列是空的——蛋糕就在那里。",
 
 
     cake_aria_cell: "第{R}行，第{C}列",

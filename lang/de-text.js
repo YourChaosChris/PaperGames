@@ -1565,7 +1565,7 @@ Object.assign(STRINGS.de, {
     cake_term_culprit: "Wer hat den Kuchen?",
     cake_rules_culprit: "Genau ein Tier ist im selben Raum wie der Kuchen. Dieses Tier hat ihn genommen.",
     cake_term_input: "So wird gespielt",
-    cake_rules_input: "Wähle unter dem Feld einen Knopf - ein Tier, den Kuchen oder X für „hier steht nichts“ - und tippe dann auf ein Kästchen. Tippst du mit derselben Auswahl noch einmal auf dasselbe Kästchen, ist es wieder weg. Tippe auf einen Hinweis, um ihn abzuhaken. Der Knopf „Tipp“ zeigt zuerst einen Fehler, sonst setzt er ein Ding richtig.",
+    cake_rules_input: "Wähle unter dem Feld einen Knopf - ein Tier, den Kuchen oder X für „hier steht nichts“ - und tippe dann auf ein Kästchen. Tippst du mit derselben Auswahl noch einmal auf dasselbe Kästchen, ist es wieder weg. Tippe auf einen Hinweis, um ihn abzuhaken. Der Knopf „Tipp“ zeigt zuerst einen Fehler, sonst setzt er das Tier, das sich als Nächstes erschließen lässt. Den Kuchen setzt du selbst: Stehen alle Tiere, sagt der Tipp nur noch, dass eine Zeile und eine Spalte übrig sind.",
     cake_term_levels: "Stufen",
     cake_rules_levels: "Leicht: 4x4 mit 3 Tieren und einfachen Schlüssen. Mittel: 5x5 mit 4 Tieren. Schwer: 6x6 mit 5 Tieren und längeren Gedankenketten.",
     cake_rules_example_title: "Ein gelöstes Beispiel",

@@ -1574,6 +1574,7 @@ STRINGS.pl = {
 
 
     cake_hint_step: "{THING}: wiersz {R}, kolumna {C}.",
+    cake_hint_last: "Wszystkie zwierzęta stoją na swoich miejscach. Wolne zostały tylko jeden wiersz i jedna kolumna - tam stoi ciasto.",
 
 
     cake_aria_cell: "Wiersz {R}, kolumna {C}",

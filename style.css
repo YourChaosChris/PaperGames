@@ -10257,14 +10257,15 @@ button.concan-meld {
 .cake-room-label {
   position: absolute;
   box-sizing: border-box;
-  padding: 6px 4px 0 6px;
+  padding: 4px 3px 0 5px;
   font-size: 0.7rem;
   line-height: 1.1;
   font-weight: 700;
   text-align: start;
   overflow-wrap: break-word;
-  hyphens: auto;
-  max-height: 2.6em;
+  -webkit-hyphens: manual;
+  hyphens: manual;
+  max-height: calc(2.2em + 4px);
   overflow: hidden;
 }
 
@@ -10362,6 +10363,29 @@ button.concan-meld {
 .cake-clues {
   margin: 0;
   padding-inline-start: 1.6rem;
+}
+
+/* The hint button right under the things to place, where the hand
+   already is. */
+.board-actions.cake-actions {
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+
+/* Two columns of clues where there is room, so board, buttons and clues
+   fit on one e-reader screen. */
+@media (min-width: 560px) {
+  .cake-clues {
+    -webkit-column-count: 2;
+    column-count: 2;
+    -webkit-column-gap: 2rem;
+    column-gap: 2rem;
+  }
+
+  .cake-clues li {
+    -webkit-column-break-inside: avoid;
+    break-inside: avoid;
+  }
 }
 
 .cake-clue {

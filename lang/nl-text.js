@@ -1565,7 +1565,7 @@ Object.assign(STRINGS.nl, {
     cake_term_culprit: "Wie heeft de taart gepakt?",
     cake_rules_culprit: "Precies één dier is in dezelfde kamer als de taart. Dat dier heeft hem gepakt.",
     cake_term_input: "Zo speel je",
-    cake_rules_input: "Kies een knop onder het bord - een dier, de taart of X voor ‘hier staat niets’ - en tik dan op een vakje. Tik je met dezelfde keuze nog eens op hetzelfde vakje, dan is het weer weg. Tik op een aanwijzing om die af te vinken. De knop ‘Tip’ toont eerst een fout en zet anders één ding goed.",
+    cake_rules_input: "Kies een knop onder het bord - een dier, de taart of X voor ‘hier staat niets’ - en tik dan op een vakje. Tik je met dezelfde keuze nog eens op hetzelfde vakje, dan is het weer weg. Tik op een aanwijzing om die af te vinken. De knop ‘Tip’ toont eerst een fout en zet anders het dier dat je als volgende kunt afleiden. De taart zet je zelf: staan alle dieren, dan zegt de tip alleen nog dat er één rij en één kolom over zijn.",
     cake_term_levels: "Niveaus",
     cake_rules_levels: "Makkelijk: 4x4 met 3 dieren en eenvoudige stappen. Gemiddeld: 5x5 met 4 dieren. Moeilijk: 6x6 met 5 dieren en langere redeneringen.",
     cake_rules_example_title: "Een opgelost voorbeeld",

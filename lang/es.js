@@ -1573,6 +1573,7 @@ STRINGS.es = {
 
 
     cake_hint_step: "{THING}: fila {R}, columna {C}.",
+    cake_hint_last: "Todos los animales están en su sitio. Solo quedan libres una fila y una columna: ahí está el pastel.",
 
 
     cake_aria_cell: "Fila {R}, columna {C}",

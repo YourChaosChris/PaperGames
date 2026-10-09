@@ -1449,7 +1449,7 @@ STRINGS.nl = {
     cake_room_kitchen_in: "in de keuken",
 
 
-    cake_room_living_name: "Woonkamer",
+    cake_room_living_name: "Woon\u00adkamer",
 
 
     cake_room_living_in: "in de woonkamer",
@@ -1461,13 +1461,13 @@ STRINGS.nl = {
     cake_room_hall_in: "in de gang",
 
 
-    cake_room_bath_name: "Badkamer",
+    cake_room_bath_name: "Bad\u00adkamer",
 
 
     cake_room_bath_in: "in de badkamer",
 
 
-    cake_room_bedroom_name: "Slaapkamer",
+    cake_room_bedroom_name: "Slaap\u00adkamer",
 
 
     cake_room_bedroom_in: "in de slaapkamer",
@@ -1573,6 +1573,7 @@ STRINGS.nl = {
 
 
     cake_hint_step: "{THING}: rij {R}, kolom {C}.",
+    cake_hint_last: "Alle dieren staan goed. Er zijn nog maar één rij en één kolom vrij - daar staat de taart.",
 
 
     cake_aria_cell: "Rij {R}, kolom {C}",

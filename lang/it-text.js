@@ -1565,7 +1565,7 @@ Object.assign(STRINGS.it, {
     cake_term_culprit: "Chi ha preso la torta?",
     cake_rules_culprit: "Esattamente un animale è nella stessa stanza della torta. È lui che l'ha presa.",
     cake_term_input: "Come si gioca",
-    cake_rules_input: "Scegli un pulsante sotto la pianta - un animale, la torta o X per «qui non c'è niente» - poi tocca una casella. Toccando di nuovo la stessa casella con la stessa scelta la togli. Tocca un indizio per spuntarlo. Il pulsante «Suggerimento» mostra prima un errore, altrimenti mette una cosa al posto giusto.",
+    cake_rules_input: "Scegli un pulsante sotto la pianta - un animale, la torta o X per «qui non c'è niente» - poi tocca una casella. Toccando di nuovo la stessa casella con la stessa scelta la togli. Tocca un indizio per spuntarlo. Il pulsante «Suggerimento» mostra prima un errore, altrimenti mette l'animale che si può dedurre subito dopo. La torta la metti tu: quando tutti gli animali sono al loro posto, il suggerimento dice solo che restano una riga e una colonna.",
     cake_term_levels: "Livelli",
     cake_rules_levels: "Facile: 4x4 con 3 animali e deduzioni semplici. Medio: 5x5 con 4 animali. Difficile: 6x6 con 5 animali e catene di ragionamento più lunghe.",
     cake_rules_example_title: "Un esempio risolto",

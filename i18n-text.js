@@ -1566,7 +1566,7 @@ Object.assign(STRINGS.en, {
     cake_term_culprit: "Who took the cake?",
     cake_rules_culprit: "Exactly one animal is in the same room as the cake. That animal took it.",
     cake_term_input: "Playing",
-    cake_rules_input: "Choose a button below the board - an animal, the cake, or X for “nothing here” - then tap a cell. Tapping the same cell again with the same choice takes it off. Tap a clue to tick it off. The Hint button places one thing correctly or points out a mistake first.",
+    cake_rules_input: "Choose a button below the board - an animal, the cake, or X for “nothing here” - then tap a cell. Tapping the same cell again with the same choice takes it off. Tap a clue to tick it off. The Hint button points out a mistake first; otherwise it places the animal that can be worked out next. The cake you place yourself: once all animals stand, the hint only tells you that one row and one column are left.",
     cake_term_levels: "Levels",
     cake_rules_levels: "Easy: 4x4 with 3 animals and simple steps. Medium: 5x5 with 4 animals. Hard: 6x6 with 5 animals and longer chains of reasoning.",
     cake_rules_example_title: "A solved example",

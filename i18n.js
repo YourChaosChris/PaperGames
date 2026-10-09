@@ -1655,6 +1655,7 @@ const STRINGS = {
 
 
     cake_hint_step: "{THING}: row {R}, column {C}.",
+    cake_hint_last: "All the animals are in place. Only one row and one column are still free - that is where the cake stands.",
 
 
     cake_aria_cell: "Row {R}, column {C}",

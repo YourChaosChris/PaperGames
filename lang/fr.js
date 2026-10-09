@@ -1573,6 +1573,7 @@ STRINGS.fr = {
 
 
     cake_hint_step: "{THING} : ligne {R}, colonne {C}.",
+    cake_hint_last: "Tous les animaux sont à leur place. Il ne reste qu'une ligne et une colonne libres : c'est là qu'est le gâteau.",
 
 
     cake_aria_cell: "Ligne {R}, colonne {C}",

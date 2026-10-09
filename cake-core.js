@@ -156,13 +156,28 @@ const CakeCore = (function () {
   //          in the cake's room).
   // Level 3: also groups: k things that together can only use k rows (or
   //          columns) block those rows for everyone else.
-  // Returns { solved, cells, levelUsed }.
-  function deduce(p, maxLevel) {
+  // `start` (optional) is what the player already knows for sure:
+  // { placed: cell per thing or -1, crosses: cells with nothing }.
+  // Returns { solved, cells, levelUsed, fixedAt } - fixedAt[k] counts the
+  // deduction steps until thing k had a single cell left (0 = from the
+  // start; -1 = never), so the hint can follow the order of reasoning.
+  function deduce(p, maxLevel, start) {
     const n = p.n;
     const cand = [];
     for (let k = 0; k < n; k++) cand.push(new Set(baseCandidates(p, k)));
+    if (start) {
+      const crosses = start.crosses || [];
+      for (let k = 0; k < n; k++) {
+        const at = start.placed ? start.placed[k] : -1;
+        if (at >= 0) cand[k] = new Set(cand[k].has(at) ? [at] : []);
+        else crosses.forEach((i) => cand[k].delete(i));
+      }
+    }
     const sames = p.clues.filter((cl) => cl.t === "same");
     let levelUsed = 1;
+    let step = 0;
+    const fixedAt = new Array(n).fill(-1);
+    const noteFixed = () => { for (let k = 0; k < n; k++) if (fixedAt[k] === -1 && cand[k].size === 1) fixedAt[k] = step; };
 
     function removeWhere(k, pred) {
       let changed = false;
@@ -251,16 +266,18 @@ const CakeCore = (function () {
       return changed;
     }
 
+    noteFixed();
     for (;;) {
-      if (cand.some((s) => s.size === 0)) return { solved: false, cells: null, levelUsed };
-      if (level1()) continue;
-      if (maxLevel >= 2 && level2()) { levelUsed = Math.max(levelUsed, 2); continue; }
-      if (maxLevel >= 3 && level3()) { levelUsed = Math.max(levelUsed, 3); continue; }
+      if (cand.some((s) => s.size === 0)) return { solved: false, cells: null, levelUsed, fixedAt };
+      step++;
+      if (level1()) { noteFixed(); continue; }
+      if (maxLevel >= 2 && level2()) { levelUsed = Math.max(levelUsed, 2); noteFixed(); continue; }
+      if (maxLevel >= 3 && level3()) { levelUsed = Math.max(levelUsed, 3); noteFixed(); continue; }
       break;
     }
-    if (cand.some((s) => s.size !== 1)) return { solved: false, cells: null, levelUsed };
+    if (cand.some((s) => s.size !== 1)) return { solved: false, cells: null, levelUsed, fixedAt };
     const cells = cand.map((s) => s.values().next().value);
-    return { solved: isSolution(p, cells), cells, levelUsed };
+    return { solved: isSolution(p, cells), cells, levelUsed, fixedAt };
   }
 
   function combinations(arr, k, cb) {
@@ -409,14 +426,27 @@ const CakeCore = (function () {
   //   { kind: "wrong", thing, cell }   a thing stands in the wrong cell
   //   { kind: "wrongx", cell }         a cross marks a cell the solution uses
   //   { kind: "step", thing, cell }    where the next thing goes
+  //   { kind: "last" }                 all animals stand right, the cake is open
   //   { kind: "done" }
   function findHint(p, placed, crosses) {
     for (let k = 0; k < p.n; k++) {
       if (placed[k] >= 0 && placed[k] !== p.solution[k]) return { kind: "wrong", thing: k, cell: placed[k] };
     }
     for (const i of crosses || []) if (p.solution.indexOf(i) !== -1) return { kind: "wrongx", cell: i };
-    for (let k = 0; k < p.n; k++) if (placed[k] !== p.solution[k]) return { kind: "step", thing: k, cell: p.solution[k] };
-    return { kind: "done" };
+    // The next step is the thing that reasoning from what is already on
+    // the board pins down first. Animals come before the cake: setting the
+    // cake ends the puzzle, and that last step stays the player's.
+    if (placed[p.n - 1] === p.solution[p.n - 1]) return { kind: "done" };
+    const animals = [];
+    for (let k = 0; k < p.n - 1; k++) if (placed[k] !== p.solution[k]) animals.push(k);
+    // Only the cake left: one row and one column are free, and saying so
+    // is the whole hint.
+    if (!animals.length) return { kind: "last" };
+    const fixedAt = deduce(p, 3, { placed, crosses }).fixedAt;
+    const rank = (k) => (fixedAt[k] === -1 ? Infinity : fixedAt[k]);
+    let best = animals[0];
+    for (const k of animals) if (rank(k) < rank(best)) best = k;
+    return { kind: "step", thing: best, cell: p.solution[best] };
   }
 
   /*** Texts ***/

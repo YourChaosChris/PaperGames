@@ -1565,7 +1565,7 @@ Object.assign(STRINGS.pl, {
     cake_term_culprit: "Kto wziął ciasto?",
     cake_rules_culprit: "Dokładnie jedno zwierzę jest w tym samym pokoju co ciasto. To ono je wzięło.",
     cake_term_input: "Jak grać",
-    cake_rules_input: "Wybierz przycisk pod planem - zwierzę, ciasto albo X („tu nic nie ma”) - a potem dotknij pola. Ponowne dotknięcie tego samego pola z tym samym wyborem usuwa rzecz. Dotknij poszlaki, aby ją odhaczyć. Przycisk „Podpowiedź” najpierw pokazuje błąd, a jeśli go nie ma, poprawnie stawia jedną rzecz.",
+    cake_rules_input: "Wybierz przycisk pod planem - zwierzę, ciasto albo X („tu nic nie ma”) - a potem dotknij pola. Ponowne dotknięcie tego samego pola z tym samym wyborem usuwa rzecz. Dotknij poszlaki, aby ją odhaczyć. Przycisk „Podpowiedź” najpierw pokazuje błąd, a jeśli go nie ma, stawia zwierzę, które da się wywnioskować jako następne. Ciasto stawiasz samodzielnie: gdy wszystkie zwierzęta stoją, podpowiedź mówi tylko, że zostały jeden wiersz i jedna kolumna.",
     cake_term_levels: "Poziomy",
     cake_rules_levels: "Łatwy: 4x4 z 3 zwierzętami i prostymi wnioskami. Średni: 5x5 z 4 zwierzętami. Trudny: 6x6 z 5 zwierzętami i dłuższymi łańcuchami rozumowania.",
     cake_rules_example_title: "Rozwiązany przykład",
