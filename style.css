@@ -9875,7 +9875,8 @@ button.concan-meld {
    gestrichelte Konfliktrahmen, also auch ohne Farbe oder Grau zu
    erkennen. */
 .sudoku-cell.hint-cell,
-.rp-cell.hint-cell {
+.rp-cell.hint-cell,
+.lightswitch-cell.hint-cell {
   outline: 6px double var(--text);
   outline-offset: -7px;
 }

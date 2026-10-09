@@ -1213,6 +1213,8 @@ Object.assign(STRINGS.pl, {
     lightswitch_rules_chase: "Przechodź przez planszę rząd po rzędzie od góry. Pod każdym zapalonym światłem w rzędzie naciśnij pole bezpośrednio pod nim. To gasi światło powyżej i nie zmienia rzędów, które są już zgaszone. Na dole wszystkie światła są zgaszone, najwyżej poza kilkoma w ostatnim rzędzie.",
     lightswitch_term_bottom: "Ostatni rząd",
     lightswitch_rules_bottom: "Jeśli w ostatnim rzędzie zostały zapalone światła, znajdź ich układ w tabeli. Naciśnij podane tam pola pierwszego rzędu (kolumny liczone od lewej), a potem jeszcze raz spychaj światła od góry. Wtedy wszystkie światła są zgaszone. Tabela dotyczy planszy 5x5; mogą na niej zostać tylko te siedem układów.",
+    lightswitch_term_hint: "Przycisk „Podpowiedź”",
+    lightswitch_rules_hint: "Bez czytania: podczas gry naciśnij „Podpowiedź”. Jedno pole dostaje podwójną ramkę - naciśnij je, a potem poproś o kolejną podpowiedź. Zaznaczone pola zawsze należą do rozwiązania z najmniejszą możliwą liczbą naciśnięć. Liczba użytych podpowiedzi jest wyświetlana obok ruchów.",
     lightswitch_table_pattern: "Wciąż zapalone w ostatnim rzędzie",
     lightswitch_table_press: "Naciśnij w pierwszym rzędzie (kolumna)",
     lightswitch_term_order: "Kolejność i podwójne naciśnięcia",

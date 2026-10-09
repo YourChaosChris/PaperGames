@@ -8,8 +8,9 @@
 // and afterwards only through the "Quick rules" button next to the
 // header's Rules link (rules-link.js). Like rules-link.js it detects a
 // game page by #board-section, so it never shows on the home, rules or
-// history pages. The sentences are i18n keys quickrules_<slug>_1..3 in
-// i18n.js / lang/*.js; a game without keys gets neither box nor button.
+// history pages. The sentences are i18n keys quickrules_<slug>_1..4 in
+// i18n.js / lang/*.js (most games have three); a game without keys gets
+// neither box nor button.
 //
 // The "seen" mark is one localStorage entry per game, guarded like
 // favorites.js: without storage the box simply shows again next time.
@@ -25,7 +26,7 @@
 
   function sentenceKeys(slug) {
     const keys = [];
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 4; i++) {
       const key = "quickrules_" + slug + "_" + i;
       if (tr(key, null)) keys.push(key);
     }

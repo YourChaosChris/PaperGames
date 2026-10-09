@@ -20,6 +20,8 @@ const AppStateLightSwitch = {
   difficulty: "medium",
   grid: null,        // 2D boolean, true = on/lit
   moveCount: 0,
+  hintCount: 0,      // how often the Hint button was used on this puzzle
+  hintCell: null,    // [row, col] the current hint marks, cleared by the next press
   gameOver: false
 };
 
@@ -30,7 +32,8 @@ function saveLightSwitchGame() {
   GameStorage.save(LIGHTSWITCH_SAVE_KEY, {
     difficulty: AppStateLightSwitch.difficulty,
     grid: AppStateLightSwitch.grid,
-    moveCount: AppStateLightSwitch.moveCount
+    moveCount: AppStateLightSwitch.moveCount,
+    hintCount: AppStateLightSwitch.hintCount
   });
 }
 
@@ -41,7 +44,7 @@ function clearSavedLightSwitchGame() {
 
 function recordLightSwitchStats() {
   if (typeof GameStats === "undefined") return;
-  GameStats.record("lightswitch", "win");
+  GameStats.record("lightswitch", "win", { hinted: AppStateLightSwitch.hintCount > 0 });
 }
 
 function setStatusLightSwitch(elementId, text) {
@@ -99,6 +102,8 @@ function initLightSwitchApp() {
     AppStateLightSwitch.difficulty = difficulty;
     AppStateLightSwitch.grid = generated.grid;
     AppStateLightSwitch.moveCount = 0;
+    AppStateLightSwitch.hintCount = 0;
+    AppStateLightSwitch.hintCell = null;
     AppStateLightSwitch.gameOver = false;
     setGameResultLightSwitch("");
     showBoardSectionLightSwitch();
@@ -115,6 +120,9 @@ function initLightSwitchApp() {
     });
   }
 
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.addEventListener("click", hintLightSwitch);
+
   startGameBtn.addEventListener("click", () => {
     const difficulty = levelInline ? levelInline.value : "medium";
     startNewGameLightSwitch(difficulty);
@@ -125,6 +133,8 @@ function initLightSwitchApp() {
     AppStateLightSwitch.difficulty = savedGame.difficulty;
     AppStateLightSwitch.grid = savedGame.grid;
     AppStateLightSwitch.moveCount = savedGame.moveCount || 0;
+    AppStateLightSwitch.hintCount = savedGame.hintCount || 0;
+    AppStateLightSwitch.hintCell = null;
     AppStateLightSwitch.gameOver = false;
     if (levelInline) levelInline.value = AppStateLightSwitch.difficulty;
     setGameResultLightSwitch("");
@@ -142,18 +152,37 @@ function onLightSwitchCellClick(r, c) {
   if (AppStateLightSwitch.gameOver || !AppStateLightSwitch.grid) return;
   AppStateLightSwitch.grid = LightSwitchCore.pressCell(AppStateLightSwitch.grid, r, c);
   AppStateLightSwitch.moveCount++;
+  AppStateLightSwitch.hintCell = null;
   updateLightSwitchBoard();
   updateGameLabelsLightSwitch();
 
   if (LightSwitchCore.isSolved(AppStateLightSwitch.grid)) {
     AppStateLightSwitch.gameOver = true;
     const moves = AppStateLightSwitch.moveCount;
-    announceGameResultLightSwitch("All lights off in " + moves + (moves === 1 ? " move" : " moves") + " - well done!");
+    const hints = AppStateLightSwitch.hintCount;
+    announceGameResultLightSwitch("All lights off in " + moves + (moves === 1 ? " move" : " moves") + " - well done!" +
+      (hints > 0 ? " Hints used: " + hints + "." : ""));
     recordLightSwitchStats();
     updateGameLabelsLightSwitch();
   } else {
     setStatusLightSwitch("board-info", "Turn off every light to win.");
   }
+}
+
+// Marks one cell of a shortest solution of the current board (see
+// LightSwitchCore.shortestSolution). Pressing that cell leaves a board
+// whose shortest solution is one press shorter, so the next hint simply
+// continues; pressing any other cell just gets a fresh answer.
+function hintLightSwitch() {
+  if (AppStateLightSwitch.gameOver || !AppStateLightSwitch.grid) return;
+  const solution = LightSwitchCore.shortestSolution(AppStateLightSwitch.grid);
+  if (!solution || !solution.length) return;
+  const [r, c] = solution[0];
+  AppStateLightSwitch.hintCell = [r, c];
+  AppStateLightSwitch.hintCount++;
+  updateLightSwitchBoard();
+  updateGameLabelsLightSwitch();
+  setStatusLightSwitch("board-info", "Hint: row " + (r + 1) + ", column " + (c + 1) + ".");
 }
 
 function showBoardSectionLightSwitch() {
@@ -227,8 +256,10 @@ function updateLightSwitchBoard() {
     const r = parseInt(cell.dataset.row, 10);
     const c = parseInt(cell.dataset.col, 10);
     const on = AppStateLightSwitch.grid[r][c];
+    const hint = !!AppStateLightSwitch.hintCell && AppStateLightSwitch.hintCell[0] === r && AppStateLightSwitch.hintCell[1] === c;
     cell.classList.toggle("lightswitch-cell-on", on);
-    I18n.setAria(cell, "Row " + (r + 1) + ", column " + (c + 1) + ", " + (on ? "light on" : "light off"));
+    cell.classList.toggle("hint-cell", hint);
+    I18n.setAria(cell, (hint ? "Hint: " : "") + "Row " + (r + 1) + ", column " + (c + 1) + ", " + (on ? "light on" : "light off"));
   });
 }
 
@@ -238,8 +269,12 @@ function updateGameLabelsLightSwitch() {
     // How many lights are still on, then the move count: "7 lights still on. Moves: 3"
     const left = AppStateLightSwitch.grid ? LightSwitchCore.countOn(AppStateLightSwitch.grid) : 0;
     const lightsText = left === 1 ? "1 light still on." : left + " lights still on.";
-    I18n.setMsg(meta, (left > 0 ? lightsText + " " : "") + "Moves: " + AppStateLightSwitch.moveCount);
+    const hints = AppStateLightSwitch.hintCount;
+    I18n.setMsg(meta, (left > 0 ? lightsText + " " : "") + "Moves: " + AppStateLightSwitch.moveCount +
+      (hints > 0 ? " · Hints: " + hints : ""));
   }
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.classList.toggle("hidden", AppStateLightSwitch.gameOver || !AppStateLightSwitch.grid);
 
   if (AppStateLightSwitch.gameOver) clearSavedLightSwitchGame();
   else saveLightSwitchGame();

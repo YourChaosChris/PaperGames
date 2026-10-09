@@ -1213,6 +1213,8 @@ Object.assign(STRINGS.de, {
     lightswitch_rules_chase: "Geh das Spielfeld Zeile für Zeile von oben nach unten durch. Unter jedem Licht, das in einer Zeile an ist, drückst du das Feld direkt darunter. Das schaltet das Licht darüber aus und berührt die Zeilen, in denen schon alle Lichter aus sind, nicht mehr. Unten angekommen sind alle Lichter aus, höchstens in der untersten Zeile sind noch welche an.",
     lightswitch_term_bottom: "Die unterste Zeile",
     lightswitch_rules_bottom: "Sind in der untersten Zeile noch Lichter an, such ihr Muster in der Tabelle. Drück die dort genannten Felder der obersten Zeile (Spalten von links gezählt) und jag die Lichter danach noch einmal von oben. Dann sind alle Lichter aus. Die Tabelle gilt für das 5x5-Feld; dort können nur diese sieben Muster übrig bleiben.",
+    lightswitch_term_hint: "Der Knopf „Tipp“",
+    lightswitch_rules_hint: "Ganz ohne Lesen: Drück während einer Partie auf „Tipp“. Ein Feld bekommt einen doppelten Rahmen - drück dieses Feld und hol dir dann den nächsten Tipp. Die markierten Felder gehören immer zu einer Lösung mit so wenig Drücken wie möglich. Die Zahl der genutzten Tipps steht neben den Zügen.",
     lightswitch_table_pattern: "Noch an in der untersten Zeile",
     lightswitch_table_press: "In der obersten Zeile drücken (Spalte)",
     lightswitch_term_order: "Reihenfolge und doppeltes Drücken",

@@ -1214,6 +1214,8 @@ Object.assign(STRINGS.en, {
     lightswitch_rules_chase: "Work through the board row by row from the top. For every light that is on in a row, press the cell directly below it. That switches the light above off and never touches the rows you have already cleared. When you reach the bottom, every light is off except possibly some in the bottom row.",
     lightswitch_term_bottom: "The bottom row",
     lightswitch_rules_bottom: "If lights are left on in the bottom row, find their pattern in the table. Press the cells of the top row listed there (columns counted from the left), then chase the lights from the top once more. After that every light is off. The table is for the 5x5 board; on it, only these seven patterns can be left over.",
+    lightswitch_term_hint: "The Hint button",
+    lightswitch_rules_hint: "Without reading any of this: press Hint during a game. It marks one cell with a double frame - press that cell, then ask for the next hint. The marked cells always belong to a solution with the fewest possible presses. The number of hints used is shown next to the moves.",
     lightswitch_table_pattern: "Still on in the bottom row",
     lightswitch_table_press: "Press in the top row (column)",
     lightswitch_term_order: "Order and double presses",

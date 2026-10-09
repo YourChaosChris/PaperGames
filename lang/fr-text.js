@@ -1186,6 +1186,8 @@ Object.assign(STRINGS.fr, {
     lightswitch_rules_chase: "Parcourez le plateau ligne par ligne, de haut en bas. Pour chaque lumière allumée dans une ligne, appuyez sur la case juste en dessous. Cela éteint la lumière du dessus sans toucher aux lignes déjà éteintes. Arrivé en bas, toutes les lumières sont éteintes, sauf peut-être certaines de la dernière ligne.",
     lightswitch_term_bottom: "La dernière ligne",
     lightswitch_rules_bottom: "S'il reste des lumières allumées dans la dernière ligne, cherchez leur motif dans le tableau. Appuyez sur les cases de la première ligne indiquées (colonnes comptées depuis la gauche), puis chassez à nouveau les lumières depuis le haut. Ensuite, toutes les lumières sont éteintes. Le tableau vaut pour le plateau 5x5 ; seuls ces sept motifs peuvent y rester.",
+    lightswitch_term_hint: "Le bouton « Indice »",
+    lightswitch_rules_hint: "Sans rien lire : appuyez sur « Indice » pendant une partie. Une case reçoit un double cadre - appuyez sur cette case, puis demandez l'indice suivant. Les cases marquées font toujours partie d'une solution avec le moins d'appuis possible. Le nombre d'indices utilisés s'affiche à côté des coups.",
     lightswitch_table_pattern: "Encore allumées dans la dernière ligne",
     lightswitch_table_press: "Appuyer dans la première ligne (colonne)",
     lightswitch_term_order: "Ordre et doubles appuis",

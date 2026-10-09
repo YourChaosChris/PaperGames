@@ -1186,6 +1186,8 @@ Object.assign(STRINGS.it, {
     lightswitch_rules_chase: "Procedi sul tabellone riga per riga dall'alto verso il basso. Per ogni luce accesa in una riga, premi la cella subito sotto. Così la luce sopra si spegne e le righe già spente non vengono più toccate. Arrivato in fondo, tutte le luci sono spente tranne, forse, alcune nell'ultima riga.",
     lightswitch_term_bottom: "L'ultima riga",
     lightswitch_rules_bottom: "Se nell'ultima riga restano luci accese, cerca il loro schema nella tabella. Premi le celle della prima riga indicate (colonne contate da sinistra), poi insegui di nuovo le luci dall'alto. A quel punto tutte le luci sono spente. La tabella vale per il tabellone 5x5; lì possono restare solo questi sette schemi.",
+    lightswitch_term_hint: "Il pulsante «Suggerimento»",
+    lightswitch_rules_hint: "Senza leggere nulla: durante una partita premi «Suggerimento». Una cella riceve una doppia cornice - premi quella cella, poi chiedi il suggerimento successivo. Le celle segnate fanno sempre parte di una soluzione con il minor numero possibile di pressioni. Il numero di suggerimenti usati compare accanto alle mosse.",
     lightswitch_table_pattern: "Ancora accese nell'ultima riga",
     lightswitch_table_press: "Premere nella prima riga (colonna)",
     lightswitch_term_order: "Ordine e doppie pressioni",

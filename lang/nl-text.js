@@ -1186,6 +1186,8 @@ Object.assign(STRINGS.nl, {
     lightswitch_rules_chase: "Werk het bord rij voor rij van boven naar beneden af. Druk onder elk lichtje dat in een rij aan is op het vakje er direct onder. Dat zet het lichtje erboven uit en raakt de rijen die al uit zijn niet meer. Onderaan zijn alle lichten uit, behalve misschien een paar in de onderste rij.",
     lightswitch_term_bottom: "De onderste rij",
     lightswitch_rules_bottom: "Zijn er in de onderste rij nog lichten aan, zoek hun patroon dan op in de tabel. Druk op de vakjes van de bovenste rij die daar staan (kolommen van links geteld) en jaag de lichten daarna nog een keer van boven weg. Dan zijn alle lichten uit. De tabel geldt voor het 5x5-bord; daarop kunnen alleen deze zeven patronen overblijven.",
+    lightswitch_term_hint: "De knop ‘Tip’",
+    lightswitch_rules_hint: "Zonder iets te lezen: druk tijdens een spel op ‘Tip’. Eén vakje krijgt een dubbele rand - druk op dat vakje en vraag daarna de volgende tip. De gemarkeerde vakjes horen altijd bij een oplossing met zo weinig mogelijk drukken. Het aantal gebruikte tips staat naast de zetten.",
     lightswitch_table_pattern: "Nog aan in de onderste rij",
     lightswitch_table_press: "Indrukken in de bovenste rij (kolom)",
     lightswitch_term_order: "Volgorde en dubbel drukken",

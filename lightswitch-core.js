@@ -90,6 +90,44 @@ const LightSwitchCore = (function () {
     return { grid, sequence };
   }
 
+  // Every set of presses that turns the grid all-off. Over GF(2) a
+  // solution is a set of cells (pressing twice cancels, order never
+  // matters), and it is fixed entirely by its top row: once row r is
+  // settled, a light left on in row r can only still be switched by the
+  // cell directly below it, so row r + 1's presses are forced. Trying all
+  // 2^size top rows and following each one down ("chasing" the presses)
+  // therefore yields every solution exactly once - four on the 5x5 board
+  // for any solvable grid, none for an unsolvable one.
+  function allSolutions(grid) {
+    const size = grid.length;
+    const out = [];
+    for (let mask = 0; mask < (1 << size); mask++) {
+      let g = grid;
+      const presses = [];
+      for (let c = 0; c < size; c++) {
+        if (mask & (1 << c)) { g = pressCell(g, 0, c); presses.push([0, c]); }
+      }
+      for (let r = 0; r < size - 1; r++) {
+        for (let c = 0; c < size; c++) {
+          if (g[r][c]) { g = pressCell(g, r + 1, c); presses.push([r + 1, c]); }
+        }
+      }
+      if (isSolved(g)) out.push(presses);
+    }
+    return out;
+  }
+
+  // A solution with the fewest presses (cells in reading order), or null
+  // if the grid cannot be solved. Ties go to the first one found.
+  function shortestSolution(grid) {
+    let best = null;
+    allSolutions(grid).forEach((presses) => {
+      if (!best || presses.length < best.length) best = presses;
+    });
+    if (!best) return null;
+    return best.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  }
+
   return {
     DEFAULT_SIZE,
     createEmptyGrid,
@@ -98,7 +136,9 @@ const LightSwitchCore = (function () {
     pressCell,
     isSolved,
     countOn,
-    generatePuzzle
+    generatePuzzle,
+    allSolutions,
+    shortestSolution
   };
 })();
 

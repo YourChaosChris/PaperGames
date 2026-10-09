@@ -1186,6 +1186,8 @@ Object.assign(STRINGS.es, {
     lightswitch_rules_chase: "Recorre el tablero fila por fila de arriba abajo. Por cada luz encendida en una fila, pulsa la casilla que está justo debajo. Eso apaga la luz de arriba y no toca las filas que ya has apagado. Al llegar abajo, todas las luces están apagadas salvo, quizá, algunas de la última fila.",
     lightswitch_term_bottom: "La última fila",
     lightswitch_rules_bottom: "Si quedan luces encendidas en la última fila, busca su patrón en la tabla. Pulsa las casillas de la primera fila que se indican (columnas contadas desde la izquierda) y vuelve a perseguir las luces desde arriba. Después, todas las luces están apagadas. La tabla es para el tablero de 5x5; en él solo pueden quedar estos siete patrones.",
+    lightswitch_term_hint: "El botón «Pista»",
+    lightswitch_rules_hint: "Sin leer nada de esto: pulsa «Pista» durante una partida. Una casilla recibe un marco doble; púlsala y pide la siguiente pista. Las casillas marcadas siempre forman parte de una solución con el menor número posible de pulsaciones. El número de pistas usadas aparece junto a los movimientos.",
     lightswitch_table_pattern: "Aún encendidas en la última fila",
     lightswitch_table_press: "Pulsar en la primera fila (columna)",
     lightswitch_term_order: "Orden y pulsaciones dobles",

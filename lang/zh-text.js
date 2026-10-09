@@ -1186,6 +1186,8 @@ Object.assign(STRINGS.zh, {
     lightswitch_rules_chase: "从上到下逐行处理棋盘。某一行中每有一盏亮着的灯，就按它正下方的格子。这样会熄灭上面的灯，而且不会再影响已经熄灭的行。到达底部时，除了最下面一行可能还有几盏，其余的灯都已熄灭。",
     lightswitch_term_bottom: "最下面一行",
     lightswitch_rules_bottom: "如果最下面一行还有灯亮着，就在表中找到它们的图案。按下表中列出的最上面一行的格子(列从左边数起)，然后再从上往下追一遍灯。之后所有灯都会熄灭。此表适用于5x5棋盘；在这种棋盘上只可能剩下这七种图案。",
+    lightswitch_term_hint: "“提示”按钮",
+    lightswitch_rules_hint: "完全不用阅读：游戏中按“提示”。一个格子会出现双线边框——按下这个格子，然后再要下一个提示。被标出的格子总是属于按的次数最少的解法。使用过的提示次数显示在步数旁边。",
     lightswitch_table_pattern: "最下面一行仍亮着",
     lightswitch_table_press: "在最上面一行按(列)",
     lightswitch_term_order: "顺序与重复按",

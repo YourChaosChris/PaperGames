@@ -300,6 +300,10 @@ const SAMPLES = [
   "All clear in 42 seconds - well done!",
   "All lights off in 1 move - well done!",
   "All lights off in 12 moves - well done!",
+  "All lights off in 12 moves - well done! Hints used: 2.",
+  "7 lights still on. Moves: 3",
+  "1 light still on. Moves: 3 · Hints: 1",
+  "Hint: row 3, column 2.",
   "No more jumps available, with 3 pegs left. Try again!",
   "You reached 2048! Keep going for a higher score, or start a new game.",
   "No more moves left. Final score: 1234",
@@ -441,6 +445,8 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  "Row 2, column 4, light on",
+  "Hint: Row 3, column 2, light off",
   "Take 5♥",
   "Card 7♣, selected",
   "Joker, selected",
