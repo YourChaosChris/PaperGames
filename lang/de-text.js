@@ -1572,7 +1572,7 @@ Object.assign(STRINGS.de, {
     cake_rules_example: "Das Bild zeigt ein gelöstes 4x4-Rätsel. In jeder Zeile und Spalte steht ein Ding, der Kuchen steht auf einem Tisch, und das einzige Tier im Raum des Kuchens - die Katze in der Küche - hat ihn genommen.",
     cake_rules_end_title: "Ein Rätsel beenden",
     cake_term_win: "Gelöst",
-    cake_rules_win: "Das Rätsel ist gelöst, sobald jedes Ding an seinem Platz steht. Die Meldung nennt dann das Tier, das den Kuchen genommen hat.",
+    cake_rules_win: "Das Rätsel ist gelöst, sobald der Kuchen an seinem richtigen Platz steht. Dann werden alle Tiere an ihren Plätzen gezeigt, und die Meldung nennt das Tier, das den Kuchen genommen hat.",
     cake_history_title: "Die Geschichte der Detektiv-Logikrätsel",
     cake_history_origins_title: "Rätsel, die eine Geschichte erzählen",
     cake_history_origins_p1: "Logikrätsel dieser Art - eine kurze Geschichte, eine Handvoll Tatsachen und genau eine Antwort, die zu allen passt - wurden im 20. Jahrhundert ein fester Bestandteil von Rätselheften. Ihr bekanntester Vorfahr ist das sogenannte Zebrarätsel, 1962 in der Zeitschrift Life International abgedruckt: fünf Häuser, fünf Bewohner, fünf Haustiere und eine Liste von Hinweisen, aus denen man erschließt, wem das Zebra gehört.",

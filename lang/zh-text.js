@@ -1572,7 +1572,7 @@ Object.assign(STRINGS.zh, {
     cake_rules_example: "图中是一道解好的4x4谜题。每行每列各有一样东西，蛋糕在桌子上，和蛋糕在同一房间的唯一动物——厨房里的猫——拿走了蛋糕。",
     cake_rules_end_title: "完成谜题",
     cake_term_win: "解开",
-    cake_rules_win: "每样东西都放对位置时，谜题就解开了。这时会显示拿走蛋糕的动物。",
+    cake_rules_win: "蛋糕放对位置时，谜题就解开了。这时所有动物都会显示在各自的位置上，并显示拿走蛋糕的动物。",
     cake_history_title: "侦探逻辑谜题的历史",
     cake_history_origins_title: "讲故事的谜题",
     cake_history_origins_p1: "这类逻辑谜题——一个小故事、几条事实，以及恰好一个符合所有事实的答案——在二十世纪成为谜题杂志的常客。它们最有名的前身是所谓的“斑马谜题”，1962年刊登在《Life International》杂志上：五座房子、五位住户、五只宠物和一串线索，从中推出谁养了斑马。",

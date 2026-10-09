@@ -1572,7 +1572,7 @@ Object.assign(STRINGS.fr, {
     cake_rules_example: "L'image montre une énigme 4x4 résolue. Chaque ligne et chaque colonne contient une chose, le gâteau est sur une table, et le seul animal dans la pièce du gâteau - le chat, dans la cuisine - l'a pris.",
     cake_rules_end_title: "Terminer une énigme",
     cake_term_win: "Résolu",
-    cake_rules_win: "L'énigme est résolue dès que chaque chose est à sa place. Le message nomme alors l'animal qui a pris le gâteau.",
+    cake_rules_win: "L'énigme est résolue dès que le gâteau est à sa bonne place. Tous les animaux sont alors montrés à leur place, et le message nomme l'animal qui a pris le gâteau.",
     cake_history_title: "L'histoire des énigmes logiques de détective",
     cake_history_origins_title: "Des énigmes qui racontent une histoire",
     cake_history_origins_p1: "Les énigmes logiques de ce genre - une courte histoire, une poignée de faits et une seule réponse qui les respecte tous - sont devenues un classique des magazines de jeux au XXe siècle. Leur ancêtre le plus connu est l'« énigme du zèbre », publiée en 1962 dans le magazine Life International : cinq maisons, cinq habitants, cinq animaux et une liste d'indices permettant de trouver à qui appartient le zèbre.",

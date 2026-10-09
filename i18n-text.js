@@ -1573,7 +1573,7 @@ Object.assign(STRINGS.en, {
     cake_rules_example: "The picture shows a solved 4x4 puzzle. Every row and every column holds one thing, the cake stands on a table, and the only animal in the cake's room - the cat, in the kitchen - took the cake.",
     cake_rules_end_title: "Finishing a puzzle",
     cake_term_win: "Solved",
-    cake_rules_win: "The puzzle is solved as soon as every thing stands in its place. The message then names the animal that took the cake.",
+    cake_rules_win: "The puzzle is solved as soon as the cake stands in its right place. All the animals are then shown in their places, and the message names the animal that took the cake.",
     cake_history_title: "The History of Detective Logic Puzzles",
     cake_history_origins_title: "Puzzles That Tell a Story",
     cake_history_origins_p1: "Logic puzzles of this kind - a short story, a handful of facts and exactly one answer that fits them all - became a fixture of puzzle magazines in the twentieth century. Their best-known ancestor is the so-called Zebra puzzle, printed in the magazine Life International in 1962: five houses, five residents, five pets and a list of clues from which you work out who owns the zebra.",

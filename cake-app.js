@@ -376,8 +376,11 @@ function onCakeCellClick(i) {
 
 function afterCakeMove() {
   const p = AppStateCake.puzzle;
-  if (AppStateCake.placed.every((cell, k) => cell === p.solution[k])) {
+  // Solved as soon as the cake is on its cell; the rest is then shown.
+  if (AppStateCake.placed[p.n - 1] === p.solution[p.n - 1]) {
     AppStateCake.gameOver = true;
+    AppStateCake.placed = p.solution.slice();
+    AppStateCake.crosses = [];
     AppStateCake.hintCell = -1;
     renderCakeAll();
     const text = cakeWinText();

@@ -1572,7 +1572,7 @@ Object.assign(STRINGS.pl, {
     cake_rules_example: "Obrazek pokazuje rozwiązaną łamigłówkę 4x4. W każdym wierszu i kolumnie stoi jedna rzecz, ciasto stoi na stole, a jedyne zwierzę w pokoju z ciastem - kot w kuchni - je wziął.",
     cake_rules_end_title: "Koniec łamigłówki",
     cake_term_win: "Rozwiązane",
-    cake_rules_win: "Łamigłówka jest rozwiązana, gdy każda rzecz stoi na swoim miejscu. Komunikat podaje wtedy zwierzę, które wzięło ciasto.",
+    cake_rules_win: "Łamigłówka jest rozwiązana, gdy ciasto stoi na właściwym miejscu. Wtedy wszystkie zwierzęta są pokazane na swoich miejscach, a komunikat podaje zwierzę, które wzięło ciasto.",
     cake_history_title: "Historia detektywistycznych łamigłówek logicznych",
     cake_history_origins_title: "Łamigłówki, które opowiadają historię",
     cake_history_origins_p1: "Łamigłówki logiczne tego rodzaju - krótka historia, garść faktów i dokładnie jedna odpowiedź, która pasuje do wszystkich - stały się w XX wieku stałym elementem czasopism z zagadkami. Ich najbardziej znanym przodkiem jest tak zwana zagadka zebry, wydrukowana w 1962 roku w magazynie Life International: pięć domów, pięciu mieszkańców, pięć zwierząt i lista wskazówek, z których wynika, do kogo należy zebra.",

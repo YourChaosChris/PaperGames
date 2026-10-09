@@ -1572,7 +1572,7 @@ Object.assign(STRINGS.es, {
     cake_rules_example: "La imagen muestra un acertijo de 4x4 resuelto. Cada fila y cada columna tiene una cosa, el pastel está sobre una mesa y el único animal en la habitación del pastel - el gato, en la cocina - se lo llevó.",
     cake_rules_end_title: "Terminar un acertijo",
     cake_term_win: "Resuelto",
-    cake_rules_win: "El acertijo está resuelto en cuanto cada cosa está en su sitio. El mensaje nombra entonces al animal que se llevó el pastel.",
+    cake_rules_win: "El acertijo está resuelto en cuanto el pastel está en su sitio correcto. Entonces se muestran todos los animales en sus sitios, y el mensaje nombra al animal que se llevó el pastel.",
     cake_history_title: "La historia de los acertijos lógicos de detectives",
     cake_history_origins_title: "Acertijos que cuentan una historia",
     cake_history_origins_p1: "Los acertijos lógicos de este tipo - una breve historia, un puñado de datos y una única respuesta que encaja con todos - se volvieron habituales en las revistas de pasatiempos del siglo XX. Su antepasado más conocido es el llamado acertijo de la cebra, publicado en 1962 en la revista Life International: cinco casas, cinco habitantes, cinco mascotas y una lista de pistas para deducir quién tiene la cebra.",

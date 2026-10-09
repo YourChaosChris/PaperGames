@@ -1572,7 +1572,7 @@ Object.assign(STRINGS.it, {
     cake_rules_example: "L'immagine mostra un rompicapo 4x4 risolto. Ogni riga e ogni colonna contiene una cosa, la torta sta su un tavolo e l'unico animale nella stanza della torta - il gatto, in cucina - l'ha presa.",
     cake_rules_end_title: "Finire un rompicapo",
     cake_term_win: "Risolto",
-    cake_rules_win: "Il rompicapo è risolto appena ogni cosa è al suo posto. Il messaggio nomina allora l'animale che ha preso la torta.",
+    cake_rules_win: "Il rompicapo è risolto appena la torta è al suo posto giusto. Allora tutti gli animali vengono mostrati al loro posto, e il messaggio nomina l'animale che ha preso la torta.",
     cake_history_title: "La storia dei rompicapi logici da detective",
     cake_history_origins_title: "Rompicapi che raccontano una storia",
     cake_history_origins_p1: "I rompicapi logici di questo tipo - una breve storia, una manciata di fatti e una sola risposta che li rispetta tutti - divennero un classico delle riviste di enigmistica nel Novecento. Il loro antenato più noto è il cosiddetto indovinello della zebra, pubblicato nel 1962 sulla rivista Life International: cinque case, cinque abitanti, cinque animali e un elenco di indizi da cui dedurre chi possiede la zebra.",

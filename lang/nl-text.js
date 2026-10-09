@@ -1572,7 +1572,7 @@ Object.assign(STRINGS.nl, {
     cake_rules_example: "De afbeelding toont een opgeloste 4x4-puzzel. In elke rij en kolom staat één ding, de taart staat op een tafel, en het enige dier in de kamer van de taart - de kat, in de keuken - heeft hem gepakt.",
     cake_rules_end_title: "Een puzzel afmaken",
     cake_term_win: "Opgelost",
-    cake_rules_win: "De puzzel is opgelost zodra elk ding op zijn plek staat. De melding noemt dan het dier dat de taart heeft gepakt.",
+    cake_rules_win: "De puzzel is opgelost zodra de taart op de juiste plek staat. Dan worden alle dieren op hun plek getoond, en de melding noemt het dier dat de taart heeft gepakt.",
     cake_history_title: "De geschiedenis van logische detectivepuzzels",
     cake_history_origins_title: "Puzzels die een verhaal vertellen",
     cake_history_origins_p1: "Logische puzzels van deze soort - een kort verhaal, een handvol feiten en precies één antwoord dat bij alles past - werden in de twintigste eeuw een vast onderdeel van puzzelbladen. Hun bekendste voorouder is de zogenoemde zebrapuzzel, in 1962 afgedrukt in het tijdschrift Life International: vijf huizen, vijf bewoners, vijf huisdieren en een lijst aanwijzingen waaruit je afleidt wie de zebra heeft.",
