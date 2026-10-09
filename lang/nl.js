@@ -13,7 +13,7 @@ STRINGS.nl = {
     nav_stats: "Statistieken",
     footer_support: "Steun dit project",
     toggle_moves_button: "Zetten",
-    home_tagline: "65 klassieke spellen, gemaakt voor e-readers.",
+    home_tagline: "{games} klassieke spellen, gemaakt voor e-readers.",
     home_intro: "Een kleine, onafhankelijke verzameling klassieke bord-, strategie- en puzzelspellen, gemaakt voor E-Ink-schermen zoals Tolino, Kobo en Kindle: hoog contrast, geen animaties, en blijft werken zonder internetverbinding zodra je het hebt geopend.",
     home_pitch: "Geen reclame, geen account, en er wordt niets over je bijgehouden. Eenmaal geladen werkt alles ook zonder internet. De computer speelt nooit uit zichzelf verder: stop wanneer je wilt en ga uren later precies verder waar je was. De broncode is open.",
     home_pitch_link: "Wat hier anders is",
@@ -146,6 +146,9 @@ STRINGS.nl = {
     quickrules_skyscrapers_1: "Vul het rooster met hoogtes van 1 tot N, zodat elke rij en kolom elke hoogte één keer bevat en elke aanwijzing klopt.",
     quickrules_skyscrapers_2: "Selecteer een vakje en kies dan een hoogte van het paneel onder het bord.",
     quickrules_skyscrapers_3: "Een aanwijzing telt de gebouwen die je vanaf die kant ziet, en een hoger gebouw verbergt elk lager gebouw erachter volledig.",
+    quickrules_cake_1: "Zet elk dier en de taart zo neer dat in elke rij en elke kolom precies één ding staat.",
+    quickrules_cake_2: "De taart staat altijd op een tafel, dieren nooit op een tafel of kast, en de aanwijzingen onder het bord vertellen de rest.",
+    quickrules_cake_3: "Het enige dier in de kamer van de taart heeft hem gepakt - kies een knop onder het bord en tik dan op een vakje.",
     quickrules_konane_1: "Laat je tegenstander zonder zet: wie op zijn beurt geen legale sprong heeft, verliest meteen.",
     quickrules_konane_2: "Elke zet is een sprong: een steen springt over een aangrenzende vijandelijke steen, nooit diagonaal, naar het lege veld erachter en slaat hem.",
     quickrules_konane_3: "Voor de eerste sprong verwijdert Zwart een eigen steen uit een hoek of het midden, daarna Wit een eigen steen direct naast dat gat.",
@@ -524,10 +527,10 @@ STRINGS.nl = {
     msg_t_do_p_drew_tiles: "{p} heeft de stenen {s} en {r} gekocht.",
     msg_aria_card_new: "nieuw",
     seo_t_game: "{s} op e-ink – offline spelen, zonder reclame",
-    seo_title_index: "PaperGames – 65 gratis bordspellen voor e-readers",
-    seo_desc_index: "65 klassieke bordspellen voor e-readers en tablets. Schaken, go, backgammon, sudoku en meer. Gratis, offline, zonder reclame, in 12 talen.",
-    seo_title_about: "Over PaperGames – 65 gratis bordspellen voor e-ink",
-    seo_desc_about: "Waarom PaperGames bestaat, hoe het gemaakt is en hoe je het project kunt steunen. Een gratis, offline en reclamevrije verzameling van 65 klassieke bord- en puzzelspellen.",
+    seo_title_index: "PaperGames – {games} gratis bordspellen voor e-readers",
+    seo_desc_index: "{games} klassieke bordspellen voor e-readers en tablets. Schaken, go, backgammon, sudoku en meer. Gratis, offline, zonder reclame, in 12 talen.",
+    seo_title_about: "Over PaperGames – {games} gratis bordspellen voor e-ink",
+    seo_desc_about: "Waarom PaperGames bestaat, hoe het gemaakt is en hoe je het project kunt steunen. Een gratis, offline en reclamevrije verzameling van {games} klassieke bord- en puzzelspellen.",
     nav_calm: "Rustig spelen",
     about_calm_link: "Rustig spelen: geen animaties, geen geluid, geen reclame",
     calm_intro: "PaperGames is gemaakt om rustig te spelen. Dat betekent:",
@@ -542,13 +545,13 @@ STRINGS.nl = {
     seo_title_calm: "Rustig spelen – spellen zonder reclame en animaties | PaperGames",
     seo_desc_calm: "PaperGames speelt rustig: geen animaties, geluid, reclame, meldingen of tracking, en geen account nodig. Gemaakt voor e-ink, werkt offline.",
     seo_title_games: "Alle spellen – PaperGames",
-    seo_desc_games: "Blader door alle 65 gratis bord- en puzzelspellen van PaperGames, zoek en sorteer ze op alfabet of op soort.",
+    seo_desc_games: "Blader door alle {games} gratis bord- en puzzelspellen van PaperGames, zoek en sorteer ze op alfabet of op soort.",
     seo_title_guide: "Installatiegids | PaperGames",
     seo_desc_guide: "Zo installeer je PaperGames op je e-reader of tablet: open het in de browser, zet het op je startscherm en speel volledig offline verder.",
     seo_title_devices: "Geteste apparaten – op welke e-readers PaperGames werkt | PaperGames",
     seo_desc_devices: "Op welke e-readers PaperGames aantoonbaar werkt, wat nog niet getest is en hoe je je eigen apparaat controleert en het laat weten – geen formulier, geen account.",
     seo_title_impressum: "Colofon | PaperGames",
-    seo_desc_impressum: "Colofon (Impressum) van PaperGames, een gratis verzameling van 65 offline bordspellen voor e-readers, beheerd door Christopher Müller.",
+    seo_desc_impressum: "Colofon (Impressum) van PaperGames, een gratis verzameling van {games} offline bordspellen voor e-readers, beheerd door Christopher Müller.",
     seo_title_datenschutz: "Privacyverklaring | PaperGames",
     seo_desc_datenschutz: "Privacyverklaring van PaperGames: geen cookies, geen analyse, geen reclame. Alleen lokale opslag, plus de optionele aanmelding bij Lichess voor online schaken.",
     seo_title_stats: "Jouw statistieken | PaperGames",
@@ -870,7 +873,7 @@ STRINGS.nl = {
     home_section_popular: "Populaire spellen",
     home_section_new: "Nieuwe spellen",
     home_all_games_title: "Op zoek naar iets anders?",
-    home_all_games_desc: "Blader door en zoek in alle 65 spellen, sorteerbaar op alfabet of type.",
+    home_all_games_desc: "Blader door en zoek in alle {games} spellen, sorteerbaar op alfabet of type.",
     nav_all_games: "Alle spellen",
     all_games_intro: "Alle spellen van PaperGames op één plek. Zoek op naam, sorteer alfabetisch of op type, en tik op de ster om een spel aan je favorieten op de startpagina toe te voegen.",
     all_games_search_placeholder: "Spellen zoeken…",
@@ -1333,6 +1336,273 @@ STRINGS.nl = {
 
 
     skyscrapers_history_intro: "Skyscrapers behoort tot dezelfde familie van Latijnse-vierkant-puzzels als Sudoku, maar voegt een eigen twist toe die het zijn naam geeft: een zichtlijnregel die net van buiten het rooster wordt afgelezen.",
+
+
+    cake_dog_name: "Hond",
+
+
+    cake_dog_cap: "De hond",
+
+
+    cake_dog_mid: "de hond",
+
+
+    cake_dog_is: "De hond is",
+
+
+    cake_dog_isnot: "De hond is niet",
+
+
+    cake_dog_sits: "De hond zit",
+
+
+    cake_win_dog: "Gevonden! De hond heeft de taart gepakt.",
+
+
+    cake_cat_name: "Kat",
+
+
+    cake_cat_cap: "De kat",
+
+
+    cake_cat_mid: "de kat",
+
+
+    cake_cat_is: "De kat is",
+
+
+    cake_cat_isnot: "De kat is niet",
+
+
+    cake_cat_sits: "De kat zit",
+
+
+    cake_win_cat: "Gevonden! De kat heeft de taart gepakt.",
+
+
+    cake_rabbit_name: "Konijn",
+
+
+    cake_rabbit_cap: "Het konijn",
+
+
+    cake_rabbit_mid: "het konijn",
+
+
+    cake_rabbit_is: "Het konijn is",
+
+
+    cake_rabbit_isnot: "Het konijn is niet",
+
+
+    cake_rabbit_sits: "Het konijn zit",
+
+
+    cake_win_rabbit: "Gevonden! Het konijn heeft de taart gepakt.",
+
+
+    cake_mouse_name: "Muis",
+
+
+    cake_mouse_cap: "De muis",
+
+
+    cake_mouse_mid: "de muis",
+
+
+    cake_mouse_is: "De muis is",
+
+
+    cake_mouse_isnot: "De muis is niet",
+
+
+    cake_mouse_sits: "De muis zit",
+
+
+    cake_win_mouse: "Gevonden! De muis heeft de taart gepakt.",
+
+
+    cake_hedgehog_name: "Egel",
+
+
+    cake_hedgehog_cap: "De egel",
+
+
+    cake_hedgehog_mid: "de egel",
+
+
+    cake_hedgehog_is: "De egel is",
+
+
+    cake_hedgehog_isnot: "De egel is niet",
+
+
+    cake_hedgehog_sits: "De egel zit",
+
+
+    cake_win_hedgehog: "Gevonden! De egel heeft de taart gepakt.",
+
+
+    cake_room_kitchen_name: "Keuken",
+
+
+    cake_room_kitchen_in: "in de keuken",
+
+
+    cake_room_living_name: "Woonkamer",
+
+
+    cake_room_living_in: "in de woonkamer",
+
+
+    cake_room_hall_name: "Gang",
+
+
+    cake_room_hall_in: "in de gang",
+
+
+    cake_room_bath_name: "Badkamer",
+
+
+    cake_room_bath_in: "in de badkamer",
+
+
+    cake_room_bedroom_name: "Slaapkamer",
+
+
+    cake_room_bedroom_in: "in de slaapkamer",
+
+
+    cake_room_garden_name: "Tuin",
+
+
+    cake_room_garden_in: "in de tuin",
+
+
+    cake_room_cellar_name: "Kelder",
+
+
+    cake_room_cellar_in: "in de kelder",
+
+
+    cake_furn_table_name: "Tafel",
+
+
+    cake_furn_chair_name: "Stoel",
+
+
+    cake_furn_rug_name: "Kleed",
+
+
+    cake_furn_plant_name: "Plant",
+
+
+    cake_furn_cupboard_name: "Kast",
+
+
+    cake_furn_chair_on: "op een stoel",
+
+
+    cake_furn_rug_on: "op een kleed",
+
+
+    cake_furn_plant_next: "naast een plant",
+
+
+    cake_furn_cupboard_next: "naast een kast",
+
+
+    cake_clue_in: "{IS} {ROOM}.",
+
+
+    cake_clue_notin: "{ISNOT} {ROOM}.",
+
+
+    cake_clue_on: "{SITS} {FURN}.",
+
+
+    cake_clue_next: "{IS} {FURN}.",
+
+
+    cake_clue_window: "{IS} in dezelfde rij als het raam.",
+
+
+    cake_clue_top: "{IS} in de bovenste rij.",
+
+
+    cake_clue_bottom: "{IS} in de onderste rij.",
+
+
+    cake_clue_left: "{IS} in de linkerkolom.",
+
+
+    cake_clue_right: "{IS} in de rechterkolom.",
+
+
+    cake_clue_same: "{A} en {B} zijn in dezelfde kamer.",
+
+
+    game_cake: "Wie heeft de taart gepakt?",
+
+
+    home_cake_desc: "Een detectivepuzzel: zet de dieren en de taart volgens de aanwijzingen op de plattegrond - één per rij en kolom - en ontdek wie de taart heeft gepakt.",
+
+
+    cake_board_label: "Plattegrond",
+
+
+    cake_palette_label: "Wat je plaatst",
+
+
+    cake_clues_title: "Aanwijzingen",
+
+
+    cake_status_pick: "Kies iets onder de plattegrond en tik dan op een vakje.",
+
+
+    cake_meta_placed: "Geplaatst: {N} / {M}",
+
+
+    cake_win_title: "Gevonden!",
+
+
+    cake_hint_wrong: "Wat in het gemarkeerde vakje staat, hoort daar niet. Haal het weg en vraag dan opnieuw om een tip.",
+
+
+    cake_hint_wrongx: "In het gemarkeerde vakje hoort iets. Haal de X weg en vraag dan opnieuw om een tip.",
+
+
+    cake_hint_step: "{THING}: rij {R}, kolom {C}.",
+
+
+    cake_aria_cell: "Rij {R}, kolom {C}",
+
+
+    cake_aria_hint: "Tip",
+
+
+    cake_tool_x: "Hier staat niets",
+
+
+    cake_window_name: "Raam",
+
+
+    cake_thing_cake: "Taart",
+
+
+    cake_history_intro: "Logische puzzels waarin een kleine zaak alleen door nadenken wordt opgelost, zijn veel ouder dan computers.",
+
+
+    cake_new_game: "Nieuwe puzzel",
+
+
+    cake_level_easy: "Makkelijk (4x4, 3 dieren)",
+
+
+    cake_level_medium: "Gemiddeld (5x5, 4 dieren)",
+
+
+    cake_level_hard: "Moeilijk (6x6, 5 dieren)",
 
     game_hashi: "Hashiwokakero",
     home_hashi_desc: "Verbind elk genummerd eiland met rechte enkele of dubbele bruggen, zodat het hele netwerk samenhangt en het aantal bruggen van elk eiland precies bij zijn getal past. Telkens opnieuw gegenereerd, in drie moeilijkheidsgraden.",

@@ -592,6 +592,36 @@ fs.readdirSync(ROOT).filter((f) => f.endsWith(".html")).sort().forEach((f) => {
   }
 });
 
+// "Who Took the Cake?" builds its clue sentences from ready-made phrases
+// (CakeCore.clueText), not through msg(). Every clue type, with every
+// animal, room and fitting piece of furniture, in every language: no
+// placeholder or key may be left over, and the sentence must differ from
+// English.
+const CakeCore = require(path.join(__dirname, "..", "cake-core.js"));
+let cakeSamples = 0;
+{
+  const cakePuzzle = { n: 6, rooms: [0], roomNames: CakeCore.ROOM_NAMES.slice() };
+  const clueSamples = [];
+  for (let a = 0; a < CakeCore.ANIMALS.length; a++) {
+    CakeCore.ROOM_NAMES.forEach((r, room) => { clueSamples.push({ t: "in", a, room }); clueSamples.push({ t: "notin", a, room }); });
+    ["chair", "rug"].forEach((f) => clueSamples.push({ t: "on", a, f }));
+    ["plant", "cupboard"].forEach((f) => clueSamples.push({ t: "next", a, f }));
+    clueSamples.push({ t: "window", a });
+    ["top", "bottom", "left", "right"].forEach((side) => clueSamples.push({ t: "edge", a, side }));
+    for (let b = 0; b < CakeCore.ANIMALS.length; b++) if (b !== a) clueSamples.push({ t: "same", a, b });
+  }
+  const tEn = (k) => STRINGS.en[k] || k;
+  for (const lang of ["en"].concat(langs)) {
+    const tl = (k) => (STRINGS[lang] && STRINGS[lang][k]) || k;
+    for (const clue of clueSamples) {
+      const out = CakeCore.clueText(cakePuzzle, clue, tl);
+      cakeSamples++;
+      if (/\{|cake_/.test(out)) fail(lang + ": cake clue incomplete " + JSON.stringify(out));
+      else if (lang !== "en" && out === CakeCore.clueText(cakePuzzle, clue, tEn)) fail(lang + ": cake clue untranslated " + JSON.stringify(out));
+    }
+  }
+}
+
 console.log(`=== I18N MESSAGES: ${SAMPLES.length + ARIA_SAMPLES.length} samples x ${langs.length} languages (main files only), ` +
-  `page texts on ${pageCount.game} other and ${pageCount.text} rules/history pages, ${failures} failure(s) ===`);
+  `page texts on ${pageCount.game} other and ${pageCount.text} rules/history pages, ${cakeSamples} cake clues, ${failures} failure(s) ===`);
 process.exit(failures ? 1 : 0);

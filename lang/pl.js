@@ -15,7 +15,7 @@ STRINGS.pl = {
     nav_impressum: "Nota prawna",
     nav_privacy: "Polityka prywatności",
     toggle_moves_button: "Ruchy",
-    home_tagline: "65 klasycznych gier, stworzonych dla czytników e-booków.",
+    home_tagline: "{games} klasycznych gier, stworzonych dla czytników e-booków.",
     home_intro: "Niewielka, niezależna kolekcja klasycznych gier planszowych, strategicznych i logicznych, stworzona dla wyświetlaczy E-Ink, takich jak Tolino, Kobo i Kindle: wysoki kontrast, brak animacji, i działa bez połączenia z internetem po pierwszym otwarciu.",
     home_pitch: "Bez reklam, bez konta i nic o tobie nie jest zapisywane. Po jednorazowym wczytaniu wszystko działa dalej bez internetu. Komputer nigdy nie gra dalej sam: przerwij, kiedy chcesz, i wróć po kilku godzinach dokładnie tam, gdzie skończyłeś. Kod źródłowy jest otwarty.",
     home_pitch_link: "Co tu jest inaczej",
@@ -148,6 +148,9 @@ STRINGS.pl = {
     quickrules_skyscrapers_1: "Wypełnij planszę wysokościami od 1 do N tak, aby każdy wiersz i każda kolumna zawierały każdą wysokość raz, a każda wskazówka się zgadzała.",
     quickrules_skyscrapers_2: "Wybierz pole, a następnie wysokość z panelu pod planszą.",
     quickrules_skyscrapers_3: "Wskazówka liczy budynki widoczne z tej strony, a wyższy budynek całkowicie zasłania każdy niższy stojący za nim.",
+    quickrules_cake_1: "Ustaw każde zwierzę i ciasto tak, aby w każdym wierszu i każdej kolumnie stała dokładnie jedna rzecz.",
+    quickrules_cake_2: "Ciasto zawsze stoi na stole, zwierzęta nigdy na stole ani na szafie, a poszlaki pod planem mówią resztę.",
+    quickrules_cake_3: "Jedyne zwierzę w pokoju z ciastem je wzięło - wybierz przycisk pod planem, a potem dotknij pola.",
     quickrules_konane_1: "Pozostaw przeciwnika bez ruchu: kto w swojej turze nie ma legalnego skoku, przegrywa natychmiast.",
     quickrules_konane_2: "Każdy ruch to skok: pionek przeskakuje sąsiedni pionek przeciwnika, nigdy po skosie, na puste pole tuż za nim i zdejmuje go.",
     quickrules_konane_3: "Przed pierwszym skokiem Czarne zdejmują jeden swój pionek z narożnika lub ze środka, a potem Białe jeden swój tuż obok tego pustego pola.",
@@ -273,7 +276,7 @@ STRINGS.pl = {
     home_section_popular: "Popularne gry",
     home_section_new: "Nowe gry",
     home_all_games_title: "Szukasz czegoś innego?",
-    home_all_games_desc: "Przeglądaj i wyszukuj wszystkie 65 gier, sortowane alfabetycznie lub według typu.",
+    home_all_games_desc: "Przeglądaj i wyszukuj wszystkie {games} gier, sortowane alfabetycznie lub według typu.",
     nav_all_games: "Wszystkie gry",
     all_games_intro: "Wszystkie gry PaperGames w jednym miejscu. Szukaj po nazwie, sortuj alfabetycznie lub według typu, i dotknij gwiazdki, aby dodać grę do ulubionych na stronie głównej.",
     all_games_search_placeholder: "Szukaj gier…",
@@ -597,10 +600,10 @@ STRINGS.pl = {
     msg_t_do_p_drew_tiles: "{p} dobiera kamienie {s} i {r}.",
     msg_aria_card_new: "nowa",
     seo_t_game: "{s} na e-ink – graj offline, bez reklam",
-    seo_title_index: "PaperGames – 65 darmowych gier planszowych na czytniki e-ink",
-    seo_desc_index: "65 klasycznych gier planszowych na czytniki e-ink i tablety. Szachy, go, tryktrak, sudoku i więcej. Za darmo, offline, bez reklam, w 12 językach.",
-    seo_title_about: "O PaperGames – 65 darmowych gier planszowych na e-ink",
-    seo_desc_about: "Dlaczego powstało PaperGames, jak jest zbudowane i jak wesprzeć projekt. Darmowa, działająca offline kolekcja 65 klasycznych gier planszowych i łamigłówek bez reklam.",
+    seo_title_index: "PaperGames – {games} darmowych gier planszowych na czytniki e-ink",
+    seo_desc_index: "{games} klasycznych gier planszowych na czytniki e-ink i tablety. Szachy, go, tryktrak, sudoku i więcej. Za darmo, offline, bez reklam, w 12 językach.",
+    seo_title_about: "O PaperGames – {games} darmowych gier planszowych na e-ink",
+    seo_desc_about: "Dlaczego powstało PaperGames, jak jest zbudowane i jak wesprzeć projekt. Darmowa, działająca offline kolekcja {games} klasycznych gier planszowych i łamigłówek bez reklam.",
     nav_calm: "Spokojna gra",
     about_calm_link: "Spokojna gra: bez animacji, bez dźwięków, bez reklam",
     calm_intro: "PaperGames powstało do spokojnej gry. W praktyce oznacza to:",
@@ -615,13 +618,13 @@ STRINGS.pl = {
     seo_title_calm: "Spokojna gra – gry bez reklam i animacji | PaperGames",
     seo_desc_calm: "PaperGames to spokojna gra: bez animacji, dźwięków, reklam, powiadomień i śledzenia, bez potrzeby zakładania konta. Dla e-ink, działa offline.",
     seo_title_games: "Wszystkie gry – PaperGames",
-    seo_desc_games: "Przeglądaj, wyszukuj i sortuj wszystkie 65 darmowych gier planszowych i łamigłówek PaperGames, alfabetycznie lub według rodzaju.",
+    seo_desc_games: "Przeglądaj, wyszukuj i sortuj wszystkie {games} darmowych gier planszowych i łamigłówek PaperGames, alfabetycznie lub według rodzaju.",
     seo_title_guide: "Przewodnik instalacji | PaperGames",
     seo_desc_guide: "Jak zainstalować PaperGames na czytniku lub tablecie: otwórz w przeglądarce, dodaj do ekranu głównego i graj dalej całkowicie offline.",
     seo_title_devices: "Przetestowane urządzenia – na jakich czytnikach działa PaperGames | PaperGames",
     seo_desc_devices: "Na jakich czytnikach PaperGames na pewno działa, czego jeszcze nie testowano i jak sprawdzić własne urządzenie oraz dać znać – bez formularza, bez konta.",
     seo_title_impressum: "Nota prawna | PaperGames",
-    seo_desc_impressum: "Nota prawna (Impressum) PaperGames, darmowej kolekcji 65 gier planszowych offline na czytniki e-ink, prowadzonej przez Christophera Müllera.",
+    seo_desc_impressum: "Nota prawna (Impressum) PaperGames, darmowej kolekcji {games} gier planszowych offline na czytniki e-ink, prowadzonej przez Christophera Müllera.",
     seo_title_datenschutz: "Polityka prywatności | PaperGames",
     seo_desc_datenschutz: "Polityka prywatności PaperGames: bez plików cookie, bez analityki, bez reklam. Tylko pamięć lokalna oraz opcjonalne logowanie do Lichess do szachów online.",
     seo_title_stats: "Twoje statystyki | PaperGames",
@@ -1334,6 +1337,273 @@ STRINGS.pl = {
 
 
     skyscrapers_history_intro: "Drapacze Chmur należą do tej samej rodziny łamigłówek opartych na kwadracie łacińskim co Sudoku, ale dodają charakterystyczny zwrot, który nadaje im nazwę: zasadę linii widzenia odczytywaną tuż spoza planszy.",
+
+
+    cake_dog_name: "Pies",
+
+
+    cake_dog_cap: "Pies",
+
+
+    cake_dog_mid: "pies",
+
+
+    cake_dog_is: "Pies jest",
+
+
+    cake_dog_isnot: "Pies nie jest",
+
+
+    cake_dog_sits: "Pies siedzi",
+
+
+    cake_win_dog: "Znaleziono! Pies wziął ciasto.",
+
+
+    cake_cat_name: "Kot",
+
+
+    cake_cat_cap: "Kot",
+
+
+    cake_cat_mid: "kot",
+
+
+    cake_cat_is: "Kot jest",
+
+
+    cake_cat_isnot: "Kot nie jest",
+
+
+    cake_cat_sits: "Kot siedzi",
+
+
+    cake_win_cat: "Znaleziono! Kot wziął ciasto.",
+
+
+    cake_rabbit_name: "Królik",
+
+
+    cake_rabbit_cap: "Królik",
+
+
+    cake_rabbit_mid: "królik",
+
+
+    cake_rabbit_is: "Królik jest",
+
+
+    cake_rabbit_isnot: "Królik nie jest",
+
+
+    cake_rabbit_sits: "Królik siedzi",
+
+
+    cake_win_rabbit: "Znaleziono! Królik wziął ciasto.",
+
+
+    cake_mouse_name: "Mysz",
+
+
+    cake_mouse_cap: "Mysz",
+
+
+    cake_mouse_mid: "mysz",
+
+
+    cake_mouse_is: "Mysz jest",
+
+
+    cake_mouse_isnot: "Mysz nie jest",
+
+
+    cake_mouse_sits: "Mysz siedzi",
+
+
+    cake_win_mouse: "Znaleziono! Mysz wzięła ciasto.",
+
+
+    cake_hedgehog_name: "Jeż",
+
+
+    cake_hedgehog_cap: "Jeż",
+
+
+    cake_hedgehog_mid: "jeż",
+
+
+    cake_hedgehog_is: "Jeż jest",
+
+
+    cake_hedgehog_isnot: "Jeż nie jest",
+
+
+    cake_hedgehog_sits: "Jeż siedzi",
+
+
+    cake_win_hedgehog: "Znaleziono! Jeż wziął ciasto.",
+
+
+    cake_room_kitchen_name: "Kuchnia",
+
+
+    cake_room_kitchen_in: "w kuchni",
+
+
+    cake_room_living_name: "Salon",
+
+
+    cake_room_living_in: "w salonie",
+
+
+    cake_room_hall_name: "Korytarz",
+
+
+    cake_room_hall_in: "na korytarzu",
+
+
+    cake_room_bath_name: "Łazienka",
+
+
+    cake_room_bath_in: "w łazience",
+
+
+    cake_room_bedroom_name: "Sypialnia",
+
+
+    cake_room_bedroom_in: "w sypialni",
+
+
+    cake_room_garden_name: "Ogród",
+
+
+    cake_room_garden_in: "w ogrodzie",
+
+
+    cake_room_cellar_name: "Piwnica",
+
+
+    cake_room_cellar_in: "w piwnicy",
+
+
+    cake_furn_table_name: "Stół",
+
+
+    cake_furn_chair_name: "Krzesło",
+
+
+    cake_furn_rug_name: "Dywan",
+
+
+    cake_furn_plant_name: "Roślina",
+
+
+    cake_furn_cupboard_name: "Szafa",
+
+
+    cake_furn_chair_on: "na krześle",
+
+
+    cake_furn_rug_on: "na dywanie",
+
+
+    cake_furn_plant_next: "obok rośliny",
+
+
+    cake_furn_cupboard_next: "obok szafy",
+
+
+    cake_clue_in: "{IS} {ROOM}.",
+
+
+    cake_clue_notin: "{ISNOT} {ROOM}.",
+
+
+    cake_clue_on: "{SITS} {FURN}.",
+
+
+    cake_clue_next: "{IS} {FURN}.",
+
+
+    cake_clue_window: "{IS} w tym samym wierszu co okno.",
+
+
+    cake_clue_top: "{IS} w górnym wierszu.",
+
+
+    cake_clue_bottom: "{IS} w dolnym wierszu.",
+
+
+    cake_clue_left: "{IS} w lewej kolumnie.",
+
+
+    cake_clue_right: "{IS} w prawej kolumnie.",
+
+
+    cake_clue_same: "{A} i {B} są w tym samym pokoju.",
+
+
+    game_cake: "Kto wziął ciasto?",
+
+
+    home_cake_desc: "Detektywistyczna łamigłówka: ustaw zwierzęta i ciasto na planie według wskazówek - po jednym w wierszu i kolumnie - i odkryj, kto wziął ciasto.",
+
+
+    cake_board_label: "Plan",
+
+
+    cake_palette_label: "Co postawić",
+
+
+    cake_clues_title: "Poszlaki",
+
+
+    cake_status_pick: "Wybierz coś pod planem, a potem dotknij pola.",
+
+
+    cake_meta_placed: "Postawiono: {N} / {M}",
+
+
+    cake_win_title: "Znaleziono!",
+
+
+    cake_hint_wrong: "To, co stoi na zaznaczonym polu, nie powinno tam być. Zdejmij to, a potem poproś o kolejną podpowiedź.",
+
+
+    cake_hint_wrongx: "Na zaznaczonym polu coś powinno stać. Usuń X, a potem poproś o kolejną podpowiedź.",
+
+
+    cake_hint_step: "{THING}: wiersz {R}, kolumna {C}.",
+
+
+    cake_aria_cell: "Wiersz {R}, kolumna {C}",
+
+
+    cake_aria_hint: "Podpowiedź",
+
+
+    cake_tool_x: "Tu nic nie ma",
+
+
+    cake_window_name: "Okno",
+
+
+    cake_thing_cake: "Ciasto",
+
+
+    cake_history_intro: "Łamigłówki logiczne, w których małą sprawę rozwiązuje się samym rozumowaniem, są dużo starsze od komputerów.",
+
+
+    cake_new_game: "Nowa łamigłówka",
+
+
+    cake_level_easy: "Łatwy (4x4, 3 zwierzęta)",
+
+
+    cake_level_medium: "Średni (5x5, 4 zwierzęta)",
+
+
+    cake_level_hard: "Trudny (6x6, 5 zwierząt)",
 
     game_hashi: "Hashiwokakero",
     home_hashi_desc: "Połącz każdą ponumerowaną wyspę prostymi, pojedynczymi lub podwójnymi mostami, tak aby cała sieć była spójna, a liczba mostów każdej wyspy dokładnie odpowiadała jej numerowi. Generowane od nowa za każdym razem, w trzech poziomach trudności.",

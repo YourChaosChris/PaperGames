@@ -13,7 +13,7 @@ STRINGS.it = {
     nav_stats: "Statistiche",
     footer_support: "Sostieni",
     toggle_moves_button: "Mosse",
-    home_tagline: "65 giochi classici, pensati per gli e-reader.",
+    home_tagline: "{games} giochi classici, pensati per gli e-reader.",
     home_intro: "Una piccola collezione indipendente di giochi da tavolo, di strategia e di rompicapo classici, pensata per display E-Ink come Tolino, Kobo e Kindle: alto contrasto, nessuna animazione, e continua a funzionare senza connessione a Internet una volta aperta.",
     home_pitch: "Niente pubblicità, nessun account e nulla viene registrato su di te. Una volta caricato, tutto continua a funzionare senza internet. Il computer non va mai avanti da solo: puoi smettere quando vuoi e riprendere ore dopo esattamente da dove avevi lasciato. Il codice sorgente è aperto.",
     home_pitch_link: "Cosa c'è di diverso",
@@ -146,6 +146,9 @@ STRINGS.it = {
     quickrules_skyscrapers_1: "Riempi la griglia con altezze da 1 a N in modo che ogni riga e colonna contenga ogni altezza una volta e ogni indizio corrisponda.",
     quickrules_skyscrapers_2: "Seleziona una casella, poi scegli un'altezza dal tastierino sotto il tabellone.",
     quickrules_skyscrapers_3: "Un indizio conta gli edifici visibili da quel lato, e un edificio più alto nasconde completamente ogni edificio più basso dietro di sé.",
+    quickrules_cake_1: "Metti ogni animale e la torta in modo che ogni riga e ogni colonna contenga esattamente una cosa.",
+    quickrules_cake_2: "La torta sta sempre su un tavolo, gli animali mai su un tavolo o un armadio, e gli indizi sotto la pianta dicono il resto.",
+    quickrules_cake_3: "L'unico animale nella stanza della torta l'ha presa: scegli un pulsante sotto la pianta, poi tocca una casella.",
     quickrules_konane_1: "Lascia l'avversario senza mosse: chi al suo turno non ha alcun salto legale perde immediatamente.",
     quickrules_konane_2: "Ogni mossa è un salto: una pedina salta sopra una pedina nemica adiacente, mai in diagonale, fino alla casella vuota subito dopo, catturandola.",
     quickrules_konane_3: "Prima del primo salto il Nero rimuove una propria pedina da un angolo o dal centro, poi il Bianco una propria pedina accanto a quel vuoto.",
@@ -271,7 +274,7 @@ STRINGS.it = {
     home_section_popular: "Giochi popolari",
     home_section_new: "Nuovi giochi",
     home_all_games_title: "Cerchi qualcos'altro?",
-    home_all_games_desc: "Sfoglia e cerca tutti i 65 giochi, ordinabili alfabeticamente o per tipo.",
+    home_all_games_desc: "Sfoglia e cerca tutti i {games} giochi, ordinabili alfabeticamente o per tipo.",
     nav_all_games: "Tutti i giochi",
     all_games_intro: "Tutti i giochi di PaperGames in un unico posto. Cerca per nome, ordina alfabeticamente o per tipo, e tocca la stella per aggiungere un gioco ai tuoi preferiti nella home page.",
     all_games_search_placeholder: "Cerca giochi…",
@@ -591,10 +594,10 @@ STRINGS.it = {
     msg_t_do_p_drew_tiles: "{p} ha pescato le tessere {s} e {r}.",
     msg_aria_card_new: "nuova",
     seo_t_game: "{s} su e-ink: gioca offline, senza pubblicità",
-    seo_title_index: "PaperGames – 65 giochi da tavolo gratuiti per e-reader",
-    seo_desc_index: "65 giochi da tavolo classici pensati per e-reader e tablet. Scacchi, go, backgammon, sudoku e altro. Gratis, offline, senza pubblicità, in 12 lingue.",
-    seo_title_about: "Informazioni su PaperGames – 65 giochi da tavolo gratuiti per e-ink",
-    seo_desc_about: "Perché esiste PaperGames, come è fatto e come sostenere il progetto. Una raccolta gratuita, offline e senza pubblicità di 65 giochi da tavolo e rompicapi classici.",
+    seo_title_index: "PaperGames – {games} giochi da tavolo gratuiti per e-reader",
+    seo_desc_index: "{games} giochi da tavolo classici pensati per e-reader e tablet. Scacchi, go, backgammon, sudoku e altro. Gratis, offline, senza pubblicità, in 12 lingue.",
+    seo_title_about: "Informazioni su PaperGames – {games} giochi da tavolo gratuiti per e-ink",
+    seo_desc_about: "Perché esiste PaperGames, come è fatto e come sostenere il progetto. Una raccolta gratuita, offline e senza pubblicità di {games} giochi da tavolo e rompicapi classici.",
     nav_calm: "Giocare con calma",
     about_calm_link: "Giocare con calma: niente animazioni, niente suoni, niente pubblicità",
     calm_intro: "PaperGames è fatto per giocare con calma. In concreto:",
@@ -609,13 +612,13 @@ STRINGS.it = {
     seo_title_calm: "Giocare con calma – giochi senza pubblicità né animazioni | PaperGames",
     seo_desc_calm: "PaperGames si gioca con calma: niente animazioni, suoni, pubblicità, notifiche o tracciamento, e nessun account necessario. Fatto per l'e-ink, funziona offline.",
     seo_title_games: "Tutti i giochi – PaperGames",
-    seo_desc_games: "Sfoglia, cerca e ordina tutti i 65 giochi da tavolo e rompicapi gratuiti di PaperGames, in ordine alfabetico o per tipo.",
+    seo_desc_games: "Sfoglia, cerca e ordina tutti i {games} giochi da tavolo e rompicapi gratuiti di PaperGames, in ordine alfabetico o per tipo.",
     seo_title_guide: "Guida all'installazione | PaperGames",
     seo_desc_guide: "Come installare PaperGames sul tuo e-reader o tablet: aprilo nel browser, aggiungilo alla schermata iniziale e continua a giocare del tutto offline.",
     seo_title_devices: "Dispositivi testati – su quali e-reader funziona PaperGames | PaperGames",
     seo_desc_devices: "Su quali e-reader funziona di sicuro PaperGames, cosa non è stato testato e come verificare il tuo dispositivo e segnalarlo: niente moduli, niente account.",
     seo_title_impressum: "Note legali | PaperGames",
-    seo_desc_impressum: "Note legali (Impressum) di PaperGames, una raccolta gratuita di 65 giochi da tavolo offline per e-reader, gestita da Christopher Müller.",
+    seo_desc_impressum: "Note legali (Impressum) di PaperGames, una raccolta gratuita di {games} giochi da tavolo offline per e-reader, gestita da Christopher Müller.",
     seo_title_datenschutz: "Informativa sulla privacy | PaperGames",
     seo_desc_datenschutz: "Informativa sulla privacy di PaperGames: niente cookie, niente analisi, niente pubblicità. Solo archiviazione locale, più l'accesso facoltativo a Lichess per gli scacchi online.",
     seo_title_stats: "Le tue statistiche | PaperGames",
@@ -1333,6 +1336,273 @@ STRINGS.it = {
 
 
     skyscrapers_history_intro: "Skyscrapers appartiene alla stessa famiglia di rompicapi a quadrato latino da cui proviene anche il Sudoku, ma aggiunge una variante distintiva che gli dà il nome: una regola di linea di vista letta appena fuori dalla griglia.",
+
+
+    cake_dog_name: "Cane",
+
+
+    cake_dog_cap: "Il cane",
+
+
+    cake_dog_mid: "il cane",
+
+
+    cake_dog_is: "Il cane è",
+
+
+    cake_dog_isnot: "Il cane non è",
+
+
+    cake_dog_sits: "Il cane è",
+
+
+    cake_win_dog: "Trovato! Il cane ha preso la torta.",
+
+
+    cake_cat_name: "Gatto",
+
+
+    cake_cat_cap: "Il gatto",
+
+
+    cake_cat_mid: "il gatto",
+
+
+    cake_cat_is: "Il gatto è",
+
+
+    cake_cat_isnot: "Il gatto non è",
+
+
+    cake_cat_sits: "Il gatto è",
+
+
+    cake_win_cat: "Trovato! Il gatto ha preso la torta.",
+
+
+    cake_rabbit_name: "Coniglio",
+
+
+    cake_rabbit_cap: "Il coniglio",
+
+
+    cake_rabbit_mid: "il coniglio",
+
+
+    cake_rabbit_is: "Il coniglio è",
+
+
+    cake_rabbit_isnot: "Il coniglio non è",
+
+
+    cake_rabbit_sits: "Il coniglio è",
+
+
+    cake_win_rabbit: "Trovato! Il coniglio ha preso la torta.",
+
+
+    cake_mouse_name: "Topo",
+
+
+    cake_mouse_cap: "Il topo",
+
+
+    cake_mouse_mid: "il topo",
+
+
+    cake_mouse_is: "Il topo è",
+
+
+    cake_mouse_isnot: "Il topo non è",
+
+
+    cake_mouse_sits: "Il topo è",
+
+
+    cake_win_mouse: "Trovato! Il topo ha preso la torta.",
+
+
+    cake_hedgehog_name: "Riccio",
+
+
+    cake_hedgehog_cap: "Il riccio",
+
+
+    cake_hedgehog_mid: "il riccio",
+
+
+    cake_hedgehog_is: "Il riccio è",
+
+
+    cake_hedgehog_isnot: "Il riccio non è",
+
+
+    cake_hedgehog_sits: "Il riccio è",
+
+
+    cake_win_hedgehog: "Trovato! Il riccio ha preso la torta.",
+
+
+    cake_room_kitchen_name: "Cucina",
+
+
+    cake_room_kitchen_in: "in cucina",
+
+
+    cake_room_living_name: "Soggiorno",
+
+
+    cake_room_living_in: "in soggiorno",
+
+
+    cake_room_hall_name: "Corridoio",
+
+
+    cake_room_hall_in: "nel corridoio",
+
+
+    cake_room_bath_name: "Bagno",
+
+
+    cake_room_bath_in: "in bagno",
+
+
+    cake_room_bedroom_name: "Camera",
+
+
+    cake_room_bedroom_in: "in camera",
+
+
+    cake_room_garden_name: "Giardino",
+
+
+    cake_room_garden_in: "in giardino",
+
+
+    cake_room_cellar_name: "Cantina",
+
+
+    cake_room_cellar_in: "in cantina",
+
+
+    cake_furn_table_name: "Tavolo",
+
+
+    cake_furn_chair_name: "Sedia",
+
+
+    cake_furn_rug_name: "Tappeto",
+
+
+    cake_furn_plant_name: "Pianta",
+
+
+    cake_furn_cupboard_name: "Armadio",
+
+
+    cake_furn_chair_on: "su una sedia",
+
+
+    cake_furn_rug_on: "su un tappeto",
+
+
+    cake_furn_plant_next: "accanto a una pianta",
+
+
+    cake_furn_cupboard_next: "accanto a un armadio",
+
+
+    cake_clue_in: "{IS} {ROOM}.",
+
+
+    cake_clue_notin: "{ISNOT} {ROOM}.",
+
+
+    cake_clue_on: "{SITS} {FURN}.",
+
+
+    cake_clue_next: "{IS} {FURN}.",
+
+
+    cake_clue_window: "{IS} nella stessa riga della finestra.",
+
+
+    cake_clue_top: "{IS} nella riga in alto.",
+
+
+    cake_clue_bottom: "{IS} nella riga in basso.",
+
+
+    cake_clue_left: "{IS} nella colonna di sinistra.",
+
+
+    cake_clue_right: "{IS} nella colonna di destra.",
+
+
+    cake_clue_same: "{A} e {B} sono nella stessa stanza.",
+
+
+    game_cake: "Chi ha preso la torta?",
+
+
+    home_cake_desc: "Un rompicapo da detective: metti gli animali e la torta sulla pianta seguendo gli indizi - uno per riga e colonna - e scopri chi ha preso la torta.",
+
+
+    cake_board_label: "Pianta",
+
+
+    cake_palette_label: "Cosa mettere",
+
+
+    cake_clues_title: "Indizi",
+
+
+    cake_status_pick: "Scegli qualcosa sotto la pianta, poi tocca una casella.",
+
+
+    cake_meta_placed: "Messi: {N} / {M}",
+
+
+    cake_win_title: "Trovato!",
+
+
+    cake_hint_wrong: "Ciò che è nella casella segnata non va lì. Toglilo, poi chiedi di nuovo un suggerimento.",
+
+
+    cake_hint_wrongx: "Qualcosa va nella casella segnata. Togli la X, poi chiedi di nuovo un suggerimento.",
+
+
+    cake_hint_step: "{THING}: riga {R}, colonna {C}.",
+
+
+    cake_aria_cell: "Riga {R}, colonna {C}",
+
+
+    cake_aria_hint: "Suggerimento",
+
+
+    cake_tool_x: "Qui non c'è niente",
+
+
+    cake_window_name: "Finestra",
+
+
+    cake_thing_cake: "Torta",
+
+
+    cake_history_intro: "I rompicapi logici in cui un piccolo caso si risolve solo ragionando sono molto più antichi dei computer.",
+
+
+    cake_new_game: "Nuovo schema",
+
+
+    cake_level_easy: "Facile (4x4, 3 animali)",
+
+
+    cake_level_medium: "Medio (5x5, 4 animali)",
+
+
+    cake_level_hard: "Difficile (6x6, 5 animali)",
 
     game_hashi: "Hashiwokakero",
     home_hashi_desc: "Collega ogni isola numerata con ponti diritti, singoli o doppi, così che l'intera rete resti unita e il conteggio di ogni isola corrisponda esattamente al suo numero. Generato di nuovo ogni volta, su tre livelli di difficoltà.",

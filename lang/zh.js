@@ -13,7 +13,7 @@ STRINGS.zh = {
     nav_stats: "统计",
     footer_support: "支持一下",
     toggle_moves_button: "着法",
-    home_tagline: "65款经典游戏，专为电子阅读器打造。",
+    home_tagline: "{games}款经典游戏，专为电子阅读器打造。",
     home_intro: "一个小巧、无依赖的经典棋盘、策略与益智游戏合集，专为 Tolino、Kobo、Kindle 等电子墨水屏设备打造：高对比度、无动画效果，首次打开后即使没有网络连接也能继续使用。",
     home_pitch: "没有广告，无需账号，也不会记录你的任何信息。加载一次之后，没有网络也能继续使用。电脑绝不会自己接着下：随时可以停下，几小时后从原处继续。源代码是公开的。",
     home_pitch_link: "这里有什么不同",
@@ -146,6 +146,9 @@ STRINGS.zh = {
     quickrules_skyscrapers_1: "在网格中填入1到N的高度，使每行每列每个高度恰好出现一次，并且四周每个提示都相符。",
     quickrules_skyscrapers_2: "先选择一个格子，再从棋盘下方的面板中选择高度。",
     quickrules_skyscrapers_3: "提示数字表示从那一侧能看到多少栋建筑，较高的建筑会把它后面所有较矮的建筑完全挡住。",
+    quickrules_cake_1: "放好每只动物和蛋糕，使每一行和每一列正好有一样东西。",
+    quickrules_cake_2: "蛋糕总在桌子上，动物从不在桌子或柜子上，其余的看下面的线索。",
+    quickrules_cake_3: "和蛋糕在同一个房间里的唯一一只动物拿走了它——先选下面的按钮，再点一个格子。",
     quickrules_konane_1: "让对手无棋可走：轮到自己时没有任何合法跳吃的一方立即输掉。",
     quickrules_konane_2: "每一步都是跳吃：让己方棋子越过直线相邻的敌方棋子（绝不斜向），落在其后的空格上并吃掉它。",
     quickrules_konane_3: "第一次跳吃之前，黑方先从角上或中央移除自己的一枚棋子，接着白方移除紧挨这个空格的一枚己方棋子。",
@@ -271,7 +274,7 @@ STRINGS.zh = {
     home_section_popular: "热门游戏",
     home_section_new: "新游戏",
     home_all_games_title: "在寻找其他游戏吗？",
-    home_all_games_desc: "浏览并搜索全部65款游戏，可按字母顺序或类型排序。",
+    home_all_games_desc: "浏览并搜索全部{games}款游戏，可按字母顺序或类型排序。",
     nav_all_games: "所有游戏",
     all_games_intro: "PaperGames的所有游戏都在这里。按名称搜索，按字母顺序或类型排序，点击星标即可将游戏添加到主页的收藏夹。",
     all_games_search_placeholder: "搜索游戏…",
@@ -591,10 +594,10 @@ STRINGS.zh = {
     msg_t_do_p_drew_tiles: "{p}摸到了骨牌{s}和{r}。",
     msg_aria_card_new: "新",
     seo_t_game: "电子墨水屏上的{s}——离线畅玩，无广告",
-    seo_title_index: "PaperGames——65款适合电子墨水阅读器的免费棋盘游戏",
-    seo_desc_index: "65款为电子墨水阅读器和平板设计的经典棋盘游戏：国际象棋、围棋、双陆棋、数独等。免费、离线、无广告，支持12种语言。",
-    seo_title_about: "关于 PaperGames——65款电子墨水屏免费棋盘游戏",
-    seo_desc_about: "PaperGames 为何存在、如何构建，以及如何支持这个项目。一套免费、离线、无广告的经典棋盘与益智游戏合集，共65款。",
+    seo_title_index: "PaperGames——{games}款适合电子墨水阅读器的免费棋盘游戏",
+    seo_desc_index: "{games}款为电子墨水阅读器和平板设计的经典棋盘游戏：国际象棋、围棋、双陆棋、数独等。免费、离线、无广告，支持12种语言。",
+    seo_title_about: "关于 PaperGames——{games}款电子墨水屏免费棋盘游戏",
+    seo_desc_about: "PaperGames 为何存在、如何构建，以及如何支持这个项目。一套免费、离线、无广告的经典棋盘与益智游戏合集，共{games}款。",
     nav_calm: "安静地玩",
     about_calm_link: "安静地玩：没有动画，没有声音，没有广告",
     calm_intro: "PaperGames 是为安静地玩而做的。具体来说：",
@@ -609,13 +612,13 @@ STRINGS.zh = {
     seo_title_calm: "安静地玩 – 没有广告和动画的游戏 | PaperGames",
     seo_desc_calm: "PaperGames 安静可玩：没有动画、声音、广告、通知和跟踪，也不需要账号。为电子墨水而做，可离线使用。",
     seo_title_games: "全部游戏——PaperGames",
-    seo_desc_games: "浏览、搜索并排序 PaperGames 中全部65款免费棋盘与益智游戏，可按字母或类型排列。",
+    seo_desc_games: "浏览、搜索并排序 PaperGames 中全部{games}款免费棋盘与益智游戏，可按字母或类型排列。",
     seo_title_guide: "安装指南 | PaperGames",
     seo_desc_guide: "如何在阅读器或平板上安装 PaperGames：在浏览器中打开，添加到主屏幕，即可完全离线继续游玩。",
     seo_title_devices: "已测试设备——PaperGames 可在哪些阅读器上运行 | PaperGames",
     seo_desc_devices: "PaperGames 已确认可运行的阅读器、尚未测试的设备，以及如何检查自己的设备并反馈——无需表单，无需账号。",
     seo_title_impressum: "法律声明 | PaperGames",
-    seo_desc_impressum: "PaperGames 的法律声明（Impressum）。PaperGames 是一套为电子墨水阅读器打造的65款免费离线棋盘游戏合集，由 Christopher Müller 运营。",
+    seo_desc_impressum: "PaperGames 的法律声明（Impressum）。PaperGames 是一套为电子墨水阅读器打造的{games}款免费离线棋盘游戏合集，由 Christopher Müller 运营。",
     seo_title_datenschutz: "隐私政策 | PaperGames",
     seo_desc_datenschutz: "PaperGames 隐私政策：无 Cookie、无统计分析、无广告。仅使用本地存储，另可选择登录 Lichess 进行在线国际象棋。",
     seo_title_stats: "你的统计 | PaperGames",
@@ -1333,6 +1336,273 @@ STRINGS.zh = {
 
 
     skyscrapers_history_intro: "摩天大楼与数独同属拉丁方阵谜题家族，但加入了一个独特的转折，也正是这个转折让它得名：一条从网格外侧读取的「视线」规则。",
+
+
+    cake_dog_name: "狗",
+
+
+    cake_dog_cap: "狗",
+
+
+    cake_dog_mid: "狗",
+
+
+    cake_dog_is: "狗在",
+
+
+    cake_dog_isnot: "狗不在",
+
+
+    cake_dog_sits: "狗坐在",
+
+
+    cake_win_dog: "找到了！是狗拿走了蛋糕。",
+
+
+    cake_cat_name: "猫",
+
+
+    cake_cat_cap: "猫",
+
+
+    cake_cat_mid: "猫",
+
+
+    cake_cat_is: "猫在",
+
+
+    cake_cat_isnot: "猫不在",
+
+
+    cake_cat_sits: "猫坐在",
+
+
+    cake_win_cat: "找到了！是猫拿走了蛋糕。",
+
+
+    cake_rabbit_name: "兔子",
+
+
+    cake_rabbit_cap: "兔子",
+
+
+    cake_rabbit_mid: "兔子",
+
+
+    cake_rabbit_is: "兔子在",
+
+
+    cake_rabbit_isnot: "兔子不在",
+
+
+    cake_rabbit_sits: "兔子坐在",
+
+
+    cake_win_rabbit: "找到了！是兔子拿走了蛋糕。",
+
+
+    cake_mouse_name: "老鼠",
+
+
+    cake_mouse_cap: "老鼠",
+
+
+    cake_mouse_mid: "老鼠",
+
+
+    cake_mouse_is: "老鼠在",
+
+
+    cake_mouse_isnot: "老鼠不在",
+
+
+    cake_mouse_sits: "老鼠坐在",
+
+
+    cake_win_mouse: "找到了！是老鼠拿走了蛋糕。",
+
+
+    cake_hedgehog_name: "刺猬",
+
+
+    cake_hedgehog_cap: "刺猬",
+
+
+    cake_hedgehog_mid: "刺猬",
+
+
+    cake_hedgehog_is: "刺猬在",
+
+
+    cake_hedgehog_isnot: "刺猬不在",
+
+
+    cake_hedgehog_sits: "刺猬坐在",
+
+
+    cake_win_hedgehog: "找到了！是刺猬拿走了蛋糕。",
+
+
+    cake_room_kitchen_name: "厨房",
+
+
+    cake_room_kitchen_in: "厨房里",
+
+
+    cake_room_living_name: "客厅",
+
+
+    cake_room_living_in: "客厅里",
+
+
+    cake_room_hall_name: "走廊",
+
+
+    cake_room_hall_in: "走廊里",
+
+
+    cake_room_bath_name: "浴室",
+
+
+    cake_room_bath_in: "浴室里",
+
+
+    cake_room_bedroom_name: "卧室",
+
+
+    cake_room_bedroom_in: "卧室里",
+
+
+    cake_room_garden_name: "花园",
+
+
+    cake_room_garden_in: "花园里",
+
+
+    cake_room_cellar_name: "地下室",
+
+
+    cake_room_cellar_in: "地下室里",
+
+
+    cake_furn_table_name: "桌子",
+
+
+    cake_furn_chair_name: "椅子",
+
+
+    cake_furn_rug_name: "地毯",
+
+
+    cake_furn_plant_name: "植物",
+
+
+    cake_furn_cupboard_name: "柜子",
+
+
+    cake_furn_chair_on: "椅子上",
+
+
+    cake_furn_rug_on: "地毯上",
+
+
+    cake_furn_plant_next: "植物旁边",
+
+
+    cake_furn_cupboard_next: "柜子旁边",
+
+
+    cake_clue_in: "{IS}{ROOM}。",
+
+
+    cake_clue_notin: "{ISNOT}{ROOM}。",
+
+
+    cake_clue_on: "{SITS}{FURN}。",
+
+
+    cake_clue_next: "{IS}{FURN}。",
+
+
+    cake_clue_window: "{A}和窗户在同一行。",
+
+
+    cake_clue_top: "{IS}最上面一行。",
+
+
+    cake_clue_bottom: "{IS}最下面一行。",
+
+
+    cake_clue_left: "{IS}最左边一列。",
+
+
+    cake_clue_right: "{IS}最右边一列。",
+
+
+    cake_clue_same: "{A}和{B}在同一个房间里。",
+
+
+    game_cake: "谁拿走了蛋糕？",
+
+
+    home_cake_desc: "侦探逻辑谜题：根据线索把动物和蛋糕放到平面图上——每行每列各一个——找出是谁拿走了蛋糕。",
+
+
+    cake_board_label: "平面图",
+
+
+    cake_palette_label: "要放的东西",
+
+
+    cake_clues_title: "线索",
+
+
+    cake_status_pick: "先在下面选一样东西，再点一个格子。",
+
+
+    cake_meta_placed: "已放：{N} / {M}",
+
+
+    cake_win_title: "找到了！",
+
+
+    cake_hint_wrong: "标出格子里的东西放错了。拿走它，然后再要一次提示。",
+
+
+    cake_hint_wrongx: "标出的格子里应该放东西。去掉X，然后再要一次提示。",
+
+
+    cake_hint_step: "{THING}：第{R}行，第{C}列。",
+
+
+    cake_aria_cell: "第{R}行，第{C}列",
+
+
+    cake_aria_hint: "提示",
+
+
+    cake_tool_x: "这里没有东西",
+
+
+    cake_window_name: "窗户",
+
+
+    cake_thing_cake: "蛋糕",
+
+
+    cake_history_intro: "只靠推理破解一桩小案子的逻辑谜题，比计算机古老得多。",
+
+
+    cake_new_game: "新谜题",
+
+
+    cake_level_easy: "简单 (4x4，3只动物)",
+
+
+    cake_level_medium: "中等 (5x5，4只动物)",
+
+
+    cake_level_hard: "困难 (6x6，5只动物)",
 
     game_hashi: "架桥（Hashiwokakero）",
     home_hashi_desc: "用笔直的单桥或双桥把每座编号的岛屿连接起来，让整张网络连成一体，并且每座岛屿的桥梁数量都恰好等于它的编号。每次都会重新生成，共有三个难度等级。",

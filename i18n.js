@@ -27,7 +27,7 @@ const STRINGS = {
     nav_privacy: "Privacy Policy",
     toggle_moves_button: "Moves",
 
-    home_tagline: "65 classic games, built for e-readers.",
+    home_tagline: "{games} classic games, built for e-readers.",
     home_intro: "A small, dependency-free collection of classic board, strategy, and puzzle games made for E-Ink displays like Tolino, Kobo and Kindle: high contrast, no animations, and it keeps working with no internet connection once you've opened it.",
     home_pitch: "No ads, no account, and nothing about you is recorded. Once it has loaded, everything keeps working without internet. The computer never plays on by itself: stop whenever you like and carry on hours later, exactly where you left off. The source code is open.",
     home_pitch_link: "What makes this different",
@@ -160,6 +160,9 @@ const STRINGS = {
     quickrules_skyscrapers_1: "Fill the grid with heights from 1 to N so each row and column has every height once and every edge clue matches.",
     quickrules_skyscrapers_2: "Select a cell, then pick a height from the pad below the board.",
     quickrules_skyscrapers_3: "A clue counts the buildings visible from that side, and a taller building hides every shorter one behind it.",
+    quickrules_cake_1: "Place each animal and the cake so that every row and every column holds exactly one thing.",
+    quickrules_cake_2: "The cake always stands on a table, animals never stand on a table or a cupboard, and the clues below the board tell you the rest.",
+    quickrules_cake_3: "The only animal in the cake's room took it - choose a button under the board, then tap a cell.",
     quickrules_konane_1: "Leave your opponent without a move: whoever has no legal jump on their turn loses immediately.",
     quickrules_konane_2: "Every move is a jump: hop a stone over an adjacent enemy stone, never diagonally, into the empty square beyond, removing the jumped stone.",
     quickrules_konane_3: "Before the first jump, Black removes one of its stones from a corner or the center, then White removes one directly beside that gap.",
@@ -285,7 +288,7 @@ const STRINGS = {
     home_section_popular: "Popular Games",
     home_section_new: "New Games",
     home_all_games_title: "Looking for something else?",
-    home_all_games_desc: "Browse and search all 65 games, sortable alphabetically or by type.",
+    home_all_games_desc: "Browse and search all {games} games, sortable alphabetically or by type.",
     nav_all_games: "All Games",
     all_games_intro: "Every game in PaperGames, in one place. Search by name, sort alphabetically or by type, and tap the star to add a game to your Favorites on the home page.",
     all_games_search_placeholder: "Search games…",
@@ -665,10 +668,10 @@ const STRINGS = {
     msg_t_do_p_drew_tiles: "{p} drew the tiles {s} and {r}.",
     msg_aria_card_new: "new",
     seo_t_game: "{s} on e-ink – play offline, no ads",
-    seo_title_index: "PaperGames – 65 free board games for e-ink readers",
-    seo_desc_index: "65 classic board games made for e-ink readers and tablets. Chess, Go, Backgammon, Sudoku and more. Free, offline, no ads, in 12 languages.",
-    seo_title_about: "About PaperGames – 65 free board games for e-ink",
-    seo_desc_about: "Why PaperGames exists, how it's built, and how to support the project. A free, offline, ad-free collection of 65 classic board and puzzle games.",
+    seo_title_index: "PaperGames – {games} free board games for e-ink readers",
+    seo_desc_index: "{games} classic board games made for e-ink readers and tablets. Chess, Go, Backgammon, Sudoku and more. Free, offline, no ads, in 12 languages.",
+    seo_title_about: "About PaperGames – {games} free board games for e-ink",
+    seo_desc_about: "Why PaperGames exists, how it's built, and how to support the project. A free, offline, ad-free collection of {games} classic board and puzzle games.",
     nav_calm: "Calm play",
     about_calm_link: "Calm play: no animations, no sounds, no ads",
     calm_intro: "PaperGames is built for calm, quiet play. This is what that means:",
@@ -683,13 +686,13 @@ const STRINGS = {
     seo_title_calm: "Calm play – quiet, ad-free games without animations | PaperGames",
     seo_desc_calm: "PaperGames plays quietly: no animations, no sounds, no ads, no notifications, no account needed, no tracking. Made for e-ink, works offline.",
     seo_title_games: "All Games – PaperGames",
-    seo_desc_games: "Browse, search, and sort all 65 free board and puzzle games in PaperGames, alphabetically or by type.",
+    seo_desc_games: "Browse, search, and sort all {games} free board and puzzle games in PaperGames, alphabetically or by type.",
     seo_title_guide: "Setup Guide | PaperGames",
     seo_desc_guide: "How to install PaperGames on your e-reader or tablet: open in the browser, add to your home screen, and keep playing fully offline.",
     seo_title_devices: "Tested devices – which e-readers PaperGames runs on | PaperGames",
     seo_desc_devices: "Which e-readers PaperGames is known to run on, what has not been tested, and how to check your own device and report back - no form, no account.",
     seo_title_impressum: "Legal Notice | PaperGames",
-    seo_desc_impressum: "Legal notice (Impressum) for PaperGames, a free collection of 65 offline board games for e-ink readers, operated by Christopher Müller.",
+    seo_desc_impressum: "Legal notice (Impressum) for PaperGames, a free collection of {games} offline board games for e-ink readers, operated by Christopher Müller.",
     seo_title_datenschutz: "Privacy Policy | PaperGames",
     seo_desc_datenschutz: "Privacy policy for PaperGames: no cookies, no analytics, no ads. Local storage only, plus optional Lichess sign-in for online chess.",
     seo_title_stats: "Your Stats | PaperGames",
@@ -1415,6 +1418,273 @@ const STRINGS = {
 
 
     skyscrapers_history_intro: "Skyscrapers belongs to the same family of Latin-square puzzles Sudoku comes from, but adds a distinctive twist that gives it its name: a line-of-sight rule read in from just outside the grid.",
+
+
+    cake_dog_name: "Dog",
+
+
+    cake_dog_cap: "The dog",
+
+
+    cake_dog_mid: "the dog",
+
+
+    cake_dog_is: "The dog is",
+
+
+    cake_dog_isnot: "The dog is not",
+
+
+    cake_dog_sits: "The dog sits",
+
+
+    cake_win_dog: "Found it! The dog took the cake.",
+
+
+    cake_cat_name: "Cat",
+
+
+    cake_cat_cap: "The cat",
+
+
+    cake_cat_mid: "the cat",
+
+
+    cake_cat_is: "The cat is",
+
+
+    cake_cat_isnot: "The cat is not",
+
+
+    cake_cat_sits: "The cat sits",
+
+
+    cake_win_cat: "Found it! The cat took the cake.",
+
+
+    cake_rabbit_name: "Rabbit",
+
+
+    cake_rabbit_cap: "The rabbit",
+
+
+    cake_rabbit_mid: "the rabbit",
+
+
+    cake_rabbit_is: "The rabbit is",
+
+
+    cake_rabbit_isnot: "The rabbit is not",
+
+
+    cake_rabbit_sits: "The rabbit sits",
+
+
+    cake_win_rabbit: "Found it! The rabbit took the cake.",
+
+
+    cake_mouse_name: "Mouse",
+
+
+    cake_mouse_cap: "The mouse",
+
+
+    cake_mouse_mid: "the mouse",
+
+
+    cake_mouse_is: "The mouse is",
+
+
+    cake_mouse_isnot: "The mouse is not",
+
+
+    cake_mouse_sits: "The mouse sits",
+
+
+    cake_win_mouse: "Found it! The mouse took the cake.",
+
+
+    cake_hedgehog_name: "Hedgehog",
+
+
+    cake_hedgehog_cap: "The hedgehog",
+
+
+    cake_hedgehog_mid: "the hedgehog",
+
+
+    cake_hedgehog_is: "The hedgehog is",
+
+
+    cake_hedgehog_isnot: "The hedgehog is not",
+
+
+    cake_hedgehog_sits: "The hedgehog sits",
+
+
+    cake_win_hedgehog: "Found it! The hedgehog took the cake.",
+
+
+    cake_room_kitchen_name: "Kitchen",
+
+
+    cake_room_kitchen_in: "in the kitchen",
+
+
+    cake_room_living_name: "Living room",
+
+
+    cake_room_living_in: "in the living room",
+
+
+    cake_room_hall_name: "Hall",
+
+
+    cake_room_hall_in: "in the hall",
+
+
+    cake_room_bath_name: "Bathroom",
+
+
+    cake_room_bath_in: "in the bathroom",
+
+
+    cake_room_bedroom_name: "Bedroom",
+
+
+    cake_room_bedroom_in: "in the bedroom",
+
+
+    cake_room_garden_name: "Garden",
+
+
+    cake_room_garden_in: "in the garden",
+
+
+    cake_room_cellar_name: "Cellar",
+
+
+    cake_room_cellar_in: "in the cellar",
+
+
+    cake_furn_table_name: "Table",
+
+
+    cake_furn_chair_name: "Chair",
+
+
+    cake_furn_rug_name: "Rug",
+
+
+    cake_furn_plant_name: "Plant",
+
+
+    cake_furn_cupboard_name: "Cupboard",
+
+
+    cake_furn_chair_on: "on a chair",
+
+
+    cake_furn_rug_on: "on a rug",
+
+
+    cake_furn_plant_next: "next to a plant",
+
+
+    cake_furn_cupboard_next: "next to a cupboard",
+
+
+    cake_clue_in: "{IS} {ROOM}.",
+
+
+    cake_clue_notin: "{ISNOT} {ROOM}.",
+
+
+    cake_clue_on: "{SITS} {FURN}.",
+
+
+    cake_clue_next: "{IS} {FURN}.",
+
+
+    cake_clue_window: "{IS} in the same row as the window.",
+
+
+    cake_clue_top: "{IS} in the top row.",
+
+
+    cake_clue_bottom: "{IS} in the bottom row.",
+
+
+    cake_clue_left: "{IS} in the left column.",
+
+
+    cake_clue_right: "{IS} in the right column.",
+
+
+    cake_clue_same: "{A} and {B} are in the same room.",
+
+
+    game_cake: "Who Took the Cake?",
+
+
+    home_cake_desc: "A detective logic puzzle: place the animals and the cake on the floor plan by the clues - one per row and column - and find out who took the cake.",
+
+
+    cake_board_label: "Floor plan",
+
+
+    cake_palette_label: "What to place",
+
+
+    cake_clues_title: "Clues",
+
+
+    cake_status_pick: "Choose something below the board, then tap a cell.",
+
+
+    cake_meta_placed: "Placed: {N} / {M}",
+
+
+    cake_win_title: "Found it!",
+
+
+    cake_hint_wrong: "The thing in the marked cell is in the wrong place. Take it off, then ask for a hint again.",
+
+
+    cake_hint_wrongx: "Something belongs in the marked cell. Remove the X, then ask for a hint again.",
+
+
+    cake_hint_step: "{THING}: row {R}, column {C}.",
+
+
+    cake_aria_cell: "Row {R}, column {C}",
+
+
+    cake_aria_hint: "Hint",
+
+
+    cake_tool_x: "Nothing here",
+
+
+    cake_window_name: "Window",
+
+
+    cake_thing_cake: "Cake",
+
+
+    cake_history_intro: "Logic puzzles in which a small case is solved by reasoning alone are much older than computers.",
+
+
+    cake_new_game: "New puzzle",
+
+
+    cake_level_easy: "Easy (4x4, 3 animals)",
+
+
+    cake_level_medium: "Medium (5x5, 4 animals)",
+
+
+    cake_level_hard: "Hard (6x6, 5 animals)",
 
     game_hashi: "Hashiwokakero",
     home_hashi_desc: "Connect every numbered island with straight single or double bridges so the whole network joins together and every island's count matches its number. Freshly generated, in three difficulty levels.",
@@ -2345,10 +2615,16 @@ const I18n = (function () {
     return detectBrowserLang();
   }
 
+  // The number of games in the collection. Texts write it as {games};
+  // tools/seo.js sets this from games-catalog.js (and the copies in the
+  // static HTML), so a new game only needs that script run once.
+  const GAME_COUNT = 66;
+
   function t(key, lang) {
     const l = lang || getLang();
     const table = STRINGS[l] || STRINGS[DEFAULT_LANG];
-    return (table && table[key]) || (STRINGS[DEFAULT_LANG] && STRINGS[DEFAULT_LANG][key]) || key;
+    const text = (table && table[key]) || (STRINGS[DEFAULT_LANG] && STRINGS[DEFAULT_LANG][key]) || key;
+    return text.indexOf("{games}") === -1 ? text : text.split("{games}").join(String(GAME_COUNT));
   }
 
   // Game status lines and result popups are built at runtime from

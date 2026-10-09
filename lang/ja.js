@@ -13,7 +13,7 @@ STRINGS.ja = {
     nav_stats: "統計",
     footer_support: "応援する",
     toggle_moves_button: "指し手",
-    home_tagline: "65の定番ゲームを、電子書籍リーダー向けに。",
+    home_tagline: "{games}の定番ゲームを、電子書籍リーダー向けに。",
     home_intro: "Tolino、Kobo、Kindleなどの電子ペーパー端末向けに作られた、依存関係のない小さな定番ボードゲーム・戦略ゲーム・パズルゲームのコレクションです。高コントラストでアニメーションなし、一度開けばインターネット接続なしでも動作し続けます。",
     home_pitch: "広告なし、アカウント不要、あなたについての記録も一切なし。一度読み込めば、インターネットなしでも動き続けます。コンピューターが勝手に先へ進むことはありません。いつでも中断して、何時間後でも同じところから再開できます。ソースコードは公開されています。",
     home_pitch_link: "ここが違うところ",
@@ -146,6 +146,9 @@ STRINGS.ja = {
     quickrules_skyscrapers_1: "各マスに1からNまでの高さを入れ、各行と各列に各高さが1回ずつ現れ、周囲のヒントがすべて合うようにします。",
     quickrules_skyscrapers_2: "マスを選び、盤面の下にある数字パッドから高さを選びます。",
     quickrules_skyscrapers_3: "ヒントはその方向から見える建物の数で、高い建物はその奥にある低い建物をすべて完全に隠します。",
+    quickrules_cake_1: "各行・各列にちょうど1つずつになるように、動物とケーキを置きます。",
+    quickrules_cake_2: "ケーキはいつもテーブルの上、動物はテーブルやたんすの上には決していません。残りは盤の下の手がかりでわかります。",
+    quickrules_cake_3: "ケーキと同じ部屋にいるただ1匹の動物が犯人です。盤の下のボタンを選んでから、マスをタップします。",
     quickrules_konane_1: "自分の手番に合法的なジャンプがない側が即座に負けるので、相手を手詰まりにすることを目指します。",
     quickrules_konane_2: "手はすべてジャンプで、自分の石で隣の相手の石を飛び越え(斜めは不可)、その先の空きマスへ移って飛び越えた石を取り除きます。",
     quickrules_konane_3: "最初のジャンプの前に、黒が四隅か中央から自分の石を1つ取り除き、次に白がその空きマスのすぐ隣の自分の石を1つ取り除きます。",
@@ -524,10 +527,10 @@ STRINGS.ja = {
     msg_t_do_p_drew_tiles: "{p}が牌{s}と{r}を引きました。",
     msg_aria_card_new: "新しい",
     seo_t_game: "電子ペーパーで{s} – オフライン・広告なし",
-    seo_title_index: "PaperGames – 電子書籍リーダー向けの無料ボードゲーム65種",
-    seo_desc_index: "電子書籍リーダーとタブレット向けのクラシックなボードゲーム65種。チェス、囲碁、バックギャモン、数独など。無料・オフライン・広告なし・12言語対応。",
-    seo_title_about: "PaperGamesについて – 電子ペーパー向け無料ボードゲーム65種",
-    seo_desc_about: "PaperGamesが生まれた理由、作り方、プロジェクトを支援する方法。クラシックなボードゲームとパズル65種を集めた、無料・オフライン・広告なしのコレクションです。",
+    seo_title_index: "PaperGames – 電子書籍リーダー向けの無料ボードゲーム{games}種",
+    seo_desc_index: "電子書籍リーダーとタブレット向けのクラシックなボードゲーム{games}種。チェス、囲碁、バックギャモン、数独など。無料・オフライン・広告なし・12言語対応。",
+    seo_title_about: "PaperGamesについて – 電子ペーパー向け無料ボードゲーム{games}種",
+    seo_desc_about: "PaperGamesが生まれた理由、作り方、プロジェクトを支援する方法。クラシックなボードゲームとパズル{games}種を集めた、無料・オフライン・広告なしのコレクションです。",
     nav_calm: "静かに遊ぶ",
     about_calm_link: "静かに遊ぶ:アニメーションなし、音なし、広告なし",
     calm_intro: "PaperGamesは静かに遊べるように作られています。具体的には:",
@@ -542,13 +545,13 @@ STRINGS.ja = {
     seo_title_calm: "静かに遊ぶ – 広告もアニメーションもないゲーム | PaperGames",
     seo_desc_calm: "PaperGamesは静かに遊べます。アニメーション、音、広告、通知、トラッキングはなく、アカウントも不要です。電子ペーパー向けで、オフラインでも動きます。",
     seo_title_games: "すべてのゲーム – PaperGames",
-    seo_desc_games: "PaperGamesの無料ボードゲームとパズル全65種を一覧・検索し、五十音順または種類別に並べ替えられます。",
+    seo_desc_games: "PaperGamesの無料ボードゲームとパズル全{games}種を一覧・検索し、五十音順または種類別に並べ替えられます。",
     seo_title_guide: "セットアップガイド | PaperGames",
     seo_desc_guide: "電子書籍リーダーやタブレットにPaperGamesを入れる方法：ブラウザで開き、ホーム画面に追加すれば、完全にオフラインで遊び続けられます。",
     seo_title_devices: "動作確認済みの端末 – PaperGamesが動く電子書籍リーダー | PaperGames",
     seo_desc_devices: "PaperGamesの動作が確認されている電子書籍リーダー、未確認の端末、そして自分の端末を確かめて報告する方法。フォームもアカウントも不要です。",
     seo_title_impressum: "運営者情報 | PaperGames",
-    seo_desc_impressum: "PaperGamesの運営者情報（Impressum）。電子書籍リーダー向けのオフラインボードゲーム65種を集めた無料コレクションで、運営者はChristopher Müllerです。",
+    seo_desc_impressum: "PaperGamesの運営者情報（Impressum）。電子書籍リーダー向けのオフラインボードゲーム{games}種を集めた無料コレクションで、運営者はChristopher Müllerです。",
     seo_title_datenschutz: "プライバシーポリシー | PaperGames",
     seo_desc_datenschutz: "PaperGamesのプライバシーポリシー：Cookieなし、解析なし、広告なし。保存は端末内のみで、オンラインチェス用のLichessログインは任意です。",
     seo_title_stats: "あなたの成績 | PaperGames",
@@ -870,7 +873,7 @@ STRINGS.ja = {
     home_section_popular: "人気のゲーム",
     home_section_new: "新しいゲーム",
     home_all_games_title: "他のゲームをお探しですか？",
-    home_all_games_desc: "全65種類のゲームを閲覧・検索できます。アルファベット順またはタイプ別に並べ替え可能です。",
+    home_all_games_desc: "全{games}種類のゲームを閲覧・検索できます。アルファベット順またはタイプ別に並べ替え可能です。",
     nav_all_games: "すべてのゲーム",
     all_games_intro: "PaperGamesのすべてのゲームを一か所に。名前で検索し、アルファベット順またはタイプ別に並べ替え、星をタップしてホームページのお気に入りに追加できます。",
     all_games_search_placeholder: "ゲームを検索…",
@@ -1333,6 +1336,273 @@ STRINGS.ja = {
 
 
     skyscrapers_history_intro: "スカイスクレイパーズは数独と同じラテン方陣パズルの仲間ですが、その名前の由来となった独自のひねりが加わっています - 盤面のすぐ外側から読み取る「見通し線」のルールです。",
+
+
+    cake_dog_name: "犬",
+
+
+    cake_dog_cap: "犬",
+
+
+    cake_dog_mid: "犬",
+
+
+    cake_dog_is: "犬は",
+
+
+    cake_dog_isnot: "犬は",
+
+
+    cake_dog_sits: "犬は",
+
+
+    cake_win_dog: "見つけた!ケーキを取ったのは犬です。",
+
+
+    cake_cat_name: "ネコ",
+
+
+    cake_cat_cap: "ネコ",
+
+
+    cake_cat_mid: "ネコ",
+
+
+    cake_cat_is: "ネコは",
+
+
+    cake_cat_isnot: "ネコは",
+
+
+    cake_cat_sits: "ネコは",
+
+
+    cake_win_cat: "見つけた!ケーキを取ったのはネコです。",
+
+
+    cake_rabbit_name: "ウサギ",
+
+
+    cake_rabbit_cap: "ウサギ",
+
+
+    cake_rabbit_mid: "ウサギ",
+
+
+    cake_rabbit_is: "ウサギは",
+
+
+    cake_rabbit_isnot: "ウサギは",
+
+
+    cake_rabbit_sits: "ウサギは",
+
+
+    cake_win_rabbit: "見つけた!ケーキを取ったのはウサギです。",
+
+
+    cake_mouse_name: "ネズミ",
+
+
+    cake_mouse_cap: "ネズミ",
+
+
+    cake_mouse_mid: "ネズミ",
+
+
+    cake_mouse_is: "ネズミは",
+
+
+    cake_mouse_isnot: "ネズミは",
+
+
+    cake_mouse_sits: "ネズミは",
+
+
+    cake_win_mouse: "見つけた!ケーキを取ったのはネズミです。",
+
+
+    cake_hedgehog_name: "ハリネズミ",
+
+
+    cake_hedgehog_cap: "ハリネズミ",
+
+
+    cake_hedgehog_mid: "ハリネズミ",
+
+
+    cake_hedgehog_is: "ハリネズミは",
+
+
+    cake_hedgehog_isnot: "ハリネズミは",
+
+
+    cake_hedgehog_sits: "ハリネズミは",
+
+
+    cake_win_hedgehog: "見つけた!ケーキを取ったのはハリネズミです。",
+
+
+    cake_room_kitchen_name: "台所",
+
+
+    cake_room_kitchen_in: "台所",
+
+
+    cake_room_living_name: "居間",
+
+
+    cake_room_living_in: "居間",
+
+
+    cake_room_hall_name: "廊下",
+
+
+    cake_room_hall_in: "廊下",
+
+
+    cake_room_bath_name: "浴室",
+
+
+    cake_room_bath_in: "浴室",
+
+
+    cake_room_bedroom_name: "寝室",
+
+
+    cake_room_bedroom_in: "寝室",
+
+
+    cake_room_garden_name: "庭",
+
+
+    cake_room_garden_in: "庭",
+
+
+    cake_room_cellar_name: "地下室",
+
+
+    cake_room_cellar_in: "地下室",
+
+
+    cake_furn_table_name: "テーブル",
+
+
+    cake_furn_chair_name: "いす",
+
+
+    cake_furn_rug_name: "じゅうたん",
+
+
+    cake_furn_plant_name: "植木",
+
+
+    cake_furn_cupboard_name: "たんす",
+
+
+    cake_furn_chair_on: "いすの上に",
+
+
+    cake_furn_rug_on: "じゅうたんの上に",
+
+
+    cake_furn_plant_next: "植木の隣に",
+
+
+    cake_furn_cupboard_next: "たんすの隣に",
+
+
+    cake_clue_in: "{IS}{ROOM}にいます。",
+
+
+    cake_clue_notin: "{ISNOT}{ROOM}にはいません。",
+
+
+    cake_clue_on: "{SITS}{FURN}座っています。",
+
+
+    cake_clue_next: "{IS}{FURN}います。",
+
+
+    cake_clue_window: "{IS}窓と同じ行にいます。",
+
+
+    cake_clue_top: "{IS}一番上の行にいます。",
+
+
+    cake_clue_bottom: "{IS}一番下の行にいます。",
+
+
+    cake_clue_left: "{IS}一番左の列にいます。",
+
+
+    cake_clue_right: "{IS}一番右の列にいます。",
+
+
+    cake_clue_same: "{A}と{B}は同じ部屋にいます。",
+
+
+    game_cake: "ケーキを取ったのはだれ?",
+
+
+    home_cake_desc: "探偵の論理パズル:手がかりに従って動物とケーキを間取り図に置き(各行・各列に1つずつ)、ケーキを取ったのはだれか突き止めます。",
+
+
+    cake_board_label: "間取り図",
+
+
+    cake_palette_label: "置くもの",
+
+
+    cake_clues_title: "手がかり",
+
+
+    cake_status_pick: "下から置くものを選んで、マスをタップしてください。",
+
+
+    cake_meta_placed: "置いた数: {N} / {M}",
+
+
+    cake_win_title: "見つけた!",
+
+
+    cake_hint_wrong: "印の付いたマスのものは置き場所が違います。取り除いてから、もう一度ヒントを求めてください。",
+
+
+    cake_hint_wrongx: "印の付いたマスには何かが入ります。Xを消してから、もう一度ヒントを求めてください。",
+
+
+    cake_hint_step: "{THING}: {R}行目、{C}列目。",
+
+
+    cake_aria_cell: "{R}行目、{C}列目",
+
+
+    cake_aria_hint: "ヒント",
+
+
+    cake_tool_x: "ここには何もない",
+
+
+    cake_window_name: "窓",
+
+
+    cake_thing_cake: "ケーキ",
+
+
+    cake_history_intro: "推理だけで小さな事件を解く論理パズルは、コンピューターよりずっと古くからあります。",
+
+
+    cake_new_game: "新しいパズル",
+
+
+    cake_level_easy: "やさしい (4x4、動物3匹)",
+
+
+    cake_level_medium: "ふつう (5x5、動物4匹)",
+
+
+    cake_level_hard: "むずかしい (6x6、動物5匹)",
 
     game_hashi: "橋つなぎパズル",
     home_hashi_desc: "番号の付いた島どうしを、まっすぐな一本橋または二本橋でつなぎ、ネットワーク全体をひとつにまとめながら、各島の橋の数をその番号にぴったり合わせましょう。毎回新しく生成され、難易度は3段階です。",

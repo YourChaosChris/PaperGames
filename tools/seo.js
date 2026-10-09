@@ -19,6 +19,9 @@
 //    when the page was opened with ?lang=xx.
 //  - sitemap.xml lists every page in every language plus the address
 //    without parameter, each with xhtml:link alternates.
+//  - the number of games (texts write it as {games}) is taken from
+//    games-catalog.js: GAME_COUNT in i18n.js, and every static English
+//    copy of such a text in the pages, manifest.json and README.md.
 //
 // No dependencies; plain Node.
 
@@ -137,6 +140,40 @@ function sitemap(pages, langs) {
   fs.writeFileSync(path.join(ROOT, "sitemap.xml"), out.join("\n"));
 }
 
+function escapeRe(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// Writes the number of games everywhere a text means it. The English
+// texts with {games} are matched with any number in its place, in plain
+// form and as the pages escape them (&#x27; for ').
+function updateGameCount(en, count) {
+  const i18nPath = path.join(ROOT, "i18n.js");
+  const i18nSrc = fs.readFileSync(i18nPath, "utf8");
+  fs.writeFileSync(i18nPath, i18nSrc.replace(/const GAME_COUNT = \d+;/, "const GAME_COUNT = " + count + ";"));
+  const patterns = [];
+  Object.keys(en).forEach((k) => {
+    const v = en[k];
+    if (typeof v !== "string" || v.indexOf("{games}") === -1) return;
+    [v, v.replace(/'/g, "&#x27;")].forEach((form) => {
+      const parts = form.split("{games}");
+      patterns.push(new RegExp("(" + escapeRe(parts[0]) + ")\\d+(" + escapeRe(parts[1]) + ")", "g"));
+    });
+  });
+  // Only the number in the place of {games} changes (a text may hold
+  // other digits, e.g. &#x27;).
+  const fill = (s) => patterns.reduce((acc, re) => acc.replace(re, "$1" + count + "$2"), s);
+  fs.readdirSync(ROOT).filter((f) => f.endsWith(".html")).forEach((f) => {
+    const p = path.join(ROOT, f), src = fs.readFileSync(p, "utf8"), out = fill(src);
+    if (out !== src) fs.writeFileSync(p, out);
+  });
+  ["manifest.json", "README.md"].forEach((f) => {
+    const p = path.join(ROOT, f), src = fs.readFileSync(p, "utf8");
+    const out = src.replace(/(collection of )\d+( classic board, strategy, and puzzle games)/g, "$1" + count + "$2");
+    if (out !== src) fs.writeFileSync(p, out);
+  });
+}
+
 function main() {
   const { STRINGS, LANGUAGE_ORDER } = loadStrings();
   const en = STRINGS.en;
@@ -156,7 +193,8 @@ function main() {
     updatePage(file, spec, LANGUAGE_ORDER);
   });
   sitemap(pages, LANGUAGE_ORDER);
-  console.log("seo: " + pages.length + " pages, sitemap with " + pages.length * (LANGUAGE_ORDER.length + 1) + " addresses");
+  updateGameCount(en, catalog.length);
+  console.log("seo: " + pages.length + " pages, sitemap with " + pages.length * (LANGUAGE_ORDER.length + 1) + " addresses, " + catalog.length + " games");
   problems.forEach((p) => console.log("  problem: " + p));
   process.exit(problems.length ? 1 : 0);
 }

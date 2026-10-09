@@ -61,6 +61,7 @@ const STATS_GAME_NAME_KEY = {
   alquerque: "game_alquerque",
   pairs: "game_pairs",
   futoshiki: "game_futoshiki",
+  cake: "game_cake",
   foxandgeese: "game_foxandgeese",
   seega: "game_seega",
   romme: "game_romme"

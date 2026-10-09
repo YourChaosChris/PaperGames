@@ -13,7 +13,7 @@ STRINGS.es = {
     nav_stats: "Estadísticas",
     footer_support: "Apoyar",
     toggle_moves_button: "Movimientos",
-    home_tagline: "65 juegos clásicos, hechos para lectores electrónicos.",
+    home_tagline: "{games} juegos clásicos, hechos para lectores electrónicos.",
     home_intro: "Una pequeña colección independiente de juegos clásicos de mesa, estrategia y rompecabezas, hecha para pantallas E-Ink como Tolino, Kobo y Kindle: alto contraste, sin animaciones, y sigue funcionando sin conexión a internet una vez que la has abierto.",
     home_pitch: "Sin anuncios, sin cuenta y sin registrar nada sobre ti. Una vez cargado, todo sigue funcionando sin internet. El ordenador nunca sigue jugando por su cuenta: para cuando quieras y continúa horas después justo donde lo dejaste. El código fuente es abierto.",
     home_pitch_link: "Qué tiene de diferente",
@@ -146,6 +146,9 @@ STRINGS.es = {
     quickrules_skyscrapers_1: "Rellena la cuadrícula con alturas del 1 al N para que cada fila y columna tenga cada altura una vez y cada pista coincida.",
     quickrules_skyscrapers_2: "Selecciona una casilla y luego elige una altura en el panel bajo el tablero.",
     quickrules_skyscrapers_3: "Una pista cuenta los edificios visibles desde ese lado, y un edificio más alto oculta por completo a cualquier edificio más bajo detrás de él.",
+    quickrules_cake_1: "Coloca cada animal y el pastel de modo que cada fila y cada columna tenga exactamente una cosa.",
+    quickrules_cake_2: "El pastel siempre está sobre una mesa, los animales nunca sobre una mesa ni un armario, y los indicios bajo el plano dicen el resto.",
+    quickrules_cake_3: "El único animal en la habitación del pastel se lo llevó: elige un botón bajo el plano y toca una casilla.",
     quickrules_konane_1: "Deja al rival sin movimiento: quien no tiene ningún salto legal en su turno pierde de inmediato.",
     quickrules_konane_2: "Cada movimiento es un salto: una ficha salta sobre una ficha enemiga adyacente, nunca en diagonal, hasta la casilla vacía de detrás y la captura.",
     quickrules_konane_3: "Antes del primer salto, las Negras retiran una de sus fichas de una esquina o del centro, y luego las Blancas una suya justo junto a ese hueco.",
@@ -271,7 +274,7 @@ STRINGS.es = {
     home_section_popular: "Juegos populares",
     home_section_new: "Juegos nuevos",
     home_all_games_title: "¿Buscas otra cosa?",
-    home_all_games_desc: "Explora y busca los 65 juegos, ordenables alfabéticamente o por tipo.",
+    home_all_games_desc: "Explora y busca los {games} juegos, ordenables alfabéticamente o por tipo.",
     nav_all_games: "Todos los juegos",
     all_games_intro: "Todos los juegos de PaperGames en un solo lugar. Busca por nombre, ordena alfabéticamente o por tipo, y toca la estrella para añadir un juego a tus favoritos en la página de inicio.",
     all_games_search_placeholder: "Buscar juegos…",
@@ -591,10 +594,10 @@ STRINGS.es = {
     msg_t_do_p_drew_tiles: "{p} ha robado las fichas {s} y {r}.",
     msg_aria_card_new: "nueva",
     seo_t_game: "{s} en e-ink: juega sin conexión y sin anuncios",
-    seo_title_index: "PaperGames: 65 juegos de mesa gratis para lectores de tinta electrónica",
-    seo_desc_index: "65 juegos de mesa clásicos para lectores de tinta electrónica y tabletas. Ajedrez, go, backgammon, sudoku y más. Gratis, sin conexión, sin anuncios, en 12 idiomas.",
-    seo_title_about: "Acerca de PaperGames: 65 juegos de mesa gratis para e-ink",
-    seo_desc_about: "Por qué existe PaperGames, cómo está hecho y cómo apoyar el proyecto. Una colección gratuita, sin conexión y sin anuncios de 65 juegos de mesa y rompecabezas clásicos.",
+    seo_title_index: "PaperGames: {games} juegos de mesa gratis para lectores de tinta electrónica",
+    seo_desc_index: "{games} juegos de mesa clásicos para lectores de tinta electrónica y tabletas. Ajedrez, go, backgammon, sudoku y más. Gratis, sin conexión, sin anuncios, en 12 idiomas.",
+    seo_title_about: "Acerca de PaperGames: {games} juegos de mesa gratis para e-ink",
+    seo_desc_about: "Por qué existe PaperGames, cómo está hecho y cómo apoyar el proyecto. Una colección gratuita, sin conexión y sin anuncios de {games} juegos de mesa y rompecabezas clásicos.",
     nav_calm: "Jugar con calma",
     about_calm_link: "Jugar con calma: sin animaciones, sin sonidos, sin publicidad",
     calm_intro: "PaperGames está hecho para jugar con calma. En concreto:",
@@ -609,13 +612,13 @@ STRINGS.es = {
     seo_title_calm: "Jugar con calma – juegos sin publicidad ni animaciones | PaperGames",
     seo_desc_calm: "PaperGames se juega con calma: sin animaciones, sonidos, publicidad, notificaciones ni rastreo, y sin necesidad de cuenta. Hecho para tinta electrónica, funciona sin conexión.",
     seo_title_games: "Todos los juegos – PaperGames",
-    seo_desc_games: "Explora, busca y ordena los 65 juegos de mesa y rompecabezas gratuitos de PaperGames, por orden alfabético o por tipo.",
+    seo_desc_games: "Explora, busca y ordena los {games} juegos de mesa y rompecabezas gratuitos de PaperGames, por orden alfabético o por tipo.",
     seo_title_guide: "Guía de instalación | PaperGames",
     seo_desc_guide: "Cómo instalar PaperGames en tu lector o tableta: ábrelo en el navegador, añádelo a la pantalla de inicio y sigue jugando totalmente sin conexión.",
     seo_title_devices: "Dispositivos probados: en qué lectores funciona PaperGames | PaperGames",
     seo_desc_devices: "En qué lectores se sabe que funciona PaperGames, qué no se ha probado y cómo comprobar tu propio dispositivo e informar: sin formularios ni cuentas.",
     seo_title_impressum: "Aviso legal | PaperGames",
-    seo_desc_impressum: "Aviso legal (Impressum) de PaperGames, una colección gratuita de 65 juegos de mesa sin conexión para lectores de tinta electrónica, gestionada por Christopher Müller.",
+    seo_desc_impressum: "Aviso legal (Impressum) de PaperGames, una colección gratuita de {games} juegos de mesa sin conexión para lectores de tinta electrónica, gestionada por Christopher Müller.",
     seo_title_datenschutz: "Política de privacidad | PaperGames",
     seo_desc_datenschutz: "Política de privacidad de PaperGames: sin cookies, sin analíticas, sin anuncios. Solo almacenamiento local, más el inicio de sesión opcional en Lichess para el ajedrez en línea.",
     seo_title_stats: "Tus estadísticas | PaperGames",
@@ -1333,6 +1336,273 @@ STRINGS.es = {
 
 
     skyscrapers_history_intro: "Rascacielos pertenece a la misma familia de puzles de cuadrado latino de la que procede el Sudoku, pero añade un giro distintivo que le da su nombre: una regla de línea de visión leída justo desde fuera de la cuadrícula.",
+
+
+    cake_dog_name: "Perro",
+
+
+    cake_dog_cap: "El perro",
+
+
+    cake_dog_mid: "el perro",
+
+
+    cake_dog_is: "El perro está",
+
+
+    cake_dog_isnot: "El perro no está",
+
+
+    cake_dog_sits: "El perro está",
+
+
+    cake_win_dog: "¡Encontrado! El perro se llevó el pastel.",
+
+
+    cake_cat_name: "Gato",
+
+
+    cake_cat_cap: "El gato",
+
+
+    cake_cat_mid: "el gato",
+
+
+    cake_cat_is: "El gato está",
+
+
+    cake_cat_isnot: "El gato no está",
+
+
+    cake_cat_sits: "El gato está",
+
+
+    cake_win_cat: "¡Encontrado! El gato se llevó el pastel.",
+
+
+    cake_rabbit_name: "Conejo",
+
+
+    cake_rabbit_cap: "El conejo",
+
+
+    cake_rabbit_mid: "el conejo",
+
+
+    cake_rabbit_is: "El conejo está",
+
+
+    cake_rabbit_isnot: "El conejo no está",
+
+
+    cake_rabbit_sits: "El conejo está",
+
+
+    cake_win_rabbit: "¡Encontrado! El conejo se llevó el pastel.",
+
+
+    cake_mouse_name: "Ratón",
+
+
+    cake_mouse_cap: "El ratón",
+
+
+    cake_mouse_mid: "el ratón",
+
+
+    cake_mouse_is: "El ratón está",
+
+
+    cake_mouse_isnot: "El ratón no está",
+
+
+    cake_mouse_sits: "El ratón está",
+
+
+    cake_win_mouse: "¡Encontrado! El ratón se llevó el pastel.",
+
+
+    cake_hedgehog_name: "Erizo",
+
+
+    cake_hedgehog_cap: "El erizo",
+
+
+    cake_hedgehog_mid: "el erizo",
+
+
+    cake_hedgehog_is: "El erizo está",
+
+
+    cake_hedgehog_isnot: "El erizo no está",
+
+
+    cake_hedgehog_sits: "El erizo está",
+
+
+    cake_win_hedgehog: "¡Encontrado! El erizo se llevó el pastel.",
+
+
+    cake_room_kitchen_name: "Cocina",
+
+
+    cake_room_kitchen_in: "en la cocina",
+
+
+    cake_room_living_name: "Salón",
+
+
+    cake_room_living_in: "en el salón",
+
+
+    cake_room_hall_name: "Pasillo",
+
+
+    cake_room_hall_in: "en el pasillo",
+
+
+    cake_room_bath_name: "Baño",
+
+
+    cake_room_bath_in: "en el baño",
+
+
+    cake_room_bedroom_name: "Dormitorio",
+
+
+    cake_room_bedroom_in: "en el dormitorio",
+
+
+    cake_room_garden_name: "Jardín",
+
+
+    cake_room_garden_in: "en el jardín",
+
+
+    cake_room_cellar_name: "Sótano",
+
+
+    cake_room_cellar_in: "en el sótano",
+
+
+    cake_furn_table_name: "Mesa",
+
+
+    cake_furn_chair_name: "Silla",
+
+
+    cake_furn_rug_name: "Alfombra",
+
+
+    cake_furn_plant_name: "Planta",
+
+
+    cake_furn_cupboard_name: "Armario",
+
+
+    cake_furn_chair_on: "sobre una silla",
+
+
+    cake_furn_rug_on: "sobre una alfombra",
+
+
+    cake_furn_plant_next: "junto a una planta",
+
+
+    cake_furn_cupboard_next: "junto a un armario",
+
+
+    cake_clue_in: "{IS} {ROOM}.",
+
+
+    cake_clue_notin: "{ISNOT} {ROOM}.",
+
+
+    cake_clue_on: "{SITS} {FURN}.",
+
+
+    cake_clue_next: "{IS} {FURN}.",
+
+
+    cake_clue_window: "{IS} en la misma fila que la ventana.",
+
+
+    cake_clue_top: "{IS} en la fila de arriba.",
+
+
+    cake_clue_bottom: "{IS} en la fila de abajo.",
+
+
+    cake_clue_left: "{IS} en la columna de la izquierda.",
+
+
+    cake_clue_right: "{IS} en la columna de la derecha.",
+
+
+    cake_clue_same: "{A} y {B} están en la misma habitación.",
+
+
+    game_cake: "¿Quién se llevó el pastel?",
+
+
+    home_cake_desc: "Un acertijo lógico de detectives: coloca los animales y el pastel en el plano según las pistas - uno por fila y columna - y descubre quién se llevó el pastel.",
+
+
+    cake_board_label: "Plano",
+
+
+    cake_palette_label: "Qué colocar",
+
+
+    cake_clues_title: "Indicios",
+
+
+    cake_status_pick: "Elige algo debajo del plano y toca una casilla.",
+
+
+    cake_meta_placed: "Colocados: {N} / {M}",
+
+
+    cake_win_title: "¡Encontrado!",
+
+
+    cake_hint_wrong: "Lo que hay en la casilla marcada no va ahí. Quítalo y vuelve a pedir una pista.",
+
+
+    cake_hint_wrongx: "Algo va en la casilla marcada. Quita la X y vuelve a pedir una pista.",
+
+
+    cake_hint_step: "{THING}: fila {R}, columna {C}.",
+
+
+    cake_aria_cell: "Fila {R}, columna {C}",
+
+
+    cake_aria_hint: "Pista",
+
+
+    cake_tool_x: "Aquí no hay nada",
+
+
+    cake_window_name: "Ventana",
+
+
+    cake_thing_cake: "Pastel",
+
+
+    cake_history_intro: "Los acertijos lógicos en los que un pequeño caso se resuelve solo razonando son mucho más antiguos que los ordenadores.",
+
+
+    cake_new_game: "Nuevo puzle",
+
+
+    cake_level_easy: "Fácil (4x4, 3 animales)",
+
+
+    cake_level_medium: "Medio (5x5, 4 animales)",
+
+
+    cake_level_hard: "Difícil (6x6, 5 animales)",
 
     game_hashi: "Hashiwokakero",
     home_hashi_desc: "Conecta cada isla numerada con puentes rectos, sencillos o dobles, para que toda la red quede unida y el recuento de cada isla coincida exactamente con su número. Generado de nuevo cada vez, en tres niveles de dificultad.",

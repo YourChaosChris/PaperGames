@@ -732,4 +732,15 @@ const GAMES_CATALOG = [
     added: "2026-10-06",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"8\" y=\"14\" width=\"40\" height=\"58\" rx=\"5\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"3\"/><rect x=\"30\" y=\"20\" width=\"40\" height=\"58\" rx=\"5\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"3\"/><rect x=\"52\" y=\"26\" width=\"40\" height=\"58\" rx=\"5\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"3\"/><text x=\"72\" y=\"62\" text-anchor=\"middle\" font-size=\"24\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#111\">7</text></svg></span>"
   },
+  {
+    slug: "cake",
+    category: "puzzles",
+    nameKey: "game_cake",
+    nameText: "Who Took the Cake?",
+    descKey: "home_cake_desc",
+    descText: "A detective logic puzzle: place the animals and the cake on the floor plan by the clues - one per row and column - and find out who took the cake.",
+    popular: false,
+    added: "2026-10-09",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M20 4C22 7 22 8.5 20 9.5C18 8.5 18 7 20 4Z\" fill=\"#141413\"/><path d=\"M20 10V15\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"11\" y=\"15\" width=\"18\" height=\"8\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"7\" y=\"23\" width=\"26\" height=\"11\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M7 27C10 30 12 25 15 28C18 31 20 25 23 28C26 31 28 25 33 28\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.8\"/></svg></span>"
+  },
 ];

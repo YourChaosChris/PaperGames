@@ -16,7 +16,7 @@ STRINGS.de = {
     nav_privacy: "Datenschutz",
     toggle_moves_button: "Züge",
 
-    home_tagline: "65 klassische Spiele, gemacht für E-Reader.",
+    home_tagline: "{games} klassische Spiele, gemacht für E-Reader.",
     home_intro: "Eine kleine, unabhängige Sammlung klassischer Brett-, Strategie- und Knobelspiele, gebaut für E-Ink-Displays wie Tolino, Kobo und Kindle: hoher Kontrast, keine Animationen, und funktioniert nach dem ersten Öffnen auch ohne Internetverbindung weiter.",
     home_pitch: "Keine Werbung, kein Konto, und über dich wird nichts mitgeschrieben. Einmal geladen, läuft alles auch ohne Internet weiter. Der Computer spielt nie von allein weiter: Du kannst jederzeit aufhören und Stunden später genau dort weitermachen. Der Quellcode ist offen.",
     home_pitch_link: "Was hier anders ist",
@@ -149,6 +149,9 @@ STRINGS.de = {
     quickrules_skyscrapers_1: "Fülle das Gitter mit Höhen von 1 bis N, sodass jede Zeile und Spalte jede Höhe genau einmal enthält und jeder Hinweis am Rand stimmt.",
     quickrules_skyscrapers_2: "Wähle ein Feld und dann eine Höhe aus dem Ziffernblock unter dem Spielfeld.",
     quickrules_skyscrapers_3: "Ein Hinweis zählt die Gebäude, die man von dieser Seite aus sieht, und ein höheres Gebäude verdeckt jedes niedrigere dahinter.",
+    quickrules_cake_1: "Setze jedes Tier und den Kuchen so, dass in jeder Zeile und jeder Spalte genau ein Ding steht.",
+    quickrules_cake_2: "Der Kuchen steht immer auf einem Tisch, Tiere nie auf einem Tisch oder Schrank, und die Hinweise unter dem Feld verraten den Rest.",
+    quickrules_cake_3: "Das einzige Tier im Raum des Kuchens hat ihn genommen - wähle einen Knopf unter dem Feld und tippe dann auf ein Kästchen.",
     quickrules_konane_1: "Lass deinen Gegner ohne Zug zurück: Wer an seinem Zug keinen legalen Sprung hat, verliert sofort.",
     quickrules_konane_2: "Jeder Zug ist ein Sprung: Ein Stein springt über einen benachbarten gegnerischen Stein, nie diagonal, auf das leere Feld dahinter und schlägt ihn.",
     quickrules_konane_3: "Vor dem ersten Sprung entfernt Schwarz einen eigenen Stein aus einer Ecke oder der Mitte, dann Weiß einen eigenen direkt neben dieser Lücke.",
@@ -274,7 +277,7 @@ STRINGS.de = {
     home_section_popular: "Beliebte Spiele",
     home_section_new: "Neue Spiele",
     home_all_games_title: "Suchst du etwas anderes?",
-    home_all_games_desc: "Durchsuche alle 65 Spiele, sortierbar nach Alphabet oder Typ.",
+    home_all_games_desc: "Durchsuche alle {games} Spiele, sortierbar nach Alphabet oder Typ.",
     nav_all_games: "Alle Spiele",
     all_games_intro: "Alle Spiele von PaperGames an einem Ort. Suche nach Namen, sortiere alphabetisch oder nach Typ, und tippe auf den Stern, um ein Spiel zu deinen Favoriten auf der Startseite hinzuzufügen.",
     all_games_search_placeholder: "Spiele suchen…",
@@ -654,10 +657,10 @@ STRINGS.de = {
     msg_t_do_p_drew_tiles: "{p} hat die Steine {s} und {r} gezogen.",
     msg_aria_card_new: "neu",
     seo_t_game: "{s} auf E-Ink – offline spielen, ohne Werbung",
-    seo_title_index: "PaperGames – 65 kostenlose Brettspiele für E-Reader",
-    seo_desc_index: "65 klassische Brettspiele für E-Reader und Tablets. Schach, Go, Backgammon, Sudoku und mehr. Kostenlos, offline, ohne Werbung, in 12 Sprachen.",
-    seo_title_about: "Über PaperGames – 65 kostenlose Brettspiele für E-Ink",
-    seo_desc_about: "Warum es PaperGames gibt, wie es gebaut ist und wie du das Projekt unterstützen kannst. Eine kostenlose, werbefreie Sammlung von 65 klassischen Brett- und Rätselspielen, auch offline.",
+    seo_title_index: "PaperGames – {games} kostenlose Brettspiele für E-Reader",
+    seo_desc_index: "{games} klassische Brettspiele für E-Reader und Tablets. Schach, Go, Backgammon, Sudoku und mehr. Kostenlos, offline, ohne Werbung, in 12 Sprachen.",
+    seo_title_about: "Über PaperGames – {games} kostenlose Brettspiele für E-Ink",
+    seo_desc_about: "Warum es PaperGames gibt, wie es gebaut ist und wie du das Projekt unterstützen kannst. Eine kostenlose, werbefreie Sammlung von {games} klassischen Brett- und Rätselspielen, auch offline.",
     nav_calm: "Ruhig spielen",
     about_calm_link: "Ruhig spielen: keine Animationen, keine Töne, keine Werbung",
     calm_intro: "PaperGames ist für ruhiges Spielen gebaut. Das heißt konkret:",
@@ -672,13 +675,13 @@ STRINGS.de = {
     seo_title_calm: "Ruhig spielen – reizarme Spiele ohne Werbung und Animationen | PaperGames",
     seo_desc_calm: "PaperGames spielt ruhig: keine Animationen, keine Töne, keine Werbung, keine Benachrichtigungen, kein Konto nötig, kein Tracking. Für E-Ink gebaut, läuft offline.",
     seo_title_games: "Alle Spiele – PaperGames",
-    seo_desc_games: "Alle 65 kostenlosen Brett- und Rätselspiele von PaperGames durchsuchen und sortieren, alphabetisch oder nach Art.",
+    seo_desc_games: "Alle {games} kostenlosen Brett- und Rätselspiele von PaperGames durchsuchen und sortieren, alphabetisch oder nach Art.",
     seo_title_guide: "Einrichtung | PaperGames",
     seo_desc_guide: "So richtest du PaperGames auf deinem E-Reader oder Tablet ein: im Browser öffnen, zum Startbildschirm hinzufügen und ganz offline weiterspielen.",
     seo_title_devices: "Getestete Geräte – auf welchen E-Readern PaperGames läuft | PaperGames",
     seo_desc_devices: "Auf welchen E-Readern PaperGames nachweislich läuft, was noch nicht getestet ist und wie du dein eigenes Gerät prüfst und Rückmeldung gibst – ohne Formular, ohne Konto.",
     seo_title_impressum: "Impressum | PaperGames",
-    seo_desc_impressum: "Impressum von PaperGames, einer kostenlosen Sammlung von 65 Offline-Brettspielen für E-Reader, betrieben von Christopher Müller.",
+    seo_desc_impressum: "Impressum von PaperGames, einer kostenlosen Sammlung von {games} Offline-Brettspielen für E-Reader, betrieben von Christopher Müller.",
     seo_title_datenschutz: "Datenschutzerklärung | PaperGames",
     seo_desc_datenschutz: "Datenschutzerklärung von PaperGames: keine Cookies, keine Analyse, keine Werbung. Nur lokaler Speicher, dazu die freiwillige Lichess-Anmeldung für Online-Schach.",
     seo_title_stats: "Deine Statistik | PaperGames",
@@ -1404,6 +1407,273 @@ STRINGS.de = {
 
 
     skyscrapers_history_intro: "Skyscrapers gehört zur selben Familie lateinischer-Quadrat-Rätsel wie Sudoku, fügt aber eine eigene Wendung hinzu, die ihm seinen Namen gibt: eine Sichtlinien-Regel, gelesen von knapp außerhalb des Gitters.",
+
+
+    cake_dog_name: "Hund",
+
+
+    cake_dog_cap: "Der Hund",
+
+
+    cake_dog_mid: "der Hund",
+
+
+    cake_dog_is: "Der Hund ist",
+
+
+    cake_dog_isnot: "Der Hund ist nicht",
+
+
+    cake_dog_sits: "Der Hund sitzt",
+
+
+    cake_win_dog: "Gefunden! Der Hund hat den Kuchen genommen.",
+
+
+    cake_cat_name: "Katze",
+
+
+    cake_cat_cap: "Die Katze",
+
+
+    cake_cat_mid: "die Katze",
+
+
+    cake_cat_is: "Die Katze ist",
+
+
+    cake_cat_isnot: "Die Katze ist nicht",
+
+
+    cake_cat_sits: "Die Katze sitzt",
+
+
+    cake_win_cat: "Gefunden! Die Katze hat den Kuchen genommen.",
+
+
+    cake_rabbit_name: "Hase",
+
+
+    cake_rabbit_cap: "Der Hase",
+
+
+    cake_rabbit_mid: "der Hase",
+
+
+    cake_rabbit_is: "Der Hase ist",
+
+
+    cake_rabbit_isnot: "Der Hase ist nicht",
+
+
+    cake_rabbit_sits: "Der Hase sitzt",
+
+
+    cake_win_rabbit: "Gefunden! Der Hase hat den Kuchen genommen.",
+
+
+    cake_mouse_name: "Maus",
+
+
+    cake_mouse_cap: "Die Maus",
+
+
+    cake_mouse_mid: "die Maus",
+
+
+    cake_mouse_is: "Die Maus ist",
+
+
+    cake_mouse_isnot: "Die Maus ist nicht",
+
+
+    cake_mouse_sits: "Die Maus sitzt",
+
+
+    cake_win_mouse: "Gefunden! Die Maus hat den Kuchen genommen.",
+
+
+    cake_hedgehog_name: "Igel",
+
+
+    cake_hedgehog_cap: "Der Igel",
+
+
+    cake_hedgehog_mid: "der Igel",
+
+
+    cake_hedgehog_is: "Der Igel ist",
+
+
+    cake_hedgehog_isnot: "Der Igel ist nicht",
+
+
+    cake_hedgehog_sits: "Der Igel sitzt",
+
+
+    cake_win_hedgehog: "Gefunden! Der Igel hat den Kuchen genommen.",
+
+
+    cake_room_kitchen_name: "Küche",
+
+
+    cake_room_kitchen_in: "in der Küche",
+
+
+    cake_room_living_name: "Wohnzimmer",
+
+
+    cake_room_living_in: "im Wohnzimmer",
+
+
+    cake_room_hall_name: "Flur",
+
+
+    cake_room_hall_in: "im Flur",
+
+
+    cake_room_bath_name: "Bad",
+
+
+    cake_room_bath_in: "im Bad",
+
+
+    cake_room_bedroom_name: "Schlafzimmer",
+
+
+    cake_room_bedroom_in: "im Schlafzimmer",
+
+
+    cake_room_garden_name: "Garten",
+
+
+    cake_room_garden_in: "im Garten",
+
+
+    cake_room_cellar_name: "Keller",
+
+
+    cake_room_cellar_in: "im Keller",
+
+
+    cake_furn_table_name: "Tisch",
+
+
+    cake_furn_chair_name: "Stuhl",
+
+
+    cake_furn_rug_name: "Teppich",
+
+
+    cake_furn_plant_name: "Pflanze",
+
+
+    cake_furn_cupboard_name: "Schrank",
+
+
+    cake_furn_chair_on: "auf einem Stuhl",
+
+
+    cake_furn_rug_on: "auf einem Teppich",
+
+
+    cake_furn_plant_next: "neben einer Pflanze",
+
+
+    cake_furn_cupboard_next: "neben einem Schrank",
+
+
+    cake_clue_in: "{IS} {ROOM}.",
+
+
+    cake_clue_notin: "{ISNOT} {ROOM}.",
+
+
+    cake_clue_on: "{SITS} {FURN}.",
+
+
+    cake_clue_next: "{IS} {FURN}.",
+
+
+    cake_clue_window: "{IS} in derselben Zeile wie das Fenster.",
+
+
+    cake_clue_top: "{IS} in der obersten Zeile.",
+
+
+    cake_clue_bottom: "{IS} in der untersten Zeile.",
+
+
+    cake_clue_left: "{IS} in der linken Spalte.",
+
+
+    cake_clue_right: "{IS} in der rechten Spalte.",
+
+
+    cake_clue_same: "{A} und {B} sind im selben Raum.",
+
+
+    game_cake: "Wer hat den Kuchen?",
+
+
+    home_cake_desc: "Ein Detektiv-Logikrätsel: Setze die Tiere und den Kuchen nach den Hinweisen auf den Grundriss - eins pro Zeile und Spalte - und finde heraus, wer den Kuchen genommen hat.",
+
+
+    cake_board_label: "Grundriss",
+
+
+    cake_palette_label: "Was gesetzt wird",
+
+
+    cake_clues_title: "Hinweise",
+
+
+    cake_status_pick: "Wähle unten etwas aus und tippe dann auf ein Kästchen.",
+
+
+    cake_meta_placed: "Gesetzt: {N} / {M}",
+
+
+    cake_win_title: "Gefunden!",
+
+
+    cake_hint_wrong: "Was im markierten Kästchen steht, gehört nicht dorthin. Nimm es weg und frag dann noch einmal nach einem Tipp.",
+
+
+    cake_hint_wrongx: "Ins markierte Kästchen gehört etwas. Nimm das X weg und frag dann noch einmal nach einem Tipp.",
+
+
+    cake_hint_step: "{THING}: Zeile {R}, Spalte {C}.",
+
+
+    cake_aria_cell: "Zeile {R}, Spalte {C}",
+
+
+    cake_aria_hint: "Tipp",
+
+
+    cake_tool_x: "Hier steht nichts",
+
+
+    cake_window_name: "Fenster",
+
+
+    cake_thing_cake: "Kuchen",
+
+
+    cake_history_intro: "Logikrätsel, in denen ein kleiner Fall allein durch Nachdenken gelöst wird, sind viel älter als Computer.",
+
+
+    cake_new_game: "Neues Rätsel",
+
+
+    cake_level_easy: "Leicht (4x4, 3 Tiere)",
+
+
+    cake_level_medium: "Mittel (5x5, 4 Tiere)",
+
+
+    cake_level_hard: "Schwer (6x6, 5 Tiere)",
 
     game_hashi: "Hashiwokakero",
     home_hashi_desc: "Verbinde jede nummerierte Insel mit geraden einfachen oder doppelten Brücken, sodass das ganze Netzwerk zusammenhängt und jede Insel genau ihre Zahl an Brücken erreicht. Frisch generiert, in drei Schwierigkeitsstufen.",

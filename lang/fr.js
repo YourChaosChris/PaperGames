@@ -13,7 +13,7 @@ STRINGS.fr = {
     nav_stats: "Stats",
     footer_support: "Soutenir",
     toggle_moves_button: "Coups",
-    home_tagline: "65 jeux classiques, pensés pour les liseuses.",
+    home_tagline: "{games} jeux classiques, pensés pour les liseuses.",
     home_intro: "Une petite collection indépendante de jeux de plateau, de stratégie et de réflexion classiques, conçue pour les écrans E Ink comme Tolino, Kobo et Kindle : contraste élevé, aucune animation, et elle continue de fonctionner sans connexion internet une fois ouverte.",
     home_pitch: "Pas de publicité, pas de compte, et rien n'est enregistré à votre sujet. Une fois chargé, tout continue de fonctionner sans internet. L'ordinateur ne joue jamais tout seul : arrêtez quand vous voulez et reprenez des heures plus tard, exactement là où vous en étiez. Le code source est ouvert.",
     home_pitch_link: "Ce qui est différent ici",
@@ -146,6 +146,9 @@ STRINGS.fr = {
     quickrules_skyscrapers_1: "Remplissez la grille de hauteurs de 1 à N pour que chaque ligne et chaque colonne contienne chaque hauteur une fois et que chaque indice corresponde.",
     quickrules_skyscrapers_2: "Sélectionnez une case, puis choisissez une hauteur sur le pavé sous la grille.",
     quickrules_skyscrapers_3: "Un indice compte les bâtiments visibles depuis ce côté, et un bâtiment plus haut cache complètement tout bâtiment plus bas derrière lui.",
+    quickrules_cake_1: "Placez chaque animal et le gâteau de sorte que chaque ligne et chaque colonne contienne exactement une chose.",
+    quickrules_cake_2: "Le gâteau est toujours sur une table, les animaux jamais sur une table ni sur une armoire, et les pistes sous le plan disent le reste.",
+    quickrules_cake_3: "Le seul animal dans la pièce du gâteau l'a pris - choisissez un bouton sous le plan, puis touchez une case.",
     quickrules_konane_1: "Privez l'adversaire de coup : celui qui n'a aucun saut légal à son tour perd immédiatement.",
     quickrules_konane_2: "Chaque coup est un saut : un pion saute par-dessus un pion ennemi adjacent, jamais en diagonale, vers la case vide juste après, et le capture.",
     quickrules_konane_3: "Avant le premier saut, le Noir retire l'un de ses pions d'un coin ou du centre, puis le Blanc l'un des siens juste à côté de ce vide.",
@@ -280,7 +283,7 @@ STRINGS.fr = {
     home_section_popular: "Jeux populaires",
     home_section_new: "Nouveaux jeux",
     home_all_games_title: "Vous cherchez autre chose ?",
-    home_all_games_desc: "Parcourez et recherchez les 65 jeux, triables par ordre alphabétique ou par type.",
+    home_all_games_desc: "Parcourez et recherchez les {games} jeux, triables par ordre alphabétique ou par type.",
     nav_all_games: "Tous les jeux",
     all_games_intro: "Tous les jeux de PaperGames, réunis au même endroit. Recherchez par nom, triez par ordre alphabétique ou par type, et appuyez sur l'étoile pour ajouter un jeu à vos favoris sur la page d'accueil.",
     all_games_search_placeholder: "Rechercher des jeux…",
@@ -591,10 +594,10 @@ STRINGS.fr = {
     msg_t_do_p_drew_tiles: "{p} a pioché les dominos {s} et {r}.",
     msg_aria_card_new: "nouveau",
     seo_t_game: "{s} sur liseuse – jouer hors ligne, sans publicité",
-    seo_title_index: "PaperGames – 65 jeux de société gratuits pour liseuses",
-    seo_desc_index: "65 jeux de société classiques conçus pour liseuses et tablettes. Échecs, go, backgammon, sudoku et plus encore. Gratuit, hors ligne, sans publicité, en 12 langues.",
-    seo_title_about: "À propos de PaperGames – 65 jeux de société gratuits pour liseuses",
-    seo_desc_about: "Pourquoi PaperGames existe, comment il est conçu et comment soutenir le projet. Une collection gratuite, hors ligne et sans publicité de 65 jeux de société et casse-tête classiques.",
+    seo_title_index: "PaperGames – {games} jeux de société gratuits pour liseuses",
+    seo_desc_index: "{games} jeux de société classiques conçus pour liseuses et tablettes. Échecs, go, backgammon, sudoku et plus encore. Gratuit, hors ligne, sans publicité, en 12 langues.",
+    seo_title_about: "À propos de PaperGames – {games} jeux de société gratuits pour liseuses",
+    seo_desc_about: "Pourquoi PaperGames existe, comment il est conçu et comment soutenir le projet. Une collection gratuite, hors ligne et sans publicité de {games} jeux de société et casse-tête classiques.",
     nav_calm: "Jouer au calme",
     about_calm_link: "Jouer au calme : pas d'animations, pas de sons, pas de publicité",
     calm_intro: "PaperGames est conçu pour jouer au calme. Concrètement :",
@@ -609,13 +612,13 @@ STRINGS.fr = {
     seo_title_calm: "Jouer au calme – jeux sans publicité ni animations | PaperGames",
     seo_desc_calm: "PaperGames se joue au calme : pas d'animations, pas de sons, pas de publicité, pas de notifications, aucun compte nécessaire, pas de pistage. Pour l'encre électronique, hors ligne.",
     seo_title_games: "Tous les jeux – PaperGames",
-    seo_desc_games: "Parcourez, recherchez et triez les 65 jeux de société et casse-tête gratuits de PaperGames, par ordre alphabétique ou par type.",
+    seo_desc_games: "Parcourez, recherchez et triez les {games} jeux de société et casse-tête gratuits de PaperGames, par ordre alphabétique ou par type.",
     seo_title_guide: "Guide d'installation | PaperGames",
     seo_desc_guide: "Comment installer PaperGames sur votre liseuse ou tablette : l'ouvrir dans le navigateur, l'ajouter à l'écran d'accueil et continuer à jouer entièrement hors ligne.",
     seo_title_devices: "Appareils testés – sur quelles liseuses PaperGames fonctionne | PaperGames",
     seo_desc_devices: "Sur quelles liseuses PaperGames fonctionne de façon confirmée, ce qui n'a pas été testé et comment vérifier votre propre appareil et nous le signaler – sans formulaire, sans compte.",
     seo_title_impressum: "Mentions légales | PaperGames",
-    seo_desc_impressum: "Mentions légales (Impressum) de PaperGames, une collection gratuite de 65 jeux de société hors ligne pour liseuses, exploitée par Christopher Müller.",
+    seo_desc_impressum: "Mentions légales (Impressum) de PaperGames, une collection gratuite de {games} jeux de société hors ligne pour liseuses, exploitée par Christopher Müller.",
     seo_title_datenschutz: "Politique de confidentialité | PaperGames",
     seo_desc_datenschutz: "Politique de confidentialité de PaperGames : pas de cookies, pas d'analyse, pas de publicité. Uniquement le stockage local, plus la connexion facultative à Lichess pour les échecs en ligne.",
     seo_title_stats: "Vos statistiques | PaperGames",
@@ -1333,6 +1336,273 @@ STRINGS.fr = {
 
 
     skyscrapers_history_intro: "Les Gratte-ciel appartiennent à la même famille de jeux de carrés latins que le Sudoku, mais y ajoutent une variante distinctive qui leur donne leur nom : une règle de ligne de vue lue juste à l'extérieur de la grille.",
+
+
+    cake_dog_name: "Chien",
+
+
+    cake_dog_cap: "Le chien",
+
+
+    cake_dog_mid: "le chien",
+
+
+    cake_dog_is: "Le chien est",
+
+
+    cake_dog_isnot: "Le chien n'est pas",
+
+
+    cake_dog_sits: "Le chien est",
+
+
+    cake_win_dog: "Trouvé ! Le chien a pris le gâteau.",
+
+
+    cake_cat_name: "Chat",
+
+
+    cake_cat_cap: "Le chat",
+
+
+    cake_cat_mid: "le chat",
+
+
+    cake_cat_is: "Le chat est",
+
+
+    cake_cat_isnot: "Le chat n'est pas",
+
+
+    cake_cat_sits: "Le chat est",
+
+
+    cake_win_cat: "Trouvé ! Le chat a pris le gâteau.",
+
+
+    cake_rabbit_name: "Lapin",
+
+
+    cake_rabbit_cap: "Le lapin",
+
+
+    cake_rabbit_mid: "le lapin",
+
+
+    cake_rabbit_is: "Le lapin est",
+
+
+    cake_rabbit_isnot: "Le lapin n'est pas",
+
+
+    cake_rabbit_sits: "Le lapin est",
+
+
+    cake_win_rabbit: "Trouvé ! Le lapin a pris le gâteau.",
+
+
+    cake_mouse_name: "Souris",
+
+
+    cake_mouse_cap: "La souris",
+
+
+    cake_mouse_mid: "la souris",
+
+
+    cake_mouse_is: "La souris est",
+
+
+    cake_mouse_isnot: "La souris n'est pas",
+
+
+    cake_mouse_sits: "La souris est",
+
+
+    cake_win_mouse: "Trouvé ! La souris a pris le gâteau.",
+
+
+    cake_hedgehog_name: "Hérisson",
+
+
+    cake_hedgehog_cap: "Le hérisson",
+
+
+    cake_hedgehog_mid: "le hérisson",
+
+
+    cake_hedgehog_is: "Le hérisson est",
+
+
+    cake_hedgehog_isnot: "Le hérisson n'est pas",
+
+
+    cake_hedgehog_sits: "Le hérisson est",
+
+
+    cake_win_hedgehog: "Trouvé ! Le hérisson a pris le gâteau.",
+
+
+    cake_room_kitchen_name: "Cuisine",
+
+
+    cake_room_kitchen_in: "dans la cuisine",
+
+
+    cake_room_living_name: "Salon",
+
+
+    cake_room_living_in: "dans le salon",
+
+
+    cake_room_hall_name: "Couloir",
+
+
+    cake_room_hall_in: "dans le couloir",
+
+
+    cake_room_bath_name: "Salle de bain",
+
+
+    cake_room_bath_in: "dans la salle de bain",
+
+
+    cake_room_bedroom_name: "Chambre",
+
+
+    cake_room_bedroom_in: "dans la chambre",
+
+
+    cake_room_garden_name: "Jardin",
+
+
+    cake_room_garden_in: "dans le jardin",
+
+
+    cake_room_cellar_name: "Cave",
+
+
+    cake_room_cellar_in: "dans la cave",
+
+
+    cake_furn_table_name: "Table",
+
+
+    cake_furn_chair_name: "Chaise",
+
+
+    cake_furn_rug_name: "Tapis",
+
+
+    cake_furn_plant_name: "Plante",
+
+
+    cake_furn_cupboard_name: "Armoire",
+
+
+    cake_furn_chair_on: "sur une chaise",
+
+
+    cake_furn_rug_on: "sur un tapis",
+
+
+    cake_furn_plant_next: "à côté d'une plante",
+
+
+    cake_furn_cupboard_next: "à côté d'une armoire",
+
+
+    cake_clue_in: "{IS} {ROOM}.",
+
+
+    cake_clue_notin: "{ISNOT} {ROOM}.",
+
+
+    cake_clue_on: "{SITS} {FURN}.",
+
+
+    cake_clue_next: "{IS} {FURN}.",
+
+
+    cake_clue_window: "{IS} dans la même ligne que la fenêtre.",
+
+
+    cake_clue_top: "{IS} dans la ligne du haut.",
+
+
+    cake_clue_bottom: "{IS} dans la ligne du bas.",
+
+
+    cake_clue_left: "{IS} dans la colonne de gauche.",
+
+
+    cake_clue_right: "{IS} dans la colonne de droite.",
+
+
+    cake_clue_same: "{A} et {B} sont dans la même pièce.",
+
+
+    game_cake: "Qui a pris le gâteau ?",
+
+
+    home_cake_desc: "Une énigme de détective : placez les animaux et le gâteau sur le plan d'après les indices - un par ligne et par colonne - et découvrez qui a pris le gâteau.",
+
+
+    cake_board_label: "Plan",
+
+
+    cake_palette_label: "Que placer",
+
+
+    cake_clues_title: "Pistes",
+
+
+    cake_status_pick: "Choisissez un élément sous le plan, puis touchez une case.",
+
+
+    cake_meta_placed: "Placés : {N} / {M}",
+
+
+    cake_win_title: "Trouvé !",
+
+
+    cake_hint_wrong: "Ce qui est dans la case marquée n'est pas à sa place. Retirez-le, puis redemandez un indice.",
+
+
+    cake_hint_wrongx: "Quelque chose va dans la case marquée. Retirez le X, puis redemandez un indice.",
+
+
+    cake_hint_step: "{THING} : ligne {R}, colonne {C}.",
+
+
+    cake_aria_cell: "Ligne {R}, colonne {C}",
+
+
+    cake_aria_hint: "Indice",
+
+
+    cake_tool_x: "Rien ici",
+
+
+    cake_window_name: "Fenêtre",
+
+
+    cake_thing_cake: "Gâteau",
+
+
+    cake_history_intro: "Les énigmes logiques où une petite affaire se résout par le seul raisonnement sont bien plus anciennes que les ordinateurs.",
+
+
+    cake_new_game: "Nouvelle grille",
+
+
+    cake_level_easy: "Facile (4x4, 3 animaux)",
+
+
+    cake_level_medium: "Moyen (5x5, 4 animaux)",
+
+
+    cake_level_hard: "Difficile (6x6, 5 animaux)",
 
     game_hashi: "Hashiwokakero",
     home_hashi_desc: "Reliez chaque île numérotée par des ponts simples ou doubles bien droits, pour que tout le réseau soit connecté et que le nombre de chaque île corresponde exactement. Généré à chaque partie, sur trois niveaux de difficulté.",
