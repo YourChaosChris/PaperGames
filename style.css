@@ -9876,7 +9876,10 @@ button.concan-meld {
    erkennen. */
 .sudoku-cell.hint-cell,
 .rp-cell.hint-cell,
-.lightswitch-cell.hint-cell {
+.lightswitch-cell.hint-cell,
+.kakuro-cell-white.hint-cell,
+.skyscrapers-cell-board.hint-cell,
+.nonogram-cell.hint-cell {
   outline: 6px double var(--text);
   outline-offset: -7px;
 }
@@ -9884,6 +9887,19 @@ button.concan-meld {
 .hashi-island.hint-cell {
   outline: 6px double var(--text);
   outline-offset: 2px;
+}
+
+/* On a filled (black) Nonogram cell the same double frame is drawn in
+   the light colour, so it still shows. */
+.nonogram-cell-filled.hint-cell {
+  outline-color: var(--square-light);
+}
+
+/* A Slitherlink hint marks an edge: the double frame goes round the
+   edge's (otherwise invisible) tap area between the two dots. */
+.slitherlink-edge-btn.hint-cell {
+  outline: 5px double var(--text);
+  outline-offset: 0;
 }
 
 /* Fox and Geese board (foxandgeese-app.js): the 33-point cross, drawn

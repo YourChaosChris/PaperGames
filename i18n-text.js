@@ -1209,6 +1209,8 @@ Object.assign(STRINGS.en, {
     lightswitch_rules_win: "The puzzle is solved the instant every light on the board is off. Every puzzle PaperGames generates is scrambled by pressing a random, known sequence of buttons starting from an all-off board, which guarantees a solution always exists - unlike a completely random starting grid, which isn't always solvable at all.",
     lightswitch_term_difficulty: "Difficulty levels",
     lightswitch_rules_difficulty: "Easy, Medium and Hard control how many random button-presses scramble the starting grid - more presses tends to produce a more tangled-looking starting position, though it isn't a strict guarantee that the puzzle takes more moves to solve.",
+    lightswitch_term_levelnumber: "The number in brackets",
+    lightswitch_rules_levelnumber: "The number after Easy, Medium and Hard is the number of random presses that scrambled the board. Pressing those same cells again undoes them, so the puzzle can always be solved in at most that many moves - often in fewer.",
     lightswitch_rules_solve_title: "How to solve it",
     lightswitch_term_chase: "Chasing the lights",
     lightswitch_rules_chase: "Work through the board row by row from the top. For every light that is on in a row, press the cell directly below it. That switches the light above off and never touches the rows you have already cleared. When you reach the bottom, every light is off except possibly some in the bottom row.",

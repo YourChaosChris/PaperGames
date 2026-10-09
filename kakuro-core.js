@@ -282,7 +282,12 @@ const KakuroCore = (function () {
   // distinct digits not already used in that run - the same bounding
   // idea as a Sudoku candidate mask, just computed from a sum instead of
   // a fixed digit set.
-  function solveFromClues(layout, clueGrid, limit) {
+  //
+  // Optional: `fixed` (a player grid) keeps the digits already entered
+  // and only fills the rest - the hint button uses it to find a solution
+  // that agrees with the player's entries. `maxNodes` stops the search
+  // after that many steps (it then returns what it has, often nothing).
+  function solveFromClues(layout, clueGrid, limit, fixed, maxNodes) {
     limit = limit || 1;
     const runs = computeRuns(layout);
     runs.forEach((run) => {
@@ -292,7 +297,7 @@ const KakuroCore = (function () {
     });
     const { hOf, vOf } = buildRunIndex(runs);
     const size = layout.length;
-    const grid = layout.map((row) => row.map((cell) => (cell === WHITE ? 0 : null)));
+    const grid = layout.map((row, r) => row.map((cell, c) => (cell === WHITE ? ((fixed && fixed[r][c]) || 0) : null)));
     const whiteCells = [];
     for (let r = 0; r < size; r++) {
       for (let c = 0; c < size; c++) {
@@ -301,6 +306,7 @@ const KakuroCore = (function () {
     }
 
     const solutions = [];
+    let nodes = 0;
 
     function runState(run) {
       let sum = 0, filled = 0;
@@ -347,6 +353,7 @@ const KakuroCore = (function () {
 
     function search() {
       if (solutions.length >= limit) return;
+      if (maxNodes && ++nodes > maxNodes) return;
       let best = null, bestCands = null;
       for (const [r, c] of whiteCells) {
         if (grid[r][c]) continue;
@@ -358,7 +365,8 @@ const KakuroCore = (function () {
         }
       }
       if (!best) {
-        solutions.push(grid.map((row) => row.slice()));
+        // Runs made up only of fixed digits were never checked above.
+        if (!fixed || findConflicts(grid, layout, clueGrid).size === 0) solutions.push(grid.map((row) => row.slice()));
         return;
       }
       const [r, c] = best;
@@ -426,6 +434,38 @@ const KakuroCore = (function () {
     return findConflicts(playerGrid, layout, clueGrid).size === 0;
   }
 
+  // The hint button (kakuro-app.js). Returns one of
+  //   { kind: "conflict", cells }   a rule is broken (cells as [r, c])
+  //   { kind: "wrong", cell }       this entry has to go
+  //   { kind: "step", cell, value } a digit that belongs in an empty cell
+  //   { kind: "done" } / { kind: "stuck" }
+  // Kakuro puzzles here need not have a single solution, so a step comes
+  // from a solution that keeps every digit the player has entered: the
+  // stored one if it agrees, otherwise one searched for with those digits
+  // fixed. Only if no such solution turns up is an entry called wrong -
+  // the first one that differs from the stored solution. `known` is the
+  // solution an earlier hint used (step.target): while it still agrees
+  // with the entries, no new search is needed.
+  const HINT_MAX_NODES = 1000;
+
+  function findHint(playerGrid, layout, clueGrid, solution, known) {
+    const conf = findConflicts(playerGrid, layout, clueGrid);
+    if (conf.size) return { kind: "conflict", cells: Array.from(conf).map((k) => k.split(",").map(Number)) };
+    const white = [];
+    layout.forEach((row, r) => row.forEach((cell, c) => { if (cell === WHITE) white.push([r, c]); }));
+    const agrees = (sol) => !!sol && white.every(([r, c]) => !playerGrid[r][c] || playerGrid[r][c] === sol[r][c]);
+    let target = agrees(solution) ? solution : (agrees(known) ? known : null);
+    if (!target) {
+      target = solveFromClues(layout, clueGrid, 1, playerGrid, HINT_MAX_NODES)[0] || null;
+      if (!target) {
+        const bad = white.find(([r, c]) => playerGrid[r][c] && (!solution || playerGrid[r][c] !== solution[r][c]));
+        return bad ? { kind: "wrong", cell: bad } : { kind: "stuck" };
+      }
+    }
+    const empty = white.find(([r, c]) => !playerGrid[r][c]);
+    return empty ? { kind: "step", cell: empty, value: target[empty[0]][empty[1]], target } : { kind: "done" };
+  }
+
   return {
     BLACK,
     WHITE,
@@ -444,7 +484,8 @@ const KakuroCore = (function () {
     countSolutions,
     solve,
     findConflicts,
-    isComplete
+    isComplete,
+    findHint
   };
 })();
 

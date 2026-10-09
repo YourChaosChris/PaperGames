@@ -1208,6 +1208,8 @@ Object.assign(STRINGS.de, {
     lightswitch_rules_win: "Das Rätsel ist in dem Moment gelöst, in dem jedes Licht auf dem Spielfeld aus ist. Jedes von PaperGames erzeugte Rätsel wird verwürfelt, indem ausgehend von einem komplett ausgeschalteten Feld eine zufällige, bekannte Abfolge von Feldern gedrückt wird - das garantiert, dass immer eine Lösung existiert, anders als bei einem völlig zufälligen Startraster, das nicht immer lösbar ist.",
     lightswitch_term_difficulty: "Schwierigkeitsgrade",
     lightswitch_rules_difficulty: "Leicht, Mittel und Schwer bestimmen, wie viele zufällige Feld-Drücke das Startraster verwürfeln - mehr Drücke ergeben tendenziell eine verworrener aussehende Ausgangsposition, garantieren aber nicht zwingend, dass das Rätsel mehr Züge zum Lösen braucht.",
+    lightswitch_term_levelnumber: "Die Zahl in Klammern",
+    lightswitch_rules_levelnumber: "Die Zahl hinter Leicht, Mittel und Schwer ist die Zahl der zufälligen Drücke, mit denen das Feld gemischt wurde. Wer dieselben Felder noch einmal drückt, macht sie rückgängig - das Rätsel ist also immer in höchstens so vielen Zügen lösbar, oft in weniger.",
     lightswitch_rules_solve_title: "So löst man es",
     lightswitch_term_chase: "Licht jagen",
     lightswitch_rules_chase: "Geh das Spielfeld Zeile für Zeile von oben nach unten durch. Unter jedem Licht, das in einer Zeile an ist, drückst du das Feld direkt darunter. Das schaltet das Licht darüber aus und berührt die Zeilen, in denen schon alle Lichter aus sind, nicht mehr. Unten angekommen sind alle Lichter aus, höchstens in der untersten Zeile sind noch welche an.",

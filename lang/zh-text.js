@@ -1181,6 +1181,8 @@ Object.assign(STRINGS.zh, {
     lightswitch_rules_win: "当棋盘上所有的灯都熄灭时，谜题即被解出。PaperGames 生成的每个谜题，都是从全部熄灭的棋盘开始，按下一串随机但已知的按键序列打乱得到的——这保证了解一定存在，这与完全随机生成的初始棋盘不同，后者并不总能解开。",
     lightswitch_term_difficulty: "难度等级",
     lightswitch_rules_difficulty: "简单、中等和困难决定了打乱初始棋盘所用的随机按键次数——按键次数越多，初始局面看起来往往越混乱，但这并不能严格保证解开谜题需要更多步数。",
+    lightswitch_term_levelnumber: "括号里的数字",
+    lightswitch_rules_levelnumber: "“简单”“中等”“困难”后面的数字是打乱棋盘时随机按下的次数。再按一次同样的格子就会还原，所以这道谜题总能在不超过这么多步内解开，往往还更少。",
     lightswitch_rules_solve_title: "解法",
     lightswitch_term_chase: "追灯法",
     lightswitch_rules_chase: "从上到下逐行处理棋盘。某一行中每有一盏亮着的灯，就按它正下方的格子。这样会熄灭上面的灯，而且不会再影响已经熄灭的行。到达底部时，除了最下面一行可能还有几盏，其余的灯都已熄灭。",

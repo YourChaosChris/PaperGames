@@ -22,7 +22,9 @@ const AppStateNonogram = {
   gameOver: false,
   moveCount: 0,
   undoStack: [],
-  isDaily: false
+  isDaily: false,
+  hinted: false,       // the hint button was used on this puzzle
+  hintCells: []        // [row, col] cells the current hint marks
 };
 
 const NONOGRAM_SAVE_KEY = "einkchess_save_nonogram";
@@ -34,7 +36,8 @@ function saveNonogramGame() {
     puzzleName: AppStateNonogram.puzzleName,
     solution: AppStateNonogram.solution,
     playerGrid: AppStateNonogram.playerGrid,
-    moveCount: AppStateNonogram.moveCount
+    moveCount: AppStateNonogram.moveCount,
+    hinted: AppStateNonogram.hinted
   });
 }
 
@@ -45,7 +48,7 @@ function clearSavedNonogramGame() {
 
 function recordNonogramStats() {
   if (typeof GameStats === "undefined") return;
-  GameStats.record("nonogram", "win");
+  GameStats.record("nonogram", "win", { hinted: AppStateNonogram.hinted });
 }
 
 function setStatusNonogram(elementId, text) {
@@ -133,6 +136,8 @@ function initNonogramApp() {
     AppStateNonogram.isDaily = !!isDaily;
     AppStateNonogram.gameOver = false;
     AppStateNonogram.moveCount = 0;
+    AppStateNonogram.hinted = false;
+    clearHintNonogram();
     resetUndoStackNonogram();
     setModeNonogram("fill");
     setGameResultNonogram("");
@@ -151,6 +156,9 @@ function initNonogramApp() {
     startNewGameNonogram(difficulty);
   });
 
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.addEventListener("click", hintNonogram);
+
   const dailyBtn = document.getElementById("daily-nonogram-button");
   if (dailyBtn) {
     dailyBtn.addEventListener("click", () => {
@@ -167,6 +175,8 @@ function initNonogramApp() {
     AppStateNonogram.clues = NonogramCore.computeClues(savedGame.solution);
     AppStateNonogram.playerGrid = savedGame.playerGrid;
     AppStateNonogram.moveCount = savedGame.moveCount;
+    AppStateNonogram.hinted = !!savedGame.hinted;
+    clearHintNonogram();
     AppStateNonogram.gameOver = false;
     resetUndoStackNonogram();
     if (levelInline) levelInline.value = AppStateNonogram.difficulty;
@@ -184,10 +194,16 @@ function initNonogramApp() {
 
 function onNonogramCellClick(r, c) {
   if (AppStateNonogram.gameOver) return;
-  pushUndoSnapshotNonogram();
   const current = AppStateNonogram.playerGrid[r][c];
   const target = AppStateNonogram.mode === "fill" ? "filled" : "marked";
-  AppStateNonogram.playerGrid[r][c] = current === target ? "empty" : target;
+  clearHintNonogram();
+  setCellNonogram(r, c, current === target ? "empty" : target);
+}
+
+// One move: the cell gets `value`, then the solved check.
+function setCellNonogram(r, c, value) {
+  pushUndoSnapshotNonogram();
+  AppStateNonogram.playerGrid[r][c] = value;
   AppStateNonogram.moveCount++;
   updateNonogramBoard();
   updateGameLabelsNonogram();
@@ -207,10 +223,43 @@ function undoLastMove() {
   const prev = AppStateNonogram.undoStack.pop();
   AppStateNonogram.playerGrid = prev.playerGrid;
   AppStateNonogram.moveCount = prev.moveCount;
+  clearHintNonogram();
   setGameResultNonogram("");
   updateNonogramBoard();
   updateGameLabelsNonogram();
   setStatusNonogram("board-info", "Move undone.");
+}
+
+/*** Hint (NonogramCore.findHint) ***/
+
+function clearHintNonogram() {
+  AppStateNonogram.hintCells = [];
+}
+
+// Like Sudoku's hint, a wrong cell is reported first; otherwise one cell
+// of the picture is filled in and marked.
+function hintNonogram() {
+  if (!AppStateNonogram.playerGrid || AppStateNonogram.gameOver) return;
+  AppStateNonogram.hinted = true;
+  const h = NonogramCore.findHint(AppStateNonogram.playerGrid, AppStateNonogram.solution);
+  let text = "";
+  AppStateNonogram.hintCells = [];
+  if (h.kind === "wrong" || h.kind === "step") {
+    const [r, c] = h.cell;
+    const where = "row " + (r + 1) + ", column " + (c + 1);
+    AppStateNonogram.hintCells = [h.cell];
+    if (h.kind === "wrong" && h.state === "filled") text = "The cell in " + where + " must stay empty. Clear it, then ask for a hint again.";
+    else if (h.kind === "wrong") text = "The cell in " + where + " belongs to the picture. Remove the cross, then ask for a hint again.";
+    else {
+      setCellNonogram(r, c, "filled");
+      text = "Filled the cell in " + where + ".";
+    }
+  }
+  updateNonogramBoard();
+  if (!AppStateNonogram.gameOver) {
+    if (text) setStatusNonogram("board-info", text);
+    saveNonogramGame();
+  }
 }
 
 function showBoardSectionNonogram() {
@@ -288,6 +337,7 @@ function updateNonogramBoard() {
     const value = AppStateNonogram.playerGrid[r][c];
     cell.classList.toggle("nonogram-cell-filled", value === "filled");
     cell.classList.toggle("nonogram-cell-marked", value === "marked");
+    cell.classList.toggle("hint-cell", AppStateNonogram.hintCells.some(([hr, hc]) => hr === r && hc === c));
     cell.textContent = value === "marked" ? "×" : "";
     let label = "Row " + (r + 1) + ", column " + (c + 1) + ", " + value;
     I18n.setAria(cell, label);
@@ -298,6 +348,8 @@ function updateGameLabelsNonogram() {
   const meta = document.getElementById("game-meta");
   if (meta) I18n.setMsg(meta, AppStateNonogram.puzzleName ? AppStateNonogram.puzzleName : "");
   updateUndoButtonVisibilityNonogram();
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.classList.toggle("hidden", AppStateNonogram.gameOver || !AppStateNonogram.playerGrid);
 
   if (AppStateNonogram.gameOver) clearSavedNonogramGame();
   else saveNonogramGame();

@@ -29,7 +29,9 @@ const AppStateSlitherlink = {
   edges: null,     // {H, V} player's current edge states (0 empty / 1 on / 2 marked)
   gameOver: false,
   moveCount: 0,
-  undoStack: []
+  undoStack: [],
+  hinted: false,   // the hint button was used on this puzzle
+  hintEdge: null   // edge ref the current hint marks
 };
 
 const SLITHERLINK_SAVE_KEY = "einkchess_save_slitherlink";
@@ -43,7 +45,8 @@ function saveSlitherlinkGame() {
     clues: AppStateSlitherlink.clues,
     solution: AppStateSlitherlink.solution,
     edges: AppStateSlitherlink.edges,
-    moveCount: AppStateSlitherlink.moveCount
+    moveCount: AppStateSlitherlink.moveCount,
+    hinted: AppStateSlitherlink.hinted
   });
 }
 
@@ -54,7 +57,7 @@ function clearSavedSlitherlinkGame() {
 
 function recordSlitherlinkStats() {
   if (typeof GameStats === "undefined") return;
-  GameStats.record("slitherlink", "win");
+  GameStats.record("slitherlink", "win", { hinted: AppStateSlitherlink.hinted });
 }
 
 function setStatusSlitherlink(elementId, text) {
@@ -139,6 +142,8 @@ function initSlitherlinkApp() {
       AppStateSlitherlink.edges = SlitherlinkCore.createEmptyEdges(puzzle.rows, puzzle.cols);
       AppStateSlitherlink.gameOver = false;
       AppStateSlitherlink.moveCount = 0;
+      AppStateSlitherlink.hinted = false;
+      AppStateSlitherlink.hintEdge = null;
       resetUndoStackSlitherlink();
       setGameResultSlitherlink("");
       showBoardSectionSlitherlink();
@@ -165,9 +170,13 @@ function initSlitherlinkApp() {
     });
   }
 
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.addEventListener("click", hintSlitherlink);
+
   if (clearBtn) {
     clearBtn.addEventListener("click", () => {
       if (!AppStateSlitherlink.edges || AppStateSlitherlink.gameOver) return;
+      AppStateSlitherlink.hintEdge = null;
       pushUndoSnapshotSlitherlink();
       AppStateSlitherlink.edges = SlitherlinkCore.createEmptyEdges(AppStateSlitherlink.rows, AppStateSlitherlink.cols);
       AppStateSlitherlink.moveCount++;
@@ -186,6 +195,8 @@ function initSlitherlinkApp() {
     AppStateSlitherlink.solution = savedGame.solution;
     AppStateSlitherlink.edges = savedGame.edges;
     AppStateSlitherlink.moveCount = savedGame.moveCount;
+    AppStateSlitherlink.hinted = !!savedGame.hinted;
+    AppStateSlitherlink.hintEdge = null;
     AppStateSlitherlink.gameOver = false;
     resetUndoStackSlitherlink();
     if (levelInline) levelInline.value = AppStateSlitherlink.difficulty;
@@ -202,9 +213,15 @@ function initSlitherlinkApp() {
 
 function onSlitherlinkEdgeClick(ref) {
   if (AppStateSlitherlink.gameOver || !AppStateSlitherlink.edges) return;
-  pushUndoSnapshotSlitherlink();
+  AppStateSlitherlink.hintEdge = null;
   const current = SlitherlinkCore.getEdge(AppStateSlitherlink.edges, ref);
-  SlitherlinkCore.setEdge(AppStateSlitherlink.edges, ref, SlitherlinkCore.cycleEdgeValue(current));
+  setEdgeSlitherlink(ref, SlitherlinkCore.cycleEdgeValue(current));
+}
+
+// One move: the edge gets `value`, then the win check.
+function setEdgeSlitherlink(ref, value) {
+  pushUndoSnapshotSlitherlink();
+  SlitherlinkCore.setEdge(AppStateSlitherlink.edges, ref, value);
   AppStateSlitherlink.moveCount++;
   updateSlitherlinkBoard();
   updateGameLabelsSlitherlink();
@@ -225,10 +242,41 @@ function undoLastMove() {
   const prev = AppStateSlitherlink.undoStack.pop();
   AppStateSlitherlink.edges = prev.edges;
   AppStateSlitherlink.moveCount = prev.moveCount;
+  AppStateSlitherlink.hintEdge = null;
   setGameResultSlitherlink("");
   updateSlitherlinkBoard();
   updateGameLabelsSlitherlink();
   setStatusSlitherlink("board-info", (window.I18n && I18n.t("slitherlink_undone")) || "Move undone.");
+}
+
+/*** Hint (SlitherlinkCore.findHint) ***/
+
+// Like Sudoku's hint, a broken clue or dot, or a wrong line or cross, is
+// reported first; otherwise one line of the loop is drawn and marked.
+function hintSlitherlink() {
+  if (!AppStateSlitherlink.edges || !AppStateSlitherlink.solution || AppStateSlitherlink.gameOver) return;
+  AppStateSlitherlink.hinted = true;
+  const h = SlitherlinkCore.findHint(AppStateSlitherlink.edges, AppStateSlitherlink.clues,
+    AppStateSlitherlink.rows, AppStateSlitherlink.cols, AppStateSlitherlink.solution);
+  let text = "";
+  AppStateSlitherlink.hintEdge = null;
+  if (h.kind === "conflict") {
+    text = "Some entries break a rule. The cells involved are marked.";
+  } else if (h.kind === "wrong") {
+    AppStateSlitherlink.hintEdge = h.ref;
+    text = h.what === "line"
+      ? "The line on the marked edge is not part of the loop. Remove it, then ask for a hint again."
+      : "The marked edge is part of the loop. Remove its cross, then ask for a hint again.";
+  } else if (h.kind === "step") {
+    AppStateSlitherlink.hintEdge = h.ref;
+    setEdgeSlitherlink(h.ref, SlitherlinkCore.ON);
+    text = "Drew a line on the marked edge.";
+  }
+  updateSlitherlinkBoard();
+  if (!AppStateSlitherlink.gameOver) {
+    if (text) setStatusSlitherlink("board-info", text);
+    saveSlitherlinkGame();
+  }
 }
 
 function showBoardSectionSlitherlink() {
@@ -441,6 +489,8 @@ function updateSlitherlinkBoard() {
       : "Edge between dot row " + ref.r + " and row " + (ref.r + 1) + ", column " + ref.c;
     I18n.setAria(btn, label + ", " + slitherlinkStateLabel(value));
     btn.classList.toggle("slitherlink-edge-btn-on", value === SlitherlinkCore.ON);
+    const hint = AppStateSlitherlink.hintEdge;
+    btn.classList.toggle("hint-cell", !!hint && hint.type === ref.type && hint.r === ref.r && hint.c === ref.c);
   });
 
   boardEl.querySelectorAll(".slitherlink-clue-ring, .slitherlink-clue-text").forEach((el) => {
@@ -466,6 +516,8 @@ function updateGameLabelsSlitherlink() {
   }
   updateUndoButtonVisibilitySlitherlink();
   updateClearButtonVisibilitySlitherlink();
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.classList.toggle("hidden", AppStateSlitherlink.gameOver || !AppStateSlitherlink.edges);
 
   if (AppStateSlitherlink.gameOver) clearSavedSlitherlinkGame();
   else saveSlitherlinkGame();

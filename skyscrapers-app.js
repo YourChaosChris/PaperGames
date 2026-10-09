@@ -28,7 +28,9 @@ const AppStateSkyscrapers = {
   selected: null,      // cell index or null
   gameOver: false,
   moveCount: 0,
-  undoStack: []
+  undoStack: [],
+  hinted: false,      // the hint button was used on this puzzle
+  hintCells: []       // cell indices the current hint marks
 };
 
 const SKYSCRAPERS_SAVE_KEY = "einkchess_save_skyscrapers";
@@ -41,7 +43,8 @@ function saveSkyscrapersGame() {
     solution: AppStateSkyscrapers.solution,
     clues: AppStateSkyscrapers.clues,
     grid: AppStateSkyscrapers.grid,
-    moveCount: AppStateSkyscrapers.moveCount
+    moveCount: AppStateSkyscrapers.moveCount,
+    hinted: AppStateSkyscrapers.hinted
   });
 }
 
@@ -52,7 +55,7 @@ function clearSavedSkyscrapersGame() {
 
 function recordSkyscrapersStats() {
   if (typeof GameStats === "undefined") return;
-  GameStats.record("skyscrapers", "win");
+  GameStats.record("skyscrapers", "win", { hinted: AppStateSkyscrapers.hinted });
 }
 
 function setStatusSkyscrapers(elementId, text) {
@@ -132,6 +135,8 @@ function initSkyscrapersApp() {
       AppStateSkyscrapers.selected = null;
       AppStateSkyscrapers.gameOver = false;
       AppStateSkyscrapers.moveCount = 0;
+      AppStateSkyscrapers.hinted = false;
+      clearHintSkyscrapers();
       resetUndoStackSkyscrapers();
       setGameResultSkyscrapers("");
       showBoardSectionSkyscrapers();
@@ -158,6 +163,9 @@ function initSkyscrapersApp() {
     startNewGameSkyscrapers(difficulty);
   });
 
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.addEventListener("click", hintSkyscrapers);
+
   if (eraseBtn) {
     eraseBtn.addEventListener("click", () => enterHeightSkyscrapers(0));
   }
@@ -180,6 +188,8 @@ function initSkyscrapersApp() {
     AppStateSkyscrapers.clues = savedGame.clues;
     AppStateSkyscrapers.grid = savedGame.grid;
     AppStateSkyscrapers.moveCount = savedGame.moveCount;
+    AppStateSkyscrapers.hinted = !!savedGame.hinted;
+    clearHintSkyscrapers();
     AppStateSkyscrapers.selected = null;
     AppStateSkyscrapers.gameOver = false;
     resetUndoStackSkyscrapers();
@@ -202,10 +212,11 @@ function onSkyscrapersCellClick(index) {
   updateSkyscrapersBoard();
 }
 
-function enterHeightSkyscrapers(height) {
+function enterHeightSkyscrapers(height, fromHint) {
   const index = AppStateSkyscrapers.selected;
   if (index === null || AppStateSkyscrapers.gameOver) return;
   if (AppStateSkyscrapers.grid[index] === height) return;
+  if (!fromHint) clearHintSkyscrapers();
 
   pushUndoSnapshotSkyscrapers();
   AppStateSkyscrapers.grid[index] = height;
@@ -229,10 +240,48 @@ function undoLastMove() {
   const prev = AppStateSkyscrapers.undoStack.pop();
   AppStateSkyscrapers.grid = prev.grid;
   AppStateSkyscrapers.moveCount = prev.moveCount;
+  clearHintSkyscrapers();
   setGameResultSkyscrapers("");
   updateSkyscrapersBoard();
   updateGameLabelsSkyscrapers();
   setStatusSkyscrapers("board-info", (window.I18n && I18n.t("skyscrapers_undone")) || "Move undone.");
+}
+
+/*** Hint (SkyscrapersCore.findHint) ***/
+
+function clearHintSkyscrapers() {
+  AppStateSkyscrapers.hintCells = [];
+}
+
+// Like Sudoku's hint, a broken rule or a wrong entry is reported first;
+// otherwise one correct height is entered and its cell marked.
+function hintSkyscrapers() {
+  if (!AppStateSkyscrapers.grid || AppStateSkyscrapers.gameOver) return;
+  const n = AppStateSkyscrapers.n;
+  if (!AppStateSkyscrapers.solution) AppStateSkyscrapers.solution = SkyscrapersPuzzles.solve(n, AppStateSkyscrapers.clues);
+  if (!AppStateSkyscrapers.solution) return;
+  AppStateSkyscrapers.hinted = true;
+  const h = SkyscrapersCore.findHint(AppStateSkyscrapers.grid, n, AppStateSkyscrapers.solution);
+  const rc = (i) => "row " + (Math.floor(i / n) + 1) + ", column " + (i % n + 1);
+  let text = "";
+  AppStateSkyscrapers.hintCells = [];
+  if (h.kind === "conflict") {
+    AppStateSkyscrapers.hintCells = h.cells;
+    text = "Some entries break a rule. The cells involved are marked.";
+  } else if (h.kind === "wrong") {
+    AppStateSkyscrapers.hintCells = [h.cell];
+    text = "The number in " + rc(h.cell) + " does not belong there. Remove it, then ask for a hint again.";
+  } else if (h.kind === "step") {
+    AppStateSkyscrapers.selected = h.cell;
+    AppStateSkyscrapers.hintCells = [h.cell];
+    enterHeightSkyscrapers(h.value, true);
+    text = "Entered " + h.value + " in " + rc(h.cell) + ".";
+  }
+  updateSkyscrapersBoard();
+  if (!AppStateSkyscrapers.gameOver) {
+    if (text) setStatusSkyscrapers("board-info", text);
+    saveSkyscrapersGame();
+  }
 }
 
 function showBoardSectionSkyscrapers() {
@@ -363,6 +412,7 @@ function updateSkyscrapersBoard() {
 
     cell.classList.toggle("selected", selected === index);
     cell.classList.toggle("skyscrapers-cell-conflict", conflicts.has(index));
+    cell.classList.toggle("hint-cell", AppStateSkyscrapers.hintCells.indexOf(index) !== -1);
 
     const r = Math.floor(index / n), c = index % n;
     let label2 = "Row " + (r + 1) + ", column " + (c + 1);
@@ -404,6 +454,8 @@ function updateGameLabelsSkyscrapers() {
   }
   updateUndoButtonVisibilitySkyscrapers();
   updateEraseButtonVisibilitySkyscrapers();
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.classList.toggle("hidden", AppStateSkyscrapers.gameOver || !AppStateSkyscrapers.grid);
 
   if (AppStateSkyscrapers.gameOver) clearSavedSkyscrapersGame();
   else saveSkyscrapersGame();

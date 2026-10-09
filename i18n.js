@@ -1001,9 +1001,9 @@ const STRINGS = {
     game_lightswitch: "Light Switch",
     home_lightswitch_desc: "Press a cell to toggle it and its neighbors on and off. Turn off every light to win - every puzzle is generated to always have a solution.",
     lightswitch_new_game: "New game",
-    lightswitch_level_easy: "Easy (5 presses)",
-    lightswitch_level_medium: "Medium (10 presses)",
-    lightswitch_level_hard: "Hard (20 presses)",
+    lightswitch_level_easy: "Easy (at most 5 moves)",
+    lightswitch_level_medium: "Medium (at most 10 moves)",
+    lightswitch_level_hard: "Hard (at most 20 moves)",
     lightswitch_history_intro: "A 1990s handheld electronic puzzle that turned out to hide a genuinely elegant piece of mathematics underneath its simple button grid.",
 
     game_bullsandcows: "Bulls and Cows",
@@ -1304,6 +1304,12 @@ const STRINGS = {
     msg_hint_hashi_connect: "Without a bridge here, the islands could no longer all be connected.",
     msg_hint_hashi_deep: "Ruling out bridges step by step, from the numbers, the crossings and the rule that all islands connect, forces another bridge here. No guessing is needed.",
     msg_hint_hashi_entered: "Bridge added.",
+    msg_t_hint_nono_empty: "The cell in row {n}, column {m} must stay empty. Clear it, then ask for a hint again.",
+    msg_t_hint_nono_fill: "The cell in row {n}, column {m} belongs to the picture. Remove the cross, then ask for a hint again.",
+    msg_t_hint_nono_filled: "Filled the cell in row {n}, column {m}.",
+    msg_hint_sl_line: "The line on the marked edge is not part of the loop. Remove it, then ask for a hint again.",
+    msg_hint_sl_cross: "The marked edge is part of the loop. Remove its cross, then ask for a hint again.",
+    msg_hint_sl_drawn: "Drew a line on the marked edge.",
     msg_hint_hashi_wrong: "The bridge between the two marked islands is not part of the solution. Remove it, then ask for a hint again.",
     cp_restart_confirm: "Restart this level from the beginning? Your moves so far will be lost.",
     cp_new_level_confirm: "Start a new level? The level you are playing will be lost.",
@@ -2549,13 +2555,24 @@ const I18n = (function () {
     const parts = s.replace(/([.!?\u2026])\s+/g, "$1\u0000").split("\u0000");
     if (parts.length < 2 && !segments) return str;
     let changed = false;
-    const out = parts.map((part) => {
-      let translated = msgSentence(part, l);
-      if (translated === null && segments) translated = msgSegments(part, l);
-      if (translated === null) return part;
-      changed = true;
-      return translated;
-    });
+    const out = [];
+    // Some templates span two sentences ("{p} can capture again with the
+    // same stone. Tap it to end the turn."), so runs of consecutive
+    // sentences are tried first, longest first, before single ones.
+    for (let i = 0; i < parts.length;) {
+      let j = parts.length;
+      for (; j > i + 1; j--) {
+        if (i === 0 && j === parts.length) continue; // the whole text was tried above
+        const run = msgSentence(parts.slice(i, j).join(" "), l);
+        if (run !== null) { out.push(run); changed = true; break; }
+      }
+      if (j > i + 1) { i = j; continue; }
+      let translated = msgSentence(parts[i], l);
+      if (translated === null && segments) translated = msgSegments(parts[i], l);
+      if (translated === null) out.push(parts[i]);
+      else { out.push(translated); changed = true; }
+      i++;
+    }
     if (!changed) return str;
     // Japanese/Chinese sentences end in full-width punctuation and are
     // written without spaces between them.

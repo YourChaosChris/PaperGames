@@ -1181,6 +1181,8 @@ Object.assign(STRINGS.fr, {
     lightswitch_rules_win: "Le puzzle est résolu dès que toutes les lumières du plateau sont éteintes. Chaque puzzle généré par PaperGames est mélangé en appuyant sur une séquence aléatoire et connue de boutons à partir d'un plateau entièrement éteint, ce qui garantit qu'une solution existe toujours - contrairement à une grille de départ complètement aléatoire, qui n'est pas toujours résoluble du tout.",
     lightswitch_term_difficulty: "Niveaux de difficulté",
     lightswitch_rules_difficulty: "Facile, Moyen et Difficile déterminent le nombre de pressions aléatoires qui mélangent la grille de départ - plus de pressions tendent à produire une position de départ d'apparence plus embrouillée, sans pour autant garantir strictement que le puzzle nécessite plus de coups à résoudre.",
+    lightswitch_term_levelnumber: "Le nombre entre parenthèses",
+    lightswitch_rules_levelnumber: "Le nombre après Facile, Moyen et Difficile est le nombre d'appuis aléatoires qui ont mélangé le plateau. Appuyer à nouveau sur ces mêmes cases les annule : le puzzle peut donc toujours être résolu en autant de coups au plus, souvent moins.",
     lightswitch_rules_solve_title: "Comment le résoudre",
     lightswitch_term_chase: "Chasser les lumières",
     lightswitch_rules_chase: "Parcourez le plateau ligne par ligne, de haut en bas. Pour chaque lumière allumée dans une ligne, appuyez sur la case juste en dessous. Cela éteint la lumière du dessus sans toucher aux lignes déjà éteintes. Arrivé en bas, toutes les lumières sont éteintes, sauf peut-être certaines de la dernière ligne.",

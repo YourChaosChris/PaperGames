@@ -173,13 +173,39 @@ const NonogramCore = (function () {
     return count;
   }
 
+
+  // The hint button (nonogram-app.js), against the puzzle's solution
+  // (every curated picture has exactly one). Returns
+  //   { kind: "wrong", cell: [r, c], state } a filled cell that must stay
+  //       empty, or a cell crossed off ("marked") that must be filled
+  //   { kind: "step", cell: [r, c] }         the first cell still to fill
+  //   { kind: "done" }
+  function findHint(playerGrid, solutionGrid) {
+    const rows = solutionGrid.length, cols = solutionGrid[0].length;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const v = playerGrid[r][c];
+        if ((v === "filled" && !solutionGrid[r][c]) || (v === "marked" && solutionGrid[r][c])) {
+          return { kind: "wrong", cell: [r, c], state: v };
+        }
+      }
+    }
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (solutionGrid[r][c] && playerGrid[r][c] !== "filled") return { kind: "step", cell: [r, c] };
+      }
+    }
+    return { kind: "done" };
+  }
+
   return {
     computeClues,
     createEmptyPlayerGrid,
     checkSolved,
     lineCandidates,
     propagate,
-    countSolutions
+    countSolutions,
+    findHint
   };
 })();
 

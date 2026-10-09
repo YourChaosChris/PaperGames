@@ -158,6 +158,25 @@ const SkyscrapersCore = (function () {
     return allCluesSatisfied(grid, n, clues);
   }
 
+
+  // The hint button (skyscrapers-app.js), against the puzzle's single
+  // solution (the generator keeps it unique). Returns
+  //   { kind: "conflict", cells } a height repeats in a row or column
+  //   { kind: "wrong", cell }     this entry differs from the solution
+  //   { kind: "step", cell, value } the height for the first empty cell
+  //   { kind: "done" }
+  function findHint(grid, n, solution) {
+    const conf = findConflicts(grid, n);
+    if (conf.size) return { kind: "conflict", cells: Array.from(conf).sort((a, b) => a - b) };
+    for (let i = 0; i < n * n; i++) {
+      if (grid[i] && grid[i] !== solution[i]) return { kind: "wrong", cell: i };
+    }
+    for (let i = 0; i < n * n; i++) {
+      if (!grid[i]) return { kind: "step", cell: i, value: solution[i] };
+    }
+    return { kind: "done" };
+  }
+
   return {
     cellIndex,
     emptyGrid,
@@ -169,7 +188,8 @@ const SkyscrapersCore = (function () {
     clueStatuses,
     isFull,
     allCluesSatisfied,
-    isComplete
+    isComplete,
+    findHint
   };
 })();
 

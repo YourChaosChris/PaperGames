@@ -236,6 +236,31 @@ const SlitherlinkCore = (function () {
     return { cellConflicts, dotConflicts };
   }
 
+
+  // The hint button (slitherlink-app.js), against the puzzle's solution
+  // loop (the generator keeps it unique). Returns
+  //   { kind: "conflict" }            a clue or dot is already broken
+  //   { kind: "wrong", ref, what }    "line": a drawn line not on the
+  //       loop; "cross": an edge crossed off that the loop does use
+  //   { kind: "step", ref }           the first loop edge not drawn yet
+  //   { kind: "done" }
+  function findHint(edges, clues, rows, cols, solution) {
+    const conf = findConflicts(edges, clues, rows, cols);
+    if (conf.cellConflicts.size || conf.dotConflicts.size) return { kind: "conflict" };
+    const refs = [];
+    for (let r = 0; r <= rows; r++) for (let c = 0; c < cols; c++) refs.push({ type: "H", r, c });
+    for (let r = 0; r < rows; r++) for (let c = 0; c <= cols; c++) refs.push({ type: "V", r, c });
+    for (const ref of refs) {
+      const v = getEdge(edges, ref), onLoop = getEdge(solution, ref) === ON;
+      if (v === ON && !onLoop) return { kind: "wrong", ref, what: "line" };
+      if (v === MARKED && onLoop) return { kind: "wrong", ref, what: "cross" };
+    }
+    for (const ref of refs) {
+      if (getEdge(solution, ref) === ON && getEdge(edges, ref) !== ON) return { kind: "step", ref };
+    }
+    return { kind: "done" };
+  }
+
   return {
     EMPTY,
     ON,
@@ -253,7 +278,8 @@ const SlitherlinkCore = (function () {
     cloneClueGrid,
     getLoopStatus,
     checkWin,
-    findConflicts
+    findConflicts,
+    findHint
   };
 })();
 

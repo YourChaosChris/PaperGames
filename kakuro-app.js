@@ -26,7 +26,10 @@ const AppStateKakuro = {
   selected: null,    // [row, col] or null
   gameOver: false,
   moveCount: 0,
-  undoStack: []
+  undoStack: [],
+  hinted: false,     // the hint button was used on this puzzle
+  hintCells: [],     // [row, col] cells the current hint marks
+  hintTarget: null   // the solution the last hint followed (KakuroCore.findHint)
 };
 
 const KAKURO_SAVE_KEY = "einkchess_save_kakuro";
@@ -39,7 +42,8 @@ function saveKakuroGame() {
     clues: AppStateKakuro.clues,
     solution: AppStateKakuro.solution,
     playerGrid: AppStateKakuro.playerGrid,
-    moveCount: AppStateKakuro.moveCount
+    moveCount: AppStateKakuro.moveCount,
+    hinted: AppStateKakuro.hinted
   });
 }
 
@@ -50,7 +54,7 @@ function clearSavedKakuroGame() {
 
 function recordKakuroStats() {
   if (typeof GameStats === "undefined") return;
-  GameStats.record("kakuro", "win");
+  GameStats.record("kakuro", "win", { hinted: AppStateKakuro.hinted });
 }
 
 function setStatusKakuro(elementId, text) {
@@ -131,6 +135,9 @@ function initKakuroApp() {
       AppStateKakuro.selected = null;
       AppStateKakuro.gameOver = false;
       AppStateKakuro.moveCount = 0;
+      AppStateKakuro.hinted = false;
+      AppStateKakuro.hintTarget = null;
+      clearHintKakuro();
       resetUndoStackKakuro();
       setGameResultKakuro("");
       showBoardSectionKakuro();
@@ -162,6 +169,9 @@ function initKakuroApp() {
     eraseBtn.addEventListener("click", () => enterDigitKakuro(0));
   }
 
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.addEventListener("click", hintKakuro);
+
   document.addEventListener("keydown", (e) => {
     if (AppStateKakuro.selected === null || AppStateKakuro.gameOver) return;
     if (e.key >= "1" && e.key <= "9") {
@@ -180,6 +190,9 @@ function initKakuroApp() {
     AppStateKakuro.solution = savedGame.solution;
     AppStateKakuro.playerGrid = savedGame.playerGrid;
     AppStateKakuro.moveCount = savedGame.moveCount;
+    AppStateKakuro.hinted = !!savedGame.hinted;
+    AppStateKakuro.hintTarget = null;
+    clearHintKakuro();
     AppStateKakuro.selected = null;
     AppStateKakuro.gameOver = false;
     resetUndoStackKakuro();
@@ -203,12 +216,13 @@ function onKakuroCellClick(r, c) {
   updateKakuroBoard();
 }
 
-function enterDigitKakuro(digit) {
+function enterDigitKakuro(digit, fromHint) {
   const sel = AppStateKakuro.selected;
   if (!sel || AppStateKakuro.gameOver) return;
   const [r, c] = sel;
   if (AppStateKakuro.layout[r][c] !== KakuroCore.WHITE) return;
   if (AppStateKakuro.playerGrid[r][c] === digit) return;
+  if (!fromHint) clearHintKakuro();
 
   pushUndoSnapshotKakuro();
   AppStateKakuro.playerGrid[r][c] = digit;
@@ -232,10 +246,48 @@ function undoLastMove() {
   const prev = AppStateKakuro.undoStack.pop();
   AppStateKakuro.playerGrid = prev.playerGrid;
   AppStateKakuro.moveCount = prev.moveCount;
+  clearHintKakuro();
   setGameResultKakuro("");
   updateKakuroBoard();
   updateGameLabelsKakuro();
   setStatusKakuro("board-info", (window.I18n && I18n.t("kakuro_undone")) || "Move undone.");
+}
+
+/*** Hint (KakuroCore.findHint) ***/
+
+function clearHintKakuro() {
+  AppStateKakuro.hintCells = [];
+}
+
+// Like Sudoku's hint, a broken rule or a wrong entry is reported first;
+// otherwise one correct digit is entered and its cell marked.
+function hintKakuro() {
+  if (!AppStateKakuro.layout || AppStateKakuro.gameOver) return;
+  AppStateKakuro.hinted = true;
+  const h = KakuroCore.findHint(AppStateKakuro.playerGrid, AppStateKakuro.layout, AppStateKakuro.clues,
+    AppStateKakuro.solution, AppStateKakuro.hintTarget);
+  let text = "";
+  AppStateKakuro.hintCells = [];
+  if (h.kind === "conflict") {
+    AppStateKakuro.hintCells = h.cells;
+    text = "Some entries break a rule. The cells involved are marked.";
+  } else if (h.kind === "wrong") {
+    AppStateKakuro.hintCells = [h.cell];
+    text = "The number in row " + (h.cell[0] + 1) + ", column " + (h.cell[1] + 1) + " does not belong there. Remove it, then ask for a hint again.";
+  } else if (h.kind === "step") {
+    AppStateKakuro.hintTarget = h.target;
+    AppStateKakuro.selected = h.cell;
+    AppStateKakuro.hintCells = [h.cell];
+    enterDigitKakuro(h.value, true);
+    text = "Entered " + h.value + " in row " + (h.cell[0] + 1) + ", column " + (h.cell[1] + 1) + ".";
+  } else if (h.kind === "stuck") {
+    text = "From here, no step follows without trying things out. The hint does not guess.";
+  }
+  updateKakuroBoard();
+  if (!AppStateKakuro.gameOver) {
+    if (text) setStatusKakuro("board-info", text);
+    saveKakuroGame();
+  }
 }
 
 function showBoardSectionKakuro() {
@@ -362,6 +414,7 @@ function updateKakuroBoard() {
     const key = r + "," + c;
     cell.classList.toggle("selected", !!selected && selected[0] === r && selected[1] === c);
     cell.classList.toggle("kakuro-cell-conflict", conflicts.has(key));
+    cell.classList.toggle("hint-cell", AppStateKakuro.hintCells.some(([hr, hc]) => hr === r && hc === c));
 
     let label2 = "Row " + (r + 1) + ", column " + (c + 1);
     label2 += value ? ", " + value : ", empty";
@@ -390,6 +443,8 @@ function updateGameLabelsKakuro() {
   }
   updateUndoButtonVisibilityKakuro();
   updateEraseButtonVisibilityKakuro();
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.classList.toggle("hidden", AppStateKakuro.gameOver || !AppStateKakuro.layout);
 
   if (AppStateKakuro.gameOver) clearSavedKakuroGame();
   else saveKakuroGame();

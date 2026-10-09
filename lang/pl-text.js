@@ -1208,6 +1208,8 @@ Object.assign(STRINGS.pl, {
     lightswitch_rules_win: "Łamigłówka jest rozwiązana w chwili, gdy wszystkie światła na planszy są zgaszone. Każda łamigłówka generowana przez PaperGames jest mieszana przez naciśnięcie losowej, znanej sekwencji przycisków zaczynając od planszy z wszystkimi zgaszonymi światłami, co gwarantuje, że rozwiązanie zawsze istnieje - w przeciwieństwie do całkowicie losowej siatki początkowej, która nie zawsze da się rozwiązać.",
     lightswitch_term_difficulty: "Poziomy trudności",
     lightswitch_rules_difficulty: "Łatwy, Średni i Trudny określają, ile losowych naciśnięć miesza siatkę początkową - więcej naciśnięć zwykle daje bardziej pogmatwaną na pierwszy rzut oka pozycję startową, choć nie gwarantuje ściśle, że łamigłówka wymaga więcej ruchów do rozwiązania.",
+    lightswitch_term_levelnumber: "Liczba w nawiasie",
+    lightswitch_rules_levelnumber: "Liczba po Łatwy, Średni i Trudny to liczba losowych naciśnięć, którymi pomieszano planszę. Ponowne naciśnięcie tych samych pól je cofa, więc łamigłówkę zawsze da się rozwiązać w najwyżej tylu ruchach, często w mniejszej liczbie.",
     lightswitch_rules_solve_title: "Jak to rozwiązać",
     lightswitch_term_chase: "Spychanie świateł",
     lightswitch_rules_chase: "Przechodź przez planszę rząd po rzędzie od góry. Pod każdym zapalonym światłem w rzędzie naciśnij pole bezpośrednio pod nim. To gasi światło powyżej i nie zmienia rzędów, które są już zgaszone. Na dole wszystkie światła są zgaszone, najwyżej poza kilkoma w ostatnim rzędzie.",
