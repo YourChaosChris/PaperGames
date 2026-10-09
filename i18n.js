@@ -1001,9 +1001,9 @@ const STRINGS = {
     game_lightswitch: "Light Switch",
     home_lightswitch_desc: "Press a cell to toggle it and its neighbors on and off. Turn off every light to win - every puzzle is generated to always have a solution.",
     lightswitch_new_game: "New game",
-    lightswitch_level_easy: "Easy (at most 5 moves)",
-    lightswitch_level_medium: "Medium (at most 10 moves)",
-    lightswitch_level_hard: "Hard (at most 20 moves)",
+    lightswitch_level_easy: "Easy (solvable in 5 moves)",
+    lightswitch_level_medium: "Medium (solvable in 10 moves)",
+    lightswitch_level_hard: "Hard (solvable in 20 moves)",
     lightswitch_history_intro: "A 1990s handheld electronic puzzle that turned out to hide a genuinely elegant piece of mathematics underneath its simple button grid.",
 
     game_bullsandcows: "Bulls and Cows",

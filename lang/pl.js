@@ -920,9 +920,9 @@ STRINGS.pl = {
     game_lightswitch: "Włącznik światła",
     home_lightswitch_desc: "Naciśnij pole, aby włączyć lub wyłączyć je oraz jego sąsiadów. Zgaś wszystkie światła, aby wygrać - każda łamigłówka jest generowana tak, by zawsze miała rozwiązanie.",
     lightswitch_new_game: "Nowa gra",
-    lightswitch_level_easy: "Łatwy (najwyżej 5 ruchów)",
-    lightswitch_level_medium: "Średni (najwyżej 10 ruchów)",
-    lightswitch_level_hard: "Trudny (najwyżej 20 ruchów)",
+    lightswitch_level_easy: "Łatwy (do rozwiązania w 5 ruchach)",
+    lightswitch_level_medium: "Średni (do rozwiązania w 10 ruchach)",
+    lightswitch_level_hard: "Trudny (do rozwiązania w 20 ruchach)",
     lightswitch_history_intro: "Elektroniczna łamigłówka kieszonkowa z lat 90., pod prostą siatką przycisków której kryje się naprawdę elegancki kawałek matematyki.",
 
     game_bullsandcows: "Byki i krowy",

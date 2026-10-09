@@ -1209,7 +1209,7 @@ Object.assign(STRINGS.de, {
     lightswitch_term_difficulty: "Schwierigkeitsgrade",
     lightswitch_rules_difficulty: "Leicht, Mittel und Schwer bestimmen, wie viele zufällige Feld-Drücke das Startraster verwürfeln - mehr Drücke ergeben tendenziell eine verworrener aussehende Ausgangsposition, garantieren aber nicht zwingend, dass das Rätsel mehr Züge zum Lösen braucht.",
     lightswitch_term_levelnumber: "Die Zahl in Klammern",
-    lightswitch_rules_levelnumber: "Die Zahl hinter Leicht, Mittel und Schwer ist die Zahl der zufälligen Drücke, mit denen das Feld gemischt wurde. Wer dieselben Felder noch einmal drückt, macht sie rückgängig - das Rätsel ist also immer in höchstens so vielen Zügen lösbar, oft in weniger.",
+    lightswitch_rules_levelnumber: "Die Zahl hinter Leicht, Mittel und Schwer gibt nur die Schwierigkeit an. Das Feld wurde mit so vielen zufälligen Drücken gemischt, deshalb ist es in so vielen Zügen lösbar - oft auch in weniger. Du darfst so oft drücken, wie du willst: Die Zahl der Züge ist nicht begrenzt.",
     lightswitch_rules_solve_title: "So löst man es",
     lightswitch_term_chase: "Licht jagen",
     lightswitch_rules_chase: "Geh das Spielfeld Zeile für Zeile von oben nach unten durch. Unter jedem Licht, das in einer Zeile an ist, drückst du das Feld direkt darunter. Das schaltet das Licht darüber aus und berührt die Zeilen, in denen schon alle Lichter aus sind, nicht mehr. Unten angekommen sind alle Lichter aus, höchstens in der untersten Zeile sind noch welche an.",

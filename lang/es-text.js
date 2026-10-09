@@ -1182,7 +1182,7 @@ Object.assign(STRINGS.es, {
     lightswitch_term_difficulty: "Niveles de dificultad",
     lightswitch_rules_difficulty: "Fácil, Medio y Difícil controlan cuántas pulsaciones aleatorias mezclan la cuadrícula inicial - más pulsaciones tienden a producir una posición inicial de aspecto más enredado, aunque no garantizan estrictamente que el puzle necesite más movimientos para resolverse.",
     lightswitch_term_levelnumber: "El número entre paréntesis",
-    lightswitch_rules_levelnumber: "El número tras Fácil, Medio y Difícil es la cantidad de pulsaciones aleatorias que mezclaron el tablero. Pulsar otra vez esas mismas casillas las deshace, así que el puzzle siempre se puede resolver en como máximo esos movimientos, a menudo en menos.",
+    lightswitch_rules_levelnumber: "El número tras Fácil, Medio y Difícil solo indica la dificultad. El tablero se mezcló con esa cantidad de pulsaciones aleatorias, así que se puede resolver en esos movimientos, a menudo en menos. Puedes pulsar tantas veces como quieras: el número de movimientos no tiene límite.",
     lightswitch_rules_solve_title: "Cómo resolverlo",
     lightswitch_term_chase: "Perseguir las luces",
     lightswitch_rules_chase: "Recorre el tablero fila por fila de arriba abajo. Por cada luz encendida en una fila, pulsa la casilla que está justo debajo. Eso apaga la luz de arriba y no toca las filas que ya has apagado. Al llegar abajo, todas las luces están apagadas salvo, quizá, algunas de la última fila.",

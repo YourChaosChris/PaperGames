@@ -990,9 +990,9 @@ STRINGS.de = {
     game_lightswitch: "Lichtschalter",
     home_lightswitch_desc: "Tippe auf ein Feld, um es und seine Nachbarn ein- und auszuschalten. Schalte alle Lichter aus, um zu gewinnen - jedes Rätsel wird so erzeugt, dass es immer lösbar ist.",
     lightswitch_new_game: "Neues Spiel",
-    lightswitch_level_easy: "Leicht (höchstens 5 Züge)",
-    lightswitch_level_medium: "Mittel (höchstens 10 Züge)",
-    lightswitch_level_hard: "Schwer (höchstens 20 Züge)",
+    lightswitch_level_easy: "Leicht (in 5 Zügen lösbar)",
+    lightswitch_level_medium: "Mittel (in 10 Zügen lösbar)",
+    lightswitch_level_hard: "Schwer (in 20 Zügen lösbar)",
     lightswitch_history_intro: "Ein elektronisches Handheld-Rätsel aus den 1990er-Jahren, hinter dessen einfachem Knopfraster sich ein wirklich elegantes Stück Mathematik verbirgt.",
 
     game_bullsandcows: "Kühe und Bullen",

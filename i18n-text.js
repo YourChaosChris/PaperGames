@@ -1210,7 +1210,7 @@ Object.assign(STRINGS.en, {
     lightswitch_term_difficulty: "Difficulty levels",
     lightswitch_rules_difficulty: "Easy, Medium and Hard control how many random button-presses scramble the starting grid - more presses tends to produce a more tangled-looking starting position, though it isn't a strict guarantee that the puzzle takes more moves to solve.",
     lightswitch_term_levelnumber: "The number in brackets",
-    lightswitch_rules_levelnumber: "The number after Easy, Medium and Hard is the number of random presses that scrambled the board. Pressing those same cells again undoes them, so the puzzle can always be solved in at most that many moves - often in fewer.",
+    lightswitch_rules_levelnumber: "The number after Easy, Medium and Hard only shows how hard the puzzle is. The board was scrambled with that many random presses, so it can be solved in that many moves - often in fewer. You may press as often as you like: there is no limit on moves.",
     lightswitch_rules_solve_title: "How to solve it",
     lightswitch_term_chase: "Chasing the lights",
     lightswitch_rules_chase: "Work through the board row by row from the top. For every light that is on in a row, press the cell directly below it. That switches the light above off and never touches the rows you have already cleared. When you reach the bottom, every light is off except possibly some in the bottom row.",

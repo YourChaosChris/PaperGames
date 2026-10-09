@@ -1182,7 +1182,7 @@ Object.assign(STRINGS.zh, {
     lightswitch_term_difficulty: "难度等级",
     lightswitch_rules_difficulty: "简单、中等和困难决定了打乱初始棋盘所用的随机按键次数——按键次数越多，初始局面看起来往往越混乱，但这并不能严格保证解开谜题需要更多步数。",
     lightswitch_term_levelnumber: "括号里的数字",
-    lightswitch_rules_levelnumber: "“简单”“中等”“困难”后面的数字是打乱棋盘时随机按下的次数。再按一次同样的格子就会还原，所以这道谜题总能在不超过这么多步内解开，往往还更少。",
+    lightswitch_rules_levelnumber: "“简单”“中等”“困难”后面的数字只表示难度。棋盘是用这么多次随机按键打乱的，所以用这么多步就能解开，往往还更少。你想按多少次都可以：步数没有限制。",
     lightswitch_rules_solve_title: "解法",
     lightswitch_term_chase: "追灯法",
     lightswitch_rules_chase: "从上到下逐行处理棋盘。某一行中每有一盏亮着的灯，就按它正下方的格子。这样会熄灭上面的灯，而且不会再影响已经熄灭的行。到达底部时，除了最下面一行可能还有几盏，其余的灯都已熄灭。",

@@ -1182,7 +1182,7 @@ Object.assign(STRINGS.nl, {
     lightswitch_term_difficulty: "Moeilijkheidsgraden",
     lightswitch_rules_difficulty: "Makkelijk, Gemiddeld en Moeilijk bepalen hoeveel willekeurige keren er op vakjes wordt getikt om het startraster te husselen - meer tikken leidt meestal tot een verwarder ogende startpositie, al is dat geen strikte garantie dat de puzzel meer zetten kost om op te lossen.",
     lightswitch_term_levelnumber: "Het getal tussen haakjes",
-    lightswitch_rules_levelnumber: "Het getal achter Makkelijk, Gemiddeld en Moeilijk is het aantal willekeurige drukken waarmee het bord is gehusseld. Wie dezelfde vakjes nog eens indrukt, maakt ze ongedaan - de puzzel is dus altijd in hoogstens zoveel zetten op te lossen, vaak in minder.",
+    lightswitch_rules_levelnumber: "Het getal achter Makkelijk, Gemiddeld en Moeilijk geeft alleen de moeilijkheid aan. Het bord is met zoveel willekeurige drukken gehusseld, dus het is in zoveel zetten op te lossen - vaak ook in minder. Je mag zo vaak drukken als je wilt: het aantal zetten is niet beperkt.",
     lightswitch_rules_solve_title: "Zo los je het op",
     lightswitch_term_chase: "De lichten wegjagen",
     lightswitch_rules_chase: "Werk het bord rij voor rij van boven naar beneden af. Druk onder elk lichtje dat in een rij aan is op het vakje er direct onder. Dat zet het lichtje erboven uit en raakt de rijen die al uit zijn niet meer. Onderaan zijn alle lichten uit, behalve misschien een paar in de onderste rij.",

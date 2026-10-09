@@ -1182,7 +1182,7 @@ Object.assign(STRINGS.it, {
     lightswitch_term_difficulty: "Livelli di difficoltà",
     lightswitch_rules_difficulty: "Facile, Medio e Difficile controllano quante pressioni casuali mescolano la griglia iniziale - più pressioni tendono a produrre una posizione di partenza dall'aspetto più intricato, anche se non garantiscono in modo rigoroso che il puzzle richieda più mosse per essere risolto.",
     lightswitch_term_levelnumber: "Il numero tra parentesi",
-    lightswitch_rules_levelnumber: "Il numero dopo Facile, Medio e Difficile è il numero di pressioni casuali che hanno mescolato il tabellone. Premere di nuovo le stesse celle le annulla, quindi il rompicapo si risolve sempre in al massimo quel numero di mosse, spesso in meno.",
+    lightswitch_rules_levelnumber: "Il numero dopo Facile, Medio e Difficile indica solo la difficoltà. Il tabellone è stato mescolato con altrettante pressioni casuali, quindi si risolve in quel numero di mosse, spesso anche in meno. Puoi premere tutte le volte che vuoi: il numero di mosse non ha limiti.",
     lightswitch_rules_solve_title: "Come risolverlo",
     lightswitch_term_chase: "Inseguire le luci",
     lightswitch_rules_chase: "Procedi sul tabellone riga per riga dall'alto verso il basso. Per ogni luce accesa in una riga, premi la cella subito sotto. Così la luce sopra si spegne e le righe già spente non vengono più toccate. Arrivato in fondo, tutte le luci sono spente tranne, forse, alcune nell'ultima riga.",
