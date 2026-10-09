@@ -1210,7 +1210,7 @@ Object.assign(STRINGS.de, {
     lightswitch_rules_difficulty: "Leicht, Mittel und Schwer bestimmen, wie viele zufällige Feld-Drücke das Startraster verwürfeln - mehr Drücke ergeben tendenziell eine verworrener aussehende Ausgangsposition, garantieren aber nicht zwingend, dass das Rätsel mehr Züge zum Lösen braucht.",
     lightswitch_rules_solve_title: "So löst man es",
     lightswitch_term_chase: "Licht jagen",
-    lightswitch_rules_chase: "Geh das Spielfeld Zeile für Zeile von oben nach unten durch. Unter jedem Licht, das in einer Zeile an ist, drückst du das Feld direkt darunter. Das schaltet das Licht darüber aus und berührt die Zeilen, die schon dunkel sind, nicht mehr. Unten angekommen sind alle Lichter aus, höchstens in der untersten Zeile sind noch welche an.",
+    lightswitch_rules_chase: "Geh das Spielfeld Zeile für Zeile von oben nach unten durch. Unter jedem Licht, das in einer Zeile an ist, drückst du das Feld direkt darunter. Das schaltet das Licht darüber aus und berührt die Zeilen, in denen schon alle Lichter aus sind, nicht mehr. Unten angekommen sind alle Lichter aus, höchstens in der untersten Zeile sind noch welche an.",
     lightswitch_term_bottom: "Die unterste Zeile",
     lightswitch_rules_bottom: "Sind in der untersten Zeile noch Lichter an, such ihr Muster in der Tabelle. Drück die dort genannten Felder der obersten Zeile (Spalten von links gezählt) und jag die Lichter danach noch einmal von oben. Dann sind alle Lichter aus. Die Tabelle gilt für das 5x5-Feld; dort können nur diese sieben Muster übrig bleiben.",
     lightswitch_table_pattern: "Noch an in der untersten Zeile",

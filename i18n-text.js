@@ -1220,7 +1220,7 @@ Object.assign(STRINGS.en, {
     lightswitch_rules_order: "The order of your presses does not matter: the same presses in any order give the same board. Pressing the same cell twice cancels out, so a solution never needs a cell pressed more than once.",
     lightswitch_history_title: "The History of Light Switch",
     lightswitch_history_origins_title: "A Tiger Electronics Handheld",
-    lightswitch_history_origins_p1: "The puzzle was first released in 1995 by Tiger Electronics as a self-contained handheld toy: a 5x5 grid of buttons, each lighting up or going dark, with the goal of turning every light off. It was invented by Dario Uribe.",
+    lightswitch_history_origins_p1: "The puzzle was first released in 1995 by Tiger Electronics as a self-contained handheld toy: a 5x5 grid of buttons, each switching its light on or off, with the goal of turning every light off. It was invented by Dario Uribe.",
     lightswitch_history_origins_p2: "The handheld shipped with a fixed set of built-in scrambled starting patterns rather than generating a fresh one on the fly, but the underlying rule - pressing a button toggles it and its orthogonal neighbors - is exactly the mechanic that later versions, including this one, still use.",
     lightswitch_history_math_title: "Turning a Toy Into Linear Algebra",
     lightswitch_history_math_p1: "The puzzle attracted real mathematical attention because its rules map cleanly onto linear algebra over GF(2), the field with just two elements, 0 and 1, added with mod-2 (XOR) arithmetic: each button is either pressed an odd or an even number of times in any solution, so a solution can be represented as a 0/1 value per button rather than needing to track how many times or in what order buttons were pressed.",
