@@ -375,6 +375,14 @@ const SAMPLES = [
   "After 2000 rounds there is still no winner. Draw.",
   "The computer has all 32 cards. You lose.",
   "Round 12 / 30",
+  // Snakes and Ladders
+  "You rolled 4. You move to field 22. Ladder: up to field 41! Computer 1's turn.",
+  "Computer 2 rolled 6. Computer 2 moves to field 49. Snake: down to field 30. Player 1's turn: tap Roll.",
+  "You rolled 5. Too far - you need exactly 2 to finish. Your turn: tap Roll.",
+  "Player 3 reaches field 100 and wins!",
+  "You are on field 17.",
+  "Computer 1 is at the start.",
+  "Ladder from field 2 to 23.",
   // Link the Pairs: status line, hints, screen-reader labels
   "Tap a symbol or drag from it to draw its line.",
   "Now tap the cells one after another, or drag.",
@@ -504,6 +512,9 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  "Computer 1, triangle, Field 33",
+  "You, circle, Start",
+  "Rolled 6",
   "Your pile, 15 cards - tap to turn up a card",
   "The computer's pile, 17 cards",
   "Hidden card 3 of 7",

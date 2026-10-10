@@ -92,7 +92,8 @@
     ["seega", "game_seega"],
     ["romme", "game_romme"],
     ["oldmaid", "game_oldmaid"],
-    ["war", "game_war"]
+    ["war", "game_war"],
+    ["snakesladders", "game_snakesladders"]
   ];
 
   var GAME_SLUGS = {};

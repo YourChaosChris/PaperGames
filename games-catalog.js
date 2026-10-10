@@ -798,4 +798,15 @@ const GAMES_CATALOG = [
     added: "2026-10-10",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"6\" width=\"17\" height=\"25\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" transform=\"rotate(-10 11 18)\"/><rect x=\"20\" y=\"9\" width=\"17\" height=\"25\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" transform=\"rotate(10 28 21)\"/><g transform=\"translate(5.5 13) scale(0.11)\"><path d=\"M50 4 C50 4 6 36 6 60 C6 73 16 81 27 81 C36 81 43 76 46 70 L41 96 L59 96 L54 70 C57 76 64 81 73 81 C84 81 94 73 94 60 C94 36 50 4 50 4 Z\" fill=\"#141413\"/></g><g transform=\"translate(23 16) scale(0.11)\"><path d=\"M50 90 C50 90 9 62 9 34 C9 20 19 11 30 11 C39 11 46 16 50 24 C54 16 61 11 70 11 C81 11 91 20 91 34 C91 62 50 90 50 90 Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"12\" stroke-linejoin=\"round\"/></g></svg></span>"
   },
+  {
+    slug: "snakesladders",
+    category: "race",
+    nameKey: "game_snakesladders",
+    nameText: "Snakes and Ladders",
+    descKey: "home_snakesladders_desc",
+    descText: "The classic dice game for children: roll, move, climb up the ladders and slide down the snakes. Two boards - 100 fields, or 50 for small children - for 2 to 4 players on one device or against the computer.",
+    popular: false,
+    added: "2026-10-10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><path d=\"M10 32L20 8M17 34L27 10M12 27L19 29M14 21L21 23M16 15L23 17\" stroke=\"#141413\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M31 9C24 13 34 18 27 22C21 26 31 29 26 33\" stroke=\"#141413\" stroke-width=\"3.4\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"31\" cy=\"9\" r=\"3\" fill=\"#141413\"/></svg></span>"
+  },
 ];

@@ -73,6 +73,10 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   "War" games to the end and 1000 short ones and fails unless each ends
   (short: within 30 rounds; full: within 2000, else a draw) and all 32
   cards stay in play after every round.
+- `node tests/snakesladders-core.js` - no server or browser needed.
+  Checks both "Snakes and Ladders" boards and plays 1000 computer games
+  per board and finishing rule; every game must end with no token
+  outside the board.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

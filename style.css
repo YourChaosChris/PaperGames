@@ -10793,3 +10793,83 @@ button.concan-meld {
   height: auto;
   margin: 0 auto;
 }
+
+/* Snakes and Ladders: the die beside the Roll button, the board as one
+   SVG sized by script, token shapes inline in the player list. */
+.sl-dice-row {
+  margin: 0.4rem 0 0.6rem;
+  text-align: center;
+}
+
+.sl-dice-row > * {
+  vertical-align: middle;
+  margin: 0 0.4rem;
+}
+
+.sl-die-wrap {
+  display: inline-block;
+  width: 3.4rem;
+  height: 3.4rem;
+}
+
+.sl-die {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sl-shape {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  vertical-align: -0.25em;
+}
+
+.sl-shape-inline {
+  margin-right: 0.25rem;
+}
+
+[dir="rtl"] .sl-shape-inline {
+  margin-right: 0;
+  margin-left: 0.25rem;
+}
+
+.sl-start-wrap {
+  font-weight: 700;
+}
+
+.sl-board-wrap {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.sl-board {
+  margin: 0 auto;
+  border: 2px solid var(--border);
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.sl-board-svg {
+  display: block;
+}
+
+/* Read by screen readers only: what stands where on the board. */
+.sl-sr-list {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+}
+
+.sl-example {
+  display: block;
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+  margin: 0 auto;
+}
