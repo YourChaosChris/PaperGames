@@ -11,6 +11,9 @@
 //                gone already, preferring to leave the next player a suit
 //                they probably don't have - both with the card it plays
 //                and with the suit it names for a Jack.
+// In the children's version (state.variant "kids") no card is special, so
+// medium and hard only keep long animals on the table and, on hard, play
+// animals the next player was seen without.
 
 const MauMauAi = (function () {
   function core() {
@@ -34,8 +37,8 @@ const MauMauAi = (function () {
   // How many cards of each suit are out of play for everyone (on the
   // discard pile) - a suit that's mostly gone is hard to follow.
   function goneCounts(state) {
-    const counts = { S: 0, H: 0, D: 0, C: 0 };
-    state.discard.forEach((c) => { counts[c.suit]++; });
+    const counts = {};
+    state.discard.forEach((c) => { counts[c.suit] = (counts[c.suit] || 0) + 1; });
     return counts;
   }
 
@@ -43,7 +46,7 @@ const MauMauAi = (function () {
     const nxt = nextPlayer(state);
     let s = 0;
     if ((state.missingSuits[nxt] || []).indexOf(suit) !== -1) s += weightMissing;
-    s += goneCounts(state)[suit] * 2;
+    s += (goneCounts(state)[suit] || 0) * 2;
     return s;
   }
 
@@ -75,25 +78,28 @@ const MauMauAi = (function () {
       index = moves[Math.floor(random() * moves.length)];
     } else {
       const threat = nextIsThreat(state);
+      const kids = state.variant === "kids";
       let bestScore = -Infinity;
       moves.forEach((i) => {
         const card = hand[i];
         let score = 0;
         if (hand.length === 1) score += 1000; // go out
-        if (card.rank === C.JACK) score -= 50;
-        else if (card.rank === C.SEVEN || card.rank === C.EIGHT) score += threat ? 40 : -10;
-        else if (card.rank === C.ACE) score += 15; // plays again
+        if (!kids) {
+          if (card.rank === C.JACK) score -= 50;
+          else if (card.rank === C.SEVEN || card.rank === C.EIGHT) score += threat ? 40 : -10;
+          else if (card.rank === C.ACE) score += 15; // plays again
+        }
         // Keep the suits we're long in on the table.
-        const sameSuit = hand.filter((c, k) => k !== i && c.suit === card.suit && c.rank !== C.JACK).length;
+        const sameSuit = hand.filter((c, k) => k !== i && c.suit === card.suit && (kids || c.rank !== C.JACK)).length;
         score += sameSuit * 3;
-        if (level >= 3 && card.rank !== C.JACK) score += suitScoreAgainstNext(C, state, card.suit, 20);
+        if (level >= 3 && (kids || card.rank !== C.JACK)) score += suitScoreAgainstNext(C, state, card.suit, 20);
         score += random() * 0.5;
         if (score > bestScore) { bestScore = score; index = i; }
       });
     }
     const card = hand[index];
     let wish = null;
-    if (card.rank === C.JACK) {
+    if (card.rank === C.JACK && state.variant !== "kids") {
       const handAfter = hand.filter((c, k) => k !== index);
       wish = chooseWish(state, level, random, handAfter);
     }
@@ -106,7 +112,7 @@ const MauMauAi = (function () {
   function playDrawn(state, level) {
     const C = core();
     const card = state.hands[state.turn][state.drawnIndex];
-    if (level >= 2 && card.rank === C.JACK && state.hands[state.turn].length > 1) return false;
+    if (level >= 2 && state.variant !== "kids" && card.rank === C.JACK && state.hands[state.turn].length > 1) return false;
     return true;
   }
 

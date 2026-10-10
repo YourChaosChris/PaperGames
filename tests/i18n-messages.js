@@ -351,6 +351,12 @@ const SAMPLES = [
   "You drew the 7♥. The drawn card fits: play it or keep it.",
   "Player 1 drew the 7♥. The drawn card fits: play it or keep it.",
   "Computer 1 played 7♠. You must draw 2 cards or play a Seven.",
+  // Mau Mau children's version: animal cards ("Dog 3") inside sentences
+  "The first card is Dog 3. Choose a card to play.",
+  "You played Cat 5. Computer 1: Mau!",
+  "Computer 2 played Rabbit 1. No card fits - draw a card from the stock.",
+  "You drew the Mouse 6. The drawn card fits: play it or keep it.",
+  "You drew Dog 2 and Cat 4.",
   "You drew 8♣ and K♦. Computer 1's turn.",
   "You drew 8♣, Q♥ and K♦.",
   "Computer 1 takes the cards. You draw the 9♥.",

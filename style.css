@@ -9061,6 +9061,62 @@ max-width: 900px;
   margin-right: var(--space-2);
 }
 
+/* Children's version: bigger cards - number as digit and die pips in
+   the top row, the animal large below. Shapes only, no grey. */
+.maumau-card.maumau-kid,
+.maumau-pile.maumau-kid {
+  width: 4.4rem;
+  height: 6.2rem;
+  padding: 0.25rem 0.25rem 0;
+}
+
+.maumau-pile.maumau-kid {
+  width: 4.8rem;
+  height: 6.6rem;
+}
+
+.maumau-kid-top {
+  display: block;
+  height: 1.6rem;
+  text-align: start;
+}
+
+.maumau-kid-num {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 1.3rem;
+  line-height: 1.5rem;
+  padding: 0 0.15rem;
+}
+
+.maumau-kid-pips {
+  float: right;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+[dir="rtl"] .maumau-kid-pips {
+  float: left;
+}
+
+.maumau-kid-animal {
+  display: block;
+  width: 3.4rem;
+  height: 3.4rem;
+  margin: 0.3rem auto 0;
+}
+
+.maumau-pile.maumau-kid .maumau-kid-animal {
+  width: 3.6rem;
+  height: 3.6rem;
+}
+
+/* Children's version: nothing fits - the stock gets a heavy frame. */
+.maumau-stock.maumau-stock-draw {
+  outline: 5px double var(--border);
+  outline-offset: 3px;
+}
+
 .maumau-discard-by {
   display: block;
   margin-top: 0.15rem;

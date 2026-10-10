@@ -27,6 +27,12 @@
 //   - The first player to get rid of their last card wins. The game calls
 //     "Mau" for a player down to one card by itself - there is no penalty
 //     for forgetting, since there's nothing to forget.
+//
+// Children's version (variant "kids"): its own 24-card pack - four
+// animals instead of suits (KIDS_SUITS) and the numbers 1 to 6. Play the
+// same animal or the same number; no special cards at all (a 1 is no
+// Ace, there is no Seven, Eight or Jack). Drawing, the stock and winning
+// work as above.
 
 const MauMauCore = (function () {
   const SUITS = ["S", "H", "D", "C"];
@@ -39,9 +45,16 @@ const MauMauCore = (function () {
   const DECK_SIZE = 32;
   const MIN_PLAYERS = 2;
   const MAX_PLAYERS = 4;
+  const KIDS_SUITS = ["dog", "cat", "rabbit", "mouse"];
+  const KIDS_RANKS = [1, 2, 3, 4, 5, 6];
+  const KIDS_DECK_SIZE = 24;
 
-  function createDeck() {
+  function createDeck(variant) {
     const deck = [];
+    if (variant === "kids") {
+      KIDS_SUITS.forEach((suit) => KIDS_RANKS.forEach((rank) => deck.push({ rank, suit })));
+      return deck;
+    }
     SUITS.forEach((suit) => RANKS.forEach((rank) => deck.push({ rank, suit })));
     return deck;
   }
@@ -56,9 +69,10 @@ const MauMauCore = (function () {
     return out;
   }
 
-  function createInitialState(numPlayers, rng) {
+  function createInitialState(numPlayers, rng, variant) {
     const n = Math.max(MIN_PLAYERS, Math.min(MAX_PLAYERS, numPlayers || 2));
-    const deck = shuffle(createDeck(), rng);
+    const kids = variant === "kids";
+    const deck = shuffle(createDeck(kids ? "kids" : null), rng);
     const hands = [];
     for (let p = 0; p < n; p++) hands.push(deck.splice(0, HAND_SIZE));
     const discard = [deck.pop()];
@@ -75,7 +89,8 @@ const MauMauCore = (function () {
       // draw while that suit was asked for). Public table information.
       missingSuits: hands.map(() => []),
       gameOver: false,
-      winner: null
+      winner: null,
+      variant: kids ? "kids" : null
     };
   }
 
@@ -95,7 +110,8 @@ const MauMauCore = (function () {
       drawnIndex: state.drawnIndex,
       missingSuits: state.missingSuits.map((m) => m.slice()),
       gameOver: state.gameOver,
-      winner: state.winner
+      winner: state.winner,
+      variant: state.variant || null
     };
   }
 
@@ -174,7 +190,10 @@ const MauMauCore = (function () {
       return { state: next, card, effect: "win" };
     }
 
-    if (card.rank === SEVEN) {
+    if (next.variant === "kids") {
+      // No special cards in the children's version.
+      next.turn = nextIndex(next, player, 1);
+    } else if (card.rank === SEVEN) {
       next.pendingDraw += 2;
       next.turn = nextIndex(next, player, 1);
       effect = "seven";
@@ -261,6 +280,9 @@ const MauMauCore = (function () {
     ACE,
     HAND_SIZE,
     DECK_SIZE,
+    KIDS_SUITS,
+    KIDS_RANKS,
+    KIDS_DECK_SIZE,
     MIN_PLAYERS,
     MAX_PLAYERS,
     createDeck,

@@ -11,12 +11,29 @@
 // With two or more people on one device, each hand is covered between
 // turns so nobody sees another's cards. Against the computer the human
 // is always Player 1.
+//
+// Children's version ("Cards: Children (animals)"): 24 cards with four
+// animals and the numbers 1 to 6. Each card shows the animal large in the
+// middle, the number as a digit and as die pips, so children who can't
+// read yet can play; when nothing fits, the stock gets a heavy frame.
 
 const MAUMAU_SAVE_KEY = "einkchess_save_maumau";
 
 const MAUMAU_SUIT_SYMBOL = { S: "♠", H: "♥", D: "♦", C: "♣" };
 const MAUMAU_SUIT_NAME = { S: "Spades", H: "Hearts", D: "Diamonds", C: "Clubs" };
 const MAUMAU_RANK_LABEL = { 1: "A", 11: "J", 12: "Q", 13: "K" };
+// Children's version: English animal names (I18n translates "Dog 3" with
+// the msg_t_maumau_kids_* templates) and die pips per number.
+const MAUMAU_KIDS_NAME = { dog: "Dog", cat: "Cat", rabbit: "Rabbit", mouse: "Mouse" };
+const MAUMAU_PIPS = {
+  1: [[15, 15]],
+  2: [[8, 8], [22, 22]],
+  3: [[8, 8], [15, 15], [22, 22]],
+  4: [[8, 8], [22, 8], [8, 22], [22, 22]],
+  5: [[8, 8], [22, 8], [15, 15], [8, 22], [22, 22]],
+  6: [[8, 7], [22, 7], [8, 15], [22, 15], [8, 23], [22, 23]]
+};
+const MAUMAU_DECK_PREF_KEY = "papergames_maumau_deck";
 
 const AppStateMauMau = {
   mode: "vs-ai",       // "vs-ai" | "hotseat"
@@ -67,8 +84,21 @@ function viewerMauMau() {
   return AppStateMauMau.mode === "vs-ai" ? 0 : AppStateMauMau.state.turn;
 }
 
+function isKidsMauMau() {
+  return !!(AppStateMauMau.state && AppStateMauMau.state.variant === "kids");
+}
+
 function cardTextMauMau(card) {
+  if (MAUMAU_KIDS_NAME[card.suit]) return MAUMAU_KIDS_NAME[card.suit] + " " + card.rank;
   return (MAUMAU_RANK_LABEL[card.rank] || String(card.rank)) + MAUMAU_SUIT_SYMBOL[card.suit];
+}
+
+function loadDeckPrefMauMau() {
+  try { return window.localStorage.getItem(MAUMAU_DECK_PREF_KEY) === "kids" ? "kids" : "normal"; } catch (e) { return "normal"; }
+}
+
+function saveDeckPrefMauMau(deck) {
+  try { window.localStorage.setItem(MAUMAU_DECK_PREF_KEY, deck); } catch (e) { /* the choice just isn't remembered */ }
 }
 
 function setStatusMauMau(text) {
@@ -112,6 +142,7 @@ function initMauMauApp() {
   const levelWrap = document.getElementById("maumau-level-wrap");
   const levelSelect = document.getElementById("maumau-level-inline");
   const playersSelect = document.getElementById("maumau-num-players");
+  const deckSelect = document.getElementById("maumau-deck");
   const startBtn = document.getElementById("start-maumau-game");
   const resignBtn = document.getElementById("resign-button");
   let pendingMode = "vs-ai";
@@ -132,11 +163,18 @@ function initMauMauApp() {
   if (modeOffline) modeOffline.addEventListener("click", () => setMode("hotseat"));
   if (modeOfflineAi) modeOfflineAi.addEventListener("click", () => setMode("vs-ai"));
 
+  if (deckSelect) {
+    deckSelect.value = loadDeckPrefMauMau();
+    deckSelect.addEventListener("change", () => saveDeckPrefMauMau(deckSelect.value === "kids" ? "kids" : "normal"));
+  }
+
   if (startBtn) {
     startBtn.addEventListener("click", () => {
       const n = playersSelect ? parseInt(playersSelect.value, 10) : 2;
       const level = levelSelect ? parseInt(levelSelect.value, 10) : 2;
-      startNewGameMauMau(pendingMode, n, level);
+      const deck = deckSelect && deckSelect.value === "kids" ? "kids" : "normal";
+      saveDeckPrefMauMau(deck);
+      startNewGameMauMau(pendingMode, n, level, deck === "kids" ? "kids" : null);
       const status = document.getElementById("offline-maumau-status");
       if (status) {
         const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
@@ -175,6 +213,7 @@ function initMauMauApp() {
     AppStateMauMau.gameOver = false;
     AppStateMauMau.pendingJack = null;
     AppStateMauMau.revealed = saved.mode !== "hotseat";
+    if (deckSelect) deckSelect.value = saved.state.variant === "kids" ? "kids" : "normal";
     setMode(saved.mode);
     showBoardMauMau();
     renderMauMau();
@@ -193,11 +232,11 @@ function showBoardMauMau() {
   if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
 }
 
-function startNewGameMauMau(mode, numPlayers, level) {
+function startNewGameMauMau(mode, numPlayers, level, variant) {
   AppStateMauMau.mode = mode;
   AppStateMauMau.numPlayers = numPlayers;
   AppStateMauMau.aiLevel = level;
-  AppStateMauMau.state = MauMauCore.createInitialState(numPlayers);
+  AppStateMauMau.state = MauMauCore.createInitialState(numPlayers, undefined, variant);
   AppStateMauMau.started = true;
   AppStateMauMau.gameOver = false;
   AppStateMauMau.pendingJack = null;
@@ -281,12 +320,14 @@ function playCardMauMau(index, wish, prefix) {
   const ns = r.state;
   const you = isYouMauMau(player);
   let msg = (prefix || "") + (you ? "You played " + cardTextMauMau(r.card) + "." : who + " played " + cardTextMauMau(r.card) + ".");
+  // The children's version has no "Mau" calls.
+  const kids = ns.variant === "kids";
   if (r.effect === "win") {
     renderMauMau();
-    endGameMauMau(player, msg + " Mau Mau!");
+    endGameMauMau(player, kids ? msg : msg + " Mau Mau!");
     return;
   }
-  if (ns.hands[player].length === 1) msg += " " + who + ": Mau!";
+  if (ns.hands[player].length === 1 && !kids) msg += " " + who + ": Mau!";
   const skipped = (player + 1) % ns.numPlayers;
   if (r.effect === "seven") msg += isYouMauMau(ns.turn) ? " You must draw " + ns.pendingDraw + " cards or play a Seven." : " " + playerNameMauMau(ns.turn) + " must draw " + ns.pendingDraw + " cards or play a Seven.";
   else if (r.effect === "eight") msg += isYouMauMau(skipped) ? " You miss a turn." : " " + playerNameMauMau(skipped) + " misses a turn.";
@@ -507,7 +548,27 @@ function renderPlayersMauMau(s) {
   });
 }
 
+function fillKidsCardMauMau(el, card) {
+  el.innerHTML = "";
+  el.classList.add("maumau-kid");
+  const top = document.createElement("span");
+  top.className = "maumau-kid-top";
+  const num = document.createElement("span");
+  num.className = "maumau-kid-num";
+  num.textContent = String(card.rank);
+  top.appendChild(num);
+  const pips = (MAUMAU_PIPS[card.rank] || []).map((p) => '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3.4" fill="#141413"/>').join("");
+  top.insertAdjacentHTML("beforeend", '<svg class="maumau-kid-pips" viewBox="0 0 30 30" aria-hidden="true" focusable="false"><rect x="1.5" y="1.5" width="27" height="27" rx="5" fill="#fff" stroke="#141413" stroke-width="2.4"/>' + pips + "</svg>");
+  el.appendChild(top);
+  if (typeof CakeIcons !== "undefined") el.insertAdjacentHTML("beforeend", CakeIcons.svg(card.suit, "maumau-kid-animal"));
+}
+
 function fillCardMauMau(el, card) {
+  if (MAUMAU_KIDS_NAME[card.suit]) {
+    fillKidsCardMauMau(el, card);
+    return;
+  }
+  el.classList.remove("maumau-kid");
   el.innerHTML = "";
   const rank = document.createElement("span");
   rank.className = "maumau-card-rank";
@@ -529,6 +590,11 @@ function renderPilesMauMau(s) {
     stock.appendChild(count);
     stock.disabled = AppStateMauMau.gameOver;
     I18n.setAria(stock, "Stock: " + s.stock.length);
+    // Children's version: a heavy frame on the stock when the only thing
+    // to do is draw - readable without words.
+    const mustDraw = isKidsMauMau() && !AppStateMauMau.gameOver && !isAiPlayerMauMau(s.turn) &&
+      (AppStateMauMau.mode !== "hotseat" || AppStateMauMau.revealed) && MauMauCore.requiredAction(s) === "draw";
+    stock.classList.toggle("maumau-stock-draw", mustDraw);
   }
   const discard = document.getElementById("maumau-discard");
   if (discard) {
