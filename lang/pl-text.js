@@ -1562,7 +1562,7 @@ Object.assign(STRINGS.pl, {
     cake_term_furniture: "Meble",
     cake_rules_furniture: "Ciasto zawsze stoi na stole. Zwierzęta nigdy nie stoją na stole ani na szafie.",
     cake_term_clues: "Poszlaki",
-    cake_rules_clues: "Każde zwierzę ma pod planem co najmniej jedną poszlakę, na przykład „Pies jest w ogrodzie.”, „Kot siedzi na krześle.” albo „Mysz jest obok rośliny.” (tuż obok, nie po skosie). Razem poszlaki dopuszczają tylko jedno rozwiązanie i nigdy nie trzeba zgadywać.",
+    cake_rules_clues: "Każde zwierzę ma pod planem co najmniej jedną poszlakę, na przykład „Pies jest w ogrodzie.”, „Kot siedzi na krześle.” albo „Mysz jest obok rośliny.” (tuż obok, nie po skosie). „Obok” liczy się tylko w tym samym pokoju: mebel po drugiej stronie ściany nie stoi obok zwierzęcia. Razem poszlaki dopuszczają tylko jedno rozwiązanie i nigdy nie trzeba zgadywać.",
     cake_term_culprit: "Kto wziął ciasto?",
     cake_rules_culprit: "Dokładnie jedno zwierzę jest w tym samym pokoju co ciasto. To ono je wzięło.",
     cake_term_input: "Jak grać",

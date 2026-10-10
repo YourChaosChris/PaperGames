@@ -1562,7 +1562,7 @@ Object.assign(STRINGS.zh, {
     cake_term_furniture: "家具",
     cake_rules_furniture: "蛋糕总是在桌子上。动物从不在桌子或柜子上。",
     cake_term_clues: "线索",
-    cake_rules_clues: "每只动物在下面至少有一条线索，例如“狗在花园里。”“猫坐在椅子上。”或“老鼠在植物旁边。”（紧挨着，不算斜对角）。所有线索合起来只留下一种摆法，永远不需要猜。",
+    cake_rules_clues: "每只动物在下面至少有一条线索，例如“狗在花园里。”“猫坐在椅子上。”或“老鼠在植物旁边。”（紧挨着，不算斜对角）。“旁边”只算同一个房间里的：墙另一边的家具不算在动物旁边。所有线索合起来只留下一种摆法，永远不需要猜。",
     cake_term_culprit: "谁拿走了蛋糕？",
     cake_rules_culprit: "正好有一只动物和蛋糕在同一个房间里。就是它拿走了蛋糕。",
     cake_term_input: "怎么玩",

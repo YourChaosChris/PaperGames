@@ -1562,7 +1562,7 @@ Object.assign(STRINGS.es, {
     cake_term_furniture: "Los muebles",
     cake_rules_furniture: "El pastel siempre está sobre una mesa. Los animales nunca están sobre una mesa ni sobre un armario.",
     cake_term_clues: "Los indicios",
-    cake_rules_clues: "Cada animal tiene al menos un indicio bajo el plano, por ejemplo «El perro está en el jardín.», «El gato está sobre una silla.» o «El ratón está junto a una planta.» (justo al lado, no en diagonal). Juntos, los indicios solo dejan una solución y nunca hace falta adivinar.",
+    cake_rules_clues: "Cada animal tiene al menos un indicio bajo el plano, por ejemplo «El perro está en el jardín.», «El gato está sobre una silla.» o «El ratón está junto a una planta.» (justo al lado, no en diagonal). «Junto a» solo cuenta dentro de la misma habitación: un mueble al otro lado de una pared no está junto al animal. Juntos, los indicios solo dejan una solución y nunca hace falta adivinar.",
     cake_term_culprit: "¿Quién se llevó el pastel?",
     cake_rules_culprit: "Exactamente un animal está en la misma habitación que el pastel. Ese animal se lo llevó.",
     cake_term_input: "Cómo se juega",

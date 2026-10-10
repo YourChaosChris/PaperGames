@@ -1562,7 +1562,7 @@ Object.assign(STRINGS.de, {
     cake_term_furniture: "Möbel",
     cake_rules_furniture: "Der Kuchen steht immer auf einem Tisch. Tiere stehen nie auf einem Tisch und nie auf einem Schrank.",
     cake_term_clues: "Die Hinweise",
-    cake_rules_clues: "Zu jedem Tier gibt es unter dem Feld mindestens einen Hinweis, zum Beispiel „Der Hund ist im Garten.“, „Die Katze sitzt auf einem Stuhl.“ oder „Die Maus ist neben einer Pflanze.“ (direkt daneben, nicht schräg). Zusammen lassen die Hinweise nur eine Lösung zu, und du musst nie raten.",
+    cake_rules_clues: "Zu jedem Tier gibt es unter dem Feld mindestens einen Hinweis, zum Beispiel „Der Hund ist im Garten.“, „Die Katze sitzt auf einem Stuhl.“ oder „Die Maus ist neben einer Pflanze.“ (direkt daneben, nicht schräg). „Neben“ gilt nur im selben Raum: Ein Möbelstück auf der anderen Seite einer Wand steht nicht neben dem Tier. Zusammen lassen die Hinweise nur eine Lösung zu, und du musst nie raten.",
     cake_term_culprit: "Wer hat den Kuchen?",
     cake_rules_culprit: "Genau ein Tier ist im selben Raum wie der Kuchen. Dieses Tier hat ihn genommen.",
     cake_term_input: "So wird gespielt",

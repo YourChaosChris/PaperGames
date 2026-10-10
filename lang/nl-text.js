@@ -1562,7 +1562,7 @@ Object.assign(STRINGS.nl, {
     cake_term_furniture: "Meubels",
     cake_rules_furniture: "De taart staat altijd op een tafel. Dieren staan nooit op een tafel en nooit op een kast.",
     cake_term_clues: "De aanwijzingen",
-    cake_rules_clues: "Elk dier heeft minstens één aanwijzing onder het bord, bijvoorbeeld ‘De hond is in de tuin.’, ‘De kat zit op een stoel.’ of ‘De muis is naast een plant.’ (er direct naast, niet schuin). Samen laten de aanwijzingen maar één oplossing over, en je hoeft nooit te gokken.",
+    cake_rules_clues: "Elk dier heeft minstens één aanwijzing onder het bord, bijvoorbeeld ‘De hond is in de tuin.’, ‘De kat zit op een stoel.’ of ‘De muis is naast een plant.’ (er direct naast, niet schuin). ‘Naast’ telt alleen in dezelfde kamer: een meubelstuk aan de andere kant van een muur staat niet naast het dier. Samen laten de aanwijzingen maar één oplossing over, en je hoeft nooit te gokken.",
     cake_term_culprit: "Wie heeft de taart gepakt?",
     cake_rules_culprit: "Precies één dier is in dezelfde kamer als de taart. Dat dier heeft hem gepakt.",
     cake_term_input: "Zo speel je",

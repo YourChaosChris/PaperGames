@@ -6,7 +6,10 @@
 //   - can be played to the end with the hint button: a wrong thing or a
 //     wrong X is pointed out first, then each hint sets an animal (never
 //     the cake), and once all animals stand the last hint only says that
-//     one row and one column are free - and that cell is the cake's.
+//     one row and one column are free - and that cell is the cake's,
+//   - has no "next to" clue that only holds through furniture behind a
+//     wall (in another room), and exactly one animal in the cake's room.
+// A fixed board checks "next to" across a wall directly.
 const path = require("path");
 const CakeCore = require(path.join(__dirname, "..", "cake-core.js"));
 
@@ -25,6 +28,16 @@ for (const level of ["easy", "medium", "hard"]) {
     const p = CakeCore.generatePuzzle(level, rng(seed * 7 + level.length * 1000));
     if (!p) { fails.push(tag + ": no puzzle"); continue; }
     const n = p.n;
+    const wall = p.clues.find((cl) => {
+      if (cl.t !== "next") return false;
+      const i = p.solution[cl.a], r = Math.floor(i / n), c = i % n;
+      const near = [[r - 1, c], [r + 1, c], [r, c - 1], [r, c + 1]]
+        .filter(([y, x]) => y >= 0 && y < n && x >= 0 && x < n).map(([y, x]) => y * n + x);
+      return !near.some((j) => p.furniture[j] === cl.f && p.rooms[j] === p.rooms[i]);
+    });
+    if (wall) { fails.push(tag + ": \"next to\" only through another room"); continue; }
+    const cakeRoom = p.rooms[p.solution[n - 1]];
+    if (p.solution.slice(0, -1).filter((i) => p.rooms[i] === cakeRoom).length !== 1) { fails.push(tag + ": not one animal in the cake's room"); continue; }
     if (CakeCore.countSolutions(p, 2) !== 1) { fails.push(tag + ": not exactly one solution"); continue; }
     const d = CakeCore.deduce(p, CakeCore.LEVELS[level].level);
     if (!d.solved || d.cells.some((c, k) => c !== p.solution[k])) { fails.push(tag + ": not solvable by deduction"); continue; }
@@ -52,6 +65,23 @@ for (const level of ["easy", "medium", "hard"]) {
     placed[n - 1] = p.solution[n - 1];
     if (CakeCore.findHint(p, placed, []).kind !== "done") fails.push(tag + ": not done with the cake in place");
   }
+}
+
+// Fixed board, 4x4: rooms 0 (columns 0-1) and 1 (columns 2-3), a wall
+// between columns 1 and 2. The dog stands at row 0, column 1; a plant
+// stands right of it at row 0, column 2 - behind the wall.
+{
+  total++;
+  const rooms = [0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1];
+  const furniture = new Array(16).fill(null);
+  furniture[2] = "plant";
+  furniture[8] = "table";
+  const p = { n: 4, rooms, roomNames: ["kitchen", "garden"], furniture, window: { row: 3, side: "left" },
+    clues: [{ t: "next", a: 0, f: "plant" }], solution: [1, 7, 14, 8] };
+  if (CakeCore.clueAllows(p, p.clues[0], 1)) fails.push("fixed board: plant behind the wall counts as next to");
+  if (CakeCore.isSolution(p, p.solution)) fails.push("fixed board: placement accepted with the plant behind the wall");
+  furniture[5] = "plant";
+  if (!CakeCore.clueAllows(p, p.clues[0], 1)) fails.push("fixed board: plant below in the same room does not count");
 }
 
 fails.forEach((f) => console.log("FAIL " + f));

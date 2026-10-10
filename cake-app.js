@@ -92,7 +92,13 @@ function initCakeApp() {
   }
 
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(CAKE_SAVE_KEY) : null;
-  if (saved && saved.puzzle && saved.puzzle.solution) {
+  // A saved puzzle whose clues no longer fit its solution under today's
+  // rules (for instance "next to" across a wall) is replaced by a new one.
+  if (saved && saved.puzzle && saved.puzzle.solution && !savedCakePuzzleValid(saved.puzzle)) {
+    const lv = CakeCore.LEVELS[saved.level] ? saved.level : "easy";
+    if (levelInline) levelInline.value = lv;
+    startNewCakeGame(lv);
+  } else if (saved && saved.puzzle && saved.puzzle.solution) {
     AppStateCake.level = saved.level || "easy";
     AppStateCake.puzzle = saved.puzzle;
     AppStateCake.placed = saved.placed || saved.puzzle.solution.map(() => -1);
@@ -107,6 +113,14 @@ function initCakeApp() {
     setCakeStatus("cake_status_pick");
   }
   // Otherwise the placeholder shows until a level is picked and New puzzle pressed.
+}
+
+function savedCakePuzzleValid(p) {
+  try {
+    return CakeCore.isSolution(p, p.solution) && CakeCore.countSolutions(p, 2) === 1;
+  } catch (e) {
+    return false;
+  }
 }
 
 function startNewCakeGame(level) {

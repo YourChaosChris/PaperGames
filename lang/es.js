@@ -147,7 +147,7 @@ STRINGS.es = {
     quickrules_skyscrapers_2: "Selecciona una casilla y luego elige una altura en el panel bajo el tablero.",
     quickrules_skyscrapers_3: "Una pista cuenta los edificios visibles desde ese lado, y un edificio más alto oculta por completo a cualquier edificio más bajo detrás de él.",
     quickrules_cake_1: "Coloca cada animal y el pastel de modo que cada fila y cada columna tenga exactamente una cosa.",
-    quickrules_cake_2: "El pastel siempre está sobre una mesa, los animales nunca sobre una mesa ni un armario, y los indicios bajo el plano dicen el resto.",
+    quickrules_cake_2: "El pastel siempre está sobre una mesa, los animales nunca sobre una mesa ni un armario, y los indicios bajo el plano dicen el resto. «Junto a» solo cuenta en la misma habitación.",
     quickrules_cake_3: "El único animal en la habitación del pastel se lo llevó: elige un botón bajo el plano y toca una casilla.",
     quickrules_konane_1: "Deja al rival sin movimiento: quien no tiene ningún salto legal en su turno pierde de inmediato.",
     quickrules_konane_2: "Cada movimiento es un salto: una ficha salta sobre una ficha enemiga adyacente, nunca en diagonal, hasta la casilla vacía de detrás y la captura.",

@@ -24,6 +24,7 @@
 //   { t: "notin", a, room }    a is not in that room
 //   { t: "on", a, f }          a sits on a chair or rug
 //   { t: "next", a, f }        a is directly beside (not diagonally) a plant or cupboard
+//                              in the same room - not behind a wall
 //   { t: "window", a }         a is in the window's row
 //   { t: "edge", a, side }     a is in the top/bottom row or left/right column
 //   { t: "same", a, b }        a and b are in the same room
@@ -51,6 +52,12 @@ const CakeCore = (function () {
     return out;
   }
 
+  // Is furniture f directly beside cell i (not diagonally) and in the
+  // same room? Something on the other side of a wall does not count.
+  function nextTo(p, i, f) {
+    return neighbours(p.n, i).some((j) => p.furniture[j] === f && p.rooms[j] === p.rooms[i]);
+  }
+
   // Does this clue hold if animal clue.a stands on cell i? ("same" is not
   // a one-cell clue and always passes here.)
   function clueAllows(p, clue, i) {
@@ -59,7 +66,7 @@ const CakeCore = (function () {
       case "in": return p.rooms[i] === clue.room;
       case "notin": return p.rooms[i] !== clue.room;
       case "on": return p.furniture[i] === clue.f;
-      case "next": return neighbours(p.n, i).some((j) => p.furniture[j] === clue.f);
+      case "next": return nextTo(p, i, clue.f);
       case "window": return r === p.window.row;
       case "edge":
         if (clue.side === "top") return r === 0;
@@ -331,7 +338,7 @@ const CakeCore = (function () {
       const rooms = new Set(p.rooms);
       rooms.forEach((r) => { if (r !== room) out.push({ t: "notin", a, room: r }); });
       if (p.furniture[i] === "chair" || p.furniture[i] === "rug") out.push({ t: "on", a, f: p.furniture[i] });
-      ["plant", "cupboard"].forEach((f) => { if (neighbours(n, i).some((j) => p.furniture[j] === f)) out.push({ t: "next", a, f }); });
+      ["plant", "cupboard"].forEach((f) => { if (nextTo(p, i, f)) out.push({ t: "next", a, f }); });
       if (rowOf(p, i) === p.window.row) out.push({ t: "window", a });
       if (rowOf(p, i) === 0) out.push({ t: "edge", a, side: "top" });
       if (rowOf(p, i) === n - 1) out.push({ t: "edge", a, side: "bottom" });
@@ -492,7 +499,7 @@ const CakeCore = (function () {
 
   return {
     ANIMALS, ROOM_NAMES, FURNITURE, LEVELS,
-    neighbours, clueAllows, baseCandidates, isSolution, countSolutions, deduce,
+    neighbours, nextTo, clueAllows, baseCandidates, isSolution, countSolutions, deduce,
     randomRooms, candidateClues, generatePuzzle, findHint, clueText, thingName, culprit, fill
   };
 })();

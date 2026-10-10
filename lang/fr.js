@@ -147,7 +147,7 @@ STRINGS.fr = {
     quickrules_skyscrapers_2: "Sélectionnez une case, puis choisissez une hauteur sur le pavé sous la grille.",
     quickrules_skyscrapers_3: "Un indice compte les bâtiments visibles depuis ce côté, et un bâtiment plus haut cache complètement tout bâtiment plus bas derrière lui.",
     quickrules_cake_1: "Placez chaque animal et le gâteau de sorte que chaque ligne et chaque colonne contienne exactement une chose.",
-    quickrules_cake_2: "Le gâteau est toujours sur une table, les animaux jamais sur une table ni sur une armoire, et les pistes sous le plan disent le reste.",
+    quickrules_cake_2: "Le gâteau est toujours sur une table, les animaux jamais sur une table ni sur une armoire, et les pistes sous le plan disent le reste. « À côté » ne compte que dans la même pièce.",
     quickrules_cake_3: "Le seul animal dans la pièce du gâteau l'a pris - choisissez un bouton sous le plan, puis touchez une case.",
     quickrules_konane_1: "Privez l'adversaire de coup : celui qui n'a aucun saut légal à son tour perd immédiatement.",
     quickrules_konane_2: "Chaque coup est un saut : un pion saute par-dessus un pion ennemi adjacent, jamais en diagonale, vers la case vide juste après, et le capture.",
