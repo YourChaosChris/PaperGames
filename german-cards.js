@@ -7,7 +7,8 @@
 //
 // Cards use the same objects as the French faces ({ rank, suit } with
 // suit C/S/H/D): C = Acorns, S = Leaves, H = Hearts, D = Bells. Ranks:
-// 14 Ace (A), 13 King (K), 12 Ober (O), 11 Unter (U), 10 to 7.
+// 14 Ace (A), 13 King (K), 12 Ober (O), 11 Unter (U), 10 to 7. Schafkopf
+// calls the suits Acorns, Grass, Hearts, Bells and the Ace the Sow.
 
 const GermanCards = (function () {
   const MARKUP = {
@@ -35,8 +36,13 @@ const GermanCards = (function () {
     return RANK[card.rank] || String(card.rank);
   }
 
+  // Schafkopf (Bavarian) names: Grass instead of Leaf, Sow for the Ace.
+  const SUIT_WORD_BAV = { C: "Acorn", S: "Grass", H: "Heart", D: "Bell" };
+
   // English name, e.g. "Acorn Ober", "Bell 10" - translated by I18n.
-  function label(card) {
+  // style "bavarian": "Grass Ober", "Acorn Sow".
+  function label(card, style) {
+    if (style === "bavarian") return SUIT_WORD_BAV[card.suit] + " " + (card.rank === 14 ? "Sow" : (RANK_WORD[card.rank] || String(card.rank)));
     return SUIT_WORD[card.suit] + " " + (RANK_WORD[card.rank] || String(card.rank));
   }
 
@@ -49,7 +55,7 @@ const GermanCards = (function () {
     el.innerHTML = '<span class="pc-rank">' + rankText(card) + "</span>" + suitSvg(card.suit, "pc-suit");
   }
 
-  return { MARKUP, SUIT_WORD, RANK_WORD, rankText, label, suitSvg, renderTall };
+  return { MARKUP, SUIT_WORD, SUIT_WORD_BAV, RANK_WORD, rankText, label, suitSvg, renderTall };
 })();
 
 if (typeof module !== "undefined" && module.exports) {

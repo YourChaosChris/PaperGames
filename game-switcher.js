@@ -97,7 +97,8 @@
     ["blockers", "game_blockers"],
     ["blackjack", "game_blackjack"],
     ["poker", "game_poker"],
-    ["skat", "game_skat"]
+    ["skat", "game_skat"],
+    ["schafkopf", "game_schafkopf"]
   ];
 
   var GAME_SLUGS = {};

@@ -102,6 +102,14 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   bid is a game value and rising, every card follows suit when it can,
   the 32 cards and 120 points are all there and the game value and
   result match a separate calculation.
+- `node tests/schafkopf-core.js` - no server or browser needed (about
+  40 seconds). Checks 19 fixed Schafkopf scores (tariff with Schneider,
+  Schwarz and Laufende) and 8 examples of counting the Laufende, then
+  plays 1000 games between computers and fails unless every trick goes to
+  the right card (checked separately), every card follows suit when it
+  can, the called Sow is played when its suit is led and not thrown away
+  before, the 120 points are all counted and the score matches a separate
+  calculation and adds up to 0.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

@@ -632,10 +632,12 @@ function renderScoreSk(s) {
     const tr = document.createElement("tr");
     const c0 = document.createElement("td"); c0.textContent = String(i + 1); tr.appendChild(c0);
     const c1 = document.createElement("td");
+    c1.className = "sk-game-cell";
     I18n.setMsg(c1, e.passedIn ? "passed in" : gameNameSk(e.game));
     tr.appendChild(c1);
     for (let p = 0; p < 3; p++) {
       const td = document.createElement("td");
+      td.className = "sk-num";
       if (!e.passedIn && e.declarer === p) td.textContent = (e.delta > 0 ? "+" : "") + e.delta;
       tr.appendChild(td);
     }
@@ -644,7 +646,8 @@ function renderScoreSk(s) {
   const foot = document.createElement("tr");
   const f0 = document.createElement("td"); f0.textContent = "Σ"; foot.appendChild(f0);
   foot.appendChild(document.createElement("td"));
-  for (let p = 0; p < 3; p++) { const td = document.createElement("td"); td.textContent = String(AppStateSk.totals[p]); foot.appendChild(td); }
+  for (let p = 0; p < 3; p++) { const td = document.createElement("td");
+      td.className = "sk-num"; td.textContent = String(AppStateSk.totals[p]); foot.appendChild(td); }
   table.appendChild(foot);
   const wrap = document.createElement("div");
   wrap.className = "sk-list-wrap";

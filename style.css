@@ -11273,13 +11273,46 @@ button.concan-meld {
 .sk-list th,
 .sk-list td {
   padding: 0.15rem 0.2rem;
+}
+
+.sk-list .sk-num {
+  white-space: nowrap;
+}
+
+.sk-list .sk-game-cell {
   overflow-wrap: anywhere;
+}
+
+.sf-list .sk-game-cell {
+  text-align: left;
+}
+
+/* Long player names (Computer 1 in some languages) on narrow screens. */
+@media (max-width: 420px) {
+  .sf-list {
+    font-size: 0.7rem;
+  }
+
+  .sf-list th,
+  .sf-list td {
+    padding: 0.1rem 0.15rem;
+  }
 }
 
 .sk-example {
   display: block;
   width: 100%;
   max-width: 200px;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Schafkopf reuses the Skat and Doppelkopf classes; only the picture of
+   the trump order on the rules page is its own. */
+.sf-example {
+  display: block;
+  width: 100%;
+  max-width: 320px;
   height: auto;
   margin: 0 auto;
 }
