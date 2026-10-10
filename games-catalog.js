@@ -875,4 +875,15 @@ const GAMES_CATALOG = [
     added: "2026-10-10",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"2\" y=\"9\" width=\"15\" height=\"22\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" transform=\"rotate(-12 9 20)\"/><rect x=\"12.5\" y=\"6\" width=\"15\" height=\"22\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"23\" y=\"9\" width=\"15\" height=\"22\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" transform=\"rotate(12 31 20)\"/><text x=\"9\" y=\"19\" text-anchor=\"middle\" font-size=\"8\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\" transform=\"rotate(-12 9 20)\">K</text><text x=\"20\" y=\"16\" text-anchor=\"middle\" font-size=\"8\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">K</text><g transform=\"translate(26.5 13) scale(0.09) rotate(12 50 50)\"><path d=\"M50 6 L61 38 L95 38 L67 58 L78 92 L50 71 L22 92 L33 58 L5 38 L39 38 Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"9\" stroke-linejoin=\"round\"/><circle cx=\"50\" cy=\"52\" r=\"10\" fill=\"#141413\"/></g><text x=\"20\" y=\"38.5\" text-anchor=\"middle\" font-size=\"7\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">7</text></svg></span>"
   },
+  {
+    slug: "bridge",
+    category: "party",
+    nameKey: "game_bridge",
+    nameText: "Bridge",
+    descKey: "home_bridge_desc",
+    descText: "Contract bridge for four: you and your computer partner against two computers. Guided bidding with buttons, the dummy open on the table, scoring as Chicago (four deals) or rubber.",
+    popular: false,
+    added: "2026-10-10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"4\" y=\"7\" width=\"15\" height=\"22\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" transform=\"rotate(-10 11 18)\"/><rect x=\"21\" y=\"7\" width=\"15\" height=\"22\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" transform=\"rotate(10 28 18)\"/><g transform=\"translate(6.5 12) scale(0.1) rotate(-10 50 50)\"><path d=\"M50 4 C50 4 6 36 6 60 C6 73 16 81 27 81 C36 81 43 76 46 70 L41 96 L59 96 L54 70 C57 76 64 81 73 81 C84 81 94 73 94 60 C94 36 50 4 50 4 Z\" fill=\"#141413\"/></g><g transform=\"translate(23.5 12) scale(0.1) rotate(10 50 50)\"><path d=\"M50 90 C50 90 9 62 9 34 C9 20 19 11 30 11 C39 11 46 16 50 24 C54 16 61 11 70 11 C81 11 91 20 91 34 C91 62 50 90 50 90 Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"12\" stroke-linejoin=\"round\"/></g><text x=\"20\" y=\"38\" text-anchor=\"middle\" font-size=\"8\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">N E S W</text></svg></span>"
+  },
 ];

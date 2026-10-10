@@ -76,7 +76,8 @@ const STATS_GAME_NAME_KEY = {
   poker: "game_poker",
   skat: "game_skat",
   schafkopf: "game_schafkopf",
-  canasta: "game_canasta"
+  canasta: "game_canasta",
+  bridge: "game_bridge"
 };
 
 function gameDisplayName(game) {

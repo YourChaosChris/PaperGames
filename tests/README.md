@@ -118,6 +118,15 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   fails unless every game ends, all 108 cards stay in play after every
   move, every meld is valid and the score of every hand matches a
   separate calculation.
+- `node tests/bridge-core.js` - no server or browser needed (about 70
+  seconds). Checks 60 fixed bridge examples (contract points, overtricks,
+  doubled and redoubled contracts, slams, undertricks, honours, Chicago
+  vulnerability and bonuses, part-scores adding up to a game, passed-out
+  deals, rubber bonuses, auction rules), then plays 500 deals between
+  computers (Chicago and rubber) and fails unless every call is allowed,
+  the declarer is right, every card follows suit when it can, 13 tricks
+  are played with each card once, the trick goes to the right card and
+  the score matches a separate calculation.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

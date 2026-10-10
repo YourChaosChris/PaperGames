@@ -500,6 +500,19 @@ const SAMPLES = [
   "Not enough for the first meld: 35 of 50 points.", "Draw first - or take the pile with the staged melds.",
   "Hand 2 · game to 5000 points", "Score: -150", "Red threes: 2", "First meld: at least 90 points",
   "Red threes: you 3♥ 3♦ · Computer –", "Cards in melds", "Canasta bonus", "Cards in hand", "This hand",
+  // Bridge
+  "New deal: East deals. East's turn.", "New deal: you deal. Your turn to bid.",
+  "West bids 1♠. North passes. East doubles. You redouble.", "You bid 3 no trump. West passes.", "North redoubles. South passes.",
+  "East bids 4♥. Contract: 4♥ by East. Doubled.", "You pass. Contract: 3 no trump by North. North plays the contract; you watch.",
+  "Contract: 2♠ by you. Redoubled.", "All four pass - the same dealer deals again.",
+  "West plays A♠. North wins the trick.", "You play 7♦. You win the trick.",
+  "North is declarer and plays both hands: tap Next to see the next trick.", "Your turn: play a card from North's hand (dummy).",
+  "You make 4♥ with 11 tricks. This deal: North-South 450, East-West 0.", "West goes down in 3 no trump with 7 tricks. This deal: North-South 100, East-West 0.",
+  "You go down in 6♠ with 11 tricks.", "North makes 7 no trump with 13 tricks.",
+  "Chicago over: North-South win 970 to 40.", "Rubber over: East-West win 1200 to 640.", "Chicago over: a draw at 600 points.",
+  "You must follow suit: play a heart.", "Deal 2 of 4", "Dealer: West", "Vulnerable: North-South", "Vulnerable: nobody", "Score: North-South 420, East-West 0",
+  "Games: North-South 1, East-West 0", "Tricks: North-South 6, East-West 7.", "Your high-card points: 12", "No bid", "Double (X)", "Redouble (XX)",
+  "dummy", "North-South", "East-West",
   // Link the Pairs: status line, hints, screen-reader labels
   "Tap a symbol or drag from it to draw its line.",
   "Now tap the cells one after another, or drag.",
@@ -629,6 +642,8 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  // Bridge
+  "Card A♠, not allowed now", "North, K♥", "3 no trump, West, 9 tricks", "1 no trump",
   // Canasta
   "Meld K, 5 cards, 1 wild card, mixed canasta", "Meld 9, 7 cards, natural canasta", "Discard pile: 8♣, 4 cards, frozen", "Stock: 71 cards, draw two",
   // Skat

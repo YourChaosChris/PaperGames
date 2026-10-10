@@ -11415,6 +11415,92 @@ button.cn-meld {
   margin-top: 0.6rem;
 }
 
+/* Bridge: the four seats (North on top, West and East side by side, South
+   at the bottom), hands as rows by suit with narrow cards, the seat to
+   play with a thick frame, guided bidding as rows of buttons, auction and
+   score list as small tables. */
+.br-line {
+  text-align: center;
+  font-size: 0.85rem;
+  margin: 0.2rem 0;
+}
+
+.br-seat {
+  margin: 0.3rem 0;
+  padding: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.br-seat.br-seat-turn {
+  border: 4px double var(--border);
+}
+
+.br-ew {
+  text-align: center;
+}
+
+.br-seat-side {
+  display: inline-block;
+  vertical-align: top;
+  width: 49%;
+  margin: 0.3rem 0.5%;
+}
+
+.br-seat-head {
+  font-size: 0.85rem;
+  margin-bottom: 0.2rem;
+}
+
+.br-seat-name,
+.br-role {
+  font-weight: 700;
+}
+
+.br-count {
+  display: block;
+  font-size: 0.85rem;
+}
+
+.br-suit-row {
+  min-height: 1rem;
+}
+
+.br-void {
+  display: inline-block;
+  font-size: 0.85rem;
+  margin: 0.2rem;
+}
+
+.br-bidding {
+  text-align: center;
+  margin: 0.4rem 0;
+}
+
+.br-bid-row {
+  margin: 0.2rem 0;
+}
+
+.br-bid-row button {
+  margin: 0.15rem;
+}
+
+.br-bid-row .br-bid {
+  min-width: 3rem;
+}
+
+.br-auction,
+.br-list {
+  font-size: 0.85rem;
+}
+
+.br-auction td,
+.br-auction th {
+  min-width: 3.2rem;
+}
+
 .cn-score-table .cn-sum-row td,
 .cn-score-table .cn-sum-row th {
   font-weight: 700;
