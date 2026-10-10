@@ -68,7 +68,8 @@ const STATS_GAME_NAME_KEY = {
   foxandgeese: "game_foxandgeese",
   seega: "game_seega",
   romme: "game_romme",
-  oldmaid: "game_oldmaid"
+  oldmaid: "game_oldmaid",
+  war: "game_war"
 };
 
 function gameDisplayName(game) {

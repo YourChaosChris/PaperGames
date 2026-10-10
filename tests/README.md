@@ -69,6 +69,10 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   "Old Maid" games each with 2, 3 and 4 players (random draws) and fails
   unless every game ends with exactly one player holding only the Black
   Peter and the card count stays the pack size.
+- `node tests/war-core.js` - no server or browser needed. Plays 1000
+  "War" games to the end and 1000 short ones and fails unless each ends
+  (short: within 30 rounds; full: within 2000, else a draw) and all 32
+  cards stay in play after every round.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

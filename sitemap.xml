@@ -47295,6 +47295,669 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/wallmaze.html"/>
   </url>
   <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-history.html</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-rules.html</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war.html</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war.html?lang=en</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war.html?lang=de</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war.html?lang=fr</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war.html?lang=es</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war.html?lang=it</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war.html?lang=nl</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war.html?lang=pl</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war.html?lang=uk</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war.html?lang=ru</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war.html?lang=ja</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war.html?lang=zh</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/war.html?lang=ar</loc>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/war.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/war.html"/>
+  </url>
+  <url>
     <loc>https://yourchaoschris.github.io/PaperGames/xiangqi-history.html</loc>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/xiangqi-history.html?lang=en"/>

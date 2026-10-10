@@ -51,6 +51,10 @@ echo "=== oldmaid-core.js ==="
 node "$ROOT/tests/oldmaid-core.js" || status=1
 echo ""
 
+echo "=== war-core.js ==="
+node "$ROOT/tests/war-core.js" || status=1
+echo ""
+
 echo "=== css-check.js ==="
 node "$ROOT/tests/css-check.js" || status=1
 echo ""

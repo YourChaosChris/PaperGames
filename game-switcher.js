@@ -91,7 +91,8 @@
     ["foxandgeese", "game_foxandgeese"],
     ["seega", "game_seega"],
     ["romme", "game_romme"],
-    ["oldmaid", "game_oldmaid"]
+    ["oldmaid", "game_oldmaid"],
+    ["war", "game_war"]
   ];
 
   var GAME_SLUGS = {};

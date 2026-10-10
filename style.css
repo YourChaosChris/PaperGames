@@ -10757,3 +10757,39 @@ button.concan-meld {
   height: auto;
   margin: 0 auto;
 }
+
+/* War: the two piles with their card counts, the round in between. */
+.war-pile-row .pc-card.war-pile {
+  width: 4.2rem;
+  height: 5.8rem;
+  vertical-align: middle;
+}
+
+.war-pile-row .pc-count {
+  vertical-align: middle;
+  margin: 0 0.4rem;
+}
+
+.war-pile-row .pc-row-label {
+  margin: 0.3rem 0;
+}
+
+.war-table {
+  margin: 0.5rem 0;
+  padding: 0.4rem 0 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+.war-table-row {
+  min-height: 4.1rem;
+}
+
+.war-example {
+  display: block;
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  margin: 0 auto;
+}

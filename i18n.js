@@ -1858,6 +1858,42 @@ const STRINGS = {
     msg_t_oldmaid_tapone: "{p}'s cards - tap one",
     msg_t_oldmaid_hidden: "Hidden card {n} of {m}",
     msg_t_oldmaid_last: "{p}'s last card",
+    game_war: "War",
+    home_war_desc: "The simple card game of pure luck: both turn up a card, the higher one takes both - and on a tie it's war. 32 cards, against the computer, no decisions; a short game of 30 rounds or play to the end.",
+    war_mode_label: "Mode",
+    war_mode_short: "Short (30 rounds)",
+    war_mode_full: "To the end",
+    war_own_label: "Your pile",
+    war_cpu_label: "Computer",
+    war_table_label: "This round",
+    war_history_intro: "German variants of the card game War are mentioned as early as 1833.",
+    quickrules_war_1: "Tap your pile: you and the computer each turn up a card, and the higher card takes both.",
+    quickrules_war_2: "On a tie it's war: one card face down, one face up - the higher face-up card takes everything.",
+    quickrules_war_3: "Short game: after 30 rounds, whoever has more cards wins; otherwise play until one side has all 32.",
+    msg_war_start: "Cards dealt: 16 each. Tap your pile to turn up the first card.",
+    msg_war_tap: "Tap your pile to turn up the next card.",
+    msg_war_war: "War!",
+    msg_t_war_wars: "{n} wars in a row!",
+    msg_war_you_empty: "You have no card left for the war.",
+    msg_war_cpu_empty: "The computer has no card left for the war.",
+    msg_t_war_you_win: "You win the round: {s} beats {r}.",
+    msg_t_war_cpu_win: "The computer wins the round: {s} beats {r}.",
+    msg_t_war_you_take: "You take {n} cards.",
+    msg_t_war_cpu_take: "The computer takes {n} cards.",
+    msg_t_war_rounds: "{k} rounds played: you have {n} cards, the computer {m}.",
+    msg_war_limit: "After 2000 rounds there is still no winner.",
+    msg_war_you_all: "You have all 32 cards.",
+    msg_war_cpu_all: "The computer has all 32 cards.",
+    msg_war_none: "Neither side has a card left.",
+    msg_war_lose: "You lose.",
+    msg_war_draw: "Draw.",
+    msg_t_war_cards: "{n} cards",
+    msg_t_war_round_of: "Round {n} / {m}",
+    msg_t_war_round: "Round {n}",
+    msg_t_war_own_aria: "Your pile, {n} cards - tap to turn up a card",
+    msg_t_war_own_aria2: "Your pile, {n} cards",
+    msg_t_war_cpu_aria: "The computer's pile, {n} cards",
+    msg_war_facedown: "face-down card",
     msg_linkpairs_joined_word: "joined",
     msg_linkpairs_empty_word: "empty",
     msg_linkpairs_end_word: "end of the line",
@@ -2801,7 +2837,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 70;
+  const GAME_COUNT = 71;
 
   function t(key, lang) {
     const l = lang || getLang();

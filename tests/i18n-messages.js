@@ -367,6 +367,14 @@ const SAMPLES = [
   "You have the Black Peter - you lose.",
   "Cards: 5 · Pairs: 3",
   "Computer 1's cards - tap one",
+  // War
+  "War! You win the round: K♣ beats 8♦. You take 6 cards.",
+  "2 wars in a row! The computer wins the round: A♠ beats 10♥. The computer takes 10 cards.",
+  "You have no card left for the war. The computer takes 3 cards.",
+  "30 rounds played: you have 18 cards, the computer 14. You win!",
+  "After 2000 rounds there is still no winner. Draw.",
+  "The computer has all 32 cards. You lose.",
+  "Round 12 / 30",
   // Link the Pairs: status line, hints, screen-reader labels
   "Tap a symbol or drag from it to draw its line.",
   "Now tap the cells one after another, or drag.",
@@ -496,6 +504,8 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  "Your pile, 15 cards - tap to turn up a card",
+  "The computer's pile, 17 cards",
   "Hidden card 3 of 7",
   "Black Peter",
   // Link the Pairs cells
