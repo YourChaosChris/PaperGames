@@ -62,6 +62,7 @@ const STATS_GAME_NAME_KEY = {
   pairs: "game_pairs",
   futoshiki: "game_futoshiki",
   cake: "game_cake",
+  linkpairs: "game_linkpairs",
   shapesort: "game_shapesort",
   animalsudoku: "game_animalsudoku",
   foxandgeese: "game_foxandgeese",

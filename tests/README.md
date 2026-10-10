@@ -61,6 +61,10 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   each starts with two empty tubes and no finished one, is solved by its
   own solution, and can be played to the end with the hint only - also
   after a few random moves (unless the solver finds no way out).
+- `node tests/linkpairs-core.js` - no server or browser needed. Checks
+  all stored "Link the Pairs" puzzles (`linkpairs-puzzles.js`): lines
+  through every cell, exactly one solution, and the first 100 per level
+  solvable with the hint alone, also after some wrong lines.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

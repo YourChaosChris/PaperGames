@@ -765,4 +765,15 @@ const GAMES_CATALOG = [
     added: "2026-10-10",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"5\" y=\"4\" width=\"13\" height=\"32\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><rect x=\"22\" y=\"4\" width=\"13\" height=\"32\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><circle cx=\"11.5\" cy=\"30\" r=\"3.6\" fill=\"#141413\"/><polygon points=\"11.5,17.5 15.5,24.5 7.5,24.5\" fill=\"#141413\"/><circle cx=\"11.5\" cy=\"12\" r=\"3.6\" fill=\"#141413\"/><rect x=\"25.5\" y=\"26.5\" width=\"6\" height=\"6\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"25.5\" y=\"18\" width=\"6\" height=\"6\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/></svg></span>"
   },
+  {
+    slug: "linkpairs",
+    category: "puzzles",
+    nameKey: "game_linkpairs",
+    nameText: "Link the Pairs",
+    descKey: "home_linkpairs_desc",
+    descText: "Join each pair of equal symbols with a line - lines never cross, and every cell is used. Numbers or animals, 5 x 5 to 9 x 9, made for e-ink; draw by dragging or by tapping.",
+    popular: false,
+    added: "2026-10-10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M9 9H20V20H31V31\" fill=\"none\" stroke=\"#141413\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M9 31H15\" fill=\"none\" stroke=\"#141413\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"9\" cy=\"9\" r=\"5.5\" fill=\"#141413\"/><circle cx=\"31\" cy=\"31\" r=\"5.5\" fill=\"#141413\"/><circle cx=\"9\" cy=\"31\" r=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><circle cx=\"20\" cy=\"31\" r=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/></svg></span>"
+  },
 ];

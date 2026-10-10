@@ -357,6 +357,15 @@ const SAMPLES = [
   "Sorted! Every tube holds one shape. Moves: 23.",
   "From here the stones can no longer all be sorted. Undo a few moves.",
   "Stones can only go onto the same shape or into an empty tube.",
+  // Link the Pairs: status line, hints, screen-reader labels
+  "Tap a symbol or drag from it to draw its line.",
+  "Now tap the cells one after another, or drag.",
+  "Pair 4 is joined.",
+  "Pair Giraffe is joined.",
+  "Hint: the line for Owl is drawn.",
+  "All pairs are joined, but every cell must be used. Empty cells: 3.",
+  "Joined: 3 / 9",
+  "Only a cell right next to the end of the line can come next.",
   // Animal Sudoku: status line, hints, screen-reader labels
   "Choose an animal below, then tap a cell.",
   "Placed: 7 / 16",
@@ -477,6 +486,10 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  // Link the Pairs cells
+  "Row 4, column 6, line Frog, end of the line",
+  "Row 1, column 1, symbol 7, joined",
+  "Row 9, column 9, empty",
   "Row 2, column 4, light on",
   "Hint: Row 3, column 2, light off",
   "Take 5♥",

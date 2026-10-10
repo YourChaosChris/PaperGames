@@ -1807,6 +1807,37 @@ const STRINGS = {
     msg_shapesort_shape_cross: "Cross",
     msg_shapesort_shape_diamond: "Diamond",
     msg_shapesort_shape_moon: "Moon",
+    game_linkpairs: "Link the Pairs",
+    home_linkpairs_desc: "Join each pair of equal symbols with a line - lines never cross, and every cell is used. Numbers or animals, 5 x 5 to 9 x 9, made for e-ink; draw by dragging or by tapping.",
+    linkpairs_new_game: "New puzzle",
+    linkpairs_level_label: "Level",
+    linkpairs_level_easy: "Easy (5 x 5)",
+    linkpairs_level_medium: "Medium (7 x 7)",
+    linkpairs_level_hard: "Hard (9 x 9)",
+    linkpairs_symbols_label: "Symbols",
+    linkpairs_symbols_numbers: "Numbers",
+    linkpairs_symbols_animals: "Animals",
+    linkpairs_board_label: "Link the Pairs board",
+    linkpairs_history_intro: "Joining pairs with lines that may not cross is an old puzzle idea - Sam Loyd printed a form of it in 1897.",
+    quickrules_linkpairs_1: "Join each pair of equal symbols with a line, horizontally and vertically from cell to cell.",
+    quickrules_linkpairs_2: "Lines may not cross or share a cell - the puzzle is solved when every cell is used.",
+    quickrules_linkpairs_3: "Drag from a symbol, or tap the symbol and then the cells one after another; tapping a line shortens it to that cell.",
+    msg_linkpairs_start: "Tap a symbol or drag from it to draw its line.",
+    msg_linkpairs_now: "Now tap the cells one after another, or drag.",
+    msg_linkpairs_cut: "The line ends here now. Go on from this cell.",
+    msg_linkpairs_next: "Only a cell right next to the end of the line can come next.",
+    msg_linkpairs_pick: "Start a line at a symbol.",
+    msg_t_linkpairs_joined: "Pair {s} is joined.",
+    msg_linkpairs_solved: "Solved! Every pair is joined and every cell is used.",
+    msg_linkpairs_every: "Every pair is joined and every cell is used.",
+    msg_t_linkpairs_empty: "All pairs are joined, but every cell must be used. Empty cells: {n}.",
+    msg_t_linkpairs_hint: "Hint: the line for {s} is drawn.",
+    msg_t_linkpairs_count: "Joined: {n} / {m}",
+    msg_t_linkpairs_symbol: "symbol {s}",
+    msg_t_linkpairs_line: "line {s}",
+    msg_linkpairs_joined_word: "joined",
+    msg_linkpairs_empty_word: "empty",
+    msg_linkpairs_end_word: "end of the line",
 
     game_hashi: "Hashiwokakero",
     home_hashi_desc: "Connect every numbered island with straight single or double bridges so the whole network joins together and every island's count matches its number. Freshly generated, in three difficulty levels.",
@@ -2747,7 +2778,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 68;
+  const GAME_COUNT = 69;
 
   function t(key, lang) {
     const l = lang || getLang();
