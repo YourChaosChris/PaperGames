@@ -190,7 +190,27 @@ function checkTextSplit() {
   else ok(`rules/history texts only on marked pages (${textKeys.size} keys in i18n-text.js)`);
 }
 
+// The service worker caches APP_SHELL with cache.addAll, which fails as a
+// whole - nothing is stored, no offline play - if an entry appears twice
+// or a file is missing.
+function checkAppShell() {
+  const src = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
+  const m = /const APP_SHELL = \[([\s\S]*?)\];/.exec(src);
+  if (!m) { fail("sw.js - no APP_SHELL list found"); return; }
+  const entries = (m[1].match(/"([^"]*)"/g) || []).map((q) => q.slice(1, -1));
+  const seen = new Set();
+  let bad = 0;
+  for (const e of entries) {
+    if (seen.has(e)) { fail("sw.js - APP_SHELL lists " + e + " twice"); bad++; }
+    seen.add(e);
+    const file = e === "./" ? "index.html" : e.split("?")[0];
+    if (!fs.existsSync(path.join(ROOT, file))) { fail("sw.js - APP_SHELL file missing: " + e); bad++; }
+  }
+  if (!bad) ok(`sw.js APP_SHELL: ${entries.length} entries, no duplicates, all files present`);
+}
+
 checkJsSyntax();
+checkAppShell();
 checkHtmlWellFormed();
 const STRINGS = loadStrings();
 checkI18nParity(STRINGS);
