@@ -10,8 +10,9 @@
 //
 // The 18 card faces are inline black-and-white SVG shapes that differ in
 // outline, not in shade: no grey fills, no emoji, no raster images. The
-// "Animals" motif swaps them for 18 animal line drawings
-// (pairs-animals.js); the rules stay the same. Taken pairs leave an
+// "Animals", "Fruit and vegetables" and "Vehicles" motifs swap them for
+// 18 line drawings each (pairs-animals.js, pairs-food.js,
+// pairs-vehicles.js); the rules stay the same. Taken pairs leave an
 // empty, dashed slot.
 
 const PAIRS_SYMBOLS = [
@@ -65,21 +66,42 @@ const PAIRS_ANIMAL_NAMES = {
   elephant: "Elephant", butterfly: "Butterfly", bee: "Bee", lion: "Lion", giraffe: "Giraffe", sheep: "Sheep"
 };
 
+// Picture sets besides the shapes: module (global name), its English
+// screen-reader names.
+const PAIRS_MOTIFS = {
+  animals: { lib: "PairsAnimals", labels: PAIRS_ANIMAL_NAMES },
+  food: { lib: "PairsFood", labels: null },
+  vehicles: { lib: "PairsVehicles", labels: null }
+};
+
+function pairsMotifValue(v) {
+  return PAIRS_MOTIFS[v] ? v : "shapes";
+}
+
+function pairsMotifLib() {
+  const m = PAIRS_MOTIFS[AppStatePairs.motif];
+  return m && typeof window !== "undefined" ? window[m.lib] || null : null;
+}
+
 function pairsMotif() {
-  return AppStatePairs.motif === "animals" && typeof PairsAnimals !== "undefined" ? "animals" : "shapes";
+  return pairsMotifLib() ? AppStatePairs.motif : "shapes";
 }
 
 function pairsFaceSvg(n) {
-  return pairsMotif() === "animals" ? PairsAnimals.svg(n) : pairsSymbolSvg(n);
+  const lib = pairsMotifLib();
+  return lib ? lib.svg(n) : pairsSymbolSvg(n);
 }
 
 function pairsFaceLabel(n) {
-  return pairsMotif() === "animals" ? PAIRS_ANIMAL_NAMES[PairsAnimals.NAMES[n]] : "symbol " + (n + 1);
+  const lib = pairsMotifLib();
+  if (!lib) return "symbol " + (n + 1);
+  const labels = PAIRS_MOTIFS[AppStatePairs.motif].labels || lib.LABELS;
+  return labels[lib.NAMES[n]];
 }
 
 const AppStatePairs = {
   opponent: "two",          // "solo" | "two" | "ai"
-  motif: "shapes",          // "shapes" | "animals"
+  motif: "shapes",          // "shapes" | "animals" | "food" | "vehicles"
   aiLevel: 2,
   humanPlayer: "1",         // vs the computer
   state: null,
@@ -154,7 +176,7 @@ function initPairsApp() {
     let opponent = "two", level = 0;
     if (choice === "solo") opponent = "solo";
     else if (choice !== "two") { opponent = "ai"; level = parseInt(choice, 10) || 2; }
-    AppStatePairs.motif = motifSelect && motifSelect.value === "animals" ? "animals" : "shapes";
+    AppStatePairs.motif = pairsMotifValue(motifSelect ? motifSelect.value : "shapes");
     startNewGamePairs(size, opponent, level);
   });
 
@@ -174,7 +196,7 @@ function initPairsApp() {
     AppStatePairs.opponent = saved.opponent === "solo" || saved.opponent === "ai" ? saved.opponent : "two";
     AppStatePairs.aiLevel = saved.aiLevel || 2;
     AppStatePairs.humanPlayer = saved.humanPlayer === "2" ? "2" : "1";
-    AppStatePairs.motif = saved.motif === "animals" ? "animals" : "shapes";
+    AppStatePairs.motif = pairsMotifValue(saved.motif);
     AppStatePairs.state = saved.state;
     AppStatePairs.seen = Array.isArray(saved.seen) ? saved.seen : [];
     AppStatePairs.gameOver = false;

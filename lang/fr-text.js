@@ -503,7 +503,7 @@ Object.assign(STRINGS.fr, {
     pairs_rules_basics_title: "Le principe",
     pairs_term_cards: "Les cartes",
     pairs_rules_cards: "Toutes les cartes sont posées face cachée, et chaque forme figure sur exactement deux d'entre elles. Vous choisissez la taille : 4 x 3 (6 paires), 4 x 4 (8 paires), 6 x 4 (12 paires) ou 6 x 6 (18 paires).",
-    pairs_rules_motif: "Avant la partie, vous choisissez le motif : des formes (par défaut) ou 18 animaux. Seules les images changent ; les règles restent les mêmes.",
+    pairs_rules_motif: "Avant la partie, vous choisissez le motif : formes (par défaut), animaux, fruits et légumes ou véhicules - 18 images différentes à chaque fois. Seules les images changent ; les règles restent les mêmes.",
     pairs_term_turn: "Un tour",
     pairs_rules_turn: "À votre tour, retournez deux cartes, l'une après l'autre. Si elles montrent la même forme, vous prenez la paire et vous rejouez. Sinon, les deux sont remises face cachée et c'est au tour de l'autre joueur.",
     pairs_term_notimer: "Rien ne se retourne tout seul",

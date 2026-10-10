@@ -503,7 +503,7 @@ Object.assign(STRINGS.it, {
     pairs_rules_basics_title: "L'idea di base",
     pairs_term_cards: "Le carte",
     pairs_rules_cards: "Tutte le carte sono coperte, e ogni forma compare esattamente su due di esse. Scegli tu la dimensione: 4 x 3 (6 coppie), 4 x 4 (8 coppie), 6 x 4 (12 coppie) o 6 x 6 (18 coppie).",
-    pairs_rules_motif: "Prima della partita scegli il motivo: forme (predefinito) o 18 animali. Cambiano solo le immagini, le regole restano le stesse.",
+    pairs_rules_motif: "Prima della partita scegli il motivo: forme (predefinito), animali, frutta e verdura o veicoli, ognuno con 18 immagini diverse. Cambiano solo le immagini, le regole restano le stesse.",
     pairs_term_turn: "Un turno",
     pairs_rules_turn: "Al tuo turno, scopri due carte, una dopo l'altra. Se mostrano la stessa forma, prendi la coppia e giochi ancora. Altrimenti entrambe vengono rigirate coperte e tocca all'altro giocatore.",
     pairs_term_notimer: "Nessuna carta si rigira da sola",

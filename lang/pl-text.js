@@ -503,7 +503,7 @@ Object.assign(STRINGS.pl, {
     pairs_rules_basics_title: "Podstawy",
     pairs_term_cards: "Karty",
     pairs_rules_cards: "Wszystkie karty leżą zakryte, a każdy kształt występuje na dokładnie dwóch z nich. Wybierasz rozmiar: 4 x 3 (6 par), 4 x 4 (8 par), 6 x 4 (12 par) lub 6 x 6 (18 par).",
-    pairs_rules_motif: "Przed grą wybierasz motyw: kształty (domyślnie) albo 18 zwierząt. Zmieniają się tylko obrazki, zasady pozostają takie same.",
+    pairs_rules_motif: "Przed grą wybierasz motyw: kształty (domyślnie), zwierzęta, owoce i warzywa albo pojazdy, w każdym 18 różnych obrazków. Zmieniają się tylko obrazki, zasady pozostają takie same.",
     pairs_term_turn: "Tura",
     pairs_rules_turn: "W swojej turze odkryj dwie karty, jedną po drugiej. Jeśli pokazują ten sam kształt, zabierasz parę i grasz ponownie. Jeśli nie, obie zostają z powrotem zakryte i kolej przechodzi na drugiego gracza.",
     pairs_term_notimer: "Nic nie odwraca się samo",

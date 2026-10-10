@@ -503,7 +503,7 @@ Object.assign(STRINGS.de, {
     pairs_rules_basics_title: "Die Grundidee",
     pairs_term_cards: "Die Karten",
     pairs_rules_cards: "Alle Karten liegen verdeckt, und jede Form kommt auf genau zwei von ihnen vor. Du wählst die Größe: 4 x 3 (6 Paare), 4 x 4 (8 Paare), 6 x 4 (12 Paare) oder 6 x 6 (18 Paare).",
-    pairs_rules_motif: "Vor dem Spiel wählst du das Motiv: Formen (Standard) oder 18 Tiere. Nur die Bilder ändern sich, die Regeln bleiben gleich.",
+    pairs_rules_motif: "Vor dem Spiel wählst du das Motiv: Formen (Standard), Tiere, Obst und Gemüse oder Fahrzeuge – jeweils 18 verschiedene Bilder. Nur die Bilder ändern sich, die Regeln bleiben gleich.",
     pairs_term_turn: "Ein Zug",
     pairs_rules_turn: "Bist du am Zug, deckst du nacheinander zwei Karten auf. Zeigen sie dieselbe Form, nimmst du das Paar und bist noch einmal dran. Wenn nicht, werden beide wieder umgedreht, und der andere Spieler ist am Zug.",
     pairs_term_notimer: "Nichts dreht sich von selbst zurück",
