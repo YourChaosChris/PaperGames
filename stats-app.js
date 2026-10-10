@@ -72,7 +72,8 @@ const STATS_GAME_NAME_KEY = {
   war: "game_war",
   snakesladders: "game_snakesladders",
   blockers: "game_blockers",
-  blackjack: "game_blackjack"
+  blackjack: "game_blackjack",
+  poker: "game_poker"
 };
 
 function gameDisplayName(game) {

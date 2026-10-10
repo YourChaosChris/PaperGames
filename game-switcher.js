@@ -95,7 +95,8 @@
     ["war", "game_war"],
     ["snakesladders", "game_snakesladders"],
     ["blockers", "game_blockers"],
-    ["blackjack", "game_blackjack"]
+    ["blackjack", "game_blackjack"],
+    ["poker", "game_poker"]
   ];
 
   var GAME_SLUGS = {};

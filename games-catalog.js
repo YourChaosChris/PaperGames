@@ -831,4 +831,15 @@ const GAMES_CATALOG = [
     added: "2026-10-10",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"6\" width=\"17\" height=\"25\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" transform=\"rotate(-10 11 18)\"/><rect x=\"20\" y=\"9\" width=\"17\" height=\"25\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" transform=\"rotate(10 28 21)\"/><text x=\"10.5\" y=\"21\" text-anchor=\"middle\" font-size=\"9\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\" transform=\"rotate(-10 11 18)\">A</text><g transform=\"translate(23 16) scale(0.11)\"><path d=\"M50 4 C50 4 6 36 6 60 C6 73 16 81 27 81 C36 81 43 76 46 70 L41 96 L59 96 L54 70 C57 76 64 81 73 81 C84 81 94 73 94 60 C94 36 50 4 50 4 Z\" fill=\"#141413\"/></g><text x=\"20\" y=\"39\" text-anchor=\"middle\" font-size=\"8\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">21</text></svg></span>"
   },
+  {
+    slug: "poker",
+    category: "party",
+    nameKey: "game_poker",
+    nameText: "Poker",
+    descKey: "home_poker_desc",
+    descText: "Texas Hold'em against 1 to 3 computers: two cards of your own, five shared cards, and fixed bet steps - fold, call or raise. The best five-card hand wins. Played with chips, which are only points in the game.",
+    popular: false,
+    added: "2026-10-10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"6\" width=\"17\" height=\"25\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" transform=\"rotate(-10 11 18)\"/><rect x=\"20\" y=\"9\" width=\"17\" height=\"25\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" transform=\"rotate(10 28 21)\"/><g transform=\"translate(5.5 13) scale(0.11)\"><path d=\"M50 4 C50 4 6 36 6 60 C6 73 16 81 27 81 C36 81 43 76 46 70 L41 96 L59 96 L54 70 C57 76 64 81 73 81 C84 81 94 73 94 60 C94 36 50 4 50 4 Z\" fill=\"#141413\"/></g><g transform=\"translate(23 16) scale(0.11)\"><path d=\"M50 4 C50 4 6 36 6 60 C6 73 16 81 27 81 C36 81 43 76 46 70 L41 96 L59 96 L54 70 C57 76 64 81 73 81 C84 81 94 73 94 60 C94 36 50 4 50 4 Z\" fill=\"#141413\"/></g><circle cx=\"20\" cy=\"35\" r=\"3.6\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"20\" cy=\"35\" r=\"1.4\" fill=\"#141413\"/></svg></span>"
+  },
 ];

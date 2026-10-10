@@ -88,6 +88,13 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   right (Ace 1 or 11), the bank draws below 17 and stands from 17, no
   card is dealt twice, the chips change by the bet as the result says
   and never go below 0.
+- `node tests/poker-core.js` - no server or browser needed (about 40
+  seconds). Checks 200 fixed Texas Hold'em hands (20 per hand category)
+  and 30 fixed pairs of hands, compares 3000 random hands with a separate
+  reference, then plays 2000 games between computers (2 to 4 players,
+  levels mixed) and fails unless every action is legal, the chips always
+  add up to the same total, no stack goes below 0 and every pot is shared
+  out in full.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

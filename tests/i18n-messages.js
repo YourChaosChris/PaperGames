@@ -417,6 +417,23 @@ const SAMPLES = [
   "Over 21! You lose 5 chips. No chips left. Tap New game to start again with 100 chips.",
   "Your turn: tap Card, Stand or Double.",
   "Points: 17", "Points: 10 + ?", "Bet: 20", "No chips left",
+  // Poker
+  "Hand 3, dealer: Computer 2. Your cards: A♠ K♦. Your turn: choose an action below.",
+  "Hand 1, dealer: You. Your cards: 7♣ 7♥. Computer 1's turn.",
+  "Computer 1 calls. Computer 2 raises to 20. Your turn: choose an action below.",
+  "You raise to 30. Computer 1 folds.",
+  "You call. The flop: K♠ 7♦ 2♣. Computer 1's turn.",
+  "Computer 2 checks. The turn: 9♥. Your turn: choose an action below.",
+  "You check. The river: Q♣. Computer 1's turn.",
+  "Computer 3 bets 20. Computer 3 is all in.",
+  "You call. You are all in. The flop: 5♦ 6♦ 7♦. The turn: 8♠. The river: J♣. You win 40 chips with Straight. Tap Next hand to go on.",
+  "Computer 1 folds. You win 15 chips - everyone else folded. Tap Next hand to go on.",
+  "You fold. Computer 2 wins 25 chips - everyone else folded. Tap Next hand to go on.",
+  "Computer 1 wins 120 chips with Two pair. Computer 2 wins 60 chips with Full house.",
+  "You have all the chips - you win!",
+  "You have no chips left - you lose.",
+  "You have: Three of a kind", "You have: Royal flush", "Call 10", "Bet 20", "Raise to 40",
+  "High card", "One pair", "Two pair", "Four of a kind", "Dealer", "folded",
   // Link the Pairs: status line, hints, screen-reader labels
   "Tap a symbol or drag from it to draw its line.",
   "Now tap the cells one after another, or drag.",
@@ -546,6 +563,11 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  // Poker
+  "Computer 2, Dealer, Chips: 180, Bet: 20, all in",
+  "You, Chips: 200",
+  "Computer 1, Chips: 0, out",
+  "no card yet",
   // Blackjack
   "Bet 10 chips",
   "face-down card",
