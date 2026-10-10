@@ -2318,6 +2318,40 @@ const STRINGS = {
     msg_br_contract_h: "Contract",
     msg_br_ns: "North-South",
     msg_br_ew: "East-West",
+    game_tenpairs: "Pairs to Ten",
+    home_tenpairs_desc: "The pen-and-paper puzzle of crossing out digits: pairs that are equal or add up to 10 and see each other. Add the open digits when you are stuck. Classic start or random, three levels.",
+    tp_history_intro: "A pen-and-paper puzzle from school exercise books; where it comes from is not documented.",
+    quickrules_tenpairs_1: "Tap two digits that are equal (3 and 3) or add up to 10 (3 and 7) to cross them out.",
+    quickrules_tenpairs_2: "They must see each other: next to each other across, down or diagonally, or with only crossed-out cells between them; across also runs over the end of a row.",
+    quickrules_tenpairs_3: "Stuck? Tap Add: the open digits are written again at the end (at most 5 times). Cross out every digit to win.",
+    tp_start_label: "Start:",
+    tp_start_classic: "Classic",
+    tp_start_random: "Random",
+    tp_add_button: "Add",
+    msg_tp_tap: "Tap a digit, then a second one: equal or adding up to 10.",
+    msg_tp_won: "You crossed out every digit!",
+    msg_tp_lost_rows: "The field has grown to more than 40 rows - the game is lost.",
+    msg_tp_lost_adds: "No pair is left and no Add either - the game is lost.",
+    msg_tp_noadd_pair: "No pair is left: tap Add.",
+    msg_tp_second: "Now tap the second digit.",
+    msg_tp_sum: "These two don't add up to 10 and aren't equal.",
+    msg_tp_see: "These two don't see each other.",
+    msg_t_tp_crossed: "Crossed out: {n} and {m}.",
+    msg_tp_row1: "An empty row vanished.",
+    msg_t_tp_rows: "{n} empty rows vanished.",
+    msg_tp_noadd: "No Add left.",
+    msg_tp_added: "The open digits were added at the end.",
+    msg_tp_undone: "Undone.",
+    msg_tp_hint_none: "Hint: no pair is left - tap Add.",
+    msg_tp_hint: "Hint: the two marked digits can be crossed out.",
+    msg_tp_crossed_out: "crossed out",
+    msg_tp_hint_lc: "hint",
+    msg_t_tp_info: "Digits left: {n} · Add used: {m} of {k}",
+    msg_t_tp_add: "Add ({n} left)",
+    msg_tp_classic: "Classic start",
+    msg_tp_r1: "Random start · Easy",
+    msg_tp_r2: "Random start · Medium",
+    msg_tp_r3: "Random start · Hard",
     msg_cn_r_frozen: "The pile is frozen: you need two natural cards of the top card's rank.",
     msg_cn_r_frozen1: "Before your first meld you need two natural cards of the top card's rank to take the pile.",
     msg_cn_r_two: "Select at least two cards to meld with the top card.",
@@ -3381,7 +3415,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 79;
+  const GAME_COUNT = 80;
 
   function t(key, lang) {
     const l = lang || getLang();

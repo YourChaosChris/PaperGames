@@ -100,7 +100,8 @@
     ["skat", "game_skat"],
     ["schafkopf", "game_schafkopf"],
     ["canasta", "game_canasta"],
-    ["bridge", "game_bridge"]
+    ["bridge", "game_bridge"],
+    ["tenpairs", "game_tenpairs"]
   ];
 
   var GAME_SLUGS = {};

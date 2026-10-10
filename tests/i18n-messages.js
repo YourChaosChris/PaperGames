@@ -513,6 +513,14 @@ const SAMPLES = [
   "You must follow suit: play a heart.", "Deal 2 of 4", "Dealer: West", "Vulnerable: North-South", "Vulnerable: nobody", "Score: North-South 420, East-West 0",
   "Games: North-South 1, East-West 0", "Tricks: North-South 6, East-West 7.", "Your high-card points: 12", "No bid", "Double (X)", "Redouble (XX)",
   "dummy", "North-South", "East-West",
+  // Pairs to Ten
+  "Tap a digit, then a second one: equal or adding up to 10.", "Now tap the second digit.",
+  "These two don't add up to 10 and aren't equal. Now tap the second digit.", "These two don't see each other. Now tap the second digit.",
+  "Crossed out: 3 and 7. An empty row vanished.", "Crossed out: 5 and 5. 2 empty rows vanished.", "Crossed out: 1 and 9. No pair is left: tap Add.",
+  "The open digits were added at the end.", "No Add left.", "Undone.", "Hint: no pair is left - tap Add.", "Hint: the two marked digits can be crossed out.",
+  "Crossed out: 4 and 6. You crossed out every digit!", "No pair is left and no Add either - the game is lost.",
+  "The field has grown to more than 40 rows - the game is lost.", "Digits left: 18 · Add used: 1 of 5", "Add (4 left)",
+  "Classic start", "Random start · Easy", "Random start · Hard",
   // Link the Pairs: status line, hints, screen-reader labels
   "Tap a symbol or drag from it to draw its line.",
   "Now tap the cells one after another, or drag.",
@@ -642,6 +650,8 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  // Pairs to Ten
+  "Row 2, column 5, 7", "Row 3, column 1, crossed out", "Row 1, column 9, 9, selected", "Row 2, column 1, 1, hint",
   // Bridge
   "Card A♠, not allowed now", "North, K♥", "3 no trump, West, 9 tricks", "1 no trump",
   // Canasta

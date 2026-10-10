@@ -127,6 +127,12 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   the declarer is right, every card follows suit when it can, 13 tricks
   are played with each card once, the trick goes to the right card and
   the score matches a separate calculation.
+- `node tests/tenpairs-core.js` - no server or browser needed (a few
+  seconds). Checks 45 fixed Pairs to Ten examples (seeing each other
+  across, down, diagonally, over crossed-out cells and over the end of a
+  row; equal or 10; vanishing rows; Add; win and loss), then plays 1000
+  games only with Hint and Add and fails unless every crossed-out pair is
+  valid (checked separately) and every game ends.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

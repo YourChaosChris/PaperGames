@@ -886,4 +886,15 @@ const GAMES_CATALOG = [
     added: "2026-10-10",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"4\" y=\"7\" width=\"15\" height=\"22\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" transform=\"rotate(-10 11 18)\"/><rect x=\"21\" y=\"7\" width=\"15\" height=\"22\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" transform=\"rotate(10 28 18)\"/><g transform=\"translate(6.5 12) scale(0.1) rotate(-10 50 50)\"><path d=\"M50 4 C50 4 6 36 6 60 C6 73 16 81 27 81 C36 81 43 76 46 70 L41 96 L59 96 L54 70 C57 76 64 81 73 81 C84 81 94 73 94 60 C94 36 50 4 50 4 Z\" fill=\"#141413\"/></g><g transform=\"translate(23.5 12) scale(0.1) rotate(10 50 50)\"><path d=\"M50 90 C50 90 9 62 9 34 C9 20 19 11 30 11 C39 11 46 16 50 24 C54 16 61 11 70 11 C81 11 91 20 91 34 C91 62 50 90 50 90 Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"12\" stroke-linejoin=\"round\"/></g><text x=\"20\" y=\"38\" text-anchor=\"middle\" font-size=\"8\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">N E S W</text></svg></span>"
   },
+  {
+    slug: "tenpairs",
+    category: "puzzles",
+    nameKey: "game_tenpairs",
+    nameText: "Pairs to Ten",
+    descKey: "home_tenpairs_desc",
+    descText: "The pen-and-paper puzzle of crossing out digits: pairs that are equal or add up to 10 and see each other. Add the open digits when you are stuck. Classic start or random, three levels.",
+    popular: false,
+    added: "2026-10-10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"2\" y=\"4\" width=\"36\" height=\"32\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><text x=\"10\" y=\"18\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">3</text><text x=\"30\" y=\"18\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">4</text><text x=\"10\" y=\"32\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">7</text><text x=\"30\" y=\"32\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">1</text><path d=\"M5 22 L35 8\" stroke=\"#141413\" stroke-width=\"2.5\"/></svg></span>"
+  },
 ];

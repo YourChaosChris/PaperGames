@@ -81,6 +81,8 @@ echo "=== canasta-core.js ==="
 node "$ROOT/tests/canasta-core.js" || status=1
 echo "=== bridge-core.js ==="
 node "$ROOT/tests/bridge-core.js" || status=1
+echo "=== tenpairs-core.js ==="
+node "$ROOT/tests/tenpairs-core.js" || status=1
 echo ""
 
 echo "=== css-check.js ==="

@@ -11501,6 +11501,66 @@ button.cn-meld {
   min-width: 3.2rem;
 }
 
+/* Pairs to Ten: nine cells per row; a crossed-out cell shows a hollow
+   digit with a thick diagonal line, the selected cell a thick double
+   frame, a hinted cell a dashed frame and a corner triangle. */
+.tp-grid {
+  text-align: center;
+  margin: 0.4rem 0;
+}
+
+.tp-row {
+  white-space: nowrap;
+}
+
+.tp-cell {
+  display: inline-block;
+  vertical-align: top;
+  width: 10.6%;
+  height: 2.6rem;
+  margin: 0 0.2% 0.2rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 2.4rem;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.tp-cell:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.tp-empty {
+  border-color: transparent;
+}
+
+.tp-crossed {
+  color: #fff;
+  -webkit-text-stroke: 1px var(--text);
+  background: linear-gradient(to top right, transparent calc(50% - 2px), var(--text) calc(50% - 2px), var(--text) calc(50% + 2px), transparent calc(50% + 2px)) #fff;
+  border-style: dotted;
+}
+
+.tp-selected {
+  border: 4px double var(--border);
+}
+
+.tp-hint {
+  border: 3px dashed var(--border);
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 8px, transparent 8px) #fff;
+}
+
+.tp-actions button {
+  margin: 0.15rem;
+}
+
 .cn-score-table .cn-sum-row td,
 .cn-score-table .cn-sum-row th {
   font-weight: 700;
