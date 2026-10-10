@@ -743,4 +743,15 @@ const GAMES_CATALOG = [
     added: "2026-10-09",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M20 4C22 7 22 8.5 20 9.5C18 8.5 18 7 20 4Z\" fill=\"#141413\"/><path d=\"M20 10V15\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"11\" y=\"15\" width=\"18\" height=\"8\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"7\" y=\"23\" width=\"26\" height=\"11\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M7 27C10 30 12 25 15 28C18 31 20 25 23 28C26 31 28 25 33 28\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.8\"/></svg></span>"
   },
+  {
+    slug: "animalsudoku",
+    category: "puzzles",
+    nameKey: "game_animalsudoku",
+    nameText: "Animal Sudoku",
+    descKey: "home_animalsudoku_desc",
+    descText: "Sudoku for children with animals instead of numbers: 4 x 4 or 6 x 6, every animal once in each row, column and box. Pick an animal, tap a cell - no reading needed.",
+    popular: false,
+    added: "2026-10-10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><path d=\"M11.5 3V37M28.5 3V37M3 11.5H37M3 28.5H37\" stroke=\"#141413\" stroke-width=\"1\"/><path d=\"M20 3V37M3 20H37\" stroke=\"#141413\" stroke-width=\"2.4\"/><circle cx=\"8.5\" cy=\"9\" r=\"2.4\" fill=\"#141413\"/><circle cx=\"14.5\" cy=\"9\" r=\"2.4\" fill=\"#141413\"/><circle cx=\"11.5\" cy=\"13\" r=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.6\"/><path d=\"M24.5 28L25 23L27.5 25.5M32.5 28L32 23L29.5 25.5\" fill=\"none\" stroke=\"#141413\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><circle cx=\"28.5\" cy=\"30\" r=\"3.4\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.6\"/></svg></span>"
+  },
 ];

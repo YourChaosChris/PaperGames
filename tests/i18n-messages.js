@@ -351,6 +351,17 @@ const SAMPLES = [
   "You drew the 7♥. The drawn card fits: play it or keep it.",
   "Player 1 drew the 7♥. The drawn card fits: play it or keep it.",
   "Computer 1 played 7♠. You must draw 2 cards or play a Seven.",
+  // Animal Sudoku: status line, hints, screen-reader labels
+  "Choose an animal below, then tap a cell.",
+  "Placed: 7 / 16",
+  "Placed: Owl in row 2, column 5.",
+  "In row 3, one animal has only one cell left. The cell is marked.",
+  "In column 4, one animal has only one cell left. The cell is marked.",
+  "Still missing there: Fish. Every other free cell is ruled out for it, so it goes in the marked cell.",
+  "Only one animal fits the marked cell (row 1, column 2).",
+  "Its row, column and box already hold every other animal. Only one is left: Rabbit.",
+  "The animal in row 4, column 1 does not belong there. Remove it, then ask for a hint again.",
+  "Solved! Every animal is in its place.",
   // Mau Mau children's version: animal cards ("Dog 3") inside sentences
   "The first card is Dog 3. Choose a card to play.",
   "You played Cat 5. Computer 1: Mau!",

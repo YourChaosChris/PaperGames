@@ -10487,6 +10487,69 @@ button.concan-meld {
   outline-offset: -7px;
 }
 
+/* Animal Sudoku (animalsudoku-app.js): square cells (float grid, height
+   set from JS), thick lines between the boxes. An animal that belongs to
+   the puzzle has a heavy inner frame; an animal that repeats gets a
+   dashed inner frame, a hinted cell a double one - shapes, never grey. */
+.animalsudoku-board-wrap {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.animalsudoku-board {
+  position: relative;
+  width: 100%;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.animalsudoku-cell {
+  float: left;
+  position: relative;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 0;
+  cursor: pointer;
+}
+
+.animalsudoku-cell.animalsudoku-box-t { border-top-width: 3px; }
+.animalsudoku-cell.animalsudoku-box-l { border-left-width: 3px; }
+
+.animalsudoku-animal {
+  display: block;
+  width: 64%;
+  height: 64%;
+  margin: 18%;
+  pointer-events: none;
+}
+
+/* A white gap keeps the frame of a given animal apart from the box lines. */
+.animalsudoku-cell.animalsudoku-given {
+  box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 7px var(--text);
+  cursor: default;
+}
+
+.animalsudoku-cell.animalsudoku-conflict {
+  outline: 3px dashed var(--text);
+  outline-offset: -11px;
+}
+
+.animalsudoku-cell.hint-cell {
+  outline: 6px double var(--text);
+  outline-offset: -12px;
+}
+
+.animalsudoku-example {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  margin: 0 auto;
+}
+
 /* Rules page: the solved example drawn as a picture. */
 .cake-example-figure {
   margin: 0.5rem 0 0.75rem;

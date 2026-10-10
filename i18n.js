@@ -1747,6 +1747,35 @@ const STRINGS = {
 
 
     cake_level_hard: "Hard (6x6, 5 animals)",
+    game_animalsudoku: "Animal Sudoku",
+    home_animalsudoku_desc: "Sudoku for children with animals instead of numbers: 4 x 4 or 6 x 6, every animal once in each row, column and box. Pick an animal, tap a cell - no reading needed.",
+    animalsudoku_new_game: "New puzzle",
+    animalsudoku_size_label: "Board size",
+    animalsudoku_size_4: "4 x 4 (4 animals)",
+    animalsudoku_size_6: "6 x 6 (6 animals)",
+    animalsudoku_level_label: "Level",
+    animalsudoku_board_label: "Animal Sudoku board",
+    animalsudoku_palette_label: "What to place",
+    animalsudoku_erase: "Erase",
+    animalsudoku_history_intro: "Picture Sudoku on small grids is a children's version of the number puzzle that became popular around the world in the mid-2000s.",
+    quickrules_animalsudoku_1: "Put the animals in so that each animal appears exactly once in every row, every column and every box.",
+    quickrules_animalsudoku_2: "Choose an animal in the row of buttons under the board, then tap an empty cell; the eraser takes an animal off again.",
+    quickrules_animalsudoku_3: "Animals with a heavy frame belong to the puzzle and stay - and the Hint button shows a mistake first, then the next step.",
+    msg_animalsudoku_pick: "Choose an animal below, then tap a cell.",
+    msg_animalsudoku_given: "This animal is part of the puzzle and stays.",
+    msg_animalsudoku_solved: "Solved! Every animal is in its place.",
+    msg_animalsudoku_every: "Every animal is in its place.",
+    msg_t_animalsudoku_count: "Placed: {n} / {m}",
+    msg_animalsudoku_conflict: "Some animals appear twice in a row, column or box. The cells are marked.",
+    msg_t_animalsudoku_wrong: "The animal in row {n}, column {m} does not belong there. Remove it, then ask for a hint again.",
+    msg_t_animalsudoku_placed: "Placed: {s} in row {n}, column {m}.",
+    msg_t_animalsudoku_hidden_row: "In row {n}, one animal has only one cell left. The cell is marked.",
+    msg_t_animalsudoku_hidden_col: "In column {n}, one animal has only one cell left. The cell is marked.",
+    msg_animalsudoku_hidden_box: "In this box, one animal has only one cell left. The cell is marked.",
+    msg_t_animalsudoku_hidden_why: "Still missing there: {s}. Every other free cell is ruled out for it, so it goes in the marked cell.",
+    msg_t_animalsudoku_naked: "Only one animal fits the marked cell (row {n}, column {m}).",
+    msg_t_animalsudoku_naked_why: "Its row, column and box already hold every other animal. Only one is left: {s}.",
+    msg_animalsudoku_given_word: "given",
 
     game_hashi: "Hashiwokakero",
     home_hashi_desc: "Connect every numbered island with straight single or double bridges so the whole network joins together and every island's count matches its number. Freshly generated, in three difficulty levels.",
@@ -2687,7 +2716,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 66;
+  const GAME_COUNT = 67;
 
   function t(key, lang) {
     const l = lang || getLang();

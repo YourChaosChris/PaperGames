@@ -51,6 +51,11 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   at its level, and can be played to the end with the hint button
   (mistakes first, animals in the order of reasoning, the cake left to
   the player).
+- `node tests/animalsudoku-core.js` - no server or browser needed.
+  Generates 60 "Animal Sudoku" puzzles per size and level from fixed
+  seeds and fails unless each has exactly one solution, can be solved
+  with the two simple steps alone, and can be played to the end with
+  the hint only.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random
