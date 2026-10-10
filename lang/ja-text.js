@@ -503,6 +503,7 @@ Object.assign(STRINGS.ja, {
     pairs_rules_basics_title: "基本",
     pairs_term_cards: "カード",
     pairs_rules_cards: "カードはすべて裏向きに並べられ、どの図形もちょうど2枚のカードに描かれています。大きさは4 x 3（6ペア）、4 x 4（8ペア）、6 x 4（12ペア）、6 x 6（18ペア）から選べます。",
+    pairs_rules_motif: "ゲームの前に絵柄を選びます：図形(標準)か18種類の動物です。変わるのは絵だけで、ルールは同じです。",
     pairs_term_turn: "手番",
     pairs_rules_turn: "自分の手番では、カードを1枚ずつ2枚めくります。同じ図形ならそのペアを取り、もう一度手番になります。違えば2枚とも裏向きに戻り、相手の手番になります。",
     pairs_term_notimer: "カードは勝手に裏返らない",

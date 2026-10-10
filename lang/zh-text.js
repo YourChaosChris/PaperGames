@@ -503,6 +503,7 @@ Object.assign(STRINGS.zh, {
     pairs_rules_basics_title: "基本玩法",
     pairs_term_cards: "牌",
     pairs_rules_cards: "所有牌都背面朝上放置，每种图形恰好出现在其中两张牌上。你可以选择大小：4 x 3（6 对）、4 x 4（8 对）、6 x 4（12 对）或 6 x 6（18 对）。",
+    pairs_rules_motif: "开局前选择图案：图形(默认)或18种动物。只有图片不同，规则不变。",
     pairs_term_turn: "一个回合",
     pairs_rules_turn: "轮到你时，先后翻开两张牌。如果它们图形相同，你就拿走这一对并再走一次。如果不同，两张牌都会重新翻回背面，轮到另一位玩家。",
     pairs_term_notimer: "牌不会自己翻回去",

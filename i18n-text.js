@@ -504,6 +504,7 @@ Object.assign(STRINGS.en, {
     pairs_rules_basics_title: "The basic idea",
     pairs_term_cards: "The cards",
     pairs_rules_cards: "All cards lie face down, and every shape appears on exactly two of them. You choose the size: 4 x 3 (6 pairs), 4 x 4 (8 pairs), 6 x 4 (12 pairs) or 6 x 6 (18 pairs).",
+    pairs_rules_motif: "Before the game you choose the motif: shapes (the default) or 18 animals. Only the pictures change; the rules stay the same.",
     pairs_term_turn: "A turn",
     pairs_rules_turn: "On your turn, turn over two cards, one after the other. If they show the same shape, you take the pair and go again. If not, both are turned face down again and it is the other player's turn.",
     pairs_term_notimer: "Nothing turns back by itself",

@@ -503,6 +503,7 @@ Object.assign(STRINGS.nl, {
     pairs_rules_basics_title: "Het idee",
     pairs_term_cards: "De kaarten",
     pairs_rules_cards: "Alle kaarten liggen dicht, en elke vorm staat op precies twee ervan. Je kiest zelf de grootte: 4 x 3 (6 paren), 4 x 4 (8 paren), 6 x 4 (12 paren) of 6 x 6 (18 paren).",
+    pairs_rules_motif: "Voor het spel kies je het motief: vormen (standaard) of 18 dieren. Alleen de plaatjes veranderen; de regels blijven gelijk.",
     pairs_term_turn: "Een beurt",
     pairs_rules_turn: "Draai op je beurt twee kaarten om, de een na de ander. Tonen ze dezelfde vorm, dan neem je het paar en ben je nog eens aan de beurt. Zo niet, dan worden beide weer dichtgelegd en is de andere speler aan de beurt.",
     pairs_term_notimer: "Niets draait vanzelf terug",

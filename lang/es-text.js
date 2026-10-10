@@ -503,6 +503,7 @@ Object.assign(STRINGS.es, {
     pairs_rules_basics_title: "La idea básica",
     pairs_term_cards: "Las cartas",
     pairs_rules_cards: "Todas las cartas están boca abajo, y cada forma aparece exactamente en dos de ellas. Tú eliges el tamaño: 4 x 3 (6 parejas), 4 x 4 (8 parejas), 6 x 4 (12 parejas) o 6 x 6 (18 parejas).",
+    pairs_rules_motif: "Antes de la partida eliges el motivo: formas (por defecto) o 18 animales. Solo cambian las imágenes; las reglas siguen igual.",
     pairs_term_turn: "Un turno",
     pairs_rules_turn: "En tu turno, da la vuelta a dos cartas, una tras otra. Si muestran la misma forma, te llevas la pareja y vuelves a jugar. Si no, ambas se vuelven a poner boca abajo y es el turno del otro jugador.",
     pairs_term_notimer: "Nada se da la vuelta solo",

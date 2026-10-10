@@ -9,8 +9,10 @@
 // computer's turn: its two cards stay open until the player taps.
 //
 // The 18 card faces are inline black-and-white SVG shapes that differ in
-// outline, not in shade: no grey fills, no emoji, no raster images.
-// Taken pairs leave an empty, dashed slot.
+// outline, not in shade: no grey fills, no emoji, no raster images. The
+// "Animals" motif swaps them for 18 animal line drawings
+// (pairs-animals.js); the rules stay the same. Taken pairs leave an
+// empty, dashed slot.
 
 const PAIRS_SYMBOLS = [
   // 0 disc
@@ -55,8 +57,29 @@ function pairsSymbolSvg(n) {
   return '<svg class="pairs-symbol" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="#111">' + PAIRS_SYMBOLS[n] + "</g></svg>";
 }
 
+// English animal names for screen readers; I18n translates them through
+// the msg_pairs_animal_* keys.
+const PAIRS_ANIMAL_NAMES = {
+  dog: "Dog", cat: "Cat", rabbit: "Rabbit", mouse: "Mouse", hedgehog: "Hedgehog", owl: "Owl",
+  fish: "Fish", turtle: "Turtle", snail: "Snail", duck: "Duck", frog: "Frog", pig: "Pig",
+  elephant: "Elephant", butterfly: "Butterfly", bee: "Bee", lion: "Lion", giraffe: "Giraffe", sheep: "Sheep"
+};
+
+function pairsMotif() {
+  return AppStatePairs.motif === "animals" && typeof PairsAnimals !== "undefined" ? "animals" : "shapes";
+}
+
+function pairsFaceSvg(n) {
+  return pairsMotif() === "animals" ? PairsAnimals.svg(n) : pairsSymbolSvg(n);
+}
+
+function pairsFaceLabel(n) {
+  return pairsMotif() === "animals" ? PAIRS_ANIMAL_NAMES[PairsAnimals.NAMES[n]] : "symbol " + (n + 1);
+}
+
 const AppStatePairs = {
   opponent: "two",          // "solo" | "two" | "ai"
+  motif: "shapes",          // "shapes" | "animals"
   aiLevel: 2,
   humanPlayer: "1",         // vs the computer
   state: null,
@@ -72,6 +95,7 @@ function savePairsGame() {
     opponent: AppStatePairs.opponent,
     aiLevel: AppStatePairs.aiLevel,
     humanPlayer: AppStatePairs.humanPlayer,
+    motif: AppStatePairs.motif,
     state: AppStatePairs.state,
     seen: AppStatePairs.seen
   });
@@ -113,6 +137,7 @@ function initPairsApp() {
   const startBtn = document.getElementById("start-pairs-game");
   const sizeSelect = document.getElementById("pairs-size");
   const opponentSelect = document.getElementById("pairs-opponent");
+  const motifSelect = document.getElementById("pairs-motif");
   const boardContainer = document.getElementById("board-container");
 
   if (menuToggle && settingsPanel) {
@@ -129,6 +154,7 @@ function initPairsApp() {
     let opponent = "two", level = 0;
     if (choice === "solo") opponent = "solo";
     else if (choice !== "two") { opponent = "ai"; level = parseInt(choice, 10) || 2; }
+    AppStatePairs.motif = motifSelect && motifSelect.value === "animals" ? "animals" : "shapes";
     startNewGamePairs(size, opponent, level);
   });
 
@@ -148,10 +174,12 @@ function initPairsApp() {
     AppStatePairs.opponent = saved.opponent === "solo" || saved.opponent === "ai" ? saved.opponent : "two";
     AppStatePairs.aiLevel = saved.aiLevel || 2;
     AppStatePairs.humanPlayer = saved.humanPlayer === "2" ? "2" : "1";
+    AppStatePairs.motif = saved.motif === "animals" ? "animals" : "shapes";
     AppStatePairs.state = saved.state;
     AppStatePairs.seen = Array.isArray(saved.seen) ? saved.seen : [];
     AppStatePairs.gameOver = false;
     if (sizeSelect) sizeSelect.value = saved.state.size || PairsCore.DEFAULT_SIZE;
+    if (motifSelect) motifSelect.value = AppStatePairs.motif;
     showBoardSectionPairs();
     buildPairsBoardDOM();
     afterChangePairs();
@@ -335,17 +363,17 @@ function updatePairsBoard() {
     const i = parseInt(btn.dataset.card, 10);
     const taken = s.taken[i] !== null;
     const open = s.open.indexOf(i) !== -1;
-    const view = taken ? "taken" : open ? "open-" + s.cards[i] : "down";
+    const view = taken ? "taken" : open ? "open-" + pairsMotif() + "-" + s.cards[i] : "down";
     if (btn.dataset.view !== view) { // unchanged cards keep their content - fewer e-ink redraws
       btn.dataset.view = view;
-      btn.innerHTML = open ? pairsSymbolSvg(s.cards[i]) : "";
+      btn.innerHTML = open ? pairsFaceSvg(s.cards[i]) : "";
     }
     btn.classList.toggle("pairs-card-down", !taken && !open);
     btn.classList.toggle("pairs-card-open", open);
     btn.classList.toggle("pairs-card-taken", taken);
     const r = Math.floor(i / s.cols) + 1, c = i % s.cols + 1;
     let label = "Row " + r + ", column " + c + ", ";
-    label += taken ? "pair found" : open ? "symbol " + (s.cards[i] + 1) : "face down";
+    label += taken ? "pair found" : open ? pairsFaceLabel(s.cards[i]) : "face down";
     I18n.setAria(btn, label);
   });
   ensurePairsBoardAspect();
