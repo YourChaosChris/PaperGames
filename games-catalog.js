@@ -754,4 +754,15 @@ const GAMES_CATALOG = [
     added: "2026-10-10",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><path d=\"M11.5 3V37M28.5 3V37M3 11.5H37M3 28.5H37\" stroke=\"#141413\" stroke-width=\"1\"/><path d=\"M20 3V37M3 20H37\" stroke=\"#141413\" stroke-width=\"2.4\"/><circle cx=\"8.5\" cy=\"9\" r=\"2.4\" fill=\"#141413\"/><circle cx=\"14.5\" cy=\"9\" r=\"2.4\" fill=\"#141413\"/><circle cx=\"11.5\" cy=\"13\" r=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.6\"/><path d=\"M24.5 28L25 23L27.5 25.5M32.5 28L32 23L29.5 25.5\" fill=\"none\" stroke=\"#141413\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><circle cx=\"28.5\" cy=\"30\" r=\"3.4\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.6\"/></svg></span>"
   },
+  {
+    slug: "shapesort",
+    category: "puzzles",
+    nameKey: "game_shapesort",
+    nameText: "Shape Sort",
+    descKey: "home_shapesort_desc",
+    descText: "A calm sorting puzzle: move the stones between tubes until every tube holds four of one shape. Shapes instead of colours, so it reads on black-and-white e-ink; undo as often as you like.",
+    popular: false,
+    added: "2026-10-10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"5\" y=\"4\" width=\"13\" height=\"32\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><rect x=\"22\" y=\"4\" width=\"13\" height=\"32\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><circle cx=\"11.5\" cy=\"30\" r=\"3.6\" fill=\"#141413\"/><polygon points=\"11.5,17.5 15.5,24.5 7.5,24.5\" fill=\"#141413\"/><circle cx=\"11.5\" cy=\"12\" r=\"3.6\" fill=\"#141413\"/><rect x=\"25.5\" y=\"26.5\" width=\"6\" height=\"6\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"25.5\" y=\"18\" width=\"6\" height=\"6\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/></svg></span>"
+  },
 ];

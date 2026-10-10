@@ -1776,6 +1776,37 @@ const STRINGS = {
     msg_t_animalsudoku_naked: "Only one animal fits the marked cell (row {n}, column {m}).",
     msg_t_animalsudoku_naked_why: "Its row, column and box already hold every other animal. Only one is left: {s}.",
     msg_animalsudoku_given_word: "given",
+    game_shapesort: "Shape Sort",
+    home_shapesort_desc: "A calm sorting puzzle: move the stones between tubes until every tube holds four of one shape. Shapes instead of colours, so it reads on black-and-white e-ink; undo as often as you like.",
+    shapesort_new_game: "New puzzle",
+    shapesort_shuffle: "Shuffle",
+    shapesort_level_label: "Level",
+    shapesort_level_easy: "Easy (4 shapes, 6 tubes)",
+    shapesort_level_medium: "Medium (6 shapes, 8 tubes)",
+    shapesort_level_hard: "Hard (8 shapes, 10 tubes)",
+    shapesort_board_label: "Tubes",
+    shapesort_history_intro: "Moving pieces between holders by fixed rules is an old idea in puzzles - the Tower of Hanoi did it in 1883.",
+    quickrules_shapesort_1: "Sort the stones so that every tube is empty or holds four stones of the same shape.",
+    quickrules_shapesort_2: "Tap a tube to pick up its top stones, then tap the tube they should go to: it must be empty or have the same shape on top, with room left.",
+    quickrules_shapesort_3: "Undo takes back any number of moves, and every puzzle can be solved - the Hint button shows a move that leads there.",
+    msg_shapesort_start: "Tap a tube, then the tube the stones should go to.",
+    msg_shapesort_now: "Now tap the tube the stones should go to.",
+    msg_shapesort_empty: "This tube is empty. Tap a tube with stones first.",
+    msg_shapesort_full: "That tube is full. Choose another one.",
+    msg_shapesort_nofit: "Stones can only go onto the same shape or into an empty tube.",
+    msg_t_shapesort_sorted: "Sorted! Every tube holds one shape. Moves: {n}.",
+    msg_t_shapesort_sorted_modal: "Every tube holds one shape. Moves: {n}.",
+    msg_t_shapesort_hint: "Hint: move the top stones from tube {n} to tube {m}.",
+    msg_shapesort_stuck: "From here the stones can no longer all be sorted. Undo a few moves.",
+    msg_t_shapesort_tube: "Tube {n}",
+    msg_shapesort_shape_circle: "Circle",
+    msg_shapesort_shape_square: "Square",
+    msg_shapesort_shape_triangle: "Triangle",
+    msg_shapesort_shape_star: "Star",
+    msg_shapesort_shape_heart: "Heart",
+    msg_shapesort_shape_cross: "Cross",
+    msg_shapesort_shape_diamond: "Diamond",
+    msg_shapesort_shape_moon: "Moon",
 
     game_hashi: "Hashiwokakero",
     home_hashi_desc: "Connect every numbered island with straight single or double bridges so the whole network joins together and every island's count matches its number. Freshly generated, in three difficulty levels.",
@@ -2716,7 +2747,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 67;
+  const GAME_COUNT = 68;
 
   function t(key, lang) {
     const l = lang || getLang();

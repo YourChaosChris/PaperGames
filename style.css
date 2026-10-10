@@ -10550,6 +10550,93 @@ button.concan-meld {
   margin: 0 auto;
 }
 
+/* Shape Sort (shapesort-app.js): tubes of four slots side by side
+   (inline-blocks, JS evens out the rows). Marked stones get a dashed
+   frame, the chosen tube a heavy double frame, a finished tube a double
+   border, hinted tubes a double outline - shapes, never grey. */
+.shapesort-area {
+  text-align: center;
+}
+
+.shapesort-tubes {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.shapesort-tube-wrap {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 5px 12px;
+  text-align: center;
+}
+
+.shapesort-tube {
+  display: block;
+  width: 54px;
+  padding: 3px;
+  border: 3px solid var(--border);
+  border-radius: 6px 6px 18px 18px;
+  background: #fff;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.shapesort-slot {
+  display: block;
+  height: 44px;
+  margin: 2px 0;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.shapesort-stone-icon {
+  display: block;
+  width: 38px;
+  height: 38px;
+  margin: 3px auto;
+  pointer-events: none;
+}
+
+.shapesort-slot.shapesort-stone-marked {
+  outline: 3px dashed var(--text);
+  outline-offset: -1px;
+}
+
+.shapesort-tube.shapesort-tube-selected {
+  border-width: 5px;
+  outline: 3px double var(--text);
+  outline-offset: 2px;
+}
+
+.shapesort-tube.shapesort-tube-done {
+  border-style: double;
+  border-width: 6px;
+}
+
+.shapesort-tube.hint-cell {
+  outline: 5px double var(--text);
+  outline-offset: 3px;
+}
+
+.shapesort-tube-num {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.board-actions.shapesort-actions {
+  justify-content: center;
+}
+
+.shapesort-example {
+  display: block;
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  margin: 0 auto;
+}
+
 /* Rules page: the solved example drawn as a picture. */
 .cake-example-figure {
   margin: 0.5rem 0 0.75rem;

@@ -351,6 +351,12 @@ const SAMPLES = [
   "You drew the 7♥. The drawn card fits: play it or keep it.",
   "Player 1 drew the 7♥. The drawn card fits: play it or keep it.",
   "Computer 1 played 7♠. You must draw 2 cards or play a Seven.",
+  // Shape Sort
+  "Tap a tube, then the tube the stones should go to.",
+  "Hint: move the top stones from tube 3 to tube 7.",
+  "Sorted! Every tube holds one shape. Moves: 23.",
+  "From here the stones can no longer all be sorted. Undo a few moves.",
+  "Stones can only go onto the same shape or into an empty tube.",
   // Animal Sudoku: status line, hints, screen-reader labels
   "Choose an animal below, then tap a cell.",
   "Placed: 7 / 16",
