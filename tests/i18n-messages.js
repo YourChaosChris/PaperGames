@@ -398,6 +398,25 @@ const SAMPLES = [
   "This token cannot move 6 fields.",
   "The stone can only go on a free field, not in the bottom row.",
   "House: 5",
+  // Blackjack / 17 and 4
+  "Choose your bet and tap Deal.",
+  "You draw 7♥. Your turn: tap Card or Stand.",
+  "You draw K♠. Over 21! You lose 10 chips. Choose your bet and tap Deal.",
+  "You stand at 18. The bank draws 5♦.",
+  "You stand at 18. 18 against 17: you win 10 chips. Choose your bet and tap Deal.",
+  "You stand at 16. 16 against 20: you lose 20 chips. Choose your bet and tap Deal.",
+  "You double: 20 chips on this hand. You draw 9♣. The bank plays.",
+  "The bank is over 21. You win 5 chips.",
+  "Equal points (19): you keep your chips.",
+  "Equal points (19): the bank wins. You lose 10 chips.",
+  "Blackjack! You win 15 chips. Choose your bet and tap Deal.",
+  "The bank has blackjack. You lose 10 chips.",
+  "You and the bank both have blackjack: you keep your chips.",
+  "Two aces - fire! You win 20 chips.",
+  "The bank has two aces - fire. You lose 5 chips.",
+  "Over 21! You lose 5 chips. No chips left. Tap New game to start again with 100 chips.",
+  "Your turn: tap Card, Stand or Double.",
+  "Points: 17", "Points: 10 + ?", "Bet: 20", "No chips left",
   // Link the Pairs: status line, hints, screen-reader labels
   "Tap a symbol or drag from it to draw its line.",
   "Now tap the cells one after another, or drag.",
@@ -527,6 +546,9 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  // Blackjack
+  "Bet 10 chips",
+  "face-down card",
   // Path Blockers
   "Row 10, column 3, your token, house entry",
   "Row 1, column 6, goal, possible",

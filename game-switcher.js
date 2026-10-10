@@ -94,7 +94,8 @@
     ["oldmaid", "game_oldmaid"],
     ["war", "game_war"],
     ["snakesladders", "game_snakesladders"],
-    ["blockers", "game_blockers"]
+    ["blockers", "game_blockers"],
+    ["blackjack", "game_blackjack"]
   ];
 
   var GAME_SLUGS = {};

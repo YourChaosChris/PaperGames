@@ -82,6 +82,12 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   computer levels and fails unless every move uses the full roll, steps
   only between joined fields, never visits a field twice or passes a
   stone, and every game ends with 6 stones and 5 tokens per player.
+- `node tests/blackjack-core.js` - no server or browser needed. Checks 20
+  fixed "17 and 4" / "Blackjack" hands, then plays 10000 rounds per
+  variant with a random player and fails unless the points are counted
+  right (Ace 1 or 11), the bank draws below 17 and stands from 17, no
+  card is dealt twice, the chips change by the bet as the result says
+  and never go below 0.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

@@ -820,4 +820,15 @@ const GAMES_CATALOG = [
     added: "2026-10-10",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><path d=\"M20 10V31M9 31H31M9 21H31M9 21V31M31 21V31\" stroke=\"#141413\" stroke-width=\"2.2\" fill=\"none\"/><circle cx=\"20\" cy=\"9\" r=\"3.6\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><rect x=\"15\" y=\"16\" width=\"10\" height=\"10\" rx=\"1\" fill=\"#141413\"/><rect x=\"16.8\" y=\"20.1\" width=\"6.4\" height=\"1.8\" fill=\"#fff\"/><circle cx=\"9\" cy=\"31\" r=\"3.2\" fill=\"#141413\"/></svg></span>"
   },
+  {
+    slug: "blackjack",
+    category: "party",
+    nameKey: "game_blackjack",
+    nameText: "Blackjack",
+    descKey: "home_blackjack_desc",
+    descText: "The card game of 21 against the bank: take cards or stand, but do not go over 21. Two variants: 17 and 4 with 32 cards and Blackjack with 52. Played with chips, which are only points in the game.",
+    popular: false,
+    added: "2026-10-10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"6\" width=\"17\" height=\"25\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" transform=\"rotate(-10 11 18)\"/><rect x=\"20\" y=\"9\" width=\"17\" height=\"25\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" transform=\"rotate(10 28 21)\"/><text x=\"10.5\" y=\"21\" text-anchor=\"middle\" font-size=\"9\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\" transform=\"rotate(-10 11 18)\">A</text><g transform=\"translate(23 16) scale(0.11)\"><path d=\"M50 4 C50 4 6 36 6 60 C6 73 16 81 27 81 C36 81 43 76 46 70 L41 96 L59 96 L54 70 C57 76 64 81 73 81 C84 81 94 73 94 60 C94 36 50 4 50 4 Z\" fill=\"#141413\"/></g><text x=\"20\" y=\"39\" text-anchor=\"middle\" font-size=\"8\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">21</text></svg></span>"
+  },
 ];

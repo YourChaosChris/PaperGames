@@ -10972,3 +10972,83 @@ button.concan-meld {
   height: auto;
   margin: 0 auto;
 }
+
+/* Blackjack / 17 and 4: the bank's hand above yours, each with its
+   points; chips and bet below; the chosen bet has a thick border and a
+   tick, not only a different shade. */
+.bj-hand {
+  margin: 0.3rem 0 0.2rem;
+}
+
+.bj-hand-head {
+  text-align: center;
+  font-size: 1rem;
+}
+
+.bj-hand-head .pc-row-label {
+  display: inline;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.bj-points {
+  font-weight: 700;
+}
+
+.bj-points:not(:empty)::before {
+  content: "\00B7\00A0";
+}
+
+.bj-cards {
+  min-height: 5.4rem;
+}
+
+.bj-chips-row {
+  margin: 0.2rem 0 0.5rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.bj-bet-now {
+  margin-left: 0.8rem;
+}
+
+[dir="rtl"] .bj-bet-now {
+  margin-left: 0;
+  margin-right: 0.8rem;
+}
+
+.bj-buttons {
+  margin: 0.3rem 0;
+  text-align: center;
+}
+
+.bj-buttons > * {
+  vertical-align: middle;
+  margin: 0.2rem 0.25rem;
+}
+
+.bj-bet-label {
+  font-weight: 700;
+}
+
+.bj-bet {
+  min-width: 3rem;
+}
+
+.bj-bet-selected {
+  border-width: 3px;
+  font-weight: 700;
+}
+
+.bj-bet-selected::before {
+  content: "\2713\00A0";
+}
+
+.bj-example {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  margin: 0 auto;
+}
