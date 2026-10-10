@@ -90,7 +90,8 @@
     ["animalsudoku", "game_animalsudoku"],
     ["foxandgeese", "game_foxandgeese"],
     ["seega", "game_seega"],
-    ["romme", "game_romme"]
+    ["romme", "game_romme"],
+    ["oldmaid", "game_oldmaid"]
   ];
 
   var GAME_SLUGS = {};

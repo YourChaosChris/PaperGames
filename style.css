@@ -10722,3 +10722,38 @@ button.concan-meld {
   height: auto;
   margin: 0 auto;
 }
+
+/* Old Maid: picture cards - the animal (or the Black Peter) large, the
+   name small underneath; hidden cards show the striped back. */
+.pc-card.oldmaid-card {
+  width: 4.8rem;
+  height: 5.3rem;
+  margin: 0 0.1rem 0.6rem;
+  padding: 0.2rem 0 0;
+  font-size: 0.6rem;
+  overflow: hidden;
+}
+
+.oldmaid-pic {
+  display: block;
+  width: 2.9rem;
+  height: 2.9rem;
+  margin: 0.15rem auto 0.1rem;
+}
+
+.oldmaid-name {
+  display: block;
+  font-size: 0.58rem;
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+
+.oldmaid-example {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto;
+}

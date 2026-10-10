@@ -1835,6 +1835,29 @@ const STRINGS = {
     msg_t_linkpairs_count: "Joined: {n} / {m}",
     msg_t_linkpairs_symbol: "symbol {s}",
     msg_t_linkpairs_line: "line {s}",
+    game_oldmaid: "Old Maid",
+    home_oldmaid_desc: "The classic children's card game with animal pictures: lay down pairs, draw a hidden card from your neighbour in turn - and don't be the one left with the Black Peter. No reading needed; against 1 to 3 computers.",
+    oldmaid_history_intro: "The rules of the German card game Black Peter were written down as early as 1821.",
+    quickrules_oldmaid_1: "Lay down pairs of equal animals - the cards have pictures, no writing.",
+    quickrules_oldmaid_2: "In turn, draw one hidden card from the player to your left; a new pair is laid down at once.",
+    quickrules_oldmaid_3: "Whoever is left holding the Black Peter - the black cat with the top hat - loses.",
+    msg_oldmaid_peter: "Black Peter",
+    msg_oldmaid_dealt: "Cards dealt, pairs laid down.",
+    msg_t_oldmaid_yourturn: "Your turn: tap one of {p}'s cards to draw it.",
+    msg_t_oldmaid_drew: "You drew: {s}.",
+    msg_oldmaid_drew_peter: "You drew the Black Peter!",
+    msg_oldmaid_pair: "A pair - laid down.",
+    msg_t_oldmaid_from_you: "{p} drew a card from you: {s}.",
+    msg_t_oldmaid_lays: "{p} lays down a pair.",
+    msg_t_oldmaid_drew_from: "{p} drew a card from {q}.",
+    msg_oldmaid_safe: "You have no cards left - you are safe.",
+    msg_t_oldmaid_out: "{p} has no cards left.",
+    msg_oldmaid_lose: "You have the Black Peter - you lose.",
+    msg_t_oldmaid_win: "{p} has the Black Peter. You win!",
+    msg_t_oldmaid_counts: "Cards: {n} · Pairs: {m}",
+    msg_t_oldmaid_tapone: "{p}'s cards - tap one",
+    msg_t_oldmaid_hidden: "Hidden card {n} of {m}",
+    msg_t_oldmaid_last: "{p}'s last card",
     msg_linkpairs_joined_word: "joined",
     msg_linkpairs_empty_word: "empty",
     msg_linkpairs_end_word: "end of the line",
@@ -2778,7 +2801,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 69;
+  const GAME_COUNT = 70;
 
   function t(key, lang) {
     const l = lang || getLang();

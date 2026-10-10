@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "papergames-cache-v198";
+const CACHE_NAME = "papergames-cache-v199";
 
 const APP_SHELL = [
   "./",
@@ -502,7 +502,12 @@ const APP_SHELL = [
   "quoridor-history.html",
   "onitama.html",
   "onitama-rules.html",
-  "onitama-history.html"
+  "onitama-history.html",
+  "oldmaid.html",
+  "oldmaid-rules.html",
+  "oldmaid-history.html",
+  "oldmaid-core.js",
+  "oldmaid-app.js"
 ];
 
 self.addEventListener("install", (event) => {

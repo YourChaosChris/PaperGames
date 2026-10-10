@@ -357,6 +357,16 @@ const SAMPLES = [
   "Sorted! Every tube holds one shape. Moves: 23.",
   "From here the stones can no longer all be sorted. Undo a few moves.",
   "Stones can only go onto the same shape or into an empty tube.",
+  // Old Maid
+  "Cards dealt, pairs laid down. Your turn: tap one of Computer 1's cards to draw it.",
+  "You drew: Giraffe. A pair - laid down.",
+  "You drew the Black Peter!",
+  "Computer 2 drew a card from you: Owl. Computer 2 lays down a pair.",
+  "Computer 1 drew a card from Computer 3. Computer 3 has no cards left.",
+  "Computer 2 has the Black Peter. You win!",
+  "You have the Black Peter - you lose.",
+  "Cards: 5 · Pairs: 3",
+  "Computer 1's cards - tap one",
   // Link the Pairs: status line, hints, screen-reader labels
   "Tap a symbol or drag from it to draw its line.",
   "Now tap the cells one after another, or drag.",
@@ -486,6 +496,8 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  "Hidden card 3 of 7",
+  "Black Peter",
   // Link the Pairs cells
   "Row 4, column 6, line Frog, end of the line",
   "Row 1, column 1, symbol 7, joined",

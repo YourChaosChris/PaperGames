@@ -776,4 +776,15 @@ const GAMES_CATALOG = [
     added: "2026-10-10",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M9 9H20V20H31V31\" fill=\"none\" stroke=\"#141413\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M9 31H15\" fill=\"none\" stroke=\"#141413\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"9\" cy=\"9\" r=\"5.5\" fill=\"#141413\"/><circle cx=\"31\" cy=\"31\" r=\"5.5\" fill=\"#141413\"/><circle cx=\"9\" cy=\"31\" r=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><circle cx=\"20\" cy=\"31\" r=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/></svg></span>"
   },
+  {
+    slug: "oldmaid",
+    category: "party",
+    nameKey: "game_oldmaid",
+    nameText: "Old Maid",
+    descKey: "home_oldmaid_desc",
+    descText: "The classic children's card game with animal pictures: lay down pairs, draw a hidden card from your neighbour in turn - and don't be the one left with the Black Peter. No reading needed; against 1 to 3 computers.",
+    popular: false,
+    added: "2026-10-10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"7\" width=\"20\" height=\"28\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\" transform=\"rotate(-12 13 21)\"/><rect x=\"15\" y=\"4\" width=\"21\" height=\"30\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><g transform=\"translate(16.5 7) scale(0.45)\"><path d=\"M9 31L10 18L17 22ZM31 31L30 18L23 22Z\" fill=\"#141413\"/><circle cx=\"20\" cy=\"28\" r=\"10.5\" fill=\"#141413\"/><ellipse cx=\"16\" cy=\"27\" rx=\"2.6\" ry=\"2.2\" fill=\"#fff\"/><ellipse cx=\"24\" cy=\"27\" rx=\"2.6\" ry=\"2.2\" fill=\"#fff\"/><path d=\"M16 25.4V28.6M24 25.4V28.6\" stroke=\"#141413\" stroke-width=\"1.3\"/><path d=\"M18.6 31.5H21.4L20 33Z\" fill=\"#fff\"/><path d=\"M3 30H13M3 34L13 32.5M37 30H27M37 34L27 32.5\" stroke=\"#141413\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><rect x=\"11\" y=\"15\" width=\"18\" height=\"3\" rx=\"1\" fill=\"#141413\"/><rect x=\"14.5\" y=\"2\" width=\"11\" height=\"14\" fill=\"#141413\"/><rect x=\"14.5\" y=\"11.5\" width=\"11\" height=\"2.3\" fill=\"#fff\"/></g></svg></span>"
+  },
 ];

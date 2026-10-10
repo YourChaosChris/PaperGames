@@ -67,7 +67,8 @@ const STATS_GAME_NAME_KEY = {
   animalsudoku: "game_animalsudoku",
   foxandgeese: "game_foxandgeese",
   seega: "game_seega",
-  romme: "game_romme"
+  romme: "game_romme",
+  oldmaid: "game_oldmaid"
 };
 
 function gameDisplayName(game) {
