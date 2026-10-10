@@ -3,7 +3,7 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "papergames-cache-v207";
+const CACHE_NAME = "papergames-cache-v208";
 
 const APP_SHELL = [
   "./",
@@ -547,7 +547,13 @@ const APP_SHELL = [
   "schafkopf-history.html",
   "schafkopf-core.js",
   "schafkopf-ai.js",
-  "schafkopf-app.js"
+  "schafkopf-app.js",
+  "canasta.html",
+  "canasta-rules.html",
+  "canasta-history.html",
+  "canasta-core.js",
+  "canasta-ai.js",
+  "canasta-app.js"
 ];
 
 self.addEventListener("install", (event) => {

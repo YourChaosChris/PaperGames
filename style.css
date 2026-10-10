@@ -11316,3 +11316,107 @@ button.concan-meld {
   height: auto;
   margin: 0 auto;
 }
+
+/* Canasta: narrow hand cards (15 fit in two rows at 360 px), each meld as
+   one box with rank, number of cards and wild cards; a canasta has a
+   double frame and says "natural" or "mixed"; a frozen discard pile has a
+   double frame and the word "frozen" below. */
+.pc-card.cn-card {
+  width: 2.05rem;
+  height: 3.3rem;
+  margin: 0 0.1rem 0.4rem;
+  padding-top: 0.2rem;
+  font-size: 0.95rem;
+}
+
+.pc-card.cn-card .pc-suit {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.15rem;
+}
+
+.cn-hand {
+  text-align: center;
+  padding-top: 0.4rem;
+}
+
+.cn-melds {
+  min-height: 1rem;
+}
+
+.cn-meld {
+  display: inline-block;
+  vertical-align: top;
+  min-width: 2.6rem;
+  margin: 0 0.25rem 0.3rem 0;
+  padding: 0.15rem 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.15;
+  font: inherit;
+}
+
+button.cn-meld {
+  border-width: 2px;
+  cursor: pointer;
+}
+
+.cn-meld.cn-canasta {
+  border: 4px double var(--border);
+}
+
+.cn-meld-rank {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.cn-meld-count {
+  display: block;
+  font-size: 0.85rem;
+}
+
+.cn-meld-tag {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+#cn-players .pc-player-extra {
+  display: block;
+  font-size: 0.85rem;
+}
+
+.cn-area {
+  margin-bottom: 0.3rem;
+}
+
+.cn-piles .pc-card {
+  margin-bottom: 0.2rem;
+}
+
+.pc-card.cn-frozen {
+  border: 5px double var(--border);
+}
+
+.cn-pile-info,
+.cn-red-line {
+  font-size: 0.85rem;
+}
+
+.cn-score-table {
+  font-size: 0.85rem;
+}
+
+#cn-next {
+  margin-top: 0.6rem;
+}
+
+.cn-score-table .cn-sum-row td,
+.cn-score-table .cn-sum-row th {
+  font-weight: 700;
+  border-top-width: 3px;
+}

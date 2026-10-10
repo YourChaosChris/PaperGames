@@ -481,6 +481,25 @@ const SAMPLES = [
   "Each of the two losers pays one winner 40 points.", "Each of the three others pays or gets 70 points.",
   "Player: Computer 2", "thrown in", "Announcing", "player side", "Pass (weiter)",
   "Grass Solo", "Heart Solo", "Grass Ober", "Grass 10", "Acorn Sow", "Bell Sow",
+  // Canasta
+  "You lay out a red three from the deal. Computer lays out 2 red threes from the deal. Your turn: draw two cards from the stock, or select cards for the top discard and take the pile.",
+  "You draw 2 cards. You lay out a red three and draw again. Your turn: lay out your first meld (at least 50 points) or discard a card.",
+  "Computer draws 2 cards.", "Computer draws 1 card.", "You draw 1 card.",
+  "Computer takes the discard pile (7 cards). Computer's first meld: 90 points.",
+  "You take the discard pile (1 card).", "Computer lays out 1 card.",
+  "You lay out 5 cards. Your first meld: 60 points.", "Computer lays out 4 cards.", "You discard 7♠.", "Computer discards Joker.",
+  "You go out. This hand: you 1240, Computer -85.", "Computer goes out concealed. This hand: you -120, Computer 1580. Computer wins the game 5120 to 3400.",
+  "The stock is used up - the hand ends.", "You win the game 2465 to 1750.", "The game ends in a draw at 5050 points.",
+  "Your turn: lay out melds or add to your melds, then discard a card.", "The stock is empty: take the discard pile.",
+  "These cards don't form a meld: at least three cards of one rank, at least two of them natural, at most three wild cards.",
+  "A meld may hold at most three wild cards.", "Wild cards alone: tap one of your melds to add them.", "Black threes can only be melded when you go out.",
+  "You can't go out yet (two canastas needed): keep at least one card to discard.",
+  "The pile is frozen: you need two natural cards of the top card's rank.",
+  "Before your first meld you need two natural cards of the top card's rank to take the pile.",
+  "A black three on top blocks the pile.", "A wild card on top: the pile can't be taken now.",
+  "Not enough for the first meld: 35 of 50 points.", "Draw first - or take the pile with the staged melds.",
+  "Hand 2 · game to 5000 points", "Score: -150", "Red threes: 2", "First meld: at least 90 points",
+  "Red threes: you 3♥ 3♦ · Computer –", "Cards in melds", "Canasta bonus", "Cards in hand", "This hand",
   // Link the Pairs: status line, hints, screen-reader labels
   "Tap a symbol or drag from it to draw its line.",
   "Now tap the cells one after another, or drag.",
@@ -610,6 +629,8 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  // Canasta
+  "Meld K, 5 cards, 1 wild card, mixed canasta", "Meld 9, 7 cards, natural canasta", "Discard pile: 8♣, 4 cards, frozen", "Stock: 71 cards, draw two",
   // Skat
   "Acorn Unter, selected",
   "Leaves, value 33",

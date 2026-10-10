@@ -98,7 +98,8 @@
     ["blackjack", "game_blackjack"],
     ["poker", "game_poker"],
     ["skat", "game_skat"],
-    ["schafkopf", "game_schafkopf"]
+    ["schafkopf", "game_schafkopf"],
+    ["canasta", "game_canasta"]
   ];
 
   var GAME_SLUGS = {};

@@ -110,6 +110,14 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   can, the called Sow is played when its suit is led and not thrown away
   before, the 120 points are all counted and the score matches a separate
   calculation and adds up to 0.
+- `node tests/canasta-core.js` - no server or browser needed (about 70
+  seconds). Checks fixed Canasta examples (card values, minimum for the
+  first meld, valid melds, taking the pile frozen and not frozen, black
+  Threes, going out only with two canastas, scores of a hand), then plays
+  500 games between computers (every fifth the short game to 2000) and
+  fails unless every game ends, all 108 cards stay in play after every
+  move, every meld is valid and the score of every hand matches a
+  separate calculation.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random
