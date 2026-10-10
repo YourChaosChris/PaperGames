@@ -1560,7 +1560,7 @@ Object.assign(STRINGS.es, {
     cake_term_place: "Lo que colocas",
     cake_rules_place: "Colocas N cosas: N-1 animales (perro, gato, conejo, ratón y erizo, según el nivel) y el pastel. Cada fila y cada columna contiene exactamente una.",
     cake_term_furniture: "Los muebles",
-    cake_rules_furniture: "El pastel siempre está sobre una mesa. Los animales nunca están sobre una mesa ni sobre un armario.",
+    cake_rules_furniture: "El pastel siempre está sobre una mesa. Los animales nunca están sobre una mesa, un armario o una planta: estos llenan toda su casilla en el plano. Una silla o una alfombra se dibuja pequeña en una esquina: ahí sí puede estar un animal.",
     cake_term_clues: "Los indicios",
     cake_rules_clues: "Cada animal tiene al menos un indicio bajo el plano, por ejemplo «El perro está en el jardín.», «El gato está sobre una silla.» o «El ratón está junto a una planta.» (justo al lado, no en diagonal). «Junto a» solo cuenta dentro de la misma habitación: un mueble al otro lado de una pared no está junto al animal. Juntos, los indicios solo dejan una solución y nunca hace falta adivinar.",
     cake_term_culprit: "¿Quién se llevó el pastel?",

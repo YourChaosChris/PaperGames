@@ -149,7 +149,7 @@ STRINGS.pl = {
     quickrules_skyscrapers_2: "Wybierz pole, a następnie wysokość z panelu pod planszą.",
     quickrules_skyscrapers_3: "Wskazówka liczy budynki widoczne z tej strony, a wyższy budynek całkowicie zasłania każdy niższy stojący za nim.",
     quickrules_cake_1: "Ustaw każde zwierzę i ciasto tak, aby w każdym wierszu i każdej kolumnie stała dokładnie jedna rzecz.",
-    quickrules_cake_2: "Ciasto zawsze stoi na stole, zwierzęta nigdy na stole ani na szafie, a poszlaki pod planem mówią resztę. „Obok” liczy się tylko w tym samym pokoju.",
+    quickrules_cake_2: "Ciasto zawsze stoi na stole, zwierzęta nigdy na stole, szafie ani roślinie, a poszlaki pod planem mówią resztę. „Obok” liczy się tylko w tym samym pokoju.",
     quickrules_cake_3: "Jedyne zwierzę w pokoju z ciastem je wzięło - wybierz przycisk pod planem, a potem dotknij pola.",
     quickrules_konane_1: "Pozostaw przeciwnika bez ruchu: kto w swojej turze nie ma legalnego skoku, przegrywa natychmiast.",
     quickrules_konane_2: "Każdy ruch to skok: pionek przeskakuje sąsiedni pionek przeciwnika, nigdy po skosie, na puste pole tuż za nim i zdejmuje go.",

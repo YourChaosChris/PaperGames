@@ -1561,7 +1561,7 @@ Object.assign(STRINGS.en, {
     cake_term_place: "What you place",
     cake_rules_place: "You place N things: N-1 animals (dog, cat, rabbit, mouse and hedgehog, depending on the level) and the cake. Every row and every column holds exactly one of them.",
     cake_term_furniture: "Furniture",
-    cake_rules_furniture: "The cake always stands on a table. Animals never stand on a table or a cupboard.",
+    cake_rules_furniture: "The cake always stands on a table. Animals never stand on a table, a cupboard or a plant - these fill their whole cell in the picture. A chair or rug is drawn small in a corner: an animal may stand there.",
     cake_term_clues: "The clues",
     cake_rules_clues: "Every animal has at least one clue below the board, for example “The dog is in the garden”, “The cat sits on a chair” or “The mouse is next to a plant” (directly beside it, not diagonally). “Next to” only counts within the same room: furniture on the other side of a wall is not next to the animal. Together the clues leave only one way to place everything, and you never need to guess.",
     cake_term_culprit: "Who took the cake?",

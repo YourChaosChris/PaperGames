@@ -5,7 +5,7 @@
 // furniture (table, chair, rug, plant, cupboard); a window sits on the
 // left or right outer wall of one row. N things are placed: N-1 animals
 // and the cake, one per row and one per column. The cake always stands
-// on a table; animals never stand on a table or a cupboard. Exactly one
+// on a table; animals never stand on a table, a cupboard or a plant. Exactly one
 // animal shares the cake's room - that animal took the cake. Clues about
 // the animals pin the placement down to a single solution.
 //
@@ -33,6 +33,8 @@ const CakeCore = (function () {
   const ANIMALS = ["dog", "cat", "rabbit", "mouse", "hedgehog"];
   const ROOM_NAMES = ["kitchen", "living", "hall", "bath", "bedroom", "garden", "cellar"];
   const FURNITURE = ["table", "chair", "rug", "plant", "cupboard"];
+  // Furniture no animal can stand on (the cake stands on a table).
+  const BLOCKING = ["table", "cupboard", "plant"];
   const LEVELS = {
     easy: { n: 4, rooms: [3, 4], level: 1 },
     medium: { n: 5, rooms: [4, 5], level: 2 },
@@ -84,7 +86,7 @@ const CakeCore = (function () {
     for (let i = 0; i < p.n * p.n; i++) {
       const f = p.furniture[i];
       if (isCake(p, k)) { if (f === "table") out.push(i); continue; }
-      if (f === "table" || f === "cupboard") continue;
+      if (BLOCKING.indexOf(f) !== -1) continue;
       if (p.clues.every((cl) => cl.a !== k || clueAllows(p, cl, i))) out.push(i);
     }
     return out;
@@ -498,7 +500,7 @@ const CakeCore = (function () {
   }
 
   return {
-    ANIMALS, ROOM_NAMES, FURNITURE, LEVELS,
+    ANIMALS, ROOM_NAMES, FURNITURE, BLOCKING, LEVELS,
     neighbours, nextTo, clueAllows, baseCandidates, isSolution, countSolutions, deduce,
     randomRooms, candidateClues, generatePuzzle, findHint, clueText, thingName, culprit, fill
   };

@@ -321,11 +321,19 @@ function renderCakeBoard() {
     const room = p.rooms[i];
     const roomName = tCake("cake_room_" + p.roomNames[room] + "_name");
     const f = p.furniture[i];
-    cell.querySelector(".cake-furn").innerHTML = f ? CakeIcons.svg(f, "cake-furn-icon") : "";
     const k = cakeThingAt(i);
+    // Furniture no animal can stand on fills its cell; a chair or rug is
+    // drawn small in a corner so the animal on it stays large. The cake
+    // on a table is drawn standing on the table top.
+    const furn = cell.querySelector(".cake-furn");
+    const blocking = CakeCore.BLOCKING.indexOf(f) !== -1;
+    const cakeOnTable = k === n - 1 && f === "table";
+    furn.className = "cake-furn" + (f ? (blocking ? " cake-furn-big" : " cake-furn-small") : "");
+    furn.innerHTML = f ? CakeIcons.svg(cakeOnTable ? "tablecake" : f, "cake-furn-icon") : "";
     const crossed = AppStateCake.crosses.indexOf(i) !== -1;
     const thing = cell.querySelector(".cake-thing");
-    if (k >= 0) thing.innerHTML = CakeIcons.svg(k === n - 1 ? "cake" : CakeCore.ANIMALS[k], "cake-thing-icon");
+    if (cakeOnTable) thing.innerHTML = "";
+    else if (k >= 0) thing.innerHTML = CakeIcons.svg(k === n - 1 ? "cake" : CakeCore.ANIMALS[k], "cake-thing-icon");
     else if (crossed) thing.innerHTML = CakeIcons.svg("x", "cake-thing-icon cake-cross-icon");
     else thing.innerHTML = "";
     cell.classList.toggle("hint-cell", AppStateCake.hintCell === i);
@@ -351,6 +359,7 @@ function fitCakeLabels() {
   const n = p.n;
   const runs = cakeLabelRuns(p);
   const keyed = [];
+  const labelled = new Set();
   document.querySelectorAll("#cake-board .cake-room-label").forEach((el) => {
     const room = parseInt(el.dataset.room, 10);
     const name = tCake("cake_room_" + p.roomNames[room] + "_name");
@@ -361,13 +370,28 @@ function fitCakeLabels() {
     };
     el.textContent = name;
     el.classList.remove("cake-room-key");
-    const fits = runs[room].some((run) => {
-      place(run);
+    // Runs without a table, cupboard or plant come first, so the big
+    // drawings rarely have to make room for a name.
+    const clear = (r) => {
+      for (let c = r.col; c < r.col + r.len; c++) if (CakeCore.BLOCKING.indexOf(p.furniture[r.row * n + c]) !== -1) return false;
+      return true;
+    };
+    const order = runs[room].filter(clear).concat(runs[room].filter((r) => !clear(r)));
+    const run = order.find((r) => {
+      place(r);
       return el.scrollWidth <= el.clientWidth;
     });
-    if (fits) return;
+    if (run) {
+      for (let c = run.col; c < run.col + run.len; c++) labelled.add(run.row * n + c);
+      return;
+    }
+    // A number takes only the first cell of the run.
     place(runs[room][0]);
+    labelled.add(runs[room][0].row * n + runs[room][0].col);
     keyed.push({ el, name });
+  });
+  document.querySelectorAll("#cake-board .cake-cell").forEach((cell) => {
+    cell.classList.toggle("cake-cell-labelled", labelled.has(parseInt(cell.dataset.index, 10)));
   });
   // Numbers follow the board from top to bottom, left to right.
   keyed.sort((a, b) => parseFloat(a.el.style.top) - parseFloat(b.el.style.top) || parseFloat(a.el.style.left) - parseFloat(b.el.style.left));

@@ -35,23 +35,33 @@ const CakeIcons = (function () {
     cake: '<path d="M20 4C22 7 22 8.5 20 9.5C18 8.5 18 7 20 4Z" ' + B + '/><path d="M20 10V15" ' + S + '/>' +
       '<rect x="11" y="15" width="18" height="8" ' + S + '/><rect x="7" y="23" width="26" height="11" ' + S + '/>' +
       '<path d="M7 27C10 30 12 25 15 28C18 31 20 25 23 28C26 31 28 25 33 28" ' + S + ' stroke-width="1.8"/>',
-    // Table: thick top, two legs.
-    table: '<rect x="5" y="14" width="30" height="5" ' + B + '/><path d="M9 19V33M31 19V33" ' + S + ' stroke-width="3"/>',
+    // Table: wide thick top, two legs and a bar between them - drawn to
+    // fill its cell, with room for the cake above the top.
+    table: '<rect x="2" y="17" width="36" height="6" ' + B + '/><path d="M6.5 23V38M33.5 23V38M6.5 31H33.5" fill="none" stroke="#141413" stroke-width="3.5" stroke-linecap="round"/>',
     // Chair: seen from the side - back, seat, legs.
     chair: '<path d="M12 5V34M12 21H29V34" ' + S + ' stroke-width="3"/>',
     // Rug: a mat with a diamond and fringes at both ends.
     rug: '<rect x="9" y="11" width="22" height="18" ' + S + '/><path d="M20 14L26 20L20 26L14 20Z" ' + S + ' stroke-width="1.8"/>' +
       '<path d="M5 13H9M5 17H9M5 21H9M5 25H9M31 13H35M31 17H35M31 21H35M31 25H35" ' + S + ' stroke-width="1.6"/>',
-    // Plant: filled pot with three leaves.
-    plant: '<path d="M13 25H27L25 35H15Z" ' + B + '/><path d="M20 25V12M20 18C14 18 11 14 11 9C17 9 20 13 20 18M20 15C26 15 29 11 29 6C23 6 20 10 20 15" ' + S + '/>',
-    // Cupboard: tall box with two doors and knobs.
-    cupboard: '<rect x="10" y="4" width="20" height="32" ' + S + '/><path d="M20 4V36" ' + S + '/>' +
-      '<circle cx="17.5" cy="20" r="1.5" ' + B + '/><circle cx="22.5" cy="20" r="1.5" ' + B + '/>',
+    // Plant: big filled pot with three large leaves, filling its cell.
+    plant: '<path d="M10 25H30L27 38H13Z" ' + B + '/><path d="M20 25V9M20 19C12 19 6 14 5 6C13 6 20 11 20 19M20 15C28 15 34 10 35 2C27 2 20 7 20 15" ' + S + '/>',
+    // Cupboard: tall wide box with two doors and knobs, filling its cell.
+    cupboard: '<rect x="5" y="2" width="30" height="36" ' + S + '/><path d="M20 2V38" ' + S + '/>' +
+      '<circle cx="16.5" cy="20" r="1.8" ' + B + '/><circle cx="23.5" cy="20" r="1.8" ' + B + '/>',
     // Window: frame with a cross.
     window: '<rect x="7" y="7" width="26" height="26" ' + S + ' stroke-width="3"/><path d="M20 7V33M7 20H33" ' + S + '/>',
     // "Nothing here": a cross.
     x: '<path d="M10 10L30 30M30 10L10 30" ' + S + ' stroke-width="3.5"/>'
   };
+
+  // The cake standing on the table: the cake drawing at 0.75 size, its
+  // base on the lower edge of the table top, lines thicker so they keep
+  // their weight once scaled.
+  const C = 'fill="#fff" stroke="#141413" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"';
+  icons.tablecake = icons.table + '<g transform="translate(5 -2.5) scale(0.75)">' +
+    '<path d="M20 4C22 7 22 8.5 20 9.5C18 8.5 18 7 20 4Z" ' + B + '/><path d="M20 10V15" ' + C + '/>' +
+    '<rect x="11" y="15" width="18" height="8" ' + C + '/><rect x="7" y="23" width="26" height="11" ' + C + '/>' +
+    '<path d="M7 27C10 30 12 25 15 28C18 31 20 25 23 28C26 31 28 25 33 28" fill="none" stroke="#141413" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>';
 
   function svg(name, cls) {
     return '<svg class="' + (cls || "cake-icon") + '" viewBox="0 0 40 40" aria-hidden="true" focusable="false">' + (icons[name] || "") + "</svg>";

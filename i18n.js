@@ -161,7 +161,7 @@ const STRINGS = {
     quickrules_skyscrapers_2: "Select a cell, then pick a height from the pad below the board.",
     quickrules_skyscrapers_3: "A clue counts the buildings visible from that side, and a taller building hides every shorter one behind it.",
     quickrules_cake_1: "Place each animal and the cake so that every row and every column holds exactly one thing.",
-    quickrules_cake_2: "The cake always stands on a table, animals never stand on a table or a cupboard, and the clues below the board tell you the rest. “Next to” only counts within the same room.",
+    quickrules_cake_2: "The cake always stands on a table, animals never stand on a table, a cupboard or a plant, and the clues below the board tell you the rest. “Next to” only counts within the same room.",
     quickrules_cake_3: "The only animal in the cake's room took it - choose a button under the board, then tap a cell.",
     quickrules_konane_1: "Leave your opponent without a move: whoever has no legal jump on their turn loses immediately.",
     quickrules_konane_2: "Every move is a jump: hop a stone over an adjacent enemy stone, never diagonally, into the empty square beyond, removing the jumped stone.",

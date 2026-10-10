@@ -1560,7 +1560,7 @@ Object.assign(STRINGS.it, {
     cake_term_place: "Cosa metti",
     cake_rules_place: "Metti N cose: N-1 animali (cane, gatto, coniglio, topo e riccio, a seconda del livello) e la torta. Ogni riga e ogni colonna ne contiene esattamente una.",
     cake_term_furniture: "I mobili",
-    cake_rules_furniture: "La torta sta sempre su un tavolo. Gli animali non stanno mai su un tavolo né su un armadio.",
+    cake_rules_furniture: "La torta sta sempre su un tavolo. Gli animali non stanno mai su un tavolo, un armadio o una pianta: questi riempiono tutta la loro casella. Una sedia o un tappeto è disegnato piccolo in un angolo: lì un animale può stare.",
     cake_term_clues: "Gli indizi",
     cake_rules_clues: "Ogni animale ha almeno un indizio sotto la pianta, per esempio «Il cane è in giardino.», «Il gatto è su una sedia.» o «Il topo è accanto a una pianta.» (proprio di fianco, non in diagonale). «Accanto» vale solo nella stessa stanza: un mobile dall'altra parte di un muro non è accanto all'animale. Insieme gli indizi lasciano una sola soluzione e non serve mai tirare a indovinare.",
     cake_term_culprit: "Chi ha preso la torta?",

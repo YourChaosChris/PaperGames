@@ -147,7 +147,7 @@ STRINGS.nl = {
     quickrules_skyscrapers_2: "Selecteer een vakje en kies dan een hoogte van het paneel onder het bord.",
     quickrules_skyscrapers_3: "Een aanwijzing telt de gebouwen die je vanaf die kant ziet, en een hoger gebouw verbergt elk lager gebouw erachter volledig.",
     quickrules_cake_1: "Zet elk dier en de taart zo neer dat in elke rij en elke kolom precies één ding staat.",
-    quickrules_cake_2: "De taart staat altijd op een tafel, dieren nooit op een tafel of kast, en de aanwijzingen onder het bord vertellen de rest. ‘Naast’ telt alleen in dezelfde kamer.",
+    quickrules_cake_2: "De taart staat altijd op een tafel, dieren nooit op een tafel, kast of plant, en de aanwijzingen onder het bord vertellen de rest. ‘Naast’ telt alleen in dezelfde kamer.",
     quickrules_cake_3: "Het enige dier in de kamer van de taart heeft hem gepakt - kies een knop onder het bord en tik dan op een vakje.",
     quickrules_konane_1: "Laat je tegenstander zonder zet: wie op zijn beurt geen legale sprong heeft, verliest meteen.",
     quickrules_konane_2: "Elke zet is een sprong: een steen springt over een aangrenzende vijandelijke steen, nooit diagonaal, naar het lege veld erachter en slaat hem.",

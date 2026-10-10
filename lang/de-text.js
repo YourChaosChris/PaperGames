@@ -1560,7 +1560,7 @@ Object.assign(STRINGS.de, {
     cake_term_place: "Was gesetzt wird",
     cake_rules_place: "Du setzt N Dinge: N-1 Tiere (je nach Stufe Hund, Katze, Hase, Maus und Igel) und den Kuchen. In jeder Zeile und jeder Spalte steht genau eins davon.",
     cake_term_furniture: "Möbel",
-    cake_rules_furniture: "Der Kuchen steht immer auf einem Tisch. Tiere stehen nie auf einem Tisch und nie auf einem Schrank.",
+    cake_rules_furniture: "Der Kuchen steht immer auf einem Tisch. Tiere stehen nie auf einem Tisch, einem Schrank oder einer Pflanze – diese füllen im Bild ihr ganzes Kästchen. Stuhl und Teppich sind klein in einer Ecke gezeichnet: Dort darf ein Tier stehen.",
     cake_term_clues: "Die Hinweise",
     cake_rules_clues: "Zu jedem Tier gibt es unter dem Feld mindestens einen Hinweis, zum Beispiel „Der Hund ist im Garten.“, „Die Katze sitzt auf einem Stuhl.“ oder „Die Maus ist neben einer Pflanze.“ (direkt daneben, nicht schräg). „Neben“ gilt nur im selben Raum: Ein Möbelstück auf der anderen Seite einer Wand steht nicht neben dem Tier. Zusammen lassen die Hinweise nur eine Lösung zu, und du musst nie raten.",
     cake_term_culprit: "Wer hat den Kuchen?",

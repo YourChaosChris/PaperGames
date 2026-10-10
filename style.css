@@ -10353,6 +10353,29 @@ button.concan-meld {
   height: 40%;
 }
 
+/* Table, cupboard, plant: no animal stands there, so the drawing fills
+   the cell, below the room name where one is written in this cell. */
+.cake-furn.cake-furn-big {
+  left: 6%;
+  right: 6%;
+  top: 6%;
+  bottom: 5%;
+  width: auto;
+  height: auto;
+}
+
+.cake-cell-labelled .cake-furn.cake-furn-big {
+  top: calc(0.77rem + 5px);
+}
+
+/* Chair, rug: small in the bottom-left corner, the animal large beside it. */
+.cake-furn.cake-furn-small {
+  left: 3%;
+  bottom: 3%;
+  width: 36%;
+  height: 36%;
+}
+
 .cake-thing {
   right: 4%;
   bottom: 5%;

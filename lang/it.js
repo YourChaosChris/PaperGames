@@ -147,7 +147,7 @@ STRINGS.it = {
     quickrules_skyscrapers_2: "Seleziona una casella, poi scegli un'altezza dal tastierino sotto il tabellone.",
     quickrules_skyscrapers_3: "Un indizio conta gli edifici visibili da quel lato, e un edificio più alto nasconde completamente ogni edificio più basso dietro di sé.",
     quickrules_cake_1: "Metti ogni animale e la torta in modo che ogni riga e ogni colonna contenga esattamente una cosa.",
-    quickrules_cake_2: "La torta sta sempre su un tavolo, gli animali mai su un tavolo o un armadio, e gli indizi sotto la pianta dicono il resto. «Accanto» vale solo nella stessa stanza.",
+    quickrules_cake_2: "La torta sta sempre su un tavolo, gli animali mai su un tavolo, un armadio o una pianta, e gli indizi sotto la pianta dicono il resto. «Accanto» vale solo nella stessa stanza.",
     quickrules_cake_3: "L'unico animale nella stanza della torta l'ha presa: scegli un pulsante sotto la pianta, poi tocca una casella.",
     quickrules_konane_1: "Lascia l'avversario senza mosse: chi al suo turno non ha alcun salto legale perde immediatamente.",
     quickrules_konane_2: "Ogni mossa è un salto: una pedina salta sopra una pedina nemica adiacente, mai in diagonale, fino alla casella vuota subito dopo, catturandola.",

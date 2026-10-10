@@ -1560,7 +1560,7 @@ Object.assign(STRINGS.pl, {
     cake_term_place: "Co ustawiasz",
     cake_rules_place: "Ustawiasz N rzeczy: N-1 zwierząt (zależnie od poziomu pies, kot, królik, mysz i jeż) oraz ciasto. W każdym wierszu i każdej kolumnie stoi dokładnie jedna z nich.",
     cake_term_furniture: "Meble",
-    cake_rules_furniture: "Ciasto zawsze stoi na stole. Zwierzęta nigdy nie stoją na stole ani na szafie.",
+    cake_rules_furniture: "Ciasto zawsze stoi na stole. Zwierzęta nigdy nie stoją na stole, szafie ani roślinie – te wypełniają całe swoje pole. Krzesło i dywan są narysowane małe w rogu: tam zwierzę może stać.",
     cake_term_clues: "Poszlaki",
     cake_rules_clues: "Każde zwierzę ma pod planem co najmniej jedną poszlakę, na przykład „Pies jest w ogrodzie.”, „Kot siedzi na krześle.” albo „Mysz jest obok rośliny.” (tuż obok, nie po skosie). „Obok” liczy się tylko w tym samym pokoju: mebel po drugiej stronie ściany nie stoi obok zwierzęcia. Razem poszlaki dopuszczają tylko jedno rozwiązanie i nigdy nie trzeba zgadywać.",
     cake_term_culprit: "Kto wziął ciasto?",

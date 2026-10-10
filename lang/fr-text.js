@@ -1560,7 +1560,7 @@ Object.assign(STRINGS.fr, {
     cake_term_place: "Ce que vous placez",
     cake_rules_place: "Vous placez N choses : N-1 animaux (chien, chat, lapin, souris et hérisson selon le niveau) et le gâteau. Chaque ligne et chaque colonne en contient exactement une.",
     cake_term_furniture: "Les meubles",
-    cake_rules_furniture: "Le gâteau est toujours sur une table. Les animaux ne sont jamais sur une table ni sur une armoire.",
+    cake_rules_furniture: "Le gâteau est toujours sur une table. Les animaux ne sont jamais sur une table, une armoire ou une plante – celles-ci remplissent toute leur case sur le plan. Une chaise ou un tapis est dessiné petit dans un coin : un animal peut s'y trouver.",
     cake_term_clues: "Les pistes",
     cake_rules_clues: "Chaque animal a au moins une piste sous le plan, par exemple « Le chien est dans le jardin. », « Le chat est sur une chaise. » ou « La souris est à côté d'une plante. » (juste à côté, pas en diagonale). « À côté » ne compte que dans la même pièce : un meuble de l'autre côté d'un mur n'est pas à côté de l'animal. Ensemble, les pistes ne laissent qu'une seule solution, et vous n'avez jamais besoin de deviner.",
     cake_term_culprit: "Qui a pris le gâteau ?",

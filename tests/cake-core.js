@@ -8,7 +8,8 @@
 //     the cake), and once all animals stand the last hint only says that
 //     one row and one column are free - and that cell is the cake's,
 //   - has no "next to" clue that only holds through furniture behind a
-//     wall (in another room), and exactly one animal in the cake's room.
+//     wall (in another room), exactly one animal in the cake's room, and
+//     no animal on a table, cupboard or plant.
 // A fixed board checks "next to" across a wall directly.
 const path = require("path");
 const CakeCore = require(path.join(__dirname, "..", "cake-core.js"));
@@ -38,6 +39,8 @@ for (const level of ["easy", "medium", "hard"]) {
     if (wall) { fails.push(tag + ": \"next to\" only through another room"); continue; }
     const cakeRoom = p.rooms[p.solution[n - 1]];
     if (p.solution.slice(0, -1).filter((i) => p.rooms[i] === cakeRoom).length !== 1) { fails.push(tag + ": not one animal in the cake's room"); continue; }
+    if (p.solution.slice(0, -1).some((i) => ["table", "cupboard", "plant"].indexOf(p.furniture[i]) !== -1)) { fails.push(tag + ": animal on a table, cupboard or plant"); continue; }
+    if (p.furniture[p.solution[n - 1]] !== "table") { fails.push(tag + ": cake not on a table"); continue; }
     if (CakeCore.countSolutions(p, 2) !== 1) { fails.push(tag + ": not exactly one solution"); continue; }
     const d = CakeCore.deduce(p, CakeCore.LEVELS[level].level);
     if (!d.solved || d.cells.some((c, k) => c !== p.solution[k])) { fails.push(tag + ": not solvable by deduction"); continue; }
@@ -82,6 +85,9 @@ for (const level of ["easy", "medium", "hard"]) {
   if (CakeCore.isSolution(p, p.solution)) fails.push("fixed board: placement accepted with the plant behind the wall");
   furniture[5] = "plant";
   if (!CakeCore.clueAllows(p, p.clues[0], 1)) fails.push("fixed board: plant below in the same room does not count");
+  // No animal stands on a plant.
+  furniture[7] = "plant";
+  if (CakeCore.baseCandidates(p, 1).indexOf(7) !== -1) fails.push("fixed board: an animal may stand on a plant");
 }
 
 fails.forEach((f) => console.log("FAIL " + f));

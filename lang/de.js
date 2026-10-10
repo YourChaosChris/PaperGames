@@ -150,7 +150,7 @@ STRINGS.de = {
     quickrules_skyscrapers_2: "Wähle ein Feld und dann eine Höhe aus dem Ziffernblock unter dem Spielfeld.",
     quickrules_skyscrapers_3: "Ein Hinweis zählt die Gebäude, die man von dieser Seite aus sieht, und ein höheres Gebäude verdeckt jedes niedrigere dahinter.",
     quickrules_cake_1: "Setze jedes Tier und den Kuchen so, dass in jeder Zeile und jeder Spalte genau ein Ding steht.",
-    quickrules_cake_2: "Der Kuchen steht immer auf einem Tisch, Tiere nie auf einem Tisch oder Schrank, und die Hinweise unter dem Feld verraten den Rest. „Neben“ gilt nur im selben Raum.",
+    quickrules_cake_2: "Der Kuchen steht immer auf einem Tisch, Tiere nie auf einem Tisch, Schrank oder einer Pflanze, und die Hinweise unter dem Feld verraten den Rest. „Neben“ gilt nur im selben Raum.",
     quickrules_cake_3: "Das einzige Tier im Raum des Kuchens hat ihn genommen - wähle einen Knopf unter dem Feld und tippe dann auf ein Kästchen.",
     quickrules_konane_1: "Lass deinen Gegner ohne Zug zurück: Wer an seinem Zug keinen legalen Sprung hat, verliert sofort.",
     quickrules_konane_2: "Jeder Zug ist ein Sprung: Ein Stein springt über einen benachbarten gegnerischen Stein, nie diagonal, auf das leere Feld dahinter und schlägt ihn.",
