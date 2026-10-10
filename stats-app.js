@@ -73,7 +73,8 @@ const STATS_GAME_NAME_KEY = {
   snakesladders: "game_snakesladders",
   blockers: "game_blockers",
   blackjack: "game_blackjack",
-  poker: "game_poker"
+  poker: "game_poker",
+  skat: "game_skat"
 };
 
 function gameDisplayName(game) {

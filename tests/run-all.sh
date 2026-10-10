@@ -71,6 +71,10 @@ echo "=== poker-core.js ==="
 node "$ROOT/tests/poker-core.js" || status=1
 echo ""
 
+echo "=== skat-core.js ==="
+node "$ROOT/tests/skat-core.js" || status=1
+echo ""
+
 echo "=== css-check.js ==="
 node "$ROOT/tests/css-check.js" || status=1
 echo ""

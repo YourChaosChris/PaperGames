@@ -434,6 +434,37 @@ const SAMPLES = [
   "You have no chips left - you lose.",
   "You have: Three of a kind", "You have: Royal flush", "Call 10", "Bet 20", "Raise to 40",
   "High card", "One pair", "Two pair", "Four of a kind", "Dealer", "folded",
+  // Skat
+  "New game: Computer 2 deals. Computer 1's turn.",
+  "Computer 1 says 18. Computer 2 says 18: hold or pass?",
+  "You hold. Computer 1 says 20.",
+  "Computer 2 passes. You are the declarer for 20. Take the skat or play Hand?",
+  "Computer 1 passes. Computer 2 is the declarer for 23.",
+  "Nobody has bid: play for 18 or pass?",
+  "You pass. All pass - the deal is passed in.",
+  "You take the skat: 7♦ and A♣. Choose two cards to put away.",
+  "You take the skat: Bell 7 and Acorn Ace. Choose two cards to put away.",
+  "You put away 10♠ and K♠. Choose your game.",
+  "You announce Hearts Hand. Computer 1's turn.",
+  "Computer 2 takes the skat. Computer 2 announces Leaves. Your turn: play a card.",
+  "Computer 1 plays Hand. Computer 1 announces Null Ouvert Hand.",
+  "You play Acorn Unter. Computer 1 plays Leaf 10. Computer 1 wins the trick (12 points).",
+  "Computer 2 plays J♣. You win the trick (21 points).",
+  "You win Diamonds with 74 points.",
+  "Computer 1 loses Grand Hand, Schneider announced with 66 points.",
+  "Computer 2 wins Null.",
+  "You lose Bells Hand, Schwarz announced with 88 points.",
+  "Overbid: the bid was 30, so the game counts 36.",
+  "Declarer: 74 points, defenders: 46 points.",
+  "Lost: counts double, minus 72",
+  "Won: plus 36",
+  "You must follow suit.",
+  "This Null game is worth less than your bid.",
+  "Schneider, Schwarz and Ouvert can only be announced in a Hand game.",
+  "Declarer: Computer 1, bid 23",
+  "Your values:", "Hold 20", "I pass", "Play for 18", "Put away (1 / 2)", "Bid: 23. Skat put away: Heart King and Bell 10.",
+  "with 2", "without 3", "game 4", "announced 6", "passed in", "Forehand", "Middlehand", "Rearhand",
+  "Acorns", "Leaves", "Bells", "Acorn Ober", "Leaf Unter", "Heart Ace", "Bell 9",
   // Link the Pairs: status line, hints, screen-reader labels
   "Tap a symbol or drag from it to draw its line.",
   "Now tap the cells one after another, or drag.",
@@ -563,6 +594,10 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  // Skat
+  "Acorn Unter, selected",
+  "Leaves, value 33",
+  "Spades, value 22",
   // Poker
   "Computer 2, Dealer, Chips: 180, Bet: 20, all in",
   "You, Chips: 200",

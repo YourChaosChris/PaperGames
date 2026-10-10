@@ -95,6 +95,13 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   levels mixed) and fails unless every action is legal, the chips always
   add up to the same total, no stack goes below 0 and every pot is shared
   out in full.
+- `node tests/skat-core.js` - no server or browser needed (about 50
+  seconds). Checks 33 fixed Skat game values and results (matadors,
+  Hand, Schneider, Schwarz, announcements, Ouvert, Null, lost and overbid
+  games), then plays 1000 games between computers and fails unless every
+  bid is a game value and rising, every card follows suit when it can,
+  the 32 cards and 120 points are all there and the game value and
+  result match a separate calculation.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

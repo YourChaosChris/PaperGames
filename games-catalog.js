@@ -842,4 +842,15 @@ const GAMES_CATALOG = [
     added: "2026-10-10",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"6\" width=\"17\" height=\"25\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" transform=\"rotate(-10 11 18)\"/><rect x=\"20\" y=\"9\" width=\"17\" height=\"25\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" transform=\"rotate(10 28 21)\"/><g transform=\"translate(5.5 13) scale(0.11)\"><path d=\"M50 4 C50 4 6 36 6 60 C6 73 16 81 27 81 C36 81 43 76 46 70 L41 96 L59 96 L54 70 C57 76 64 81 73 81 C84 81 94 73 94 60 C94 36 50 4 50 4 Z\" fill=\"#141413\"/></g><g transform=\"translate(23 16) scale(0.11)\"><path d=\"M50 4 C50 4 6 36 6 60 C6 73 16 81 27 81 C36 81 43 76 46 70 L41 96 L59 96 L54 70 C57 76 64 81 73 81 C84 81 94 73 94 60 C94 36 50 4 50 4 Z\" fill=\"#141413\"/></g><circle cx=\"20\" cy=\"35\" r=\"3.6\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"20\" cy=\"35\" r=\"1.4\" fill=\"#141413\"/></svg></span>"
   },
+  {
+    slug: "skat",
+    category: "party",
+    nameKey: "game_skat",
+    nameText: "Skat",
+    descKey: "home_skat_desc",
+    descText: "Germany's classic card game for three: you against two computers, with bidding, the skat, Hand games, Grand and Null, and game values worked out after the official rules. French or German cards; a score list over many games.",
+    popular: false,
+    added: "2026-10-10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"2\" y=\"8\" width=\"15\" height=\"22\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" transform=\"rotate(-14 9 19)\"/><rect x=\"12.5\" y=\"5\" width=\"15\" height=\"22\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"23\" y=\"8\" width=\"15\" height=\"22\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" transform=\"rotate(14 31 19)\"/><g transform=\"translate(4.5 14) scale(0.09) rotate(-14 50 50)\"><circle cx=\"50\" cy=\"27\" r=\"21\" fill=\"#141413\"/><circle cx=\"26\" cy=\"59\" r=\"21\" fill=\"#141413\"/><circle cx=\"74\" cy=\"59\" r=\"21\" fill=\"#141413\"/><path d=\"M45 50 L39 96 L61 96 L55 50 Z\" fill=\"#141413\"/></g><g transform=\"translate(15.5 11) scale(0.09)\"><path d=\"M46 6 L54 6 L53 18 L47 18 Z\" fill=\"#141413\"/><path d=\"M18 40 C18 22 82 22 82 40 L82 46 L18 46 Z\" fill=\"#141413\"/><path d=\"M24 46 L76 46 C76 72 62 92 50 94 C38 92 24 72 24 46 Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"8\" stroke-linejoin=\"round\"/></g><g transform=\"translate(26.5 14) scale(0.09) rotate(14 50 50)\"><path d=\"M50 4 C50 4 6 36 6 60 C6 73 16 81 27 81 C36 81 43 76 46 70 L41 96 L59 96 L54 70 C57 76 64 81 73 81 C84 81 94 73 94 60 C94 36 50 4 50 4 Z\" fill=\"#141413\"/></g><text x=\"20\" y=\"38.5\" text-anchor=\"middle\" font-size=\"7.5\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">18</text></svg></span>"
+  },
 ];

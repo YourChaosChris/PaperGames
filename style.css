@@ -11194,3 +11194,92 @@ button.concan-meld {
   height: auto;
   margin: 0 auto;
 }
+
+/* Skat: the game line, the bidding and announcement panels, the open
+   hand of an Ouvert declarer and the score list (which may scroll on
+   its own on a narrow screen, the page does not). The trick and score
+   table reuse the Doppelkopf classes. */
+.sk-game-line {
+  margin: 0.2rem 0 0.4rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.sk-values {
+  margin: 0.3rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.sk-values-head {
+  font-weight: 700;
+  margin-right: 0.3rem;
+}
+
+[dir="rtl"] .sk-values-head {
+  margin-right: 0;
+  margin-left: 0.3rem;
+}
+
+.sk-value {
+  display: inline-block;
+  margin: 0.1rem 0.25rem;
+  padding: 0 0.3rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.sk-panel {
+  margin: 0.4rem 0;
+}
+
+.sk-buttons {
+  text-align: center;
+}
+
+.sk-buttons > button {
+  margin: 0.2rem 0.25rem;
+}
+
+.sk-note {
+  margin: 0.2rem 0;
+  text-align: center;
+}
+
+.sk-options {
+  margin: 0.3rem 0;
+  text-align: center;
+}
+
+.sk-options label {
+  display: inline-block;
+  margin: 0.2rem 0.5rem;
+}
+
+.sk-open {
+  margin: 0.3rem 0;
+}
+
+.sk-list-wrap {
+  overflow-x: auto;
+}
+
+.sk-list {
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+.sk-list th,
+.sk-list td {
+  padding: 0.15rem 0.2rem;
+  overflow-wrap: anywhere;
+}
+
+.sk-example {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  margin: 0 auto;
+}
