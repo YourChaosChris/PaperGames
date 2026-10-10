@@ -1936,6 +1936,39 @@ const STRINGS = {
     msg_sl_square: "square",
     msg_sl_triangle: "triangle",
     msg_sl_star: "star",
+    game_blockers: "Path Blockers",
+    home_blockers_desc: "A dice race to the goal at the top of the board for 2 to 4 players: stones block the paths, and whoever lands on one puts it in the others' way. Against the computer or with friends on one device.",
+    bl_level_label: "Level",
+    bl_board_aria: "Path Blockers board",
+    bl_history_intro: "Path Blockers is PaperGames' own race game; it takes up old elements of dice race games such as sending tokens home and blocking the way.",
+    quickrules_blockers_1: "Roll and move one token exactly that many fields along the paths towards the goal at the top.",
+    quickrules_blockers_2: "No token may pass over a stone. Land on a stone, and you put it on another free field - in someone else's way.",
+    quickrules_blockers_3: "Land on another player's token, and it goes back to its house. The first token in the goal wins.",
+    msg_bl_stone_place: "Tap a free field to put the stone on (not in the bottom row).",
+    msg_bl_pick_target: "Now tap one of the marked fields.",
+    msg_t_bl_pick_token: "Tap a token with a dashed ring (or the house button) to move it {n} fields.",
+    msg_t_bl_no_move: "No move is possible with {n}.",
+    msg_bl_enter_you: "You bring a token onto the board.",
+    msg_t_bl_enter: "{p} brings a token onto the board.",
+    msg_bl_move_you: "You move a token.",
+    msg_t_bl_move: "{p} moves a token.",
+    msg_t_bl_hit_you: "{p} sends one of your tokens back to the house!",
+    msg_t_bl_hit_by_you: "You send a token of {q} back to the house!",
+    msg_t_bl_hit: "{p} sends a token of {q} back to the house!",
+    msg_bl_stone_you: "You take a stone.",
+    msg_t_bl_stone: "{p} takes a stone and puts it on another field.",
+    msg_bl_win_you: "You reach the goal and win!",
+    msg_t_bl_win: "{p} reaches the goal and wins!",
+    msg_t_bl_cannot: "This token cannot move {n} fields.",
+    msg_bl_stone_bad: "The stone can only go on a free field, not in the bottom row.",
+    msg_t_bl_house: "House: {n}",
+    msg_bl_goal: "goal",
+    msg_bl_your_token: "your token",
+    msg_t_bl_token_of: "token of {p}",
+    msg_bl_entry: "house entry",
+    msg_bl_possible: "possible",
+    msg_bl_can_move: "can move",
+    msg_bl_diamond: "diamond",
     msg_linkpairs_joined_word: "joined",
     msg_linkpairs_empty_word: "empty",
     msg_linkpairs_end_word: "end of the line",
@@ -2879,7 +2912,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 72;
+  const GAME_COUNT = 73;
 
   function t(key, lang) {
     const l = lang || getLang();

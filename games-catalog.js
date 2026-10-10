@@ -809,4 +809,15 @@ const GAMES_CATALOG = [
     added: "2026-10-10",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><path d=\"M10 32L20 8M17 34L27 10M12 27L19 29M14 21L21 23M16 15L23 17\" stroke=\"#141413\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M31 9C24 13 34 18 27 22C21 26 31 29 26 33\" stroke=\"#141413\" stroke-width=\"3.4\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"31\" cy=\"9\" r=\"3\" fill=\"#141413\"/></svg></span>"
   },
+  {
+    slug: "blockers",
+    category: "race",
+    nameKey: "game_blockers",
+    nameText: "Path Blockers",
+    descKey: "home_blockers_desc",
+    descText: "A dice race to the goal at the top of the board for 2 to 4 players: stones block the paths, and whoever lands on one puts it in the others' way. Against the computer or with friends on one device.",
+    popular: false,
+    added: "2026-10-10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><path d=\"M20 10V31M9 31H31M9 21H31M9 21V31M31 21V31\" stroke=\"#141413\" stroke-width=\"2.2\" fill=\"none\"/><circle cx=\"20\" cy=\"9\" r=\"3.6\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><rect x=\"15\" y=\"16\" width=\"10\" height=\"10\" rx=\"1\" fill=\"#141413\"/><rect x=\"16.8\" y=\"20.1\" width=\"6.4\" height=\"1.8\" fill=\"#fff\"/><circle cx=\"9\" cy=\"31\" r=\"3.2\" fill=\"#141413\"/></svg></span>"
+  },
 ];

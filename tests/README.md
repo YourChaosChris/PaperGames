@@ -77,6 +77,11 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   Checks both "Snakes and Ladders" boards and plays 1000 computer games
   per board and finishing rule; every game must end with no token
   outside the board.
+- `node tests/blockers-core.js` - no server or browser needed. Plays
+  500 "Path Blockers" games each for 2, 3 and 4 players with mixed
+  computer levels and fails unless every move uses the full roll, steps
+  only between joined fields, never visits a field twice or passes a
+  stone, and every game ends with 6 stones and 5 tokens per player.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

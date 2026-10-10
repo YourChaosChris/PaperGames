@@ -59,6 +59,10 @@ echo "=== snakesladders-core.js ==="
 node "$ROOT/tests/snakesladders-core.js" || status=1
 echo ""
 
+echo "=== blockers-core.js ==="
+node "$ROOT/tests/blockers-core.js" || status=1
+echo ""
+
 echo "=== css-check.js ==="
 node "$ROOT/tests/css-check.js" || status=1
 echo ""

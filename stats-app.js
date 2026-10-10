@@ -70,7 +70,8 @@ const STATS_GAME_NAME_KEY = {
   romme: "game_romme",
   oldmaid: "game_oldmaid",
   war: "game_war",
-  snakesladders: "game_snakesladders"
+  snakesladders: "game_snakesladders",
+  blockers: "game_blockers"
 };
 
 function gameDisplayName(game) {

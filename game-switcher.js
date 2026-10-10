@@ -93,7 +93,8 @@
     ["romme", "game_romme"],
     ["oldmaid", "game_oldmaid"],
     ["war", "game_war"],
-    ["snakesladders", "game_snakesladders"]
+    ["snakesladders", "game_snakesladders"],
+    ["blockers", "game_blockers"]
   ];
 
   var GAME_SLUGS = {};

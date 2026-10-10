@@ -10873,3 +10873,102 @@ button.concan-meld {
   height: auto;
   margin: 0 auto;
 }
+
+/* Path Blockers: the board is one SVG sized by script with a button
+   over every field; the houses are buttons below the board (dashed
+   border = a token can come out, double border = chosen). */
+.bl-dice-row {
+  margin: 0.4rem 0 0.6rem;
+  text-align: center;
+}
+
+.bl-dice-row > * {
+  vertical-align: middle;
+  margin: 0 0.4rem;
+}
+
+.bl-die-wrap {
+  display: inline-block;
+  width: 3.4rem;
+  height: 3.4rem;
+}
+
+.bl-die {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.bl-board-wrap {
+  max-width: 564px;
+  margin: 0 auto;
+}
+
+.bl-board {
+  position: relative;
+  margin: 0 auto;
+  border: 2px solid var(--border);
+  background: #fff;
+  box-sizing: content-box;
+}
+
+.bl-board-svg {
+  display: block;
+}
+
+.bl-field {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+  background: transparent;
+}
+
+.bl-players {
+  margin-top: 0.6rem;
+  justify-content: center;
+}
+
+.bl-house {
+  color: inherit;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.bl-house:disabled {
+  opacity: 1;
+  color: inherit;
+  cursor: default;
+}
+
+.bl-house-pick {
+  border: 3px dashed var(--border);
+}
+
+.bl-house-selected {
+  border: 4px double var(--border);
+}
+
+.bl-shape {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 0.25rem;
+  vertical-align: -0.25em;
+}
+
+[dir="rtl"] .bl-shape {
+  margin-right: 0;
+  margin-left: 0.25rem;
+}
+
+.bl-example {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto;
+}
