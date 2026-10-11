@@ -31,6 +31,12 @@
 
 const CakeCore = (function () {
   const ANIMALS = ["dog", "cat", "rabbit", "mouse", "hedgehog"];
+  // Themes: the same puzzle with other pictures and names. "cats" (p.motif)
+  // has five cats told apart by pattern and name, and a fish instead of
+  // the cake; rules, generator and clues stay the same. A puzzle without
+  // p.motif (older saves) is the animals theme.
+  const MOTIFS = ["animals", "cats"];
+  const CATS = ["cattiger", "catluna", "catmimi", "catfelix", "catmax"];
   const ROOM_NAMES = ["kitchen", "living", "hall", "bath", "bedroom", "garden", "cellar"];
   const FURNITURE = ["table", "chair", "rug", "plant", "cupboard"];
   // Furniture no animal can stand on (the cake stands on a table).
@@ -567,8 +573,26 @@ const CakeCore = (function () {
     return s;
   }
 
+  // The id of animal k in the puzzle's theme (names: cake_<id>_..., icons:
+  // CakeIcons <id>).
+  function animalId(p, k) {
+    return (p && p.motif === "cats" ? CATS : ANIMALS)[k];
+  }
+
+  // The id of thing k: an animal, or "cake" / "fish" for the last one.
+  function thingId(p, k) {
+    if (isCake(p, k)) return p.motif === "cats" ? "fish" : "cake";
+    return animalId(p, k);
+  }
+
+  // A text key in the puzzle's theme: base + "_fish" when the cats look for
+  // a fish (only for the texts that name the cake).
+  function themed(p, key) {
+    return p && p.motif === "cats" ? key + "_fish" : key;
+  }
+
   function clueText(p, clue, t) {
-    const a = ANIMALS[clue.a];
+    const a = animalId(p, clue.a);
     const vars = {
       IS: t("cake_" + a + "_is"),
       ISNOT: t("cake_" + a + "_isnot"),
@@ -582,13 +606,13 @@ const CakeCore = (function () {
       case "next": vars.FURN = t("cake_furn_" + clue.f + "_next"); return fill(t("cake_clue_next"), vars);
       case "window": return fill(t("cake_clue_window"), vars);
       case "edge": return fill(t("cake_clue_" + clue.side), vars);
-      case "same": vars.B = t("cake_" + ANIMALS[clue.b] + "_mid"); return fill(t("cake_clue_same"), vars);
+      case "same": vars.B = t("cake_" + animalId(p, clue.b) + "_mid"); return fill(t("cake_clue_same"), vars);
       default: return "";
     }
   }
 
   function thingName(p, k, t) {
-    return isCake(p, k) ? t("cake_thing_cake") : t("cake_" + ANIMALS[k] + "_name");
+    return isCake(p, k) ? t("cake_thing_" + thingId(p, k)) : t("cake_" + animalId(p, k) + "_name");
   }
 
   // The animal in the cake's room, by the solution.
@@ -599,7 +623,7 @@ const CakeCore = (function () {
   }
 
   return {
-    ANIMALS, ROOM_NAMES, FURNITURE, BLOCKING, LEVELS,
+    ANIMALS, CATS, MOTIFS, ROOM_NAMES, FURNITURE, BLOCKING, LEVELS, animalId, thingId, themed,
     neighbours, nextTo, clueAllows, baseCandidates, isSolution, countSolutions, deduce,
     randomRooms, candidateClues, generatePuzzle, addExtraClues, findHint, explainStep, clueText, thingName, culprit, fill
   };

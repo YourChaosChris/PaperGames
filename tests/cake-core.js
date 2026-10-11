@@ -180,11 +180,43 @@ for (const level of ["easy", "medium", "hard"]) {
   }
 }
 
+// The "Cats" theme: the same puzzles with cats and a fish. Every clue,
+// thing name, win line and the texts that name the cake read without a
+// raw key in every language, and no cat text mentions the cake.
+let catTexts = 0;
+{
+  const { loadI18n } = require("./load-i18n.js");
+  const STRINGS = loadI18n({ texts: false }).STRINGS;
+  const cakeWord = { en: /cake/i, de: /Kuchen/, fr: /gâteau/i, es: /pastel/i, it: /torta/i, nl: /taart/i, pl: /ciast/i, uk: /торт/i, ru: /торт/i, ja: /ケーキ/, zh: /蛋糕/, ar: /كعك/ };
+  for (const lang of Object.keys(STRINGS)) {
+    const t = (k) => (STRINGS[lang][k] !== undefined ? STRINGS[lang][k] : STRINGS.en[k] !== undefined ? STRINGS.en[k] : k);
+    const check = (what, text) => {
+      catTexts++;
+      if (/[{}]|cake_|undefined/.test(text)) fails.push(lang + " cats: " + what + " \"" + text + "\"");
+      if (cakeWord[lang] && cakeWord[lang].test(text)) fails.push(lang + " cats: " + what + " names the cake: \"" + text + "\"");
+    };
+    CakeCore.CATS.forEach((id) => ["name", "cap", "mid", "is", "isnot", "sits"].forEach((f) => {
+      if (STRINGS[lang]["cake_" + id + "_" + f] === undefined) fails.push(lang + " lacks cake_" + id + "_" + f);
+    }));
+    for (const level of Object.keys(CakeCore.LEVELS)) {
+      for (let seed = 1; seed <= 20; seed++) {
+        const p = CakeCore.generatePuzzle(level, rng(seed * 977 + 13));
+        if (!p) continue;
+        p.motif = "cats";
+        p.clues.forEach((cl) => check("clue", CakeCore.clueText(p, cl, t)));
+        for (let k = 0; k < p.n; k++) check("thing", CakeCore.thingName(p, k, t));
+        check("win", t("cake_win_" + CakeCore.animalId(p, CakeCore.culprit(p))));
+      }
+    }
+    ["cake_hint_last", "cake_always_1", "cake_always_2", "cake_always_4"].forEach((k) => check(k, t(CakeCore.themed({ motif: "cats" }, k))));
+  }
+}
+
 Object.keys(clueStats).forEach((lv) => {
   const st = clueStats[lv];
   console.log(lv + ": clues on average " + (st.sum / PER_LEVEL).toFixed(2) + " (" + st.min + "-" + st.max + "), needed on average " + (st.needSum / PER_LEVEL).toFixed(2));
 });
 console.log("hint reasons (first " + HINT_PLAY + " puzzles per level): " + JSON.stringify(reasonStats));
 fails.forEach((f) => console.log("FAIL " + f));
-console.log("\n=== CAKE CORE: " + total + " puzzles, " + fails.length + " failures ===");
+console.log("\n=== CAKE CORE: " + total + " puzzles, " + catTexts + " cat theme texts checked, " + fails.length + " failures ===");
 process.exit(fails.length ? 1 : 0);

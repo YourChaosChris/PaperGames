@@ -63,6 +63,40 @@ const CakeIcons = (function () {
     '<rect x="11" y="15" width="18" height="8" ' + C + '/><rect x="7" y="23" width="26" height="11" ' + C + '/>' +
     '<path d="M7 27C10 30 12 25 15 28C18 31 20 25 23 28C26 31 28 25 33 28" fill="none" stroke="#141413" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>';
 
+  // The cats of the "Cats" theme: the same head with pointed ears, told
+  // apart by a pattern drawn in solid black and white - stripes, all
+  // black, plain white, patches, a collar with a bell - never by grey.
+  const catEars = '<path d="M11 18L12 6L19 13M29 18L28 6L21 13" ' + S + '/>';
+  const catHead = (fill) => '<circle cx="20" cy="23" r="10" fill="' + fill + '" stroke="#141413" stroke-width="2.4"/>';
+  const catWhiskers = '<path d="M6 25H12M6 29L12 27.5M34 25H28M34 29L28 27.5" ' + S + ' stroke-width="1.6"/>';
+  const catFace = (eye) => '<circle cx="16" cy="22" r="1.8" fill="' + eye + '"/><circle cx="24" cy="22" r="1.8" fill="' + eye + '"/>' +
+    '<path d="M20 26.5L18.6 25H21.4Z" fill="' + eye + '"/>';
+  // Tiger: three thick stripes on the forehead and one on each side of the chin.
+  icons.cattiger = catEars + catHead("#fff") + catWhiskers +
+    '<path d="M20 13.5V18.5M15.5 14.8L16.8 18.8M24.5 14.8L23.2 18.8M14 29.5L16.5 28M26 29.5L23.5 28" ' + S + ' stroke-width="2.8"/>' + catFace("#141413");
+  // Luna: all black, white eyes and nose; filled ears.
+  icons.catluna = '<path d="M11 18L12 6L19 13Z M29 18L28 6L21 13Z" ' + B + ' stroke="#141413" stroke-width="2.4" stroke-linejoin="round"/>' +
+    catHead("#141413") + catWhiskers + catFace("#fff");
+  // Mimi: plain white with a big bow between the ears.
+  icons.catmimi = catEars + catHead("#fff") + catWhiskers + catFace("#141413") +
+    '<path d="M20 13L12 8V18Z M20 13L28 8V18Z" ' + B + '/><circle cx="20" cy="13" r="2.6" ' + B + '/>';
+  // Felix: a black patch over the left eye and one on the right cheek.
+  icons.catfelix = catEars + catHead("#fff") + catWhiskers +
+    '<path d="M11.2 19C12 15 15 13.5 18.5 14.5C19.5 18 18 21.5 13 22.5Z" ' + B + '/><circle cx="25.5" cy="28" r="2.6" ' + B + '/>' +
+    '<circle cx="16" cy="19.5" r="1.8" fill="#fff"/><circle cx="24" cy="22" r="1.8" ' + B + '/><path d="M20 26.5L18.6 25H21.4Z" ' + B + '/>';
+  // Max: plain head with a thick collar and a round bell underneath.
+  icons.catmax = catEars + catHead("#fff") + catWhiskers + catFace("#141413") +
+    '<path d="M12 32.5C16 35 24 35 28 32.5" fill="none" stroke="#141413" stroke-width="3.6" stroke-linecap="round"/>' +
+    '<circle cx="20" cy="36.5" r="2.6" fill="#fff" stroke="#141413" stroke-width="2"/>';
+  // Fish (what the cats are after instead of the cake): body, tail, eye.
+  icons.fish = '<path d="M6 20C11 11 23 10 29 20C23 30 11 29 6 20Z" fill="#fff" stroke="#141413" stroke-width="2.4" stroke-linejoin="round"/>' +
+    '<path d="M29 20L36 13V27Z" ' + B + '/><circle cx="12.5" cy="18.5" r="1.8" ' + B + '/>' +
+    '<path d="M17 15C19 18 19 22 17 25M21.5 14.5C23.5 18 23.5 22 21.5 25.5" ' + S + ' stroke-width="1.6"/>';
+  // The fish lying on the table.
+  icons.tablefish = icons.table + '<g transform="translate(4 -6.5) scale(0.8)">' +
+    '<path d="M6 20C11 11 23 10 29 20C23 30 11 29 6 20Z" fill="#fff" stroke="#141413" stroke-width="3" stroke-linejoin="round"/>' +
+    '<path d="M29 20L36 13V27Z" ' + B + '/><circle cx="12.5" cy="18.5" r="2" ' + B + '/></g>';
+
   function svg(name, cls) {
     return '<svg class="' + (cls || "cake-icon") + '" viewBox="0 0 40 40" aria-hidden="true" focusable="false">' + (icons[name] || "") + "</svg>";
   }

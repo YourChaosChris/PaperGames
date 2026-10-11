@@ -146,6 +146,30 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   "Children's Games" filter show exactly the games marked `kids: true`,
   that all their links answer, that Mau Mau opens with the animal cards
   from there, the link on calm.html, and no sideways scrolling.
+- `node tests/domino-core.js` - no server or browser needed. 500
+  computer games per number of players (2-4) for classic Domino and for
+  the triangles variant: every game ends, every move is legal, no tile is
+  lost or doubled, and on the triangle board every corner keeps one
+  number for all tiles meeting there.
+- `node tests/mathcross-core.js` - no server or browser needed. 500
+  "Math Cross" puzzles per level: worked from left to right with whole
+  numbers above 0, only the level's operators, exactly one solution,
+  solvable by deduction alone, and playable to the end with the hint.
+- `node tests/differences-core.js` - no server or browser needed. 500
+  "Spot the Difference" picture pairs per level: 3 / 5 / 7 differences,
+  each in an area of its own, every difference changes the drawing and
+  nothing else differs.
+- `node tests/pentomino-core.js` - no server or browser needed. 500
+  "Pentomino Puzzle" puzzles per mode and level: every stored solution
+  fills the board legally, the free fields have the right sizes, the
+  start-pieces puzzles have exactly one solution, and the first 50 of
+  each can be finished with the hint alone. About 45 seconds.
+- `node tests/game-families.js` - needs a running server and a browser.
+  Checks the game families (`family` in games-catalog.js): each has at
+  least two games, no game is in the catalog twice, game-switcher.js
+  agrees, all names exist in 12 languages, games.html's family filter
+  shows exactly the family, and each game page lists its relatives
+  under "Related games".
 - `node tests/offline-install.js` - needs a browser; starts its own
   server on a copy of the site. Checks the offline install of `sw.js`
   and the home page's status line: progress "X of Y files", a broken

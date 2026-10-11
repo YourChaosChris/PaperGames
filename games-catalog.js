@@ -18,11 +18,30 @@
 // for children), on top of its category: the home page's "Children's
 // Games" section and the games.html filter show exactly these. `kidsPlay`
 // is where "Play" leads from there (Mau Mau opens with the animal cards).
+//
+// `family` groups games that have their own pages but are closely related
+// (same roots, same material or the same kind of puzzle), for example
+// Sudoku, Killer Sudoku and Animal Sudoku. games.html filters by it, every
+// card of a family names it, and each game page lists the other members
+// under "Related games" (game-switcher.js keeps the same family per slug;
+// tests/game-families.js checks both agree). Games without relatives get
+// no `family`; every family has at least two games. GAME_FAMILIES below
+// is the order of the filter, its names are the i18n keys family_<id>.
+//
+// The basic rule for new ideas: first check whether the game, or something
+// very close to it, already exists (all games, their rules and modes). A
+// variant - same basic rules or same material - gets NO entry of its own
+// but a "Variant" or "Theme" choice in the existing game (like the themes
+// of Pairs, or 17 and 4 in Blackjack), and that game's description names
+// it. Only a genuinely new game gets its own pages and an entry here.
+
+const GAME_FAMILIES = ["chess", "draughts", "tafl", "hunt", "halma", "inarow", "ancientrace", "dicerace", "sudoku", "latin", "math", "patience", "rummy", "tricks", "casino"];
 
 const GAMES_CATALOG = [
   {
     slug: "chess",
     category: "strategy",
+    family: "chess",
     nameKey: "game_chess",
     nameText: "Chess",
     descKey: "home_chess_desc",
@@ -34,6 +53,7 @@ const GAMES_CATALOG = [
   {
     slug: "checkers",
     category: "strategy",
+    family: "draughts",
     nameKey: "game_checkers",
     nameText: "Checkers",
     descKey: "home_checkers_desc",
@@ -45,6 +65,7 @@ const GAMES_CATALOG = [
   {
     slug: "xiangqi",
     category: "strategy",
+    family: "chess",
     nameKey: "game_xiangqi_short",
     nameText: "Xiangqi",
     descKey: "home_xiangqi_desc",
@@ -56,6 +77,7 @@ const GAMES_CATALOG = [
   {
     slug: "shogi",
     category: "strategy",
+    family: "chess",
     nameKey: "game_shogi",
     nameText: "Shogi",
     descKey: "home_shogi_desc",
@@ -78,6 +100,7 @@ const GAMES_CATALOG = [
   {
     slug: "hnefatafl",
     category: "strategy",
+    family: "tafl",
     nameKey: "game_hnefatafl",
     nameText: "Hnefatafl (Viking Chess)",
     descKey: "home_hnefatafl_desc",
@@ -111,6 +134,7 @@ const GAMES_CATALOG = [
   {
     slug: "fourinarow",
     category: "strategy",
+    family: "inarow",
     nameKey: "game_four_in_a_row",
     nameText: "Four in a Row",
     descKey: "home_four_in_a_row_desc",
@@ -123,6 +147,7 @@ const GAMES_CATALOG = [
   {
     slug: "gomoku",
     category: "strategy",
+    family: "inarow",
     nameKey: "game_gomoku",
     nameText: "Gomoku",
     descKey: "home_gomoku_desc",
@@ -167,6 +192,7 @@ const GAMES_CATALOG = [
   {
     slug: "halma",
     category: "strategy",
+    family: "halma",
     nameKey: "game_halma",
     nameText: "Halma",
     descKey: "home_halma_desc",
@@ -178,6 +204,7 @@ const GAMES_CATALOG = [
   {
     slug: "sternhalma",
     category: "strategy",
+    family: "halma",
     nameKey: "game_sternhalma",
     nameText: "Chinese Checkers",
     descKey: "home_sternhalma_desc",
@@ -211,6 +238,7 @@ const GAMES_CATALOG = [
   {
     slug: "backgammon",
     category: "race",
+    family: "ancientrace",
     nameKey: "game_backgammon",
     nameText: "Backgammon",
     descKey: "home_backgammon_desc",
@@ -222,6 +250,7 @@ const GAMES_CATALOG = [
   {
     slug: "ur",
     category: "race",
+    family: "ancientrace",
     nameKey: "game_ur",
     nameText: "Ur",
     descKey: "home_ur_desc",
@@ -233,6 +262,7 @@ const GAMES_CATALOG = [
   {
     slug: "senet",
     category: "race",
+    family: "ancientrace",
     nameKey: "game_senet",
     nameText: "Senet",
     descKey: "home_senet_desc",
@@ -266,6 +296,7 @@ const GAMES_CATALOG = [
   {
     slug: "sudoku",
     category: "puzzles",
+    family: "sudoku",
     nameKey: "game_sudoku",
     nameText: "Sudoku",
     descKey: "home_sudoku_desc",
@@ -299,6 +330,7 @@ const GAMES_CATALOG = [
   {
     slug: "freecell",
     category: "puzzles",
+    family: "patience",
     nameKey: "game_freecell",
     nameText: "FreeCell",
     descKey: "home_freecell_desc",
@@ -366,6 +398,7 @@ const GAMES_CATALOG = [
   {
     slug: "klondike",
     category: "puzzles",
+    family: "patience",
     nameKey: "game_klondike",
     nameText: "Klondike",
     descKey: "home_klondike_desc",
@@ -377,6 +410,7 @@ const GAMES_CATALOG = [
   {
     slug: "spidersolitaire",
     category: "puzzles",
+    family: "patience",
     nameKey: "game_spidersolitaire",
     nameText: "Spider Solitaire",
     descKey: "home_spidersolitaire_desc",
@@ -388,6 +422,7 @@ const GAMES_CATALOG = [
   {
     slug: "kakuro",
     category: "puzzles",
+    family: "math",
     nameKey: "game_kakuro",
     nameText: "Kakuro",
     descKey: "home_kakuro_desc",
@@ -399,6 +434,7 @@ const GAMES_CATALOG = [
   {
     slug: "fanorona",
     category: "strategy",
+    family: "draughts",
     nameKey: "game_fanorona",
     nameText: "Fanorona",
     descKey: "home_fanorona_desc",
@@ -410,6 +446,7 @@ const GAMES_CATALOG = [
   {
     slug: "baghchal",
     category: "strategy",
+    family: "hunt",
     nameKey: "game_baghchal",
     nameText: "Bagh-Chal",
     descKey: "home_baghchal_desc",
@@ -421,6 +458,7 @@ const GAMES_CATALOG = [
   {
     slug: "tablut",
     category: "strategy",
+    family: "tafl",
     nameKey: "game_tablut",
     nameText: "Tablut",
     descKey: "home_tablut_desc",
@@ -443,6 +481,7 @@ const GAMES_CATALOG = [
   {
     slug: "pyramidsolitaire",
     category: "puzzles",
+    family: "patience",
     nameKey: "game_pyramidsolitaire",
     nameText: "Pyramid Solitaire",
     descKey: "home_pyramidsolitaire_desc",
@@ -487,6 +526,7 @@ const GAMES_CATALOG = [
   {
     slug: "skyscrapers",
     category: "puzzles",
+    family: "latin",
     nameKey: "game_skyscrapers",
     nameText: "Skyscrapers",
     descKey: "home_skyscrapers_desc",
@@ -498,6 +538,7 @@ const GAMES_CATALOG = [
   {
     slug: "konane",
     category: "strategy",
+    family: "draughts",
     nameKey: "game_konane",
     nameText: "Konane",
     descKey: "home_konane_desc",
@@ -520,6 +561,7 @@ const GAMES_CATALOG = [
   {
     slug: "ludo",
     category: "race",
+    family: "dicerace",
     nameKey: "game_ludo",
     nameText: "Ludo",
     descKey: "home_ludo_desc",
@@ -550,7 +592,7 @@ const GAMES_CATALOG = [
     nameKey: "game_domino",
     nameText: "Domino",
     descKey: "home_domino_desc",
-    descText: "The classic draw game with a double-six set: match the pips on either open end, draw when you're stuck, and be the first to play your last tile. Against the computer or with 2-4 players on one device.",
+    descText: "The classic draw game with a double-six set: match the pips on either open end, draw when you're stuck, and be the first to play your last tile. Against the computer or with 2-4 players on one device. Variants: classic, or triangles with three numbers each.",
     popular: false,
     added: "2026-09-26T11:28",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"6.5\" y=\"2.5\" width=\"11\" height=\"19\" rx=\"2\"/><path d=\"M6.5 12H17.5\"/><circle cx=\"12\" cy=\"7.25\" r=\"1.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"9.5\" cy=\"15\" r=\"1.4\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"14.5\" cy=\"18.5\" r=\"1.4\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
@@ -571,6 +613,7 @@ const GAMES_CATALOG = [
   {
     slug: "calcudoku",
     category: "puzzles",
+    family: "math",
     nameKey: "game_calcudoku",
     nameText: "Calcudoku",
     descKey: "home_calcudoku_desc",
@@ -593,6 +636,7 @@ const GAMES_CATALOG = [
   {
     slug: "killersudoku",
     category: "puzzles",
+    family: "sudoku",
     nameKey: "game_killersudoku",
     nameText: "Killer Sudoku",
     descKey: "home_killersudoku_desc",
@@ -626,6 +670,7 @@ const GAMES_CATALOG = [
   {
     slug: "concan",
     category: "strategy",
+    family: "rummy",
     nameKey: "game_concan",
     nameText: "Concan",
     descKey: "home_concan_desc",
@@ -637,6 +682,7 @@ const GAMES_CATALOG = [
   {
     slug: "doppelkopf",
     category: "strategy",
+    family: "tricks",
     nameKey: "game_doppelkopf",
     nameText: "Doppelkopf",
     descKey: "home_doppelkopf_desc",
@@ -648,6 +694,7 @@ const GAMES_CATALOG = [
   {
     slug: "trix",
     category: "strategy",
+    family: "tricks",
     nameKey: "game_trix",
     nameText: "Trix",
     descKey: "home_trix_desc",
@@ -670,6 +717,7 @@ const GAMES_CATALOG = [
   {
     slug: "tictactoe",
     category: "strategy",
+    family: "inarow",
     nameKey: "game_tictactoe",
     nameText: "Tic-Tac-Toe",
     descKey: "home_tictactoe_desc",
@@ -682,6 +730,7 @@ const GAMES_CATALOG = [
   {
     slug: "alquerque",
     category: "strategy",
+    family: "draughts",
     nameKey: "game_alquerque",
     nameText: "Alquerque",
     descKey: "home_alquerque_desc",
@@ -705,6 +754,7 @@ const GAMES_CATALOG = [
   {
     slug: "futoshiki",
     category: "puzzles",
+    family: "latin",
     nameKey: "game_futoshiki",
     nameText: "Futoshiki",
     descKey: "home_futoshiki_desc",
@@ -716,6 +766,7 @@ const GAMES_CATALOG = [
   {
     slug: "foxandgeese",
     category: "strategy",
+    family: "hunt",
     nameKey: "game_foxandgeese",
     nameText: "Fox and Geese",
     descKey: "home_foxandgeese_desc",
@@ -738,6 +789,7 @@ const GAMES_CATALOG = [
   {
     slug: "romme",
     category: "strategy",
+    family: "rummy",
     nameKey: "game_romme",
     nameText: "Rummy (Rommé)",
     descKey: "home_romme_desc",
@@ -752,7 +804,7 @@ const GAMES_CATALOG = [
     nameKey: "game_cake",
     nameText: "Who Took the Cake?",
     descKey: "home_cake_desc",
-    descText: "A detective logic puzzle: place the animals and the cake on the floor plan by the clues - one per row and column - and find out who took the cake.",
+    descText: "A detective logic puzzle: place the animals and the cake on the floor plan by the clues - one per row and column - and find out who took the cake. Theme: animals and cake, or cats and fish.",
     popular: false,
     kids: true,
     added: "2026-10-09T16:02",
@@ -761,6 +813,7 @@ const GAMES_CATALOG = [
   {
     slug: "animalsudoku",
     category: "puzzles",
+    family: "sudoku",
     nameKey: "game_animalsudoku",
     nameText: "Animal Sudoku",
     descKey: "home_animalsudoku_desc",
@@ -821,6 +874,7 @@ const GAMES_CATALOG = [
   {
     slug: "snakesladders",
     category: "race",
+    family: "dicerace",
     nameKey: "game_snakesladders",
     nameText: "Snakes and Ladders",
     descKey: "home_snakesladders_desc",
@@ -833,6 +887,7 @@ const GAMES_CATALOG = [
   {
     slug: "blockers",
     category: "race",
+    family: "dicerace",
     nameKey: "game_blockers",
     nameText: "Path Blockers",
     descKey: "home_blockers_desc",
@@ -845,6 +900,7 @@ const GAMES_CATALOG = [
   {
     slug: "blackjack",
     category: "party",
+    family: "casino",
     nameKey: "game_blackjack",
     nameText: "Blackjack",
     descKey: "home_blackjack_desc",
@@ -856,6 +912,7 @@ const GAMES_CATALOG = [
   {
     slug: "poker",
     category: "party",
+    family: "casino",
     nameKey: "game_poker",
     nameText: "Poker",
     descKey: "home_poker_desc",
@@ -867,6 +924,7 @@ const GAMES_CATALOG = [
   {
     slug: "skat",
     category: "party",
+    family: "tricks",
     nameKey: "game_skat",
     nameText: "Skat",
     descKey: "home_skat_desc",
@@ -878,6 +936,7 @@ const GAMES_CATALOG = [
   {
     slug: "schafkopf",
     category: "party",
+    family: "tricks",
     nameKey: "game_schafkopf",
     nameText: "Schafkopf",
     descKey: "home_schafkopf_desc",
@@ -889,6 +948,7 @@ const GAMES_CATALOG = [
   {
     slug: "canasta",
     category: "party",
+    family: "rummy",
     nameKey: "game_canasta",
     nameText: "Canasta",
     descKey: "home_canasta_desc",
@@ -900,6 +960,7 @@ const GAMES_CATALOG = [
   {
     slug: "bridge",
     category: "party",
+    family: "tricks",
     nameKey: "game_bridge",
     nameText: "Bridge",
     descKey: "home_bridge_desc",
@@ -920,4 +981,39 @@ const GAMES_CATALOG = [
     added: "2026-10-10T20:37",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"2\" y=\"4\" width=\"36\" height=\"32\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><text x=\"10\" y=\"18\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">3</text><text x=\"30\" y=\"18\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">4</text><text x=\"10\" y=\"32\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">7</text><text x=\"30\" y=\"32\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">1</text><path d=\"M5 22 L35 8\" stroke=\"#141413\" stroke-width=\"2.5\"/></svg></span>"
   },
+  {
+    slug: "mathcross",
+    category: "puzzles",
+    family: "math",
+    nameKey: "game_mathcross",
+    nameText: "Math Cross",
+    descKey: "home_mathcross_desc",
+    descText: "Place the numbers 1 to 9 once each so every row and every column works out, worked from left to right. Three levels, always exactly one solution, solvable without guessing.",
+    popular: false,
+    added: "2026-10-11T16:10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"10\" height=\"10\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"27\" y=\"3\" width=\"10\" height=\"10\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"3\" y=\"27\" width=\"10\" height=\"10\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"27\" y=\"27\" width=\"10\" height=\"10\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><path d=\"M20 4V12M16 8H24M20 28V36M16 32H24M8 16V24M32 16V24M28 20H36\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.5\" stroke-linecap=\"round\"/></svg></span>"
+  },
+  {
+    slug: "differences",
+    category: "puzzles",
+    nameKey: "game_differences",
+    nameText: "Spot the Difference",
+    descKey: "home_differences_desc",
+    descText: "Two pictures that differ in 3, 5 or 7 places: something missing, another pattern, mirrored or moved. Tap a difference in either picture. No time limit, a hint when you are stuck.",
+    popular: false,
+    kids: true,
+    added: "2026-10-11T16:18",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"2\" y=\"6\" width=\"16\" height=\"28\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"22\" y=\"6\" width=\"16\" height=\"28\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"10\" cy=\"15\" r=\"4\" fill=\"#141413\"/><circle cx=\"30\" cy=\"15\" r=\"4\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><path d=\"M5 29L10 22L15 29Z M25 29L30 22L35 29Z\" fill=\"#141413\"/></svg></span>"
+  },
+  {
+    slug: "pentomino",
+    category: "puzzles",
+    nameKey: "game_pentomino",
+    nameText: "Pentomino Puzzle",
+    descKey: "home_pentomino_desc",
+    descText: "Lay the twelve pieces of five squares into a rectangle - turn and flip them with a tap, no dragging. Free laying in four field sizes, or with start pieces given and exactly one solution.",
+    popular: false,
+    added: "2026-10-11T16:27",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M4 4H20V12H12V28H4Z\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M20 4H36V20H28V12H20Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M12 12H28V20H36V36H20V28H12Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M14 16H26M14 24H26\" stroke=\"#141413\" stroke-width=\"1.5\"/></svg></span>"
+  }
 ];

@@ -27,6 +27,33 @@ const AppStateCake = {
 };
 
 const CAKE_SAVE_KEY = "einkchess_save_cake";
+// Theme ("animals" or "cats", CakeCore.MOTIFS) for new puzzles; the
+// current puzzle keeps its own in puzzle.motif.
+const CAKE_MOTIF_KEY = "papergames_cake_motif";
+
+function loadCakeMotif() {
+  try {
+    const m = localStorage.getItem(CAKE_MOTIF_KEY);
+    return CakeCore.MOTIFS.indexOf(m) !== -1 ? m : "animals";
+  } catch (e) {
+    return "animals";
+  }
+}
+
+function storeCakeMotif(m) {
+  try { localStorage.setItem(CAKE_MOTIF_KEY, m); } catch (e) { /* not kept */ }
+}
+
+// The "Always true" box names the cake or, with the cats, the fish.
+function renderCakeAlways() {
+  const p = AppStateCake.puzzle;
+  document.querySelectorAll("#cake-always [data-cake-always]").forEach((li) => {
+    const nr = li.getAttribute("data-cake-always");
+    const key = nr === "3" ? "cake_always_3" : CakeCore.themed(p, "cake_always_" + nr);
+    li.setAttribute("data-i18n", key);
+    li.textContent = tCake(key);
+  });
+}
 
 function tCake(key, vars) {
   const s = (typeof I18n !== "undefined") ? I18n.t(key) : key;
@@ -59,7 +86,7 @@ function setCakeStatus(key, vars, reason) {
 
 function cakeReasonText(thing, reason) {
   const kind = reason.kind === "clue" && reason.clues.length === 2 ? "clue2" : reason.kind;
-  const vars = { A: tCake("cake_" + CakeCore.ANIMALS[thing] + "_cap") };
+  const vars = { A: tCake("cake_" + CakeCore.animalId(AppStateCake.puzzle, thing) + "_cap") };
   if (reason.clues && reason.clues.length) { vars.N = String(reason.clues[0] + 1); if (reason.clues[1] !== undefined) vars.M = String(reason.clues[1] + 1); }
   return tCake("cake_why_" + kind, vars);
 }
@@ -78,7 +105,7 @@ function renderCakeStatus() {
 
 function cakeWinText() {
   const a = CakeCore.culprit(AppStateCake.puzzle);
-  return tCake("cake_win_" + CakeCore.ANIMALS[a]);
+  return tCake("cake_win_" + CakeCore.animalId(AppStateCake.puzzle, a));
 }
 
 function initCakeApp() {
@@ -86,6 +113,21 @@ function initCakeApp() {
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const levelInline = document.getElementById("cake-level-inline");
+  const motifSelect = document.getElementById("cake-motif");
+  if (motifSelect) {
+    motifSelect.value = loadCakeMotif();
+    // Only pictures and names change, so the puzzle on the board switches
+    // at once and keeps every move.
+    motifSelect.addEventListener("change", () => {
+      storeCakeMotif(motifSelect.value);
+      const p = AppStateCake.puzzle;
+      if (!p) return;
+      if (motifSelect.value === "cats") p.motif = "cats";
+      else delete p.motif;
+      showCakeBoard();
+      if (!AppStateCake.gameOver) saveCakeGame();
+    });
+  }
 
   if (menuToggle && settingsPanel) {
     menuToggle.addEventListener("click", () => {
@@ -123,6 +165,7 @@ function initCakeApp() {
     AppStateCake.tool = 0;
     AppStateCake.gameOver = false;
     if (levelInline) levelInline.value = AppStateCake.level;
+    if (motifSelect) motifSelect.value = saved.puzzle.motif === "cats" ? "cats" : "animals";
     showCakeBoard();
     setCakeStatus("cake_status_pick");
   }
@@ -140,6 +183,7 @@ function savedCakePuzzleValid(p) {
 function startNewCakeGame(level) {
   const puzzle = CakeCore.generatePuzzle(level);
   if (!puzzle) return;
+  if (loadCakeMotif() === "cats") puzzle.motif = "cats";
   AppStateCake.level = level;
   AppStateCake.puzzle = puzzle;
   AppStateCake.placed = puzzle.solution.map(() => -1);
@@ -283,7 +327,7 @@ function buildCakePalette() {
     btn.className = "secondary cake-pick";
     btn.setAttribute("data-i18n-attr", "");
     btn.dataset.tool = String(tool);
-    const icon = tool === "x" ? "x" : (tool === p.n - 1 ? "cake" : CakeCore.ANIMALS[tool]);
+    const icon = tool === "x" ? "x" : CakeCore.thingId(p, tool);
     btn.innerHTML = CakeIcons.svg(icon, "cake-pick-icon") + '<span class="cake-pick-name"></span>';
     btn.addEventListener("click", () => {
       AppStateCake.tool = tool;
@@ -321,6 +365,7 @@ function renderCakeAll() {
   renderCakeClues();
   renderCakeStatus();
   renderCakeMeta();
+  renderCakeAlways();
   const boardEl = document.getElementById("cake-board");
   if (boardEl) boardEl.setAttribute("aria-label", tCake("cake_board_label"));
   const win = document.getElementById("game-result");
@@ -344,11 +389,11 @@ function renderCakeBoard() {
     const blocking = CakeCore.BLOCKING.indexOf(f) !== -1;
     const cakeOnTable = k === n - 1 && f === "table";
     furn.className = "cake-furn" + (f ? (blocking ? " cake-furn-big" : " cake-furn-small") : "");
-    furn.innerHTML = f ? CakeIcons.svg(cakeOnTable ? "tablecake" : f, "cake-furn-icon") : "";
+    furn.innerHTML = f ? CakeIcons.svg(cakeOnTable ? "table" + CakeCore.thingId(p, k) : f, "cake-furn-icon") : "";
     const crossed = AppStateCake.crosses.indexOf(i) !== -1;
     const thing = cell.querySelector(".cake-thing");
     if (cakeOnTable) thing.innerHTML = "";
-    else if (k >= 0) thing.innerHTML = CakeIcons.svg(k === n - 1 ? "cake" : CakeCore.ANIMALS[k], "cake-thing-icon");
+    else if (k >= 0) thing.innerHTML = CakeIcons.svg(CakeCore.thingId(p, k), "cake-thing-icon");
     else if (crossed) thing.innerHTML = CakeIcons.svg("x", "cake-thing-icon cake-cross-icon");
     else thing.innerHTML = "";
     cell.classList.toggle("hint-cell", AppStateCake.hintCell === i);
@@ -549,7 +594,7 @@ function hintCake() {
   } else if (h.kind === "last") {
     AppStateCake.hintCell = -1;
     AppStateCake.hintClues = [];
-    setCakeStatus("cake_hint_last");
+    setCakeStatus(CakeCore.themed(p, "cake_hint_last"));
     renderCakeAll();
   } else if (h.kind === "step") {
     const k = cakeThingAt(h.cell);

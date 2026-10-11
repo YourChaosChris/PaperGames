@@ -83,10 +83,20 @@ echo "=== bridge-core.js ==="
 node "$ROOT/tests/bridge-core.js" || status=1
 echo "=== tenpairs-core.js ==="
 node "$ROOT/tests/tenpairs-core.js" || status=1
+echo "=== domino-core.js ==="
+node "$ROOT/tests/domino-core.js" || status=1
+echo "=== mathcross-core.js ==="
+node "$ROOT/tests/mathcross-core.js" || status=1
+echo "=== differences-core.js ==="
+node "$ROOT/tests/differences-core.js" || status=1
+echo "=== pentomino-core.js ==="
+node "$ROOT/tests/pentomino-core.js" || status=1
 echo "=== new-games-order.js ==="
 node "$ROOT/tests/new-games-order.js" || status=1
 echo "=== kids-games.js ==="
 node "$ROOT/tests/kids-games.js" || status=1
+echo "=== game-families.js ==="
+node "$ROOT/tests/game-families.js" || status=1
 echo ""
 
 echo "=== offline-install.js ==="

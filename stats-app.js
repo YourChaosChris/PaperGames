@@ -78,7 +78,10 @@ const STATS_GAME_NAME_KEY = {
   schafkopf: "game_schafkopf",
   canasta: "game_canasta",
   bridge: "game_bridge",
-  tenpairs: "game_tenpairs"
+  tenpairs: "game_tenpairs",
+  mathcross: "game_mathcross",
+  differences: "game_differences",
+  pentomino: "game_pentomino"
 };
 
 function gameDisplayName(game) {

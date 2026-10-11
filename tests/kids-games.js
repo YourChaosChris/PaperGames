@@ -2,7 +2,7 @@
 // "Children's Games": the home page section and the games.html filter
 // show exactly the games marked `kids: true` in games-catalog.js.
 //
-// Checks: the marked set is the agreed list of 15 games; the home section
+// Checks: the marked set is the agreed list of 16 games; the home section
 // (index.html#section-kids) and the "Children's Games" chip on games.html
 // (also preselected by games.html?category=kids) list exactly these; every
 // Play / Rules / History link there answers 200; Mau Mau's "Play" there is
@@ -25,7 +25,7 @@ const ctx = {};
 vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(ROOT, "games-catalog.js"), "utf8") + "\nthis.GAMES_CATALOG = GAMES_CATALOG;", ctx);
 const marked = ctx.GAMES_CATALOG.filter((g) => g.kids === true).map((g) => g.slug).sort();
-const AGREED = ["cake", "animalsudoku", "shapesort", "linkpairs", "pairs", "maumau", "oldmaid", "war", "snakesladders", "blockers", "ludo", "fourinarow", "tictactoe", "lightswitch", "tenpairs"].sort();
+const AGREED = ["cake", "animalsudoku", "shapesort", "linkpairs", "pairs", "maumau", "oldmaid", "war", "snakesladders", "blockers", "ludo", "fourinarow", "tictactoe", "lightswitch", "tenpairs", "differences"].sort();
 const fails = [];
 const same = (name, got, want) => { if (JSON.stringify(got) !== JSON.stringify(want)) fails.push(name + ": " + JSON.stringify(got) + ", expected " + JSON.stringify(want)); };
 same("marked games", marked, AGREED);

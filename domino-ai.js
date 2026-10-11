@@ -10,7 +10,9 @@
 //                in state.missing) and prefers leaving those numbers on
 //                the open ends, above all against the next player.
 // Drawing and passing aren't choices in this ruleset, so the only
-// decision is which tile goes on which end.
+// decision is which tile goes on which end (triangle variant: on which
+// free triangle; there the hard level prefers tiles that touch more laid
+// tiles and keep more of its hand playable).
 
 const DominoAi = (function () {
   function core() {
@@ -46,6 +48,19 @@ const DominoAi = (function () {
     return score;
   }
 
+  // Triangle variant, hard: like medium, plus tiles that touch more laid
+  // tiles (they close gaps where little else fits) and moves after which
+  // more of the remaining hand can still be played.
+  function hardScoreTriangle(C, state, move) {
+    const player = state.turn;
+    const tile = state.hands[player][move.index];
+    let score = mediumScore(C, tile) + 6 * C.touching(state, move.slot);
+    const after = C.applyMove(state, move.index, move.slot).state;
+    const rest = after.hands[player];
+    score += 4 * rest.filter((t) => C.slotsForTile(after, t).length > 0).length;
+    return score;
+  }
+
   function chooseMove(state, level, rng) {
     const C = core();
     const random = rng || Math.random;
@@ -57,7 +72,8 @@ const DominoAi = (function () {
     moves.forEach((m) => {
       const tile = state.hands[state.turn][m.index];
       // Small random tie-breaker so equal choices don't always look alike.
-      const s = (level >= 3 ? hardScore(C, state, m) : mediumScore(C, tile)) + random() * 0.5;
+      const hard = level >= 3 ? (C.isTriangle(state) ? hardScoreTriangle(C, state, m) : hardScore(C, state, m)) : null;
+      const s = (hard !== null ? hard : mediumScore(C, tile)) + random() * 0.5;
       if (s > bestScore) { bestScore = s; best = m; }
     });
     return best;

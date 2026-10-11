@@ -13,6 +13,11 @@
 // With two or more people on one device, each hand is covered between
 // turns ("Pass the device to Player 2") so nobody sees another's tiles.
 // Against the computer the human is always Player 1.
+//
+// Variant "Triangles" (DominoCore, state.variant): instead of the ends
+// row and the line, the board of triangles is drawn, scaled to the width.
+// Picking a tile marks every free triangle it fits on with a number; tap
+// one to lay the tile there.
 
 const DOMINO_SAVE_KEY = "einkchess_save_domino";
 
@@ -55,7 +60,11 @@ function viewerDomino() {
 }
 
 function tileTextDomino(tile) {
-  return tile[0] + "-" + tile[1];
+  return tile.join("-");
+}
+
+function isTriDomino() {
+  return !!(AppStateDomino.state && DominoCore.isTriangle(AppStateDomino.state));
 }
 
 function setStatusDomino(text) {
@@ -122,6 +131,26 @@ function tileSvgDomino(tile, vertical) {
     pipsSvgDomino(tile[0], 0, 0) + pipsSvgDomino(tile[1], 50, 0) + "</svg>";
 }
 
+// A triangle tile for the hand: pointing up, a number in each corner.
+function triTileSvgDomino(tile) {
+  return '<svg class="domino-svg domino-svg-tri" viewBox="0 0 100 88" aria-hidden="true" focusable="false">' +
+    '<path class="domino-face" d="M50 3L97 85H3Z" stroke-linejoin="round"/>' +
+    '<text class="domino-tri-num" x="50" y="34">' + tile[0] + "</text>" +
+    '<text class="domino-tri-num" x="25" y="76">' + tile[1] + "</text>" +
+    '<text class="domino-tri-num" x="75" y="76">' + tile[2] + "</text></svg>";
+}
+
+// Corner points of triangle (r, c) in board units (side W, height H), in
+// DominoCore.triCorners order.
+const DOMINO_TRI_W = 60;
+const DOMINO_TRI_H = 52;
+
+function triPointsDomino(r, c) {
+  const x0 = c * DOMINO_TRI_W / 2, y0 = r * DOMINO_TRI_H, W = DOMINO_TRI_W, H = DOMINO_TRI_H;
+  if (DominoCore.pointsUp(r, c)) return [[x0 + W / 2, y0], [x0, y0 + H], [x0 + W, y0 + H]];
+  return [[x0, y0], [x0 + W, y0], [x0 + W / 2, y0 + H]];
+}
+
 /*** Game flow ***/
 
 function initDominoApp() {
@@ -132,6 +161,7 @@ function initDominoApp() {
   const levelWrap = document.getElementById("domino-level-wrap");
   const levelSelect = document.getElementById("domino-level-inline");
   const playersSelect = document.getElementById("domino-num-players");
+  const variantSelect = document.getElementById("domino-variant");
   const startBtn = document.getElementById("start-domino-game");
   const resignBtn = document.getElementById("resign-button");
   let pendingMode = "vs-ai";
@@ -156,7 +186,7 @@ function initDominoApp() {
     startBtn.addEventListener("click", () => {
       const n = playersSelect ? parseInt(playersSelect.value, 10) : 2;
       const level = levelSelect ? parseInt(levelSelect.value, 10) : 2;
-      startNewGameDomino(pendingMode, n, level);
+      startNewGameDomino(pendingMode, n, level, variantSelect ? variantSelect.value : "classic");
       const status = document.getElementById("offline-domino-status");
       if (status) {
         const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
@@ -193,6 +223,7 @@ function initDominoApp() {
     AppStateDomino.selected = null;
     AppStateDomino.revealed = saved.mode !== "hotseat";
     setMode(saved.mode);
+    if (variantSelect) variantSelect.value = DominoCore.isTriangle(saved.state) ? "triangle" : "classic";
     showBoardDomino();
     renderDomino();
     continueTurnDomino();
@@ -210,11 +241,11 @@ function showBoardDomino() {
   if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
 }
 
-function startNewGameDomino(mode, numPlayers, level) {
+function startNewGameDomino(mode, numPlayers, level, variant) {
   AppStateDomino.mode = mode;
   AppStateDomino.numPlayers = numPlayers;
   AppStateDomino.aiLevel = level;
-  AppStateDomino.state = DominoCore.createInitialState(numPlayers);
+  AppStateDomino.state = DominoCore.createInitialState(numPlayers, null, variant === "triangle" ? "triangle" : null);
   AppStateDomino.started = true;
   AppStateDomino.gameOver = false;
   AppStateDomino.selected = null;
@@ -228,9 +259,9 @@ function startNewGameDomino(mode, numPlayers, level) {
   const s = AppStateDomino.state;
   const opener = s.turn;
   const index = s.hands[opener].findIndex((t) => DominoCore.sameTile(t, s.openingTile));
-  const r = DominoCore.applyMove(s, index, "right");
+  const r = DominoCore.applyMove(s, index, DominoCore.isTriangle(s) ? "0,0" : "right");
   AppStateDomino.state = r.state;
-  AppStateDomino.lastPlaced = { side: "right" };
+  AppStateDomino.lastPlaced = { side: r.side };
   AppStateDomino.revealed = mode !== "hotseat";
   afterActionDomino(opener, (isYouDomino(opener) ? "You open with " : playerNameDomino(opener) + " opens with ") + tileTextDomino(r.tile) + ".");
 }
@@ -256,9 +287,9 @@ function promptHumanDomino() {
   const s = AppStateDomino.state;
   const action = DominoCore.requiredAction(s);
   const who = isYouDomino(s.turn) ? "Your turn. " : playerNameDomino(s.turn) + "'s turn. ";
-  if (action === "play") setStatusDomino(who + "Choose a tile, then an open end.");
+  if (action === "play") setStatusDomino(who + chooseTextDomino());
   else if (action === "draw") setStatusDomino(who + "No tile fits - draw from the stock.");
-  else if (action === "pass") setStatusDomino(who + "No tile fits and the stock is empty - pass.");
+  else if (action === "pass") setStatusDomino(who + passTextDomino());
   renderDomino();
 }
 
@@ -280,7 +311,7 @@ function aiTurnDomino() {
     return;
   }
   const move = DominoAi.chooseMove(s, AppStateDomino.aiLevel);
-  playMoveDomino(move.index, move.side, drawn);
+  playMoveDomino(move.index, DominoCore.isTriangle(s) ? move.slot : move.side, drawn);
 }
 
 function drewTilesTextDomino(player, keys) {
@@ -302,7 +333,7 @@ function playMoveDomino(index, side, drawn) {
   const player = s.turn;
   const r = DominoCore.applyMove(s, index, side);
   AppStateDomino.state = r.state;
-  AppStateDomino.lastPlaced = { side: side };
+  AppStateDomino.lastPlaced = { side: r.side };
   AppStateDomino.selected = null;
   const played = isYouDomino(player) ? "You played " : playerNameDomino(player) + " played ";
   const msg = drawNoteDomino(player, drawn) + played + tileTextDomino(r.tile) + ".";
@@ -338,8 +369,20 @@ function afterActionDomino(player, msg) {
 function statusPromptDomino() {
   const action = DominoCore.requiredAction(AppStateDomino.state);
   if (action === "draw") return "No tile fits - draw from the stock.";
-  if (action === "pass") return "No tile fits and the stock is empty - pass.";
-  return "Choose a tile, then an open end.";
+  if (action === "pass") return passTextDomino();
+  return chooseTextDomino();
+}
+
+function chooseTextDomino() {
+  return isTriDomino() ? "Choose a tile, then a marked place." : "Choose a tile, then an open end.";
+}
+
+// Why the player has to pass: an empty stock, or (triangles) three tiles
+// drawn this turn already.
+function passTextDomino() {
+  const s = AppStateDomino.state;
+  if (isTriDomino() && s.stock.length) return "No tile fits after three draws - pass.";
+  return "No tile fits and the stock is empty - pass.";
 }
 
 function endGameDomino(lastMsg) {
@@ -349,7 +392,7 @@ function endGameDomino(lastMsg) {
   let title;
   let msg;
   if (s.blocked) {
-    msg = lastMsg + " The line is blocked.";
+    msg = lastMsg + (isTriDomino() ? " The board is blocked." : " The line is blocked.");
     if (s.draw) msg += " The lowest pip total is shared - it's a draw.";
     else if (isYouDomino(s.winner)) msg += " You win with the lowest pip total.";
     else msg += " " + playerNameDomino(s.winner) + " wins with the lowest pip total.";
@@ -422,6 +465,21 @@ function onHandTileClickDomino(index) {
     renderDomino();
     return;
   }
+  if (isTriDomino()) {
+    const slots = DominoCore.slotsForTile(s, tile);
+    if (!slots.length) {
+      AppStateDomino.selected = null;
+      setStatusDomino("That tile doesn't fit anywhere.");
+      renderDomino();
+      return;
+    }
+    AppStateDomino.selected = index;
+    setStatusDomino(slots.length === 1
+      ? "Tap the marked place to lay tile " + tileTextDomino(tile) + "."
+      : "Tile " + tileTextDomino(tile) + " fits in " + slots.length + " places - tap one.");
+    renderDomino();
+    return;
+  }
   const sides = DominoCore.sidesForTile(s, tile);
   if (!sides.length) {
     AppStateDomino.selected = null;
@@ -451,6 +509,15 @@ function onEndClickDomino(side) {
   playMoveDomino(AppStateDomino.selected, side, 0);
 }
 
+function onSlotClickDomino(slot) {
+  if (!humanCanActDomino()) return;
+  const s = AppStateDomino.state;
+  if (AppStateDomino.selected === null) return;
+  const tile = s.hands[s.turn][AppStateDomino.selected];
+  if (DominoCore.slotsForTile(s, tile).indexOf(slot) === -1) return;
+  playMoveDomino(AppStateDomino.selected, slot, 0);
+}
+
 function onDrawClickDomino() {
   if (!humanCanActDomino()) return;
   let s = AppStateDomino.state;
@@ -472,8 +539,8 @@ function onDrawClickDomino() {
   const fresh = s.hands[player].map(tileTextDomino).filter((k) => !had.has(k));
   AppStateDomino.newKeys = fresh;
   const note = fresh.length ? drewTilesTextDomino(player, fresh) + " " : drawNoteDomino(player, drawn);
-  if (DominoCore.requiredAction(s) === "pass") setStatusDomino(note + "No tile fits and the stock is empty - pass.");
-  else setStatusDomino(note + "Choose a tile, then an open end.");
+  if (DominoCore.requiredAction(s) === "pass") setStatusDomino(note + passTextDomino());
+  else setStatusDomino(note + chooseTextDomino());
   renderDomino();
   saveDominoGame();
 }
@@ -495,8 +562,19 @@ function renderDomino() {
   const s = AppStateDomino.state;
   if (!s) return;
   renderPlayersDomino(s);
-  renderEndsDomino(s);
-  renderLineDomino(s);
+  const tri = DominoCore.isTriangle(s);
+  const endsRow = document.querySelector(".domino-ends");
+  const lineEl = document.getElementById("domino-line");
+  const gridEl = document.getElementById("domino-grid");
+  if (endsRow) endsRow.classList.toggle("hidden", tri);
+  if (lineEl) lineEl.classList.toggle("hidden", tri);
+  if (gridEl) gridEl.classList.toggle("hidden", !tri);
+  if (tri) {
+    renderGridDomino(s);
+  } else {
+    renderEndsDomino(s);
+    renderLineDomino(s);
+  }
   renderHandDomino(s);
   renderButtonsDomino(s);
   const resignBtn = document.getElementById("resign-button");
@@ -575,6 +653,71 @@ function renderLineDomino(s) {
   else el.scrollLeft = el.scrollWidth;
 }
 
+// The board of triangles, scaled to the width: every laid tile with its
+// corner numbers (the latest one with a thick outline) and, while a tile
+// is picked, the free triangles it fits on as numbered, dashed places.
+function renderGridDomino(s) {
+  const el = document.getElementById("domino-grid");
+  if (!el) return;
+  const sel = AppStateDomino.selected;
+  const selTile = sel !== null && s.hands[s.turn] ? s.hands[s.turn][sel] : null;
+  const targets = selTile && !AppStateDomino.gameOver ? DominoCore.slotsForTile(s, selTile) : [];
+  const all = s.slots.concat(targets).concat(DominoCore.openSlots(s));
+  if (!all.length) { el.innerHTML = ""; return; }
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  all.forEach((slot) => {
+    const rc = DominoCore.parseSlot(slot);
+    triPointsDomino(rc[0], rc[1]).forEach((p) => {
+      minX = Math.min(minX, p[0]); maxX = Math.max(maxX, p[0]);
+      minY = Math.min(minY, p[1]); maxY = Math.max(maxY, p[1]);
+    });
+  });
+  const pad = 4;
+  const vbW = maxX - minX + 2 * pad, vbH = maxY - minY + 2 * pad;
+  const last = AppStateDomino.lastPlaced ? AppStateDomino.lastPlaced.side : null;
+  // At least 36 px per triangle side (wider boards scroll inside their
+  // frame, never the page), at most 96 px.
+  let svg = '<div class="domino-grid-inner" style="min-width:' + Math.round(vbW * 0.6) + "px;max-width:" + Math.round(vbW * 1.6) + 'px">' +
+    '<svg class="domino-grid-svg" viewBox="' + (minX - pad) + " " + (minY - pad) + " " + vbW + " " + vbH +
+    '" aria-hidden="true" focusable="false">';
+  s.slots.forEach((slot) => {
+    const rc = DominoCore.parseSlot(slot);
+    const pts = triPointsDomino(rc[0], rc[1]);
+    const cx = (pts[0][0] + pts[1][0] + pts[2][0]) / 3, cy = (pts[0][1] + pts[1][1] + pts[2][1]) / 3;
+    svg += '<path class="domino-face' + (slot === last ? " domino-tri-last" : "") + '" d="M' + pts.map((p) => p[0] + " " + p[1]).join("L") + 'Z"/>';
+    s.board[slot].forEach((v, i) => {
+      const x = pts[i][0] + (cx - pts[i][0]) * 0.55, y = pts[i][1] + (cy - pts[i][1]) * 0.55 + 4.5;
+      svg += '<text class="domino-tri-num domino-tri-num-board" x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '">' + v + "</text>";
+    });
+  });
+  svg += "</svg></div>";
+  el.innerHTML = svg;
+  const inner = el.firstChild;
+  // The places to tap are buttons laid over the drawing, so they can be
+  // reached and read out like any other button.
+  const overlay = document.createElement("div");
+  overlay.className = "domino-grid-places";
+  targets.forEach((slot, i) => {
+    const rc = DominoCore.parseSlot(slot);
+    const pts = triPointsDomino(rc[0], rc[1]);
+    const cx = (pts[0][0] + pts[1][0] + pts[2][0]) / 3, cy = (pts[0][1] + pts[1][1] + pts[2][1]) / 3;
+    const marker = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    marker.setAttribute("class", "domino-tri-place");
+    marker.setAttribute("d", "M" + pts.map((p) => p[0] + " " + p[1]).join("L") + "Z");
+    inner.firstChild.appendChild(marker);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "domino-place-btn";
+    btn.textContent = String(i + 1);
+    btn.style.left = ((cx - (minX - pad)) / vbW * 100) + "%";
+    btn.style.top = ((cy - (minY - pad)) / vbH * 100) + "%";
+    I18n.setAria(btn, "Free place " + (i + 1));
+    btn.addEventListener("click", () => onSlotClickDomino(slot));
+    overlay.appendChild(btn);
+  });
+  inner.appendChild(overlay);
+}
+
 function renderHandDomino(s) {
   const handEl = document.getElementById("domino-hand");
   const cover = document.getElementById("domino-hand-cover");
@@ -592,12 +735,13 @@ function renderHandDomino(s) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "domino-tile domino-hand-tile";
-    const fits = myTurn && DominoCore.sidesForTile(s, tile).length > 0;
+    const fits = myTurn && (DominoCore.isTriangle(s) ? DominoCore.slotsForTile(s, tile) : DominoCore.sidesForTile(s, tile)).length > 0;
     if (!fits) btn.classList.add("domino-tile-unplayable");
     if (AppStateDomino.selected === i) btn.classList.add("domino-tile-selected");
     const fresh = (AppStateDomino.newKeys || []).indexOf(tileTextDomino(tile)) !== -1;
     if (fresh) btn.classList.add("card-new");
-    btn.innerHTML = tileSvgDomino(tile, false);
+    if (DominoCore.isTriangle(s)) btn.classList.add("domino-hand-tri");
+    btn.innerHTML = DominoCore.isTriangle(s) ? triTileSvgDomino(tile) : tileSvgDomino(tile, false);
     let label = "Tile " + tileTextDomino(tile);
     if (AppStateDomino.selected === i) label += ", selected";
     if (fresh) label += ", new";

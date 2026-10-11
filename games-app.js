@@ -6,7 +6,7 @@
 // Strategy/Race/Puzzles headings the home page itself uses.
 
 (function () {
-  const state = { query: "", sort: "alpha", category: "all" };
+  const state = { query: "", sort: "alpha", category: "all", family: "all" };
   const CATEGORY_ORDER = ["strategy", "race", "puzzles", "party"];
   const CATEGORY_LABEL_KEY = {
     strategy: "home_section_strategy",
@@ -35,13 +35,37 @@
     return state.category === "all" || game.category === state.category;
   }
 
+  // Family (games-catalog.js `family`): a filter of its own. Picking a
+  // family shows all its games ("All" chip); picking a chip shows all
+  // families again, so the two never combine into an empty list.
+  function matchesFamily(game) {
+    return state.family === "all" || game.family === state.family;
+  }
+
+  function fillFamilySelect(select) {
+    const t = (k) => (window.I18n ? I18n.t(k) : k);
+    const families = GAME_FAMILIES.slice().sort((a, b) => t("family_" + a).localeCompare(t("family_" + b)));
+    select.innerHTML = '<option value="all">' + t("family_filter_all") + "</option>" +
+      families.map((f) => '<option value="' + f + '">' + t("family_" + f) + "</option>").join("");
+    select.value = state.family;
+  }
+
+  function setCategoryChip(cat) {
+    state.category = cat;
+    const chips = document.getElementById("games-category-chips");
+    if (!chips) return;
+    chips.querySelectorAll(".mode-btn").forEach((b) => {
+      b.classList.toggle("active-mode", b.getAttribute("data-category") === cat);
+    });
+  }
+
   function render() {
     const grid = document.getElementById("games-grid");
     const noResults = document.getElementById("games-no-results");
     if (!grid) return;
 
     const q = state.query.trim().toLowerCase();
-    const filtered = GAMES_CATALOG.filter((g) => GamesRender.isListed(g) && matchesQuery(g, q) && matchesCategory(g));
+    const filtered = GAMES_CATALOG.filter((g) => GamesRender.isListed(g) && matchesQuery(g, q) && matchesCategory(g) && matchesFamily(g));
 
     if (!filtered.length) {
       grid.innerHTML = "";
@@ -53,7 +77,7 @@
     // Grouped-by-type headings only make sense across all categories at
     // once - a single category chip already says what group this is, so
     // that selection always renders as a flat, alphabetical list instead.
-    if (state.sort === "type" && state.category === "all") {
+    if (state.sort === "type" && state.category === "all" && state.family === "all") {
       let html = "";
       CATEGORY_ORDER.forEach((cat) => {
         const group = filtered.filter((g) => g.category === cat).sort(byDisplayName);
@@ -80,6 +104,7 @@
     const searchInput = document.getElementById("games-search");
     const sortSelect = document.getElementById("games-sort");
     const categoryChips = document.getElementById("games-category-chips");
+    const familySelect = document.getElementById("games-family");
 
     if (searchInput) {
       searchInput.addEventListener("input", () => {
@@ -117,6 +142,22 @@
         categoryChips.querySelectorAll(".mode-btn").forEach((b) => {
           b.classList.toggle("active-mode", b === btn);
         });
+        state.family = "all";
+        if (familySelect) familySelect.value = "all";
+        render();
+      });
+    }
+    if (familySelect) {
+      // games.html?family=sudoku (the "Related games" box on game pages).
+      const wantedFam = new URLSearchParams(window.location.search).get("family");
+      if (wantedFam && GAME_FAMILIES.indexOf(wantedFam) !== -1) {
+        state.family = wantedFam;
+        setCategoryChip("all");
+      }
+      fillFamilySelect(familySelect);
+      familySelect.addEventListener("change", () => {
+        state.family = familySelect.value;
+        if (state.family !== "all") setCategoryChip("all");
         render();
       });
     }
@@ -131,7 +172,10 @@
     render();
 
     if (window.I18n && typeof I18n.onChange === "function") {
-      I18n.onChange(render);
+      I18n.onChange(() => {
+        if (familySelect) fillFamilySelect(familySelect);
+        render();
+      });
     }
   }
 

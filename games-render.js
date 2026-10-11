@@ -15,6 +15,9 @@ const GamesRender = (function () {
       '<button type="button" class="favorite-toggle" data-slug="' + game.slug + '"></button>' +
       '<div class="game-select-title">' + game.icon + ' <span data-i18n="' + game.nameKey + '">' + game.nameText + '</span></div>' +
       '<p class="game-select-desc" data-i18n="' + game.descKey + '">' + game.descText + '</p>' +
+      (game.family
+        ? '<p class="game-select-family"><span data-i18n="family_label">Family:</span> <span data-i18n="family_' + game.family + '">' + game.family + '</span></p>'
+        : '') +
       '<div class="game-select-actions">' +
       '<a href="' + play + '" class="primary small" data-i18n="nav_play">Play</a>' +
       '<a href="' + game.slug + '-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>' +

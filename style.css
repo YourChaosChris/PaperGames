@@ -1806,6 +1806,38 @@ margin: 2rem 0 var(--space-4);
   margin: 0 0 var(--space-2);
 }
 
+/* "Family: Sudoku" under the description of a game that has relatives. */
+.game-select-family {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 0 0 var(--space-2);
+}
+
+/* "Related games" at the end of a game page (game-switcher.js). */
+.related-games h2 {
+  margin-top: 0;
+}
+
+.related-games-family {
+  margin: 0 0 var(--space-2);
+}
+
+.related-games-list {
+  margin: 0;
+  padding-inline-start: 1.4rem;
+}
+
+.related-games-list li {
+  padding: 6px 0;
+}
+
+.related-games-list a,
+.related-games-family a {
+  display: inline-block;
+  min-height: 32px;
+  line-height: 32px;
+}
+
 .game-select-actions {
   display: flex;
   flex-wrap: wrap;
@@ -8891,6 +8923,77 @@ max-width: 900px;
   outline-offset: 3px;
 }
 
+/* Triangles variant: the board of triangles, scaled to the width (a very
+   wide board scrolls inside its frame), and the places a picked tile fits
+   on as dashed triangles with a numbered button in the middle. */
+.domino-grid {
+  overflow-x: auto;
+  overflow-y: hidden;
+  color: var(--text);
+}
+
+.domino-grid-inner {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.domino-grid-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.domino-tri-num {
+  font-size: 28px;
+  font-weight: 700;
+  text-anchor: middle;
+  fill: currentColor;
+}
+
+.domino-tri-num-board {
+  font-size: 13px;
+}
+
+.domino-tri-last {
+  stroke-width: 6;
+}
+
+.domino-tri-place {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-dasharray: 6 4;
+}
+
+.domino-grid-places {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.domino-place-btn {
+  position: absolute;
+  transform: translate(-50%, -40%);
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0 4px;
+  border: 3px solid var(--border);
+  border-radius: 50%;
+  background: var(--square-light);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.domino-hand-tile.domino-hand-tri {
+  width: 3.6rem;
+  height: 3.2rem;
+}
+
 /* Icons follow the other games' 1em icon size (game cards, placeholder). */
 .domino-icon {
   display: inline-block;
@@ -9935,7 +10038,8 @@ button.concan-meld {
 .lightswitch-cell.hint-cell,
 .kakuro-cell-white.hint-cell,
 .skyscrapers-cell-board.hint-cell,
-.nonogram-cell.hint-cell {
+.nonogram-cell.hint-cell,
+.mc-cell.hint-cell {
   outline: 6px double var(--text);
   outline-offset: -7px;
 }
@@ -11829,4 +11933,241 @@ button.cn-meld {
   text-align: center;
   margin: 0.5rem 0 0;
   font-weight: 700;
+}
+
+/* Math Cross (Rechenkreuz): a 7 x 7 grid - number squares, operators,
+   "=" and results - and the number pad below. Given numbers are bold in
+   a thick frame, entered ones normal; the selected square has a double
+   frame. Used numbers on the pad are struck through (never grey alone). */
+.mc-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 3rem)) minmax(0, 2rem) minmax(0, 4rem);
+  grid-auto-rows: 3rem;
+  justify-content: center;
+  align-items: center;
+  margin: 0.6rem 0;
+}
+
+.mc-grid .mc-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.mc-cell {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  background: var(--square-light);
+  color: var(--text);
+  font-weight: 400;
+}
+
+.mc-cell.mc-given {
+  border-width: 4px;
+  font-weight: 700;
+}
+
+.mc-cell.mc-selected {
+  border: 6px double var(--border);
+}
+
+.mc-op,
+.mc-eq {
+  font-weight: 700;
+}
+
+.mc-res {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mc-pad {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 22rem;
+  margin: 0 auto 0.4rem;
+}
+
+.mc-num {
+  min-width: 3rem;
+  min-height: 3rem;
+  margin: 0 0.25rem 0.4rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.mc-num-used {
+  text-decoration: line-through;
+  border-style: dashed;
+}
+
+.mc-num-current {
+  border: 4px solid var(--border);
+}
+
+.mc-clear {
+  font-size: 1rem;
+}
+
+@media (max-width: 400px) {
+  .mc-grid {
+    grid-template-columns: repeat(5, minmax(0, 2.6rem)) minmax(0, 1.6rem) minmax(0, 3.6rem);
+    grid-auto-rows: 2.6rem;
+  }
+  .mc-num {
+    min-width: 2.6rem;
+  }
+}
+
+/* Spot the Difference: two pictures, one above the other or side by side
+   on wide screens; invisible buttons over each picture's 5 x 3 areas; a
+   found difference gets a thick circle, the hint a dashed frame. */
+.df-pictures {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.df-pic {
+  position: relative;
+  flex: 1 1 400px;
+  max-width: 540px;
+  margin: 0 0.3rem 0.6rem;
+}
+
+.df-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.df-areas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.df-area {
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.df-area:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: -3px;
+}
+
+.df-found {
+  fill: none;
+  stroke: #141413;
+  stroke-width: 4.5;
+}
+
+.df-hint {
+  fill: none;
+  stroke: #141413;
+  stroke-width: 3;
+  stroke-dasharray: 7 5;
+}
+
+/* Pentomino Puzzle (Legepuzzle): the board as a drawing with an invisible
+   grid of buttons on top, the piece in hand with its dot, turn and flip
+   buttons, and the pieces to choose from. Laid pieces in the tray are
+   dashed, the chosen one has a thick frame. */
+.pt-board {
+  position: relative;
+  width: 100%;
+  margin: 0.4rem auto 0.6rem;
+}
+
+.pt-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pt-cells {
+  position: absolute;
+  display: grid;
+}
+
+.pt-cell {
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pt-cell:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: -3px;
+}
+
+.pt-hint {
+  fill: none;
+  stroke: #141413;
+  stroke-width: 4;
+  stroke-dasharray: 6 4;
+}
+
+.pt-hand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.pt-hand > * {
+  margin: 0 0.3rem 0.3rem;
+}
+
+.pt-current svg {
+  display: block;
+}
+
+.pt-tray {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.pt-piece {
+  width: 3.4rem;
+  height: 3.4rem;
+  margin: 0 0.25rem 0.4rem;
+  padding: 0.25rem;
+}
+
+.pt-piece svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pt-piece-selected {
+  border: 4px solid var(--border);
+}
+
+.pt-piece-laid {
+  border-style: dashed;
 }

@@ -16,35 +16,37 @@
 // off there.
 
 (function () {
-  // [slug, i18n key] for every game, slug matching its <slug>.html /
+  // [slug, i18n key, family] for every game, slug matching its <slug>.html /
   // <slug>-rules.html / <slug>-history.html files. The i18n key is the
   // same one each game's own card on the home page uses for its name,
   // so the label here always matches what the player already knows the
-  // game as, in whatever language is active.
+  // game as, in whatever language is active. The family is the game's
+  // `family` in games-catalog.js (tests/game-families.js checks they
+  // agree); a game page lists the other members under "Related games".
   var GAMES = [
-    ["chess", "game_chess"],
+    ["chess", "game_chess", "chess"],
     ["go", "game_go"],
-    ["checkers", "game_checkers"],
+    ["checkers", "game_checkers", "draughts"],
     ["reversi", "game_reversi"],
-    ["fourinarow", "game_four_in_a_row"],
-    ["gomoku", "game_gomoku"],
+    ["fourinarow", "game_four_in_a_row", "inarow"],
+    ["gomoku", "game_gomoku", "inarow"],
     ["hex", "game_hex"],
     ["morris", "game_morris"],
     ["wallmaze", "game_wall_maze"],
-    ["halma", "game_halma"],
-    ["xiangqi", "game_xiangqi_short"],
-    ["shogi", "game_shogi"],
+    ["halma", "game_halma", "halma"],
+    ["xiangqi", "game_xiangqi_short", "chess"],
+    ["shogi", "game_shogi", "chess"],
     ["cardtactics", "game_card_tactics"],
-    ["hnefatafl", "game_hnefatafl"],
-    ["backgammon", "game_backgammon"],
-    ["ur", "game_ur"],
-    ["senet", "game_senet"],
+    ["hnefatafl", "game_hnefatafl", "tafl"],
+    ["backgammon", "game_backgammon", "ancientrace"],
+    ["ur", "game_ur", "ancientrace"],
+    ["senet", "game_senet", "ancientrace"],
     ["mancala", "game_mancala"],
-    ["ludo", "game_ludo"],
-    ["sudoku", "game_sudoku"],
+    ["ludo", "game_ludo", "dicerace"],
+    ["sudoku", "game_sudoku", "sudoku"],
     ["minesweeper", "game_minesweeper"],
     ["twenty48", "game_2048"],
-    ["freecell", "game_freecell"],
+    ["freecell", "game_freecell", "patience"],
     ["mahjong", "game_mahjong_solitaire"],
     ["nonogram", "game_nonograms"],
     ["pegsolitaire", "game_peg_solitaire"],
@@ -52,56 +54,59 @@
     ["lightswitch", "game_lightswitch"],
     ["bullsandcows", "game_bullsandcows"],
     ["dotsandboxes", "game_dotsandboxes"],
-    ["klondike", "game_klondike"],
+    ["klondike", "game_klondike", "patience"],
     ["amazons", "game_amazons"],
-    ["kakuro", "game_kakuro"],
+    ["kakuro", "game_kakuro", "math"],
     ["hashi", "game_hashi"],
-    ["skyscrapers", "game_skyscrapers"],
+    ["skyscrapers", "game_skyscrapers", "latin"],
     ["slitherlink", "game_slitherlink"],
-    ["fanorona", "game_fanorona"],
+    ["fanorona", "game_fanorona", "draughts"],
     ["fleetbattle", "game_fleetbattle"],
-    ["konane", "game_konane"],
-    ["sternhalma", "game_sternhalma"],
-    ["spidersolitaire", "game_spidersolitaire"],
-    ["baghchal", "game_baghchal"],
-    ["tablut", "game_tablut"],
+    ["konane", "game_konane", "draughts"],
+    ["sternhalma", "game_sternhalma", "halma"],
+    ["spidersolitaire", "game_spidersolitaire", "patience"],
+    ["baghchal", "game_baghchal", "hunt"],
+    ["tablut", "game_tablut", "tafl"],
     ["marblepush", "game_marblepush"],
-    ["pyramidsolitaire", "game_pyramidsolitaire"],
+    ["pyramidsolitaire", "game_pyramidsolitaire", "patience"],
     ["surakarta", "game_surakarta"],
     ["categories", "game_categories"],
     ["domino", "game_domino"],
     ["maumau", "game_maumau"],
-    ["calcudoku", "game_calcudoku"],
+    ["calcudoku", "game_calcudoku", "math"],
     ["numberblocks", "game_numberblocks"],
-    ["killersudoku", "game_killersudoku"],
+    ["killersudoku", "game_killersudoku", "sudoku"],
     ["schwimmen", "game_schwimmen"],
     ["durak", "game_durak"],
-    ["concan", "game_concan"],
-    ["doppelkopf", "game_doppelkopf"],
-    ["trix", "game_trix"],
+    ["concan", "game_concan", "rummy"],
+    ["doppelkopf", "game_doppelkopf", "tricks"],
+    ["trix", "game_trix", "tricks"],
     ["cratepusher", "game_cratepusher"],
-    ["tictactoe", "game_tictactoe"],
-    ["alquerque", "game_alquerque"],
+    ["tictactoe", "game_tictactoe", "inarow"],
+    ["alquerque", "game_alquerque", "draughts"],
     ["pairs", "game_pairs"],
-    ["futoshiki", "game_futoshiki"],
+    ["futoshiki", "game_futoshiki", "latin"],
     ["cake", "game_cake"],
     ["linkpairs", "game_linkpairs"],
     ["shapesort", "game_shapesort"],
-    ["animalsudoku", "game_animalsudoku"],
-    ["foxandgeese", "game_foxandgeese"],
+    ["animalsudoku", "game_animalsudoku", "sudoku"],
+    ["foxandgeese", "game_foxandgeese", "hunt"],
     ["seega", "game_seega"],
-    ["romme", "game_romme"],
+    ["romme", "game_romme", "rummy"],
     ["oldmaid", "game_oldmaid"],
     ["war", "game_war"],
-    ["snakesladders", "game_snakesladders"],
-    ["blockers", "game_blockers"],
-    ["blackjack", "game_blackjack"],
-    ["poker", "game_poker"],
-    ["skat", "game_skat"],
-    ["schafkopf", "game_schafkopf"],
-    ["canasta", "game_canasta"],
-    ["bridge", "game_bridge"],
-    ["tenpairs", "game_tenpairs"]
+    ["snakesladders", "game_snakesladders", "dicerace"],
+    ["blockers", "game_blockers", "dicerace"],
+    ["blackjack", "game_blackjack", "casino"],
+    ["poker", "game_poker", "casino"],
+    ["skat", "game_skat", "tricks"],
+    ["schafkopf", "game_schafkopf", "tricks"],
+    ["canasta", "game_canasta", "rummy"],
+    ["bridge", "game_bridge", "tricks"],
+    ["tenpairs", "game_tenpairs"],
+    ["mathcross", "game_mathcross", "math"],
+    ["differences", "game_differences"],
+    ["pentomino", "game_pentomino"]
   ];
 
   var GAME_SLUGS = {};
@@ -132,9 +137,43 @@
     });
   }
 
+  // "Related games" at the end of a game's play page (not its rules or
+  // history page): the family's name and links to the other members.
+  function familyOf(slug) {
+    for (var i = 0; i < GAMES.length; i++) if (GAMES[i][0] === slug) return GAMES[i][2] || null;
+    return null;
+  }
+
+  function fillRelated(box, slug, family) {
+    var html = '<h2 data-i18n="related_games_title">' + label("related_games_title") + "</h2>" +
+      '<p class="related-games-family"><span data-i18n="family_label">' + label("family_label") + "</span> " +
+      '<a href="games.html?family=' + family + '" data-i18n="family_' + family + '">' + label("family_" + family) + "</a></p>" +
+      '<ul class="related-games-list">';
+    GAMES.forEach(function (g) {
+      if (g[2] === family && g[0] !== slug) {
+        html += '<li><a href="' + g[0] + '.html" data-i18n="' + g[1] + '">' + label(g[1]) + "</a></li>";
+      }
+    });
+    box.innerHTML = html + "</ul>";
+  }
+
+  function addRelated(slug) {
+    var file = (location.pathname.split("/").pop() || "").toLowerCase();
+    if (/-(rules|history)\.html?$/.test(file)) return;
+    var family = familyOf(slug);
+    var main = document.querySelector("main");
+    if (!family || !main || document.getElementById("related-games")) return;
+    var box = document.createElement("section");
+    box.id = "related-games";
+    box.className = "card related-games";
+    fillRelated(box, slug, family);
+    main.appendChild(box);
+  }
+
   function init() {
     var slug = currentSlug();
     if (!slug) return;
+    addRelated(slug);
 
     var panel = document.querySelector(".app-header .user-panel");
     if (!panel) return;
