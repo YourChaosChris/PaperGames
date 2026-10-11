@@ -123,46 +123,49 @@
     check: '<svg viewBox="0 0 16 16" focusable="false"><path d="M2 8.5 L6.2 12.5 L14 3.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>',
     dot: '<svg viewBox="0 0 16 16" focusable="false"><circle cx="8" cy="8" r="3.5" fill="currentColor"/></svg>'
   };
-  // Storing 400-odd files on a slow reader takes a minute or two, so the
-  // home page waits longer than the Settings dialog's 30 seconds before
-  // it calls the device unable to store the app.
-  const OFFLINE_WAIT_MS = 180000;
+  // The line is filled from the last state, again on a language change
+  // (the counts don't fit a static data-i18n key).
+  let offlineState = null;
 
-  function showOfflineStatus(key, icon) {
+  function offlineText(key, detail) {
+    const text = window.I18n && typeof I18n.t === "function" ? I18n.t(key) : key;
+    return text.split("{n}").join(String(detail.done)).split("{m}").join(String(detail.total));
+  }
+
+  function showOfflineStatus() {
     const text = document.getElementById("offline-status-text");
     const mark = document.querySelector("#offline-status .offline-status-icon");
-    if (!text || !mark) return;
-    mark.innerHTML = key ? OFFLINE_ICON[icon] : "";
-    if (!key) {
-      text.removeAttribute("data-i18n");
-      text.textContent = "";
-    } else if (window.I18n && typeof I18n.setKey === "function") {
-      I18n.setKey(text, key);
+    if (!text || !mark || !offlineState) return;
+    const state = offlineState.state, detail = offlineState.detail;
+    const counted = typeof detail.total === "number";
+    let key = "", icon = "dot";
+    if (state === "ready") {
+      key = detail.updating ? "offline_ready_updating" : "offline_ready";
+      icon = "check";
+    } else if (state === "loading" && detail.controlled) {
+      // A worker already controls this page, so the files are stored and
+      // its answer is a few milliseconds away - don't flash "loading" on
+      // an e-ink screen for that.
+      key = "";
+    } else if (state === "loading") {
+      key = counted ? "offline_loading_progress" : "offline_loading";
+    } else if (state === "paused") {
+      key = "offline_paused";
+    } else {
+      key = "offline_unavailable";
     }
+    mark.innerHTML = key ? OFFLINE_ICON[icon] : "";
+    text.removeAttribute("data-i18n");
+    text.textContent = key ? offlineText(key, detail) : "";
   }
 
   function watchOfflineStatus() {
     if (typeof OfflineStatus === "undefined" || !document.getElementById("offline-status")) return;
     OfflineStatus.watch((state, detail) => {
-      if (state === "ready") {
-        showOfflineStatus("offline_ready", "check");
-      } else if (state === "loading" && detail.controlled) {
-        // A worker already controls this page, so the files are stored and
-        // its answer is a few milliseconds away - don't flash "loading" on
-        // an e-ink screen for that.
-        showOfflineStatus("", "");
-      } else if (state === "loading") {
-        showOfflineStatus("offline_loading", "dot");
-      } else {
-        showOfflineStatus("offline_unavailable", "dot");
-        // A very slow first install can still finish after the time limit;
-        // when a worker takes over after all, ask again.
-        const sw = navigator.serviceWorker;
-        if (sw && (location.protocol === "http:" || location.protocol === "https:")) {
-          sw.addEventListener("controllerchange", watchOfflineStatus, { once: true });
-        }
-      }
-    }, { limit: OFFLINE_WAIT_MS });
+      offlineState = { state: state, detail: detail };
+      showOfflineStatus();
+    });
+    if (window.I18n && typeof I18n.onChange === "function") I18n.onChange(showOfflineStatus);
   }
 
   // The short "no ads, no account, ..." block under the heading. Shown on

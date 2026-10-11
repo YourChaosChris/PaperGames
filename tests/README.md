@@ -38,7 +38,9 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   `lang/*.js` for the rest), and no
   `data-i18n`/`data-i18n-attr` reference anywhere (static markup or
   markup a script builds at runtime) pointing at a key that doesn't
-  exist.
+  exist. Also that every `APP_SHELL` entry in `sw.js` appears once, its
+  file exists, and its checksum in `FILE_HASHES` matches the file (after
+  changing any file, run `node tools/sw-hashes.js`).
 - `node tests/i18n-messages.js` - no server or browser needed. Runs a
   sample of every runtime status/result message shape through
   `I18n.msg()` in all 10 non-English languages and fails on anything
@@ -46,11 +48,13 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   leftover English words; also checks `msg_t_*` template placeholders
   match across languages.
 - `node tests/cake-core.js` - no server or browser needed. Generates
-  150 "Who Took the Cake?" puzzles per level from fixed seeds and fails
+  500 "Who Took the Cake?" puzzles per level from fixed seeds and fails
   unless each has exactly one solution, is solvable by deduction alone
-  at its level, and can be played to the end with the hint button
-  (mistakes first, animals in the order of reasoning, the cake left to
-  the player).
+  at its level, has the needed clues plus 2 (easy) / 1 (medium) extra
+  ones, and can be played to the end with the hint button (mistakes
+  first, animals in the order of reasoning, the cake left to the
+  player). For the first 200 per level every hint's reason is checked
+  against the board and its sentence in all 12 languages.
 - `node tests/animalsudoku-core.js` - no server or browser needed.
   Generates 60 "Animal Sudoku" puzzles per size and level from fixed
   seeds and fails unless each has exactly one solution, can be solved
@@ -142,6 +146,13 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   "Children's Games" filter show exactly the games marked `kids: true`,
   that all their links answer, that Mau Mau opens with the animal cards
   from there, the link on calm.html, and no sideways scrolling.
+- `node tests/offline-install.js` - needs a browser; starts its own
+  server on a copy of the site. Checks the offline install of `sw.js`
+  and the home page's status line: progress "X of Y files", a broken
+  download retried and an interrupted install carried on, an update
+  that downloads only the changed file, and every game page loading
+  with the server off. `THROTTLE=1` runs a first visit over a slow line
+  (500 kbit/s, 300 ms per request) instead; that takes several minutes.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

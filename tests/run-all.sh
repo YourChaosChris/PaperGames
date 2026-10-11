@@ -89,6 +89,10 @@ echo "=== kids-games.js ==="
 node "$ROOT/tests/kids-games.js" || status=1
 echo ""
 
+echo "=== offline-install.js ==="
+node "$ROOT/tests/offline-install.js" || status=1
+echo ""
+
 echo "=== css-check.js ==="
 node "$ROOT/tests/css-check.js" || status=1
 echo ""

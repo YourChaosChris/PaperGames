@@ -146,10 +146,12 @@ const SettingsMenu = (function () {
 
   // Shows the running version, as answered by the service worker via
   // offline-status.js (shared with the home page's offline line). On a
-  // first visit the worker is still installing, so this shows "Checking…"
-  // until it is ready. "Version unknown" appears without service worker
-  // support, on a file:// copy, when a worker doesn't answer within two
-  // seconds, or when nothing has happened after 30 seconds in total.
+  // first visit the worker is still installing, so this shows how many
+  // files are stored so far ("Checking…" until the first count arrives),
+  // or that storing paused. While a newer version is stored, the version
+  // is followed by "(update loading …)". "Version unknown" appears only
+  // when the app can't be stored at all (no service worker support, a
+  // file:// copy, a refused registration, no storage space).
   let stopVersionCheck = null;
 
   function showVersion() {
@@ -171,12 +173,18 @@ const SettingsMenu = (function () {
     stopVersionCheck = OfflineStatus.watch((state, detail) => {
       if (state === "ready") {
         el.removeAttribute("data-i18n");
-        el.textContent = detail.version;
+        el.textContent = detail.version + (detail.updating ? " " + t("settings_version_updating", "(update loading …)") : "");
       } else if (state === "loading" && detail.controlled) {
         el.removeAttribute("data-i18n");
         el.textContent = "…";
+      } else if (state === "loading" && typeof detail.total === "number") {
+        el.removeAttribute("data-i18n");
+        el.textContent = t("offline_loading_progress", "Being stored for offline use … {n} of {m} files.")
+          .split("{n}").join(String(detail.done)).split("{m}").join(String(detail.total));
       } else if (state === "loading") {
         setKey("settings_version_checking", "Checking…");
+      } else if (state === "paused") {
+        setKey("offline_paused", "Storing was interrupted.");
       } else {
         setKey("settings_version_unknown", "Version unknown");
       }

@@ -190,9 +190,9 @@ function checkTextSplit() {
   else ok(`rules/history texts only on marked pages (${textKeys.size} keys in i18n-text.js)`);
 }
 
-// The service worker caches APP_SHELL with cache.addAll, which fails as a
-// whole - nothing is stored, no offline play - if an entry appears twice
-// or a file is missing.
+// The service worker stores every APP_SHELL entry; an install only
+// finishes (and the app only works offline) when all of them load, so no
+// entry may appear twice or point to a missing file.
 function checkAppShell() {
   const src = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
   const m = /const APP_SHELL = \[([\s\S]*?)\];/.exec(src);
@@ -209,8 +209,25 @@ function checkAppShell() {
   if (!bad) ok(`sw.js APP_SHELL: ${entries.length} entries, no duplicates, all files present`);
 }
 
+// sw.js copies a file from the copy already on the device when its
+// checksum in FILE_HASHES is unchanged, so a stale checksum would keep an
+// old file after an update. tools/sw-hashes.js writes them.
+function checkFileHashes() {
+  const tool = require(path.join(ROOT, "tools", "sw-hashes.js"));
+  let stale;
+  try {
+    stale = tool.staleEntries(ROOT);
+  } catch (e) {
+    fail("sw.js FILE_HASHES - " + e.message);
+    return;
+  }
+  if (stale.length) fail("sw.js FILE_HASHES out of date (run node tools/sw-hashes.js): " + stale.slice(0, 10).join(", ") + (stale.length > 10 ? " and " + (stale.length - 10) + " more" : ""));
+  else ok("sw.js FILE_HASHES: one checksum per APP_SHELL file, all match");
+}
+
 checkJsSyntax();
 checkAppShell();
+checkFileHashes();
 checkHtmlWellFormed();
 const STRINGS = loadStrings();
 checkI18nParity(STRINGS);
