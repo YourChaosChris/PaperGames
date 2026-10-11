@@ -75,6 +75,22 @@
     <label for="bl-computers" data-i18n="sl_computers_label">Computer:</label>
     <select id="bl-computers"><option value="0">0</option><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option></select>
   </div>
+  <div id="bl-choices"></div>
+  <div class="field-row">
+    <label for="bl-first" data-i18n="sl_first_label">Who starts:</label>
+    <select id="bl-first">
+        <option value="me" data-i18n="sl_first_me">Me</option>
+        <option value="computer" data-i18n="sl_first_computer">Computer</option>
+        <option value="random" selected data-i18n="sl_first_random">Random</option>
+      </select>
+  </div>
+  <div class="field-row">
+    <label for="bl-pace" data-i18n="sl_pace_label">Computer moves:</label>
+    <select id="bl-pace">
+        <option value="tap" selected data-i18n="sl_pace_tap">Continue after a tap</option>
+        <option value="auto" data-i18n="sl_pace_auto">Automatically</option>
+      </select>
+  </div>
 </section>
 </div>
 
@@ -98,6 +114,7 @@
     <div class="bl-dice-row">
       <span id="bl-die" class="bl-die-wrap" role="img"></span>
       <button id="bl-roll" class="primary" type="button" data-i18n="sl_roll">Roll</button>
+      <button id="bl-next" class="primary hidden" type="button" data-i18n="sl_next">Continue</button>
     </div>
     <div id="bl-board-wrap" class="bl-board-wrap">
       <div id="bl-board" class="bl-board" role="group" data-i18n-attr="aria-label:bl_board_aria" aria-label="Path Blockers board"></div>

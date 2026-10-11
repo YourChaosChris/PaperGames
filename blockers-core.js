@@ -10,6 +10,14 @@
 // player's token sends it back to its house. The number rolled must be
 // used in full, and a move may not visit a field twice (no turning back).
 // The first player to bring one token into the goal wins.
+//
+// Houses: six places below the bottom row, at the columns whose field is
+// 14 steps from the goal (HOUSE_COLS) - every house equally far. The
+// people playing choose their house and token shape, the computers get
+// houses spread out over the free ones and the shapes left over. Who
+// rolls first is chosen too: "me", "computer" or "random". States saved
+// before this have no `houses`: they keep the old entry columns
+// (ENTRY_COLS) and shape p for player p.
 
 const BlockersCore = (function () {
   // The board on an 11 x 10 grid: "G" goal, "#" field, "B" field with a
@@ -32,6 +40,9 @@ const BlockersCore = (function () {
   // Entry field (in the bottom row) of each player's house; with the
   // same number of players every entry is equally far from the goal.
   const ENTRY_COLS = { 2: [2, 8], 3: [3, 5, 7], 4: [1, 3, 7, 9] };
+  // The six houses, left to right: entry columns all 14 steps from the goal.
+  const HOUSE_COLS = [0, 2, 4, 6, 8, 10];
+  const SHAPES = ["circle", "triangle", "diamond", "star"];
 
   const idx = (r, c) => r * COLS + c;
   const fields = [];
@@ -70,19 +81,79 @@ const BlockersCore = (function () {
   })();
   const bottomRow = (i) => Math.floor(i / COLS) === ROWS - 1;
 
+  // Entry field of player p's house.
   function entryOf(s, p) {
+    if (Array.isArray(s.houses)) return idx(ROWS - 1, HOUSE_COLS[s.houses[p]]);
     return idx(ROWS - 1, ENTRY_COLS[s.numPlayers][p]);
   }
 
-  function createInitialState(numPlayers) {
+  // Houses (0..5) for all seats: the people get their choices in order (a
+  // house already taken goes to the next free one), each computer the
+  // free house farthest from the houses already taken (the leftmost of
+  // equals).
+  function assignHouses(numPlayers, choices) {
     const n = ENTRY_COLS[numPlayers] ? numPlayers : 2;
+    const H = HOUSE_COLS.length, out = [];
+    (choices || []).slice(0, n).forEach((c) => {
+      let h = c >= 0 && c < H ? c : 0;
+      while (out.indexOf(h) !== -1) h = (h + 1) % H;
+      out.push(h);
+    });
+    while (out.length < n) {
+      let best = -1, bestGap = -1;
+      for (let h = 0; h < H; h++) {
+        if (out.indexOf(h) !== -1) continue;
+        const gap = out.length ? Math.min.apply(null, out.map((o) => Math.abs(o - h))) : (h === 1 ? 99 : 0);
+        if (gap > bestGap) { best = h; bestGap = gap; }
+      }
+      out.push(best);
+    }
+    return out;
+  }
+
+  // Token shapes (0..3, SHAPES) for all seats, like assignHouses: the
+  // people's choices, the computers the shapes left over in order.
+  function assignShapes(numPlayers, choices) {
+    const n = ENTRY_COLS[numPlayers] ? numPlayers : 2;
+    const out = [];
+    (choices || []).slice(0, n).forEach((c) => {
+      let k = c >= 0 && c < SHAPES.length ? c : 0;
+      while (out.indexOf(k) !== -1) k = (k + 1) % SHAPES.length;
+      out.push(k);
+    });
+    for (let k = 0; out.length < n; k++) if (out.indexOf(k) === -1) out.push(k);
+    return out;
+  }
+
+  // Who rolls first: "me" - seat 0 (the first person), "computer" - the
+  // first computer (seat `humans`; seat 0 when nobody is a computer),
+  // "random" - any seat. rng: () => [0, 1).
+  function firstPlayer(choice, numPlayers, humans, rng) {
+    const n = ENTRY_COLS[numPlayers] ? numPlayers : 2;
+    if (choice === "me") return 0;
+    if (choice === "computer") return humans >= 0 && humans < n ? humans : 0;
+    return Math.floor((rng || Math.random)() * n);
+  }
+
+  // opts: { houses, shapes, first } - all optional (then houses from
+  // assignHouses, shapes 0..n-1, seat 0 first).
+  function createInitialState(numPlayers, opts) {
+    const n = ENTRY_COLS[numPlayers] ? numPlayers : 2;
+    const o = opts || {};
     const tokens = [];
     for (let p = 0; p < n; p++) tokens.push(new Array(TOKENS).fill(-1)); // -1 = in the house
-    return { numPlayers: n, tokens, stones: startStones.slice(), turn: 0, roll: 0, phase: "roll", pendingStone: false, gameOver: false, winner: -1, turns: 0 };
+    const houses = Array.isArray(o.houses) && o.houses.length === n ? o.houses.slice() : assignHouses(n, []);
+    const shapes = Array.isArray(o.shapes) && o.shapes.length === n ? o.shapes.slice() : assignShapes(n, []);
+    const first = o.first >= 0 && o.first < n ? o.first : 0;
+    return { numPlayers: n, tokens, stones: startStones.slice(), houses, shapes, first, turn: first, roll: 0, phase: "roll", pendingStone: false, gameOver: false, winner: -1, turns: 0 };
   }
 
   function cloneState(s) {
-    return { numPlayers: s.numPlayers, tokens: s.tokens.map((t) => t.slice()), stones: s.stones.slice(), turn: s.turn, roll: s.roll, phase: s.phase, pendingStone: s.pendingStone, gameOver: s.gameOver, winner: s.winner, turns: s.turns };
+    const c = { numPlayers: s.numPlayers, tokens: s.tokens.map((t) => t.slice()), stones: s.stones.slice(), turn: s.turn, roll: s.roll, phase: s.phase, pendingStone: s.pendingStone, gameOver: s.gameOver, winner: s.winner, turns: s.turns };
+    if (Array.isArray(s.houses)) c.houses = s.houses.slice();
+    if (Array.isArray(s.shapes)) c.shapes = s.shapes.slice();
+    if (s.first !== undefined) c.first = s.first;
+    return c;
   }
 
   function ownerAt(s, f) {
@@ -218,8 +289,8 @@ const BlockersCore = (function () {
   }
 
   return {
-    MAP, ROWS, COLS, TOKENS, fields, goal, neighbours, distToGoal, startStones, isBottomRow: bottomRow,
-    entryOf, createInitialState, ownerAt, targetsFor, legalMoves, setRoll, applyMove, stoneTargets, placeStone,
+    MAP, ROWS, COLS, TOKENS, HOUSE_COLS, SHAPES, fields, goal, neighbours, distToGoal, startStones, isBottomRow: bottomRow,
+    entryOf, assignHouses, assignShapes, firstPlayer, createInitialState, ownerAt, targetsFor, legalMoves, setRoll, applyMove, stoneTargets, placeStone,
     pass, tokenDistance, rollDie: (rng) => 1 + Math.floor((rng || Math.random)() * 6)
   };
 })();

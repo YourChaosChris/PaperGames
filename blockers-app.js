@@ -7,12 +7,38 @@
 // tokens that can move (they get a dashed ring; tokens still in the house
 // are chosen with the house button under the board), then tap one of the
 // marked fields. Landing on a stone lets you put it on any free field:
-// tap one. Computer turns follow one after another with a pause
-// (AiPacing). Tokens differ by shape (circle, triangle, diamond, star);
+// tap one. Tokens differ by shape (circle, triangle, diamond, star);
 // stones are black squares with a white bar.
+//
+// Before the game every person chooses a token and a start house (six
+// houses under the board, all equally far from the goal); the computers
+// get the others. "Who starts": me, a computer or random (the default).
+// Computer turns one at a time, like Snakes and Ladders: with "Computer
+// moves: Continue after a tap" (the default, remembered on the device) a
+// computer rolls when Continue is tapped, then moves and places a stone
+// after calm pauses; with "Automatically" it rolls by itself after a calm
+// pause too (AiPacing). Under the board each house shows its number and
+// the token of the player starting there.
 
 const BLOCKERS_SAVE_KEY = "einkchess_save_blockers";
 const BL_SHAPES = ["circle", "triangle", "diamond", "star"];
+const BL_SHAPE_NAME = { circle: "Circle", triangle: "Triangle", diamond: "Diamond", star: "Star" };
+const BL_PACE_KEY = "papergames_blockers_pace";
+
+function loadPaceBL() {
+  try { return window.localStorage.getItem(BL_PACE_KEY) === "auto" ? "auto" : "tap"; } catch (e) { return "tap"; }
+}
+
+function savePaceBL(pace) {
+  try { window.localStorage.setItem(BL_PACE_KEY, pace === "auto" ? "auto" : "tap"); } catch (e) { /* the choice just isn't remembered */ }
+}
+
+// Player p's token shape; games saved before tokens could be chosen have
+// player p on shape p.
+function shapeOfBL(p) {
+  const s = AppStateBL.state;
+  return s && Array.isArray(s.shapes) ? s.shapes[p] : p;
+}
 
 const AppStateBL = {
   numPlayers: 2,
@@ -56,7 +82,11 @@ function shapeMarkupBL(shape, x, y, r) {
 }
 
 function shapeSvgBL(p) {
-  return '<svg class="bl-shape" viewBox="0 0 40 40" aria-hidden="true" focusable="false">' + shapeMarkupBL(BL_SHAPES[p], 20, 21, 14) + "</svg>";
+  return shapeSvgOfBL(shapeOfBL(p));
+}
+
+function shapeSvgOfBL(k) {
+  return '<svg class="bl-shape" viewBox="0 0 40 40" aria-hidden="true" focusable="false">' + shapeMarkupBL(BL_SHAPES[k], 20, 21, 14) + "</svg>";
 }
 
 /*** Status and save ***/
@@ -99,12 +129,24 @@ function initBlockersApp() {
     Array.from(computers.options).forEach((o) => { o.disabled = parseInt(o.value, 10) > n - 1; });
     if (parseInt(computers.value, 10) > n - 1) computers.value = String(n - 1);
   }
-  players.addEventListener("change", limitComputers);
+  const firstSel = document.getElementById("bl-first");
+  const paceSel = document.getElementById("bl-pace");
+  players.addEventListener("change", () => { limitComputers(); buildChoicesBL(); });
+  computers.addEventListener("change", buildChoicesBL);
   limitComputers();
+  buildChoicesBL();
+  paceSel.value = loadPaceBL();
+  paceSel.addEventListener("change", () => {
+    savePaceBL(paceSel.value);
+    if (paceSel.value === "auto" && AppStateBL.state) { renderBL(); continueBL(); }
+  });
   document.getElementById("start-bl-game").addEventListener("click", () => {
-    startGameBL(parseInt(players.value, 10), parseInt(computers.value, 10), parseInt(document.getElementById("bl-level").value, 10));
+    const tokens = Array.from(document.querySelectorAll("#bl-choices .bl-token-select")).map((sel) => parseInt(sel.value, 10));
+    const houses = Array.from(document.querySelectorAll("#bl-choices .bl-house-select")).map((sel) => parseInt(sel.value, 10));
+    startGameBL(parseInt(players.value, 10), parseInt(computers.value, 10), parseInt(document.getElementById("bl-level").value, 10), tokens, houses, firstSel.value);
   });
   document.getElementById("bl-roll").addEventListener("click", humanRollBL);
+  document.getElementById("bl-next").addEventListener("click", nextComputerBL);
   window.addEventListener("resize", () => { if (AppStateBL.state) renderBoardBL(); });
   if (typeof I18n !== "undefined" && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateBL.state) renderBL(); });
@@ -132,12 +174,86 @@ function showBoardBL() {
   if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
 }
 
-function startGameBL(numPlayers, computers, level) {
+// Per person: token and start house. Two people can't take the same
+// token or house: choosing one that is taken swaps it with the other
+// person's.
+function buildChoicesBL() {
+  const wrap = document.getElementById("bl-choices");
+  const n = parseInt(document.getElementById("bl-num-players").value, 10);
+  const humans = n - parseInt(document.getElementById("bl-computers").value, 10);
+  const tokBefore = Array.from(wrap.querySelectorAll(".bl-token-select")).map((sel) => parseInt(sel.value, 10));
+  const houseBefore = Array.from(wrap.querySelectorAll(".bl-house-select")).map((sel) => parseInt(sel.value, 10));
+  const toks = BlockersCore.assignShapes(n, tokBefore.slice(0, humans)).slice(0, humans);
+  // A new person starts in house 2 (as before this choice existed) or the next free one.
+  const houses = BlockersCore.assignHouses(n, houseBefore.length ? houseBefore.slice(0, humans).concat([1, 1, 1]).slice(0, humans) : new Array(humans).fill(1)).slice(0, humans);
+  wrap.innerHTML = "";
+  const swapper = (cls) => (sel) => {
+    sel.dataset.prev = sel.value;
+    sel.addEventListener("change", () => {
+      wrap.querySelectorAll("." + cls).forEach((x) => { if (x !== sel && x.value === sel.value) { x.value = sel.dataset.prev; x.dataset.prev = sel.dataset.prev; } });
+      sel.dataset.prev = sel.value;
+      renderChoicePicsBL();
+    });
+  };
+  for (let h = 0; h < humans; h++) {
+    const row = document.createElement("div");
+    row.className = "field-row bl-choice";
+    const tl = document.createElement("label");
+    tl.setAttribute("for", "bl-token-" + h);
+    I18n.setMsg(tl, humans === 1 ? "Your token:" : "Token of player " + (h + 1) + ":");
+    const ts = document.createElement("select");
+    ts.id = "bl-token-" + h;
+    ts.className = "bl-token-select";
+    BL_SHAPES.forEach((shape, k) => {
+      const o = document.createElement("option");
+      o.value = String(k);
+      I18n.setMsg(o, BL_SHAPE_NAME[shape]);
+      ts.appendChild(o);
+    });
+    ts.value = String(toks[h]);
+    swapper("bl-token-select")(ts);
+    const pic = document.createElement("span");
+    pic.className = "bl-choice-pic";
+    const hl = document.createElement("label");
+    hl.setAttribute("for", "bl-house-" + h);
+    I18n.setMsg(hl, "Start house:");
+    const hs = document.createElement("select");
+    hs.id = "bl-house-" + h;
+    hs.className = "bl-house-select";
+    BlockersCore.HOUSE_COLS.forEach((_, k) => {
+      const o = document.createElement("option");
+      o.value = String(k);
+      I18n.setKey(o, "bl_house_" + (k + 1));
+      hs.appendChild(o);
+    });
+    hs.value = String(houses[h]);
+    swapper("bl-house-select")(hs);
+    [tl, ts, pic, hl, hs].forEach((el) => row.appendChild(el));
+    wrap.appendChild(row);
+  }
+  renderChoicePicsBL();
+  const firstSel = document.getElementById("bl-first");
+  const compOpt = firstSel.querySelector('option[value="computer"]');
+  compOpt.disabled = humans >= n;
+  if (compOpt.disabled && firstSel.value === "computer") firstSel.value = "random";
+}
+
+function renderChoicePicsBL() {
+  document.querySelectorAll("#bl-choices .bl-choice").forEach((row) => {
+    row.querySelector(".bl-choice-pic").innerHTML = shapeSvgOfBL(parseInt(row.querySelector(".bl-token-select").value, 10));
+  });
+}
+
+function startGameBL(numPlayers, computers, level, tokenChoices, houseChoices, firstChoice) {
   const n = Math.max(2, Math.min(4, numPlayers || 2));
   AppStateBL.numPlayers = n;
   AppStateBL.computers = Math.max(0, Math.min(n - 1, computers || 0));
   AppStateBL.level = level >= 1 && level <= 3 ? level : 2;
-  AppStateBL.state = BlockersCore.createInitialState(n);
+  const humans = n - AppStateBL.computers;
+  const shapes = BlockersCore.assignShapes(n, (tokenChoices || []).slice(0, humans));
+  const houses = BlockersCore.assignHouses(n, (houseChoices || []).slice(0, humans));
+  const first = BlockersCore.firstPlayer(firstChoice || "random", n, AppStateBL.computers ? humans : n);
+  AppStateBL.state = BlockersCore.createInitialState(n, { houses, shapes, first });
   AppStateBL.started = true;
   AppStateBL.gameOver = false;
   AppStateBL.busy = false;
@@ -157,7 +273,7 @@ function promptBL(prefix) {
   const pre = prefix ? prefix + " " : "";
   const who = nameBL(s.turn), you = who === "You";
   let text;
-  if (isComputerBL(s.turn)) text = prefix && s.phase !== "roll" ? "" : who + "'s turn.";
+  if (isComputerBL(s.turn)) text = prefix && s.phase !== "roll" ? "" : (s.phase === "roll" && loadPaceBL() === "tap" ? who + "'s turn: tap Continue." : who + "'s turn.");
   else if (s.phase === "roll") text = you ? "Your turn: tap Roll." : who + "'s turn: tap Roll.";
   else if (s.phase === "stone") text = "Tap a free field to put the stone on (not in the bottom row).";
   else if (AppStateBL.selected >= 0) text = "Now tap one of the marked fields.";
@@ -166,11 +282,20 @@ function promptBL(prefix) {
   renderBL();
 }
 
+// A computer's turn: the roll waits for Continue ("tap") or comes after a
+// calm pause ("auto"); the move and the stone always follow after a pause.
 function continueBL() {
   const s = AppStateBL.state;
   if (!s || AppStateBL.gameOver || s.gameOver || !isComputerBL(s.turn) || AppStateBL.busy) return;
+  if (s.phase === "roll" && loadPaceBL() === "tap") return;
   AppStateBL.busy = true;
-  setTimeout(aiStepBL, AiPacing.delay(s.phase === "roll" ? 700 : 900));
+  setTimeout(aiStepBL, AiPacing.delay(s.phase === "roll" ? 600 : 900));
+}
+
+function nextComputerBL() {
+  const s = AppStateBL.state;
+  if (!s || AppStateBL.gameOver || s.gameOver || !isComputerBL(s.turn) || AppStateBL.busy || s.phase !== "roll") return;
+  rollBL();
 }
 
 function aiStepBL() {
@@ -344,7 +469,7 @@ function renderBL() {
     extra.className = "pc-player-extra";
     I18n.setMsg(extra, "House: " + inHouse);
     row.appendChild(extra);
-    I18n.setAria(row, nameBL(p) + ", " + BL_SHAPES[p] + ", " + "House: " + inHouse + (canPick ? ", can move" : ""));
+    I18n.setAria(row, nameBL(p) + ", " + BL_SHAPES[shapeOfBL(p)] + ", " + "House: " + inHouse + (canPick ? ", can move" : ""));
     row.disabled = !canPick;
     row.addEventListener("click", () => onHouseBL(p));
     playersEl.appendChild(row);
@@ -354,8 +479,11 @@ function renderBL() {
     BL_PIPS[s.roll].map((q) => '<circle cx="' + q[0] + '" cy="' + q[1] + '" r="9" fill="#141413"/>').join("") + "</svg>" : "";
   if (s.roll) I18n.setAria(dieEl, "Rolled " + s.roll); else dieEl.removeAttribute("aria-label");
   const rollBtn = document.getElementById("bl-roll");
-  rollBtn.classList.toggle("hidden", over);
+  const nextBtn = document.getElementById("bl-next");
+  const computerWaits = !over && isComputerBL(s.turn) && s.phase === "roll" && loadPaceBL() === "tap";
+  rollBtn.classList.toggle("hidden", over || computerWaits);
   rollBtn.disabled = over || isComputerBL(s.turn) || s.phase !== "roll";
+  nextBtn.classList.toggle("hidden", !computerWaits);
   renderBoardBL();
 }
 
@@ -366,8 +494,9 @@ function renderBoardBL() {
   const boardEl = document.getElementById("bl-board");
   const width = Math.min((wrap.clientWidth || 324) - 4, 560);
   const u = Math.floor(width / C.COLS);
+  // One more row under the fields for the six houses.
   boardEl.style.width = u * C.COLS + "px";
-  boardEl.style.height = u * C.ROWS + "px";
+  boardEl.style.height = u * (C.ROWS + 1) + "px";
   const xy = (f) => [(f % C.COLS) * u + u / 2, Math.floor(f / C.COLS) * u + u / 2];
   const fx = (v) => Math.round(v * 10) / 10;
   const human = humanCanActBL();
@@ -405,7 +534,7 @@ function renderBoardBL() {
     s.tokens[p].forEach((f, k) => {
       if (f < 0) return;
       const [x, y] = xy(f);
-      out += shapeMarkupBL(BL_SHAPES[p], x, y, u * 0.26);
+      out += shapeMarkupBL(BL_SHAPES[shapeOfBL(p)], x, y, u * 0.26);
       if (p === s.turn && movable.has(k)) {
         out += '<circle cx="' + fx(x) + '" cy="' + fx(y) + '" r="' + fx(u * 0.46) + '" fill="none" stroke="#141413" stroke-width="' + fx(Math.max(1.5, u * 0.05)) + '" stroke-dasharray="' + fx(u * 0.12) + " " + fx(u * 0.08) + '"/>';
       }
@@ -423,7 +552,20 @@ function renderBoardBL() {
     const [x, y] = xy(f), h = u * 0.44;
     out += '<rect x="' + fx(x - h) + '" y="' + fx(y - h) + '" width="' + fx(2 * h) + '" height="' + fx(2 * h) + '" fill="none" stroke="#141413" stroke-width="' + fx(Math.max(1.2, u * 0.04)) + '" stroke-dasharray="' + fx(u * 0.06) + " " + fx(u * 0.08) + '"/>';
   });
-  let html = '<svg class="bl-board-svg" viewBox="0 0 ' + u * C.COLS + " " + u * C.ROWS + '" width="' + u * C.COLS + '" height="' + u * C.ROWS + '" aria-hidden="true" focusable="false">' + out + "</svg>";
+  // The houses under the bottom row: a house outline, thick with the token
+  // of the player who starts there, or thin with its number when free.
+  // (Games saved before the houses existed show the old entry fields only.)
+  const owners = {};
+  if (Array.isArray(s.houses)) for (let p = 0; p < s.numPlayers; p++) owners[s.houses[p]] = p;
+  const houseCols = Array.isArray(s.houses) ? C.HOUSE_COLS : [];
+  houseCols.forEach((col, h) => {
+    const x = col * u + u / 2, top = C.ROWS * u + u * 0.06, w = u * 0.42, roof = u * 0.3, bottom = C.ROWS * u + u * 0.96;
+    const owned = owners[h] !== undefined;
+    out += '<path d="M' + fx(x) + " " + fx(top) + "L" + fx(x + w) + " " + fx(top + roof) + "V" + fx(bottom) + "H" + fx(x - w) + "V" + fx(top + roof) + 'Z" fill="#fff" stroke="#141413" stroke-width="' + fx(owned ? Math.max(2, u * 0.08) : Math.max(1, u * 0.035)) + '" stroke-linejoin="round"/>';
+    if (owned) out += shapeMarkupBL(BL_SHAPES[shapeOfBL(owners[h])], x, top + roof + (bottom - top - roof) * 0.5, u * 0.22);
+    else out += '<text x="' + fx(x) + '" y="' + fx(bottom - u * 0.1) + '" text-anchor="middle" font-size="' + fx(Math.max(9, u * 0.3)) + '" font-weight="700" fill="#141413">' + (h + 1) + "</text>";
+  });
+  let html = '<svg class="bl-board-svg" viewBox="0 0 ' + u * C.COLS + " " + u * (C.ROWS + 1) + '" width="' + u * C.COLS + '" height="' + u * (C.ROWS + 1) + '" aria-hidden="true" focusable="false">' + out + "</svg>";
   boardEl.innerHTML = html;
   // A button over every field, for tapping and for screen readers.
   C.fields.forEach((f) => {

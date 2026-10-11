@@ -365,6 +365,7 @@ const SAMPLES = [
   "Computer 1 drew a card from Computer 3. Computer 3 has no cards left.",
   "You drew from Computer 1. A pair!",
   "Your token:",
+  "Start house:",
   "Token of player 2:",
   "Computer 1 rolled 4. Computer 1 moves to field 26. Snake: down to field 5. Computer 2's turn: tap Continue.",
   "23 (Ladder)",
