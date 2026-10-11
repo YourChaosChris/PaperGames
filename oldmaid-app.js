@@ -7,7 +7,16 @@
 // cannot read can play. On your turn the hidden cards of the player to
 // your left stand in a row: tap one to draw it. Pairs are laid down by
 // themselves. Computer turns follow one after another with a pause
-// (AiPacing), the computers draw at random.
+// (AiPacing, a little longer than in the other card games, so each step
+// can be looked at), the computers draw at random.
+//
+// Understandable without reading: every player has a sign (you a person,
+// each computer a screen with its number). The "Drawn" field shows the
+// last draw until the next one: giver's sign, arrow, the card (face up
+// when you drew it or it was taken from you, the back otherwise; both
+// cards side by side when it made a pair), arrow, taker's sign. Under
+// "Pairs laid down" each player has an open pile: the last pair large and
+// every pair as a small picture, the deal's pairs included.
 
 const OLDMAID_SAVE_KEY = "einkchess_save_oldmaid";
 
@@ -17,8 +26,12 @@ const AppStateOldMaid = {
   started: false,
   gameOver: false,
   busy: false,
-  lastCard: null    // the card you drew last, marked in your hand
+  lastCard: null,   // the card you drew last, marked in your hand
+  lastDraw: null    // { taker, from, card, pair } for the "Drawn" field
 };
+
+// Base pause before a computer draws (stretched by AiPacing).
+const OLDMAID_AI_DELAY = 1500;
 
 const OLDMAID_ANIMAL_EN = {
   dog: "Dog", cat: "Cat", rabbit: "Rabbit", mouse: "Mouse", hedgehog: "Hedgehog", owl: "Owl", fish: "Fish",
@@ -64,6 +77,28 @@ function playerNameOldMaid(i) {
   return i === 0 ? "You" : "Computer " + i;
 }
 
+// A player's sign: a person for you, a screen with the number for a
+// computer - so whose turn it is and who drew can be seen without reading.
+function playerSignOldMaid(i) {
+  const span = document.createElement("span");
+  span.className = "oldmaid-sign";
+  span.setAttribute("aria-hidden", "true");
+  span.innerHTML = i === 0
+    ? '<svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="7.5" r="4.5" fill="#141413"/><path d="M3.5 22C3.5 16 7 13.5 12 13.5S20.5 16 20.5 22Z" fill="#141413"/></svg>'
+    : '<svg viewBox="0 0 24 24" focusable="false"><rect x="2" y="3" width="20" height="14" rx="1.5" fill="#fff" stroke="#141413" stroke-width="2"/><path d="M8 21.5H16M12 17V21.5" stroke="#141413" stroke-width="2"/><text x="12" y="14.2" text-anchor="middle" font-size="10.5" font-weight="700" font-family="sans-serif" fill="#141413">' + i + "</text></svg>";
+  return span;
+}
+
+// A face-up picture card (`size`: "" normal, "oldmaid-card-mid" smaller).
+function faceCardOldMaid(card, size) {
+  const c = document.createElement("span");
+  c.className = "pc-card oldmaid-card" + (size ? " " + size : "");
+  c.setAttribute("role", "img");
+  fillCardOldMaid(c, card);
+  I18n.setAria(c, cardNameOldMaid(card));
+  return c;
+}
+
 function setStatusOldMaid(text) {
   const el = document.getElementById("board-info");
   if (el) I18n.setMsg(el, text || "");
@@ -77,7 +112,7 @@ function setResultOldMaid(text) {
 
 function saveOldMaid() {
   if (typeof GameStorage === "undefined") return;
-  GameStorage.save(OLDMAID_SAVE_KEY, { numPlayers: AppStateOldMaid.numPlayers, state: AppStateOldMaid.state });
+  GameStorage.save(OLDMAID_SAVE_KEY, { numPlayers: AppStateOldMaid.numPlayers, state: AppStateOldMaid.state, lastDraw: AppStateOldMaid.lastDraw });
 }
 
 function clearSaveOldMaid() {
@@ -109,6 +144,7 @@ function initOldMaidApp() {
     AppStateOldMaid.state = saved.state;
     AppStateOldMaid.started = true;
     AppStateOldMaid.gameOver = false;
+    AppStateOldMaid.lastDraw = saved.lastDraw && typeof saved.lastDraw.taker === "number" ? saved.lastDraw : null;
     if (playersSelect) playersSelect.value = String(saved.numPlayers);
     showBoardOldMaid();
     promptOldMaid();
@@ -135,6 +171,7 @@ function startGameOldMaid(numPlayers) {
   AppStateOldMaid.gameOver = false;
   AppStateOldMaid.busy = false;
   AppStateOldMaid.lastCard = null;
+  AppStateOldMaid.lastDraw = null;
   setResultOldMaid("");
   showBoardOldMaid();
   saveOldMaid();
@@ -158,7 +195,7 @@ function continueOldMaid() {
   const s = AppStateOldMaid.state;
   if (AppStateOldMaid.gameOver || !s || s.gameOver || s.turn === 0 || AppStateOldMaid.busy) return;
   AppStateOldMaid.busy = true;
-  setTimeout(aiTurnOldMaid, AiPacing.delay(900));
+  setTimeout(aiTurnOldMaid, AiPacing.delay(OLDMAID_AI_DELAY));
 }
 
 function aiTurnOldMaid() {
@@ -194,6 +231,7 @@ function applyDrawOldMaid(index) {
   if (!r.ok) return false;
   AppStateOldMaid.state = r.state;
   AppStateOldMaid.lastCard = r.taker === 0 && !r.pair ? r.card : null;
+  AppStateOldMaid.lastDraw = { taker: r.taker, from: r.from, card: r.card, pair: r.pair };
   const msg = describeDrawOldMaid(r);
   saveOldMaid();
   if (r.state.gameOver) { endGameOldMaid(msg); return true; }
@@ -239,6 +277,7 @@ function renderOldMaid() {
   for (let p = 0; p < s.numPlayers; p++) {
     const row = document.createElement("div");
     row.className = "game-player" + (p === s.turn && !over ? " game-player-active" : "") + (!s.hands[p].length ? " game-player-stock" : "");
+    row.appendChild(playerSignOldMaid(p));
     const name = document.createElement("span");
     name.className = "game-player-name";
     I18n.setMsg(name, playerNameOldMaid(p));
@@ -250,6 +289,8 @@ function renderOldMaid() {
     row.appendChild(extra);
     playersEl.appendChild(row);
   }
+
+  renderDrawnOldMaid();
 
   // The hidden cards to draw from (your turn), or every hand at the end.
   const fromWrap = document.getElementById("oldmaid-from-wrap");
@@ -288,6 +329,8 @@ function renderOldMaid() {
     handEl.appendChild(c);
   });
 
+  renderPilesOldMaid();
+
   // At the end: the loser's last card.
   const endEl = document.getElementById("oldmaid-end");
   endEl.innerHTML = "";
@@ -297,14 +340,101 @@ function renderOldMaid() {
     label.className = "pc-row-label";
     I18n.setMsg(label, playerNameOldMaid(s.loser) + "'s last card");
     endEl.appendChild(label);
-    s.hands[s.loser].forEach((card) => {
-      const c = document.createElement("span");
-      c.className = "pc-card oldmaid-card";
-      c.setAttribute("role", "img");
-      fillCardOldMaid(c, card);
-      I18n.setAria(c, cardNameOldMaid(card));
-      endEl.appendChild(c);
-    });
+    s.hands[s.loser].forEach((card) => endEl.appendChild(faceCardOldMaid(card)));
+  }
+}
+
+// The "Drawn" field: the last draw until the next one.
+function renderDrawnOldMaid() {
+  const wrap = document.getElementById("oldmaid-drawn");
+  const label = document.getElementById("oldmaid-drawn-label");
+  const row = document.getElementById("oldmaid-drawn-cards");
+  const d = AppStateOldMaid.lastDraw;
+  row.innerHTML = "";
+  wrap.classList.toggle("hidden", !d);
+  if (!d) return;
+  const taker = playerNameOldMaid(d.taker), from = playerNameOldMaid(d.from);
+  let text;
+  if (d.taker === 0) text = "You drew from " + from + ".";
+  else if (d.from === 0) text = taker + " took from you.";
+  else text = taker + " took a card from " + from + ".";
+  if (d.pair) text += " A pair!";
+  I18n.setMsg(label, text);
+  const arrow = () => {
+    const a = document.createElement("span");
+    a.className = "oldmaid-arrow";
+    a.setAttribute("aria-hidden", "true");
+    a.textContent = "\u2192";
+    return a;
+  };
+  row.appendChild(playerSignOldMaid(d.from));
+  row.appendChild(arrow());
+  const cards = document.createElement("span");
+  cards.className = "oldmaid-drawn-group" + (d.pair ? " oldmaid-drawn-pair" : "");
+  // A card one computer takes from another stays hidden, unless it made a
+  // pair: pairs are laid down face up.
+  const open = d.taker === 0 || d.from === 0 || d.pair;
+  if (open) cards.appendChild(faceCardOldMaid(d.card));
+  else {
+    const back = document.createElement("span");
+    back.className = "pc-card oldmaid-card pc-card-back";
+    back.setAttribute("role", "img");
+    I18n.setAria(back, "Hidden card");
+    cards.appendChild(back);
+  }
+  if (d.pair) cards.appendChild(faceCardOldMaid(d.card));
+  row.appendChild(cards);
+  row.appendChild(arrow());
+  row.appendChild(playerSignOldMaid(d.taker));
+}
+
+// "Pairs laid down": an open pile per player - the last pair large, every
+// pair as a small picture. Games saved before the pairs were remembered
+// show one small back per pair instead.
+function renderPilesOldMaid() {
+  const s = AppStateOldMaid.state;
+  const el = document.getElementById("oldmaid-piles");
+  el.innerHTML = "";
+  for (let p = 0; p < s.numPlayers; p++) {
+    const pile = document.createElement("div");
+    pile.className = "oldmaid-pile";
+    pile.dataset.player = String(p);
+    const head = document.createElement("div");
+    head.className = "oldmaid-pile-head";
+    head.appendChild(playerSignOldMaid(p));
+    const name = document.createElement("span");
+    I18n.setMsg(name, playerNameOldMaid(p));
+    head.appendChild(name);
+    const count = document.createElement("span");
+    count.className = "oldmaid-pile-count";
+    I18n.setMsg(count, "Pairs: " + s.pairs[p]);
+    head.appendChild(count);
+    pile.appendChild(head);
+    const laid = s.laid ? s.laid[p] : null;
+    if (laid && laid.length) {
+      const last = document.createElement("div");
+      last.className = "oldmaid-pile-last";
+      last.appendChild(faceCardOldMaid(laid[laid.length - 1], "oldmaid-card-mid"));
+      last.appendChild(faceCardOldMaid(laid[laid.length - 1], "oldmaid-card-mid"));
+      pile.appendChild(last);
+    }
+    const strip = document.createElement("div");
+    strip.className = "oldmaid-pile-strip";
+    for (let k = 0; k < s.pairs[p]; k++) {
+      const mini = document.createElement("span");
+      mini.className = "oldmaid-mini";
+      mini.setAttribute("role", "img");
+      if (laid) {
+        mini.innerHTML = cardSvgOldMaid(laid[k]);
+        I18n.setAria(mini, "Pair: " + cardNameOldMaid(laid[k]));
+      } else {
+        mini.classList.add("pc-card-back");
+        I18n.setAria(mini, "Pair laid down");
+      }
+      strip.appendChild(mini);
+    }
+    pile.appendChild(strip);
+    el.appendChild(pile);
   }
 }
 

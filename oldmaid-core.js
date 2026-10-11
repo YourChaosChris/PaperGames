@@ -8,6 +8,11 @@
 // has cards; a card that makes a pair is laid down at once. A player
 // without cards is out and safe. When only one player has cards left,
 // that player holds the Black Peter alone and loses.
+//
+// s.laid[p] lists the animals of the pairs player p has laid down, in the
+// order they went (the deal's pairs first), so the page can show them.
+// States saved before this existed have no `laid`; s.pairs[p] still
+// counts them.
 
 const OldMaidCore = (function () {
   const PETER = -1;
@@ -29,13 +34,15 @@ const OldMaidCore = (function () {
     return pack;
   }
 
-  // Lays down every pair in a hand; returns how many pairs went.
-  function removePairs(hand) {
+  // Lays down every pair in a hand; returns how many pairs went. The
+  // animals laid down are added to `laid` if given.
+  function removePairs(hand, laid) {
     let pairs = 0;
     for (let i = 0; i < hand.length; i++) {
       if (hand[i] === PETER) continue;
       const j = hand.indexOf(hand[i], i + 1);
       if (j !== -1) {
+        if (laid) laid.push(hand[i]);
         hand.splice(j, 1);
         hand.splice(i, 1);
         pairs++;
@@ -81,8 +88,9 @@ const OldMaidCore = (function () {
     const hands = [];
     for (let p = 0; p < n; p++) hands.push([]);
     pack.forEach((card, i) => hands[i % n].push(card));
-    const pairs = hands.map((h) => removePairs(h));
-    const s = { numPlayers: n, hands, pairs, turn: 0, gameOver: false, loser: -1, moves: 0 };
+    const laid = hands.map(() => []);
+    const pairs = hands.map((h, p) => removePairs(h, laid[p]));
+    const s = { numPlayers: n, hands, pairs, laid, turn: 0, gameOver: false, loser: -1, moves: 0 };
     hands.forEach((h) => shuffle(h, rnd));
     if (!s.hands[0].length) s.turn = nextWithCards(s, 0);
     checkEnd(s);
@@ -90,7 +98,9 @@ const OldMaidCore = (function () {
   }
 
   function cloneState(s) {
-    return { numPlayers: s.numPlayers, hands: s.hands.map((h) => h.slice()), pairs: s.pairs.slice(), turn: s.turn, gameOver: s.gameOver, loser: s.loser, moves: s.moves };
+    const c = { numPlayers: s.numPlayers, hands: s.hands.map((h) => h.slice()), pairs: s.pairs.slice(), turn: s.turn, gameOver: s.gameOver, loser: s.loser, moves: s.moves };
+    if (Array.isArray(s.laid)) c.laid = s.laid.map((l) => l.slice());
+    return c;
   }
 
   // The player on turn draws card `index` from the giver.
@@ -109,6 +119,7 @@ const OldMaidCore = (function () {
     if (j !== -1) {
       hand.splice(j, 1);
       s.pairs[taker]++;
+      if (s.laid) s.laid[taker].push(card);
       pair = true;
     } else {
       hand.push(card);

@@ -91,6 +91,10 @@
   </div>
   <div id="board-container" class="hidden">
     <div id="oldmaid-players" class="game-players" role="status" aria-live="polite"></div>
+    <div id="oldmaid-drawn" class="oldmaid-drawn hidden">
+      <span id="oldmaid-drawn-label" class="pc-row-label"></span>
+      <div id="oldmaid-drawn-cards" class="oldmaid-drawn-cards"></div>
+    </div>
     <div id="oldmaid-from-wrap" class="pc-row hidden">
       <span id="oldmaid-from-label" class="pc-row-label"></span>
       <div id="oldmaid-from" role="group" data-i18n-attr="aria-label:msg_oldmaid_peter" aria-label="Black Peter"></div>
@@ -100,6 +104,10 @@
       <div id="oldmaid-hand" role="group"></div>
     </div>
     <div id="oldmaid-end" class="pc-row hidden"></div>
+    <div class="oldmaid-piles-wrap">
+      <span class="pc-row-label" data-i18n="oldmaid_pairs_title">Pairs laid down</span>
+      <div id="oldmaid-piles"></div>
+    </div>
   </div>
 </section>
   </main>
