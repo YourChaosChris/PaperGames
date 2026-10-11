@@ -1641,6 +1641,20 @@ STRINGS.pl = {
 
     cake_hint_step: "{THING}: wiersz {R}, kolumna {C}.",
     cake_hint_last: "Wszystkie zwierzęta stoją na swoich miejscach. Wolne zostały tylko jeden wiersz i jedna kolumna - tam stoi ciasto.",
+    cake_always_title: "Zawsze obowiązuje",
+    cake_always_1: "W każdym wierszu i w każdej kolumnie stoi dokładnie jedna rzecz: zwierzę albo ciasto.",
+    cake_always_2: "Ciasto zawsze stoi na stole.",
+    cake_always_3: "Zwierzęta nigdy nie stoją na stole, szafie ani roślinie.",
+    cake_always_4: "Dokładnie jedno zwierzę jest w pokoju z ciastem – to ono je wzięło.",
+    cake_why_free: "{A} – tutaj: według zasad 1 i 3 to jedyne wolne jeszcze pole.",
+    cake_why_clue: "{A} – tutaj: poszlaka {N} zostawia wolne tylko to pole.",
+    cake_why_clue2: "{A} – tutaj: poszlaki {N} i {M} razem zostawiają wolne tylko to pole.",
+    cake_why_row: "{A} – tutaj: nic innego nie pasuje do tego wiersza, a w tym wierszu możliwe jest tylko to pole.",
+    cake_why_col: "{A} – tutaj: nic innego nie pasuje do tej kolumny, a w tej kolumnie możliwe jest tylko to pole.",
+    cake_why_lines: "{A} – tutaj: według zasady 1 pozostałe możliwe pola leżą w wierszach lub kolumnach potrzebnych innym.",
+    cake_why_rooms: "{A} – tutaj: wynika to z zasady 4 i poszlak o pokojach.",
+    cake_why_groups: "{A} – tutaj: według zasady 1 kilka innych razem potrzebuje pewnych wierszy lub kolumn i zostaje tylko to pole.",
+    cake_why_general: "{A} – tutaj: wynika to z poszlak i zasad z ramki Zawsze obowiązuje.",
 
 
     cake_aria_cell: "Wiersz {R}, kolumna {C}",

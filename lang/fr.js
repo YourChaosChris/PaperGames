@@ -1640,6 +1640,20 @@ STRINGS.fr = {
 
     cake_hint_step: "{THING} : ligne {R}, colonne {C}.",
     cake_hint_last: "Tous les animaux sont à leur place. Il ne reste qu'une ligne et une colonne libres : c'est là qu'est le gâteau.",
+    cake_always_title: "Toujours vrai",
+    cake_always_1: "Chaque ligne et chaque colonne contient exactement une chose : un animal ou le gâteau.",
+    cake_always_2: "Le gâteau est toujours posé sur une table.",
+    cake_always_3: "Les animaux ne sont jamais sur une table, une armoire ou une plante.",
+    cake_always_4: "Exactement un animal se trouve dans la pièce du gâteau : c'est lui qui l'a pris.",
+    cake_why_free: "{A} va ici : d'après les règles 1 et 3, c'est la seule case encore libre.",
+    cake_why_clue: "{A} va ici : la piste {N} ne laisse que cette case libre.",
+    cake_why_clue2: "{A} va ici : les pistes {N} et {M} ensemble ne laissent que cette case libre.",
+    cake_why_row: "{A} va ici : rien d'autre ne tient dans cette ligne, et dans cette ligne seule cette case est possible.",
+    cake_why_col: "{A} va ici : rien d'autre ne tient dans cette colonne, et dans cette colonne seule cette case est possible.",
+    cake_why_lines: "{A} va ici : d'après la règle 1, les autres cases possibles sont dans des lignes ou colonnes dont les autres ont besoin.",
+    cake_why_rooms: "{A} va ici : cela découle de la règle 4 et des pistes sur les pièces.",
+    cake_why_groups: "{A} va ici : d'après la règle 1, certains des autres ont besoin ensemble de certaines lignes ou colonnes, et seule cette case reste.",
+    cake_why_general: "{A} va ici : cela découle des pistes et des règles de Toujours vrai.",
 
 
     cake_aria_cell: "Ligne {R}, colonne {C}",

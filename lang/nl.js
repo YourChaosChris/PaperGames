@@ -1640,6 +1640,20 @@ STRINGS.nl = {
 
     cake_hint_step: "{THING}: rij {R}, kolom {C}.",
     cake_hint_last: "Alle dieren staan goed. Er zijn nog maar één rij en één kolom vrij - daar staat de taart.",
+    cake_always_title: "Geldt altijd",
+    cake_always_1: "In elke rij en elke kolom staat precies één ding: een dier of de taart.",
+    cake_always_2: "De taart staat altijd op een tafel.",
+    cake_always_3: "Dieren staan nooit op een tafel, een kast of een plant.",
+    cake_always_4: "Precies één dier is in de kamer van de taart – dat heeft de taart gepakt.",
+    cake_why_free: "{A} hoort hier: volgens regel 1 en 3 is dit het enige vakje dat nog vrij is.",
+    cake_why_clue: "{A} hoort hier: aanwijzing {N} laat alleen dit vakje vrij.",
+    cake_why_clue2: "{A} hoort hier: aanwijzingen {N} en {M} laten samen alleen dit vakje vrij.",
+    cake_why_row: "{A} hoort hier: niets anders past in deze rij, en in deze rij is alleen dit vakje mogelijk.",
+    cake_why_col: "{A} hoort hier: niets anders past in deze kolom, en in deze kolom is alleen dit vakje mogelijk.",
+    cake_why_lines: "{A} hoort hier: volgens regel 1 liggen de andere mogelijke vakjes in rijen of kolommen die de anderen nodig hebben.",
+    cake_why_rooms: "{A} hoort hier: dat volgt uit regel 4 en de aanwijzingen over de kamers.",
+    cake_why_groups: "{A} hoort hier: volgens regel 1 hebben enkele anderen samen bepaalde rijen of kolommen nodig, en blijft alleen dit vakje over.",
+    cake_why_general: "{A} hoort hier: dat volgt uit de aanwijzingen en de regels onder Geldt altijd.",
 
 
     cake_aria_cell: "Rij {R}, kolom {C}",

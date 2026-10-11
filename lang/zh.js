@@ -1640,6 +1640,20 @@ STRINGS.zh = {
 
     cake_hint_step: "{THING}：第{R}行，第{C}列。",
     cake_hint_last: "所有动物都放对了。只剩一行和一列是空的——蛋糕就在那里。",
+    cake_always_title: "总是成立",
+    cake_always_1: "每一行和每一列都正好有一样东西:一只动物或蛋糕。",
+    cake_always_2: "蛋糕总是放在桌子上。",
+    cake_always_3: "动物从不站在桌子、柜子或植物上。",
+    cake_always_4: "正好有一只动物和蛋糕在同一个房间——就是它拿走了蛋糕。",
+    cake_why_free: "{A}在这里:根据规则1和3,这是唯一还空着的格子。",
+    cake_why_clue: "{A}在这里:线索{N}只留下这一个空格。",
+    cake_why_clue2: "{A}在这里:线索{N}和{M}合起来只留下这一个空格。",
+    cake_why_row: "{A}在这里:这一行放不下别的东西,而这一行里只有这一格可以。",
+    cake_why_col: "{A}在这里:这一列放不下别的东西,而这一列里只有这一格可以。",
+    cake_why_lines: "{A}在这里:根据规则1,其他可能的格子都在别的东西需要的行或列里。",
+    cake_why_rooms: "{A}在这里:这是由规则4和关于房间的线索得出的。",
+    cake_why_groups: "{A}在这里:根据规则1,另外几样东西合起来需要某些行或列,只剩下这一格。",
+    cake_why_general: "{A}在这里:这是由线索和“总是成立”里的规则得出的。",
 
 
     cake_aria_cell: "第{R}行，第{C}列",

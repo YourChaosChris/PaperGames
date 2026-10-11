@@ -1722,6 +1722,20 @@ const STRINGS = {
 
     cake_hint_step: "{THING}: row {R}, column {C}.",
     cake_hint_last: "All the animals are in place. Only one row and one column are still free - that is where the cake stands.",
+    cake_always_title: "Always true",
+    cake_always_1: "Every row and every column holds exactly one thing: an animal or the cake.",
+    cake_always_2: "The cake always stands on a table.",
+    cake_always_3: "Animals never stand on a table, a cupboard or a plant.",
+    cake_always_4: "Exactly one animal is in the cake's room - it took the cake.",
+    cake_why_free: "{A} goes here: by rules 1 and 3 this is the only square still free for it.",
+    cake_why_clue: "{A} goes here: clue {N} leaves only this square free.",
+    cake_why_clue2: "{A} goes here: clues {N} and {M} together leave only this square free.",
+    cake_why_row: "{A} goes here: nothing else fits in this row, and in this row only this square is possible.",
+    cake_why_col: "{A} goes here: nothing else fits in this column, and in this column only this square is possible.",
+    cake_why_lines: "{A} goes here: by rule 1 the other possible squares lie in rows or columns that the others need.",
+    cake_why_rooms: "{A} goes here: this follows from rule 4 and the room clues.",
+    cake_why_groups: "{A} goes here: by rule 1 some of the others together need certain rows or columns, and only this square is left.",
+    cake_why_general: "{A} goes here: this follows from the clues and the rules under Always true.",
 
 
     cake_aria_cell: "Row {R}, column {C}",

@@ -35,11 +35,14 @@ const CakeCore = (function () {
   const FURNITURE = ["table", "chair", "rug", "plant", "cupboard"];
   // Furniture no animal can stand on (the cake stands on a table).
   const BLOCKING = ["table", "cupboard", "plant"];
+  // extra: clues added on top of the ones that are needed (Easy 2,
+  // Medium 1, Hard none), positive ones first ("is in", "sits on", ...).
   const LEVELS = {
-    easy: { n: 4, rooms: [3, 4], level: 1 },
-    medium: { n: 5, rooms: [4, 5], level: 2 },
-    hard: { n: 6, rooms: [5, 6], level: 3 }
+    easy: { n: 4, rooms: [3, 4], level: 1, extra: 2 },
+    medium: { n: 5, rooms: [4, 5], level: 2, extra: 1 },
+    hard: { n: 6, rooms: [5, 6], level: 3, extra: 0 }
   };
+  const POSITIVE = ["in", "on", "next", "same", "window", "edge"];
 
   function rowOf(p, i) { return Math.floor(i / p.n); }
   function colOf(p, i) { return i % p.n; }
@@ -387,7 +390,10 @@ const CakeCore = (function () {
   // Clues are added until the puzzle has exactly one solution, every
   // clue that is not needed for that is removed again (each animal keeps
   // at least one), and the result must be solvable by deduction alone at
-  // the level's depth.
+  // the level's depth. Then Easy and Medium get cfg.extra more true clues
+  // (p.needed keeps the number that was needed): positive ones first,
+  // for the animals with the fewest clues; "not in" only if nothing else
+  // is left.
   function generatePuzzle(levelName, rng) {
     const rnd = rng || Math.random;
     const cfg = LEVELS[levelName] || LEVELS.medium;
@@ -421,11 +427,29 @@ const CakeCore = (function () {
       // Hard puzzles should need more than the simplest steps; after many
       // tries any deducible one is taken, so a puzzle always comes out.
       if (cfg.level >= 3 && attempt < 200 && deduce(p, 1).solved) continue;
+      p.needed = p.clues.length;
+      addExtraClues(p, pool, cfg.extra || 0);
       p.clues.sort((x, y) => x.a - y.a || (x.t < y.t ? -1 : x.t > y.t ? 1 : 0));
       p.level = levelName;
       return p;
     }
     return null;
+  }
+
+  function sameClue(x, y) {
+    return x.t === y.t && x.a === y.a && x.b === y.b && x.room === y.room && x.f === y.f && x.side === y.side;
+  }
+
+  function addExtraClues(p, pool, count) {
+    for (let added = 0; added < count; added++) {
+      const left = pool.filter((cl) => !p.clues.some((x) => sameClue(x, cl)));
+      if (!left.length) return;
+      const have = (a) => p.clues.filter((x) => x.a === a || x.b === a).length;
+      const score = (cl) => (POSITIVE.indexOf(cl.t) !== -1 ? 0 : 100) + have(cl.a);
+      let best = left[0];
+      for (const cl of left) if (score(cl) < score(best)) best = cl;
+      p.clues.push(best);
+    }
   }
 
   /*** Hint ***/
@@ -434,7 +458,8 @@ const CakeCore = (function () {
   // "nothing here". Returns
   //   { kind: "wrong", thing, cell }   a thing stands in the wrong cell
   //   { kind: "wrongx", cell }         a cross marks a cell the solution uses
-  //   { kind: "step", thing, cell }    where the next thing goes
+  //   { kind: "step", thing, cell, reason }  where the next thing goes,
+  //                                    and why (see explainStep)
   //   { kind: "last" }                 all animals stand right, the cake is open
   //   { kind: "done" }
   function findHint(p, placed, crosses) {
@@ -453,10 +478,84 @@ const CakeCore = (function () {
     if (!animals.length) return { kind: "last" };
     const fixedAt = deduce(p, 3, { placed, crosses }).fixedAt;
     const rank = (k) => (fixedAt[k] === -1 ? Infinity : fixedAt[k]);
-    let best = animals[0];
-    for (const k of animals) if (rank(k) < rank(best)) best = k;
-    return { kind: "step", thing: best, cell: p.solution[best] };
+    // An animal whose place can be seen directly from the board as it is
+    // comes first, so the reason given is one the player can check.
+    let best = -1, bestReason = null;
+    const simple = (r) => REASON_ORDER.indexOf(r.kind);
+    for (const k of animals) {
+      const r = explainStep(p, placed, crosses, k);
+      if (best === -1 || simple(r) < simple(bestReason) || (simple(r) === simple(bestReason) && rank(k) < rank(best))) { best = k; bestReason = r; }
+    }
+    return { kind: "step", thing: best, cell: p.solution[best], reason: bestReason };
   }
+
+  // Why thing k must stand on its solution cell, seen from the board as
+  // it is (placed things and crosses; both already checked to be right):
+  //   { kind: "free" }              only this cell is still free for it
+  //                                 (rows and columns taken, crosses,
+  //                                 furniture it cannot stand on)
+  //   { kind: "clue", clues: [i] }  clue i (or clues i, j together) leave
+  //                                 only this cell free
+  //   { kind: "row" } / "col"       nothing else fits in this row/column,
+  //                                 and this is its only cell there
+  //   { kind: "lines" }             its other cells lie in rows or columns
+  //                                 the other things need (level-1 steps)
+  //   { kind: "rooms" }             follows with the room rules (exactly
+  //                                 one animal in the cake's room, "same
+  //                                 room" clues)
+  //   { kind: "groups" }            several things together need certain
+  //                                 rows or columns
+  //   { kind: "general", clues }    none of these alone; clues lists the
+  //                                 clues about k
+  function explainStep(p, placed, crosses, k) {
+    const n = p.n, target = p.solution[k];
+    const takenR = new Set(), takenC = new Set();
+    for (let t = 0; t < n; t++) if (placed[t] >= 0 && t !== k) { takenR.add(rowOf(p, placed[t])); takenC.add(colOf(p, placed[t])); }
+    const crossSet = new Set(crosses || []);
+    const open = (i) => !takenR.has(rowOf(p, i)) && !takenC.has(colOf(p, i)) && !crossSet.has(i);
+    const standable = (t, i) => (isCake(p, t) ? p.furniture[i] === "table" : BLOCKING.indexOf(p.furniture[i]) === -1);
+    const own = [];
+    p.clues.forEach((cl, idx) => { if (cl.a === k && cl.t !== "same") own.push(idx); });
+    const cellsWith = (t, clueIdx) => {
+      const out = [];
+      for (let i = 0; i < n * n; i++) {
+        if (!open(i) || !standable(t, i)) continue;
+        if (clueIdx.every((ci) => clueAllows(p, p.clues[ci], i))) out.push(i);
+      }
+      return out;
+    };
+    const only = (cells) => cells.length === 1 && cells[0] === target;
+    if (only(cellsWith(k, []))) return { kind: "free" };
+    for (const ci of own) if (only(cellsWith(k, [ci]))) return { kind: "clue", clues: [ci] };
+    for (let x = 0; x < own.length; x++) for (let y = x + 1; y < own.length; y++) {
+      if (only(cellsWith(k, [own[x], own[y]]))) return { kind: "clue", clues: [own[x], own[y]] };
+    }
+    // Rows and columns: every unplaced thing with all its own clues.
+    const cand = [];
+    for (let t = 0; t < n; t++) {
+      if (placed[t] >= 0 && t !== k) { cand.push([]); continue; }
+      const ownT = [];
+      p.clues.forEach((cl, idx) => { if (cl.a === t && cl.t !== "same") ownT.push(idx); });
+      cand.push(cellsWith(t, ownT));
+    }
+    for (const [kind, f] of [["row", (i) => rowOf(p, i)], ["col", (i) => colOf(p, i)]]) {
+      const line = f(target);
+      const mine = cand[k].filter((i) => f(i) === line);
+      const others = cand.some((cs, t) => t !== k && cs.some((i) => f(i) === line));
+      if (!others && mine.length === 1 && mine[0] === target) return { kind };
+    }
+    // Reasoning from the board as it is: which kind of step fixes k.
+    const start = { placed, crosses };
+    const levelKinds = ["lines", "rooms", "groups"];
+    for (let lv = 1; lv <= 3; lv++) {
+      const d = deduce(p, lv, start);
+      if (d.fixedAt[k] !== -1) return { kind: levelKinds[lv - 1] };
+    }
+    return { kind: "general", clues: own };
+  }
+
+  // How simple a reason is, for choosing the hint (lower = simpler).
+  const REASON_ORDER = ["free", "clue", "row", "col", "lines", "rooms", "groups", "general"];
 
   /*** Texts ***/
 
@@ -502,7 +601,7 @@ const CakeCore = (function () {
   return {
     ANIMALS, ROOM_NAMES, FURNITURE, BLOCKING, LEVELS,
     neighbours, nextTo, clueAllows, baseCandidates, isSolution, countSolutions, deduce,
-    randomRooms, candidateClues, generatePuzzle, findHint, clueText, thingName, culprit, fill
+    randomRooms, candidateClues, generatePuzzle, addExtraClues, findHint, explainStep, clueText, thingName, culprit, fill
   };
 })();
 

@@ -1640,6 +1640,20 @@ STRINGS.it = {
 
     cake_hint_step: "{THING}: riga {R}, colonna {C}.",
     cake_hint_last: "Tutti gli animali sono al loro posto. Restano libere solo una riga e una colonna: lì c'è la torta.",
+    cake_always_title: "Vale sempre",
+    cake_always_1: "In ogni riga e in ogni colonna c'è esattamente una cosa: un animale o la torta.",
+    cake_always_2: "La torta sta sempre su un tavolo.",
+    cake_always_3: "Gli animali non stanno mai su un tavolo, un armadio o una pianta.",
+    cake_always_4: "Esattamente un animale è nella stanza della torta: è lui che l'ha presa.",
+    cake_why_free: "{A} va qui: secondo le regole 1 e 3 è l'unica casella ancora libera.",
+    cake_why_clue: "{A} va qui: l'indizio {N} lascia libera solo questa casella.",
+    cake_why_clue2: "{A} va qui: gli indizi {N} e {M} insieme lasciano libera solo questa casella.",
+    cake_why_row: "{A} va qui: nient'altro entra in questa riga, e in questa riga è possibile solo questa casella.",
+    cake_why_col: "{A} va qui: nient'altro entra in questa colonna, e in questa colonna è possibile solo questa casella.",
+    cake_why_lines: "{A} va qui: secondo la regola 1 le altre caselle possibili sono in righe o colonne che servono agli altri.",
+    cake_why_rooms: "{A} va qui: lo si ricava dalla regola 4 e dagli indizi sulle stanze.",
+    cake_why_groups: "{A} va qui: secondo la regola 1 alcuni degli altri insieme hanno bisogno di certe righe o colonne, e resta solo questa casella.",
+    cake_why_general: "{A} va qui: lo si ricava dagli indizi e dalle regole di Vale sempre.",
 
 
     cake_aria_cell: "Riga {R}, colonna {C}",

@@ -21,6 +21,7 @@ const AppStateCake = {
   cluesDone: [],     // clue index -> ticked off
   hinted: false,     // the hint button was used on this puzzle
   hintCell: -1,      // cell the current hint marks
+  hintClues: [],     // clues the current hint's reason uses (shown bold)
   gameOver: false,
   status: null       // { key, vars } of the current info line
 };
@@ -48,9 +49,19 @@ function clearSavedCakeGame() {
   if (typeof GameStorage !== "undefined") GameStorage.clear(CAKE_SAVE_KEY);
 }
 
-function setCakeStatus(key, vars) {
-  AppStateCake.status = key ? { key, vars: vars || null } : null;
+// reason (optional): { kind, clues } from CakeCore.explainStep - said
+// after the main sentence, e.g. "The dog goes here: clue 2 leaves only
+// this square free."
+function setCakeStatus(key, vars, reason) {
+  AppStateCake.status = key ? { key, vars: vars || null, reason: reason || null } : null;
   renderCakeStatus();
+}
+
+function cakeReasonText(thing, reason) {
+  const kind = reason.kind === "clue" && reason.clues.length === 2 ? "clue2" : reason.kind;
+  const vars = { A: tCake("cake_" + CakeCore.ANIMALS[thing] + "_cap") };
+  if (reason.clues && reason.clues.length) { vars.N = String(reason.clues[0] + 1); if (reason.clues[1] !== undefined) vars.M = String(reason.clues[1] + 1); }
+  return tCake("cake_why_" + kind, vars);
 }
 
 function renderCakeStatus() {
@@ -60,7 +71,9 @@ function renderCakeStatus() {
   if (!s) { el.textContent = ""; return; }
   const vars = s.vars ? Object.assign({}, s.vars) : null;
   if (vars && vars.thing !== undefined) vars.THING = CakeCore.thingName(AppStateCake.puzzle, vars.thing, tCake);
-  el.textContent = tCake(s.key, vars);
+  let text = tCake(s.key, vars);
+  if (s.reason && vars && vars.thing !== undefined) text += " " + cakeReasonText(vars.thing, s.reason);
+  el.textContent = text;
 }
 
 function cakeWinText() {
@@ -106,6 +119,7 @@ function initCakeApp() {
     AppStateCake.cluesDone = saved.cluesDone || [];
     AppStateCake.hinted = !!saved.hinted;
     AppStateCake.hintCell = -1;
+    AppStateCake.hintClues = [];
     AppStateCake.tool = 0;
     AppStateCake.gameOver = false;
     if (levelInline) levelInline.value = AppStateCake.level;
@@ -133,6 +147,7 @@ function startNewCakeGame(level) {
   AppStateCake.cluesDone = puzzle.clues.map(() => false);
   AppStateCake.hinted = false;
   AppStateCake.hintCell = -1;
+  AppStateCake.hintClues = [];
   AppStateCake.tool = 0;
   AppStateCake.gameOver = false;
   const result = document.getElementById("game-result");
@@ -440,6 +455,7 @@ function renderCakeClues() {
     btn.setAttribute("data-i18n-attr", "");
     const done = !!AppStateCake.cluesDone[idx];
     btn.classList.toggle("cake-clue-done", done);
+    btn.classList.toggle("cake-clue-used", AppStateCake.hintClues.indexOf(idx) !== -1);
     btn.setAttribute("aria-pressed", done ? "true" : "false");
     btn.textContent = CakeCore.clueText(p, clue, tCake);
     btn.addEventListener("click", () => {
@@ -465,6 +481,7 @@ function renderCakeMeta() {
 function onCakeCellClick(i) {
   if (AppStateCake.gameOver || !AppStateCake.puzzle) return;
   AppStateCake.hintCell = -1;
+  AppStateCake.hintClues = [];
   const tool = AppStateCake.tool;
   const placed = AppStateCake.placed;
   const crossAt = AppStateCake.crosses.indexOf(i);
@@ -494,6 +511,7 @@ function afterCakeMove() {
     AppStateCake.placed = p.solution.slice();
     AppStateCake.crosses = [];
     AppStateCake.hintCell = -1;
+    AppStateCake.hintClues = [];
     renderCakeAll();
     const text = cakeWinText();
     const result = document.getElementById("game-result");
@@ -530,6 +548,7 @@ function hintCake() {
     renderCakeAll();
   } else if (h.kind === "last") {
     AppStateCake.hintCell = -1;
+    AppStateCake.hintClues = [];
     setCakeStatus("cake_hint_last");
     renderCakeAll();
   } else if (h.kind === "step") {
@@ -539,7 +558,8 @@ function hintCake() {
     if (crossAt !== -1) AppStateCake.crosses.splice(crossAt, 1);
     AppStateCake.placed[h.thing] = h.cell;
     AppStateCake.hintCell = h.cell;
-    setCakeStatus("cake_hint_step", { thing: h.thing, R: Math.floor(h.cell / n) + 1, C: h.cell % n + 1 });
+    AppStateCake.hintClues = h.reason && h.reason.kind === "clue" ? h.reason.clues.slice() : [];
+    setCakeStatus("cake_hint_step", { thing: h.thing, R: Math.floor(h.cell / n) + 1, C: h.cell % n + 1 }, h.reason);
     afterCakeMove();
     return;
   }

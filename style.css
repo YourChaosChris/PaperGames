@@ -10495,6 +10495,30 @@ button.concan-meld {
   cursor: pointer;
 }
 
+/* The clue the hint's reason uses: bold until the next move. */
+.cake-clue.cake-clue-used {
+  font-weight: 700;
+}
+
+/* "Always true": the four fixed rules, numbered, same size as the clues,
+   not tickable; a plain frame sets them apart from the clues. */
+.cake-always {
+  margin: 0.5rem 0 0;
+  padding: 0 0.5rem 0.25rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.cake-always-list {
+  margin: 0;
+  padding-inline-start: 1.6rem;
+}
+
+.cake-always-list li {
+  padding: 4px 4px;
+  text-align: start;
+}
+
 /* Ticked off: struck through and marked with a tick in front. */
 .cake-clue.cake-clue-done {
   text-decoration: line-through;

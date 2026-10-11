@@ -1711,6 +1711,20 @@ STRINGS.de = {
 
     cake_hint_step: "{THING}: Zeile {R}, Spalte {C}.",
     cake_hint_last: "Alle Tiere stehen richtig. Nur noch eine Zeile und eine Spalte sind frei - dort steht der Kuchen.",
+    cake_always_title: "Immer gilt",
+    cake_always_1: "In jeder Zeile und jeder Spalte steht genau eine Sache: ein Tier oder der Kuchen.",
+    cake_always_2: "Der Kuchen steht immer auf einem Tisch.",
+    cake_always_3: "Tiere stehen nie auf einem Tisch, einem Schrank oder einer Pflanze.",
+    cake_always_4: "Genau ein Tier ist im Raum des Kuchens – es hat den Kuchen genommen.",
+    cake_why_free: "{A} gehört hierhin: Nach Regel 1 und 3 ist das das einzige noch freie Kästchen.",
+    cake_why_clue: "{A} gehört hierhin: Hinweis {N} lässt nur dieses Kästchen frei.",
+    cake_why_clue2: "{A} gehört hierhin: Hinweis {N} und {M} lassen zusammen nur dieses Kästchen frei.",
+    cake_why_row: "{A} gehört hierhin: In diese Zeile passt sonst nichts, und in dieser Zeile ist nur dieses Kästchen möglich.",
+    cake_why_col: "{A} gehört hierhin: In diese Spalte passt sonst nichts, und in dieser Spalte ist nur dieses Kästchen möglich.",
+    cake_why_lines: "{A} gehört hierhin: Nach Regel 1 liegen die anderen möglichen Kästchen in Zeilen oder Spalten, die die anderen brauchen.",
+    cake_why_rooms: "{A} gehört hierhin: Das folgt aus Regel 4 und den Raum-Hinweisen.",
+    cake_why_groups: "{A} gehört hierhin: Nach Regel 1 brauchen einige der anderen zusammen bestimmte Zeilen oder Spalten, und nur dieses Kästchen bleibt übrig.",
+    cake_why_general: "{A} gehört hierhin: Das folgt aus den Hinweisen und den Regeln unter Immer gilt.",
 
 
     cake_aria_cell: "Zeile {R}, Spalte {C}",

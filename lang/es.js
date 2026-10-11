@@ -1640,6 +1640,20 @@ STRINGS.es = {
 
     cake_hint_step: "{THING}: fila {R}, columna {C}.",
     cake_hint_last: "Todos los animales están en su sitio. Solo quedan libres una fila y una columna: ahí está el pastel.",
+    cake_always_title: "Siempre vale",
+    cake_always_1: "En cada fila y cada columna hay exactamente una cosa: un animal o el pastel.",
+    cake_always_2: "El pastel siempre está sobre una mesa.",
+    cake_always_3: "Los animales nunca están sobre una mesa, un armario o una planta.",
+    cake_always_4: "Exactamente un animal está en la habitación del pastel: es el que se lo llevó.",
+    cake_why_free: "{A} va aquí: según las reglas 1 y 3, es la única casilla que queda libre.",
+    cake_why_clue: "{A} va aquí: el indicio {N} solo deja libre esta casilla.",
+    cake_why_clue2: "{A} va aquí: los indicios {N} y {M} juntos solo dejan libre esta casilla.",
+    cake_why_row: "{A} va aquí: nada más cabe en esta fila, y en esta fila solo es posible esta casilla.",
+    cake_why_col: "{A} va aquí: nada más cabe en esta columna, y en esta columna solo es posible esta casilla.",
+    cake_why_lines: "{A} va aquí: según la regla 1, las otras casillas posibles están en filas o columnas que necesitan los demás.",
+    cake_why_rooms: "{A} va aquí: se deduce de la regla 4 y de los indicios sobre las habitaciones.",
+    cake_why_groups: "{A} va aquí: según la regla 1, algunos de los demás necesitan juntos ciertas filas o columnas, y solo queda esta casilla.",
+    cake_why_general: "{A} va aquí: se deduce de los indicios y de las reglas de Siempre vale.",
 
 
     cake_aria_cell: "Fila {R}, columna {C}",
