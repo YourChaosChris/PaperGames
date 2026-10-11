@@ -166,6 +166,14 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   fills the board legally, the free fields have the right sizes, the
   start-pieces puzzles have exactly one solution, and the first 50 of
   each can be finished with the hint alone. About 45 seconds.
+- `node tests/cardduel-core.js` - no server or browser needed. "Card
+  Duel": 4 decks of 30 cards, at most 6 abilities, every card and ability
+  named in 12 languages; 500 computer games (medium against medium) for
+  each of the 16 deck pairings - every game ends, every move is legal,
+  each deck wins 40-60 % in every pairing, the starter at most 55 % -,
+  hard beats easy in at least 70 % of 200 games, and single rules
+  (Bulwark, Nimble, Thick Skin, empty deck, 6 creatures, the evening out
+  of the start). About 90 seconds.
 - `node tests/game-families.js` - needs a running server and a browser.
   Checks the game families (`family` in games-catalog.js): each has at
   least two games, no game is in the catalog twice, game-switcher.js
@@ -182,8 +190,9 @@ Set `PORT` to use a port other than 8000 if that one's busy.
 - `node tests/update-banner.js` - needs a browser; starts its own server
   on a copy of the site and makes updates by raising `CACHE_NAME` in the
   copy's `sw.js`. Checks the "what's new" lines of the update banner: a
-  device that last saw v222 with 80 games is shown exactly the 3 new
-  games and the sentence of `release-notes.js` (German and English), a
+  device that last saw v222 with 80 games is shown exactly the games
+  added since then and the sentences of `release-notes.js` since v222
+  (German and English), a
   second update without anything new shows the main line alone, and no
   sideways scrolling at 360 and 600 px. `SHOT=<file.png>` saves a
   screenshot at 360 px.

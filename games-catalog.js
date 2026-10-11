@@ -1015,5 +1015,16 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-11T16:27",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M4 4H20V12H12V28H4Z\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M20 4H36V20H28V12H20Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M12 12H28V20H36V36H20V28H12Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M14 16H26M14 24H26\" stroke=\"#141413\" stroke-width=\"1.5\"/></svg></span>"
+  },
+  {
+    slug: "cardduel",
+    category: "party",
+    nameKey: "game_cardduel",
+    nameText: "Card Duel",
+    descKey: "home_cardduel_desc",
+    descText: "A fantasy card game for two mages: creatures and spells, four ready-made decks of forest, fire, water and stone. Against the computer in three levels or with two players on one device.",
+    popular: false,
+    added: "2026-10-11T22:21",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"7\" width=\"17\" height=\"25\" rx=\"2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" transform=\"rotate(-10 11.5 19.5)\"/><path d=\"M11 12C11.6 15 14.5 16 14.5 19.6A3.6 3.6 0 0 1 7.3 19.6C7.3 17.3 9.1 16.7 9.1 14.3C10.3 15.5 10.3 16.7 10.3 17.3C11.5 16.1 11.5 13.8 11 12Z\" fill=\"#141413\" transform=\"rotate(-10 11.5 19.5)\"/><rect x=\"20\" y=\"8\" width=\"17\" height=\"25\" rx=\"2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" transform=\"rotate(10 28.5 20.5)\"/><path d=\"M28.5 13C30 15.7 32.4 17.8 32.4 20.5A3.9 3.9 0 0 1 24.6 20.5C24.6 17.8 27 15.7 28.5 13Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.6\" transform=\"rotate(10 28.5 20.5)\"/></svg></span>"
   }
 ];

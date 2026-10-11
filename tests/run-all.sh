@@ -91,6 +91,8 @@ echo "=== differences-core.js ==="
 node "$ROOT/tests/differences-core.js" || status=1
 echo "=== pentomino-core.js ==="
 node "$ROOT/tests/pentomino-core.js" || status=1
+echo "=== cardduel-core.js ==="
+node "$ROOT/tests/cardduel-core.js" || status=1
 echo "=== new-games-order.js ==="
 node "$ROOT/tests/new-games-order.js" || status=1
 echo "=== kids-games.js ==="

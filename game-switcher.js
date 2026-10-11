@@ -106,7 +106,8 @@
     ["tenpairs", "game_tenpairs"],
     ["mathcross", "game_mathcross", "math"],
     ["differences", "game_differences"],
-    ["pentomino", "game_pentomino"]
+    ["pentomino", "game_pentomino"],
+    ["cardduel", "game_cardduel"]
   ];
 
   var GAME_SLUGS = {};

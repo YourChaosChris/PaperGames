@@ -6,9 +6,10 @@
 //  1. Rules of whatsNew() alone (node): stored version -> games not seen
 //     and the sentences in between, at most 3 plus "more"; no stored
 //     version -> games of the last 14 days and the newest sentence.
-//  2. German: a device that last saw v222 with 80 games (the catalog
-//     without its 3 newest), then an update: the banner names exactly
-//     those 3 games (newest first) and the sentence of release-notes.js, nothing else.
+//  2. German: a device that last saw v222 with 80 games (everything added
+//     before the games of v223), then an update: the banner names exactly
+//     the games since then (newest first) and the sentences of
+//     release-notes.js since v222, nothing else.
 //     No sideways scrolling at 360 and 600 px. SHOT=<file.png> saves a
 //     screenshot at 360 px.
 //  3. A second update without a new game or entry: the main line alone.
@@ -78,8 +79,11 @@ vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(ROOT, "games-catalog.js"), "utf8") + "\nthis.G = GAMES_CATALOG;", ctx);
 vm.runInContext(fs.readFileSync(path.join(ROOT, "release-notes.js"), "utf8") + "\nthis.N = RELEASE_NOTES;", ctx);
 const strings = require("./load-i18n").loadI18n().STRINGS;
-const newest = ctx.G.slice().sort((a, b) => (a.added < b.added ? 1 : a.added > b.added ? -1 : 0)).slice(0, 3);
-const older = ctx.G.filter((g) => newest.indexOf(g) === -1).map((g) => g.slug);
+// What v222 had: the 80 games added before the three of v223 (2026-10-11
+// from 16:10 on). Every game after them is new for such a device.
+const V222_UNTIL = "2026-10-11T16:00";
+const older = ctx.G.filter((g) => g.added < V222_UNTIL).map((g) => g.slug);
+const newest = ctx.G.filter((g) => g.added >= V222_UNTIL).sort((a, b) => (a.added < b.added ? 1 : a.added > b.added ? -1 : 0));
 const tr = (lang, key) => strings[lang][key] || strings.en[key];
 
 // --- the test server ----------------------------------------------------
@@ -148,18 +152,23 @@ async function firstVisit(context, lang) {
   return page;
 }
 
-function expectNews(lines, lang, label) {
-  const names = newest.map((g) => tr(lang, g.nameKey)).join(tr(lang, "update_banner_list_sep"));
+// The expected lines after an update from v222 to version n: every game
+// since v222 (newest first, at most 6 named) and the sentences of the
+// versions in between (newest first, at most 3, then "And more ...").
+function expectNews(lines, lang, label, n) {
+  const shown = newest.slice(0, 6).map((g) => tr(lang, g.nameKey));
+  if (newest.length > 6) shown.push(tr(lang, "update_banner_more_games").split("{n}").join(String(newest.length - 6)));
+  const notes = ctx.N.filter((e) => +e.version.slice(1) > 222 && +e.version.slice(1) <= n);
   const want = [
     tr(lang, "update_banner_text"),
-    tr(lang, "update_banner_new_games").split("{s}").join(names),
-    tr(lang, ctx.N[0].key)
-  ];
+    tr(lang, "update_banner_new_games").split("{s}").join(shown.join(tr(lang, "update_banner_list_sep")))
+  ].concat(notes.slice(0, 3).map((e) => tr(lang, e.key)));
+  if (notes.length > 3) want.push(tr(lang, "update_banner_more_notes"));
   check(JSON.stringify(lines) === JSON.stringify(want), label + ": banner lines\n    " + JSON.stringify(lines) + "\n  expected\n    " + JSON.stringify(want));
 }
 
 (async () => {
-  check(older.length === 80, "the catalog should have 83 games, the old visit 80 (got " + older.length + ")");
+  check(older.length === 80, "v222 had 80 games, found " + older.length + " added before " + V222_UNTIL);
   await new Promise((r) => httpServer.listen(PORT, r));
   const browser = await chromium.launch({ executablePath: EXEC });
   const report = [];
@@ -170,7 +179,7 @@ function expectNews(lines, lang, label) {
   let page = await firstVisit(context, "de");
   let n = await update(page);
   let lines = await bannerLines(page);
-  expectNews(lines, "de", "de, v222 -> v" + n);
+  expectNews(lines, "de", "de, v222 -> v" + n, n);
   report.push("de, v222 (80 Spiele) -> v" + n + ":\n    " + lines.join("\n    "));
   check(await noSideScroll(page), "de: sideways scrolling at 360 px with the banner");
   if (process.env.SHOT) await page.screenshot({ path: process.env.SHOT });
@@ -201,7 +210,7 @@ function expectNews(lines, lang, label) {
   page = await firstVisit(context, "en");
   n = await update(page);
   lines = await bannerLines(page);
-  expectNews(lines, "en", "en, v222 -> v" + n);
+  expectNews(lines, "en", "en, v222 -> v" + n, n);
   report.push("en, v222 (80 games) -> v" + n + ":\n    " + lines.join("\n    "));
   await context.close();
 

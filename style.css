@@ -12171,3 +12171,240 @@ button.cn-meld {
 .pt-piece-laid {
   border-style: dashed;
 }
+
+/* Card Duel (cardduel-app.js): the other mage, both rows of creatures and
+   your mage as one bordered table, the hand as a list of large cards.
+   Ready creatures have a thick frame, possible targets a dashed one, the
+   selected card or creature is drawn inverted. Margins instead of `gap`
+   (older e-ink browsers). */
+.cd-table {
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-2);
+}
+
+.cd-mage-btn {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  text-align: start;
+  padding: var(--space-2);
+  background: #fff;
+  color: #141413;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.cd-mage-btn > * {
+  margin: 0 var(--space-2) 0 0;
+}
+
+.cd-mage-name {
+  font-weight: 700;
+}
+
+.cd-mage-life {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.cd-mage-facts {
+  font-size: 0.85rem;
+  flex: 1 1 12rem;
+}
+
+.cd-board {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 3.2rem;
+  margin: var(--space-2) 0;
+  padding: var(--space-1) 0;
+}
+
+.cd-board-own {
+  border-top: 2px dashed var(--border);
+  padding-top: var(--space-2);
+}
+
+.cd-empty {
+  color: var(--muted);
+  font-size: 0.85rem;
+  align-self: center;
+}
+
+.cd-creature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 31%;
+  min-width: 5.5rem;
+  margin: 0 2% var(--space-2) 0;
+  padding: var(--space-1);
+  background: #fff;
+  color: #141413;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.8rem;
+  line-height: 1.25;
+}
+
+.cd-creature.cd-ready {
+  border-width: 3px;
+}
+
+.cd-creature-name {
+  font-weight: 700;
+  text-align: center;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.cd-stats {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.cd-hurt {
+  font-weight: 400;
+  font-size: 0.75rem;
+  margin-inline-start: 0.2em;
+}
+
+.cd-abil {
+  font-size: 0.72rem;
+  text-align: center;
+}
+
+.cd-emblem {
+  width: 1.4rem;
+  height: 1.4rem;
+  flex: 0 0 auto;
+}
+
+.cd-target {
+  outline: 3px dashed #141413;
+  outline-offset: 2px;
+}
+
+.cd-selected,
+.cd-selected .cd-cost {
+  background: #141413;
+  color: #fff;
+}
+
+.cd-selected .cd-emblem {
+  background: #fff;
+  border-radius: 3px;
+}
+
+.cd-actions {
+  margin: var(--space-2) 0;
+  text-align: center;
+}
+
+.cd-actions button {
+  margin: 0 var(--space-1) var(--space-1) 0;
+}
+
+.cd-info {
+  text-align: start;
+  min-height: 2.6em;
+  margin: var(--space-2) 0;
+  padding: var(--space-2);
+  border-left: 4px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.cd-heading {
+  text-align: start;
+  font-size: 1rem;
+  margin: var(--space-3) 0 var(--space-1);
+}
+
+.cd-hand {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cd-hand li {
+  margin: 0 0 var(--space-2);
+}
+
+.cd-card {
+  display: block;
+  width: 100%;
+  text-align: start;
+  padding: var(--space-2);
+  background: #fff;
+  color: #141413;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  line-height: 1.3;
+}
+
+.cd-card.cd-unplayable {
+  border-style: dashed;
+  border-width: 1px;
+}
+
+.cd-card-top {
+  display: flex;
+  align-items: center;
+}
+
+.cd-card-top > * {
+  margin: 0 var(--space-2) 0 0;
+}
+
+.cd-card-name {
+  flex: 1 1 auto;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.cd-cost {
+  display: inline-block;
+  min-width: 1.8rem;
+  padding: 0.1rem 0.3rem;
+  border: 2px solid #141413;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cd-card-kind {
+  font-size: 0.8rem;
+  margin-inline-end: var(--space-2);
+}
+
+.cd-card-stats {
+  font-weight: 700;
+}
+
+.cd-card-text {
+  display: block;
+  font-size: 0.85rem;
+  margin-top: var(--space-1);
+}
+
+.cd-log {
+  text-align: start;
+  margin: 0;
+  padding-inline-start: 1.4rem;
+  font-size: 0.85rem;
+}
+
+.cd-log li {
+  margin-bottom: 0.15rem;
+}
+
+/* Narrow screens: two creatures per row, so names like
+   "Flammentänzerin" fit without breaking inside the word. */
+@media (max-width: 440px) {
+  .cd-creature {
+    width: 48%;
+  }
+}

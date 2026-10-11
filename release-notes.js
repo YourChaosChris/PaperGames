@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v224",
+    date: "2026-10-11",
+    key: "release_v224",
+    text: "Card Duel: four decks of equal strength, against the computer or with two players on one device."
+  },
+  {
     version: "v223",
     date: "2026-10-11",
     key: "release_v223",

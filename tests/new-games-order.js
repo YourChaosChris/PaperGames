@@ -28,7 +28,7 @@ cat.forEach((g) => {
 });
 const now = Date.parse("2026-10-11T12:00:00");
 const home = GR.newGames(cat, 8, 60, now).map((g) => g.slug);
-const want = ["pentomino", "differences", "mathcross", "tenpairs", "bridge", "canasta", "schafkopf", "skat"];
+const want = ["cardduel", "pentomino", "differences", "mathcross", "tenpairs", "bridge", "canasta", "schafkopf"];
 if (JSON.stringify(home) !== JSON.stringify(want)) fails.push("home list " + JSON.stringify(home) + ", expected " + JSON.stringify(want));
 const all = cat.slice().sort(GR.compareNewest);
 for (let i = 1; i < all.length; i++) {
