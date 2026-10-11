@@ -334,7 +334,9 @@ function renderTrayPt() {
     btn.className = "secondary pt-piece" + (AppStatePt.selected === L ? " pt-piece-selected" : "") + (laid ? " pt-piece-laid" : "") + (AppStatePt.hintPiece === L ? " hint-cell" : "");
     const shape = PentominoCore.transform(L, 0, false);
     const h = Math.max.apply(null, shape.map((q) => q[0])) + 1, w = Math.max.apply(null, shape.map((q) => q[1])) + 1;
-    btn.innerHTML = '<svg viewBox="-1 -1 ' + (w * 10 + 2) + " " + (h * 10 + 2) + '" aria-hidden="true" focusable="false">' + ptDefs("ptt" + L) + ptShapeSvg(shape, L, "ptt" + L, 10, null) + "</svg>";
+    // Drawn at 24 units per square (the button scales it down), so the
+    // letter's font size stays at a readable 10.
+    btn.innerHTML = '<svg viewBox="-2 -2 ' + (w * 24 + 4) + " " + (h * 24 + 4) + '" aria-hidden="true" focusable="false">' + ptDefs("ptt" + L) + ptShapeSvg(shape, L, "ptt" + L, 24, null) + "</svg>";
     btn.setAttribute("aria-label", tPt("pt_aria_piece").split("{L}").join(L) + (laid ? ", " + tPt("pt_aria_laid") : ""));
     btn.addEventListener("click", () => selectPt(L));
     tray.appendChild(btn);
@@ -350,8 +352,8 @@ function renderCurrentPt() {
   box.classList.remove("hidden");
   const shape = currentShapePt();
   const h = Math.max.apply(null, shape.map((q) => q[0])) + 1, w = Math.max.apply(null, shape.map((q) => q[1])) + 1;
-  box.innerHTML = '<svg viewBox="-1 -1 ' + (w * 20 + 2) + " " + (h * 20 + 2) + '" style="width:' + w * 1.6 + "rem;height:" + h * 1.6 + 'rem" role="img" aria-label="' +
-    tPt("pt_aria_piece").split("{L}").join(L) + '">' + ptDefs("ptc") + ptShapeSvg(shape, L, "ptc", 20, shape[0]) + "</svg>";
+  box.innerHTML = '<svg viewBox="-2 -2 ' + (w * 24 + 4) + " " + (h * 24 + 4) + '" style="width:' + w * 1.6 + "rem;height:" + h * 1.6 + 'rem" role="img" aria-label="' +
+    tPt("pt_aria_piece").split("{L}").join(L) + '">' + ptDefs("ptc") + ptShapeSvg(shape, L, "ptc", 24, shape[0]) + "</svg>";
 }
 
 document.addEventListener("DOMContentLoaded", initPtApp);

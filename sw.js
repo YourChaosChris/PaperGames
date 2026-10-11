@@ -1154,7 +1154,7 @@ const FILE_HASHES = {
   "pentomino-rules.html": "a66be796",
   "pentomino-history.html": "20a8a6da",
   "pentomino-core.js": "c938927b",
-  "pentomino-app.js": "6041b19b"
+  "pentomino-app.js": "b75aec3a"
 };
 // end FILE_HASHES
 
