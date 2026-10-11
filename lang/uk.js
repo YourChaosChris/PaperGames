@@ -275,6 +275,7 @@ STRINGS.uk = {
     home_favorites_empty: "Торкніться зірочки біля гри, щоб додати її сюди.",
     home_section_popular: "Популярні ігри",
     home_section_new: "Нові ігри",
+    home_new_all: "Усі нові ігри",
     home_all_games_title: "Шукаєте щось інше?",
     home_all_games_desc: "Переглядайте та шукайте серед усіх {games} ігор, із сортуванням за алфавітом або типом.",
     nav_all_games: "Усі ігри",

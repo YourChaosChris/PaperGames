@@ -48,7 +48,7 @@
     GamesRender.translateInto(grid);
   }
 
-  const NEW_GAMES_MAX = 6;
+  const NEW_GAMES_MAX = 8;
   const NEW_GAMES_DAYS = 60;
 
   function renderNewGames() {
@@ -57,11 +57,7 @@
     const navLink = document.getElementById("nav-link-new");
     if (!section || !grid) return;
 
-    const cutoff = Date.now() - NEW_GAMES_DAYS * 24 * 60 * 60 * 1000;
-    const games = GAMES_CATALOG
-      .filter((g) => GamesRender.isListed(g) && g.added && Date.parse(g.added + "T00:00:00") >= cutoff)
-      .sort((a, b) => b.added.localeCompare(a.added))
-      .slice(0, NEW_GAMES_MAX);
+    const games = GamesRender.newGames(GAMES_CATALOG, NEW_GAMES_MAX, NEW_GAMES_DAYS);
 
     if (!games.length) {
       section.classList.add("hidden");

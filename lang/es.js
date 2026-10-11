@@ -275,6 +275,7 @@ STRINGS.es = {
     home_favorites_empty: "Toca la estrella de un juego para añadirlo aquí.",
     home_section_popular: "Juegos populares",
     home_section_new: "Juegos nuevos",
+    home_new_all: "Todos los juegos nuevos",
     home_all_games_title: "¿Buscas otra cosa?",
     home_all_games_desc: "Explora y busca los {games} juegos, ordenables alfabéticamente o por tipo.",
     nav_all_games: "Todos los juegos",

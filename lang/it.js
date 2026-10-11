@@ -275,6 +275,7 @@ STRINGS.it = {
     home_favorites_empty: "Tocca la stella di un gioco per aggiungerlo qui.",
     home_section_popular: "Giochi popolari",
     home_section_new: "Nuovi giochi",
+    home_new_all: "Tutti i giochi nuovi",
     home_all_games_title: "Cerchi qualcos'altro?",
     home_all_games_desc: "Sfoglia e cerca tutti i {games} giochi, ordinabili alfabeticamente o per tipo.",
     nav_all_games: "Tutti i giochi",

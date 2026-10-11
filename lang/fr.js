@@ -284,6 +284,7 @@ STRINGS.fr = {
     home_favorites_empty: "Touchez l'étoile d'un jeu pour l'ajouter ici.",
     home_section_popular: "Jeux populaires",
     home_section_new: "Nouveaux jeux",
+    home_new_all: "Tous les nouveaux jeux",
     home_all_games_title: "Vous cherchez autre chose ?",
     home_all_games_desc: "Parcourez et recherchez les {games} jeux, triables par ordre alphabétique ou par type.",
     nav_all_games: "Tous les jeux",

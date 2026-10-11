@@ -933,6 +933,7 @@ STRINGS.nl = {
     home_favorites_empty: "Tik op de ster bij een spel om het hier toe te voegen.",
     home_section_popular: "Populaire spellen",
     home_section_new: "Nieuwe spellen",
+    home_new_all: "Alle nieuwe spellen",
     home_all_games_title: "Op zoek naar iets anders?",
     home_all_games_desc: "Blader door en zoek in alle {games} spellen, sorteerbaar op alfabet of type.",
     nav_all_games: "Alle spellen",

@@ -278,6 +278,7 @@ STRINGS.ar = {
     home_favorites_empty: "اضغط على النجمة بجانب أي لعبة لإضافتها هنا.",
     home_section_popular: "ألعاب شائعة",
     home_section_new: "ألعاب جديدة",
+    home_new_all: "كل الألعاب الجديدة",
     home_all_games_title: "تبحث عن شيء آخر؟",
     home_all_games_desc: "تصفّح وابحث في جميع الألعاب الـ {games}، مرتبة أبجديًا أو حسب النوع.",
     nav_all_games: "كل الألعاب",

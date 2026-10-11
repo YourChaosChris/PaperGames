@@ -83,6 +83,8 @@ echo "=== bridge-core.js ==="
 node "$ROOT/tests/bridge-core.js" || status=1
 echo "=== tenpairs-core.js ==="
 node "$ROOT/tests/tenpairs-core.js" || status=1
+echo "=== new-games-order.js ==="
+node "$ROOT/tests/new-games-order.js" || status=1
 echo ""
 
 echo "=== css-check.js ==="

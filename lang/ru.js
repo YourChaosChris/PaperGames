@@ -275,6 +275,7 @@ STRINGS.ru = {
     home_favorites_empty: "Коснитесь звёздочки рядом с игрой, чтобы добавить её сюда.",
     home_section_popular: "Популярные игры",
     home_section_new: "Новые игры",
+    home_new_all: "Все новые игры",
     home_all_games_title: "Ищете что-то другое?",
     home_all_games_desc: "Просматривайте и ищите среди всех {games} игр, с сортировкой по алфавиту или типу.",
     nav_all_games: "Все игры",

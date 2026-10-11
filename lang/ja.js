@@ -933,6 +933,7 @@ STRINGS.ja = {
     home_favorites_empty: "ゲームの星をタップすると、ここに追加されます。",
     home_section_popular: "人気のゲーム",
     home_section_new: "新しいゲーム",
+    home_new_all: "新しいゲームをすべて見る",
     home_all_games_title: "他のゲームをお探しですか？",
     home_all_games_desc: "全{games}種類のゲームを閲覧・検索できます。アルファベット順またはタイプ別に並べ替え可能です。",
     nav_all_games: "すべてのゲーム",

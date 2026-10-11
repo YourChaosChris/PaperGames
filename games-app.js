@@ -63,7 +63,7 @@
       // "newest" orders by publication date (GAMES_CATALOG's `added`),
       // alphabetical within the same date.
       const sorted = state.sort === "newest"
-        ? filtered.slice().sort((a, b) => (b.added || "").localeCompare(a.added || "") || byDisplayName(a, b))
+        ? filtered.slice().sort((a, b) => GamesRender.compareNewest(a, b) || byDisplayName(a, b))
         : filtered.slice().sort(byDisplayName);
       grid.innerHTML = '<div class="game-select-grid">' + sorted.map(GamesRender.buildGameCardHTML).join("") + "</div>";
     }
@@ -84,6 +84,12 @@
       });
     }
     if (sortSelect) {
+      // games.html?sort=newest (the home page's "All new games" link).
+      const wanted = new URLSearchParams(window.location.search).get("sort");
+      if (wanted && sortSelect.querySelector('option[value="' + wanted + '"]')) {
+        sortSelect.value = wanted;
+        state.sort = wanted;
+      }
       sortSelect.addEventListener("change", () => {
         state.sort = sortSelect.value;
         render();

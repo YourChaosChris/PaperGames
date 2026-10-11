@@ -133,6 +133,10 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   row; equal or 10; vanishing rows; Add; win and loss), then plays 1000
   games only with Hint and Add and fails unless every crossed-out pair is
   valid (checked separately) and every game ends.
+- `node tests/new-games-order.js` - no server or browser needed. Checks
+  that the home page's "New Games" (8 games) and games.html's "Newest
+  first" put the newest game first, also among games of the same day
+  (`added` carries the time of the commit that brought the game).
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

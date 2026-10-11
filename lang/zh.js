@@ -275,6 +275,7 @@ STRINGS.zh = {
     home_favorites_empty: "点击游戏旁的星号，即可加入这里。",
     home_section_popular: "热门游戏",
     home_section_new: "新游戏",
+    home_new_all: "所有新游戏",
     home_all_games_title: "在寻找其他游戏吗？",
     home_all_games_desc: "浏览并搜索全部{games}款游戏，可按字母顺序或类型排序。",
     nav_all_games: "所有游戏",

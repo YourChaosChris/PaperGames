@@ -11566,3 +11566,10 @@ button.cn-meld {
   font-weight: 700;
   border-top-width: 3px;
 }
+
+/* Home page: "All new games" link under the New Games section. */
+.section-more-link {
+  text-align: center;
+  margin: 0.5rem 0 0;
+  font-weight: 700;
+}

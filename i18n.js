@@ -289,6 +289,7 @@ const STRINGS = {
     home_favorites_empty: "Tap the star on any game to add it here.",
     home_section_popular: "Popular Games",
     home_section_new: "New Games",
+    home_new_all: "All new games",
     home_all_games_title: "Looking for something else?",
     home_all_games_desc: "Browse and search all {games} games, sortable alphabetically or by type.",
     nav_all_games: "All Games",

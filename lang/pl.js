@@ -277,6 +277,7 @@ STRINGS.pl = {
     home_favorites_empty: "Dotknij gwiazdki przy grze, aby dodać ją tutaj.",
     home_section_popular: "Popularne gry",
     home_section_new: "Nowe gry",
+    home_new_all: "Wszystkie nowe gry",
     home_all_games_title: "Szukasz czegoś innego?",
     home_all_games_desc: "Przeglądaj i wyszukuj wszystkie {games} gier, sortowane alfabetycznie lub według typu.",
     nav_all_games: "Wszystkie gry",

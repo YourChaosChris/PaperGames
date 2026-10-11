@@ -278,6 +278,7 @@ STRINGS.de = {
     home_favorites_empty: "Tippe auf den Stern eines Spiels, um es hier hinzuzufügen.",
     home_section_popular: "Beliebte Spiele",
     home_section_new: "Neue Spiele",
+    home_new_all: "Alle neuen Spiele",
     home_all_games_title: "Suchst du etwas anderes?",
     home_all_games_desc: "Durchsuche alle {games} Spiele, sortierbar nach Alphabet oder Typ.",
     nav_all_games: "Alle Spiele",

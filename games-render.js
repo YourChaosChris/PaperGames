@@ -65,7 +65,29 @@ const GamesRender = (function () {
     return !(game.hideInLangs && game.hideInLangs.indexOf(lang) !== -1);
   }
 
-  return { buildGameCardHTML, updateFavoriteButtons, translateInto, isListed };
+  // Newest first by `added` ("YYYY-MM-DDTHH:MM", or a date only for the
+  // original collection). Games that came in the same commit (same
+  // minute) keep the order in which they were entered: the later catalog
+  // entry first. Returns 0 for games that only share a date, so callers
+  // can add their own order (e.g. by name).
+  function compareNewest(a, b) {
+    const d = (b.added || "").localeCompare(a.added || "");
+    if (d) return d;
+    if ((a.added || "").length > 10 && typeof GAMES_CATALOG !== "undefined") return GAMES_CATALOG.indexOf(b) - GAMES_CATALOG.indexOf(a);
+    return 0;
+  }
+
+  // The games for the home page's "New Games": published within `days`
+  // days before `now`, newest first, at most `max`.
+  function newGames(list, max, days, now) {
+    const cutoff = (now === undefined ? Date.now() : now) - days * 24 * 60 * 60 * 1000;
+    return list
+      .filter((g) => isListed(g) && g.added && Date.parse(g.added.slice(0, 10) + "T00:00:00") >= cutoff)
+      .sort(compareNewest)
+      .slice(0, max);
+  }
+
+  return { buildGameCardHTML, updateFavoriteButtons, translateInto, isListed, compareNewest, newGames };
 })();
 
 // See favorites.js for why this explicit export is needed: a top-level
