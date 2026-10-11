@@ -77,6 +77,13 @@
   </div>
   <div id="bl-choices"></div>
   <div class="field-row">
+    <label for="bl-finish" data-i18n="bl_finish_label">Game end:</label>
+    <select id="bl-finish">
+        <option value="one" selected data-i18n="bl_finish_one">One token in the goal</option>
+        <option value="all" data-i18n="bl_finish_all">All tokens in the goal</option>
+      </select>
+  </div>
+  <div class="field-row">
     <label for="bl-first" data-i18n="sl_first_label">Who starts:</label>
     <select id="bl-first">
         <option value="me" data-i18n="sl_first_me">Me</option>
@@ -120,6 +127,10 @@
       <div id="bl-board" class="bl-board" role="group" data-i18n-attr="aria-label:bl_board_aria" aria-label="Path Blockers board"></div>
     </div>
     <div id="bl-players" class="game-players bl-players"></div>
+    <div id="bl-ranking-wrap" class="bl-ranking-wrap hidden">
+      <span class="pc-row-label" data-i18n="bl_ranking_title">Ranking</span>
+      <ol id="bl-ranking" class="bl-ranking"></ol>
+    </div>
   </div>
 </section>
   </main>

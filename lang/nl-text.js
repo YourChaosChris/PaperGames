@@ -1742,7 +1742,7 @@ Object.assign(STRINGS.nl, {
     bl_term_hit: "Naar huis sturen",
     bl_rules_hit: "Een pion die precies op de pion van een andere speler landt, stuurt die terug naar zijn huis. Twee eigen pionnen mogen niet op hetzelfde veld staan.",
     bl_term_win: "De winnaar",
-    bl_rules_win: "Wie als eerste een pion in het doel brengt, wint.",
+    bl_rules_win: "Hoe het spel eindigt, kies je vóór het spel. ‘Eén pion in het doel’ (standaard): wie als eerste een pion in het doel brengt, wint. ‘Alle pionnen in het doel’: een pion die het doel bereikt, verlaat het bord en het doel is weer vrij; wie als eerste alle 5 pionnen in het doel heeft, wint, en de anderen volgen naar het aantal pionnen in het doel.",
     bl_term_players: "Spelers",
     bl_rules_players: "2 tot 4 spelers op één apparaat; elk van hen kan door de computer worden gespeeld (Makkelijk, Gemiddeld of Moeilijk). De pionnen verschillen in vorm: cirkel, driehoek, ruit en ster.",
     bl_rules_example_title: "Een steen in de weg",

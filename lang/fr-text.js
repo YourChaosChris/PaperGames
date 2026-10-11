@@ -1742,7 +1742,7 @@ Object.assign(STRINGS.fr, {
     bl_term_hit: "Renvoyer",
     bl_rules_hit: "Un pion qui s'arrête exactement sur le pion d'un autre joueur le renvoie à sa maison. Deux de vos propres pions ne peuvent pas occuper la même case.",
     bl_term_win: "Le gagnant",
-    bl_rules_win: "Le premier joueur qui amène un pion à l'arrivée gagne.",
+    bl_rules_win: "La fin de partie se choisit avant de jouer. « Un pion à l'arrivée » (par défaut) : le premier joueur qui amène un pion à l'arrivée gagne. « Tous les pions à l'arrivée » : un pion qui atteint l'arrivée quitte le plateau et l'arrivée est de nouveau libre ; le premier joueur dont les 5 pions sont à l'arrivée gagne, les autres sont classés selon leurs pions à l'arrivée.",
     bl_term_players: "Joueurs",
     bl_rules_players: "2 à 4 joueurs sur un appareil ; chacun peut être joué par l'ordinateur (Facile, Moyen ou Difficile). Les pions se distinguent par leur forme : cercle, triangle, losange et étoile.",
     bl_rules_example_title: "Une pierre sur le chemin",

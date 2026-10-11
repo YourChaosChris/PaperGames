@@ -1743,7 +1743,7 @@ Object.assign(STRINGS.en, {
     bl_term_hit: "Sending back",
     bl_rules_hit: "A token that lands exactly on another player's token sends it back to its house. Two of your own tokens may not stand on the same field.",
     bl_term_win: "The winner",
-    bl_rules_win: "The first player to bring one token into the goal wins.",
+    bl_rules_win: "How the game ends is chosen before the game. \"One token in the goal\" (the default): the first player to bring one token into the goal wins. \"All tokens in the goal\": a token that reaches the goal leaves the board, and the goal is free again; the first player with all 5 tokens in the goal wins, and the others are ranked by their tokens in the goal.",
     bl_term_players: "Players",
     bl_rules_players: "2 to 4 players on one device; any of them can be played by the computer (Easy, Medium or Hard). Tokens are told apart by their shape: circle, triangle, diamond and star.",
     bl_rules_example_title: "A stone in the way",

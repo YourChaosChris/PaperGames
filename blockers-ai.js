@@ -7,6 +7,9 @@
 // opponent. Hard also prefers moves that bring its most advanced token
 // on, sends back advanced opponents first, and never blocks its own
 // leading token if another spot stops the opponent just as well.
+// With the game end "all" (every token must reach the goal) Medium and
+// Hard do not just race their front token: they also value bringing
+// tokens out of the house and moving the ones far behind.
 
 const BlockersAi = (function () {
   const C = (typeof BlockersCore !== "undefined") ? BlockersCore : require("./blockers-core.js");
@@ -38,6 +41,13 @@ const BlockersAi = (function () {
       score += (level >= 3 ? 3 : 2) * Math.max(0, 40 - od);
     }
     if (s.stones.indexOf(m.to) !== -1) score += 6;
+    if (s.finish === "all") {
+      // Every token counts: bring new ones on, help the ones behind.
+      if (s.tokens[p][m.token] === -1) score += 8;
+      score += before * (level >= 3 ? 0.8 : 0.4);
+      if (level >= 3 && after <= 6) score += 10;
+      return score;
+    }
     if (level >= 3) {
       let best = after;
       for (let k = 0; k < C.TOKENS; k++) if (k !== m.token) best = Math.min(best, C.tokenDistance(s, p, k));
@@ -69,8 +79,10 @@ const BlockersAi = (function () {
     for (let p = 0; p < s.numPlayers; p++) {
       if (p === me) continue;
       for (let k = 0; k < C.TOKENS; k++) {
+        const at = s.tokens[p][k];
+        if (at === C.ARRIVED || at === C.goal) continue; // already home
         const d = C.tokenDistance(s, p, k);
-        if (!lead || d < lead.dist) lead = { player: p, token: k, at: s.tokens[p][k], dist: d };
+        if (!lead || d < lead.dist) lead = { player: p, token: k, at, dist: d };
       }
     }
     return lead;
@@ -83,6 +95,7 @@ const BlockersAi = (function () {
     if (level <= 1) return free[Math.floor(rnd() * free.length)];
     const me = s.turn;
     const lead = leaderOf(s, me);
+    if (!lead) return free[0];
     const start = lead.at === -1 ? C.entryOf(s, lead.player) : lead.at;
     const fromLead = bfsFrom(start);
     const startDist = C.distToGoal[start];
@@ -93,14 +106,18 @@ const BlockersAi = (function () {
       // Not in the way of my own leading token, if that can be avoided.
       let mine = null;
       for (let k = 0; k < C.TOKENS; k++) {
+        const at = s.tokens[me][k];
+        if (at === C.ARRIVED || at === C.goal) continue;
         const d = C.tokenDistance(s, me, k);
-        if (!mine || d < mine.dist) mine = { at: s.tokens[me][k], dist: d };
+        if (!mine || d < mine.dist) mine = { at, dist: d };
       }
-      const myStart = mine.at === -1 ? C.entryOf(s, me) : mine.at;
-      const fromMine = bfsFrom(myStart);
-      const myDist = C.distToGoal[myStart];
-      const notMine = options.filter((f) => !(fromMine[f] + C.distToGoal[f] === myDist));
-      if (notMine.length) options = notMine;
+      if (mine) {
+        const myStart = mine.at === -1 ? C.entryOf(s, me) : mine.at;
+        const fromMine = bfsFrom(myStart);
+        const myDist = C.distToGoal[myStart];
+        const notMine = options.filter((f) => !(fromMine[f] + C.distToGoal[f] === myDist));
+        if (notMine.length) options = notMine;
+      }
     }
     // Close in front of the leader (but at least 2 steps away, so a
     // throw of 1 does not simply take it).

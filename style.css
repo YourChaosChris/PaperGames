@@ -11154,6 +11154,45 @@ button.concan-meld {
   margin-left: 0.25rem;
 }
 
+/* "All tokens in the goal": the count in the player buttons and the
+   ranking after the win. */
+.bl-house .pc-player-extra,
+.bl-house .game-player-name {
+  white-space: nowrap;
+}
+
+/* In the player buttons on its own line, so it never breaks apart. */
+.bl-house .bl-goal-count {
+  display: block;
+  white-space: nowrap;
+}
+
+.bl-ranking .bl-goal-count {
+  margin-left: 0.4rem;
+  white-space: nowrap;
+}
+
+.bl-ranking .bl-goal-count::before {
+  content: "\00B7\00A0";
+}
+
+.bl-ranking-wrap {
+  margin: 0.5rem 0 0;
+  text-align: center;
+}
+
+.bl-ranking {
+  display: inline-block;
+  margin: 0;
+  padding-left: 1.6rem;
+  text-align: left;
+  font-weight: 700;
+}
+
+.bl-ranking li {
+  margin: 0.15rem 0;
+}
+
 .bl-example {
   display: block;
   width: 100%;

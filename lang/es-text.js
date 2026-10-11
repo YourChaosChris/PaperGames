@@ -1742,7 +1742,7 @@ Object.assign(STRINGS.es, {
     bl_term_hit: "Devolver a casa",
     bl_rules_hit: "Una ficha que cae exactamente en la ficha de otro jugador la devuelve a su casa. Dos fichas propias no pueden estar en la misma casilla.",
     bl_term_win: "El ganador",
-    bl_rules_win: "Gana el primer jugador que lleva una ficha a la meta.",
+    bl_rules_win: "Cómo termina la partida se elige antes de jugar. «Una ficha en la meta» (por defecto): gana el primer jugador que lleva una ficha a la meta. «Todas las fichas en la meta»: una ficha que llega a la meta sale del tablero y la meta queda libre de nuevo; gana el primer jugador con las 5 fichas en la meta, y los demás se clasifican según sus fichas en la meta.",
     bl_term_players: "Jugadores",
     bl_rules_players: "De 2 a 4 jugadores en un dispositivo; cualquiera de ellos puede jugarlo el ordenador (Fácil, Medio o Difícil). Las fichas se distinguen por su forma: círculo, triángulo, rombo y estrella.",
     bl_rules_example_title: "Una piedra en el camino",

@@ -1742,7 +1742,7 @@ Object.assign(STRINGS.de, {
     bl_term_hit: "Hinauswerfen",
     bl_rules_hit: "Eine Figur, die genau auf einer fremden Figur landet, schickt sie zurück in ihr Haus. Zwei eigene Figuren dürfen nicht auf demselben Feld stehen.",
     bl_term_win: "Der Sieger",
-    bl_rules_win: "Wer als Erster eine Figur ins Ziel bringt, gewinnt.",
+    bl_rules_win: "Wann das Spiel endet, wählst du vor dem Spiel. „Eine Figur im Ziel“ (Standard): Wer als Erster eine Figur ins Ziel bringt, gewinnt. „Alle Figuren im Ziel“: Eine Figur, die das Ziel erreicht, verlässt das Brett, und das Ziel ist wieder frei; wer zuerst alle 5 Figuren im Ziel hat, gewinnt, die anderen folgen nach der Zahl ihrer Figuren im Ziel.",
     bl_term_players: "Spieler",
     bl_rules_players: "2 bis 4 Spieler an einem Gerät; jeder von ihnen kann vom Computer gespielt werden (Leicht, Mittel oder Schwer). Die Figuren unterscheiden sich durch ihre Form: Kreis, Dreieck, Raute und Stern.",
     bl_rules_example_title: "Ein Stein im Weg",

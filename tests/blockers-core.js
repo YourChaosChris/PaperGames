@@ -9,6 +9,11 @@
 // the chosen starter rolls first, houses and tokens are all different.
 // Also: every house is equally far from the goal (printed: steps from
 // the entry field), and an old state without houses plays on.
+// Game end "all": 500 computer games per number of players. Every game
+// ends; no move passes over a stone; board + house + goal = 5 tokens per
+// player all the time; the goal never keeps a token; the winner is the
+// first with all 5 in the goal and the game ends right then; the ranking
+// puts the winner first and the others by tokens in the goal.
 const path = require("path");
 const C = require(path.join(__dirname, "..", "blockers-core.js"));
 const A = require(path.join(__dirname, "..", "blockers-ai.js"));
@@ -107,6 +112,57 @@ for (let h = 0; h < C.HOUSE_COLS.length; h++) {
 }
 const houseTotal = Object.values(houseGames).reduce((a, b) => a + b, 0);
 console.log("games ended per house and players: " + JSON.stringify(houseGames));
+// Game end "all".
+const allStats = {};
+let allGames = 0;
+for (const n of [2, 3, 4]) {
+  let turns = 0, maxTurns = 0, loserArrived = 0, losers = 0;
+  for (let g = 1; g <= 500; g++) {
+    const r = rng(g * 5003 + n * 17);
+    const levels = Array.from({ length: n }, (_, p) => 1 + ((g + p) % 3));
+    let s = C.createInitialState(n, { houses: C.assignHouses(n, [g % 6]), first: g % n, finish: "all" });
+    const tag = "all " + n + "p #" + g;
+    let ok = true;
+    for (let t = 0; t < 50000 && !s.gameOver; t++) {
+      s = C.setRoll(s, C.rollDie(r));
+      const moves = C.legalMoves(s);
+      for (const m of moves) {
+        const stones = new Set(s.stones);
+        if (m.path.length !== s.roll || m.path.slice(0, -1).some((f) => stones.has(f))) { fails.push(tag + ": bad move"); ok = false; break; }
+      }
+      if (!ok) break;
+      const m = A.chooseMove(s, levels[s.turn], r);
+      if (!m) { s = C.pass(s); continue; }
+      const p = s.turn, before = C.arrivedCount(s, p);
+      const res = C.applyMove(s, m);
+      s = res.state;
+      if (m.to === C.goal) {
+        if (!res.arrived || C.arrivedCount(s, p) !== before + 1) { fails.push(tag + ": arrival not counted"); ok = false; break; }
+        if (s.gameOver !== (before + 1 === C.TOKENS)) { fails.push(tag + ": game end wrong at " + (before + 1) + " in the goal"); ok = false; break; }
+      }
+      if (res.stone) s = C.placeStone(s, A.chooseStone(s, levels[s.turn], r));
+      for (let q = 0; q < n; q++) {
+        const onBoard = s.tokens[q].filter((x) => x >= 0).length, home = s.tokens[q].filter((x) => x === -1).length, inGoal = C.arrivedCount(s, q);
+        if (s.tokens[q].length !== C.TOKENS || onBoard + home + inGoal !== C.TOKENS) { fails.push(tag + ": token count"); ok = false; }
+        if (s.tokens[q].indexOf(C.goal) !== -1) { fails.push(tag + ": a token stays on the goal"); ok = false; }
+      }
+      if (!ok) break;
+    }
+    if (!ok) continue;
+    if (!s.gameOver) { fails.push(tag + ": no end"); continue; }
+    if (C.arrivedCount(s, s.winner) !== C.TOKENS) { fails.push(tag + ": winner without all tokens"); continue; }
+    for (let q = 0; q < n; q++) if (q !== s.winner && C.arrivedCount(s, q) === C.TOKENS) fails.push(tag + ": two players with all tokens");
+    const rank = C.ranking(s);
+    if (rank[0] !== s.winner || rank.length !== n) fails.push(tag + ": ranking " + rank);
+    for (let i = 2; i < rank.length; i++) if (C.arrivedCount(s, rank[i - 1]) < C.arrivedCount(s, rank[i])) fails.push(tag + ": ranking order " + rank);
+    for (let q = 0; q < n; q++) if (q !== s.winner) { loserArrived += C.arrivedCount(s, q); losers++; }
+    turns += s.turns; maxTurns = Math.max(maxTurns, s.turns);
+    allGames++;
+  }
+  allStats[n] = { avgTurns: (turns / 500).toFixed(1), maxTurns, losersInGoalAvg: (loserArrived / losers).toFixed(2) };
+}
+console.log("game end all: " + JSON.stringify(allStats));
+
 // An old state (no houses, shapes, first) plays on with the old entries.
 {
   const r = rng(77);
@@ -122,9 +178,10 @@ console.log("games ended per house and players: " + JSON.stringify(houseGames));
     if (res.stone) s = C.placeStone(s, A.chooseStone(s, 2, r));
   }
   if (!s.gameOver || s.houses) fails.push("old state did not play on");
+  if (s.tokens[s.winner].indexOf(C.goal) === -1) fails.push("old state: not the game end \"one\"");
 }
 
 fails.slice(0, 20).forEach((f) => console.log("FAIL " + f));
 console.log(JSON.stringify(stats));
-console.log("\n=== PATH BLOCKERS CORE: 1500 games, " + houseTotal + " games with chosen house, token and starter (500 per house and number of players), " + fails.length + " failures ===");
+console.log("\n=== PATH BLOCKERS CORE: 1500 games, " + allGames + " games with game end all (500 per number of players), " + houseTotal + " games with chosen house, token and starter (500 per house and number of players), " + fails.length + " failures ===");
 process.exit(fails.length ? 1 : 0);

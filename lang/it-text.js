@@ -1742,7 +1742,7 @@ Object.assign(STRINGS.it, {
     bl_term_hit: "Rimandare a casa",
     bl_rules_hit: "Una pedina che si ferma esattamente sulla pedina di un altro giocatore la rimanda nella sua casa. Due tue pedine non possono stare sulla stessa casella.",
     bl_term_win: "Il vincitore",
-    bl_rules_win: "Vince il primo giocatore che porta una pedina al traguardo.",
+    bl_rules_win: "Come finisce la partita si sceglie prima di giocare. «Una pedina al traguardo» (predefinito): vince il primo giocatore che porta una pedina al traguardo. «Tutte le pedine al traguardo»: una pedina che raggiunge il traguardo lascia il tabellone e il traguardo torna libero; vince il primo giocatore con tutte e 5 le pedine al traguardo, gli altri sono classificati in base alle pedine al traguardo.",
     bl_term_players: "Giocatori",
     bl_rules_players: "Da 2 a 4 giocatori su un dispositivo; ognuno può essere giocato dal computer (Facile, Medio o Difficile). Le pedine si distinguono per la forma: cerchio, triangolo, rombo e stella.",
     bl_rules_example_title: "Una pietra sulla strada",

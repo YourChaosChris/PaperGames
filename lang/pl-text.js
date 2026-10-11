@@ -1742,7 +1742,7 @@ Object.assign(STRINGS.pl, {
     bl_term_hit: "Odsyłanie",
     bl_rules_hit: "Pionek, który staje dokładnie na pionku innego gracza, odsyła go do jego domu. Dwa własne pionki nie mogą stać na tym samym polu.",
     bl_term_win: "Zwycięzca",
-    bl_rules_win: "Wygrywa gracz, który pierwszy wprowadzi pionek na metę.",
+    bl_rules_win: "Sposób zakończenia gry wybiera się przed grą. „Jeden pionek na mecie” (domyślnie): wygrywa gracz, który pierwszy wprowadzi pionek na metę. „Wszystkie pionki na mecie”: pionek, który dotrze do mety, schodzi z planszy, a meta znów jest wolna; wygrywa gracz, który pierwszy ma wszystkie 5 pionków na mecie, a pozostali są uszeregowani według liczby pionków na mecie.",
     bl_term_players: "Gracze",
     bl_rules_players: "Od 2 do 4 graczy na jednym urządzeniu; każdego z nich może grać komputer (Łatwy, Średni lub Trudny). Pionki różnią się kształtem: koło, trójkąt, romb i gwiazda.",
     bl_rules_example_title: "Kamień na drodze",
