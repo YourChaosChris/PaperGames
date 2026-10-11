@@ -107,7 +107,8 @@
     ["mathcross", "game_mathcross", "math"],
     ["differences", "game_differences"],
     ["pentomino", "game_pentomino"],
-    ["cardduel", "game_cardduel"]
+    ["cardduel", "game_cardduel"],
+    ["villains", "game_villains"]
   ];
 
   var GAME_SLUGS = {};

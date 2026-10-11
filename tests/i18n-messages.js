@@ -918,8 +918,9 @@ let cakeSamples = 0;
   }
 }
 
-// "Card Duel" builds its status lines, log and card texts from cd_* keys
-// with {placeholders} (cardduel-app.js), not through msg(). Every such
+// "Card Duel" and "Fairy-Tale Villains" build their status lines, logs
+// and card texts from cd_* / vl_* keys with {placeholders}
+// (cardduel-app.js, villains-app.js), not through msg(). Every such
 // text in every language: the same placeholders as English, and filled
 // with sample values (card and player names of that language) nothing is
 // left over and it differs from English.
@@ -927,11 +928,11 @@ let cdSamples = 0;
 {
   const CD = require(path.join(__dirname, "..", "cardduel-core.js"));
   const vars = (s) => (s.match(/\{[a-z]\}/g) || []).sort().join(",");
-  const cdKeys = Object.keys(STRINGS.en).filter((k) => /^cd_/.test(k) && /\{[a-z]\}/.test(STRINGS.en[k]));
+  const cdKeys = Object.keys(STRINGS.en).filter((k) => /^(cd|vl)_/.test(k) && /\{[a-z]\}/.test(STRINGS.en[k]));
   const fill = (lang, k) => {
     const tl = (x) => (STRINGS[lang] && STRINGS[lang][x]) || STRINGS.en[x];
     const v = { p: tl("cd_computer"), c: tl("cd_card_ashwolf"), t: tl("cd_card_mistotter"), n: 3, m: 2, a: 4, l: 5, h: 6, d: 20, e: tl("cd_el_water"), s: "x" };
-    return tl(k).replace(/\{([a-z])\}/g, (all, x) => String(v[x]));
+    return tl(k).replace(/\{([a-z])\}/g, (all, x) => String(v[x] !== undefined ? v[x] : 7));
   };
   for (const lang of langs) {
     for (const k of cdKeys) {
@@ -940,8 +941,8 @@ let cdSamples = 0;
       if (typeof own !== "string") { fail(lang + ": no text " + k); continue; }
       if (vars(own) !== vars(STRINGS.en[k])) { fail(lang + ": " + k + " has placeholders " + vars(own) + ", English " + vars(STRINGS.en[k])); continue; }
       const out = fill(lang, k);
-      if (/\{|cd_/.test(out)) fail(lang + ": card duel text incomplete " + JSON.stringify(out));
-      else if (out === fill("en", k) && !/^[^A-Za-z]*$/.test(out)) fail(lang + ": card duel text untranslated " + k + " " + JSON.stringify(out));
+      if (/\{|cd_|vl_/.test(out)) fail(lang + ": card duel / villains text incomplete " + JSON.stringify(out));
+      else if (out === fill("en", k) && /[A-Za-z]/.test(STRINGS.en[k].replace(/\{[a-z]\}/g, ""))) fail(lang + ": card duel text untranslated " + k + " " + JSON.stringify(out));
     }
     // Every card's own text: ability names and its effect.
     CD.CARDS.forEach((c) => {
@@ -959,5 +960,5 @@ let cdSamples = 0;
 }
 
 console.log(`=== I18N MESSAGES: ${SAMPLES.length + ARIA_SAMPLES.length} samples x ${langs.length} languages (main files only), ` +
-  `page texts on ${pageCount.game} other and ${pageCount.text} rules/history pages, ${cakeSamples} cake clues, ${cdSamples} card duel texts, ${failures} failure(s) ===`);
+  `page texts on ${pageCount.game} other and ${pageCount.text} rules/history pages, ${cakeSamples} cake clues, ${cdSamples} card duel and villains texts, ${failures} failure(s) ===`);
 process.exit(failures ? 1 : 0);

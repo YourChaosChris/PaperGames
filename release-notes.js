@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v225",
+    date: "2026-10-11",
+    key: "release_v225",
+    text: "Fairy-Tale Villains: six villains from the Grimms' tales with goals of their own, for 2 to 4 players."
+  },
+  {
     version: "v224",
     date: "2026-10-11",
     key: "release_v224",

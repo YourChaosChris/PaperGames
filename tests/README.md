@@ -174,6 +174,14 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   hard beats easy in at least 70 % of 200 games, and single rules
   (Bulwark, Nimble, Thick Skin, empty deck, 6 creatures, the evening out
   of the start). About 90 seconds.
+- `node tests/villains-core.js` - no server or browser needed.
+  "Fairy-Tale Villains": six villains with four places each, all names
+  in 12 languages; 500 computer games for each number of players (2, 3,
+  4) with random villains - every game ends, every move is legal, gold
+  never negative, each villain wins within +/- 8 points of its fair
+  share -, and single rules (a hero blocks his place, helpers lower the
+  price, the Messenger, the thorn hedge, the wolf in the forest, a
+  twist). About two minutes.
 - `node tests/game-families.js` - needs a running server and a browser.
   Checks the game families (`family` in games-catalog.js): each has at
   least two games, no game is in the catalog twice, game-switcher.js

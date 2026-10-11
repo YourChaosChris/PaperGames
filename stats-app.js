@@ -82,7 +82,8 @@ const STATS_GAME_NAME_KEY = {
   mathcross: "game_mathcross",
   differences: "game_differences",
   pentomino: "game_pentomino",
-  cardduel: "game_cardduel"
+  cardduel: "game_cardduel",
+  villains: "game_villains"
 };
 
 function gameDisplayName(game) {
