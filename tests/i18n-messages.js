@@ -704,6 +704,7 @@ const ARIA_SAMPLES = [
   "Your pile, 15 cards - tap to turn up a card",
   "The computer's pile, 17 cards",
   "Hidden card 3 of 7",
+  "Row 8, column 3, safe",
   "Pair: Owl",
   "Pair laid down",
   "Hidden card",

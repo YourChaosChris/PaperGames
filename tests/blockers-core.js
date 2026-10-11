@@ -13,7 +13,16 @@
 // ends; no move passes over a stone; board + house + goal = 5 tokens per
 // player all the time; the goal never keeps a token; the winner is the
 // first with all 5 in the goal and the game ends right then; the ranking
-// puts the winner first and the others by tokens in the goal.
+// puts the winner first and the others by tokens in the goal. These games
+// alternate 3 and 5 tokens per player, and no stone may ever stand on the
+// last NEAR_GOAL fields before the goal.
+// Safe half: no legal move ends on another player's token in the lower
+// half (rows SAFE_FROM_ROW and below) - checked in every game.
+// Fairness: 2000 games per number of players with equally strong
+// computers (Medium), a random starter and the default houses, for "one"
+// and for "all" with 3 tokens: every place must win within 5 percentage
+// points of its fair share (50 / 33.3 / 25 %). Game length of "all" with 3
+// tokens: on average at most 90 turns with 2 players and 185 with 4.
 const path = require("path");
 const C = require(path.join(__dirname, "..", "blockers-core.js"));
 const A = require(path.join(__dirname, "..", "blockers-ai.js"));
@@ -42,6 +51,8 @@ for (const n of [2, 3, 4]) {
         if (new Set(m.path).size !== m.path.length) { fails.push(n + "p #" + g + ": field used twice"); ok = false; }
         if (m.path.slice(0, -1).some((f) => stones.has(f))) { fails.push(n + "p #" + g + ": passes over a stone"); ok = false; }
         for (let i = 1; i < m.path.length; i++) if (C.neighbours[m.path[i - 1]].indexOf(m.path[i]) === -1) { fails.push(n + "p #" + g + ": jump"); ok = false; }
+        const victim = C.ownerAt(s, m.to);
+        if (victim && victim.player !== s.turn && C.isSafe(m.to)) { fails.push(n + "p #" + g + ": hits a token in the safe half"); ok = false; }
       }
       if (!ok) break;
       const m = A.chooseMove(s, levels[s.turn], r);
@@ -120,7 +131,9 @@ for (const n of [2, 3, 4]) {
   for (let g = 1; g <= 500; g++) {
     const r = rng(g * 5003 + n * 17);
     const levels = Array.from({ length: n }, (_, p) => 1 + ((g + p) % 3));
-    let s = C.createInitialState(n, { houses: C.assignHouses(n, [g % 6]), first: g % n, finish: "all" });
+    const count = g % 2 ? 3 : 5;
+    let s = C.createInitialState(n, { houses: C.assignHouses(n, [g % 6]), first: g % n, finish: "all", tokens: count });
+    if (s.tokens.some((t) => t.length !== count)) fails.push("all " + n + "p #" + g + ": not " + count + " tokens");
     const tag = "all " + n + "p #" + g;
     let ok = true;
     for (let t = 0; t < 50000 && !s.gameOver; t++) {
@@ -129,6 +142,8 @@ for (const n of [2, 3, 4]) {
       for (const m of moves) {
         const stones = new Set(s.stones);
         if (m.path.length !== s.roll || m.path.slice(0, -1).some((f) => stones.has(f))) { fails.push(tag + ": bad move"); ok = false; break; }
+        const victim = C.ownerAt(s, m.to);
+        if (victim && victim.player !== s.turn && C.isSafe(m.to)) { fails.push(tag + ": hits a token in the safe half"); ok = false; break; }
       }
       if (!ok) break;
       const m = A.chooseMove(s, levels[s.turn], r);
@@ -138,20 +153,21 @@ for (const n of [2, 3, 4]) {
       s = res.state;
       if (m.to === C.goal) {
         if (!res.arrived || C.arrivedCount(s, p) !== before + 1) { fails.push(tag + ": arrival not counted"); ok = false; break; }
-        if (s.gameOver !== (before + 1 === C.TOKENS)) { fails.push(tag + ": game end wrong at " + (before + 1) + " in the goal"); ok = false; break; }
+        if (s.gameOver !== (before + 1 === count)) { fails.push(tag + ": game end wrong at " + (before + 1) + " in the goal"); ok = false; break; }
       }
       if (res.stone) s = C.placeStone(s, A.chooseStone(s, levels[s.turn], r));
       for (let q = 0; q < n; q++) {
         const onBoard = s.tokens[q].filter((x) => x >= 0).length, home = s.tokens[q].filter((x) => x === -1).length, inGoal = C.arrivedCount(s, q);
-        if (s.tokens[q].length !== C.TOKENS || onBoard + home + inGoal !== C.TOKENS) { fails.push(tag + ": token count"); ok = false; }
+        if (s.tokens[q].length !== count || onBoard + home + inGoal !== count) { fails.push(tag + ": token count"); ok = false; }
         if (s.tokens[q].indexOf(C.goal) !== -1) { fails.push(tag + ": a token stays on the goal"); ok = false; }
       }
+      if (s.stones.some((f) => C.distToGoal[f] <= C.NEAR_GOAL)) { fails.push(tag + ": a stone near the goal"); ok = false; }
       if (!ok) break;
     }
     if (!ok) continue;
     if (!s.gameOver) { fails.push(tag + ": no end"); continue; }
-    if (C.arrivedCount(s, s.winner) !== C.TOKENS) { fails.push(tag + ": winner without all tokens"); continue; }
-    for (let q = 0; q < n; q++) if (q !== s.winner && C.arrivedCount(s, q) === C.TOKENS) fails.push(tag + ": two players with all tokens");
+    if (C.arrivedCount(s, s.winner) !== count) { fails.push(tag + ": winner without all tokens"); continue; }
+    for (let q = 0; q < n; q++) if (q !== s.winner && C.arrivedCount(s, q) === count) fails.push(tag + ": two players with all tokens");
     const rank = C.ranking(s);
     if (rank[0] !== s.winner || rank.length !== n) fails.push(tag + ": ranking " + rank);
     for (let i = 2; i < rank.length; i++) if (C.arrivedCount(s, rank[i - 1]) < C.arrivedCount(s, rank[i])) fails.push(tag + ": ranking order " + rank);
@@ -162,6 +178,40 @@ for (const n of [2, 3, 4]) {
   allStats[n] = { avgTurns: (turns / 500).toFixed(1), maxTurns, losersInGoalAvg: (loserArrived / losers).toFixed(2) };
 }
 console.log("game end all: " + JSON.stringify(allStats));
+
+// Fairness and game length.
+const fairness = [];
+const lengths = {};
+for (const variant of [{ finish: "one" }, { finish: "all", tokens: 3 }]) {
+  for (const n of [2, 3, 4]) {
+    const G = 2000, wins = new Array(n).fill(0);
+    let turns = 0;
+    for (let g = 0; g < G; g++) {
+      const r = rng(g * 104729 + n * 31 + (variant.finish === "all" ? 7 : 0));
+      let s = C.createInitialState(n, Object.assign({ houses: C.assignHouses(n, []), first: Math.floor(r() * n) }, variant));
+      for (let t = 0; t < 100000 && !s.gameOver; t++) {
+        s = C.setRoll(s, C.rollDie(r));
+        const m = A.chooseMove(s, 2, r);
+        if (!m) { s = C.pass(s); continue; }
+        const res = C.applyMove(s, m);
+        s = res.state;
+        if (res.stone) s = C.placeStone(s, A.chooseStone(s, 2, r));
+      }
+      if (!s.gameOver) { fails.push("fairness game did not end"); break; }
+      wins[s.winner]++;
+      turns += s.turns;
+    }
+    const pct = wins.map((w) => 100 * w / G);
+    const name = variant.finish + (variant.tokens ? " " + variant.tokens + " tokens" : "") + " " + n + "p";
+    fairness.push(name + ": " + pct.map((x) => x.toFixed(1)).join(" / "));
+    pct.forEach((x, p) => { if (Math.abs(x - 100 / n) > 5) fails.push("unfair: " + name + " place " + (p + 1) + " wins " + x.toFixed(1) + "%"); });
+    lengths[name] = (turns / G).toFixed(1);
+  }
+}
+console.log("fairness (wins per place, %): " + fairness.join("; "));
+console.log("average game length (turns): " + JSON.stringify(lengths));
+if (+lengths["all 3 tokens 2p"] > 90) fails.push("all, 3 tokens, 2 players too long: " + lengths["all 3 tokens 2p"]);
+if (+lengths["all 3 tokens 4p"] > 185) fails.push("all, 3 tokens, 4 players too long: " + lengths["all 3 tokens 4p"]);
 
 // An old state (no houses, shapes, first) plays on with the old entries.
 {
@@ -183,5 +233,5 @@ console.log("game end all: " + JSON.stringify(allStats));
 
 fails.slice(0, 20).forEach((f) => console.log("FAIL " + f));
 console.log(JSON.stringify(stats));
-console.log("\n=== PATH BLOCKERS CORE: 1500 games, " + allGames + " games with game end all (500 per number of players), " + houseTotal + " games with chosen house, token and starter (500 per house and number of players), " + fails.length + " failures ===");
+console.log("\n=== PATH BLOCKERS CORE: 1500 games, " + allGames + " games with game end all (500 per number of players, 3 and 5 tokens), 12000 fairness games (2000 per variant and number of players), " + houseTotal + " games with chosen house, token and starter (500 per house and number of players), " + fails.length + " failures ===");
 process.exit(fails.length ? 1 : 0);

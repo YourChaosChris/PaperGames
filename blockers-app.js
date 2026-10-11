@@ -23,13 +23,27 @@
 // "Game end" (remembered on the device): "One token in the goal" (the
 // default) or "All tokens in the goal" - then a token reaching the goal
 // leaves the board, every player shows "In the goal: n of 5", and with
-// more than two players a ranking follows the win.
+// more than two players a ranking follows the win. "Tokens per player"
+// (3 or 5, remembered) applies to "All tokens in the goal" only; with
+// "One token in the goal" it stays 5.
+//
+// Fields in the safe lower half (no token can be sent back there) are
+// drawn as rounded squares, the others as circles.
 
 const BLOCKERS_SAVE_KEY = "einkchess_save_blockers";
 const BL_SHAPES = ["circle", "triangle", "diamond", "star"];
 const BL_SHAPE_NAME = { circle: "Circle", triangle: "Triangle", diamond: "Diamond", star: "Star" };
 const BL_PACE_KEY = "papergames_blockers_pace";
 const BL_FINISH_KEY = "papergames_blockers_finish";
+const BL_TOKENS_KEY = "papergames_blockers_tokens";
+
+function loadTokensBL() {
+  try { return window.localStorage.getItem(BL_TOKENS_KEY) === "5" ? 5 : 3; } catch (e) { return 3; }
+}
+
+function saveTokensBL(n) {
+  try { window.localStorage.setItem(BL_TOKENS_KEY, String(n === 5 ? 5 : 3)); } catch (e) { /* the choice just isn't remembered */ }
+}
 
 function loadFinishBL() {
   try { return window.localStorage.getItem(BL_FINISH_KEY) === "all" ? "all" : "one"; } catch (e) { return "one"; }
@@ -152,8 +166,17 @@ function initBlockersApp() {
   const firstSel = document.getElementById("bl-first");
   const paceSel = document.getElementById("bl-pace");
   const finishSel = document.getElementById("bl-finish");
+  const tokensSel = document.getElementById("bl-tokens");
+  // "Tokens per player" only with "All tokens in the goal"; otherwise 5.
+  const syncTokens = () => {
+    const all = finishSel.value === "all";
+    tokensSel.disabled = !all;
+    tokensSel.value = all ? String(loadTokensBL()) : "5";
+  };
   finishSel.value = loadFinishBL();
-  finishSel.addEventListener("change", () => saveFinishBL(finishSel.value));
+  syncTokens();
+  finishSel.addEventListener("change", () => { saveFinishBL(finishSel.value); syncTokens(); });
+  tokensSel.addEventListener("change", () => { if (finishSel.value === "all") saveTokensBL(parseInt(tokensSel.value, 10)); });
   players.addEventListener("change", () => { limitComputers(); buildChoicesBL(); });
   computers.addEventListener("change", buildChoicesBL);
   limitComputers();
@@ -167,7 +190,7 @@ function initBlockersApp() {
     const tokens = Array.from(document.querySelectorAll("#bl-choices .bl-token-select")).map((sel) => parseInt(sel.value, 10));
     const houses = Array.from(document.querySelectorAll("#bl-choices .bl-house-select")).map((sel) => parseInt(sel.value, 10));
     saveFinishBL(finishSel.value);
-    startGameBL(parseInt(players.value, 10), parseInt(computers.value, 10), parseInt(document.getElementById("bl-level").value, 10), tokens, houses, firstSel.value, finishSel.value);
+    startGameBL(parseInt(players.value, 10), parseInt(computers.value, 10), parseInt(document.getElementById("bl-level").value, 10), tokens, houses, firstSel.value, finishSel.value, parseInt(tokensSel.value, 10));
   });
   document.getElementById("bl-roll").addEventListener("click", humanRollBL);
   document.getElementById("bl-next").addEventListener("click", nextComputerBL);
@@ -268,7 +291,7 @@ function renderChoicePicsBL() {
   });
 }
 
-function startGameBL(numPlayers, computers, level, tokenChoices, houseChoices, firstChoice, finish) {
+function startGameBL(numPlayers, computers, level, tokenChoices, houseChoices, firstChoice, finish, tokenCount) {
   const n = Math.max(2, Math.min(4, numPlayers || 2));
   AppStateBL.numPlayers = n;
   AppStateBL.computers = Math.max(0, Math.min(n - 1, computers || 0));
@@ -277,7 +300,7 @@ function startGameBL(numPlayers, computers, level, tokenChoices, houseChoices, f
   const shapes = BlockersCore.assignShapes(n, (tokenChoices || []).slice(0, humans));
   const houses = BlockersCore.assignHouses(n, (houseChoices || []).slice(0, humans));
   const first = BlockersCore.firstPlayer(firstChoice || "random", n, AppStateBL.computers ? humans : n);
-  AppStateBL.state = BlockersCore.createInitialState(n, { houses, shapes, first, finish: finish === "all" ? "all" : "one" });
+  AppStateBL.state = BlockersCore.createInitialState(n, { houses, shapes, first, finish: finish === "all" ? "all" : "one", tokens: tokenCount === 5 ? 5 : 3 });
   AppStateBL.started = true;
   AppStateBL.gameOver = false;
   AppStateBL.busy = false;
@@ -393,7 +416,7 @@ function doMoveBL(move) {
   }
   if (r.state.gameOver) { endGameBL(parts.join(" ")); return; }
   if (r.arrived) {
-    const left = BlockersCore.TOKENS - BlockersCore.arrivedCount(r.state, p);
+    const left = r.state.tokens[p].length - BlockersCore.arrivedCount(r.state, p);
     parts.push(you ? "You bring a token into the goal: " + left + " still to go." : who + " brings a token into the goal: " + left + " still to go.");
   }
   if (r.stone) parts.push(you ? "You take a stone." : who + " takes a stone and puts it on another field.");
@@ -511,10 +534,10 @@ function renderBL() {
     if (finishBL() === "all") {
       const goalCount = document.createElement("span");
       goalCount.className = "pc-player-extra bl-goal-count";
-      I18n.setMsg(goalCount, "In the goal: " + BlockersCore.arrivedCount(s, p) + " of " + BlockersCore.TOKENS);
+      I18n.setMsg(goalCount, "In the goal: " + BlockersCore.arrivedCount(s, p) + " of " + s.tokens[p].length);
       row.appendChild(goalCount);
     }
-    I18n.setAria(row, nameBL(p) + ", " + BL_SHAPES[shapeOfBL(p)] + ", " + "House: " + inHouse + (finishBL() === "all" ? ", " + "In the goal: " + BlockersCore.arrivedCount(s, p) + " of " + BlockersCore.TOKENS : "") + (canPick ? ", can move" : ""));
+    I18n.setAria(row, nameBL(p) + ", " + BL_SHAPES[shapeOfBL(p)] + ", " + "House: " + inHouse + (finishBL() === "all" ? ", " + "In the goal: " + BlockersCore.arrivedCount(s, p) + " of " + s.tokens[p].length : "") + (canPick ? ", can move" : ""));
     row.disabled = !canPick;
     row.addEventListener("click", () => onHouseBL(p));
     playersEl.appendChild(row);
@@ -552,7 +575,7 @@ function renderRankingBL(over) {
     li.appendChild(name);
     const count = document.createElement("span");
     count.className = "pc-player-extra bl-goal-count";
-    I18n.setMsg(count, "In the goal: " + BlockersCore.arrivedCount(s, p) + " of " + BlockersCore.TOKENS);
+    I18n.setMsg(count, "In the goal: " + BlockersCore.arrivedCount(s, p) + " of " + s.tokens[p].length);
     li.appendChild(count);
     list.appendChild(li);
   });
@@ -590,6 +613,10 @@ function renderBoardBL() {
     if (f === C.goal) {
       out += '<circle cx="' + fx(x) + '" cy="' + fx(y) + '" r="' + fx(u * 0.42) + '" fill="#fff" stroke="#141413" stroke-width="' + fx(u * 0.1) + '"/>' +
         '<circle cx="' + fx(x) + '" cy="' + fx(y) + '" r="' + fx(u * 0.22) + '" fill="#fff" stroke="#141413" stroke-width="' + fx(u * 0.07) + '"/>';
+    } else if (C.isSafe(f)) {
+      // Safe half: a rounded square instead of a circle.
+      const h = u * 0.31;
+      out += '<rect x="' + fx(x - h) + '" y="' + fx(y - h) + '" width="' + fx(2 * h) + '" height="' + fx(2 * h) + '" rx="' + fx(u * 0.08) + '" fill="#fff" stroke="#141413" stroke-width="' + fx(entries.has(f) ? u * 0.11 : u * 0.05) + '"/>';
     } else {
       out += '<circle cx="' + fx(x) + '" cy="' + fx(y) + '" r="' + fx(u * 0.33) + '" fill="#fff" stroke="#141413" stroke-width="' + fx(entries.has(f) ? u * 0.11 : u * 0.05) + '"/>';
     }
@@ -653,6 +680,7 @@ function renderBoardBL() {
     const o = C.ownerAt(s, f);
     if (o) parts.push(nameBL(o.player) === "You" ? "your token" : "token of " + nameBL(o.player));
     if (entries.has(f)) parts.push("house entry");
+    if (C.isSafe(f)) parts.push("safe");
     if (targets.has(f) || stoneSpots.has(f)) parts.push("possible");
     I18n.setAria(btn, parts.join(", "));
     btn.addEventListener("click", () => onFieldBL(f));

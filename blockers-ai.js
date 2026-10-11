@@ -50,7 +50,7 @@ const BlockersAi = (function () {
     }
     if (level >= 3) {
       let best = after;
-      for (let k = 0; k < C.TOKENS; k++) if (k !== m.token) best = Math.min(best, C.tokenDistance(s, p, k));
+      for (let k = 0; k < s.tokens[p].length; k++) if (k !== m.token) best = Math.min(best, C.tokenDistance(s, p, k));
       score += Math.max(0, 30 - best) * 2;
       if (after <= 6) score += 15; // close enough to reach the goal with one roll
     }
@@ -78,7 +78,7 @@ const BlockersAi = (function () {
     let lead = null;
     for (let p = 0; p < s.numPlayers; p++) {
       if (p === me) continue;
-      for (let k = 0; k < C.TOKENS; k++) {
+      for (let k = 0; k < s.tokens[p].length; k++) {
         const at = s.tokens[p][k];
         if (at === C.ARRIVED || at === C.goal) continue; // already home
         const d = C.tokenDistance(s, p, k);
@@ -105,7 +105,7 @@ const BlockersAi = (function () {
     if (level >= 3) {
       // Not in the way of my own leading token, if that can be avoided.
       let mine = null;
-      for (let k = 0; k < C.TOKENS; k++) {
+      for (let k = 0; k < s.tokens[me].length; k++) {
         const at = s.tokens[me][k];
         if (at === C.ARRIVED || at === C.goal) continue;
         const d = C.tokenDistance(s, me, k);
@@ -120,7 +120,13 @@ const BlockersAi = (function () {
       }
     }
     // Close in front of the leader (but at least 2 steps away, so a
-    // throw of 1 does not simply take it).
+    // throw of 1 does not simply take it). Equal spots in random order:
+    // a fixed order put the stones on the left more often, and the
+    // players on the left lost more often.
+    for (let i = options.length - 1; i > 0; i--) {
+      const j = Math.floor(rnd() * (i + 1));
+      const t = options[i]; options[i] = options[j]; options[j] = t;
+    }
     options.sort((a, b) => {
       const da = Math.abs((fromLead[a] || 99) - 3), db = Math.abs((fromLead[b] || 99) - 3);
       return da - db || C.distToGoal[b] - C.distToGoal[a];

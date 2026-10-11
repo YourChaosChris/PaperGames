@@ -13,6 +13,18 @@
 // game end "all" (s.finish), the first to bring all 5: then a token that
 // reaches the goal leaves the board at once (ARRIVED) and the goal is free
 // again. States saved before this choice have no `finish` and play "one".
+// With "all", each player has 3 or 5 tokens (s.tokens[p].length, chosen
+// before the game); with "one" always 5.
+//
+// Safe half: in the lower half of the board (rows SAFE_FROM_ROW and below)
+// no token can be sent back - a move may not end on another player's token
+// there. Without it the players in the middle houses, reachable from both
+// sides, lost far more often against computers that like to hit.
+//
+// With "all", no stone stands on the last NEAR_GOAL fields before the goal
+// (the single lane up to it): not at the start, and a taken stone may not
+// be put there. Otherwise every token had to hit a stone there exactly, and
+// games ran to several hundred turns.
 //
 // Houses: six places below the bottom row, at the columns whose field is
 // 14 steps from the goal (HOUSE_COLS) - every house equally far. The
@@ -39,7 +51,10 @@ const BlockersCore = (function () {
     "###########"
   ];
   const ROWS = MAP.length, COLS = MAP[0].length;
-  const TOKENS = 5;
+  const TOKENS = 5;              // tokens per player with "one" (and the default)
+  const TOKEN_CHOICES = [3, 5];  // tokens per player with "all"
+  const SAFE_FROM_ROW = 5;
+  const NEAR_GOAL = 3;
   const ARRIVED = -2; // token position: reached the goal and left the board ("all")
   // Entry field (in the bottom row) of each player's house; with the
   // same number of players every entry is equally far from the goal.
@@ -84,6 +99,7 @@ const BlockersCore = (function () {
     }
   })();
   const bottomRow = (i) => Math.floor(i / COLS) === ROWS - 1;
+  const isSafe = (i) => Math.floor(i / COLS) >= SAFE_FROM_ROW;
 
   // Entry field of player p's house.
   function entryOf(s, p) {
@@ -139,18 +155,21 @@ const BlockersCore = (function () {
     return Math.floor((rng || Math.random)() * n);
   }
 
-  // opts: { houses, shapes, first, finish } - all optional (then houses
-  // from assignHouses, shapes 0..n-1, seat 0 first, finish "one").
+  // opts: { houses, shapes, first, finish, tokens } - all optional (then
+  // houses from assignHouses, shapes 0..n-1, seat 0 first, finish "one",
+  // 5 tokens; tokens 3 only with finish "all").
   function createInitialState(numPlayers, opts) {
     const n = ENTRY_COLS[numPlayers] ? numPlayers : 2;
     const o = opts || {};
     const tokens = [];
-    for (let p = 0; p < n; p++) tokens.push(new Array(TOKENS).fill(-1)); // -1 = in the house
+    const count = o.finish === "all" && TOKEN_CHOICES.indexOf(o.tokens) !== -1 ? o.tokens : TOKENS;
+    for (let p = 0; p < n; p++) tokens.push(new Array(count).fill(-1)); // -1 = in the house
     const houses = Array.isArray(o.houses) && o.houses.length === n ? o.houses.slice() : assignHouses(n, []);
     const shapes = Array.isArray(o.shapes) && o.shapes.length === n ? o.shapes.slice() : assignShapes(n, []);
     const first = o.first >= 0 && o.first < n ? o.first : 0;
     const finish = o.finish === "all" ? "all" : "one";
-    return { numPlayers: n, tokens, stones: startStones.slice(), houses, shapes, first, finish, turn: first, roll: 0, phase: "roll", pendingStone: false, gameOver: false, winner: -1, turns: 0 };
+    const stones = startStones.filter((f) => finish !== "all" || distToGoal[f] > NEAR_GOAL);
+    return { numPlayers: n, tokens, stones, houses, shapes, first, finish, turn: first, roll: 0, phase: "roll", pendingStone: false, gameOver: false, winner: -1, turns: 0 };
   }
 
   function cloneState(s) {
@@ -177,9 +196,10 @@ const BlockersCore = (function () {
     const stones = new Set(s.stones);
     const out = new Map();
     const startPath = from === -1 ? [entryOf(s, player)] : [];
+    // Not on an own token, and not on another player's token in the safe half.
     function allowedEnd(f) {
       const o = ownerAt(s, f);
-      return !(o && o.player === player);
+      return !(o && (o.player === player || isSafe(f)));
     }
     function walk(path, left) {
       const cur = path[path.length - 1];
@@ -207,7 +227,7 @@ const BlockersCore = (function () {
   function legalMoves(s) {
     const p = s.turn, moves = [];
     let houseDone = false;
-    for (let k = 0; k < TOKENS; k++) {
+    for (let k = 0; k < s.tokens[p].length; k++) {
       const at = s.tokens[p][k];
       if (at === goal || at === ARRIVED) continue;
       if (at === -1) {
@@ -257,7 +277,7 @@ const BlockersCore = (function () {
       // The token leaves the board; the goal is free again.
       s.tokens[p][move.token] = ARRIVED;
       arrived = true;
-      if (arrivedCount(s, p) === TOKENS) {
+      if (arrivedCount(s, p) === s.tokens[p].length) {
         s.gameOver = true;
         s.winner = p;
         s.phase = "over";
@@ -292,9 +312,11 @@ const BlockersCore = (function () {
   }
 
   // Free fields for a taken stone: no token, no stone, not the goal, not
-  // the bottom row.
+  // the bottom row - and with "all" not the last NEAR_GOAL fields before
+  // the goal.
   function stoneTargets(s) {
-    return fields.filter((f) => f !== goal && !bottomRow(f) && !s.stones.includes(f) && !ownerAt(s, f));
+    return fields.filter((f) => f !== goal && !bottomRow(f) && !s.stones.includes(f) && !ownerAt(s, f) &&
+      !(s.finish === "all" && distToGoal[f] <= NEAR_GOAL));
   }
 
   function placeStone(s0, field) {
@@ -322,7 +344,7 @@ const BlockersCore = (function () {
   }
 
   return {
-    MAP, ROWS, COLS, TOKENS, ARRIVED, HOUSE_COLS, SHAPES, fields, goal, neighbours, distToGoal, startStones, isBottomRow: bottomRow,
+    MAP, ROWS, COLS, TOKENS, TOKEN_CHOICES, SAFE_FROM_ROW, NEAR_GOAL, ARRIVED, isSafe, HOUSE_COLS, SHAPES, fields, goal, neighbours, distToGoal, startStones, isBottomRow: bottomRow,
     entryOf, assignHouses, assignShapes, firstPlayer, createInitialState, ownerAt, targetsFor, legalMoves, setRoll, applyMove, stoneTargets, placeStone,
     pass, tokenDistance, arrivedCount, ranking, rollDie: (rng) => 1 + Math.floor((rng || Math.random)() * 6)
   };
