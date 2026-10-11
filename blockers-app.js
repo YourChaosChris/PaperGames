@@ -268,6 +268,15 @@ function startGameBL(numPlayers, computers, level, tokenChoices, houseChoices, f
 
 /*** Turns ***/
 
+// "1 field", "3 fields" - the singular for a roll of 1.
+function fieldsBL(n) {
+  return n + (n === 1 ? " field" : " fields");
+}
+
+function pickTextBL(roll) {
+  return "Tap a token with a dashed ring (or the house button) to move it " + fieldsBL(roll) + ".";
+}
+
 function promptBL(prefix) {
   const s = AppStateBL.state;
   const pre = prefix ? prefix + " " : "";
@@ -277,7 +286,7 @@ function promptBL(prefix) {
   else if (s.phase === "roll") text = you ? "Your turn: tap Roll." : who + "'s turn: tap Roll.";
   else if (s.phase === "stone") text = "Tap a free field to put the stone on (not in the bottom row).";
   else if (AppStateBL.selected >= 0) text = "Now tap one of the marked fields.";
-  else text = "Tap a token with a dashed ring (or the house button) to move it " + s.roll + " fields.";
+  else text = pickTextBL(s.roll);
   setStatusBL((pre + text).trim());
   renderBL();
 }
@@ -404,7 +413,7 @@ function chooseTokenBL(token) {
   // A token in the house stands for every token in the house.
   const k = s.tokens[s.turn][token] === -1 ? (AppStateBL.moves.find((m) => s.tokens[s.turn][m.token] === -1) || {}).token : token;
   if (k === undefined || !movableTokensBL().has(k)) {
-    setStatusBL("This token cannot move " + s.roll + " fields.");
+    setStatusBL("This token cannot move " + fieldsBL(s.roll) + ".");
     return;
   }
   AppStateBL.selected = AppStateBL.selected === k ? -1 : k;
@@ -429,7 +438,7 @@ function onFieldBL(field) {
   }
   const o = BlockersCore.ownerAt(s, field);
   if (o && o.player === s.turn) { chooseTokenBL(o.token); return; }
-  setStatusBL(AppStateBL.selected >= 0 ? "Now tap one of the marked fields." : "Tap a token with a dashed ring (or the house button) to move it " + s.roll + " fields.");
+  setStatusBL(AppStateBL.selected >= 0 ? "Now tap one of the marked fields." : pickTextBL(s.roll));
 }
 
 function onHouseBL(p) {
