@@ -225,6 +225,36 @@ function checkFileHashes() {
   else ok("sw.js FILE_HASHES: one checksum per APP_SHELL file, all match");
 }
 
+// Every CACHE_NAME has its entry in release-notes.js (the "what's new"
+// lines of the update banner, update-banner.js): newest first, one per
+// version, and each sentence in all 12 languages - in i18n.js and in every
+// lang/xx.js itself (not the -text file: the banner reads that one file of
+// the new version), the English one equal to the entry's own `text`.
+function checkReleaseNotes(STRINGS) {
+  const sw = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
+  const cache = /const CACHE_NAME = "papergames-cache-(v\d+)"/.exec(sw);
+  if (!cache) { fail("release notes - no CACHE_NAME in sw.js"); return; }
+  const notes = require(path.join(ROOT, "release-notes.js"));
+  const before = failures;
+  if (!notes.some((e) => e.version === cache[1])) fail("release notes - CACHE_NAME " + cache[1] + " has no entry in release-notes.js");
+  if (!notes.length || notes[0].version !== cache[1]) fail("release notes - the first (newest) entry must be " + cache[1]);
+  const num = (v) => parseInt(String(v).slice(1), 10);
+  notes.forEach((e, i) => {
+    const name = "release notes - " + e.version;
+    if (!/^v\d+$/.test(e.version || "")) fail(name + ": version must look like v223");
+    if (i > 0 && !(num(e.version) < num(notes[i - 1].version))) fail(name + ": entries must be newest first, one per version");
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(e.date || "")) fail(name + ": date must be YYYY-MM-DD");
+    if (!e.key || !e.text) { fail(name + ": needs key and text"); return; }
+    Object.keys(STRINGS).forEach((lang) => {
+      const file = lang === "en" ? "i18n.js" : "lang/" + lang + ".js";
+      const src = fs.readFileSync(path.join(ROOT, file), "utf8");
+      if (!new RegExp("\\n\\s*" + e.key + ": \"").test(src) || !STRINGS[lang][e.key]) fail(name + ": no text " + e.key + " in " + file);
+    });
+    if (STRINGS.en[e.key] !== e.text) fail(name + ": text differs from i18n.js " + e.key);
+  });
+  if (failures === before) ok("release notes: " + cache[1] + " has its entry, " + notes.length + " entries in " + Object.keys(STRINGS).length + " languages");
+}
+
 checkJsSyntax();
 checkAppShell();
 checkFileHashes();
@@ -233,6 +263,7 @@ const STRINGS = loadStrings();
 checkI18nParity(STRINGS);
 checkOrphanRefs(STRINGS);
 checkTextSplit();
+checkReleaseNotes(STRINGS);
 
 console.log("");
 if (failures) {

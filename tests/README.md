@@ -40,7 +40,9 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   markup a script builds at runtime) pointing at a key that doesn't
   exist. Also that every `APP_SHELL` entry in `sw.js` appears once, its
   file exists, and its checksum in `FILE_HASHES` matches the file (after
-  changing any file, run `node tools/sw-hashes.js`).
+  changing any file, run `node tools/sw-hashes.js`). And that the
+  version in `CACHE_NAME` has its entry in `release-notes.js`, every
+  entry with its sentence in all 12 languages.
 - `node tests/i18n-messages.js` - no server or browser needed. Runs a
   sample of every runtime status/result message shape through
   `I18n.msg()` in all 10 non-English languages and fails on anything
@@ -177,6 +179,14 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   that downloads only the changed file, and every game page loading
   with the server off. `THROTTLE=1` runs a first visit over a slow line
   (500 kbit/s, 300 ms per request) instead; that takes several minutes.
+- `node tests/update-banner.js` - needs a browser; starts its own server
+  on a copy of the site and makes updates by raising `CACHE_NAME` in the
+  copy's `sw.js`. Checks the "what's new" lines of the update banner: a
+  device that last saw v222 with 80 games is shown exactly the 3 new
+  games and the sentence of `release-notes.js` (German and English), a
+  second update without anything new shows the main line alone, and no
+  sideways scrolling at 360 and 600 px. `SHOT=<file.png>` saves a
+  screenshot at 360 px.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

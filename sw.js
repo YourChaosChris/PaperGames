@@ -3,7 +3,10 @@
 // after it has been opened once. Only same-origin requests are handled –
 // Lichess API calls (online mode) always go straight to the network.
 
-const CACHE_NAME = "papergames-cache-v222";
+// Every new CACHE_NAME needs its entry in release-notes.js (version, date
+// and one sentence in all 12 languages): the update banner shows it, and
+// tests/static-checks.js fails without it.
+const CACHE_NAME = "papergames-cache-v223";
 
 const APP_SHELL = [
   "./",
@@ -468,6 +471,7 @@ const APP_SHELL = [
   "quick-rules.js",
   "adaptive-difficulty.js",
   "update-banner.js",
+  "release-notes.js",
   "error-banner.js",
   "force-update.js",
   "games-catalog.js",
@@ -804,29 +808,29 @@ const FILE_HASHES = {
   "datenschutz.html": "20635409",
   "donate-qr.png": "f17a17e8",
   "style.css": "137ba260",
-  "i18n.js": "6302c978",
+  "i18n.js": "6d52a53c",
   "i18n-text.js": "81a25264",
-  "lang/de.js": "bb0719d1",
+  "lang/de.js": "bfea7b41",
   "lang/de-text.js": "aaf91ba5",
-  "lang/fr.js": "68d2b47f",
+  "lang/fr.js": "4c4de182",
   "lang/fr-text.js": "8c1c1bc2",
-  "lang/es.js": "071bdc46",
+  "lang/es.js": "c96731d7",
   "lang/es-text.js": "6fba0068",
-  "lang/it.js": "4b03b6b0",
+  "lang/it.js": "bc21d18e",
   "lang/it-text.js": "2b907d25",
-  "lang/nl.js": "60cae14d",
+  "lang/nl.js": "3dd912e5",
   "lang/nl-text.js": "9a62f55e",
-  "lang/pl.js": "d96ba2f6",
+  "lang/pl.js": "387d4c44",
   "lang/pl-text.js": "aa3052b8",
-  "lang/uk.js": "02e0bd0f",
+  "lang/uk.js": "6e3b1e99",
   "lang/uk-text.js": "d645bd31",
-  "lang/ru.js": "d4ecc697",
+  "lang/ru.js": "77be78fe",
   "lang/ru-text.js": "751e0272",
-  "lang/ja.js": "6f8a2727",
+  "lang/ja.js": "1e213cb5",
   "lang/ja-text.js": "24173e04",
-  "lang/zh.js": "c13dc2f1",
+  "lang/zh.js": "c74f221a",
   "lang/zh-text.js": "81dfeb21",
-  "lang/ar.js": "65790cca",
+  "lang/ar.js": "7596c4c7",
   "lang/ar-text.js": "49a008f4",
   "game-switcher.js": "3756752c",
   "chess-core.js": "afc62048",
@@ -1045,7 +1049,8 @@ const FILE_HASHES = {
   "rules-link.js": "dcf5ea5d",
   "quick-rules.js": "efff5e68",
   "adaptive-difficulty.js": "abfa62fe",
-  "update-banner.js": "2e2e4b62",
+  "update-banner.js": "2c928b7f",
+  "release-notes.js": "c437a239",
   "error-banner.js": "a67457c5",
   "force-update.js": "75f1558c",
   "games-catalog.js": "e7b79b58",
