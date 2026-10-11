@@ -164,6 +164,9 @@ function initMauMauApp() {
   if (modeOfflineAi) modeOfflineAi.addEventListener("click", () => setMode("vs-ai"));
 
   if (deckSelect) {
+    // maumau.html?deck=kids (the link from the children's games) picks the
+    // animal cards for the next game; it is saved like a choice by hand.
+    if (new URLSearchParams(window.location.search).get("deck") === "kids") saveDeckPrefMauMau("kids");
     deckSelect.value = loadDeckPrefMauMau();
     deckSelect.addEventListener("change", () => saveDeckPrefMauMau(deckSelect.value === "kids" ? "kids" : "normal"));
   }

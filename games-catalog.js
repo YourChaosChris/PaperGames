@@ -13,6 +13,11 @@
 // 60 days, and games.html can sort by it - so a new game MUST get its
 // `added` date here too, or it never shows up as new. The original
 // collection shares one placeholder date well outside that window.
+//
+// `kids: true` marks a children's game (playable without reading, or made
+// for children), on top of its category: the home page's "Children's
+// Games" section and the games.html filter show exactly these. `kidsPlay`
+// is where "Play" leads from there (Mau Mau opens with the animal cards).
 
 const GAMES_CATALOG = [
   {
@@ -111,6 +116,7 @@ const GAMES_CATALOG = [
     descKey: "home_four_in_a_row_desc",
     descText: "Drop discs to connect four in a row before your opponent does. Local 2-player or vs. the built-in engine.",
     popular: false,
+    kids: true,
     added: "2026-07-01",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\" rx=\"2\"/><circle cx=\"7\" cy=\"17\" r=\"2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"10.3\" cy=\"13.7\" r=\"2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"13.7\" cy=\"10.3\" r=\"2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"17\" cy=\"7\" r=\"2\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
@@ -342,6 +348,7 @@ const GAMES_CATALOG = [
     descKey: "home_lightswitch_desc",
     descText: "Press a cell to toggle it and its neighbors on and off. Turn off every light to win - every puzzle is generated to always have a solution.",
     popular: false,
+    kids: true,
     added: "2026-07-01",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8.5 15.5C6.5 14 5.5 12 5.5 10A6.5 6.5 0 0 1 18.5 10C18.5 12 17.5 14 15.5 15.5V17.5H8.5Z\"/><path d=\"M9.5 20.5H14.5\"/><path d=\"M10.5 12L12 9.5L13.5 12\" stroke-width=\"2\"/></svg></span>"
   },
@@ -518,6 +525,7 @@ const GAMES_CATALOG = [
     descKey: "home_ludo_desc",
     descText: "The classic cross-shaped race game descended from ancient Pachisi. Play one color yourself against up to three built-in computer opponents (2-4 players total), or pass the device around in local hotseat.",
     popular: false,
+    kids: true,
     added: "2026-07-01",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><circle cx=\"7.25\" cy=\"7.25\" r=\"2.6\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"16.75\" cy=\"7.25\" r=\"2.2\"/><path d=\"M7.25 14.5L9.8 19.2H4.7Z\" fill=\"#141413\" stroke=\"none\"/><rect x=\"14.6\" y=\"14.6\" width=\"4.3\" height=\"4.3\"/></svg></span>"
   },
@@ -555,6 +563,8 @@ const GAMES_CATALOG = [
     descKey: "home_maumau_desc",
     descText: "The traditional card game with a 32-card pack: follow suit or rank, use Sevens, Eights, Jacks and Aces to your advantage, and be the first to get rid of your cards. Against the computer or with 2-4 players on one device.",
     popular: false,
+    kids: true,
+    kidsPlay: "maumau.html?deck=kids",
     added: "2026-09-26T11:28",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"4.5\" width=\"11\" height=\"15\" rx=\"1.5\" transform=\"rotate(-10 8 12)\"/><rect x=\"10\" y=\"3.5\" width=\"11\" height=\"16\" rx=\"1.5\" fill=\"#fff\"/><path d=\"M15.5 7.5L18.5 11.5L15.5 15.5L12.5 11.5Z\" fill=\"#141413\"/></svg></span>"
   },
@@ -665,6 +675,7 @@ const GAMES_CATALOG = [
     descKey: "home_tictactoe_desc",
     descText: "Three in a row on a 3x3 grid - the classic pencil-and-paper game. Local 2-player or vs. the built-in engine, which never loses on Hard.",
     popular: false,
+    kids: true,
     added: "2026-10-03T12:38",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 2.5V21.5M15 2.5V21.5M2.5 9H21.5M2.5 15H21.5\"/><path d=\"M3.8 3.8L7.7 7.7M7.7 3.8L3.8 7.7\"/><circle cx=\"12\" cy=\"12\" r=\"1.9\"/></svg></span>"
   },
@@ -687,6 +698,7 @@ const GAMES_CATALOG = [
     descKey: "home_pairs_desc",
     descText: "Turn over two cards and find the pairs: the classic card-matching game with simple black-and-white shapes. Solo against the move count, two players on one device, or vs. the built-in engine.",
     popular: false,
+    kids: true,
     added: "2026-10-06T10:17",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"4\" width=\"8.5\" height=\"12\" rx=\"1.5\"/><rect x=\"13\" y=\"8\" width=\"8.5\" height=\"12\" rx=\"1.5\"/><circle cx=\"6.75\" cy=\"10\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"17.25\" cy=\"14\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   },
@@ -742,6 +754,7 @@ const GAMES_CATALOG = [
     descKey: "home_cake_desc",
     descText: "A detective logic puzzle: place the animals and the cake on the floor plan by the clues - one per row and column - and find out who took the cake.",
     popular: false,
+    kids: true,
     added: "2026-10-09T16:02",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M20 4C22 7 22 8.5 20 9.5C18 8.5 18 7 20 4Z\" fill=\"#141413\"/><path d=\"M20 10V15\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"11\" y=\"15\" width=\"18\" height=\"8\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"7\" y=\"23\" width=\"26\" height=\"11\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M7 27C10 30 12 25 15 28C18 31 20 25 23 28C26 31 28 25 33 28\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.8\"/></svg></span>"
   },
@@ -753,6 +766,7 @@ const GAMES_CATALOG = [
     descKey: "home_animalsudoku_desc",
     descText: "Sudoku for children with animals instead of numbers: 4 x 4 or 6 x 6, every animal once in each row, column and box. Pick an animal, tap a cell - no reading needed.",
     popular: false,
+    kids: true,
     added: "2026-10-10T09:01",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><path d=\"M11.5 3V37M28.5 3V37M3 11.5H37M3 28.5H37\" stroke=\"#141413\" stroke-width=\"1\"/><path d=\"M20 3V37M3 20H37\" stroke=\"#141413\" stroke-width=\"2.4\"/><circle cx=\"8.5\" cy=\"9\" r=\"2.4\" fill=\"#141413\"/><circle cx=\"14.5\" cy=\"9\" r=\"2.4\" fill=\"#141413\"/><circle cx=\"11.5\" cy=\"13\" r=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.6\"/><path d=\"M24.5 28L25 23L27.5 25.5M32.5 28L32 23L29.5 25.5\" fill=\"none\" stroke=\"#141413\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><circle cx=\"28.5\" cy=\"30\" r=\"3.4\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.6\"/></svg></span>"
   },
@@ -764,6 +778,7 @@ const GAMES_CATALOG = [
     descKey: "home_shapesort_desc",
     descText: "A calm sorting puzzle: move the stones between tubes until every tube holds four of one shape. Shapes instead of colours, so it reads on black-and-white e-ink; undo as often as you like.",
     popular: false,
+    kids: true,
     added: "2026-10-10T09:17",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"5\" y=\"4\" width=\"13\" height=\"32\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><rect x=\"22\" y=\"4\" width=\"13\" height=\"32\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><circle cx=\"11.5\" cy=\"30\" r=\"3.6\" fill=\"#141413\"/><polygon points=\"11.5,17.5 15.5,24.5 7.5,24.5\" fill=\"#141413\"/><circle cx=\"11.5\" cy=\"12\" r=\"3.6\" fill=\"#141413\"/><rect x=\"25.5\" y=\"26.5\" width=\"6\" height=\"6\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"25.5\" y=\"18\" width=\"6\" height=\"6\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/></svg></span>"
   },
@@ -775,6 +790,7 @@ const GAMES_CATALOG = [
     descKey: "home_linkpairs_desc",
     descText: "Join each pair of equal symbols with a line - lines never cross, and every cell is used. Numbers or animals, 5 x 5 to 9 x 9, made for e-ink; draw by dragging or by tapping.",
     popular: false,
+    kids: true,
     added: "2026-10-10T10:47",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M9 9H20V20H31V31\" fill=\"none\" stroke=\"#141413\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M9 31H15\" fill=\"none\" stroke=\"#141413\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"9\" cy=\"9\" r=\"5.5\" fill=\"#141413\"/><circle cx=\"31\" cy=\"31\" r=\"5.5\" fill=\"#141413\"/><circle cx=\"9\" cy=\"31\" r=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><circle cx=\"20\" cy=\"31\" r=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/></svg></span>"
   },
@@ -786,6 +802,7 @@ const GAMES_CATALOG = [
     descKey: "home_oldmaid_desc",
     descText: "The classic children's card game with animal pictures: lay down pairs, draw a hidden card from your neighbour in turn - and don't be the one left with the Black Peter. No reading needed; against 1 to 3 computers.",
     popular: false,
+    kids: true,
     added: "2026-10-10T14:04",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"7\" width=\"20\" height=\"28\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\" transform=\"rotate(-12 13 21)\"/><rect x=\"15\" y=\"4\" width=\"21\" height=\"30\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><g transform=\"translate(16.5 7) scale(0.45)\"><path d=\"M9 31L10 18L17 22ZM31 31L30 18L23 22Z\" fill=\"#141413\"/><circle cx=\"20\" cy=\"28\" r=\"10.5\" fill=\"#141413\"/><ellipse cx=\"16\" cy=\"27\" rx=\"2.6\" ry=\"2.2\" fill=\"#fff\"/><ellipse cx=\"24\" cy=\"27\" rx=\"2.6\" ry=\"2.2\" fill=\"#fff\"/><path d=\"M16 25.4V28.6M24 25.4V28.6\" stroke=\"#141413\" stroke-width=\"1.3\"/><path d=\"M18.6 31.5H21.4L20 33Z\" fill=\"#fff\"/><path d=\"M3 30H13M3 34L13 32.5M37 30H27M37 34L27 32.5\" stroke=\"#141413\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><rect x=\"11\" y=\"15\" width=\"18\" height=\"3\" rx=\"1\" fill=\"#141413\"/><rect x=\"14.5\" y=\"2\" width=\"11\" height=\"14\" fill=\"#141413\"/><rect x=\"14.5\" y=\"11.5\" width=\"11\" height=\"2.3\" fill=\"#fff\"/></g></svg></span>"
   },
@@ -797,6 +814,7 @@ const GAMES_CATALOG = [
     descKey: "home_war_desc",
     descText: "The simple card game of pure luck: both turn up a card, the higher one takes both - and on a tie it's war. 32 cards, against the computer, no decisions; a short game of 30 rounds or play to the end.",
     popular: false,
+    kids: true,
     added: "2026-10-10T14:16",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"6\" width=\"17\" height=\"25\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" transform=\"rotate(-10 11 18)\"/><rect x=\"20\" y=\"9\" width=\"17\" height=\"25\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" transform=\"rotate(10 28 21)\"/><g transform=\"translate(5.5 13) scale(0.11)\"><path d=\"M50 4 C50 4 6 36 6 60 C6 73 16 81 27 81 C36 81 43 76 46 70 L41 96 L59 96 L54 70 C57 76 64 81 73 81 C84 81 94 73 94 60 C94 36 50 4 50 4 Z\" fill=\"#141413\"/></g><g transform=\"translate(23 16) scale(0.11)\"><path d=\"M50 90 C50 90 9 62 9 34 C9 20 19 11 30 11 C39 11 46 16 50 24 C54 16 61 11 70 11 C81 11 91 20 91 34 C91 62 50 90 50 90 Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"12\" stroke-linejoin=\"round\"/></g></svg></span>"
   },
@@ -808,6 +826,7 @@ const GAMES_CATALOG = [
     descKey: "home_snakesladders_desc",
     descText: "The classic dice game for children: roll, move, climb up the ladders and slide down the snakes. Two boards - 100 fields, or 50 for small children - for 2 to 4 players on one device or against the computer.",
     popular: false,
+    kids: true,
     added: "2026-10-10T14:36",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><path d=\"M10 32L20 8M17 34L27 10M12 27L19 29M14 21L21 23M16 15L23 17\" stroke=\"#141413\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M31 9C24 13 34 18 27 22C21 26 31 29 26 33\" stroke=\"#141413\" stroke-width=\"3.4\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"31\" cy=\"9\" r=\"3\" fill=\"#141413\"/></svg></span>"
   },
@@ -819,6 +838,7 @@ const GAMES_CATALOG = [
     descKey: "home_blockers_desc",
     descText: "A dice race to the goal at the top of the board for 2 to 4 players: stones block the paths, and whoever lands on one puts it in the others' way. Against the computer or with friends on one device.",
     popular: false,
+    kids: true,
     added: "2026-10-10T15:13",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><path d=\"M20 10V31M9 31H31M9 21H31M9 21V31M31 21V31\" stroke=\"#141413\" stroke-width=\"2.2\" fill=\"none\"/><circle cx=\"20\" cy=\"9\" r=\"3.6\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><rect x=\"15\" y=\"16\" width=\"10\" height=\"10\" rx=\"1\" fill=\"#141413\"/><rect x=\"16.8\" y=\"20.1\" width=\"6.4\" height=\"1.8\" fill=\"#fff\"/><circle cx=\"9\" cy=\"31\" r=\"3.2\" fill=\"#141413\"/></svg></span>"
   },
@@ -896,6 +916,7 @@ const GAMES_CATALOG = [
     descKey: "home_tenpairs_desc",
     descText: "The pen-and-paper puzzle of crossing out digits: pairs that are equal or add up to 10 and see each other. Add the open digits when you are stuck. Classic start or random, three levels.",
     popular: false,
+    kids: true,
     added: "2026-10-10T20:37",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"2\" y=\"4\" width=\"36\" height=\"32\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><text x=\"10\" y=\"18\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">3</text><text x=\"30\" y=\"18\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">4</text><text x=\"10\" y=\"32\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">7</text><text x=\"30\" y=\"32\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">1</text><path d=\"M5 22 L35 8\" stroke=\"#141413\" stroke-width=\"2.5\"/></svg></span>"
   },

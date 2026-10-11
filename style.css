@@ -11567,6 +11567,11 @@ button.cn-meld {
   border-top-width: 3px;
 }
 
+/* Home page: one line under a section heading (Children's Games). */
+.section-intro {
+  margin: 0 0 var(--space-3);
+}
+
 /* Home page: "All new games" link under the New Games section. */
 .section-more-link {
   text-align: center;

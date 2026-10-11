@@ -28,7 +28,10 @@
     return displayName(game).toLowerCase().indexOf(q) !== -1;
   }
 
+  // "kids" is not a category but the `kids: true` mark, which a game has
+  // on top of its category.
   function matchesCategory(game) {
+    if (state.category === "kids") return game.kids === true;
     return state.category === "all" || game.category === state.category;
   }
 
@@ -65,7 +68,8 @@
       const sorted = state.sort === "newest"
         ? filtered.slice().sort((a, b) => GamesRender.compareNewest(a, b) || byDisplayName(a, b))
         : filtered.slice().sort(byDisplayName);
-      grid.innerHTML = '<div class="game-select-grid">' + sorted.map(GamesRender.buildGameCardHTML).join("") + "</div>";
+      const card = state.category === "kids" ? GamesRender.buildKidsCardHTML : GamesRender.buildGameCardHTML;
+      grid.innerHTML = '<div class="game-select-grid">' + sorted.map(card).join("") + "</div>";
     }
 
     GamesRender.updateFavoriteButtons(grid);
@@ -96,6 +100,16 @@
       });
     }
     if (categoryChips) {
+      // games.html?category=kids (the home page's and the calm page's
+      // children's games links).
+      const wantedCat = new URLSearchParams(window.location.search).get("category");
+      const wantedBtn = wantedCat && categoryChips.querySelector('.mode-btn[data-category="' + wantedCat + '"]');
+      if (wantedBtn) {
+        state.category = wantedCat;
+        categoryChips.querySelectorAll(".mode-btn").forEach((b) => {
+          b.classList.toggle("active-mode", b === wantedBtn);
+        });
+      }
       categoryChips.addEventListener("click", (evt) => {
         const btn = evt.target.closest(".mode-btn");
         if (!btn) return;

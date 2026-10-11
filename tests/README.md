@@ -137,6 +137,11 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   that the home page's "New Games" (8 games) and games.html's "Newest
   first" put the newest game first, also among games of the same day
   (`added` carries the time of the commit that brought the game).
+- `node tests/kids-games.js` - needs a running server and a browser.
+  Checks that the home page's "Children's Games" and games.html's
+  "Children's Games" filter show exactly the games marked `kids: true`,
+  that all their links answer, that Mau Mau opens with the animal cards
+  from there, the link on calm.html, and no sideways scrolling.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random

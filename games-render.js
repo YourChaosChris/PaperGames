@@ -5,19 +5,33 @@
 // exact same card markup and star-toggle behavior only needs writing once.
 
 const GamesRender = (function () {
-  function buildGameCardHTML(game) {
+  // `kidsView`: the card stands in the children's games (home section or
+  // games.html filter), so "Play" goes to the game's `kidsPlay` page if it
+  // has one. Use buildKidsCardHTML with Array.map (map passes an index).
+  function buildGameCardHTML(game, kidsView) {
+    const play = kidsView === true && game.kidsPlay ? game.kidsPlay : game.slug + ".html";
     return (
       '<div class="game-select-item" data-slug="' + game.slug + '">' +
       '<button type="button" class="favorite-toggle" data-slug="' + game.slug + '"></button>' +
       '<div class="game-select-title">' + game.icon + ' <span data-i18n="' + game.nameKey + '">' + game.nameText + '</span></div>' +
       '<p class="game-select-desc" data-i18n="' + game.descKey + '">' + game.descText + '</p>' +
       '<div class="game-select-actions">' +
-      '<a href="' + game.slug + '.html" class="primary small" data-i18n="nav_play">Play</a>' +
+      '<a href="' + play + '" class="primary small" data-i18n="nav_play">Play</a>' +
       '<a href="' + game.slug + '-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>' +
       '<a href="' + game.slug + '-history.html" class="secondary small" data-i18n="nav_history">History</a>' +
       '</div>' +
       '</div>'
     );
+  }
+
+  function buildKidsCardHTML(game) {
+    return buildGameCardHTML(game, true);
+  }
+
+  // The children's games (`kids: true`) listed in the current language,
+  // in catalog order.
+  function kidsGames(list) {
+    return list.filter((g) => g.kids === true && isListed(g));
   }
 
   // Sets each favorite-toggle button's glyph/state within `root` (a
@@ -87,7 +101,7 @@ const GamesRender = (function () {
       .slice(0, max);
   }
 
-  return { buildGameCardHTML, updateFavoriteButtons, translateInto, isListed, compareNewest, newGames };
+  return { buildGameCardHTML, buildKidsCardHTML, kidsGames, updateFavoriteButtons, translateInto, isListed, compareNewest, newGames };
 })();
 
 // See favorites.js for why this explicit export is needed: a top-level

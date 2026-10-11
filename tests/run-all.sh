@@ -85,6 +85,8 @@ echo "=== tenpairs-core.js ==="
 node "$ROOT/tests/tenpairs-core.js" || status=1
 echo "=== new-games-order.js ==="
 node "$ROOT/tests/new-games-order.js" || status=1
+echo "=== kids-games.js ==="
+node "$ROOT/tests/kids-games.js" || status=1
 echo ""
 
 echo "=== css-check.js ==="

@@ -1,5 +1,5 @@
 // home-app.js
-// Renders the "New Games" section (the newest games of the last 60 days,
+// Renders the "New Games" section, the "Children's Games" section (the newest games of the last 60 days,
 // from GAMES_CATALOG's `added` dates; hidden when there are none) and the
 // personalized "My Favorites" section on the home page
 // (always visible, with an empty-state message when there are none yet,
@@ -69,6 +69,19 @@
     section.classList.remove("hidden");
     if (navLink) navLink.classList.remove("hidden");
     grid.innerHTML = games.map(GamesRender.buildGameCardHTML).join("");
+    GamesRender.updateFavoriteButtons(grid);
+    GamesRender.translateInto(grid);
+  }
+
+  // "Children's Games": every game marked `kids: true` in GAMES_CATALOG,
+  // alphabetical in the current language; "Play" opens the children's
+  // version where there is one (Mau Mau's animal cards).
+  function renderKids() {
+    const grid = document.getElementById("kids-grid");
+    if (!grid) return;
+    const name = (g) => (window.I18n ? I18n.t(g.nameKey) : g.nameText);
+    const games = GamesRender.kidsGames(GAMES_CATALOG).sort((a, b) => name(a).localeCompare(name(b)));
+    grid.innerHTML = games.map(GamesRender.buildKidsCardHTML).join("");
     GamesRender.updateFavoriteButtons(grid);
     GamesRender.translateInto(grid);
   }
@@ -201,6 +214,7 @@
     initPitch();
     renderContinuePlaying();
     renderNewGames();
+    renderKids();
     renderFavorites();
     GamesRender.updateFavoriteButtons(document);
     watchOfflineStatus();
@@ -221,6 +235,7 @@
       I18n.onChange(() => {
         renderContinuePlaying();
         renderNewGames();
+        renderKids();
         renderFavorites();
         GamesRender.updateFavoriteButtons(document);
       });
