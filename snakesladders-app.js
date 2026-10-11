@@ -5,13 +5,25 @@
 // 2 to 4 players on one device, any of them played by the computer.
 // Tap "Roll": the die is shown large, the token moves by itself, and a
 // ladder or snake is taken at once and named in the status line - no
-// animation. Computer turns roll after a pause (AiPacing). Tokens differ
-// by shape (circle, square, triangle, star); ladders are two rails with
-// rungs, snakes a thick wavy band with a head, all black on white.
+// animation. Tokens differ by shape (circle, square, triangle, star);
+// ladders are two rails with rungs, snakes a thick wavy band with a head,
+// all black on white.
+//
+// Before the game every person chooses a token (the computers get the
+// others) and who starts: me, a computer or random (the default). Computer
+// turns one at a time: with "Computer moves: Continue after a tap" (the
+// default, remembered on the device) each computer roll waits for the
+// Continue button; with "Automatically" it comes after a calm pause
+// (about 1.5 seconds, AiPacing). The die shows the roll large next to the
+// roller's token, the status line names ladder or snake, and a short list
+// shows the last moves (who, rolled, from, to).
 
 const SNAKESLADDERS_SAVE_KEY = "einkchess_save_snakesladders";
 const SL_SHAPES = ["circle", "square", "triangle", "star"];
 const SL_SHAPE_EN = { circle: "circle", square: "square", triangle: "triangle", star: "star" };
+const SL_SHAPE_NAME = { circle: "Circle", square: "Square", triangle: "Triangle", star: "Star" };
+const SL_PACE_KEY = "papergames_snakesladders_pace";
+const SL_LOG_MAX = 6;
 
 const AppStateSL = {
   board: "big",
@@ -21,8 +33,24 @@ const AppStateSL = {
   state: null,
   started: false,
   gameOver: false,
-  busy: false
+  busy: false,
+  log: []          // last moves, newest first: { player, roll, from, end, via, blocked }
 };
+
+function loadPaceSL() {
+  try { return window.localStorage.getItem(SL_PACE_KEY) === "auto" ? "auto" : "tap"; } catch (e) { return "tap"; }
+}
+
+function savePaceSL(pace) {
+  try { window.localStorage.setItem(SL_PACE_KEY, pace === "auto" ? "auto" : "tap"); } catch (e) { /* the choice just isn't remembered */ }
+}
+
+// Player p's token shape; games saved before tokens could be chosen have
+// player p on shape p.
+function shapeOfSL(p) {
+  const s = AppStateSL.state;
+  return s && Array.isArray(s.shapes) ? s.shapes[p] : p;
+}
 
 /*** Players ***/
 
@@ -55,7 +83,11 @@ function shapeMarkupSL(shape, x, y, r) {
 }
 
 function shapeSvgSL(p, cls) {
-  return '<svg class="' + (cls || "sl-shape") + '" viewBox="0 0 40 40" aria-hidden="true" focusable="false">' + shapeMarkupSL(SL_SHAPES[p], 20, 20, 15) + "</svg>";
+  return shapeSvgOfSL(shapeOfSL(p), cls);
+}
+
+function shapeSvgOfSL(k, cls) {
+  return '<svg class="' + (cls || "sl-shape") + '" viewBox="0 0 40 40" aria-hidden="true" focusable="false">' + shapeMarkupSL(SL_SHAPES[k], 20, 20, 15) + "</svg>";
 }
 
 /*** Status and save ***/
@@ -75,7 +107,7 @@ function saveSL() {
   if (typeof GameStorage === "undefined" || !AppStateSL.state) return;
   GameStorage.save(SNAKESLADDERS_SAVE_KEY, {
     board: AppStateSL.board, finish: AppStateSL.finish, numPlayers: AppStateSL.numPlayers,
-    computers: AppStateSL.computers, state: AppStateSL.state
+    computers: AppStateSL.computers, state: AppStateSL.state, log: AppStateSL.log
   });
 }
 
@@ -101,20 +133,32 @@ function initSnakesLaddersApp() {
     Array.from(computers.options).forEach((o) => { o.disabled = parseInt(o.value, 10) > n - 1; });
     if (parseInt(computers.value, 10) > n - 1) computers.value = String(n - 1);
   }
-  players.addEventListener("change", limitComputers);
+  const firstSel = document.getElementById("sl-first");
+  const paceSel = document.getElementById("sl-pace");
+  players.addEventListener("change", () => { limitComputers(); buildTokenChoicesSL(); });
+  computers.addEventListener("change", buildTokenChoicesSL);
   limitComputers();
+  buildTokenChoicesSL();
+  paceSel.value = loadPaceSL();
+  paceSel.addEventListener("change", () => {
+    savePaceSL(paceSel.value);
+    // Switched to automatic while a computer waits for Continue: go on.
+    if (paceSel.value === "auto" && AppStateSL.state) { renderSL(); continueSL(); }
+  });
   document.getElementById("start-sl-game").addEventListener("click", () => {
+    const choices = Array.from(document.querySelectorAll("#sl-token-choices select")).map((sel) => parseInt(sel.value, 10));
     startGameSL(document.getElementById("sl-board-choice").value, document.getElementById("sl-finish").value,
-      parseInt(players.value, 10), parseInt(computers.value, 10));
+      parseInt(players.value, 10), parseInt(computers.value, 10), choices, firstSel.value);
   });
   document.getElementById("sl-roll").addEventListener("click", humanRollSL);
+  document.getElementById("sl-next").addEventListener("click", nextComputerSL);
   window.addEventListener("resize", () => { if (AppStateSL.state) renderBoardSL(); });
   if (typeof I18n !== "undefined" && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateSL.state) renderSL(); });
   }
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(SNAKESLADDERS_SAVE_KEY) : null;
   if (saved && saved.state && !saved.state.gameOver && SnakesLaddersCore.BOARDS[saved.board]) {
-    Object.assign(AppStateSL, { board: saved.board, finish: saved.finish, numPlayers: saved.numPlayers, computers: saved.computers, state: saved.state });
+    Object.assign(AppStateSL, { board: saved.board, finish: saved.finish, numPlayers: saved.numPlayers, computers: saved.computers, state: saved.state, log: Array.isArray(saved.log) ? saved.log : [] });
     AppStateSL.started = true;
     AppStateSL.gameOver = false;
     showBoardSL();
@@ -134,13 +178,71 @@ function showBoardSL() {
   if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
 }
 
-function startGameSL(board, finish, numPlayers, computers) {
+// One token choice per person: "Your token" with one person, "Token of
+// player N" with several. Two people can't pick the same token: choosing
+// one that is taken swaps it with the other person's.
+function buildTokenChoicesSL() {
+  const wrap = document.getElementById("sl-token-choices");
+  const n = parseInt(document.getElementById("sl-num-players").value, 10);
+  const humans = n - parseInt(document.getElementById("sl-computers").value, 10);
+  const before = Array.from(wrap.querySelectorAll("select")).map((sel) => parseInt(sel.value, 10));
+  const values = SnakesLaddersCore.assignShapes(n, before.slice(0, humans)).slice(0, humans);
+  wrap.innerHTML = "";
+  values.forEach((v, h) => {
+    const id = "sl-token-" + h;
+    const row = document.createElement("span");
+    row.className = "sl-token-choice";
+    const label = document.createElement("label");
+    label.setAttribute("for", id);
+    I18n.setMsg(label, humans === 1 ? "Your token:" : "Token of player " + (h + 1) + ":");
+    const sel = document.createElement("select");
+    sel.id = id;
+    SL_SHAPES.forEach((shape, k) => {
+      const o = document.createElement("option");
+      o.value = String(k);
+      I18n.setMsg(o, SL_SHAPE_NAME[shape]);
+      sel.appendChild(o);
+    });
+    sel.value = String(v);
+    sel.dataset.prev = String(v);
+    sel.addEventListener("change", () => {
+      const others = Array.from(wrap.querySelectorAll("select")).filter((x) => x !== sel && x.value === sel.value);
+      others.forEach((x) => { x.value = sel.dataset.prev; x.dataset.prev = sel.dataset.prev; });
+      sel.dataset.prev = sel.value;
+      renderTokenPreviewSL();
+    });
+    row.appendChild(label);
+    row.appendChild(sel);
+    const pic = document.createElement("span");
+    pic.className = "sl-token-pic";
+    row.appendChild(pic);
+    wrap.appendChild(row);
+  });
+  renderTokenPreviewSL();
+  // "Computer starts" needs a computer.
+  const firstSel = document.getElementById("sl-first");
+  const compOpt = firstSel.querySelector('option[value="computer"]');
+  compOpt.disabled = humans >= n;
+  if (compOpt.disabled && firstSel.value === "computer") firstSel.value = "random";
+}
+
+function renderTokenPreviewSL() {
+  document.querySelectorAll("#sl-token-choices .sl-token-choice").forEach((row) => {
+    row.querySelector(".sl-token-pic").innerHTML = shapeSvgOfSL(parseInt(row.querySelector("select").value, 10), "sl-shape sl-shape-inline");
+  });
+}
+
+function startGameSL(board, finish, numPlayers, computers, tokenChoices, firstChoice) {
   const n = Math.max(2, Math.min(4, numPlayers || 2));
   AppStateSL.board = SnakesLaddersCore.BOARDS[board] ? board : "big";
   AppStateSL.finish = finish === "exact" ? "exact" : "spare";
   AppStateSL.numPlayers = n;
   AppStateSL.computers = Math.max(0, Math.min(n - 1, computers || 0));
-  AppStateSL.state = SnakesLaddersCore.createInitialState(AppStateSL.board, n, AppStateSL.finish);
+  const humans = n - AppStateSL.computers;
+  const shapes = SnakesLaddersCore.assignShapes(n, (tokenChoices || []).slice(0, humans));
+  const first = SnakesLaddersCore.firstPlayer(firstChoice || "random", n, AppStateSL.computers ? humans : n);
+  AppStateSL.state = SnakesLaddersCore.createInitialState(AppStateSL.board, n, AppStateSL.finish, { shapes, first });
+  AppStateSL.log = [];
   AppStateSL.started = true;
   AppStateSL.gameOver = false;
   AppStateSL.busy = false;
@@ -157,21 +259,31 @@ function promptSL(prefix) {
   const s = AppStateSL.state;
   const pre = prefix ? prefix + " " : "";
   const who = nameSL(s.turn);
-  if (isComputerSL(s.turn)) setStatusSL(pre + who + "'s turn.");
+  if (isComputerSL(s.turn) && loadPaceSL() === "tap") setStatusSL(pre + who + "'s turn: tap Continue.");
+  else if (isComputerSL(s.turn)) setStatusSL(pre + who + "'s turn.");
   else setStatusSL(pre + (who === "You" ? "Your turn: tap Roll." : who + "'s turn: tap Roll."));
   renderSL();
 }
 
+// A computer's turn: waits for Continue ("tap"), or rolls after a calm
+// pause ("auto").
 function continueSL() {
   const s = AppStateSL.state;
   if (!s || AppStateSL.gameOver || s.gameOver || !isComputerSL(s.turn) || AppStateSL.busy) return;
+  if (loadPaceSL() === "tap") return;
   AppStateSL.busy = true;
   setTimeout(() => {
     AppStateSL.busy = false;
     const st = AppStateSL.state;
     if (!st || AppStateSL.gameOver || st.gameOver || !isComputerSL(st.turn)) return;
     doRollSL();
-  }, AiPacing.delay(900));
+  }, AiPacing.delay(600));
+}
+
+function nextComputerSL() {
+  const s = AppStateSL.state;
+  if (!s || AppStateSL.gameOver || s.gameOver || !isComputerSL(s.turn) || AppStateSL.busy) return;
+  doRollSL();
 }
 
 function humanRollSL() {
@@ -203,6 +315,8 @@ function doRollSL() {
   const roll = SnakesLaddersCore.rollDie();
   AppStateSL.state = SnakesLaddersCore.move(AppStateSL.state, roll);
   const s = AppStateSL.state;
+  const l = s.last;
+  AppStateSL.log = [{ player: l.player, roll: l.roll, from: l.from, end: l.end, via: l.via, blocked: l.blocked }].concat(AppStateSL.log).slice(0, SL_LOG_MAX);
   const msg = describeSL(s.last);
   if (s.gameOver) { endGameSL(msg); return; }
   saveSL();
@@ -253,23 +367,53 @@ function renderSL() {
     extra.className = "pc-player-extra";
     I18n.setMsg(extra, s.pos[p] ? "Field " + s.pos[p] : "Start");
     row.appendChild(extra);
-    I18n.setAria(row, nameSL(p) + ", " + SL_SHAPE_EN[SL_SHAPES[p]] + ", " + (s.pos[p] ? "Field " + s.pos[p] : "Start"));
+    I18n.setAria(row, nameSL(p) + ", " + SL_SHAPE_EN[SL_SHAPES[shapeOfSL(p)]] + ", " + (s.pos[p] ? "Field " + s.pos[p] : "Start"));
     row.setAttribute("role", "img");
     playersEl.appendChild(row);
   }
   // Die and button.
   const dieEl = document.getElementById("sl-die");
-  dieEl.innerHTML = s.last ? dieSvgSL(s.last.roll) : "";
-  if (s.last) I18n.setAria(dieEl, "Rolled " + s.last.roll);
+  dieEl.innerHTML = s.last ? shapeSvgSL(s.last.player, "sl-shape sl-die-who") + dieSvgSL(s.last.roll) : "";
+  if (s.last) I18n.setAria(dieEl, nameSL(s.last.player) + ", " + "Rolled " + s.last.roll);
   const rollBtn = document.getElementById("sl-roll");
-  rollBtn.classList.toggle("hidden", over);
+  const nextBtn = document.getElementById("sl-next");
+  const computerWaits = !over && isComputerSL(s.turn) && loadPaceSL() === "tap";
+  rollBtn.classList.toggle("hidden", over || computerWaits);
   rollBtn.disabled = over || isComputerSL(s.turn);
+  nextBtn.classList.toggle("hidden", !computerWaits);
+  renderLogSL();
   // Tokens still at the start.
   const startEl = document.getElementById("sl-start");
   startEl.innerHTML = "";
   for (let p = 0; p < s.numPlayers; p++) if (!s.pos[p]) startEl.insertAdjacentHTML("beforeend", shapeSvgSL(p, "sl-shape sl-shape-inline"));
   document.getElementById("sl-start-wrap").classList.toggle("hidden", !startEl.innerHTML);
   renderBoardSL();
+}
+
+// The last moves, newest first: token and name, roll, from, to (with
+// ladder or snake).
+function renderLogSL() {
+  const wrap = document.getElementById("sl-log-wrap");
+  const body = document.getElementById("sl-log-body");
+  body.innerHTML = "";
+  wrap.classList.toggle("hidden", !AppStateSL.log.length);
+  AppStateSL.log.forEach((e) => {
+    const tr = document.createElement("tr");
+    const who = document.createElement("td");
+    who.insertAdjacentHTML("beforeend", shapeSvgSL(e.player, "sl-shape sl-shape-inline"));
+    const name = document.createElement("span");
+    I18n.setMsg(name, nameSL(e.player));
+    who.appendChild(name);
+    const roll = document.createElement("td");
+    roll.className = "sl-log-roll";
+    roll.textContent = String(e.roll);
+    const from = document.createElement("td");
+    I18n.setMsg(from, e.from ? String(e.from) : "Start");
+    const to = document.createElement("td");
+    I18n.setMsg(to, e.blocked ? "Too far" : String(e.end) + (e.via === "ladder" ? " (Ladder)" : e.via === "snake" ? " (Snake)" : ""));
+    [who, roll, from, to].forEach((td) => tr.appendChild(td));
+    body.appendChild(tr);
+  });
 }
 
 // The board: cells with their numbers, ladders and snakes and the tokens
@@ -328,7 +472,7 @@ function renderBoardSL() {
   for (let p = 0; p < s.numPlayers; p++) {
     if (!s.pos[p]) continue;
     const [x, y] = C(s.pos[p]);
-    out += shapeMarkupSL(SL_SHAPES[p], fx(x + offsets[p][0] * u), fx(y + offsets[p][1] * u), fx(u * 0.23));
+    out += shapeMarkupSL(SL_SHAPES[shapeOfSL(p)], fx(x + offsets[p][0] * u), fx(y + offsets[p][1] * u), fx(u * 0.23));
   }
   boardEl.innerHTML = '<svg class="sl-board-svg" viewBox="0 0 ' + u * cols + " " + u * rows + '" width="' + u * cols + '" height="' + u * rows + '" aria-hidden="true" focusable="false">' + out + "</svg>";
   // Screen reader: a list of what is where.

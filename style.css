@@ -10946,15 +10946,65 @@ button.concan-meld {
 }
 
 .sl-die-wrap {
-  display: inline-block;
-  width: 3.4rem;
-  height: 3.4rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: 4rem;
 }
 
+/* The die large, the roller's token next to it. */
 .sl-die {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 4rem;
+  height: 4rem;
+}
+
+.sl-shape.sl-die-who {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.35rem;
+}
+
+.sl-token-choice {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0.6rem 0.3rem 0;
+}
+
+.sl-token-choice select {
+  margin: 0 0.3rem;
+}
+
+.sl-token-pic .sl-shape {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+/* Last moves: a small table, newest first. */
+.sl-log-wrap {
+  margin: 0.6rem 0 0;
+  text-align: center;
+}
+
+.sl-log {
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.sl-log th,
+.sl-log td {
+  padding: 0.15rem 0.45rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.sl-log td:first-child {
+  white-space: nowrap;
+}
+
+.sl-log td.sl-log-roll {
+  font-weight: 700;
+  text-align: center;
 }
 
 .sl-shape {

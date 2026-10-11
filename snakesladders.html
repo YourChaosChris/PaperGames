@@ -78,6 +78,22 @@
     <label for="sl-computers" data-i18n="sl_computers_label">Computer:</label>
     <select id="sl-computers"><option value="0">0</option><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option></select>
   </div>
+  <div id="sl-token-choices" class="field-row"></div>
+  <div class="field-row">
+    <label for="sl-first" data-i18n="sl_first_label">Who starts:</label>
+    <select id="sl-first">
+        <option value="me" data-i18n="sl_first_me">Me</option>
+        <option value="computer" data-i18n="sl_first_computer">Computer</option>
+        <option value="random" selected data-i18n="sl_first_random">Random</option>
+      </select>
+  </div>
+  <div class="field-row">
+    <label for="sl-pace" data-i18n="sl_pace_label">Computer moves:</label>
+    <select id="sl-pace">
+        <option value="tap" selected data-i18n="sl_pace_tap">Continue after a tap</option>
+        <option value="auto" data-i18n="sl_pace_auto">Automatically</option>
+      </select>
+  </div>
 </section>
 </div>
 
@@ -102,10 +118,18 @@
     <div class="sl-dice-row">
       <span id="sl-die" class="sl-die-wrap" role="img"></span>
       <button id="sl-roll" class="primary" type="button" data-i18n="sl_roll">Roll</button>
+      <button id="sl-next" class="primary hidden" type="button" data-i18n="sl_next">Continue</button>
       <span id="sl-start-wrap" class="sl-start-wrap hidden"><span data-i18n="sl_start_label">Start</span>: <span id="sl-start"></span></span>
     </div>
     <div id="sl-board-wrap" class="sl-board-wrap">
       <div id="sl-board" class="sl-board" role="img" data-i18n-attr="aria-label:sl_board_aria" aria-label="Snakes and Ladders board"></div>
+    </div>
+    <div id="sl-log-wrap" class="sl-log-wrap hidden">
+      <span class="pc-row-label" data-i18n="sl_log_title">Last moves</span>
+      <table class="sl-log">
+        <thead><tr><th data-i18n="sl_log_who">Who</th><th data-i18n="sl_log_rolled">Rolled</th><th data-i18n="sl_log_from">From</th><th data-i18n="sl_log_to">To</th></tr></thead>
+        <tbody id="sl-log-body"></tbody>
+      </table>
     </div>
     <ul id="sl-board-desc" class="sl-sr-list"></ul>
   </div>

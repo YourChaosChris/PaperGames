@@ -8,11 +8,19 @@
 // Tokens start off the board (position 0) and enter with the first roll.
 // Whoever reaches the last field first wins.
 //
+// Tokens: s.shapes[p] is the shape of player p's token (0 circle,
+// 1 square, 2 triangle, 3 star). The people playing choose theirs, the
+// computers get the others (assignShapes). Who rolls first is chosen too:
+// "me" (the first person), "computer" (the first computer) or "random"
+// (firstPlayer). States saved before this have no `shapes`: player p then
+// has shape p, as before.
+//
 // Finishing: "spare" (the default) - a roll that goes past the last field
 // still reaches it, the spare pips are lost; "exact" - the roll must fit
 // exactly, otherwise the token stays where it is.
 
 const SnakesLaddersCore = (function () {
+  const SHAPES = ["circle", "square", "triangle", "star"];
   const BOARDS = {
     big: {
       size: 100, cols: 10,
@@ -36,13 +44,43 @@ const SnakesLaddersCore = (function () {
     return { row: rows - 1 - rowFromBottom, col };
   }
 
-  // players: number of tokens (2-4). rng is not needed here.
-  function createInitialState(boardName, numPlayers, finish) {
+  // Shapes for all seats: the people (seats 0..humans-1) get their
+  // choices in order - a shape already taken goes to the next free one -
+  // the computers the shapes left over, in order.
+  function assignShapes(numPlayers, choices) {
+    const n = Math.max(2, Math.min(4, numPlayers || 2));
+    const taken = [], out = [];
+    (choices || []).slice(0, n).forEach((c) => {
+      let k = SHAPES.indexOf(c) !== -1 ? SHAPES.indexOf(c) : (typeof c === "number" ? c : 0);
+      if (!(k >= 0 && k < SHAPES.length)) k = 0;
+      while (taken.indexOf(k) !== -1) k = (k + 1) % SHAPES.length;
+      taken.push(k); out.push(k);
+    });
+    for (let k = 0; out.length < n; k++) if (taken.indexOf(k) === -1) { taken.push(k); out.push(k); }
+    return out;
+  }
+
+  // Who rolls first: "me" - seat 0 (the first person), "computer" - the
+  // first computer (seat `humans`; seat 0 when nobody is a computer),
+  // "random" - any seat. rng: () => [0, 1).
+  function firstPlayer(choice, numPlayers, humans, rng) {
+    const n = Math.max(2, Math.min(4, numPlayers || 2));
+    if (choice === "me") return 0;
+    if (choice === "computer") return humans >= 0 && humans < n ? humans : 0;
+    return Math.floor((rng || Math.random)() * n);
+  }
+
+  // players: number of tokens (2-4). opts: { shapes, first } (both
+  // optional: shapes 0..n-1 and seat 0 when left out).
+  function createInitialState(boardName, numPlayers, finish, opts) {
     const board = BOARDS[boardName] ? boardName : "big";
     const n = Math.max(2, Math.min(4, numPlayers || 2));
+    const o = opts || {};
+    const shapes = Array.isArray(o.shapes) && o.shapes.length === n ? o.shapes.slice() : assignShapes(n, []);
+    const first = o.first >= 0 && o.first < n ? o.first : 0;
     return {
-      board, numPlayers: n, finish: finish === "exact" ? "exact" : "spare",
-      pos: new Array(n).fill(0), turn: 0, gameOver: false, winner: -1, turns: 0, last: null
+      board, numPlayers: n, finish: finish === "exact" ? "exact" : "spare", shapes,
+      pos: new Array(n).fill(0), turn: first, first, gameOver: false, winner: -1, turns: 0, last: null
     };
   }
 
@@ -53,6 +91,8 @@ const SnakesLaddersCore = (function () {
   function move(s0, roll) {
     if (s0.gameOver) return s0;
     const s = { board: s0.board, numPlayers: s0.numPlayers, finish: s0.finish, pos: s0.pos.slice(), turn: s0.turn, gameOver: false, winner: -1, turns: s0.turns + 1, last: null };
+    if (s0.shapes) s.shapes = s0.shapes.slice();
+    if (s0.first !== undefined) s.first = s0.first;
     const b = BOARDS[s.board];
     const p = s.turn, from = s.pos[p];
     let to = from + roll, blocked = false;
@@ -77,7 +117,7 @@ const SnakesLaddersCore = (function () {
     return 1 + Math.floor((rng || Math.random)() * 6);
   }
 
-  return { BOARDS, cellOf, createInitialState, move, rollDie };
+  return { BOARDS, SHAPES, cellOf, assignShapes, firstPlayer, createInitialState, move, rollDie };
 })();
 
 if (typeof module !== "undefined" && module.exports) {
