@@ -776,7 +776,7 @@ const GAMES_CATALOG = [
     nameKey: "game_shapesort",
     nameText: "Shape Sort",
     descKey: "home_shapesort_desc",
-    descText: "A calm sorting puzzle: move the stones between tubes until every tube holds four of one shape. Shapes instead of colours, so it reads on black-and-white e-ink; undo as often as you like.",
+    descText: "A calm sorting puzzle: move the stones between tubes until every tube holds one shape only. 4 to 10 stones per tube. Shapes instead of colours, so it reads on black-and-white e-ink; undo as often as you like.",
     popular: false,
     kids: true,
     added: "2026-10-10T09:17",

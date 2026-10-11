@@ -10648,6 +10648,20 @@ button.concan-meld {
   font-weight: 700;
 }
 
+/* "Stones per tube": more stones, smaller shapes, taller tubes. The tube
+   stays at least 44px wide to tap; JS puts the tubes in several rows. */
+.shapesort-cap-6 .shapesort-tube { width: 50px; }
+.shapesort-cap-6 .shapesort-slot { height: 37px; }
+.shapesort-cap-6 .shapesort-stone-icon { width: 32px; height: 32px; margin: 2px auto; }
+.shapesort-cap-8 .shapesort-tube { width: 46px; }
+.shapesort-cap-8 .shapesort-slot { height: 31px; margin: 1px 0; }
+.shapesort-cap-8 .shapesort-stone-icon { width: 27px; height: 27px; margin: 2px auto; }
+.shapesort-cap-10 .shapesort-tube { width: 44px; padding: 2px; }
+.shapesort-cap-10 .shapesort-slot { height: 27px; margin: 1px 0; }
+.shapesort-cap-10 .shapesort-stone-icon { width: 24px; height: 24px; margin: 1px auto; }
+.shapesort-cap-8 .shapesort-tube-wrap,
+.shapesort-cap-10 .shapesort-tube-wrap { margin: 0 4px 12px; }
+
 .board-actions.shapesort-actions {
   justify-content: center;
 }

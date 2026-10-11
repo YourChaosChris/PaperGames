@@ -9,6 +9,10 @@
 // tubes of a move that leads to a solution (or says honestly that the
 // position can no longer be solved, so an undo is needed).
 //
+// "Stones per tube" (4, 6, 8 or 10) is chosen next to the level and
+// remembered for the next visit; with more stones the shapes get smaller
+// and the tubes taller (class shapesort-cap-N on the tube area).
+//
 // Stones differ by shape only - circle, square, triangle, star, heart,
 // cross, diamond, moon - drawn black on white, some filled and some
 // outlined as an extra cue. Each tube has its number under it, which the
@@ -16,6 +20,7 @@
 
 const AppStateShapeSort = {
   level: "easy",
+  cap: 4,            // stones per tube (ShapeSortCore.CAPACITIES)
   tubes: null,
   start: null,       // the deal, for nothing but the save
   history: [],       // positions before each move, for Undo
@@ -28,6 +33,15 @@ const AppStateShapeSort = {
 };
 
 const SHAPESORT_SAVE_KEY = "einkchess_save_shapesort";
+const SHAPESORT_CAP_PREF_KEY = "papergames_shapesort_cap";
+
+function loadCapPrefShapeSort() {
+  try { return ShapeSortCore.capOf(parseInt(window.localStorage.getItem(SHAPESORT_CAP_PREF_KEY), 10)); } catch (e) { return ShapeSortCore.CAPACITY; }
+}
+
+function saveCapPrefShapeSort(cap) {
+  try { window.localStorage.setItem(SHAPESORT_CAP_PREF_KEY, String(cap)); } catch (e) { /* the choice just isn't remembered */ }
+}
 const SHAPESORT_EN = { circle: "Circle", square: "Square", triangle: "Triangle", star: "Star", heart: "Heart", cross: "Cross", diamond: "Diamond", moon: "Moon" };
 
 // Shape drawings, viewBox 0 0 40 40.
@@ -63,7 +77,7 @@ function setStatusShapeSort(text) {
 function saveShapeSortGame() {
   if (typeof GameStorage === "undefined" || !AppStateShapeSort.tubes) return;
   const s = AppStateShapeSort;
-  GameStorage.save(SHAPESORT_SAVE_KEY, { level: s.level, tubes: s.tubes, start: s.start, history: s.history, moves: s.moves, hinted: s.hinted });
+  GameStorage.save(SHAPESORT_SAVE_KEY, { level: s.level, cap: s.cap, tubes: s.tubes, start: s.start, history: s.history, moves: s.moves, hinted: s.hinted });
 }
 
 function clearSavedShapeSortGame() {
@@ -74,14 +88,23 @@ function initShapeSortApp() {
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const levelSelect = document.getElementById("shapesort-level");
+  const capSelect = document.getElementById("shapesort-cap");
   if (menuToggle && settingsPanel) {
     menuToggle.addEventListener("click", () => {
       const hidden = settingsPanel.classList.toggle("hidden");
       I18n.setKey(menuToggle, hidden ? "menu_toggle" : "menu_close");
     });
   }
-  document.getElementById("start-shapesort-game").addEventListener("click", () => startNewShapeSort(levelSelect.value));
-  document.getElementById("shapesort-shuffle").addEventListener("click", () => startNewShapeSort(AppStateShapeSort.level));
+  if (capSelect) {
+    capSelect.value = String(loadCapPrefShapeSort());
+    capSelect.addEventListener("change", () => saveCapPrefShapeSort(ShapeSortCore.capOf(parseInt(capSelect.value, 10))));
+  }
+  const chosenCap = () => ShapeSortCore.capOf(capSelect ? parseInt(capSelect.value, 10) : ShapeSortCore.CAPACITY);
+  document.getElementById("start-shapesort-game").addEventListener("click", () => {
+    saveCapPrefShapeSort(chosenCap());
+    startNewShapeSort(levelSelect.value, chosenCap());
+  });
+  document.getElementById("shapesort-shuffle").addEventListener("click", () => startNewShapeSort(AppStateShapeSort.level, AppStateShapeSort.cap));
   document.getElementById("shapesort-undo").addEventListener("click", undoShapeSort);
   document.getElementById("hint-btn").addEventListener("click", hintShapeSort);
 
@@ -89,6 +112,8 @@ function initShapeSortApp() {
   if (saved && Array.isArray(saved.tubes) && ShapeSortCore.LEVELS[saved.level]) {
     const s = AppStateShapeSort;
     s.level = saved.level;
+    // Games saved before "Stones per tube" existed have 4.
+    s.cap = ShapeSortCore.capOf(saved.cap);
     s.tubes = saved.tubes;
     s.start = saved.start || saved.tubes;
     s.history = Array.isArray(saved.history) ? saved.history : [];
@@ -98,20 +123,23 @@ function initShapeSortApp() {
     s.selected = -1;
     s.gameOver = false;
     if (levelSelect) levelSelect.value = s.level;
+    if (capSelect) capSelect.value = String(s.cap);
     showShapeSortBoard();
     buildShapeSortBoard();
     setStatusShapeSort("Tap a tube, then the tube the stones should go to.");
   }
 }
 
-function startNewShapeSort(level) {
-  const p = ShapeSortCore.generatePuzzle(level);
+function startNewShapeSort(level, cap) {
+  const c = ShapeSortCore.capOf(cap);
+  const p = ShapeSortCore.generatePuzzle(level, null, c);
   const s = AppStateShapeSort;
   s.level = level;
+  s.cap = c;
   s.tubes = p.tubes;
   s.start = p.tubes;
   s.history = [];
-  s.plan = ShapeSortCore.makePlan(p.tubes, p.solution);
+  s.plan = ShapeSortCore.makePlan(p.tubes, p.solution, c);
   s.selected = -1;
   s.hintTubes = [];
   s.hinted = false;
@@ -143,6 +171,7 @@ function buildShapeSortBoard() {
   const s = AppStateShapeSort;
   const el = document.getElementById("shapesort-tubes");
   el.innerHTML = "";
+  ShapeSortCore.CAPACITIES.forEach((c) => el.classList.toggle("shapesort-cap-" + c, c === s.cap));
   s.tubes.forEach((_, i) => {
     const wrap = document.createElement("span");
     wrap.className = "shapesort-tube-wrap";
@@ -151,7 +180,7 @@ function buildShapeSortBoard() {
     btn.className = "shapesort-tube";
     btn.setAttribute("data-i18n-attr", "");
     btn.dataset.tube = i;
-    for (let k = ShapeSortCore.CAPACITY - 1; k >= 0; k--) {
+    for (let k = s.cap - 1; k >= 0; k--) {
       const slot = document.createElement("span");
       slot.className = "shapesort-slot";
       slot.dataset.slot = k;
@@ -214,7 +243,7 @@ function renderShapeSort() {
       slot.classList.toggle("shapesort-stone-marked", i === sel && k < t.length && k >= t.length - runSel);
     });
     btn.classList.toggle("shapesort-tube-selected", i === sel);
-    btn.classList.toggle("shapesort-tube-done", ShapeSortCore.isComplete(t));
+    btn.classList.toggle("shapesort-tube-done", ShapeSortCore.isComplete(t, s.cap));
     btn.classList.toggle("hint-cell", s.hintTubes.indexOf(i) !== -1);
     let label = "Tube " + (i + 1) + ", ";
     label += t.length ? t.map(shapeNameEn).join(", ") : "empty";
@@ -252,9 +281,9 @@ function onShapeSortTubeClick(i) {
     return;
   }
   const from = s.selected;
-  const next = ShapeSortCore.applyMove(s.tubes, from, i);
+  const next = ShapeSortCore.applyMove(s.tubes, from, i, s.cap);
   if (!next) {
-    setStatusShapeSort(s.tubes[i].length >= ShapeSortCore.CAPACITY
+    setStatusShapeSort(s.tubes[i].length >= s.cap
       ? "That tube is full. Choose another one."
       : "Stones can only go onto the same shape or into an empty tube.");
     return;
@@ -268,7 +297,7 @@ function onShapeSortTubeClick(i) {
 
 function afterShapeSortMove() {
   const s = AppStateShapeSort;
-  if (ShapeSortCore.isSolved(s.tubes)) {
+  if (ShapeSortCore.isSolved(s.tubes, s.cap)) {
     s.gameOver = true;
     s.hintTubes = [];
     renderShapeSort();
@@ -303,7 +332,7 @@ function hintShapeSort() {
   if (!s.tubes || s.gameOver) return;
   s.hinted = true;
   s.selected = -1;
-  const h = ShapeSortCore.findHint(s.tubes, s.plan);
+  const h = ShapeSortCore.findHint(s.tubes, s.plan, s.cap);
   if (h.kind === "move") {
     s.plan = h.plan;
     s.hintTubes = [h.from, h.to];
