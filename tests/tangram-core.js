@@ -11,6 +11,13 @@
 // no overlap, outline full. Solution counts are printed per level (Easy
 // has the most). Playing every outline with the hint alone fills it; a
 // wrongly laid piece is cleared away by the hint.
+// "Outline only": 29 more outlines (numbers, letters, animals, people,
+// houses, boats), checked the same way. Their picture (tangram-app.js) is
+// one path and nothing else: every piece of its line has the figure on
+// exactly one side (no line inside), and together the line runs along the
+// whole edge of the figure; there are no solution lines. A piece may be
+// laid sticking out (placeFree) - then the outline does not count as
+// full - and laying the solution with placeFree fills it.
 //
 // Run: node tests/tangram-core.js
 
@@ -34,7 +41,7 @@ function connected(fig) {
   return seen.size === keys.length;
 }
 
-const want = { easy: 20, medium: 20, hard: 21 };
+const want = { easy: 20, medium: 20, hard: 21, outline: 29 };
 const ids = new Set(), shapes = new Set();
 let total = 0;
 const report = [];
@@ -84,7 +91,65 @@ Object.keys(want).forEach((lv) => {
 });
 report.forEach((r) => console.log(r));
 console.log(total + " outlines, each solvable; filled with the hint alone");
-if (total < 60) fails.push("only " + total + " outlines");
+if (total < 90) fails.push("only " + total + " outlines");
+
+// The outline picture of the "outline only" level.
+{
+  const fs = require("fs"), vm = require("vm"), path = require("path");
+  const ctx = { document: { addEventListener() {} }, console, Math, window: {} };
+  vm.createContext(ctx);
+  vm.runInContext(fs.readFileSync(path.join(__dirname, "..", "tangram-core.js"), "utf8") + fs.readFileSync(path.join(__dirname, "..", "tangram-app.js"), "utf8") +
+    ";this.loops=outlineLoopsTg;this.svg=outlineSvgTg;", ctx);
+  let segs = 0;
+  T.LEVELS.outline.forEach((f) => {
+    const fig = T.parseFigure(f.rows);
+    const html = ctx.svg(fig, 40);
+    if ((html.match(/<path/g) || []).length !== 1 || /dasharray/.test(html)) fails.push(f.id + ": outline picture is not one plain path");
+    // Inside test: a point is in the figure if it lies in one of its quarters.
+    const inside = (x, y) => {
+      const c = Math.floor(x), r = Math.floor(y), fx = x - c, fy = y - r;
+      const q = fy < fx ? (fy < 1 - fx ? 0 : 1) : (fy < 1 - fx ? 3 : 2);
+      return !!fig.quarters[r + "," + c + "," + q];
+    };
+    let len = 0;
+    ctx.loops(fig).forEach((pts) => {
+      pts.forEach((a, i) => {
+        const b = pts[(i + 1) % pts.length];
+        const L = Math.hypot(b[0] - a[0], b[1] - a[1]);
+        len += L;
+        // Check several points along the piece of line.
+        for (let t = 0.1; t < 1; t += 0.2) {
+          const mx = a[0] + (b[0] - a[0]) * t, my = a[1] + (b[1] - a[1]) * t;
+          const nx = -(b[1] - a[1]) / L * 0.01, ny = (b[0] - a[0]) / L * 0.01;
+          if (inside(mx + nx, my + ny) === inside(mx - nx, my - ny)) { fails.push(f.id + ": a line inside the figure or outside it"); return; }
+        }
+        segs++;
+      });
+    });
+    // Length of the whole edge, counted from the quarters.
+    const across = { 0: [[-1, 0, 2], [0, 0, 1], [0, 0, 3]], 1: [[0, 1, 3], [0, 0, 2], [0, 0, 0]], 2: [[1, 0, 0], [0, 0, 3], [0, 0, 1]], 3: [[0, -1, 1], [0, 0, 0], [0, 0, 2]] };
+    let edge = 0;
+    Object.keys(fig.quarters).forEach((k) => {
+      const [r, c, q] = k.split(",").map(Number);
+      across[q].forEach((d, i) => { if (!fig.quarters[(r + d[0]) + "," + (c + d[1]) + "," + d[2]]) edge += i === 0 ? 1 : Math.SQRT1_2; });
+    });
+    if (Math.abs(edge - len) > 1e-6) fails.push(f.id + ": the line covers " + len.toFixed(2) + " of an edge of " + edge.toFixed(2));
+    // Free laying: a piece sticking out is allowed but the outline is not full.
+    const sol = T.solve(fig);
+    let placed = [];
+    const out = T.placeFree(fig, [], "Q", 0, false, -0.5, -0.5, 2, 1);
+    if (!out || T.fits(fig, [], out)) fails.push(f.id + ": no square laid sticking out");
+    else if (T.isComplete(fig, [out])) fails.push(f.id + ": sticking-out piece counts as filled");
+    sol.forEach((pl) => {
+      const poly = T.placementPolygon(pl);
+      const cx = poly.reduce((a, p) => a + p[0], 0) / poly.length, cy = poly.reduce((a, p) => a + p[1], 0) / poly.length;
+      const got = T.placeFree(fig, placed, pl.piece, pl.k, pl.flip, cx, cy, 0.5, 1);
+      if (got) placed.push(got);
+    });
+    if (!T.isComplete(fig, placed)) fails.push(f.id + ": laying the solution freely does not fill it");
+  });
+  console.log("outline only: " + T.LEVELS.outline.length + " pictures drawn as one line along the edge (" + segs + " pieces of line checked), no lines inside; free laying works");
+}
 if (fails.length) {
   fails.slice(0, 20).forEach((f) => console.log("FAIL: " + f));
   console.log("=== TANGRAM CORE: " + fails.length + " failure(s) ===");

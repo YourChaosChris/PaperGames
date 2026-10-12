@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v234",
+    date: "2026-10-12",
+    key: "release_v234",
+    text: "Tangram has a new level, Outline only, with 29 new figures."
+  },
+  {
     version: "v233",
     date: "2026-10-12",
     key: "release_v233",

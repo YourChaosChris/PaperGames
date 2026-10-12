@@ -225,6 +225,37 @@ const TangramCore = (function () {
     return best;
   }
 
+  // Outline only: the nearest whole-number position near (px, py) where
+  // the piece lies on no placed piece and stays on the board (the outline
+  // plus `pad` units around it) - inside the outline or not. Or null.
+  function onBoard(fig, pl, pad) {
+    const qs = placementQuarters(pl);
+    if (!qs) return false;
+    return qs.every((x) => {
+      const [r, c] = x.split(",").map(Number);
+      return r >= -pad && r < fig.rows + pad && c >= -pad && c < fig.cols + pad;
+    });
+  }
+  function placeFree(fig, placed, piece, k, flip, px, py, reach, pad) {
+    if (k % 2) return null;
+    const poly = polygon(KIND[piece], k, flip);
+    const cx = poly.reduce((a, p) => a + p[0], 0) / poly.length, cy = poly.reduce((a, p) => a + p[1], 0) / poly.length;
+    const taken = {};
+    placed.forEach((p) => (placementQuarters(p) || []).forEach((x) => { taken[x] = true; }));
+    let best = null, bd = (reach || 2) * (reach || 2);
+    for (let y = -pad - 2; y <= fig.rows + pad; y++) {
+      for (let x = -pad - 2; x <= fig.cols + pad; x++) {
+        const d = (x + cx - px) * (x + cx - px) + (y + cy - py) * (y + cy - py);
+        if (d >= bd) continue;
+        const pl = { piece, k, flip, x, y };
+        if (!onBoard(fig, pl, pad)) continue;
+        if (placementQuarters(pl).some((q) => taken[q])) continue;
+        best = pl; bd = d;
+      }
+    }
+    return best;
+  }
+
   // Same shape on the same quarters (the two large and the two small
   // triangles count as the same piece).
   function samePlace(a, b) {
@@ -254,10 +285,11 @@ const TangramCore = (function () {
   }
 
   // --- the outlines --------------------------------------------------------
-  // [id, level, rows]: 61 outlines (animals, people, things and signs),
+  // [id, level, rows]: 90 outlines (animals, people, things and signs),
   // drawn for PaperGames on the grid described above. The level follows
   // the number of ways to fill the outline: Easy has the most (and shows
   // the lines of one solution), Hard the fewest - many have only one.
+  // "outline" is a level of its own (see there).
   const FIGURES = [
     ["house", "easy", [".34.","3##4",".##.",".##."]],
     ["tree", "easy", [".24..",".3#4.","3###4","..#.."]],
@@ -319,13 +351,45 @@ const TangramCore = (function () {
     ["whale", "hard", ["4...","##3#","#2##","1..."]],
     ["letter_l", "hard", ["24..","4#..","##..","###1"]],
     ["star", "hard", ["..4.","4###","21##",".21."]],
-    ["zigzag", "hard", ["4...","##..","3##.","..##","...#"]]
+    ["zigzag", "hard", ["4...","##..","3##.","..##","...#"]],
+    // Outline only: numbers, letters, animals, people, houses and boats.
+    // Only the outer line is drawn, and a piece lands where it is tapped
+    // even if it sticks out (placeFree) - trying out is part of it.
+    ["digit_1", "outline", [".3#",  "3##",  ".##",  ".##"]],
+    ["digit_2", "outline", [".2#4",  "...#",  ".3#1",  "3##1"]],
+    ["digit_5", "outline", [".3",  "3#",  "#.",  "##",  ".#",  "##"]],
+    ["letter_c", "outline", ["###",  "#..",  "#..",  "###"]],
+    ["letter_e", "outline", ["##",  "#.",  "##",  "#.",  "##"]],
+    ["letter_f", "outline", ["..3",  "3##",  "#..",  "##.",  "#..",  "#.."]],
+    ["letter_u", "outline", ["#..#",  "#..#",  "####"]],
+    ["letter_y", "outline", ["...#",  "#..#",  "2##1",  ".##."]],
+    ["letter_z", "outline", ["2#44",  ".3#1",  "3###"]],
+    ["fish", "outline", ["4.34.",  "#####",  "1.21."]],
+    ["cat_sitting", "outline", ["4.3",  "###",  ".##",  ".##"]],
+    ["bird_flying", "outline", ["..4.3",  "3###1",  "2##..",  ".1..."]],
+    ["pony", "outline", ["4....",  "#3###",  "##..#"]],
+    ["seal", "outline", ["3....",  "2#...",  ".###4",  ".2##."]],
+    ["hen", "outline", [".4..",  "4#4.",  "###4",  ".2#1"]],
+    ["swan", "outline", ["3...",  "#...",  "#...",  "2##4",  ".##1"]],
+    ["fox_sitting", "outline", [".44.",  ".##.",  "3##4",  ".##."]],
+    ["person_coat", "outline", [".#.",  "3#4",  "###",  "#.#"]],
+    ["walker", "outline", [".#4",  ".##",  "3##",  "#.#"]],
+    ["thrower", "outline", [".3..",  "3###",  ".3#4",  ".#.#"]],
+    ["resting", "outline", ["34..",  "##..",  "###4",  "1..#"]],
+    ["house_chimney", "outline", ["..#",  ".3#",  "3##",  "###"]],
+    ["house_door", "outline", ["..4.",  "3##4",  "#.2#",  "#..#"]],
+    ["castle", "outline", ["#.#.#",  "#####"]],
+    ["tent", "outline", ["...4..",  "..##4.",  "3####4"]],
+    ["hut", "outline", [".3..",  ".#4.",  "3##4",  "2##1"]],
+    ["sailing_boat", "outline", ["..4..",  "..#4.",  "2###1",  ".##.."]],
+    ["rowboat", "outline", ["..#..",  "4.#.3",  "#####"]],
+    ["yacht", "outline", ["..#4.",  "..##4",  "2###1"]]
   ];
 
-  const LEVELS = { easy: [], medium: [], hard: [] };
+  const LEVELS = { easy: [], medium: [], hard: [], outline: [] };
   FIGURES.forEach((f) => { LEVELS[f[1]].push({ id: f[0], level: f[1], rows: f[2] }); });
 
-  return { PIECES, KIND, BASE, SHAPES, FIGURES, LEVELS, polygon, placementQuarters, placementPolygon, parseFigure, solve, countSolutions, fits, isComplete, snap, samePlace, findHint };
+  return { PIECES, KIND, BASE, SHAPES, FIGURES, LEVELS, polygon, placementQuarters, placementPolygon, parseFigure, solve, countSolutions, fits, isComplete, snap, placeFree, onBoard, samePlace, findHint };
 })();
 
 if (typeof module !== "undefined" && module.exports) {

@@ -35,7 +35,7 @@
 // of Pairs, or 17 and 4 in Blackjack), and that game's description names
 // it. Only a genuinely new game gets its own pages and an entry here.
 
-const GAME_FAMILIES = ["chess", "draughts", "tafl", "hunt", "halma", "inarow", "ancientrace", "dicerace", "sudoku", "latin", "math", "tiling", "patience", "rummy", "tricks", "casino"];
+const GAME_FAMILIES = ["chess", "draughts", "tafl", "hunt", "halma", "inarow", "ancientrace", "dicerace", "sudoku", "latin", "math", "tiling", "rings", "patience", "rummy", "tricks", "casino"];
 
 const GAMES_CATALOG = [
   {
@@ -1075,6 +1075,7 @@ const GAMES_CATALOG = [
   {
     slug: "rings",
     category: "puzzles",
+    family: "rings",
     nameKey: "game_rings",
     nameText: "Turn the Rings",
     descKey: "home_rings_desc",
@@ -1090,7 +1091,7 @@ const GAMES_CATALOG = [
     nameKey: "game_tangram",
     nameText: "Tangram",
     descKey: "home_tangram_desc",
-    descText: "Fill an outline with the seven classic pieces - triangles, a square and a parallelogram. 61 outlines in three levels, each with a solution checked by computer; tap a piece, turn it, tap where it goes - no dragging.",
+    descText: "Fill an outline with the seven classic pieces - triangles, a square and a parallelogram. 90 outlines in four levels, each with a solution checked by computer. On Outline only you see just the outer line, and a piece lands where you tap it - you have to try. Tap a piece, turn it, tap where it goes - no dragging.",
     popular: false,
     added: "2026-10-12T15:20",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M4 4H36L20 20Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M4 4V36L20 20Z\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M36 4V20L28 12Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M20 20L28 12L36 20L28 28Z\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M20 20L28 28H12Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M4 36L12 28H28L20 36Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M20 36H36V20Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/></svg></span>"
@@ -1116,5 +1117,17 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-12T16:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><path d=\"M14.3 3V14.3H25.7V37M3 25.7H25.7\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.6\"/><path d=\"M14.3 25.7V37M25.7 14.3H37\" stroke=\"#141413\" stroke-width=\"0.8\" stroke-dasharray=\"1.5 2\"/><path d=\"M27 6.5L27.6 3.8L29.6 5.6H32L34 3.8L34.6 6.5Q34.6 10.6 30.8 10.6Q27 10.6 27 6.5Z\" fill=\"#141413\"/><ellipse cx=\"9\" cy=\"32\" rx=\"4.2\" ry=\"2.8\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.2\"/><path d=\"M4.3 26.8L4.6 24.6L6.3 26H8.3L10 24.6L10.3 26.8Q10.3 30.2 7.3 30.2Q4.3 30.2 4.3 26.8Z\" fill=\"#141413\"/><circle cx=\"20\" cy=\"20\" r=\"1.3\" fill=\"#141413\"/></svg></span>"
+  },
+  {
+    slug: "loosen",
+    category: "puzzles",
+    family: "rings",
+    nameKey: "game_loosen",
+    nameText: "Loosen the Rings",
+    descKey: "home_loosen_desc",
+    descText: "Rings hooked into each other, each with a gap: turn them - hooked rings turn along the other way - until one after the other slips off. Three levels, with the fewest moves, undo and hints.",
+    popular: false,
+    added: "2026-10-12T17:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M23.5 9.2A10 10 0 1 0 23.6 23.3\" fill=\"none\" stroke=\"#141413\" stroke-width=\"3.2\"/><path d=\"M16.5 30.8A10 10 0 1 0 16.4 16.7\" fill=\"none\" stroke=\"#141413\" stroke-width=\"3.2\"/><path d=\"M21.4 7.4L25.6 11M21.5 25.2L25.7 21.4M18.6 32.6L14.4 29M18.5 14.8L14.3 18.6\" stroke=\"#141413\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg></span>"
   }
 ];

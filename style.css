@@ -13372,6 +13372,56 @@ li.fv-card {
   }
 }
 
+/* Loosen the Rings (loosen-app.js): the rings as one picture, a round
+   tap button over the middle of every ring; the chosen ring has a dashed
+   circle inside, the hinted one a thicker one. */
+.lr-board {
+  position: relative;
+  width: 100%;
+  margin: 0.4rem auto 0.6rem;
+}
+
+.lr-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.lr-ring-btn {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.lr-ring-btn:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
+}
+
+.lr-num {
+  font: bold 20px sans-serif;
+  fill: #141413;
+}
+
+.lr-sel {
+  fill: none;
+  stroke: #141413;
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+}
+
+.lr-hint {
+  fill: none;
+  stroke: #141413;
+  stroke-width: 4;
+  stroke-dasharray: 6 4;
+}
+
 /* Cat Places (catplaces-app.js): uses the Pentomino board layout
    (.pt-board, .pt-cells); cats that break a rule get a dashed frame. */
 .kz-conflict {

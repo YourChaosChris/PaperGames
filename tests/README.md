@@ -191,7 +191,9 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   confirmed by an independent search, the hint solves each in exactly
   that many moves. About 30 seconds.
 - `node tests/tangram-core.js` - no server or browser needed. "Tangram":
-  the seven pieces and all 61 outlines - each one connected area of 8,
+  the seven pieces and all 90 outlines (29 of them "Outline only": drawn
+  as one line along the edge, nothing inside, pieces may be laid
+  sticking out) - each one connected area of 8,
   solvable (the found solution is checked on its own), filled with the
   hint alone even after a wrongly laid piece. Under a second.
 - `node tests/catplaces-core.js` - no server or browser needed. 500
@@ -199,6 +201,12 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   exactly one solution (counted by a search of its own), solved by
   deduction alone with the level's rules, finished with the hint alone
   after a wrongly placed cat. About two minutes.
+- `node tests/loosen-core.js` - no server or browser needed. 500 "Loosen
+  the Rings" puzzles per level (3 / 4-5 / 6-7 rings): one group without
+  closed loops, nothing free at the start, the solver clears each in
+  exactly the stored fewest moves (confirmed by a second search for the
+  first 40 per level); a random player fails (not clear after twice the
+  fewest moves) in most tries on Hard (share printed). About 40 seconds.
 - `node tests/matches-core.js` - no server or browser needed. All 90
   "Matchstick Puzzles": the start is wrong (sums) or lacks the asked
   number of squares, a full search finds a solution with exactly 1 or 2

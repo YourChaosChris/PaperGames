@@ -7,6 +7,11 @@
 // piece where the computer's solution has it. On Easy the lines of that
 // solution are drawn faintly inside the outline. Pieces differ by black
 // and white patterns, never by colour.
+//
+// "Outline only" (level outline): only the outer line of the figure, and
+// a piece lands on the grid where it is tapped even if it does not fit
+// (TangramCore.placeFree) - as with the wooden pieces, you try until the
+// outline is full.
 
 const TG_SAVE_KEY = "einkchess_save_tangram";
 const TG_DONE_KEY = "einkchess_tangram_done";
@@ -119,7 +124,7 @@ function initTgApp() {
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(TG_SAVE_KEY) : null;
   if (saved && TangramCore.LEVELS[saved.level] && TangramCore.LEVELS[saved.level][saved.index] && Array.isArray(saved.placed)) {
     loadFigureTg(saved.level, saved.index);
-    AppStateTg.placed = saved.placed.filter((p) => TangramCore.fits(AppStateTg.fig, [], p));
+    AppStateTg.placed = saved.placed.filter((p) => saved.level === "outline" ? TangramCore.onBoard(AppStateTg.fig, p, TG_PAD) : TangramCore.fits(AppStateTg.fig, [], p));
     AppStateTg.hinted = !!saved.hinted;
     levelSel.value = saved.level;
     numSel.value = "";
@@ -243,7 +248,9 @@ function onBoardTg(evt) {
     setStatusTg("Turned this way the piece fits nowhere - turn it once more.");
     return;
   }
-  const pl = TangramCore.snap(AppStateTg.fig, AppStateTg.placed, AppStateTg.selected, AppStateTg.k, AppStateTg.flip, pt[0], pt[1], 1.6);
+  const pl = AppStateTg.level === "outline"
+    ? TangramCore.placeFree(AppStateTg.fig, AppStateTg.placed, AppStateTg.selected, AppStateTg.k, AppStateTg.flip, pt[0], pt[1], 1.6, TG_PAD)
+    : TangramCore.snap(AppStateTg.fig, AppStateTg.placed, AppStateTg.selected, AppStateTg.k, AppStateTg.flip, pt[0], pt[1], 1.6);
   if (!pl) {
     if (hit) { selectTg(hit.piece); return; }
     setStatusTg("The piece does not fit there.");
@@ -296,11 +303,10 @@ function winTg() {
 
 /*** Rendering ***/
 
-// The outline: white inside (patterns belong to the pieces only), its
-// border thick.
-function outlineSvgTg(fig, u) {
-  const P = TG_PAD;
-  let fill = "", edges = "";
+// The outline: white inside (patterns belong to the pieces only), drawn
+// as one closed line round the figure - the edges between two quarters of
+// the figure are left out, so nothing shows inside.
+function outlineLoopsTg(fig) {
   const has = fig.quarters;
   const tri = (r, c, q) => {
     const m = [c + 0.5, r + 0.5], k = [[c, r], [c + 1, r], [c + 1, r + 1], [c, r + 1]];
@@ -309,20 +315,52 @@ function outlineSvgTg(fig, u) {
   // Across which quarter each edge of a quarter lies: side edge, then the
   // two diagonal halves.
   const across = { 0: [[-1, 0, 2], [0, 0, 1], [0, 0, 3]], 1: [[0, 1, 3], [0, 0, 2], [0, 0, 0]], 2: [[1, 0, 0], [0, 0, 3], [0, 0, 1]], 3: [[0, -1, 1], [0, 0, 0], [0, 0, 2]] };
-  Object.keys(has).forEach((key) => {
-    const [r, c, q] = key.split(",").map(Number);
+  const key = (p) => p[0] + "," + p[1];
+  const next = {};
+  Object.keys(has).forEach((k) => {
+    const [r, c, q] = k.split(",").map(Number);
     const t = tri(r, c, q);
-    fill += polyPath(t, P, P, u);
-    // edges: side t0-t1, then t1-m, m-t0
-    const segs = [[t[0], t[1]], [t[1], t[2]], [t[2], t[0]]];
-    across[q].forEach((d, i) => {
-      if (!has[(r + d[0]) + "," + (c + d[1]) + "," + d[2]]) {
-        const s = segs[i];
-        edges += "M" + ((s[0][0] + P) * u).toFixed(1) + " " + ((s[0][1] + P) * u).toFixed(1) + "L" + ((s[1][0] + P) * u).toFixed(1) + " " + ((s[1][1] + P) * u).toFixed(1);
-      }
+    // Edges in the triangle's own (clockwise on screen) order, so loops
+    // can be followed from end to start.
+    [[t[0], t[1]], [t[1], t[2]], [t[2], t[0]]].forEach((sg, i) => {
+      const d = across[q][i];
+      if (!has[(r + d[0]) + "," + (c + d[1]) + "," + d[2]]) next[key(sg[0])] = (next[key(sg[0])] || []).concat([sg[1]]);
     });
   });
-  return '<path d="' + fill + '" fill="#fff" stroke="none"/><path d="' + edges + '" fill="none" stroke="#141413" stroke-width="3.5" stroke-linecap="round"/>';
+  const loops = [];
+  const used = {};
+  Object.keys(next).forEach((startKey) => {
+    next[startKey].forEach((first, n) => {
+      const id = startKey + ">" + n;
+      if (used[id]) return;
+      const loop = [startKey.split(",").map(Number)];
+      let curKey = startKey, idx = n, guard = 0;
+      while (guard++ < 1000) {
+        used[curKey + ">" + idx] = true;
+        const to = next[curKey][idx];
+        const toKey = key(to);
+        if (toKey === startKey) break;
+        loop.push(to);
+        const outs = next[toKey] || [];
+        idx = outs.findIndex((x, j) => !used[toKey + ">" + j]);
+        if (idx < 0) break;
+        curKey = toKey;
+      }
+      // Drop points in the middle of a straight run.
+      const pts = loop.filter((p, i) => {
+        const a = loop[(i + loop.length - 1) % loop.length], b = loop[(i + 1) % loop.length];
+        return (p[0] - a[0]) * (b[1] - p[1]) - (p[1] - a[1]) * (b[0] - p[0]) !== 0;
+      });
+      loops.push(pts);
+    });
+  });
+  return loops;
+}
+
+function outlineSvgTg(fig, u) {
+  const P = TG_PAD;
+  const d = outlineLoopsTg(fig).map((pts) => pts.map((p, i) => (i ? "L" : "M") + ((p[0] + P) * u).toFixed(1) + " " + ((p[1] + P) * u).toFixed(1)).join("") + "Z").join("");
+  return '<path class="tg-outline" d="' + d + '" fill="#fff" fill-rule="evenodd" stroke="#141413" stroke-width="3.5" stroke-linejoin="round"/>';
 }
 
 function renderTg() {

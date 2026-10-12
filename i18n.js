@@ -626,6 +626,7 @@ const STRINGS = {
     release_v228: "A small link in the footer of the home page leads to Quillwild, a new project in progress.",
     release_v229: "The home page is shorter now; the categories have pages of their own.",
     release_v230: "Card Duel: every card has a picture now.",
+    release_v234: "Tangram has a new level, Outline only, with 29 new figures.",
     release_v233: "Arrows on Hard: gliding arrows, 11 × 11 squares, and a new Master level with three hearts.",
     release_v232: "Move suggestions can be switched off in the Settings, and “Who Took the Cake?” has three new themes.",
     release_v231: "Spot the Difference has a new mode: picture search.",
@@ -3581,6 +3582,31 @@ const STRINGS = {
     aw_dir_2: "down",
     aw_dir_3: "left",
     msg_aw_start: "Tap an arrow to send it out of the field.",
+    tg_level_outline: "Outline only",
+    game_loosen: "Loosen the Rings",
+    home_loosen_desc: "Rings hooked into each other, each with a gap: turn them - hooked rings turn along the other way - until one after the other slips off. Three levels, with the fewest moves, undo and hints.",
+    lr_history_intro: "Ring puzzles are old - the Chinese rings were described around 1500; this flat version with gaps is new.",
+    quickrules_loosen_1: "Tap a ring: it turns a quarter clockwise, and the rings hooked into it turn the other way.",
+    quickrules_loosen_2: "A ring is free when its gap sits where the hooked ring lies on top - tap it and it comes out.",
+    quickrules_loosen_3: "Take out all the rings; the rings at the ends go first. Hint shows a move.",
+    lr_win_title: "All loose!",
+    lr_aria_ring: "Ring {N}, gap {D}",
+    lr_dir_0: "upper right",
+    lr_dir_1: "lower right",
+    lr_dir_2: "lower left",
+    lr_dir_3: "upper left",
+    lr_turn_left: "↺ Left",
+    lr_turn_right: "Right ↻",
+    msg_lr_start: "Tap a ring to turn it a quarter clockwise; a free ring comes out.",
+    msg_t_lr_out: "Ring {n} is free and comes out.",
+    msg_t_lr_turned: "Ring {n} turned; the rings hooked into it turned the other way.",
+    msg_lr_pick: "Tap a ring first.",
+    msg_lr_hint_out: "Hint: the marked ring is free - tap it.",
+    msg_lr_hint_cw: "Hint: turn the marked ring clockwise.",
+    msg_lr_hint_ccw: "Hint: turn the marked ring anticlockwise.",
+    msg_t_lr_won: "All rings are loose - solved in {n} moves!",
+    msg_t_lr_info: "Rings left: {n} · Moves: {m} · Fewest: {k}",
+    family_rings: "Ring puzzles",
     aw_level_master: "Master",
     aw_retry: "Try again",
     msg_aw_glided: "The arrow glides forward up to the next arrow.",
@@ -3672,7 +3698,7 @@ const STRINGS = {
     msg_mt_won: "Right! The puzzle is solved.",
     msg_t_mt_info: "Moved: {n} of {m}",
     game_tangram: "Tangram",
-    home_tangram_desc: "Fill an outline with the seven classic pieces - triangles, a square and a parallelogram. 61 outlines in three levels, each with a solution checked by computer; tap a piece, turn it, tap where it goes - no dragging.",
+    home_tangram_desc: "Fill an outline with the seven classic pieces - triangles, a square and a parallelogram. 90 outlines in four levels, each with a solution checked by computer. On Outline only you see just the outer line, and a piece lands where you tap it - you have to try. Tap a piece, turn it, tap where it goes - no dragging.",
     tg_history_intro: "Seven pieces cut from a square: the puzzle comes from China, where the oldest surviving book about it was printed in 1813; from 1817 it became a craze in Europe.",
     quickrules_tangram_1: "Choose a piece below the outline, turn it with Turn 45° or Flip, then tap where it should go.",
     quickrules_tangram_2: "Fill the whole outline with all seven pieces; they must not overlap.",
@@ -4781,7 +4807,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 92;
+  const GAME_COUNT = 93;
 
   function t(key, lang) {
     const l = lang || getLang();

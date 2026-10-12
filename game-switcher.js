@@ -112,10 +112,11 @@
     ["forestvillage", "game_forestvillage"],
     ["adventurebook", "game_adventurebook"],
     ["arrows", "game_arrows"],
-    ["rings", "game_rings"],
+    ["rings", "game_rings", "rings"],
     ["tangram", "game_tangram", "tiling"],
     ["matches", "game_matches"],
-    ["catplaces", "game_catplaces"]
+    ["catplaces", "game_catplaces"],
+    ["loosen", "game_loosen", "rings"]
   ];
 
   var GAME_SLUGS = {};

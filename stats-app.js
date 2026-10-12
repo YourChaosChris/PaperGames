@@ -90,7 +90,8 @@ const STATS_GAME_NAME_KEY = {
   rings: "game_rings",
   tangram: "game_tangram",
   matches: "game_matches",
-  catplaces: "game_catplaces"
+  catplaces: "game_catplaces",
+  loosen: "game_loosen"
 };
 
 function gameDisplayName(game) {
