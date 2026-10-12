@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v228",
+    date: "2026-10-12",
+    key: "release_v228",
+    text: "A small link in the footer of the home page leads to Quillwild, a new project in progress."
+  },
+  {
     version: "v227",
     date: "2026-10-12",
     key: "release_v227",
