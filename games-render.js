@@ -105,8 +105,8 @@ const GamesRender = (function () {
     return 0;
   }
 
-  // The games for the home page's "New Games": published within `days`
-  // days before `now`, newest first, at most `max`.
+  // The games for "New Games": published within `days` days before
+  // `now`, newest first, at most `max` (GameCategories.NEW_MAX).
   function newGames(list, max, days, now) {
     const cutoff = (now === undefined ? Date.now() : now) - days * 24 * 60 * 60 * 1000;
     return list

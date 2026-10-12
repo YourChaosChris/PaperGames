@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v237",
+    date: "2026-10-12",
+    key: "release_v237",
+    text: "New Games now shows the 10 newest games."
+  },
+  {
     version: "v236",
     date: "2026-10-12",
     key: "release_v236",

@@ -10,6 +10,7 @@
 //     Play, star - no rules or history link). The tiles name every
 //     category page with its number of games.
 //  2. Every category page: at most 12 games per page, "Page n of m",
+//     "New Games" exactly the 10 newest of the last 60 days, newest first,
 //     every game of the category exactly once over all pages (compared
 //     with games-catalog.js), the page number in the address survives a
 //     reload, a "Back to home" link on top.
@@ -36,7 +37,11 @@ vm.runInContext(fs.readFileSync(path.join(ROOT, "games-catalog.js"), "utf8") + "
 const CAT = ctx.GAMES_CATALOG.filter((g) => !(g.hideInLangs && g.hideInLangs.indexOf("de") !== -1));
 const NOW = Date.now();
 const WANT = {
-  new: CAT.filter((g) => g.added && Date.parse(g.added.slice(0, 10) + "T00:00:00") >= NOW - 60 * 864e5),
+  // The 10 newest of the last 60 days, newest first (games of one commit:
+  // the later catalog entry first).
+  new: CAT.filter((g) => g.added && Date.parse(g.added.slice(0, 10) + "T00:00:00") >= NOW - 60 * 864e5)
+    .sort((a, b) => b.added.localeCompare(a.added) || (a.added.length > 10 ? ctx.GAMES_CATALOG.indexOf(b) - ctx.GAMES_CATALOG.indexOf(a) : 0))
+    .slice(0, 10),
   popular: CAT.filter((g) => g.popular === true),
   kids: CAT.filter((g) => g.kids === true),
   strategy: CAT.filter((g) => g.category === "strategy"),
@@ -127,6 +132,10 @@ const report = [];
       if (n === 1) await wide("games-" + id + ".html");
     }
     check(JSON.stringify(seen.slice().sort()) === JSON.stringify(want), id + ": pages show " + seen.length + " games (" + new Set(seen).size + " different), expected " + want.length);
+    if (id === "new") {
+      check(seen.length <= 10, "new: " + seen.length + " games, at most 10 allowed");
+      check(JSON.stringify(seen) === JSON.stringify(WANT.new.map((g) => g.slug)), "new: not the 10 newest, newest first: " + seen.join(","));
+    }
     report.push("games-" + id + ".html: " + want.length + " games on " + pages + " page(s), each once");
     if (pages > 1) {
       await page.goto(BASE_URL + "games-" + id + ".html?page=2", { waitUntil: "networkidle" });

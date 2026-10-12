@@ -9,7 +9,10 @@
 
 const GameCategories = (function () {
   const PER_PAGE = 12;
+  // "New Games": the NEW_MAX newest games, and only those published in
+  // the last NEW_DAYS days.
   const NEW_DAYS = 60;
+  const NEW_MAX = 10;
 
   // Small black-and-white symbols for the tiles (no colour needed).
   const S = (body) => '<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false">' + body + "</svg>";
@@ -43,12 +46,12 @@ const GameCategories = (function () {
   function byName(a, b) { return name(a).localeCompare(name(b)); }
 
   // The games of a category in the order the page shows them: new ones
-  // newest first, favorites in the order they were starred, all others
+  // newest first (at most NEW_MAX), favorites in the order they were starred, all others
   // alphabetical in the current language.
   function games(id, catalog, now) {
     const listed = catalog.filter((g) => GamesRender.isListed(g));
     switch (id) {
-      case "new": return GamesRender.newGames(catalog, Infinity, NEW_DAYS, now);
+      case "new": return GamesRender.newGames(catalog, NEW_MAX, NEW_DAYS, now);
       case "popular": return listed.filter((g) => g.popular === true).sort(byName);
       case "kids": return GamesRender.kidsGames(catalog).sort(byName);
       case "favorites": {
@@ -89,7 +92,7 @@ const GameCategories = (function () {
       btn(page + 1, "pager_next", "pager-next");
   }
 
-  return { PER_PAGE, NEW_DAYS, PAGES, FAVORITES, ICONS, games, pageFromUrl, pageOf, pagerHTML };
+  return { PER_PAGE, NEW_DAYS, NEW_MAX, PAGES, FAVORITES, ICONS, games, pageFromUrl, pageOf, pagerHTML };
 })();
 
 window.GameCategories = GameCategories;
