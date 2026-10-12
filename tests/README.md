@@ -144,10 +144,11 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   first" put the newest game first, also among games of the same day
   (`added` carries the time of the commit that brought the game).
 - `node tests/kids-games.js` - needs a running server and a browser.
-  Checks that the home page's "Children's Games" and games.html's
+  Checks that games-kids.html (over all its pages) and games.html's
   "Children's Games" filter show exactly the games marked `kids: true`,
-  that all their links answer, that Mau Mau opens with the animal cards
-  from there, the link on calm.html, and no sideways scrolling.
+  the home page's tile and the old addresses leading there, that all
+  their links answer, that Mau Mau opens with the animal cards from
+  there, the link on calm.html, and no sideways scrolling.
 - `node tests/domino-core.js` - no server or browser needed. 500
   computer games per number of players (2-4) for classic Domino and for
   the triangles variant: every game ends, every move is legal, no tile is
@@ -206,6 +207,15 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   agrees, all names exist in 12 languages, games.html's family filter
   shows exactly the family, and each game page lists its relatives
   under "Related games".
+- `node tests/home-categories.js` - needs a running server and a
+  browser. The short home page (height at 600 x 800 at most one screen
+  without data and two with 3 started games and 6 favorites; heights at
+  360 x 640 printed; compact entries; the category tiles with their
+  counts), every category page (12 games per page, each game of the
+  category exactly once over all pages, page number kept in the address,
+  back link on top), games.html's paging with search and filters, the
+  old addresses (index.html#section-popular and the others,
+  games.html?category=...) and no sideways scrolling.
 - `node tests/offline-install.js` - needs a browser; starts its own
   server on a copy of the site. Checks the offline install of `sw.js`
   and the home page's status line: progress "X of Y files", a broken

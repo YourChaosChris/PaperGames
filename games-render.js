@@ -27,6 +27,17 @@ const GamesRender = (function () {
     );
   }
 
+  // The short entry on the home page: symbol, name, "Play" and the star.
+  function buildCompactCardHTML(game) {
+    return (
+      '<div class="game-select-item game-compact" data-slug="' + game.slug + '">' +
+      '<button type="button" class="favorite-toggle" data-slug="' + game.slug + '"></button>' +
+      '<div class="game-select-title">' + game.icon + ' <span data-i18n="' + game.nameKey + '">' + game.nameText + '</span></div>' +
+      '<a href="' + game.slug + '.html" class="primary small game-compact-play" data-i18n="nav_play">Play</a>' +
+      '</div>'
+    );
+  }
+
   function buildKidsCardHTML(game) {
     return buildGameCardHTML(game, true);
   }
@@ -104,7 +115,7 @@ const GamesRender = (function () {
       .slice(0, max);
   }
 
-  return { buildGameCardHTML, buildKidsCardHTML, kidsGames, updateFavoriteButtons, translateInto, isListed, compareNewest, newGames };
+  return { buildGameCardHTML, buildCompactCardHTML, buildKidsCardHTML, kidsGames, updateFavoriteButtons, translateInto, isListed, compareNewest, newGames };
 })();
 
 // See favorites.js for why this explicit export is needed: a top-level

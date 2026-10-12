@@ -105,6 +105,8 @@ echo "=== kids-games.js ==="
 node "$ROOT/tests/kids-games.js" || status=1
 echo "=== game-families.js ==="
 node "$ROOT/tests/game-families.js" || status=1
+echo "=== home-categories.js ==="
+node "$ROOT/tests/home-categories.js" || status=1
 echo ""
 
 echo "=== offline-install.js ==="

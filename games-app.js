@@ -3,10 +3,15 @@
 // entirely from GAMES_CATALOG so a new game only ever needs adding there.
 // Search matches the game's name in whatever language is currently active
 // (not the raw i18n key), and "sort by type" groups games under the same
-// Strategy/Race/Puzzles headings the home page itself uses.
+// Strategy/Race/Puzzles headings the category pages use. At most 12 games
+// per page (game-categories.js); search, sorting and the filters work
+// over all pages, the page number stays in the address (?page=2).
+// Old links with ?category=kids (or another category) go on to that
+// category's own page.
 
 (function () {
-  const state = { query: "", sort: "alpha", category: "all", family: "all" };
+  const state = { query: "", sort: "alpha", category: "all", family: "all", page: 1 };
+  const CATEGORY_PAGES = { strategy: 1, race: 1, puzzles: 1, party: 1, kids: 1 };
   const CATEGORY_ORDER = ["strategy", "race", "puzzles", "party"];
   const CATEGORY_LABEL_KEY = {
     strategy: "home_section_strategy",
@@ -67,20 +72,28 @@
     const q = state.query.trim().toLowerCase();
     const filtered = GAMES_CATALOG.filter((g) => GamesRender.isListed(g) && matchesQuery(g, q) && matchesCategory(g) && matchesFamily(g));
 
+    const pager = document.getElementById("games-pager");
     if (!filtered.length) {
       grid.innerHTML = "";
+      if (pager) { pager.innerHTML = ""; pager.classList.add("hidden"); }
       if (noResults) noResults.classList.remove("hidden");
       return;
     }
     if (noResults) noResults.classList.add("hidden");
+    let view;
 
     // Grouped-by-type headings only make sense across all categories at
     // once - a single category chip already says what group this is, so
     // that selection always renders as a flat, alphabetical list instead.
     if (state.sort === "type" && state.category === "all" && state.family === "all") {
+      // The pages cut through the groups; each page shows the headings of
+      // the groups it has games of.
+      let ordered = [];
+      CATEGORY_ORDER.forEach((cat) => { ordered = ordered.concat(filtered.filter((g) => g.category === cat).sort(byDisplayName)); });
+      view = GameCategories.pageOf(ordered, state.page);
       let html = "";
       CATEGORY_ORDER.forEach((cat) => {
-        const group = filtered.filter((g) => g.category === cat).sort(byDisplayName);
+        const group = view.items.filter((g) => g.category === cat);
         if (!group.length) return;
         html += '<h3 class="games-group-title" data-i18n="' + CATEGORY_LABEL_KEY[cat] + '"></h3>';
         html += '<div class="game-select-grid">' + group.map(GamesRender.buildGameCardHTML).join("") + "</div>";
@@ -93,14 +106,53 @@
         ? filtered.slice().sort((a, b) => GamesRender.compareNewest(a, b) || byDisplayName(a, b))
         : filtered.slice().sort(byDisplayName);
       const card = state.category === "kids" ? GamesRender.buildKidsCardHTML : GamesRender.buildGameCardHTML;
-      grid.innerHTML = '<div class="game-select-grid">' + sorted.map(card).join("") + "</div>";
+      view = GameCategories.pageOf(sorted, state.page);
+      grid.innerHTML = '<div class="game-select-grid">' + view.items.map(card).join("") + "</div>";
     }
+    state.page = view.page;
+    if (pager) {
+      pager.innerHTML = GameCategories.pagerHTML(view.page, view.pages, null);
+      pager.classList.toggle("hidden", view.pages <= 1);
+      pager.setAttribute("aria-label", window.I18n ? I18n.t("pager_label") : "Pages");
+    }
+    keepPageInUrl();
 
     GamesRender.updateFavoriteButtons(grid);
     GamesRender.translateInto(grid);
   }
 
+  // The page number in the address, without reloading (other parameters
+  // such as ?family= stay).
+  function keepPageInUrl() {
+    if (!window.history || typeof history.replaceState !== "function") return;
+    const params = new URLSearchParams(window.location.search);
+    if (state.page > 1) params.set("page", String(state.page)); else params.delete("page");
+    const q = params.toString();
+    const url = window.location.pathname + (q ? "?" + q : "") + window.location.hash;
+    if (url !== window.location.pathname + window.location.search + window.location.hash) history.replaceState(null, "", url);
+  }
+
+  // A change of search, sorting or filter starts again on page 1.
+  function renderFromStart() {
+    state.page = 1;
+    render();
+  }
+
   function init() {
+    const oldCat = new URLSearchParams(window.location.search).get("category");
+    if (oldCat && CATEGORY_PAGES[oldCat]) { window.location.replace("games-" + oldCat + ".html"); return; }
+    state.page = GameCategories.pageFromUrl();
+    const pagerBox = document.getElementById("games-pager");
+    if (pagerBox) {
+      pagerBox.addEventListener("click", (evt) => {
+        const b = evt.target.closest("[data-page]");
+        if (!b) return;
+        state.page = parseInt(b.getAttribute("data-page"), 10) || 1;
+        render();
+        const top = document.getElementById("games-grid");
+        if (top && top.scrollIntoView) top.scrollIntoView();
+      });
+    }
     const searchInput = document.getElementById("games-search");
     const sortSelect = document.getElementById("games-sort");
     const categoryChips = document.getElementById("games-category-chips");
@@ -109,7 +161,7 @@
     if (searchInput) {
       searchInput.addEventListener("input", () => {
         state.query = searchInput.value;
-        render();
+        renderFromStart();
       });
     }
     if (sortSelect) {
@@ -121,12 +173,11 @@
       }
       sortSelect.addEventListener("change", () => {
         state.sort = sortSelect.value;
-        render();
+        renderFromStart();
       });
     }
     if (categoryChips) {
-      // games.html?category=kids (the home page's and the calm page's
-      // children's games links).
+      // games.html?category=all (a real category went to its own page above).
       const wantedCat = new URLSearchParams(window.location.search).get("category");
       const wantedBtn = wantedCat && categoryChips.querySelector('.mode-btn[data-category="' + wantedCat + '"]');
       if (wantedBtn) {
@@ -144,7 +195,7 @@
         });
         state.family = "all";
         if (familySelect) familySelect.value = "all";
-        render();
+        renderFromStart();
       });
     }
     if (familySelect) {
@@ -158,7 +209,7 @@
       familySelect.addEventListener("change", () => {
         state.family = familySelect.value;
         if (state.family !== "all") setCategoryChip("all");
-        render();
+        renderFromStart();
       });
     }
 

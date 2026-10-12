@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v229",
+    date: "2026-10-12",
+    key: "release_v229",
+    text: "The home page is shorter now; the categories have pages of their own."
+  },
+  {
     version: "v228",
     date: "2026-10-12",
     key: "release_v228",

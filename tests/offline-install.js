@@ -14,8 +14,9 @@
 //  3. Update: a new version where only one file changed. Only sw.js and
 //     that file come from the network; the old cache is gone afterwards,
 //     a localStorage entry (stands for saved games and settings) is kept.
-//  4. Server off: every game page, its rules page and the home page load
-//     from the device without errors, the changed file in its new form.
+//  4. Server off: every game page, its rules page, the home page, the games
+//     list and every category page load from the device without errors,
+//     the changed file in its new form.
 //
 // THROTTLE=1 node tests/offline-install.js: first visit without errors
 // over a slow line (500 kbit/s in total, 300 ms per request), then step 4.
@@ -138,7 +139,8 @@ async function offlinePages(context, expectText) {
   const ctx = {};
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync(path.join(SITE, "games-catalog.js"), "utf8") + "\nthis.G = GAMES_CATALOG;", ctx);
-  const pages = ["index.html", "games.html"];
+  // Home, the games list and the category pages (games-*.html in sw.js).
+  const pages = ["index.html", "games.html"].concat(SHELL.filter((f) => /^games-[a-z]+\.html$/.test(f)));
   ctx.G.forEach((g) => { pages.push(g.slug + ".html"); pages.push(g.slug + "-rules.html"); });
   const page = await context.newPage();
   const errors = [];
@@ -262,7 +264,7 @@ async function offlinePages(context, expectText) {
   await page.waitForTimeout(500);
   await stopServer();
   const off = await offlinePages(context, THROTTLE ? null : { page: "cake-rules.html", text: "<!-- offline update test -->" });
-  report.push("step 4: server off, " + off.ok + " of " + off.pages + " pages (home, games list, every game and its rules page) loaded from the device");
+  report.push("step 4: server off, " + off.ok + " of " + off.pages + " pages (home, games list, category pages, every game and its rules page) loaded from the device");
   pageErrors.slice(0, 5).forEach((e) => fails.push("page error: " + e));
 
   await browser.close();

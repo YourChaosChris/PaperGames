@@ -13042,3 +13042,175 @@ li.fv-card {
   padding-inline-start: 1.4rem;
   font-size: 0.85rem;
 }
+
+/* Short home page (home-app.js): compact game entries (symbol, name,
+   Play, star) in two or three columns, the category tiles and the page
+   navigation of the category pages and games.html (game-categories.js).
+   Margins instead of `gap` for the flex rows (older e-ink browsers). */
+.home-hero-short {
+  padding: var(--space-3) var(--space-4);
+}
+
+.home-hero-short .home-tagline {
+  margin: 0;
+}
+
+.home-hero-short .home-hero-actions > * {
+  margin-top: var(--space-2);
+}
+
+.game-compact-grid {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.game-select-item.game-compact {
+  padding: var(--space-2);
+  padding-right: 2rem;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.game-compact .game-select-title {
+  flex: 1 1 100%;
+  margin: 0 0 var(--space-1);
+  font-size: 0.95rem;
+}
+
+.game-compact-play {
+  display: inline-block;
+}
+
+.category-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  margin: var(--space-2) 0 0;
+}
+
+.category-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 23.5%;
+  min-height: 5.5rem;
+  margin: 0 2% var(--space-2) 0;
+  padding: var(--space-2) var(--space-1);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--text);
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+.category-tile:nth-child(4n) {
+  margin-right: 0;
+}
+
+.category-tile-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-top: var(--space-1);
+  overflow-wrap: anywhere;
+}
+
+.category-tile-count {
+  font-size: 0.8rem;
+}
+
+.about-back-top {
+  margin-top: 0;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: var(--space-3) 0 var(--space-1);
+}
+
+.pager-btn {
+  min-width: 6.5rem;
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.pager-off {
+  visibility: hidden;
+}
+
+.pager-now {
+  flex: 1 1 auto;
+  text-align: center;
+  font-weight: 700;
+  margin: 0 var(--space-2);
+}
+
+@media (max-width: 520px) {
+  .category-tile {
+    width: 49%;
+  }
+  .category-tile:nth-child(2n) {
+    margin-right: 0;
+  }
+  .category-tile:nth-child(4n) {
+    margin-right: 0;
+  }
+  .category-tile:nth-child(odd) {
+    margin-right: 2%;
+  }
+  .pager-btn {
+    min-width: 5rem;
+    padding: var(--space-2);
+  }
+}
+
+/* The three home sections stay compact, so the page fits on one e-reader
+   screen without started games or favorites. */
+#section-continue,
+#section-favorites,
+#section-categories {
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+#section-continue h2,
+#section-favorites h2,
+#section-categories h2 {
+  margin: 0 0 var(--space-1);
+  font-size: 1.15rem;
+}
+
+#section-favorites .section-empty-state {
+  padding: 0;
+  margin: 0;
+}
+
+#section-categories .section-more-link {
+  margin: 0;
+}
+
+.category-tile {
+  min-height: 4.6rem;
+}
+
+.pager-btn {
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .pager-btn {
+    min-width: 0;
+    font-size: 0.9rem;
+    padding: var(--space-2) var(--space-2);
+  }
+  .pager-now {
+    font-size: 0.9rem;
+    margin: 0 var(--space-1);
+  }
+}

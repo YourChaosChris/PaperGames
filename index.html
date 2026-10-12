@@ -74,126 +74,33 @@
   </nav>
 
   <main>
-    <section class="card home-hero">
+    <section class="card home-hero home-hero-short">
       <svg class="home-hero-icon" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="20" y="19" width="72" height="72" rx="15" fill="#4a4947"/><rect x="14" y="13" width="72" height="72" rx="15" fill="#ffffff" stroke="#141413" stroke-width="3.5"/><rect x="20" y="19" width="15" height="15" fill="#141413"/><rect x="35" y="19" width="15" height="15" fill="#ffffff"/><rect x="50" y="19" width="15" height="15" fill="#141413"/><rect x="65" y="19" width="15" height="15" fill="#ffffff"/><rect x="20" y="34" width="15" height="15" fill="#ffffff"/><rect x="35" y="34" width="15" height="15" fill="#141413"/><rect x="50" y="34" width="15" height="15" fill="#ffffff"/><rect x="65" y="34" width="15" height="15" fill="#141413"/><rect x="20" y="49" width="15" height="15" fill="#141413"/><rect x="35" y="49" width="15" height="15" fill="#ffffff"/><rect x="50" y="49" width="15" height="15" fill="#141413"/><rect x="65" y="49" width="15" height="15" fill="#ffffff"/><rect x="20" y="64" width="15" height="15" fill="#ffffff"/><rect x="35" y="64" width="15" height="15" fill="#141413"/><rect x="50" y="64" width="15" height="15" fill="#ffffff"/><rect x="65" y="64" width="15" height="15" fill="#141413"/><g stroke="#141413" stroke-width="0.8"><line x1="35" y1="19" x2="35" y2="79"/><line x1="50" y1="19" x2="50" y2="79"/><line x1="65" y1="19" x2="65" y2="79"/><line x1="20" y1="34" x2="80" y2="34"/><line x1="20" y1="49" x2="80" y2="49"/><line x1="20" y1="64" x2="80" y2="64"/></g><rect x="20" y="19" width="60" height="60" fill="none" stroke="#141413" stroke-width="1.6"/></svg>
       <h1>PaperGames</h1>
-      <p id="home-pitch" class="home-pitch hidden" data-i18n="home_pitch">No ads, no account, and nothing about you is recorded. Once it has loaded, everything keeps working without internet. The computer never plays on by itself: stop whenever you like and carry on hours later, exactly where you left off. The source code is open.</p>
-      <p class="home-languages" data-i18n="home_languages">Available in 12 languages</p>
       <p class="home-tagline" data-i18n="home_tagline">87 classic games, built for e-readers.</p>
-      <p class="home-intro" data-i18n="home_intro">A small, dependency-free collection of classic board, strategy, and puzzle games made for E-Ink displays like Tolino, Kobo and Kindle: high contrast, no animations, and it keeps working with no internet connection once you've opened it.</p>
       <p id="offline-status" class="offline-status" aria-live="polite"><span class="offline-status-icon" aria-hidden="true"></span><span id="offline-status-text"></span></p>
       <div class="home-hero-actions">
-        <a href="#section-popular" class="primary home-play-button" data-i18n="home_play_button">▶ Choose a game</a>
         <button type="button" id="home-surprise-button" class="secondary home-play-button" data-i18n="home_surprise_button">🎲 Surprise me</button>
       </div>
     </section>
 
-    <nav class="game-section-nav" aria-label="Jump to game category">
-      <a href="#section-continue" id="nav-link-continue" class="hidden"><span aria-hidden="true">↻</span> <span data-i18n="home_section_continue">Continue Playing</span></a>
-      <a href="#section-favorites"><span aria-hidden="true">★</span> <span data-i18n="home_section_favorites">My Favorites</span></a>
-      <a href="#section-new" id="nav-link-new" class="hidden"><span aria-hidden="true">✦</span> <span data-i18n="home_section_new">New Games</span></a>
-      <a href="#section-popular"><span aria-hidden="true">♟</span> <span data-i18n="home_section_popular">Popular Games</span></a>
-      <a href="#section-kids"><span aria-hidden="true">☺</span> <span data-i18n="home_section_kids">Children's Games</span></a>
-      <a href="games.html"><span aria-hidden="true">▦</span> <span data-i18n="nav_all_games">All Games</span></a>
-    </nav>
-
     <section id="section-continue" class="card hidden">
       <h2 data-i18n="home_section_continue">Continue Playing</h2>
-      <div class="game-select-grid" id="continue-grid"></div>
+      <div class="game-select-grid game-compact-grid" id="continue-grid"></div>
     </section>
 
     <section id="section-favorites" class="card">
       <h2 data-i18n="home_section_favorites">My Favorites</h2>
       <p id="favorites-empty" class="section-empty-state" data-i18n="home_favorites_empty">Tap the star on any game to add it here.</p>
-      <div class="game-select-grid" id="favorites-grid"></div>
+      <div class="game-select-grid game-compact-grid" id="favorites-grid"></div>
+      <p id="favorites-more" class="section-more-link hidden"><a href="games-favorites.html">All favorites</a></p>
     </section>
 
-    <section id="section-new" class="card hidden">
-      <h2 data-i18n="home_section_new">New Games</h2>
-      <div class="game-select-grid" id="new-grid"></div>
-      <p class="section-more-link"><a href="games.html?sort=newest" data-i18n="home_new_all">All new games</a></p>
+    <section id="section-categories" class="card">
+      <h2 data-i18n="home_categories_title">Games by category</h2>
+      <div id="category-tiles" class="category-tiles"></div>
+      <p class="section-more-link"><a href="history.html" data-i18n="home_history_link">Where do the games come from?</a></p>
     </section>
-
-    <section id="section-popular" class="card">
-      <h2 data-i18n="home_section_popular">Popular Games</h2>
-      <div class="game-select-grid">
-        <div class="game-select-item" data-slug="chess">
-          <button type="button" class="favorite-toggle" data-slug="chess">☆</button>
-          <div class="game-select-title"><span class="game-select-icon-svg" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 45"><g fill="none" fill-rule="evenodd" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path fill="#000" d="M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21"/><path fill="#000" d="M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.04-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-1-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-2 2.5-3c1 0 1 3 1 3"/><path fill="#ececec" stroke="#ececec" d="M9.5 25.5a.5.5 0 1 1-1 0 .5.5 0 1 1 1 0m5.43-9.75a.5 1.5 30 1 1-.86-.5.5 1.5 30 1 1 .86.5"/><path fill="#ececec" stroke="none" d="m24.55 10.4-.45 1.45.5.15c3.15 1 5.65 2.49 7.9 6.75S35.75 29.06 35.25 39l-.05.5h2.25l.05-.5c.5-10.06-.88-16.85-3.25-21.34s-5.79-6.64-9.19-7.16z"/></g></svg></span> <span data-i18n="game_chess">Chess</span></div>
-          <p class="game-select-desc" data-i18n="home_chess_desc">The classic game. Local 2-player, vs. the built-in engine, or online via Lichess.</p>
-          <div class="game-select-actions">
-            <a href="chess.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="chess-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="chess-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item" data-slug="checkers">
-          <button type="button" class="favorite-toggle" data-slug="checkers">☆</button>
-          <div class="game-select-title"><span class="game-select-icon-svg" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#141413" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.5" fill="#141413" stroke="none"/></svg></span> <span data-i18n="game_checkers">Checkers</span></div>
-          <p class="game-select-desc" data-i18n="home_checkers_desc">The classic jump-and-capture game. Local 2-player or vs. the built-in engine, three difficulty levels.</p>
-          <div class="game-select-actions">
-            <a href="checkers.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="checkers-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="checkers-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item" data-slug="backgammon">
-          <button type="button" class="favorite-toggle" data-slug="backgammon">☆</button>
-          <div class="game-select-title"><span class="game-select-icon-svg" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#141413" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5L7 12L11 2.5M13 21.5L17 12L21 21.5"/><circle cx="7" cy="18" r="3" fill="#141413" stroke="none"/><circle cx="17" cy="6" r="3"/></svg></span> <span data-i18n="game_backgammon">Backgammon</span></div>
-          <p class="game-select-desc" data-i18n="home_backgammon_desc">The classic dice race game. Local 2-player or vs. the built-in engine, with the bar, bearing off, and blot-hitting.</p>
-          <div class="game-select-actions">
-            <a href="backgammon.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="backgammon-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="backgammon-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-        <div class="game-select-item" data-slug="sudoku">
-          <button type="button" class="favorite-toggle" data-slug="sudoku">☆</button>
-          <div class="game-select-title"><span class="game-select-icon-svg" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#141413" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19"/><path d="M8.83 2.5V21.5M15.17 2.5V21.5M2.5 8.83H21.5M2.5 15.17H21.5" stroke-width="2"/></svg></span> <span data-i18n="game_sudoku">Sudoku</span></div>
-          <p class="game-select-desc" data-i18n="home_sudoku_desc">Fill a 9x9 grid with digits so every row, column and 3x3 box contains 1-9 exactly once. Freshly generated with a unique solution, in three difficulty levels.</p>
-          <div class="game-select-actions">
-            <a href="sudoku.html" class="primary small" data-i18n="nav_play">Play</a>
-            <a href="sudoku-rules.html" class="secondary small" data-i18n="nav_rules">Rules</a>
-            <a href="sudoku-history.html" class="secondary small" data-i18n="nav_history">History</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="section-kids" class="card">
-      <h2 data-i18n="home_section_kids">Children's Games</h2>
-      <p class="section-intro" data-i18n="home_kids_intro">For children: most of them can be played without reading.</p>
-      <div class="game-select-grid" id="kids-grid"></div>
-      <p class="section-more-link"><a href="games.html?category=kids" data-i18n="home_kids_all">All children's games in the list</a></p>
-    </section>
-
-    <section class="card home-all-games-card">
-      <h2 data-i18n="home_all_games_title">Looking for something else?</h2>
-      <p data-i18n="home_all_games_desc">Browse and search all 87 games, sortable alphabetically or by type.</p>
-      <a href="games.html" class="primary" data-i18n="nav_all_games">All Games</a>
-    </section>
-
-    <section class="card home-all-games-card">
-      <h2 data-i18n="home_history_title">Curious where these games come from?</h2>
-      <p data-i18n="home_history_desc">Read every game's origin story, from ancient Egypt to last decade - no browsing, just history.</p>
-      <a href="history.html" class="primary" data-i18n="nav_history">History</a>
-    </section>
-
-    <section class="nav-cards">
-      <a href="guide.html" class="card nav-card">
-        <div class="nav-card-title" data-i18n="nav_guide">Guide</div>
-        <div class="nav-card-desc" data-i18n="home_guide_desc">Get it onto your e-reader and keep it working offline.</div>
-      </a>
-      <a href="about.html" class="card nav-card">
-        <div class="nav-card-title" data-i18n="nav_about">About</div>
-        <div class="nav-card-desc" data-i18n="home_about_desc">Why this exists, and how to say thanks.</div>
-      </a>
-      <a href="stats.html" class="card nav-card">
-        <div class="nav-card-title" data-i18n="nav_stats">Stats</div>
-        <div class="nav-card-desc" data-i18n="home_stats_desc">See your win/loss record against the computer, for every game.</div>
-      </a>
-    </section>
-
   </main>
   <footer class="site-footer">
     <a href="guide.html" data-i18n="nav_guide">Guide</a>
@@ -201,7 +108,7 @@
     <a href="stats.html" data-i18n="nav_stats">Stats</a>
     <a href="devices.html" data-i18n="nav_devices">Tested devices</a>
     <a href="calm.html" data-i18n="nav_calm">Calm play</a>
-    <a href="#home-pitch" id="home-pitch-link" data-i18n="home_pitch_link">What makes this different</a>
+    <a href="about.html#about-pitch" data-i18n="home_pitch_link">What makes this different</a>
     <a href="about.html" data-i18n="footer_support">☕ Support</a>
     <a href="https://yourchaoschris.github.io/quillwild-play/" data-i18n="footer_quillwild">New project in progress: Quillwild</a>
     <a href="impressum.html" data-i18n="nav_impressum">Legal Notice</a>
@@ -221,6 +128,7 @@
 <script src="games-catalog.js"></script>
 <script src="favorites.js"></script>
 <script src="games-render.js"></script>
+<script src="game-categories.js"></script>
 <script src="storage-warning.js"></script>
 <script src="game-storage.js"></script>
 <script src="home-app.js"></script>

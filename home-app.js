@@ -1,13 +1,13 @@
 // home-app.js
-// Renders the "New Games" section, the "Children's Games" section (the newest games of the last 60 days,
-// from GAMES_CATALOG's `added` dates; hidden when there are none) and the
-// personalized "My Favorites" section on the home page
-// (always visible, with an empty-state message when there are none yet,
-// so its permanent nav link is never dead - the empty one further down
-// the page, see placeFavoritesSection) and keeps every
-// favorite-toggle star - on both the static Popular section and the
-// dynamically-rendered Favorites section - in sync with the shared
-// Favorites module.
+// The short home page: "Continue Playing" (the last 3 started games,
+// hidden when there are none), "My Favorites" (at most 6, then a link to
+// games-favorites.html; a short hint while there are none) and a row of
+// category tiles with their number of games (game-categories.js). Game
+// entries here are compact: symbol, name, "Play" and the star - rules and
+// history are on the category pages and in the games.
+//
+// Old links into the long home page (#section-popular, #section-new,
+// #section-kids) go on to the matching category page.
 
 (function () {
   // 2048 has always saved under its number rather than its slug. Save
@@ -15,6 +15,9 @@
   const SAVE_SLUG_TO_CATALOG_SLUG = {
     "2048": "twenty48"
   };
+  const CONTINUE_MAX = 3;
+  const FAVORITES_MAX = 6;
+  const OLD_ANCHORS = { "#section-popular": "games-popular.html", "#section-new": "games-new.html", "#section-kids": "games-kids.html" };
 
   function catalogEntry(slug) {
     for (let i = 0; i < GAMES_CATALOG.length; i++) {
@@ -23,102 +26,57 @@
     return null;
   }
 
+  function t(key) { return window.I18n ? I18n.t(key) : key; }
+
   function renderContinuePlaying() {
     const section = document.getElementById("section-continue");
     const grid = document.getElementById("continue-grid");
-    const navLink = document.getElementById("nav-link-continue");
     if (!section || !grid || typeof GameStorage === "undefined") return;
 
     const games = GameStorage.getRecentSlugs()
       .map((slug) => SAVE_SLUG_TO_CATALOG_SLUG[slug] || slug)
       .map(catalogEntry)
-      .filter(Boolean);
+      .filter(Boolean)
+      .slice(0, CONTINUE_MAX);
 
-    if (!games.length) {
-      section.classList.add("hidden");
-      if (navLink) navLink.classList.add("hidden");
-      grid.innerHTML = "";
-      return;
-    }
-
-    section.classList.remove("hidden");
-    if (navLink) navLink.classList.remove("hidden");
-    grid.innerHTML = games.map(GamesRender.buildGameCardHTML).join("");
+    section.classList.toggle("hidden", !games.length);
+    grid.innerHTML = games.map(GamesRender.buildCompactCardHTML).join("");
     GamesRender.updateFavoriteButtons(grid);
     GamesRender.translateInto(grid);
-  }
-
-  const NEW_GAMES_MAX = 8;
-  const NEW_GAMES_DAYS = 60;
-
-  function renderNewGames() {
-    const section = document.getElementById("section-new");
-    const grid = document.getElementById("new-grid");
-    const navLink = document.getElementById("nav-link-new");
-    if (!section || !grid) return;
-
-    const games = GamesRender.newGames(GAMES_CATALOG, NEW_GAMES_MAX, NEW_GAMES_DAYS);
-
-    if (!games.length) {
-      section.classList.add("hidden");
-      if (navLink) navLink.classList.add("hidden");
-      grid.innerHTML = "";
-      return;
-    }
-
-    section.classList.remove("hidden");
-    if (navLink) navLink.classList.remove("hidden");
-    grid.innerHTML = games.map(GamesRender.buildGameCardHTML).join("");
-    GamesRender.updateFavoriteButtons(grid);
-    GamesRender.translateInto(grid);
-  }
-
-  // "Children's Games": every game marked `kids: true` in GAMES_CATALOG,
-  // alphabetical in the current language; "Play" opens the children's
-  // version where there is one (Mau Mau's animal cards).
-  function renderKids() {
-    const grid = document.getElementById("kids-grid");
-    if (!grid) return;
-    const name = (g) => (window.I18n ? I18n.t(g.nameKey) : g.nameText);
-    const games = GamesRender.kidsGames(GAMES_CATALOG).sort((a, b) => name(a).localeCompare(name(b)));
-    grid.innerHTML = games.map(GamesRender.buildKidsCardHTML).join("");
-    GamesRender.updateFavoriteButtons(grid);
-    GamesRender.translateInto(grid);
-  }
-
-  // While there are no favorites the section is only a hint ("tap the
-  // star"), and on a first visit it would push every game tile below the
-  // fold - so it waits under Popular Games until the first star is set,
-  // then moves back up under Continue Playing.
-  function placeFavoritesSection(hasFavorites) {
-    const section = document.getElementById("section-favorites");
-    const anchor = document.getElementById(hasFavorites ? "section-continue" : "section-popular");
-    if (!section || !anchor || anchor.nextElementSibling === section) return;
-    anchor.parentNode.insertBefore(section, anchor.nextElementSibling);
   }
 
   function renderFavorites() {
     const grid = document.getElementById("favorites-grid");
     const emptyState = document.getElementById("favorites-empty");
+    const more = document.getElementById("favorites-more");
     if (!grid) return;
 
-    const favGames = Favorites.getAll().map(catalogEntry).filter(Boolean);
-    placeFavoritesSection(favGames.length > 0);
-    if (!favGames.length) {
-      grid.innerHTML = "";
-      if (emptyState) emptyState.classList.remove("hidden");
-      return;
+    const favGames = GameCategories.games("favorites", GAMES_CATALOG);
+    if (emptyState) emptyState.classList.toggle("hidden", favGames.length > 0);
+    grid.innerHTML = favGames.slice(0, FAVORITES_MAX).map(GamesRender.buildCompactCardHTML).join("");
+    if (more) {
+      more.classList.toggle("hidden", favGames.length <= FAVORITES_MAX);
+      const link = more.querySelector("a");
+      if (link) link.textContent = t("home_favorites_all").split("{n}").join(String(favGames.length));
     }
-
-    if (emptyState) emptyState.classList.add("hidden");
-    grid.innerHTML = favGames.map(GamesRender.buildGameCardHTML).join("");
     GamesRender.updateFavoriteButtons(grid);
     GamesRender.translateInto(grid);
   }
 
-  // The offline status line under the intro: whether the service worker
-  // has stored the app on this device (offline-status.js). It stays on the
-  // page for good, so anyone can check it later too.
+  // The tiles: symbol, name and number of games of each category page.
+  function renderCategories() {
+    const box = document.getElementById("category-tiles");
+    if (!box) return;
+    box.innerHTML = GameCategories.PAGES.map((c) => {
+      const n = GameCategories.games(c.id, GAMES_CATALOG).length;
+      const count = t("home_cat_count").split("{n}").join(String(n));
+      return '<a class="category-tile" href="' + c.file + '">' + GameCategories.ICONS[c.id] +
+        '<span class="category-tile-name">' + t(c.nameKey) + '</span><span class="category-tile-count">' + count + "</span></a>";
+    }).join("");
+  }
+
+  // The offline status line in the header card: whether the service worker
+  // has stored the app on this device (offline-status.js).
   const OFFLINE_ICON = {
     check: '<svg viewBox="0 0 16 16" focusable="false"><path d="M2 8.5 L6.2 12.5 L14 3.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>',
     dot: '<svg viewBox="0 0 16 16" focusable="false"><circle cx="8" cy="8" r="3.5" fill="currentColor"/></svg>'
@@ -128,8 +86,7 @@
   let offlineState = null;
 
   function offlineText(key, detail) {
-    const text = window.I18n && typeof I18n.t === "function" ? I18n.t(key) : key;
-    return text.split("{n}").join(String(detail.done)).split("{m}").join(String(detail.total));
+    return t(key).split("{n}").join(String(detail.done)).split("{m}").join(String(detail.total));
   }
 
   function showOfflineStatus() {
@@ -168,44 +125,6 @@
     if (window.I18n && typeof I18n.onChange === "function") I18n.onChange(showOfflineStatus);
   }
 
-  // The short "no ads, no account, ..." block under the heading. Shown on
-  // the first two visits to the home page; from the third on it stays
-  // hidden and only the footer link brings it back. The visit counter is
-  // guarded like favorites.js - without storage it just keeps showing.
-  const HOME_VISITS_KEY = "papergames_home_visits";
-  const PITCH_VISITS = 2;
-
-  function countHomeVisit() {
-    try {
-      if (!window.localStorage) return 1;
-      const visits = (parseInt(window.localStorage.getItem(HOME_VISITS_KEY), 10) || 0) + 1;
-      window.localStorage.setItem(HOME_VISITS_KEY, String(visits));
-      return visits;
-    } catch (e) {
-      return 1;
-    }
-  }
-
-  function showPitch(show) {
-    const pitch = document.getElementById("home-pitch");
-    const hero = document.querySelector(".home-hero");
-    if (!pitch || !hero) return;
-    pitch.classList.toggle("hidden", !show);
-    hero.classList.toggle("home-pitch-shown", show);
-  }
-
-  function initPitch() {
-    showPitch(countHomeVisit() <= PITCH_VISITS);
-    const link = document.getElementById("home-pitch-link");
-    if (!link) return;
-    link.addEventListener("click", (evt) => {
-      evt.preventDefault();
-      showPitch(true);
-      const pitch = document.getElementById("home-pitch");
-      if (pitch) pitch.scrollIntoView();
-    });
-  }
-
   function goToRandomGame() {
     const games = GAMES_CATALOG.filter(GamesRender.isListed);
     if (!games.length) return;
@@ -213,13 +132,15 @@
     window.location.href = pick.slug + ".html";
   }
 
-  function init() {
-    initPitch();
+  function renderAll() {
     renderContinuePlaying();
-    renderNewGames();
-    renderKids();
     renderFavorites();
-    GamesRender.updateFavoriteButtons(document);
+    renderCategories();
+  }
+
+  function init() {
+    if (OLD_ANCHORS[window.location.hash]) { window.location.replace(OLD_ANCHORS[window.location.hash]); return; }
+    renderAll();
     watchOfflineStatus();
 
     const surpriseBtn = document.getElementById("home-surprise-button");
@@ -234,15 +155,7 @@
       GamesRender.updateFavoriteButtons(document);
     });
 
-    if (window.I18n && typeof I18n.onChange === "function") {
-      I18n.onChange(() => {
-        renderContinuePlaying();
-        renderNewGames();
-        renderKids();
-        renderFavorites();
-        GamesRender.updateFavoriteButtons(document);
-      });
-    }
+    if (window.I18n && typeof I18n.onChange === "function") I18n.onChange(renderAll);
   }
 
   document.addEventListener("DOMContentLoaded", init);

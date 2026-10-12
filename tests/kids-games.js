@@ -1,13 +1,15 @@
 // tests/kids-games.js
-// "Children's Games": the home page section and the games.html filter
-// show exactly the games marked `kids: true` in games-catalog.js.
+// "Children's Games": the category page games-kids.html and the games.html
+// filter show exactly the games marked `kids: true` in games-catalog.js.
 //
-// Checks: the marked set is the agreed list of 16 games; the home section
-// (index.html#section-kids) and the "Children's Games" chip on games.html
-// (also preselected by games.html?category=kids) list exactly these; every
-// Play / Rules / History link there answers 200; Mau Mau's "Play" there is
+// Checks: the marked set is the agreed list of 16 games; games-kids.html
+// (all its pages, 12 games each) and the "Children's Games" chip on
+// games.html list exactly these; the home page's tile links there with
+// the right count; the old addresses games.html?category=kids and
+// index.html#section-kids lead to games-kids.html; every Play / Rules /
+// History link answers 200; Mau Mau's "Play" there is
 // maumau.html?deck=kids and opens with the animal cards chosen; the
-// sentence on calm.html links to the filter; no page scrolls sideways at
+// sentence on calm.html links to the page; no page scrolls sideways at
 // 600 px or 360 px.
 //
 // Needs the local server (BASE_URL) and Playwright, like board-sweep.js.
@@ -43,6 +45,21 @@ async function cardsIn(page, sel) {
   })));
 }
 
+// All cards of a paged list: on games.html the pager has buttons
+// (data-page), on a category page links (?page=n).
+async function allCards(page, sel) {
+  const cards = await cardsIn(page, sel);
+  for (let k = 0; k < 20; k++) {
+    const next = await page.$(".pager .pager-next:not(.pager-off)");
+    if (!next) break;
+    const isLink = await next.evaluate((n) => n.tagName === "A");
+    if (isLink) await Promise.all([page.waitForNavigation({ waitUntil: "networkidle" }), next.click()]);
+    else await next.click();
+    cards.push(...(await cardsIn(page, sel)));
+  }
+  return cards;
+}
+
 async function checkLinks(where, cards) {
   same(where + ": games", cards.map((c) => c.slug).sort(), AGREED);
   for (const c of cards) {
@@ -71,30 +88,35 @@ async function noSideScroll(page, name) {
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
 
-  // Home page section and its menu link.
+  // Home page tile, the category page and the old addresses.
   await page.goto(BASE_URL + "index.html", { waitUntil: "networkidle" });
-  await checkLinks("home", await cardsIn(page, "#section-kids"));
-  same("home menu link", await page.$$eval('.game-section-nav a[href="#section-kids"]', (a) => a.length), 1);
-  same("home heading", await page.$eval("#section-kids h2", (h) => h.textContent), "Kinderspiele");
-  same("home more link", await page.$eval("#section-kids .section-more-link a", (a) => a.getAttribute("href")), "games.html?category=kids");
+  same("home tile", await page.$eval('.category-tile[href="games-kids.html"]', (a) => a.textContent), "Kinderspiele" + AGREED.length + " Spiele");
   await noSideScroll(page, "index.html");
-
-  // games.html: the chip by hand, then preselected from the URL.
-  await page.goto(BASE_URL + "games.html", { waitUntil: "networkidle" });
-  const all = (await cardsIn(page, "#games-grid")).length;
-  same("all games listed", all, ctx.GAMES_CATALOG.length);
-  await page.click('#games-category-chips .mode-btn[data-category="kids"]');
-  await checkLinks("games.html chip", await cardsIn(page, "#games-grid"));
-  await page.selectOption("#games-sort", "type");
-  same("games.html chip, sort by type", (await cardsIn(page, "#games-grid")).map((c) => c.slug).sort(), AGREED);
-  await page.selectOption("#games-sort", "newest");
-  same("games.html chip, newest first", (await cardsIn(page, "#games-grid")).map((c) => c.slug).sort(), AGREED);
+  await page.goto(BASE_URL + "games-kids.html", { waitUntil: "networkidle" });
+  same("kids page heading", await page.$eval("h1", (h) => h.textContent), "Kinderspiele");
+  await noSideScroll(page, "games-kids.html");
+  await checkLinks("games-kids.html", await allCards(page, "#cat-grid"));
   await page.goto(BASE_URL + "games.html?category=kids", { waitUntil: "networkidle" });
-  await checkLinks("games.html?category=kids", await cardsIn(page, "#games-grid"));
-  same("chip preselected", await page.$eval("#games-category-chips .active-mode", (b) => b.getAttribute("data-category")), "kids");
-  await noSideScroll(page, "games.html?category=kids");
+  same("games.html?category=kids leads to", page.url().replace(BASE_URL, ""), "games-kids.html");
+  await page.goto(BASE_URL + "index.html#section-kids", { waitUntil: "networkidle" });
+  same("index.html#section-kids leads to", page.url().replace(BASE_URL, ""), "games-kids.html");
+
+  // games.html: the chip by hand, over all pages.
+  await page.goto(BASE_URL + "games.html", { waitUntil: "networkidle" });
+  const all = (await allCards(page, "#games-grid")).length;
+  same("all games listed", all, ctx.GAMES_CATALOG.length);
+  await page.goto(BASE_URL + "games.html", { waitUntil: "networkidle" });
+  await page.click('#games-category-chips .mode-btn[data-category="kids"]');
+  await checkLinks("games.html chip", await allCards(page, "#games-grid"));
+  await page.click('#games-category-chips .mode-btn[data-category="kids"]');
+  await page.selectOption("#games-sort", "type");
+  same("games.html chip, sort by type", (await allCards(page, "#games-grid")).map((c) => c.slug).sort(), AGREED);
+  await page.click('#games-category-chips .mode-btn[data-category="kids"]');
+  await page.selectOption("#games-sort", "newest");
+  same("games.html chip, newest first", (await allCards(page, "#games-grid")).map((c) => c.slug).sort(), AGREED);
+  await noSideScroll(page, "games.html (children's games)");
   await page.click('#games-category-chips .mode-btn[data-category="all"]');
-  same("back to all", (await cardsIn(page, "#games-grid")).length, all);
+  same("back to all", (await allCards(page, "#games-grid")).length, all);
 
   // Mau Mau from the children's games: animal cards chosen.
   await page.goto(BASE_URL + "maumau.html?deck=kids", { waitUntil: "networkidle" });
@@ -104,7 +126,7 @@ async function noSideScroll(page, name) {
 
   // Calm play page.
   await page.goto(BASE_URL + "calm.html", { waitUntil: "networkidle" });
-  same("calm link", await page.$$eval('a[href="games.html?category=kids"]', (a) => a.map((x) => x.textContent)), ["Kinderspiele"]);
+  same("calm link", await page.$$eval('a[href="games-kids.html"]', (a) => a.map((x) => x.textContent)), ["Kinderspiele"]);
   await noSideScroll(page, "calm.html");
 
   if (errors.length) fails.push("page errors: " + errors.join(" | "));
@@ -114,5 +136,5 @@ async function noSideScroll(page, name) {
     console.log("=== KIDS GAMES: " + fails.length + " failure(s) ===");
     process.exit(1);
   }
-  console.log("=== KIDS GAMES: " + AGREED.length + " games in section and filter, all links 200, 0 failures ===");
+  console.log("=== KIDS GAMES: " + AGREED.length + " games on games-kids.html and in the filter, all links 200, 0 failures ===");
 })();

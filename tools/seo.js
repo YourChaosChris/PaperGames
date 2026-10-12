@@ -49,7 +49,8 @@ function loadCatalog() {
 
 // Pages that are neither a game nor its rules or history page: their own
 // title and description keys (seo_title_<name>, seo_desc_<name>).
-const OTHER_PAGES = ["index", "about", "games", "guide", "devices", "impressum", "datenschutz", "stats", "history", "calm"];
+const OTHER_PAGES = ["index", "about", "games", "guide", "devices", "impressum", "datenschutz", "stats", "history", "calm",
+  "games-new", "games-popular", "games-kids", "games-strategy", "games-race", "games-puzzles", "games-party", "games-favorites"];
 
 function isStub(html, file) {
   return /http-equiv="refresh"/i.test(html) || /^google[0-9a-f]+\.html$/.test(file);
@@ -63,7 +64,8 @@ function realPages() {
 // Which keys translate a page's title and description.
 function seoSpec(file, html, en, catalog) {
   const name = file.replace(/\.html$/, "");
-  if (OTHER_PAGES.indexOf(name) !== -1) return { title: "full:seo_title_" + name, desc: "key:seo_desc_" + name };
+  // Keys use "_" where the file name has "-" (games-kids -> seo_title_games_kids).
+  if (OTHER_PAGES.indexOf(name) !== -1) return { title: "full:seo_title_" + name.replace(/-/g, "_"), desc: "key:seo_desc_" + name.replace(/-/g, "_") };
   const game = catalog.find((g) => g.slug === name);
   if (game) return { title: "game:" + game.nameKey, desc: "key:" + game.descKey };
   const h1 = (html.match(/<h1[^>]*data-i18n="([a-z0-9_]+)"/) || [])[1];
