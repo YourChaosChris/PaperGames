@@ -88,6 +88,14 @@ function isKidsMauMau() {
   return !!(AppStateMauMau.state && AppStateMauMau.state.variant === "kids");
 }
 
+// Setting "Show move suggestions" (move-hints.js): off by default, on for
+// the animal cards unless the player switched it off.
+function hintsMauMau() {
+  if (typeof MoveHints === "undefined") return true;
+  MoveHints.setPageDefault(isKidsMauMau());
+  return MoveHints.enabled();
+}
+
 function cardTextMauMau(card) {
   if (MAUMAU_KIDS_NAME[card.suit]) return MAUMAU_KIDS_NAME[card.suit] + " " + card.rank;
   return (MAUMAU_RANK_LABEL[card.rank] || String(card.rank)) + MAUMAU_SUIT_SYMBOL[card.suit];
@@ -135,6 +143,7 @@ function recordStatsMauMau(outcome) {
 /*** Game flow ***/
 
 function initMauMauApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => renderMauMau());
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
@@ -653,7 +662,7 @@ function renderHandMauMau(s) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "maumau-card";
-    if (legal.indexOf(i) === -1) btn.classList.add("maumau-card-unplayable");
+    if (!myTurn || (hintsMauMau() && legal.indexOf(i) === -1)) btn.classList.add("maumau-card-unplayable");
     if (myTurn && s.drawnIndex === i) btn.classList.add("maumau-card-drawn");
     if (AppStateMauMau.pendingJack === i) btn.classList.add("maumau-card-drawn");
     const fresh = (AppStateMauMau.newKeys || []).indexOf(cardKeyMauMau(card)) !== -1;

@@ -97,6 +97,8 @@ echo "=== rings-core.js ==="
 node "$ROOT/tests/rings-core.js" || status=1
 echo "=== tangram-core.js ==="
 node "$ROOT/tests/tangram-core.js" || status=1
+echo "=== catplaces-core.js ==="
+node "$ROOT/tests/catplaces-core.js" || status=1
 echo "=== matches-core.js ==="
 node "$ROOT/tests/matches-core.js" || status=1
 echo "=== cardduel-core.js ==="
@@ -111,6 +113,8 @@ echo "=== new-games-order.js ==="
 node "$ROOT/tests/new-games-order.js" || status=1
 echo "=== kids-games.js ==="
 node "$ROOT/tests/kids-games.js" || status=1
+echo "=== move-hints.js ==="
+node "$ROOT/tests/move-hints.js" || status=1
 echo "=== game-families.js ==="
 node "$ROOT/tests/game-families.js" || status=1
 echo "=== home-categories.js ==="

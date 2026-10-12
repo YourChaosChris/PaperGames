@@ -87,7 +87,13 @@ function viewerDk() {
 
 /*** Game flow ***/
 
+// Setting "Show move suggestions" (move-hints.js); off by default.
+function hintsDk() {
+  return typeof MoveHints === "undefined" || MoveHints.enabled();
+}
+
 function initDoppelkopfApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => renderDk());
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
@@ -475,7 +481,7 @@ function renderDk() {
     el.innerHTML = "";
     list.forEach((c) => {
       const playable = legal.some((x) => DoppelkopfCore.sameCard(x, c));
-      const btn = cardElDk(c, "button", myTurn && !playable ? "pc-card-dim" : "");
+      const btn = cardElDk(c, "button", myTurn && !playable && hintsDk() ? "pc-card-dim" : "");
       btn.disabled = !myTurn;
       I18n.setAria(btn, "Card " + cardTextDk(c));
       btn.addEventListener("click", () => onHandCardDk(c));

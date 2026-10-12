@@ -3,7 +3,8 @@
 // header (same technique as rules-link.js/game-switcher.js - injected
 // at runtime rather than hand-written into ~150 static pages) opening a
 // single modal that gathers every on-device setting this app has -
-// language, text size, high contrast, spacing density (density.js) and
+// language, text size, high contrast, spacing density (density.js),
+// move suggestions (move-hints.js, on games that mark playable cards) and
 // (on pages with a computer opponent) the computer's move speed - instead of each living as
 // its own separate icon button in the header. This also gives the 46
 // game pages a language switcher for the first time: the old static
@@ -124,6 +125,16 @@ const SettingsMenu = (function () {
     refresh();
   }
 
+  function wireMoveHints(overlay) {
+    if (typeof MoveHints === "undefined") return;
+    const checkbox = overlay.querySelector("#settings-move-hints-checkbox");
+    if (!checkbox) return;
+    checkbox.checked = MoveHints.enabled();
+    checkbox.addEventListener("change", () => {
+      MoveHints.setEnabled(checkbox.checked);
+    });
+  }
+
   function wireHighContrast(overlay) {
     if (typeof HighContrast === "undefined") return;
     const checkbox = overlay.querySelector("#settings-high-contrast-checkbox");
@@ -241,6 +252,14 @@ const SettingsMenu = (function () {
                 '<button type="button" class="secondary" data-mode="slow" data-i18n="settings_ai_pacing_slow">Slow</button>' +
               '</div>'
             : '') +
+          // Only on the games that mark playable cards, tiles or pieces.
+          (typeof MoveHints !== "undefined"
+            ? '<h3 class="settings-subheading" data-i18n="settings_section_move_hints">Move suggestions</h3>' +
+              '<label class="settings-checkbox-row">' +
+                '<input type="checkbox" id="settings-move-hints-checkbox">' +
+                '<span data-i18n="settings_move_hints">Show move suggestions (mark playable cards, tiles and pieces)</span>' +
+              '</label>'
+            : '') +
           '<h3 class="settings-subheading" data-i18n="settings_section_random_start">Who moves first</h3>' +
           '<div class="settings-segmented" id="settings-random-start-group" role="group">' +
             '<button type="button" class="secondary" data-random="0" data-i18n="settings_random_start_chosen">As chosen</button>' +
@@ -269,6 +288,7 @@ const SettingsMenu = (function () {
 
     wireTextSize(overlay);
     wireHighContrast(overlay);
+    wireMoveHints(overlay);
     wireDensity(overlay);
     wireAiPacing(overlay);
     wireRandomStart(overlay);
@@ -285,6 +305,10 @@ const SettingsMenu = (function () {
     buildModal();
     const overlay = document.getElementById("settings-modal-overlay");
     if (overlay) overlay.classList.remove("hidden");
+    // A game may have changed its default (a children's version) since the
+    // menu was built.
+    const mh = document.getElementById("settings-move-hints-checkbox");
+    if (mh && typeof MoveHints !== "undefined") mh.checked = MoveHints.enabled();
     showVersion();
   }
 

@@ -27,7 +27,8 @@ const AppStateCake = {
 };
 
 const CAKE_SAVE_KEY = "einkchess_save_cake";
-// Theme ("animals" or "cats", CakeCore.MOTIFS) for new puzzles; the
+// Theme ("animals", "cats", "bears", "dogs", "magpies": CakeCore.MOTIFS)
+// for new puzzles; the
 // current puzzle keeps its own in puzzle.motif.
 const CAKE_MOTIF_KEY = "papergames_cake_motif";
 
@@ -44,7 +45,7 @@ function storeCakeMotif(m) {
   try { localStorage.setItem(CAKE_MOTIF_KEY, m); } catch (e) { /* not kept */ }
 }
 
-// The "Always true" box names the cake or, with the cats, the fish.
+// The "Always true" box names the cake or the theme's thing (fish, ...).
 function renderCakeAlways() {
   const p = AppStateCake.puzzle;
   document.querySelectorAll("#cake-always [data-cake-always]").forEach((li) => {
@@ -122,7 +123,7 @@ function initCakeApp() {
       storeCakeMotif(motifSelect.value);
       const p = AppStateCake.puzzle;
       if (!p) return;
-      if (motifSelect.value === "cats") p.motif = "cats";
+      if (motifSelect.value !== "animals" && CakeCore.MOTIFS.indexOf(motifSelect.value) !== -1) p.motif = motifSelect.value;
       else delete p.motif;
       showCakeBoard();
       if (!AppStateCake.gameOver) saveCakeGame();
@@ -165,7 +166,7 @@ function initCakeApp() {
     AppStateCake.tool = 0;
     AppStateCake.gameOver = false;
     if (levelInline) levelInline.value = AppStateCake.level;
-    if (motifSelect) motifSelect.value = saved.puzzle.motif === "cats" ? "cats" : "animals";
+    if (motifSelect) motifSelect.value = CakeCore.MOTIFS.indexOf(saved.puzzle.motif) !== -1 ? saved.puzzle.motif : "animals";
     showCakeBoard();
     setCakeStatus("cake_status_pick");
   }
@@ -183,7 +184,8 @@ function savedCakePuzzleValid(p) {
 function startNewCakeGame(level) {
   const puzzle = CakeCore.generatePuzzle(level);
   if (!puzzle) return;
-  if (loadCakeMotif() === "cats") puzzle.motif = "cats";
+  const motif = loadCakeMotif();
+  if (motif !== "animals") puzzle.motif = motif;
   AppStateCake.level = level;
   AppStateCake.puzzle = puzzle;
   AppStateCake.placed = puzzle.solution.map(() => -1);

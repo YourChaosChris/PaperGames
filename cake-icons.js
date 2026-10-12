@@ -97,6 +97,80 @@ const CakeIcons = (function () {
     '<path d="M6 20C11 11 23 10 29 20C23 30 11 29 6 20Z" fill="#fff" stroke="#141413" stroke-width="3" stroke-linejoin="round"/>' +
     '<path d="M29 20L36 13V27Z" ' + B + '/><circle cx="12.5" cy="18.5" r="2" ' + B + '/></g>';
 
+  // Bears ("Bears and cookies"): round head, round ears, a light snout,
+  // told apart by one black-and-white feature each.
+  const bearEars = (fill) => '<circle cx="11.5" cy="13.5" r="5" fill="' + fill + '" stroke="#141413" stroke-width="2.4"/><circle cx="28.5" cy="13.5" r="5" fill="' + fill + '" stroke="#141413" stroke-width="2.4"/>';
+  const bearHead = (fill) => '<circle cx="20" cy="23" r="10.5" fill="' + fill + '" stroke="#141413" stroke-width="2.4"/>';
+  const bearFace = (eye) => '<circle cx="16" cy="20.5" r="1.7" fill="' + eye + '"/><circle cx="24" cy="20.5" r="1.7" fill="' + eye + '"/>' +
+    '<ellipse cx="20" cy="27" rx="5" ry="3.8" fill="#fff" stroke="#141413" stroke-width="1.8"/><ellipse cx="20" cy="25.6" rx="2" ry="1.4" ' + B + '/>';
+  const bear = bearEars("#fff") + bearHead("#fff") + bearFace("#141413");
+  // Bruno: a bow tie under the chin.
+  icons.bearbruno = bear + '<path d="M20 35.5L13 32V39Z M20 35.5L27 32V39Z" ' + B + '/><circle cx="20" cy="35.5" r="1.8" ' + B + '/>';
+  // Paula: all black, white eyes, white snout.
+  icons.bearpaula = bearEars("#141413") + bearHead("#141413") + bearFace("#fff");
+  // Otto: round glasses.
+  icons.bearotto = bear + '<circle cx="15.5" cy="20.5" r="3.8" fill="none" stroke="#141413" stroke-width="1.8"/><circle cx="24.5" cy="20.5" r="3.8" fill="none" stroke="#141413" stroke-width="1.8"/><path d="M19.3 20.5H20.7" ' + S + ' stroke-width="1.8"/>';
+  // Lilli: a flower on her head.
+  icons.bearlilli = bear + '<circle cx="20" cy="7.5" r="2.6" ' + B + '/><circle cx="20" cy="13.5" r="2.6" ' + B + '/><circle cx="17" cy="10.5" r="2.6" ' + B + '/><circle cx="23" cy="10.5" r="2.6" ' + B + '/>' +
+    '<circle cx="20" cy="10.5" r="2" fill="#fff" stroke="#141413" stroke-width="1.2"/>';
+  // Fritz: a striped woolly hat with a bobble, over the ears.
+  icons.bearfritz = bear + '<path d="M8.5 19.5C8.5 9 31.5 9 31.5 19.5Z" fill="#fff" stroke="#141413" stroke-width="2.4" stroke-linejoin="round"/>' +
+    '<path d="M10.5 15.2H29.5M13.6 11.6H26.4" ' + S + ' stroke-width="2.4"/><circle cx="20" cy="7" r="3" ' + B + '/>';
+
+  // Dogs ("Dogs and ball"): the dog's head with hanging ears.
+  const dogEars = (fill) => '<ellipse cx="9.5" cy="21" rx="4" ry="8.5" fill="' + fill + '" stroke="#141413" stroke-width="1.6" transform="rotate(14 9.5 21)"/>' +
+    '<ellipse cx="30.5" cy="21" rx="4" ry="8.5" fill="' + fill + '" stroke="#141413" stroke-width="1.6" transform="rotate(-14 30.5 21)"/>';
+  const dogHead = (fill) => '<circle cx="20" cy="22" r="10" fill="' + fill + '" stroke="#141413" stroke-width="2.4"/>';
+  const dogFace = (c) => '<circle cx="16" cy="22" r="1.6" fill="' + c + '"/><circle cx="24" cy="22" r="1.6" fill="' + c + '"/><ellipse cx="20" cy="27" rx="3" ry="2.2" fill="' + c + '"/>';
+  // Bello: black spots.
+  icons.dogbello = dogEars("#141413") + dogHead("#fff") + '<circle cx="14.5" cy="16" r="2.4" ' + B + '/><circle cx="25.5" cy="15" r="1.8" ' + B + '/><circle cx="26" cy="28.5" r="1.7" ' + B + '/>' + dogFace("#141413");
+  // Lotte: all black, white eyes and nose.
+  icons.doglotte = dogEars("#141413") + dogHead("#141413") + dogFace("#fff");
+  // Benny: a black patch round one eye, light ears.
+  icons.dogbenny = dogEars("#fff") + dogHead("#fff") + '<ellipse cx="24.5" cy="21" rx="4.6" ry="4.2" ' + B + '/>' +
+    '<circle cx="16" cy="22" r="1.6" ' + B + '/><circle cx="24.5" cy="21.5" r="1.6" fill="#fff"/><ellipse cx="20" cy="27" rx="3" ry="2.2" ' + B + '/>';
+  // Susi: a big bow on top of the head.
+  icons.dogsusi = dogEars("#141413") + dogHead("#fff") + dogFace("#141413") + '<path d="M20 11L12 6V16Z M20 11L28 6V16Z" ' + B + '/><circle cx="20" cy="11" r="2.6" ' + B + '/>';
+  // Rudi: a neckerchief under the chin.
+  icons.dogrudi = dogEars("#fff") + dogHead("#fff") + dogFace("#141413") + '<path d="M11 31.5H29L20 39.5Z" ' + B + '/><path d="M15 33.5H25" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>';
+
+  // Magpies ("Magpies and key"): seen from the side - black head and back,
+  // white belly, long black tail, beak to the left.
+  const magpie = '<path d="M26 26L38 34L35 36.5L25 29Z" ' + B + '/>' +
+    '<ellipse cx="21" cy="26" rx="10" ry="7" fill="#fff" stroke="#141413" stroke-width="2.4"/>' +
+    '<path d="M13 22C17 18 27 18 31 25C26 23 18 24 14 27Z" ' + B + '/>' +
+    '<circle cx="15" cy="16" r="6.5" ' + B + '/><path d="M9.5 14.5L3 16.5L9.5 18.5Z" ' + B + '/><circle cx="13.5" cy="15" r="1.4" fill="#fff"/>' +
+    '<path d="M19 33V37M23 33V37" ' + S + ' stroke-width="1.8"/>';
+  // Pip: three crest feathers.
+  icons.magpiepip = magpie + '<path d="M14 9.5L12.5 4M16 9.5L17 3.5M18 10.5L21 5.5" ' + S + ' stroke-width="2.2"/>';
+  // Kiki: glasses round the eye.
+  icons.magpiekiki = magpie + '<circle cx="13.5" cy="15" r="3.4" fill="none" stroke="#fff" stroke-width="1.6"/><path d="M16.9 15H20" stroke="#fff" stroke-width="1.6"/>';
+  // Rosa: a bow on the head.
+  icons.magpierosa = magpie + '<path d="M17 9L11 5.5V12.5Z M17 9L23 5.5V12.5Z" fill="#fff" stroke="#141413" stroke-width="1.6" stroke-linejoin="round"/><circle cx="17" cy="9" r="1.8" fill="#fff" stroke="#141413" stroke-width="1.4"/>';
+  // Jakob: a small top hat.
+  icons.magpiejakob = magpie + '<path d="M9 10.5H21" ' + S + ' stroke-width="2.4"/><rect x="11.5" y="3" width="7" height="7.5" fill="#fff" stroke="#141413" stroke-width="2"/>';
+  // Lou: a light scarf with a hanging end.
+  icons.magpielou = magpie + '<path d="M9 21.5C13 25 18 25 22 21.5" fill="none" stroke="#141413" stroke-width="7.5" stroke-linecap="round"/>' +
+    '<path d="M9 21.5C13 25 18 25 22 21.5" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>' +
+    '<path d="M17 23.5L18.5 34L23.5 33L21.5 23Z" fill="#fff" stroke="#141413" stroke-width="1.8" stroke-linejoin="round"/>' +
+    '<path d="M18.3 28H22.2M18.8 31H22.8" ' + S + ' stroke-width="1.4"/>';
+
+  // The things: cookies (two round biscuits with chocolate dots), a ball
+  // with seams, a key.
+  const cookies = '<circle cx="15" cy="23" r="9" fill="#fff" stroke="#141413" stroke-width="2.4"/><circle cx="26" cy="17" r="9" fill="#fff" stroke="#141413" stroke-width="2.4"/>' +
+    '<circle cx="11.5" cy="22" r="1.5" ' + B + '/><circle cx="16" cy="27" r="1.5" ' + B + '/><circle cx="23" cy="14" r="1.5" ' + B + '/><circle cx="28.5" cy="19" r="1.5" ' + B + '/><circle cx="27" cy="12" r="1.3" ' + B + '/>';
+  const ball = '<circle cx="20" cy="20" r="13" fill="#fff" stroke="#141413" stroke-width="2.4"/>' +
+    '<path d="M7.5 16C14 19 26 19 32.5 16M7.5 24C14 21 26 21 32.5 24" ' + S + ' stroke-width="2"/><path d="M20 7V33" ' + S + ' stroke-width="2"/>';
+  const key = '<circle cx="11" cy="20" r="6.5" fill="#fff" stroke="#141413" stroke-width="3"/><circle cx="11" cy="20" r="2" ' + B + '/>' +
+    '<path d="M17.5 20H35M29 20V26M34 20V25" fill="none" stroke="#141413" stroke-width="3.2" stroke-linecap="round"/>';
+  icons.cookies = cookies;
+  icons.ball = ball;
+  icons.key = key;
+  // On the table, like the cake and the fish.
+  icons.tablecookies = icons.table + '<g transform="translate(6 -5) scale(0.7)">' + cookies + "</g>";
+  icons.tableball = icons.table + '<g transform="translate(8.5 -3.5) scale(0.58)">' + ball + "</g>";
+  icons.tablekey = icons.table + '<g transform="translate(4 -1.5) scale(0.8)">' + key + "</g>";
+
   function svg(name, cls) {
     return '<svg class="' + (cls || "cake-icon") + '" viewBox="0 0 40 40" aria-hidden="true" focusable="false">' + (icons[name] || "") + "</svg>";
   }

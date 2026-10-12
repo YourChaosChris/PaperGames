@@ -108,7 +108,13 @@ function clearSavedCdGame() {
 
 /*** Setup ***/
 
+// Setting "Show move suggestions" (move-hints.js); off by default.
+function hintsCd() {
+  return typeof MoveHints === "undefined" || MoveHints.enabled();
+}
+
 function initCdApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => renderCd());
   // Hatching and frame patterns of the card pictures, once per page.
   if (typeof CardDuelArt !== "undefined" && !document.querySelector(".cda-defs")) document.body.insertAdjacentHTML("afterbegin", CardDuelArt.defs());
   const viewBtn = document.getElementById("cd-view");
@@ -260,7 +266,15 @@ function onPlayCd() {
   if (!humanTurnCd() || !AppStateCd.sel || AppStateCd.sel.kind !== "hand") return;
   const s = AppStateCd.state;
   const i = AppStateCd.sel.index;
-  if (!coreCd().canPlay(s, i)) return;
+  if (!coreCd().canPlay(s, i)) {
+    // Without move suggestions the Play button stays on: say why not.
+    const pl = s.players[s.current], c = coreCd().card(pl.hand[i]);
+    if (c.cost > pl.power) setStatusCd("cd_status_no_power");
+    else if (c.kind === "creature" && pl.board.length >= coreCd().MAX_BOARD) setStatusCd("cd_status_row_full");
+    else setStatusCd("cd_status_no_target");
+    renderCd();
+    return;
+  }
   const id = s.players[s.current].hand[i];
   if (coreCd().targetKind(id)) {
     AppStateCd.targeting = true;
@@ -602,7 +616,7 @@ function renderCd() {
 
   const myTurn = humanTurnCd() && s.current === me;
   const selHand = AppStateCd.sel && AppStateCd.sel.kind === "hand";
-  document.getElementById("cd-play").disabled = !(myTurn && selHand && !AppStateCd.targeting && coreCd().canPlay(s, AppStateCd.sel.index));
+  document.getElementById("cd-play").disabled = !(myTurn && selHand && !AppStateCd.targeting && (!hintsCd() || coreCd().canPlay(s, AppStateCd.sel.index)));
   document.getElementById("cd-cancel").disabled = !(myTurn && AppStateCd.sel);
   document.getElementById("cd-end").disabled = !myTurn;
   document.getElementById("resign-button").classList.toggle("hidden", AppStateCd.gameOver);
@@ -618,11 +632,11 @@ function renderCd() {
   hand.classList.toggle("hidden", covered);
   if (!covered) {
     const pl = s.players[me];
-    hand.innerHTML = pl.hand.map((id, i) => handCardHtmlCd(id, i, myTurn && coreCd().canPlay(s, i), selHand && AppStateCd.sel.index === i)).join("");
+    hand.innerHTML = pl.hand.map((id, i) => handCardHtmlCd(id, i, !myTurn || !hintsCd() || coreCd().canPlay(s, i), selHand && AppStateCd.sel.index === i)).join("");
     hand.setAttribute("aria-label", fillCd("cd_hand_label", { n: pl.hand.length }));
     hand.querySelectorAll(".cd-card").forEach((btn) => {
       const i = parseInt(btn.getAttribute("data-hand"), 10);
-      btn.setAttribute("aria-label", handLabelCd(pl.hand[i], myTurn && coreCd().canPlay(s, i)));
+      btn.setAttribute("aria-label", handLabelCd(pl.hand[i], !myTurn || !hintsCd() || coreCd().canPlay(s, i)));
       btn.addEventListener("click", () => onHandCd(i));
     });
   }

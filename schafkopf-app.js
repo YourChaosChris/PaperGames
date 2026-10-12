@@ -46,7 +46,13 @@ function saveSf() {
 
 /*** Setup ***/
 
+// Setting "Show move suggestions" (move-hints.js); off by default.
+function hintsSf() {
+  return typeof MoveHints === "undefined" || MoveHints.enabled();
+}
+
 function initSchafkopfApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => renderSf());
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   if (menuToggle && settingsPanel) {
@@ -320,7 +326,7 @@ function renderSf() {
   const legal = myPlay ? SchafkopfCore.legalCards(s, 0) : [];
   sortedSf(s.hands[0], s.game).forEach((c) => {
     const ok = legal.some((x) => SchafkopfCore.same(x, c));
-    const btn = cardElSf(c, "button", myPlay && !ok ? "pc-card-dim" : "");
+    const btn = cardElSf(c, "button", myPlay && !ok && hintsSf() ? "pc-card-dim" : "");
     btn.disabled = !myPlay;
     btn.addEventListener("click", () => onHandCardSf(c));
     handEl.appendChild(btn);

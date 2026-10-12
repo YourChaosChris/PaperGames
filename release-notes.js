@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v232",
+    date: "2026-10-12",
+    key: "release_v232",
+    text: "Move suggestions can be switched off in the Settings, and “Who Took the Cake?” has three new themes."
+  },
+  {
     version: "v231",
     date: "2026-10-12",
     key: "release_v231",

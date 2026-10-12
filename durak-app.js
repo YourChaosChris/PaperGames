@@ -94,7 +94,13 @@ function clearSaveDurak() {
 
 /*** Game flow ***/
 
+// Setting "Show move suggestions" (move-hints.js); off by default.
+function hintsDurak() {
+  return typeof MoveHints === "undefined" || MoveHints.enabled();
+}
+
 function initDurakApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => renderDurak());
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
@@ -515,7 +521,7 @@ function renderDurak() {
       DurakCore.SUITS.indexOf(x.c.suit) - DurakCore.SUITS.indexOf(y.c.suit) || x.c.rank - y.c.rank);
     hand.forEach(({ c, i }) => {
       const fresh = AppStateDurak.mode === "vs-ai" && (AppStateDurak.newKeys || []).indexOf(cardKeyDurak(c)) !== -1;
-      const btn = cardElDurak(c, "button", (myTurn && !usableDurak(s, c) ? "pc-card-dim" : "") + (fresh ? " card-new" : ""));
+      const btn = cardElDurak(c, "button", (myTurn && !usableDurak(s, c) && hintsDurak() ? "pc-card-dim" : "") + (fresh ? " card-new" : ""));
       btn.disabled = !myTurn;
       I18n.setAria(btn, "Card " + cardTextDurak(c) + (fresh ? ", new" : ""));
       btn.addEventListener("click", () => onHandCardDurak(i));

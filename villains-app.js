@@ -121,7 +121,13 @@ function clearSavedVlGame() { if (typeof GameStorage !== "undefined") GameStorag
 
 /*** Setup ***/
 
+// Setting "Show move suggestions" (move-hints.js); off by default.
+function hintsVl() {
+  return typeof MoveHints === "undefined" || MoveHints.enabled();
+}
+
 function initVlApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => renderVl());
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeHotseat = document.getElementById("mode-offline");
@@ -272,6 +278,11 @@ function onActVl(kind, extra) {
   if (kind === "play") {
     if (AppStateVl.sel === null) { setStatusVl("vl_status_pick_card"); renderVl(); return; }
     const c = VC().card(p.hand[AppStateVl.sel]);
+    if (!VC().legalActions(s).some((a) => a.type === "play" && a.card === AppStateVl.sel)) {
+      setStatusVl(c.cost > p.gold ? "vl_status_no_gold" : "vl_status_cannot_play");
+      renderVl();
+      return;
+    }
     if (c.fx === "shove") { AppStateVl.pick = { kind: "shove-hero", card: AppStateVl.sel }; setStatusVl("vl_status_pick_hero"); renderVl(); return; }
     if (c.fx === "ward") { AppStateVl.pick = { kind: "ward-hero", card: AppStateVl.sel }; setStatusVl("vl_status_pick_hero"); renderVl(); return; }
     doVl({ type: "play", card: AppStateVl.sel });
@@ -542,7 +553,7 @@ function renderVl() {
       if (AppStateVl.sel === i) cls.push("vl-selected");
       if (AppStateVl.discardMarks.indexOf(i) !== -1) cls.push("vl-marked");
       const playable = myTurn && s.phase === "act" && playIdx.indexOf(i) !== -1;
-      if (!playable) cls.push("vl-unplayable");
+      if (!playable && (!myTurn || s.phase !== "act" || hintsVl())) cls.push("vl-unplayable");
       const kind = tVl(c.kind === "helper" ? "vl_kind_helper" : "vl_kind_trick");
       const label = [cardNameVl(id), kind, fillVl("vl_cost_n", { n: c.cost }), cardTextVl(id), AppStateVl.discardMarks.indexOf(i) !== -1 ? tVl("vl_marked") : ""].filter(Boolean).join(", ");
       return '<li><button type="button" class="' + cls.join(" ") + '" data-hand="' + i + '" aria-label="' + escVl(label) + '">' +

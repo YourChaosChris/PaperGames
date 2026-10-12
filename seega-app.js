@@ -92,7 +92,13 @@ function pushUndoSeega() {
   });
 }
 
+// Setting "Show move suggestions" (move-hints.js); off by default.
+function hintsSeega() {
+  return typeof MoveHints === "undefined" || MoveHints.enabled();
+}
+
 function initSeegaApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => updateSeegaBoard());
   if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
@@ -419,7 +425,7 @@ function updateSeegaBoard() {
     const moves = SeegaCore.legalMoves(s);
     if (s.chain !== null) moves.forEach((m) => { if (!m.stop) targets.add(m.to); });
     else if (AppStateSeega.selected !== null) moves.forEach((m) => { if (m.from === AppStateSeega.selected) targets.add(m.to); });
-    else moves.forEach((m) => selectable.add(m.from));
+    else if (hintsSeega()) moves.forEach((m) => selectable.add(m.from));
   }
   const active = s.chain !== null ? s.chain : AppStateSeega.selected;
   boardEl.querySelectorAll(".seega-cell").forEach((cell) => {

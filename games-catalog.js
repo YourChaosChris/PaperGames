@@ -1105,5 +1105,16 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-12T15:30",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><g stroke-linecap=\"round\"><path d=\"M8 6V18\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M8 6V18\" stroke=\"#fff\" stroke-width=\"2.4\"/><path d=\"M8 22V34\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M8 22V34\" stroke=\"#fff\" stroke-width=\"2.4\"/><path d=\"M14 20H26\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M14 20H26\" stroke=\"#fff\" stroke-width=\"2.4\"/><path d=\"M32 6V18\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M32 6V18\" stroke=\"#fff\" stroke-width=\"2.4\"/><path d=\"M32 22V34\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M32 22V34\" stroke=\"#fff\" stroke-width=\"2.4\"/></g><circle cx=\"8\" cy=\"17\" r=\"2.6\" fill=\"#141413\"/><circle cx=\"8\" cy=\"33\" r=\"2.6\" fill=\"#141413\"/><circle cx=\"25\" cy=\"20\" r=\"2.6\" fill=\"#141413\"/><circle cx=\"32\" cy=\"17\" r=\"2.6\" fill=\"#141413\"/><circle cx=\"32\" cy=\"33\" r=\"2.6\" fill=\"#141413\"/></svg></span>"
+  },
+  {
+    slug: "catplaces",
+    category: "puzzles",
+    nameKey: "game_catplaces",
+    nameText: "Cat Places",
+    descKey: "home_catplaces_desc",
+    descText: "Every row, every column and every room gets exactly one cat - and no two cats may touch, not even at a corner. Logic puzzles in three sizes, each with exactly one solution, solvable without guessing.",
+    popular: false,
+    added: "2026-10-12T16:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><path d=\"M14.3 3V14.3H25.7V37M3 25.7H25.7\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.6\"/><path d=\"M14.3 25.7V37M25.7 14.3H37\" stroke=\"#141413\" stroke-width=\"0.8\" stroke-dasharray=\"1.5 2\"/><path d=\"M27 6.5L27.6 3.8L29.6 5.6H32L34 3.8L34.6 6.5Q34.6 10.6 30.8 10.6Q27 10.6 27 6.5Z\" fill=\"#141413\"/><ellipse cx=\"9\" cy=\"32\" rx=\"4.2\" ry=\"2.8\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.2\"/><path d=\"M4.3 26.8L4.6 24.6L6.3 26H8.3L10 24.6L10.3 26.8Q10.3 30.2 7.3 30.2Q4.3 30.2 4.3 26.8Z\" fill=\"#141413\"/><circle cx=\"20\" cy=\"20\" r=\"1.3\" fill=\"#141413\"/></svg></span>"
   }
 ];

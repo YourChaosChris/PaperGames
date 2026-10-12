@@ -149,6 +149,12 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   the home page's tile and the old addresses leading there, that all
   their links answer, that Mau Mau opens with the animal cards from
   there, the link on calm.html, and no sideways scrolling.
+- `node tests/move-hints.js` - needs a running server and a browser.
+  Setting "Show move suggestions": off by default, so Domino (Triangles),
+  Mau Mau and Card duel mark nothing and refuse a wrong move with a line;
+  switched on in the Settings menu they mark again; on by default for
+  Mau Mau with the animal cards; the checkbox only on games that mark
+  moves; no sideways scrolling at 600 and 360 px.
 - `node tests/domino-core.js` - no server or browser needed. 500
   computer games per number of players (2-4) for classic Domino and for
   the triangles variant: every game ends, every move is legal, no tile is
@@ -184,6 +190,11 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   the seven pieces and all 61 outlines - each one connected area of 8,
   solvable (the found solution is checked on its own), filled with the
   hint alone even after a wrongly laid piece. Under a second.
+- `node tests/catplaces-core.js` - no server or browser needed. 500
+  "Cat Places" fields per level (5 x 5, 7 x 7, 8 x 8): n connected rooms,
+  exactly one solution (counted by a search of its own), solved by
+  deduction alone with the level's rules, finished with the hint alone
+  after a wrongly placed cat. About two minutes.
 - `node tests/matches-core.js` - no server or browser needed. All 90
   "Matchstick Puzzles": the start is wrong (sums) or lacks the asked
   number of squares, a full search finds a solution with exactly 1 or 2

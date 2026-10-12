@@ -100,7 +100,13 @@ function nextHumanTx(from) {
 
 /*** Game flow ***/
 
+// Setting "Show move suggestions" (move-hints.js); off by default.
+function hintsTx() {
+  return typeof MoveHints === "undefined" || MoveHints.enabled();
+}
+
 function initTrixApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => renderTx());
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
@@ -577,7 +583,8 @@ function renderTx() {
   hand.forEach((c) => {
     const playable = legal.some((x) => TrixCore.sameCard(x, c));
     let cls = "";
-    if (myTurn && isTrix && playable) cls = "tx-playable";
+    if (!hintsTx()) cls = "";
+    else if (myTurn && isTrix && playable) cls = "tx-playable";
     else if (myTurn && !playable) cls = "pc-card-dim";
     const btn = cardElTx(c, "button", cls);
     btn.disabled = !myTurn;

@@ -103,7 +103,13 @@ function pushUndoSnapshotBaghChal() {
   });
 }
 
+// Setting "Show move suggestions" (move-hints.js); off by default.
+function hintsBaghChal() {
+  return typeof MoveHints === "undefined" || MoveHints.enabled();
+}
+
 function initBaghChalApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => updateBaghChalBoard());
   if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
@@ -301,7 +307,7 @@ function onBaghChalPointClick(i) {
     AppStateBaghChal.selected = i;
     AppStateBaghChal.legalTargets = computeLegalTargetsBaghChal(i);
     updateBaghChalBoard();
-    setStatusBaghChal("board-info", "Choose where to move it.");
+    setStatusBaghChal("board-info", Object.keys(AppStateBaghChal.legalTargets).length ? "Choose where to move it." : "This piece can't move.");
     return;
   }
 
@@ -509,7 +515,7 @@ function updateBaghChalBoard() {
     placementHighlight = true;
   }
   let selectableSet = null;
-  if (isHumanTurnBaghChal() && AppStateBaghChal.selected === null && !placementHighlight) {
+  if (isHumanTurnBaghChal() && AppStateBaghChal.selected === null && !placementHighlight && hintsBaghChal()) {
     selectableSet = new Set();
     BaghChalCore.getLegalMoves(state, turn).forEach((m) => { if (m.from !== undefined) selectableSet.add(m.from); });
   }

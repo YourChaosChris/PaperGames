@@ -100,7 +100,13 @@ function pushUndoSnapshotAlquerque() {
   });
 }
 
+// Setting "Show move suggestions" (move-hints.js); off by default.
+function hintsAlquerque() {
+  return typeof MoveHints === "undefined" || MoveHints.enabled();
+}
+
 function initAlquerqueApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => updateAlquerqueBoard());
   if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
@@ -546,7 +552,7 @@ function updateAlquerqueBoard() {
     const isTarget = !!path && highlight.has(i);
     pt.classList.toggle("alquerque-point-selected", isActive);
     pt.classList.toggle("alquerque-point-movable", isTarget);
-    pt.classList.toggle("alquerque-point-selectable", !path && highlight.has(i));
+    pt.classList.toggle("alquerque-point-selectable", !path && highlight.has(i) && hintsAlquerque());
     pt.classList.toggle("last-move", !path && !!(AppStateAlquerque.lastMove &&
       (AppStateAlquerque.lastMove.from === i || AppStateAlquerque.lastMove.to === i)));
 

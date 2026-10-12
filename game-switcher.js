@@ -114,7 +114,8 @@
     ["arrows", "game_arrows"],
     ["rings", "game_rings"],
     ["tangram", "game_tangram", "tiling"],
-    ["matches", "game_matches"]
+    ["matches", "game_matches"],
+    ["catplaces", "game_catplaces"]
   ];
 
   var GAME_SLUGS = {};

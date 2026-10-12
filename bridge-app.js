@@ -49,7 +49,13 @@ function saveBr() {
 
 /*** Setup ***/
 
+// Setting "Show move suggestions" (move-hints.js); off by default.
+function hintsBr() {
+  return typeof MoveHints === "undefined" || MoveHints.enabled();
+}
+
 function initBridgeApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => renderBr());
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   if (menuToggle && settingsPanel) {
@@ -329,11 +335,11 @@ function handElBr(s, seat, playable) {
     row.className = "br-suit-row";
     cs.forEach((c) => {
       const ok = legal.some((x) => BridgeCore.same(x, c));
-      const el = cardElBr(c, playable ? "button" : "span", playable && !ok ? "pc-card-dim" : "");
+      const el = cardElBr(c, playable ? "button" : "span", playable && !ok && hintsBr() ? "pc-card-dim" : "");
       if (playable) {
         el.addEventListener("click", () => onCardBr(seat, c));
         el.setAttribute("data-card", cardTextBr(c));
-        I18n.setAria(el, "Card " + cardTextBr(c) + (ok ? "" : ", not allowed now"));
+        I18n.setAria(el, "Card " + cardTextBr(c) + (ok || !hintsBr() ? "" : ", not allowed now"));
       } else {
         el.setAttribute("role", "img");
         I18n.setAria(el, "Card " + cardTextBr(c));

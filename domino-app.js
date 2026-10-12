@@ -154,6 +154,7 @@ function triPointsDomino(r, c) {
 /*** Game flow ***/
 
 function initDominoApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => renderDomino());
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeOffline = document.getElementById("mode-offline");
@@ -454,6 +455,12 @@ function humanCanActDomino() {
   return true;
 }
 
+// Whether playable tiles and the places they fit are marked (setting
+// "Show move suggestions", move-hints.js; off by default).
+function hintsDomino() {
+  return typeof MoveHints === "undefined" || MoveHints.enabled();
+}
+
 function onHandTileClickDomino(index) {
   if (!humanCanActDomino()) return;
   AppStateDomino.newKeys = [];
@@ -474,7 +481,8 @@ function onHandTileClickDomino(index) {
       return;
     }
     AppStateDomino.selected = index;
-    setStatusDomino(slots.length === 1
+    if (!hintsDomino()) setStatusDomino("Tap a free place to lay tile " + tileTextDomino(tile) + ".");
+    else setStatusDomino(slots.length === 1
       ? "Tap the marked place to lay tile " + tileTextDomino(tile) + "."
       : "Tile " + tileTextDomino(tile) + " fits in " + slots.length + " places - tap one.");
     renderDomino();
@@ -488,7 +496,8 @@ function onHandTileClickDomino(index) {
     return;
   }
   AppStateDomino.selected = index;
-  setStatusDomino(sides.length === 2
+  if (!hintsDomino()) setStatusDomino("Tap an end to place tile " + tileTextDomino(tile) + ".");
+  else setStatusDomino(sides.length === 2
     ? "Tile " + tileTextDomino(tile) + " fits on both ends - tap one."
     : "Tap the highlighted end to place tile " + tileTextDomino(tile) + ".");
   renderDomino();
@@ -514,7 +523,10 @@ function onSlotClickDomino(slot) {
   const s = AppStateDomino.state;
   if (AppStateDomino.selected === null) return;
   const tile = s.hands[s.turn][AppStateDomino.selected];
-  if (DominoCore.slotsForTile(s, tile).indexOf(slot) === -1) return;
+  if (DominoCore.slotsForTile(s, tile).indexOf(slot) === -1) {
+    setStatusDomino("That tile doesn't fit here.");
+    return;
+  }
   playMoveDomino(AppStateDomino.selected, slot, 0);
 }
 
@@ -616,7 +628,7 @@ function renderEndsDomino(s) {
   const ends = DominoCore.openEnds(s);
   const sel = AppStateDomino.selected;
   const selTile = sel !== null ? s.hands[s.turn][sel] : null;
-  const fitting = selTile ? DominoCore.sidesForTile(s, selTile) : [];
+  const fitting = selTile && hintsDomino() ? DominoCore.sidesForTile(s, selTile) : [];
   const last = AppStateDomino.lastPlaced ? AppStateDomino.lastPlaced.side : null;
   ["left", "right"].forEach((side) => {
     const btn = document.getElementById("domino-end-" + side);
@@ -661,7 +673,9 @@ function renderGridDomino(s) {
   if (!el) return;
   const sel = AppStateDomino.selected;
   const selTile = sel !== null && s.hands[s.turn] ? s.hands[s.turn][sel] : null;
-  const targets = selTile && !AppStateDomino.gameOver ? DominoCore.slotsForTile(s, selTile) : [];
+  // Without suggestions every free place is offered; a wrong one is
+  // refused when tapped.
+  const targets = !selTile || AppStateDomino.gameOver ? [] : hintsDomino() ? DominoCore.slotsForTile(s, selTile) : DominoCore.openSlots(s);
   const all = s.slots.concat(targets).concat(DominoCore.openSlots(s));
   if (!all.length) { el.innerHTML = ""; return; }
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
@@ -736,7 +750,7 @@ function renderHandDomino(s) {
     btn.type = "button";
     btn.className = "domino-tile domino-hand-tile";
     const fits = myTurn && (DominoCore.isTriangle(s) ? DominoCore.slotsForTile(s, tile) : DominoCore.sidesForTile(s, tile)).length > 0;
-    if (!fits) btn.classList.add("domino-tile-unplayable");
+    if (!fits && hintsDomino()) btn.classList.add("domino-tile-unplayable");
     if (AppStateDomino.selected === i) btn.classList.add("domino-tile-selected");
     const fresh = (AppStateDomino.newKeys || []).indexOf(tileTextDomino(tile)) !== -1;
     if (fresh) btn.classList.add("card-new");

@@ -95,7 +95,13 @@ function toMoveTextFoxGeese() {
   return sideNameFoxGeese(AppStateFoxGeese.turn) + " to move.";
 }
 
+// Setting "Show move suggestions" (move-hints.js); off by default.
+function hintsFoxGeese() {
+  return typeof MoveHints === "undefined" || MoveHints.enabled();
+}
+
 function initFoxGeeseApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => updateFoxGeeseBoard());
   if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
@@ -528,7 +534,7 @@ function updateFoxGeeseBoard() {
     const isActive = activeIndex === i;
     pt.classList.toggle("foxandgeese-point-selected", isActive);
     pt.classList.toggle("foxandgeese-point-movable", !!path && highlight.has(i));
-    pt.classList.toggle("foxandgeese-point-selectable", !path && highlight.has(i));
+    pt.classList.toggle("foxandgeese-point-selectable", !path && highlight.has(i) && hintsFoxGeese());
     pt.classList.toggle("last-move", !path && !!(AppStateFoxGeese.lastMove &&
       (AppStateFoxGeese.lastMove.from === i || AppStateFoxGeese.lastMove.to === i)));
 

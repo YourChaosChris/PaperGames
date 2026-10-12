@@ -180,37 +180,85 @@ for (const level of ["easy", "medium", "hard"]) {
   }
 }
 
-// The "Cats" theme: the same puzzles with cats and a fish. Every clue,
-// thing name, win line and the texts that name the cake read without a
-// raw key in every language, and no cat text mentions the cake.
+// The themes: the same puzzles with other suspects and things - cats and
+// a fish, bears and cookies, dogs and a ball, magpies and a key. Every
+// clue, thing name, win line and the texts that name the thing read
+// without a raw key in every language, and no theme text mentions the
+// cake. Every suspect of a theme has a drawing, and so do the thing and
+// the thing on the table; suspects of one theme are drawn differently.
 let catTexts = 0;
+const THEMES = CakeCore.MOTIFS.filter((m) => m !== "animals");
 {
   const { loadI18n } = require("./load-i18n.js");
+  const CakeIcons = require(path.join(__dirname, "..", "cake-icons.js"));
   const STRINGS = loadI18n({ texts: false }).STRINGS;
-  const cakeWord = { en: /cake/i, de: /Kuchen/, fr: /gâteau/i, es: /pastel/i, it: /torta/i, nl: /taart/i, pl: /ciast/i, uk: /торт/i, ru: /торт/i, ja: /ケーキ/, zh: /蛋糕/, ar: /كعك/ };
+  const cakeWord = { en: /cake/i, de: /Kuchen/, fr: /gâteau/i, es: /pastel/i, it: /torta/i, nl: /taart/i, pl: /ciast(?!ecz)/i, uk: /торт/i, ru: /торт/i, ja: /ケーキ/, zh: /蛋糕/, ar: /كعك/ };
+  THEMES.forEach((motif) => {
+    const th = CakeCore.THEMES[motif];
+    const drawn = new Set();
+    th.who.concat([th.thing, "table" + th.thing]).forEach((id) => {
+      if (!CakeIcons.icons[id]) fails.push(motif + ": no drawing for " + id);
+      else drawn.add(CakeIcons.icons[id]);
+    });
+    if (drawn.size !== th.who.length + 2) fails.push(motif + ": two drawings are the same");
+  });
   for (const lang of Object.keys(STRINGS)) {
     const t = (k) => (STRINGS[lang][k] !== undefined ? STRINGS[lang][k] : STRINGS.en[k] !== undefined ? STRINGS.en[k] : k);
-    const check = (what, text) => {
-      catTexts++;
-      if (/[{}]|cake_|undefined/.test(text)) fails.push(lang + " cats: " + what + " \"" + text + "\"");
-      if (cakeWord[lang] && cakeWord[lang].test(text)) fails.push(lang + " cats: " + what + " names the cake: \"" + text + "\"");
-    };
-    CakeCore.CATS.forEach((id) => ["name", "cap", "mid", "is", "isnot", "sits"].forEach((f) => {
-      if (STRINGS[lang]["cake_" + id + "_" + f] === undefined) fails.push(lang + " lacks cake_" + id + "_" + f);
-    }));
-    for (const level of Object.keys(CakeCore.LEVELS)) {
-      for (let seed = 1; seed <= 20; seed++) {
-        const p = CakeCore.generatePuzzle(level, rng(seed * 977 + 13));
-        if (!p) continue;
-        p.motif = "cats";
-        p.clues.forEach((cl) => check("clue", CakeCore.clueText(p, cl, t)));
-        for (let k = 0; k < p.n; k++) check("thing", CakeCore.thingName(p, k, t));
-        check("win", t("cake_win_" + CakeCore.animalId(p, CakeCore.culprit(p))));
+    THEMES.forEach((motif) => {
+      const check = (what, text) => {
+        catTexts++;
+        if (/[{}]|cake_|undefined/.test(text)) fails.push(lang + " " + motif + ": " + what + " \"" + text + "\"");
+        if (cakeWord[lang] && cakeWord[lang].test(text)) fails.push(lang + " " + motif + ": " + what + " names the cake: \"" + text + "\"");
+      };
+      if (STRINGS[lang]["cake_motif_" + motif] === undefined) fails.push(lang + " lacks cake_motif_" + motif);
+      CakeCore.THEMES[motif].who.forEach((id) => ["name", "cap", "mid", "is", "isnot", "sits"].forEach((f) => {
+        if (STRINGS[lang]["cake_" + id + "_" + f] === undefined) fails.push(lang + " lacks cake_" + id + "_" + f);
+      }));
+      for (const level of Object.keys(CakeCore.LEVELS)) {
+        for (let seed = 1; seed <= 20; seed++) {
+          const p = CakeCore.generatePuzzle(level, rng(seed * 977 + 13));
+          if (!p) continue;
+          p.motif = motif;
+          p.clues.forEach((cl) => check("clue", CakeCore.clueText(p, cl, t)));
+          for (let k = 0; k < p.n; k++) check("thing", CakeCore.thingName(p, k, t));
+          check("win", t("cake_win_" + CakeCore.animalId(p, CakeCore.culprit(p))));
+        }
       }
-    }
-    ["cake_hint_last", "cake_always_1", "cake_always_2", "cake_always_4"].forEach((k) => check(k, t(CakeCore.themed({ motif: "cats" }, k))));
+      ["cake_hint_last", "cake_always_1", "cake_always_2", "cake_always_4"].forEach((k) => {
+        const key = CakeCore.themed({ motif }, k);
+        if (STRINGS[lang][key] === undefined) fails.push(lang + " lacks " + key);
+        check(k, t(key));
+      });
+    });
   }
 }
+
+// 500 cases per new theme (bears, dogs, magpies), spread over the levels:
+// the theme is set on the generated puzzle, which keeps exactly one
+// solution and stays solvable by deduction at its level; culprit and
+// thing come from the theme.
+const NEW_THEMES = ["bears", "dogs", "magpies"];
+const themeCases = {};
+NEW_THEMES.forEach((motif, ti) => {
+  let ok = 0;
+  const levels = Object.keys(CakeCore.LEVELS);
+  for (let i = 0; i < 500; i++) {
+    const level = levels[i % levels.length];
+    const p = CakeCore.generatePuzzle(level, rng(70000 + ti * 1000 + i));
+    const tag = motif + " #" + (i + 1);
+    if (!p) { fails.push(tag + ": no puzzle"); continue; }
+    p.motif = motif;
+    if (CakeCore.countSolutions(p, 2) !== 1) { fails.push(tag + ": not exactly one solution"); continue; }
+    if (!CakeCore.isSolution(p, p.solution)) { fails.push(tag + ": stored solution breaks a rule"); continue; }
+    const d = CakeCore.deduce(p, CakeCore.LEVELS[level].level);
+    if (!d || !d.solved || d.cells.some((c, k) => c !== p.solution[k])) { fails.push(tag + ": not solvable by deduction"); continue; }
+    if (CakeCore.thingId(p, p.n - 1) !== CakeCore.THEMES[motif].thing) fails.push(tag + ": wrong thing");
+    if (CakeCore.THEMES[motif].who.indexOf(CakeCore.animalId(p, CakeCore.culprit(p))) === -1) fails.push(tag + ": culprit not from the theme");
+    ok++;
+  }
+  themeCases[motif] = ok;
+});
+console.log("themes: " + NEW_THEMES.map((m) => m + " " + themeCases[m] + "/500 solvable with exactly one solution").join(", "));
 
 Object.keys(clueStats).forEach((lv) => {
   const st = clueStats[lv];
@@ -218,5 +266,5 @@ Object.keys(clueStats).forEach((lv) => {
 });
 console.log("hint reasons (first " + HINT_PLAY + " puzzles per level): " + JSON.stringify(reasonStats));
 fails.forEach((f) => console.log("FAIL " + f));
-console.log("\n=== CAKE CORE: " + total + " puzzles, " + catTexts + " cat theme texts checked, " + fails.length + " failures ===");
+console.log("\n=== CAKE CORE: " + total + " puzzles, " + catTexts + " theme texts checked, " + fails.length + " failures ===");
 process.exit(fails.length ? 1 : 0);

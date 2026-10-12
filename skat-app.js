@@ -74,7 +74,13 @@ function saveSk() {
 
 /*** Setup ***/
 
+// Setting "Show move suggestions" (move-hints.js); off by default.
+function hintsSk() {
+  return typeof MoveHints === "undefined" || MoveHints.enabled();
+}
+
 function initSkatApp() {
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => renderSk());
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   if (menuToggle && settingsPanel) {
@@ -489,7 +495,7 @@ function renderSk() {
   sortedSk(mine, s.game).forEach((c) => {
     const sel = AppStateSk.selected.some((x) => SkatCore.same(x, c));
     const playable = legal.some((x) => SkatCore.same(x, c));
-    const btn = cardElSk(c, "button", (myPlay && !playable ? "pc-card-dim" : "") + (sel ? " pc-card-selected" : ""));
+    const btn = cardElSk(c, "button", (myPlay && !playable && hintsSk() ? "pc-card-dim" : "") + (sel ? " pc-card-selected" : ""));
     btn.disabled = !(myPlay || discarding);
     if (sel) I18n.setAria(btn, cardTextSk(c) + ", selected");
     btn.addEventListener("click", () => onHandCardSk(c));

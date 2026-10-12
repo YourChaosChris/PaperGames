@@ -13372,6 +13372,15 @@ li.fv-card {
   }
 }
 
+/* Cat Places (catplaces-app.js): uses the Pentomino board layout
+   (.pt-board, .pt-cells); cats that break a rule get a dashed frame. */
+.kz-conflict {
+  fill: none;
+  stroke: #141413;
+  stroke-width: 2.5;
+  stroke-dasharray: 5 3;
+}
+
 /* Arrows (arrows-app.js): uses the Pentomino board layout (.pt-board,
    .pt-cells); the arrow in the way of a tapped one gets a dotted frame. */
 .aw-blocker {

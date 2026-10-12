@@ -31,12 +31,27 @@
 
 const CakeCore = (function () {
   const ANIMALS = ["dog", "cat", "rabbit", "mouse", "hedgehog"];
-  // Themes: the same puzzle with other pictures and names. "cats" (p.motif)
-  // has five cats told apart by pattern and name, and a fish instead of
-  // the cake; rules, generator and clues stay the same. A puzzle without
-  // p.motif (older saves) is the animals theme.
-  const MOTIFS = ["animals", "cats"];
+  // Themes: the same puzzle with other pictures and names (p.motif). Each
+  // has five suspects told apart by pattern and name, and its own thing
+  // instead of the cake: cats and a fish, bears and cookies, dogs and a
+  // ball, magpies and a key. Rules, generator and clues stay the same. A
+  // puzzle without p.motif (older saves) is the animals theme. suffix: the
+  // texts that name the thing have their own key (base + suffix).
   const CATS = ["cattiger", "catluna", "catmimi", "catfelix", "catmax"];
+  const BEARS = ["bearbruno", "bearpaula", "bearotto", "bearlilli", "bearfritz"];
+  const DOGS = ["dogbello", "doglotte", "dogbenny", "dogsusi", "dogrudi"];
+  const MAGPIES = ["magpiepip", "magpiekiki", "magpierosa", "magpiejakob", "magpielou"];
+  const THEMES = {
+    animals: { who: ANIMALS, thing: "cake", suffix: "" },
+    cats: { who: CATS, thing: "fish", suffix: "_fish" },
+    bears: { who: BEARS, thing: "cookies", suffix: "_cookies" },
+    dogs: { who: DOGS, thing: "ball", suffix: "_ball" },
+    magpies: { who: MAGPIES, thing: "key", suffix: "_key" }
+  };
+  const MOTIFS = Object.keys(THEMES);
+  function theme(p) {
+    return (p && THEMES[p.motif]) || THEMES.animals;
+  }
   const ROOM_NAMES = ["kitchen", "living", "hall", "bath", "bedroom", "garden", "cellar"];
   const FURNITURE = ["table", "chair", "rug", "plant", "cupboard"];
   // Furniture no animal can stand on (the cake stands on a table).
@@ -576,19 +591,19 @@ const CakeCore = (function () {
   // The id of animal k in the puzzle's theme (names: cake_<id>_..., icons:
   // CakeIcons <id>).
   function animalId(p, k) {
-    return (p && p.motif === "cats" ? CATS : ANIMALS)[k];
+    return theme(p).who[k];
   }
 
   // The id of thing k: an animal, or "cake" / "fish" for the last one.
   function thingId(p, k) {
-    if (isCake(p, k)) return p.motif === "cats" ? "fish" : "cake";
+    if (isCake(p, k)) return theme(p).thing;
     return animalId(p, k);
   }
 
   // A text key in the puzzle's theme: base + "_fish" when the cats look for
-  // a fish (only for the texts that name the cake).
+  // a fish, and so on (only for the texts that name the cake).
   function themed(p, key) {
-    return p && p.motif === "cats" ? key + "_fish" : key;
+    return key + theme(p).suffix;
   }
 
   function clueText(p, clue, t) {
@@ -623,7 +638,7 @@ const CakeCore = (function () {
   }
 
   return {
-    ANIMALS, CATS, MOTIFS, ROOM_NAMES, FURNITURE, BLOCKING, LEVELS, animalId, thingId, themed,
+    ANIMALS, CATS, BEARS, DOGS, MAGPIES, THEMES, MOTIFS, ROOM_NAMES, FURNITURE, BLOCKING, LEVELS, animalId, thingId, themed,
     neighbours, nextTo, clueAllows, baseCandidates, isSolution, countSolutions, deduce,
     randomRooms, candidateClues, generatePuzzle, addExtraClues, findHint, explainStep, clueText, thingName, culprit, fill
   };
