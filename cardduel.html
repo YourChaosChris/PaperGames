@@ -127,6 +127,13 @@
       <button type="button" id="cd-end" class="secondary" data-i18n="cd_end_turn">End turn</button>
     </div>
     <p id="cd-info" class="cd-info" aria-live="polite"></p>
+    <div class="cd-actions"><button type="button" id="cd-view" class="secondary" data-i18n="cd_view" disabled>Look at the card</button></div>
+    <div id="cd-viewer" class="cd-viewer hidden" role="dialog" aria-modal="true" aria-labelledby="cd-viewer-title">
+      <div class="cd-viewer-card card">
+        <div id="cd-viewer-body"></div>
+        <button type="button" id="cd-viewer-close" class="primary" data-i18n="cd_view_close">Close</button>
+      </div>
+    </div>
     <div id="cd-hand-cover" class="hand-cover hidden">
       <p id="cd-hand-cover-text"></p>
       <button id="cd-show-hand" class="primary" type="button" data-i18n="cd_show_hand">Show my cards</button>
@@ -166,6 +173,7 @@
 <script src="game-storage.js"></script>
 <script src="game-stats.js"></script>
 <script src="board-a11y.js"></script>
+<script src="cardduel-art.js"></script>
 <script src="cardduel-app.js"></script>
 <script src="confirm-actions.js"></script>
 <script src="sw-register.js"></script>

@@ -109,6 +109,16 @@ function clearSavedCdGame() {
 /*** Setup ***/
 
 function initCdApp() {
+  // Hatching and frame patterns of the card pictures, once per page.
+  if (typeof CardDuelArt !== "undefined" && !document.querySelector(".cda-defs")) document.body.insertAdjacentHTML("afterbegin", CardDuelArt.defs());
+  const viewBtn = document.getElementById("cd-view");
+  if (viewBtn) viewBtn.addEventListener("click", openViewCd);
+  const viewClose = document.getElementById("cd-viewer-close");
+  if (viewClose) viewClose.addEventListener("click", closeViewCd);
+  document.addEventListener("keydown", (e) => {
+    const box = document.getElementById("cd-viewer");
+    if (e.key === "Escape" && box && !box.classList.contains("hidden")) closeViewCd();
+  });
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const modeHotseat = document.getElementById("mode-offline");
@@ -399,7 +409,7 @@ function creatureHtmlCd(m, side, idx, targets) {
   if (targets.some((t) => t.side === side && t.index === idx)) cls.push("cd-target");
   const hurt = m.hp < m.max;
   return '<button type="button" class="' + cls.join(" ") + '" data-side="' + side + '" data-index="' + idx + '">' +
-    emblemCd(c.el) +
+    pictureCd(m.id, "cda-pic cd-creature-pic", c.el) +
     '<span class="cd-creature-name">' + escCd(cardNameCd(m.id)) + "</span>" +
     '<span class="cd-stats">' + m.atk + " / " + m.hp + (hurt ? '<span class="cd-hurt">(' + m.max + ")</span>" : "") + "</span>" +
     (m.abil.length ? '<span class="cd-abil">' + escCd(m.abil.map(abilityNameCd).join(", ")) + "</span>" : "") +
@@ -424,7 +434,7 @@ function mageHtmlCd(side, targets) {
   const s = AppStateCd.state;
   const pl = s.players[side];
   const facts = fillCd("cd_mage_facts", { l: pl.life, h: pl.hand.length, d: pl.deck.length, p: pl.power, m: pl.maxPower });
-  return emblemCd(s.decks[side], "cd-emblem cd-emblem-mage") +
+  return (typeof CardDuelArt !== "undefined" ? CardDuelArt.portrait(s.decks[side], "cda-portrait cd-mage-portrait") : emblemCd(s.decks[side], "cd-emblem cd-emblem-mage")) +
     '<span class="cd-mage-name">' + escCd(playerNameCd(side)) + "</span>" +
     '<span class="cd-mage-life">' + escCd(fillCd("cd_life_n", { n: pl.life })) + "</span>" +
     '<span class="cd-mage-facts">' + escCd(facts) + "</span>";
@@ -437,6 +447,7 @@ function handCardHtmlCd(id, i, playable, selected) {
   if (selected) cls.push("cd-selected");
   const stats = c.kind === "creature" ? '<span class="cd-card-stats">' + c.atk + " / " + c.hp + "</span>" : "";
   return '<li><button type="button" class="' + cls.join(" ") + '" data-hand="' + i + '">' +
+    pictureCd(id, "cda-pic cd-card-pic", c.el) +
     '<span class="cd-card-top">' + emblemCd(c.el) + '<span class="cd-card-name">' + escCd(cardNameCd(id)) + "</span>" +
     '<span class="cd-cost" aria-hidden="true">' + c.cost + "</span></span>" +
     '<span class="cd-card-kind">' + escCd(tCd(c.kind === "creature" ? "cd_kind_creature" : "cd_kind_spell")) + "</span>" + stats +
@@ -452,6 +463,54 @@ function handLabelCd(id, playable) {
   if (text) parts.push(text);
   if (!playable) parts.push(tCd("cd_aria_unplayable"));
   return parts.join(", ");
+}
+
+// A card's drawing (cardduel-art.js); the element symbol if it is missing.
+function pictureCd(id, cls, el) {
+  const pic = typeof CardDuelArt !== "undefined" ? CardDuelArt.picture(id, cls) : "";
+  return pic || emblemCd(el);
+}
+
+// The card behind the explanation line (a card in hand or a creature),
+// or null.
+function viewedCardCd() {
+  const s = AppStateCd.state, info = AppStateCd.info;
+  if (!s || !info) return null;
+  if (info.kind === "card") return info.id ? { id: info.id, m: null } : null;
+  if (info.kind === "creature") {
+    const m = s.players[info.side].board.find((x) => x.uid === info.uid);
+    return m ? { id: m.id, m } : null;
+  }
+  return null;
+}
+
+// "Look": the card large, with its picture and the full text.
+function openViewCd() {
+  const v = viewedCardCd();
+  const box = document.getElementById("cd-viewer");
+  if (!v || !box) return;
+  const c = coreCd().card(v.id);
+  const abil = v.m ? v.m.abil : c.abil;
+  let stats = "";
+  if (c.kind === "creature") stats = v.m ? fillCd("cd_aria_stats", { a: v.m.atk, l: v.m.hp, m: v.m.max }) : c.atk + " / " + c.hp;
+  const fx = c.fx ? (c.kind === "creature" ? fillCd("cd_on_play", { s: fxTextCd(c.fx) }) : fxTextCd(c.fx)) : "";
+  document.getElementById("cd-viewer-body").innerHTML =
+    pictureCd(v.id, "cda-pic cd-view-pic", c.el) +
+    '<h2 id="cd-viewer-title" class="cd-view-name">' + escCd(cardNameCd(v.id)) + "</h2>" +
+    '<p class="cd-view-line">' + escCd(tCd("cd_el_" + c.el) + " · " + tCd(c.kind === "creature" ? "cd_kind_creature" : "cd_kind_spell") + " · " + fillCd("cd_aria_cost", { n: c.cost })) + "</p>" +
+    (stats ? '<p class="cd-view-stats">' + escCd(stats) + "</p>" : "") +
+    (fx ? '<p class="cd-view-line">' + escCd(fx) + "</p>" : "") +
+    abil.map((a) => '<p class="cd-view-line"><strong>' + escCd(abilityNameCd(a)) + "</strong>: " + escCd(tCd("cd_ab_" + a + "_desc")) + "</p>").join("");
+  box.classList.remove("hidden");
+  const close = document.getElementById("cd-viewer-close");
+  if (close) close.focus();
+}
+
+function closeViewCd() {
+  const box = document.getElementById("cd-viewer");
+  if (box) box.classList.add("hidden");
+  const btn = document.getElementById("cd-view");
+  if (btn && !btn.disabled) btn.focus();
 }
 
 // The explanation line: the card or creature tapped last with what its
@@ -549,6 +608,8 @@ function renderCd() {
   document.getElementById("resign-button").classList.toggle("hidden", AppStateCd.gameOver);
 
   document.getElementById("cd-info").innerHTML = infoHtmlCd();
+  const viewBtn = document.getElementById("cd-view");
+  if (viewBtn) viewBtn.disabled = !viewedCardCd();
 
   const cover = document.getElementById("cd-hand-cover");
   const hand = document.getElementById("cd-hand");

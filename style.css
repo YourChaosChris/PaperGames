@@ -13214,3 +13214,160 @@ li.fv-card {
     margin: 0 var(--space-1);
   }
 }
+
+/* Card Duel pictures (cardduel-art.js): the hand as a grid of cards with
+   the picture on top (three per row, two on a narrow screen), small
+   pictures on the creatures, the mage portraits, and the large view of a
+   card ("Look"). Black and white; the frame pattern shows the element. */
+.cd-hand {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cd-hand li {
+  width: 32%;
+  margin: 0 2% var(--space-2) 0;
+}
+
+.cd-hand li:nth-child(3n) {
+  margin-right: 0;
+}
+
+.cd-hand .cd-card {
+  position: relative;
+  height: 100%;
+  padding: var(--space-1);
+  font-size: 0.85rem;
+  line-height: 1.25;
+}
+
+/* The cost sits in the top corner of the picture, so long names such as
+   "Glutsalamander" get the whole width and may wrap. */
+.cd-hand .cd-cost {
+  position: absolute;
+  top: 0.1rem;
+  right: 0.1rem;
+  min-width: 1.6rem;
+  background: #fff;
+}
+
+[dir="rtl"] .cd-hand .cd-cost {
+  right: auto;
+  left: 0.1rem;
+}
+
+.cd-hand .cd-selected .cd-cost {
+  background: #141413;
+}
+
+.cd-hand .cd-card-top > * {
+  min-width: 0;
+}
+
+/* The frame of the picture already shows the element. */
+.cd-hand .cd-card-top .cd-emblem {
+  display: none;
+}
+
+.cd-hand .cd-card-name {
+  font-size: 0.95rem;
+  overflow-wrap: break-word;
+}
+
+.cda-pic {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cd-card-pic {
+  margin-bottom: var(--space-1);
+}
+
+.cd-hand .cd-card-text {
+  font-size: 0.8rem;
+}
+
+.cd-creature-pic {
+  width: 100%;
+  max-width: 6.5rem;
+  margin: 0 auto 0.15rem;
+}
+
+.cd-mage-portrait {
+  width: 3rem;
+  height: 3rem;
+  flex: 0 0 auto;
+}
+
+.cd-viewer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+  background: #fff;
+  overflow-y: auto;
+}
+
+.cd-viewer.hidden {
+  display: none;
+}
+
+.cd-viewer-card {
+  width: 100%;
+  max-width: 24rem;
+  text-align: start;
+  border: 3px solid var(--border);
+}
+
+.cd-view-pic {
+  margin-bottom: var(--space-2);
+}
+
+.cd-view-name {
+  font-size: 1.3rem;
+  margin: 0 0 var(--space-1);
+}
+
+.cd-view-line,
+.cd-view-stats {
+  margin: 0 0 var(--space-1);
+}
+
+.cd-view-stats {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+#cd-viewer-close {
+  margin-top: var(--space-2);
+}
+
+@media (max-width: 520px) {
+  .cd-hand li {
+    width: 49%;
+    margin-right: 2%;
+  }
+  .cd-hand li:nth-child(3n) {
+    margin-right: 2%;
+  }
+  .cd-hand li:nth-child(2n) {
+    margin-right: 0;
+  }
+  .cd-hand .cd-card-name {
+    font-size: 0.8rem;
+  }
+  .cd-hand .cd-card-pic {
+    max-width: 7rem;
+    margin: 0 auto var(--space-1);
+  }
+  .cd-creature-pic {
+    max-width: 5.5rem;
+  }
+}

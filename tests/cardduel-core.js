@@ -9,6 +9,9 @@
 //  3. Hard against easy: at least 70 % over 200 games.
 //  4. A few rules on their own: Bulwark, Nimble, Thick Skin, the empty
 //     deck, the 6-creature limit, the evening out of the start.
+//  5. Pictures (cardduel-art.js): every card has its own drawing, no
+//     drawing belongs to two cards, no drawing without a card, a portrait
+//     for every element; the size of the picture file (under 300 KB).
 // No server or browser needed. About 90 seconds.
 
 const path = require("path");
@@ -138,6 +141,35 @@ function put(s, side, id, ready) {
   check(s.players[1].hand.length === 3 && s.players[0].hand.length === 4, "start: starter 3 cards (no draw in the first turn), the other 4");
   C.apply(s, { type: "end" });
   check(s.players[0].power === 2 && s.players[0].maxPower === 1, "the second player's first turn should have 2 power (1 + 1)");
+})();
+
+// --- 5. pictures ------------------------------------------------------------
+(function () {
+  const fs = require("fs");
+  const vm = require("vm");
+  const file = path.join(__dirname, "..", "cardduel-art.js");
+  const ctx = {};
+  vm.createContext(ctx);
+  vm.runInContext(fs.readFileSync(file, "utf8") + "\nthis.CardDuelArt = CardDuelArt;", ctx);
+  const A = ctx.CardDuelArt;
+  const cards = C.CARDS.concat(C.TOKENS).map((c) => c.id);
+  const seen = {};
+  cards.forEach((id) => {
+    const pic = A.picture(id);
+    check(/^<svg [^>]*viewBox="0 0 100 70"/.test(pic) && pic.length > 300, id + ": no picture");
+    check(pic.indexOf("url(#cda-fr-" + id.split("_")[0] + ")") !== -1, id + ": picture without the frame of its element");
+    // The drawing alone, without the element frame.
+    const body = pic.replace(/cda-fr-[a-z]+/g, "");
+    if (seen[body]) fails.push(id + ": same picture as " + seen[body]);
+    seen[body] = id;
+  });
+  A.ids().forEach((id) => check(cards.indexOf(id) !== -1, "picture " + id + " belongs to no card"));
+  const ports = C.ELEMENTS.map((el) => A.portrait(el));
+  ports.forEach((p, i) => check(/viewBox="0 0 60 60"/.test(p), C.ELEMENTS[i] + ": no mage portrait"));
+  check(new Set(ports).size === ports.length, "two mages share a portrait");
+  const kb = fs.statSync(file).size / 1024;
+  check(kb < 300, "cardduel-art.js is " + kb.toFixed(1) + " KB, expected under 300");
+  console.log("pictures: " + cards.length + " cards, " + Object.keys(seen).length + " different drawings, " + ports.length + " portraits; cardduel-art.js " + kb.toFixed(1) + " KB");
 })();
 
 if (fails.length) {

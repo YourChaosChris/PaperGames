@@ -174,7 +174,9 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   each deck wins 40-60 % in every pairing, the starter at most 55 % -,
   hard beats easy in at least 70 % of 200 games, and single rules
   (Bulwark, Nimble, Thick Skin, empty deck, 6 creatures, the evening out
-  of the start). About 90 seconds.
+  of the start); every card has its own picture in cardduel-art.js (none
+  missing, none shared by two cards, a portrait per mage, the file under
+  300 KB; the size is printed). About 90 seconds.
 - `node tests/villains-core.js` - no server or browser needed.
   "Fairy-Tale Villains": six villains with four places each, all names
   in 12 languages; 500 computer games for each number of players (2, 3,

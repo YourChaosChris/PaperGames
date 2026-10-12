@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v230",
+    date: "2026-10-12",
+    key: "release_v230",
+    text: "Card Duel: every card has a picture now."
+  },
+  {
     version: "v229",
     date: "2026-10-12",
     key: "release_v229",
