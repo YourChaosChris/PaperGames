@@ -1048,5 +1048,16 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-12T00:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M10 4L3 18H7L2 28H18L13 18H17Z\" fill=\"#141413\"/><rect x=\"9\" y=\"28\" width=\"2\" height=\"6\" fill=\"#141413\"/><path d=\"M21 22L29 14L37 22V36H21Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"27\" y=\"28\" width=\"4\" height=\"8\" fill=\"#141413\"/></svg></span>"
+  },
+  {
+    slug: "adventurebook",
+    category: "strategy",
+    nameKey: "game_adventurebook",
+    nameText: "Adventure Book",
+    descKey: "home_adventurebook_desc",
+    descText: "A role-playing game for one: create a hero, explore a cave, a tower or a forest room by room, roll dice for checks and fights and bring back a lost treasure. Easy, Medium or Hard.",
+    popular: false,
+    added: "2026-10-12T00:30",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M6 8H19V34H6Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><path d=\"M21 8H34V34H21Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><path d=\"M19 8Q20 6 21 8V34Q20 36 19 34Z\" fill=\"#141413\"/><path d=\"M27 13L28.5 17H32.5L29.3 19.5L30.5 23.5L27 21L23.5 23.5L24.7 19.5L21.5 17H25.5Z\" fill=\"#141413\"/><path d=\"M9 14H16M9 19H16M9 24H14\" stroke=\"#141413\" stroke-width=\"2\"/></svg></span>"
   }
 ];

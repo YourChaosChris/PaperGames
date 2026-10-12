@@ -191,6 +191,15 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   Hard beats Easy in at least 70 % of 400 games, and single rules (free
   animal next to its building, taken and shared fields, spring, full
   village). About a minute.
+- `node tests/adventurebook-core.js` - no server or browser needed.
+  "Adventure Book": at least 60 room texts, 20 enemies and 30 items, all
+  in 12 languages; creating a hero (6 points, at most 4 each); 1000
+  generated places per difficulty (12-20 rooms, every room and the goal
+  reachable, every way both directions, at most 3 choices per room);
+  1000 runs with random choices for every class and difficulty - every
+  run ends without an illegal step, Easy above 75 % -, and single rules
+  (checks, backpack, levels, flight, bringing the treasure back). About
+  half a minute.
 - `node tests/game-families.js` - needs a running server and a browser.
   Checks the game families (`family` in games-catalog.js): each has at
   least two games, no game is in the catalog twice, game-switcher.js

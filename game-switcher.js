@@ -109,7 +109,8 @@
     ["pentomino", "game_pentomino"],
     ["cardduel", "game_cardduel"],
     ["villains", "game_villains"],
-    ["forestvillage", "game_forestvillage"]
+    ["forestvillage", "game_forestvillage"],
+    ["adventurebook", "game_adventurebook"]
   ];
 
   var GAME_SLUGS = {};

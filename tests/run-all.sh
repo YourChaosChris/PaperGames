@@ -97,6 +97,8 @@ echo "=== villains-core.js ==="
 node "$ROOT/tests/villains-core.js" || status=1
 echo "=== forestvillage-core.js ==="
 node "$ROOT/tests/forestvillage-core.js" || status=1
+echo "=== adventurebook-core.js ==="
+node "$ROOT/tests/adventurebook-core.js" || status=1
 echo "=== new-games-order.js ==="
 node "$ROOT/tests/new-games-order.js" || status=1
 echo "=== kids-games.js ==="

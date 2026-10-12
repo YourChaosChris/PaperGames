@@ -84,7 +84,8 @@ const STATS_GAME_NAME_KEY = {
   pentomino: "game_pentomino",
   cardduel: "game_cardduel",
   villains: "game_villains",
-  forestvillage: "game_forestvillage"
+  forestvillage: "game_forestvillage",
+  adventurebook: "game_adventurebook"
 };
 
 function gameDisplayName(game) {

@@ -12841,3 +12841,204 @@ li.fv-card {
     padding: 0.1rem;
   }
 }
+
+/* Adventure Book (adventurebook-app.js): creating a hero (classes as
+   framed radio choices, values with - and + buttons), the room (text,
+   what happened, choices as full-width buttons), fight box, map (SVG),
+   backpack list, hero values and log. Margins instead of `gap`. */
+.ab-create,
+.ab-play {
+  text-align: start;
+}
+
+.ab-heading {
+  text-align: start;
+  font-size: 1rem;
+  margin: var(--space-3) 0 var(--space-1);
+}
+
+.ab-name-row input {
+  max-width: 14rem;
+  font-size: 1rem;
+}
+
+.ab-fieldset {
+  border: none;
+  margin: var(--space-2) 0;
+  padding: 0;
+}
+
+.ab-fieldset legend {
+  font-weight: 700;
+  margin-bottom: var(--space-1);
+}
+
+.ab-class {
+  display: block;
+  margin: 0 0 var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.ab-class.ab-chosen {
+  border-width: 3px;
+}
+
+.ab-class-name {
+  font-weight: 700;
+}
+
+.ab-class-desc {
+  display: block;
+  font-size: 0.85rem;
+}
+
+.ab-points {
+  font-weight: 700;
+  margin: var(--space-2) 0 var(--space-1);
+}
+
+.ab-stat-row {
+  display: flex;
+  align-items: center;
+  margin: 0 0 var(--space-1);
+}
+
+.ab-stat-name {
+  flex: 1 1 auto;
+}
+
+.ab-stat-btn {
+  min-width: 2.75rem;
+  margin-inline-start: var(--space-1);
+  font-weight: 700;
+}
+
+.ab-create-msg:empty,
+.ab-goal:empty,
+.ab-event:empty,
+.ab-result:empty {
+  display: none;
+}
+
+.ab-create-msg {
+  font-weight: 700;
+}
+
+.ab-goal {
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-1) var(--space-2);
+  font-size: 0.9rem;
+}
+
+.ab-room-text {
+  font-size: 1.05rem;
+  line-height: 1.4;
+  margin: var(--space-1) 0;
+}
+
+.ab-event {
+  font-weight: 700;
+  margin: var(--space-1) 0;
+}
+
+.ab-fight {
+  border: 3px double var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-2);
+  margin: var(--space-2) 0;
+}
+
+.ab-result {
+  border-inline-start: 3px solid var(--border);
+  padding-inline-start: var(--space-2);
+  margin: var(--space-2) 0;
+  font-size: 0.9rem;
+}
+
+.ab-result p {
+  margin: 0 0 0.2rem;
+}
+
+.ab-choices {
+  margin: var(--space-2) 0;
+}
+
+.ab-choice {
+  display: block;
+  width: 100%;
+  margin: 0 0 var(--space-1);
+  text-align: start;
+}
+
+.ab-actions {
+  margin: var(--space-2) 0;
+  text-align: center;
+}
+
+.ab-actions button {
+  margin: 0 var(--space-1) var(--space-1) 0;
+}
+
+.ab-panel {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-2);
+  margin: var(--space-2) 0;
+}
+
+.ab-map-svg {
+  display: block;
+  width: 100%;
+  max-width: 330px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.ab-legend,
+.ab-compass {
+  font-size: 0.85rem;
+  margin: var(--space-1) 0 0;
+}
+
+.ab-pack-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ab-pack-list li {
+  margin: 0 0 var(--space-2);
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--border);
+}
+
+.ab-fx {
+  display: block;
+  font-size: 0.85rem;
+}
+
+.ab-pack-btns button {
+  margin: var(--space-1) var(--space-1) 0 0;
+}
+
+.ab-hero {
+  border-top: 2px solid var(--border);
+  padding-top: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.ab-hp {
+  font-weight: 700;
+}
+
+.ab-log {
+  margin: 0;
+  padding-inline-start: 1.4rem;
+  font-size: 0.85rem;
+}

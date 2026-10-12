@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v227",
+    date: "2026-10-12",
+    key: "release_v227",
+    text: "Adventure Book: a role-playing game for one – create a hero and explore a cave, a tower or a forest."
+  },
+  {
     version: "v226",
     date: "2026-10-12",
     key: "release_v226",
