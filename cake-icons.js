@@ -171,6 +171,63 @@ const CakeIcons = (function () {
   icons.tableball = icons.table + '<g transform="translate(8.5 -3.5) scale(0.58)">' + ball + "</g>";
   icons.tablekey = icons.table + '<g transform="translate(4 -1.5) scale(0.8)">' + key + "</g>";
 
+  // People ("Family and cake", "Neighbours' children and treasure"): head
+  // and shoulders, told apart by hair, hat and clothes drawn in solid black
+  // and white - bun and glasses, beard, long hair, tie, pigtails, cap, bow,
+  // curls, sun hat, spiky hair.
+  const P = 'stroke="#141413" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"';
+  const torso = (fill) => '<path d="M6 40C6 31 12 28 20 28C28 28 34 31 34 40" fill="' + fill + '" ' + P + '/>';
+  const head = '<circle cx="20" cy="17" r="8.5" fill="#fff" ' + P + '/>';
+  const eyes = '<circle cx="16.8" cy="17" r="1.5" ' + B + '/><circle cx="23.2" cy="17" r="1.5" ' + B + '/>';
+  const smile = '<path d="M17 21Q20 23.5 23 21" ' + S + ' stroke-width="1.6"/>';
+  const shortHair = '<path d="M11.5 15C11.5 6.5 28.5 6.5 28.5 15C27 12 24 11 20 11.5C16 11 13 12 11.5 15Z" ' + B + '/>';
+  // Greta: hair in a bun on top, round glasses, a brooch.
+  icons.greta = torso("#fff") + head + '<circle cx="20" cy="6" r="3.8" ' + B + '/>' +
+    '<path d="M11.5 16C11.5 7 28.5 7 28.5 16C25 12 15 12 11.5 16Z" ' + B + '/>' + eyes + smile +
+    '<circle cx="16.8" cy="17" r="3" fill="none" stroke="#141413" stroke-width="1.4"/><circle cx="23.2" cy="17" r="3" fill="none" stroke="#141413" stroke-width="1.4"/>' +
+    '<path d="M19.8 17H20.2" ' + S + ' stroke-width="1.4"/><circle cx="20" cy="33" r="1.8" ' + B + '/>';
+  // Anton: bald, a big black beard, a cardigan with buttons.
+  icons.anton = torso("#fff") + '<path d="M20 30V40" ' + S + ' stroke-width="1.8"/><circle cx="17.5" cy="34" r="1.2" ' + B + '/><circle cx="17.5" cy="38" r="1.2" ' + B + '/>' +
+    head + '<path d="M12.3 20C13 27 16.5 30.5 20 30.5C23.5 30.5 27 27 27.7 20C25.5 22 23 21.5 20 21.5C17 21.5 14.5 22 12.3 20Z" ' + B + '/>' + eyes +
+    '<path d="M14.5 13.5H18.5M21.5 13.5H25.5" ' + S + ' stroke-width="2"/>';
+  // Lisa: long black hair down to the shoulders, a fringe.
+  icons.lisa = torso("#fff") + '<path d="M10 17C10 6 30 6 30 17V32H25V22H15V32H10Z" ' + B + '/>' + head +
+    '<path d="M11.5 15C13 9 27 9 28.5 15C24 12.5 16 12.5 11.5 15Z" ' + B + '/>' + eyes + smile;
+  // Jonas: short black hair, a shirt with a black tie.
+  icons.jonas = torso("#fff") + '<path d="M15 29L20 32L25 29" ' + S + ' stroke-width="1.8"/><path d="M18.6 31H21.4L22.4 33L20.8 39.5H19.2L17.6 33Z" ' + B + '/>' +
+    head + shortHair + eyes + smile;
+  // Emma: two pigtails, a dress with dots.
+  icons.emma = torso("#fff") + '<circle cx="13" cy="34.5" r="1.4" ' + B + '/><circle cx="20" cy="32.5" r="1.4" ' + B + '/><circle cx="27" cy="34.5" r="1.4" ' + B + '/>' +
+    '<circle cx="16.5" cy="38" r="1.4" ' + B + '/><circle cx="23.5" cy="38" r="1.4" ' + B + '/>' +
+    '<circle cx="8.5" cy="13" r="4" ' + B + '/><circle cx="31.5" cy="13" r="4" ' + B + '/>' + head + shortHair + eyes + smile;
+  // Tom: a black cap with the peak to the side, a black jumper.
+  icons.tom = torso("#141413") + head + '<path d="M11.5 15C11.5 6 28.5 6 28.5 15Z" ' + B + '/>' +
+    '<path d="M27 14.5H36" fill="none" stroke="#141413" stroke-width="3.2" stroke-linecap="round"/>' + eyes + smile;
+  // Nora: a black bob and a big white bow on top.
+  icons.nora = torso("#fff") + head + '<path d="M10.5 22C9 8 31 8 29.5 22H27V15C24 13 16 13 13 15V22Z" ' + B + '/>' + eyes + smile +
+    '<path d="M20 7L12.5 3V11Z M20 7L27.5 3V11Z" fill="#fff" ' + P + ' stroke-width="1.8"/><circle cx="20" cy="7" r="2" fill="#fff" ' + P + ' stroke-width="1.6"/>';
+  // Ben: black curls, a striped jumper.
+  icons.ben = torso("#fff") + '<path d="M8.5 33.5H31.5M7 37.5H33" ' + S + ' stroke-width="2.4"/>' + head +
+    '<circle cx="12" cy="13.5" r="3" ' + B + '/><circle cx="14" cy="9.5" r="3" ' + B + '/><circle cx="18" cy="7.5" r="3" ' + B + '/>' +
+    '<circle cx="22.5" cy="7.5" r="3" ' + B + '/><circle cx="26.3" cy="9.5" r="3" ' + B + '/><circle cx="28.2" cy="13.5" r="3" ' + B + '/>' + eyes + smile;
+  // Ida: a wide white sun hat with a black band.
+  icons.ida = torso("#fff") + head + eyes + smile +
+    '<path d="M13.5 11.5C13.5 3 26.5 3 26.5 11.5Z" fill="#fff" ' + P + '/><path d="M13.7 9.3H26.3" fill="none" stroke="#141413" stroke-width="2.8"/>' +
+    '<ellipse cx="20" cy="11.5" rx="15" ry="3" fill="#fff" ' + P + ' stroke-width="2.2"/>';
+  // Leo: spiky black hair, square glasses.
+  icons.leo = torso("#fff") + head +
+    '<path d="M11.5 15L10.5 8L14.5 10.5L16 4.5L19 9.5L21.5 4L23.5 9.5L27 5.5L27 10.5L29.5 9.5L28.5 15C25 12 15 12 11.5 15Z" ' + B + '/>' +
+    eyes + smile + '<rect x="13.6" y="14.3" width="6" height="5.4" fill="none" stroke="#141413" stroke-width="1.5"/><rect x="20.4" y="14.3" width="6" height="5.4" fill="none" stroke="#141413" stroke-width="1.5"/>';
+  // The treasure: an open chest full of gold coins.
+  const treasure = '<path d="M7 18L10 6H30L33 18" fill="#fff" ' + P + '/>' +
+    '<circle cx="13" cy="16" r="3.4" fill="#fff" ' + P + ' stroke-width="1.8"/><circle cx="20" cy="13.5" r="3.4" fill="#fff" ' + P + ' stroke-width="1.8"/>' +
+    '<circle cx="27" cy="16" r="3.4" fill="#fff" ' + P + ' stroke-width="1.8"/><circle cx="16.5" cy="17.5" r="3.4" fill="#fff" ' + P + ' stroke-width="1.8"/>' +
+    '<circle cx="23.5" cy="17.5" r="3.4" fill="#fff" ' + P + ' stroke-width="1.8"/>' +
+    '<rect x="6" y="18" width="28" height="17" fill="#fff" ' + P + '/><path d="M6 22H34" fill="none" stroke="#141413" stroke-width="3"/>' +
+    '<path d="M12 22V35M28 22V35" ' + S + ' stroke-width="2"/><rect x="17" y="20" width="6" height="7" ' + B + '/><circle cx="20" cy="23" r="1.2" fill="#fff"/>';
+  icons.treasure = treasure;
+  icons.tabletreasure = icons.table + '<g transform="translate(6 -1.5) scale(0.7)">' + treasure + "</g>";
+
   function svg(name, cls) {
     return '<svg class="' + (cls || "cake-icon") + '" viewBox="0 0 40 40" aria-hidden="true" focusable="false">' + (icons[name] || "") + "</svg>";
   }

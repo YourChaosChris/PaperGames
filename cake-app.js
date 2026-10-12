@@ -27,9 +27,9 @@ const AppStateCake = {
 };
 
 const CAKE_SAVE_KEY = "einkchess_save_cake";
-// Theme ("animals", "cats", "bears", "dogs", "magpies": CakeCore.MOTIFS)
-// for new puzzles; the
-// current puzzle keeps its own in puzzle.motif.
+// Theme ("animals", "cats", "bears", "dogs", "magpies", "family",
+// "treasure": CakeCore.MOTIFS) for new puzzles; the current puzzle keeps
+// its own in puzzle.motif.
 const CAKE_MOTIF_KEY = "papergames_cake_motif";
 
 function loadCakeMotif() {
@@ -50,7 +50,7 @@ function renderCakeAlways() {
   const p = AppStateCake.puzzle;
   document.querySelectorAll("#cake-always [data-cake-always]").forEach((li) => {
     const nr = li.getAttribute("data-cake-always");
-    const key = nr === "3" ? "cake_always_3" : CakeCore.themed(p, "cake_always_" + nr);
+    const key = nr === "3" ? CakeCore.always3Key(p) : CakeCore.themed(p, "cake_always_" + nr);
     li.setAttribute("data-i18n", key);
     li.textContent = tCake(key);
   });

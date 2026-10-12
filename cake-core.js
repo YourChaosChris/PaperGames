@@ -34,19 +34,26 @@ const CakeCore = (function () {
   // Themes: the same puzzle with other pictures and names (p.motif). Each
   // has five suspects told apart by pattern and name, and its own thing
   // instead of the cake: cats and a fish, bears and cookies, dogs and a
-  // ball, magpies and a key. Rules, generator and clues stay the same. A
+  // ball, magpies and a key; a family and the cake, neighbours' children
+  // and a treasure chest. Rules, generator and clues stay the same. A
   // puzzle without p.motif (older saves) is the animals theme. suffix: the
-  // texts that name the thing have their own key (base + suffix).
+  // texts that name the thing have their own key (base + suffix); people:
+  // the suspects are people, so "Animals never stand on ..." has its own
+  // text too.
   const CATS = ["cattiger", "catluna", "catmimi", "catfelix", "catmax"];
   const BEARS = ["bearbruno", "bearpaula", "bearotto", "bearlilli", "bearfritz"];
   const DOGS = ["dogbello", "doglotte", "dogbenny", "dogsusi", "dogrudi"];
   const MAGPIES = ["magpiepip", "magpiekiki", "magpierosa", "magpiejakob", "magpielou"];
+  const FAMILY = ["greta", "anton", "lisa", "jonas", "emma"];
+  const KIDS = ["tom", "nora", "ben", "ida", "leo"];
   const THEMES = {
     animals: { who: ANIMALS, thing: "cake", suffix: "" },
     cats: { who: CATS, thing: "fish", suffix: "_fish" },
     bears: { who: BEARS, thing: "cookies", suffix: "_cookies" },
     dogs: { who: DOGS, thing: "ball", suffix: "_ball" },
-    magpies: { who: MAGPIES, thing: "key", suffix: "_key" }
+    magpies: { who: MAGPIES, thing: "key", suffix: "_key" },
+    family: { who: FAMILY, thing: "cake", suffix: "_family", people: true },
+    treasure: { who: KIDS, thing: "treasure", suffix: "_treasure", people: true }
   };
   const MOTIFS = Object.keys(THEMES);
   function theme(p) {
@@ -606,6 +613,11 @@ const CakeCore = (function () {
     return key + theme(p).suffix;
   }
 
+  // The key of the "never stands on a table ..." text for the theme.
+  function always3Key(p) {
+    return theme(p).people ? "cake_always_3_people" : "cake_always_3";
+  }
+
   function clueText(p, clue, t) {
     const a = animalId(p, clue.a);
     const vars = {
@@ -638,7 +650,7 @@ const CakeCore = (function () {
   }
 
   return {
-    ANIMALS, CATS, BEARS, DOGS, MAGPIES, THEMES, MOTIFS, ROOM_NAMES, FURNITURE, BLOCKING, LEVELS, animalId, thingId, themed,
+    ANIMALS, CATS, BEARS, DOGS, MAGPIES, FAMILY, KIDS, THEMES, MOTIFS, ROOM_NAMES, FURNITURE, BLOCKING, LEVELS, animalId, thingId, themed, always3Key,
     neighbours, nextTo, clueAllows, baseCandidates, isSolution, countSolutions, deduce,
     randomRooms, candidateClues, generatePuzzle, addExtraClues, findHint, explainStep, clueText, thingName, culprit, fill
   };

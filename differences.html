@@ -68,6 +68,18 @@
         <option value="diff" selected data-i18n="df_mode_diff">Differences</option>
         <option value="search" data-i18n="df_mode_search">Picture search</option>
       </select>
+    <select id="df-room" class="hidden" data-i18n-attr="aria-label:df_room_label" aria-label="Room">
+        <option value="random" selected data-i18n="df_room_random">Any room</option>
+        <option value="kitchen" data-i18n="df_room_kitchen">Kitchen</option>
+        <option value="living" data-i18n="df_room_living">Living room</option>
+        <option value="kids" data-i18n="df_room_kids">Children's room</option>
+        <option value="attic" data-i18n="df_room_attic">Attic</option>
+        <option value="terrace" data-i18n="df_room_terrace">Terrace</option>
+        <option value="garden" data-i18n="df_room_garden">Garden</option>
+        <option value="dining" data-i18n="df_room_dining">Dining room</option>
+        <option value="office" data-i18n="df_room_office">Office</option>
+        <option value="hall" data-i18n="df_room_hall">Hall</option>
+      </select>
     <select id="df-level" data-i18n-attr="aria-label:bl_level_label" aria-label="Level">
         <option value="easy" selected data-i18n="df_level_easy">Easy (3 differences)</option>
         <option value="medium" data-i18n="df_level_medium">Medium (5 differences)</option>
@@ -100,9 +112,10 @@
       <div id="df-pic-b" class="df-pic" role="group" data-i18n-attr="aria-label:df_picture_2" aria-label="Picture 2"></div>
     </div>
     <div id="df-search-box" class="hidden">
-      <div id="df-search-pic" class="df-pic df-search-pic" role="group" data-i18n-attr="aria-label:df_mode_search" aria-label="Picture search"></div>
       <p class="df-targets-label" data-i18n="df_targets_label">Find these:</p>
       <ul id="df-targets" class="df-targets"></ul>
+      <p id="df-room-name" class="df-room-name"></p>
+      <div id="df-search-pic" class="df-pic df-search-pic" role="group" data-i18n-attr="aria-label:df_mode_search" aria-label="Picture search"></div>
     </div>
     <div class="game-actions-row">
       <button id="df-hint" class="secondary" type="button" data-i18n="hint_button">Hint</button>

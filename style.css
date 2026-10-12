@@ -13550,11 +13550,21 @@ li.fv-card {
   height: 3.6rem;
 }
 
-/* Spot the Difference, mode "Picture search": one large picture, under it
-   the drawings to find as small pictures; found ones are crossed out. */
+/* Spot the Difference, mode "Picture search": the drawings to find as
+   small pictures (found ones are crossed out), the room's name, then one
+   large picture of the room. */
 .df-search-pic {
   max-width: 600px;
   margin: 0 auto 0.5rem;
+}
+
+.df-room-name {
+  text-align: center;
+  margin: 0 0 0.3rem;
+}
+
+.df-room-name:empty {
+  display: none;
 }
 
 .df-targets-label {

@@ -8,9 +8,11 @@
 // Each picture has a grid of invisible buttons over its 5 x 3 areas: they
 // take the taps and tell a screen reader what is in each area.
 //
-// Mode "Picture search": one large picture and below it the drawings to
-// find, as small pictures (no words needed). Tapping one of them in the
-// large picture circles it there and ticks it off below.
+// Mode "Picture search": one large picture of a room and above it the
+// drawings to find, as small pictures (no words needed). Tapping one of
+// them in the large picture circles it there and ticks it off above. The
+// room (kitchen, attic, garden, ...) is chosen next to the level, or by
+// chance.
 
 const DF_SAVE_KEY = "einkchess_save_differences";
 
@@ -56,7 +58,8 @@ function initDfApp() {
   if (modeSelect) modeSelect.addEventListener("change", () => levelLabelsDf(modeSelect.value));
   document.getElementById("start-df-game").addEventListener("click", () => {
     AppStateDf.mode = modeSelect && modeSelect.value === "search" ? "search" : "diff";
-    startNewDfGame(levelSelect ? levelSelect.value : "easy");
+    const roomSelect = document.getElementById("df-room");
+    startNewDfGame(levelSelect ? levelSelect.value : "easy", roomSelect ? roomSelect.value : "random");
   });
   document.getElementById("df-hint").addEventListener("click", hintDf);
   if (typeof I18n !== "undefined" && typeof I18n.onChange === "function") {
@@ -75,12 +78,15 @@ function initDfApp() {
     AppStateDf.gameOver = false;
     if (levelSelect) levelSelect.value = AppStateDf.level;
     showBoardDf();
-    setStatusDf(AppStateDf.mode === "search" ? "Find the things shown below the picture: tap them in the picture." : "Find the differences: tap a place in either picture.");
+    setStatusDf(AppStateDf.mode === "search" ? "Find the things shown above the picture: tap them in the picture." : "Find the differences: tap a place in either picture.");
   }
 }
 
-// The level choices name differences or things to find.
+// The level choices name differences or things to find; the room choice
+// is only there for the picture search.
 function levelLabelsDf(mode) {
+  const room = document.getElementById("df-room");
+  if (room) room.classList.toggle("hidden", mode !== "search");
   const sel = document.getElementById("df-level");
   if (!sel) return;
   ["easy", "medium", "hard"].forEach((lv) => {
@@ -97,9 +103,9 @@ function showBoardDf() {
   renderDf();
 }
 
-function startNewDfGame(level) {
+function startNewDfGame(level, room) {
   AppStateDf.level = level;
-  AppStateDf.puzzle = AppStateDf.mode === "search" ? DifferencesCore.generateSearch(level) : DifferencesCore.generatePuzzle(level);
+  AppStateDf.puzzle = AppStateDf.mode === "search" ? DifferencesCore.generateSearch(level, null, room) : DifferencesCore.generatePuzzle(level);
   AppStateDf.found = [];
   AppStateDf.hintArea = -1;
   AppStateDf.hinted = false;
@@ -112,7 +118,7 @@ function startNewDfGame(level) {
   if (settingsPanel) settingsPanel.classList.add("hidden");
   if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
   showBoardDf();
-  setStatusDf(AppStateDf.mode === "search" ? "Find the things shown below the picture: tap them in the picture." : "Find the differences: tap a place in either picture.");
+  setStatusDf(AppStateDf.mode === "search" ? "Find the things shown above the picture: tap them in the picture." : "Find the differences: tap a place in either picture.");
   saveDfGame();
 }
 
@@ -237,6 +243,12 @@ function renderSearchDf() {
     btn.setAttribute("aria-label", label);
     btn.addEventListener("click", () => onCellDf(cell));
   });
+  // The room's name above the picture (older saved pictures have none).
+  const roomName = document.getElementById("df-room-name");
+  if (roomName) {
+    if (p.room && D.ROOMS[p.room]) I18n.setKey(roomName, "df_room_" + p.room);
+    else { roomName.removeAttribute("data-i18n"); roomName.textContent = ""; }
+  }
   // The things to find, as small pictures; found ones are crossed out.
   const list = document.getElementById("df-targets");
   list.innerHTML = p.targets.map((cell, i) => {

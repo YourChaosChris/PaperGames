@@ -181,10 +181,12 @@ for (const level of ["easy", "medium", "hard"]) {
 }
 
 // The themes: the same puzzles with other suspects and things - cats and
-// a fish, bears and cookies, dogs and a ball, magpies and a key. Every
-// clue, thing name, win line and the texts that name the thing read
-// without a raw key in every language, and no theme text mentions the
-// cake. Every suspect of a theme has a drawing, and so do the thing and
+// a fish, bears and cookies, dogs and a ball, magpies and a key, a family
+// and the cake, children and a treasure. Every clue, thing name, win line
+// and the texts that name the thing read without a raw key in every
+// language, and no theme text mentions the cake unless the theme's thing
+// is the cake; themes with people have their own "nobody stands on ..."
+// text. Every suspect of a theme has a drawing, and so do the thing and
 // the thing on the table; suspects of one theme are drawn differently.
 let catTexts = 0;
 const THEMES = CakeCore.MOTIFS.filter((m) => m !== "animals");
@@ -208,7 +210,7 @@ const THEMES = CakeCore.MOTIFS.filter((m) => m !== "animals");
       const check = (what, text) => {
         catTexts++;
         if (/[{}]|cake_|undefined/.test(text)) fails.push(lang + " " + motif + ": " + what + " \"" + text + "\"");
-        if (cakeWord[lang] && cakeWord[lang].test(text)) fails.push(lang + " " + motif + ": " + what + " names the cake: \"" + text + "\"");
+        if (CakeCore.THEMES[motif].thing !== "cake" && cakeWord[lang] && cakeWord[lang].test(text)) fails.push(lang + " " + motif + ": " + what + " names the cake: \"" + text + "\"");
       };
       if (STRINGS[lang]["cake_motif_" + motif] === undefined) fails.push(lang + " lacks cake_motif_" + motif);
       CakeCore.THEMES[motif].who.forEach((id) => ["name", "cap", "mid", "is", "isnot", "sits"].forEach((f) => {
@@ -229,15 +231,20 @@ const THEMES = CakeCore.MOTIFS.filter((m) => m !== "animals");
         if (STRINGS[lang][key] === undefined) fails.push(lang + " lacks " + key);
         check(k, t(key));
       });
+      const k3 = CakeCore.always3Key({ motif });
+      if (STRINGS[lang][k3] === undefined) fails.push(lang + " lacks " + k3);
+      check("cake_always_3", t(k3));
+      if (CakeCore.THEMES[motif].people && k3 === "cake_always_3") fails.push(motif + ": people theme says animals never stand on a table");
     });
   }
 }
 
-// 500 cases per new theme (bears, dogs, magpies), spread over the levels:
+// 500 cases per newer theme (bears, dogs, magpies, family, treasure),
+// spread over the levels:
 // the theme is set on the generated puzzle, which keeps exactly one
 // solution and stays solvable by deduction at its level; culprit and
 // thing come from the theme.
-const NEW_THEMES = ["bears", "dogs", "magpies"];
+const NEW_THEMES = ["bears", "dogs", "magpies", "family", "treasure"];
 const themeCases = {};
 NEW_THEMES.forEach((motif, ti) => {
   let ok = 0;

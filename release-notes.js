@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v235",
+    date: "2026-10-12",
+    key: "release_v235",
+    text: "Picture search with nine rooms and over 40 new drawings; Who Took the Cake? with a family and with children and a treasure."
+  },
+  {
     version: "v234",
     date: "2026-10-12",
     key: "release_v234",

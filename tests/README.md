@@ -56,7 +56,10 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   ones, and can be played to the end with the hint button (mistakes
   first, animals in the order of reasoning, the cake left to the
   player). For the first 200 per level every hint's reason is checked
-  against the board and its sentence in all 12 languages.
+  against the board and its sentence in all 12 languages. The themes
+  (cats, bears, dogs, magpies, family, children and treasure) each have
+  their drawings and all their texts in 12 languages; 500 cases per
+  newer theme stay solvable with exactly one solution.
 - `node tests/animalsudoku-core.js` - no server or browser needed.
   Generates 60 "Animal Sudoku" puzzles per size and level from fixed
   seeds and fails unless each has exactly one solution, can be solved
@@ -167,9 +170,11 @@ Set `PORT` to use a port other than 8000 if that one's busy.
 - `node tests/differences-core.js` - no server or browser needed. 500
   "Spot the Difference" picture pairs per level: 3 / 5 / 7 differences,
   each in an area of its own, every difference changes the drawing and
-  nothing else differs; and 500 search pictures per level: 5 / 7 / 10
-  things to find, each in the picture exactly once (no other drawing has
-  its type, pattern and direction).
+  nothing else differs; and 200 search pictures per room (9 rooms) and
+  level: 5 / 7 / 10 things to find, all things of the room, each in the
+  picture exactly once (no other drawing has its type, pattern and
+  direction), the room's background drawn; names of all drawings and
+  rooms in 12 languages.
 - `node tests/pentomino-core.js` - no server or browser needed. 500
   "Pentomino Puzzle" puzzles per mode and level: every stored solution
   fills the board legally, the free fields have the right sizes, the

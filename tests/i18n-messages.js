@@ -402,7 +402,7 @@ const SAMPLES = [
   "Right! The puzzle is solved.",
   "Moved: 1 of 2",
   // Spot the Difference, picture search
-  "Find the things shown below the picture: tap them in the picture.",
+  "Find the things shown above the picture: tap them in the picture.",
   "That is not one of the things you are looking for.",
   "You found all the things!",
   "Hint: one of the things is in the marked place.",

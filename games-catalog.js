@@ -999,7 +999,7 @@ const GAMES_CATALOG = [
     nameKey: "game_differences",
     nameText: "Spot the Difference",
     descKey: "home_differences_desc",
-    descText: "Two pictures that differ in 3, 5 or 7 places: something missing, another pattern, mirrored or moved. Tap a difference in either picture. No time limit, a hint when you are stuck. Or a picture search: find 5 to 10 things in one large picture.",
+    descText: "Two pictures that differ in 3, 5 or 7 places: something missing, another pattern, mirrored or moved. Tap a difference in either picture. No time limit, a hint when you are stuck. Or a picture search: find 5 to 10 things in a large picture of a room - kitchen, attic, garden and six more.",
     popular: false,
     kids: true,
     added: "2026-10-11T16:18",
