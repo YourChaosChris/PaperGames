@@ -95,6 +95,8 @@ echo "=== cardduel-core.js ==="
 node "$ROOT/tests/cardduel-core.js" || status=1
 echo "=== villains-core.js ==="
 node "$ROOT/tests/villains-core.js" || status=1
+echo "=== forestvillage-core.js ==="
+node "$ROOT/tests/forestvillage-core.js" || status=1
 echo "=== new-games-order.js ==="
 node "$ROOT/tests/new-games-order.js" || status=1
 echo "=== kids-games.js ==="

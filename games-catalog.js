@@ -1037,5 +1037,16 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-11T23:04",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M5 36L13 9L21 36Z\" fill=\"#141413\"/><path d=\"M8 14L2 19L14 17Z\" fill=\"#141413\"/><circle cx=\"29\" cy=\"17\" r=\"6\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><path d=\"M23 13L26 8L28 12L30 7L32 12L35 8L35 14Z\" fill=\"#141413\"/><path d=\"M21 36C21 28 37 28 37 36Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/></svg></span>"
+  },
+  {
+    slug: "forestvillage",
+    category: "strategy",
+    nameKey: "game_forestvillage",
+    nameText: "Forest Village",
+    descKey: "home_forestvillage_desc",
+    descText: "Forest animals build a village through four seasons: send squirrels for wood, resin, pebbles and berries, build buildings and let the matching animals move in. 1 to 4 players, alone against a target score or against the computer.",
+    popular: false,
+    added: "2026-10-12T00:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M10 4L3 18H7L2 28H18L13 18H17Z\" fill=\"#141413\"/><rect x=\"9\" y=\"28\" width=\"2\" height=\"6\" fill=\"#141413\"/><path d=\"M21 22L29 14L37 22V36H21Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"27\" y=\"28\" width=\"4\" height=\"8\" fill=\"#141413\"/></svg></span>"
   }
 ];

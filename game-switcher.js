@@ -108,7 +108,8 @@
     ["differences", "game_differences"],
     ["pentomino", "game_pentomino"],
     ["cardduel", "game_cardduel"],
-    ["villains", "game_villains"]
+    ["villains", "game_villains"],
+    ["forestvillage", "game_forestvillage"]
   ];
 
   var GAME_SLUGS = {};

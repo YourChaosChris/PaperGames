@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v226",
+    date: "2026-10-12",
+    key: "release_v226",
+    text: "Forest Village: forest animals build a village through the seasons, for 1 to 4 players."
+  },
+  {
     version: "v225",
     date: "2026-10-11",
     key: "release_v225",

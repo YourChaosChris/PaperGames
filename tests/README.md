@@ -182,6 +182,15 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   share -, and single rules (a hero blocks his place, helpers lower the
   price, the Messenger, the thorn hedge, the wolf in the forest, a
   twist). About two minutes.
+- `node tests/forestvillage-core.js` - no server or browser needed.
+  "Forest Village": 50 different cards (25 buildings, 25 animals, every
+  animal with its building), all names in 12 languages; 500 computer
+  games for each number of players (1 to 4) - every game ends, every move
+  is legal, resources never below 0, at most 15 cards per village and 8
+  in hand, the first player wins within +/- 8 points of the fair share -,
+  Hard beats Easy in at least 70 % of 400 games, and single rules (free
+  animal next to its building, taken and shared fields, spring, full
+  village). About a minute.
 - `node tests/game-families.js` - needs a running server and a browser.
   Checks the game families (`family` in games-catalog.js): each has at
   least two games, no game is in the catalog twice, game-switcher.js

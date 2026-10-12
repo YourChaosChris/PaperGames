@@ -918,17 +918,20 @@ let cakeSamples = 0;
   }
 }
 
-// "Card Duel" and "Fairy-Tale Villains" build their status lines, logs
-// and card texts from cd_* / vl_* keys with {placeholders}
-// (cardduel-app.js, villains-app.js), not through msg(). Every such
+// "Card Duel", "Fairy-Tale Villains" and "Forest Village" build their
+// status lines, logs and card texts from cd_* / vl_* / fv_* keys with
+// {placeholders} (cardduel-app.js, villains-app.js, forestvillage-app.js),
+// not through msg(). Every such
 // text in every language: the same placeholders as English, and filled
 // with sample values (card and player names of that language) nothing is
 // left over and it differs from English.
 let cdSamples = 0;
+// Texts that are rightly the same as in English.
+const SAME_AS_EN = { fv_computer_n: ["de", "it", "nl"] };
 {
   const CD = require(path.join(__dirname, "..", "cardduel-core.js"));
   const vars = (s) => (s.match(/\{[a-z]\}/g) || []).sort().join(",");
-  const cdKeys = Object.keys(STRINGS.en).filter((k) => /^(cd|vl)_/.test(k) && /\{[a-z]\}/.test(STRINGS.en[k]));
+  const cdKeys = Object.keys(STRINGS.en).filter((k) => /^(cd|vl|fv)_/.test(k) && /\{[a-z]\}/.test(STRINGS.en[k]));
   const fill = (lang, k) => {
     const tl = (x) => (STRINGS[lang] && STRINGS[lang][x]) || STRINGS.en[x];
     const v = { p: tl("cd_computer"), c: tl("cd_card_ashwolf"), t: tl("cd_card_mistotter"), n: 3, m: 2, a: 4, l: 5, h: 6, d: 20, e: tl("cd_el_water"), s: "x" };
@@ -941,8 +944,8 @@ let cdSamples = 0;
       if (typeof own !== "string") { fail(lang + ": no text " + k); continue; }
       if (vars(own) !== vars(STRINGS.en[k])) { fail(lang + ": " + k + " has placeholders " + vars(own) + ", English " + vars(STRINGS.en[k])); continue; }
       const out = fill(lang, k);
-      if (/\{|cd_|vl_/.test(out)) fail(lang + ": card duel / villains text incomplete " + JSON.stringify(out));
-      else if (out === fill("en", k) && /[A-Za-z]/.test(STRINGS.en[k].replace(/\{[a-z]\}/g, ""))) fail(lang + ": card duel text untranslated " + k + " " + JSON.stringify(out));
+      if (/\{|cd_|vl_|fv_/.test(out)) fail(lang + ": card duel / villains text incomplete " + JSON.stringify(out));
+      else if (out === fill("en", k) && /[A-Za-z]/.test(STRINGS.en[k].replace(/\{[a-z]\}/g, "")) && (SAME_AS_EN[k] || []).indexOf(lang) === -1) fail(lang + ": card duel text untranslated " + k + " " + JSON.stringify(out));
     }
     // Every card's own text: ability names and its effect.
     CD.CARDS.forEach((c) => {
