@@ -14,6 +14,18 @@
 // Every drawing is black on white: patterns are solid black, white,
 // stripes or dots - never shades of grey - so a difference stays easy to
 // see on e-ink.
+//
+// The second mode, "Picture search" (Suchbild), uses the same drawings:
+// one large picture of cols x rows cells of 40 x 40, at most one drawing
+// per cell, and 5 / 7 / 10 drawings to find, shown on their own below it.
+// A drawing to find is told by its type, its pattern and - for drawings
+// that look different mirrored - its direction (its "look"); each look to
+// find is in the picture exactly once, the other drawings have other
+// looks (on Hard often the same type in another pattern). A search
+// puzzle:
+//   { mode: "search", level, cols, rows,
+//     items: [{ cell, type, pattern, mirror, dx, dy, scale }],
+//     targets: [cell, ...] }
 
 const DifferencesCore = (function () {
   const W = 300, H = 180, COLS = 5, ROWS = 3, AREA = 60;
@@ -116,6 +128,92 @@ const DifferencesCore = (function () {
     return { items, diffs: diffs.sort((a, b) => a.area - b.area), level: lv };
   }
 
+  // --- picture search ------------------------------------------------------
+  const CELL = 40;
+  const SEARCH = {
+    easy: { cols: 6, rows: 4, targets: 5, items: 12 },
+    medium: { cols: 7, rows: 5, targets: 7, items: 22 },
+    hard: { cols: 8, rows: 6, targets: 10, items: 36 }
+  };
+
+  // What tells two drawings apart: type, pattern, direction (only for
+  // drawings that look different mirrored).
+  function lookOf(it) {
+    return it.type + "|" + it.pattern + "|" + (TYPES[it.type].asym && it.mirror ? "m" : "");
+  }
+
+  function generateSearch(level, rng) {
+    const random = rng || Math.random;
+    const lv = SEARCH[level] ? level : "easy";
+    const cfg = SEARCH[lv];
+    const cells = shuffle([...Array(cfg.cols * cfg.rows).keys()], random).slice(0, cfg.items);
+    const randomLook = () => {
+      const type = TYPE_NAMES[Math.floor(random() * TYPE_NAMES.length)];
+      return { type, pattern: PATTERNS[Math.floor(random() * PATTERNS.length)], mirror: TYPES[type].asym && random() < 0.5 };
+    };
+    // The looks to find, all different; easier levels use different types.
+    const targets = [], looks = {};
+    const typesLeft = shuffle(TYPE_NAMES, random);
+    while (targets.length < cfg.targets) {
+      let look = randomLook();
+      if (lv !== "hard" && typesLeft.length) {
+        look.type = typesLeft.pop();
+        look.mirror = TYPES[look.type].asym && look.mirror;
+      }
+      const key = lookOf(look);
+      if (looks[key]) continue;
+      looks[key] = true;
+      targets.push(look);
+    }
+    // The other drawings: never a look to find. On Hard half of them share
+    // a type with a drawing to find.
+    const items = [];
+    cells.forEach((cell, i) => {
+      let look;
+      if (i < targets.length) look = targets[i];
+      else {
+        do {
+          look = randomLook();
+          if (lv === "hard" && random() < 0.5) {
+            const t = targets[Math.floor(random() * targets.length)];
+            look.type = t.type;
+            look.mirror = TYPES[t.type].asym && random() < 0.5;
+          }
+        } while (looks[lookOf(look)]);
+      }
+      items.push({
+        cell, type: look.type, pattern: look.pattern, mirror: look.mirror,
+        dx: Math.round((random() - 0.5) * 6), dy: Math.round((random() - 0.5) * 6),
+        scale: [0.7, 0.75, 0.8][Math.floor(random() * 3)]
+      });
+    });
+    items.sort((a, b) => a.cell - b.cell);
+    return { mode: "search", level: lv, cols: cfg.cols, rows: cfg.rows, items, targets: cells.slice(0, targets.length).sort((a, b) => a - b) };
+  }
+
+  // The cell of the search picture a point falls in, or -1.
+  function cellAt(p, x, y) {
+    if (x < 0 || y < 0 || x >= p.cols * CELL || y >= p.rows * CELL) return -1;
+    return Math.floor(y / CELL) * p.cols + Math.floor(x / CELL);
+  }
+
+  function searchItemSvg(p, it, prefix) {
+    const cx = (it.cell % p.cols) * CELL + CELL / 2 + (it.dx || 0), cy = Math.floor(it.cell / p.cols) * CELL + CELL / 2 + (it.dy || 0);
+    const s = it.scale || 0.75;
+    return '<g transform="translate(' + cx + " " + cy + ") scale(" + (it.mirror ? -s : s) + " " + s + ')">' + TYPES[it.type].draw(fillOf(it.pattern, prefix)) + "</g>";
+  }
+
+  function searchSvg(p, prefix) {
+    const W2 = p.cols * CELL, H2 = p.rows * CELL;
+    return defs(prefix) + '<rect x="1" y="1" width="' + (W2 - 2) + '" height="' + (H2 - 2) + '" fill="#fff" stroke="#141413" stroke-width="2"/>' +
+      p.items.map((it) => searchItemSvg(p, it, prefix)).join("");
+  }
+
+  // One drawing on its own (for the list of things to find), 40 x 40.
+  function lookSvg(it, prefix) {
+    return defs(prefix) + '<g transform="translate(20 20) scale(' + (it.mirror ? -0.9 : 0.9) + ' 0.9)">' + TYPES[it.type].draw(fillOf(it.pattern, prefix)) + "</g>";
+  }
+
   // The pattern fills (ids made unique per picture with `prefix`).
   function defs(prefix) {
     return '<defs><pattern id="' + prefix + 'st" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
@@ -147,7 +245,8 @@ const DifferencesCore = (function () {
       items.map((it) => itemSvg(it, prefix)).join("");
   }
 
-  return { W, H, COLS, ROWS, AREA, LEVELS, KINDS, PATTERNS, TYPES, TYPE_NAMES, areaAt, areaCentre, pictureB, generatePuzzle, itemSvg, pictureSvg };
+  return { W, H, COLS, ROWS, AREA, LEVELS, KINDS, PATTERNS, TYPES, TYPE_NAMES, areaAt, areaCentre, pictureB, generatePuzzle, itemSvg, pictureSvg,
+    CELL, SEARCH, lookOf, generateSearch, cellAt, searchItemSvg, searchSvg, lookSvg };
 })();
 
 if (typeof module !== "undefined" && module.exports) {

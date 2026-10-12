@@ -161,12 +161,34 @@ Set `PORT` to use a port other than 8000 if that one's busy.
 - `node tests/differences-core.js` - no server or browser needed. 500
   "Spot the Difference" picture pairs per level: 3 / 5 / 7 differences,
   each in an area of its own, every difference changes the drawing and
-  nothing else differs.
+  nothing else differs; and 500 search pictures per level: 5 / 7 / 10
+  things to find, each in the picture exactly once (no other drawing has
+  its type, pattern and direction).
 - `node tests/pentomino-core.js` - no server or browser needed. 500
   "Pentomino Puzzle" puzzles per mode and level: every stored solution
   fills the board legally, the free fields have the right sizes, the
   start-pieces puzzles have exactly one solution, and the first 50 of
   each can be finished with the hint alone. About 45 seconds.
+- `node tests/arrows-core.js` - no server or browser needed. 500
+  "Arrows" puzzles per level: every arrow a line of neighbouring cells
+  with its head pointing the way of its last step, no overlaps, the
+  level's field and arrow lengths, nesting of at least 3 / 5 / 7 rounds;
+  played with the hint alone each field is cleared in exactly the fewest
+  moves (one per arrow). About 6 seconds.
+- `node tests/rings-core.js` - no server or browser needed. 500 "Turn the
+  Rings" puzzles per level: 3 / 4 / 5 rings with 4 / 6 / 8 shapes,
+  coupling only on Hard, the fewest moves in the level's range and
+  confirmed by an independent search, the hint solves each in exactly
+  that many moves. About 30 seconds.
+- `node tests/tangram-core.js` - no server or browser needed. "Tangram":
+  the seven pieces and all 61 outlines - each one connected area of 8,
+  solvable (the found solution is checked on its own), filled with the
+  hint alone even after a wrongly laid piece. Under a second.
+- `node tests/matches-core.js` - no server or browser needed. All 90
+  "Matchstick Puzzles": the start is wrong (sums) or lacks the asked
+  number of squares, a full search finds a solution with exactly 1 or 2
+  moved matches and none with fewer, sums have exactly one solution, the
+  hint solves each in the stated number of moves. About 3 seconds.
 - `node tests/cardduel-core.js` - no server or browser needed. "Card
   Duel": 4 decks of 30 cards, at most 6 abilities, every card and ability
   named in 12 languages; 500 computer games (medium against medium) for

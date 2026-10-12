@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v231",
+    date: "2026-10-12",
+    key: "release_v231",
+    text: "Spot the Difference has a new mode: picture search."
+  },
+  {
     version: "v230",
     date: "2026-10-12",
     key: "release_v230",

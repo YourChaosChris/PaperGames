@@ -91,6 +91,14 @@ echo "=== differences-core.js ==="
 node "$ROOT/tests/differences-core.js" || status=1
 echo "=== pentomino-core.js ==="
 node "$ROOT/tests/pentomino-core.js" || status=1
+echo "=== arrows-core.js ==="
+node "$ROOT/tests/arrows-core.js" || status=1
+echo "=== rings-core.js ==="
+node "$ROOT/tests/rings-core.js" || status=1
+echo "=== tangram-core.js ==="
+node "$ROOT/tests/tangram-core.js" || status=1
+echo "=== matches-core.js ==="
+node "$ROOT/tests/matches-core.js" || status=1
 echo "=== cardduel-core.js ==="
 node "$ROOT/tests/cardduel-core.js" || status=1
 echo "=== villains-core.js ==="

@@ -4,10 +4,10 @@
 // `added` carries the time of the commit that brought the game).
 //
 // Checks: every `added` is "YYYY-MM-DD" or "YYYY-MM-DDTHH:MM"; the home
-// list (GamesRender.newGames, as on 11 Oct 2026) has 8 games in the order
-// they were added - Pairs to Ten, Bridge, Canasta, Schafkopf, Skat,
-// Poker, 17 and 4, Path Blockers; the full newest-first order never has
-// an older game before a newer one.
+// list (GamesRender.newGames, as on 11 Oct 2026) has 8 games, newest
+// first - Matchstick Puzzles, Tangram, Turn the Rings, Arrows, Adventure
+// Book, Forest Village, Fairy-Tale Villains, Card Duel; the full
+// newest-first order never has an older game before a newer one.
 //
 // Run: node tests/new-games-order.js
 
@@ -28,7 +28,7 @@ cat.forEach((g) => {
 });
 const now = Date.parse("2026-10-11T12:00:00");
 const home = GR.newGames(cat, 8, 60, now).map((g) => g.slug);
-const want = ["adventurebook", "forestvillage", "villains", "cardduel", "pentomino", "differences", "mathcross", "tenpairs"];
+const want = ["matches", "tangram", "rings", "arrows", "adventurebook", "forestvillage", "villains", "cardduel"];
 if (JSON.stringify(home) !== JSON.stringify(want)) fails.push("home list " + JSON.stringify(home) + ", expected " + JSON.stringify(want));
 const all = cat.slice().sort(GR.compareNewest);
 for (let i = 1; i < all.length; i++) {

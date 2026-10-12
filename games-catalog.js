@@ -35,7 +35,7 @@
 // of Pairs, or 17 and 4 in Blackjack), and that game's description names
 // it. Only a genuinely new game gets its own pages and an entry here.
 
-const GAME_FAMILIES = ["chess", "draughts", "tafl", "hunt", "halma", "inarow", "ancientrace", "dicerace", "sudoku", "latin", "math", "patience", "rummy", "tricks", "casino"];
+const GAME_FAMILIES = ["chess", "draughts", "tafl", "hunt", "halma", "inarow", "ancientrace", "dicerace", "sudoku", "latin", "math", "tiling", "patience", "rummy", "tricks", "casino"];
 
 const GAMES_CATALOG = [
   {
@@ -999,7 +999,7 @@ const GAMES_CATALOG = [
     nameKey: "game_differences",
     nameText: "Spot the Difference",
     descKey: "home_differences_desc",
-    descText: "Two pictures that differ in 3, 5 or 7 places: something missing, another pattern, mirrored or moved. Tap a difference in either picture. No time limit, a hint when you are stuck.",
+    descText: "Two pictures that differ in 3, 5 or 7 places: something missing, another pattern, mirrored or moved. Tap a difference in either picture. No time limit, a hint when you are stuck. Or a picture search: find 5 to 10 things in one large picture.",
     popular: false,
     kids: true,
     added: "2026-10-11T16:18",
@@ -1008,6 +1008,7 @@ const GAMES_CATALOG = [
   {
     slug: "pentomino",
     category: "puzzles",
+    family: "tiling",
     nameKey: "game_pentomino",
     nameText: "Pentomino Puzzle",
     descKey: "home_pentomino_desc",
@@ -1059,5 +1060,50 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-12T00:30",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M6 8H19V34H6Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><path d=\"M21 8H34V34H21Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><path d=\"M19 8Q20 6 21 8V34Q20 36 19 34Z\" fill=\"#141413\"/><path d=\"M27 13L28.5 17H32.5L29.3 19.5L30.5 23.5L27 21L23.5 23.5L24.7 19.5L21.5 17H25.5Z\" fill=\"#141413\"/><path d=\"M9 14H16M9 19H16M9 24H14\" stroke=\"#141413\" stroke-width=\"2\"/></svg></span>"
+  },
+  {
+    slug: "arrows",
+    category: "puzzles",
+    nameKey: "game_arrows",
+    nameText: "Arrows",
+    descKey: "home_arrows_desc",
+    descText: "Tap an arrow and it slides out of the field - if no other arrow is in its way. Clear the whole field; every puzzle can be solved, with undo and hints and no time limit.",
+    popular: false,
+    added: "2026-10-12T15:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><path d=\"M9 30V12\" stroke=\"#141413\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><path d=\"M9 5L14 12H4Z\" fill=\"#141413\"/><path d=\"M15 20H28\" stroke=\"#141413\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><path d=\"M35 20L28 15V25Z\" fill=\"#141413\"/><path d=\"M28 28H20V34\" stroke=\"#141413\" stroke-width=\"3.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"/></svg></span>"
+  },
+  {
+    slug: "rings",
+    category: "puzzles",
+    nameKey: "game_rings",
+    nameText: "Turn the Rings",
+    descKey: "home_rings_desc",
+    descText: "Three to five rings, one inside the other, with shapes on them. Turn the rings until every ray from the middle shows the same shape - on Hard a ring turns its neighbour along. Fewest moves shown, with a hint button.",
+    popular: false,
+    added: "2026-10-12T15:10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><circle cx=\"20\" cy=\"20\" r=\"17\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"20\" cy=\"20\" r=\"11\" fill=\"none\" stroke=\"#141413\" stroke-width=\"1.5\"/><circle cx=\"20\" cy=\"20\" r=\"5\" fill=\"none\" stroke=\"#141413\" stroke-width=\"1.5\"/><circle cx=\"20\" cy=\"6\" r=\"2.4\" fill=\"#141413\"/><circle cx=\"20\" cy=\"12\" r=\"2.2\" fill=\"#141413\"/><path d=\"M31 23l3 4h-6z\" fill=\"#141413\"/><path d=\"M27 20l2 3h-4z\" fill=\"#141413\"/><rect x=\"5\" y=\"18\" width=\"4\" height=\"4\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.2\"/><rect x=\"11\" y=\"18.5\" width=\"3\" height=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.2\"/></svg></span>"
+  },
+  {
+    slug: "tangram",
+    category: "puzzles",
+    family: "tiling",
+    nameKey: "game_tangram",
+    nameText: "Tangram",
+    descKey: "home_tangram_desc",
+    descText: "Fill an outline with the seven classic pieces - triangles, a square and a parallelogram. 61 outlines in three levels, each with a solution checked by computer; tap a piece, turn it, tap where it goes - no dragging.",
+    popular: false,
+    added: "2026-10-12T15:20",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M4 4H36L20 20Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M4 4V36L20 20Z\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M36 4V20L28 12Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M20 20L28 12L36 20L28 28Z\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M20 20L28 28H12Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M4 36L12 28H28L20 36Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M20 36H36V20Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\" stroke-linejoin=\"round\"/></svg></span>"
+  },
+  {
+    slug: "matches",
+    category: "puzzles",
+    nameKey: "game_matches",
+    nameText: "Matchstick Puzzles",
+    descKey: "home_matches_desc",
+    descText: "Move one or two matches so that a wrong sum becomes right, or so that the figure shows a given number of squares. 90 puzzles in three levels, each checked by computer; tap a match, then a free place - no dragging.",
+    popular: false,
+    added: "2026-10-12T15:30",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><g stroke-linecap=\"round\"><path d=\"M8 6V18\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M8 6V18\" stroke=\"#fff\" stroke-width=\"2.4\"/><path d=\"M8 22V34\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M8 22V34\" stroke=\"#fff\" stroke-width=\"2.4\"/><path d=\"M14 20H26\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M14 20H26\" stroke=\"#fff\" stroke-width=\"2.4\"/><path d=\"M32 6V18\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M32 6V18\" stroke=\"#fff\" stroke-width=\"2.4\"/><path d=\"M32 22V34\" stroke=\"#141413\" stroke-width=\"5\"/><path d=\"M32 22V34\" stroke=\"#fff\" stroke-width=\"2.4\"/></g><circle cx=\"8\" cy=\"17\" r=\"2.6\" fill=\"#141413\"/><circle cx=\"8\" cy=\"33\" r=\"2.6\" fill=\"#141413\"/><circle cx=\"25\" cy=\"20\" r=\"2.6\" fill=\"#141413\"/><circle cx=\"32\" cy=\"17\" r=\"2.6\" fill=\"#141413\"/><circle cx=\"32\" cy=\"33\" r=\"2.6\" fill=\"#141413\"/></svg></span>"
   }
 ];

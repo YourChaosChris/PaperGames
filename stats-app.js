@@ -85,7 +85,11 @@ const STATS_GAME_NAME_KEY = {
   cardduel: "game_cardduel",
   villains: "game_villains",
   forestvillage: "game_forestvillage",
-  adventurebook: "game_adventurebook"
+  adventurebook: "game_adventurebook",
+  arrows: "game_arrows",
+  rings: "game_rings",
+  tangram: "game_tangram",
+  matches: "game_matches"
 };
 
 function gameDisplayName(game) {

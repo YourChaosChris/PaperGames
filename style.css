@@ -13371,3 +13371,148 @@ li.fv-card {
     max-width: 5.5rem;
   }
 }
+
+/* Arrows (arrows-app.js): uses the Pentomino board layout (.pt-board,
+   .pt-cells); the arrow in the way of a tapped one gets a dotted frame. */
+.aw-blocker {
+  fill: none;
+  stroke: #141413;
+  stroke-width: 3;
+  stroke-dasharray: 2 3;
+}
+
+/* Turn the Rings (rings-app.js): the rings as one round picture, under it
+   one row per ring (outermost first) with its number and two large turn
+   buttons. */
+.rg-board {
+  width: 100%;
+  max-width: 24rem;
+  margin: 0.4rem auto 0.6rem;
+}
+
+.rg-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.rg-turns {
+  max-width: 24rem;
+  margin: 0 auto 0.5rem;
+}
+
+.rg-turn-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.35rem;
+}
+
+.rg-turn-label {
+  min-width: 4.5rem;
+  font-weight: 700;
+  text-align: end;
+  margin-inline-end: 0.6rem;
+}
+
+.rg-turn {
+  min-width: 3.4rem;
+  min-height: 2.8rem;
+  font-size: 1.4rem;
+  margin: 0 0.3rem;
+}
+
+/* Matchstick Puzzles (matches-app.js): the task as a sentence, the
+   matches as a drawing with an invisible button over every place a match
+   can lie; the match in hand leaves a dashed frame at its old place. */
+.mt-task {
+  font-weight: 700;
+  text-align: center;
+  margin: 0.3rem 0 0.2rem;
+}
+
+.mt-board {
+  position: relative;
+  width: 100%;
+  margin: 0.4rem auto 0.6rem;
+}
+
+.mt-slot {
+  position: absolute;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mt-slot:focus-visible {
+  outline: 3px solid var(--text);
+}
+
+.mt-held {
+  fill: none;
+  stroke: #141413;
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+}
+
+/* Tangram (tangram-app.js): the outline as a dotted area with a thick
+   border, laid pieces with their own black-and-white patterns; the piece
+   in hand is shown next to the turn and flip buttons. */
+.tg-board {
+  cursor: pointer;
+}
+
+.tg-current svg {
+  display: block;
+  width: 3.6rem;
+  height: 3.6rem;
+}
+
+/* Spot the Difference, mode "Picture search": one large picture, under it
+   the drawings to find as small pictures; found ones are crossed out. */
+.df-search-pic {
+  max-width: 600px;
+  margin: 0 auto 0.5rem;
+}
+
+.df-targets-label {
+  text-align: center;
+  font-weight: 700;
+  margin: 0.2rem 0;
+}
+
+.df-targets {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 0 0.5rem;
+  padding: 0;
+}
+
+.df-target {
+  width: 3.4rem;
+  height: 3.4rem;
+  margin: 0 0.25rem 0.4rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.df-target svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.df-target-found {
+  border-style: dashed;
+}
+
+.rg-turn.hint-cell {
+  border: 4px dashed var(--border);
+}

@@ -7,10 +7,15 @@
 //
 // Each picture has a grid of invisible buttons over its 5 x 3 areas: they
 // take the taps and tell a screen reader what is in each area.
+//
+// Mode "Picture search": one large picture and below it the drawings to
+// find, as small pictures (no words needed). Tapping one of them in the
+// large picture circles it there and ticks it off below.
 
 const DF_SAVE_KEY = "einkchess_save_differences";
 
 const AppStateDf = {
+  mode: "diff",  // "diff" | "search"
   level: "easy",
   puzzle: null,
   found: [],     // areas of differences found
@@ -30,7 +35,7 @@ function setStatusDf(text) {
 
 function saveDfGame() {
   if (typeof GameStorage === "undefined" || !AppStateDf.puzzle) return;
-  GameStorage.save(DF_SAVE_KEY, { level: AppStateDf.level, puzzle: AppStateDf.puzzle, found: AppStateDf.found, hinted: AppStateDf.hinted });
+  GameStorage.save(DF_SAVE_KEY, { mode: AppStateDf.mode, level: AppStateDf.level, puzzle: AppStateDf.puzzle, found: AppStateDf.found, hinted: AppStateDf.hinted });
 }
 
 function clearSavedDfGame() {
@@ -47,13 +52,21 @@ function initDfApp() {
       I18n.setKey(menuToggle, hidden ? "menu_toggle" : "menu_close");
     });
   }
-  document.getElementById("start-df-game").addEventListener("click", () => startNewDfGame(levelSelect ? levelSelect.value : "easy"));
+  const modeSelect = document.getElementById("df-mode");
+  if (modeSelect) modeSelect.addEventListener("change", () => levelLabelsDf(modeSelect.value));
+  document.getElementById("start-df-game").addEventListener("click", () => {
+    AppStateDf.mode = modeSelect && modeSelect.value === "search" ? "search" : "diff";
+    startNewDfGame(levelSelect ? levelSelect.value : "easy");
+  });
   document.getElementById("df-hint").addEventListener("click", hintDf);
   if (typeof I18n !== "undefined" && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateDf.puzzle) renderDf(); });
   }
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(DF_SAVE_KEY) : null;
   if (saved && saved.puzzle && saved.puzzle.items) {
+    AppStateDf.mode = saved.mode === "search" ? "search" : "diff";
+    if (modeSelect) modeSelect.value = AppStateDf.mode;
+    levelLabelsDf(AppStateDf.mode);
     AppStateDf.level = saved.level || "easy";
     AppStateDf.puzzle = saved.puzzle;
     AppStateDf.found = saved.found || [];
@@ -62,8 +75,18 @@ function initDfApp() {
     AppStateDf.gameOver = false;
     if (levelSelect) levelSelect.value = AppStateDf.level;
     showBoardDf();
-    setStatusDf("Find the differences: tap a place in either picture.");
+    setStatusDf(AppStateDf.mode === "search" ? "Find the things shown below the picture: tap them in the picture." : "Find the differences: tap a place in either picture.");
   }
+}
+
+// The level choices name differences or things to find.
+function levelLabelsDf(mode) {
+  const sel = document.getElementById("df-level");
+  if (!sel) return;
+  ["easy", "medium", "hard"].forEach((lv) => {
+    const o = sel.querySelector('option[value="' + lv + '"]');
+    if (o) I18n.setKey(o, (mode === "search" ? "df_slevel_" : "df_level_") + lv);
+  });
 }
 
 function showBoardDf() {
@@ -76,7 +99,7 @@ function showBoardDf() {
 
 function startNewDfGame(level) {
   AppStateDf.level = level;
-  AppStateDf.puzzle = DifferencesCore.generatePuzzle(level);
+  AppStateDf.puzzle = AppStateDf.mode === "search" ? DifferencesCore.generateSearch(level) : DifferencesCore.generatePuzzle(level);
   AppStateDf.found = [];
   AppStateDf.hintArea = -1;
   AppStateDf.hinted = false;
@@ -89,7 +112,7 @@ function startNewDfGame(level) {
   if (settingsPanel) settingsPanel.classList.add("hidden");
   if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
   showBoardDf();
-  setStatusDf("Find the differences: tap a place in either picture.");
+  setStatusDf(AppStateDf.mode === "search" ? "Find the things shown below the picture: tap them in the picture." : "Find the differences: tap a place in either picture.");
   saveDfGame();
 }
 
@@ -116,10 +139,33 @@ function onAreaDf(area) {
   saveDfGame();
 }
 
+// Picture search: a tap on a cell of the large picture.
+function onCellDf(cell) {
+  if (AppStateDf.gameOver) return;
+  const p = AppStateDf.puzzle;
+  if (p.targets.indexOf(cell) === -1) {
+    setStatusDf("That is not one of the things you are looking for.");
+    return;
+  }
+  if (AppStateDf.found.indexOf(cell) !== -1) {
+    setStatusDf("You have already found this one.");
+    return;
+  }
+  AppStateDf.found.push(cell);
+  if (AppStateDf.hintArea === cell) AppStateDf.hintArea = -1;
+  if (AppStateDf.found.length === p.targets.length) {
+    winDf();
+    return;
+  }
+  setStatusDf("Found! " + AppStateDf.found.length + " of " + p.targets.length + ".");
+  renderDf();
+  saveDfGame();
+}
+
 function winDf() {
   AppStateDf.gameOver = true;
   AppStateDf.hintArea = -1;
-  const text = "You found all the differences!";
+  const text = AppStateDf.mode === "search" ? "You found all the things!" : "You found all the differences!";
   const result = document.getElementById("game-result");
   if (result) I18n.setMsg(result, text);
   setStatusDf(text);
@@ -132,6 +178,16 @@ function winDf() {
 function hintDf() {
   const p = AppStateDf.puzzle;
   if (!p || AppStateDf.gameOver) return;
+  if (AppStateDf.mode === "search") {
+    const left = p.targets.filter((c) => AppStateDf.found.indexOf(c) === -1);
+    if (!left.length) return;
+    AppStateDf.hinted = true;
+    AppStateDf.hintArea = left[0];
+    setStatusDf("Hint: one of the things is in the marked place.");
+    renderDf();
+    saveDfGame();
+    return;
+  }
   const open = p.diffs.filter((d) => AppStateDf.found.indexOf(d.area) === -1);
   if (!open.length) return;
   AppStateDf.hinted = true;
@@ -152,9 +208,55 @@ function areaLabelDf(items, area, picture) {
   return label;
 }
 
+// What a screen reader hears for a drawing in the search picture: type,
+// pattern and, where it matters, whether it is mirrored.
+function lookLabelDf(it) {
+  let label = tDf("df_item_" + it.type) + ", " + tDf("df_pat_" + it.pattern);
+  if (DifferencesCore.TYPES[it.type].asym && it.mirror) label += ", " + tDf("df_mirrored");
+  return label;
+}
+
+function renderSearchDf() {
+  const p = AppStateDf.puzzle;
+  const D = DifferencesCore;
+  const C = D.CELL, W = p.cols * C, H = p.rows * C;
+  const centre = (cell) => [(cell % p.cols) * C + C / 2, Math.floor(cell / p.cols) * C + C / 2];
+  let marks = "";
+  AppStateDf.found.forEach((cell) => { const c = centre(cell); marks += '<circle class="df-found" cx="' + c[0] + '" cy="' + c[1] + '" r="19"/>'; });
+  if (AppStateDf.hintArea !== -1) { const c = centre(AppStateDf.hintArea); marks += '<rect class="df-hint" x="' + (c[0] - 19) + '" y="' + (c[1] - 19) + '" width="38" height="38"/>'; }
+  const box = document.getElementById("df-search-pic");
+  let html = '<svg class="df-svg" viewBox="0 0 ' + W + " " + H + '" aria-hidden="true" focusable="false">' + D.searchSvg(p, "dfs") + marks +
+    '</svg><div class="df-areas" style="grid-template-columns:repeat(' + p.cols + ",1fr);grid-template-rows:repeat(" + p.rows + ',1fr)">';
+  for (let cell = 0; cell < p.cols * p.rows; cell++) html += '<button type="button" class="df-area" data-cell="' + cell + '"></button>';
+  box.innerHTML = html + "</div>";
+  box.querySelectorAll(".df-area").forEach((btn) => {
+    const cell = parseInt(btn.getAttribute("data-cell"), 10);
+    const it = p.items.find((x) => x.cell === cell);
+    let label = tDf("df_aria_cell").split("{R}").join(String(Math.floor(cell / p.cols) + 1)).split("{C}").join(String((cell % p.cols) + 1)) + ": " + (it ? lookLabelDf(it) : tDf("df_aria_empty"));
+    if (AppStateDf.found.indexOf(cell) !== -1) label += ", " + tDf("df_aria_found");
+    btn.setAttribute("aria-label", label);
+    btn.addEventListener("click", () => onCellDf(cell));
+  });
+  // The things to find, as small pictures; found ones are crossed out.
+  const list = document.getElementById("df-targets");
+  list.innerHTML = p.targets.map((cell, i) => {
+    const it = p.items.find((x) => x.cell === cell);
+    const found = AppStateDf.found.indexOf(cell) !== -1;
+    return '<li class="df-target' + (found ? " df-target-found" : "") + '" aria-label="' + lookLabelDf(it) + (found ? ", " + tDf("df_aria_found") : "") + '">' +
+      '<svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">' + D.lookSvg(it, "dft" + i) +
+      (found ? '<path d="M6 34L34 6" stroke="#141413" stroke-width="3" stroke-linecap="round"/>' : "") + "</svg></li>";
+  }).join("");
+  const info = document.getElementById("df-info");
+  if (info) I18n.setMsg(info, "Found: " + AppStateDf.found.length + " of " + p.targets.length);
+}
+
 function renderDf() {
   const p = AppStateDf.puzzle;
   if (!p) return;
+  const search = AppStateDf.mode === "search";
+  document.getElementById("df-diff-box").classList.toggle("hidden", search);
+  document.getElementById("df-search-box").classList.toggle("hidden", !search);
+  if (search) { renderSearchDf(); return; }
   const D = DifferencesCore;
   const itemsB = D.pictureB(p);
   ["a", "b"].forEach((which, idx) => {

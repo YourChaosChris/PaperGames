@@ -106,11 +106,15 @@
     ["tenpairs", "game_tenpairs"],
     ["mathcross", "game_mathcross", "math"],
     ["differences", "game_differences"],
-    ["pentomino", "game_pentomino"],
+    ["pentomino", "game_pentomino", "tiling"],
     ["cardduel", "game_cardduel"],
     ["villains", "game_villains"],
     ["forestvillage", "game_forestvillage"],
-    ["adventurebook", "game_adventurebook"]
+    ["adventurebook", "game_adventurebook"],
+    ["arrows", "game_arrows"],
+    ["rings", "game_rings"],
+    ["tangram", "game_tangram", "tiling"],
+    ["matches", "game_matches"]
   ];
 
   var GAME_SLUGS = {};
