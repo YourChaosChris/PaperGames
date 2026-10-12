@@ -432,7 +432,7 @@ function fitCakeLabels() {
     };
     el.textContent = name;
     el.classList.remove("cake-room-key");
-    // Runs without a table, cupboard or plant come first, so the big
+    // Runs without big furniture (table, cupboard, ...) come first, so the big
     // drawings rarely have to make room for a name.
     const clear = (r) => {
       for (let c = r.col; c < r.col + r.len; c++) if (CakeCore.BLOCKING.indexOf(p.furniture[r.row * n + c]) !== -1) return false;

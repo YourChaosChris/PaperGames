@@ -971,8 +971,8 @@ let cakeSamples = 0;
   const clueSamples = [];
   for (let a = 0; a < CakeCore.ANIMALS.length; a++) {
     CakeCore.ROOM_NAMES.forEach((r, room) => { clueSamples.push({ t: "in", a, room }); clueSamples.push({ t: "notin", a, room }); });
-    ["chair", "rug"].forEach((f) => clueSamples.push({ t: "on", a, f }));
-    ["plant", "cupboard"].forEach((f) => clueSamples.push({ t: "next", a, f }));
+    CakeCore.SITTING.forEach((f) => clueSamples.push({ t: "on", a, f }));
+    CakeCore.NEXT_TO.forEach((f) => clueSamples.push({ t: "next", a, f }));
     clueSamples.push({ t: "window", a });
     ["top", "bottom", "left", "right"].forEach((side) => clueSamples.push({ t: "edge", a, side }));
     for (let b = 0; b < CakeCore.ANIMALS.length; b++) if (b !== a) clueSamples.push({ t: "same", a, b });

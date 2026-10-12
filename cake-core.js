@@ -2,10 +2,12 @@
 // "Who Took the Cake?" - a detective logic puzzle. Dependency-free, no DOM.
 //
 // The board is an N x N floor plan split into rooms. Some cells hold
-// furniture (table, chair, rug, plant, cupboard); a window sits on the
+// furniture that fits the room (table, chair, rug, sofa, bed, stool,
+// plant, cupboard, shelf, box, lamp, bathtub); a window sits on the
 // left or right outer wall of one row. N things are placed: N-1 animals
 // and the cake, one per row and one per column. The cake always stands
-// on a table; animals never stand on a table, a cupboard or a plant. Exactly one
+// on a table; animals never stand on a table or on furniture that fills
+// its cell (plant, cupboard, shelf, box, lamp, bathtub). Exactly one
 // animal shares the cake's room - that animal took the cake. Clues about
 // the animals pin the placement down to a single solution.
 //
@@ -13,7 +15,7 @@
 //   n          board size
 //   rooms      room index per cell (cell i = row * n + col)
 //   roomNames  room name id per room index ("kitchen", "garden", ...)
-//   furniture  "table" | "chair" | "rug" | "plant" | "cupboard" | null per cell
+//   furniture  one of FURNITURE or null per cell
 //   window     { row, side: "left" | "right" }
 //   clues      see below
 //   solution   cell per thing: things 0..n-2 are animals (ANIMALS order),
@@ -22,8 +24,9 @@
 // Clues (a, b: animal index):
 //   { t: "in", a, room }       a is in that room
 //   { t: "notin", a, room }    a is not in that room
-//   { t: "on", a, f }          a sits on a chair or rug
-//   { t: "next", a, f }        a is directly beside (not diagonally) a plant or cupboard
+//   { t: "on", a, f }          a sits on f (SITTING: chair, rug, sofa, bed, stool)
+//   { t: "next", a, f }        a is directly beside (not diagonally) f (NEXT_TO:
+//                              plant, cupboard, shelf, box, lamp, bathtub)
 //                              in the same room - not behind a wall
 //   { t: "window", a }         a is in the window's row
 //   { t: "edge", a, side }     a is in the top/bottom row or left/right column
@@ -59,10 +62,33 @@ const CakeCore = (function () {
   function theme(p) {
     return (p && THEMES[p.motif]) || THEMES.animals;
   }
-  const ROOM_NAMES = ["kitchen", "living", "hall", "bath", "bedroom", "garden", "cellar"];
-  const FURNITURE = ["table", "chair", "rug", "plant", "cupboard"];
+  const ROOM_NAMES = ["kitchen", "living", "hall", "bath", "bedroom", "garden", "cellar", "kids", "attic", "dining", "office", "terrace"];
+  const FURNITURE = ["table", "chair", "rug", "plant", "cupboard", "sofa", "bed", "stool", "shelf", "box", "lamp", "bathtub"];
+  // Furniture to sit on: an animal may stand there ("sits on a chair").
+  const SITTING = ["chair", "rug", "sofa", "bed", "stool"];
+  // Furniture that fills its cell: nobody stands there, and "is next to"
+  // clues name it.
+  const NEXT_TO = ["plant", "cupboard", "shelf", "box", "lamp", "bathtub"];
   // Furniture no animal can stand on (the cake stands on a table).
-  const BLOCKING = ["table", "cupboard", "plant"];
+  const BLOCKING = ["table"].concat(NEXT_TO);
+  // What stands in which room: things to sit on and things that fill a
+  // cell, so a bed is in the bedroom, a bathtub in the bathroom, a shelf
+  // in the office and boxes in the cellar or the attic. Older puzzles
+  // keep the furniture they were made with.
+  const ROOM_FURNITURE = {
+    kitchen: { sit: ["chair", "stool", "rug"], block: ["cupboard", "plant", "shelf"] },
+    living: { sit: ["sofa", "chair", "rug"], block: ["plant", "lamp", "shelf", "cupboard"] },
+    hall: { sit: ["rug", "stool", "chair"], block: ["cupboard", "plant", "lamp"] },
+    bath: { sit: ["rug", "stool"], block: ["bathtub", "cupboard", "plant"] },
+    bedroom: { sit: ["bed", "rug", "chair"], block: ["cupboard", "lamp", "plant"] },
+    garden: { sit: ["chair", "rug", "stool"], block: ["plant", "box"] },
+    cellar: { sit: ["stool", "chair"], block: ["box", "shelf", "cupboard"] },
+    kids: { sit: ["bed", "rug", "stool"], block: ["box", "shelf", "lamp"] },
+    attic: { sit: ["chair", "rug", "sofa"], block: ["box", "cupboard", "lamp"] },
+    dining: { sit: ["chair", "rug"], block: ["cupboard", "plant", "lamp"] },
+    office: { sit: ["chair", "stool", "rug"], block: ["shelf", "lamp", "plant"] },
+    terrace: { sit: ["chair", "stool", "sofa"], block: ["plant", "box"] }
+  };
   // extra: clues added on top of the ones that are needed (Easy 2,
   // Medium 1, Hard none), positive ones first ("is in", "sits on", ...).
   const LEVELS = {
@@ -370,8 +396,8 @@ const CakeCore = (function () {
       out.push({ t: "in", a, room });
       const rooms = new Set(p.rooms);
       rooms.forEach((r) => { if (r !== room) out.push({ t: "notin", a, room: r }); });
-      if (p.furniture[i] === "chair" || p.furniture[i] === "rug") out.push({ t: "on", a, f: p.furniture[i] });
-      ["plant", "cupboard"].forEach((f) => { if (nextTo(p, i, f)) out.push({ t: "next", a, f }); });
+      if (SITTING.indexOf(p.furniture[i]) !== -1) out.push({ t: "on", a, f: p.furniture[i] });
+      NEXT_TO.forEach((f) => { if (nextTo(p, i, f)) out.push({ t: "next", a, f }); });
       if (rowOf(p, i) === p.window.row) out.push({ t: "window", a });
       if (rowOf(p, i) === 0) out.push({ t: "edge", a, side: "top" });
       if (rowOf(p, i) === n - 1) out.push({ t: "edge", a, side: "bottom" });
@@ -401,14 +427,20 @@ const CakeCore = (function () {
       const furniture = new Array(n * n).fill(null);
       furniture[sol[n - 1]] = "table";
       const occupied = new Set(sol);
+      // Furniture of the cell's room, picked at random.
+      const pick = (i, kind) => {
+        const list = (ROOM_FURNITURE[names[rooms[i]]] || ROOM_FURNITURE.living)[kind];
+        return list[Math.floor(rnd() * list.length)];
+      };
       for (let a = 0; a < n - 1; a++) {
-        const x = rnd();
-        // Animals sit on a chair or a rug, or stand on a bare cell.
-        furniture[sol[a]] = x < 0.35 ? "chair" : (x < 0.6 ? "rug" : null);
+        // Animals sit on something of their room, or stand on a bare cell.
+        furniture[sol[a]] = rnd() < 0.6 ? pick(sol[a], "sit") : null;
       }
       const free = shuffle(Array.from({ length: n * n }, (_, i) => i).filter((i) => !occupied.has(i)), rnd);
-      const extra = { table: 1 + Math.floor(rnd() * (n - 2)), cupboard: 1 + Math.floor(rnd() * 2), plant: 1 + Math.floor(rnd() * 2), chair: Math.floor(rnd() * 3), rug: Math.floor(rnd() * 2) };
-      Object.keys(extra).forEach((f) => { for (let c = 0; c < extra[f] && free.length; c++) furniture[free.pop()] = f; });
+      const tables = 1 + Math.floor(rnd() * (n - 2)), blocks = 2 + Math.floor(rnd() * 3), sits = Math.floor(rnd() * 4);
+      for (let c = 0; c < tables && free.length; c++) furniture[free.pop()] = "table";
+      for (let c = 0; c < blocks && free.length; c++) { const i = free.pop(); furniture[i] = pick(i, "block"); }
+      for (let c = 0; c < sits && free.length; c++) { const i = free.pop(); furniture[i] = pick(i, "sit"); }
       const win = { row: Math.floor(rnd() * n), side: rnd() < 0.5 ? "left" : "right" };
       return { n, rooms, roomNames: names, furniture, window: win, clues: [], solution: sol };
     }
@@ -650,7 +682,7 @@ const CakeCore = (function () {
   }
 
   return {
-    ANIMALS, CATS, BEARS, DOGS, MAGPIES, FAMILY, KIDS, THEMES, MOTIFS, ROOM_NAMES, FURNITURE, BLOCKING, LEVELS, animalId, thingId, themed, always3Key,
+    ANIMALS, CATS, BEARS, DOGS, MAGPIES, FAMILY, KIDS, THEMES, MOTIFS, ROOM_NAMES, FURNITURE, SITTING, NEXT_TO, BLOCKING, ROOM_FURNITURE, LEVELS, animalId, thingId, themed, always3Key,
     neighbours, nextTo, clueAllows, baseCandidates, isSolution, countSolutions, deduce,
     randomRooms, candidateClues, generatePuzzle, addExtraClues, findHint, explainStep, clueText, thingName, culprit, fill
   };

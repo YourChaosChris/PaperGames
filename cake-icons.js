@@ -48,6 +48,24 @@ const CakeIcons = (function () {
     // Cupboard: tall wide box with two doors and knobs, filling its cell.
     cupboard: '<rect x="5" y="2" width="30" height="36" ' + S + '/><path d="M20 2V38" ' + S + '/>' +
       '<circle cx="16.5" cy="20" r="1.8" ' + B + '/><circle cx="23.5" cy="20" r="1.8" ' + B + '/>',
+    // Sofa (to sit on, drawn small): back, two armrests, seat, feet.
+    sofa: '<path d="M9 22V15C9 12 31 12 31 15V22M5 31V21C5 18 9 18 9 21V24H31V21C31 18 35 18 35 21V31Z" ' + S + '/><path d="M8 31V35M32 31V35" ' + S + ' stroke-width="3"/>',
+    // Bed (to sit on, drawn small): seen from the side - tall headboard,
+    // mattress, pillow, legs.
+    bed: '<path d="M5 6V35M5 26H35V35M5 19H35V26" ' + S + ' stroke-width="3"/><rect x="8" y="13" width="10" height="6" rx="2.5" ' + S + ' stroke-width="2"/>',
+    // Stool (to sit on, drawn small): round seat, three legs, a rung.
+    stool: '<path d="M9 13H31" ' + S + ' stroke-width="4"/><path d="M13 13L10 35M27 13L30 35M20 13V35M12 26H28" ' + S + ' stroke-width="2.6"/>',
+    // Shelf (fills its cell): open frame with two boards, books and a jar.
+    shelf: '<rect x="5" y="2" width="30" height="36" ' + S + '/><path d="M5 14H35M5 26H35" ' + S + '/>' +
+      '<rect x="9" y="5" width="3.5" height="9" ' + B + '/><rect x="14" y="7" width="3.5" height="7" ' + B + '/><rect x="19" y="5" width="3.5" height="9" ' + B + '/>' +
+      '<circle cx="27" cy="21" r="3.6" ' + S + ' stroke-width="2"/><rect x="10" y="29" width="16" height="9" ' + S + ' stroke-width="2"/>',
+    // Box (fills its cell): a wooden crate with planks and a cross brace.
+    box: '<rect x="4" y="8" width="32" height="30" ' + S + '/><path d="M4 18H36M4 28H36" ' + S + ' stroke-width="1.8"/><path d="M4 8L36 38M36 8L4 38" ' + S + ' stroke-width="2.6"/>',
+    // Lamp (fills its cell): a standard lamp with a black shade.
+    lamp: '<path d="M11 3H29L34 16H6Z" ' + B + '/><path d="M20 16V36M11 37H29" ' + S + ' stroke-width="3.4"/>',
+    // Bathtub (fills its cell): tub on feet, a tap, bubbles.
+    bathtub: '<path d="M7 18V9C7 5 13 5 13 9" ' + S + '/><path d="M2 18H38V24C38 31 32 34 26 34H14C8 34 2 31 2 24Z" ' + S + '/>' +
+      '<path d="M9 34L7 38M31 34L33 38" ' + S + '/><circle cx="20" cy="13" r="2.6" ' + S + ' stroke-width="1.8"/><circle cx="26" cy="9" r="2" ' + S + ' stroke-width="1.6"/><circle cx="30" cy="14" r="2.4" ' + S + ' stroke-width="1.8"/>',
     // Window: frame with a cross.
     window: '<rect x="7" y="7" width="26" height="26" ' + S + ' stroke-width="3"/><path d="M20 7V33M7 20H33" ' + S + '/>',
     // "Nothing here": a cross.

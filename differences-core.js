@@ -149,7 +149,28 @@ const DifferencesCore = (function () {
     pencil: { asym: true, draw: (f) => '<path d="M-12 9L8-11L13-6L-7 14Z" fill="' + f + '" ' + S + '/><path d="M8-11L11-14C12-15 15-12 16-11L13-6Z" ' + WF + '/>' +
       '<path d="M-12 9L-7 14L-17 18Z" ' + WF + '/><path d="M-15 14L-17 18L-13 16Z" fill="#141413"/>' },
     boot: { asym: true, draw: (f) => '<path d="M-7-17H5V3L14 6C17 7 17 13 15 13H-7Z" fill="' + f + '" ' + S + '/><path d="M-8 16H16" fill="none" stroke="#141413" stroke-width="3.4" stroke-linecap="round"/>' +
-      '<path d="M-7-12H5" fill="none" stroke="#fff" stroke-width="3.6"/><path d="M-7-14H5M-7-10H5" fill="none" ' + S + ' stroke-width="1.4"/>' }
+      '<path d="M-7-12H5" fill="none" stroke="#fff" stroke-width="3.6"/><path d="M-7-14H5M-7-10H5" fill="none" ' + S + ' stroke-width="1.4"/>' },
+    rubberduck: { asym: true, draw: (f) => '<path d="M-16 2C-16 14 14 15 15 4C15 0 11-1 7 1C9-4 8-11 1-12C-6-12-8-6-6-2C-10-3-16-3-16 2Z" fill="' + f + '" ' + S + '/>' +
+      '<path d="M-7-6L-15-5L-8-2Z" fill="#fff" ' + S + ' stroke-width="1.8"/>' + eye(-1, -6) + '<path d="M1 6C4 9 9 8 11 5" fill="none" ' + S + ' stroke-width="1.6"/>' },
+    toothbrush: { asym: true, draw: (f) => '<path d="M-16 13L8-6" fill="none" stroke="#141413" stroke-width="5.4" stroke-linecap="round"/><path d="M-16 13L8-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>' +
+      '<path d="M5-10L13-17L18-11L10-4Z" fill="' + f + '" ' + S + '/><path d="M9-15L5-19M12-12L8-16M15-9L11-13" fill="none" ' + S + ' stroke-width="1.6"/>' },
+    soap: { asym: false, draw: (f) => '<rect x="-14" y="-6" width="28" height="16" rx="7" fill="' + f + '" ' + S + '/><circle cx="-6" cy="-12" r="3.4" ' + WF + ' stroke-width="1.8"/>' +
+      '<circle cx="3" cy="-14" r="2.4" ' + WF + ' stroke-width="1.6"/><circle cx="9" cy="-10" r="1.8" ' + WF + ' stroke-width="1.4"/>' },
+    towel: { asym: false, draw: (f) => '<path d="M-16-14H16" fill="none" stroke="#141413" stroke-width="3.4" stroke-linecap="round"/><path d="M-11-14H11V16H-11Z" fill="' + f + '" ' + S + '/>' +
+      '<path d="M-11 9H11" fill="none" stroke="#fff" stroke-width="4.4"/><path d="M-11 7H11M-11 11H11" fill="none" ' + S + ' stroke-width="1.4"/>' },
+    comb: { asym: false, draw: (f) => '<path d="M-16-6H16V1H-16Z" fill="' + f + '" ' + S + '/><path d="M-13 1V12M-8 1V12M-3 1V12M2 1V12M7 1V12M12 1V12" fill="none" ' + S + ' stroke-width="2.4"/>' },
+    jar: { asym: false, draw: (f) => '<rect x="-10" y="-17" width="20" height="6" rx="1.5" ' + WF + '/><path d="M-11-11H11V13C11 16 9 17 6 17H-6C-9 17-11 16-11 13Z" fill="' + f + '" ' + S + '/>' +
+      '<rect x="-7" y="-2" width="14" height="8" ' + WF + ' stroke-width="1.6"/>' },
+    barrel: { asym: false, draw: (f) => '<path d="M-10-17H10C14-9 14 9 10 17H-10C-14 9-14-9-10-17Z" fill="' + f + '" ' + S + '/>' +
+      '<path d="M-12.5-8H12.5M-12.5 8H12.5" fill="none" stroke="#fff" stroke-width="4.4"/><path d="M-12.5-8H12.5M-12.5 8H12.5" fill="none" ' + S + ' stroke-width="1.6"/>' },
+    hammer: { asym: true, draw: (f) => '<path d="M-1-6V18" fill="none" stroke="#141413" stroke-width="5.4" stroke-linecap="round"/><path d="M-1-6V18" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>' +
+      '<path d="M-14-16H8V-6H-14Z" fill="' + f + '" ' + S + '/><path d="M8-14C13-14 16-17 17-19M8-8C13-8 16-5 17-3" fill="none" ' + S + '/>' },
+    pillow: { asym: false, draw: (f) => '<path d="M-16-10C-10-13 10-13 16-10C18-3 18 3 16 10C10 13-10 13-16 10C-18 3-18-3-16-10Z" fill="' + f + '" ' + S + '/>' +
+      '<circle cx="0" cy="0" r="3" ' + WF + ' stroke-width="1.6"/>' },
+    slipper: { asym: true, draw: (f) => '<path d="M-17 4C-17-3-10-6-3-6H6C13-6 17-2 17 4C17 9 13 11 6 11H-10C-14 11-17 9-17 4Z" ' + WF + '/>' +
+      '<path d="M-1-6C6-11 15-6 17 3H-1Z" fill="' + f + '" ' + S + '/><circle cx="-10" cy="2" r="1.6" fill="#141413"/>' },
+    glasses: { asym: false, draw: (f) => '<path d="M-4-2C-2-5 2-5 4-2M-17-3L-19-8M17-3L19-8" fill="none" ' + S + '/>' +
+      '<circle cx="-10" cy="1" r="7" fill="' + f + '" ' + S + '/><circle cx="10" cy="1" r="7" fill="' + f + '" ' + S + '/>' }
   });
 
   // The rooms of the picture search: the drawings that belong there and a
@@ -275,6 +296,52 @@ const DifferencesCore = (function () {
       }
     }
   };
+  Object.assign(ROOMS, {
+    bath: {
+      items: ["rubberduck", "toothbrush", "soap", "towel", "comb", "bottle", "cup", "fish", "candle", "vase", "bucket", "clock"],
+      // Tiles on the lower wall, a mirror over a basin, a towel rail, the
+      // bathtub at the bottom.
+      bg: (W, H) => {
+        let s = "";
+        for (let y = 0.45; y < 0.99; y += 0.11) s += line("M0 " + rd(H * y) + "H" + W);
+        for (let x = 0; x < W; x += W / 10) s += line("M" + rd(x) + " " + rd(H * 0.45) + "V" + H);
+        s += '<ellipse cx="' + rd(W * 0.3) + '" cy="' + rd(H * 0.2) + '" rx="' + rd(W * 0.07) + '" ry="' + rd(H * 0.13) + '" ' + L + "/>";
+        s += line("M" + rd(W * 0.2) + " " + rd(H * 0.4) + "H" + rd(W * 0.4) + "C" + rd(W * 0.38) + " " + rd(H * 0.5) + " " + rd(W * 0.22) + " " + rd(H * 0.5) + " " + rd(W * 0.2) + " " + rd(H * 0.4));
+        s += line("M" + rd(W * 0.6) + " " + rd(H * 0.18) + "H" + rd(W * 0.85));
+        s += line("M" + rd(W * 0.5) + " " + rd(H * 0.72) + "H" + rd(W * 0.98) + "V" + rd(H * 0.82) + "C" + rd(W * 0.98) + " " + rd(H * 0.96) + " " + rd(W * 0.5) + " " + rd(H * 0.96) + " " + rd(W * 0.5) + " " + rd(H * 0.82) + "Z");
+        return s;
+      }
+    },
+    cellar: {
+      items: ["jar", "barrel", "hammer", "bottle", "chest", "suitcase", "lantern", "bucket", "shovel", "mouse", "ball", "candle"],
+      // A brick wall, stairs coming down on the left, a small barred
+      // window, a shelf.
+      bg: (W, H) => {
+        let s = "";
+        for (let r = 0, y = H * 0.06; y < H * 0.6; r++, y += H * 0.09) {
+          s += line("M" + rd(W * 0.3) + " " + rd(y) + "H" + W);
+          for (let x = W * 0.3 + (r % 2 ? W * 0.05 : 0); x < W; x += W * 0.1) s += line("M" + rd(x) + " " + rd(y) + "v" + rd(H * 0.09));
+        }
+        let st = "M0 " + rd(H * 0.2);
+        for (let k = 0; k < 6; k++) st += "H" + rd(W * 0.05 * (k + 1)) + "V" + rd(H * (0.2 + 0.13 * (k + 1)));
+        s += line(st);
+        s += box(W * 0.6, H * 0.08, W * 0.16, H * 0.14) + line("M" + rd(W * 0.64) + " " + rd(H * 0.08) + "v" + rd(H * 0.14) + "M" + rd(W * 0.68) + " " + rd(H * 0.08) + "v" + rd(H * 0.14) + "M" + rd(W * 0.72) + " " + rd(H * 0.08) + "v" + rd(H * 0.14));
+        s += floorAt(H * 0.98, W);
+        return s;
+      }
+    },
+    bedroom: {
+      items: ["pillow", "slipper", "glasses", "clock", "book", "lamp", "bear", "candle", "cat", "vase", "hat", "star"],
+      // A big bed, a window with curtains, a picture, a bedside table.
+      bg: (W, H) => windowAt(W * 0.62, H * 0.08, W * 0.24, H * 0.3) +
+        line("M" + rd(W * 0.59) + " " + rd(H * 0.06) + "H" + rd(W * 0.89) + "M" + rd(W * 0.6) + " " + rd(H * 0.06) + "C" + rd(W * 0.58) + " " + rd(H * 0.2) + " " + rd(W * 0.62) + " " + rd(H * 0.35) + " " + rd(W * 0.59) + " " + rd(H * 0.44) +
+          "M" + rd(W * 0.88) + " " + rd(H * 0.06) + "C" + rd(W * 0.9) + " " + rd(H * 0.2) + " " + rd(W * 0.86) + " " + rd(H * 0.35) + " " + rd(W * 0.89) + " " + rd(H * 0.44)) +
+        box(W * 0.12, H * 0.1, W * 0.2, H * 0.18) + line("M" + rd(W * 0.14) + " " + rd(H * 0.25) + "Q" + rd(W * 0.22) + " " + rd(H * 0.12) + " " + rd(W * 0.3) + " " + rd(H * 0.25)) +
+        line("M" + rd(W * 0.04) + " " + H + "V" + rd(H * 0.45) + "M" + rd(W * 0.04) + " " + rd(H * 0.7) + "H" + rd(W * 0.6) + "V" + H + "M" + rd(W * 0.04) + " " + rd(H * 0.62) + "H" + rd(W * 0.58)) +
+        box(W * 0.68, H * 0.66, W * 0.14, H * 0.2) + line("M" + rd(W * 0.68) + " " + rd(H * 0.76) + "H" + rd(W * 0.82)) +
+        floorAt(H * 0.95, W)
+    }
+  });
   const ROOM_NAMES = Object.keys(ROOMS);
 
   function shuffle(arr, random) {

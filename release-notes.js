@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v236",
+    date: "2026-10-12",
+    key: "release_v236",
+    text: "Picture search with bathroom, cellar and bedroom; Who Took the Cake? with five more rooms and seven new pieces of furniture."
+  },
+  {
     version: "v235",
     date: "2026-10-12",
     key: "release_v235",

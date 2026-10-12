@@ -9,7 +9,8 @@
 //     one row and one column are free - and that cell is the cake's,
 //   - has no "next to" clue that only holds through furniture behind a
 //     wall (in another room), exactly one animal in the cake's room, and
-//     no animal on a table, cupboard or plant.
+//     no animal on a table or on furniture that fills its cell (plant,
+//     cupboard, shelf, crate, standard lamp, bathtub).
 // A fixed board checks "next to" across a wall directly.
 // Clue counts: Easy has exactly 2 clues more than needed, Medium 1, Hard
 // none (p.needed); the extra clues are positive ones ("is in", "sits on",
@@ -28,6 +29,9 @@ function rng(seed) {
 }
 
 const PER_LEVEL = 500;
+// Furniture nobody stands on, written out here on its own (not taken from
+// the core), so a change there is caught.
+const BLOCK = ["table", "cupboard", "plant", "shelf", "box", "lamp", "bathtub"];
 const HINT_PLAY = 200;
 const fs = require("fs");
 const POSITIVE = ["in", "on", "next", "same", "window", "edge"];
@@ -38,7 +42,7 @@ function checkReason(p, placed, h) {
   if (!r || !r.kind) return "no reason";
   const takenR = new Set(), takenC = new Set();
   placed.forEach((at, t) => { if (at >= 0 && t !== k) { takenR.add(Math.floor(at / n)); takenC.add(at % n); } });
-  const standable = (t, i) => (t === n - 1 ? p.furniture[i] === "table" : ["table", "cupboard", "plant"].indexOf(p.furniture[i]) === -1);
+  const standable = (t, i) => (t === n - 1 ? p.furniture[i] === "table" : BLOCK.indexOf(p.furniture[i]) === -1);
   const cells = (t, clueIdx) => {
     const out = [];
     for (let i = 0; i < n * n; i++) if (!takenR.has(Math.floor(i / n)) && !takenC.has(i % n) && standable(t, i) && clueIdx.every((ci) => CakeCore.clueAllows(p, p.clues[ci], i))) out.push(i);
@@ -86,7 +90,7 @@ for (const level of ["easy", "medium", "hard"]) {
     if (wall) { fails.push(tag + ": \"next to\" only through another room"); continue; }
     const cakeRoom = p.rooms[p.solution[n - 1]];
     if (p.solution.slice(0, -1).filter((i) => p.rooms[i] === cakeRoom).length !== 1) { fails.push(tag + ": not one animal in the cake's room"); continue; }
-    if (p.solution.slice(0, -1).some((i) => ["table", "cupboard", "plant"].indexOf(p.furniture[i]) !== -1)) { fails.push(tag + ": animal on a table, cupboard or plant"); continue; }
+    if (p.solution.slice(0, -1).some((i) => BLOCK.indexOf(p.furniture[i]) !== -1)) { fails.push(tag + ": animal on a table or on furniture that fills its cell"); continue; }
     if (p.furniture[p.solution[n - 1]] !== "table") { fails.push(tag + ": cake not on a table"); continue; }
     if (CakeCore.countSolutions(p, 2) !== 1) { fails.push(tag + ": not exactly one solution"); continue; }
     const d = CakeCore.deduce(p, CakeCore.LEVELS[level].level);
@@ -239,33 +243,65 @@ const THEMES = CakeCore.MOTIFS.filter((m) => m !== "animals");
   }
 }
 
-// 500 cases per newer theme (bears, dogs, magpies, family, treasure),
-// spread over the levels:
-// the theme is set on the generated puzzle, which keeps exactly one
-// solution and stays solvable by deduction at its level; culprit and
-// thing come from the theme.
-const NEW_THEMES = ["bears", "dogs", "magpies", "family", "treasure"];
+// 500 cases per level and theme (every theme, 3 x 7 = 21 x 500): the
+// theme is set on the generated puzzle, which keeps exactly one solution
+// and stays solvable by deduction at its level; culprit and thing come
+// from the theme. Every piece of furniture other than the table stands
+// in a room it belongs to, every room name and every piece of furniture
+// turns up in each level's 500 (all themes alike), and every one of them
+// is named by a clue somewhere ("sits on a sofa", "is next to a shelf").
 const themeCases = {};
-NEW_THEMES.forEach((motif, ti) => {
+const seenFurn = {}, seenRoom = {}, seenClueF = new Set();
+CakeCore.MOTIFS.forEach((motif, ti) => {
   let ok = 0;
-  const levels = Object.keys(CakeCore.LEVELS);
-  for (let i = 0; i < 500; i++) {
-    const level = levels[i % levels.length];
-    const p = CakeCore.generatePuzzle(level, rng(70000 + ti * 1000 + i));
-    const tag = motif + " #" + (i + 1);
-    if (!p) { fails.push(tag + ": no puzzle"); continue; }
-    p.motif = motif;
-    if (CakeCore.countSolutions(p, 2) !== 1) { fails.push(tag + ": not exactly one solution"); continue; }
-    if (!CakeCore.isSolution(p, p.solution)) { fails.push(tag + ": stored solution breaks a rule"); continue; }
-    const d = CakeCore.deduce(p, CakeCore.LEVELS[level].level);
-    if (!d || !d.solved || d.cells.some((c, k) => c !== p.solution[k])) { fails.push(tag + ": not solvable by deduction"); continue; }
-    if (CakeCore.thingId(p, p.n - 1) !== CakeCore.THEMES[motif].thing) fails.push(tag + ": wrong thing");
-    if (CakeCore.THEMES[motif].who.indexOf(CakeCore.animalId(p, CakeCore.culprit(p))) === -1) fails.push(tag + ": culprit not from the theme");
-    ok++;
+  for (const level of Object.keys(CakeCore.LEVELS)) {
+    seenFurn[level] = seenFurn[level] || {};
+    seenRoom[level] = seenRoom[level] || {};
+    const seenF = new Set(), seenR = new Set();
+    for (let i = 0; i < 500; i++) {
+      const p = CakeCore.generatePuzzle(level, rng(70000 + ti * 10007 + level.length * 1000003 + i));
+      const tag = motif + " " + level + " #" + (i + 1);
+      if (!p) { fails.push(tag + ": no puzzle"); continue; }
+      p.motif = motif;
+      if (CakeCore.countSolutions(p, 2) !== 1) { fails.push(tag + ": not exactly one solution"); continue; }
+      if (!CakeCore.isSolution(p, p.solution)) { fails.push(tag + ": stored solution breaks a rule"); continue; }
+      const d = CakeCore.deduce(p, CakeCore.LEVELS[level].level);
+      if (!d || !d.solved || d.cells.some((c, k) => c !== p.solution[k])) { fails.push(tag + ": not solvable by deduction"); continue; }
+      if (CakeCore.thingId(p, p.n - 1) !== CakeCore.THEMES[motif].thing) fails.push(tag + ": wrong thing");
+      if (CakeCore.THEMES[motif].who.indexOf(CakeCore.animalId(p, CakeCore.culprit(p))) === -1) fails.push(tag + ": culprit not from the theme");
+      p.furniture.forEach((f, cell) => {
+        if (!f) return;
+        seenF.add(f);
+        if (f === "table") return;
+        const fits = CakeCore.ROOM_FURNITURE[p.roomNames[p.rooms[cell]]];
+        if (!fits || (fits.sit.indexOf(f) === -1 && fits.block.indexOf(f) === -1)) fails.push(tag + ": " + f + " in the " + p.roomNames[p.rooms[cell]]);
+      });
+      p.roomNames.forEach((r) => seenR.add(r));
+      p.clues.forEach((cl) => { if (cl.f) seenClueF.add(cl.f); });
+      ok++;
+    }
+    CakeCore.FURNITURE.forEach((f) => { if (!seenF.has(f)) fails.push(motif + " " + level + ": no " + f + " in 500 puzzles"); });
+    CakeCore.ROOM_NAMES.forEach((r) => { if (!seenR.has(r)) fails.push(motif + " " + level + ": no " + r + " in 500 puzzles"); });
   }
   themeCases[motif] = ok;
 });
-console.log("themes: " + NEW_THEMES.map((m) => m + " " + themeCases[m] + "/500 solvable with exactly one solution").join(", "));
+CakeCore.FURNITURE.filter((f) => f !== "table").forEach((f) => { if (!seenClueF.has(f)) fails.push("no clue names the " + f); });
+if (JSON.stringify(CakeCore.BLOCKING.slice().sort()) !== JSON.stringify(BLOCK.slice().sort())) fails.push("furniture nobody stands on: " + CakeCore.BLOCKING.join(","));
+{
+  // Every room and piece of furniture has its words in all languages.
+  const { loadI18n } = require("./load-i18n.js");
+  const STR = loadI18n({ texts: false }).STRINGS;
+  const CakeIcons = require(path.join(__dirname, "..", "cake-icons.js"));
+  for (const lang of Object.keys(STR)) {
+    CakeCore.ROOM_NAMES.forEach((r) => ["name", "in"].forEach((x) => { if (!STR[lang]["cake_room_" + r + "_" + x]) fails.push(lang + " lacks cake_room_" + r + "_" + x); }));
+    CakeCore.FURNITURE.forEach((f) => { if (!STR[lang]["cake_furn_" + f + "_name"]) fails.push(lang + " lacks cake_furn_" + f + "_name"); });
+    CakeCore.SITTING.forEach((f) => { if (!STR[lang]["cake_furn_" + f + "_on"]) fails.push(lang + " lacks cake_furn_" + f + "_on"); });
+    CakeCore.NEXT_TO.forEach((f) => { if (!STR[lang]["cake_furn_" + f + "_next"]) fails.push(lang + " lacks cake_furn_" + f + "_next"); });
+  }
+  CakeCore.FURNITURE.forEach((f) => { if (!CakeIcons.icons[f]) fails.push("no drawing for " + f); });
+}
+console.log("themes: " + CakeCore.MOTIFS.map((m) => m + " " + themeCases[m] + "/1500").join(", ") + " solvable with exactly one solution (500 per level)");
+console.log("furniture and rooms: all " + CakeCore.FURNITURE.length + " pieces and all " + CakeCore.ROOM_NAMES.length + " rooms in every level's 500 puzzles of every theme, each piece fits its room, each piece named by a clue");
 
 Object.keys(clueStats).forEach((lv) => {
   const st = clueStats[lv];
