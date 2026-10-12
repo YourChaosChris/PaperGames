@@ -180,7 +180,11 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   with its head pointing the way of its last step, no overlaps, the
   level's field and arrow lengths, nesting of at least 3 / 5 / 7 rounds;
   played with the hint alone each field is cleared in exactly the fewest
-  moves (one per arrow). About 6 seconds.
+  moves (one per arrow). Hard and Master (11 x 11, gliding arrows with at
+  most two corners): the solver finds a way out and replaying it clears
+  the field, so does the gliding hint alone; a random player gets stuck
+  in at least 60 % of all tries (share printed). Easy and Medium make the
+  same puzzles as before (fingerprint). About 3 minutes.
 - `node tests/rings-core.js` - no server or browser needed. 500 "Turn the
   Rings" puzzles per level: 3 / 4 / 5 rings with 4 / 6 / 8 shapes,
   coupling only on Hard, the fewest moves in the level's range and

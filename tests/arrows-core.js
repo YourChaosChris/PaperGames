@@ -11,6 +11,14 @@
 // of "all free arrows leave") reaches the level's minimum. A blocked
 // arrow is reported with the arrow in its way.
 //
+// Hard and Master (gliding arrows): 11 x 11, at most two corners per
+// arrow; the solver finds a way out from the start and replaying it
+// clears the field; playing with the gliding hint alone clears it too; a
+// glide keeps the arrow's length, moves it forward along its way and only
+// over free squares. A random player (always some arrow that can move)
+// gets stuck in at least 60 % of all tries on Hard (20 tries per puzzle,
+// the share is printed). Easy and Medium make the same puzzles as before.
+//
 // Run: node tests/arrows-core.js
 
 const A = require("../arrows-core.js");
@@ -23,9 +31,11 @@ function check(p, lv, seed) {
   const cfg = A.LEVELS[lv];
   const tag = lv + " #" + seed;
   if (p.rows !== cfg.rows || p.cols !== cfg.cols) return tag + ": field " + p.rows + " x " + p.cols;
+  if (!!p.glide !== !!cfg.glide) return tag + ": glide flag wrong";
   const seen = {};
   for (const a of p.arrows) {
     if (a.cells.length < cfg.minLen || a.cells.length > cfg.maxLen) return tag + ": arrow of " + a.cells.length + " cells";
+    if (cfg.maxBends !== undefined && bendsOf(p, a.cells) > cfg.maxBends) return tag + ": arrow with " + bendsOf(p, a.cells) + " corners";
     for (let j = 0; j < a.cells.length; j++) {
       const i = a.cells[j];
       if (i < 0 || i >= p.rows * p.cols) return tag + ": cell off the field";
@@ -42,6 +52,7 @@ function check(p, lv, seed) {
   const r = A.rounds(p);
   if (r < 0) return tag + ": cannot be cleared";
   if (r < cfg.rounds) return tag + ": only " + r + " rounds";
+  if (cfg.glide) return checkGlide(p, lv, tag, r);
   // Play it with the hint alone.
   const present = p.arrows.map(() => true);
   let moves = 0;
@@ -70,6 +81,64 @@ function check(p, lv, seed) {
   return null;
 }
 
+function bendsOf(p, cells) {
+  let n = 0;
+  for (let j = 2; j < cells.length; j++) {
+    const d1 = cells[j - 1] - cells[j - 2], d2 = cells[j] - cells[j - 1];
+    if (d1 !== d2) n++;
+  }
+  return n;
+}
+
+const glide = {};
+function checkGlide(p, lv, tag, r) {
+  const way = A.solveGlide(p, A.startPos(p));
+  if (!way) return tag + ": solver finds no way out";
+  let pos = A.startPos(p);
+  for (const k of way) {
+    const m = A.applyMove(p, pos, k);
+    if (m.move.type === "blocked") return tag + ": solution taps a blocked arrow";
+    if (m.move.type === "slide") {
+      const before = pos[k], after = m.pos[k];
+      if (after.length !== before.length) return tag + ": glide changes the length";
+      const occ = A.occupancyPos(p, pos);
+      const ray = A.rayCells(p, { cells: before, dir: p.arrows[k].dir });
+      const newCells = after.filter((i) => before.indexOf(i) === -1);
+      if (newCells.some((i) => occ[i] !== -1 || ray.indexOf(i) === -1)) return tag + ": glide over taken or wrong squares";
+    }
+    pos = m.pos;
+  }
+  if (!A.cleared(pos)) return tag + ": solution does not clear the field";
+  // Hint only.
+  pos = A.startPos(p);
+  for (let guard = 0; guard < 500 && !A.cleared(pos); guard++) {
+    const k = A.findHintGlide(p, pos);
+    if (k < 0) return tag + ": gliding hint found nothing";
+    pos = A.applyMove(p, pos, k).pos;
+  }
+  if (!A.cleared(pos)) return tag + ": gliding hint does not clear the field";
+  // Random players.
+  const g = glide[lv] || (glide[lv] = { arrows: [], stuck: 0, tries: 0, rounds: [] });
+  const random = A.makeRng(tag.length * 131 + p.arrows.length * 17 + way.length);
+  for (let t = 0; t < 20; t++) { g.tries++; if (A.randomPlayStuck(p, random)) g.stuck++; }
+  g.arrows.push(p.arrows.length);
+  g.rounds.push(r);
+  return null;
+}
+
+// Easy and Medium: the same puzzles as before gliding came (fingerprints
+// of the first puzzles from fixed seeds).
+const FINGER = { easy: "4149842568", medium: "1057272333" };
+const finger = (lv) => {
+  let h = 0;
+  for (let seed = 1; seed <= 20; seed++) {
+    const p = A.generatePuzzle(lv, A.makeRng(seed * 7919 + lv.length));
+    JSON.stringify(p.arrows).split("").forEach((ch) => { h = (h * 31 + ch.charCodeAt(0)) >>> 0; });
+  }
+  return String(h);
+};
+Object.keys(FINGER).forEach((lv) => { const f = finger(lv); if (f !== FINGER[lv]) fails.push(lv + ": puzzles changed (fingerprint " + f + ")"); });
+
 const t0 = Date.now();
 for (const lv of Object.keys(A.LEVELS)) {
   for (let seed = 1; seed <= PER; seed++) {
@@ -79,6 +148,11 @@ for (const lv of Object.keys(A.LEVELS)) {
 }
 const range = (a) => Math.min.apply(null, a) + "-" + Math.max.apply(null, a) + " (average " + (a.reduce((x, y) => x + y, 0) / a.length).toFixed(1) + ")";
 Object.keys(stats).forEach((lv) => console.log(lv + ": " + PER + " puzzles, arrows " + range(stats[lv].arrows) + ", rounds " + range(stats[lv].rounds) + ", solved with the hint in the fewest moves"));
+Object.keys(glide).forEach((lv) => {
+  const g = glide[lv], rate = g.stuck / g.tries;
+  console.log(lv + ": " + PER + " puzzles 11 x 11 with gliding arrows, arrows " + range(g.arrows) + ", rounds " + range(g.rounds) + ", solved by the solver and with the hint; random player stuck in " + g.stuck + " of " + g.tries + " tries (" + (100 * rate).toFixed(1) + " %)");
+  if (rate < 0.6) fails.push(lv + ": random player stuck in only " + (100 * rate).toFixed(1) + " %");
+});
 console.log("time " + ((Date.now() - t0) / 1000).toFixed(1) + " s");
 if (fails.length) {
   fails.slice(0, 20).forEach((f) => console.log("FAIL: " + f));

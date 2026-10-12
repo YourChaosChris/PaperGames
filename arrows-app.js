@@ -5,6 +5,13 @@
 // is free; otherwise it stays, a short line says so and the arrow in the
 // way gets a dotted frame - no penalty. Undo puts the last arrow back,
 // Hint frames an arrow that can leave. No time limit.
+//
+// Hard and Master (puzzles with `glide`): a blocked arrow glides forward
+// up to the obstacle (ArrowsCore.moveOf) - a wrong move can block others
+// for good, undo takes it back, and Hint looks for a way out from the
+// current position. Master adds three hearts: every tap that does not
+// take an arrow out costs one, no frame shows the arrow in the way and
+// there is no hint; with no hearts left the puzzle can be tried again.
 
 const AW_SAVE_KEY = "einkchess_save_arrows";
 const AW_CELL = 40;
@@ -12,7 +19,9 @@ const AW_CELL = 40;
 const AppStateAw = {
   puzzle: null,
   present: [],    // per arrow: still in the field
-  history: [],    // arrows taken out, in order
+  history: [],    // arrows taken out, in order (gliding: earlier positions)
+  pos: null,      // gliding puzzles: per arrow its cells now, or null
+  hearts: 0,      // Master: hearts left
   moves: 0,
   hint: -1,
   blocker: -1,
@@ -31,7 +40,29 @@ function setStatusAw(text) {
 
 function saveAwGame() {
   if (typeof GameStorage === "undefined" || !AppStateAw.puzzle) return;
-  GameStorage.save(AW_SAVE_KEY, { puzzle: AppStateAw.puzzle, present: AppStateAw.present, history: AppStateAw.history, moves: AppStateAw.moves, hinted: AppStateAw.hinted });
+  GameStorage.save(AW_SAVE_KEY, { puzzle: AppStateAw.puzzle, present: AppStateAw.present, history: AppStateAw.history, moves: AppStateAw.moves, hinted: AppStateAw.hinted, pos: AppStateAw.pos, hearts: AppStateAw.hearts });
+}
+
+function glideAw() {
+  return !!(AppStateAw.puzzle && AppStateAw.puzzle.glide);
+}
+
+function masterAw() {
+  return !!(AppStateAw.puzzle && AppStateAw.puzzle.level === "master");
+}
+
+// Cells of arrow k now (moved by gliding), and whether it is still there.
+function cellsAw(k) {
+  return glideAw() ? AppStateAw.pos[k] : (AppStateAw.present[k] ? AppStateAw.puzzle.arrows[k].cells : null);
+}
+
+function occupancyAw() {
+  const p = AppStateAw.puzzle;
+  return glideAw() ? ArrowsCore.occupancyPos(p, AppStateAw.pos) : ArrowsCore.occupancy(p, AppStateAw.present);
+}
+
+function syncPresentAw() {
+  if (glideAw()) AppStateAw.present = AppStateAw.pos.map((c) => c !== null);
 }
 
 function clearSavedAwGame() {
@@ -51,13 +82,17 @@ function initAwApp() {
   document.getElementById("start-aw-game").addEventListener("click", () => startNewAwGame(levelSel.value));
   document.getElementById("aw-undo").addEventListener("click", undoAw);
   document.getElementById("aw-hint").addEventListener("click", hintAw);
+  document.getElementById("aw-retry").addEventListener("click", retryAw);
   if (typeof I18n !== "undefined" && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateAw.puzzle) renderAw(); });
   }
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(AW_SAVE_KEY) : null;
-  if (saved && saved.puzzle && saved.puzzle.arrows && Array.isArray(saved.present) && saved.present.length === saved.puzzle.arrows.length) {
+  if (saved && saved.puzzle && saved.puzzle.arrows && Array.isArray(saved.present) && saved.present.length === saved.puzzle.arrows.length &&
+      (!saved.puzzle.glide || (Array.isArray(saved.pos) && saved.pos.length === saved.puzzle.arrows.length))) {
     AppStateAw.puzzle = saved.puzzle;
     AppStateAw.present = saved.present;
+    AppStateAw.pos = saved.puzzle.glide ? saved.pos : null;
+    AppStateAw.hearts = typeof saved.hearts === "number" ? saved.hearts : 0;
     AppStateAw.history = saved.history || [];
     AppStateAw.moves = saved.moves || 0;
     AppStateAw.hinted = !!saved.hinted;
@@ -77,9 +112,19 @@ function showBoardAw() {
 }
 
 function startNewAwGame(level) {
-  const p = ArrowsCore.generatePuzzle(level);
+  startAwPuzzle(ArrowsCore.generatePuzzle(level));
+}
+
+// Master, no hearts left: the same puzzle from the start.
+function retryAw() {
+  if (AppStateAw.puzzle) startAwPuzzle(AppStateAw.puzzle);
+}
+
+function startAwPuzzle(p) {
   AppStateAw.puzzle = p;
   AppStateAw.present = p.arrows.map(() => true);
+  AppStateAw.pos = p.glide ? ArrowsCore.startPos(p) : null;
+  AppStateAw.hearts = (ArrowsCore.LEVELS[p.level] && ArrowsCore.LEVELS[p.level].hearts) || 0;
   AppStateAw.history = [];
   AppStateAw.moves = 0;
   AppStateAw.hint = -1;
@@ -101,6 +146,7 @@ function startNewAwGame(level) {
 function onCellAw(i) {
   const p = AppStateAw.puzzle;
   if (!p || AppStateAw.gameOver) return;
+  if (glideAw()) { onCellGlideAw(i); return; }
   const occ = ArrowsCore.occupancy(p, AppStateAw.present);
   const k = occ[i];
   if (k === -1) {
@@ -127,6 +173,65 @@ function onCellAw(i) {
   saveAwGame();
 }
 
+// Gliding arrows: leave, glide up to the obstacle, or stay when the very
+// next square is taken. Master: anything but leaving costs a heart.
+function onCellGlideAw(i) {
+  const p = AppStateAw.puzzle;
+  const occ = ArrowsCore.occupancyPos(p, AppStateAw.pos);
+  const k = occ[i];
+  if (k === -1) {
+    setStatusAw("Tap an arrow to send it out of the field.");
+    return;
+  }
+  AppStateAw.hint = -1;
+  AppStateAw.blocker = -1;
+  const before = AppStateAw.pos;
+  const r = ArrowsCore.applyMove(p, before, k);
+  let text;
+  if (r.move.type === "blocked") {
+    if (!masterAw()) AppStateAw.blocker = occ[ArrowsCore.rayCells(p, { cells: before[k], dir: p.arrows[k].dir })[0]];
+    text = "Blocked - another arrow is in the way.";
+  } else {
+    AppStateAw.history.push(before);
+    AppStateAw.pos = r.pos;
+    syncPresentAw();
+    AppStateAw.moves++;
+    if (ArrowsCore.cleared(r.pos)) { winAw(); return; }
+    text = r.move.type === "leave" ? "The arrow leaves the field." : "The arrow glides forward up to the next arrow.";
+  }
+  if (masterAw() && r.move.type !== "leave") {
+    AppStateAw.hearts = Math.max(0, AppStateAw.hearts - 1);
+    if (AppStateAw.hearts === 0) { loseAw(); return; }
+    text += " " + "That cost a heart.";
+  } else if (r.move.type !== "blocked" && stuckAw()) {
+    text = "No arrow can move any more - undo some moves.";
+  }
+  setStatusAw(text);
+  renderAw();
+  saveAwGame();
+}
+
+// No arrow can move, but some are left.
+function stuckAw() {
+  const p = AppStateAw.puzzle, pos = AppStateAw.pos;
+  if (ArrowsCore.cleared(pos)) return false;
+  const occ = ArrowsCore.occupancyPos(p, pos);
+  return !pos.some((c, k) => c && ArrowsCore.moveOf(p, pos, k, occ).type !== "blocked");
+}
+
+function loseAw() {
+  AppStateAw.gameOver = true;
+  AppStateAw.hint = -1;
+  AppStateAw.blocker = -1;
+  const text = "No hearts left - try this puzzle again or start a new one.";
+  const result = document.getElementById("game-result");
+  if (result) I18n.setMsg(result, text);
+  setStatusAw(text);
+  if (typeof GameStats !== "undefined") GameStats.record("arrows", "loss");
+  clearSavedAwGame();
+  renderAw();
+}
+
 function undoAw() {
   if (!AppStateAw.puzzle || AppStateAw.gameOver) return;
   if (!AppStateAw.history.length) {
@@ -134,22 +239,31 @@ function undoAw() {
     return;
   }
   const k = AppStateAw.history.pop();
-  AppStateAw.present[k] = true;
+  if (glideAw()) {
+    AppStateAw.pos = k;
+    syncPresentAw();
+  } else AppStateAw.present[k] = true;
   AppStateAw.moves++;
   AppStateAw.hint = -1;
   AppStateAw.blocker = -1;
-  setStatusAw("Undone: the arrow is back.");
+  setStatusAw(glideAw() ? "Undone." : "Undone: the arrow is back.");
   renderAw();
   saveAwGame();
 }
 
 function hintAw() {
   const p = AppStateAw.puzzle;
-  if (!p || AppStateAw.gameOver) return;
+  if (!p || AppStateAw.gameOver || masterAw()) return;
   AppStateAw.hinted = true;
   AppStateAw.blocker = -1;
-  AppStateAw.hint = ArrowsCore.findHint(p, AppStateAw.present);
-  setStatusAw("Hint: the marked arrow can leave.");
+  if (glideAw()) {
+    AppStateAw.hint = ArrowsCore.findHintGlide(p, AppStateAw.pos);
+    if (AppStateAw.hint < 0) setStatusAw("There is no way out from here - undo some moves.");
+    else setStatusAw(ArrowsCore.moveOf(p, AppStateAw.pos, AppStateAw.hint).type === "leave" ? "Hint: the marked arrow can leave." : "Hint: let the marked arrow glide forward.");
+  } else {
+    AppStateAw.hint = ArrowsCore.findHint(p, AppStateAw.present);
+    setStatusAw("Hint: the marked arrow can leave.");
+  }
   renderAw();
   saveAwGame();
 }
@@ -193,8 +307,8 @@ function arrowSvgAw(p, a, S) {
     "L" + (base[0] - side[0] * hw).toFixed(1) + " " + (base[1] - side[1] * hw).toFixed(1) + 'Z" fill="#141413" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>';
 }
 
-function frameSvgAw(p, a, S, cls) {
-  return a.cells.map((i) => '<rect class="' + cls + '" x="' + ((i % p.cols) * S + 3) + '" y="' + (Math.floor(i / p.cols) * S + 3) + '" width="' + (S - 6) + '" height="' + (S - 6) + '"/>').join("");
+function frameSvgAw(p, cells, S, cls) {
+  return cells.map((i) => '<rect class="' + cls + '" x="' + ((i % p.cols) * S + 3) + '" y="' + (Math.floor(i / p.cols) * S + 3) + '" width="' + (S - 6) + '" height="' + (S - 6) + '"/>').join("");
 }
 
 function renderAw() {
@@ -205,9 +319,9 @@ function renderAw() {
     '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="#fff"/>';
   for (let r = 1; r < p.rows; r++) svg += '<path d="M0 ' + r * S + "H" + W + '" stroke="#141413" stroke-width="0.6" stroke-dasharray="2 4"/>';
   for (let c = 1; c < p.cols; c++) svg += '<path d="M' + c * S + " 0V" + H + '" stroke="#141413" stroke-width="0.6" stroke-dasharray="2 4"/>';
-  p.arrows.forEach((a, k) => { if (AppStateAw.present[k]) svg += arrowSvgAw(p, a, S); });
-  if (AppStateAw.hint >= 0) svg += frameSvgAw(p, p.arrows[AppStateAw.hint], S, "pt-hint");
-  if (AppStateAw.blocker >= 0) svg += frameSvgAw(p, p.arrows[AppStateAw.blocker], S, "aw-blocker");
+  p.arrows.forEach((a, k) => { const c = cellsAw(k); if (c) svg += arrowSvgAw(p, { cells: c, dir: a.dir }, S); });
+  if (AppStateAw.hint >= 0 && cellsAw(AppStateAw.hint)) svg += frameSvgAw(p, cellsAw(AppStateAw.hint), S, "pt-hint");
+  if (AppStateAw.blocker >= 0 && cellsAw(AppStateAw.blocker)) svg += frameSvgAw(p, cellsAw(AppStateAw.blocker), S, "aw-blocker");
   svg += '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="none" stroke="#141413" stroke-width="4"/></svg>';
   const boardEl = document.getElementById("aw-board");
   const ix = (200 / (W + 4)).toFixed(3) + "%", iy = (200 / (H + 4)).toFixed(3) + "%";
@@ -216,7 +330,8 @@ function renderAw() {
   for (let i = 0; i < p.rows * p.cols; i++) html += '<button type="button" class="pt-cell" data-i="' + i + '"></button>';
   boardEl.innerHTML = html + "</div>";
   boardEl.style.maxWidth = (p.cols * 3.4) + "rem";
-  const occ = ArrowsCore.occupancy(p, AppStateAw.present);
+  boardEl.classList.toggle("aw-board-large", p.cols >= 10);
+  const occ = occupancyAw();
   boardEl.querySelectorAll(".pt-cell").forEach((btn) => {
     const i = parseInt(btn.getAttribute("data-i"), 10);
     const r = Math.floor(i / p.cols) + 1, c = (i % p.cols) + 1;
@@ -227,9 +342,20 @@ function renderAw() {
   });
   const left = AppStateAw.present.filter(Boolean).length;
   const info = document.getElementById("aw-info");
-  if (info) I18n.setMsg(info, "Arrows left: " + left + " · Moves: " + AppStateAw.moves + " · Fewest: " + ArrowsCore.minMoves(p));
+  if (info) {
+    if (masterAw()) I18n.setMsg(info, "Arrows left: " + left + " · Moves: " + AppStateAw.moves + " · Hearts: " + AppStateAw.hearts);
+    else I18n.setMsg(info, "Arrows left: " + left + " · Moves: " + AppStateAw.moves + " · Fewest: " + ArrowsCore.minMoves(p));
+  }
+  const hearts = document.getElementById("aw-hearts");
+  if (hearts) {
+    hearts.classList.toggle("hidden", !masterAw());
+    const full = AppStateAw.hearts, all = (ArrowsCore.LEVELS.master && ArrowsCore.LEVELS.master.hearts) || 3;
+    hearts.textContent = "♥".repeat(full) + "♡".repeat(Math.max(0, all - full));
+  }
   document.getElementById("aw-undo").disabled = AppStateAw.gameOver || !AppStateAw.history.length;
   document.getElementById("aw-hint").disabled = AppStateAw.gameOver;
+  document.getElementById("aw-hint").classList.toggle("hidden", masterAw());
+  document.getElementById("aw-retry").classList.toggle("hidden", !(masterAw() && AppStateAw.gameOver && AppStateAw.hearts === 0));
 }
 
 document.addEventListener("DOMContentLoaded", initAwApp);

@@ -1067,7 +1067,7 @@ const GAMES_CATALOG = [
     nameKey: "game_arrows",
     nameText: "Arrows",
     descKey: "home_arrows_desc",
-    descText: "Tap an arrow and it slides out of the field - if no other arrow is in its way. Clear the whole field; every puzzle can be solved, with undo and hints and no time limit.",
+    descText: "Tap an arrow and it slides out of the field - if no other arrow is in its way. Clear the whole field; every puzzle can be solved, with undo and hints and no time limit. On Hard and Master, blocked arrows glide forward and can get stuck.",
     popular: false,
     added: "2026-10-12T15:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><path d=\"M9 30V12\" stroke=\"#141413\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><path d=\"M9 5L14 12H4Z\" fill=\"#141413\"/><path d=\"M15 20H28\" stroke=\"#141413\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><path d=\"M35 20L28 15V25Z\" fill=\"#141413\"/><path d=\"M28 28H20V34\" stroke=\"#141413\" stroke-width=\"3.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"/></svg></span>"

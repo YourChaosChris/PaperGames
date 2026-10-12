@@ -67,6 +67,7 @@
         <option value="easy" selected data-i18n="level_easy">Easy</option>
         <option value="medium" data-i18n="level_medium">Medium</option>
         <option value="hard" data-i18n="level_hard">Hard</option>
+        <option value="master" data-i18n="aw_level_master">Master</option>
       </select>
   </div>
 </section>
@@ -90,10 +91,12 @@
   </div>
   <div id="board-container" class="hidden">
     <div id="aw-info" class="sk-game-line"></div>
+    <div id="aw-hearts" class="aw-hearts hidden" aria-hidden="true"></div>
     <div id="aw-board" class="pt-board" role="group" data-i18n-attr="aria-label:game_arrows" aria-label="Arrows"></div>
     <div class="pt-hand">
       <button id="aw-undo" class="secondary" type="button" data-i18n="undo_button">Undo</button>
       <button id="aw-hint" class="secondary" type="button" data-i18n="hint_button">Hint</button>
+      <button id="aw-retry" class="primary hidden" type="button" data-i18n="aw_retry">Try again</button>
     </div>
   </div>
 </section>

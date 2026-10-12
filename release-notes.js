@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v233",
+    date: "2026-10-12",
+    key: "release_v233",
+    text: "Arrows on Hard: gliding arrows, 11 × 11 squares, and a new Master level with three hearts."
+  },
+  {
     version: "v232",
     date: "2026-10-12",
     key: "release_v232",

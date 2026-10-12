@@ -13383,6 +13383,25 @@ li.fv-card {
 
 /* Arrows (arrows-app.js): uses the Pentomino board layout (.pt-board,
    .pt-cells); the arrow in the way of a tapped one gets a dotted frame. */
+/* 11 x 11 on a narrow screen: the field reaches the card's edges so each
+   square stays as large as possible (an arrow takes taps on all its
+   squares). */
+@media (max-width: 480px) {
+  .pt-board.aw-board-large {
+    width: calc(100% + 24px);
+    margin-left: -12px;
+    margin-right: -12px;
+  }
+}
+
+/* Master: the hearts left, as large symbols under the info line. */
+.aw-hearts {
+  text-align: center;
+  font-size: 1.6rem;
+  letter-spacing: 0.3rem;
+  line-height: 1.2;
+}
+
 .aw-blocker {
   fill: none;
   stroke: #141413;
