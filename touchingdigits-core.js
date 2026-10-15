@@ -1,5 +1,5 @@
-// numberblocks-core.js
-// Dependency-free Number Blocks engine (the puzzle Naoki Inaba published
+// touchingdigits-core.js
+// Dependency-free region-and-neighbour puzzle engine (published
 // in 2001): puzzle generation and the validation logic the UI needs. No
 // DOM here, same separation as every other <game>-core.js in this app.
 //

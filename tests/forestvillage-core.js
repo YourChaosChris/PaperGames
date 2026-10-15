@@ -4,15 +4,15 @@
 //     to exactly one building and the other way round; every card, field,
 //     resource, season and task has its text in 12 languages.
 //  2. 500 computer games for each number of players (1 to 4): every game
-//     ends, every move is legal, resources never go below 0, at most 15
+//     ends, every move is legal, resources never go below 0, at most 12
 //     cards per village, at most 8 in hand. With 2 to 4 players the first
 //     player wins within +/- 8 percentage points of the fair share. The
 //     range of points and the turns per player are printed.
 //  3. Hard beats Easy in at least 70 % of 400 two-player games.
-//  4. Single rules: an animal moves in for free next to its building,
+//  4. Single rules: a matching animal gets one feather off its cost,
 //     a taken field is closed for others while shared fields are not,
-//     spring gives a squirrel and lets production cards produce again,
-//     the village holds at most 15 cards, scoring of pairs.
+//     spring gives a worker, production triggers after every second placement,
+//     the village holds at most 12 cards, scoring of pairs.
 // No server or browser needed.
 
 const path = require("path");
@@ -98,42 +98,42 @@ console.log("(" + Math.round((Date.now() - t0) / 1000) + " s)");
   let s = F.createGame(2, rng);
   let p = s.players[0];
   // Building the bakery, then the hedgehog moves in for free.
-  p.res = { w: 2, r: 0, p: 1, b: 0 };
+  p.res = { c: 2, s: 0, f: 1 };
   p.hand = ["bakery", "hedgehog"];
-  check(F.isLegal(s, { type: "build", from: "hand", index: 0 }), "the bakery should be buildable with 2 wood and 1 pebble");
+  check(F.isLegal(s, { type: "build", from: "hand", index: 0 }), "the bakery should be buildable with 2 clay and 1 feather");
   F.apply(s, { type: "build", from: "hand", index: 0 }, rng);
-  check(p.res.w === 0 && p.res.p === 0 && p.res.b === 2, "the bakery costs 2 wood, 1 pebble and gives 2 berries at once: " + JSON.stringify(p.res));
+  check(p.res.c === 0 && p.res.f === 2, "the bakery costs 2 clay and 1 feather, then gives 2 feathers: " + JSON.stringify(p.res));
   s.current = 0;
-  p.res = { w: 0, r: 0, p: 0, b: 0 };
-  check(F.freeMoveIn(p, "hedgehog") && F.isLegal(s, { type: "build", from: "hand", index: 0 }), "the hedgehog should move in for free next to the bakery");
+  p.res = { c: 0, s: 0, f: 1 };
+  check(F.discountedAnimal(p, "hedgehog") && F.isLegal(s, { type: "build", from: "hand", index: 0 }), "the hedgehog should be buildable with a one-feather discount next to the bakery");
   F.apply(s, { type: "build", from: "hand", index: 0 }, rng);
   check(F.pairs(p) === 1 && F.score(s, 0).pairs === F.PAIR_BONUS, "bakery and hedgehog should be one pair worth " + F.PAIR_BONUS);
-  check(!F.freeMoveIn(p, "hedgehog"), "a second hedgehog needs a second bakery");
+  check(!F.discountedAnimal(p, "hedgehog"), "a second hedgehog needs a second bakery for the discount");
 
   // A taken field is closed for the next player, a shared field is not.
   s = F.createGame(2, rng);
   F.apply(s, { type: "place", field: 0 }, rng);
-  check(!F.isLegal(s, { type: "place", field: 0 }), "the woodpile is taken");
+  check(!F.isLegal(s, { type: "place", field: 0 }), "the Clay Bank is taken");
   F.apply(s, { type: "place", field: 7 }, rng);
   s.current = 0;
   check(F.isLegal(s, { type: "place", field: 7 }), "the market has room for everyone");
 
-  // Spring: workers back, +1 worker, production again.
+  // Spring: workers return, +1 worker; production triggered by placements.
   s = F.createGame(1, rng);
   p = s.players[0];
   p.village = [{ id: "sawmill" }];
-  p.res = { w: 0, r: 0, p: 0, b: 0 };
+  p.res = { c: 0, s: 0, f: 1 };
   F.apply(s, { type: "place", field: 0 }, rng);
   F.apply(s, { type: "place", field: 1 }, rng);
-  check(F.isLegal(s, { type: "season" }), "with all squirrels out the season can change");
+  check(F.isLegal(s, { type: "season" }), "with all workers out the season can change");
   F.apply(s, { type: "season" }, rng);
   check(F.season(p) === "spring" && p.workers === 3 && p.placed === 0, "spring should bring a third squirrel");
-  check(p.res.w === 3 + 2, "the sawmill should produce 2 wood in spring: " + JSON.stringify(p.res));
+  check(p.res.c === 3 + 2, "the sawmill should produce 2 clay after the second worker placement: " + JSON.stringify(p.res));
   check(s.fields[0].length === 0, "the squirrels come back from the forest");
 
-  // At most 15 cards.
-  p.village = Array.from({ length: 15 }, () => ({ id: "pantry" }));
-  p.res = { w: 9, r: 9, p: 9, b: 9 };
+  // At most 12 cards.
+  p.village = Array.from({ length: 12 }, () => ({ id: "pantry" }));
+  p.res = { c: 9, s: 9, f: 9 };
   p.hand = ["well"];
   check(!F.canBuild(s, p, "well"), "a full village takes no more cards");
 })();

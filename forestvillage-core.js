@@ -3,18 +3,13 @@
 // the seasons; 1 to 4 players (alone against a target score, or against
 // the computer). Dependency-free, no DOM.
 //
-// Resources: wood, resin, pebbles, berries (w, r, p, b). Everyone starts
-// with 2 workers (squirrels) in late winter. A turn is one of:
-//   place  put a worker on a free field of the forest map (some fields
-//          take any number of workers) and take what it gives;
-//   build  pay a card's cost (from the hand or the meadow, the 8 open
-//          cards) and put it into the own village - an animal moves in for
-//          free when its partner building stands in the village and has no
-//          animal yet; at most 15 cards per village;
-//   season all workers are out: take them back and move on to the next
-//          season - spring +1 worker, summer, autumn +2 workers, then
-//          winter; in spring and autumn every production card of the
-//          village gives its goods again;
+// Resources: clay, seeds and feathers (c, s, f). Everyone starts
+// with 2 workers (squirrels). A turn is one of:
+//   place  send a worker to a forest space and take its reward; after every
+//          second placement, the player's production cards pay out;
+//   build  pay for a card from hand or the Clearing (6 open cards); a
+//          matching animal gets a one-feather discount; villages hold 12;
+//   season return all workers and advance at the player's own pace;
 //   pass   (winter only) done for this game.
 // The game ends when everyone has passed. Points: the cards, 2 per pair
 // (building with its animal), the end bonuses of some cards and the open
@@ -23,12 +18,12 @@
 // with more cards in hand (5, 6, 7, 8).
 
 const ForestVillageCore = (function () {
-  const RES = ["w", "r", "p", "b"];
+  const RES = ["c", "s", "f"];
   const SEASONS = ["latewinter", "spring", "summer", "autumn", "winter"];
   const NEW_WORKERS = { spring: 1, summer: 0, autumn: 2, winter: 0 };
-  const MAX_VILLAGE = 15;
+  const MAX_VILLAGE = 12;
   const MAX_HAND = 8;
-  const MEADOW = 8;
+  const MEADOW = 6;
   const START_HAND = [5, 6, 7, 8];
   const PAIR_BONUS = 2;
   const SOLO_TARGET = 45;
@@ -36,19 +31,19 @@ const ForestVillageCore = (function () {
   // Fields of the forest map: what a worker gets; shared fields take any
   // number of workers.
   const FIELDS = [
-    { id: "woodpile", gain: { w: 3 } },
-    { id: "resinfir", gain: { r: 2 } },
-    { id: "pebblebrook", gain: { p: 1 } },
-    { id: "berryslope", gain: { b: 2 } },
-    { id: "forestpath", gain: { w: 2, b: 1 } },
-    { id: "clearing", gain: { p: 1, b: 1 } },
-    { id: "oldoak", gain: { w: 1 }, draw: 2, shared: true },
+    { id: "claybank", gain: { c: 3 } },
+    { id: "seedpatch", gain: { s: 2 } },
+    { id: "featherbed", gain: { f: 2 } },
+    { id: "fernpath", gain: { c: 1, f: 1 } },
+    { id: "mossytrail", gain: { s: 1, f: 1 } },
+    { id: "sunnyhollow", gain: { c: 1, s: 1 } },
+    { id: "oldoak", gain: { c: 1 }, draw: 2, shared: true },
     { id: "market", draw: 3, shared: true }
   ];
 
   // Cards: [id, kind, cost, points, effect, partner, copies]
   //   effect: { prod: {res}, gain: {res}, draw: n, end: { per, n } }
-  //   prod gives at build and in spring and autumn; gain/draw once at
+  //   prod gives at build and after every second worker placement; gain/draw once at
   //   build; end scores at the end (per "building" | "animal" | "prod" |
   //   "pair" | "leftover").
   const C = (id, kind, cost, pts, fx, partner, copies) => ({ id, kind, cost, pts, fx: fx || {}, partner, copies: copies || 2 });
@@ -104,6 +99,21 @@ const ForestVillageCore = (function () {
     C("spider", "animal", { b: 2, r: 1 }, 2, {}, "tailor"),
     C("lark", "animal", { b: 2 }, 2, {}, "fairground")
   ];
+  // Cards began with a four-resource prototype. Convert their costs and effects
+  // into the current three-resource economy, combining stone/food into feathers.
+  const convertResources = (obj) => {
+    const out = {};
+    Object.keys(obj || {}).forEach((k) => {
+      const key = ({ w: "c", r: "s", p: "f", b: "f" })[k] || k;
+      out[key] = (out[key] || 0) + obj[k];
+    });
+    return out;
+  };
+  CARDS.forEach((c) => {
+    c.cost = convertResources(c.cost);
+    if (c.fx.prod) c.fx.prod = convertResources(c.fx.prod);
+    if (c.fx.gain) c.fx.gain = convertResources(c.fx.gain);
+  });
   const BY_ID = {};
   CARDS.forEach((c) => { BY_ID[c.id] = c; });
   function card(id) { return BY_ID[id]; }
@@ -115,8 +125,8 @@ const ForestVillageCore = (function () {
     { id: "animals", n: 6, pts: 5 },       // at least 6 animals
     { id: "pairs", n: 3, pts: 6 },         // at least 3 pairs
     { id: "buildings", n: 7, pts: 5 },     // at least 7 buildings
-    { id: "full", n: 13, pts: 5 },         // at least 13 cards
-    { id: "allres", n: 4, pts: 6 }         // producers of all 4 resources
+    { id: "full", n: 11, pts: 5 },         // at least 13 cards
+    { id: "allres", n: 3, pts: 6 }         // producers of all 3 resources
   ];
 
   function shuffle(a, rnd) {
@@ -152,7 +162,7 @@ const ForestVillageCore = (function () {
       players: [], current: 0, turn: 0, over: false, log: []
     };
     for (let i = 0; i < n; i++) {
-      s.players.push({ res: { w: 0, r: 0, p: 0, b: 0 }, hand: [], village: [], workers: 2, placed: 0, season: 0, passed: false, turns: 0 });
+      s.players.push({ res: { c: 0, s: 0, f: 0 }, hand: [], village: [], workers: 2, placed: 0, placementsSinceProduction: 0, season: 0, passed: false, turns: 0 });
     }
     for (let i = 0; i < MEADOW; i++) s.meadow.push(drawOne(s, rnd));
     s.players.forEach((p, i) => { for (let k = 0; k < START_HAND[i]; k++) giveCard(s, p, rnd); });
@@ -182,9 +192,9 @@ const ForestVillageCore = (function () {
   function addRes(p, gain) { Object.keys(gain || {}).forEach((k) => { p.res[k] += gain[k]; }); }
   function canAfford(p, cost) { return Object.keys(cost).every((k) => p.res[k] >= cost[k]); }
 
-  // Is `id` free to build: its partner building stands in the village
-  // without its animal yet.
-  function freeMoveIn(p, id) {
+  // Is `id` eligible for a one-feather discount because its partner building
+  // stands in the village without that animal yet?
+  function discountedAnimal(p, id) {
     const c = card(id);
     if (c.kind !== "animal") return false;
     return p.village.filter((v) => v.id === c.partner).length > p.village.filter((v) => v.id === id).length;
@@ -192,7 +202,9 @@ const ForestVillageCore = (function () {
 
   function canBuild(s, p, id) {
     if (p.village.length >= MAX_VILLAGE) return false;
-    return freeMoveIn(p, id) || canAfford(p, card(id).cost);
+    const cost = Object.assign({}, card(id).cost);
+    if (discountedAnimal(p, id)) cost.f = Math.max(0, (cost.f || 0) - 1);
+    return canAfford(p, cost);
   }
 
   function season(p) { return SEASONS[p.season]; }
@@ -233,29 +245,33 @@ const ForestVillageCore = (function () {
       s.fields[act.field].push(me);
       p.placed++;
       addRes(p, f.gain);
+      p.placementsSinceProduction = (p.placementsSinceProduction || 0) + 1;
+      if (p.placementsSinceProduction >= 2) {
+        p.placementsSinceProduction = 0;
+        p.village.forEach((v) => produce(s, p, card(v.id), rnd));
+      }
       for (let i = 0; i < (f.draw || 0); i++) giveCard(s, p, rnd);
       log(s, { k: "place", p: me, field: act.field });
     } else if (act.type === "build") {
       const id = act.from === "hand" ? p.hand[act.index] : s.meadow[act.index];
       const c = card(id);
-      const free = freeMoveIn(p, id);
-      if (!free) Object.keys(c.cost).forEach((k) => { p.res[k] -= c.cost[k]; });
+      const discounted = discountedAnimal(p, id);
+      const cost = Object.assign({}, c.cost);
+      if (discounted) cost.f = Math.max(0, (cost.f || 0) - 1);
+      Object.keys(cost).forEach((k) => { p.res[k] -= cost[k]; });
       if (act.from === "hand") p.hand.splice(act.index, 1);
       else s.meadow[act.index] = drawOne(s, rnd);
       p.village.push({ id });
       produce(s, p, c, rnd);
       addRes(p, c.fx.gain);
       for (let i = 0; i < (c.fx.draw || 0); i++) giveCard(s, p, rnd);
-      log(s, { k: "build", p: me, c: id, free });
+      log(s, { k: "build", p: me, c: id, discounted });
     } else if (act.type === "season") {
       s.fields.forEach((list) => { for (let i = list.length - 1; i >= 0; i--) if (list[i] === me) list.splice(i, 1); });
       p.placed = 0;
       p.season++;
       const name = season(p);
       p.workers += NEW_WORKERS[name] || 0;
-      if (name === "spring" || name === "autumn") {
-        p.village.forEach((v) => produce(s, p, card(v.id), rnd));
-      }
       if (name === "summer") { giveCard(s, p, rnd); giveCard(s, p, rnd); }
       log(s, { k: "season", p: me, season: name });
     } else if (act.type === "pass") {
@@ -333,10 +349,10 @@ const ForestVillageCore = (function () {
   // for the rest of the game, pairs, end bonuses), minus its cost.
   function cardValue(s, p, id, level) {
     const c = card(id);
-    const free = freeMoveIn(p, id);
+    const discounted = discountedAnimal(p, id);
     let v = c.pts;
-    const left = Math.max(0, 3 - p.season);          // productions still to come (roughly)
-    if (c.fx.prod) v += sumRes(c.fx.prod) * (1 + (p.season <= 1 ? 1 : 0) + (p.season <= 3 ? 1 : 0)) * 0.6;
+    const placementsLeft = Math.max(0, p.workers - p.placed); // future production opportunities
+    if (c.fx.prod) v += sumRes(c.fx.prod) * (1 + Math.ceil(placementsLeft / 2)) * 0.6;
     if (c.fx.gain) v += sumRes(c.fx.gain) * 0.6;
     if (c.fx.draw) v += c.fx.draw * 0.5;
     const nb = p.village.filter((x) => x.id === (c.kind === "animal" ? c.partner : c.id)).length;
@@ -352,13 +368,14 @@ const ForestVillageCore = (function () {
       const partnerVisible = p.hand.concat(s.meadow).indexOf(c.partner) !== -1;
       if (partnerVisible) v += 1.5;
     }
-    void left;
     if (level === "hard") {
       // Late in the game a village place is worth more than a cheap card.
       const room = MAX_VILLAGE - p.village.length;
       if (room <= 6) v -= Math.max(0, 2.5 - c.pts) * (7 - room) * 0.35;
     }
-    return free ? v + sumRes(c.cost) * 0.4 : v - sumRes(c.cost) * (level === "hard" ? 0.25 : 0.3);
+    const effectiveCost = Object.assign({}, c.cost);
+    if (discounted) effectiveCost.f = Math.max(0, (effectiveCost.f || 0) - 1);
+    return v - sumRes(effectiveCost) * (level === "hard" ? 0.25 : 0.3) + (discounted ? 0.4 : 0);
   }
   function sumRes(r) { return Object.keys(r || {}).reduce((a, k) => a + r[k], 0); }
 
@@ -367,7 +384,7 @@ const ForestVillageCore = (function () {
   function fieldValue(s, p, f, level) {
     let v = sumRes(f.gain) * 0.7 + (f.draw || 0) * 0.45;
     if (level !== "easy") {
-      const want = { w: 0, r: 0, p: 0, b: 0 };
+      const want = { c: 0, s: 0, f: 0 };
       p.hand.concat(s.meadow).forEach((id) => {
         if (!id) return;
         const c = card(id);
@@ -395,7 +412,7 @@ const ForestVillageCore = (function () {
       if (a.type === "build") {
         const id = a.from === "hand" ? p.hand[a.index] : s.meadow[a.index];
         v = cardValue(s, p, id, level) + 0.5;
-        if (p.village.length >= MAX_VILLAGE - 2 && card(id).pts <= 1 && !freeMoveIn(p, id)) v -= 2;
+        if (p.village.length >= MAX_VILLAGE - 2 && card(id).pts <= 1 && !discountedAnimal(p, id)) v -= 2;
       } else if (a.type === "place") v = fieldValue(s, p, FIELDS[a.field], level);
       else if (a.type === "season") v = 0.2;
       else v = 0.1; // pass
@@ -408,7 +425,7 @@ const ForestVillageCore = (function () {
   }
 
   return { RES, SEASONS, FIELDS, CARDS, TASKS, MAX_VILLAGE, MAX_HAND, MEADOW, START_HAND, PAIR_BONUS, SOLO_TARGET,
-    card, makeRng, createGame, legalActions, isLegal, apply, canBuild, freeMoveIn, score, winners, taskDone, pairs, chooseAction, clone, season };
+    card, makeRng, createGame, legalActions, isLegal, apply, canBuild, discountedAnimal, score, winners, taskDone, pairs, chooseAction, clone, season };
 })();
 
 if (typeof module !== "undefined" && module.exports) module.exports = ForestVillageCore;

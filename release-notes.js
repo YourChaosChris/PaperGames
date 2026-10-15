@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v241",
+    date: "2026-10-15",
+    key: "release_v241",
+    text: "Forest Village has new rules, a renamed game, and revised descriptions; old Forest Village saves are discarded."
+  },
+  {
     version: "v240",
     date: "2026-10-15",
     key: "release_v240",

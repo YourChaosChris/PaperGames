@@ -69,7 +69,7 @@ no internet connection at all.
 - Domino
 - Mau Mau
 - Calcudoku
-- Number Blocks
+- Touching Digits
 - Killer Sudoku
 - Thirty-One (Schwimmen)
 - Durak
@@ -117,9 +117,9 @@ licenses (not the MIT grant above) — see [NOTICE](NOTICE):
 - Chess piece set ("cburnett") by Colin M.L. Burnett, used under the BSD
   license (`pieces.js` and the pawn icons in `style.css`).
 - Xiangqi's symbol-style pieces are adapted from piece drawings originally
-  by Inductiveload (Wikimedia Commons, CC BY-SA), as resplit per piece by
-  Kadagaden ([github.com/Kadagaden/chess-pieces](https://github.com/Kadagaden/chess-pieces),
-  "xiangqi_wikipedia_intl_modded", CC BY 4.0).
+  by Inductiveload (Wikimedia Commons), adapted per piece by Kadagaden
+  ([github.com/Kadagaden/chess-pieces](https://github.com/Kadagaden/chess-pieces),
+  "xiangqi_wikipedia_intl_modded"), under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 - Shogi's piece kanji are adapted from the "kanji_light" piece set by
   Kadagaden ([github.com/Kadagaden/shogi-pieces](https://github.com/Kadagaden/shogi-pieces),
   CC BY 4.0).

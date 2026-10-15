@@ -3,7 +3,7 @@
 //
 // Layout: a status line, the player's season, workers and resources, the
 // forest map (8 field buttons with what they give and who stands there),
-// the meadow (8 open cards), the hand, the action buttons (Build, Change
+// the Clearing (6 open cards), the hand, the action buttons (Build, Change
 // season, Done), the village (cards built, pairs marked), the task card,
 // the points (also of the others) and the log. Tap a field to place a
 // worker; tap a card (meadow or hand) to see it - "Build" shows what is
@@ -13,7 +13,8 @@
 // device the hand is covered between turns; alone there is no opponent,
 // the target score counts. Every text comes from fv_* i18n keys.
 
-const FV_SAVE_KEY = "einkchess_save_forestvillage";
+const FV_SAVE_KEY = "einkchess_save_forestvillage_v2";
+const FV_OLD_SAVE_KEY = "einkchess_save_forestvillage";
 const FV_LOG_LINES = 8;
 
 const AppStateFv = {
@@ -45,7 +46,7 @@ function playerNameFv(i) {
 }
 function cardNameFv(id) { return tFv("fv_card_" + id); }
 
-// "2 Wood, 1 Pebbles" in the current language.
+// "2 clay, 1 feathers" in the current language.
 function resTextFv(r) {
   const parts = FC().RES.filter((k) => r && r[k]).map((k) => fillFv("fv_res_amount", { n: r[k], r: tFv("fv_res_" + k) }));
   return parts.join(tFv("fv_list_sep"));
@@ -124,6 +125,11 @@ function initFvApp() {
     });
   }
   setMode("vs-ai");
+  const oldSave = typeof GameStorage !== "undefined" ? GameStorage.load(FV_OLD_SAVE_KEY) : null;
+  if (oldSave) {
+    GameStorage.clear(FV_OLD_SAVE_KEY);
+    setStatusFv("fv_old_save_discarded");
+  }
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(FV_SAVE_KEY) : null;
   if (saved && saved.state && saved.state.players && !saved.state.over) {
     AppStateFv.mode = saved.mode === "hotseat" ? "hotseat" : "vs-ai";
@@ -283,13 +289,15 @@ function cardHtmlFv(id, from, index, p, s, canTap) {
   const c = FC().card(id);
   const sel = AppStateFv.sel && AppStateFv.sel.from === from && AppStateFv.sel.index === index;
   const built = from === "village";
-  const free = !built && FC().freeMoveIn(p, id);
+  const discounted = !built && FC().discountedAnimal(p, id);
   const ok = built || FC().canBuild(s, p, id);
   const cls = ["fv-card"];
   if (sel) cls.push("fv-selected");
   if (!ok) cls.push("fv-unaffordable");
   // Cards already in the village show no price.
-  const cost = built ? "" : free ? tFv("fv_cost_free") : fillFv("fv_cost", { s: resTextFv(c.cost) });
+  const shownCost = Object.assign({}, c.cost);
+  if (discounted) shownCost.f = Math.max(0, (shownCost.f || 0) - 1);
+  const cost = built ? "" : discounted ? fillFv("fv_cost_discount", { s: resTextFv(shownCost) }) : fillFv("fv_cost", { s: resTextFv(c.cost) });
   const kind = tFv(c.kind === "animal" ? "fv_kind_animal" : "fv_kind_building");
   const lines = [kind + " · " + fillFv("fv_points", { n: c.pts }), cost, cardTextFv(id), fillFv("fv_partner", { c: cardNameFv(c.partner) })].filter(Boolean);
   const label = [cardNameFv(id)].concat(lines).concat(ok ? [] : [tFv("fv_aria_unaffordable")]).join(", ");
@@ -301,7 +309,9 @@ function cardHtmlFv(id, from, index, p, s, canTap) {
 function missingTextFv(p, id) {
   const c = FC().card(id);
   const miss = {};
-  Object.keys(c.cost).forEach((k) => { if (p.res[k] < c.cost[k]) miss[k] = c.cost[k] - p.res[k]; });
+  const cost = Object.assign({}, c.cost);
+  if (FC().discountedAnimal(p, id)) cost.f = Math.max(0, (cost.f || 0) - 1);
+  Object.keys(cost).forEach((k) => { if (p.res[k] < cost[k]) miss[k] = cost[k] - p.res[k]; });
   return resTextFv(miss);
 }
 
@@ -339,7 +349,7 @@ function renderFv() {
   }).join("");
   fields.querySelectorAll(".fv-field").forEach((b) => b.addEventListener("click", () => onFieldFv(parseInt(b.getAttribute("data-field"), 10))));
 
-  // Meadow and hand.
+  // Clearing and hand.
   const meadow = document.getElementById("fv-meadow");
   meadow.innerHTML = s.meadow.map((id, i) => (id ? cardHtmlFv(id, "meadow", i, p, s, true) : "")).join("");
   const cover = document.getElementById("fv-hand-cover");
@@ -384,7 +394,7 @@ function renderFv() {
 function logLineFv(s, e) {
   switch (e.k) {
     case "place": return fillFv("fv_log_place", { p: playerNameFv(e.p), x: tFv("fv_field_" + FC().FIELDS[e.field].id) });
-    case "build": return fillFv(e.free ? "fv_log_build_free" : "fv_log_build", { p: playerNameFv(e.p), c: cardNameFv(e.c) });
+    case "build": return fillFv(e.discounted ? "fv_log_build_discount" : "fv_log_build", { p: playerNameFv(e.p), c: cardNameFv(e.c) });
     case "season": return fillFv("fv_log_season", { p: playerNameFv(e.p), s: tFv("fv_season_" + e.season) });
     case "pass": return fillFv("fv_log_pass", { p: playerNameFv(e.p) });
     case "end": return tFv("fv_log_end");

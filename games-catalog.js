@@ -402,7 +402,7 @@ const GAMES_CATALOG = [
     nameKey: "game_klondike",
     nameText: "Klondike",
     descKey: "home_klondike_desc",
-    descText: "The original patience game solitaire is named after - seven cascading tableau columns, four foundations, and a draw pile to work through. The game Windows made famous.",
+    descText: "The best-known patience game: seven tableau columns, four foundations, and a stock pile to work through, with no redeal limit.",
     popular: false,
     added: "2026-07-01",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"11\" height=\"15\" rx=\"1.5\"/><rect x=\"6.5\" y=\"5\" width=\"11\" height=\"15\" rx=\"1.5\" fill=\"#fff\"/><rect x=\"10.5\" y=\"7.5\" width=\"11\" height=\"14\" rx=\"1.5\" fill=\"#fff\"/><path d=\"M16 11L18.5 14.5L16 18L13.5 14.5Z\" fill=\"#141413\"/></svg></span>"
@@ -623,12 +623,12 @@ const GAMES_CATALOG = [
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><path d=\"M10.25 2.5H13.75V13.75H2.5V10.25H10.25Z\" fill=\"#141413\" stroke=\"none\"/><path d=\"M15.5 6.5H19.5M17.5 4.5V8.5M15.5 17.5H19.5\"/></svg></span>"
   },
   {
-    slug: "numberblocks",
+    slug: "touchingdigits",
     category: "puzzles",
     nameKey: "game_numberblocks",
-    nameText: "Number Blocks",
+    nameText: "Touching Digits",
     descKey: "home_numberblocks_desc",
-    descText: "Fill every block of n cells with the digits 1 to n - but equal digits may never touch, not even diagonally. Three difficulty levels, unique solution.",
+    descText: "Fill each region with the digits 1 to its size. Equal digits may never touch, even diagonally. Three difficulty levels; every puzzle has one solution.",
     popular: false,
     added: "2026-09-27T21:03",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><path d=\"M7.08 2.5H10.58V13.42H21.5V16.92H2.5V13.42H7.08Z\" fill=\"#141413\" stroke=\"none\"/></svg></span>"

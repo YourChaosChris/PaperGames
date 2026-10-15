@@ -69,6 +69,14 @@ function seoSpec(file, html, en, catalog) {
   const game = catalog.find((g) => g.slug === name);
   if (game) return { title: "game:" + game.nameKey, desc: "key:" + game.descKey };
   const h1 = (html.match(/<h1[^>]*data-i18n="([a-z0-9_]+)"/) || [])[1];
+  // The renamed region puzzle keeps its established translation keys so
+  // saved UI language data and its 12-language copy remain shared.
+  if (h1 && name.indexOf("touchingdigits-") === 0 && /-(rules|history)$/.test(name)) {
+    const suffix = /-(rules|history)$/.exec(name)[1];
+    const title = "numberblocks_" + suffix + "_title";
+    const intro = "numberblocks_" + suffix + "_intro";
+    return { title: "key:" + title, desc: en[intro] !== undefined ? "key:" + intro : null };
+  }
   if (h1 && /-(rules|history)$/.test(name)) {
     const intro = h1.replace(/_title$/, "_intro");
     return { title: "key:" + h1, desc: en[intro] !== undefined ? "key:" + intro : null };

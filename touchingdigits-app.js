@@ -1,5 +1,5 @@
-// numberblocks-app.js
-// Wires NumberBlocksCore to numberblocks.html through the shared
+// touchingdigits-app.js
+// Wires the region puzzle core to touchingdigits.html through the shared
 // RegionPuzzle page logic (region-puzzle.js): pick a difficulty (grid
 // size and number of givens) and press "New puzzle". Blocks are outlined
 // with thick lines; the number pad offers 1 up to the largest block
@@ -33,8 +33,8 @@
   function init() {
     RegionPuzzle.init({
       prefix: "numberblocks",
-      saveKey: "einkchess_save_numberblocks",
-      statsKey: "numberblocks",
+      saveKey: "einkchess_save_touchingdigits",
+      statsKey: "touchingdigits",
       startButtonId: "start-numberblocks-game",
       statusId: "offline-numberblocks-status",
       readOptions,

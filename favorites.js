@@ -10,6 +10,18 @@ const Favorites = (function () {
   const KEY = "einkchess_favorites";
   const listeners = [];
 
+  function migrateRenamedFavorites() {
+    try {
+      if (!window.localStorage) return;
+      const raw = window.localStorage.getItem(KEY);
+      const list = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(list) || list.indexOf("numberblocks") === -1) return;
+      const next = list.map((slug) => slug === "numberblocks" ? "touchingdigits" : slug);
+      window.localStorage.setItem(KEY, JSON.stringify(Array.from(new Set(next))));
+    } catch (e) { /* ignore */ }
+  }
+  migrateRenamedFavorites();
+
   function getAll() {
     try {
       if (!window.localStorage) return [];

@@ -74,7 +74,7 @@
     ["domino", "game_domino"],
     ["maumau", "game_maumau"],
     ["calcudoku", "game_calcudoku", "math"],
-    ["numberblocks", "game_numberblocks"],
+    ["touchingdigits", "game_numberblocks"],
     ["killersudoku", "game_killersudoku", "sudoku"],
     ["schwimmen", "game_schwimmen"],
     ["durak", "game_durak"],

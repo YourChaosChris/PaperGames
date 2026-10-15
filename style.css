@@ -8132,7 +8132,7 @@ max-width: 900px;
 }
 
 /* Print view for the paper puzzles (Sudoku, Kakuro, Nonogram, Slitherlink,
-   Killer Sudoku, Calcudoku, Number Blocks, Hashi, Skyscrapers - every
+   Killer Sudoku, Calcudoku, Touching Digits, Hashi, Skyscrapers - every
    page with body.printable-puzzle, see print-puzzle.js): one A4 portrait
    sheet with a title line and the EMPTY puzzle, black on white. Only the
    board survives - not the site chrome around it, not the number pad,
@@ -9270,7 +9270,7 @@ max-width: 900px;
   margin: 0 1.5rem 1rem 0;
 }
 
-/* Region puzzles (Calcudoku, Number Blocks, Killer Sudoku - see
+/* Region puzzles (Calcudoku, Touching Digits, Killer Sudoku - see
    region-puzzle.js): a float-grid of square cells like Sudoku's board.
    Every cell draws only its left and top border; the board's own frame
    closes the right and bottom edge. Region borders differ from cell

@@ -25,9 +25,9 @@ const XQ_PIECE_NAMES = { G: "General", A: "Advisor", E: "Elephant", H: "Horse", 
 // Knight/Rook/Pawn) for some pieces and Xiangqi-specific line art for
 // others - that mix used to read as two unrelated styles on the same
 // board. The set is adapted from the Xiangqi piece drawings originally
-// by Inductiveload (Wikimedia Commons, CC BY-SA), as cleaned up and
-// resplit per-piece by Kadagaden (github.com/Kadagaden/chess-pieces,
-// "xiangqi_wikipedia_intl_modded", CC BY 4.0). Each source file draws
+// by Inductiveload (Wikimedia Commons), adapted per piece by Kadagaden
+// in "xiangqi_wikipedia_intl_modded" under CC BY-SA 4.0
+// (https://creativecommons.org/licenses/by-sa/4.0/). Each source file draws
 // its own background disc and ring; both are stripped here so every
 // piece instead sits on this app's own `.xq-piece-filled` board-square
 // disc, keeping only the line art (plus, for Cannon, its two small
