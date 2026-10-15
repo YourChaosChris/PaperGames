@@ -115,7 +115,7 @@ A few visual assets are third-party work, used here under their own
 licenses (not the MIT grant above) — see [NOTICE](NOTICE):
 
 - Chess piece set ("cburnett") by Colin M.L. Burnett, used under the BSD
-  license (`pieces.js`).
+  license (`pieces.js` and the pawn icons in `style.css`).
 - Xiangqi's symbol-style pieces are adapted from piece drawings originally
   by Inductiveload (Wikimedia Commons, CC BY-SA), as resplit per piece by
   Kadagaden ([github.com/Kadagaden/chess-pieces](https://github.com/Kadagaden/chess-pieces),
