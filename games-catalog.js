@@ -138,7 +138,7 @@ const GAMES_CATALOG = [
     nameKey: "game_four_in_a_row",
     nameText: "Four in a Row",
     descKey: "home_four_in_a_row_desc",
-    descText: "Drop discs to connect four in a row before your opponent does. Local 2-player or vs. the built-in engine.",
+    descText: "Drop discs to make a line of four before your opponent does. Local 2-player or vs. the built-in engine.",
     popular: false,
     kids: true,
     added: "2026-07-01",

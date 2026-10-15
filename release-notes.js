@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v239",
+    date: "2026-10-15",
+    key: "release_v239",
+    text: "Removed protected game names from rules and history page descriptions."
+  },
+  {
     version: "v238",
     date: "2026-10-15",
     key: "release_v238",
