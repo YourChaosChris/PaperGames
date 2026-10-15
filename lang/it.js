@@ -557,6 +557,7 @@ STRINGS.it = {
     release_v235: "Cerca nell'immagine con nove stanze e oltre 40 nuovi disegni; «Chi ha preso la torta?» con una famiglia, e con bambini e un tesoro.",
     release_v236: "Cerca nell'immagine con bagno, cantina e camera da letto; «Chi ha preso la torta?» con cinque stanze in più e sette nuovi mobili.",
     release_v237: "«Nuovi giochi» mostra ora i 10 giochi più recenti.",
+    release_v238: "Le regole rapide ora corrispondono al tema scelto e alla modalità di ricerca nell’immagine.",
     release_v233: "Frecce in Difficile: frecce che scivolano, 11 × 11 caselle e un nuovo livello Maestro con tre cuori.",
     release_v232: "I suggerimenti di mossa si possono disattivare nelle impostazioni, e «Chi ha preso la torta?» ha tre nuovi temi.",
     release_v231: "Trova le differenze ha una nuova modalità: cerca nell'immagine.",
@@ -1708,7 +1709,7 @@ STRINGS.it = {
     game_cake: "Chi ha preso la torta?",
 
 
-    home_cake_desc: "Un rompicapo da detective: metti gli animali e la torta sulla pianta seguendo gli indizi - uno per riga e colonna - e scopri chi ha preso la torta. Tema: animali e torta, oppure gatti e pesce.",
+    home_cake_desc: "Un rompicapo logico: seguendo gli indizi, metti un personaggio o un oggetto scelto in ogni riga e colonna; scopri chi condivide una stanza con l'oggetto del tema.",
 
 
     cake_board_label: "Pianta",
@@ -3520,6 +3521,9 @@ STRINGS.it = {
     quickrules_differences_1: "Le due immagini si differenziano in alcuni punti: 3, 5 o 7, secondo il livello.",
     quickrules_differences_2: "Tocca una differenza in una delle due immagini: viene cerchiata in entrambe. Qualcosa può mancare, avere un altro motivo, essere specchiato o spostato.",
     quickrules_differences_3: "Non c'è limite di tempo né penalità per un tocco sbagliato. Ti blocchi? Il pulsante Suggerimento incornicia un'area con una differenza.",
+    quickrules_differences_search_1: "Sopra la stanza vedi le cose da trovare. Tocca ciascuna nel disegno.",
+    quickrules_differences_search_2: "Il pulsante Suggerimento incornicia una zona che contiene una delle cose da trovare.",
+    quickrules_differences_search_3: "Non c'è limite di tempo: prenditi tutto il tempo che vuoi.",
     df_level_easy: "Facile (3 differenze)",
     df_level_medium: "Medio (5 differenze)",
     df_level_hard: "Difficile (7 differenze)",

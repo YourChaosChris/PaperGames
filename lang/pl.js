@@ -563,6 +563,7 @@ STRINGS.pl = {
     release_v235: "Wyszukiwanka z dziewięcioma pomieszczeniami i ponad 40 nowymi rysunkami; „Kto wziął ciasto?” z rodziną oraz z dziećmi i skarbem.",
     release_v236: "Wyszukiwanka z łazienką, piwnicą i sypialnią; „Kto wziął ciasto?” z pięcioma nowymi pomieszczeniami i siedmioma nowymi meblami.",
     release_v237: "„Nowe gry” pokazują teraz 10 najnowszych gier.",
+    release_v238: "Krótkie zasady pasują teraz do wybranego motywu i trybu wyszukiwania na obrazku.",
     release_v233: "Strzałki na poziomie Trudny: sunące strzałki, plansza 11 × 11 i nowy poziom Mistrz z trzema sercami.",
     release_v232: "Podpowiedzi ruchów można wyłączyć w ustawieniach, a „Kto wziął ciasto?” ma trzy nowe motywy.",
     release_v231: "Znajdź różnice ma nowy tryb: wyszukiwankę.",
@@ -1709,7 +1710,7 @@ STRINGS.pl = {
     game_cake: "Kto wziął ciasto?",
 
 
-    home_cake_desc: "Detektywistyczna łamigłówka: ustaw zwierzęta i ciasto na planie według wskazówek - po jednym w wierszu i kolumnie - i odkryj, kto wziął ciasto. Motyw: zwierzęta i ciasto albo koty i ryba.",
+    home_cake_desc: "Logiczna zagadka detektywistyczna: zgodnie ze wskazówkami umieść jedną wybraną postać lub rzecz w każdym wierszu i każdej kolumnie. Ustal, kto dzieli pokój z przedmiotem z wybranego motywu.",
 
 
     cake_board_label: "Plan",
@@ -3521,6 +3522,9 @@ STRINGS.pl = {
     quickrules_differences_1: "Oba obrazki różnią się w kilku miejscach - w 3, 5 lub 7, zależnie od poziomu.",
     quickrules_differences_2: "Dotknij różnicy na jednym z obrazków: zostanie zakreślona na obu. Czegoś może brakować, może mieć inny wzór, być odbite lub przesunięte.",
     quickrules_differences_3: "Nie ma limitu czasu ani kary za błędne dotknięcie. Utknąłeś? Przycisk Podpowiedź obramowuje obszar z różnicą.",
+    quickrules_differences_search_1: "Nad obrazkiem pokoju widzisz rzeczy do znalezienia. Dotknij każdej z nich na obrazku.",
+    quickrules_differences_search_2: "Przycisk Podpowiedź obramowuje obszar, w którym znajduje się jedna z szukanych rzeczy.",
+    quickrules_differences_search_3: "Nie ma limitu czasu — nie spiesz się.",
     df_level_easy: "Łatwy (3 różnice)",
     df_level_medium: "Średni (5 różnic)",
     df_level_hard: "Trudny (7 różnic)",

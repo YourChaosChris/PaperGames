@@ -557,6 +557,7 @@ STRINGS.fr = {
     release_v235: "Image à fouiller avec neuf pièces et plus de 40 nouveaux dessins ; « Qui a pris le gâteau ? » avec une famille, et avec des enfants et un trésor.",
     release_v236: "Image à fouiller avec salle de bain, cave et chambre ; « Qui a pris le gâteau ? » avec cinq pièces de plus et sept nouveaux meubles.",
     release_v237: "« Nouveaux jeux » montre désormais les 10 jeux les plus récents.",
+    release_v238: "Les règles en bref correspondent désormais au thème du gâteau et au mode image à fouiller.",
     release_v233: "Flèches en Difficile : flèches glissantes, 11 × 11 cases et un nouveau niveau Maître avec trois cœurs.",
     release_v232: "Les suggestions de coups se désactivent dans les réglages, et « Qui a pris le gâteau ? » a trois nouveaux thèmes.",
     release_v231: "Jeu des différences : nouveau mode « Image à fouiller ».",
@@ -1708,7 +1709,7 @@ STRINGS.fr = {
     game_cake: "Qui a pris le gâteau ?",
 
 
-    home_cake_desc: "Une énigme de détective : placez les animaux et le gâteau sur le plan d'après les indices - un par ligne et par colonne - et découvrez qui a pris le gâteau. Thème : animaux et gâteau, ou chats et poisson.",
+    home_cake_desc: "Une énigme de logique : placez un personnage ou un objet choisi dans chaque ligne et colonne selon les indices, puis trouvez qui partage une pièce avec l'objet du thème.",
 
 
     cake_board_label: "Plan",
@@ -3520,6 +3521,9 @@ STRINGS.fr = {
     quickrules_differences_1: "Les deux images diffèrent à quelques endroits : 3, 5 ou 7 selon le niveau.",
     quickrules_differences_2: "Touchez une différence dans l'une des deux images : elle est entourée dans les deux. Un élément peut manquer, avoir un autre motif, être inversé ou déplacé.",
     quickrules_differences_3: "Il n'y a pas de limite de temps ni de pénalité pour une erreur. Vous bloquez ? Le bouton Indice encadre une zone contenant une différence.",
+    quickrules_differences_search_1: "Au-dessus de l'image de la pièce, choisis un objet à trouver et touche-le dans l'image.",
+    quickrules_differences_search_2: "Le bouton Indice encadre une zone contenant l'un des objets recherchés.",
+    quickrules_differences_search_3: "Il n'y a pas de limite de temps : prends tout le temps qu'il te faut.",
     df_level_easy: "Facile (3 différences)",
     df_level_medium: "Moyen (5 différences)",
     df_level_hard: "Difficile (7 différences)",

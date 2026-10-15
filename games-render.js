@@ -5,16 +5,30 @@
 // exact same card markup and star-toggle behavior only needs writing once.
 
 const GamesRender = (function () {
+  function descriptionText(game) {
+    if (game.slug !== "cake" || !window.I18n) return game.descText;
+    let motif = "animals";
+    try {
+      const stored = window.localStorage.getItem("papergames_cake_motif");
+      if (["animals", "cats", "bears", "dogs", "magpies", "family", "treasure"].indexOf(stored) !== -1) motif = stored;
+    } catch (e) { /* use the default motif */ }
+    const suffix = { cats: "_fish", bears: "_cookies", dogs: "_ball", magpies: "_key", family: "_family", treasure: "_treasure" }[motif] || "";
+    const keys = ["cake_always_1" + suffix, motif === "family" || motif === "treasure" ? "cake_always_3_people" : "cake_always_3", "cake_always_2" + suffix, "cake_always_4" + suffix];
+    return keys.map((key) => I18n.t(key)).join(" ");
+  }
+
   // `kidsView`: the card stands in the children's games (home section or
   // games.html filter), so "Play" goes to the game's `kidsPlay` page if it
   // has one. Use buildKidsCardHTML with Array.map (map passes an index).
   function buildGameCardHTML(game, kidsView) {
     const play = kidsView === true && game.kidsPlay ? game.kidsPlay : game.slug + ".html";
+    const dynamicCake = game.slug === "cake" && !!window.I18n;
+    const descText = descriptionText(game);
     return (
       '<div class="game-select-item" data-slug="' + game.slug + '">' +
       '<button type="button" class="favorite-toggle" data-slug="' + game.slug + '"></button>' +
       '<div class="game-select-title">' + game.icon + ' <span data-i18n="' + game.nameKey + '">' + game.nameText + '</span></div>' +
-      '<p class="game-select-desc" data-i18n="' + game.descKey + '">' + game.descText + '</p>' +
+      '<p class="game-select-desc"' + (dynamicCake ? '' : ' data-i18n="' + game.descKey + '"') + '>' + descText + '</p>' +
       (game.family
         ? '<p class="game-select-family"><span data-i18n="family_label">Family:</span> <span data-i18n="family_' + game.family + '">' + game.family + '</span></p>'
         : '') +

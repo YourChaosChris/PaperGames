@@ -56,6 +56,19 @@ function renderCakeAlways() {
   });
 }
 
+function syncCakeQuickRules() {
+  const motifSelect = document.getElementById("cake-motif");
+  const puzzle = AppStateCake.puzzle || { motif: motifSelect ? motifSelect.value : loadCakeMotif() };
+  if (window.PaperGamesQuickRules) {
+    window.PaperGamesQuickRules.setSentences("cake", [
+      CakeCore.themed(puzzle, "cake_always_1"),
+      CakeCore.themed(puzzle, "cake_always_2"),
+      CakeCore.always3Key(puzzle),
+      CakeCore.themed(puzzle, "cake_always_4")
+    ]);
+  }
+}
+
 function tCake(key, vars) {
   const s = (typeof I18n !== "undefined") ? I18n.t(key) : key;
   return vars ? CakeCore.fill(s, vars) : s;
@@ -121,6 +134,7 @@ function initCakeApp() {
     // at once and keeps every move.
     motifSelect.addEventListener("change", () => {
       storeCakeMotif(motifSelect.value);
+      syncCakeQuickRules();
       const p = AppStateCake.puzzle;
       if (!p) return;
       if (motifSelect.value !== "animals" && CakeCore.MOTIFS.indexOf(motifSelect.value) !== -1) p.motif = motifSelect.value;
@@ -144,8 +158,12 @@ function initCakeApp() {
   if (hintBtn) hintBtn.addEventListener("click", hintCake);
 
   if (typeof I18n !== "undefined" && typeof I18n.onChange === "function") {
-    I18n.onChange(() => { if (AppStateCake.puzzle) renderCakeAll(); });
+    I18n.onChange(() => {
+      syncCakeQuickRules();
+      if (AppStateCake.puzzle) renderCakeAll();
+    });
   }
+  syncCakeQuickRules();
 
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(CAKE_SAVE_KEY) : null;
   // A saved puzzle whose clues no longer fit its solution under today's

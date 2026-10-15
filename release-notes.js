@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v238",
+    date: "2026-10-15",
+    key: "release_v238",
+    text: "Quick rules now match the selected cake theme and picture search mode."
+  },
+  {
     version: "v237",
     date: "2026-10-12",
     key: "release_v237",

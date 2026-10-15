@@ -557,6 +557,7 @@ STRINGS.es = {
     release_v235: "Buscar en la imagen con nueve habitaciones y más de 40 dibujos nuevos; «¿Quién se llevó el pastel?» con una familia, y con niños y un tesoro.",
     release_v236: "Buscar en la imagen con baño, sótano y dormitorio; «¿Quién se llevó el pastel?» con cinco habitaciones más y siete muebles nuevos.",
     release_v237: "«Juegos nuevos» muestra ahora los 10 juegos más recientes.",
+    release_v238: "Las reglas breves ahora corresponden al tema elegido y al modo de buscar en la imagen.",
     release_v233: "Flechas en Difícil: flechas que se deslizan, 11 × 11 casillas y un nuevo nivel Maestro con tres corazones.",
     release_v232: "Las sugerencias de jugada se pueden desactivar en los ajustes, y «¿Quién se llevó el pastel?» tiene tres temas nuevos.",
     release_v231: "Busca las diferencias tiene un modo nuevo: buscar en la imagen.",
@@ -1708,7 +1709,7 @@ STRINGS.es = {
     game_cake: "¿Quién se llevó el pastel?",
 
 
-    home_cake_desc: "Un acertijo lógico de detectives: coloca los animales y el pastel en el plano según las pistas - uno por fila y columna - y descubre quién se llevó el pastel. Tema: animales y pastel, o gatos y pescado.",
+    home_cake_desc: "Un rompecabezas de lógica: coloca un personaje u objeto elegido en cada fila y columna siguiendo las pistas, y descubre quién comparte habitación con el objeto del tema.",
 
 
     cake_board_label: "Plano",
@@ -3520,6 +3521,9 @@ STRINGS.es = {
     quickrules_differences_1: "Los dos dibujos se diferencian en algunos sitios: 3, 5 o 7, según el nivel.",
     quickrules_differences_2: "Toca una diferencia en cualquiera de los dos dibujos: se rodea en ambos. Algo puede faltar, tener otro dibujo, estar reflejado o movido.",
     quickrules_differences_3: "No hay límite de tiempo ni castigo por tocar mal. ¿Te atascas? El botón Pista enmarca una zona con una diferencia.",
+    quickrules_differences_search_1: "Encima de la habitación aparecen las cosas que debes buscar. Toca cada una en la imagen.",
+    quickrules_differences_search_2: "El botón Pista enmarca una zona donde está una de las cosas que buscas.",
+    quickrules_differences_search_3: "No hay límite de tiempo: tómate todo el tiempo que necesites.",
     df_level_easy: "Fácil (3 diferencias)",
     df_level_medium: "Medio (5 diferencias)",
     df_level_hard: "Difícil (7 diferencias)",

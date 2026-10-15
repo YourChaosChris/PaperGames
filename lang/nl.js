@@ -467,6 +467,7 @@ STRINGS.nl = {
     release_v235: "Zoekplaat met negen kamers en meer dan 40 nieuwe tekeningen; ‘Wie heeft de taart gepakt?’ met een familie, en met kinderen en een schat.",
     release_v236: "Zoekplaat met badkamer, kelder en slaapkamer; ‘Wie heeft de taart gepakt?’ met vijf kamers meer en zeven nieuwe meubels.",
     release_v237: "‘Nieuwe spellen’ toont nu de 10 nieuwste spellen.",
+    release_v238: "De korte regels passen nu bij het gekozen taartmotief en de zoekplaat.",
     release_v233: "Pijlen op Moeilijk: glijdende pijlen, 11 × 11 vakjes en een nieuw niveau Meester met drie hartjes.",
     release_v232: "Zetsuggesties kun je uitzetten in de instellingen, en ‘Wie heeft de taart gepakt?’ heeft drie nieuwe thema's.",
     release_v231: "Zoek de verschillen heeft een nieuwe spelvorm: de zoekplaat.",
@@ -1708,7 +1709,7 @@ STRINGS.nl = {
     game_cake: "Wie heeft de taart gepakt?",
 
 
-    home_cake_desc: "Een detectivepuzzel: zet de dieren en de taart volgens de aanwijzingen op de plattegrond - één per rij en kolom - en ontdek wie de taart heeft gepakt. Thema: dieren en taart, of katten en vis.",
+    home_cake_desc: "Een logisch detectivepuzzel: plaats volgens de aanwijzingen één gekozen personage of voorwerp in elke rij en kolom. Ontdek wie een kamer deelt met het voorwerp van het motief.",
 
 
     cake_board_label: "Plattegrond",
@@ -3520,6 +3521,9 @@ STRINGS.nl = {
     quickrules_differences_1: "De twee plaatjes verschillen op een paar plekken - 3, 5 of 7, afhankelijk van het niveau.",
     quickrules_differences_2: "Tik een verschil aan in een van de twee plaatjes: het wordt in allebei omcirkeld. Iets kan ontbreken, een ander patroon hebben, gespiegeld of verschoven zijn.",
     quickrules_differences_3: "Er is geen tijdslimiet en geen straf voor verkeerd tikken. Zit je vast? De knop Tip omkadert een gebied met een verschil.",
+    quickrules_differences_search_1: "Boven de kamer zie je de dingen die je moet zoeken. Tik elk ding in de afbeelding aan.",
+    quickrules_differences_search_2: "De knop Tip kadert een gebied in waar een van de gezochte dingen staat.",
+    quickrules_differences_search_3: "Er is geen tijdslimiet: neem alle tijd die je nodig hebt.",
     df_level_easy: "Makkelijk (3 verschillen)",
     df_level_medium: "Gemiddeld (5 verschillen)",
     df_level_hard: "Moeilijk (7 verschillen)",

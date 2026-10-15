@@ -630,6 +630,7 @@ const STRINGS = {
     release_v235: "Picture search with nine rooms and over 40 new drawings; Who Took the Cake? with a family and with children and a treasure.",
     release_v236: "Picture search with bathroom, cellar and bedroom; Who Took the Cake? with five more rooms and seven new pieces of furniture.",
     release_v237: "New Games now shows the 10 newest games.",
+    release_v238: "Quick rules now match the selected cake theme and picture search mode.",
     release_v233: "Arrows on Hard: gliding arrows, 11 × 11 squares, and a new Master level with three hearts.",
     release_v232: "Move suggestions can be switched off in the Settings, and “Who Took the Cake?” has three new themes.",
     release_v231: "Spot the Difference has a new mode: picture search.",
@@ -1790,7 +1791,7 @@ const STRINGS = {
     game_cake: "Who Took the Cake?",
 
 
-    home_cake_desc: "A detective logic puzzle: place the animals and the cake on the floor plan by the clues - one per row and column - and find out who took the cake. Theme: animals and cake, or cats and fish.",
+    home_cake_desc: "A detective logic puzzle: place one chosen character or object in each row and column, using the clues to work out which character shares a room with the themed object.",
 
 
     cake_board_label: "Floor plan",
@@ -3602,6 +3603,9 @@ const STRINGS = {
     quickrules_differences_1: "The two pictures differ in a few places - 3, 5 or 7, depending on the level.",
     quickrules_differences_2: "Tap a difference in either picture: it is circled in both. Something can be missing, have another pattern, be mirrored or be moved.",
     quickrules_differences_3: "There is no time limit and no penalty for a wrong tap. Stuck? The Hint button frames an area with a difference.",
+    quickrules_differences_search_1: "Above the room picture, choose a thing to find and tap its match in the picture.",
+    quickrules_differences_search_2: "The Hint button frames an area containing one of the things you are looking for.",
+    quickrules_differences_search_3: "There is no time limit; take as long as you need.",
     df_level_easy: "Easy (3 differences)",
     df_level_medium: "Medium (5 differences)",
     df_level_hard: "Hard (7 differences)",

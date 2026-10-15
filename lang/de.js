@@ -619,6 +619,7 @@ STRINGS.de = {
     release_v235: "Suchbild mit neun Räumen und über 40 neuen Zeichnungen; „Wer hat den Kuchen?“ mit einer Familie und mit Kindern und einem Schatz.",
     release_v236: "Suchbild mit Badezimmer, Keller und Schlafzimmer; „Wer hat den Kuchen?“ mit fünf weiteren Räumen und sieben neuen Möbelstücken.",
     release_v237: "„Neue Spiele“ zeigt jetzt die 10 neuesten Spiele.",
+    release_v238: "Die Kurzregeln passen jetzt zum gewählten Kuchenmotiv und zum Suchbild.",
     release_v233: "Pfeile auf Schwer: Gleitpfeile, 11 × 11 Felder und die neue Stufe Meister mit drei Herzen.",
     release_v232: "Zugvorschläge lassen sich in den Einstellungen abschalten, und „Wer hat den Kuchen?“ hat drei neue Motive.",
     release_v231: "Finde die Unterschiede hat jetzt auch ein Suchbild.",
@@ -1779,7 +1780,7 @@ STRINGS.de = {
     game_cake: "Wer hat den Kuchen?",
 
 
-    home_cake_desc: "Ein Detektiv-Logikrätsel: Setze die Tiere und den Kuchen nach den Hinweisen auf den Grundriss - eins pro Zeile und Spalte - und finde heraus, wer den Kuchen genommen hat. Motiv: Tiere und Kuchen oder Katzen und Fisch.",
+    home_cake_desc: "Ein Detektiv-Logikrätsel: Setze nach den Hinweisen genau eine ausgewählte Person oder Sache in jede Zeile und Spalte. Finde heraus, welche Person mit der Sache des Motivs im selben Raum ist.",
 
 
     cake_board_label: "Grundriss",
@@ -3591,6 +3592,9 @@ STRINGS.de = {
     quickrules_differences_1: "Die beiden Bilder unterscheiden sich an einigen Stellen – je nach Stufe an 3, 5 oder 7.",
     quickrules_differences_2: "Tippe einen Unterschied in einem der beiden Bilder an: Er wird in beiden eingekreist. Etwas kann fehlen, ein anderes Muster haben, gespiegelt oder verschoben sein.",
     quickrules_differences_3: "Es gibt keine Zeitbegrenzung und keine Strafe für falsches Tippen. Kommst du nicht weiter, umrahmt der Tipp-Knopf einen Bereich mit einem Unterschied.",
+    quickrules_differences_search_1: "Über dem Raumbild siehst du die Dinge, die du suchen sollst. Tippe jedes davon im Bild an.",
+    quickrules_differences_search_2: "Der Tipp-Knopf umrahmt einen Bereich, in dem sich eines der gesuchten Dinge befindet.",
+    quickrules_differences_search_3: "Es gibt keine Zeitbegrenzung – lass dir Zeit.",
     df_level_easy: "Leicht (3 Unterschiede)",
     df_level_medium: "Mittel (5 Unterschiede)",
     df_level_hard: "Schwer (7 Unterschiede)",

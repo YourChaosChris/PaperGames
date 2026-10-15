@@ -35,6 +35,17 @@ function setStatusDf(text) {
   if (el) I18n.setMsg(el, text || "");
 }
 
+function syncDifferencesQuickRules(mode) {
+  if (!window.PaperGamesQuickRules) return;
+  const isSearch = (mode || AppStateDf.mode) === "search";
+  const suffix = isSearch ? "_search" : "";
+  window.PaperGamesQuickRules.setSentences("differences", [
+    "quickrules_differences" + suffix + "_1",
+    "quickrules_differences" + suffix + "_2",
+    "quickrules_differences" + suffix + "_3"
+  ]);
+}
+
 function saveDfGame() {
   if (typeof GameStorage === "undefined" || !AppStateDf.puzzle) return;
   GameStorage.save(DF_SAVE_KEY, { mode: AppStateDf.mode, level: AppStateDf.level, puzzle: AppStateDf.puzzle, found: AppStateDf.found, hinted: AppStateDf.hinted });
@@ -55,7 +66,10 @@ function initDfApp() {
     });
   }
   const modeSelect = document.getElementById("df-mode");
-  if (modeSelect) modeSelect.addEventListener("change", () => levelLabelsDf(modeSelect.value));
+  if (modeSelect) modeSelect.addEventListener("change", () => {
+    levelLabelsDf(modeSelect.value);
+    syncDifferencesQuickRules(modeSelect.value);
+  });
   document.getElementById("start-df-game").addEventListener("click", () => {
     AppStateDf.mode = modeSelect && modeSelect.value === "search" ? "search" : "diff";
     const roomSelect = document.getElementById("df-room");
@@ -65,9 +79,11 @@ function initDfApp() {
   if (typeof I18n !== "undefined" && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateDf.puzzle) renderDf(); });
   }
+  syncDifferencesQuickRules();
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(DF_SAVE_KEY) : null;
   if (saved && saved.puzzle && saved.puzzle.items) {
     AppStateDf.mode = saved.mode === "search" ? "search" : "diff";
+    syncDifferencesQuickRules();
     if (modeSelect) modeSelect.value = AppStateDf.mode;
     levelLabelsDf(AppStateDf.mode);
     AppStateDf.level = saved.level || "easy";

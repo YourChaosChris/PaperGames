@@ -52,6 +52,19 @@
     else el.textContent = fallback;
   }
 
+  function updateSentences(slug, keys) {
+    const box = document.getElementById("quick-rules");
+    if (!box || !keys || !keys.length) return;
+    const actions = box.querySelector(".quick-rules-actions");
+    box.querySelectorAll(".quick-rules-sentence").forEach((p) => p.remove());
+    keys.forEach((key) => {
+      const p = document.createElement("p");
+      p.className = "quick-rules-sentence";
+      setText(p, key, "");
+      box.insertBefore(p, actions);
+    });
+  }
+
   function buildBox(slug, keys) {
     const box = document.createElement("section");
     box.id = "quick-rules";
@@ -118,6 +131,10 @@
       markSeen(slug);
     }
   }
+
+  window.PaperGamesQuickRules = {
+    setSentences: updateSentences
+  };
 
   document.addEventListener("DOMContentLoaded", init);
 })();
