@@ -1,6 +1,6 @@
 // print-puzzle.js
 // Shared "Print" button for the paper puzzles (Sudoku, Kakuro, Nonogram,
-// Slitherlink, Killer Sudoku, Calcudoku, Touching Digits, Hashi,
+// Slitherlink, Killer Sudoku, Calcudoku, No Neighbors, Hashi,
 // Skyscrapers). The print view itself lives in style.css under
 // `@media print` (body.printable-puzzle): it prints the empty puzzle,
 // never the player's own entries, so the sheet can be solved on paper.

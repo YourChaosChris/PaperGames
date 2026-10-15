@@ -623,12 +623,12 @@ const GAMES_CATALOG = [
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><path d=\"M10.25 2.5H13.75V13.75H2.5V10.25H10.25Z\" fill=\"#141413\" stroke=\"none\"/><path d=\"M15.5 6.5H19.5M17.5 4.5V8.5M15.5 17.5H19.5\"/></svg></span>"
   },
   {
-    slug: "touchingdigits",
+    slug: "noneighbors",
     category: "puzzles",
     nameKey: "game_numberblocks",
-    nameText: "Touching Digits",
+    nameText: "No Neighbors",
     descKey: "home_numberblocks_desc",
-    descText: "Fill each region with the digits 1 to its size. Equal digits may never touch, even diagonally. Three difficulty levels; every puzzle has one solution.",
+    descText: "Fill each region with values 1 to its size. Equal values may never touch, even diagonally. Three difficulty levels; every puzzle has one solution.",
     popular: false,
     added: "2026-09-27T21:03",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><path d=\"M7.08 2.5H10.58V13.42H21.5V16.92H2.5V13.42H7.08Z\" fill=\"#141413\" stroke=\"none\"/></svg></span>"

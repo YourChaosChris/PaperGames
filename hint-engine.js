@@ -1,6 +1,6 @@
 // hint-engine.js
 // Step-by-step hints for the number puzzles that have their own solver
-// (Sudoku, Killer Sudoku, Calcudoku, Touching Digits). Dependency-free, no
+// (Sudoku, Killer Sudoku, Calcudoku, No Neighbors). Dependency-free, no
 // DOM. A hint works on the player's current grid, never on a stored
 // solution, and it never guesses: it only reports a step that follows by
 // plain deduction, in this order of simplicity -
@@ -165,7 +165,7 @@ const HintEngine = (function () {
     return finishModel(n * n, () => n, units, cc, null);
   }
 
-  // Touching Digits: a block of k cells holds 1..k; equal digits never
+  // No Neighbors: a block of k cells holds 1..k; equal digits never
   // touch, not even diagonally.
   function numberBlocksModel(rows, cols, blocks) {
     const size = rows * cols;

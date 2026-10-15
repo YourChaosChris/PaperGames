@@ -15,8 +15,8 @@ const Favorites = (function () {
       if (!window.localStorage) return;
       const raw = window.localStorage.getItem(KEY);
       const list = raw ? JSON.parse(raw) : [];
-      if (!Array.isArray(list) || list.indexOf("numberblocks") === -1) return;
-      const next = list.map((slug) => slug === "numberblocks" ? "touchingdigits" : slug);
+      if (!Array.isArray(list) || !list.some((slug) => slug === "touchingdigits" || slug === "numberblocks")) return;
+      const next = list.map((slug) => slug === "touchingdigits" || slug === "numberblocks" ? "noneighbors" : slug);
       window.localStorage.setItem(KEY, JSON.stringify(Array.from(new Set(next))));
     } catch (e) { /* ignore */ }
   }

@@ -69,7 +69,7 @@ no internet connection at all.
 - Domino
 - Mau Mau
 - Calcudoku
-- Touching Digits
+- No Neighbors
 - Killer Sudoku
 - Thirty-One (Schwimmen)
 - Durak

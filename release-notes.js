@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v242",
+    date: "2026-10-15",
+    key: "release_v242",
+    text: "The game has a new name and address; old addresses now redirect."
+  },
+  {
     version: "v241",
     date: "2026-10-15",
     key: "release_v241",

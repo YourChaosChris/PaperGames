@@ -1,7 +1,7 @@
 // daily-challenge.js
 // Shared "puzzle of the day" helper for the generated puzzle games
 // (Sudoku, Kakuro, Slitherlink, 2048, Nonogram, Killer Sudoku, Calcudoku,
-// Touching Digits, Hashi, Skyscrapers, Minesweeper, Lights Out, Crate
+// No Neighbors, Hashi, Skyscrapers, Minesweeper, Lights Out, Crate
 // Pusher, Bulls and Cows). No server involved: a
 // small seeded PRNG (mulberry32 - deterministic, tiny, public domain)
 // takes the place of Math.random() in each game's own generator, seeded

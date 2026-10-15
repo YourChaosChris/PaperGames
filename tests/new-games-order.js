@@ -42,7 +42,7 @@ for (let i = 1; i < all.length; i++) {
 }
 // Games of one commit: the later catalog entry first.
 const same = all.filter((g) => g.added === "2026-09-27T21:03").map((g) => g.slug);
-if (JSON.stringify(same) !== JSON.stringify(["killersudoku", "touchingdigits", "calcudoku"])) fails.push("same commit order " + JSON.stringify(same));
+if (JSON.stringify(same) !== JSON.stringify(["killersudoku", "noneighbors", "calcudoku"])) fails.push("same commit order " + JSON.stringify(same));
 // Outside the 60 days nothing shows; inside, the 60 days still cut the
 // list short (a day after the 10th newest game turned 60 days old, it is
 // gone, the 9 newer ones stay if they are younger).

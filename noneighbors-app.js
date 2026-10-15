@@ -1,0 +1,58 @@
+// noneighbors-app.js
+// Wires the region puzzle core to noneighbors.html through the shared
+// RegionPuzzle page logic (region-puzzle.js): pick a difficulty (grid
+// size and number of givens) and press "New puzzle". Blocks are outlined
+// with thick lines; the number pad offers 1 up to the largest block
+// size. A digit that repeats in its block, is too big for it, or touches
+// the same digit (also diagonally) is marked on every cell involved.
+
+(function () {
+  function readOptions() {
+    const levelEl = document.getElementById("numberblocks-level-inline");
+    return { difficulty: levelEl ? levelEl.value : "medium" };
+  }
+
+  function applyOptions(options) {
+    const levelEl = document.getElementById("numberblocks-level-inline");
+    if (levelEl && options.difficulty) levelEl.value = options.difficulty;
+  }
+
+  function toRegionPuzzle(p) {
+    return {
+      rows: p.rows,
+      cols: p.cols,
+      maxDigit: NumberBlocksCore.maxBlockSize(p.blocks),
+      regions: p.blocks,
+      labels: p.blocks.map(() => ""),
+      givens: p.puzzle,
+      style: "solid",
+      boxes: false
+    };
+  }
+
+  function init() {
+    RegionPuzzle.init({
+      prefix: "numberblocks",
+      saveKey: "einkchess_save_noneighbors",
+      statsKey: "noneighbors",
+      startButtonId: "start-numberblocks-game",
+      statusId: "offline-numberblocks-status",
+      readOptions,
+      applyOptions,
+      daily: { buttonId: "daily-numberblocks-button", options: { difficulty: "medium" } },
+      // A puzzle that the hint could not finish without trying things
+      // out is passed over (see hint-engine.js).
+      generate(options, done, rng) {
+        done(toRegionPuzzle(HintEngine.pickSolvable(
+          () => NumberBlocksCore.generatePuzzle(options.difficulty, rng),
+          (p) => HintEngine.solvable(HintEngine.numberBlocksModel(p.rows, p.cols, p.blocks), p.puzzle))));
+      },
+      hint: { flavor: "numberblocks", model: (p) => HintEngine.numberBlocksModel(p.rows, p.cols, p.regions) },
+      findConflicts: (p, grid) => NumberBlocksCore.findConflicts(p.rows, p.cols, p.regions, grid),
+      isComplete: (p, grid) => NumberBlocksCore.isComplete(p.rows, p.cols, p.regions, grid),
+      regionAria: (p, region) => "block of " + p.regions[region].length + " cells"
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+})();

@@ -1,6 +1,6 @@
 // region-puzzle.js
 // Shared page logic for the digit puzzles drawn on a grid split into
-// regions - Calcudoku, Touching Digits and Killer Sudoku. Each game's
+// regions - Calcudoku, No Neighbors and Killer Sudoku. Each game's
 // <slug>-app.js passes its rules (generate, conflicts, completion) and
 // labels to RegionPuzzle.init(); everything else - the board, the number
 // pad, saving, undo, the result popup - works the same way it does in

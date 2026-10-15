@@ -6,11 +6,11 @@
 
 const GameStats = (function () {
   const KEY = "einkchess_stats";
-  const GAMES = ["chess", "go", "checkers", "ur", "morris", "backgammon", "xiangqi", "mancala", "ludo", "reversi", "fourinarow", "gomoku", "senet", "shogi", "sudoku", "pegsolitaire", "minesweeper", "nonogram", "twenty48", "mahjong", "freecell", "cardtactics", "hnefatafl", "wallmaze", "hex", "halma", "lightswitch", "bullsandcows", "dotsandboxes", "amazons", "kakuro", "hashi", "skyscrapers", "slitherlink", "fanorona", "fleetbattle", "konane", "sternhalma", "baghchal", "tablut", "marblepush", "pyramidsolitaire", "surakarta", "domino", "maumau", "calcudoku", "touchingdigits", "killersudoku", "schwimmen", "durak", "concan", "doppelkopf", "trix", "cratepusher", "tictactoe", "alquerque", "pairs", "futoshiki", "foxandgeese", "seega", "romme", "cake", "animalsudoku", "shapesort", "linkpairs", "oldmaid", "war", "snakesladders", "blockers", "blackjack", "poker", "skat", "schafkopf", "canasta", "bridge", "tenpairs", "mathcross", "differences", "pentomino", "cardduel", "villains", "forestvillage", "adventurebook", "arrows", "rings", "tangram", "matches", "catplaces", "loosen"];
+  const GAMES = ["chess", "go", "checkers", "ur", "morris", "backgammon", "xiangqi", "mancala", "ludo", "reversi", "fourinarow", "gomoku", "senet", "shogi", "sudoku", "pegsolitaire", "minesweeper", "nonogram", "twenty48", "mahjong", "freecell", "cardtactics", "hnefatafl", "wallmaze", "hex", "halma", "lightswitch", "bullsandcows", "dotsandboxes", "amazons", "kakuro", "hashi", "skyscrapers", "slitherlink", "fanorona", "fleetbattle", "konane", "sternhalma", "baghchal", "tablut", "marblepush", "pyramidsolitaire", "surakarta", "domino", "maumau", "calcudoku", "noneighbors", "killersudoku", "schwimmen", "durak", "concan", "doppelkopf", "trix", "cratepusher", "tictactoe", "alquerque", "pairs", "futoshiki", "foxandgeese", "seega", "romme", "cake", "animalsudoku", "shapesort", "linkpairs", "oldmaid", "war", "snakesladders", "blockers", "blackjack", "poker", "skat", "schafkopf", "canasta", "bridge", "tenpairs", "mathcross", "differences", "pentomino", "cardduel", "villains", "forestvillage", "adventurebook", "arrows", "rings", "tangram", "matches", "catplaces", "loosen"];
 
   // Games renamed for trademark reasons: new name -> old name. Results
   // recorded under the old name are carried over once.
-  const RENAMED = { bullsandcows: "mastermind", marblepush: "abalone", lightswitch: "lightsout", reversi: "othello", wallmaze: "quoridor", fourinarow: "connectfour", cardtactics: "onitama", touchingdigits: "numberblocks" };
+  const RENAMED = { bullsandcows: ["mastermind"], marblepush: ["abalone"], lightswitch: ["lightsout"], reversi: ["othello"], wallmaze: ["quoridor"], fourinarow: ["connectfour"], cardtactics: ["onitama"], noneighbors: ["touchingdigits", "numberblocks"] };
 
   function loadAll() {
     try {
@@ -19,11 +19,12 @@ const GameStats = (function () {
       const all = raw ? JSON.parse(raw) : {};
       let moved = false;
       Object.keys(RENAMED).forEach((name) => {
-        const old = RENAMED[name];
-        if (!all[old]) return;
-        if (!all[name]) all[name] = all[old];
-        delete all[old];
-        moved = true;
+        RENAMED[name].forEach((old) => {
+          if (!all[old]) return;
+          if (!all[name]) all[name] = all[old];
+          delete all[old];
+          moved = true;
+        });
       });
       if (moved) window.localStorage.setItem(KEY, JSON.stringify(all));
       return all;

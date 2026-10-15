@@ -49,7 +49,7 @@ const STATS_GAME_NAME_KEY = {
   domino: "game_domino",
   maumau: "game_maumau",
   calcudoku: "game_calcudoku",
-  touchingdigits: "game_numberblocks",
+  noneighbors: "game_numberblocks",
   killersudoku: "game_killersudoku",
   schwimmen: "game_schwimmen",
   durak: "game_durak",
