@@ -986,7 +986,7 @@ const GAMES_CATALOG = [
     category: "puzzles",
     family: "math",
     nameKey: "game_mathcross",
-    nameText: "Math Cross",
+    nameText: "Calculation Grid",
     descKey: "home_mathcross_desc",
     descText: "Place the numbers 1 to 9 once each so every row and every column works out, worked from left to right. Three levels, always exactly one solution, solvable without guessing.",
     popular: false,

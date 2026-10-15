@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v240",
+    date: "2026-10-15",
+    key: "release_v240",
+    text: "Game names have changed in all 12 languages."
+  },
+  {
     version: "v239",
     date: "2026-10-15",
     key: "release_v239",
