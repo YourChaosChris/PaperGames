@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const ROOT = path.join(__dirname, "..");
 const games = [
+  "bingo",
   "alquerque", "amazons", "backgammon", "baghchal", "blockers", "cardduel",
   "cardtactics", "checkers", "concan", "domino", "doppelkopf", "dotsandboxes",
   "durak", "fanorona", "fleetbattle", "forestvillage", "fourinarow", "foxandgeese",
@@ -22,6 +23,7 @@ const statusKeys = [
 // computer-turn status phase. Its human-turn and decisive winner statuses
 // still use the shared keys; a tied round remains the existing draw message.
 const exceptions = {
+  bingo: { keys: ["ui_status_computer_turn"], reason: "The caller draws for every card at once, so there is no separate computer-turn phase." },
   war: { keys: ["ui_status_computer_turn"], reason: "The round is simultaneous: there is no separate computer turn to announce." }
 };
 const failures = [];

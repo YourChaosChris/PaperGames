@@ -2555,5 +2555,13 @@ Object.assign(STRINGS.zh, {
     maumau_history_origin_p2: "因为它是靠玩的方式口耳相传，而不是见诸书面，所以规则各家不同——7 能否叠加，J 能否出在 J 上，忘了喊“Mau”又会怎样。",
     maumau_history_version_title: "本版本",
     maumau_history_version_p1: "PaperGames 采用一套常见的规则，使用普通扑克牌：7 让下家摸两张并且可以叠加，8 跳过一轮，J 指定花色，A 再出一次。“Mau”由游戏自动喊出，没有惩罚。",
+
+    bingo_rules_title: '宾果规则',
+    bingo_rules_intro: '选择数字或图片，每次抽取一个并标记自己的卡片。',
+    bingo_rules_basics_title: '玩法',
+    bingo_rules_play: '选择卡片类型、大小、模式和获胜图案。按“继续抽取”显示一个项目，然后自行标记匹配格子。两人玩时轮流传递设备并按“下一张卡”。仅主持人模式不显示卡片，请先打印。',
+    bingo_rules_check: '随时按“宾果！”。图案完整即可获胜；否则会圈出尚未抽到的标记，不作处罚。',
+    bingo_history_title: '宾果的历史',
+    bingo_history_intro: '宾果源自欧洲的数字抽签和彩票。十九至二十世纪，带有卡片和数字标记的玩法广为流传。后来，图片卡也让这种简单玩法适合年幼儿童。'
 });
 I18n.markTextLoaded("zh");

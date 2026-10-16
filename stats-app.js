@@ -3,6 +3,7 @@
 // (localStorage, vs-AI games only - see game-stats.js).
 
 const STATS_GAME_NAME_KEY = {
+  bingo: "game_bingo",
   chess: "game_chess",
   go: "game_go",
   checkers: "game_checkers",

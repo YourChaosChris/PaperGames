@@ -81,6 +81,7 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   level and theme stay solvable with exactly one solution, every one of
   the 12 rooms and 12 pieces of furniture turns up in each level's 500,
   every piece stands in a room it belongs to and is named by some clue.
+- `node tests/bingo-core.js` - no server or browser needed. Runs 1,000 randomized number/picture decks and draw sequences, checking uniqueness and win-pattern detection.
 - `node tests/animalsudoku-core.js` - no server or browser needed.
   Generates 60 "Animal Sudoku" puzzles per size and level from fixed
   seeds and fails unless each has exactly one solution, can be solved

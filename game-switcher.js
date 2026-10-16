@@ -24,6 +24,7 @@
   // `family` in games-catalog.js (tests/game-families.js checks they
   // agree); a game page lists the other members under "Related games".
   var GAMES = [
+    ["bingo", "game_bingo"],
     ["chess", "game_chess", "chess"],
     ["go", "game_go"],
     ["checkers", "game_checkers", "draughts"],

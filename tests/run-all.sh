@@ -47,6 +47,9 @@ echo "=== cake-core.js ==="
 node "$ROOT/tests/cake-core.js" || status=1
 echo ""
 
+echo "=== bingo-core.js ==="
+node "$ROOT/tests/bingo-core.js" || status=1
+
 echo "=== animalsudoku-core.js ==="
 node "$ROOT/tests/animalsudoku-core.js" || status=1
 echo ""
