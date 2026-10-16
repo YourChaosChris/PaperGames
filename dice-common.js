@@ -42,24 +42,26 @@ const DiceCommon = (function () {
     return '<svg class="' + (cls || "dg-die") + '" viewBox="0 0 100 100" width="72" height="72" aria-hidden="true" focusable="false">' + rect + pips + "</svg>";
   }
 
-  // The marker of player i: circle, square, triangle or star, in black.
-  function markerSvg(i, cls) {
+  // The shape of the marker of player i on a 100 x 100 square, without the
+  // svg around it (the board of Sternjagd draws it small, inside its own svg).
+  function markerShape(i) {
     const k = ((i % 4) + 4) % 4;
     const stroke = ' stroke="#fff" stroke-width="4" stroke-linejoin="round"';
-    let shape;
-    if (k === 0) shape = '<circle cx="50" cy="50" r="38" fill="#141413"' + stroke + "/>";
-    else if (k === 1) shape = '<rect x="14" y="14" width="72" height="72" fill="#141413"' + stroke + "/>";
-    else if (k === 2) shape = '<polygon points="50,8 94,86 6,86" fill="#141413"' + stroke + "/>";
-    else {
-      const pts = [];
-      for (let j = 0; j < 10; j++) {
-        const a = -Math.PI / 2 + j * Math.PI / 5;
-        const r = j % 2 ? 22 : 46;
-        pts.push((50 + r * Math.cos(a)).toFixed(1) + "," + (50 + r * Math.sin(a)).toFixed(1));
-      }
-      shape = '<polygon points="' + pts.join(" ") + '" fill="#141413"' + stroke + "/>";
+    if (k === 0) return '<circle cx="50" cy="50" r="38" fill="#141413"' + stroke + "/>";
+    if (k === 1) return '<rect x="14" y="14" width="72" height="72" fill="#141413"' + stroke + "/>";
+    if (k === 2) return '<polygon points="50,8 94,86 6,86" fill="#141413"' + stroke + "/>";
+    const pts = [];
+    for (let j = 0; j < 10; j++) {
+      const a = -Math.PI / 2 + j * Math.PI / 5;
+      const r = j % 2 ? 22 : 46;
+      pts.push((50 + r * Math.cos(a)).toFixed(1) + "," + (50 + r * Math.sin(a)).toFixed(1));
     }
-    return '<svg class="' + (cls || "dg-marker") + '" viewBox="0 0 100 100" width="28" height="28" aria-hidden="true" focusable="false">' + shape + "</svg>";
+    return '<polygon points="' + pts.join(" ") + '" fill="#141413"' + stroke + "/>";
+  }
+
+  // The marker of player i: circle, square, triangle or star, in black.
+  function markerSvg(i, cls) {
+    return '<svg class="' + (cls || "dg-marker") + '" viewBox="0 0 100 100" width="28" height="28" aria-hidden="true" focusable="false">' + markerShape(i) + "</svg>";
   }
 
   // "You" for the only person, "Player 2" when several people play,
@@ -142,7 +144,7 @@ const DiceCommon = (function () {
     if (window.ResultModal) window.ResultModal.show(titleEnglish, message);
   }
 
-  return { dieSvg, markerSvg, playerName, playersHtml, seats, activeMode, setMode, setText, wireMenu, showBoard, showResult, fill, t };
+  return { dieSvg, markerSvg, markerShape, playerName, playersHtml, seats, activeMode, setMode, setText, wireMenu, showBoard, showResult, fill, t };
 })();
 
 if (typeof window !== "undefined") window.DiceCommon = DiceCommon;

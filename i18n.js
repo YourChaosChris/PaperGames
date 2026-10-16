@@ -3877,6 +3877,25 @@ const STRINGS = {
     sw_out_tag: "out",
     sw_full_message: "Every hole is pegged!",
     sw_shared_message: "The others could not peg any more.",
+    game_sternjagd: "Sternjagd",
+    home_sternjagd_desc: "A chase game for two to four players with one die: the number rolled is the exact number of steps along the arrows of a star-shaped board. Stop on an opponent to take one of its three stars; passing over changes nothing. The last player with stars left wins.",
+    sj_history_intro: "Chase games with a die are traditional in many cultures; this version has its own board with arrows.",
+    quickrules_sternjagd_1: "Roll the die and move exactly that many steps along the arrows. Tap one of the ringed fields.",
+    quickrules_sternjagd_2: "End your move on an opponent to catch it: it loses a star and returns to a corner. Passing over changes nothing.",
+    quickrules_sternjagd_3: "Everyone has three stars. The last player with stars left wins. Undo takes back a move.",
+    sj_roll: "Roll the die",
+    sj_roll_hint: "Roll the die.",
+    sj_move_hint: "Tap a ringed field. Steps along the arrows: {n}.",
+    sj_last_move: "{name}: rolled {n}, moved.",
+    sj_last_capture: "{name}: rolled {n}, caught {victim}: one star less.",
+    sj_last_pass: "{name}: rolled {n}, no field fits.",
+    sj_stars_tag: "Stars: {n}",
+    sj_out_tag: "out",
+    sj_board_aria: "Board with twelve fields joined by arrows",
+    sj_field_aria: "Field {n}",
+    sj_field_piece_aria: "Field {n}: piece of {name}",
+    sj_field_move_aria: "Field {n}: move here",
+    sj_over_message: "The last player with stars left wins.",
     aw_level_master: "Master",
     aw_retry: "Try again",
     msg_aw_glided: "The arrow glides forward up to the next arrow.",
@@ -5081,7 +5100,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 95;
+  const GAME_COUNT = 96;
 
   function t(key, lang) {
     const l = lang || getLang();

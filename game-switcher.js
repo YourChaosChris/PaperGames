@@ -118,7 +118,8 @@
     ["catplaces", "game_catplaces"],
     ["loosen", "game_loosen", "rings"],
     ["klappenkasten", "game_klappenkasten", "dicegames"],
-    ["steckwuerfeln", "game_steckwuerfeln", "dicegames"]
+    ["steckwuerfeln", "game_steckwuerfeln", "dicegames"],
+    ["sternjagd", "game_sternjagd", "hunt"]
   ];
 
   var GAME_SLUGS = {};

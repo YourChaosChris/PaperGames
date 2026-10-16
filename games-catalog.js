@@ -1172,5 +1172,17 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-17T01:10",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><circle cx=\"9\" cy=\"12\" r=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"20\" cy=\"12\" r=\"5\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"31\" cy=\"12\" r=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"9\" cy=\"27\" r=\"5\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"20\" cy=\"27\" r=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"31\" cy=\"27\" r=\"5\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2.2\"/></svg></span>"
+  },
+  {
+    slug: "sternjagd",
+    category: "strategy",
+    family: "hunt",
+    nameKey: "game_sternjagd",
+    nameText: "Sternjagd",
+    descKey: "home_sternjagd_desc",
+    descText: "A chase game for two to four players with one die: the number rolled is the exact number of steps along the arrows of a star-shaped board. Stop on an opponent to take one of its three stars; passing over changes nothing. The last player with stars left wins.",
+    popular: false,
+    added: "2026-10-17T01:20",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><polygon points=\"20,3 24.5,14.5 37,15 27.5,23 30.5,35 20,28.5 9.5,35 12.5,23 3,15 15.5,14.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><circle cx=\"20\" cy=\"20\" r=\"4\" fill=\"#141413\"/></svg></span>"
   }
 ];

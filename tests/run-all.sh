@@ -117,6 +117,8 @@ echo "=== klappenkasten-core.js ==="
 node "$ROOT/tests/klappenkasten-core.js" || status=1
 echo "=== steckwuerfeln-core.js ==="
 node "$ROOT/tests/steckwuerfeln-core.js" || status=1
+echo "=== sternjagd-core.js ==="
+node "$ROOT/tests/sternjagd-core.js" || status=1
 echo "=== matches-core.js ==="
 node "$ROOT/tests/matches-core.js" || status=1
 echo "=== cardduel-core.js ==="

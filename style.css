@@ -14255,3 +14255,23 @@ li.fv-card {
 [dir="rtl"] .sw-ways > * {
   margin: 0 0 var(--space-2) var(--space-2);
 }
+
+/* Sternjagd: the board is one svg (arrows, fields, pieces). The ringed
+   fields are the ones a move may end on. Black and white only. */
+.sj-board {
+  direction: ltr;
+  max-width: 420px;
+  margin: var(--space-2) auto;
+  text-align: center;
+}
+
+.sj-board svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.sj-goal {
+  cursor: pointer;
+}
