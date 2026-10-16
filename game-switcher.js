@@ -117,7 +117,8 @@
     ["matches", "game_matches"],
     ["catplaces", "game_catplaces"],
     ["loosen", "game_loosen", "rings"],
-    ["klappenkasten", "game_klappenkasten", "dicegames"]
+    ["klappenkasten", "game_klappenkasten", "dicegames"],
+    ["steckwuerfeln", "game_steckwuerfeln", "dicegames"]
   ];
 
   var GAME_SLUGS = {};

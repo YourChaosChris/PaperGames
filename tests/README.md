@@ -240,6 +240,12 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   win, the computer's choices (high flaps first) and 1000 computer games
   (2-4 players, 9 or 12 flaps, 1/3/5 rounds) that all end without an
   error. A few seconds.
+- `node tests/steckwuerfeln-core.js` - no server or browser needed. Rules of
+  Steckwuerfeln (pegs and two dice): the total or the two single dice,
+  refused pegs, the double-six joker (roll again / turn ends / hole 12),
+  points and rounds, all eleven holes pegged as an instant win, the shared
+  board (who cannot peg is out), the computer's choice and 1000 computer
+  games in both ways to play that all end without an error. A few seconds.
 - `node tests/matches-core.js` - no server or browser needed. All 90
   "Matchstick Puzzles": the start is wrong (sums) or lacks the asked
   number of squares, a full search finds a solution with exactly 1 or 2

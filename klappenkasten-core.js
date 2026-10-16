@@ -60,6 +60,7 @@ const KlappenkastenCore = (() => {
       winner: null,           // player index, -1 for a draw, null while playing
       boxShut: false,         // the winner closed every flap
       last: null,             // the turn that ended last, see endTurn()
+      seq: 0,                 // counts the turns that ended (tells a new `last` from an old one)
       turnClosed: []          // flaps closed in the running turn
     };
   }
@@ -103,6 +104,7 @@ const KlappenkastenCore = (() => {
     t.scores[p].push(points);
     t.turns += 1;
     t.last = { player: p, round: t.round, dice: t.dice.slice(), closed: t.turnClosed.slice(), points: points, boxShut: !!boxShut };
+    t.seq += 1;
     t.turnClosed = [];
     t.dice = [];
     if (boxShut) {

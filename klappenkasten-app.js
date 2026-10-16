@@ -17,7 +17,9 @@ const KLAPPENKASTEN_SAVE_KEY = "einkchess_save_klappenkasten";
 const AppStateKK = {
   state: null,
   undoStack: [],
-  selected: []
+  selected: [],
+  log: [],      // the last turns that ended, newest first (not saved)
+  logged: 0     // state.seq of the newest logged turn
 };
 
 function tKK(key, values) {
@@ -64,9 +66,20 @@ function startGameKK() {
   AppStateKK.state = KlappenkastenCore.newGame({ players: n, computer: DiceCommon.seats(mode, n), size: size, rounds: rounds });
   AppStateKK.undoStack = [];
   AppStateKK.selected = [];
+  AppStateKK.log = [];
+  AppStateKK.logged = 0;
   setResultKK("");
   DiceCommon.showBoard();
   afterActionKK();
+}
+
+// Remembers a turn that has just ended, to show what the computers did.
+function noteKK() {
+  const s = AppStateKK.state;
+  if (!s.last || s.seq === AppStateKK.logged) return;
+  AppStateKK.logged = s.seq;
+  AppStateKK.log.unshift(JSON.parse(JSON.stringify(s.last)));
+  AppStateKK.log = AppStateKK.log.slice(0, 3);
 }
 
 // The computers play at once until a person is to roll or the game is over.
@@ -76,10 +89,12 @@ function runComputersKK() {
     const next = KlappenkastenCore.aiStep(AppStateKK.state);
     if (next === AppStateKK.state) break;
     AppStateKK.state = next;
+    noteKK();
   }
 }
 
 function afterActionKK() {
+  noteKK();
   runComputersKK();
   const s = AppStateKK.state;
   if (s.phase === "over") finishKK();
@@ -132,6 +147,8 @@ function undoKK() {
   if (!prev) return;
   AppStateKK.state = prev;
   AppStateKK.selected = [];
+  AppStateKK.log = [];
+  AppStateKK.logged = prev.seq;
   setResultKK("");
   if (window.ResultModal) window.ResultModal.hide();
   afterActionKK();
@@ -177,12 +194,19 @@ function setResultKK(text) {
   DiceCommon.setText(document.getElementById("game-result"), text);
 }
 
-function lastTurnTextKK() {
-  const s = AppStateKK.state;
-  const l = s.last;
-  if (!l) return "";
+function turnTextKK(l) {
   if (l.boxShut) return tKK("kk_last_box", { name: nameKK(l.player) });
   return tKK("kk_last_stuck", { name: nameKK(l.player), dice: l.dice.join(" + "), n: l.points });
+}
+
+function renderLogKK() {
+  const wrap = document.getElementById("kk-last");
+  wrap.innerHTML = "";
+  AppStateKK.log.forEach((l) => {
+    const p = document.createElement("div");
+    p.textContent = turnTextKK(l);
+    wrap.appendChild(p);
+  });
 }
 
 function turnStatusKK() {
@@ -262,12 +286,8 @@ function renderKK() {
   document.getElementById("kk-close").disabled = !(humanTurn && s.phase === "close" && AppStateKK.selected.length > 0);
   document.getElementById("undo-btn").disabled = AppStateKK.undoStack.length === 0;
   renderScoresKK();
-  if (over) {
-    setStatusKK(lastTurnTextKK());
-  } else {
-    setStatusKK(turnStatusKK());
-  }
-  DiceCommon.setText(document.getElementById("kk-last"), over ? "" : lastTurnTextKK());
+  setStatusKK(over ? "" : turnStatusKK());
+  renderLogKK(over);
 }
 
 /*** Setup ***/
@@ -289,6 +309,8 @@ function initKlappenkastenApp() {
     AppStateKK.state = saved.state;
     AppStateKK.undoStack = Array.isArray(saved.undoStack) ? saved.undoStack : [];
     AppStateKK.selected = [];
+    AppStateKK.log = [];
+    AppStateKK.logged = saved.state.seq || 0;
     DiceCommon.showBoard();
     afterActionKK();
   }

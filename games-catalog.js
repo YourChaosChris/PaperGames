@@ -1160,5 +1160,17 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-17T01:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"12\" width=\"10\" height=\"16\" rx=\"2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><rect x=\"15\" y=\"12\" width=\"10\" height=\"16\" rx=\"2\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2.2\"/><rect x=\"27\" y=\"12\" width=\"10\" height=\"16\" rx=\"2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-dasharray=\"3 2\"/><circle cx=\"8\" cy=\"20\" r=\"1.8\" fill=\"#141413\"/><circle cx=\"32\" cy=\"20\" r=\"1.8\" fill=\"#141413\"/></svg></span>"
+  },
+  {
+    slug: "steckwuerfeln",
+    category: "race",
+    family: "dicegames",
+    nameKey: "game_steckwuerfeln",
+    nameText: "Steckwürfeln",
+    descKey: "home_steckwuerfeln_desc",
+    descText: "A traditional peg-and-dice game with eleven holes numbered 2 to 12: roll two dice and peg the hole of the total, or the two holes of the single dice. Keep rolling until nothing fits - the free holes count against you, the fewest points win. Variants: double six as a joker, or one shared board where whoever cannot peg is out.",
+    popular: false,
+    added: "2026-10-17T01:10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><circle cx=\"9\" cy=\"12\" r=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"20\" cy=\"12\" r=\"5\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"31\" cy=\"12\" r=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"9\" cy=\"27\" r=\"5\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"20\" cy=\"27\" r=\"5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"31\" cy=\"27\" r=\"5\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2.2\"/></svg></span>"
   }
 ];

@@ -10,7 +10,7 @@ const games = [
   "durak", "fanorona", "fleetbattle", "forestvillage", "fourinarow", "foxandgeese",
   "go", "gomoku", "halma", "hex", "hnefatafl", "klappenkasten", "konane", "ludo", "mancala",
   "marblepush", "maumau", "morris", "pairs", "poker", "reversi", "romme",
-  "schwimmen", "seega", "senet", "shogi", "snakesladders", "sternhalma",
+  "schwimmen", "seega", "senet", "shogi", "snakesladders", "steckwuerfeln", "sternhalma",
   "surakarta", "tablut", "tictactoe", "trix", "ur", "villains", "wallmaze",
   "war", "xiangqi"
 ];

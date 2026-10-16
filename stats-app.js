@@ -92,7 +92,8 @@ const STATS_GAME_NAME_KEY = {
   matches: "game_matches",
   catplaces: "game_catplaces",
   loosen: "game_loosen",
-  klappenkasten: "game_klappenkasten"
+  klappenkasten: "game_klappenkasten",
+  steckwuerfeln: "game_steckwuerfeln"
 };
 
 function gameDisplayName(game) {
