@@ -54,6 +54,7 @@ STRINGS.pl = {
     home_pitch_link: "Co tu jest inaczej",
     quickrules_button: "Krótkie zasady",
     quickrules_go: "Zaczynamy",
+    play_button: "Graj",
     quickrules_all: "Wszystkie zasady",
     quickrules_chess_1: "Daj mata królowi przeciwnika: musi być w szachu i nie mieć żadnego legalnego ruchu, by się z niego wydostać.",
     quickrules_chess_2: "W swojej turze wykonujesz ruch jedną ze swoich bierek; każdy rodzaj bierki porusza się na swój sposób.",
@@ -566,6 +567,7 @@ STRINGS.pl = {
     release_v241: "Waldsiedlung ma nowe zasady, nową nazwę i poprawione opisy; stare zapisy gry zostają usunięte.",
     release_v242: "Gra ma nową nazwę i adres; stare adresy przekierowują dalej.",
     release_v243: "Pamięć offline rzadziej ładuje dane ponownie; poprawiono odstępy po arabsku, aktywne przyciski są czarne, „Potasuj” pyta o potwierdzenie, a strony zasad mają u góry link powrotu.",
+    release_v244: "Gry otwierają się gotowe do gry; okno wyniku ma przycisk „Zagraj jeszcze raz”; „Nowa gra” jest obok planszy; szachy mają osobny przycisk dla dwóch graczy.",
     release_v240: "Nazwy gier zmieniły się we wszystkich 12 językach.",
     release_v239: "Usunięto chronione nazwy gier z zasad i opisów na stronach historycznych.",
     release_v238: "Krótkie zasady pasują teraz do wybranego motywu i trybu wyszukiwania na obrazku.",
@@ -4088,6 +4090,8 @@ STRINGS.pl = {
     resign_button: "Poddaj się",
     offer_draw_button: "Zaproponuj remis",
     chess_mode_offline: "Offline",
+    chess_mode_two_player: "Dwóch graczy na jednym urządzeniu",
+    chess_mode_computer: "Graj przeciwko komputerowi",
     chess_mode_online: "Online",
     chess_rated_checkbox: "Rankingowa",
     chess_time_10_0: "10 + 0 (Szybka)",
@@ -4463,6 +4467,8 @@ STRINGS.pl = {
 
     // Screen-reader labels (I18n.setAria) and result popup button
     result_modal_ok: "OK",
+    result_modal_replay: "Zagraj ponownie",
+    result_modal_close: "Zamknij",
     msg_noun_pawn: "pionek",
     msg_noun_knight: "skoczek",
     msg_noun_bishop: "goniec",

@@ -52,6 +52,7 @@ STRINGS.it = {
     home_pitch_link: "Cosa c'è di diverso",
     quickrules_button: "Regole in breve",
     quickrules_go: "Via",
+    play_button: "Gioca",
     quickrules_all: "Tutte le regole",
     quickrules_chess_1: "Dai scacco matto al re avversario: deve essere sotto scacco senza alcuna mossa legale per sfuggirvi.",
     quickrules_chess_2: "Al tuo turno muovi uno dei tuoi pezzi; ogni tipo di pezzo si muove a modo suo.",
@@ -560,6 +561,7 @@ STRINGS.it = {
     release_v241: "Waldsiedlung ha nuove regole, un nuovo nome e descrizioni riviste; i vecchi salvataggi vengono eliminati.",
     release_v242: "Il gioco ha un nuovo nome e un nuovo indirizzo; i vecchi indirizzi reindirizzano.",
     release_v243: "La memoria offline ricarica meno; gli spazi in arabo sono corretti, i pulsanti attivi sono neri, «Mescola» chiede conferma e le regole hanno un link per tornare in alto.",
+    release_v244: "I giochi si aprono pronti da giocare; la finestra del risultato offre «Gioca ancora»; «Nuova partita» resta accanto alla scacchiera; gli scacchi hanno un tasto per due giocatori.",
     release_v240: "I nomi dei giochi sono cambiati in tutte e 12 le lingue.",
     release_v239: "I nomi di giochi protetti sono stati rimossi dalle regole e dalle descrizioni storiche.",
     release_v238: "Le regole rapide ora corrispondono al tema scelto e alla modalità di ricerca nell’immagine.",
@@ -4087,6 +4089,8 @@ STRINGS.it = {
     resign_button: "Abbandona",
     offer_draw_button: "Proponi patta",
     chess_mode_offline: "Offline",
+    chess_mode_two_player: "Due giocatori su questo dispositivo",
+    chess_mode_computer: "Gioca contro il computer",
     chess_mode_online: "Online",
     chess_rated_checkbox: "Classificata",
     chess_time_10_0: "10 + 0 (Rapida)",
@@ -4462,6 +4466,8 @@ STRINGS.it = {
 
     // Screen-reader labels (I18n.setAria) and result popup button
     result_modal_ok: "OK",
+    result_modal_replay: "Gioca ancora",
+    result_modal_close: "Chiudi",
     msg_noun_pawn: "pedone",
     msg_noun_knight: "cavallo",
     msg_noun_bishop: "alfiere",

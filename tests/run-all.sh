@@ -139,6 +139,10 @@ echo "=== rtl-spacing.js ==="
 node "$ROOT/tests/rtl-spacing.js" || status=1
 echo ""
 
+echo "=== direct-start.js ==="
+node "$ROOT/tests/direct-start.js" || status=1
+echo ""
+
 echo "=== board-sweep.js ==="
 node "$ROOT/tests/board-sweep.js" || status=1
 echo ""

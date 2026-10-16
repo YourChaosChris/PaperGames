@@ -2082,8 +2082,37 @@ margin: 2rem 0 var(--space-4);
   margin-bottom: var(--space-4);
 }
 
-.result-modal .result-modal-close {
+.result-modal-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.result-modal-actions button {
+  margin-top: var(--space-1);
+}
+
+.result-modal .result-modal-close,
+.result-modal .result-modal-replay {
   min-width: 6rem;
+}
+
+.placeholder-play-button {
+  font-size: 1.2rem;
+  min-width: 10rem;
+  padding: var(--space-3) var(--space-5);
+}
+
+.board-placeholder.has-play-button > :not(.placeholder-play-button) {
+  display: none;
+}
+
+.direct-new-game-button {
+  margin: 0 0.25rem 0.25rem 0;
+}
+
+[dir="rtl"] .direct-new-game-button {
+  margin: 0 0 0.25rem 0.25rem;
 }
 
 /* Checkers board: reuses .square/.light/.dark/.selected/.last-move from

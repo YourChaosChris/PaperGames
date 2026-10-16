@@ -52,6 +52,7 @@ STRINGS.zh = {
     home_pitch_link: "这里有什么不同",
     quickrules_button: "简要规则",
     quickrules_go: "开始",
+    play_button: "开始游戏",
     quickrules_all: "全部规则",
     quickrules_chess_1: "将死对方的王：使其被将军，且没有任何合法着法能解除将军。",
     quickrules_chess_2: "轮到你时，移动一枚己方棋子；每种棋子都有各自的走法。",
@@ -560,6 +561,7 @@ STRINGS.zh = {
     release_v241: "Waldsiedlung更新了规则和说明并更改了名称；旧游戏存档将被删除。",
     release_v242: "游戏更换了名称和地址，旧地址会自动跳转。",
     release_v243: "离线存储减少了重新加载；修正了阿拉伯语间距，选中按钮改为黑色，“洗牌”会先询问，规则页面顶部也增加了返回链接。",
+    release_v244: "游戏打开即可开始；结果窗口新增“再玩一次”；“新游戏”保留在棋盘旁；国际象棋有了单独的双人按钮。",
     release_v240: "游戏名称已在全部12种语言中更改。",
     release_v239: "规则和历史页面描述中已移除受保护的游戏名称。",
     release_v238: "简要规则现在会匹配所选的蛋糕主题和图片搜索模式。",
@@ -4087,6 +4089,8 @@ STRINGS.zh = {
     resign_button: "认输",
     offer_draw_button: "提议和棋",
     chess_mode_offline: "离线",
+    chess_mode_two_player: "同一设备双人游戏",
+    chess_mode_computer: "与电脑对战",
     chess_mode_online: "在线",
     chess_rated_checkbox: "计分",
     chess_time_10_0: "10 + 0（快棋）",
@@ -4462,6 +4466,8 @@ STRINGS.zh = {
 
     // Screen-reader labels (I18n.setAria) and result popup button
     result_modal_ok: "确定",
+    result_modal_replay: "再玩一次",
+    result_modal_close: "关闭",
     msg_noun_pawn: "兵",
     msg_noun_knight: "马",
     msg_noun_bishop: "象",

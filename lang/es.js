@@ -52,6 +52,7 @@ STRINGS.es = {
     home_pitch_link: "Qué tiene de diferente",
     quickrules_button: "Reglas breves",
     quickrules_go: "Vamos",
+    play_button: "Jugar",
     quickrules_all: "Todas las reglas",
     quickrules_chess_1: "Da jaque mate al rey del oponente: que esté en jaque y no tenga ninguna jugada legal para librarse.",
     quickrules_chess_2: "En tu turno mueves una de tus piezas; cada tipo de pieza se mueve a su manera.",
@@ -560,6 +561,7 @@ STRINGS.es = {
     release_v241: "Waldsiedlung tiene reglas nuevas, un nombre nuevo y descripciones revisadas; se descartan las partidas guardadas antiguas.",
     release_v242: "El juego tiene un nombre y una dirección nuevos; las direcciones antiguas redirigen.",
     release_v243: "El almacenamiento sin conexión vuelve a cargar menos; se corrigen los espacios en árabe, los botones activos son negros, «Mezclar» pide confirmación y las reglas tienen un enlace para volver arriba.",
+    release_v244: "Los juegos se abren listos para jugar; la ventana de resultado ofrece «Jugar otra vez»; «Nueva partida» queda junto al tablero; el ajedrez tiene su propio botón para dos jugadores.",
     release_v240: "Se cambiaron los nombres de los juegos en los 12 idiomas.",
     release_v239: "Se eliminaron nombres de juegos protegidos de las reglas y las descripciones históricas.",
     release_v238: "Las reglas breves ahora corresponden al tema elegido y al modo de buscar en la imagen.",
@@ -4087,6 +4089,8 @@ STRINGS.es = {
     resign_button: "Rendirse",
     offer_draw_button: "Ofrecer tablas",
     chess_mode_offline: "Sin conexión",
+    chess_mode_two_player: "Dos jugadores en este dispositivo",
+    chess_mode_computer: "Jugar contra el ordenador",
     chess_mode_online: "En línea",
     chess_rated_checkbox: "Clasificada",
     chess_time_10_0: "10 + 0 (Rápida)",
@@ -4462,6 +4466,8 @@ STRINGS.es = {
 
     // Screen-reader labels (I18n.setAria) and result popup button
     result_modal_ok: "Aceptar",
+    result_modal_replay: "Jugar otra vez",
+    result_modal_close: "Cerrar",
     msg_noun_pawn: "peón",
     msg_noun_knight: "caballo",
     msg_noun_bishop: "alfil",

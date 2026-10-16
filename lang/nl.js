@@ -52,6 +52,7 @@ STRINGS.nl = {
     home_pitch_link: "Wat hier anders is",
     quickrules_button: "Korte regels",
     quickrules_go: "Aan de slag",
+    play_button: "Spelen",
     quickrules_all: "Alle regels",
     quickrules_chess_1: "Zet de koning van je tegenstander schaakmat: hij staat schaak en heeft geen legale zet om te ontsnappen.",
     quickrules_chess_2: "Als je aan zet bent, verplaats je een van je stukken; elk soort stuk beweegt op zijn eigen manier.",
@@ -470,6 +471,7 @@ STRINGS.nl = {
     release_v241: "Waldsiedlung heeft nieuwe regels, een nieuwe naam en aangepaste beschrijvingen; oude spelgegevens worden verwijderd.",
     release_v242: "Het spel heeft een nieuwe naam en een nieuw adres; oude adressen verwijzen door.",
     release_v243: "De offlineopslag laadt minder opnieuw; Arabische tussenruimtes zijn hersteld, actieve knoppen zijn zwart, ‘Schudden’ vraagt eerst om bevestiging en regelpagina’s hebben bovenaan een teruglink.",
+    release_v244: "Spellen openen meteen speelklaar; het resultaatvenster heeft «Nog een keer»; «Nieuw spel» staat naast het bord; schaken heeft een eigen knop voor twee spelers.",
     release_v240: "De spelnamen zijn in alle 12 talen gewijzigd.",
     release_v239: "Beschermde spelnamen zijn verwijderd uit regels en beschrijvingen van geschiedenispagina’s.",
     release_v238: "De korte regels passen nu bij het gekozen taartmotief en de zoekplaat.",
@@ -4087,6 +4089,8 @@ STRINGS.nl = {
     resign_button: "Opgeven",
     offer_draw_button: "Remise aanbieden",
     chess_mode_offline: "Offline",
+    chess_mode_two_player: "Met twee op één apparaat",
+    chess_mode_computer: "Tegen de computer spelen",
     chess_mode_online: "Online",
     chess_rated_checkbox: "Met rating",
     chess_time_10_0: "10 + 0 (Snel)",
@@ -4462,6 +4466,8 @@ STRINGS.nl = {
 
     // Screen-reader labels (I18n.setAria) and result popup button
     result_modal_ok: "OK",
+    result_modal_replay: "Opnieuw spelen",
+    result_modal_close: "Sluiten",
     msg_noun_pawn: "pion",
     msg_noun_knight: "paard",
     msg_noun_bishop: "loper",

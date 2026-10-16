@@ -52,6 +52,7 @@ STRINGS.ja = {
     home_pitch_link: "ここが違うところ",
     quickrules_button: "かんたんルール",
     quickrules_go: "始める",
+    play_button: "プレイ",
     quickrules_all: "すべてのルール",
     quickrules_chess_1: "相手のキングをチェックされた状態にし、逃れる合法手を一つも残さないこと（チェックメイト）が目的です。",
     quickrules_chess_2: "手番ごとに自分の駒を1つ動かします（駒の種類によって動き方は異なります）。",
@@ -470,6 +471,7 @@ STRINGS.ja = {
     release_v241: "Waldsiedlungのルールと説明を更新し、ゲーム名を変更しました。以前のセーブデータは破棄されます。",
     release_v242: "ゲームの名前とアドレスが新しくなり、以前のアドレスから転送されます。",
     release_v243: "オフライン保存で再読み込みが減りました。アラビア語の間隔を修正し、選択中のボタンを黒くし、「シャッフル」は確認を求め、ルールページの上部に戻るリンクを追加しました。",
+    release_v244: "ゲームはすぐに遊べる状態で開きます。結果画面に「もう一度遊ぶ」が加わり、「新しいゲーム」は盤のそばに残り、チェスには二人用の専用ボタンができました。",
     release_v240: "ゲーム名を12言語すべてで変更しました。",
     release_v239: "ルールと歴史ページの説明から保護されたゲーム名を削除しました。",
     release_v238: "クイックルールが選択したケーキのテーマと絵さがしモードに合うようになりました。",
@@ -4087,6 +4089,8 @@ STRINGS.ja = {
     resign_button: "投了",
     offer_draw_button: "引き分けを提案",
     chess_mode_offline: "オフライン",
+    chess_mode_two_player: "1台で2人プレイ",
+    chess_mode_computer: "コンピューターと対戦",
     chess_mode_online: "オンライン",
     chess_rated_checkbox: "レーティング対象",
     chess_time_10_0: "10 + 0（早指し）",
@@ -4462,6 +4466,8 @@ STRINGS.ja = {
 
     // Screen-reader labels (I18n.setAria) and result popup button
     result_modal_ok: "閉じる",
+    result_modal_replay: "もう一度プレイ",
+    result_modal_close: "閉じる",
     msg_noun_pawn: "ポーン",
     msg_noun_knight: "ナイト",
     msg_noun_bishop: "ビショップ",

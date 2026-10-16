@@ -52,6 +52,7 @@ STRINGS.fr = {
     home_pitch_link: "Ce qui est différent ici",
     quickrules_button: "Règles en bref",
     quickrules_go: "C'est parti",
+    play_button: "Jouer",
     quickrules_all: "Toutes les règles",
     quickrules_chess_1: "Mettez le roi adverse échec et mat : il est en échec et n'a aucun coup légal pour y échapper.",
     quickrules_chess_2: "À votre tour, vous déplacez une de vos pièces ; chaque type de pièce se déplace à sa manière.",
@@ -560,6 +561,7 @@ STRINGS.fr = {
     release_v241: "Waldsiedlung reçoit de nouvelles règles, un nouveau nom et des descriptions révisées ; les anciennes sauvegardes sont supprimées.",
     release_v242: "Le jeu a un nouveau nom et une nouvelle adresse ; les anciennes adresses redirigent.",
     release_v243: "Le stockage hors ligne recharge moins souvent ; les espaces arabes sont corrigés, les boutons actifs sont noirs, « Mélanger » demande confirmation et les règles ont un lien de retour en haut.",
+    release_v244: "Les jeux s’ouvrent prêts à jouer ; la fenêtre de résultat propose « Rejouer » ; « Nouvelle partie » reste près du plateau ; les échecs ont un bouton pour deux joueurs.",
     release_v240: "Les noms des jeux ont changé dans les 12 langues.",
     release_v239: "Les noms de jeux protégés ont été retirés des règles et des descriptions historiques.",
     release_v238: "Les règles en bref correspondent désormais au thème du gâteau et au mode image à fouiller.",
@@ -4087,6 +4089,8 @@ STRINGS.fr = {
     resign_button: "Abandonner",
     offer_draw_button: "Proposer nulle",
     chess_mode_offline: "Hors ligne",
+    chess_mode_two_player: "À deux sur cet appareil",
+    chess_mode_computer: "Jouer contre l’ordinateur",
     chess_mode_online: "En ligne",
     chess_rated_checkbox: "Classée",
     chess_time_10_0: "10 + 0 (Rapide)",
@@ -4462,6 +4466,8 @@ STRINGS.fr = {
 
     // Screen-reader labels (I18n.setAria) and result popup button
     result_modal_ok: "OK",
+    result_modal_replay: "Rejouer",
+    result_modal_close: "Fermer",
     msg_noun_pawn: "pion",
     msg_noun_knight: "cavalier",
     msg_noun_bishop: "fou",

@@ -24,10 +24,13 @@
     return text && text !== key ? text : fallback;
   }
 
+  // Pages renamed after their texts were written keep the old key prefix.
+  const KEY_PREFIX = { noneighbors: "numberblocks" };
+
   function sentenceKeys(slug) {
     const keys = [];
     for (let i = 1; i <= 4; i++) {
-      const key = "quickrules_" + slug + "_" + i;
+      const key = "quickrules_" + (KEY_PREFIX[slug] || slug) + "_" + i;
       if (tr(key, null)) keys.push(key);
     }
     return keys;
@@ -126,10 +129,110 @@
       panel.insertBefore(btn, rulesLink ? rulesLink.nextSibling : panel.firstChild);
     }
 
-    if (!wasSeen(slug)) {
-      box.classList.remove("hidden");
-      markSeen(slug);
+    // Rules remain available from their button, while the first screen is
+    // reserved for the playable board and its controls.
+    box.classList.add("hidden");
+    if (!wasSeen(slug)) markSeen(slug);
+
+    // Game apps attach their start handlers in their own DOMContentLoaded
+    // listeners, registered after this shared rules module.
+    window.setTimeout(() => prepareDirectPlay(slug), 0);
+  }
+
+  function prepareDirectPlay(slug) {
+    const boardSection = document.getElementById("board-section");
+    const board = document.getElementById("board-container");
+    const placeholder = document.getElementById("board-placeholder");
+    const start = findStartButton();
+    if (!boardSection || !placeholder) return;
+
+    const settingsKey = "papergames_last_settings_" + slug;
+    const hasActiveBoard = !!(board && !board.classList.contains("hidden"));
+    let remembered = null;
+    try { remembered = JSON.parse(localStorage.getItem(settingsKey) || "null"); } catch (e) {}
+
+    if (!hasActiveBoard && remembered) {
+      if (remembered.modeId) {
+        const mode = document.getElementById(remembered.modeId);
+        if (mode) mode.click();
+      }
+      (remembered.fields || []).forEach((entry) => {
+        const el = entry.id ? document.getElementById(entry.id) : document.querySelector(entry.selector);
+        if (el && (el.tagName === "SELECT" || el.type === "checkbox" || el.type === "radio")) {
+          if (el.type === "checkbox" || el.type === "radio") el.checked = !!entry.checked;
+          else el.value = entry.value;
+        }
+      });
+    } else if (!hasActiveBoard) {
+      const aiMode = document.getElementById("mode-offline-ai") || document.getElementById("mode-ai");
+      if (aiMode) aiMode.click();
+      // A first visit starts at the lowest offered computer level.
+      document.querySelectorAll("select").forEach((select) => {
+        const selectName = (select.id || "") + " " + (select.name || "");
+        if (/opponent/i.test(selectName)) {
+          const easyOpponent = Array.from(select.options).find((option) => /easy|easiest|beginner/i.test(option.value + " " + option.textContent));
+          if (easyOpponent) { select.value = easyOpponent.value; return; }
+        }
+        if (!/level|difficulty/i.test(selectName)) return;
+        const numeric = Array.from(select.options).filter((option) => /^\d+$/.test(option.value) && Number(option.value) > 0);
+        if (numeric.length) select.value = numeric.sort((a, b) => Number(a.value) - Number(b.value))[0].value;
+        else {
+          const easy = Array.from(select.options).find((option) => /easy|easiest|beginner/i.test(option.value + " " + option.textContent));
+          if (easy) select.value = easy.value;
+        }
+      });
     }
+
+    function rememberSettings(modeButton) {
+      const fields = Array.from(document.querySelectorAll("#settings-panel select, #settings-panel input[type=checkbox], #settings-panel input[type=radio]"))
+        .filter((el) => el.id || el.name)
+        .map((el) => ({ id: el.id || "", selector: el.id ? "" : 'input[name="' + el.name.replace(/"/g, '\\"') + '"][value="' + el.value.replace(/"/g, '\\"') + '"]', value: el.value, checked: el.checked }));
+      const activeMode = document.querySelector("#settings-panel .mode-btn.active-mode, #settings-panel .mode-btn.active");
+      try { localStorage.setItem(settingsKey, JSON.stringify({ fields, modeId: modeButton ? modeButton.id : (activeMode ? activeMode.id : "") })); } catch (e) {}
+    }
+    document.addEventListener("click", (event) => {
+      if (event.target.closest) {
+        const button = event.target.closest('button[id^="start-"], button.mode-btn');
+        if (button) rememberSettings(button.matches(".mode-btn") ? button : null);
+      }
+    }, true);
+
+    if (start) {
+      const actions = document.getElementById("board-actions") || document.createElement("div");
+      if (!actions.id) { actions.id = "board-actions"; actions.className = "board-actions"; boardSection.appendChild(actions); }
+      if (!document.getElementById("direct-new-game-button")) {
+        const again = document.createElement("button");
+        again.type = "button";
+        again.id = "direct-new-game-button";
+        again.className = "secondary small direct-new-game-button";
+        again.setAttribute("data-i18n", "new_game");
+        again.textContent = window.I18n ? I18n.t("new_game") : "New game";
+        again.addEventListener("click", () => start.click());
+        actions.insertBefore(again, actions.firstChild);
+      }
+      if (board && board.classList.contains("hidden")) {
+        // App scripts restore saved games before DOMContentLoaded. A visible
+        // board therefore means the saved state won and must be preserved.
+        start.click();
+      }
+      return;
+    }
+
+    // Keep a clear, large entry point in the middle of any game-specific
+    // placeholder whose app has no discoverable start control.
+    if (!placeholder.querySelector(".placeholder-play-button")) {
+      placeholder.classList.add("has-play-button");
+      const play = document.createElement("button");
+      play.type = "button";
+      play.className = "primary placeholder-play-button";
+      play.setAttribute("data-i18n", "play_button");
+      play.textContent = window.I18n ? I18n.t("play_button") : "Play";
+      placeholder.appendChild(play);
+    }
+  }
+
+  function findStartButton() {
+    return document.querySelector('button[id^="start-"][id$="-game"], button[id^="start-"][id$="-puzzle"], button[id^="start-"][id$="-level"], #start-ai-game');
   }
 
   window.PaperGamesQuickRules = {

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v244",
+    date: "2026-10-16",
+    key: "release_v244",
+    text: "Games open ready to play; the result window offers Play again; New game stays next to the board; Chess has its own two-player button."
+  },
+  {
     version: "v243",
     date: "2026-10-16",
     key: "release_v243",

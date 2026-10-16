@@ -31,6 +31,8 @@ async function fresh(browser, file, width) {
   const page = await ctx.newPage();
   const errors = [];
   page.on("pageerror", (e) => errors.push(String(e)));
+  // A game now runs from the start, so "New game" asks before replacing it.
+  page.on("dialog", (d) => d.accept());
   await page.goto(BASE_URL + file, { waitUntil: "networkidle" });
   return { ctx, page, errors };
 }
@@ -53,8 +55,14 @@ async function waitFor(page, fn, what) {
   {
     const { ctx, page, errors } = await fresh(browser, "domino.html");
     await page.evaluate(() => { Math.random = () => 0.1; });
-    await page.selectOption("#domino-variant", "triangle");
-    await page.click("#start-domino-game");
+    // The game now starts by itself and its settings are hidden, so the
+    // variant is set and the game restarted through the DOM.
+    await page.evaluate(() => {
+      const select = document.getElementById("domino-variant");
+      select.value = "triangle";
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+      document.getElementById("start-domino-game").click();
+    });
     await page.evaluate(() => { const b = document.querySelector(".confirm-ok, #confirm-yes"); if (b) b.click(); });
     if (await waitFor(page, () => typeof humanCanActDomino === "function" && humanCanActDomino() && AppStateDomino.state && DominoCore.isTriangle(AppStateDomino.state) && AppStateDomino.state.slots.length > 0, "Domino: human turn on a started triangle board")) {
       check("Domino: setting off by default", await page.evaluate(() => !MoveHints.enabled()));
@@ -93,7 +101,7 @@ async function waitFor(page, fn, what) {
     const { ctx, page, errors } = await fresh(browser, "maumau.html");
     let found = false;
     for (let round = 0; round < 15 && !found; round++) {
-      await page.click("#start-maumau-game");
+      await page.evaluate((id) => document.querySelector(id).click(), "#start-maumau-game");
       await page.evaluate(() => { const b = document.querySelector(".confirm-ok, #confirm-yes"); if (b) b.click(); });
       if (!(await waitFor(page, () => AppStateMauMau.state && AppStateMauMau.state.turn === 0 && humanCanActMauMau(), "Mau Mau: human turn"))) break;
       found = await page.evaluate(() => MauMauCore.legalMoves(AppStateMauMau.state).length < AppStateMauMau.state.hands[0].length);
@@ -121,7 +129,7 @@ async function waitFor(page, fn, what) {
   {
     const { ctx, page, errors } = await fresh(browser, "cardduel.html");
     await page.evaluate(() => { Math.random = () => 0.1; });
-    await page.click("#start-cardduel-game");
+    await page.evaluate((id) => document.querySelector(id).click(), "#start-cardduel-game");
     await page.evaluate(() => { const b = document.querySelector(".confirm-ok, #confirm-yes"); if (b) b.click(); });
     if (await waitFor(page, () => AppStateCd.state && humanTurnCd(), "Card duel: human turn")) {
       check("Card duel off: no card marked", (await page.$$(".cd-unplayable")).length === 0);
@@ -147,7 +155,7 @@ async function waitFor(page, fn, what) {
   // Mau Mau, animal cards: on by default.
   {
     const { ctx, page, errors } = await fresh(browser, "maumau.html?deck=kids");
-    await page.click("#start-maumau-game");
+    await page.evaluate((id) => document.querySelector(id).click(), "#start-maumau-game");
     await page.evaluate(() => { const b = document.querySelector(".confirm-ok, #confirm-yes"); if (b) b.click(); });
     if (await waitFor(page, () => AppStateMauMau.state && AppStateMauMau.state.variant === "kids", "Mau Mau kids game")) {
       check("Mau Mau animal cards: suggestions on by default", await page.evaluate(() => MoveHints.enabled()));

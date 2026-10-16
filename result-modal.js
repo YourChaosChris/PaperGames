@@ -36,13 +36,25 @@ const ResultModal = (function () {
         '<div class="result-modal-ornament" aria-hidden="true">&#9733;</div>' +
         '<div id="result-modal-title" class="result-modal-title"></div>' +
         '<div id="result-modal-message" class="result-modal-message"></div>' +
-        '<button type="button" class="primary result-modal-close" data-i18n="result_modal_ok">OK</button>' +
+        '<div class="result-modal-actions">' +
+          '<button type="button" class="primary result-modal-replay" data-i18n="result_modal_replay">Play again</button>' +
+          '<button type="button" class="secondary result-modal-close" data-i18n="result_modal_close">Close</button>' +
+        '</div>' +
       "</div>";
     document.body.appendChild(overlay);
     const okBtn = overlay.querySelector(".result-modal-close");
-    if (window.I18n) okBtn.textContent = I18n.t("result_modal_ok");
+    const replayBtn = overlay.querySelector(".result-modal-replay");
+    if (window.I18n) {
+      okBtn.textContent = I18n.t("result_modal_close");
+      replayBtn.textContent = I18n.t("result_modal_replay");
+    }
 
     overlay.querySelector(".result-modal-close").addEventListener("click", hide);
+    replayBtn.addEventListener("click", () => {
+      const callback = overlay.__replayCallback || findNewGameAction();
+      hide();
+      if (typeof callback === "function") callback();
+    });
     overlay.addEventListener("click", (e) => {
       if (e.target === overlay) hide();
     });
@@ -50,8 +62,24 @@ const ResultModal = (function () {
     return overlay;
   }
 
-  function show(title, message) {
+  function findNewGameAction() {
+    // Adventure Book keeps the completed hero so a replay can begin again
+    // with the same character and difficulty in one tap.
+    const sameHero = document.getElementById("ab-same");
+    if (sameHero) return () => sameHero.click();
+    const start = document.querySelector('button[id^="start-"][id$="-game"], button[id^="start-"][id$="-puzzle"], button[id^="start-"][id$="-level"]');
+    if (start) return () => start.click();
+    const appStart = document.getElementById("start-ai-game") || document.getElementById("new-game-button");
+    if (appStart) return () => appStart.click();
+    return null;
+  }
+
+  function show(title, message, onReplay) {
     const overlay = ensureModal();
+    overlay.__replayCallback = typeof onReplay === "function" ? onReplay : findNewGameAction();
+    const replay = overlay.querySelector(".result-modal-replay");
+    replay.disabled = !overlay.__replayCallback;
+    replay.classList.toggle("hidden", !overlay.__replayCallback);
     const titleEl = overlay.querySelector("#result-modal-title");
     const messageEl = overlay.querySelector("#result-modal-message");
     // classifyOutcome reads the English wording, so the outcome is decided

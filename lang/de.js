@@ -55,6 +55,7 @@ STRINGS.de = {
     home_pitch_link: "Was hier anders ist",
     quickrules_button: "Kurzregel",
     quickrules_go: "Los",
+    play_button: "Spielen",
     quickrules_all: "Alle Regeln",
     quickrules_chess_1: "Setze den gegnerischen König schachmatt: Er steht im Schach und hat keinen legalen Zug, dem zu entkommen.",
     quickrules_chess_2: "Am Zug bewegst du eine deiner Figuren; jede Figurenart zieht auf ihre eigene Weise.",
@@ -622,6 +623,7 @@ STRINGS.de = {
     release_v241: "Waldsiedlung hat neue Regeln, einen neuen Namen und überarbeitete Beschreibungen; alte Spielstände der Waldsiedlung werden verworfen.",
     release_v242: "Das Spiel hat einen neuen Namen und eine neue Adresse; alte Adressen leiten weiter.",
     release_v243: "Der Offline-Speicher lädt weniger neu; Arabisch hat Abstände, aktive Knöpfe sind schwarz, „Mischen“ fragt nach, und Regelseiten haben oben einen Zurück-Link.",
+    release_v244: "Spiele öffnen direkt spielbereit; das Ergebnisfenster hat „Nochmal spielen“; „Neues Spiel“ steht neben dem Brett; Schach hat einen eigenen Knopf für zwei Spieler.",
     release_v240: "Die Spielnamen wurden in allen 12 Sprachen geändert.",
     release_v239: "Geschützte Spielnamen wurden aus Regeln und Beschreibungen der Geschichtsseiten entfernt.",
     release_v238: "Die Kurzregeln passen jetzt zum gewählten Kuchenmotiv und zum Suchbild.",
@@ -4158,6 +4160,8 @@ STRINGS.de = {
     resign_button: "Aufgeben",
     offer_draw_button: "Remis anbieten",
     chess_mode_offline: "Offline",
+    chess_mode_two_player: "Zu zweit an einem Gerät",
+    chess_mode_computer: "Gegen den Computer spielen",
     chess_mode_online: "Online",
     chess_rated_checkbox: "Gewertet",
     chess_time_10_0: "10 + 0 (Schnell)",
@@ -4533,6 +4537,8 @@ STRINGS.de = {
 
     // Screen-reader labels (I18n.setAria) and result popup button
     result_modal_ok: "OK",
+    result_modal_replay: "Nochmal spielen",
+    result_modal_close: "Schließen",
     msg_noun_pawn: "Bauer",
     msg_noun_knight: "Springer",
     msg_noun_bishop: "Läufer",

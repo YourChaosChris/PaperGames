@@ -66,6 +66,7 @@ const STRINGS = {
     home_pitch_link: "What makes this different",
     quickrules_button: "Quick rules",
     quickrules_go: "Let's go",
+    play_button: "Play",
     quickrules_all: "All rules",
     quickrules_chess_1: "Checkmate the opponent's king: put it in check so that it has no legal move to escape.",
     quickrules_chess_2: "On your turn you move one of your pieces; each kind of piece moves in its own way.",
@@ -633,6 +634,7 @@ const STRINGS = {
     release_v241: "Forest Village has new rules, a renamed game, and revised descriptions; old Forest Village saves are discarded.",
     release_v242: "The game has a new name and address; old addresses now redirect.",
     release_v243: "Offline storage reloads less; Arabic spacing is fixed, active buttons are black, Shuffle asks first, and rules pages have a back link at the top.",
+    release_v244: "Games open ready to play; the result window offers Play again; New game stays next to the board; Chess has its own two-player button.",
     release_v240: "Game names have changed in all 12 languages.",
     release_v239: "Removed protected game names from rules and history page descriptions.",
     release_v238: "Quick rules now match the selected cake theme and picture search mode.",
@@ -4169,6 +4171,8 @@ const STRINGS = {
     resign_button: "Resign",
     offer_draw_button: "Offer draw",
     chess_mode_offline: "Offline",
+    chess_mode_two_player: "2 players on one device",
+    chess_mode_computer: "Play vs computer",
     chess_mode_online: "Online",
     chess_rated_checkbox: "Rated",
     chess_time_10_0: "10 + 0 (Rapid)",
@@ -4544,6 +4548,8 @@ const STRINGS = {
 
     // Screen-reader labels (I18n.setAria) and result popup button
     result_modal_ok: "OK",
+    result_modal_replay: "Play again",
+    result_modal_close: "Close",
     msg_noun_pawn: "pawn",
     msg_noun_knight: "knight",
     msg_noun_bishop: "bishop",

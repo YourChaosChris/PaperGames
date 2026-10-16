@@ -14,7 +14,7 @@ const AB_LOG_LINES = 8;
 const AppStateAb = {
   state: null,        // the running adventure (AdventureCore state)
   hero: null,         // the hero of the last adventure (for "same hero")
-  draft: { name: "", cls: "fighter", stats: { str: 2, dex: 2, wis: 2 }, level: "medium", setting: "random" },
+  draft: { name: "", cls: "fighter", stats: { str: 2, dex: 2, wis: 2 }, level: "easy", setting: "random" },
   panel: null,        // null | "map" | "pack" | "items"
   logFrom: 0,         // first log entry of the last step (shown as result)
   view: "create"      // "create" | "play" | "end"
@@ -87,6 +87,11 @@ function initAbApp() {
     AppStateAb.view = saved.view === "end" ? "end" : "play";
     AppStateAb.logFrom = saved.logFrom || 0;
     showBoardAb();
+  } else {
+    // Start a simple default adventure immediately. The New hero control
+    // still opens the full character setup when the player wants it.
+    const hero = AC().createHero(tAb("ab_name_default"), "fighter", { str: 2, dex: 2, wis: 2 });
+    beginAb(hero, "easy", null);
   }
   renderAb();
 }

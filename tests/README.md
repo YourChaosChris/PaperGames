@@ -295,6 +295,13 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   it in another non-Latin language (Arabic, Ukrainian, Japanese ...).
 - `node tests/css-check.js` - needs a browser only (no server): loads
   `style.css` in a real page and confirms it parses cleanly.
+- `node tests/rtl-spacing.js` - needs a running server (`BASE_URL`) and a
+  browser. Opens Mau Mau, Chess and the games list in Arabic at 360 px
+  and fails if two buttons or links in the same row touch (gap under 1 px).
+- `node tests/direct-start.js` - same prerequisites. Opens every game page
+  on a first visit at 360 px and checks that the board is visible without
+  a further tap (no placeholder, no rules box) and that a "New game"
+  control stands next to it.
 - `node tests/board-sweep.js` - needs a running server (`BASE_URL` env
   var, default `http://localhost:8000/`) and a browser. Loads every
   game, starts it, and checks for JS errors, a rendered board, no
