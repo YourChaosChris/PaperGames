@@ -96,6 +96,9 @@ const STATS_GAME_NAME_KEY = {
   klappenkasten: "game_klappenkasten",
   steckwuerfeln: "game_steckwuerfeln",
   sternjagd: "game_sternjagd"
+  patternrow: "game_patternrow",
+  shadowmatch: "game_shadowmatch",
+  oddone: "game_oddone"
 };
 
 function gameDisplayName(game) {

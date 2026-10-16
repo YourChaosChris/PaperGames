@@ -253,6 +253,25 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   stars and the return to a free corner, the last player left wins, the
   draw after 600 moves, the computer's capture and 1000 computer games
   (2-4 players) that all end without an error. A few seconds.
+- `node tests/patternrow-core.js` - no server or browser needed. 200 games
+  of "Continue the Pattern" per level (6 rows each): every row has exactly
+  one symbol that continues it (no repeating part of at most half the row
+  gives another), the unit is shown at least twice, the answer sits among
+  distinct options and at every position, rows fit in 10 cells. Under a
+  second.
+- `node tests/shadowmatch-core.js` - no server or browser needed. The 20
+  drawings of kidspics.js (4 groups of 5, picture and shadow differ, every
+  shadow in every turn different from all others), then 200 games of "Whose
+  Shadow Is It?" per level (6 pictures each, all different): exactly one
+  unturned shadow of the picture among distinct options; easy takes shadows
+  from other groups, medium from the same group, hard two turned shadows of
+  the same drawing plus one from the group. Under a second.
+- `node tests/oddone-core.js` - no server or browser needed. 200 games of
+  "Which One Is Different?" per level (6 rounds each): in every round exactly
+  one card is the odd one (checked by brute force over all rules); easy has
+  group rounds with 4 drawings, medium and hard mix group rounds with
+  attribute rounds (shape, filling, number) with 5 and 6 cards. Under a
+  second.
 - `node tests/matches-core.js` - no server or browser needed. All 90
   "Matchstick Puzzles": the start is wrong (sums) or lacks the asked
   number of squares, a full search finds a solution with exactly 1 or 2

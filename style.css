@@ -14512,10 +14512,147 @@ li.fv-card {
 .sj-board svg {
   display: block;
   width: 100%;
+/* Picture-logic games for children (patternrow-app.js, shadowmatch-app.js,
+   oddone-app.js): a picture or row on top, large answer buttons below.
+   Black and white only: a wrong answer gets a dashed frame and a cross,
+   the right one a double frame, the hint a double outline. Inline-blocks
+   and margins instead of grid/gap (old e-ink browsers); symmetric
+   margins, so right-to-left needs nothing more. */
+.kq-area {
+  text-align: center;
+}
+
+.kq-row {
+  margin: 8px auto 14px;
+  max-width: 520px;
+  text-align: center;
+  font-size: 0;
+}
+
+.kq-cell {
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+  max-width: 56px;
+  padding: 2px;
+  border: 2px solid var(--border);
+  background: #fff;
+}
+
+.kq-cell svg,
+.kq-option svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.kq-cell.kq-cell-q {
+  border-style: dashed;
+}
+
+.kq-cell.kq-cell-filled {
+  border-style: double;
+  border-width: 5px;
+  padding: 0;
+}
+
+.kq-options {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.kq-option {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  box-sizing: border-box;
+  width: 84px;
+  height: 84px;
+  margin: 6px;
+  padding: 8px;
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.kq-option:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.kq-option.kq-wrong {
+  border-style: dashed;
+}
+
+.kq-option .kq-cross {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+}
+
+.kq-option.kq-right {
+  border-style: double;
+  border-width: 7px;
+  padding: 5px;
+}
+
+.kq-option.hint-cell {
+  outline: 5px double var(--text);
+  outline-offset: 3px;
+}
+
+.board-actions.kq-actions {
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.kq-actions .small {
+  min-height: 48px;
+  min-width: 96px;
+  font-size: 1rem;
+}
+
+.kq-example {
+  display: block;
+  width: 100%;
+  max-width: 280px;
   height: auto;
   margin: 0 auto;
 }
 
 .sj-goal {
   cursor: pointer;
+/* Whose Shadow Is It?: the picture in a frame, shadows as large square
+   buttons - two per row (four shadows) or three per row (three). */
+.kq-picture {
+  box-sizing: border-box;
+  width: 150px;
+  margin: 8px auto 14px;
+  padding: 8px;
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.kq-picture svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.kq-options-big .kq-option {
+  width: 44%;
+  max-width: 140px;
+  height: auto;
+  margin: 4px;
+}
+
+.kq-options-big.kq-n3 .kq-option {
+  width: 29%;
+  max-width: 116px;
 }
