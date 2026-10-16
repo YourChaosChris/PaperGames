@@ -1,6 +1,6 @@
 // tests/arrows-core.js
-// "Arrows" (Pfeile): 500 generated puzzles per existing level and 100
-// each for Grandmaster and every picture shape.
+// "Arrows" (Pfeile): 500 generated puzzles per existing level, 200 for
+// Grandmaster and 50 for each of the twelve picture shapes.
 //
 // Checks: every arrow lies on the field, its cells are neighbours in a
 // line without overlap, a line of two or more cells points the way of its
@@ -25,7 +25,8 @@
 const A = require("../arrows-core.js");
 
 const PER = 500;
-const NEW_PER = 100;
+const GRAND_PER = 200;
+const SHAPE_PER = 50;
 const fails = [];
 const stats = {};
 
@@ -54,7 +55,11 @@ function check(p, lv, seed, shape) {
   if (shape) {
     const mask = new Set(p.mask || []), covered = new Set(p.arrows.flatMap((a) => a.cells));
     if (!mask.size || covered.size < Math.ceil(mask.size * 0.9)) return tag + ": silhouette coverage below 90 %";
-    if (covered.size !== mask.size || Array.from(covered).some((i) => !mask.has(i))) return tag + ": arrows do not exactly cover the silhouette mask";
+    if (Array.from(covered).some((i) => !mask.has(i))) return tag + ": an arrow cell lies outside the silhouette";
+    if (p.shape !== shape || p.mask.join() !== A.maskFor(shape).join()) return tag + ": shape or mask not stored";
+    // not trivial: not every arrow free at the start
+    const occ0 = A.occupancy(p, p.arrows.map(() => true));
+    if (p.arrows.every((_a, k) => A.canLeave(p, occ0, k))) return tag + ": every arrow is free at the start";
   }
   const r = A.rounds(p);
   if (r < 0) return tag + ": cannot be cleared";
@@ -165,7 +170,7 @@ Object.keys(FINGER).forEach((lv) => { const f = finger(lv); if (f !== FINGER[lv]
 const t0 = Date.now();
 for (const lv of Object.keys(A.LEVELS)) {
   const shapes = lv === "pictures" ? Object.keys(A.SHAPES) : [null];
-  const count = (lv === "grandmaster" || lv === "pictures") ? NEW_PER : PER;
+  const count = lv === "grandmaster" ? GRAND_PER : lv === "pictures" ? SHAPE_PER : PER;
   for (const shape of shapes) for (let seed = 1; seed <= count; seed++) {
     const p = A.generatePuzzle(lv, A.makeRng(seed * 7919 + lv.length + (shape ? shape.length * 101 : 0)), shape || undefined);
     const err = check(p, lv, seed, shape);

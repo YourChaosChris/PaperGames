@@ -330,7 +330,10 @@ function renderAw() {
   if (!p) return;
   const S = AW_CELL, W = p.cols * S, H = p.rows * S;
   const mask = p.mask ? new Set(p.mask) : null;
-  let svg = '<svg class="pt-svg" viewBox="0 0 ' + W + " " + H + '" aria-hidden="true" focusable="false">' +
+  // The 15 x 15 boards (Grandmaster, pictures) have no margin around the
+  // grid, so a cell is a full 24 px on a 360 px wide screen.
+  const M = p.cols >= 15 ? 0 : 2;
+  let svg = '<svg class="pt-svg" viewBox="' + (-M) + " " + (-M) + " " + (W + 2 * M) + " " + (H + 2 * M) + '" aria-hidden="true" focusable="false">' +
     '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="#fff"/>';
   if (mask) {
     mask.forEach((i) => { const x = (i % p.cols) * S, y = Math.floor(i / p.cols) * S;
@@ -342,15 +345,17 @@ function renderAw() {
   p.arrows.forEach((a, k) => { const c = cellsAw(k); if (c) svg += arrowSvgAw(p, { cells: c, dir: a.dir }, S); });
   if (AppStateAw.hint >= 0 && cellsAw(AppStateAw.hint)) svg += frameSvgAw(p, cellsAw(AppStateAw.hint), S, "pt-hint");
   if (AppStateAw.blocker >= 0 && cellsAw(AppStateAw.blocker)) svg += frameSvgAw(p, cellsAw(AppStateAw.blocker), S, "aw-blocker");
-  if (!mask) svg += '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="none" stroke="#141413" stroke-width="4"/>';
+  if (!mask) svg += M ? '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="none" stroke="#141413" stroke-width="4"/></svg>' : '<rect x="2" y="2" width="' + (W - 4) + '" height="' + (H - 4) + '" fill="none" stroke="#141413" stroke-width="4"/></svg>';
+  else svg += "</svg>";
   const boardEl = document.getElementById("aw-board");
-  const ix = "0%", iy = "0%";
+  const ix = (100 * M / (W + 2 * M)).toFixed(3) + "%", iy = (100 * M / (H + 2 * M)).toFixed(3) + "%";
   let html = svg + '<div class="pt-cells" style="left:' + ix + ";right:" + ix + ";top:" + iy + ";bottom:" + iy +
     ";grid-template-columns:repeat(" + p.cols + ",1fr);grid-template-rows:repeat(" + p.rows + ',1fr)">';
   for (let i = 0; i < p.rows * p.cols; i++) html += '<button type="button" class="pt-cell' + (mask && !mask.has(i) ? ' aw-cell-outside' : '') + '" data-i="' + i + '"' + (mask && !mask.has(i) ? ' disabled tabindex="-1" aria-hidden="true"' : '') + '></button>';
   boardEl.innerHTML = html + "</div>";
   boardEl.style.maxWidth = (p.cols * 3.4) + "rem";
   boardEl.classList.toggle("aw-board-large", p.cols >= 10);
+  boardEl.classList.toggle("aw-board-full", p.cols >= 15);
   const occ = occupancyAw();
   boardEl.querySelectorAll(".pt-cell").forEach((btn) => {
     const i = parseInt(btn.getAttribute("data-i"), 10);
