@@ -1,5 +1,6 @@
 // tests/arrows-core.js
-// "Arrows" (Pfeile): 500 generated puzzles per level.
+// "Arrows" (Pfeile): 500 generated puzzles per existing level, 200 for
+// Grandmaster and 50 for each of the twelve picture shapes.
 //
 // Checks: every arrow lies on the field, its cells are neighbours in a
 // line without overlap, a line of two or more cells points the way of its
@@ -24,12 +25,14 @@
 const A = require("../arrows-core.js");
 
 const PER = 500;
+const GRAND_PER = 200;
+const SHAPE_PER = 50;
 const fails = [];
 const stats = {};
 
-function check(p, lv, seed) {
+function check(p, lv, seed, shape) {
   const cfg = A.LEVELS[lv];
-  const tag = lv + " #" + seed;
+  const tag = lv + (shape ? " (" + shape + ")" : "") + " #" + seed;
   if (p.rows !== cfg.rows || p.cols !== cfg.cols) return tag + ": field " + p.rows + " x " + p.cols;
   if (!!p.glide !== !!cfg.glide) return tag + ": glide flag wrong";
   const seen = {};
@@ -49,10 +52,30 @@ function check(p, lv, seed) {
       }
     }
   }
+  if (shape) {
+    const mask = new Set(p.mask || []), covered = new Set(p.arrows.flatMap((a) => a.cells));
+    if (!mask.size || covered.size < Math.ceil(mask.size * 0.9)) return tag + ": silhouette coverage below 90 %";
+    if (Array.from(covered).some((i) => !mask.has(i))) return tag + ": an arrow cell lies outside the silhouette";
+    if (p.shape !== shape || p.mask.join() !== A.maskFor(shape).join()) return tag + ": shape or mask not stored";
+    // not trivial: not every arrow free at the start
+    const occ0 = A.occupancy(p, p.arrows.map(() => true));
+    if (p.arrows.every((_a, k) => A.canLeave(p, occ0, k))) return tag + ": every arrow is free at the start";
+  }
   const r = A.rounds(p);
   if (r < 0) return tag + ": cannot be cleared";
   if (r < cfg.rounds) return tag + ": only " + r + " rounds";
-  if (cfg.glide) return checkGlide(p, lv, tag, r);
+  if (cfg.glide) {
+    const err = checkGlide(p, lv, tag, r);
+    if (err) return err;
+    const statKey = shape ? lv + "/" + shape : lv;
+    const s = stats[statKey] || (stats[statKey] = { arrows: [], rounds: [], free: [], puzzles: 0 });
+    const initialOcc = A.occupancy(p, p.arrows.map(() => true));
+    s.arrows.push(p.arrows.length);
+    s.rounds.push(r);
+    s.free.push(p.arrows.reduce((n, _a, k) => n + (A.canLeave(p, initialOcc, k) ? 1 : 0), 0));
+    s.puzzles++;
+    return null;
+  }
   // Play it with the hint alone.
   const present = p.arrows.map(() => true);
   let moves = 0;
@@ -75,9 +98,13 @@ function check(p, lv, seed) {
       if (!A.rayCells(p, p.arrows[k]).some((i) => occ[i] === b)) return tag + ": blocker not in the way";
     }
   }
-  const s = stats[lv] || (stats[lv] = { arrows: [], rounds: [] });
+  const statKey = shape ? lv + "/" + shape : lv;
+  const s = stats[statKey] || (stats[statKey] = { arrows: [], rounds: [], free: [], puzzles: 0 });
   s.arrows.push(p.arrows.length);
   s.rounds.push(r);
+  const initialOcc = A.occupancy(p, p.arrows.map(() => true));
+  s.free.push(p.arrows.reduce((n, _a, k) => n + (A.canLeave(p, initialOcc, k) ? 1 : 0), 0));
+  s.puzzles++;
   return null;
 }
 
@@ -118,11 +145,12 @@ function checkGlide(p, lv, tag, r) {
   }
   if (!A.cleared(pos)) return tag + ": gliding hint does not clear the field";
   // Random players.
-  const g = glide[lv] || (glide[lv] = { arrows: [], stuck: 0, tries: 0, rounds: [] });
+  const g = glide[lv] || (glide[lv] = { arrows: [], stuck: 0, tries: 0, rounds: [], puzzles: 0 });
   const random = A.makeRng(tag.length * 131 + p.arrows.length * 17 + way.length);
   for (let t = 0; t < 20; t++) { g.tries++; if (A.randomPlayStuck(p, random)) g.stuck++; }
   g.arrows.push(p.arrows.length);
   g.rounds.push(r);
+  g.puzzles++;
   return null;
 }
 
@@ -141,17 +169,21 @@ Object.keys(FINGER).forEach((lv) => { const f = finger(lv); if (f !== FINGER[lv]
 
 const t0 = Date.now();
 for (const lv of Object.keys(A.LEVELS)) {
-  for (let seed = 1; seed <= PER; seed++) {
-    const err = check(A.generatePuzzle(lv, A.makeRng(seed * 7919 + lv.length)), lv, seed);
+  const shapes = lv === "pictures" ? Object.keys(A.SHAPES) : [null];
+  const count = lv === "grandmaster" ? GRAND_PER : lv === "pictures" ? SHAPE_PER : PER;
+  for (const shape of shapes) for (let seed = 1; seed <= count; seed++) {
+    const p = A.generatePuzzle(lv, A.makeRng(seed * 7919 + lv.length + (shape ? shape.length * 101 : 0)), shape || undefined);
+    const err = check(p, lv, seed, shape);
     if (err) fails.push(err);
   }
 }
 const range = (a) => Math.min.apply(null, a) + "-" + Math.max.apply(null, a) + " (average " + (a.reduce((x, y) => x + y, 0) / a.length).toFixed(1) + ")";
-Object.keys(stats).forEach((lv) => console.log(lv + ": " + PER + " puzzles, arrows " + range(stats[lv].arrows) + ", rounds " + range(stats[lv].rounds) + ", solved with the hint in the fewest moves"));
+Object.keys(stats).forEach((lv) => console.log(lv + ": " + stats[lv].puzzles + " puzzles, arrows " + range(stats[lv].arrows) + ", free at start " + range(stats[lv].free) + ", dependency chain (rounds) " + range(stats[lv].rounds) + ", solved with the hint in the fewest moves"));
 Object.keys(glide).forEach((lv) => {
   const g = glide[lv], rate = g.stuck / g.tries;
-  console.log(lv + ": " + PER + " puzzles 11 x 11 with gliding arrows, arrows " + range(g.arrows) + ", rounds " + range(g.rounds) + ", solved by the solver and with the hint; random player stuck in " + g.stuck + " of " + g.tries + " tries (" + (100 * rate).toFixed(1) + " %)");
-  if (rate < 0.6) fails.push(lv + ": random player stuck in only " + (100 * rate).toFixed(1) + " %");
+  const cfg = A.LEVELS[lv];
+  console.log(lv + ": " + g.puzzles + " puzzles " + cfg.rows + " x " + cfg.cols + " with gliding arrows, arrows " + range(g.arrows) + ", rounds " + range(g.rounds) + ", solved by the solver and with the hint; random player stuck in " + g.stuck + " of " + g.tries + " tries (" + (100 * rate).toFixed(1) + " %)");
+  if ((lv === "hard" || lv === "master") && rate < 0.6) fails.push(lv + ": random player stuck in only " + (100 * rate).toFixed(1) + " %");
 });
 console.log("time " + ((Date.now() - t0) / 1000).toFixed(1) + " s");
 if (fails.length) {

@@ -2229,7 +2229,7 @@ Object.assign(STRINGS.es, {
     aw_term_goal: "Objetivo",
     aw_rules_goal: "Vacía todo el tablero. Cada acertijo está hecho para tener solución, y sacar una flecha nunca bloquea a otra, así que no puedes quedarte atascado. El mínimo de movimientos es el número de flechas; deshacer también cuenta como movimiento.",
     aw_term_levels: "Niveles",
-    aw_rules_levels: "Fácil: 5 × 5 casillas con flechas cortas. Medio: 7 × 7 con flechas de dos a cuatro casillas. Difícil: 11 × 11 con flechas que se deslizan, de hasta siete casillas y dos esquinas. Maestro: como Difícil, con tres corazones.",
+    aw_rules_levels: "Fácil: 5 × 5 casillas con flechas cortas. Medio: 7 × 7 con flechas de dos a cuatro casillas. Difícil: 11 × 11 con flechas que se deslizan, de hasta siete casillas y dos esquinas. Maestro: como Difícil, con tres corazones. Gran maestro: 15 × 15, con flechas deslizantes de hasta 15 casillas y seis giros, además de tres corazones. Las figuras usan una de doce siluetas de casillas. Las pistas funcionan en Gran maestro y en las figuras.",
     aw_term_help: "Pista",
     aw_rules_help: "«Pista» marca una flecha que puede salir ahora.",
     aw_rules_example_title: "Ejemplo",

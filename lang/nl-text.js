@@ -2229,7 +2229,7 @@ Object.assign(STRINGS.nl, {
     aw_term_goal: "Doel",
     aw_rules_goal: "Maak het hele veld leeg. Elke puzzel is zo gemaakt dat hij oplosbaar is, en een pijl weghalen blokkeert nooit een andere, dus je kunt niet vastlopen. Het minste aantal zetten is het aantal pijlen; ook ongedaan maken telt als zet.",
     aw_term_levels: "Niveaus",
-    aw_rules_levels: "Makkelijk: 5 × 5 vakjes met korte pijlen. Gemiddeld: 7 × 7 met pijlen van twee tot vier vakjes. Moeilijk: 11 × 11 met glijdende pijlen van tot zeven vakjes en twee hoeken. Meester: als Moeilijk, met drie hartjes.",
+    aw_rules_levels: "Makkelijk: 5 × 5 vakjes met korte pijlen. Gemiddeld: 7 × 7 met pijlen van twee tot vier vakjes. Moeilijk: 11 × 11 met glijdende pijlen van tot zeven vakjes en twee hoeken. Meester: als Moeilijk, met drie hartjes. Grootmeester: 15 × 15 met glijdende pijlen tot 15 vakjes en zes bochten, plus drie hartjes. Beeldpuzzels gebruiken een van twaalf omtrekvormen van vakjes. Tips werken in Grootmeester en bij de beeldpuzzels.",
     aw_term_help: "Tip",
     aw_rules_help: "‘Tip’ markeert een pijl die nu eruit kan.",
     aw_rules_example_title: "Voorbeeld",

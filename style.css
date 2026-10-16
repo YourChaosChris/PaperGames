@@ -13934,6 +13934,16 @@ li.fv-card {
   }
 }
 
+/* 15 x 15 boards (Grandmaster, pictures): the full screen width, so a cell
+   is 24 px at 360 px. */
+@media (max-width: 480px) {
+  .pt-board.aw-board-full {
+    width: 100vw;
+    margin-left: calc((100% - 100vw) / 2);
+    margin-right: calc((100% - 100vw) / 2);
+  }
+}
+
 /* Master: the hearts left, as large symbols under the info line. */
 .aw-hearts {
   text-align: center;

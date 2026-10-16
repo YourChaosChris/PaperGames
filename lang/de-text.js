@@ -2229,7 +2229,7 @@ Object.assign(STRINGS.de, {
     aw_term_goal: "Ziel",
     aw_rules_goal: "Räume das ganze Feld. Jedes Rätsel ist so gebaut, dass es lösbar ist, und ein herausgenommener Pfeil blockiert nie einen anderen – du kannst also nicht steckenbleiben. Die Mindestzahl der Züge ist die Zahl der Pfeile; auch Rückgängig zählt als Zug.",
     aw_term_levels: "Stufen",
-    aw_rules_levels: "Leicht: 5 × 5 Felder mit kurzen Pfeilen. Mittel: 7 × 7 mit Pfeilen aus zwei bis vier Feldern. Schwer: 11 × 11 mit Gleitpfeilen aus bis zu sieben Feldern und zwei Ecken. Meister: wie Schwer, mit drei Herzen.",
+    aw_rules_levels: "Leicht: 5 × 5 Felder mit kurzen Pfeilen. Mittel: 7 × 7 mit Pfeilen aus zwei bis vier Feldern. Schwer: 11 × 11 mit Gleitpfeilen aus bis zu sieben Feldern und zwei Ecken. Meister: wie Schwer, mit drei Herzen. Großmeister: 15 × 15 mit Gleitpfeilen aus bis zu 15 Feldern und sechs Ecken sowie drei Herzen. Bildrätsel nutzen eine von zwölf Umrissformen aus Zellen. Auf Großmeister und in Bildrätseln funktioniert „Tipp“.",
     aw_term_help: "Tipp",
     aw_rules_help: "„Tipp“ markiert einen Pfeil, der jetzt hinaus kann.",
     aw_rules_example_title: "Beispiel",
