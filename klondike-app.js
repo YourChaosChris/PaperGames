@@ -460,7 +460,7 @@ function updateUndoButtonVisibilityKlondike() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateKlondike.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateKlondike.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 document.addEventListener("DOMContentLoaded", initKlondikeApp);

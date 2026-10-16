@@ -53,7 +53,8 @@ function saveFanoronaGame() {
     humanColor: AppStateFanorona.humanColor,
     aiLevel: AppStateFanorona.aiLevel,
     moveCount: AppStateFanorona.moveCount,
-    captures: AppStateFanorona.captures
+    captures: AppStateFanorona.captures,
+    undoStack: AppStateFanorona.undoStack.slice(-50),
   });
 }
 
@@ -73,7 +74,7 @@ function colorNameFanorona(color) {
 }
 
 function setStatusFanorona(elementId, text) {
-  if (((AppStateFanorona.mode === "offline-ai")) && text) {
+  if (((AppStateFanorona.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateFanorona.state || AppStateFanorona;
     const uiStatusGameOver = AppStateFanorona.gameOver === true || AppStateFanorona.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -305,7 +306,7 @@ function initFanoronaApp() {
     AppStateFanorona.moveCount = savedGame.moveCount;
     AppStateFanorona.captures = savedGame.captures;
     AppStateFanorona.gameOver = false;
-    resetUndoStackFanorona();
+    AppStateFanorona.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateFanorona.mode);
     setGameResultFanorona("");
     showBoardSectionFanorona();
@@ -777,7 +778,7 @@ function updateUndoButtonVisibilityFanorona() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateFanorona.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateFanorona.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityFanorona() {

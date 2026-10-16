@@ -38,7 +38,8 @@ function saveFoxGeeseGame() {
     lastMove: AppStateFoxGeese.lastMove,
     humanSide: AppStateFoxGeese.humanSide,
     aiLevel: AppStateFoxGeese.aiLevel,
-    moveCount: AppStateFoxGeese.moveCount
+    moveCount: AppStateFoxGeese.moveCount,
+    undoStack: AppStateFoxGeese.undoStack.slice(-50),
   });
 }
 
@@ -58,7 +59,7 @@ function sideNameFoxGeese(side) {
 }
 
 function setStatusFoxGeese(elementId, text) {
-  if (((AppStateFoxGeese.mode === "offline-ai")) && text) {
+  if (((AppStateFoxGeese.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateFoxGeese.state || AppStateFoxGeese;
     const uiStatusGameOver = AppStateFoxGeese.gameOver === true || AppStateFoxGeese.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -246,7 +247,7 @@ function initFoxGeeseApp() {
     AppStateFoxGeese.aiLevel = saved.aiLevel;
     AppStateFoxGeese.moveCount = saved.moveCount;
     AppStateFoxGeese.gameOver = false;
-    AppStateFoxGeese.undoStack = [];
+    AppStateFoxGeese.undoStack = Array.isArray(saved.undoStack) ? saved.undoStack : [];
     setActiveModeButton(AppStateFoxGeese.mode);
     setGameResultFoxGeese("");
     showBoardSectionFoxGeese();
@@ -590,7 +591,7 @@ function updateGameLabelsFoxGeese() {
   const meta = document.getElementById("game-meta");
   if (meta) I18n.setMsg(meta, AppStateFoxGeese.moveCount ? "Move " + AppStateFoxGeese.moveCount : "");
   const undoBtn = document.getElementById("undo-btn");
-  if (undoBtn) undoBtn.classList.toggle("hidden", !(AppStateFoxGeese.undoStack.length && !AppStateFoxGeese.gameOver));
+  if (undoBtn) undoBtn.disabled = !(AppStateFoxGeese.undoStack.length);
   const resignBtn = document.getElementById("resign-button");
   if (resignBtn) resignBtn.classList.toggle("hidden", AppStateFoxGeese.gameOver);
   if (AppStateFoxGeese.gameOver) clearSavedFoxGeeseGame();

@@ -45,7 +45,8 @@ function saveSenetGame() {
     roll: AppStateSenet.roll,
     humanColor: AppStateSenet.humanColor,
     aiLevel: AppStateSenet.aiLevel,
-    moveCount: AppStateSenet.moveCount
+    moveCount: AppStateSenet.moveCount,
+    undoStack: AppStateSenet.undoStack.slice(-50),
   });
 }
 
@@ -65,7 +66,7 @@ function colorNameSenet(color) {
 }
 
 function setStatusSenet(elementId, text) {
-  if (((AppStateSenet.mode === "offline-ai")) && text) {
+  if (((AppStateSenet.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateSenet.state || AppStateSenet;
     const uiStatusGameOver = AppStateSenet.gameOver === true || AppStateSenet.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -270,7 +271,7 @@ function initSenetApp() {
     AppStateSenet.moveCount = savedGame.moveCount;
     AppStateSenet.lastMove = null;
     AppStateSenet.gameOver = false;
-    resetUndoStackSenet();
+    AppStateSenet.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButtonSenet(AppStateSenet.mode);
     setGameResultSenet("");
     showBoardSectionSenet();
@@ -641,7 +642,7 @@ function updateUndoButtonVisibilitySenet() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateSenet.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateSenet.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilitySenet() {

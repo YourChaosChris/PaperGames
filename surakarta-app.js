@@ -47,7 +47,8 @@ function saveSurakartaGame() {
     humanColor: AppStateSurakarta.humanColor,
     aiLevel: AppStateSurakarta.aiLevel,
     moveCount: AppStateSurakarta.moveCount,
-    captures: AppStateSurakarta.captures
+    captures: AppStateSurakarta.captures,
+    undoStack: AppStateSurakarta.undoStack.slice(-50),
   });
 }
 
@@ -67,7 +68,7 @@ function colorNameSurakarta(color) {
 }
 
 function setStatusSurakarta(elementId, text) {
-  if (((AppStateSurakarta.mode === "offline-ai")) && text) {
+  if (((AppStateSurakarta.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateSurakarta.state || AppStateSurakarta;
     const uiStatusGameOver = AppStateSurakarta.gameOver === true || AppStateSurakarta.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -269,7 +270,7 @@ function initSurakartaApp() {
     AppStateSurakarta.moveCount = savedGame.moveCount;
     AppStateSurakarta.captures = savedGame.captures;
     AppStateSurakarta.gameOver = false;
-    resetUndoStackSurakarta();
+    AppStateSurakarta.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateSurakarta.mode);
     setGameResultSurakarta("");
     showBoardSectionSurakarta();
@@ -673,7 +674,7 @@ function updateUndoButtonVisibilitySurakarta() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateSurakarta.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateSurakarta.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilitySurakarta() {

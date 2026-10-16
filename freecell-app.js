@@ -460,7 +460,7 @@ function updateUndoButtonVisibilityFreeCell() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateFreeCell.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateFreeCell.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 document.addEventListener("DOMContentLoaded", initFreeCellApp);

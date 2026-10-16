@@ -576,6 +576,7 @@ STRINGS.es = {
     release_v244: "Los juegos se abren listos para jugar; la ventana de resultado ofrece «Jugar otra vez»; «Nueva partida» queda junto al tablero; el ajedrez tiene su propio botón para dos jugadores.",
     release_v245: "Las páginas de juego tienen una cabecera de una línea y no muestran la navegación del sitio; los ajustes están en el menú; el panel se cierra al empezar, así caben más tableros en la pantalla.",
     release_v246: "Las tarjetas de juego de todas las páginas de categoría son zonas grandes para tocar; la página infantil muestra todos los juegos en una página con iconos grandes; «Tablero grande» facilita los tableros pequeños; Cake ya no figura entre los juegos infantiles.",
+    release_v247: "Todos los juegos usan los mismos nombres y textos de estado («Contra el ordenador», «Dos jugadores en un dispositivo», «Partida nueva», «Te toca»); cada página de juego tiene un botón de Inicio; «Deshacer» retira tu jugada y la respuesta del ordenador en 32 juegos.",
     release_v240: "Se cambiaron los nombres de los juegos en los 12 idiomas.",
     release_v239: "Se eliminaron nombres de juegos protegidos de las reglas y las descripciones históricas.",
     release_v238: "Las reglas breves ahora corresponden al tema elegido y al modo de buscar en la imagen.",

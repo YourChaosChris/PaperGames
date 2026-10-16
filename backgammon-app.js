@@ -76,7 +76,8 @@ function saveBackgammonGame() {
     moveCount: AppStateBackgammon.moveCount,
     cubeValue: AppStateBackgammon.cubeValue,
     cubeOwner: AppStateBackgammon.cubeOwner,
-    moveHistory: AppStateBackgammon.moveHistory
+    moveHistory: AppStateBackgammon.moveHistory,
+    undoStack: AppStateBackgammon.undoStack.slice(-50),
   });
 }
 
@@ -96,7 +97,7 @@ function colorNameBg(color) {
 }
 
 function setStatusBg(elementId, text) {
-  if (((AppStateBackgammon.mode === "offline-ai")) && text) {
+  if (((AppStateBackgammon.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateBackgammon.state || AppStateBackgammon;
     const uiStatusGameOver = AppStateBackgammon.gameOver === true || AppStateBackgammon.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -339,7 +340,7 @@ function initBackgammonApp() {
     AppStateBackgammon.cubeOwner = savedGame.cubeOwner || null;
     AppStateBackgammon.moveHistory = savedGame.moveHistory || [];
     AppStateBackgammon.gameOver = false;
-    resetUndoStackBg();
+    AppStateBackgammon.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     renderMoveListBg();
     setActiveModeButtonBg(AppStateBackgammon.mode);
     setGameResultBg("");
@@ -887,7 +888,7 @@ function updateUndoButtonVisibilityBg() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateBackgammon.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateBackgammon.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityBg() {

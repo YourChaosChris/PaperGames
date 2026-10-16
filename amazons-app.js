@@ -45,7 +45,8 @@ function saveAmazonsGame() {
     lastMove: AppStateAmazons.lastMove,
     humanSide: AppStateAmazons.humanSide,
     aiLevel: AppStateAmazons.aiLevel,
-    moveCount: AppStateAmazons.moveCount
+    moveCount: AppStateAmazons.moveCount,
+    undoStack: AppStateAmazons.undoStack.slice(-50),
   });
 }
 
@@ -65,7 +66,7 @@ function sideNameAmazons(side) {
 }
 
 function setStatusAmazons(elementId, text) {
-  if (((AppStateAmazons.mode === "offline-ai")) && text) {
+  if (((AppStateAmazons.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateAmazons.state || AppStateAmazons;
     const uiStatusGameOver = AppStateAmazons.gameOver === true || AppStateAmazons.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -268,7 +269,7 @@ function initAmazonsApp() {
     AppStateAmazons.aiLevel = savedGame.aiLevel;
     AppStateAmazons.moveCount = savedGame.moveCount;
     AppStateAmazons.gameOver = false;
-    resetUndoStackAmazons();
+    AppStateAmazons.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateAmazons.mode);
     setGameResultAmazons("");
     showBoardSectionAmazons();
@@ -588,7 +589,7 @@ function updateUndoButtonVisibilityAmazons() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateAmazons.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateAmazons.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityAmazons() {

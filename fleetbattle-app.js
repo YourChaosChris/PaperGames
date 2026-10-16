@@ -90,7 +90,7 @@ function fbShipName(id) {
 }
 
 function setStatusFb(elementId, text) {
-  if ((AppStateFleetBattle.phase === "battle" || AppStateFleetBattle.phase === "over") && text) {
+  if ((AppStateFleetBattle.phase === "battle" || AppStateFleetBattle.phase === "over") && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateFleetBattle;
     const uiStatusGameOver = AppStateFleetBattle.gameOver === true || AppStateFleetBattle.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;

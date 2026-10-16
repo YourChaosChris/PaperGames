@@ -29,7 +29,8 @@ function saveMancalaGame() {
     turn: AppStateMancala.turn,
     humanSide: AppStateMancala.humanSide,
     aiLevel: AppStateMancala.aiLevel,
-    moveCount: AppStateMancala.moveCount
+    moveCount: AppStateMancala.moveCount,
+    undoStack: AppStateMancala.undoStack.slice(-50),
   });
 }
 
@@ -49,7 +50,7 @@ function sideNameMancala(side) {
 }
 
 function setStatusMancala(elementId, text) {
-  if (((AppStateMancala.mode === "offline-ai")) && text) {
+  if (((AppStateMancala.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateMancala.state || AppStateMancala;
     const uiStatusGameOver = AppStateMancala.gameOver === true || AppStateMancala.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -246,7 +247,7 @@ function initMancalaApp() {
     AppStateMancala.moveCount = savedGame.moveCount;
     AppStateMancala.lastMove = null;
     AppStateMancala.gameOver = false;
-    resetUndoStackMancala();
+    AppStateMancala.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateMancala.mode);
     setGameResultMancala("");
     showBoardSectionMancala();
@@ -510,7 +511,7 @@ function updateUndoButtonVisibilityMancala() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateMancala.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateMancala.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityMancala() {

@@ -42,7 +42,8 @@ function saveAlquerqueGame() {
     humanColor: AppStateAlquerque.humanColor,
     aiLevel: AppStateAlquerque.aiLevel,
     moveCount: AppStateAlquerque.moveCount,
-    captures: AppStateAlquerque.captures
+    captures: AppStateAlquerque.captures,
+    undoStack: AppStateAlquerque.undoStack.slice(-50),
   });
 }
 
@@ -62,7 +63,7 @@ function colorNameAlquerque(color) {
 }
 
 function setStatusAlquerque(elementId, text) {
-  if (((AppStateAlquerque.mode === "offline-ai")) && text) {
+  if (((AppStateAlquerque.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateAlquerque.state || AppStateAlquerque;
     const uiStatusGameOver = AppStateAlquerque.gameOver === true || AppStateAlquerque.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -254,7 +255,7 @@ function initAlquerqueApp() {
     AppStateAlquerque.moveCount = savedGame.moveCount;
     AppStateAlquerque.captures = savedGame.captures || { b: 0, w: 0 };
     AppStateAlquerque.gameOver = false;
-    resetUndoStackAlquerque();
+    AppStateAlquerque.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateAlquerque.mode);
     setGameResultAlquerque("");
     showBoardSectionAlquerque();
@@ -612,7 +613,7 @@ function updateGameLabelsAlquerque() {
   const meta = document.getElementById("game-meta");
   if (meta) I18n.setMsg(meta, AppStateAlquerque.moveCount ? "Move " + AppStateAlquerque.moveCount : "");
   const undoBtn = document.getElementById("undo-btn");
-  if (undoBtn) undoBtn.classList.toggle("hidden", !(AppStateAlquerque.undoStack.length && !AppStateAlquerque.gameOver));
+  if (undoBtn) undoBtn.disabled = !(AppStateAlquerque.undoStack.length);
   const resignBtn = document.getElementById("resign-button");
   if (resignBtn) resignBtn.classList.toggle("hidden", AppStateAlquerque.gameOver);
   if (AppStateAlquerque.gameOver) clearSavedAlquerqueGame();

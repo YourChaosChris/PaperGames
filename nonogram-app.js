@@ -367,7 +367,7 @@ function updateUndoButtonVisibilityNonogram() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateNonogram.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateNonogram.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 document.addEventListener("DOMContentLoaded", initNonogramApp);

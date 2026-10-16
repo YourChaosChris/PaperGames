@@ -39,7 +39,8 @@ function saveTablutGame() {
     lastMove: AppStateTablut.lastMove,
     humanSide: AppStateTablut.humanSide,
     aiLevel: AppStateTablut.aiLevel,
-    moveCount: AppStateTablut.moveCount
+    moveCount: AppStateTablut.moveCount,
+    undoStack: AppStateTablut.undoStack.slice(-50),
   });
 }
 
@@ -59,7 +60,7 @@ function sideNameTablut(side) {
 }
 
 function setStatusTablut(elementId, text) {
-  if (((AppStateTablut.mode === "offline-ai")) && text) {
+  if (((AppStateTablut.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateTablut.state || AppStateTablut;
     const uiStatusGameOver = AppStateTablut.gameOver === true || AppStateTablut.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -257,7 +258,7 @@ function initTablutApp() {
     AppStateTablut.aiLevel = savedGame.aiLevel;
     AppStateTablut.moveCount = savedGame.moveCount;
     AppStateTablut.gameOver = false;
-    resetUndoStackTablut();
+    AppStateTablut.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateTablut.mode);
     setGameResultTablut("");
     showBoardSectionTablut();
@@ -515,7 +516,7 @@ function updateUndoButtonVisibilityTablut() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateTablut.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateTablut.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityTablut() {

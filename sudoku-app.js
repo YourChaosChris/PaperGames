@@ -417,7 +417,7 @@ function updateUndoButtonVisibilitySudoku() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateSudoku.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateSudoku.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateEraseButtonVisibilitySudoku() {

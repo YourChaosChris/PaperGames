@@ -48,7 +48,8 @@ function saveSternhalmaGame() {
     lastMove: AppStateSternhalma.lastMove,
     humanSide: AppStateSternhalma.humanSide,
     aiLevel: AppStateSternhalma.aiLevel,
-    moveCount: AppStateSternhalma.moveCount
+    moveCount: AppStateSternhalma.moveCount,
+    undoStack: AppStateSternhalma.undoStack.slice(-50),
   });
 }
 
@@ -68,7 +69,7 @@ function sideNameSternhalma(side) {
 }
 
 function setStatusSternhalma(elementId, text) {
-  if (((AppStateSternhalma.mode === "offline-ai")) && text) {
+  if (((AppStateSternhalma.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateSternhalma.state || AppStateSternhalma;
     const uiStatusGameOver = AppStateSternhalma.gameOver === true || AppStateSternhalma.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -266,7 +267,7 @@ function initSternhalmaApp() {
     AppStateSternhalma.aiLevel = savedGame.aiLevel;
     AppStateSternhalma.moveCount = savedGame.moveCount;
     AppStateSternhalma.gameOver = false;
-    resetUndoStackSternhalma();
+    AppStateSternhalma.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateSternhalma.mode);
     setGameResultSternhalma("");
     showBoardSectionSternhalma();
@@ -568,7 +569,7 @@ function updateUndoButtonVisibilitySternhalma() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateSternhalma.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateSternhalma.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilitySternhalma() {

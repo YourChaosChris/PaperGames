@@ -527,7 +527,7 @@ function updateUndoButtonVisibilitySlitherlink() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateSlitherlink.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateSlitherlink.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateClearButtonVisibilitySlitherlink() {

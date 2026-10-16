@@ -39,7 +39,8 @@ function saveChessGame() {
     positionHistory: AppState.positionHistory,
     halfmoveClock: AppState.halfmoveClock,
     moveHistory: AppState.moveHistory,
-    rules: ChessCore.getRulesState()
+    rules: ChessCore.getRulesState(),
+    undoStack: AppState.undoStack.slice(-50),
   });
 }
 
@@ -804,7 +805,7 @@ aiLevelInline.addEventListener("change", () => {
     else ChessCore.setRulesState({ ep: null, castling: ChessCore.rightsFromBoard(savedGame.board) });
     AppState.currentGame = null;
     AppState.gameOver = false;
-    resetUndoStack();
+    AppState.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     updateActionButtonsVisibility();
     setActiveModeButton(savedGame.mode);
     onlineControls.classList.add("hidden");
@@ -896,7 +897,7 @@ function updateUserPanel(extraError) {
 }
 
 function setStatus(elementId, text) {
-  if (AppState.mode === "offline-ai" && text) {
+  if (AppState.mode === "offline-ai" && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppState;
     const uiStatusGameOver = AppState.gameOver === true || AppState.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -1198,8 +1199,7 @@ function updateUndoButtonVisibility() {
   const stack = AppState.undoStack || [];
   const hasUndo = stack.length > 0;
   const isOfflineMode = AppState.mode === "offline" || AppState.mode === "offline-ai";
-  const shouldShow = isOfflineMode && hasUndo && !AppState.gameOver;
-  btn.classList.toggle("hidden", !shouldShow);
+  btn.disabled = !isOfflineMode || !hasUndo;
 }
 
 

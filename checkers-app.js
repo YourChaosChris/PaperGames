@@ -38,7 +38,8 @@ function saveCheckersGame() {
     aiLevel: AppStateCheckers.aiLevel,
     moveCount: AppStateCheckers.moveCount,
     movesSinceCapture: AppStateCheckers.movesSinceCapture,
-    captures: AppStateCheckers.captures
+    captures: AppStateCheckers.captures,
+    undoStack: AppStateCheckers.undoStack.slice(-50),
   });
 }
 
@@ -58,7 +59,7 @@ function colorNameCheckers(color) {
 }
 
 function setStatusCheckers(elementId, text) {
-  if (((AppStateCheckers.mode === "offline-ai")) && text) {
+  if (((AppStateCheckers.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateCheckers.state || AppStateCheckers;
     const uiStatusGameOver = AppStateCheckers.gameOver === true || AppStateCheckers.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -263,7 +264,7 @@ function initCheckersApp() {
     AppStateCheckers.movesSinceCapture = savedGame.movesSinceCapture;
     AppStateCheckers.captures = savedGame.captures;
     AppStateCheckers.gameOver = false;
-    resetUndoStackCheckers();
+    AppStateCheckers.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateCheckers.mode);
     setGameResultCheckers("");
     showBoardSectionCheckers();
@@ -647,7 +648,7 @@ function updateUndoButtonVisibilityCheckers() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateCheckers.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateCheckers.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityCheckers() {

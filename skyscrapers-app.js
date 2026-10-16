@@ -465,7 +465,7 @@ function updateUndoButtonVisibilitySkyscrapers() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateSkyscrapers.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateSkyscrapers.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateEraseButtonVisibilitySkyscrapers() {

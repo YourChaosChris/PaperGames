@@ -558,8 +558,8 @@ function renderDurak() {
   const takeBtn = document.getElementById("durak-take");
   const passBtn = document.getElementById("durak-pass");
   const transferBtn = document.getElementById("durak-transfer");
-  takeBtn.classList.toggle("hidden", !(myTurn && s.phase === "defend"));
-  passBtn.classList.toggle("hidden", !(myTurn && s.phase === "throw"));
+  takeBtn.disabled = !(myTurn);
+  passBtn.disabled = !(myTurn);
   const canTransferAny = myTurn && s.phase === "defend" && s.hands[s.actor].some((c) => DurakCore.canTransfer(s, c));
   transferBtn.classList.toggle("hidden", !canTransferAny);
   transferBtn.classList.toggle("active-mode", AppStateDurak.transferMode);

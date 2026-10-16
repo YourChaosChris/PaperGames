@@ -387,7 +387,7 @@ function updateUndoButtonVisibilitySpider() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateSpider.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateSpider.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 document.addEventListener("DOMContentLoaded", initSpiderApp);

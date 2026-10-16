@@ -50,6 +50,12 @@ Set `PORT` to use a port other than 8000 if that one's busy.
 - `node tests/ui-status.js` - no server or browser needed. Checks that all
   computer-opponent games use the shared four localized turn and winner
   status keys; documents the simultaneous-round exception in War.
+- `node tests/undo.js` - no server or browser needed. Checks Undo coverage for
+  every computer-opponent game, verifies the shared localized button and
+  enabled/disabled source behavior, exercises one-ply hotseat and paired
+  computer-turn history restoration, checks saved history compatibility
+  (last 50 snapshots; older saves load without history), and lists
+  rule-based exceptions.
 - `node tests/game-frame.js` - no server or browser needed. Checks that
   every real game page from `game-switcher.js` loads the shared frame,
   which adds a visible, localized Home link before the game controls and

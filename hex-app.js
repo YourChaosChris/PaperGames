@@ -37,7 +37,8 @@ function saveHexGame() {
     lastMove: AppStateHex.lastMove,
     humanColor: AppStateHex.humanColor,
     aiLevel: AppStateHex.aiLevel,
-    moveCount: AppStateHex.moveCount
+    moveCount: AppStateHex.moveCount,
+    undoStack: AppStateHex.undoStack.slice(-50),
   });
 }
 
@@ -57,7 +58,7 @@ function colorNameHex(color) {
 }
 
 function setStatusHex(elementId, text) {
-  if (((AppStateHex.mode === "offline-ai")) && text) {
+  if (((AppStateHex.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateHex.state || AppStateHex;
     const uiStatusGameOver = AppStateHex.gameOver === true || AppStateHex.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -251,7 +252,7 @@ function initHexApp() {
     AppStateHex.aiLevel = savedGame.aiLevel;
     AppStateHex.moveCount = savedGame.moveCount;
     AppStateHex.gameOver = false;
-    resetUndoStackHex();
+    AppStateHex.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateHex.mode);
     setGameResultHex("");
     showBoardSectionHex();
@@ -470,7 +471,7 @@ function updateUndoButtonVisibilityHex() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateHex.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateHex.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityHex() {

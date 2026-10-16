@@ -253,7 +253,7 @@
       }
     }
     const undoBtn = document.getElementById("undo-btn");
-    if (undoBtn) undoBtn.classList.toggle("hidden", !(state.undoStack.length && !state.gameOver));
+    if (undoBtn) undoBtn.disabled = !(state.undoStack.length);
     const eraseBtn = document.getElementById("futoshiki-erase-button");
     if (eraseBtn) eraseBtn.classList.toggle("hidden", state.gameOver || !state.puzzle);
     const hintBtn = document.getElementById("hint-btn");

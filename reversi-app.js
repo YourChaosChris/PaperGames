@@ -33,7 +33,8 @@ function saveReversiGame() {
     turn: AppStateReversi.turn,
     humanColor: AppStateReversi.humanColor,
     aiLevel: AppStateReversi.aiLevel,
-    moveCount: AppStateReversi.moveCount
+    moveCount: AppStateReversi.moveCount,
+    undoStack: AppStateReversi.undoStack.slice(-50),
   });
 }
 
@@ -53,7 +54,7 @@ function colorNameReversi(color) {
 }
 
 function setStatusReversi(elementId, text) {
-  if (((AppStateReversi.mode === "offline-ai")) && text) {
+  if (((AppStateReversi.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateReversi.state || AppStateReversi;
     const uiStatusGameOver = AppStateReversi.gameOver === true || AppStateReversi.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -250,7 +251,7 @@ function initReversiApp() {
     AppStateReversi.moveCount = savedGame.moveCount;
     AppStateReversi.lastMove = null;
     AppStateReversi.gameOver = false;
-    resetUndoStackReversi();
+    AppStateReversi.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateReversi.mode);
     setGameResultReversi("");
     showBoardSectionReversi();
@@ -527,7 +528,7 @@ function updateUndoButtonVisibilityReversi() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateReversi.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateReversi.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityReversi() {

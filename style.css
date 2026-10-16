@@ -226,6 +226,13 @@ button:disabled {
   cursor: default;
 }
 
+button[data-i18n="undo_button"]:disabled {
+  opacity: 1;
+  color: #111;
+  background: #fff;
+  border-color: #111;
+}
+
 /* A greyed-out control button (Roll, Discard, ...) also gets its label
    struck through, so "not available now" doesn't rest on paleness alone.
    Only the labelled control buttons - board cells that are buttons keep
@@ -1436,11 +1443,17 @@ margin: var(--space-2) 0;
 
 @media (max-width: 600px) {
   .game-page .user-panel {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: flex-start;
   }
   .game-page .game-switch {
     margin-right: auto;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .game-page .game-switch select {
+    min-width: 0;
+    max-width: 100%;
   }
 }
 

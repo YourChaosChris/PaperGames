@@ -485,6 +485,7 @@ STRINGS.nl = {
     release_v244: "Spellen openen meteen speelklaar; het resultaatvenster heeft «Nog een keer»; «Nieuw spel» staat naast het bord; schaken heeft een eigen knop voor twee spelers.",
     release_v245: "Spelpagina’s hebben een kop van één regel en geen sitenavigatie; instellingen zitten nu in het menu; het bedieningspaneel sluit na de start, zodat meer borden op het scherm passen.",
     release_v246: "Spelkaarten op alle categoriepagina’s zijn grote tikvlakken; de kinderpagina toont alle kinderspellen op één pagina met grote symbolen; «Groot bord» maakt kleine borden makkelijker te tikken; Cake staat niet meer bij de kinderspellen.",
+    release_v247: "Alle spellen gebruiken dezelfde namen en statusteksten („Tegen de computer”, „Met twee op één apparaat”, „Nieuw spel”, „Jij bent aan de beurt”); elke spelpagina heeft een Home-knop; „Ongedaan maken” neemt je zet en het antwoord van de computer terug in 32 spellen.",
     release_v240: "De spelnamen zijn in alle 12 talen gewijzigd.",
     release_v239: "Beschermde spelnamen zijn verwijderd uit regels en beschrijvingen van geschiedenispagina’s.",
     release_v238: "De korte regels passen nu bij het gekozen taartmotief en de zoekplaat.",

@@ -38,6 +38,16 @@ for (const game of games) {
 // are used only when its local computer mode is active.
 const chess = fs.readFileSync(path.join(ROOT, "app.js"), "utf8");
 for (const key of statusKeys) if (!chess.includes(`"${key}"`)) failures.push(`app.js (Chess): missing ${key}`);
+// The status rewrite must only touch status elements: helpers that also fill
+// other elements (Mancala store counts) once got "Your turn." prepended.
+for (const file of fs.readdirSync(ROOT).filter((n) => n.endsWith("-app.js") || n === "app.js")) {
+  const code = fs.readFileSync(path.join(ROOT, file), "utf8");
+  const helper = code.match(/function setStatus\w*\((\w+), (\w+)\) \{\n  if \((.*?)\) \{\n    const uiStatusText/);
+  if (code.includes("uiStatusText") && /function setStatus\w*\(\w+, \w+\)/.test(code)) {
+    const guarded = /&& text && \/status\|info\/i\.test\(String\(\w+\)\)\) \{\n    const uiStatusText/.test(code);
+    if (!guarded) failures.push(`${file}: status rewrite must be limited to status/info elements`);
+  }
+}
 for (const [game, exception] of Object.entries(exceptions)) {
   if (!exception.reason.trim()) failures.push(`${game}: exception needs a reason`);
 }

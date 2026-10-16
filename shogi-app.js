@@ -94,7 +94,8 @@ function saveShogiGame() {
     humanColor: AppStateShogi.humanColor,
     aiLevel: AppStateShogi.aiLevel,
     moveCount: AppStateShogi.moveCount,
-    plyLog: AppStateShogi.plyLog
+    plyLog: AppStateShogi.plyLog,
+    undoStack: AppStateShogi.undoStack.slice(-50),
   });
 }
 
@@ -114,7 +115,7 @@ function colorNameShogi(color) {
 }
 
 function setStatusShogi(elementId, text) {
-  if (((AppStateShogi.mode === "offline-ai")) && text) {
+  if (((AppStateShogi.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateShogi.state || AppStateShogi;
     const uiStatusGameOver = AppStateShogi.gameOver === true || AppStateShogi.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -357,7 +358,7 @@ function initShogiApp() {
     AppStateShogi.legalTargets = {};
     AppStateShogi.pendingPromotion = null;
     AppStateShogi.lastMove = null;
-    resetUndoStackShogi();
+    AppStateShogi.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     if (Array.isArray(savedGame.plyLog) && savedGame.plyLog.length) AppStateShogi.plyLog = savedGame.plyLog;
     else seedPlyLogShogi();
     setActiveModeButtonShogi(AppStateShogi.mode);
@@ -762,7 +763,7 @@ function updateUndoButtonVisibilityShogi() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateShogi.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateShogi.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityShogi() {

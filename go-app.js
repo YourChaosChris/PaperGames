@@ -45,7 +45,8 @@ function saveGoGame() {
     consecutivePasses: AppStateGo.consecutivePasses,
     moveCount: AppStateGo.moveCount,
     captures: AppStateGo.captures,
-    boardHistory: AppStateGo.boardHistory
+    boardHistory: AppStateGo.boardHistory,
+    undoStack: AppStateGo.undoStack.slice(-50),
   });
 }
 
@@ -65,7 +66,7 @@ function colorNameGo(color) {
 }
 
 function setStatusGo(elementId, text) {
-  if (((AppStateGo.mode === "offline-ai")) && text) {
+  if (((AppStateGo.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateGo.state || AppStateGo;
     const uiStatusGameOver = AppStateGo.gameOver === true || AppStateGo.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -336,7 +337,7 @@ function initGoApp() {
       ? savedGame.boardHistory
       : [GoCore.boardKey(AppStateGo.board)];
     AppStateGo.gameOver = false;
-    resetUndoStackGo();
+    AppStateGo.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButtonGo(AppStateGo.mode);
     setGameResultGo("");
     showBoardSectionGo();
@@ -607,7 +608,7 @@ function updateUndoButtonVisibilityGo() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateGo.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateGo.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updatePassResignVisibilityGo() {

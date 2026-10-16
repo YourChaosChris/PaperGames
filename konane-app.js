@@ -57,7 +57,8 @@ function saveKonaneGame() {
     humanColor: AppStateKonane.humanColor,
     aiLevel: AppStateKonane.aiLevel,
     moveCount: AppStateKonane.moveCount,
-    captures: AppStateKonane.captures
+    captures: AppStateKonane.captures,
+    undoStack: AppStateKonane.undoStack.slice(-50),
   });
 }
 
@@ -77,7 +78,7 @@ function colorNameKonane(color) {
 }
 
 function setStatusKonane(elementId, text) {
-  if (((AppStateKonane.mode === "offline-ai")) && text) {
+  if (((AppStateKonane.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateKonane.state || AppStateKonane;
     const uiStatusGameOver = AppStateKonane.gameOver === true || AppStateKonane.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -309,7 +310,7 @@ function initKonaneApp() {
     AppStateKonane.moveCount = savedGame.moveCount;
     AppStateKonane.captures = savedGame.captures;
     AppStateKonane.gameOver = false;
-    resetUndoStackKonane();
+    AppStateKonane.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateKonane.mode);
     setGameResultKonane("");
     showBoardSectionKonane();
@@ -801,7 +802,7 @@ function updateUndoButtonVisibilityKonane() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateKonane.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateKonane.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityKonane() {

@@ -59,7 +59,8 @@ function saveMorrisGame() {
     humanColor: AppStateMorris.humanColor,
     aiLevel: AppStateMorris.aiLevel,
     moveCount: AppStateMorris.moveCount,
-    moveHistory: AppStateMorris.moveHistory
+    moveHistory: AppStateMorris.moveHistory,
+    undoStack: AppStateMorris.undoStack.slice(-50),
   });
 }
 
@@ -79,7 +80,7 @@ function colorNameMorris(color) {
 }
 
 function setStatusMorris(elementId, text) {
-  if (((AppStateMorris.mode === "offline-ai")) && text) {
+  if (((AppStateMorris.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateMorris.state || AppStateMorris;
     const uiStatusGameOver = AppStateMorris.gameOver === true || AppStateMorris.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -320,7 +321,7 @@ function initMorrisApp() {
     AppStateMorris.lastMove = null;
     AppStateMorris.moveHistory = savedGame.moveHistory || [];
     AppStateMorris.gameOver = false;
-    resetUndoStackMorris();
+    AppStateMorris.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     renderMoveListMorris();
     setActiveModeButtonMorris(AppStateMorris.mode);
     setGameResultMorris("");
@@ -690,7 +691,7 @@ function updateUndoButtonVisibilityMorris() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateMorris.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateMorris.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityMorris() {

@@ -359,7 +359,7 @@ function updateUndoButtonVisibilityPegSolitaire() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStatePegSolitaire.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStatePegSolitaire.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 document.addEventListener("DOMContentLoaded", initPegSolitaireApp);

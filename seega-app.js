@@ -37,7 +37,8 @@ function saveSeegaGame() {
     lastMove: AppStateSeega.lastMove,
     humanColor: AppStateSeega.humanColor,
     aiLevel: AppStateSeega.aiLevel,
-    moveCount: AppStateSeega.moveCount
+    moveCount: AppStateSeega.moveCount,
+    undoStack: AppStateSeega.undoStack.slice(-50),
   });
 }
 
@@ -55,7 +56,7 @@ function recordSeegaStatsIfVsAi(outcome) {
 function colorNameSeega(c) { return c === "b" ? "Black" : "White"; }
 
 function setStatusSeega(id, text) {
-  if (((AppStateSeega.mode === "offline-ai")) && text) {
+  if (((AppStateSeega.mode === "offline-ai")) && text && /status|info/i.test(String(id))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateSeega.state || AppStateSeega;
     const uiStatusGameOver = AppStateSeega.gameOver === true || AppStateSeega.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -233,7 +234,7 @@ function initSeegaApp() {
     AppStateSeega.humanColor = saved.humanColor;
     AppStateSeega.aiLevel = saved.aiLevel;
     AppStateSeega.moveCount = saved.moveCount;
-    AppStateSeega.undoStack = [];
+    AppStateSeega.undoStack = Array.isArray(saved.undoStack) ? saved.undoStack : [];
     setActiveModeButton(AppStateSeega.mode);
     setGameResultSeega("");
     showBoardSectionSeega();
@@ -494,7 +495,7 @@ function updateGameLabelsSeega() {
   const meta = document.getElementById("game-meta");
   if (meta) I18n.setMsg(meta, AppStateSeega.moveCount ? "Move " + AppStateSeega.moveCount : "");
   const undoBtn = document.getElementById("undo-btn");
-  if (undoBtn) undoBtn.classList.toggle("hidden", !(AppStateSeega.undoStack.length && !s.over));
+  if (undoBtn) undoBtn.disabled = !(AppStateSeega.undoStack.length);
   const resignBtn = document.getElementById("resign-button");
   if (resignBtn) resignBtn.classList.toggle("hidden", s.over);
   if (s.over) clearSavedSeegaGame();

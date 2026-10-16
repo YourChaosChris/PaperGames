@@ -327,7 +327,7 @@ function updateUndoButtonVisibilityMahjong() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateMahjong.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateMahjong.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateShuffleButtonVisibilityMahjong() {

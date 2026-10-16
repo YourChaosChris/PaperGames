@@ -454,7 +454,7 @@ function updateUndoButtonVisibilityKakuro() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateKakuro.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateKakuro.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateEraseButtonVisibilityKakuro() {

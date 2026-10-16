@@ -27,7 +27,8 @@ function saveFourInARowGame() {
     turn: AppStateFourInARow.turn,
     humanColor: AppStateFourInARow.humanColor,
     aiLevel: AppStateFourInARow.aiLevel,
-    moveCount: AppStateFourInARow.moveCount
+    moveCount: AppStateFourInARow.moveCount,
+    undoStack: AppStateFourInARow.undoStack.slice(-50),
   });
 }
 
@@ -47,7 +48,7 @@ function colorNameFourInARow(color) {
 }
 
 function setStatusFourInARow(elementId, text) {
-  if (((AppStateFourInARow.mode === "offline-ai")) && text) {
+  if (((AppStateFourInARow.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateFourInARow.state || AppStateFourInARow;
     const uiStatusGameOver = AppStateFourInARow.gameOver === true || AppStateFourInARow.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -241,7 +242,7 @@ function initFourInARowApp() {
     AppStateFourInARow.moveCount = savedGame.moveCount;
     AppStateFourInARow.lastMove = null;
     AppStateFourInARow.gameOver = false;
-    resetUndoStackFourInARow();
+    AppStateFourInARow.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateFourInARow.mode);
     setGameResultFourInARow("");
     showBoardSectionFourInARow();
@@ -478,7 +479,7 @@ function updateUndoButtonVisibilityFourInARow() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateFourInARow.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateFourInARow.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityFourInARow() {

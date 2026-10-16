@@ -30,7 +30,8 @@ function saveGomokuGame() {
     humanColor: AppStateGomoku.humanColor,
     aiLevel: AppStateGomoku.aiLevel,
     lastMove: AppStateGomoku.lastMove,
-    moveCount: AppStateGomoku.moveCount
+    moveCount: AppStateGomoku.moveCount,
+    undoStack: AppStateGomoku.undoStack.slice(-50),
   });
 }
 
@@ -50,7 +51,7 @@ function colorNameGomoku(color) {
 }
 
 function setStatusGomoku(elementId, text) {
-  if (((AppStateGomoku.mode === "offline-ai")) && text) {
+  if (((AppStateGomoku.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateGomoku.state || AppStateGomoku;
     const uiStatusGameOver = AppStateGomoku.gameOver === true || AppStateGomoku.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -244,7 +245,7 @@ function initGomokuApp() {
     AppStateGomoku.lastMove = savedGame.lastMove;
     AppStateGomoku.moveCount = savedGame.moveCount;
     AppStateGomoku.gameOver = false;
-    resetUndoStackGomoku();
+    AppStateGomoku.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateGomoku.mode);
     setGameResultGomoku("");
     showBoardSectionGomoku();
@@ -488,7 +489,7 @@ function updateUndoButtonVisibilityGomoku() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateGomoku.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateGomoku.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityGomoku() {

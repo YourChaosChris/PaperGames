@@ -41,7 +41,8 @@ function saveCardTacticsGame() {
     turn: AppStateCardTactics.turn,
     humanColor: AppStateCardTactics.humanColor,
     aiLevel: AppStateCardTactics.aiLevel,
-    moveCount: AppStateCardTactics.moveCount
+    moveCount: AppStateCardTactics.moveCount,
+    undoStack: AppStateCardTactics.undoStack.slice(-50),
   });
 }
 
@@ -61,7 +62,7 @@ function colorNameCardTactics(color) {
 }
 
 function setStatusCardTactics(elementId, text) {
-  if (((AppStateCardTactics.mode === "offline-ai")) && text) {
+  if (((AppStateCardTactics.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateCardTactics.state || AppStateCardTactics;
     const uiStatusGameOver = AppStateCardTactics.gameOver === true || AppStateCardTactics.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -262,7 +263,7 @@ function initCardTacticsApp() {
     AppStateCardTactics.selectedCard = null;
     AppStateCardTactics.selectedPiece = null;
     AppStateCardTactics.legalTargets = {};
-    resetUndoStackCardTactics();
+    AppStateCardTactics.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButtonCardTactics(AppStateCardTactics.mode);
     setGameResultCardTactics("");
     showBoardSectionCardTactics();
@@ -608,7 +609,7 @@ function updateUndoButtonVisibilityCardTactics() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateCardTactics.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateCardTactics.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityCardTactics() {

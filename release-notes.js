@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v247",
+    date: "2026-10-16",
+    key: "release_v247",
+    text: "All games use the same names and status texts (Against the computer, Two players, one device, New game, Your turn); every game page has a Home button; Undo takes back your move and the computer's answer in 32 games."
+  },
+  {
     version: "v246",
     date: "2026-10-16",
     key: "release_v246",

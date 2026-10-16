@@ -43,7 +43,8 @@ function saveBaghChalGame() {
     lastMove: AppStateBaghChal.lastMove,
     humanSide: AppStateBaghChal.humanSide,
     aiLevel: AppStateBaghChal.aiLevel,
-    moveCount: AppStateBaghChal.moveCount
+    moveCount: AppStateBaghChal.moveCount,
+    undoStack: AppStateBaghChal.undoStack.slice(-50),
   });
 }
 
@@ -63,7 +64,7 @@ function sideNameBaghChal(side) {
 }
 
 function setStatusBaghChal(elementId, text) {
-  if (((AppStateBaghChal.mode === "offline-ai")) && text) {
+  if (((AppStateBaghChal.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateBaghChal.state || AppStateBaghChal;
     const uiStatusGameOver = AppStateBaghChal.gameOver === true || AppStateBaghChal.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -265,7 +266,7 @@ function initBaghChalApp() {
     AppStateBaghChal.aiLevel = savedGame.aiLevel;
     AppStateBaghChal.moveCount = savedGame.moveCount;
     AppStateBaghChal.gameOver = false;
-    resetUndoStackBaghChal();
+    AppStateBaghChal.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateBaghChal.mode);
     setGameResultBaghChal("");
     showBoardSectionBaghChal();
@@ -611,7 +612,7 @@ function updateUndoButtonVisibilityBaghChal() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateBaghChal.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateBaghChal.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityBaghChal() {

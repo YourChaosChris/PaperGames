@@ -486,7 +486,7 @@ function updateUndoButtonVisibilityHashi() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateHashi.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateHashi.gameOver));
+  btn.disabled = !(hasUndo);
   const hintBtn = document.getElementById("hint-btn");
   if (hintBtn) hintBtn.classList.toggle("hidden", AppStateHashi.gameOver || !AppStateHashi.board || !hashiHintSession);
 }

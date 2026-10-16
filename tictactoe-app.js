@@ -33,7 +33,8 @@ function saveTicTacToeGame() {
     humanPlayer: AppStateTicTacToe.humanPlayer,
     aiLevel: AppStateTicTacToe.aiLevel,
     lastMove: AppStateTicTacToe.lastMove,
-    moveCount: AppStateTicTacToe.moveCount
+    moveCount: AppStateTicTacToe.moveCount,
+    undoStack: AppStateTicTacToe.undoStack.slice(-50),
   });
 }
 
@@ -53,7 +54,7 @@ function playerNameTicTacToe(player) {
 }
 
 function setStatusTicTacToe(elementId, text) {
-  if (((AppStateTicTacToe.mode === "offline-ai")) && text) {
+  if (((AppStateTicTacToe.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateTicTacToe.state || AppStateTicTacToe;
     const uiStatusGameOver = AppStateTicTacToe.gameOver === true || AppStateTicTacToe.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -254,7 +255,7 @@ function initTicTacToeApp() {
     AppStateTicTacToe.lastMove = typeof savedGame.lastMove === "number" ? savedGame.lastMove : null;
     AppStateTicTacToe.moveCount = savedGame.moveCount || 0;
     AppStateTicTacToe.gameOver = false;
-    resetUndoStackTicTacToe();
+    AppStateTicTacToe.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateTicTacToe.mode);
     setGameResultTicTacToe("");
     showBoardSectionTicTacToe();
@@ -471,7 +472,7 @@ function updateUndoButtonVisibilityTicTacToe() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateTicTacToe.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateTicTacToe.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityTicTacToe() {

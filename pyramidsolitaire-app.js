@@ -461,7 +461,7 @@ function updateUndoButtonVisibilityPyramid() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStatePyramid.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStatePyramid.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 document.addEventListener("DOMContentLoaded", initPyramidApp);

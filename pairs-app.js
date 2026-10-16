@@ -133,7 +133,7 @@ function playerNamePairs(p) {
 }
 
 function setStatusPairs(elementId, text) {
-  if (AppStatePairs.opponent === "ai" && text) {
+  if (AppStatePairs.opponent === "ai" && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStatePairs.state || AppStatePairs;
     const uiStatusGameOver = AppStatePairs.gameOver === true || AppStatePairs.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;

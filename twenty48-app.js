@@ -368,7 +368,7 @@ function updateUndoButtonVisibility2048() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppState2048.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppState2048.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 document.addEventListener("DOMContentLoaded", initTwenty48App);

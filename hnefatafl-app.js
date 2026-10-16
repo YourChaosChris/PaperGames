@@ -37,7 +37,8 @@ function saveHnefataflGame() {
     lastMove: AppStateHnefatafl.lastMove,
     humanSide: AppStateHnefatafl.humanSide,
     aiLevel: AppStateHnefatafl.aiLevel,
-    moveCount: AppStateHnefatafl.moveCount
+    moveCount: AppStateHnefatafl.moveCount,
+    undoStack: AppStateHnefatafl.undoStack.slice(-50),
   });
 }
 
@@ -57,7 +58,7 @@ function sideNameHnefatafl(side) {
 }
 
 function setStatusHnefatafl(elementId, text) {
-  if (((AppStateHnefatafl.mode === "offline-ai")) && text) {
+  if (((AppStateHnefatafl.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateHnefatafl.state || AppStateHnefatafl;
     const uiStatusGameOver = AppStateHnefatafl.gameOver === true || AppStateHnefatafl.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -255,7 +256,7 @@ function initHnefataflApp() {
     AppStateHnefatafl.aiLevel = savedGame.aiLevel;
     AppStateHnefatafl.moveCount = savedGame.moveCount;
     AppStateHnefatafl.gameOver = false;
-    resetUndoStackHnefatafl();
+    AppStateHnefatafl.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateHnefatafl.mode);
     setGameResultHnefatafl("");
     showBoardSectionHnefatafl();
@@ -513,7 +514,7 @@ function updateUndoButtonVisibilityHnefatafl() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateHnefatafl.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateHnefatafl.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityHnefatafl() {

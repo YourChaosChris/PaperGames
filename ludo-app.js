@@ -102,7 +102,8 @@ function saveLudoGame() {
     state: AppStateLudo.state,
     roll: AppStateLudo.roll,
     sixStreak: AppStateLudo.sixStreak,
-    moveCount: AppStateLudo.moveCount
+    moveCount: AppStateLudo.moveCount,
+    undoStack: AppStateLudo.undoStack.slice(-50),
   });
 }
 
@@ -126,7 +127,7 @@ function currentColorLudo() {
 }
 
 function setStatusLudo(elementId, text) {
-  if (((AppStateLudo.mode === "vs-ai")) && text) {
+  if (((AppStateLudo.mode === "vs-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateLudo.state || AppStateLudo;
     const uiStatusGameOver = AppStateLudo.gameOver === true || AppStateLudo.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -351,7 +352,7 @@ function initLudoApp() {
     AppStateLudo.gameOver = false;
     AppStateLudo.started = true;
     AppStateLudo.lastMove = null;
-    resetUndoStackLudo();
+    AppStateLudo.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     pendingMode = AppStateLudo.mode;
     setActiveModeButtonLudo(AppStateLudo.mode);
     updateColorChoiceVisibilityLudo();
@@ -962,7 +963,7 @@ function updateUndoButtonVisibilityLudo() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateLudo.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateLudo.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityLudo() {

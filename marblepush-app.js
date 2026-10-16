@@ -48,7 +48,8 @@ function saveMarblePushGame() {
     lastMove: AppStateMarblePush.lastMove,
     humanColor: AppStateMarblePush.humanColor,
     aiLevel: AppStateMarblePush.aiLevel,
-    moveCount: AppStateMarblePush.moveCount
+    moveCount: AppStateMarblePush.moveCount,
+    undoStack: AppStateMarblePush.undoStack.slice(-50),
   });
 }
 
@@ -68,7 +69,7 @@ function colorNameMarblePush(color) {
 }
 
 function setStatusMarblePush(elementId, text) {
-  if (((AppStateMarblePush.mode === "offline-ai")) && text) {
+  if (((AppStateMarblePush.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateMarblePush.state || AppStateMarblePush;
     const uiStatusGameOver = AppStateMarblePush.gameOver === true || AppStateMarblePush.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -274,7 +275,7 @@ function initMarblePushApp() {
     AppStateMarblePush.aiLevel = savedGame.aiLevel;
     AppStateMarblePush.moveCount = savedGame.moveCount;
     AppStateMarblePush.gameOver = false;
-    resetUndoStackMarblePush();
+    AppStateMarblePush.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateMarblePush.mode);
     setGameResultMarblePush("");
     showBoardSectionMarblePush();
@@ -636,7 +637,7 @@ function updateUndoButtonVisibilityMarblePush() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateMarblePush.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateMarblePush.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityMarblePush() {

@@ -51,7 +51,8 @@ function saveWallMazeGame() {
     lastMove: AppStateWallMaze.lastMove,
     humanSide: AppStateWallMaze.humanSide,
     aiLevel: AppStateWallMaze.aiLevel,
-    moveCount: AppStateWallMaze.moveCount
+    moveCount: AppStateWallMaze.moveCount,
+    undoStack: AppStateWallMaze.undoStack.slice(-50),
   });
 }
 
@@ -71,7 +72,7 @@ function sideNameWallMaze(side) {
 }
 
 function setStatusWallMaze(elementId, text) {
-  if (((AppStateWallMaze.mode === "offline-ai")) && text) {
+  if (((AppStateWallMaze.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateWallMaze.state || AppStateWallMaze;
     const uiStatusGameOver = AppStateWallMaze.gameOver === true || AppStateWallMaze.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -285,7 +286,7 @@ function initWallMazeApp() {
     AppStateWallMaze.gameOver = false;
     AppStateWallMaze.pendingWall = null;
     AppStateWallMaze.wallMode = false;
-    resetUndoStackWallMaze();
+    AppStateWallMaze.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateWallMaze.mode);
     setGameResultWallMaze("");
     showBoardSectionWallMaze();
@@ -677,7 +678,7 @@ function updateUndoButtonVisibilityWallMaze() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateWallMaze.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateWallMaze.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityWallMaze() {

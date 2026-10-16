@@ -39,7 +39,8 @@ function saveDotsAndBoxesGame() {
     state: AppStateDotsAndBoxes.state,
     humanPlayer: AppStateDotsAndBoxes.humanPlayer,
     aiLevel: AppStateDotsAndBoxes.aiLevel,
-    moveCount: AppStateDotsAndBoxes.moveCount
+    moveCount: AppStateDotsAndBoxes.moveCount,
+    undoStack: AppStateDotsAndBoxes.undoStack.slice(-50),
   });
 }
 
@@ -59,7 +60,7 @@ function playerNameDotsAndBoxes(player) {
 }
 
 function setStatusDotsAndBoxes(elementId, text) {
-  if (((AppStateDotsAndBoxes.mode === "offline-ai")) && text) {
+  if (((AppStateDotsAndBoxes.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateDotsAndBoxes.state || AppStateDotsAndBoxes;
     const uiStatusGameOver = AppStateDotsAndBoxes.gameOver === true || AppStateDotsAndBoxes.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -265,7 +266,7 @@ function initDotsAndBoxesApp() {
     AppStateDotsAndBoxes.moveCount = savedGame.moveCount;
     AppStateDotsAndBoxes.gameOver = false;
     AppStateDotsAndBoxes.lastMove = null;
-    resetUndoStackDotsAndBoxes();
+    AppStateDotsAndBoxes.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateDotsAndBoxes.mode);
     setGameResultDotsAndBoxes("");
     showBoardSectionDotsAndBoxes();
@@ -641,7 +642,7 @@ function updateUndoButtonVisibilityDotsAndBoxes() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateDotsAndBoxes.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateDotsAndBoxes.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityDotsAndBoxes() {

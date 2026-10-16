@@ -142,7 +142,8 @@ function saveXiangqiGame() {
     humanColor: AppStateXiangqi.humanColor,
     aiLevel: AppStateXiangqi.aiLevel,
     moveCount: AppStateXiangqi.moveCount,
-    moveHistory: AppStateXiangqi.moveHistory
+    moveHistory: AppStateXiangqi.moveHistory,
+    undoStack: AppStateXiangqi.undoStack.slice(-50),
   });
 }
 
@@ -162,7 +163,7 @@ function colorNameXq(color) {
 }
 
 function setStatusXq(elementId, text) {
-  if (((AppStateXiangqi.mode === "offline-ai")) && text) {
+  if (((AppStateXiangqi.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateXiangqi.state || AppStateXiangqi;
     const uiStatusGameOver = AppStateXiangqi.gameOver === true || AppStateXiangqi.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -458,7 +459,7 @@ function initXiangqiApp() {
     AppStateXiangqi.moveCount = savedGame.moveCount;
     AppStateXiangqi.moveHistory = savedGame.moveHistory || [];
     AppStateXiangqi.gameOver = false;
-    resetUndoStackXq();
+    AppStateXiangqi.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     resetPositionHistoryXq();
     renderMoveListXq();
     setActiveModeButtonXq(AppStateXiangqi.mode);
@@ -817,7 +818,7 @@ function updateUndoButtonVisibilityXq() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateXiangqi.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateXiangqi.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityXq() {

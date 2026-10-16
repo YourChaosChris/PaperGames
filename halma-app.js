@@ -41,7 +41,8 @@ function saveHalmaGame() {
     lastMove: AppStateHalma.lastMove,
     humanSide: AppStateHalma.humanSide,
     aiLevel: AppStateHalma.aiLevel,
-    moveCount: AppStateHalma.moveCount
+    moveCount: AppStateHalma.moveCount,
+    undoStack: AppStateHalma.undoStack.slice(-50),
   });
 }
 
@@ -61,7 +62,7 @@ function sideNameHalma(side) {
 }
 
 function setStatusHalma(elementId, text) {
-  if (((AppStateHalma.mode === "offline-ai")) && text) {
+  if (((AppStateHalma.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
     const uiStatusState = AppStateHalma.state || AppStateHalma;
     const uiStatusGameOver = AppStateHalma.gameOver === true || AppStateHalma.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
@@ -259,7 +260,7 @@ function initHalmaApp() {
     AppStateHalma.aiLevel = savedGame.aiLevel;
     AppStateHalma.moveCount = savedGame.moveCount;
     AppStateHalma.gameOver = false;
-    resetUndoStackHalma();
+    AppStateHalma.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButton(AppStateHalma.mode);
     setGameResultHalma("");
     showBoardSectionHalma();
@@ -502,7 +503,7 @@ function updateUndoButtonVisibilityHalma() {
   const btn = document.getElementById("undo-btn");
   if (!btn) return;
   const hasUndo = (AppStateHalma.undoStack || []).length > 0;
-  btn.classList.toggle("hidden", !(hasUndo && !AppStateHalma.gameOver));
+  btn.disabled = !(hasUndo);
 }
 
 function updateResignVisibilityHalma() {
