@@ -43,6 +43,10 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   changing any file, run `node tools/sw-hashes.js`). And that the
   version in `CACHE_NAME` has its entry in `release-notes.js`, every
   entry with its sentence in all 12 languages.
+- `node tests/ui-names.js` - no server or browser needed. Checks that
+  game controls use the shared mode and start names in all 12 languages,
+  two-player mode is not duplicated in level lists, and legacy mode keys
+  retain the same translated wording.
 - `node tests/i18n-messages.js` - no server or browser needed. Runs a
   sample of every runtime status/result message shape through
   `I18n.msg()` in all 10 non-English languages and fails on anything

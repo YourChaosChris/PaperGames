@@ -152,7 +152,11 @@
       (remembered.fields || []).forEach((entry) => {
         const el = entry.id ? document.getElementById(entry.id) : document.querySelector(entry.selector);
         if (el && (el.tagName === "SELECT" || el.type === "checkbox" || el.type === "radio")) {
-          if (el.type === "checkbox" || el.type === "radio") el.checked = !!entry.checked;
+          const selectName = (el.id || "") + " " + (el.name || "");
+          if (el.tagName === "SELECT" && /level|difficulty/i.test(selectName) && String(entry.value) === "0" && !Array.from(el.options).some((option) => option.value === "0")) {
+            const localMode = document.getElementById("mode-offline") || document.getElementById("mode-local");
+            if (localMode) localMode.click();
+          } else if (el.type === "checkbox" || el.type === "radio") el.checked = !!entry.checked;
           else el.value = entry.value;
         }
       });
@@ -211,8 +215,8 @@
         again.type = "button";
         again.id = "direct-new-game-button";
         again.className = "secondary small direct-new-game-button";
-        again.setAttribute("data-i18n", "new_game");
-        again.textContent = window.I18n ? I18n.t("new_game") : "New game";
+        again.setAttribute("data-i18n", "ui_new_game");
+        again.textContent = window.I18n ? I18n.t("ui_new_game") : "New game";
         again.addEventListener("click", () => start.click());
         actions.insertBefore(again, actions.firstChild);
       }

@@ -63,21 +63,20 @@
 <section class="mode-section">
   <div class="mode-section-row">
     <div class="mode-buttons">
-      <button id="mode-offline" class="mode-btn secondary" data-i18n="mode_two_player" aria-pressed="false">2 Player (local)</button>
-      <button id="mode-offline-ai" class="mode-btn secondary" data-i18n="vs_computer" aria-pressed="false">vs Computer</button>
+      <button id="mode-offline" class="mode-btn secondary" data-i18n="ui_mode_two_player" aria-pressed="false">Two players, one device</button>
+      <button id="mode-offline-ai" class="mode-btn secondary" data-i18n="ui_mode_computer" aria-pressed="false">Against the computer</button>
     </div>
   </div>
 </section>
 
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
-    <button id="start-tablut-game" class="primary" data-i18n="new_game">New game</button>
+    <button id="start-tablut-game" class="primary" data-i18n="ui_new_game">New game</button>
     <div id="tablut-side-choice" class="inline-options">
       <label class="color-choice"><input type="radio" name="tablut-side" value="defender" checked> <span class="color-choice-icon tablut-icon-piece tablut-icon-piece-defender"></span></label>
       <label class="color-choice"><input type="radio" name="tablut-side" value="attacker"> <span class="color-choice-icon tablut-icon-piece tablut-icon-piece-attacker"></span></label>
     </div>
     <select id="tablut-level-inline">
-        <option value="0" data-i18n="mode_two_player">2 Player (local)</option>
         <option value="1" data-i18n="level_easy">Easy</option>
         <option value="2" selected data-i18n="level_medium">Medium</option>
         <option value="3" data-i18n="level_hard">Hard</option>

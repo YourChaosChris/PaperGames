@@ -56,21 +56,20 @@
 <section class="mode-section">
   <div class="mode-section-row">
     <div class="mode-buttons">
-      <button id="mode-offline" class="mode-btn secondary" data-i18n="mode_two_player" aria-pressed="false">2 Player (local)</button>
-      <button id="mode-offline-ai" class="mode-btn secondary" data-i18n="vs_computer" aria-pressed="false">vs Computer</button>
+      <button id="mode-offline" class="mode-btn secondary" data-i18n="ui_mode_two_player" aria-pressed="false">Two players, one device</button>
+      <button id="mode-offline-ai" class="mode-btn secondary" data-i18n="ui_mode_computer" aria-pressed="false">Against the computer</button>
     </div>
   </div>
 </section>
 
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
-    <button id="start-tictactoe-game" class="primary" data-i18n="new_game">New game</button>
+    <button id="start-tictactoe-game" class="primary" data-i18n="ui_new_game">New game</button>
     <div id="tictactoe-player-choice" class="inline-options">
       <label class="color-choice"><input type="radio" name="tictactoe-player" value="1" checked> <span class="color-choice-icon ttt-icon-swatch"><svg class="ttt-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><line x1="24" y1="24" x2="76" y2="76"/><line x1="76" y1="24" x2="24" y2="76"/></svg></span></label>
       <label class="color-choice"><input type="radio" name="tictactoe-player" value="2"> <span class="color-choice-icon ttt-icon-swatch"><svg class="ttt-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="27"/></svg></span></label>
     </div>
     <select id="tictactoe-level-inline">
-        <option value="0" data-i18n="mode_two_player">2 Player (local)</option>
         <option value="1" data-i18n="level_easy">Easy</option>
         <option value="2" selected data-i18n="level_medium">Medium</option>
         <option value="3" data-i18n="level_hard">Hard</option>
