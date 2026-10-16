@@ -14,12 +14,33 @@
 
 (function () {
   function injectRulesLink() {
-    if (!document.getElementById("board-section")) return;
     const panel = document.querySelector(".user-panel");
-    if (!panel || document.getElementById("rules-link-button")) return;
-
     const slug = (location.pathname.split("/").pop() || "").replace(/\.html?$/i, "");
     if (!slug) return;
+
+    // Rules and history pages already have the localized return link at
+    // the bottom. Repeat that same link before the first section heading
+    // so it is available without scrolling through the whole page.
+    if (/-rules$|-history$/.test(slug)) {
+      const content = document.querySelector(".content-page");
+      const bottom = content && content.querySelector(".about-back a[data-i18n='about_back']");
+      if (!content || !bottom || content.querySelector(".about-back-top")) return;
+      const top = bottom.parentElement.cloneNode(true);
+      top.classList.add("about-back-top");
+      const link = top.querySelector("a");
+      function setBackLabel() {
+        if (window.I18n && typeof I18n.t === "function") link.textContent = I18n.t("about_back");
+      }
+      setBackLabel();
+      const firstHeading = content.querySelector("h2");
+      if (firstHeading) content.insertBefore(top, firstHeading);
+      else content.insertBefore(top, bottom.parentElement);
+      if (window.I18n && typeof I18n.onChange === "function") I18n.onChange(setBackLabel);
+      return;
+    }
+
+    if (!document.getElementById("board-section")) return;
+    if (!panel || document.getElementById("rules-link-button")) return;
 
     const link = document.createElement("a");
     link.id = "rules-link-button";

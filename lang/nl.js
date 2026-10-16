@@ -469,6 +469,7 @@ STRINGS.nl = {
     release_v237: "‘Nieuwe spellen’ toont nu de 10 nieuwste spellen.",
     release_v241: "Waldsiedlung heeft nieuwe regels, een nieuwe naam en aangepaste beschrijvingen; oude spelgegevens worden verwijderd.",
     release_v242: "Het spel heeft een nieuwe naam en een nieuw adres; oude adressen verwijzen door.",
+    release_v243: "De offlineopslag laadt minder opnieuw; Arabische tussenruimtes zijn hersteld, actieve knoppen zijn zwart, ‘Schudden’ vraagt eerst om bevestiging en regelpagina’s hebben bovenaan een teruglink.",
     release_v240: "De spelnamen zijn in alle 12 talen gewijzigd.",
     release_v239: "Beschermde spelnamen zijn verwijderd uit regels en beschrijvingen van geschiedenispagina’s.",
     release_v238: "De korte regels passen nu bij het gekozen taartmotief en de zoekplaat.",

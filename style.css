@@ -268,8 +268,17 @@ flex-wrap: wrap;
   margin: 0 var(--space-2) var(--space-2) 0;
 }
 
+[dir="rtl"] .mode-section-row > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
 .mode-section-row > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .mode-section-row > *:last-child {
+  margin-left: 0;
 }
 
 
@@ -283,18 +292,28 @@ flex-wrap: wrap;
   margin: 0 var(--space-2) var(--space-2) 0;
 }
 
+[dir="rtl"] .mode-buttons > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
 .mode-buttons > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .mode-buttons > *:last-child {
+  margin-left: 0;
 }
 
 .mode-buttons .mode-btn {
   border-radius: var(--radius);
 }
 
-.mode-buttons .mode-btn.active-mode {
-  background: #ffffff;
-  color: #000000;
-  border-width: 3px;
+button.active-mode,
+.settings-segmented button.active {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
   font-weight: 800;
 }
 
@@ -325,11 +344,20 @@ margin: 0 0 var(--space-2);
   margin: 0 var(--space-2) var(--space-2) 0;
 }
 
+[dir="rtl"] .game-section-nav > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
 /* A quick way to skip past 25 games' worth of cards to the category
    you actually want - three plain anchor jumps > *:last-child, not JS > *:last-child, so they work
    the same with scripting on or off and cost nothing on E-Ink. */
 .game-section-nav > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .game-section-nav > *:last-child {
+  margin-left: 0;
 }
 
 
@@ -352,8 +380,17 @@ margin: 0 0 var(--space-2);
   margin: 0 var(--space-1) var(--space-1) 0;
 }
 
+[dir="rtl"] .game-section-nav a > * {
+  margin-right: 0;
+  margin-left: var(--space-1);
+}
+
 .game-section-nav a > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .game-section-nav a > *:last-child {
+  margin-left: 0;
 }
 
 
@@ -369,8 +406,17 @@ margin: 0 0 var(--space-2);
   margin: 0 var(--space-2) var(--space-2) 0;
 }
 
+[dir="rtl"] .field-row > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
 .field-row > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .field-row > *:last-child {
+  margin-left: 0;
 }
 
 
@@ -397,8 +443,17 @@ margin: 0 0 var(--space-2);
   margin: 0 var(--space-2) var(--space-2) 0;
 }
 
+[dir="rtl"] .checkbox-label > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
 .checkbox-label > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .checkbox-label > *:last-child {
+  margin-left: 0;
 }
 
 
@@ -711,8 +766,17 @@ margin-left: var(--space-2);
   margin: 0 var(--space-1) var(--space-1) 0;
 }
 
+[dir="rtl"] .inline-options > * {
+  margin-right: 0;
+  margin-left: var(--space-1);
+}
+
 .inline-options > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .inline-options > *:last-child {
+  margin-left: 0;
 }
 
 
@@ -747,8 +811,17 @@ margin-left: var(--space-2);
   margin: 0 var(--space-2) var(--space-2) 0;
 }
 
+[dir="rtl"] #online-controls .online-inline-row .online-action-right > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
 #online-controls .online-inline-row .online-action-right > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] #online-controls .online-inline-row .online-action-right > *:last-child {
+  margin-left: 0;
 }
 
 
@@ -764,8 +837,17 @@ margin-left: var(--space-2);
   margin: 0 var(--space-1) var(--space-1) 0;
 }
 
+[dir="rtl"] .online-sub-tabs > * {
+  margin-right: 0;
+  margin-left: var(--space-1);
+}
+
 .online-sub-tabs > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .online-sub-tabs > *:last-child {
+  margin-left: 0;
 }
 
 .board-actions {
@@ -780,8 +862,17 @@ justify-content: flex-start;
   margin: 0 0.5rem 0.5rem 0;
 }
 
+[dir="rtl"] .board-actions > * {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
 .board-actions > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .board-actions > *:last-child {
+  margin-left: 0;
 }
 
 
@@ -846,6 +937,13 @@ font-size: 1.2rem;
 .board-placeholder-icon {
   font-size: 1em;
   line-height: 1;
+  margin-right: 0.4em;
+  flex: 0 0 auto;
+}
+
+[dir="rtl"] .board-placeholder-icon {
+  margin-right: 0;
+  margin-left: 0.4em;
 }
 
 /* Raw inline SVG (e.g. chess's knight) has no intrinsic width/height of its
@@ -861,8 +959,8 @@ font-size: 1.2rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-left: 0.4em;
   min-width: 0;
+  flex: 0 1 auto;
 }
 
 /* The title is a flex item of a column with align-items: flex-start, so
@@ -1052,10 +1150,19 @@ font-size: 1.2rem;
   margin: 0 var(--space-1) var(--space-1) 0;
 }
 
+[dir="rtl"] .lang-switch > * {
+  margin-right: 0;
+  margin-left: var(--space-1);
+}
+
 /* Site-wide nav bar and language switch (home/rules/guide/about pages) */
 
 .lang-switch > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .lang-switch > *:last-child {
+  margin-left: 0;
 }
 
 
@@ -1098,11 +1205,20 @@ font-size: 1.2rem;
   margin: 0 var(--space-1) var(--space-1) 0;
 }
 
+[dir="rtl"] .game-switch > * {
+  margin-right: 0;
+  margin-left: var(--space-1);
+}
+
 /* Game switcher: same treatment as the language picker > *:last-child, built at
    runtime by game-switcher.js on every game/rules/history page (not on
    the home page > *:last-child, which has no "current game" to switch away from). */
 .game-switch > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .game-switch > *:last-child {
+  margin-left: 0;
 }
 
 
@@ -1126,8 +1242,17 @@ margin: var(--space-2) 0;
   margin: 0 var(--space-2) var(--space-2) 0;
 }
 
+[dir="rtl"] .site-nav > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
 .site-nav > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .site-nav > *:last-child {
+  margin-left: 0;
 }
 
 
@@ -1282,8 +1407,17 @@ margin: 2rem 0 var(--space-4);
   margin: 0 var(--space-4) var(--space-1) 0;
 }
 
+[dir="rtl"] .site-footer > * {
+  margin-right: 0;
+  margin-left: var(--space-4);
+}
+
 .site-footer > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .site-footer > *:last-child {
+  margin-left: 0;
 }
 
 
@@ -1376,8 +1510,17 @@ margin: 2rem 0 var(--space-4);
   margin: 0 var(--space-2) 0 0;
 }
 
+[dir="rtl"] .quick-rules-actions > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
 .quick-rules-actions > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .quick-rules-actions > *:last-child {
+  margin-left: 0;
 }
 
 /* Offline status line under the home intro (home-app.js, offline-status.js):
@@ -1746,8 +1889,17 @@ margin: 2rem 0 var(--space-4);
   margin: 0 var(--space-2) var(--space-2) 0;
 }
 
+[dir="rtl"] .games-toolbar > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
 .games-toolbar > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .games-toolbar > *:last-child {
+  margin-left: 0;
 }
 
 .games-search-input {
@@ -1849,8 +2001,17 @@ margin: 2rem 0 var(--space-4);
   margin: 0 var(--space-2) var(--space-2) 0;
 }
 
+[dir="rtl"] .game-select-actions > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
 .game-select-actions > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .game-select-actions > *:last-child {
+  margin-left: 0;
 }
 
 
@@ -8522,8 +8683,17 @@ max-width: 900px;
   margin: 0 var(--space-1) 0 0;
 }
 
+[dir="rtl"] .settings-segmented > * {
+  margin-right: 0;
+  margin-left: var(--space-1);
+}
+
 .settings-segmented > *:last-child {
   margin-right: 0;
+}
+
+[dir="rtl"] .settings-segmented > *:last-child {
+  margin-left: 0;
 }
 
 .settings-segmented button {
@@ -8531,7 +8701,9 @@ max-width: 900px;
 }
 
 .settings-segmented button.active {
-  border-width: calc(var(--border-width) * 2);
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
   font-weight: 800;
 }
 

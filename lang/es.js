@@ -559,6 +559,7 @@ STRINGS.es = {
     release_v237: "«Juegos nuevos» muestra ahora los 10 juegos más recientes.",
     release_v241: "Waldsiedlung tiene reglas nuevas, un nombre nuevo y descripciones revisadas; se descartan las partidas guardadas antiguas.",
     release_v242: "El juego tiene un nombre y una dirección nuevos; las direcciones antiguas redirigen.",
+    release_v243: "El almacenamiento sin conexión vuelve a cargar menos; se corrigen los espacios en árabe, los botones activos son negros, «Mezclar» pide confirmación y las reglas tienen un enlace para volver arriba.",
     release_v240: "Se cambiaron los nombres de los juegos en los 12 idiomas.",
     release_v239: "Se eliminaron nombres de juegos protegidos de las reglas y las descripciones históricas.",
     release_v238: "Las reglas breves ahora corresponden al tema elegido y al modo de buscar en la imagen.",

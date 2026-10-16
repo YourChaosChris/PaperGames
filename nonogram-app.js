@@ -113,8 +113,16 @@ function initNonogramApp() {
 
   function setModeNonogram(mode) {
     AppStateNonogram.mode = mode;
-    if (modeFillBtn) modeFillBtn.classList.toggle("active-mode", mode === "fill");
-    if (modeMarkBtn) modeMarkBtn.classList.toggle("active-mode", mode === "mark");
+    if (modeFillBtn) {
+      const active = mode === "fill";
+      modeFillBtn.classList.toggle("active-mode", active);
+      modeFillBtn.setAttribute("aria-pressed", active ? "true" : "false");
+    }
+    if (modeMarkBtn) {
+      const active = mode === "mark";
+      modeMarkBtn.classList.toggle("active-mode", active);
+      modeMarkBtn.setAttribute("aria-pressed", active ? "true" : "false");
+    }
   }
 
   if (modeFillBtn) modeFillBtn.addEventListener("click", () => setModeNonogram("fill"));

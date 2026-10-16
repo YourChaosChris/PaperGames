@@ -63,6 +63,12 @@ const ResultModal = (function () {
       titleEl.textContent = title || "";
       messageEl.textContent = message || "";
     }
+    const result = document.getElementById("game-result");
+    const status = document.getElementById("board-info");
+    if (result && status && result.textContent && result.textContent === status.textContent) {
+      if (window.I18n && I18n.setMsg) I18n.setMsg(status, "");
+      else status.textContent = "";
+    }
     const modal = overlay.querySelector(".result-modal");
     const englishTitle = window.I18n && I18n.sourceText ? I18n.sourceText(title || "") : title;
     modal.className = "result-modal result-modal-" + classifyOutcome(englishTitle);

@@ -621,6 +621,7 @@ STRINGS.de = {
     release_v237: "„Neue Spiele“ zeigt jetzt die 10 neuesten Spiele.",
     release_v241: "Waldsiedlung hat neue Regeln, einen neuen Namen und überarbeitete Beschreibungen; alte Spielstände der Waldsiedlung werden verworfen.",
     release_v242: "Das Spiel hat einen neuen Namen und eine neue Adresse; alte Adressen leiten weiter.",
+    release_v243: "Der Offline-Speicher lädt weniger neu; Arabisch hat Abstände, aktive Knöpfe sind schwarz, „Mischen“ fragt nach, und Regelseiten haben oben einen Zurück-Link.",
     release_v240: "Die Spielnamen wurden in allen 12 Sprachen geändert.",
     release_v239: "Geschützte Spielnamen wurden aus Regeln und Beschreibungen der Geschichtsseiten entfernt.",
     release_v238: "Die Kurzregeln passen jetzt zum gewählten Kuchenmotiv und zum Suchbild.",

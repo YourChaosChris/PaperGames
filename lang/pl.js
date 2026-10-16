@@ -565,6 +565,7 @@ STRINGS.pl = {
     release_v237: "„Nowe gry” pokazują teraz 10 najnowszych gier.",
     release_v241: "Waldsiedlung ma nowe zasady, nową nazwę i poprawione opisy; stare zapisy gry zostają usunięte.",
     release_v242: "Gra ma nową nazwę i adres; stare adresy przekierowują dalej.",
+    release_v243: "Pamięć offline rzadziej ładuje dane ponownie; poprawiono odstępy po arabsku, aktywne przyciski są czarne, „Potasuj” pyta o potwierdzenie, a strony zasad mają u góry link powrotu.",
     release_v240: "Nazwy gier zmieniły się we wszystkich 12 językach.",
     release_v239: "Usunięto chronione nazwy gier z zasad i opisów na stronach historycznych.",
     release_v238: "Krótkie zasady pasują teraz do wybranego motywu i trybu wyszukiwania na obrazku.",

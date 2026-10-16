@@ -24,6 +24,30 @@
 // receive an imported file either, so the feature was removed rather
 // than kept as something that only worked on other devices.
 
+// Mode and filter buttons are rendered by many independent game scripts.
+// Keep their pressed state in sync with the shared visual state, including
+// buttons whose initial state comes from static markup.
+(function syncPressedButtons() {
+  const selector = "button.mode-btn, .nonogram-mode-toggle button, .settings-segmented button";
+  function sync(button) {
+    const active = button.classList.contains("active-mode") || button.classList.contains("active");
+    button.setAttribute("aria-pressed", active ? "true" : "false");
+  }
+  function syncAll(root) {
+    if (root.matches && root.matches(selector)) sync(root);
+    if (root.querySelectorAll) root.querySelectorAll(selector).forEach(sync);
+  }
+  syncAll(document);
+  if (typeof MutationObserver !== "undefined") {
+    new MutationObserver((records) => {
+      records.forEach((record) => {
+        if (record.type === "attributes" && record.target.matches(selector)) sync(record.target);
+        else record.addedNodes.forEach((node) => { if (node.nodeType === 1) syncAll(node); });
+      });
+    }).observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  }
+})();
+
 const SettingsMenu = (function () {
   function t(key, fallback) {
     return (window.I18n && typeof I18n.t === "function") ? I18n.t(key) : fallback;

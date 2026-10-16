@@ -559,6 +559,7 @@ STRINGS.fr = {
     release_v237: "« Nouveaux jeux » montre désormais les 10 jeux les plus récents.",
     release_v241: "Waldsiedlung reçoit de nouvelles règles, un nouveau nom et des descriptions révisées ; les anciennes sauvegardes sont supprimées.",
     release_v242: "Le jeu a un nouveau nom et une nouvelle adresse ; les anciennes adresses redirigent.",
+    release_v243: "Le stockage hors ligne recharge moins souvent ; les espaces arabes sont corrigés, les boutons actifs sont noirs, « Mélanger » demande confirmation et les règles ont un lien de retour en haut.",
     release_v240: "Les noms des jeux ont changé dans les 12 langues.",
     release_v239: "Les noms de jeux protégés ont été retirés des règles et des descriptions historiques.",
     release_v238: "Les règles en bref correspondent désormais au thème du gâteau et au mode image à fouiller.",

@@ -60,7 +60,9 @@
     const chips = document.getElementById("games-category-chips");
     if (!chips) return;
     chips.querySelectorAll(".mode-btn").forEach((b) => {
-      b.classList.toggle("active-mode", b.getAttribute("data-category") === cat);
+      const active = b.getAttribute("data-category") === cat;
+      b.classList.toggle("active-mode", active);
+      b.setAttribute("aria-pressed", active ? "true" : "false");
     });
   }
 
@@ -183,7 +185,9 @@
       if (wantedBtn) {
         state.category = wantedCat;
         categoryChips.querySelectorAll(".mode-btn").forEach((b) => {
-          b.classList.toggle("active-mode", b === wantedBtn);
+          const active = b === wantedBtn;
+          b.classList.toggle("active-mode", active);
+          b.setAttribute("aria-pressed", active ? "true" : "false");
         });
       }
       categoryChips.addEventListener("click", (evt) => {
@@ -191,7 +195,9 @@
         if (!btn) return;
         state.category = btn.getAttribute("data-category");
         categoryChips.querySelectorAll(".mode-btn").forEach((b) => {
-          b.classList.toggle("active-mode", b === btn);
+          const active = b === btn;
+          b.classList.toggle("active-mode", active);
+          b.setAttribute("aria-pressed", active ? "true" : "false");
         });
         state.family = "all";
         if (familySelect) familySelect.value = "all";

@@ -158,8 +158,16 @@ function initMauMauApp() {
 
   function setMode(mode) {
     pendingMode = mode;
-    if (modeOffline) modeOffline.classList.toggle("active-mode", mode === "hotseat");
-    if (modeOfflineAi) modeOfflineAi.classList.toggle("active-mode", mode === "vs-ai");
+    if (modeOffline) {
+      const active = mode === "hotseat";
+      modeOffline.classList.toggle("active-mode", active);
+      modeOffline.setAttribute("aria-pressed", active ? "true" : "false");
+    }
+    if (modeOfflineAi) {
+      const active = mode === "vs-ai";
+      modeOfflineAi.classList.toggle("active-mode", active);
+      modeOfflineAi.setAttribute("aria-pressed", active ? "true" : "false");
+    }
     if (levelWrap) levelWrap.classList.toggle("hidden", mode !== "vs-ai");
   }
 

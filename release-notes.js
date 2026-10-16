@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v243",
+    date: "2026-10-16",
+    key: "release_v243",
+    text: "Offline storage reloads less; Arabic spacing is fixed, active buttons are black, Shuffle asks first, and rules pages have a back link at the top."
+  },
+  {
     version: "v242",
     date: "2026-10-15",
     key: "release_v242",

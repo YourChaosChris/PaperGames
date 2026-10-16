@@ -28,6 +28,7 @@ const AppStateShapeSort = {
   selected: -1,
   hintTubes: [],
   hinted: false,
+  hasMoved: false,
   moves: 0,
   gameOver: false
 };
@@ -77,7 +78,7 @@ function setStatusShapeSort(text) {
 function saveShapeSortGame() {
   if (typeof GameStorage === "undefined" || !AppStateShapeSort.tubes) return;
   const s = AppStateShapeSort;
-  GameStorage.save(SHAPESORT_SAVE_KEY, { level: s.level, cap: s.cap, tubes: s.tubes, start: s.start, history: s.history, moves: s.moves, hinted: s.hinted });
+  GameStorage.save(SHAPESORT_SAVE_KEY, { level: s.level, cap: s.cap, tubes: s.tubes, start: s.start, history: s.history, moves: s.moves, hinted: s.hinted, hasMoved: s.hasMoved });
 }
 
 function clearSavedShapeSortGame() {
@@ -104,7 +105,8 @@ function initShapeSortApp() {
     saveCapPrefShapeSort(chosenCap());
     startNewShapeSort(levelSelect.value, chosenCap());
   });
-  document.getElementById("shapesort-shuffle").addEventListener("click", () => startNewShapeSort(AppStateShapeSort.level, AppStateShapeSort.cap));
+  const shuffleButton = document.getElementById("shapesort-shuffle");
+  shuffleButton.addEventListener("click", () => startNewShapeSort(AppStateShapeSort.level, AppStateShapeSort.cap));
   document.getElementById("shapesort-undo").addEventListener("click", undoShapeSort);
   document.getElementById("hint-btn").addEventListener("click", hintShapeSort);
 
@@ -119,6 +121,8 @@ function initShapeSortApp() {
     s.history = Array.isArray(saved.history) ? saved.history : [];
     s.moves = saved.moves || 0;
     s.hinted = !!saved.hinted;
+    s.hasMoved = !!saved.hasMoved || s.moves > 0;
+    if (s.hasMoved) shuffleButton.setAttribute("data-confirm", "new_game_confirm_dialog");
     s.plan = null;
     s.selected = -1;
     s.gameOver = false;
@@ -143,6 +147,9 @@ function startNewShapeSort(level, cap) {
   s.selected = -1;
   s.hintTubes = [];
   s.hinted = false;
+  s.hasMoved = false;
+  const shuffleButton = document.getElementById("shapesort-shuffle");
+  if (shuffleButton) shuffleButton.removeAttribute("data-confirm");
   s.moves = 0;
   s.gameOver = false;
   if (window.ResultModal) window.ResultModal.hide();
@@ -292,6 +299,9 @@ function onShapeSortTubeClick(i) {
   s.tubes = next;
   s.selected = -1;
   s.moves++;
+  s.hasMoved = true;
+  const shuffleButton = document.getElementById("shapesort-shuffle");
+  if (shuffleButton) shuffleButton.setAttribute("data-confirm", "new_game_confirm_dialog");
   afterShapeSortMove();
 }
 

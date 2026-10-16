@@ -632,6 +632,7 @@ const STRINGS = {
     release_v237: "New Games now shows the 10 newest games.",
     release_v241: "Forest Village has new rules, a renamed game, and revised descriptions; old Forest Village saves are discarded.",
     release_v242: "The game has a new name and address; old addresses now redirect.",
+    release_v243: "Offline storage reloads less; Arabic spacing is fixed, active buttons are black, Shuffle asks first, and rules pages have a back link at the top.",
     release_v240: "Game names have changed in all 12 languages.",
     release_v239: "Removed protected game names from rules and history page descriptions.",
     release_v238: "Quick rules now match the selected cake theme and picture search mode.",
@@ -5269,6 +5270,20 @@ const I18n = (function () {
     if (src) el.setAttribute("data-i18n-msg", src);
     else el.removeAttribute("data-i18n-msg");
     el.textContent = msg(src);
+    dedupeResultStatus(el);
+  }
+
+  // The result badge is the single announcement for a finished game.
+  // Some games also send the same sentence through the live status line;
+  // keep that line for distinct instructions, but remove an exact repeat.
+  function dedupeResultStatus(changed) {
+    if (!changed || (changed.id !== "game-result" && changed.id !== "board-info")) return;
+    const result = document.getElementById("game-result");
+    const status = document.getElementById("board-info");
+    if (!result || !status || !result.textContent || result.textContent !== status.textContent) return;
+    status.removeAttribute("data-i18n");
+    status.removeAttribute("data-i18n-msg");
+    status.textContent = "";
   }
 
   // Sets an element's screen-reader label from English text, remembering
@@ -5404,6 +5419,8 @@ const I18n = (function () {
         // A listener misbehaving shouldn't break the rest of i18n.
       }
     });
+
+    dedupeResultStatus(document.getElementById("game-result"));
 
     // A small inline script in each page's <head> hides the page while
     // its static English markup waits for another language (see

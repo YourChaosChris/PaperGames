@@ -135,6 +135,10 @@ echo "=== css-check.js ==="
 node "$ROOT/tests/css-check.js" || status=1
 echo ""
 
+echo "=== rtl-spacing.js ==="
+node "$ROOT/tests/rtl-spacing.js" || status=1
+echo ""
+
 echo "=== board-sweep.js ==="
 node "$ROOT/tests/board-sweep.js" || status=1
 echo ""
