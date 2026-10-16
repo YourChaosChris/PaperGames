@@ -91,7 +91,8 @@ const STATS_GAME_NAME_KEY = {
   tangram: "game_tangram",
   matches: "game_matches",
   catplaces: "game_catplaces",
-  loosen: "game_loosen"
+  loosen: "game_loosen",
+  patternrow: "game_patternrow"
 };
 
 function gameDisplayName(game) {

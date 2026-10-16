@@ -113,6 +113,8 @@ echo "=== catplaces-core.js ==="
 node "$ROOT/tests/catplaces-core.js" || status=1
 echo "=== loosen-core.js ==="
 node "$ROOT/tests/loosen-core.js" || status=1
+echo "=== patternrow-core.js ==="
+node "$ROOT/tests/patternrow-core.js" || status=1
 echo "=== matches-core.js ==="
 node "$ROOT/tests/matches-core.js" || status=1
 echo "=== cardduel-core.js ==="

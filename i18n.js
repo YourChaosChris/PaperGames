@@ -3808,6 +3808,27 @@ const STRINGS = {
     msg_t_lr_won: "All rings are loose - solved in {n} moves!",
     msg_t_lr_info: "Rings left: {n} · Moves: {m} · Fewest: {k}",
     family_rings: "Ring puzzles",
+    kq_next: "Next",
+    kq_level_label: "Level",
+    kq_answers_label: "Answers",
+    game_patternrow: "Continue the Pattern",
+    home_patternrow_desc: "A row of symbols follows a pattern - which symbol comes next? Six rows per game, three levels, shapes in black and white, big answer buttons. No time limit, a hint when you are stuck.",
+    patternrow_history_intro: "Rows of repeating signs are as old as pottery and weaving - and continuing them is a favourite task in school books and tests.",
+    quickrules_patternrow_1: "A row of symbols repeats in a pattern; the last place is empty.",
+    quickrules_patternrow_2: "Tap the symbol that belongs in the empty place. A wrong one is crossed out - try another.",
+    quickrules_patternrow_3: "Six rows make a game. There is no time limit, and the hint marks the right symbol.",
+    pr_win_title: "All rows finished!",
+    msg_pr_start: "Which symbol comes next? Tap the answer.",
+    msg_pr_wrong: "That is not it. Try another one.",
+    msg_pr_right: "Right! Tap Next.",
+    msg_pr_hint: "Hint: the marked symbol is the right one.",
+    msg_t_pr_won: "All rows finished! Mistakes: {n}.",
+    msg_t_pr_won_modal: "All rows finished. Mistakes: {n}.",
+    msg_t_pr_info: "Row {n} of {m} · Mistakes: {k}",
+    msg_pr_aria_row: "Pattern row. The last place is empty.",
+    msg_t_pr_aria_option: "Answer {n}",
+    msg_t_pr_aria_wrong: "Answer {n}, not right",
+    msg_t_pr_aria_right: "Answer {n}, right",
     aw_level_master: "Master",
     aw_retry: "Try again",
     msg_aw_glided: "The arrow glides forward up to the next arrow.",
@@ -5012,7 +5033,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 93;
+  const GAME_COUNT = 94;
 
   function t(key, lang) {
     const l = lang || getLang();

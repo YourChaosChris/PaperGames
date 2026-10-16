@@ -234,6 +234,12 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   exactly the stored fewest moves (confirmed by a second search for the
   first 40 per level); a random player fails (not clear after twice the
   fewest moves) in most tries on Hard (share printed). About 40 seconds.
+- `node tests/patternrow-core.js` - no server or browser needed. 200 games
+  of "Continue the Pattern" per level (6 rows each): every row has exactly
+  one symbol that continues it (no repeating part of at most half the row
+  gives another), the unit is shown at least twice, the answer sits among
+  distinct options and at every position, rows fit in 10 cells. Under a
+  second.
 - `node tests/matches-core.js` - no server or browser needed. All 90
   "Matchstick Puzzles": the start is wrong (sums) or lacks the asked
   number of squares, a full search finds a solution with exactly 1 or 2

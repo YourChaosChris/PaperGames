@@ -1147,5 +1147,18 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-12T17:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M23.5 9.2A10 10 0 1 0 23.6 23.3\" fill=\"none\" stroke=\"#141413\" stroke-width=\"3.2\"/><path d=\"M16.5 30.8A10 10 0 1 0 16.4 16.7\" fill=\"none\" stroke=\"#141413\" stroke-width=\"3.2\"/><path d=\"M21.4 7.4L25.6 11M21.5 25.2L25.7 21.4M18.6 32.6L14.4 29M18.5 14.8L14.3 18.6\" stroke=\"#141413\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg></span>"
+  },
+  {
+    slug: "patternrow",
+    category: "puzzles",
+    nameKey: "game_patternrow",
+    nameText: "Continue the Pattern",
+    descKey: "home_patternrow_desc",
+    descText: "A row of symbols follows a pattern - which symbol comes next? Six rows per game, three levels, shapes in black and white, big answer buttons. No time limit, a hint when you are stuck.",
+    popular: false,
+    kids: true,
+    added: "2026-10-17T00:10",
+    noRead: true,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><circle cx=\"5.5\" cy=\"11\" r=\"3.8\" fill=\"#141413\"/><rect x=\"11.7\" y=\"7.2\" width=\"7.6\" height=\"7.6\" fill=\"#141413\"/><circle cx=\"25.5\" cy=\"11\" r=\"3.8\" fill=\"#141413\"/><rect x=\"31.7\" y=\"7.2\" width=\"7.6\" height=\"7.6\" fill=\"#141413\"/><circle cx=\"5.5\" cy=\"29\" r=\"3.8\" fill=\"#141413\"/><rect x=\"11.7\" y=\"25.2\" width=\"7.6\" height=\"7.6\" fill=\"#141413\"/><circle cx=\"25.5\" cy=\"29\" r=\"3.8\" fill=\"#141413\"/><rect x=\"31.2\" y=\"24.7\" width=\"8.2\" height=\"8.2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.5\" stroke-dasharray=\"2.2 1.6\"/></svg></span>"
   }
 ];

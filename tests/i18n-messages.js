@@ -351,6 +351,13 @@ const SAMPLES = [
   "You found all the differences!",
   "Hint: there is a difference in the marked area.",
   "Found: 3 of 7",
+  "Which symbol comes next? Tap the answer.",
+  "That is not it. Try another one.",
+  "Right! Tap Next.",
+  "Hint: the marked symbol is the right one.",
+  "All rows finished! Mistakes: 2.",
+  "All rows finished. Mistakes: 0.",
+  "Row 3 of 6 · Mistakes: 1",
   "Choose a piece below the board.",
   "Turn or flip it if needed, then tap where its dot should go.",
   "The piece does not fit there.",
@@ -777,6 +784,10 @@ const SAMPLES = [
 
 // Screen-reader labels, translated part by part (I18n.setAria()).
 const ARIA_SAMPLES = [
+  "Pattern row. The last place is empty.",
+  "Answer 2",
+  "Answer 3, not right",
+  "Answer 1, right",
   // Pairs to Ten
   "Row 2, column 5, 7", "Row 3, column 1, crossed out", "Row 1, column 9, 9, selected", "Row 2, column 1, 1, hint",
   // Bridge
