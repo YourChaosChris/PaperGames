@@ -1,5 +1,13 @@
+// bingo-app.js
+// Wires BingoCore to bingo.html. Number or picture cards (3 x 3 / 5 x 5),
+// the caller draws on a button press only - nothing runs by itself.
+// Modes: "caller" (the device only draws; print the cards), "two" (1-4
+// cards on one device, shown one after the other with "Next card"), and
+// "computer" (your card against computer cards that mark by themselves).
+// "Bingo!" checks the shown card; wrong marks get a dashed frame, no penalty.
 (function () {
   const $ = (id) => document.getElementById(id);
+  const t = (k) => (typeof I18n !== "undefined" ? I18n.t(k) : k);
   const state = { game: null, cards: [], active: 0, current: null };
   const PICTURES = ["dog","cat","rabbit","mouse","owl","fish","turtle","snail","duck","frog","pig","elephant","butterfly","bee","lion","giraffe","sheep","apple","pear","car","boat","ball","flower","house"];
   const DRAWINGS = {
@@ -28,24 +36,182 @@
     flower:'<circle cx="50" cy="50" r="10"/><g><circle cx="50" cy="25" r="12"/><circle cx="75" cy="50" r="12"/><circle cx="50" cy="75" r="12"/><circle cx="25" cy="50" r="12"/></g><path d="M50 60v29m0-11q-18-12-22 0 13 9 22 0"/>',
     house:'<path d="M12 48 50 15l38 33M22 43v43h56V43M43 86V59h16v27M31 53h8v9h-8zm24 0h8v9h-8z"/>'
   };
-  function drawIcon(value) { const key = String(value).replace("picture", ""); return '<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="none" stroke="#111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">' + DRAWINGS[PICTURES[Number(key)]] + '</g></svg>'; }
+
+  function pictureName(v) { return t("bingo_picture_" + PICTURES[Number(String(v).replace("picture", ""))]); }
+  function drawIcon(value) {
+    const key = String(value).replace("picture", "");
+    return '<svg viewBox="0 0 100 100" width="100" height="100" aria-hidden="true" focusable="false"><g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">' + DRAWINGS[PICTURES[Number(key)]] + "</g></svg>";
+  }
+  function itemLabel(v) { return v === null ? t("bingo_free") : state.game.kind === "pictures" ? pictureName(v) : String(v); }
+  function setStatus(text) { const el = $("board-info"); if (el) el.textContent = text || ""; }
+  function setResult(text) { const el = $("game-result"); if (el) el.textContent = text || ""; }
+
+  function readSettings() {
+    const mode = $("bingo-mode").value;
+    const n = Number($("bingo-count").value);
+    return { kind: $("bingo-kind").value, size: Number($("bingo-size").value), mode, pattern: $("bingo-pattern").value, count: mode === "computer" ? Math.max(2, n) : n };
+  }
+
   function start() {
-    const kind = $('bingo-kind').value, size = Number($('bingo-size').value), mode = $('bingo-mode').value, count = mode === 'caller' ? 0 : (mode === 'computer' ? Math.max(2, Number($('bingo-count').value)) : Number($('bingo-count').value));
-    state.game = { kind, size, mode, pattern: $('bingo-pattern').value, drawn: [] };
-    state.cards = Array.from({ length: count }, () => BingoCore.createDeck(kind, size)); state.active = 0; state.current = null;
-    render(); $('bingo-status').textContent = I18n.t("ui_status_your_turn");
+    const s = readSettings();
+    state.game = { kind: s.kind, size: s.size, mode: s.mode, pattern: s.pattern, drawn: [], over: false };
+    state.cards = s.mode === "caller" ? [] : Array.from({ length: s.count }, () => BingoCore.createDeck(s.kind, s.size));
+    state.active = 0;
+    state.current = null;
+    setResult("");
+    setStatus(s.mode === "caller" ? t("bingo_status_caller") : t("bingo_status_start"));
+    $("board-placeholder").classList.add("hidden");
+    $("board-container").classList.remove("hidden");
+    $("settings-panel").classList.add("hidden");
+    I18n.setKey($("menu-toggle"), "menu_toggle");
+    render();
   }
+
+  function visibleIndex() { return state.game.mode === "computer" ? 0 : state.active; }
+
+  // A card as buttons in a grid; blank = printable copy without marks.
+  function cardHtml(card, index, blank) {
+    let html = '<h3 class="bingo-card-title">' + t("bingo_card") + " " + (index + 1) + '</h3><div class="bingo-grid" style="--bingo-n:' + card.size + '" role="group" aria-label="' + t("bingo_card") + " " + (index + 1) + '">';
+    card.board.forEach((v, i) => {
+      const marked = !blank && card.marked[i];
+      html += '<button type="button" class="bingo-cell' + (marked ? " marked" : "") + (card.kind === "pictures" ? " picture-cell" : "") + '" data-i="' + i + '" aria-pressed="' + (marked ? "true" : "false") + '" aria-label="' + itemLabel(v).replace(/"/g, "") + '"' + (blank ? " tabindex=\"-1\"" : "") + '><span class="bingo-in">' + (v === null ? "&#9733;" : card.kind === "pictures" ? drawIcon(v) : String(v)) + "</span></button>";
+    });
+    return html + "</div>";
+  }
+
   function render() {
-    const printable = $('bingo-print-cards'); printable.innerHTML = '';
-    state.cards.forEach((card, ci) => { const article = document.createElement('article'); article.className = 'bingo-card print-card' + (ci === (state.game.mode === 'computer' ? 0 : state.active) ? ' active' : ''); article.innerHTML = '<h3>' + I18n.t('bingo_card') + ' ' + (ci + 1) + '</h3><div class="bingo-grid" style="--bingo-n:' + card.size + '"></div>'; const grid = article.querySelector('.bingo-grid'); card.board.forEach((v, i) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'bingo-cell' + (card.marked[i] ? ' marked' : '') + (state.game.kind === 'pictures' ? ' picture-cell' : ''); b.setAttribute('aria-label', v === null ? I18n.t('bingo_free') : state.game.kind === 'pictures' ? I18n.t('bingo_picture_' + PICTURES[Number(String(v).replace('picture',''))]) : String(v)); b.innerHTML = v === null ? '★' : state.game.kind === 'pictures' ? drawIcon(v) : String(v); b.addEventListener('click', () => { if (state.game.mode === 'caller') return; card.marked[i] = !card.marked[i]; render(); }); grid.appendChild(b); }); printable.appendChild(article); });
-    $('bingo-current').textContent = state.current === null ? '—' : state.game.kind === 'pictures' ? drawIcon(state.current) + I18n.t('bingo_picture_' + PICTURES[Number(String(state.current).replace('picture',''))]) : state.current;
-    $('bingo-print-cards').classList.toggle('hidden', !state.cards.length);
+    const g = state.game;
+    if (!g) return;
+    const showCards = g.mode !== "caller" && state.cards.length > 0;
+    const vi = visibleIndex();
+    const host = $("bingo-cards");
+    host.innerHTML = "";
+    if (showCards) {
+      const article = document.createElement("article");
+      article.className = "bingo-card";
+      article.innerHTML = cardHtml(state.cards[vi], vi, false);
+      article.querySelectorAll(".bingo-cell").forEach((b) => {
+        const i = Number(b.getAttribute("data-i"));
+        b.addEventListener("click", () => onCell(i));
+      });
+      host.appendChild(article);
+    }
+    host.classList.toggle("hidden", !showCards);
+    const cur = $("bingo-current");
+    cur.innerHTML = "";
+    if (state.current === null) cur.textContent = "\u2014";
+    else if (g.kind === "pictures") cur.innerHTML = drawIcon(state.current) + "<span>" + pictureName(state.current) + "</span>";
+    else cur.textContent = String(state.current);
+    renderCalled();
+    $("bingo-next").classList.toggle("hidden", !(g.mode === "two" && state.cards.length > 1));
+    $("bingo-check").classList.toggle("hidden", !showCards);
+    $("bingo-draw").disabled = g.over;
+    $("bingo-check").disabled = g.over;
   }
-  $('bingo-new').addEventListener('click', start);
-  $('bingo-draw').addEventListener('click', () => { if (!state.game) start(); if (state.game.over) return; const deck = state.game.kind === 'pictures' ? Array.from({length:24},(_,i)=>'picture'+i) : Array.from({length:75},(_,i)=>i+1); const used = state.game.drawn || (state.game.drawn=[]); const left = deck.filter(x=>!used.includes(x)); state.current = left.length ? left[Math.floor(Math.random()*left.length)] : null; if(state.current!==null){used.push(state.current);state.cards.forEach(c=>{c.drawn=used.slice();const i=c.board.indexOf(state.current);if(i>=0&&state.game.mode==='computer'&&c!==state.cards[0])c.marked[i]=true;});} const aiWin=state.game.mode==='computer'&&state.cards.slice(1).some(c=>BingoCore.check(c,state.game.pattern).valid); if(aiWin){state.game.over=true;if(typeof GameStats!=='undefined')GameStats.record('bingo','loss');} $('bingo-status').textContent = state.current === null ? I18n.t('bingo_draw_empty') : (aiWin ? I18n.t("ui_status_computer_wins") : I18n.t("ui_status_your_turn")); render(); });
-  $('bingo-next').addEventListener('click', () => { if (!state.cards.length) return; state.active = (state.active + 1) % state.cards.length; $('bingo-status').textContent = I18n.t("ui_status_your_turn"); render(); });
-  $('bingo-check').addEventListener('click', () => { if(!state.cards.length||state.game.over)return; const result = BingoCore.check(state.cards[state.active], state.game.pattern); $('bingo-status').textContent = I18n.t(result.valid ? (state.game.mode === 'computer' && state.active > 0 ? "ui_status_computer_wins" : "ui_status_you_win") : 'bingo_incorrect'); if (result.valid) { state.game.over = true; if (state.game.mode === 'computer' && typeof GameStats !== 'undefined') GameStats.record('bingo', state.active === 0 ? 'win' : 'loss'); } const cells = $('bingo-print-cards').children[state.active].querySelectorAll('.bingo-cell'); cells.forEach((el,i)=>el.classList.toggle('wrong',result.incorrect.includes(i))); });
-  $('bingo-mode').addEventListener('change', () => { const count = $('bingo-count'); count.disabled = $('bingo-mode').value === 'caller'; count.options[0].disabled = $('bingo-mode').value === 'computer'; if (count.options[0].disabled && count.value === '1') count.value = '2'; });
-  document.addEventListener('DOMContentLoaded', () => {});
-  if (document.readyState !== 'loading') start(); else document.addEventListener('DOMContentLoaded', start);
+
+  function renderCalled() {
+    const g = state.game, list = $("bingo-called");
+    const items = g.kind === "pictures" ? g.drawn.slice() : g.drawn.slice().sort((a, b) => a - b);
+    $("bingo-called-title").textContent = t("bingo_called") + " (" + items.length + ")";
+    list.innerHTML = items.map((v) => g.kind === "pictures"
+      ? '<li class="bingo-called-pic" title="' + pictureName(v) + '">' + drawIcon(v) + "</li>"
+      : "<li>" + v + "</li>").join("");
+  }
+
+  // Printable sheet: blank copies of the cards, 4 per page; in caller
+  // mode four new cards.
+  function renderPrint() {
+    const g = state.game;
+    if (!g) return;
+    const cards = state.cards.length ? state.cards : Array.from({ length: 4 }, () => BingoCore.createDeck(g.kind, g.size));
+    $("bingo-print").innerHTML = cards.map((c, i) => '<article class="bingo-card print-card">' + cardHtml(c, i, true) + "</article>").join("");
+  }
+
+  function onCell(i) {
+    const g = state.game;
+    if (!g || g.over) return;
+    const card = state.cards[visibleIndex()];
+    if (card.board[i] === null) return;
+    card.marked[i] = !card.marked[i];
+    render();
+    const el = $("bingo-cards").querySelectorAll(".bingo-cell")[i];
+    if (el) el.focus();
+  }
+
+  function onDraw() {
+    if (!state.game) start();
+    const g = state.game;
+    if (g.over) return;
+    const probe = { kind: g.kind, drawn: g.drawn };
+    const v = BingoCore.draw(probe);
+    state.current = v;
+    if (v === null) { setStatus(t("bingo_draw_empty")); render(); return; }
+    let computerWin = false;
+    state.cards.forEach((c, ci) => {
+      c.drawn = g.drawn.slice();
+      if (g.mode === "computer" && ci > 0) {
+        BingoCore.autoMark(c, v);
+        if (BingoCore.check(c, g.pattern).valid) computerWin = true;
+      }
+    });
+    if (computerWin) {
+      g.over = true;
+      setStatus(t("ui_status_computer_wins"));
+      setResult(t("ui_status_computer_wins"));
+      if (typeof GameStats !== "undefined") GameStats.record("bingo", "loss");
+    } else setStatus(g.mode === "computer" ? t("ui_status_your_turn") : t("bingo_status_marked"));
+    render();
+  }
+
+  function onCheck() {
+    const g = state.game;
+    if (!g || g.over || !state.cards.length) return;
+    const vi = visibleIndex();
+    const card = state.cards[vi];
+    card.drawn = g.drawn.slice();
+    const res = BingoCore.check(card, g.pattern);
+    const cells = $("bingo-cards").querySelectorAll(".bingo-cell");
+    cells.forEach((el, i) => el.classList.toggle("wrong", res.incorrect.indexOf(i) !== -1));
+    if (res.valid) {
+      g.over = true;
+      const text = g.mode === "computer" ? t("ui_status_you_win") : t("bingo_correct");
+      setStatus(text);
+      setResult(t("bingo_correct"));
+      if (g.mode === "computer" && typeof GameStats !== "undefined") GameStats.record("bingo", "win");
+      $("bingo-draw").disabled = true;
+      $("bingo-check").disabled = true;
+    } else setStatus(res.incorrect.length ? t("bingo_incorrect") : t("bingo_not_yet"));
+  }
+
+  function onNext() {
+    if (!state.cards.length) return;
+    state.active = (state.active + 1) % state.cards.length;
+    setStatus(t("bingo_card") + " " + (state.active + 1));
+    render();
+  }
+
+  function syncCount() {
+    const mode = $("bingo-mode").value, count = $("bingo-count");
+    count.disabled = mode === "caller";
+    count.options[0].disabled = mode === "computer";
+    if (mode === "computer" && count.value === "1") count.value = "2";
+  }
+
+  function init() {
+    const toggle = $("menu-toggle"), panel = $("settings-panel");
+    if (toggle && panel) toggle.addEventListener("click", () => {
+      const hidden = panel.classList.toggle("hidden");
+      I18n.setKey(toggle, hidden ? "menu_toggle" : "menu_close");
+    });
+    $("start-bingo-game").addEventListener("click", start);
+    $("bingo-draw").addEventListener("click", onDraw);
+    $("bingo-next").addEventListener("click", onNext);
+    $("bingo-check").addEventListener("click", onCheck);
+    $("bingo-print-btn").addEventListener("click", () => { if (!state.game) start(); renderPrint(); window.print(); });
+    window.addEventListener("beforeprint", renderPrint);
+    $("bingo-mode").addEventListener("change", syncCount);
+    syncCount();
+    if (typeof I18n.onChange === "function") I18n.onChange(() => { if (state.game) { render(); } });
+  }
+  document.addEventListener("DOMContentLoaded", init);
 })();
