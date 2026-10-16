@@ -14,9 +14,9 @@
 const RELEASE_NOTES = [
   {
     version: "v248",
-    date: "2026-10-16",
+    date: "2026-10-17",
     key: "release_v248",
-    text: "Search now matches descriptions and keywords such as cards, dice and kids; the Card Games page is new."
+    text: "Seven new games (Bingo, three dice games and three children's puzzles), a new hardest level in Arrows, a hint button in Cat Places, better search and a Card Games page."
   },
   {
     version: "v247",
