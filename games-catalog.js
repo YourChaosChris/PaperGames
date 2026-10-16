@@ -39,8 +39,7 @@
 // of Pairs, or 17 and 4 in Blackjack), and that game's description names
 // it. Only a genuinely new game gets its own pages and an entry here.
 
-const GAME_FAMILIES = ["chess", "draughts", "tafl", "hunt", "halma", "inarow", "ancientrace", "dicerace", "dicegames", "sudoku", "latin", "math", "tiling", "rings", "patience", "rummy", "tricks", "casino"];
-const GAME_FAMILIES = ["chess", "draughts", "tafl", "hunt", "halma", "inarow", "ancientrace", "dicerace", "sudoku", "latin", "math", "tiling", "rings", "patience", "rummy", "tricks", "casino", "picturelogic"];
+const GAME_FAMILIES = ["chess", "draughts", "tafl", "hunt", "halma", "inarow", "ancientrace", "dicerace", "dicegames", "sudoku", "latin", "math", "tiling", "rings", "patience", "rummy", "tricks", "casino", "picturelogic"];
 
 const GAMES_CATALOG = [
   {
@@ -1191,6 +1190,8 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-17T01:20",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><polygon points=\"20,3 24.5,14.5 37,15 27.5,23 30.5,35 20,28.5 9.5,35 12.5,23 3,15 15.5,14.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><circle cx=\"20\" cy=\"20\" r=\"4\" fill=\"#141413\"/></svg></span>"
+  },
+  {
     slug: "patternrow",
     category: "puzzles",
     family: "picturelogic",

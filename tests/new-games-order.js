@@ -40,9 +40,7 @@ if (GC.NEW_MAX !== 10) fails.push("NEW_MAX " + GC.NEW_MAX);
 const home = GC.games("new", cat, now).map((g) => g.slug);
 const all0 = cat.slice().sort(GR.compareNewest).map((g) => g.slug);
 const want = all0.slice(0, 10);
-if (JSON.stringify(want.slice(0, 8)) !== JSON.stringify(["bingo", "loosen", "catplaces", "matches", "tangram", "rings", "arrows", "adventurebook"])) fails.push("newest eight " + JSON.stringify(want.slice(0, 8)));
-if (JSON.stringify(want.slice(0, 8)) !== JSON.stringify(["sternjagd", "steckwuerfeln", "klappenkasten", "loosen", "catplaces", "matches", "tangram", "rings"])) fails.push("newest eight " + JSON.stringify(want.slice(0, 8)));
-if (JSON.stringify(want.slice(0, 8)) !== JSON.stringify(["oddone", "shadowmatch", "patternrow", "loosen", "catplaces", "matches", "tangram", "rings"])) fails.push("newest eight " + JSON.stringify(want.slice(0, 8)));
+if (JSON.stringify(want.slice(0, 8)) !== JSON.stringify(["sternjagd", "steckwuerfeln", "klappenkasten", "oddone", "shadowmatch", "patternrow", "bingo", "loosen"])) fails.push("newest eight " + JSON.stringify(want.slice(0, 8)));
 if (JSON.stringify(home) !== JSON.stringify(want)) fails.push("home list " + JSON.stringify(home) + ", expected " + JSON.stringify(want));
 const all = cat.slice().sort(GR.compareNewest);
 for (let i = 1; i < all.length; i++) {

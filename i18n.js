@@ -5241,8 +5241,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 94;
-  const GAME_COUNT = 96;
+  const GAME_COUNT = 100;
 
   function t(key, lang) {
     const l = lang || getLang();
