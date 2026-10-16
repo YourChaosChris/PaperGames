@@ -61,6 +61,32 @@ function isAiRomme(i) { return AppStateRomme.mode === "vs-ai" && i !== 0; }
 function cardLabelRomme(c) { return c.joker ? "Joker" : CardFaces.label(c); }
 
 function setStatusRomme(text) {
+  if (((AppStateRomme.mode === "vs-ai")) && text) {
+    const uiStatusText = String(text);
+    const uiStatusState = AppStateRomme.state || AppStateRomme;
+    const uiStatusGameOver = AppStateRomme.gameOver === true || AppStateRomme.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
+    const uiStatusTurn = uiStatusState.turn !== undefined ? uiStatusState.turn : uiStatusState.current;
+    const uiStatusHuman = AppStateRomme.humanColor !== undefined ? AppStateRomme.humanColor : (AppStateRomme.humanPlayer !== undefined ? AppStateRomme.humanPlayer : AppStateRomme.human);
+    let uiStatusKey = null;
+    if (uiStatusGameOver && !/\b(draw|drawn|tie|remis|stalemate)\b/i.test(uiStatusText) && /\b(win|wins|won|winner|lose|loses)\b/i.test(uiStatusText)) {
+      if (/\b(you win|you won|you have won)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_you_win";
+      else if (/\b(you lose|you lost|computer.{0,30}wins?)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_computer_wins";
+      else if (uiStatusState.winner !== undefined && uiStatusHuman !== undefined) uiStatusKey = String(uiStatusState.winner) === String(uiStatusHuman) ? "ui_status_you_win" : "ui_status_computer_wins";
+      else if (uiStatusHuman !== undefined) { const winSide = uiStatusText.match(/\b(white|black|red|blue)\s+wins?\b/i); if (winSide) uiStatusKey = winSide[1].charAt(0).toLowerCase() === String(uiStatusHuman).charAt(0).toLowerCase() ? "ui_status_you_win" : "ui_status_computer_wins"; }
+    }
+    if (!uiStatusKey && /(?:^|[.!?]\s+)(?:the\s+)?computer(?:\s+\d+)?(?:\x27s)?\s+(?:turn|thinking|to move|is thinking|is playing|plays|acts|rolling)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_computer_turn";
+    if (!uiStatusKey && /\b(turn|to move|move a stone|place a stone|draw a card|roll|throw)\b/i.test(uiStatusText) && uiStatusHuman !== undefined && uiStatusTurn !== undefined) uiStatusKey = String(uiStatusTurn) === String(uiStatusHuman) ? "ui_status_your_turn" : "ui_status_computer_turn";
+    if (!uiStatusKey && /\b(your turn|you are next|you to move)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_your_turn";
+    if (!uiStatusKey && !/\b(draw|drawn|tie|remis|stalemate|win|wins|won|winner|lose|loses)\b/i.test(uiStatusText)) {
+      if (uiStatusHuman !== undefined && uiStatusTurn !== undefined) uiStatusKey = String(uiStatusTurn) === String(uiStatusHuman) ? "ui_status_your_turn" : "ui_status_computer_turn";
+      else if (/(?:^|[.!?]\s+)(?:the\s+)?computer(?:\s+\d+)?(?:\x27s)?\s+(?:turn|thinking|to move|is thinking|is playing|plays|acts|rolling)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_computer_turn";
+      else uiStatusKey = "ui_status_your_turn";
+    }
+    if (uiStatusKey) {
+      const uiStatusExtra = uiStatusText.replace(/^.*?(?:\.|…|!)(?:\s+|$)/, "").trim();
+      text = I18n.t(uiStatusKey) + (uiStatusExtra ? " " + uiStatusExtra : "");
+    }
+  }
   const el = document.getElementById("board-info");
   if (el) I18n.setMsg(el, text || "");
 }

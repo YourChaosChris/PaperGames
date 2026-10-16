@@ -47,6 +47,9 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   game controls use the shared mode and start names in all 12 languages,
   two-player mode is not duplicated in level lists, and legacy mode keys
   retain the same translated wording.
+- `node tests/ui-status.js` - no server or browser needed. Checks that all
+  computer-opponent games use the shared four localized turn and winner
+  status keys; documents the simultaneous-round exception in War.
 - `node tests/i18n-messages.js` - no server or browser needed. Runs a
   sample of every runtime status/result message shape through
   `I18n.msg()` in all 10 non-English languages and fails on anything

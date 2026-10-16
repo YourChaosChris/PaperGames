@@ -21,7 +21,6 @@ function setStatusWar(text) {
   const el = document.getElementById("board-info");
   if (el) I18n.setMsg(el, text || "");
 }
-
 function setResultWar(text) {
   const el = document.getElementById("game-result");
   if (el) I18n.setMsg(el, text || "");
@@ -107,7 +106,7 @@ function playRoundWar() {
   AppStateWar.state = WarCore.playRound(s);
   const msg = roundTextWar(AppStateWar.state.last);
   if (AppStateWar.state.gameOver) { endGameWar(msg); return; }
-  setStatusWar(msg);
+  setStatusWar(I18n.t("ui_status_your_turn") + " " + msg);
   renderWar();
   saveWar();
 }
@@ -125,7 +124,8 @@ function endGameWar(prefix) {
   const verdict = s.winner === 0 ? "You win!" : (s.winner === 1 ? "You lose." : "Draw.");
   const full = (prefix ? prefix + " " : "") + end + " " + verdict;
   setResultWar(end + " " + verdict);
-  setStatusWar(full);
+  const statusKey = s.winner === 0 ? "ui_status_you_win" : (s.winner === 1 ? "ui_status_computer_wins" : null);
+  setStatusWar(statusKey ? I18n.t(statusKey) + " " + full : full);
   if (typeof GameStats !== "undefined") GameStats.record("war", s.winner === 0 ? "win" : (s.winner === 1 ? "loss" : "draw"));
   if (window.ResultModal) window.ResultModal.show(s.winner === 0 ? "You win!" : (s.winner === 1 ? "You lose" : "Draw"), end + " " + verdict);
   clearSaveWar();

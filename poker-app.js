@@ -30,6 +30,31 @@ function cardsTextPK(cards) {
 /*** Status and save ***/
 
 function setStatusPK(text) {
+  if (AppStatePK.computers > 0 && text) {
+    const uiStatusText = String(text);
+    const uiStatusState = AppStatePK.state || AppStatePK;
+    const uiStatusGameOver = AppStatePK.gameOver === true || AppStatePK.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
+    const uiStatusTurn = (AppStatePK.state || {}).toAct;
+    const uiStatusHuman = 0;
+    let uiStatusKey = null;
+    if (uiStatusGameOver && !/\b(draw|drawn|tie|remis|stalemate)\b/i.test(uiStatusText) && /\b(win|wins|won|winner|lose|loses)\b/i.test(uiStatusText)) {
+      if (/\b(you win|you won|you have won)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_you_win";
+      else if (/\b(you lose|you lost|computer.{0,30}wins?)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_computer_wins";
+      else if (uiStatusState.winner !== undefined) uiStatusKey = String(uiStatusState.winner) === String(0) ? "ui_status_you_win" : "ui_status_computer_wins";
+    }
+    if (!uiStatusKey && /(?:^|[.!?]\s+)(?:the\s+)?computer(?:\s+\d+)?(?:\x27s)?\s+(?:turn|thinking|to move|is thinking|is playing|plays|acts|rolling)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_computer_turn";
+    if (!uiStatusKey && /\b(turn|to move|move a stone|place a stone|draw a card|roll|throw)\b/i.test(uiStatusText) && uiStatusHuman !== undefined && uiStatusTurn !== undefined) uiStatusKey = String(uiStatusTurn) === String(uiStatusHuman) ? "ui_status_your_turn" : "ui_status_computer_turn";
+    if (!uiStatusKey && /\b(your turn|you are next|you to move)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_your_turn";
+    if (!uiStatusKey && !/\b(draw|drawn|tie|remis|stalemate|win|wins|won|winner|lose|loses)\b/i.test(uiStatusText)) {
+      if (uiStatusHuman !== undefined && uiStatusTurn !== undefined) uiStatusKey = String(uiStatusTurn) === String(uiStatusHuman) ? "ui_status_your_turn" : "ui_status_computer_turn";
+      else if (/(?:^|[.!?]\s+)(?:the\s+)?computer(?:\s+\d+)?(?:\x27s)?\s+(?:turn|thinking|to move|is thinking|is playing|plays|acts|rolling)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_computer_turn";
+      else uiStatusKey = "ui_status_your_turn";
+    }
+    if (uiStatusKey) {
+      const uiStatusExtra = uiStatusText.replace(/^.*?(?:\.|…|!)(?:\s+|$)/, "").trim();
+      text = I18n.t(uiStatusKey) + (uiStatusExtra ? " " + uiStatusExtra : "");
+    }
+  }
   const el = document.getElementById("board-info");
   if (el) I18n.setMsg(el, text || "");
 }

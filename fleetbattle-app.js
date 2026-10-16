@@ -90,6 +90,31 @@ function fbShipName(id) {
 }
 
 function setStatusFb(elementId, text) {
+  if ((AppStateFleetBattle.phase === "battle" || AppStateFleetBattle.phase === "over") && text) {
+    const uiStatusText = String(text);
+    const uiStatusState = AppStateFleetBattle;
+    const uiStatusGameOver = AppStateFleetBattle.gameOver === true || AppStateFleetBattle.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
+    const uiStatusTurn = AppStateFleetBattle.turn;
+    const uiStatusHuman = "human";
+    let uiStatusKey = null;
+    if (uiStatusGameOver && !/\b(draw|drawn|tie|remis|stalemate)\b/i.test(uiStatusText) && /\b(win|wins|won|winner|lose|loses)\b/i.test(uiStatusText)) {
+      if (/\b(you win|you won|you have won)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_you_win";
+      else if (/\b(you lose|you lost|computer.{0,30}wins?)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_computer_wins";
+      else if (uiStatusState.winner !== undefined) uiStatusKey = String(uiStatusState.winner) === String("human") ? "ui_status_you_win" : "ui_status_computer_wins";
+    }
+    if (!uiStatusKey && /(?:^|[.!?]\s+)(?:the\s+)?computer(?:\s+\d+)?(?:\x27s)?\s+(?:turn|thinking|to move|is thinking|is playing|plays|acts|rolling)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_computer_turn";
+    if (!uiStatusKey && /\b(turn|to move|move a stone|place a stone|draw a card|roll|throw)\b/i.test(uiStatusText) && uiStatusHuman !== undefined && uiStatusTurn !== undefined) uiStatusKey = String(uiStatusTurn) === String(uiStatusHuman) ? "ui_status_your_turn" : "ui_status_computer_turn";
+    if (!uiStatusKey && /\b(your turn|you are next|you to move)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_your_turn";
+    if (!uiStatusKey && !/\b(draw|drawn|tie|remis|stalemate|win|wins|won|winner|lose|loses)\b/i.test(uiStatusText)) {
+      if (uiStatusHuman !== undefined && uiStatusTurn !== undefined) uiStatusKey = String(uiStatusTurn) === String(uiStatusHuman) ? "ui_status_your_turn" : "ui_status_computer_turn";
+      else if (/(?:^|[.!?]\s+)(?:the\s+)?computer(?:\s+\d+)?(?:\x27s)?\s+(?:turn|thinking|to move|is thinking|is playing|plays|acts|rolling)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_computer_turn";
+      else uiStatusKey = "ui_status_your_turn";
+    }
+    if (uiStatusKey) {
+      const uiStatusExtra = uiStatusText.replace(/^.*?(?:\.|…|!)(?:\s+|$)/, "").trim();
+      text = I18n.t(uiStatusKey) + (uiStatusExtra ? " " + uiStatusExtra : "");
+    }
+  }
   const el = document.getElementById(elementId);
   if (el) I18n.setMsg(el, text || "");
 }
@@ -104,7 +129,8 @@ function setGameResultFb(text) {
 
 function announceGameResultFb(title, message) {
   setGameResultFb(message);
-  setStatusFb("board-info", message);
+  const key = AppStateFleetBattle.winner === "human" ? "ui_status_you_win" : "ui_status_computer_wins";
+  setStatusFb("board-info", I18n.t(key) + " " + message);
   if (window.ResultModal) {
     window.ResultModal.show(title, message);
   }
@@ -250,10 +276,10 @@ function initFleetBattleApp() {
         const msg = AppStateFleetBattle.winner === "human" ? t18nFb("fleetbattle_win_message") : t18nFb("fleetbattle_lose_message");
         setStatusFb("board-info", msg);
       } else if (AppStateFleetBattle.turn === "computer") {
-        setStatusFb("board-info", t18nFb("fleetbattle_computer_thinking"));
+        setStatusFb("board-info", I18n.t("ui_status_computer_turn"));
         setTimeout(computerTakesTurnFb, AiPacing.delay(350));
       } else {
-        setStatusFb("board-info", t18nFb("fleetbattle_your_turn"));
+        setStatusFb("board-info", I18n.t("ui_status_your_turn"));
       }
     }
   }
@@ -300,7 +326,7 @@ function startBattlePhaseFb() {
   renderFbOwnGrid();
   renderFbEnemyGrid();
   updateFbMeta();
-  setStatusFb("board-info", t18nFb("fleetbattle_your_turn"));
+  setStatusFb("board-info", I18n.t("ui_status_your_turn"));
   saveFleetBattleGame();
 }
 
@@ -369,7 +395,7 @@ function onFbEnemyCellClick(r, c) {
   AppStateFleetBattle.turn = "computer";
   renderFbEnemyGrid();
   saveFleetBattleGame();
-  setStatusFb("board-info", t18nFb("fleetbattle_computer_thinking"));
+  setStatusFb("board-info", I18n.t("ui_status_computer_turn"));
   setTimeout(computerTakesTurnFb, AiPacing.delay(350));
 }
 
@@ -398,7 +424,7 @@ function computerTakesTurnFb() {
 
   AppStateFleetBattle.turn = "human";
   renderFbEnemyGrid();
-  setStatusFb("board-info", t18nFb("fleetbattle_your_turn"));
+  setStatusFb("board-info", I18n.t("ui_status_your_turn"));
   saveFleetBattleGame();
 }
 

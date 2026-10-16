@@ -77,7 +77,13 @@ function taskTextFv(id) {
 function setStatusFv(key, vars) {
   AppStateFv.status = key ? { key, vars: vars || {} } : null;
   const el = document.getElementById("board-info");
-  if (el) el.textContent = key ? fillFv(key, vars) : "";
+  if (el) {
+    if (AppStateFv.mode === "vs-ai" && key) {
+      if (key === "fv_status_computer") el.textContent = I18n.t("ui_status_computer_turn") + " " + fillFv(key, vars);
+      else if (["fv_status_turn", "fv_status_winter", "fv_status_season"].includes(key)) el.textContent = I18n.t("ui_status_your_turn") + " " + fillFv(key, vars);
+      else el.textContent = fillFv(key, vars);
+    } else el.textContent = key ? fillFv(key, vars) : "";
+  }
 }
 
 function saveFvGame() {
@@ -268,7 +274,7 @@ function endGameFv(resigned) {
     if (AppStateFv.mode === "vs-ai" && typeof GameStats !== "undefined") GameStats.record("forestvillage", w.indexOf(0) !== -1 ? (w.length > 1 ? "draw" : "win") : "loss");
   }
   setStatusFv(null);
-  document.getElementById("board-info").textContent = text;
+  document.getElementById("board-info").textContent = AppStateFv.mode === "vs-ai" && n > 1 && w.length === 1 ? I18n.t(w[0] === 0 ? "ui_status_you_win" : "ui_status_computer_wins") + " " + text : text;
   document.getElementById("game-result").textContent = text;
   if (window.ResultModal) window.ResultModal.show(title, text);
   clearSavedFvGame();

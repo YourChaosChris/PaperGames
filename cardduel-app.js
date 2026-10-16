@@ -94,9 +94,18 @@ function emblemCd(el, cls) {
 function setStatusCd(key, vars) {
   AppStateCd.status = key ? { key, vars: vars || {} } : null;
   const el = document.getElementById("board-info");
-  if (el) el.textContent = key ? fillCd(key, vars) : "";
+  if (!el) return;
+  let text = key ? fillCd(key, vars) : "";
+  if (AppStateCd.mode === "vs-ai" && key) {
+    const statusKey = key === "cd_status_computer_turn" || key === "cd_status_computer_starts" ? "ui_status_computer_turn"
+      : (key === "cd_status_your_turn" || key === "cd_status_you_start" ? "ui_status_your_turn" : null);
+    if (statusKey) {
+      const extra = text.replace(/^.*?(?:\.|…|!)(?:\s+|$)/, "").trim();
+      text = I18n.t(statusKey) + (extra ? " " + extra : "");
+    }
+  }
+  el.textContent = text;
 }
-
 function saveCdGame() {
   if (typeof GameStorage === "undefined" || !AppStateCd.state) return;
   GameStorage.save(CD_SAVE_KEY, { mode: AppStateCd.mode, level: AppStateCd.level, state: AppStateCd.state });
@@ -389,7 +398,7 @@ function endGameCd(resignedBy) {
   }
   setStatusCd(null);
   const status = document.getElementById("board-info");
-  if (status) status.textContent = text;
+  if (status) status.textContent = AppStateCd.mode === "vs-ai" ? I18n.t(w === 0 ? "ui_status_you_win" : "ui_status_computer_wins") + " " + text : text;
   const result = document.getElementById("game-result");
   if (result) result.textContent = text;
   if (window.ResultModal) window.ResultModal.show(title, text);

@@ -110,7 +110,13 @@ function goalTextVl(v) {
 function setStatusVl(key, vars) {
   AppStateVl.status = key ? { key, vars: vars || {} } : null;
   const el = document.getElementById("board-info");
-  if (el) el.textContent = key ? fillVl(key, vars) : "";
+  if (el) {
+    if (AppStateVl.mode === "vs-ai" && key) {
+      if (key === "vl_status_computer") el.textContent = I18n.t("ui_status_computer_turn") + " " + fillVl(key, vars);
+      else if (key === "vl_status_move") el.textContent = I18n.t("ui_status_your_turn") + " " + fillVl(key, vars);
+      else el.textContent = fillVl(key, vars);
+    } else el.textContent = key ? fillVl(key, vars) : "";
+  }
 }
 
 function saveVlGame() {
@@ -395,7 +401,7 @@ function endGameVl(resigned) {
     text = title;
   }
   setStatusVl(null);
-  document.getElementById("board-info").textContent = text;
+  document.getElementById("board-info").textContent = AppStateVl.mode === "vs-ai" ? I18n.t(w === 0 ? "ui_status_you_win" : "ui_status_computer_wins") + " " + text : text;
   document.getElementById("game-result").textContent = text;
   if (window.ResultModal) window.ResultModal.show(title, text);
   clearSavedVlGame();
