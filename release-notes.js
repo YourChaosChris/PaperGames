@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v245",
+    date: "2026-10-16",
+    key: "release_v245",
+    text: "Game pages have a one-row header and no site navigation; Settings moved into the menu; the control panel closes after the start, so more boards fit on the screen."
+  },
+  {
     version: "v244",
     date: "2026-10-16",
     key: "release_v244",

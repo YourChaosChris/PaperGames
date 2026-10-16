@@ -464,6 +464,10 @@ margin: 0 0 var(--space-2);
   min-height: 1.2em;
 }
 
+.status-text:empty {
+  display: none;
+}
+
 .game-clocks {
   font-size: 0.8rem;
 }
@@ -1332,6 +1336,73 @@ margin: var(--space-2) 0;
     min-height: 44px;
     padding: var(--space-1) var(--space-2);
   }
+}
+
+/* A game page uses one compact toolbar above the board. The site navigation
+   remains available on the home, catalogue and information pages. */
+.game-page .site-nav {
+  display: none;
+}
+
+.game-page .app-header {
+  flex-wrap: nowrap;
+  margin-bottom: var(--space-1);
+}
+
+.game-page .title-wrap {
+  display: none;
+}
+
+.game-page .user-panel {
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.game-page .user-panel > * {
+  margin: 0 4px 0 0;
+}
+
+.game-page .user-panel > *:last-child {
+  margin-right: 0;
+}
+
+.game-page .game-switch {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  margin-right: auto;
+}
+
+.game-page .game-switch-icon {
+  margin-right: 4px;
+}
+
+.game-page .game-select {
+  max-width: 150px;
+}
+
+.game-page #rules-link-button,
+.game-page #menu-toggle {
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+[dir="rtl"] .game-page .user-panel > * {
+  margin-right: 0;
+  margin-left: 4px;
+}
+
+[dir="rtl"] .game-page .user-panel > *:last-child {
+  margin-left: 0;
+}
+
+[dir="rtl"] .game-page .game-switch-icon {
+  margin-right: 0;
+  margin-left: 4px;
 }
 
 /* History library page: a plain, image-free reading list of every game's

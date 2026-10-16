@@ -562,6 +562,7 @@ STRINGS.es = {
     release_v242: "El juego tiene un nombre y una dirección nuevos; las direcciones antiguas redirigen.",
     release_v243: "El almacenamiento sin conexión vuelve a cargar menos; se corrigen los espacios en árabe, los botones activos son negros, «Mezclar» pide confirmación y las reglas tienen un enlace para volver arriba.",
     release_v244: "Los juegos se abren listos para jugar; la ventana de resultado ofrece «Jugar otra vez»; «Nueva partida» queda junto al tablero; el ajedrez tiene su propio botón para dos jugadores.",
+    release_v245: "Las páginas de juego tienen una cabecera de una línea y no muestran la navegación del sitio; los ajustes están en el menú; el panel se cierra al empezar, así caben más tableros en la pantalla.",
     release_v240: "Se cambiaron los nombres de los juegos en los 12 idiomas.",
     release_v239: "Se eliminaron nombres de juegos protegidos de las reglas y las descripciones históricas.",
     release_v238: "Las reglas breves ahora corresponden al tema elegido y al modo de buscar en la imagen.",

@@ -38,6 +38,7 @@ async function fresh(browser, file, width) {
 }
 
 async function setHints(page, on) {
+  await page.click("#menu-toggle");
   await page.click("#settings-menu-button");
   const box = page.locator("#settings-move-hints-checkbox");
   if ((await box.isChecked()) !== on) await box.click();
@@ -159,6 +160,7 @@ async function waitFor(page, fn, what) {
     await page.evaluate(() => { const b = document.querySelector(".confirm-ok, #confirm-yes"); if (b) b.click(); });
     if (await waitFor(page, () => AppStateMauMau.state && AppStateMauMau.state.variant === "kids", "Mau Mau kids game")) {
       check("Mau Mau animal cards: suggestions on by default", await page.evaluate(() => MoveHints.enabled()));
+      await page.click("#menu-toggle");
       await page.click("#settings-menu-button");
       check("Mau Mau animal cards: checkbox shows on", await page.locator("#settings-move-hints-checkbox").isChecked());
     }
@@ -170,6 +172,7 @@ async function waitFor(page, fn, what) {
   for (const [file, want] of [["domino.html", true], ["skat.html", true], ["seega.html", true], ["chess.html", false]]) {
     for (const width of [600, 360]) {
       const { ctx, page } = await fresh(browser, file, width);
+      await page.click("#menu-toggle");
       await page.click("#settings-menu-button");
       const has = (await page.$$("#settings-move-hints-checkbox")).length === 1;
       check(file + ": move suggestions checkbox " + (want ? "present" : "absent"), has === want);

@@ -562,6 +562,7 @@ STRINGS.it = {
     release_v242: "Il gioco ha un nuovo nome e un nuovo indirizzo; i vecchi indirizzi reindirizzano.",
     release_v243: "La memoria offline ricarica meno; gli spazi in arabo sono corretti, i pulsanti attivi sono neri, «Mescola» chiede conferma e le regole hanno un link per tornare in alto.",
     release_v244: "I giochi si aprono pronti da giocare; la finestra del risultato offre «Gioca ancora»; «Nuova partita» resta accanto alla scacchiera; gli scacchi hanno un tasto per due giocatori.",
+    release_v245: "Le pagine di gioco hanno un’intestazione su una riga e niente navigazione del sito; le impostazioni sono nel menu; il pannello si chiude all’avvio, così più tavolieri stanno sullo schermo.",
     release_v240: "I nomi dei giochi sono cambiati in tutte e 12 le lingue.",
     release_v239: "I nomi di giochi protetti sono stati rimossi dalle regole e dalle descrizioni storiche.",
     release_v238: "Le regole rapide ora corrispondono al tema scelto e alla modalità di ricerca nell’immagine.",

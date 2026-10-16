@@ -302,6 +302,10 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   on a first visit at 360 px and checks that the board is visible without
   a further tap (no placeholder, no rules box) and that a "New game"
   control stands next to it.
+- `node tests/board-fit.js [--table] [--min N]` - same prerequisites. Opens
+  every game after the start at 600x800 and 360x740 and counts how many
+  boards end inside the first screen; `--table` lists the bottom edge of
+  each, `--min 80` fails when fewer than 80 fit at 600x800.
 - `node tests/board-sweep.js` - needs a running server (`BASE_URL` env
   var, default `http://localhost:8000/`) and a browser. Loads every
   game, starts it, and checks for JS errors, a rendered board, no

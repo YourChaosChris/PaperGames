@@ -143,6 +143,10 @@ echo "=== direct-start.js ==="
 node "$ROOT/tests/direct-start.js" || status=1
 echo ""
 
+echo "=== board-fit.js ==="
+node "$ROOT/tests/board-fit.js" --min 80 || status=1
+echo ""
+
 echo "=== board-sweep.js ==="
 node "$ROOT/tests/board-sweep.js" || status=1
 echo ""

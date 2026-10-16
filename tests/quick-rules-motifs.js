@@ -26,7 +26,7 @@ const { BASE_URL } = require("./lib");
       if (forbidden) assert(!text.includes(forbidden), motif + " quick rules still say " + forbidden + ": " + text);
       if (motif === "family" || motif === "treasure") assert(!text.includes("tier"), motif + " quick rules still say Tier: " + text);
     }
-    await page.locator("#quick-rules-button").click();
+    await page.locator("#rules-link-button").click();
     assert((await page.locator("#quick-rules").innerText()).toLowerCase().includes("schatz"));
     for (const width of [600, 360]) {
       await page.setViewportSize({ width, height: 800 });

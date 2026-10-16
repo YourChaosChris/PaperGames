@@ -624,6 +624,7 @@ STRINGS.de = {
     release_v242: "Das Spiel hat einen neuen Namen und eine neue Adresse; alte Adressen leiten weiter.",
     release_v243: "Der Offline-Speicher lädt weniger neu; Arabisch hat Abstände, aktive Knöpfe sind schwarz, „Mischen“ fragt nach, und Regelseiten haben oben einen Zurück-Link.",
     release_v244: "Spiele öffnen direkt spielbereit; das Ergebnisfenster hat „Nochmal spielen“; „Neues Spiel“ steht neben dem Brett; Schach hat einen eigenen Knopf für zwei Spieler.",
+    release_v245: "Spielseiten haben einen einzeiligen Kopf und keine Seiten-Navigation; „Einstellungen“ ist ins Menü gewandert; das Steuerfeld schließt nach dem Start, damit mehr Bretter auf den Bildschirm passen.",
     release_v240: "Die Spielnamen wurden in allen 12 Sprachen geändert.",
     release_v239: "Geschützte Spielnamen wurden aus Regeln und Beschreibungen der Geschichtsseiten entfernt.",
     release_v238: "Die Kurzregeln passen jetzt zum gewählten Kuchenmotiv und zum Suchbild.",

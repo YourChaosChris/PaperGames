@@ -568,6 +568,7 @@ STRINGS.pl = {
     release_v242: "Gra ma nową nazwę i adres; stare adresy przekierowują dalej.",
     release_v243: "Pamięć offline rzadziej ładuje dane ponownie; poprawiono odstępy po arabsku, aktywne przyciski są czarne, „Potasuj” pyta o potwierdzenie, a strony zasad mają u góry link powrotu.",
     release_v244: "Gry otwierają się gotowe do gry; okno wyniku ma przycisk „Zagraj jeszcze raz”; „Nowa gra” jest obok planszy; szachy mają osobny przycisk dla dwóch graczy.",
+    release_v245: "Strony gier mają nagłówek w jednym wierszu i nie pokazują nawigacji serwisu; ustawienia są w menu; panel zamyka się po starcie, więc więcej plansz mieści się na ekranie.",
     release_v240: "Nazwy gier zmieniły się we wszystkich 12 językach.",
     release_v239: "Usunięto chronione nazwy gier z zasad i opisów na stronach historycznych.",
     release_v238: "Krótkie zasady pasują teraz do wybranego motywu i trybu wyszukiwania na obrazku.",

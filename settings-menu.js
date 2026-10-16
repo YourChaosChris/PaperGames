@@ -1,7 +1,7 @@
 // settings-menu.js
-// Self-injecting Settings menu: one "Settings" button in every page's
-// header (same technique as rules-link.js/game-switcher.js - injected
-// at runtime rather than hand-written into ~150 static pages) opening a
+// Self-injecting Settings menu: one "Settings" button on every page
+// (in the header on general pages and in the game controls panel on game
+// pages; injected at runtime rather than hand-written into ~150 static pages) opening a
 // single modal that gathers every on-device setting this app has -
 // language, text size, high contrast, spacing density (density.js),
 // move suggestions (move-hints.js, on games that mark playable cards) and
@@ -344,6 +344,7 @@ const SettingsMenu = (function () {
   function injectTrigger() {
     const panel = document.querySelector(".user-panel");
     if (!panel || document.getElementById("settings-menu-button")) return;
+    const gameSettings = document.getElementById("board-section") && document.getElementById("settings-panel");
 
     const btn = document.createElement("button");
     btn.type = "button";
@@ -355,7 +356,8 @@ const SettingsMenu = (function () {
     }
     setLabel();
     btn.addEventListener("click", show);
-    panel.insertBefore(btn, panel.firstChild);
+    if (gameSettings) gameSettings.insertBefore(btn, gameSettings.firstChild);
+    else panel.insertBefore(btn, panel.firstChild);
 
     if (window.I18n && typeof I18n.onChange === "function") {
       I18n.onChange(setLabel);

@@ -40,6 +40,9 @@
     }
 
     if (!document.getElementById("board-section")) return;
+    document.body.classList.add("game-page");
+    const siteNav = document.querySelector(".site-nav");
+    if (siteNav) siteNav.remove();
     if (!panel || document.getElementById("rules-link-button")) return;
 
     const link = document.createElement("a");

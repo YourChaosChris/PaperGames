@@ -472,6 +472,7 @@ STRINGS.nl = {
     release_v242: "Het spel heeft een nieuwe naam en een nieuw adres; oude adressen verwijzen door.",
     release_v243: "De offlineopslag laadt minder opnieuw; Arabische tussenruimtes zijn hersteld, actieve knoppen zijn zwart, ‘Schudden’ vraagt eerst om bevestiging en regelpagina’s hebben bovenaan een teruglink.",
     release_v244: "Spellen openen meteen speelklaar; het resultaatvenster heeft «Nog een keer»; «Nieuw spel» staat naast het bord; schaken heeft een eigen knop voor twee spelers.",
+    release_v245: "Spelpagina’s hebben een kop van één regel en geen sitenavigatie; instellingen zitten nu in het menu; het bedieningspaneel sluit na de start, zodat meer borden op het scherm passen.",
     release_v240: "De spelnamen zijn in alle 12 talen gewijzigd.",
     release_v239: "Beschermde spelnamen zijn verwijderd uit regels en beschrijvingen van geschiedenispagina’s.",
     release_v238: "De korte regels passen nu bij het gekozen taartmotief en de zoekplaat.",

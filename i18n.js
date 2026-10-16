@@ -635,6 +635,7 @@ const STRINGS = {
     release_v242: "The game has a new name and address; old addresses now redirect.",
     release_v243: "Offline storage reloads less; Arabic spacing is fixed, active buttons are black, Shuffle asks first, and rules pages have a back link at the top.",
     release_v244: "Games open ready to play; the result window offers Play again; New game stays next to the board; Chess has its own two-player button.",
+    release_v245: "Game pages have a one-row header and no site navigation; Settings moved into the menu; the control panel closes after the start, so more boards fit on the screen.",
     release_v240: "Game names have changed in all 12 languages.",
     release_v239: "Removed protected game names from rules and history page descriptions.",
     release_v238: "Quick rules now match the selected cake theme and picture search mode.",

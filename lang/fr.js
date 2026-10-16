@@ -562,6 +562,7 @@ STRINGS.fr = {
     release_v242: "Le jeu a un nouveau nom et une nouvelle adresse ; les anciennes adresses redirigent.",
     release_v243: "Le stockage hors ligne recharge moins souvent ; les espaces arabes sont corrigés, les boutons actifs sont noirs, « Mélanger » demande confirmation et les règles ont un lien de retour en haut.",
     release_v244: "Les jeux s’ouvrent prêts à jouer ; la fenêtre de résultat propose « Rejouer » ; « Nouvelle partie » reste près du plateau ; les échecs ont un bouton pour deux joueurs.",
+    release_v245: "Les pages de jeu ont un en-tête sur une ligne et pas de navigation du site ; les réglages sont dans le menu ; le panneau de commandes se ferme au démarrage, donc plus de plateaux tiennent à l’écran.",
     release_v240: "Les noms des jeux ont changé dans les 12 langues.",
     release_v239: "Les noms de jeux protégés ont été retirés des règles et des descriptions historiques.",
     release_v238: "Les règles en bref correspondent désormais au thème du gâteau et au mode image à fouiller.",

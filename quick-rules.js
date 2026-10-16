@@ -5,12 +5,13 @@
 // close it and "All rules" for the full rules page.
 //
 // It opens by itself the first time a game is opened on this device,
-// and afterwards only through the "Quick rules" button next to the
-// header's Rules link (rules-link.js). Like rules-link.js it detects a
+// and afterwards only through the header's Rules button (rules-link.js).
+// That button opens this box, which contains the full-rules link. Like
+// rules-link.js it detects a
 // game page by #board-section, so it never shows on the home, rules or
 // history pages. The sentences are i18n keys quickrules_<slug>_1..4 in
 // i18n.js / lang/*.js (most games have three); a game without keys gets
-// neither box nor button.
+// neither box nor Rules button.
 //
 // The "seen" mark is one localStorage entry per game, guarded like
 // favorites.js: without storage the box simply shows again next time.
@@ -114,20 +115,12 @@
     const box = buildBox(slug, keys);
     boardSection.parentNode.insertBefore(box, boardSection);
 
-    const panel = document.querySelector(".user-panel");
-    if (panel) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.id = "quick-rules-button";
-      btn.className = "secondary";
-      setText(btn, "quickrules_button", "Quick rules");
-      btn.addEventListener("click", () => {
-        box.classList.remove("hidden");
-        box.scrollIntoView();
-      });
-      const rulesLink = document.getElementById("rules-link-button");
-      panel.insertBefore(btn, rulesLink ? rulesLink.nextSibling : panel.firstChild);
-    }
+    const btn = document.getElementById("rules-link-button");
+    if (btn) btn.addEventListener("click", (event) => {
+      event.preventDefault();
+      box.classList.remove("hidden");
+      box.scrollIntoView();
+    });
 
     // Rules remain available from their button, while the first screen is
     // reserved for the playable board and its controls.
@@ -196,6 +189,19 @@
         if (button) rememberSettings(button.matches(".mode-btn") ? button : null);
       }
     }, true);
+
+    // All game apps bind their start handler directly to the start button.
+    // Close the controls after that handler has started the game. Delegating
+    // here keeps this behavior consistent without changing app storage or
+    // each game's Menu toggle.
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest && event.target.closest('button[id^="start-"]');
+      if (!button) return;
+      window.setTimeout(() => {
+        const panel = document.getElementById("settings-panel");
+        if (panel) panel.classList.add("hidden");
+      }, 0);
+    });
 
     if (start) {
       const actions = document.getElementById("board-actions") || document.createElement("div");
