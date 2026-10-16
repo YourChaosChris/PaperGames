@@ -120,7 +120,7 @@
     ["loosen", "game_loosen", "rings"],
     ["klappenkasten", "game_klappenkasten", "dicegames"],
     ["steckwuerfeln", "game_steckwuerfeln", "dicegames"],
-    ["sternjagd", "game_sternjagd", "hunt"]
+    ["sternjagd", "game_sternjagd", "hunt"],
     ["patternrow", "game_patternrow", "picturelogic"],
     ["shadowmatch", "game_shadowmatch", "picturelogic"],
     ["oddone", "game_oddone", "picturelogic"]
