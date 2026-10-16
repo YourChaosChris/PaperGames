@@ -55,6 +55,7 @@ function initKzApp() {
   document.getElementById("start-kz-game").addEventListener("click", () => startNewKzGame(levelSel.value));
   document.getElementById("kz-undo").addEventListener("click", undoKz);
   document.getElementById("kz-hint").addEventListener("click", hintKz);
+  document.getElementById("kz-start").addEventListener("click", startHintKz);
   if (typeof I18n !== "undefined" && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateKz.puzzle) renderKz(); });
   }
@@ -148,6 +149,25 @@ function hintKz() {
   saveKzGame();
 }
 
+// "Where to start?": frames a cell that surely gets a cat and says why.
+function startHintKz() {
+  const p = AppStateKz.puzzle;
+  if (!p || AppStateKz.gameOver) return;
+  const h = CatPlacesCore.findStart(p, catsKz());
+  if (!h) { setStatusKz("There is no safe cell to point out right now."); return; }
+  AppStateKz.hinted = true;
+  AppStateKz.hint = h.place;
+  AppStateKz.hintWrong = false;
+  setStatusKz({
+    row: "Start here: in this row only one cell is left for the cat.",
+    col: "Start here: in this column only one cell is left for the cat.",
+    room: "Start here: in this room only one cell is left for the cat.",
+    think: "Start here: after some thinking, only this cell is left for its cat."
+  }[h.reason]);
+  renderKz();
+  saveKzGame();
+}
+
 function winKz() {
   AppStateKz.gameOver = true;
   AppStateKz.hint = -1;
@@ -225,6 +245,7 @@ function renderKz() {
   if (info) I18n.setMsg(info, "Cats: " + cats.length + " of " + n);
   document.getElementById("kz-undo").disabled = AppStateKz.gameOver || !AppStateKz.history.length;
   document.getElementById("kz-hint").disabled = AppStateKz.gameOver;
+  document.getElementById("kz-start").disabled = AppStateKz.gameOver;
 }
 
 document.addEventListener("DOMContentLoaded", initKzApp);

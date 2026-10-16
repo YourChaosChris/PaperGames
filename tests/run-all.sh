@@ -117,6 +117,8 @@ echo "=== tangram-core.js ==="
 node "$ROOT/tests/tangram-core.js" || status=1
 echo "=== catplaces-core.js ==="
 node "$ROOT/tests/catplaces-core.js" || status=1
+echo "=== catplaces-start.js ==="
+node "$ROOT/tests/catplaces-start.js" || status=1
 echo "=== loosen-core.js ==="
 node "$ROOT/tests/loosen-core.js" || status=1
 echo "=== klappenkasten-core.js ==="

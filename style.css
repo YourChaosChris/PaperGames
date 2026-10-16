@@ -14655,4 +14655,8 @@ li.fv-card {
 .kq-options-big.kq-n3 .kq-option {
   width: 29%;
   max-width: 116px;
+.kz-start-btn {
+  min-height: 44px;
+  min-width: 44px;
+  font-size: 0.8rem;
 }
