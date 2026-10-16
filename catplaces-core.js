@@ -364,6 +364,32 @@ const CatPlacesCore = (function () {
     return missing === undefined ? null : { place: missing };
   }
 
+  // "Where to start?": a cell where a cat surely belongs, with the kind of
+  // reason. Only the player's correct cats count (dots and wrong cats are
+  // ignored), so the cell is always one of the solution. reason: "row" |
+  // "col" | "room" when that unit has just one free cell left once the
+  // cats placed are taken into account; "think" when the cell follows only
+  // after a few deductions. Returns null when no cat is missing.
+  function findStart(p, cats) {
+    const n = p.n, X = ctxOf(p);
+    const state = { cat: new Array(n * n).fill(false), out: new Array(n * n).fill(false) };
+    cats.filter((i) => p.solution.indexOf(i) !== -1).forEach((i) => place(p, state, i));
+    const kind = (u) => (u < n ? "row" : u < 2 * n ? "col" : "room");
+    for (let u = 0; u < X.U.length; u++) {
+      if (hasCat(state, X.U[u])) continue;
+      const f = freeCells(state, X.U[u]);
+      if (f.length === 1) return { place: f[0], reason: kind(u) };
+    }
+    const L = LEVELS[p.level] || LEVELS.hard;
+    for (let guard = 0; guard < 10 * n * n; guard++) {
+      const s = step(p, state, Math.max(L.rules, 5));
+      if (!s) break;
+      if (s.place !== undefined) return { place: s.place, reason: "think" };
+    }
+    const missing = p.solution.find((i) => !state.cat[i]);
+    return missing === undefined ? null : { place: missing, reason: "think" };
+  }
+
   // Thick borders: for each cell, whether its right / bottom side is a
   // room border.
   function borders(p) {
@@ -377,7 +403,7 @@ const CatPlacesCore = (function () {
 
   return {
     LEVELS, neighbours, units, conflicts, isSolved, countSolutions,
-    solveLogically, generatePuzzle, findHint, borders, growRooms, randomCats
+    solveLogically, generatePuzzle, findHint, findStart, borders, growRooms, randomCats
   };
 })();
 

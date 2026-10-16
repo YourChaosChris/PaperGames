@@ -228,6 +228,10 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   exactly one solution (counted by a search of its own), solved by
   deduction alone with the level's rules, finished with the hint alone
   after a wrongly placed cat. About two minutes.
+- `node tests/catplaces-start.js` - no server or browser needed. 750 random
+  "Cat Places" board states (all levels, with and without wrong cats): the
+  "Where to start?" cell is always a cell of the solution, and the named
+  reason (row, column, room) is true. A few seconds.
 - `node tests/loosen-core.js` - no server or browser needed. 500 "Loosen
   the Rings" puzzles per level (3 / 4-5 / 6-7 rings): one group without
   closed loops, nothing free at the start, the solver clears each in

@@ -14071,3 +14071,9 @@ li.fv-card {
   min-height: 44px;
   box-sizing: border-box;
 }
+
+.kz-start-btn {
+  min-height: 44px;
+  min-width: 44px;
+  font-size: 0.8rem;
+}
