@@ -72,6 +72,7 @@
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
     <button id="start-sternhalma-game" class="primary" data-i18n="new_game">New game</button>
+    <button type="button" class="secondary small big-board-toggle" data-big-board="sternhalma" data-i18n="big_board_on">Large board</button>
     <div id="sternhalma-side-choice" class="inline-options">
       <label class="color-choice"><input type="radio" name="sternhalma-side" value="p1" checked> <span class="color-choice-icon sternhalma-icon-piece sternhalma-icon-piece-p1"></span></label>
       <label class="color-choice"><input type="radio" name="sternhalma-side" value="p2"> <span class="color-choice-icon sternhalma-icon-piece sternhalma-icon-piece-p2"></span></label>
@@ -104,7 +105,7 @@
     </div>
   </div>
   <div id="board-container" class="hidden">
-    <div id="sternhalma-board" class="sternhalma-board" role="group" aria-label="Chinese Checkers board"></div>
+    <div class="big-board-scroll"><div id="sternhalma-board" class="sternhalma-board" role="group" aria-label="Chinese Checkers board"></div></div>
   </div>
   <div id="board-actions" class="board-actions">
     <button id="undo-btn" class="secondary small hidden" data-i18n="undo_button" onclick="undoLastMove()">Undo</button>
@@ -120,6 +121,7 @@
 
 <script src="error-banner.js"></script>
 <script src="i18n.js"></script>
+<script src="big-board.js"></script>
 <script src="font-size-toggle.js"></script>
 <script src="high-contrast.js"></script>
 <script src="force-update.js"></script>

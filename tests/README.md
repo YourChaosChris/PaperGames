@@ -149,8 +149,9 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   first" put the newest game first, also among games of the same day
   (`added` carries the time of the commit that brought the game).
 - `node tests/kids-games.js` - needs a running server and a browser.
-  Checks that games-kids.html (over all its pages) and games.html's
-  "Children's Games" filter show exactly the games marked `kids: true`,
+  Checks that games-kids.html shows all games marked `kids: true` at once
+  with one-tap links, and that games.html's "Children's Games" filter
+  shows the same set,
   the home page's tile and the old addresses leading there, that all
   their links answer, that Mau Mau opens with the animal cards from
   there, the link on calm.html, and no sideways scrolling.
@@ -306,6 +307,13 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   every game after the start at 600x800 and 360x740 and counts how many
   boards end inside the first screen; `--table` lists the bottom edge of
   each, `--min 80` fails when fewer than 80 fit at 600x800.
+- `node tests/tap-targets.js` - same prerequisites. On every category page
+  (games*.html) at 360 px, links and buttons must be at least 44 px high
+  (links in running text excepted) and the page must not scroll sideways.
+- `node tests/cell-size.js` - same prerequisites. Starts Marble Push, Hashi,
+  Gomoku, Chinese Checkers and Ludo at 360 px with "Large board" on and
+  requires every cell to be at least 28 px, a visible switch next to "New
+  game", and no sideways scrolling of the page.
 - `node tests/board-sweep.js` - needs a running server (`BASE_URL` env
   var, default `http://localhost:8000/`) and a browser. Loads every
   game, starts it, and checks for JS errors, a rendered board, no

@@ -147,6 +147,14 @@ echo "=== board-fit.js ==="
 node "$ROOT/tests/board-fit.js" --min 80 || status=1
 echo ""
 
+echo "=== tap-targets.js ==="
+node "$ROOT/tests/tap-targets.js" || status=1
+echo ""
+
+echo "=== cell-size.js ==="
+node "$ROOT/tests/cell-size.js" || status=1
+echo ""
+
 echo "=== board-sweep.js ==="
 node "$ROOT/tests/board-sweep.js" || status=1
 echo ""

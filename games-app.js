@@ -107,7 +107,9 @@
       const sorted = state.sort === "newest"
         ? filtered.slice().sort((a, b) => GamesRender.compareNewest(a, b) || byDisplayName(a, b))
         : filtered.slice().sort(byDisplayName);
-      const card = state.category === "kids" ? GamesRender.buildKidsCardHTML : GamesRender.buildGameCardHTML;
+      const card = state.category === "kids"
+        ? (game) => GamesRender.buildGameCardHTML(game, true)
+        : GamesRender.buildGameCardHTML;
       view = GameCategories.pageOf(sorted, state.page);
       grid.innerHTML = '<div class="game-select-grid">' + view.items.map(card).join("") + "</div>";
     }

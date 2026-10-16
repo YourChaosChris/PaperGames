@@ -14,11 +14,13 @@
     if (!root || !grid) return;
     const id = root.getAttribute("data-category-page");
     const list = GameCategories.games(id, GAMES_CATALOG);
-    const view = GameCategories.pageOf(list, GameCategories.pageFromUrl());
+    const view = id === "kids"
+      ? { items: list, page: 1, pages: 1 }
+      : GameCategories.pageOf(list, GameCategories.pageFromUrl());
     const empty = document.getElementById("cat-empty");
     if (empty) empty.classList.toggle("hidden", list.length > 0);
     const card = id === "kids" ? GamesRender.buildKidsCardHTML : GamesRender.buildGameCardHTML;
-    grid.innerHTML = view.items.length ? '<div class="game-select-grid">' + view.items.map(card).join("") + "</div>" : "";
+    grid.innerHTML = view.items.length ? '<div class="game-select-grid' + (id === "kids" ? " game-kids-grid" : "") + '">' + view.items.map(card).join("") + "</div>" : "";
     if (pager) {
       pager.innerHTML = GameCategories.pagerHTML(view.page, view.pages, (n) => "?page=" + n);
       pager.classList.toggle("hidden", view.pages <= 1);

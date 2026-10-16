@@ -2,12 +2,13 @@
 // "Children's Games": the category page games-kids.html and the games.html
 // filter show exactly the games marked `kids: true` in games-catalog.js.
 //
-// Checks: the marked set is the agreed list of 16 games; games-kids.html
-// (all its pages, 12 games each) and the "Children's Games" chip on
+// Checks: the marked set is the agreed list of 15 games; games-kids.html
+// shows them all at once and the "Children's Games" chip on
 // games.html list exactly these; the home page's tile links there with
 // the right count; the old addresses games.html?category=kids and
-// index.html#section-kids lead to games-kids.html; every Play / Rules /
-// History link answers 200; Mau Mau's "Play" there is
+// index.html#section-kids lead to games-kids.html; each kids card is one
+// large Play link and has no rules/history/description; all links answer
+// 200; Mau Mau's link there is
 // maumau.html?deck=kids and opens with the animal cards chosen; the
 // sentence on calm.html links to the page; no page scrolls sideways at
 // 600 px or 360 px.
@@ -27,7 +28,7 @@ const ctx = {};
 vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(ROOT, "games-catalog.js"), "utf8") + "\nthis.GAMES_CATALOG = GAMES_CATALOG;", ctx);
 const marked = ctx.GAMES_CATALOG.filter((g) => g.kids === true).map((g) => g.slug).sort();
-const AGREED = ["cake", "animalsudoku", "shapesort", "linkpairs", "pairs", "maumau", "oldmaid", "war", "snakesladders", "blockers", "ludo", "fourinarow", "tictactoe", "lightswitch", "tenpairs", "differences"].sort();
+const AGREED = ["animalsudoku", "shapesort", "linkpairs", "pairs", "maumau", "oldmaid", "war", "snakesladders", "blockers", "ludo", "fourinarow", "tictactoe", "lightswitch", "tenpairs", "differences"].sort();
 const fails = [];
 const same = (name, got, want) => { if (JSON.stringify(got) !== JSON.stringify(want)) fails.push(name + ": " + JSON.stringify(got) + ", expected " + JSON.stringify(want)); };
 same("marked games", marked, AGREED);
@@ -41,7 +42,9 @@ function status(url) {
 async function cardsIn(page, sel) {
   return page.$$eval(sel + " .game-select-item", (items) => items.map((it) => ({
     slug: it.getAttribute("data-slug"),
-    links: Array.from(it.querySelectorAll(".game-select-actions a")).map((a) => a.getAttribute("href"))
+    links: Array.from(it.querySelectorAll(".game-select-actions a")).map((a) => a.getAttribute("href")),
+    mainHref: it.querySelector(".game-select-play-link")?.getAttribute("href") || "",
+    kidsHref: it.querySelector(".game-kids-play-link")?.getAttribute("href") || ""
   })));
 }
 
@@ -64,11 +67,23 @@ async function checkLinks(where, cards) {
   same(where + ": games", cards.map((c) => c.slug).sort(), AGREED);
   for (const c of cards) {
     const play = c.slug === "maumau" ? "maumau.html?deck=kids" : c.slug + ".html";
+    same(where + ": " + c.slug + " icon/name link", c.mainHref, play);
     same(where + ": " + c.slug + " links", c.links, [play, c.slug + "-rules.html", c.slug + "-history.html"]);
     for (const href of c.links) {
       const code = await status(BASE_URL + href);
       if (code !== 200) fails.push(where + ": " + href + " answers " + code);
     }
+  }
+}
+
+async function checkKidsCards(where, cards) {
+  same(where + ": games", cards.map((c) => c.slug).sort(), AGREED);
+  for (const c of cards) {
+    const play = c.slug === "maumau" ? "maumau.html?deck=kids" : c.slug + ".html";
+    same(where + ": " + c.slug + " one-tap link", c.kidsHref, play);
+    if (c.links.length) fails.push(where + ": " + c.slug + " has extra action links");
+    const code = await status(BASE_URL + play);
+    if (code !== 200) fails.push(where + ": " + play + " answers " + code);
   }
 }
 
@@ -95,7 +110,17 @@ async function noSideScroll(page, name) {
   await page.goto(BASE_URL + "games-kids.html", { waitUntil: "networkidle" });
   same("kids page heading", await page.$eval("h1", (h) => h.textContent), "Kinderspiele");
   await noSideScroll(page, "games-kids.html");
-  await checkLinks("games-kids.html", await allCards(page, "#cat-grid"));
+  const kidsCards = await allCards(page, "#cat-grid");
+  await checkKidsCards("games-kids.html", kidsCards);
+  same("kids page has no pager", await page.$eval("#cat-pager", (el) => el.classList.contains("hidden")), true);
+  same("kids page has no descriptions", await page.$$eval("#cat-grid .game-select-desc", (els) => els.length), 0);
+  same("kids page has no rules/history links", await page.$$eval("#cat-grid .game-select-actions", (els) => els.length), 0);
+  const tapSizes = await page.$$eval("#cat-grid .game-kids-card", (cards) => cards.map((card) => {
+    const link = card.querySelector(".game-kids-play-link").getBoundingClientRect();
+    const star = card.querySelector(".favorite-toggle").getBoundingClientRect();
+    return { link: [link.width, link.height], star: [star.width, star.height] };
+  }));
+  if (tapSizes.some((s) => s.link[0] < 44 || s.link[1] < 44 || s.star[0] < 44 || s.star[1] < 44)) fails.push("kids page has a tap target below 44 px");
   await page.goto(BASE_URL + "games.html?category=kids", { waitUntil: "networkidle" });
   same("games.html?category=kids leads to", page.url().replace(BASE_URL, ""), "games-kids.html");
   await page.goto(BASE_URL + "index.html#section-kids", { waitUntil: "networkidle" });

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v246",
+    date: "2026-10-16",
+    key: "release_v246",
+    text: "Game cards on all category pages are big tap targets; the kids page shows every kids game on one page with large icons; Large board makes tiny boards easier to tap; Cake is no longer listed as a kids game."
+  },
+  {
     version: "v245",
     date: "2026-10-16",
     key: "release_v245",

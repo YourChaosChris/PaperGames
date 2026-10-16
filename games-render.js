@@ -17,9 +17,9 @@ const GamesRender = (function () {
     return keys.map((key) => I18n.t(key)).join(" ");
   }
 
-  // `kidsView`: the card stands in the children's games (home section or
-  // games.html filter), so "Play" goes to the game's `kidsPlay` page if it
-  // has one. Use buildKidsCardHTML with Array.map (map passes an index).
+  // `kidsView`: the card is shown in the games.html kids filter, so its
+  // separate Play action goes to `kidsPlay` when one is set. The dedicated
+  // kids page uses buildKidsCardHTML below for its single large tap link.
   function buildGameCardHTML(game, kidsView) {
     const play = kidsView === true && game.kidsPlay ? game.kidsPlay : game.slug + ".html";
     const dynamicCake = game.slug === "cake" && !!window.I18n;
@@ -27,7 +27,7 @@ const GamesRender = (function () {
     return (
       '<div class="game-select-item" data-slug="' + game.slug + '">' +
       '<button type="button" class="favorite-toggle" data-slug="' + game.slug + '"></button>' +
-      '<div class="game-select-title">' + game.icon + ' <span data-i18n="' + game.nameKey + '">' + game.nameText + '</span></div>' +
+      '<a class="game-select-play-link" href="' + play + '"><div class="game-select-title">' + game.icon + ' <span data-i18n="' + game.nameKey + '">' + game.nameText + '</span></div></a>' +
       '<p class="game-select-desc"' + (dynamicCake ? '' : ' data-i18n="' + game.descKey + '"') + '>' + descText + '</p>' +
       (game.family
         ? '<p class="game-select-family"><span data-i18n="family_label">Family:</span> <span data-i18n="family_' + game.family + '">' + game.family + '</span></p>'
@@ -53,7 +53,16 @@ const GamesRender = (function () {
   }
 
   function buildKidsCardHTML(game) {
-    return buildGameCardHTML(game, true);
+    const play = game.kidsPlay || game.slug + ".html";
+    const noRead = game.noRead === true;
+    const mark = '<svg class="no-read-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 5.5c3.3-.9 6.3-.5 9 1.5v13c-2.7-2-5.7-2.4-9-1.5zM21 5.5c-3.3-.9-6.3-.5-9 1.5v13c2.7-2 5.7-2.4 9-1.5z"/><path d="M4 3l16 18"/></svg>';
+    return (
+      '<div class="game-select-item game-kids-card" data-slug="' + game.slug + '">' +
+      '<button type="button" class="favorite-toggle" data-slug="' + game.slug + '"></button>' +
+      '<a class="game-kids-play-link" href="' + play + '">' + game.icon + '<span class="game-kids-title" data-i18n="' + game.nameKey + '">' + game.nameText + '</span></a>' +
+      (noRead ? '<span class="no-read-mark" title="' + (window.I18n ? I18n.t("card_no_read") : "Can be played without reading") + '" aria-label="' + (window.I18n ? I18n.t("card_no_read") : "Can be played without reading") + '">' + mark + '</span>' : '') +
+      '</div>'
+    );
   }
 
   // The children's games (`kids: true`) listed in the current language,

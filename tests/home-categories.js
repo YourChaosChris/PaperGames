@@ -119,12 +119,13 @@ const report = [];
   };
   for (const id of Object.keys(WANT)) {
     const want = WANT[id].map((g) => g.slug).sort();
-    const pages = Math.max(1, Math.ceil(want.length / 12));
+    // The kids page lists every kids game on one page (task 97).
+    const pages = id === "kids" ? 1 : Math.max(1, Math.ceil(want.length / 12));
     const seen = [];
     for (let n = 1; n <= pages; n++) {
       await page.goto(BASE_URL + "games-" + id + ".html" + (n > 1 ? "?page=" + n : ""), { waitUntil: "networkidle" });
       const s = await slugs("#cat-grid");
-      check(s.length <= 12, id + " page " + n + " shows " + s.length + " games");
+      check(s.length <= (id === "kids" ? 20 : 12), id + " page " + n + " shows " + s.length + " games");
       seen.push(...s);
       const now = await page.$eval("#cat-pager", (p) => (p.querySelector(".pager-now") || { textContent: "" }).textContent);
       check(pages === 1 ? now === "" : now === "Seite " + n + " von " + pages, id + " page " + n + ": pager \"" + now + "\"");

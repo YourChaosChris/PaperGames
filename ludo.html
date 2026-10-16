@@ -72,6 +72,7 @@
     <section id="offline-ai-controls" class="card">
   <div class="field-row">
     <button id="start-ludo-game" class="primary" data-i18n="new_game">New game</button>
+    <button type="button" class="secondary small big-board-toggle" data-big-board="ludo" data-i18n="big_board_on">Large board</button>
     <label data-i18n="ludo_num_players">Players:</label>
     <select id="ludo-num-players">
         <option value="2">2</option>
@@ -114,7 +115,7 @@
   </div>
   <div id="board-container" class="hidden">
     <div id="ludo-turn-indicator" class="ludo-turn-indicator" role="status" aria-live="polite"></div>
-    <div id="ludo-board" class="ludo-board" role="group" aria-label="Ludo board"></div>
+    <div class="big-board-scroll"><div id="ludo-board" class="ludo-board" role="group" aria-label="Ludo board"></div></div>
     <div id="ludo-dice-area" class="ludo-dice-area">
       <button id="ludo-roll-button" class="primary" type="button" data-i18n="ludo_roll_die">Roll</button>
       <div id="ludo-dice-display" class="ludo-dice-display"></div>
@@ -134,6 +135,7 @@
 
 <script src="error-banner.js"></script>
 <script src="i18n.js"></script>
+<script src="big-board.js"></script>
 <script src="font-size-toggle.js"></script>
 <script src="high-contrast.js"></script>
 <script src="force-update.js"></script>

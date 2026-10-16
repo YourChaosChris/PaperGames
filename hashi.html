@@ -63,6 +63,7 @@
     <section id="hashi-controls" class="card">
   <div class="field-row">
     <button id="start-hashi-game" class="primary" data-i18n="hashi_new_game">New puzzle</button>
+    <button type="button" class="secondary small big-board-toggle" data-big-board="hashi" data-i18n="big_board_on">Large board</button>
     <button id="daily-hashi-button" class="secondary" data-i18n="daily_challenge_button">🗓 Daily Challenge</button>
     <button id="print-puzzle-button" class="secondary" data-i18n="print_puzzle_button">🖨 Print</button>
     <select id="hashi-level-inline">
@@ -92,7 +93,7 @@
     </div>
   </div>
   <div id="board-container" class="hidden">
-    <div id="hashi-board" class="hashi-board" role="group" aria-label="Hashiwokakero board"></div>
+    <div class="big-board-scroll"><div id="hashi-board" class="hashi-board" role="group" aria-label="Hashiwokakero board"></div></div>
   </div>
   <div id="board-actions" class="board-actions">
     <button id="undo-btn" class="secondary small hidden" data-i18n="undo_button" onclick="undoLastMove()">Undo</button>
@@ -108,6 +109,7 @@
 
 <script src="error-banner.js"></script>
 <script src="i18n.js"></script>
+<script src="big-board.js"></script>
 <script src="font-size-toggle.js"></script>
 <script src="high-contrast.js"></script>
 <script src="ai-pacing.js"></script>

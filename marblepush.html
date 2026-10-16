@@ -65,6 +65,7 @@
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
     <button id="start-marblepush-game" class="primary" data-i18n="new_game">New game</button>
+    <button type="button" class="secondary small big-board-toggle" data-big-board="marblepush" data-i18n="big_board_on">Large board</button>
     <div id="marblepush-color-choice" class="inline-options">
       <label class="color-choice"><input type="radio" name="marblepush-color" value="black" checked> <span class="color-choice-icon"><span class="marblepush-icon-disc marblepush-icon-disc-black"></span></span></label>
       <label class="color-choice"><input type="radio" name="marblepush-color" value="white"> <span class="color-choice-icon"><span class="marblepush-icon-disc marblepush-icon-disc-white"></span></span></label>
@@ -97,9 +98,9 @@
     </div>
   </div>
   <div id="board-container" class="hidden">
-    <div class="marblepush-board-wrap">
+    <div class="big-board-scroll"><div class="marblepush-board-wrap">
       <div id="marblepush-board" class="marblepush-board" role="group" aria-label="Marble Push board"></div>
-    </div>
+    </div></div>
   </div>
   <div id="marblepush-selection-controls" class="marblepush-selection-controls hidden">
     <span data-i18n="marblepush_selection_hint">Tap a highlighted cell to move this selection, or clear it below.</span><br>
@@ -120,6 +121,7 @@
 
 <script src="error-banner.js"></script>
 <script src="i18n.js"></script>
+<script src="big-board.js"></script>
 <script src="font-size-toggle.js"></script>
 <script src="high-contrast.js"></script>
 <script src="force-update.js"></script>
