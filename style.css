@@ -1409,6 +1409,46 @@ margin: var(--space-2) 0;
   white-space: nowrap;
 }
 
+.game-page .game-home-link {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 2px solid #000;
+  border-radius: 0;
+  color: #000;
+  background: #fff;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  animation: none;
+  transition: none;
+}
+
+.game-page .game-home-link:focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .game-page .user-panel {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .game-page .game-switch {
+    margin-right: auto;
+  }
+}
+
+[dir="rtl"] .game-page .game-home-link {
+  margin-right: 0;
+  margin-left: 4px;
+}
+
 [dir="rtl"] .game-page .user-panel > * {
   margin-right: 0;
   margin-left: 4px;

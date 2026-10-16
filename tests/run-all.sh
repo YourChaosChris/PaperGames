@@ -36,6 +36,9 @@ echo ""
 echo "=== ui-status.js ==="
 node "$ROOT/tests/ui-status.js" || status=1
 echo ""
+echo "=== game-frame.js ==="
+node "$ROOT/tests/game-frame.js" || status=1
+echo ""
 
 echo "=== cake-core.js ==="
 node "$ROOT/tests/cake-core.js" || status=1

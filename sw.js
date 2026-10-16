@@ -10,6 +10,7 @@ const CACHE_NAME = "papergames-cache-v246";
 
 const APP_SHELL = [
   "./",
+  "game-frame.js",
   "index.html",
   "chess.html",
   "chess-rules.html",

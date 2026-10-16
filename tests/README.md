@@ -50,6 +50,12 @@ Set `PORT` to use a port other than 8000 if that one's busy.
 - `node tests/ui-status.js` - no server or browser needed. Checks that all
   computer-opponent games use the shared four localized turn and winner
   status keys; documents the simultaneous-round exception in War.
+- `node tests/game-frame.js` - no server or browser needed. Checks that
+  every real game page from `game-switcher.js` loads the shared frame,
+  which adds a visible, localized Home link before the game controls and
+  marks the existing title, mode, start, status and result elements
+  without replacing their IDs. Also checks its 44 px black-and-white
+  styling, RTL spacing, and service-worker shell entry. No exceptions.
 - `node tests/i18n-messages.js` - no server or browser needed. Runs a
   sample of every runtime status/result message shape through
   `I18n.msg()` in all 10 non-English languages and fails on anything
