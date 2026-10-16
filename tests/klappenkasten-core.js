@@ -1,0 +1,2 @@
+const assert=require('assert');const C=require('../klappenkasten-core.js');
+let s=C.initial();assert.strictEqual(C.close(s,[1]),s);s=C.roll(s,()=>0);assert.deepStrictEqual(s.dice,[1,1]);assert(C.choices(s).some(c=>c.includes(2)));s=C.close(s,[2]);assert.deepStrictEqual(s.open,[1,3,4,5,6,7,8,9]);for(let i=0;i<200;i++){let x=C.initial();while(!x.over){x=C.roll(x,()=>((i*13+x.open.length*7)%6)/6);x=C.finish(x);if(!x.over){let c=C.chooseAi(x);x=C.close(x,c)}}assert(x.over)}console.log('Klappenkasten core: pass (rules, illegal moves, 200 simulations)');

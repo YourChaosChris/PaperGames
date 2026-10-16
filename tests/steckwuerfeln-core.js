@@ -1,0 +1,2 @@
+const assert=require('assert');const C=require('../steckwuerfeln-core.js');
+let s=C.initial();assert.strictEqual(C.play(s,[2]),s);s=C.roll(s,()=>1/6);assert.deepStrictEqual(s.dice,[2,2]);assert(C.choices(s).some(c=>c.length===1&&c[0]===4));assert(!C.choices(s).some(c=>c.length===2));for(let i=0;i<200;i++){let x=C.initial();while(!x.over){x=C.roll(x,()=>((i*17+x.open.length*3)%6)/6);x=C.finish(x);if(!x.over){let c=C.chooseAi(x);x=C.play(x,c)}}assert(x.over)}console.log('Steckwuerfeln core: pass (rules, illegal moves, 200 simulations)');
