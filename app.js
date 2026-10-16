@@ -181,7 +181,7 @@ function chessResultTitle(resultCode) {
   if (resultCode === "½-½") return "Draw";
   const winnerColor = resultCode === "1-0" ? "white" : "black";
   if (AppState.mode === "offline-ai") {
-    return winnerColor === AppState.humanColor ? "You win!" : "The computer wins";
+    return winnerColor === AppState.humanColor ? "You win!" : I18n.t("ui_status_computer_wins");
   }
   if (AppState.mode === "online") {
     return winnerColor === AppState.viewColor ? "You win!" : "You lose";

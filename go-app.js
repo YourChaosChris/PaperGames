@@ -115,7 +115,7 @@ function setGameResultGo(text) {
 // the app uses instead.
 function resultTitleGo(winner) {
   if (AppStateGo.mode === "offline-ai") {
-    return winner === AppStateGo.humanColor ? "You win!" : "The computer wins";
+    return winner === AppStateGo.humanColor ? "You win!" : I18n.t("ui_status_computer_wins");
   }
   return colorNameGo(winner) + " wins";
 }
