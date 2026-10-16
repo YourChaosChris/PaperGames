@@ -103,7 +103,8 @@ function setStatusMorris(elementId, text) {
       else uiStatusKey = "ui_status_your_turn";
     }
     if (uiStatusKey && !uiStatusKeep) {
-      const uiStatusExtra = uiStatusText.replace(/^.*?(?:\.|…|!)(?:\s+|$)/, "").trim();
+      const uiStatusExtraRaw = uiStatusText.replace(/^.*?(?:\.|…|!)(?:\s+|$)/, "").trim();
+      const uiStatusExtra = /^(?:you win|you won|you lose|you lost|the computer wins|computer wins|your (?:move|turn)|the computer(?:\x27s)? turn|computer thinking)\W*$/i.test(uiStatusExtraRaw) ? "" : uiStatusExtraRaw;
       text = I18n.t(uiStatusKey) + (uiStatusExtra ? " " + uiStatusExtra : "");
     }
   }

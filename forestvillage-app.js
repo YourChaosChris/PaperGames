@@ -256,7 +256,7 @@ function endGameFv(resigned) {
   AppStateFv.sel = null;
   const n = s.players.length;
   const totals = s.players.map((p, i) => FC().score(s, i).total);
-  let title, text;
+  let title, text, w;
   if (n === 1) {
     const ok = totals[0] >= FC().SOLO_TARGET;
     title = tFv(ok ? "fv_result_win" : "fv_result_lose");
@@ -265,7 +265,7 @@ function endGameFv(resigned) {
     title = tFv("fv_result_lose");
     text = tFv("fv_result_resigned");
   } else {
-    const w = FC().winners(s);
+    w = FC().winners(s);
     const best = totals[w[0]];
     const names = w.map(playerNameFv).join(tFv("fv_list_sep"));
     if (AppStateFv.mode === "vs-ai") title = tFv(w.indexOf(0) !== -1 ? (w.length > 1 ? "fv_result_tie" : "fv_result_win") : "fv_result_lose");
@@ -274,7 +274,7 @@ function endGameFv(resigned) {
     if (AppStateFv.mode === "vs-ai" && typeof GameStats !== "undefined") GameStats.record("forestvillage", w.indexOf(0) !== -1 ? (w.length > 1 ? "draw" : "win") : "loss");
   }
   setStatusFv(null);
-  document.getElementById("board-info").textContent = AppStateFv.mode === "vs-ai" && n > 1 && w.length === 1 ? I18n.t(w[0] === 0 ? "ui_status_you_win" : "ui_status_computer_wins") + " " + text : text;
+  document.getElementById("board-info").textContent = AppStateFv.mode === "vs-ai" && n > 1 && w && w.length === 1 ? I18n.t(w[0] === 0 ? "ui_status_you_win" : "ui_status_computer_wins") + " " + text : text;
   document.getElementById("game-result").textContent = text;
   if (window.ResultModal) window.ResultModal.show(title, text);
   clearSavedFvGame();
