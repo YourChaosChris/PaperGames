@@ -1175,5 +1175,19 @@ const GAMES_CATALOG = [
     added: "2026-10-17T00:20",
     noRead: true,
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M3 22L11 12L19 22V33H3Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><rect x=\"7\" y=\"25\" width=\"5\" height=\"8\" fill=\"#141413\"/><path d=\"M21 22L29 12L37 22V33H21Z\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/></svg></span>"
+  },
+  {
+    slug: "oddone",
+    category: "puzzles",
+    family: "picturelogic",
+    nameKey: "game_oddone",
+    nameText: "Which One Is Different?",
+    descKey: "home_oddone_desc",
+    descText: "Several cards, all alike in one way except one: tap the one that does not belong. Drawings from the same group, or shapes that match in one feature. Six rounds per game, three levels, big buttons, no time limit, a hint when you are stuck.",
+    popular: false,
+    kids: true,
+    added: "2026-10-17T00:30",
+    noRead: true,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"15\" height=\"15\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"10.5\" cy=\"10.5\" r=\"4.2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"22\" y=\"3\" width=\"15\" height=\"15\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"29.5\" cy=\"10.5\" r=\"4.2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"3\" y=\"22\" width=\"15\" height=\"15\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"10.5\" cy=\"29.5\" r=\"4.2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"22\" y=\"22\" width=\"15\" height=\"15\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"4\"/><rect x=\"26\" y=\"26\" width=\"7\" height=\"7\" fill=\"#141413\"/></svg></span>"
   }
 ];

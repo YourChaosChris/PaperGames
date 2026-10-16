@@ -117,6 +117,8 @@ echo "=== patternrow-core.js ==="
 node "$ROOT/tests/patternrow-core.js" || status=1
 echo "=== shadowmatch-core.js ==="
 node "$ROOT/tests/shadowmatch-core.js" || status=1
+echo "=== oddone-core.js ==="
+node "$ROOT/tests/oddone-core.js" || status=1
 echo "=== matches-core.js ==="
 node "$ROOT/tests/matches-core.js" || status=1
 echo "=== cardduel-core.js ==="

@@ -798,6 +798,15 @@ const ARIA_SAMPLES = [
   "Shadow 2",
   "Shadow 3, not right",
   "Shadow 1, right",
+  "Which one does not belong? Tap it.",
+  "That one belongs with the others. Try another one.",
+  "Hint: the marked card is the odd one.",
+  "All rounds finished! Mistakes: 1.",
+  "All rounds finished. Mistakes: 0.",
+  "Round 2 of 6 · Mistakes: 0",
+  "Card 2",
+  "Card 3, not right",
+  "Card 1, right",
   // Pairs to Ten
   "Row 2, column 5, 7", "Row 3, column 1, crossed out", "Row 1, column 9, 9, selected", "Row 2, column 1, 1, hint",
   // Bridge

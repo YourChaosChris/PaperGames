@@ -8,7 +8,8 @@ const GameStats = (function () {
   const KEY = "einkchess_stats";
   const GAMES = ["chess", "go", "checkers", "ur", "morris", "backgammon", "xiangqi", "mancala", "ludo", "reversi", "fourinarow", "gomoku", "senet", "shogi", "sudoku", "pegsolitaire", "minesweeper", "nonogram", "twenty48", "mahjong", "freecell", "cardtactics", "hnefatafl", "wallmaze", "hex", "halma", "lightswitch", "bullsandcows", "dotsandboxes", "amazons", "kakuro", "hashi", "skyscrapers", "slitherlink", "fanorona", "fleetbattle", "konane", "sternhalma", "baghchal", "tablut", "marblepush", "pyramidsolitaire", "surakarta", "domino", "maumau", "calcudoku", "noneighbors", "killersudoku", "schwimmen", "durak", "concan", "doppelkopf", "trix", "cratepusher", "tictactoe", "alquerque", "pairs", "futoshiki", "foxandgeese", "seega", "romme", "cake", "animalsudoku", "shapesort", "linkpairs", "oldmaid", "war", "snakesladders", "blockers", "blackjack", "poker", "skat", "schafkopf", "canasta", "bridge", "tenpairs", "mathcross", "differences", "pentomino", "cardduel", "villains", "forestvillage", "adventurebook", "arrows", "rings", "tangram", "matches", "catplaces", "loosen",
   "patternrow",
-  "shadowmatch"];
+  "shadowmatch",
+  "oddone"];
 
   // Games renamed for trademark reasons: new name -> old name. Results
   // recorded under the old name are carried over once.

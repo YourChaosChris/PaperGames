@@ -3808,6 +3808,23 @@ const STRINGS = {
     msg_t_lr_won: "All rings are loose - solved in {n} moves!",
     msg_t_lr_info: "Rings left: {n} · Moves: {m} · Fewest: {k}",
     family_rings: "Ring puzzles",
+    kq_cards_label: "Cards",
+    game_oddone: "Which One Is Different?",
+    home_oddone_desc: "Several cards, all alike in one way except one: tap the one that does not belong. Drawings from the same group, or shapes that match in one feature. Six rounds per game, three levels, big buttons, no time limit, a hint when you are stuck.",
+    oddone_history_intro: "Finding the one that does not fit is a classic exercise in school books and thinking tests - it trains sorting things by their features.",
+    quickrules_oddone_1: "Several cards are alike in one way - except one.",
+    quickrules_oddone_2: "Tap the card that does not belong. A wrong one is crossed out - try another.",
+    quickrules_oddone_3: "Six rounds make a game. There is no time limit, and the hint marks the odd card.",
+    od_win_title: "All rounds finished!",
+    msg_od_start: "Which one does not belong? Tap it.",
+    msg_od_wrong: "That one belongs with the others. Try another one.",
+    msg_od_hint: "Hint: the marked card is the odd one.",
+    msg_t_od_won: "All rounds finished! Mistakes: {n}.",
+    msg_t_od_won_modal: "All rounds finished. Mistakes: {n}.",
+    msg_t_od_info: "Round {n} of {m} · Mistakes: {k}",
+    msg_t_od_aria_option: "Card {n}",
+    msg_t_od_aria_wrong: "Card {n}, not right",
+    msg_t_od_aria_right: "Card {n}, right",
     kq_shadows_label: "Shadows",
     family_picturelogic: "Picture logic puzzles",
     game_shadowmatch: "Whose Shadow Is It?",
@@ -5052,7 +5069,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 95;
+  const GAME_COUNT = 96;
 
   function t(key, lang) {
     const l = lang || getLang();
