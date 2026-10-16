@@ -3808,6 +3808,25 @@ const STRINGS = {
     msg_t_lr_won: "All rings are loose - solved in {n} moves!",
     msg_t_lr_info: "Rings left: {n} · Moves: {m} · Fewest: {k}",
     family_rings: "Ring puzzles",
+    kq_shadows_label: "Shadows",
+    family_picturelogic: "Picture logic puzzles",
+    game_shadowmatch: "Whose Shadow Is It?",
+    home_shadowmatch_desc: "A picture and some black shadows: which shadow belongs to it? Six pictures per game, three levels - on Hard the same picture also appears turned or mirrored. Big buttons, no time limit, a hint when you are stuck.",
+    shadowmatch_history_intro: "Shadows have been traced, cut out and played with for centuries - matching a shadow to its object is a small exercise in looking closely.",
+    quickrules_shadowmatch_1: "A picture is shown, with black shadows below it.",
+    quickrules_shadowmatch_2: "Tap the shadow that has exactly the outline of the picture. A wrong one is crossed out - try another.",
+    quickrules_shadowmatch_3: "Six pictures make a game. There is no time limit, and the hint marks the right shadow.",
+    sm_win_title: "All pictures done!",
+    msg_sm_start: "Which shadow belongs to the picture? Tap it.",
+    msg_sm_wrong: "That shadow does not fit. Try another one.",
+    msg_sm_hint: "Hint: the marked shadow is the right one.",
+    msg_t_sm_won: "All pictures done! Mistakes: {n}.",
+    msg_t_sm_won_modal: "All pictures done. Mistakes: {n}.",
+    msg_t_sm_info: "Picture {n} of {m} · Mistakes: {k}",
+    msg_sm_aria_picture: "Picture",
+    msg_t_sm_aria_option: "Shadow {n}",
+    msg_t_sm_aria_wrong: "Shadow {n}, not right",
+    msg_t_sm_aria_right: "Shadow {n}, right",
     kq_next: "Next",
     kq_level_label: "Level",
     kq_answers_label: "Answers",
@@ -5033,7 +5052,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 94;
+  const GAME_COUNT = 95;
 
   function t(key, lang) {
     const l = lang || getLang();

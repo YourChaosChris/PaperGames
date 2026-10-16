@@ -14184,3 +14184,33 @@ li.fv-card {
   height: auto;
   margin: 0 auto;
 }
+
+/* Whose Shadow Is It?: the picture in a frame, shadows as large square
+   buttons - two per row (four shadows) or three per row (three). */
+.kq-picture {
+  box-sizing: border-box;
+  width: 150px;
+  margin: 8px auto 14px;
+  padding: 8px;
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.kq-picture svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.kq-options-big .kq-option {
+  width: 44%;
+  max-width: 140px;
+  height: auto;
+  margin: 4px;
+}
+
+.kq-options-big.kq-n3 .kq-option {
+  width: 29%;
+  max-width: 116px;
+}

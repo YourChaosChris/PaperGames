@@ -117,7 +117,8 @@
     ["matches", "game_matches"],
     ["catplaces", "game_catplaces"],
     ["loosen", "game_loosen", "rings"],
-    ["patternrow", "game_patternrow"]
+    ["patternrow", "game_patternrow", "picturelogic"],
+    ["shadowmatch", "game_shadowmatch", "picturelogic"]
   ];
 
   var GAME_SLUGS = {};

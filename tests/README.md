@@ -240,6 +240,13 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   gives another), the unit is shown at least twice, the answer sits among
   distinct options and at every position, rows fit in 10 cells. Under a
   second.
+- `node tests/shadowmatch-core.js` - no server or browser needed. The 20
+  drawings of kidspics.js (4 groups of 5, picture and shadow differ, every
+  shadow in every turn different from all others), then 200 games of "Find
+  the Shadow" per level (6 pictures each, all different): exactly one
+  unturned shadow of the picture among distinct options; easy takes shadows
+  from other groups, medium from the same group, hard two turned shadows of
+  the same drawing plus one from the group. Under a second.
 - `node tests/matches-core.js` - no server or browser needed. All 90
   "Matchstick Puzzles": the start is wrong (sums) or lacks the asked
   number of squares, a full search finds a solution with exactly 1 or 2

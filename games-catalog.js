@@ -39,7 +39,7 @@
 // of Pairs, or 17 and 4 in Blackjack), and that game's description names
 // it. Only a genuinely new game gets its own pages and an entry here.
 
-const GAME_FAMILIES = ["chess", "draughts", "tafl", "hunt", "halma", "inarow", "ancientrace", "dicerace", "sudoku", "latin", "math", "tiling", "rings", "patience", "rummy", "tricks", "casino"];
+const GAME_FAMILIES = ["chess", "draughts", "tafl", "hunt", "halma", "inarow", "ancientrace", "dicerace", "sudoku", "latin", "math", "tiling", "rings", "patience", "rummy", "tricks", "casino", "picturelogic"];
 
 const GAMES_CATALOG = [
   {
@@ -1151,6 +1151,7 @@ const GAMES_CATALOG = [
   {
     slug: "patternrow",
     category: "puzzles",
+    family: "picturelogic",
     nameKey: "game_patternrow",
     nameText: "Continue the Pattern",
     descKey: "home_patternrow_desc",
@@ -1160,5 +1161,19 @@ const GAMES_CATALOG = [
     added: "2026-10-17T00:10",
     noRead: true,
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><circle cx=\"5.5\" cy=\"11\" r=\"3.8\" fill=\"#141413\"/><rect x=\"11.7\" y=\"7.2\" width=\"7.6\" height=\"7.6\" fill=\"#141413\"/><circle cx=\"25.5\" cy=\"11\" r=\"3.8\" fill=\"#141413\"/><rect x=\"31.7\" y=\"7.2\" width=\"7.6\" height=\"7.6\" fill=\"#141413\"/><circle cx=\"5.5\" cy=\"29\" r=\"3.8\" fill=\"#141413\"/><rect x=\"11.7\" y=\"25.2\" width=\"7.6\" height=\"7.6\" fill=\"#141413\"/><circle cx=\"25.5\" cy=\"29\" r=\"3.8\" fill=\"#141413\"/><rect x=\"31.2\" y=\"24.7\" width=\"8.2\" height=\"8.2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.5\" stroke-dasharray=\"2.2 1.6\"/></svg></span>"
+  },
+  {
+    slug: "shadowmatch",
+    category: "puzzles",
+    family: "picturelogic",
+    nameKey: "game_shadowmatch",
+    nameText: "Whose Shadow Is It?",
+    descKey: "home_shadowmatch_desc",
+    descText: "A picture and some black shadows: which shadow belongs to it? Six pictures per game, three levels - on Hard the same picture also appears turned or mirrored. Big buttons, no time limit, a hint when you are stuck.",
+    popular: false,
+    kids: true,
+    added: "2026-10-17T00:20",
+    noRead: true,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M3 22L11 12L19 22V33H3Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><rect x=\"7\" y=\"25\" width=\"5\" height=\"8\" fill=\"#141413\"/><path d=\"M21 22L29 12L37 22V33H21Z\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/></svg></span>"
   }
 ];

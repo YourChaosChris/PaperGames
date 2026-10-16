@@ -358,6 +358,12 @@ const SAMPLES = [
   "All rows finished! Mistakes: 2.",
   "All rows finished. Mistakes: 0.",
   "Row 3 of 6 · Mistakes: 1",
+  "Which shadow belongs to the picture? Tap it.",
+  "That shadow does not fit. Try another one.",
+  "Hint: the marked shadow is the right one.",
+  "All pictures done! Mistakes: 1.",
+  "All pictures done. Mistakes: 0.",
+  "Picture 2 of 6 · Mistakes: 0",
   "Choose a piece below the board.",
   "Turn or flip it if needed, then tap where its dot should go.",
   "The piece does not fit there.",
@@ -788,6 +794,10 @@ const ARIA_SAMPLES = [
   "Answer 2",
   "Answer 3, not right",
   "Answer 1, right",
+  "Picture",
+  "Shadow 2",
+  "Shadow 3, not right",
+  "Shadow 1, right",
   // Pairs to Ten
   "Row 2, column 5, 7", "Row 3, column 1, crossed out", "Row 1, column 9, 9, selected", "Row 2, column 1, 1, hint",
   // Bridge
