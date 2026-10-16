@@ -4921,6 +4921,64 @@ const STRINGS = {
     msg_t_maumau_kids_mouse: "Mouse {n}",
     domino_history_intro: "Small tiles with pips, known in China for many centuries and in Europe since the 18th century - though how the two traditions are connected is still an open question.",
     maumau_history_intro: "A card game for the whole family, played in countless house-rule versions - and like many folk games, nobody knows who invented it.",
+    game_bingo: 'Bingo',
+    home_bingo_desc: 'Number and picture bingo for children and families, with printable cards and no time pressure.',
+    bingo_kind: 'Cards',
+    bingo_numbers: 'Numbers',
+    bingo_pictures: 'Pictures',
+    bingo_size: 'Card size',
+    bingo_pattern: 'Winning pattern',
+    bingo_line: 'Any line, column or diagonal',
+    bingo_full: 'Full card',
+    bingo_mode: 'Mode',
+    bingo_caller: 'Caller only',
+    bingo_card_count: 'Number of cards',
+    bingo_draw: 'Draw next',
+    bingo_next_card: 'Next card',
+    bingo_check: 'Bingo!',
+    bingo_print: 'Print cards',
+    bingo_correct: 'That is a bingo!',
+    bingo_incorrect: 'Not yet. Incorrect marks are shown.',
+    bingo_draw_empty: 'No more calls.',
+    bingo_card: 'Card',
+    bingo_free: 'Free',
+    bingo_row: "A row",
+    bingo_col: "A column",
+    bingo_diag: "A diagonal",
+    bingo_not_yet: "Not yet - the pattern is not complete.",
+    bingo_called: "Called so far",
+    bingo_status_caller: "Press Draw next. Print the cards for the players.",
+    bingo_status_start: "Press Draw next, then tap the called item on your card.",
+    bingo_status_marked: "Tap the called item on your card.",
+    quickrules_bingo_1: "Press Draw next to call one number or picture - there is no timer.",
+    quickrules_bingo_2: "Tap each called item on your card. A complete pattern (row, column, diagonal or full card, as set under Winning pattern) wins.",
+    quickrules_bingo_3: "Press Bingo! to check your card: wrong marks are outlined, no penalty. With Caller only, print cards for the children.",
+    bingo_picture_dog: 'Dog',
+    bingo_picture_cat: 'Cat',
+    bingo_picture_rabbit: 'Rabbit',
+    bingo_picture_mouse: 'Mouse',
+    bingo_picture_owl: 'Owl',
+    bingo_picture_fish: 'Fish',
+    bingo_picture_turtle: 'Turtle',
+    bingo_picture_snail: 'Snail',
+    bingo_picture_duck: 'Duck',
+    bingo_picture_frog: 'Frog',
+    bingo_picture_pig: 'Pig',
+    bingo_picture_elephant: 'Elephant',
+    bingo_picture_butterfly: 'Butterfly',
+    bingo_picture_bee: 'Bee',
+    bingo_picture_lion: 'Lion',
+    bingo_picture_giraffe: 'Giraffe',
+    bingo_picture_sheep: 'Sheep',
+    bingo_picture_apple: 'Apple',
+    bingo_picture_pear: 'Pear',
+    bingo_picture_car: 'Car',
+    bingo_picture_boat: 'Boat',
+    bingo_picture_ball: 'Ball',
+    bingo_picture_flower: 'Flower',
+    bingo_picture_house: 'House',
+    bingo_history_linktitle: 'The story of Bingo',
+    bingo_history_teaser: 'Bingo grew from number-drawing and lottery games in Europe. During the nineteenth and twentieth centuries, versions with cards and marked numbers spread widely. Picture cards later made the same simple call-and-mark idea easy for young children too.',
   }
 };
 
@@ -5017,7 +5075,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 93;
+  const GAME_COUNT = 94;
 
   function t(key, lang) {
     const l = lang || getLang();
@@ -5588,7 +5646,7 @@ const I18n = (function () {
     pageNeedsText: pageNeedsText,
     isReady: isReady,
     languageName: (code) => LANGUAGE_NAMES[code] || code.toUpperCase()
-  };
+};
 })();
 
 if (typeof window !== "undefined") {
@@ -5618,5 +5676,7 @@ if (typeof window !== "undefined") {
     // missing files now and switch over once they are there.
     const lang = I18n.getLang();
     if (!I18n.isReady(lang)) I18n.useLang(lang);
-  });
+
+
+});
 }

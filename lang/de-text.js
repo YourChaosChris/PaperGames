@@ -2555,5 +2555,13 @@ Object.assign(STRINGS.de, {
     maumau_history_origin_p2: "Weil es durchs Spielen weitergegeben wurde und nicht in gedruckter Form, unterscheiden sich die Regeln von Familie zu Familie – ob man Siebenen stapeln darf, ob ein Bube auf einen Buben darf oder was passiert, wenn man vergisst, „Mau“ zu sagen.",
     maumau_history_version_title: "Diese Version",
     maumau_history_version_p1: "PaperGames verwendet einen verbreiteten Regelsatz mit gewöhnlichen Spielkarten: Siebenen lassen die nächste Person zwei Karten ziehen und lassen sich stapeln, Achten lassen aussetzen, ein Bube wünscht sich die Farbe und ein Ass bringt einen weiteren Zug. „Mau“ sagt das Spiel selbst an, ohne Strafen.",
+
+    bingo_rules_title: 'Bingo-Regeln',
+    bingo_rules_intro: 'Wähle Zahlen oder Bilder, ziehe einzeln und markiere deine Karte.',
+    bingo_rules_basics_title: 'So wird gespielt',
+    bingo_rules_play: 'Starte ein Spiel und wähle Zahlen- oder Bildkarten, Größe, Modus und Gewinnmuster. Mit „Nächste Ziehung“ erscheint ein Element. Markiere passende Felder selbst. Beim Spiel zu zweit wird das Gerät weitergereicht; „Nächste Karte“ zeigt die aktive Karte. Im Ausrufer-Modus gibt es keine Karten auf dem Bildschirm; drucke sie vorher aus.',
+    bingo_rules_check: 'Drücke jederzeit „Bingo!“. Ein vollständiges Muster gewinnt. Sonst werden nicht gezogene Markierungen umrandet. Es gibt keine Strafe.',
+    bingo_history_title: 'Die Geschichte von Bingo',
+    bingo_history_intro: 'Bingo entwickelte sich aus Zahlenziehungen und Lotteriespielen in Europa. Im 19. und 20. Jahrhundert verbreiteten sich Varianten mit Karten und markierten Zahlen. Bilderkarten machten dieselbe einfache Ruf-und-Markier-Idee später auch für kleine Kinder zugänglich.'
 });
 I18n.markTextLoaded("de");

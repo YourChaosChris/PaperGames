@@ -2555,5 +2555,13 @@ Object.assign(STRINGS.nl, {
     maumau_history_origin_p2: "Omdat het al spelend werd doorgegeven en niet op papier, verschillen de regels van familie tot familie - of zevens gestapeld mogen worden, of een boer op een boer mag, of wat er gebeurt als je vergeet 'Mau' te roepen.",
     maumau_history_version_title: "Deze versie",
     maumau_history_version_p1: "PaperGames gebruikt een gangbare set regels met een gewoon spel kaarten: zevens laten de volgende speler twee kaarten pakken en kunnen gestapeld worden, achten laten een beurt overslaan, een boer kiest de kleur en een aas geeft nog een beurt. Het spel roept zelf 'Mau', zonder straffen.",
+
+    bingo_rules_title: 'Bingoregels',
+    bingo_rules_intro: 'Kies getallen of plaatjes, trek ze één voor één en markeer je kaart.',
+    bingo_rules_basics_title: 'Zo speel je',
+    bingo_rules_play: 'Kies kaartsoort, formaat, modus en patroon. Druk op Volgende trekking om een item te tonen en markeer passende vakjes. Speel je met twee, geef het apparaat door en kies Volgende kaart. Alleen omroepen toont geen kaarten; print ze vooraf.',
+    bingo_rules_check: 'Druk op Bingo! wanneer je wilt. Een compleet patroon wint. Anders worden niet getrokken markeringen omlijnd, zonder straf.',
+    bingo_history_title: 'De geschiedenis van bingo',
+    bingo_history_intro: 'Bingo ontstond uit getallentrekkingen en loterijen in Europa. In de negentiende en twintigste eeuw verspreidden versies met kaarten en gemarkeerde getallen zich. Later maakten kaarten met plaatjes hetzelfde eenvoudige spel toegankelijk voor jonge kinderen.'
 });
 I18n.markTextLoaded("nl");

@@ -2555,5 +2555,13 @@ Object.assign(STRINGS.pl, {
     maumau_history_origin_p2: "Ponieważ przekazywano ją przez granie, a nie drukiem, zasady różnią się w zależności od rodziny - czy można łączyć siódemki, czy wolno położyć waleta na walecie i co się dzieje, gdy ktoś zapomni powiedzieć „Mau”.",
     maumau_history_version_title: "Ta wersja",
     maumau_history_version_p1: "PaperGames stosuje popularny zestaw zasad ze zwykłą talią kart: siódemki każą następnemu graczowi dobrać dwie karty i można je łączyć, ósemki pomijają kolejkę, walet wybiera kolor, a as daje dodatkowy ruch. Gra sama mówi „Mau”, bez kar.",
+
+    bingo_rules_title: 'Zasady bingo',
+    bingo_rules_intro: 'Wybierz liczby lub obrazki, losuj po jednym i zaznaczaj swoją kartę.',
+    bingo_rules_basics_title: 'Jak grać',
+    bingo_rules_play: 'Wybierz rodzaj i rozmiar kart, tryb oraz wzór. Naciśnij Losuj, aby odsłonić element, i samodzielnie zaznacz pasujące pola. Grając we dwoje, podawajcie urządzenie i wybierajcie Następna karta. Tryb Tylko prowadzący nie pokazuje kart — wydrukuj je wcześniej.',
+    bingo_rules_check: 'Naciśnij Bingo! w dowolnej chwili. Pełny wzór oznacza wygraną. W przeciwnym razie nie wylosowane zaznaczenia zostaną obrysowane, bez kary.',
+    bingo_history_title: 'Historia bingo',
+    bingo_history_intro: 'Bingo wywodzi się z europejskich losowań liczb i loterii. W XIX i XX wieku rozpowszechniły się wersje z kartami i zaznaczanymi liczbami. Później karty obrazkowe ułatwiły tę prostą zabawę małym dzieciom.'
 });
 I18n.markTextLoaded("pl");

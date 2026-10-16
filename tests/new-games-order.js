@@ -4,7 +4,7 @@
 // `added` carries the time of the commit that brought the game).
 //
 // Checks: every `added` is "YYYY-MM-DD" or "YYYY-MM-DDTHH:MM"; "New
-// Games" (GameCategories.games("new"), as on 11 Oct 2026) has exactly
+// Games" (GameCategories.games("new"), as on 17 Oct 2026) has exactly
 // GameCategories.NEW_MAX = 10 games, the 10 newest, newest first - Loosen
 // the Rings, Cat Places, Matchstick Puzzles, Tangram, Turn the Rings,
 // Arrows, Adventure Book, Forest Village, Fairy-Tale Villains, Card Duel;
@@ -29,12 +29,12 @@ const fails = [];
 cat.forEach((g) => {
   if (!/^\d{4}-\d\d-\d\d(T\d\d:\d\d)?$/.test(g.added || "")) fails.push(g.slug + ": bad added " + g.added);
 });
-const now = Date.parse("2026-10-11T12:00:00");
+const now = Date.parse("2026-10-17T12:00:00");
 if (GC.NEW_MAX !== 10) fails.push("NEW_MAX " + GC.NEW_MAX);
 const home = GC.games("new", cat, now).map((g) => g.slug);
 const all0 = cat.slice().sort(GR.compareNewest).map((g) => g.slug);
 const want = all0.slice(0, 10);
-if (JSON.stringify(want.slice(0, 8)) !== JSON.stringify(["loosen", "catplaces", "matches", "tangram", "rings", "arrows", "adventurebook", "forestvillage"])) fails.push("newest eight " + JSON.stringify(want.slice(0, 8)));
+if (JSON.stringify(want.slice(0, 8)) !== JSON.stringify(["bingo", "loosen", "catplaces", "matches", "tangram", "rings", "arrows", "adventurebook"])) fails.push("newest eight " + JSON.stringify(want.slice(0, 8)));
 if (JSON.stringify(home) !== JSON.stringify(want)) fails.push("home list " + JSON.stringify(home) + ", expected " + JSON.stringify(want));
 const all = cat.slice().sort(GR.compareNewest);
 for (let i = 1; i < all.length; i++) {

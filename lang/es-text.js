@@ -2555,5 +2555,13 @@ Object.assign(STRINGS.es, {
     maumau_history_origin_p2: "Como se transmitió jugando y no por escrito, las reglas cambian de una familia a otra - si se pueden acumular los Sietes, si se puede jugar una Jota sobre otra Jota o qué pasa si se olvida decir «Mau».",
     maumau_history_version_title: "Esta versión",
     maumau_history_version_p1: "PaperGames usa un conjunto de reglas habitual con una baraja normal: los Sietes hacen robar dos cartas al siguiente jugador y se pueden acumular, los Ochos hacen saltar un turno, una Jota elige el palo y un As da otro turno. El juego dice «Mau» por sí mismo, sin penalizaciones.",
+
+    bingo_rules_title: 'Reglas del bingo',
+    bingo_rules_intro: 'Elige números o imágenes, extrae una a una y marca tu cartón.',
+    bingo_rules_basics_title: 'Cómo jugar',
+    bingo_rules_play: 'Elige el tipo y tamaño de cartón, el modo y el patrón. Pulsa Siguiente extracción para mostrar un elemento y marca las casillas. A dos, pasa el dispositivo y usa Siguiente cartón. El modo Solo cantar no muestra cartones; imprímelos antes.',
+    bingo_rules_check: 'Pulsa ¡Bingo! cuando quieras. Un patrón completo gana. Si falta, se señalan las marcas que no han salido, sin penalización.',
+    bingo_history_title: 'Historia del bingo',
+    bingo_history_intro: 'El bingo surgió de sorteos de números y loterías europeas. En los siglos XIX y XX se difundieron versiones con cartones y números marcados. Más tarde, los cartones ilustrados acercaron esta sencilla idea a los niños pequeños.'
 });
 I18n.markTextLoaded("es");

@@ -2555,5 +2555,13 @@ Object.assign(STRINGS.fr, {
     maumau_history_origin_p2: "Comme il s'est transmis en jouant plutôt que par l'imprimé, les règles varient d'une famille à l'autre - peut-on empiler les Sept, peut-on poser un Valet sur un Valet, ou que se passe-t-il si l'on oublie d'annoncer « Mau ».",
     maumau_history_version_title: "Cette version",
     maumau_history_version_p1: "PaperGames utilise un ensemble de règles courant avec un jeu de cartes ordinaire : les Sept font piocher deux cartes au joueur suivant et peuvent s'empiler, les Huit font passer un tour, un Valet fixe la couleur et un As donne un tour de plus. Le jeu annonce « Mau » lui-même, sans pénalités.",
+
+    bingo_rules_title: 'Règles du bingo',
+    bingo_rules_intro: 'Choisissez des nombres ou des images, tirez-les un par un et marquez votre carte.',
+    bingo_rules_basics_title: 'Comment jouer',
+    bingo_rules_play: 'Choisissez le type de carte, sa taille, le mode et le motif. Appuyez sur Tirer pour révéler un élément et marquez vous-même les cases. À deux, passez l’appareil et utilisez Carte suivante. Le mode annonceur seul n’affiche aucune carte : imprimez-les avant.',
+    bingo_rules_check: 'Appuyez sur Bingo ! à tout moment. Un motif complet gagne. Sinon, les marques non tirées sont signalées, sans pénalité.',
+    bingo_history_title: 'Histoire du bingo',
+    bingo_history_intro: 'Le bingo vient des tirages de nombres et des loteries européennes. Aux XIXe et XXe siècles, les versions avec cartes et nombres marqués se sont répandues. Les cartes illustrées ont ensuite rendu cette idée simple accessible aux jeunes enfants.'
 });
 I18n.markTextLoaded("fr");

@@ -7,6 +7,7 @@ const status = fs.readFileSync(path.join(ROOT, "tests/ui-status.js"), "utf8");
 const gamesBlock = status.split("const games = [")[1].split("];", 1)[0];
 const games = [...gamesBlock.matchAll(/"([a-z0-9]+)"/g)].map((m) => m[1]).concat("chess");
 const exceptions = {
+  bingo: "Bingo draws are random and the call history is not saved, so an undo could not restore the exact draw state.",
   blockers: "Dice rolls are generated randomly and the roll state is not saved.",
   cardduel: "Private hands and deck order are hidden; undoing a revealed computer play would preserve information the player has learned.",
   concan: "Private hands and stock draws are hidden; undoing a revealed computer play or draw would preserve information the player has learned.",

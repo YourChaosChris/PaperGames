@@ -43,6 +43,12 @@ const GAME_FAMILIES = ["chess", "draughts", "tafl", "hunt", "halma", "inarow", "
 
 const GAMES_CATALOG = [
   {
+    slug: "bingo", category: "party", nameKey: "game_bingo", nameText: "Bingo",
+    descKey: "home_bingo_desc", descText: "Number and picture bingo for children and families, with printable cards and no time pressure.",
+    popular: false, kids: true, noRead: true, added: "2026-10-16T09:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\"/><path d=\"M9 3v18M15 3v18M3 9h18M3 15h18\"/><circle cx=\"9\" cy=\"9\" r=\"2\" fill=\"#141413\"/></svg></span>"
+  },
+  {
     slug: "chess",
     category: "strategy",
     family: "chess",
