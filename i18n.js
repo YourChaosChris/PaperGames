@@ -3808,6 +3808,44 @@ const STRINGS = {
     msg_t_lr_won: "All rings are loose - solved in {n} moves!",
     msg_t_lr_info: "Rings left: {n} · Moves: {m} · Fewest: {k}",
     family_rings: "Ring puzzles",
+    family_dicegames: "Dice games",
+    dg_you: "You",
+    dg_player: "Player {n}",
+    dg_computer: "Computer",
+    dg_computer_n: "Computer {n}",
+    dg_players_label: "Players:",
+    dg_rounds_label: "Rounds:",
+    dg_turn_of: "{name}'s turn.",
+    dg_wins: "{name} wins.",
+    dg_draw: "Draw.",
+    dg_total: "Total",
+    dg_round_of: "Round {n} of {m}",
+    dg_points: "Points: {n}",
+    dg_dice_aria: "Dice: {dice}",
+    dg_dice_none: "Not rolled yet",
+    dg_roll: "Roll",
+    game_klappenkasten: "Klappenkasten",
+    home_klappenkasten_desc: "A traditional dice game: roll two dice and close the numbered flaps that add up to your roll. When nothing fits, the flaps still open count against you - the fewest points win, and closing every flap wins at once. Against the computer or with up to four players on one device.",
+    kk_history_intro: "A traditional dice game with a row of numbered flaps, played in pubs and on ships - where and when exactly it began is not certain.",
+    quickrules_klappenkasten_1: "Roll the two dice and close flaps whose numbers add up to the roll - one flap or several.",
+    quickrules_klappenkasten_2: "Keep rolling and closing. When nothing fits, the numbers of the open flaps are your points.",
+    quickrules_klappenkasten_3: "The fewest points win; closing all flaps wins at once. Undo takes back a closing.",
+    kk_size_label: "Flaps:",
+    kk_size_9: "1 to 9",
+    kk_size_12: "1 to 12",
+    kk_roll_two: "Roll two dice",
+    kk_roll_one: "Roll one die",
+    kk_close: "Close flaps",
+    kk_roll_hint: "Roll the dice.",
+    kk_pick_hint: "Tap flaps that add up to {n}, then tap Close flaps.",
+    kk_selected: "Selected: {n} of {m}",
+    kk_wrong_sum: "These flaps add up to {n}, not {m}.",
+    kk_last_stuck: "{name} rolled {dice}: nothing fits. {n} points.",
+    kk_last_box: "{name} closed every flap: box shut!",
+    kk_box_message: "Box shut! Every flap is closed.",
+    kk_flap_aria: "Flap {n}",
+    kk_flap_closed_aria: "Flap {n}, closed",
+    kk_flap_selected_aria: "Flap {n}, selected",
     aw_level_master: "Master",
     aw_retry: "Try again",
     msg_aw_glided: "The arrow glides forward up to the next arrow.",
@@ -5012,7 +5050,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 93;
+  const GAME_COUNT = 94;
 
   function t(key, lang) {
     const l = lang || getLang();

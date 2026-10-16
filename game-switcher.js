@@ -50,7 +50,7 @@
     ["mahjong", "game_mahjong_solitaire"],
     ["nonogram", "game_nonograms"],
     ["pegsolitaire", "game_peg_solitaire"],
-    ["yatzy", "game_yatzy"],
+    ["yatzy", "game_yatzy", "dicegames"],
     ["lightswitch", "game_lightswitch"],
     ["bullsandcows", "game_bullsandcows"],
     ["dotsandboxes", "game_dotsandboxes"],
@@ -116,7 +116,8 @@
     ["tangram", "game_tangram", "tiling"],
     ["matches", "game_matches"],
     ["catplaces", "game_catplaces"],
-    ["loosen", "game_loosen", "rings"]
+    ["loosen", "game_loosen", "rings"],
+    ["klappenkasten", "game_klappenkasten", "dicegames"]
   ];
 
   var GAME_SLUGS = {};

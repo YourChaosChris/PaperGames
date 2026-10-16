@@ -1,112 +1,297 @@
-// Klappenkasten game UI and local game controller.
-const KK_SAVE_KEY = "einkchess_save_klappenkasten";
-const KK_STATE = { game: null, undoStack: [] };
-const kkClone = (x) => JSON.parse(JSON.stringify(x));
-const kkT = (key) => window.I18n ? I18n.t(key) : key;
-function kkSave() {
-  if (window.GameStorage && KK_STATE.game) GameStorage.save(KK_SAVE_KEY, { game: KK_STATE.game, undoStack: KK_STATE.undoStack.slice(-50) });
+// klappenkasten-app.js
+// Wires KlappenkastenCore ("shut the box") to klappenkasten.html.
+//
+// One person plays against one to three computers, or 2 to 4 people pass
+// the device around. Roll the dice (large pip-dot dice), tap the flaps that
+// add up to the roll, tap "Close flaps". The computer plays its whole turn
+// at once and the line under the board tells what it did. Nothing is
+// animated; the flaps are black-and-white: open = white with a thick
+// frame, selected = black, closed = dashed frame and crossed out.
+//
+// Undo takes back the last closing (the state before it, dice included),
+// also in the computer mode: snapshots are only taken where a person
+// decides, so going back never replays or re-rolls a die.
+
+const KLAPPENKASTEN_SAVE_KEY = "einkchess_save_klappenkasten";
+
+const AppStateKK = {
+  state: null,
+  undoStack: [],
+  selected: []
+};
+
+function tKK(key, values) {
+  return DiceCommon.fill(I18n.t(key), values);
 }
-function kkSnapshot() { KK_STATE.undoStack.push(kkClone(KK_STATE.game)); KK_STATE.undoStack = KK_STATE.undoStack.slice(-50); }
-function kkName(i) { return KK_STATE.game.mode === "ai" && i === 1 ? kkT("kk_computer") : kkT("kk_player") + " " + (i + 1); }
-function kkStatus(key, replacements) {
-  const el = document.getElementById("board-info");
-  if (!el) return;
-  let s = kkT(key);
-  Object.keys(replacements || {}).forEach((k) => { s = s.replace("{" + k + "}", replacements[k]); });
-  I18n.setMsg(el, s);
+
+function nameKK(i) {
+  return DiceCommon.playerName(AppStateKK.state.computer, i);
 }
-function kkStart(mode) {
-  KK_STATE.game = { mode, current: 0, round: 1, players: [{ score: null }, { score: null }], turn: KlappenkastenCore.initial(), over: false, winner: null };
-  KK_STATE.undoStack = [];
-  document.getElementById("board-placeholder").classList.add("hidden");
-  document.getElementById("board-container").classList.remove("hidden");
-  document.getElementById("board-section").classList.remove("hidden");
-  kkRender(); kkStatus("kk_roll_hint", { player: kkName(0) }); kkSave();
+
+function humansKK() {
+  return AppStateKK.state.computer.filter((c) => !c).length;
 }
-function kkNeedsOneDie() { return ![7, 8, 9].some((n) => KK_STATE.game.turn.open.includes(n)); }
-function kkRoll() {
-  const g = KK_STATE.game; if (!g || g.over || g.turn.dice.length) return;
-  kkSnapshot();
-  let s = KlappenkastenCore.roll(g.turn);
-  if (kkNeedsOneDie()) s = { ...s, dice: [1 + Math.floor(Math.random() * 6)] };
-  g.turn = s;
-  if (!KlappenkastenCore.choices(s).length) { g.turn = KlappenkastenCore.finish(s); kkEndTurn(); return; }
-  kkRender(); kkStatus("kk_choose_hint", { player: kkName(g.current) }); kkSave();
-  if (g.mode === "ai" && g.current === 1) kkAiPlay();
+
+function sumKK(list) {
+  return list.reduce((a, b) => a + b, 0);
 }
-function kkClose() {
-  const g = KK_STATE.game; if (!g || g.over) return;
-  const nums = Array.from(document.querySelectorAll(".kk-tile.selected"), (b) => Number(b.dataset.num));
-  const before = g.turn; const next = KlappenkastenCore.close(before, nums);
-  if (next === before) { kkStatus("kk_invalid", {}); return; }
-  kkSnapshot(); g.turn = next;
-  if (next.over) { g.players[g.current].score = 0; kkRender(); kkFinishRound(true); return; }
-  if (!KlappenkastenCore.choices(next).length) { g.turn = KlappenkastenCore.finish(next); g.players[g.current].score = next.score; kkFinishRound(false); return; }
-  g.turn = { ...next, dice: [] };
-  kkRender(); kkStatus("kk_roll_hint", { player: kkName(g.current) }); kkSave();
+
+/*** Save and load ***/
+
+function saveKK() {
+  if (typeof GameStorage === "undefined" || !AppStateKK.state) return;
+  if (AppStateKK.state.phase === "over") {
+    GameStorage.clear(KLAPPENKASTEN_SAVE_KEY);
+    return;
+  }
+  GameStorage.save(KLAPPENKASTEN_SAVE_KEY, {
+    state: AppStateKK.state,
+    undoStack: AppStateKK.undoStack.slice(-50)
+  });
 }
-function kkAiPlay() {
-  const g = KK_STATE.game;
-  while (g && !g.over && g.mode === "ai" && g.current === 1) {
-    if (!g.turn.dice.length) {
-      let s = KlappenkastenCore.roll(g.turn);
-      if (kkNeedsOneDie()) s = { ...s, dice: [1 + Math.floor(Math.random() * 6)] };
-      g.turn = s;
-      if (!KlappenkastenCore.choices(s).length) { g.turn = KlappenkastenCore.finish(s); g.players[1].score = s.score; kkFinishRound(false); continue; }
+
+function validStateKK(s) {
+  return !!s && s.game === "klappenkasten" && Array.isArray(s.open) && Array.isArray(s.scores) && Array.isArray(s.computer) && s.phase !== "over";
+}
+
+/*** Game flow ***/
+
+function startGameKK() {
+  const mode = DiceCommon.activeMode();
+  const n = parseInt(document.getElementById("kk-players").value, 10) || 2;
+  const size = parseInt(document.getElementById("kk-size").value, 10) === 12 ? 12 : 9;
+  const rounds = parseInt(document.getElementById("kk-rounds").value, 10) || 3;
+  AppStateKK.state = KlappenkastenCore.newGame({ players: n, computer: DiceCommon.seats(mode, n), size: size, rounds: rounds });
+  AppStateKK.undoStack = [];
+  AppStateKK.selected = [];
+  setResultKK("");
+  DiceCommon.showBoard();
+  afterActionKK();
+}
+
+// The computers play at once until a person is to roll or the game is over.
+function runComputersKK() {
+  let guard = 0;
+  while (AppStateKK.state.phase !== "over" && AppStateKK.state.computer[AppStateKK.state.current] && guard++ < 2000) {
+    const next = KlappenkastenCore.aiStep(AppStateKK.state);
+    if (next === AppStateKK.state) break;
+    AppStateKK.state = next;
+  }
+}
+
+function afterActionKK() {
+  runComputersKK();
+  const s = AppStateKK.state;
+  if (s.phase === "over") finishKK();
+  renderKK();
+  saveKK();
+}
+
+function rollKK(count) {
+  const s = AppStateKK.state;
+  if (!s || s.phase !== "roll" || s.computer[s.current]) return;
+  AppStateKK.selected = [];
+  AppStateKK.state = KlappenkastenCore.roll(s, count);
+  afterActionKK();
+}
+
+function toggleFlapKK(n) {
+  const s = AppStateKK.state;
+  if (!s || s.phase !== "close" || s.computer[s.current] || s.open.indexOf(n) < 0) return;
+  const at = AppStateKK.selected.indexOf(n);
+  if (at >= 0) AppStateKK.selected.splice(at, 1);
+  else AppStateKK.selected.push(n);
+  renderKK();
+}
+
+function closeFlapsKK() {
+  const s = AppStateKK.state;
+  if (!s || s.phase !== "close" || s.computer[s.current]) return;
+  const picked = AppStateKK.selected.slice().sort((a, b) => a - b);
+  const need = sumKK(s.dice);
+  const next = KlappenkastenCore.close(s, picked);
+  if (next === s) {
+    renderKK();
+    setStatusKK(tKK("kk_wrong_sum", { n: sumKK(picked), m: need }));
+    return;
+  }
+  AppStateKK.undoStack.push(JSON.parse(JSON.stringify(s)));
+  AppStateKK.undoStack = AppStateKK.undoStack.slice(-50);
+  AppStateKK.selected = [];
+  AppStateKK.state = next;
+  afterActionKK();
+}
+
+function undoKK() {
+  let prev = null;
+  while (AppStateKK.undoStack.length) {
+    const candidate = AppStateKK.undoStack.pop();
+    // Snapshots are taken where a person decides; skip any other.
+    if (!candidate.computer[candidate.current]) { prev = candidate; break; }
+  }
+  if (!prev) return;
+  AppStateKK.state = prev;
+  AppStateKK.selected = [];
+  setResultKK("");
+  if (window.ResultModal) window.ResultModal.hide();
+  afterActionKK();
+}
+
+/*** End of the game ***/
+
+function finishKK() {
+  const s = AppStateKK.state;
+  const humans = humansKK();
+  let title;
+  let text;
+  if (s.winner === -1) {
+    title = "Draw";
+    text = tKK("dg_draw");
+  } else if (!s.computer[s.winner]) {
+    title = humans === 1 ? "You win!" : "Player " + (s.computer.slice(0, s.winner + 1).filter((c) => !c).length) + " wins";
+    text = humans === 1 ? I18n.t("ui_status_you_win") : tKK("dg_wins", { name: nameKK(s.winner) });
+  } else {
+    const nth = s.computer.slice(0, s.winner + 1).filter((c) => c).length;
+    const several = s.computer.filter((c) => c).length > 1;
+    title = humans === 1 ? "You lose" : (several ? "Computer " + nth : "Computer") + " wins";
+    text = humans === 1 ? I18n.t("ui_status_computer_wins") : tKK("dg_wins", { name: nameKK(s.winner) });
+  }
+  setResultKK(text);
+  const totals = KlappenkastenCore.totals(s);
+  const message = s.boxShut
+    ? tKK("kk_box_message")
+    : s.computer.map((c, i) => nameKK(i) + ": " + totals[i]).join(" · ");
+  DiceCommon.showResult(title, message);
+  if (humans === 1 && s.computer.length > 1 && typeof GameStats !== "undefined") {
+    GameStats.record("klappenkasten", KlappenkastenCore.outcomeFor(s, s.computer.indexOf(false)));
+  }
+}
+
+/*** Display ***/
+
+function setStatusKK(text) {
+  DiceCommon.setText(document.getElementById("board-info"), text);
+}
+
+function setResultKK(text) {
+  DiceCommon.setText(document.getElementById("game-result"), text);
+}
+
+function lastTurnTextKK() {
+  const s = AppStateKK.state;
+  const l = s.last;
+  if (!l) return "";
+  if (l.boxShut) return tKK("kk_last_box", { name: nameKK(l.player) });
+  return tKK("kk_last_stuck", { name: nameKK(l.player), dice: l.dice.join(" + "), n: l.points });
+}
+
+function turnStatusKK() {
+  const s = AppStateKK.state;
+  if (s.computer[s.current]) return I18n.t("ui_status_computer_turn");
+  const who = humansKK() === 1 ? I18n.t("ui_status_your_turn") : tKK("dg_turn_of", { name: nameKK(s.current) });
+  const hint = s.phase === "roll" ? tKK("kk_roll_hint") : tKK("kk_pick_hint", { n: sumKK(s.dice) });
+  return who + " " + hint;
+}
+
+function renderFlapsKK() {
+  const s = AppStateKK.state;
+  const wrap = document.getElementById("kk-flaps");
+  const human = !s.computer[s.current] && s.phase === "close";
+  wrap.className = "kk-flaps kk-flaps-" + s.size;
+  wrap.innerHTML = "";
+  for (let n = 1; n <= s.size; n++) {
+    const isOpen = s.open.indexOf(n) >= 0;
+    const isSel = AppStateKK.selected.indexOf(n) >= 0;
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "kk-flap" + (isOpen ? "" : " kk-flap-closed") + (isSel ? " kk-flap-selected" : "");
+    b.textContent = String(n);
+    b.setAttribute("aria-label", tKK(!isOpen ? "kk_flap_closed_aria" : isSel ? "kk_flap_selected_aria" : "kk_flap_aria", { n: n }));
+    if (!isOpen) b.disabled = true;
+    else {
+      b.setAttribute("aria-pressed", isSel ? "true" : "false");
+      if (human) b.addEventListener("click", () => toggleFlapKK(n));
     }
-    const move = KlappenkastenCore.chooseAi(g.turn);
-    if (!move) { g.turn = KlappenkastenCore.finish(g.turn); g.players[1].score = g.turn.score; kkFinishRound(false); continue; }
-    kkSnapshot(); g.turn = KlappenkastenCore.close(g.turn, move);
-    if (g.turn.over) { g.players[1].score = 0; kkFinishRound(true); }
-    else if (!KlappenkastenCore.choices(g.turn).length) { g.turn = KlappenkastenCore.finish(g.turn); g.players[1].score = g.turn.score; kkFinishRound(false); }
-    else g.turn = { ...g.turn, dice: [] };
+    wrap.appendChild(b);
   }
-  kkRender(); kkSave();
 }
-function kkEndTurn() { const g = KK_STATE.game; g.players[g.current].score = g.turn.score; kkFinishRound(false); }
-function kkFinishRound(boxClosed) {
-  const g = KK_STATE.game;
-  if (boxClosed) g.players[g.current].score = 0;
-  if (g.current === 0) { g.current = 1; g.turn = KlappenkastenCore.initial(); if (g.mode === "ai") { kkStatus("kk_ai_turn", {}); kkAiPlay(); return; } }
-  else if (g.round === 1) { g.current = 0; g.round = 2; g.players.forEach((p) => { p.score = null; }); g.turn = KlappenkastenCore.initial(); }
-  else {
-    g.over = true;
-    const a = g.players[0].score, b = g.players[1].score;
-    g.winner = a === b ? -1 : (a < b ? 0 : 1);
-    const el = document.getElementById("game-result");
-    const msg = g.winner === -1 ? kkT("kk_draw") : kkT("kk_winner").replace("{player}", kkName(g.winner));
-    I18n.setMsg(el, msg); if (window.ResultModal) ResultModal.show(kkT("game_klappenkasten"), msg);
-    if (g.mode === "ai" && window.GameStats) GameStats.record("klappenkasten", g.winner === 0 ? "win" : g.winner === 1 ? "loss" : "draw");
+
+function renderDiceKK() {
+  const s = AppStateKK.state;
+  const wrap = document.getElementById("kk-dice");
+  let html = "";
+  s.dice.forEach((d) => { html += DiceCommon.dieSvg(d); });
+  if (!s.dice.length) html = DiceCommon.dieSvg(0) + DiceCommon.dieSvg(0);
+  wrap.innerHTML = html;
+  wrap.setAttribute("aria-label", s.dice.length ? tKK("dg_dice_aria", { dice: s.dice.join(", ") }) : tKK("dg_dice_none"));
+  const total = document.getElementById("kk-total");
+  total.textContent = s.dice.length ? "= " + sumKK(s.dice) : "";
+}
+
+function renderScoresKK() {
+  const s = AppStateKK.state;
+  const totals = KlappenkastenCore.totals(s);
+  let head = "<tr><th></th>";
+  for (let r = 1; r <= s.rounds; r++) head += "<th>" + r + "</th>";
+  head += "<th>" + I18n.t("dg_total") + "</th></tr>";
+  let rows = "";
+  s.computer.forEach((c, i) => {
+    rows += "<tr><td>" + DiceCommon.markerSvg(i, "dg-marker dg-marker-small") + " " + nameKK(i) + "</td>";
+    for (let r = 0; r < s.rounds; r++) rows += "<td>" + (s.scores[i][r] === undefined ? "–" : s.scores[i][r]) + "</td>";
+    rows += "<td><b>" + totals[i] + "</b></td></tr>";
+  });
+  document.getElementById("kk-scores").innerHTML = "<thead>" + head + "</thead><tbody>" + rows + "</tbody>";
+}
+
+function renderKK() {
+  const s = AppStateKK.state;
+  if (!s) return;
+  const totals = KlappenkastenCore.totals(s);
+  const over = s.phase === "over";
+  document.getElementById("kk-players-list").innerHTML = DiceCommon.playersHtml(s.computer, s.current, totals.map((t) => tKK("dg_points", { n: t })), over);
+  document.getElementById("kk-round").textContent = tKK("dg_round_of", { n: s.round, m: s.rounds });
+  renderDiceKK();
+  renderFlapsKK();
+  const humanTurn = !over && !s.computer[s.current];
+  const sel = sumKK(AppStateKK.selected);
+  document.getElementById("kk-selected").textContent = humanTurn && s.phase === "close" ? tKK("kk_selected", { n: sel, m: sumKK(s.dice) }) : "";
+  document.getElementById("kk-roll2").disabled = !(humanTurn && s.phase === "roll");
+  const one = document.getElementById("kk-roll1");
+  one.classList.toggle("hidden", !(humanTurn && KlappenkastenCore.canOneDie(s)));
+  one.disabled = !(humanTurn && s.phase === "roll");
+  document.getElementById("kk-close").disabled = !(humanTurn && s.phase === "close" && AppStateKK.selected.length > 0);
+  document.getElementById("undo-btn").disabled = AppStateKK.undoStack.length === 0;
+  renderScoresKK();
+  if (over) {
+    setStatusKK(lastTurnTextKK());
+  } else {
+    setStatusKK(turnStatusKK());
   }
-  kkRender(); kkStatus(g.over ? "kk_game_over" : "kk_roll_hint", { player: kkName(g.current) }); kkSave();
+  DiceCommon.setText(document.getElementById("kk-last"), over ? "" : lastTurnTextKK());
 }
-function kkUndo() {
-  if (!KK_STATE.undoStack.length || !KK_STATE.game) return;
-  let prev = KK_STATE.undoStack.pop();
-  if (KK_STATE.game.mode === "ai") while (prev && prev.mode === "ai" && prev.current === 1 && KK_STATE.undoStack.length) prev = KK_STATE.undoStack.pop();
-  KK_STATE.game = prev; document.getElementById("game-result").textContent = ""; if (window.ResultModal) ResultModal.hide();
-  kkRender(); kkStatus("kk_roll_hint", { player: kkName(prev.current) }); kkSave();
-}
-function kkRender() {
-  const g = KK_STATE.game; if (!g) return;
-  document.getElementById("kk-dice").textContent = g.turn.dice.length ? g.turn.dice.join(" + ") + " = " + g.turn.dice.reduce((a,b)=>a+b,0) : "–";
-  const board = document.getElementById("kk-tiles"); board.innerHTML = "";
-  for (let n = 1; n <= g.turn.size; n++) {
-    const b = document.createElement("button"); b.type = "button"; b.className = "kk-tile" + (g.turn.open.includes(n) ? "" : " closed"); b.dataset.num = n; b.textContent = String(n); b.disabled = !g.turn.open.includes(n) || !g.turn.dice.length || (g.mode === "ai" && g.current === 1);
-    b.setAttribute("aria-pressed", "false"); b.addEventListener("click", () => { b.classList.toggle("selected"); b.setAttribute("aria-pressed", b.classList.contains("selected") ? "true" : "false"); }); board.appendChild(b);
+
+/*** Setup ***/
+
+function initKlappenkastenApp() {
+  DiceCommon.wireMenu();
+  document.getElementById("mode-ai").addEventListener("click", () => DiceCommon.setMode("ai"));
+  document.getElementById("mode-offline").addEventListener("click", () => DiceCommon.setMode("hotseat"));
+  document.getElementById("start-kk-game").addEventListener("click", startGameKK);
+  document.getElementById("kk-roll2").addEventListener("click", () => rollKK(2));
+  document.getElementById("kk-roll1").addEventListener("click", () => rollKK(1));
+  document.getElementById("kk-close").addEventListener("click", closeFlapsKK);
+  document.getElementById("undo-btn").addEventListener("click", undoKK);
+  if (window.I18n && typeof I18n.onChange === "function") {
+    I18n.onChange(() => { if (AppStateKK.state) renderKK(); });
   }
-  document.getElementById("kk-player-label").textContent = kkName(g.current) + " · " + kkT("kk_round") + " " + g.round;
-  document.getElementById("kk-scores").textContent = kkName(0) + ": " + (g.players[0].score === null ? "–" : g.players[0].score) + "   |   " + kkName(1) + ": " + (g.players[1].score === null ? "–" : g.players[1].score);
-  document.getElementById("kk-roll-btn").disabled = g.over || !!g.turn.dice.length || (g.mode === "ai" && g.current === 1);
-  document.getElementById("kk-close-btn").disabled = g.over || !g.turn.dice.length || (g.mode === "ai" && g.current === 1);
-  document.getElementById("undo-btn").disabled = !KK_STATE.undoStack.length;
+  const saved = typeof GameStorage !== "undefined" ? GameStorage.load(KLAPPENKASTEN_SAVE_KEY) : null;
+  if (saved && validStateKK(saved.state)) {
+    AppStateKK.state = saved.state;
+    AppStateKK.undoStack = Array.isArray(saved.undoStack) ? saved.undoStack : [];
+    AppStateKK.selected = [];
+    DiceCommon.showBoard();
+    afterActionKK();
+  }
 }
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("mode-ai").addEventListener("click", () => { document.getElementById("mode-ai").setAttribute("aria-pressed", "true"); document.getElementById("mode-offline").setAttribute("aria-pressed", "false"); kkStart("ai"); });
-  document.getElementById("mode-offline").addEventListener("click", () => { document.getElementById("mode-offline").setAttribute("aria-pressed", "true"); document.getElementById("mode-ai").setAttribute("aria-pressed", "false"); kkStart("hotseat"); });
-  document.getElementById("new-game-btn").addEventListener("click", () => kkStart(document.getElementById("mode-offline").getAttribute("aria-pressed") === "true" ? "hotseat" : "ai"));
-  document.getElementById("kk-roll-btn").addEventListener("click", kkRoll); document.getElementById("kk-close-btn").addEventListener("click", kkClose); document.getElementById("undo-btn").addEventListener("click", kkUndo);
-  const saved = window.GameStorage && GameStorage.load(KK_SAVE_KEY);
-  if (saved && saved.game) { KK_STATE.game = saved.game; KK_STATE.undoStack = Array.isArray(saved.undoStack) ? saved.undoStack : []; document.getElementById("board-placeholder").classList.add("hidden"); document.getElementById("board-container").classList.remove("hidden"); kkRender(); kkStatus("kk_roll_hint", { player: kkName(KK_STATE.game.current) }); }
-  if (window.I18n) I18n.onChange(() => { if (KK_STATE.game) kkRender(); });
-});
+
+document.addEventListener("DOMContentLoaded", initKlappenkastenApp);

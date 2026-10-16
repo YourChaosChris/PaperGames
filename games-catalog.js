@@ -39,7 +39,7 @@
 // of Pairs, or 17 and 4 in Blackjack), and that game's description names
 // it. Only a genuinely new game gets its own pages and an entry here.
 
-const GAME_FAMILIES = ["chess", "draughts", "tafl", "hunt", "halma", "inarow", "ancientrace", "dicerace", "sudoku", "latin", "math", "tiling", "rings", "patience", "rummy", "tricks", "casino"];
+const GAME_FAMILIES = ["chess", "draughts", "tafl", "hunt", "halma", "inarow", "ancientrace", "dicerace", "dicegames", "sudoku", "latin", "math", "tiling", "rings", "patience", "rummy", "tricks", "casino"];
 
 const GAMES_CATALOG = [
   {
@@ -290,6 +290,7 @@ const GAMES_CATALOG = [
   {
     slug: "yatzy",
     category: "race",
+    family: "dicegames",
     nameKey: "game_yatzy",
     nameText: "Yatzy",
     descKey: "home_yatzy_desc",
@@ -1147,5 +1148,17 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-12T17:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M23.5 9.2A10 10 0 1 0 23.6 23.3\" fill=\"none\" stroke=\"#141413\" stroke-width=\"3.2\"/><path d=\"M16.5 30.8A10 10 0 1 0 16.4 16.7\" fill=\"none\" stroke=\"#141413\" stroke-width=\"3.2\"/><path d=\"M21.4 7.4L25.6 11M21.5 25.2L25.7 21.4M18.6 32.6L14.4 29M18.5 14.8L14.3 18.6\" stroke=\"#141413\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg></span>"
+  },
+  {
+    slug: "klappenkasten",
+    category: "race",
+    family: "dicegames",
+    nameKey: "game_klappenkasten",
+    nameText: "Klappenkasten",
+    descKey: "home_klappenkasten_desc",
+    descText: "A traditional dice game: roll two dice and close the numbered flaps that add up to your roll. When nothing fits, the flaps still open count against you - the fewest points win, and closing every flap wins at once. Against the computer or with up to four players on one device.",
+    popular: false,
+    added: "2026-10-17T01:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"12\" width=\"10\" height=\"16\" rx=\"2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><rect x=\"15\" y=\"12\" width=\"10\" height=\"16\" rx=\"2\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2.2\"/><rect x=\"27\" y=\"12\" width=\"10\" height=\"16\" rx=\"2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-dasharray=\"3 2\"/><circle cx=\"8\" cy=\"20\" r=\"1.8\" fill=\"#141413\"/><circle cx=\"32\" cy=\"20\" r=\"1.8\" fill=\"#141413\"/></svg></span>"
   }
 ];
