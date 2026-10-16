@@ -1149,3 +1149,25 @@ const GAMES_CATALOG = [
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M23.5 9.2A10 10 0 1 0 23.6 23.3\" fill=\"none\" stroke=\"#141413\" stroke-width=\"3.2\"/><path d=\"M16.5 30.8A10 10 0 1 0 16.4 16.7\" fill=\"none\" stroke=\"#141413\" stroke-width=\"3.2\"/><path d=\"M21.4 7.4L25.6 11M21.5 25.2L25.7 21.4M18.6 32.6L14.4 29M18.5 14.8L14.3 18.6\" stroke=\"#141413\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg></span>"
   }
 ];
+
+// Search vocabulary is kept with the catalogue instead of being repeated in
+// each translation file. Entries are deliberately broad and multilingual.
+const SEARCH_TERMS = {
+  cards: ["cards", "card game", "card games", "karten", "kartenspiel", "kartenspiele", "cartes", "cartas", "carte", "kaarten", "karty", "карти", "карты", "карточные игры", "カード", "纸牌", "أوراق اللعب"],
+  solitaire: ["solitaire", "solitär", "solitaer", "patience", "пасьянс", "ソリティア", "纸牌接龙", "سوليتير"],
+  dice: ["dice", "würfel", "wuerfel", "würfelspiel", "wuerfelspiel", "dados", "dé", "des", "dadi", "dobbel", "kostki", "кубики", "кости", "サイコロ", "骰子", "نرد"],
+  kids: ["kids", "children", "childrens", "kinder", "kinderspiele", "enfants", "niños", "bambini", "kinderen", "dzieci", "діти", "дети", "子ども", "儿童", "أطفال"],
+  two: ["two players", "two player", "2 players", "zu zweit", "deux joueurs", "dos jugadores", "due giocatori", "twee spelers", "dwóch graczy", "удвох", "два игрока", "二人", "两人", "لاعبان"]
+};
+const CARD_GAMES = new Set(["durak", "doppelkopf", "trix", "romme", "skat", "bridge", "poker", "canasta", "klondike", "freecell", "spidersolitaire", "maumau", "schwimmen", "cardduel", "cardtactics", "pairs", "war", "oldmaid", "concan", "blackjack", "schafkopf", "pyramidsolitaire"]);
+const SOLITAIRE_GAMES = new Set(["klondike", "freecell", "spidersolitaire", "pyramidsolitaire", "pegsolitaire"]);
+const MORE_POPULAR = new Set(["go", "sudoku", "ludo", "yatzy", "mahjong", "klondike", "poker", "pairs"]);
+GAMES_CATALOG.forEach((game) => {
+  if (MORE_POPULAR.has(game.slug)) game.popular = true;
+  game.keywords = [];
+  if (CARD_GAMES.has(game.slug)) game.keywords.push(...SEARCH_TERMS.cards);
+  if (SOLITAIRE_GAMES.has(game.slug)) game.keywords.push(...SEARCH_TERMS.solitaire);
+  if (game.category === "race" || game.slug === "yatzy") game.keywords.push(...SEARCH_TERMS.dice);
+  if (game.kids === true) game.keywords.push(...SEARCH_TERMS.kids);
+  if (/two players|local 2-player|two-player/i.test(game.descText)) game.keywords.push(...SEARCH_TERMS.two);
+});

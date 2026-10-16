@@ -13647,6 +13647,48 @@ li.fv-card {
   min-height: 4.6rem;
 }
 
+/* The tile grid uses physical margins; mirror their spacing for Arabic. */
+[dir="rtl"] .category-tile {
+  margin-right: 0;
+  margin-left: 2%;
+}
+
+[dir="rtl"] .category-tile:nth-child(4n) {
+  margin-left: 0;
+}
+
+@media (max-width: 520px) {
+  [dir="rtl"] .category-tile:nth-child(2n) {
+    margin-left: 0;
+  }
+  [dir="rtl"] .category-tile:nth-child(4n) {
+    margin-left: 0;
+  }
+  [dir="rtl"] .category-tile:nth-child(odd) {
+    margin-left: 2%;
+  }
+}
+
+/* Nine tiles: five per row on wider screens, so the home page still fits
+   one screen (the narrow two-column layout below 521 px is unchanged). */
+@media (min-width: 521px) {
+  .category-tile {
+    width: 18.4%;
+  }
+  .category-tile:nth-child(4n) {
+    margin-right: 2%;
+  }
+  .category-tile:nth-child(5n) {
+    margin-right: 0;
+  }
+  [dir="rtl"] .category-tile:nth-child(4n) {
+    margin-left: 2%;
+  }
+  [dir="rtl"] .category-tile:nth-child(5n) {
+    margin-left: 0;
+  }
+}
+
 .pager-btn {
   white-space: nowrap;
 }

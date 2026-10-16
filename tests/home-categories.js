@@ -43,6 +43,7 @@ const WANT = {
     .sort((a, b) => b.added.localeCompare(a.added) || (a.added.length > 10 ? ctx.GAMES_CATALOG.indexOf(b) - ctx.GAMES_CATALOG.indexOf(a) : 0))
     .slice(0, 10),
   popular: CAT.filter((g) => g.popular === true),
+  cards: CAT.filter((g) => g.keywords && g.keywords.includes("cards")),
   kids: CAT.filter((g) => g.kids === true),
   strategy: CAT.filter((g) => g.category === "strategy"),
   race: CAT.filter((g) => g.category === "race"),

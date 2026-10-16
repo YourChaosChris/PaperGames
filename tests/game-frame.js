@@ -6,6 +6,10 @@ const ROOT = path.join(__dirname, "..");
 const failures = [];
 
 const switcher = fs.readFileSync(path.join(ROOT, "game-switcher.js"), "utf8");
+// Category pages share the game catalogue but are not playable game pages.
+const cardsCategory = fs.readFileSync(path.join(ROOT, "games-cards.html"), "utf8");
+if (!cardsCategory.includes('data-category-page="cards"')) failures.push("games-cards.html: missing cards category marker");
+if (cardsCategory.includes('<script src="game-frame.js"></script>')) failures.push("games-cards.html: category page must not load the game frame");
 const block = switcher.match(/var GAMES = \[([\s\S]*?)\n  \];/);
 if (!block) throw new Error("game-switcher.js: could not find the game list");
 const games = [...block[1].matchAll(/\["([a-z0-9]+)",/g)].map((match) => match[1]);

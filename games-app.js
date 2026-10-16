@@ -29,8 +29,13 @@
   }
 
   function matchesQuery(game, q) {
-    if (!q) return true;
-    return displayName(game).toLowerCase().indexOf(q) !== -1;
+    const t = (key) => window.I18n ? I18n.t(key) : key;
+    return GamesSearch.matches(game, q, {
+      name: displayName(game),
+      description: t(game.descKey),
+      family: game.family ? t("family_" + game.family) : "",
+      category: t("home_section_" + game.category)
+    });
   }
 
   // "kids" is not a category but the `kids: true` mark, which a game has
@@ -71,7 +76,7 @@
     const noResults = document.getElementById("games-no-results");
     if (!grid) return;
 
-    const q = state.query.trim().toLowerCase();
+    const q = state.query.trim();
     const filtered = GAMES_CATALOG.filter((g) => GamesRender.isListed(g) && matchesQuery(g, q) && matchesCategory(g) && matchesFamily(g));
 
     const pager = document.getElementById("games-pager");

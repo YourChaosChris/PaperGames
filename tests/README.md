@@ -368,3 +368,7 @@ they don't play a full game to a win/loss, don't verify move legality,
 and don't test on real E-Ink hardware. Passing here is a strong signal
 nothing is obviously broken, not a replacement for actually trying a
 change on a real device before shipping it.
+
+- `node tests/search-keywords.js` - pure Node check of catalogue keyword search,
+  multilingual query terms and accent/umlaut normalization; prints German and
+  English hits for every checked query.

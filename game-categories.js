@@ -24,6 +24,7 @@ const GameCategories = (function () {
     race: S('<rect x="3" y="3" width="18" height="18" rx="4" fill="#fff" stroke="#141413" stroke-width="2"/><circle cx="8" cy="8" r="1.7" fill="#141413"/><circle cx="12" cy="12" r="1.7" fill="#141413"/><circle cx="16" cy="16" r="1.7" fill="#141413"/>'),
     puzzles: S('<rect x="3" y="3" width="18" height="18" fill="#fff" stroke="#141413" stroke-width="2"/><path d="M9 3V21M15 3V21M3 9H21M3 15H21" stroke="#141413" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" fill="#141413"/>'),
     party: S('<rect x="4" y="5" width="11" height="15" rx="2" fill="#fff" stroke="#141413" stroke-width="2" transform="rotate(-10 9.5 12.5)"/><rect x="9" y="4" width="11" height="15" rx="2" fill="#fff" stroke="#141413" stroke-width="2"/><path d="M14.5 8L16.5 11.5L14.5 15L12.5 11.5Z" fill="#141413"/>'),
+    cards: S('<rect x="3" y="5" width="12" height="16" rx="2" fill="#fff" stroke="#141413" stroke-width="2" transform="rotate(-12 9 13)"/><rect x="10" y="3" width="11" height="16" rx="2" fill="#fff" stroke="#141413" stroke-width="2"/><path d="M15.5 7L17 10L15.5 13L14 10Z" fill="#141413"/>'),
     favorites: S('<path d="M12 2L14.5 9.5H22L16 14L18.5 22L12 17L5.5 22L8 14L2 9.5H9.5Z" fill="#141413"/>'),
     all: S('<rect x="3" y="3" width="7" height="7" fill="#141413"/><rect x="14" y="3" width="7" height="7" fill="#fff" stroke="#141413" stroke-width="2"/><rect x="3" y="14" width="7" height="7" fill="#fff" stroke="#141413" stroke-width="2"/><rect x="14" y="14" width="7" height="7" fill="#141413"/>')
   };
@@ -32,6 +33,7 @@ const GameCategories = (function () {
   const PAGES = [
     { id: "new", file: "games-new.html", nameKey: "home_section_new" },
     { id: "popular", file: "games-popular.html", nameKey: "home_section_popular" },
+    { id: "cards", file: "games-cards.html", nameKey: "home_section_cards" },
     { id: "kids", file: "games-kids.html", nameKey: "home_section_kids" },
     { id: "strategy", file: "games-strategy.html", nameKey: "home_section_strategy" },
     { id: "race", file: "games-race.html", nameKey: "home_section_race" },
@@ -53,6 +55,7 @@ const GameCategories = (function () {
     switch (id) {
       case "new": return GamesRender.newGames(catalog, NEW_MAX, NEW_DAYS, now);
       case "popular": return listed.filter((g) => g.popular === true).sort(byName);
+      case "cards": return listed.filter((g) => g.keywords && g.keywords.indexOf("cards") !== -1).sort(byName);
       case "kids": return GamesRender.kidsGames(catalog).sort(byName);
       case "favorites": {
         const fav = window.Favorites ? Favorites.getAll() : [];
