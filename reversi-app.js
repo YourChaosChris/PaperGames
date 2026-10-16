@@ -56,6 +56,7 @@ function colorNameReversi(color) {
 function setStatusReversi(elementId, text) {
   if (((AppStateReversi.mode === "offline-ai")) && text && /status|info/i.test(String(elementId))) {
     const uiStatusText = String(text);
+    const uiStatusKeep = /(n't|\bnot\b|cannot|\billegal\b|\binvalid\b|\bfirst\b|\bmust\b|\bneed|\bempty\b|\bchoose\b|\btap\b|\bselect\b|\bpick\b|\balready\b|\bno tile\b|\bno card\b|\bno move\b|\bplay the card\b|\bplay a\b|\bdraw\b.*\bstock\b)/i.test(uiStatusText) && !/\b(wins?|won|winner)\b/i.test(uiStatusText);
     const uiStatusState = AppStateReversi.state || AppStateReversi;
     const uiStatusGameOver = AppStateReversi.gameOver === true || AppStateReversi.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
     const uiStatusTurn = uiStatusState.turn !== undefined ? uiStatusState.turn : uiStatusState.current;
@@ -75,7 +76,7 @@ function setStatusReversi(elementId, text) {
       else if (/(?:^|[.!?]\s+)(?:the\s+)?computer(?:\s+\d+)?(?:\x27s)?\s+(?:turn|thinking|to move|is thinking|is playing|plays|acts|rolling)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_computer_turn";
       else uiStatusKey = "ui_status_your_turn";
     }
-    if (uiStatusKey) {
+    if (uiStatusKey && !uiStatusKeep) {
       const uiStatusExtra = uiStatusText.replace(/^.*?(?:\.|…|!)(?:\s+|$)/, "").trim();
       text = I18n.t(uiStatusKey) + (uiStatusExtra ? " " + uiStatusExtra : "");
     }
