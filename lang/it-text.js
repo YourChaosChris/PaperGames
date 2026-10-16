@@ -2229,7 +2229,7 @@ Object.assign(STRINGS.it, {
     aw_term_goal: "Scopo",
     aw_rules_goal: "Svuota tutto il campo. Ogni rompicapo è costruito in modo da avere una soluzione, e togliere una freccia non ne blocca mai un'altra: quindi non puoi restare bloccato. Il minimo di mosse è il numero di frecce; anche annullare conta come mossa.",
     aw_term_levels: "Livelli",
-    aw_rules_levels: "Facile: 5 × 5 caselle con frecce corte. Medio: 7 × 7 con frecce da due a quattro caselle. Difficile: 11 × 11 con frecce che scivolano, fino a sette caselle e due angoli. Maestro: come Difficile, con tre cuori.",
+    aw_rules_levels: "Facile: 5 × 5 caselle con frecce corte. Medio: 7 × 7 con frecce da due a quattro caselle. Difficile: 11 × 11 con frecce che scivolano, fino a sette caselle e due angoli. Maestro: come Difficile, con tre cuori. Gran maestro: 15 × 15, con frecce scorrevoli fino a 15 caselle e sei svolte, più tre cuori. Le immagini usano una delle dodici sagome a celle. I suggerimenti funzionano in Gran maestro e nelle immagini.",
     aw_term_help: "Suggerimento",
     aw_rules_help: "«Suggerimento» segna una freccia che ora può uscire.",
     aw_rules_example_title: "Esempio",

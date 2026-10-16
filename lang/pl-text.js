@@ -2229,7 +2229,7 @@ Object.assign(STRINGS.pl, {
     aw_term_goal: "Cel",
     aw_rules_goal: "Oczyść całą planszę. Każda łamigłówka jest zbudowana tak, by miała rozwiązanie, a usunięcie strzałki nigdy nie blokuje innej, więc nie można utknąć. Najmniejsza liczba ruchów to liczba strzałek; cofnięcie też liczy się jako ruch.",
     aw_term_levels: "Poziomy",
-    aw_rules_levels: "Łatwy: 5 × 5 pól z krótkimi strzałkami. Średni: 7 × 7 ze strzałkami z dwóch do czterech pól. Trudny: 11 × 11 z sunącymi strzałkami do siedmiu pól i dwóch zakrętów. Mistrz: jak Trudny, z trzema sercami.",
+    aw_rules_levels: "Łatwy: 5 × 5 pól z krótkimi strzałkami. Średni: 7 × 7 ze strzałkami z dwóch do czterech pól. Trudny: 11 × 11 z sunącymi strzałkami do siedmiu pól i dwóch zakrętów. Mistrz: jak Trudny, z trzema sercami. Arcymistrz: 15 × 15, ze ślizgającymi się strzałkami do 15 pól i sześcioma zakrętami oraz trzema sercami. Obrazki używają jednego z dwunastu obrysów z pól. Podpowiedź działa w Arcymistrzu i w obrazkach.",
     aw_term_help: "Podpowiedź",
     aw_rules_help: "„Podpowiedź” zaznacza strzałkę, która może teraz wyjść.",
     aw_rules_example_title: "Przykład",

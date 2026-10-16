@@ -2229,7 +2229,7 @@ Object.assign(STRINGS.fr, {
     aw_term_goal: "But",
     aw_rules_goal: "Videz tout le plateau. Chaque énigme est construite pour avoir une solution, et sortir une flèche n'en bloque jamais une autre : vous ne pouvez donc pas rester coincé. Le nombre minimal de coups est le nombre de flèches ; une annulation compte aussi comme un coup.",
     aw_term_levels: "Niveaux",
-    aw_rules_levels: "Facile : 5 × 5 cases avec des flèches courtes. Moyen : 7 × 7 avec des flèches de deux à quatre cases. Difficile : 11 × 11 avec des flèches glissantes jusqu'à sept cases et deux coudes. Maître : comme Difficile, avec trois cœurs.",
+    aw_rules_levels: "Facile : 5 × 5 cases avec des flèches courtes. Moyen : 7 × 7 avec des flèches de deux à quatre cases. Difficile : 11 × 11 avec des flèches glissantes jusqu'à sept cases et deux coudes. Maître : comme Difficile, avec trois cœurs. Grand maître : 15 × 15, avec des flèches glissantes jusqu’à 15 cases et six coudes, plus trois cœurs. Les images utilisent l’une des douze silhouettes en cases. L’indice fonctionne au Grand maître et dans les images.",
     aw_term_help: "Indice",
     aw_rules_help: "« Indice » marque une flèche qui peut sortir maintenant.",
     aw_rules_example_title: "Exemple",

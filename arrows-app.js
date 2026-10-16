@@ -51,6 +51,11 @@ function masterAw() {
   return !!(AppStateAw.puzzle && AppStateAw.puzzle.level === "master");
 }
 
+function heartModeAw() {
+  const cfg = AppStateAw.puzzle && ArrowsCore.LEVELS[AppStateAw.puzzle.level];
+  return !!(cfg && cfg.hearts);
+}
+
 // Cells of arrow k now (moved by gliding), and whether it is still there.
 function cellsAw(k) {
   return glideAw() ? AppStateAw.pos[k] : (AppStateAw.present[k] ? AppStateAw.puzzle.arrows[k].cells : null);
@@ -73,13 +78,17 @@ function initAwApp() {
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const levelSel = document.getElementById("aw-level");
+  const shapeSel = document.getElementById("aw-shape");
+  const syncShape = () => shapeSel.classList.toggle("hidden", levelSel.value !== "pictures");
+  levelSel.addEventListener("change", syncShape);
+  syncShape();
   if (menuToggle && settingsPanel) {
     menuToggle.addEventListener("click", () => {
       const hidden = settingsPanel.classList.toggle("hidden");
       I18n.setKey(menuToggle, hidden ? "menu_toggle" : "menu_close");
     });
   }
-  document.getElementById("start-aw-game").addEventListener("click", () => startNewAwGame(levelSel.value));
+  document.getElementById("start-aw-game").addEventListener("click", () => startNewAwGame(levelSel.value, shapeSel.value));
   document.getElementById("aw-undo").addEventListener("click", undoAw);
   document.getElementById("aw-hint").addEventListener("click", hintAw);
   document.getElementById("aw-retry").addEventListener("click", retryAw);
@@ -98,6 +107,8 @@ function initAwApp() {
     AppStateAw.hinted = !!saved.hinted;
     AppStateAw.gameOver = false;
     levelSel.value = saved.puzzle.level;
+    shapeSel.value = saved.puzzle.shape || "cat";
+    syncShape();
     showBoardAw();
     setStatusAw("Tap an arrow to send it out of the field.");
   }
@@ -111,8 +122,8 @@ function showBoardAw() {
   renderAw();
 }
 
-function startNewAwGame(level) {
-  startAwPuzzle(ArrowsCore.generatePuzzle(level));
+function startNewAwGame(level, shape) {
+  startAwPuzzle(ArrowsCore.generatePuzzle(level, undefined, shape));
 }
 
 // Master, no hearts left: the same puzzle from the start.
@@ -131,6 +142,9 @@ function startAwPuzzle(p) {
   AppStateAw.blocker = -1;
   AppStateAw.hinted = false;
   AppStateAw.gameOver = false;
+  const levelSel = document.getElementById("aw-level"), shapeSel = document.getElementById("aw-shape");
+  if (levelSel) levelSel.value = p.level;
+  if (shapeSel) { shapeSel.value = p.shape || "cat"; shapeSel.classList.toggle("hidden", p.level !== "pictures"); }
   const result = document.getElementById("game-result");
   if (result) I18n.setMsg(result, "");
   if (window.ResultModal) window.ResultModal.hide();
@@ -199,7 +213,7 @@ function onCellGlideAw(i) {
     if (ArrowsCore.cleared(r.pos)) { winAw(); return; }
     text = r.move.type === "leave" ? "The arrow leaves the field." : "The arrow glides forward up to the next arrow.";
   }
-  if (masterAw() && r.move.type !== "leave") {
+  if (heartModeAw() && r.move.type !== "leave") {
     AppStateAw.hearts = Math.max(0, AppStateAw.hearts - 1);
     if (AppStateAw.hearts === 0) { loseAw(); return; }
     text += " " + "That cost a heart.";
@@ -315,19 +329,25 @@ function renderAw() {
   const p = AppStateAw.puzzle;
   if (!p) return;
   const S = AW_CELL, W = p.cols * S, H = p.rows * S;
-  let svg = '<svg class="pt-svg" viewBox="-2 -2 ' + (W + 4) + " " + (H + 4) + '" aria-hidden="true" focusable="false">' +
+  const mask = p.mask ? new Set(p.mask) : null;
+  let svg = '<svg class="pt-svg" viewBox="0 0 ' + W + " " + H + '" aria-hidden="true" focusable="false">' +
     '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="#fff"/>';
-  for (let r = 1; r < p.rows; r++) svg += '<path d="M0 ' + r * S + "H" + W + '" stroke="#141413" stroke-width="0.6" stroke-dasharray="2 4"/>';
-  for (let c = 1; c < p.cols; c++) svg += '<path d="M' + c * S + " 0V" + H + '" stroke="#141413" stroke-width="0.6" stroke-dasharray="2 4"/>';
+  if (mask) {
+    mask.forEach((i) => { const x = (i % p.cols) * S, y = Math.floor(i / p.cols) * S;
+      svg += '<rect x="' + x + '" y="' + y + '" width="' + S + '" height="' + S + '" fill="#fff" stroke="#141413" stroke-width="0.8"/>'; });
+  } else {
+    for (let r = 1; r < p.rows; r++) svg += '<path d="M0 ' + r * S + "H" + W + '" stroke="#141413" stroke-width="0.6" stroke-dasharray="2 4"/>';
+    for (let c = 1; c < p.cols; c++) svg += '<path d="M' + c * S + " 0V" + H + '" stroke="#141413" stroke-width="0.6" stroke-dasharray="2 4"/>';
+  }
   p.arrows.forEach((a, k) => { const c = cellsAw(k); if (c) svg += arrowSvgAw(p, { cells: c, dir: a.dir }, S); });
   if (AppStateAw.hint >= 0 && cellsAw(AppStateAw.hint)) svg += frameSvgAw(p, cellsAw(AppStateAw.hint), S, "pt-hint");
   if (AppStateAw.blocker >= 0 && cellsAw(AppStateAw.blocker)) svg += frameSvgAw(p, cellsAw(AppStateAw.blocker), S, "aw-blocker");
-  svg += '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="none" stroke="#141413" stroke-width="4"/></svg>';
+  if (!mask) svg += '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="none" stroke="#141413" stroke-width="4"/>';
   const boardEl = document.getElementById("aw-board");
-  const ix = (200 / (W + 4)).toFixed(3) + "%", iy = (200 / (H + 4)).toFixed(3) + "%";
+  const ix = "0%", iy = "0%";
   let html = svg + '<div class="pt-cells" style="left:' + ix + ";right:" + ix + ";top:" + iy + ";bottom:" + iy +
     ";grid-template-columns:repeat(" + p.cols + ",1fr);grid-template-rows:repeat(" + p.rows + ',1fr)">';
-  for (let i = 0; i < p.rows * p.cols; i++) html += '<button type="button" class="pt-cell" data-i="' + i + '"></button>';
+  for (let i = 0; i < p.rows * p.cols; i++) html += '<button type="button" class="pt-cell' + (mask && !mask.has(i) ? ' aw-cell-outside' : '') + '" data-i="' + i + '"' + (mask && !mask.has(i) ? ' disabled tabindex="-1" aria-hidden="true"' : '') + '></button>';
   boardEl.innerHTML = html + "</div>";
   boardEl.style.maxWidth = (p.cols * 3.4) + "rem";
   boardEl.classList.toggle("aw-board-large", p.cols >= 10);
@@ -343,19 +363,19 @@ function renderAw() {
   const left = AppStateAw.present.filter(Boolean).length;
   const info = document.getElementById("aw-info");
   if (info) {
-    if (masterAw()) I18n.setMsg(info, "Arrows left: " + left + " · Moves: " + AppStateAw.moves + " · Hearts: " + AppStateAw.hearts);
+    if (heartModeAw()) I18n.setMsg(info, "Arrows left: " + left + " · Moves: " + AppStateAw.moves + " · Hearts: " + AppStateAw.hearts);
     else I18n.setMsg(info, "Arrows left: " + left + " · Moves: " + AppStateAw.moves + " · Fewest: " + ArrowsCore.minMoves(p));
   }
   const hearts = document.getElementById("aw-hearts");
   if (hearts) {
-    hearts.classList.toggle("hidden", !masterAw());
-    const full = AppStateAw.hearts, all = (ArrowsCore.LEVELS.master && ArrowsCore.LEVELS.master.hearts) || 3;
+    hearts.classList.toggle("hidden", !heartModeAw());
+    const full = AppStateAw.hearts, all = (ArrowsCore.LEVELS[p.level] && ArrowsCore.LEVELS[p.level].hearts) || 3;
     hearts.textContent = "♥".repeat(full) + "♡".repeat(Math.max(0, all - full));
   }
   document.getElementById("aw-undo").disabled = AppStateAw.gameOver || !AppStateAw.history.length;
   document.getElementById("aw-hint").disabled = AppStateAw.gameOver;
   document.getElementById("aw-hint").classList.toggle("hidden", masterAw());
-  document.getElementById("aw-retry").classList.toggle("hidden", !(masterAw() && AppStateAw.gameOver && AppStateAw.hearts === 0));
+  document.getElementById("aw-retry").classList.toggle("hidden", !(heartModeAw() && AppStateAw.gameOver && AppStateAw.hearts === 0));
 }
 
 document.addEventListener("DOMContentLoaded", initAwApp);

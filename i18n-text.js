@@ -2230,7 +2230,7 @@ Object.assign(STRINGS.en, {
     aw_term_goal: "Goal",
     aw_rules_goal: "Clear the whole field. Every puzzle is made so that it can be solved, and taking an arrow out never blocks another one, so you cannot get stuck. The fewest moves are the number of arrows; Undo counts as a move too.",
     aw_term_levels: "Levels",
-    aw_rules_levels: "Easy: 5 × 5 squares with short arrows. Medium: 7 × 7 with arrows of two to four squares. Hard: 11 × 11 with gliding arrows of up to seven squares and two corners. Master: as Hard, with three hearts.",
+    aw_rules_levels: "Easy: 5 × 5 squares with short arrows. Medium: 7 × 7 with arrows of two to four squares. Hard: 11 × 11 with gliding arrows of up to seven squares and two corners. Master: as Hard, with three hearts. Grandmaster: 15 × 15, with gliding arrows up to 15 squares and six bends, plus three hearts. Picture puzzles use one of twelve outlined cell shapes. Hints work on Grandmaster and picture puzzles.",
     aw_term_help: "Hint",
     aw_rules_help: "Hint marks an arrow that can leave now.",
     aw_rules_example_title: "Example",

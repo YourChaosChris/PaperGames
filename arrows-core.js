@@ -21,6 +21,8 @@
 //   hard   11 x 11, 2-7 cells with at most two corners, gliding arrows
 //   master as hard, with three hearts in the app (a tap that does not
 //          take an arrow out costs one) and no hint
+//   grandmaster: 15 x 15, arrows up to 15 cells and six bends
+//   pictures: grandmaster rules, restricted to one of twelve own masks
 // A "round" takes out every arrow that can leave at the same time; the
 // number of rounds measures the nesting.
 //
@@ -43,8 +45,63 @@ const ArrowsCore = (function () {
     easy: { rows: 5, cols: 5, minLen: 1, maxLen: 2, rounds: 3, fill: 0.8 },
     medium: { rows: 7, cols: 7, minLen: 2, maxLen: 4, rounds: 5, fill: 0.85 },
     hard: { rows: 11, cols: 11, minLen: 2, maxLen: 7, maxBends: 2, rounds: 7, fill: 0.86, glide: true, failRate: 0.8 },
-    master: { rows: 11, cols: 11, minLen: 2, maxLen: 7, maxBends: 2, rounds: 7, fill: 0.86, glide: true, failRate: 0.8, hearts: 3 }
+    master: { rows: 11, cols: 11, minLen: 2, maxLen: 7, maxBends: 2, rounds: 7, fill: 0.86, glide: true, failRate: 0.8, hearts: 3 },
+    grandmaster: { rows: 15, cols: 15, minLen: 2, maxLen: 15, maxBends: 6, rounds: 9, fill: 0.91, glide: true, hearts: 3 },
+    pictures: { rows: 15, cols: 15, minLen: 1, maxLen: 15, maxBends: 6, rounds: 1, fill: 0.9, glide: true, hearts: 3 }
   };
+
+  // Original, deliberately simple silhouettes on a 15 x 15 cell grid.
+  const SHAPES = {
+    cat: ["....###........", "...#####.......", "..##.##.##.....", "..########.....", "..########.....", "...########....", "...########....", "...########....", "....######.....", "....######.....", "...##.##.......", "...##.##.......", "..##...##......", "..##...##......", "..............."],
+    fish: ["...............", "......#####....", "...##########..", ".#############.", "##############.", ".#############.", "...##########..", "......#####....", "...............", "...............", "...............", "...............", "...............", "...............", "..............."],
+    tree: [".......#.......", "......###......", ".....#####.....", "....#######....", "...#########...", "..###########..", ".#############.", "......###......", ".....#####.....", "....#######....", "...#########...", "......###......", "......###......", "......###......", "......###......"],
+    house: [".......#.......", "......###......", ".....#####.....", "....#######....", "...#########...", "..###########..", ".#############.", "###############", "##...........##", "##...........##", "##....###....##", "##....###....##", "##....###....##", "##....###....##", "###############"],
+    star: [".......#.......", ".......#.......", "......###......", "..###########..", "...#########...", "....#######....", "...#########...", "..###########..", ".#####...#####.", "####.......####", "###.........###", "##...........##", "#.............#", "...............", "..............."],
+    heart: ["..####...####..", ".######.######.", "###############", "###############", ".#############.", "..###########..", "...#########...", "....#######....", ".....#####.....", "......###......", ".......#.......", "...............", "...............", "...............", "..............."],
+    boat: ["...............", "...............", ".......#.......", ".......##......", ".......###.....", ".......####....", ".......#####...", ".......######..", ".......#######.", "###############", ".#############.", "..###########..", "...#########...", "....#######....", "..............."],
+    key: ["....#####......", "...#######.....", "..#########....", "...#######.....", "....#####......", "......##.......", "......##.......", "......##.......", "......##.......", "......##.......", "......##.......", "......##.......", "......###......", "......#.#......", "......###......"],
+    bird: [".......##......", "......####.....", ".....######....", "....########...", "...##########..", "..############.", ".#############.", "..###########..", "...#########...", "....#######....", ".....#####.....", "......###......", ".....##.##.....", "....##...##....", "..............."],
+    mushroom: [".......#.......", "....#######....", "..###########..", ".#############.", "###############", "###############", "###############", "###############", "....#######....", "....#######....", "....#######....", "...#########...", "...#########...", "....#######....", "..............."],
+    cup: ["..###########..", "..###########..", "..###########..", "..###########..", "..###########..", "...#########...", "....#######....", ".....#####.....", "......###......", "......###......", "...#########...", "..###########..", "..###########..", "...............", "..............."],
+    moon: [".......#####...", ".....########..", "...##########..", "..##########...", ".##########....", ".#########.....", "#########......", "#########......", ".#########.....", ".##########....", "..##########...", "...##########..", ".....########..", ".......#####...", "..............."]
+  };
+
+  function maskFor(shape) {
+    const rows = SHAPES[shape] || SHAPES.cat;
+    const cells = [];
+    rows.forEach((row, r) => Array.from(row).forEach((ch, c) => { if (ch === "#") cells.push(r * 15 + c); }));
+    return cells;
+  }
+
+  // Picture boards use straight arrows per contiguous silhouette row.
+  // Some longer rows split at a random point; the two arrows point out
+  // toward opposite edges, so every mask cell stays covered and can leave.
+  function buildPicture(shape, random) {
+    const rows = SHAPES[shape] || SHAPES.cat, arrows = [];
+    rows.forEach((line, r) => {
+      let c = 0, segments = [];
+      while (c < line.length) {
+        while (c < line.length && line[c] !== "#") c++;
+        if (c >= line.length) break;
+        const first = c;
+        while (c < line.length && line[c] === "#") c++;
+        const last = c - 1;
+        segments.push([first, last]);
+      }
+      segments.forEach(([first, last], n) => {
+        const leftDir = n === 0 && segments.length > 1 ? 3 : (first > 7 ? 1 : 3);
+        const cut = random && last - first >= 5 && random() < 0.4 ? first + 1 + Math.floor(random() * (last - first - 1)) : -1;
+        const pieces = cut >= 0 ? [[first, cut, 3], [cut + 1, last, 1]] : [[first, last, leftDir]];
+        pieces.forEach(([a, b, dir]) => {
+          const cells = [];
+          if (dir === 3) for (let x = b; x >= a; x--) cells.push(r * 15 + x);
+          else for (let x = a; x <= b; x++) cells.push(r * 15 + x);
+          arrows.push({ cells, dir });
+        });
+      });
+    });
+    return { rows: 15, cols: 15, arrows, glide: true, level: "pictures", shape, mask: maskFor(shape) };
+  }
 
   function makeRng(seed) {
     let s = (seed >>> 0) || 1;
@@ -183,12 +240,17 @@ const ArrowsCore = (function () {
   // candidates.
   function build(cfg, random) {
     const p = { rows: cfg.rows, cols: cfg.cols, arrows: [] };
+    if (cfg.mask) p.mask = cfg.mask.slice();
     const n = cfg.rows * cfg.cols;
+    const mask = cfg.mask || null;
+    const allowed = mask ? new Set(mask) : null;
     const occ = new Array(n).fill(false);
+    if (allowed) for (let i = 0; i < n; i++) if (!allowed.has(i)) occ[i] = true;
+    const target = cfg.fill * (mask ? mask.length : n);
     let used = 0, misses = 0;
     // A miss on a gliding level already tried 30 candidates.
     const maxMisses = cfg.glide ? 15 : 400;
-    while (used < cfg.fill * n && misses < maxMisses) {
+    while (used < target && misses < maxMisses) {
       let a = null, best = -1;
       const tries = cfg.glide ? 30 : 1;
       const free = freeCells(p, cfg, occ);
@@ -215,10 +277,38 @@ const ArrowsCore = (function () {
     return p;
   }
 
-  function generatePuzzle(level, rng) {
+  function generatePuzzle(level, rng, shape) {
     const lv = LEVELS[level] ? level : "easy";
     const cfg = LEVELS[lv];
     const random = rng || Math.random;
+    if (lv === "grandmaster" || lv === "pictures") {
+      const selected = lv === "pictures" && shape && SHAPES[shape] ? shape : "cat";
+      if (lv === "pictures") return buildPicture(selected, random);
+      const custom = Object.assign({}, cfg);
+      let best = null, bestScore = -Infinity, valid = 0;
+      for (let tries = 0; tries < 300; tries++) {
+        const p = build(custom, random);
+        p.glide = true;
+        const r = rounds(p);
+        if (r < cfg.rounds) continue;
+        const present = p.arrows.map(() => true), occ = occupancy(p, present);
+        const free = p.arrows.reduce((n, _a, k) => n + (canLeave(p, occ, k) ? 1 : 0), 0);
+        const filled = p.arrows.reduce((n, a) => n + a.cells.length, 0);
+        if (!solveGlide(p, startPos(p), 50000)) continue;
+        valid++;
+        const score = r * 100 - free * 5 + filled * 0.6;
+        if (score > bestScore) { best = p; bestScore = score; }
+        if (valid >= 20) break;
+      }
+      while (!best) {
+        const p = build(custom, random);
+        p.glide = true;
+        if (rounds(p) >= cfg.rounds && solveGlide(p, startPos(p), 50000)) best = p;
+      }
+      best.level = lv;
+      if (lv === "pictures") best.shape = selected;
+      return best;
+    }
     if (cfg.glide) return generateGlide(lv, cfg, random);
     let best = null, bestRounds = -1;
     for (let tries = 0; tries < 60; tries++) {
@@ -367,7 +457,7 @@ const ArrowsCore = (function () {
   }
 
   return {
-    LEVELS, DR, DC, makeRng, occupancy, rayCells, canLeave, blocker, rounds, generatePuzzle, minMoves, findHint,
+    LEVELS, SHAPES, maskFor, DR, DC, makeRng, occupancy, rayCells, canLeave, blocker, rounds, generatePuzzle, minMoves, findHint,
     startPos, occupancyPos, moveOf, applyMove, cleared, randomPlayStuck, randomFailRate, solveGlide, findHintGlide
   };
 })();
