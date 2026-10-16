@@ -14316,4 +14316,206 @@ li.fv-card {
   body.page-bingo .print-card .bingo-cell::after {
     display: none;
   }
+/* ---- Number-dice games: Klappenkasten, Steckwuerfeln, Sternjagd ----
+   Shared pieces (dice-common.js): pip-dot dice, player markers, players
+   list, button row, score table. Black on white only, nothing animated;
+   spacing from margins, not flexbox `gap` (Tolino). Rows of numbers keep
+   their order in right-to-left languages (direction: ltr). */
+.dg-round {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin: 0 0 var(--space-1);
+}
+
+.dg-dice-line {
+  text-align: center;
+  margin: var(--space-2) 0;
+}
+
+.dg-dice {
+  display: inline-block;
+  direction: ltr;
+  vertical-align: middle;
+}
+
+.dg-die {
+  display: inline-block;
+  width: 72px;
+  height: 72px;
+  margin: 0 6px;
+  vertical-align: middle;
+}
+
+.dg-total {
+  display: inline-block;
+  min-width: 2.5rem;
+  margin-left: var(--space-2);
+  font-size: 2rem;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+[dir="rtl"] .dg-total {
+  margin-left: 0;
+  margin-right: var(--space-2);
+}
+
+.dg-marker {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  vertical-align: middle;
+}
+
+.dg-marker-small {
+  width: 20px;
+  height: 20px;
+}
+
+.dg-player .dg-marker {
+  margin: 0 var(--space-1);
+}
+
+.dg-player-extra {
+  font-weight: 400;
+}
+
+.dg-selected {
+  text-align: center;
+}
+
+.dg-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: var(--space-2) 0;
+}
+
+.dg-actions > * {
+  min-height: 48px;
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+[dir="rtl"] .dg-actions > * {
+  margin: 0 0 var(--space-2) var(--space-2);
+}
+
+.dg-scores {
+  width: 100%;
+  margin-top: var(--space-2);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.dg-scores th:first-child,
+.dg-scores td:first-child {
+  text-align: start;
+}
+
+.kk-flaps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  direction: ltr;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.kk-flap {
+  width: calc(20% - 8px);
+  min-height: 64px;
+  margin: 4px;
+  padding: 0;
+  border: 4px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+  color: #141413;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.kk-flaps-12 .kk-flap {
+  width: calc(25% - 8px);
+}
+
+.kk-flap-selected {
+  background: #141413;
+  color: #fff;
+}
+
+.kk-flap-closed,
+.kk-flap:disabled {
+  border-width: 2px;
+  border-style: dashed;
+  background: #fff;
+  color: #141413;
+  font-size: 1.2rem;
+  text-decoration: line-through;
+  opacity: 1;
+}
+
+/* Steckwuerfeln: eleven holes (a free hole is a white circle, a hole with a
+   peg a black one) and the buttons for the ways to peg. */
+.sw-holes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  direction: ltr;
+  max-width: 480px;
+  margin: var(--space-2) auto;
+}
+
+.sw-hole {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  margin: 4px;
+  border: 4px solid #141413;
+  border-radius: 50%;
+  background: #fff;
+  color: #141413;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.sw-hole-pegged {
+  background: #141413;
+  color: #fff;
+}
+
+.sw-ways {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sw-ways > * {
+  min-height: 48px;
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+[dir="rtl"] .sw-ways > * {
+  margin: 0 0 var(--space-2) var(--space-2);
+}
+
+/* Sternjagd: the board is one svg (arrows, fields, pieces). The ringed
+   fields are the ones a move may end on. Black and white only. */
+.sj-board {
+  direction: ltr;
+  max-width: 420px;
+  margin: var(--space-2) auto;
+  text-align: center;
+}
+
+.sj-board svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.sj-goal {
+  cursor: pointer;
 }

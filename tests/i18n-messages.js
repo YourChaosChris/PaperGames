@@ -772,7 +772,13 @@ const SAMPLES = [
   "You drew 3 tiles. You passed.",
   "Computer 2 passed. The line is blocked. You win with the lowest pip total.",
   "You played 0-5. You played your last tile.",
-  "Computer 1 played 0-5. Computer 1 played their last tile."
+  "Computer 1 played 0-5. Computer 1 played their last tile.",
+  // Klappenkasten, Steckwürfeln, Sternjagd: titles of the result pop-up
+  "Player 3 wins",
+  "Computer 3 wins",
+  "Computer wins",
+  "You lose",
+  "Draw"
 ];
 
 // Screen-reader labels, translated part by part (I18n.setAria()).

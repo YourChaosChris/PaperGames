@@ -92,7 +92,10 @@ const STATS_GAME_NAME_KEY = {
   tangram: "game_tangram",
   matches: "game_matches",
   catplaces: "game_catplaces",
-  loosen: "game_loosen"
+  loosen: "game_loosen",
+  klappenkasten: "game_klappenkasten",
+  steckwuerfeln: "game_steckwuerfeln",
+  sternjagd: "game_sternjagd"
 };
 
 function gameDisplayName(game) {

@@ -235,6 +235,24 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   exactly the stored fewest moves (confirmed by a second search for the
   first 40 per level); a random player fails (not clear after twice the
   fewest moves) in most tries on Hard (share printed). About 40 seconds.
+- `node tests/klappenkasten-core.js` - no server or browser needed. Rules of
+  Klappenkasten (shut the box): legal and refused closings, the one-die rule
+  (flap 7 and above closed), points, rounds, draw, box shut as an instant
+  win, the computer's choices (high flaps first) and 1000 computer games
+  (2-4 players, 9 or 12 flaps, 1/3/5 rounds) that all end without an
+  error. A few seconds.
+- `node tests/steckwuerfeln-core.js` - no server or browser needed. Rules of
+  Steckwuerfeln (pegs and two dice): the total or the two single dice,
+  refused pegs, the double-six joker (roll again / turn ends / hole 12),
+  points and rounds, all eleven holes pegged as an instant win, the shared
+  board (who cannot peg is out), the computer's choice and 1000 computer
+  games in both ways to play that all end without an error. A few seconds.
+- `node tests/sternjagd-core.js` - no server or browser needed. The board of
+  Sternjagd (twelve fields, two arrows from each, the same from every
+  corner), the exact steps of the die, catching only where a move ends,
+  stars and the return to a free corner, the last player left wins, the
+  draw after 600 moves, the computer's capture and 1000 computer games
+  (2-4 players) that all end without an error. A few seconds.
 - `node tests/matches-core.js` - no server or browser needed. All 90
   "Matchstick Puzzles": the start is wrong (sums) or lacks the asked
   number of squares, a full search finds a solution with exactly 1 or 2
