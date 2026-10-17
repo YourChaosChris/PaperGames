@@ -581,6 +581,7 @@ STRINGS.it = {
     release_v245: "Le pagine di gioco hanno un’intestazione su una riga e niente navigazione del sito; le impostazioni sono nel menu; il pannello si chiude all’avvio, così più tavolieri stanno sullo schermo.",
     release_v246: "Le schede dei giochi in tutte le pagine di categoria sono grandi aree da toccare; la pagina bambini mostra tutti i giochi in una pagina con grandi simboli; «Tavoliere grande» facilita i tavolieri piccoli; Cake non è più tra i giochi per bambini.",
     release_v249: "Le pagine si caricano più velocemente perché richiedono meno dati. Nuovi giochi: Kleeberg e Amici del prato.",
+    release_v250: "In Steckwürfeln si possono toccare i fori, Klappenkasten mostra cosa ha chiuso il computer e il bingo ammette fino a quattro avversari del computer. I pulsanti di Durak e Skat funzionano di nuovo.",
     release_v248: "Sette nuovi giochi (bingo, tre giochi di dadi e tre indovinelli per bambini), un nuovo livello molto difficile nel gioco delle frecce, un pulsante di aiuto nel gioco dei gatti, ricerca migliorata e la pagina Giochi di carte.",
     release_v247: "Tutti i giochi usano gli stessi nomi e testi di stato («Contro il computer», «In due su un dispositivo», «Nuova partita», «Tocca a te»); ogni pagina di gioco ha un pulsante Home; «Annulla» ritira la tua mossa e la risposta del computer in 32 giochi.",
     release_v240: "I nomi dei giochi sono cambiati in tutte e 12 le lingue.",

@@ -490,6 +490,7 @@ STRINGS.nl = {
     release_v245: "Spelpagina’s hebben een kop van één regel en geen sitenavigatie; instellingen zitten nu in het menu; het bedieningspaneel sluit na de start, zodat meer borden op het scherm passen.",
     release_v246: "Spelkaarten op alle categoriepagina’s zijn grote tikvlakken; de kinderpagina toont alle kinderspellen op één pagina met grote symbolen; «Groot bord» maakt kleine borden makkelijker te tikken; Cake staat niet meer bij de kinderspellen.",
     release_v249: "Pagina’s laden sneller, omdat ze minder gegevens nodig hebben. Nieuwe spellen: Kleeberg en Weidevrienden.",
+    release_v250: "In Steckwürfeln kun je op de gaten tikken, Klappenkasten laat zien wat de computer dichtklapte en bingo kent tot vier computertegenstanders. De knoppen bij Durak en Skat werken weer.",
     release_v248: "Zeven nieuwe spellen (bingo, drie dobbelspellen en drie kinderpuzzels), een nieuw zeer moeilijk niveau bij het pijlenspel, een hulpknop bij het kattenspel, betere zoekfunctie en de pagina Kaartspellen.",
     release_v247: "Alle spellen gebruiken dezelfde namen en statusteksten („Tegen de computer”, „Met twee op één apparaat”, „Nieuw spel”, „Jij bent aan de beurt”); elke spelpagina heeft een Home-knop; „Ongedaan maken” neemt je zet en het antwoord van de computer terug in 32 spellen.",
     release_v240: "De spelnamen zijn in alle 12 talen gewijzigd.",

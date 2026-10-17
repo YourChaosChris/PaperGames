@@ -581,6 +581,7 @@ STRINGS.es = {
     release_v245: "Las páginas de juego tienen una cabecera de una línea y no muestran la navegación del sitio; los ajustes están en el menú; el panel se cierra al empezar, así caben más tableros en la pantalla.",
     release_v246: "Las tarjetas de juego de todas las páginas de categoría son zonas grandes para tocar; la página infantil muestra todos los juegos en una página con iconos grandes; «Tablero grande» facilita los tableros pequeños; Cake ya no figura entre los juegos infantiles.",
     release_v249: "Las páginas cargan más rápido porque necesitan menos datos. Juegos nuevos: Kleeberg y Amigos del prado.",
+    release_v250: "En Steckwürfeln se pueden tocar los agujeros, Klappenkasten muestra lo que cerró la computadora y el bingo admite hasta cuatro rivales de la computadora. Los botones de Durak y Skat funcionan de nuevo.",
     release_v248: "Siete juegos nuevos (bingo, tres juegos de dados y tres acertijos para niños), un nuevo nivel muy difícil en el juego de flechas, un botón de pista en el juego de los gatos, mejor búsqueda y la página Juegos de cartas.",
     release_v247: "Todos los juegos usan los mismos nombres y textos de estado («Contra el ordenador», «Dos jugadores en un dispositivo», «Partida nueva», «Te toca»); cada página de juego tiene un botón de Inicio; «Deshacer» retira tu jugada y la respuesta del ordenador en 32 juegos.",
     release_v240: "Se cambiaron los nombres de los juegos en los 12 idiomas.",

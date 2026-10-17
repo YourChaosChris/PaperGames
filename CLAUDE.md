@@ -124,21 +124,19 @@ Vorgaben für den Bericht:
   - `ss` gibt es nicht, den Server mit `curl` prüfen;
   - Hilfsskripte im Scratchpad gehen mit der Sitzung verloren.
 
-## Stand (14.10.2026)
+## Stand (17.10.2026)
 
-- `main` bei `e6a707b`, `CACHE_NAME` `papergames-cache-v237`, 93 Spiele.
-- Aufgaben bis 89 erledigt, `offen/` leer.
+- `CACHE_NAME` `papergames-cache-v250`, 102 Spiele.
+- Aufgaben bis 99o, 99z und die Abschluss-Bereinigung erledigt, `offen/` leer.
 - Zuletzt gebaut:
-  - 87: Suchbild mit Räumen (`ROOMS` in `differences-core.js`), Kuchen
-    mit Personen und Schatz;
-  - 88: Suchbild jetzt 12 Räume; Kuchen mit 12 Räumen und 12 Möbeln
-    (`SITTING`, `NEXT_TO`, `ROOM_FURNITURE` in `cake-core.js`);
-  - 89: „Neue Spiele“ höchstens 10 (`NEW_MAX` in `game-categories.js`,
-    dazu weiter 60 Tage).
+  - 99o: Steckwürfeln: Löcher antippbar (`sw-hole-way`); Klappenkasten: Zug des
+    Computers als Zeile über dem Brett (`kk_last_closed`); Bingo: 1 bis 4
+    Computergegner (`bingo-opponents`);
+  - Pflege: Durak und Skat wieder spielbar (Regression aus 0baa68a).
 - Offen bemerkt, nicht beauftragt:
-  - die Kuchen-Geschichtsseite sagt noch „die Verdächtigen sind Tiere“;
   - eine „neu“-Markierung auf Spielkarten gibt es nicht
-    (`msg_aria_card_new` ist ungenutzt).
+    (`msg_aria_card_new` ist ungenutzt);
+  - Vorschläge siehe `vorschlaege/2026-10-17.md` im Aufgaben-Repository.
 
 ## Sicherungen (Prozess, damit Christopher nicht nachfragen muss)
 

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v250",
+    date: "2026-10-17",
+    key: "release_v250",
+    text: "In Steckwürfeln you can tap the holes, Klappenkasten shows what the computer closed, and Bingo allows up to four computer opponents. Durak and Skat buttons work again."
+  },
+  {
     version: "v249",
     date: "2026-10-17",
     key: "release_v249",
