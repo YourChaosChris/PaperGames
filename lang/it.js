@@ -583,6 +583,7 @@ STRINGS.it = {
     release_v249: "Le pagine si caricano più velocemente perché richiedono meno dati. Nuovi giochi: Kleeberg e Amici del prato.",
     release_v250: "In Steckwürfeln si possono toccare i fori, Klappenkasten mostra cosa ha chiuso il computer e il bingo ammette fino a quattro avversari del computer. I pulsanti di Durak e Skat funzionano di nuovo.",
     release_v251: "Nuovo gioco: Dadi dello zoo. Amici del prato ora si spiega con le immagini, Schwimmen mostra il giocatore giusto, la tavola di Kleeberg non è più tagliata e le anteprime dei link non mostrano più il numero dei giochi.",
+    release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss e Pasture Friends ora si spiegano con le immagini, Zoo Toss ha un livello principiante e il tabellone della torta indica le stanze con numeri e ha caselle più grandi.",
     release_v248: "Sette nuovi giochi (bingo, tre giochi di dadi e tre indovinelli per bambini), un nuovo livello molto difficile nel gioco delle frecce, un pulsante di aiuto nel gioco dei gatti, ricerca migliorata e la pagina Giochi di carte.",
     release_v247: "Tutti i giochi usano gli stessi nomi e testi di stato («Contro il computer», «In due su un dispositivo», «Nuova partita», «Tocca a te»); ogni pagina di gioco ha un pulsante Home; «Annulla» ritira la tua mossa e la risposta del computer in 32 giochi.",
     release_v240: "I nomi dei giochi sono cambiati in tutte e 12 le lingue.",

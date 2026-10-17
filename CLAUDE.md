@@ -126,9 +126,10 @@ Vorgaben für den Bericht:
 
 ## Stand (17.10.2026)
 
-- `CACHE_NAME` `papergames-cache-v251`, 103 Spiele.
-- Aufgaben bis 99r erledigt, `offen/` leer.
+- `CACHE_NAME` `papergames-cache-v252`, 103 Spiele.
+- Aufgaben bis 99s erledigt, `offen/` leer.
 - Zuletzt gebaut:
+  - 99s: gemeinsames „Wie geht das?“ (`howto.js`, 5 Spiele), gemeinsamer Statustext (`ui-status.js` statt 45 Kopien), Kuchenbrett mit Raumzahlen und Legende, Zoowurf-Stufe Anfänger;
   - 99p: Vorschaubild ohne Spielezahl (`og-image.png?v=251`);
   - 99q: Zoowurf (Kinder-Würfelspiel, `zoowurf-core.js`);
   - 99r: Spielprüfung aller Spiele; Weidefreunde mit Bilderklärung,

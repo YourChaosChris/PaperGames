@@ -61,7 +61,12 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   retain the same translated wording.
 - `node tests/ui-status.js` - no server or browser needed. Checks that all
   computer-opponent games use the shared four localized turn and winner
-  status keys; documents the simultaneous-round exception in War.
+  status keys (now in the shared `ui-status.js`); documents the
+  simultaneous-round exception in War.
+- `node tests/howto.js` - no server or browser needed. Checks that the five
+  games with the shared picture explanation (`howto.js`) load it before
+  their app, call `Howto.init` with four steps, and have all step
+  sentences in 12 languages.
 - `node tests/undo.js` - no server or browser needed. Checks Undo coverage for
   every computer-opponent game, verifies the shared localized button and
   enabled/disabled source behavior, exercises one-ply hotseat and paired

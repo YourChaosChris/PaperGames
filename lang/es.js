@@ -583,6 +583,7 @@ STRINGS.es = {
     release_v249: "Las páginas cargan más rápido porque necesitan menos datos. Juegos nuevos: Kleeberg y Amigos del prado.",
     release_v250: "En Steckwürfeln se pueden tocar los agujeros, Klappenkasten muestra lo que cerró la computadora y el bingo admite hasta cuatro rivales de la computadora. Los botones de Durak y Skat funcionan de nuevo.",
     release_v251: "Juego nuevo: Dados del zoo. Amigos del prado ahora se explica con imágenes, Schwimmen muestra el turno del jugador correcto, el tablero de Kleeberg ya no se corta y las vistas previas de enlaces ya no muestran el número de juegos.",
+    release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss y Pasture Friends ahora se explican con imágenes, Zoo Toss tiene un nivel para principiantes, y el tablero de la tarta indica sus habitaciones con números y tiene casillas más grandes.",
     release_v248: "Siete juegos nuevos (bingo, tres juegos de dados y tres acertijos para niños), un nuevo nivel muy difícil en el juego de flechas, un botón de pista en el juego de los gatos, mejor búsqueda y la página Juegos de cartas.",
     release_v247: "Todos los juegos usan los mismos nombres y textos de estado («Contra el ordenador», «Dos jugadores en un dispositivo», «Partida nueva», «Te toca»); cada página de juego tiene un botón de Inicio; «Deshacer» retira tu jugada y la respuesta del ordenador en 32 juegos.",
     release_v240: "Se cambiaron los nombres de los juegos en los 12 idiomas.",

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v252",
+    date: "2026-10-17",
+    key: "release_v252",
+    text: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss and Pasture Friends now explain themselves with pictures, Zoo Toss has a beginner level, and the cake board names its rooms with numbers and has larger squares."
+  },
+  {
     version: "v251",
     date: "2026-10-17",
     key: "release_v251",

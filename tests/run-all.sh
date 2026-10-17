@@ -43,6 +43,8 @@ node "$ROOT/tests/ui-names.js" || status=1
 echo ""
 echo "=== ui-status.js ==="
 node "$ROOT/tests/ui-status.js" || status=1
+echo "=== howto.js ==="
+node "$ROOT/tests/howto.js" || status=1
 echo ""
 echo "=== undo.js ==="
 node "$ROOT/tests/undo.js" || status=1

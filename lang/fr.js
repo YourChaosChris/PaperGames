@@ -583,6 +583,7 @@ STRINGS.fr = {
     release_v249: "Les pages se chargent plus vite, car elles demandent moins de données. Nouveaux jeux : Kleeberg et Les amis du pré.",
     release_v250: "Dans Steckwürfeln, on peut toucher les trous ; Klappenkasten montre ce que l’ordinateur a fermé ; le bingo accepte jusqu’à quatre adversaires ordinateur. Les boutons de Durak et de Skat fonctionnent de nouveau.",
     release_v251: "Nouveau jeu : Lancer au zoo. Les amis du pré s'expliquent maintenant par des images, Schwimmen indique le bon joueur, le plateau de Kleeberg n'est plus coupé et les aperçus de liens n'affichent plus de nombre de jeux.",
+    release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss et Pasture Friends s'expliquent maintenant avec des images, Zoo Toss a un niveau débutant, et le plateau du gâteau désigne ses pièces par des numéros avec des cases plus grandes.",
     release_v248: "Sept nouveaux jeux (bingo, trois jeux de dés et trois énigmes pour enfants), un nouveau niveau très difficile dans le jeu de flèches, un bouton d’indice dans le jeu des chats, une meilleure recherche et la page Jeux de cartes.",
     release_v247: "Tous les jeux utilisent les mêmes noms et textes d’état (« Contre l’ordinateur », « À deux sur un appareil », « Nouvelle partie », « À toi de jouer ») ; chaque page de jeu a un bouton Accueil ; « Annuler » reprend ton coup et la réponse de l’ordinateur dans 32 jeux.",
     release_v240: "Les noms des jeux ont changé dans les 12 langues.",

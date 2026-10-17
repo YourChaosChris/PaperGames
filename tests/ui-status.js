@@ -27,26 +27,40 @@ const exceptions = {
   war: { keys: ["ui_status_computer_turn"], reason: "The round is simultaneous: there is no separate computer turn to announce." }
 };
 const failures = [];
+// The shared rewrite (ui-status.js) holds the four sentences' keys; the games
+// that go through it only call UiStatus.rewrite from their status helper.
+const central = fs.readFileSync(path.join(ROOT, "ui-status.js"), "utf8");
+for (const key of statusKeys) if (!central.includes(`"${key}"`)) failures.push(`ui-status.js: missing ${key}`);
+const shell = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
+if (!shell.includes('"ui-status.js"')) failures.push("sw.js: ui-status.js is not in APP_SHELL");
+const usesCentral = (source) => source.includes("UiStatus.rewrite(");
 for (const game of games) {
   const file = `${game}-app.js`;
   const source = fs.readFileSync(path.join(ROOT, file), "utf8");
   const allowedMissing = new Set(exceptions[game] ? exceptions[game].keys : []);
   for (const key of statusKeys) {
     if (allowedMissing.has(key)) continue;
-    if (!source.includes(`"${key}"`)) failures.push(`${file}: missing ${key}`);
+    if (!source.includes(`"${key}"`) && !usesCentral(source)) failures.push(`${file}: missing ${key}`);
+  }
+  if (usesCentral(source)) {
+    const pages = fs.readdirSync(ROOT).filter((n) => n.endsWith(".html") && fs.readFileSync(path.join(ROOT, n), "utf8").includes(`<script src="${file}"></script>`));
+    for (const page of pages) {
+      const html = fs.readFileSync(path.join(ROOT, page), "utf8");
+      const a = html.indexOf('<script src="ui-status.js"></script>');
+      if (a < 0 || a > html.indexOf(`<script src="${file}"></script>`)) failures.push(`${page}: ui-status.js must load before ${file}`);
+    }
   }
 }
 // Chess lives in app.js and also has an online mode; these shared statuses
 // are used only when its local computer mode is active.
 const chess = fs.readFileSync(path.join(ROOT, "app.js"), "utf8");
-for (const key of statusKeys) if (!chess.includes(`"${key}"`)) failures.push(`app.js (Chess): missing ${key}`);
+for (const key of statusKeys) if (!chess.includes(`"${key}"`) && !usesCentral(chess)) failures.push(`app.js (Chess): missing ${key}`);
 // The status rewrite must only touch status elements: helpers that also fill
 // other elements (Mancala store counts) once got "Your turn." prepended.
 for (const file of fs.readdirSync(ROOT).filter((n) => n.endsWith("-app.js") || n === "app.js")) {
   const code = fs.readFileSync(path.join(ROOT, file), "utf8");
-  const helper = code.match(/function setStatus\w*\((\w+), (\w+)\) \{\n  if \((.*?)\) \{\n    const uiStatusText/);
-  if (code.includes("uiStatusText") && /function setStatus\w*\(\w+, \w+\)/.test(code)) {
-    const guarded = /&& text && \/status\|info\/i\.test\(String\(\w+\)\)\) \{\n    const uiStatusText/.test(code);
+  if (code.includes("UiStatus.rewrite(") && /function setStatus\w*\(\w+, \w+\)/.test(code)) {
+    const guarded = /&& text && \/status\|info\/i\.test\(String\(\w+\)\)\) \{\n    text = UiStatus\.rewrite/.test(code);
     if (!guarded) failures.push(`${file}: status rewrite must be limited to status/info elements`);
   }
 }
