@@ -211,6 +211,13 @@
     window.addEventListener("beforeprint", renderPrint);
     $("bingo-mode").addEventListener("change", syncCount);
     syncCount();
+    const T = (n, st) => Howto.tile(n, st, 44);
+    Howto.init({ slug: "bingo", actions: ["bingo-draw"], steps: [
+      { pics: T("17"), key: "bingo_howto_1" },
+      { pics: T("17") + Howto.arrow() + T("17", "mark"), key: "bingo_howto_2" },
+      { pics: T("4", "mark") + T("17", "mark") + T("9") + T("23", "mark"), key: "bingo_howto_3" },
+      { pics: T("4", "mark") + T("17", "mark") + T("9", "mark") + T("23", "mark") + T("31", "mark"), key: "bingo_howto_4" }
+    ] });
     if (typeof I18n.onChange === "function") I18n.onChange(() => { if (state.game) { render(); } });
   }
   document.addEventListener("DOMContentLoaded", init);

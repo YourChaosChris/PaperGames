@@ -57,7 +57,8 @@ function validStateZW(s) {
 function startGameZW() {
   const mode = DiceCommon.activeMode();
   const n = parseInt(document.getElementById("zw-players").value, 10) || 2;
-  AppStateZW.state = ZoowurfCore.newGame({ players: n, computer: DiceCommon.seats(mode, n) });
+  const level = document.getElementById("zw-level").value === "beginner" ? "beginner" : "normal";
+  AppStateZW.state = ZoowurfCore.newGame({ players: n, computer: DiceCommon.seats(mode, n), level: level });
   AppStateZW.log = [];
   AppStateZW.logged = 0;
   setResultZW("");
@@ -292,16 +293,27 @@ function renderZW() {
 
 function initZoowurfApp() {
   DiceCommon.wireMenu();
-  document.getElementById("mode-ai").addEventListener("click", () => DiceCommon.setMode("ai"));
-  document.getElementById("mode-offline").addEventListener("click", () => DiceCommon.setMode("hotseat"));
+  // the level only matters against the computer
+  const showLevelZW = () => document.getElementById("zw-level-wrap").classList.toggle("hidden", DiceCommon.activeMode() === "hotseat");
+  document.getElementById("mode-ai").addEventListener("click", () => { DiceCommon.setMode("ai"); showLevelZW(); });
+  document.getElementById("mode-offline").addEventListener("click", () => { DiceCommon.setMode("hotseat"); showLevelZW(); });
+  showLevelZW();
   document.getElementById("start-zw-game").addEventListener("click", startGameZW);
   document.getElementById("zw-roll").addEventListener("click", rollZW);
+  const A = (id) => ZooIcons.svg(id, 34), Z = (face, hit) => dieSvgZW(face, hit, 44);
+  Howto.init({ slug: "zoowurf", actions: ["zw-roll"], steps: [
+    { pics: Howto.box(A(0) + A(0) + A(3)) + Howto.box(A(2) + A(4) + A(1)), key: "zw_howto_1" },
+    { pics: Z(0) + Z(4) + Z("paw") + Z(2), key: "zw_howto_2" },
+    { pics: Z("paw") + Howto.arrow() + Z(0, true), key: "zw_howto_3" },
+    { pics: Howto.box(A(0) + A(0) + A(3)) + Howto.sign("=") + Howto.tile("", "mark", 36), key: "zw_howto_4" }
+  ] });
   if (window.I18n && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateZW.state) renderZW(); });
   }
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(ZOOWURF_SAVE_KEY) : null;
   if (saved && validStateZW(saved.state)) {
     AppStateZW.state = saved.state;
+    document.getElementById("zw-level").value = saved.state.level === "beginner" ? "beginner" : "normal";
     AppStateZW.log = [];
     AppStateZW.logged = saved.state.seq || 0;
     DiceCommon.showBoard();

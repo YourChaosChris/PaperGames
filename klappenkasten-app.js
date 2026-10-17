@@ -324,6 +324,14 @@ function initKlappenkastenApp() {
   document.getElementById("kk-roll1").addEventListener("click", () => rollKK(1));
   document.getElementById("kk-close").addEventListener("click", closeFlapsKK);
   document.getElementById("undo-btn").addEventListener("click", undoKK);
+  const D = (v) => Howto.die(v, 44), F = (n, st) => Howto.tile(n, st, 28);
+  const flaps = () => { let h = ""; for (let i = 1; i <= 9; i++) h += F(i, i === 3 || i === 5 ? "shut" : ""); return h; };
+  Howto.init({ slug: "klappenkasten", actions: ["kk-roll2", "kk-roll1"], steps: [
+    { pics: D(5) + D(3), key: "kk_howto_1" },
+    { pics: D(5) + D(3) + Howto.sign("=") + Howto.sign("8") + Howto.arrow() + F(3, "shut") + Howto.sign("+") + F(5, "shut"), key: "kk_howto_2" },
+    { pics: flaps, key: "kk_howto_3" },
+    { pics: F(1) + Howto.sign("+") + F(2) + Howto.sign("+") + F(4) + Howto.sign("=") + Howto.sign("7"), key: "kk_howto_4" }
+  ] });
   if (window.I18n && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateKK.state) renderKK(); });
   }

@@ -93,7 +93,10 @@ const ZoowurfCore = (() => {
     return cards;
   }
 
-  // opts: { players: 2..4, computer: [bool, ...], rng, target }
+  // opts: { players: 2..4, computer: [bool, ...], rng, target,
+  //         level: "beginner" - the computers choose the open card at random }
+  // Without a level the computers choose by the exact chance (as before);
+  // an older saved state has no level and plays as before.
   function newGame(opts) {
     const o = opts || {};
     const n = Math.max(2, Math.min(4, o.players || 2));
@@ -105,7 +108,7 @@ const ZoowurfCore = (() => {
     }
     const pile = shuffle(allCards(o.rng), o.rng);
     const yard = pile.splice(0, OPEN);
-    return {
+    const game = {
       game: "zoowurf",
       n: n,
       computer: computer,
@@ -123,6 +126,8 @@ const ZoowurfCore = (() => {
       last: null,           // the turn that ended last, see finishTurn()
       seq: 0                // counts the turns that ended
     };
+    if (o.level === "beginner") game.level = "beginner";
+    return game;
   }
 
   // Which animal a paw stands for: the one the card needs most (the first
@@ -301,10 +306,11 @@ const ZoowurfCore = (() => {
     return best;
   }
 
-  // One action of the computer. opts.dumb: choose the card at random.
+  // One action of the computer. opts.dumb: choose the card at random; by
+  // default the level of the game decides ("beginner" chooses at random).
   function aiStep(s, rng, opts) {
     if (s.phase === "choose") {
-      const dumb = !!(opts && opts.dumb);
+      const dumb = opts && opts.dumb !== undefined ? !!opts.dumb : s.level === "beginner";
       return choose(s, dumb ? Math.floor((rng || Math.random)() * s.yard.length) : chooseCard(s));
     }
     if (s.phase === "roll") return roll(s, rng);

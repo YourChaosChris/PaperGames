@@ -134,6 +134,46 @@ for (let i = 0; i < N; i++) {
 console.log("card choice against always-the-worst-card: " + wins + " of " + N + " (" + (100 * wins / N).toFixed(1) + " %)");
 check("the card choice wins more than half against the worst choice", wins / N > 0.52);
 
+
+// ---- level "Beginner" (task 99s): the computers choose the open card at random ----
+(() => {
+  const old = C.newGame({ players: 2, computer: [false, true], rng: C.makeRng(3) });
+  check("a game without a level has no level field (older saved states are the same)", old.level === undefined && !("level" in old));
+  const beg = C.newGame({ players: 2, computer: [false, true], rng: C.makeRng(3), level: "beginner" });
+  check("level beginner is stored in the state and survives a save", beg.level === "beginner" && JSON.parse(JSON.stringify(beg)).level === "beginner");
+  check("an unknown level is the standard", C.newGame({ players: 2, level: "x" }).level === undefined);
+  // the standard picks the same open card every time; the beginner picks both
+  const at = (g) => ({ ...g, current: 1 });
+  const normalPicks = new Set(), beginnerPicks = new Set();
+  const r = C.makeRng(99);
+  for (let i = 0; i < 100; i++) {
+    const a = C.newGame({ players: 2, computer: [false, true], rng: C.makeRng(200 + i) });
+    const b = C.newGame({ players: 2, computer: [false, true], rng: C.makeRng(200 + i), level: "beginner" });
+    const na = C.aiStep(at(a), r), nb = C.aiStep(at(b), r);
+    check("the beginner step is a legal choice " + i, nb !== at(b) && nb.phase === "roll");
+    normalPicks.add(i + ":" + (na.play.card.join("") === a.yard[C.chooseCard(a)].join("")));
+    beginnerPicks.add(nb.play.card.join("") === b.yard[0].join("") ? "first" : "second");
+  }
+  check("the standard always picks the card with the best chance", [...normalPicks].every((x) => x.endsWith("true")));
+  check("the beginner picks both open cards over 100 rounds", beginnerPicks.has("first") && beginnerPicks.has("second"));
+  // 100 games, two players: the standard against the beginner
+  let smartWins = 0;
+  const N2 = 100;
+  for (let i = 0; i < N2; i++) {
+    const smartSeat = i % 2, rr = C.makeRng(7000 + i);
+    let g = C.newGame({ players: 2, computer: [true, true], rng: rr });
+    let guard = 0;
+    while (g.phase !== "over" && guard++ < 2000) {
+      const next = C.aiStep(g, rr, { dumb: g.current !== smartSeat });
+      if (next === g) break;
+      g = next;
+    }
+    if (g.winner === smartSeat) smartWins++;
+  }
+  console.log("level beginner: the standard computer wins " + smartWins + " of " + N2 + " games against a computer that chooses cards at random");
+  check("the standard computer beats the random chooser more often than not", smartWins >= 50);
+})();
+
 if (fails.length) {
   console.log(fails.slice(0, 30).join("\n"));
   console.log("=== ZOOWURF CORE: " + fails.length + " failure(s) ===");

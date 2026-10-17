@@ -16,6 +16,11 @@
   box-sizing: border-box;
 }
 
+/* Only the wall with the window needs room beside the board. */
+.cake-board-wrap.cake-wrap-left { padding-right: 0; }
+
+.cake-board-wrap.cake-wrap-right { padding-left: 0; }
+
 .cake-board {
   position: relative;
   width: 100%;

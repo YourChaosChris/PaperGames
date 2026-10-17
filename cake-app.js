@@ -282,6 +282,7 @@ function buildCakeBoardDOM() {
   }
   win.innerHTML = CakeIcons.svg("window");
   win.className = "cake-window cake-window-" + p.window.side;
+  wrap.className = "cake-board-wrap cake-wrap-" + p.window.side;
   win.style.top = (p.window.row * 100 / n) + "%";
   win.style.height = (100 / n) + "%";
   sizeCakeBoard();
@@ -300,7 +301,7 @@ function buildCakeBoardDOM() {
 // Square cells by explicit pixel height (no CSS aspect-ratio on e-ink).
 // The board also shrinks so that the info line, board, buttons and clues
 // fit on one screen together where possible - on an e-reader every scroll
-// is a page turn - but never below 48px cells.
+// is a page turn - but never below 60px cells (less only where the width allows no more).
 function sizeCakeBoard() {
   const boardEl = document.getElementById("cake-board");
   const wrap = document.getElementById("cake-board-wrap");
@@ -320,8 +321,8 @@ function sizeCakeBoard() {
     const scrollY = window.pageYOffset || 0;
     const lastBottom = last.getBoundingClientRect().bottom + scrollY;
     let room = viewH - (lastBottom - boardH) - 16;
-    if (room < n * 60) room = viewH - (last.getBoundingClientRect().bottom - info.getBoundingClientRect().top - boardH) - 16;
-    side = Math.min(w, Math.max(room, n * 48));
+    if (room < n * 60 + 6) room = viewH - (last.getBoundingClientRect().bottom - info.getBoundingClientRect().top - boardH) - 16;
+    side = Math.min(w, Math.max(room, n * 60 + 6));
   }
   if (side < w) wrap.style.maxWidth = Math.floor(side + (wrap.offsetWidth - w)) + "px";
   // The board's frame is part of its height (border-box), so it is added
@@ -428,10 +429,9 @@ function renderCakeBoard() {
   fitCakeLabels();
 }
 
-// A room name is written out in full, on one line, at the normal size,
-// on the first run of its cells that is wide enough. A room with no such
-// run gets a number instead, and the legend under the board says which
-// room the number stands for.
+// Every room gets a number in the first cell of its topmost run; the legend
+// under the board says which room the number stands for. (Names written in
+// the cells made them too small and cut off.)
 function fitCakeLabels() {
   const p = AppStateCake.puzzle;
   const legend = document.getElementById("cake-legend");
@@ -450,21 +450,6 @@ function fitCakeLabels() {
     };
     el.textContent = name;
     el.classList.remove("cake-room-key");
-    // Runs without big furniture (table, cupboard, ...) come first, so the big
-    // drawings rarely have to make room for a name.
-    const clear = (r) => {
-      for (let c = r.col; c < r.col + r.len; c++) if (CakeCore.BLOCKING.indexOf(p.furniture[r.row * n + c]) !== -1) return false;
-      return true;
-    };
-    const order = runs[room].filter(clear).concat(runs[room].filter((r) => !clear(r)));
-    const run = order.find((r) => {
-      place(r);
-      return el.scrollWidth <= el.clientWidth;
-    });
-    if (run) {
-      for (let c = run.col; c < run.col + run.len; c++) labelled.add(run.row * n + c);
-      return;
-    }
     // A number takes only the first cell of the run.
     place(runs[room][0]);
     labelled.add(runs[room][0].row * n + runs[room][0].col);

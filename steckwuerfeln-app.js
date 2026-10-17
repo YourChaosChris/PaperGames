@@ -322,6 +322,13 @@ function initSteckwuerfelnApp() {
   document.getElementById("sw-roll").addEventListener("click", rollSW);
   document.getElementById("undo-btn").addEventListener("click", undoSW);
   updateSetupSW();
+  const D = (v) => Howto.die(v, 44), P = (n, st) => Howto.tile(n, st, 36);
+  Howto.init({ slug: "steckwuerfeln", actions: ["sw-roll"], steps: [
+    { pics: D(2) + D(4), key: "sw_howto_1" },
+    { pics: D(2) + D(4) + Howto.arrow() + P(6, "peg") + Howto.sign("/") + P(2, "peg") + P(4, "peg"), key: "sw_howto_2" },
+    { pics: P(2, "peg") + P(3) + P(4, "peg") + P(5) + P(6, "peg") + P(7), key: "sw_howto_3" },
+    { pics: P(3) + Howto.sign("+") + P(5) + Howto.sign("=") + Howto.sign("8"), key: "sw_howto_4" }
+  ] });
   if (window.I18n && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateSW.state) renderSW(); });
   }

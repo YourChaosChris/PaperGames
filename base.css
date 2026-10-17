@@ -3961,3 +3961,73 @@ button.concan-meld {
   color: #000;
   font-size: 0.95rem;
 }
+
+/* Howto (howto.js): the picture explanation "How does it work?" of the
+   simple games - a framed list of picture rows with one sentence each. */
+.howto-bar {
+  margin: 0 0 var(--space-2);
+  text-align: center;
+}
+
+.howto {
+  margin: 0 0 var(--space-2);
+  padding: var(--space-2);
+  border: 3px solid #141413;
+  border-radius: var(--radius);
+  text-align: left;
+}
+
+.howto-title {
+  margin-top: 0;
+}
+
+.howto-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.howto-item {
+  margin: 0 0 var(--space-2);
+  text-align: center;
+}
+
+.howto-pics {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  direction: ltr;
+  margin-bottom: 4px;
+  line-height: 0;
+}
+
+.howto-pics svg {
+  max-width: none;
+  margin: 1px 2px;
+}
+
+.howto-sign {
+  margin: 0 4px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.howto-text {
+  display: block;
+}
+
+.howto-card {
+  display: inline-flex;
+  align-items: center;
+  margin: 1px 3px;
+  padding: 2px;
+  border: 2px solid #141413;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.howto-card svg {
+  margin: 0;
+}

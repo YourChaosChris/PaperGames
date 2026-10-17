@@ -37,48 +37,27 @@ function animalNameWF(a) {
 
 /*** How it works: a picture explanation before the first game ***/
 
-// One picture row of the explanation: the picture(s) and its sentence.
-function howtoRowWF(pics, key) {
-  return '<li class="wf-howto-item"><span class="wf-howto-pics" aria-hidden="true">' + pics + '</span><span class="wf-howto-text">' + tWF(key) + "</span></li>";
-}
-
-function howtoHtmlWF() {
+// The four steps; the panel itself is the shared Howto (howto.js).
+function howtoStepsWF() {
   const arrow = '<svg class="wf-howto-arrow" viewBox="0 0 30 20" width="30" height="20" focusable="false"><path d="M2 10H24M17 3L25 10L17 17" fill="none" stroke="#141413" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const card = (a) => '<span class="wf-card wf-howto-card">' + WeideIcons.svg(a, 40) + "</span>";
   const slot = (a, own) => '<span class="wf-slot ' + (own ? "wf-slot-own" : "wf-slot-free") + ' wf-howto-slot">' + WeideIcons.svg(a, 36) + "</span>";
   let all = "";
   for (let a = 0; a < WeidefreundeCore.ANIMALS; a++) all += slot(a, true);
-  return '<ol class="wf-howto-list">' +
-    howtoRowWF(dieSvgWF(0, 56), "wf_howto_1") +
-    howtoRowWF(card(0) + arrow + slot(0, true), "wf_howto_2") +
-    howtoRowWF(card("farmer") + arrow + slot(1, true), "wf_howto_3") +
-    howtoRowWF(all, "wf_howto_4") +
-    "</ol>";
-}
-
-function renderHowtoWF() {
-  const box = document.getElementById("wf-howto-body");
-  if (box) box.innerHTML = howtoHtmlWF();
+  return [
+    { pics: dieSvgWF(0, 56), key: "wf_howto_1" },
+    { pics: card(0) + arrow + slot(0, true), key: "wf_howto_2" },
+    { pics: card("farmer") + arrow + slot(1, true), key: "wf_howto_3" },
+    { pics: all, key: "wf_howto_4" }
+  ];
 }
 
 // The explanation opens by itself until the first roll on this device;
 // afterwards the button "How does it work?" shows it again.
-const WF_HOWTO_SEEN = "papergames_wf_howto_seen";
-
-function howtoSeenWF() {
-  try { return !!(window.localStorage && window.localStorage.getItem(WF_HOWTO_SEEN)); } catch (e) { return false; }
-}
+let howtoWF = null;
 
 function markHowtoSeenWF() {
-  try { if (window.localStorage) window.localStorage.setItem(WF_HOWTO_SEEN, "1"); } catch (e) { /* the explanation just opens again next time */ }
-  setHowtoWF(false);
-}
-
-function setHowtoWF(show) {
-  const panel = document.getElementById("wf-howto");
-  const btn = document.getElementById("wf-howto-toggle");
-  if (panel) panel.classList.toggle("hidden", !show);
-  if (btn && window.I18n) I18n.setKey(btn, show ? "wf_howto_hide" : "wf_howto_show");
+  if (howtoWF) howtoWF.markSeen();
 }
 
 /*** Save and load ***/
@@ -296,13 +275,15 @@ function initWeidefreundeApp() {
   document.getElementById("mode-offline").addEventListener("click", () => DiceCommon.setMode("hotseat"));
   document.getElementById("start-wf-game").addEventListener("click", startGameWF);
   document.getElementById("wf-roll").addEventListener("click", rollWF);
-  document.getElementById("wf-howto-toggle").addEventListener("click", () => {
-    setHowtoWF(document.getElementById("wf-howto").classList.contains("hidden"));
+  howtoWF = Howto.init({
+    slug: "weidefreunde",
+    seenKey: "papergames_wf_howto_seen",
+    keys: { title: "wf_howto_title", show: "wf_howto_show", hide: "wf_howto_hide" },
+    actions: [],
+    steps: howtoStepsWF()
   });
-  renderHowtoWF();
-  setHowtoWF(!howtoSeenWF());
   if (window.I18n && typeof I18n.onChange === "function") {
-    I18n.onChange(() => { renderHowtoWF(); if (AppStateWF.state) renderWF(); });
+    I18n.onChange(() => { if (AppStateWF.state) renderWF(); });
   }
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(WEIDEFREUNDE_SAVE_KEY) : null;
   if (saved && validStateWF(saved.state)) {
