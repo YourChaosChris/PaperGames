@@ -1244,6 +1244,20 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-17T02:10",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><circle cx=\"20\" cy=\"7\" r=\"4.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"14\" cy=\"20\" r=\"4.5\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"26\" cy=\"20\" r=\"4.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"8\" cy=\"33\" r=\"4.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"20\" cy=\"33\" r=\"4.5\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"32\" cy=\"33\" r=\"4.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/></svg></span>"
+  },
+  {
+    slug: "weidefreunde",
+    category: "race",
+    family: "dicegames",
+    nameKey: "game_weidefreunde",
+    nameText: "Pasture Friends",
+    descKey: "home_weidefreunde_desc",
+    descText: "A card-and-dice game for children: roll the animal die and collect the five farm animals - cow, sheep, pig, hen and horse - on your own pasture. Pictures only, no reading needed, no time limit. Against the computer or with up to four players on one device.",
+    popular: false,
+    kids: true,
+    added: "2026-10-17T13:00",
+    noRead: true,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"4\" width=\"15\" height=\"19\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"10.5\" cy=\"13\" r=\"4.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"10.5\" cy=\"13\" r=\"1.4\" fill=\"#141413\"/><rect x=\"20\" y=\"4\" width=\"15\" height=\"19\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><path d=\"M24 15L27.5 9L31 15Z\" fill=\"#141413\"/><rect x=\"9\" y=\"26\" width=\"14\" height=\"12\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"13\" cy=\"30\" r=\"1.4\" fill=\"#141413\"/><circle cx=\"19\" cy=\"34\" r=\"1.4\" fill=\"#141413\"/><path d=\"M26 33H36\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-dasharray=\"3 2\"/></svg></span>"
   }
 ];
 

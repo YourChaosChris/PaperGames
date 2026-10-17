@@ -3830,6 +3830,33 @@ const STRINGS = {
     dg_dice_aria: "Dice: {dice}",
     dg_dice_none: "Not rolled yet",
     dg_roll: "Roll",
+    game_weidefreunde: "Pasture Friends",
+    home_weidefreunde_desc: "A card-and-dice game for children: roll the animal die and collect the five farm animals - cow, sheep, pig, hen and horse - on your own pasture. Pictures only, no reading needed, no time limit. Against the computer or with up to four players on one device.",
+    weidefreunde_history_intro: "Games with pictures instead of numbers and cards to collect are among the first games small children play - this one combines both.",
+    quickrules_weidefreunde_1: "Roll the die. It shows an animal or the farmer.",
+    quickrules_weidefreunde_2: "The card of that animal moves to your pasture if the yard has it and you do not. The farmer lets you take any card you miss. Otherwise send one yard card back.",
+    quickrules_weidefreunde_3: "Whoever has all five animals on the pasture first wins.",
+    wf_animal_0: "cow",
+    wf_animal_1: "sheep",
+    wf_animal_2: "pig",
+    wf_animal_3: "hen",
+    wf_animal_4: "horse",
+    wf_farmer: "farmer",
+    wf_yard: "Yard",
+    wf_roll: "Roll the die",
+    wf_roll_hint: "Roll the die.",
+    wf_pick_hint: "Farmer! Tap a card you do not have yet.",
+    wf_swap_hint: "No card for you. Tap a card to send it back.",
+    wf_last_take: "{name}: took the {animal}.",
+    wf_last_farmer: "{name}: farmer! Took the {animal}.",
+    wf_last_swap: "{name}: no card. Sent the {animal} back, the {shown} is open now.",
+    wf_card_aria: "{animal}",
+    wf_card_aria_tap: "{animal}, tap to choose",
+    wf_slot_own_aria: "{animal}, on the pasture",
+    wf_slot_free_aria: "{animal}, still missing",
+    wf_die_aria: "Die: {face}",
+    wf_count: "{n} of {m}",
+    wf_full_pasture: "One pasture is full: all five animals are there.",
     game_klappenkasten: "Klappenkasten",
     home_klappenkasten_desc: "A traditional dice game: roll two dice and close the numbered flaps that add up to your roll. When nothing fits, the flaps still open count against you - the fewest points win, and closing every flap wins at once. Against the computer or with up to four players on one device.",
     kk_history_intro: "A traditional dice game with a row of numbered flaps, played in pubs and on ships - where and when exactly it began is not certain.",
@@ -5259,7 +5286,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 101;
+  const GAME_COUNT = 102;
 
   function t(key, lang) {
     const l = lang || getLang();

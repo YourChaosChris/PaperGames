@@ -294,6 +294,12 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   group rounds with 4 drawings, medium and hard mix group rounds with
   attribute rounds (shape, filling, number) with 5 and 6 cards. Under a
   second.
+- `node tests/weidefreunde-core.js` - no server or browser needed. "Pasture
+  Friends": every rule with fixed rolls (take, farmer, send back, refused
+  moves), then 1000 games computer against computer for each of 2, 3 and 4
+  players: one full pasture ends the game, the 35 cards are always all there,
+  the yard keeps 5 cards, the pile never runs out, every computer step is
+  legal; the strategy beats random choices in 2000 games. A few seconds.
 - `node tests/matches-core.js` - no server or browser needed. All 90
   "Matchstick Puzzles": the start is wrong (sums) or lacks the asked
   number of squares, a full search finds a solution with exactly 1 or 2

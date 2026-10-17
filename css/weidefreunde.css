@@ -1,0 +1,101 @@
+/* weidefreunde: rules used only by the weidefreunde pages (loaded after base.css). */
+/* ---- Pasture Friends (Weidefreunde): card-and-dice game for children ----
+   Yard of five cards, the animal die, one pasture row per player. Black on
+   white only; a free place on a pasture is the same drawing, white and
+   dashed. Nothing animated; spacing from margins (Tolino). */
+.wf-die-svg {
+  width: 96px;
+  height: 96px;
+}
+
+.wf-yard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  direction: ltr;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.wf-card {
+  width: calc(20% - 8px);
+  min-width: 56px;
+  min-height: 72px;
+  margin: 4px;
+  padding: 2px;
+  border: 2px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+  color: #141413;
+  line-height: 0;
+}
+
+.wf-card svg {
+  width: 100%;
+  max-width: 56px;
+  height: auto;
+}
+
+.wf-card-active {
+  border-width: 5px;
+  padding: 0;
+}
+
+.wf-pastures {
+  margin: var(--space-2) auto;
+  max-width: 480px;
+}
+
+.wf-pasture {
+  display: flex;
+  align-items: center;
+  direction: ltr;
+  margin: 0 0 var(--space-1);
+  padding: 4px;
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+}
+
+.wf-pasture-active {
+  border: 4px solid #141413;
+  padding: 2px;
+}
+
+.wf-pasture-marker {
+  flex: 0 0 auto;
+  margin-right: 4px;
+}
+
+.wf-slots {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: space-between;
+}
+
+.wf-slot {
+  display: block;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: 19%;
+  max-width: 52px;
+  padding: 2px;
+  border: 3px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+  line-height: 0;
+}
+
+.wf-slot svg {
+  width: 100%;
+  height: auto;
+}
+
+.wf-slot-free {
+  border-style: dashed;
+  border-width: 2px;
+}
+
+.wf-slot-free svg * {
+  fill: #fff !important;
+  stroke-dasharray: 3 3;
+}
