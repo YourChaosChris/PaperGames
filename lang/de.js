@@ -642,6 +642,7 @@ STRINGS.de = {
     release_v244: "Spiele öffnen direkt spielbereit; das Ergebnisfenster hat „Nochmal spielen“; „Neues Spiel“ steht neben dem Brett; Schach hat einen eigenen Knopf für zwei Spieler.",
     release_v245: "Spielseiten haben einen einzeiligen Kopf und keine Seiten-Navigation; „Einstellungen“ ist ins Menü gewandert; das Steuerfeld schließt nach dem Start, damit mehr Bretter auf den Bildschirm passen.",
     release_v246: "Spielkarten auf allen Kategorieseiten sind große Tippflächen; die Kinderseite zeigt alle Kinderspiele auf einer Seite mit großen Symbolen; „Großes Feld“ macht kleine Bretter besser tippbar; Kuchen steht nicht mehr bei den Kinderspielen.",
+    release_v249: "Seiten laden schneller, weil sie weniger Daten brauchen. Neue Spiele: Kleeberg und Weidefreunde.",
     release_v248: "Sieben neue Spiele (Bingo, drei Würfelspiele und drei Kinderrätsel), eine neue schwerste Stufe bei Pfeile, ein Hinweisknopf bei Katzenplätze, bessere Suche und die Seite Kartenspiele.",
     release_v247: "Alle Spiele verwenden dieselben Namen und Statustexte („Gegen den Computer“, „Zu zweit an einem Gerät“, „Neues Spiel“, „Du bist dran“); jede Spielseite hat einen Home-Knopf; „Rückgängig“ nimmt in 32 Spielen deinen Zug und die Antwort des Computers zurück.",
     release_v240: "Die Spielnamen wurden in allen 12 Sprachen geändert.",

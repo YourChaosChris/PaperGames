@@ -580,6 +580,7 @@ STRINGS.fr = {
     release_v244: "Les jeux s’ouvrent prêts à jouer ; la fenêtre de résultat propose « Rejouer » ; « Nouvelle partie » reste près du plateau ; les échecs ont un bouton pour deux joueurs.",
     release_v245: "Les pages de jeu ont un en-tête sur une ligne et pas de navigation du site ; les réglages sont dans le menu ; le panneau de commandes se ferme au démarrage, donc plus de plateaux tiennent à l’écran.",
     release_v246: "Les cartes de jeu de toutes les pages de catégorie sont de grandes zones à toucher ; la page enfants montre tous les jeux sur une page avec de grands symboles ; « Grand plateau » facilite les petits plateaux ; Cake n’est plus classé parmi les jeux pour enfants.",
+    release_v249: "Les pages se chargent plus vite, car elles demandent moins de données. Nouveaux jeux : Kleeberg et Les amis du pré.",
     release_v248: "Sept nouveaux jeux (bingo, trois jeux de dés et trois énigmes pour enfants), un nouveau niveau très difficile dans le jeu de flèches, un bouton d’indice dans le jeu des chats, une meilleure recherche et la page Jeux de cartes.",
     release_v247: "Tous les jeux utilisent les mêmes noms et textes d’état (« Contre l’ordinateur », « À deux sur un appareil », « Nouvelle partie », « À toi de jouer ») ; chaque page de jeu a un bouton Accueil ; « Annuler » reprend ton coup et la réponse de l’ordinateur dans 32 jeux.",
     release_v240: "Les noms des jeux ont changé dans les 12 langues.",

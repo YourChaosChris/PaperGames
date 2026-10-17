@@ -654,6 +654,7 @@ const STRINGS = {
     release_v244: "Games open ready to play; the result window offers Play again; New game stays next to the board; Chess has its own two-player button.",
     release_v245: "Game pages have a one-row header and no site navigation; Settings moved into the menu; the control panel closes after the start, so more boards fit on the screen.",
     release_v246: "Game cards on all category pages are big tap targets; the kids page shows every kids game on one page with large icons; Large board makes tiny boards easier to tap; Cake is no longer listed as a kids game.",
+    release_v249: "Pages load faster because they need less data. New games: Kleeberg and Pasture Friends.",
     release_v248: "Seven new games (Bingo, three dice games and three children's puzzles), a new hardest level in Arrows, a hint button in Cat Places, better search and a Card Games page.",
     release_v247: "All games use the same names and status texts (Against the computer, Two players, one device, New game, Your turn); every game page has a Home button; Undo takes back your move and the computer's answer in 32 games.",
     release_v240: "Game names have changed in all 12 languages.",

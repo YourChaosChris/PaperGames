@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v249",
+    date: "2026-10-17",
+    key: "release_v249",
+    text: "Pages load faster because they need less data. New games: Kleeberg and Pasture Friends."
+  },
+  {
     version: "v248",
     date: "2026-10-17",
     key: "release_v248",

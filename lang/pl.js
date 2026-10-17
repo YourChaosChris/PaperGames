@@ -586,6 +586,7 @@ STRINGS.pl = {
     release_v244: "Gry otwierają się gotowe do gry; okno wyniku ma przycisk „Zagraj jeszcze raz”; „Nowa gra” jest obok planszy; szachy mają osobny przycisk dla dwóch graczy.",
     release_v245: "Strony gier mają nagłówek w jednym wierszu i nie pokazują nawigacji serwisu; ustawienia są w menu; panel zamyka się po starcie, więc więcej plansz mieści się na ekranie.",
     release_v246: "Karty gier na wszystkich stronach kategorii to duże pola dotyku; strona dla dzieci pokazuje wszystkie gry na jednej stronie z dużymi symbolami; „Duża plansza” ułatwia małe plansze; Cake nie jest już na liście gier dla dzieci.",
+    release_v249: "Strony wczytują się szybciej, bo potrzebują mniej danych. Nowe gry: Kleeberg i Przyjaciele z łąki.",
     release_v248: "Siedem nowych gier (bingo, trzy gry w kości i trzy zagadki dla dzieci), nowy bardzo trudny poziom w grze w strzałki, przycisk podpowiedzi w grze z kotami, lepsze wyszukiwanie i strona Gier karcianych.",
     release_v247: "Wszystkie gry używają tych samych nazw i komunikatów stanu („Przeciw komputerowi”, „Dwóch graczy na jednym urządzeniu”, „Nowa gra”, „Twój ruch”); każda strona gry ma przycisk Strona główna; „Cofnij” cofa Twój ruch i odpowiedź komputera w 32 grach.",
     release_v240: "Nazwy gier zmieniły się we wszystkich 12 językach.",

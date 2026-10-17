@@ -121,7 +121,35 @@ function updatePage(file, spec, langs) {
     html = html.replace(/<meta name="description"(?: data-seo-desc="[^"]*")? content=/,
       '<meta name="description"' + (spec.desc ? ' data-seo-desc="' + spec.desc + '"' : "") + " content=");
   }
+  html = syncSocialTags(html);
   fs.writeFileSync(p, html);
+}
+
+// og:/twitter: title and description must describe the same page as
+// <title> and <meta name="description">. They were once copied from another
+// game's page by hand (oddone, patternrow, shadowmatch said "Shape Sort" or
+// "Sorting Puzzles"). A title that only extends the page title (for example
+// "Chess Rules - how to play | PaperGames") is kept.
+function syncSocialTags(html) {
+  const attr = (v) => v.replace(/"/g, "&quot;");
+  const t = /<title[^>]*>([^<]*)<\/title>/.exec(html);
+  const d = /<meta name="description"[^>]*? content="([^"]*)"/.exec(html);
+  if (t) {
+    const title = t[1];
+    const stem = title.split(" | ")[0];
+    ["property=\"og:title\"", "name=\"twitter:title\""].forEach((k) => {
+      const re = new RegExp("(<meta " + k + " content=\")([^\"]*)(\")");
+      const m = re.exec(html);
+      if (m && m[2] !== title && m[2].indexOf(stem) !== 0) html = html.replace(re, (all, a, b, c) => a + attr(title) + c);
+    });
+  }
+  if (d) {
+    ["property=\"og:description\"", "name=\"twitter:description\""].forEach((k) => {
+      const re = new RegExp("(<meta " + k + " content=\")([^\"]*)(\")");
+      if (re.test(html)) html = html.replace(re, (all, a, b, c) => a + d[1] + c);
+    });
+  }
+  return html;
 }
 
 function oldPriorities() {
