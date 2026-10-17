@@ -926,7 +926,7 @@ const FILE_HASHES = {
   "impressum.html": "1cd77500",
   "datenschutz.html": "20635409",
   "donate-qr.png": "f17a17e8",
-  "style.css": "0eee0182",
+  "style.css": "0b954eff",
   "i18n.js": "93ed3578",
   "big-board.js": "e4968dce",
   "i18n-text.js": "213d5b49",

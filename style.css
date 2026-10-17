@@ -14316,6 +14316,8 @@ li.fv-card {
   body.page-bingo .print-card .bingo-cell::after {
     display: none;
   }
+}
+
 /* ---- Number-dice games: Klappenkasten, Steckwuerfeln, Sternjagd ----
    Shared pieces (dice-common.js): pip-dot dice, player markers, players
    list, button row, score table. Black on white only, nothing animated;
@@ -14512,6 +14514,10 @@ li.fv-card {
 .sj-board svg {
   display: block;
   width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
 /* Picture-logic games for children (patternrow-app.js, shadowmatch-app.js,
    oddone-app.js): a picture or row on top, large answer buttons below.
    Black and white only: a wrong answer gets a dashed frame and a cross,
@@ -14627,6 +14633,8 @@ li.fv-card {
 
 .sj-goal {
   cursor: pointer;
+}
+
 /* Whose Shadow Is It?: the picture in a frame, shadows as large square
    buttons - two per row (four shadows) or three per row (three). */
 .kq-picture {
@@ -14655,6 +14663,8 @@ li.fv-card {
 .kq-options-big.kq-n3 .kq-option {
   width: 29%;
   max-width: 116px;
+}
+
 .kz-start-btn {
   min-height: 44px;
   min-width: 44px;
