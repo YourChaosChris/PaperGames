@@ -18,6 +18,12 @@
 //     up to three times. Every die that shows a needed animal (or the
 //     paw) is put on the card and stays there; the other dice are rolled
 //     again.
+//   - Pick rule (games started with pick: true): a paw is put on the card
+//     by the player, who taps the open place of the animal it shall be.
+//     While paws wait, the phase is "paw". Where there is no choice (one
+//     open animal, or at least as many paws as places) the paws go on at
+//     once. Games without pick (older saves) put a paw on the animal the
+//     card needs most.
 //   - When the card is full the player takes it and its points. A new
 //     round begins with the next player.
 //   - When three rolls did not fill the card, the dice on it stay, and
@@ -94,7 +100,8 @@ const ZoowurfCore = (() => {
   }
 
   // opts: { players: 2..4, computer: [bool, ...], rng, target,
-  //         level: "beginner" - the computers choose the open card at random }
+  //         level: "beginner" - the computers choose the open card at random,
+  //         pick: true - the player puts the paws on the card themselves }
   // Without a level the computers choose by the exact chance (as before);
   // an older saved state has no level and plays as before.
   function newGame(opts) {
@@ -127,6 +134,7 @@ const ZoowurfCore = (() => {
       seq: 0                // counts the turns that ended
     };
     if (o.level === "beginner") game.level = "beginner";
+    if (o.pick) game.pick = true;
     return game;
   }
 
@@ -185,10 +193,64 @@ const ZoowurfCore = (() => {
       f = [];
       for (let i = 0; i < n; i++) f.push(Math.floor((rng || Math.random)() * 6));
     }
+    t.dice = { faces: f.slice(), hits: f.map(() => false) };
+    t.rolls += 1;
+    if (t.pick) {
+      // animals first; the paws wait for the player when there is a choice
+      t.dice.on = f.map(() => -1);   // the animal a paw die went on (-1: none)
+      const left = t.play.need.slice();
+      f.forEach((x, i) => { if (x < ANIMALS && left[x] > 0) { left[x]--; t.dice.hits[i] = true; } });
+      t.play.need = left;
+      t.paws = [];
+      f.forEach((x, i) => { if (x === WILD) t.paws.push(i); });
+      return placePaws(t);
+    }
     const r = applyDice(t.play.need, f);
     t.play.need = r.need;
-    t.dice = { faces: f.slice(), hits: r.hits };
-    t.rolls += 1;
+    t.dice.hits = r.hits;
+    return settle(t);
+  }
+
+  function openAnimals(need) {
+    let n = 0;
+    need.forEach((x) => { if (x > 0) n++; });
+    return n;
+  }
+
+  // Puts waiting paws on the card where the player has no choice; stops in
+  // the phase "paw" when there is one.
+  function placePaws(t) {
+    const total = sum(t.play.need);
+    if (t.paws && t.paws.length && total > 0 && openAnimals(t.play.need) > 1 && t.paws.length < total) {
+      t.phase = "paw";
+      return t;
+    }
+    while (t.paws && t.paws.length && sum(t.play.need) > 0) {
+      let best = -1;
+      for (let a = 0; a < ANIMALS; a++) if (t.play.need[a] > 0 && (best < 0 || t.play.need[a] > t.play.need[best])) best = a;
+      t.play.need[best]--;
+      const d = t.paws.shift();
+      t.dice.hits[d] = true;
+      t.dice.on[d] = best;
+    }
+    t.paws = [];
+    t.phase = "roll";
+    return settle(t);
+  }
+
+  // The player puts one waiting paw on the open place of animal a.
+  function placePaw(s, a) {
+    if (s.phase !== "paw" || !s.play || !s.paws || !s.paws.length || !(a >= 0 && a < ANIMALS) || !(s.play.need[a] > 0)) return s;
+    const t = clone(s);
+    t.play.need[a]--;
+    const d = t.paws.shift();
+    t.dice.hits[d] = true;
+    t.dice.on[d] = a;
+    return placePaws(t);
+  }
+
+  // The roll is complete: a full card is won, three rolls pass the card on.
+  function settle(t) {
     if (sum(t.play.need) === 0) {
       const size = t.play.size;
       t.scores[t.current] += 1;
@@ -306,6 +368,24 @@ const ZoowurfCore = (() => {
     return best;
   }
 
+  // The animal the computer puts a paw on: the open place that leaves the
+  // best chance to fill the card (the beginner level takes one at random).
+  function chooseAnimal(s, rng, opts) {
+    const open = [];
+    s.play.need.forEach((n, a) => { if (n > 0) open.push(a); });
+    const dumb = opts && opts.dumb !== undefined ? !!opts.dumb : s.level === "beginner";
+    if (dumb) return open[Math.floor((rng || Math.random)() * open.length)];
+    let best = open[0];
+    let bestValue = -1;
+    open.forEach((a) => {
+      const need = s.play.need.slice();
+      need[a]--;
+      const v = firstChance(key(need));
+      if (v > bestValue + 1e-9) { best = a; bestValue = v; }
+    });
+    return best;
+  }
+
   // One action of the computer. opts.dumb: choose the card at random; by
   // default the level of the game decides ("beginner" chooses at random).
   function aiStep(s, rng, opts) {
@@ -314,6 +394,7 @@ const ZoowurfCore = (() => {
       return choose(s, dumb ? Math.floor((rng || Math.random)() * s.yard.length) : chooseCard(s));
     }
     if (s.phase === "roll") return roll(s, rng);
+    if (s.phase === "paw") return placePaw(s, chooseAnimal(s, rng, opts));
     return s;
   }
 
@@ -323,7 +404,7 @@ const ZoowurfCore = (() => {
     return s.winner === player ? "win" : "loss";
   }
 
-  return { ANIMALS, WILD, MAX_ROLLS, TARGET, OPEN, makeRng, newGame, applyDice, choose, roll, cardValue, chooseCard, firstChance, key, aiStep, outcomeFor, sum };
+  return { ANIMALS, WILD, MAX_ROLLS, TARGET, OPEN, makeRng, newGame, applyDice, choose, roll, placePaw, cardValue, chooseCard, firstChance, key, aiStep, outcomeFor, sum };
 })();
 
 if (typeof module !== "undefined") module.exports = ZoowurfCore;

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v253",
+    date: "2026-10-17",
+    key: "release_v253",
+    text: "Zoo Toss: you now put the paws on the card yourself, and after the computer's turn you see its card, dice and paws and tap Next."
+  },
+  {
     version: "v252",
     date: "2026-10-17",
     key: "release_v252",

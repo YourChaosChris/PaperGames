@@ -5,9 +5,12 @@
 // the device around. At the start of a round the player to move taps one
 // of two open cards. Then the dice are rolled with the "Roll the dice"
 // button: every die that shows an animal of the card (or the paw) goes
-// onto the card at once and is marked with a tick; up to three rolls make
-// a turn. The computers play their whole turns at once and the lines under
-// the board tell what they did, with the dice they rolled last. Pictures
+// onto the card at once and is marked with a tick; a paw is put on the
+// card by the player, who taps the open place of the animal it shall be
+// (games from v253 on; an older saved game puts it on the animal needed
+// most). Up to three rolls make a turn. A computer plays one whole turn;
+// then a panel shows the card it took, every roll with its dice and the
+// animal each paw went on, and the "Next" button goes on. Pictures
 // only, no word is needed to play; nothing is animated, no time limit;
 // everything is black on white (a free place on a card is a dashed
 // outline).
@@ -17,7 +20,8 @@ const ZOOWURF_SAVE_KEY = "einkchess_save_zoowurf";
 const AppStateZW = {
   state: null,
   log: [],      // the last turns that ended, newest first (not saved)
-  logged: 0     // state.seq of the newest logged turn
+  logged: 0,    // state.seq of the newest logged turn
+  review: null  // the computer turn just played, shown until "Next" (not saved)
 };
 
 function tZW(key, values) {
@@ -49,7 +53,7 @@ function saveZW() {
 
 function validStateZW(s) {
   return !!s && s.game === "zoowurf" && Array.isArray(s.yard) && Array.isArray(s.pile) && Array.isArray(s.scores) && Array.isArray(s.computer) && s.phase !== "over" &&
-    (s.phase !== "roll" || (!!s.play && Array.isArray(s.play.need) && Array.isArray(s.play.card)));
+    ((s.phase !== "roll" && s.phase !== "paw") || (!!s.play && Array.isArray(s.play.need) && Array.isArray(s.play.card)));
 }
 
 /*** Game flow ***/
@@ -58,8 +62,9 @@ function startGameZW() {
   const mode = DiceCommon.activeMode();
   const n = parseInt(document.getElementById("zw-players").value, 10) || 2;
   const level = document.getElementById("zw-level").value === "beginner" ? "beginner" : "normal";
-  AppStateZW.state = ZoowurfCore.newGame({ players: n, computer: DiceCommon.seats(mode, n), level: level });
+  AppStateZW.state = ZoowurfCore.newGame({ players: n, computer: DiceCommon.seats(mode, n), level: level, pick: true });
   AppStateZW.log = [];
+  AppStateZW.review = null;
   AppStateZW.logged = 0;
   setResultZW("");
   if (window.ResultModal) window.ResultModal.hide();
@@ -76,41 +81,77 @@ function noteZW() {
   AppStateZW.log = AppStateZW.log.slice(0, 3);
 }
 
-// The computers play at once until a person is to act or the game is over.
-function runComputersZW() {
+// A computer plays one whole turn (until a card is won or passed on) and
+// the turn is written down for the panel. Nothing is played after it until
+// the person taps "Next".
+function runComputerTurnZW() {
+  let st = AppStateZW.state;
+  const seq = st.seq;
+  const rec = { player: st.current, card: null, need: null, rolls: [], action: null, left: 0 };
   let guard = 0;
-  while (AppStateZW.state.phase !== "over" && AppStateZW.state.computer[AppStateZW.state.current] && guard++ < 2000) {
-    const next = ZoowurfCore.aiStep(AppStateZW.state);
-    if (next === AppStateZW.state) break;
-    AppStateZW.state = next;
+  while (st.phase !== "over" && st.computer[st.current] && st.seq === seq && guard++ < 200) {
+    const before = st;
+    const next = ZoowurfCore.aiStep(before);
+    if (next === before) break;
+    if (!rec.card) {
+      rec.card = (before.play || next.play).card.slice();
+      rec.need = (before.phase === "choose" ? next.play : before.play).need.slice();
+    }
+    if (before.phase === "roll") {
+      rec.rolls.push({ dice: JSON.parse(JSON.stringify(next.dice)) });
+    } else if (before.phase === "paw") {
+      rec.rolls[rec.rolls.length - 1].dice = JSON.parse(JSON.stringify(next.dice));
+    }
+    st = next;
+  }
+  AppStateZW.state = st;
+  if (st.last && st.seq !== seq) {
+    rec.action = st.last.action;
+    rec.left = st.last.left;
     noteZW();
   }
+  if (rec.rolls.length) AppStateZW.review = rec;
 }
 
 function afterActionZW() {
   noteZW();
-  runComputersZW();
+  if (!AppStateZW.review && AppStateZW.state.phase !== "over" && AppStateZW.state.computer[AppStateZW.state.current]) runComputerTurnZW();
   const s = AppStateZW.state;
-  if (s.phase === "over") finishZW();
+  if (s.phase === "over" && !AppStateZW.review) finishZW();
   renderZW();
   saveZW();
 }
 
+function nextZW() {
+  if (!AppStateZW.review) return;
+  AppStateZW.review = null;
+  afterActionZW();
+}
+
 function humanTurnZW() {
   const s = AppStateZW.state;
-  return !!s && s.phase !== "over" && !s.computer[s.current];
+  return !!s && s.phase !== "over" && !s.computer[s.current] && !AppStateZW.review;
 }
 
 function rollZW() {
   const s = AppStateZW.state;
-  if (!s || s.phase !== "roll" || s.computer[s.current]) return;
+  if (!s || s.phase !== "roll" || s.computer[s.current] || AppStateZW.review) return;
   AppStateZW.state = ZoowurfCore.roll(s);
+  afterActionZW();
+}
+
+function pawZW(a) {
+  const s = AppStateZW.state;
+  if (!humanTurnZW() || s.phase !== "paw") return;
+  const next = ZoowurfCore.placePaw(s, a);
+  if (next === s) return;
+  AppStateZW.state = next;
   afterActionZW();
 }
 
 function chooseZW(i) {
   const s = AppStateZW.state;
-  if (!humanTurnZW() || s.phase !== "choose") return;
+  if (!humanTurnZW() || s.phase !== "choose" || AppStateZW.review) return;
   const next = ZoowurfCore.choose(s, i);
   if (next === s) return;
   AppStateZW.state = next;
@@ -165,14 +206,15 @@ function dieSvgZW(face, hit, size) {
 // The pictures of a card: one place per animal on it. With `need` given,
 // the places that are still open are drawn dashed and white, the others
 // are full. size: px of one picture.
-function cardHtmlZW(card, need, size) {
+function cardHtmlZW(card, need, size, tap) {
   const left = need ? need.slice() : null;
   let html = "";
   for (let a = 0; a < ZoowurfCore.ANIMALS; a++) {
     for (let k = 0; k < card[a]; k++) {
       let open = false;
       if (left && left[a] > 0 && k >= card[a] - left[a]) open = true;
-      html += '<span class="zw-slot' + (open ? " zw-slot-open" : "") + '">' + ZooIcons.svg(a, size) + "</span>";
+      if (open && tap) html += '<button type="button" class="zw-slot zw-slot-open zw-slot-tap" data-animal="' + a + '" aria-label="' + tZW("zw_paw_here_aria", { animal: animalNameZW(a) }) + '">' + ZooIcons.svg(a, size) + "</button>";
+      else html += '<span class="zw-slot' + (open ? " zw-slot-open" : "") + '">' + ZooIcons.svg(a, size) + "</span>";
     }
   }
   return html;
@@ -221,9 +263,10 @@ function renderLogZW() {
 
 function turnStatusZW() {
   const s = AppStateZW.state;
+  if (AppStateZW.review) return tZW("zw_cpu_title", { name: nameZW(AppStateZW.review.player) });
   if (s.computer[s.current]) return I18n.t("ui_status_computer_turn");
   const who = humansZW() === 1 ? I18n.t("ui_status_your_turn") : tZW("dg_turn_of", { name: nameZW(s.current) });
-  const hint = s.phase === "choose" ? tZW("zw_choose_hint") : tZW("zw_roll_hint", { n: s.rolls + 1 });
+  const hint = s.phase === "choose" ? tZW("zw_choose_hint") : (s.phase === "paw" ? tZW("zw_paw_hint") : tZW("zw_roll_hint", { n: s.rolls + 1 }));
   return who + " " + hint;
 }
 
@@ -255,10 +298,10 @@ function renderPlayZW() {
     rolls.innerHTML = "";
     return;
   }
-  card.innerHTML = cardHtmlZW(s.play.card, s.play.need, 44);
+  card.innerHTML = cardHtmlZW(s.play.card, s.play.need, 44, humanTurnZW() && s.phase === "paw");
   card.setAttribute("aria-label", cardAriaZW(s.play.card, s.play.need));
   let html;
-  if (s.rolls > 0 && s.dice) {
+  if ((s.rolls > 0 || s.phase === "paw") && s.dice) {
     html = diceListHtmlZW(s.dice, 64);
     dice.setAttribute("aria-label", tZW("zw_dice_aria", { dice: s.dice.faces.map((f, i) => animalNameZW(f) + (s.dice.hits[i] ? " (" + tZW("zw_hit") + ")" : "")).join(", ") }));
   } else {
@@ -275,18 +318,44 @@ function renderPlayZW() {
   rolls.setAttribute("aria-label", tZW("zw_rolls_aria", { n: s.rolls, m: ZoowurfCore.MAX_ROLLS }));
 }
 
+// The panel with the turn a computer has just played.
+function renderReviewZW() {
+  const r = AppStateZW.review;
+  const wrap = document.getElementById("zw-review");
+  wrap.classList.toggle("hidden", !r);
+  if (!r) { wrap.innerHTML = ""; return; }
+  let h = '<div class="zw-review-title">' + tZW("zw_cpu_title", { name: nameZW(r.player) }) + "</div>";
+  h += '<div class="pc-row"><span class="pc-row-label">' + tZW("zw_cpu_card") + '</span><div class="zw-card-big zw-card-small">' + cardHtmlZW(r.card, r.need, 32) + "</div></div>";
+  r.rolls.forEach((x, i) => {
+    h += '<div class="zw-review-roll"><span class="zw-review-label">' + tZW("zw_cpu_roll", { n: i + 1 }) + '</span><span class="zw-log-dice">' + diceListHtmlZW(x.dice, 40) + "</span>";
+    x.dice.faces.forEach((f, k) => {
+      const a = x.dice.on ? x.dice.on[k] : -1;
+      if (f !== ZoowurfCore.WILD || !(a >= 0)) return;
+      h += '<span class="zw-review-paw" role="img" aria-label="' + tZW("zw_cpu_paw_aria", { animal: animalNameZW(a) }) + '">' + dieSvgZW(ZoowurfCore.WILD, false, 30) + '<span aria-hidden="true">&rarr;</span>' + ZooIcons.svg(a, 30) + "</span>";
+    });
+    h += "</div>";
+  });
+  h += '<div class="status-text">' + turnTextZW({ player: r.player, action: r.action, left: r.left }) + "</div>";
+  h += '<div class="dg-actions"><button id="zw-next" class="primary" type="button">' + tZW("zw_next") + "</button></div>";
+  wrap.innerHTML = h;
+  document.getElementById("zw-next").addEventListener("click", nextZW);
+}
+
 function renderZW() {
   const s = AppStateZW.state;
   if (!s) return;
   const over = s.phase === "over";
   document.getElementById("zw-players-list").innerHTML = DiceCommon.playersHtml(s.computer, s.current, s.scores.map((n) => tZW("zw_count", { n: n, m: s.target })), over);
-  document.getElementById("zw-choose").classList.toggle("hidden", s.phase !== "choose");
-  document.getElementById("zw-play").classList.toggle("hidden", s.phase !== "roll");
+  const showing = !!AppStateZW.review;
+  document.getElementById("zw-choose").classList.toggle("hidden", s.phase !== "choose" || showing);
+  document.getElementById("zw-play").classList.toggle("hidden", !(s.phase === "roll" || s.phase === "paw") || showing);
+  renderReviewZW();
   if (s.phase === "choose") renderYardZW();
   renderPlayZW();
   document.getElementById("zw-roll").disabled = !(humanTurnZW() && s.phase === "roll");
-  setStatusZW(over ? "" : turnStatusZW());
+  setStatusZW(over && !showing ? "" : turnStatusZW());
   renderLogZW();
+  document.getElementById("zw-last").classList.toggle("hidden", showing);
 }
 
 /*** Setup ***/
@@ -300,11 +369,15 @@ function initZoowurfApp() {
   showLevelZW();
   document.getElementById("start-zw-game").addEventListener("click", startGameZW);
   document.getElementById("zw-roll").addEventListener("click", rollZW);
+  document.getElementById("zw-card").addEventListener("click", (e) => {
+    const b = e.target && e.target.closest ? e.target.closest("button[data-animal]") : null;
+    if (b) pawZW(parseInt(b.getAttribute("data-animal"), 10));
+  });
   const A = (id) => ZooIcons.svg(id, 34), Z = (face, hit) => dieSvgZW(face, hit, 44);
   Howto.init({ slug: "zoowurf", actions: ["zw-roll"], steps: [
     { pics: Howto.box(A(0) + A(0) + A(3)) + Howto.box(A(2) + A(4) + A(1)), key: "zw_howto_1" },
     { pics: Z(0) + Z(4) + Z("paw") + Z(2), key: "zw_howto_2" },
-    { pics: Z("paw") + Howto.arrow() + Z(0, true), key: "zw_howto_3" },
+    { pics: Z("paw") + Howto.arrow() + Howto.box('<span class="zw-slot">' + A(0) + '</span><span class="zw-slot zw-slot-open">' + A(3) + "</span>"), key: "zw_howto_3" },
     { pics: Howto.box(A(0) + A(0) + A(3)) + Howto.sign("=") + Howto.tile("", "mark", 36), key: "zw_howto_4" }
   ] });
   if (window.I18n && typeof I18n.onChange === "function") {

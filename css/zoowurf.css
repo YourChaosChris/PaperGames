@@ -110,3 +110,72 @@
 .zw-log-dice .zw-die {
   margin: 1px;
 }
+
+/* a free place the player can tap to put the paw there (at least 48 px) */
+button.zw-slot-tap {
+  min-width: 52px;
+  min-height: 52px;
+  margin: 4px;
+  padding: 2px;
+  border: 4px dashed #141413;
+  border-radius: var(--radius);
+  background: #fff;
+  color: #141413;
+  cursor: pointer;
+}
+
+/* the turn a computer has just played */
+.zw-review {
+  box-sizing: border-box;
+  max-width: 480px;
+  margin: 0 auto var(--space-2);
+  padding: 6px;
+  border: 3px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.zw-review-title {
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.zw-card-small {
+  border-width: 3px;
+  padding: 3px;
+}
+
+.zw-card-small .zw-slot {
+  margin: 2px;
+  padding: 1px;
+  border-width: 2px;
+}
+
+.zw-review-roll {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0;
+}
+
+.zw-review-label {
+  margin: 0 6px;
+}
+
+.zw-review-paw {
+  display: inline-flex;
+  align-items: center;
+  direction: ltr;
+  margin: 0 6px;
+  line-height: 0;
+}
+
+.zw-review-paw .zw-die {
+  margin: 0 2px;
+}
+
+.zw-review-paw svg {
+  margin: 0 2px;
+}

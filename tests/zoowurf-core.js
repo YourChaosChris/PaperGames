@@ -174,6 +174,73 @@ check("the card choice wins more than half against the worst choice", wins / N >
   check("the standard computer beats the random chooser more often than not", smartWins >= 50);
 })();
 
+
+// ---- pick rule (task 99t): the player puts the paws on the card ----
+(() => {
+  const mk = (card, players) => { const g = C.newGame({ players: players || 2, rng: C.makeRng(1), pick: true }); g.yard = [card.slice(), [1, 1, 1, 0, 0]]; g.pile = []; return C.choose(g, 0); };
+  const old = C.newGame({ players: 2, rng: C.makeRng(3) });
+  check("pick: a game without pick has no pick field (older saves play as before)", old.pick === undefined && !("pick" in old) && C.newGame({ players: 2, pick: true }).pick === true);
+  // lion, monkey, penguin open; one paw: the player chooses
+  let g = mk([1, 0, 0, 1, 1]);
+  let t = C.roll(g, null, [5, 1, 2]);
+  check("pick: one paw and three open animals waits for the player", t.phase === "paw" && t.paws.join() === "0" && t.dice.hits.join() === "false,false,false" && t.play.need.join() === "1,0,0,1,1" && t.rolls === 1 && t.current === 0);
+  check("pick: roll and choose are refused while a paw waits", C.roll(t, null, [0]) === t && C.choose(t, 0) === t);
+  check("pick: a place that is not open is refused", C.placePaw(t, 1) === t && C.placePaw(t, 9) === t && C.placePaw(g, 0) === g);
+  let u = C.placePaw(t, 4);
+  check("pick: the paw goes on the chosen animal, the die is marked, the roll goes on", u.phase === "roll" && u.play.need.join() === "1,0,0,1,0" && u.dice.hits.join() === "true,false,false" && u.paws.length === 0 && u.current === 0);
+  // plain animals are put first, then the paw
+  t = C.roll(g, null, [3, 5, 5]);
+  check("pick: the monkey goes on at once, two paws and two open places fill the card without a question", t.phase === "choose" && t.scores[0] === 1 && t.last.action === "win");
+  g = mk([2, 0, 0, 1, 1]);
+  t = C.roll(g, null, [5, 5, 3, 3]);
+  check("pick: two paws, two open animals after the monkey: the player chooses twice", t.phase === "paw" && t.paws.length === 2 && t.play.need.join() === "2,0,0,0,1");
+  u = C.placePaw(t, 0);
+  check("pick: after the first paw the second still waits", u.phase === "paw" && u.paws.length === 1 && u.play.need.join() === "1,0,0,0,1" && u.dice.hits.filter(Boolean).length === 2);
+  u = C.placePaw(u, 4);
+  check("pick: after the second paw the roll goes on with one place open", u.phase === "roll" && u.play.need.join() === "1,0,0,0,0" && u.dice.hits.filter(Boolean).length === 3);
+  // only one open animal: no choice, the paw goes on at once
+  g = mk([2, 0, 0, 1, 0]);
+  t = C.roll(g, null, [3, 5, 4]);
+  check("pick: one open animal left means no choice", t.phase === "roll" && t.play.need.join() === "1,0,0,0,0" && t.dice.hits.join() === "true,true,false");
+  // paws fill the card when there are enough
+  t = C.roll(g, null, [5, 5, 5]);
+  check("pick: as many paws as places fill the card without a question", t.phase === "choose" && t.scores[0] === 1);
+  // the third roll with a waiting paw: after the choice the turn passes
+  g = mk([1, 0, 0, 1, 1]);
+  g.rolls = 2;
+  t = C.roll(g, null, [5, 2, 2]);
+  u = C.placePaw(t, 0);
+  check("pick: third roll, paw placed, card not full: the turn passes to the next player", u.current === 1 && u.rolls === 0 && u.play.need.join() === "0,0,0,1,1" && u.last.action === "pass");
+  check("pick: the state with a waiting paw survives a save", JSON.stringify(JSON.parse(JSON.stringify(t))) === JSON.stringify(t));
+  // the computer answers in the paw phase, the beginner at random
+  t = C.roll(mk([1, 0, 0, 1, 1]), null, [5, 2, 2]);
+  const ai = C.aiStep(t, C.makeRng(4));
+  check("pick: the computer places the paw", ai !== t && ai.phase === "roll" && C.sum(ai.play.need) === 2);
+  const seen = {};
+  for (let i = 0; i < 60; i++) { const b = C.aiStep({ ...t, level: "beginner" }, C.makeRng(300 + i)); seen[b.play.need.join("")] = 1; }
+  check("pick: the beginner places the paw on different animals", Object.keys(seen).length >= 2);
+  // 100 games: every one ends, cards are kept; the computer that chooses
+  // the paw against one that chooses at random
+  let ended = 0, smart = 0;
+  const N3 = 100;
+  for (let i = 0; i < N3; i++) {
+    const rr = C.makeRng(9000 + i), seat = i % 2;
+    let x = C.newGame({ players: 2, computer: [true, true], rng: rr, pick: true });
+    let guard = 0, bad = false;
+    while (x.phase !== "over" && guard++ < 3000) {
+      const next = C.aiStep(x, rr, { dumb: x.current !== seat });
+      if (next === x) { bad = true; break; }
+      x = next;
+      if (!conserved(x)) { bad = true; break; }
+    }
+    if (!bad && x.phase === "over" && x.scores[x.winner] === C.TARGET) ended++;
+    if (x.winner === seat) smart++;
+  }
+  console.log("pick rule: " + ended + " of " + N3 + " computer games ended with a winner of 4 cards; the standard computer wins " + smart + " of " + N3 + " against a computer that chooses cards and paws at random");
+  check("pick: all 100 games end correctly", ended === N3);
+  check("pick: the standard computer beats the random one more often than not", smart >= 50);
+})();
+
 if (fails.length) {
   console.log(fails.slice(0, 30).join("\n"));
   console.log("=== ZOOWURF CORE: " + fails.length + " failure(s) ===");
