@@ -300,6 +300,14 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   players: one full pasture ends the game, the 35 cards are always all there,
   the yard keeps 5 cards, the pile never runs out, every computer step is
   legal; the strategy beats random choices in 2000 games. A few seconds.
+- `node tests/zoowurf-core.js` - no server or browser needed. "Zoo Toss":
+  every rule with fixed rolls (dice that fit go onto the card, the paw, three
+  rolls make a turn, the rest of the card goes on to the next player, four
+  cards win, refused moves), the 30 different cards, the exact chance of
+  filling a card first against a simulation of 10000 rounds, then 1000
+  games computer against computer for each of 2, 3 and 4 players (one winner
+  with 4 cards, no card lost, every step legal), and the card choice against
+  a player who always takes the worst open card (3000 games). A few seconds.
 - `node tests/matches-core.js` - no server or browser needed. All 90
   "Matchstick Puzzles": the start is wrong (sums) or lacks the asked
   number of squares, a full search finds a solution with exactly 1 or 2

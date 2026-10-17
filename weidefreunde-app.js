@@ -35,6 +35,52 @@ function animalNameWF(a) {
   return tWF(a === WeidefreundeCore.FARMER ? "wf_farmer" : "wf_animal_" + a);
 }
 
+/*** How it works: a picture explanation before the first game ***/
+
+// One picture row of the explanation: the picture(s) and its sentence.
+function howtoRowWF(pics, key) {
+  return '<li class="wf-howto-item"><span class="wf-howto-pics" aria-hidden="true">' + pics + '</span><span class="wf-howto-text">' + tWF(key) + "</span></li>";
+}
+
+function howtoHtmlWF() {
+  const arrow = '<svg class="wf-howto-arrow" viewBox="0 0 30 20" width="30" height="20" focusable="false"><path d="M2 10H24M17 3L25 10L17 17" fill="none" stroke="#141413" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const card = (a) => '<span class="wf-card wf-howto-card">' + WeideIcons.svg(a, 40) + "</span>";
+  const slot = (a, own) => '<span class="wf-slot ' + (own ? "wf-slot-own" : "wf-slot-free") + ' wf-howto-slot">' + WeideIcons.svg(a, 36) + "</span>";
+  let all = "";
+  for (let a = 0; a < WeidefreundeCore.ANIMALS; a++) all += slot(a, true);
+  return '<ol class="wf-howto-list">' +
+    howtoRowWF(dieSvgWF(0, 56), "wf_howto_1") +
+    howtoRowWF(card(0) + arrow + slot(0, true), "wf_howto_2") +
+    howtoRowWF(card("farmer") + arrow + slot(1, true), "wf_howto_3") +
+    howtoRowWF(all, "wf_howto_4") +
+    "</ol>";
+}
+
+function renderHowtoWF() {
+  const box = document.getElementById("wf-howto-body");
+  if (box) box.innerHTML = howtoHtmlWF();
+}
+
+// The explanation opens by itself until the first roll on this device;
+// afterwards the button "How does it work?" shows it again.
+const WF_HOWTO_SEEN = "papergames_wf_howto_seen";
+
+function howtoSeenWF() {
+  try { return !!(window.localStorage && window.localStorage.getItem(WF_HOWTO_SEEN)); } catch (e) { return false; }
+}
+
+function markHowtoSeenWF() {
+  try { if (window.localStorage) window.localStorage.setItem(WF_HOWTO_SEEN, "1"); } catch (e) { /* the explanation just opens again next time */ }
+  setHowtoWF(false);
+}
+
+function setHowtoWF(show) {
+  const panel = document.getElementById("wf-howto");
+  const btn = document.getElementById("wf-howto-toggle");
+  if (panel) panel.classList.toggle("hidden", !show);
+  if (btn && window.I18n) I18n.setKey(btn, show ? "wf_howto_hide" : "wf_howto_show");
+}
+
 /*** Save and load ***/
 
 function saveWF() {
@@ -70,7 +116,7 @@ function noteWF() {
   if (!s.last || s.seq === AppStateWF.logged) return;
   AppStateWF.logged = s.seq;
   AppStateWF.log.unshift(JSON.parse(JSON.stringify(s.last)));
-  AppStateWF.log = AppStateWF.log.slice(0, 3);
+  AppStateWF.log = AppStateWF.log.slice(0, s.n);
 }
 
 // The computers play at once until a person is to roll or the game is over.
@@ -101,6 +147,7 @@ function humanTurnWF() {
 function rollWF() {
   const s = AppStateWF.state;
   if (!s || s.phase !== "roll" || s.computer[s.current]) return;
+  markHowtoSeenWF();
   AppStateWF.state = WeidefreundeCore.roll(s);
   afterActionWF();
 }
@@ -151,11 +198,11 @@ function setResultWF(text) {
 
 // The die: a rounded square with the animal (or the farmer) on it; a
 // dashed empty face before the roll.
-function dieSvgWF(face) {
+function dieSvgWF(face, size) {
   const empty = face === null || face === undefined;
   const rect = '<rect x="5" y="5" width="90" height="90" rx="16" fill="#ffffff" stroke="#141413" stroke-width="6"' + (empty ? ' stroke-dasharray="10 8"' : "") + "/>";
   const pic = empty ? "" : '<g transform="translate(13 13) scale(1.23)">' + WeideIcons.inner(face) + "</g>";
-  return '<svg class="dg-die wf-die-svg" viewBox="0 0 100 100" width="96" height="96" aria-hidden="true" focusable="false">' + rect + pic + "</svg>";
+  return '<svg class="dg-die wf-die-svg" viewBox="0 0 100 100" width="' + (size || 96) + '" height="' + (size || 96) + '" aria-hidden="true" focusable="false">' + rect + pic + "</svg>";
 }
 
 function turnTextWF(l) {
@@ -171,7 +218,14 @@ function renderLogWF() {
   wrap.innerHTML = "";
   AppStateWF.log.forEach((l) => {
     const p = document.createElement("div");
-    p.textContent = turnTextWF(l);
+    p.className = "wf-log-line";
+    const d = document.createElement("span");
+    d.className = "wf-log-die";
+    d.innerHTML = dieSvgWF(l.die, 36);
+    p.appendChild(d);
+    const t = document.createElement("span");
+    t.textContent = turnTextWF(l);
+    p.appendChild(t);
     wrap.appendChild(p);
   });
 }
@@ -242,8 +296,13 @@ function initWeidefreundeApp() {
   document.getElementById("mode-offline").addEventListener("click", () => DiceCommon.setMode("hotseat"));
   document.getElementById("start-wf-game").addEventListener("click", startGameWF);
   document.getElementById("wf-roll").addEventListener("click", rollWF);
+  document.getElementById("wf-howto-toggle").addEventListener("click", () => {
+    setHowtoWF(document.getElementById("wf-howto").classList.contains("hidden"));
+  });
+  renderHowtoWF();
+  setHowtoWF(!howtoSeenWF());
   if (window.I18n && typeof I18n.onChange === "function") {
-    I18n.onChange(() => { if (AppStateWF.state) renderWF(); });
+    I18n.onChange(() => { renderHowtoWF(); if (AppStateWF.state) renderWF(); });
   }
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(WEIDEFREUNDE_SAVE_KEY) : null;
   if (saved && validStateWF(saved.state)) {

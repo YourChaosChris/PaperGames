@@ -99,3 +99,97 @@
   fill: #fff !important;
   stroke-dasharray: 3 3;
 }
+
+/* The picture explanation (before the first game) and the lines about the
+   last turns, each with the die that was rolled. */
+.wf-howto {
+  margin: 0 0 var(--space-2);
+  padding: var(--space-2);
+  border: 3px solid #141413;
+  border-radius: var(--radius);
+  text-align: left;
+}
+
+.wf-howto-title {
+  margin-top: 0;
+}
+
+.wf-howto-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wf-howto-item {
+  margin: 0 0 var(--space-2);
+  text-align: center;
+}
+
+.wf-howto-pics {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  direction: ltr;
+  margin-bottom: 4px;
+  line-height: 0;
+}
+
+.wf-howto-text {
+  display: block;
+}
+
+.wf-howto-pics .wf-howto-card,
+.wf-howto-pics .wf-howto-slot {
+  margin: 1px;
+  min-width: 0;
+  min-height: 0;
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.wf-howto-pics .wf-howto-slot {
+  width: auto;
+  max-width: none;
+}
+
+.wf-howto-pics svg {
+  max-width: none;
+}
+
+.wf-howto-pics .wf-slot svg,
+.wf-howto-pics .wf-card svg {
+  width: auto;
+  height: auto;
+}
+
+.wf-howto-arrow {
+  flex: 0 0 auto;
+  margin: 0 2px;
+}
+
+.wf-howto-back {
+  line-height: 0;
+  margin-left: 2px;
+}
+
+.wf-log-line {
+  margin-bottom: 4px;
+}
+
+.wf-log-die {
+  display: inline-block;
+  line-height: 0;
+  vertical-align: middle;
+  margin: 0 8px;
+  direction: ltr;
+}
+
+.wf-log-die .wf-die-svg {
+  width: 36px;
+  height: 36px;
+}
+
+.wf-howto-pics .wf-die-svg {
+  width: 56px;
+  height: 56px;
+}

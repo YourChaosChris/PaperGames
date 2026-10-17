@@ -145,6 +145,8 @@ echo "=== oddone-core.js ==="
 node "$ROOT/tests/oddone-core.js" || status=1
 echo "=== weidefreunde-core.js ==="
 node "$ROOT/tests/weidefreunde-core.js" || status=1
+echo "=== zoowurf-core.js ==="
+node "$ROOT/tests/zoowurf-core.js" || status=1
 echo "=== matches-core.js ==="
 node "$ROOT/tests/matches-core.js" || status=1
 echo "=== cardduel-core.js ==="

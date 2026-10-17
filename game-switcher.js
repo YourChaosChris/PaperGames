@@ -125,7 +125,8 @@
     ["shadowmatch", "game_shadowmatch", "picturelogic"],
     ["oddone", "game_oddone", "picturelogic"],
     ["kleeberg", "game_kleeberg", "inarow"],
-    ["weidefreunde", "game_weidefreunde", "dicegames"]
+    ["weidefreunde", "game_weidefreunde", "dicegames"],
+    ["zoowurf", "game_zoowurf", "dicegames"]
   ];
 
   var GAME_SLUGS = {};

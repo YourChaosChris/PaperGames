@@ -1258,6 +1258,20 @@ const GAMES_CATALOG = [
     added: "2026-10-17T13:00",
     noRead: true,
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"4\" width=\"15\" height=\"19\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"10.5\" cy=\"13\" r=\"4.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"10.5\" cy=\"13\" r=\"1.4\" fill=\"#141413\"/><rect x=\"20\" y=\"4\" width=\"15\" height=\"19\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><path d=\"M24 15L27.5 9L31 15Z\" fill=\"#141413\"/><rect x=\"9\" y=\"26\" width=\"14\" height=\"12\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"13\" cy=\"30\" r=\"1.4\" fill=\"#141413\"/><circle cx=\"19\" cy=\"34\" r=\"1.4\" fill=\"#141413\"/><path d=\"M26 33H36\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-dasharray=\"3 2\"/></svg></span>"
+  },
+  {
+    slug: "zoowurf",
+    category: "race",
+    family: "dicegames",
+    nameKey: "game_zoowurf",
+    nameText: "Zoo Toss",
+    descKey: "home_zoowurf_desc",
+    descText: "A dice game for children: roll the animal dice and fill the card with the animals it shows - lion, elephant, giraffe, monkey and penguin. Pictures only, no reading needed, no time limit. Against the computer or with up to four players on one device.",
+    popular: false,
+    kids: true,
+    added: "2026-10-17T19:00",
+    noRead: true,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"7\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><ellipse cx=\"20\" cy=\"26\" rx=\"8\" ry=\"6\" fill=\"#141413\"/><ellipse cx=\"10\" cy=\"19\" rx=\"3\" ry=\"4\" fill=\"#141413\"/><ellipse cx=\"16\" cy=\"12\" rx=\"3\" ry=\"4.5\" fill=\"#141413\"/><ellipse cx=\"24\" cy=\"12\" rx=\"3\" ry=\"4.5\" fill=\"#141413\"/><ellipse cx=\"30\" cy=\"19\" rx=\"3\" ry=\"4\" fill=\"#141413\"/></svg></span>"
   }
 ];
 

@@ -25,6 +25,7 @@ const exceptions = {
   trix: "Hands are private; undoing a played card would preserve information the player has learned.",
   villains: "Hands and card decks are private; undoing a revealed computer play or draw would preserve information.",
   weidefreunde: "The animal die is rolled randomly and the roll state is not saved, so an undo could not restore the exact state.",
+  zoowurf: "The animal dice are rolled randomly and the roll state is not saved, so an undo could not restore the exact state.",
   war: "The round reveals both hidden cards at once; undo would let a player retain knowledge of the computer's card."
 };
 const failures = [];

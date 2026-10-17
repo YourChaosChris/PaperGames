@@ -1,0 +1,112 @@
+/* zoowurf: rules used only by the zoowurf pages (loaded after base.css). */
+/* ---- Zoo Toss (Zoowurf): dice game for children ----
+   Two open cards to choose from, the card in play, the animal dice. Black
+   on white only; a place on the card that is still open is the same
+   drawing, white and dashed. Nothing animated; spacing from margins
+   (Tolino). */
+.zw-yard,
+.zw-card-big {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  direction: ltr;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.zw-open-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  width: calc(50% - 12px);
+  min-width: 140px;
+  min-height: 96px;
+  margin: 6px;
+  padding: 4px;
+  border: 2px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+  color: #141413;
+  line-height: 0;
+}
+
+.zw-open-card-active {
+  border-width: 5px;
+  padding: 1px;
+}
+
+.zw-card-big {
+  box-sizing: border-box;
+  padding: 6px;
+  border: 4px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+  line-height: 0;
+}
+
+.zw-slot {
+  display: block;
+  box-sizing: border-box;
+  margin: 3px;
+  padding: 2px;
+  border: 3px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+  line-height: 0;
+}
+
+.zw-open-card .zw-slot {
+  margin: 2px;
+  padding: 1px;
+  border-width: 2px;
+}
+
+.zw-slot-open {
+  border-style: dashed;
+  border-width: 2px;
+}
+
+.zw-slot-open svg * {
+  fill: #fff !important;
+  stroke-dasharray: 3 3;
+}
+
+.zw-dice {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  direction: ltr;
+}
+
+.zw-dice .zw-die {
+  margin: 4px;
+}
+
+.zw-rolls {
+  text-align: center;
+  direction: ltr;
+  line-height: 0;
+  margin: var(--space-1) 0;
+}
+
+.zw-roll-dot {
+  margin: 0 4px;
+}
+
+.zw-log-line {
+  margin-bottom: 4px;
+}
+
+.zw-log-dice {
+  display: inline-block;
+  direction: ltr;
+  line-height: 0;
+  vertical-align: middle;
+  margin: 0 6px;
+}
+
+.zw-log-dice .zw-die {
+  margin: 1px;
+}
