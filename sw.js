@@ -1769,7 +1769,7 @@ const FILE_HASHES = {
   "weidefreunde-history.html": "b36b7c22",
   "kleeberg.html": "9477a975",
   "kleeberg-core.js": "2d1ab4bf",
-  "kleeberg-app.js": "42cf7b61",
+  "kleeberg-app.js": "556547a2",
   "kleeberg-rules.html": "2e102ccd",
   "kleeberg-history.html": "0c4e7df1",
   "patternrow.html": "eeb2e384",

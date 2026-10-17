@@ -283,7 +283,7 @@ function renderKB() {
   document.getElementById("kb-players-list").innerHTML = html;
   renderBoardKB();
   renderGoalKB();
-  document.getElementById("undo-btn").disabled = AppStateKB.undoStack.length === 0;
+  document.getElementById("undo-btn").disabled = !(AppStateKB.undoStack.length > 0);
   setStatusKB(over ? "" : turnStatusKB());
 }
 

@@ -24,12 +24,13 @@ const exceptions = {
   snakesladders: "Dice rolls are generated randomly and the roll state is not saved.",
   trix: "Hands are private; undoing a played card would preserve information the player has learned.",
   villains: "Hands and card decks are private; undoing a revealed computer play or draw would preserve information.",
+  weidefreunde: "The animal die is rolled randomly and the roll state is not saved, so an undo could not restore the exact state.",
   war: "The round reveals both hidden cards at once; undo would let a player retain knowledge of the computer's card."
 };
 const failures = [];
 const read = (name) => fs.readFileSync(path.join(ROOT, name), "utf8");
 const undoPages = fs.readdirSync(ROOT).filter((name) => name.endsWith(".html") && /id="undo-btn"/.test(read(name)));
-if (undoPages.length !== 53) failures.push(`expected the 53 existing Undo pages, found ${undoPages.length}`);
+if (undoPages.length !== 54) failures.push(`expected the 54 existing Undo pages, found ${undoPages.length}`);
 for (const page of undoPages) {
   const html = read(page);
   if (!/data-i18n="undo_button"/.test(html)) failures.push(`${page}: button must use the shared localized Undo label`);
