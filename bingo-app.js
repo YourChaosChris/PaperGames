@@ -48,8 +48,9 @@
 
   function readSettings() {
     const mode = $("bingo-mode").value;
-    const n = Number($("bingo-count").value);
-    return { kind: $("bingo-kind").value, size: Number($("bingo-size").value), mode, pattern: $("bingo-pattern").value, count: mode === "computer" ? Math.max(2, n) : n };
+    // Against the computer: your card plus one card per computer opponent.
+    const count = mode === "computer" ? 1 + Number($("bingo-opponents").value) : Number($("bingo-count").value);
+    return { kind: $("bingo-kind").value, size: Number($("bingo-size").value), mode, pattern: $("bingo-pattern").value, count: count };
   }
 
   function start() {
@@ -192,8 +193,8 @@
   function syncCount() {
     const mode = $("bingo-mode").value, count = $("bingo-count");
     count.disabled = mode === "caller";
-    count.options[0].disabled = mode === "computer";
-    if (mode === "computer" && count.value === "1") count.value = "2";
+    $("bingo-count-label").classList.toggle("hidden", mode === "computer");
+    $("bingo-opp-label").classList.toggle("hidden", mode !== "computer");
   }
 
   function init() {

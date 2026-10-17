@@ -19,7 +19,8 @@ const AppStateKK = {
   undoStack: [],
   selected: [],
   log: [],      // the last turns that ended, newest first (not saved)
-  logged: 0     // state.seq of the newest logged turn
+  logged: 0,    // state.seq of the newest logged turn
+  moves: []     // what a computer closed so far in its running turn (not saved)
 };
 
 function tKK(key, values) {
@@ -68,6 +69,7 @@ function startGameKK() {
   AppStateKK.selected = [];
   AppStateKK.log = [];
   AppStateKK.logged = 0;
+  AppStateKK.moves = [];
   setResultKK("");
   DiceCommon.showBoard();
   afterActionKK();
@@ -78,7 +80,10 @@ function noteKK() {
   const s = AppStateKK.state;
   if (!s.last || s.seq === AppStateKK.logged) return;
   AppStateKK.logged = s.seq;
-  AppStateKK.log.unshift(JSON.parse(JSON.stringify(s.last)));
+  const entry = JSON.parse(JSON.stringify(s.last));
+  entry.moves = AppStateKK.moves;
+  AppStateKK.moves = [];
+  AppStateKK.log.unshift(entry);
   AppStateKK.log = AppStateKK.log.slice(0, 3);
 }
 
@@ -86,8 +91,14 @@ function noteKK() {
 function runComputersKK() {
   let guard = 0;
   while (AppStateKK.state.phase !== "over" && AppStateKK.state.computer[AppStateKK.state.current] && guard++ < 2000) {
-    const next = KlappenkastenCore.aiStep(AppStateKK.state);
-    if (next === AppStateKK.state) break;
+    const before = AppStateKK.state;
+    const next = KlappenkastenCore.aiStep(before);
+    if (next === before) break;
+    if (before.phase === "close") {
+      // The flaps this step closed (the turn may have ended with it).
+      const closed = next.seq !== before.seq ? next.last.closed : next.turnClosed;
+      AppStateKK.moves.push({ dice: before.dice.slice(), flaps: closed.slice(before.turnClosed.length) });
+    }
     AppStateKK.state = next;
     noteKK();
   }
@@ -148,6 +159,7 @@ function undoKK() {
   AppStateKK.state = prev;
   AppStateKK.selected = [];
   AppStateKK.log = [];
+  AppStateKK.moves = [];
   AppStateKK.logged = prev.seq;
   setResultKK("");
   if (window.ResultModal) window.ResultModal.hide();
@@ -199,10 +211,21 @@ function turnTextKK(l) {
   return tKK("kk_last_stuck", { name: nameKK(l.player), dice: l.dice.join(" + "), n: l.points });
 }
 
+// "4 + 5 > 2 + 7 · 3 + 1 > 4": the dice and the flaps closed with them.
+function movesTextKK(l) {
+  const list = (l.moves || []).map((m) => m.dice.join(" + ") + " \u2192 " + m.flaps.join(" + "));
+  return "\u2066" + list.join(" \u00b7 ") + "\u2069";
+}
+
 function renderLogKK() {
   const wrap = document.getElementById("kk-last");
   wrap.innerHTML = "";
   AppStateKK.log.forEach((l) => {
+    if (l.moves && l.moves.length) {
+      const m = document.createElement("div");
+      m.textContent = tKK("kk_last_closed", { name: nameKK(l.player), moves: movesTextKK(l) });
+      wrap.appendChild(m);
+    }
     const p = document.createElement("div");
     p.textContent = turnTextKK(l);
     wrap.appendChild(p);
@@ -310,6 +333,7 @@ function initKlappenkastenApp() {
     AppStateKK.undoStack = Array.isArray(saved.undoStack) ? saved.undoStack : [];
     AppStateKK.selected = [];
     AppStateKK.log = [];
+    AppStateKK.moves = [];
     AppStateKK.logged = saved.state.seq || 0;
     DiceCommon.showBoard();
     afterActionKK();

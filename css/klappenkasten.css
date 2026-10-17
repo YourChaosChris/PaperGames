@@ -40,3 +40,15 @@
   text-decoration: line-through;
   opacity: 1;
 }
+
+/* What the computers did, above the board so it is seen first. */
+.kk-last:not(:empty) {
+  margin: var(--space-2) 0;
+  padding: var(--space-2);
+  border: 2px solid #141413;
+  border-radius: var(--radius);
+}
+
+.kk-last > div + div {
+  margin-top: 4px;
+}

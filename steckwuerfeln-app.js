@@ -211,12 +211,22 @@ function renderHolesSW() {
   const s = AppStateSW.state;
   const wrap = document.getElementById("sw-holes");
   wrap.innerHTML = "";
+  // While a person pegs, every hole of a legal way can be tapped; the tap
+  // pegs the whole way (one hole, or both holes of the single dice).
+  const ways = s.phase === "plug" && !s.computer[s.current] ? SteckwuerfelnCore.choices(s) : [];
   SteckwuerfelnCore.FIELDS.forEach((n) => {
     const free = s.open.indexOf(n) >= 0;
-    const hole = document.createElement("span");
-    hole.className = "sw-hole" + (free ? "" : " sw-hole-pegged");
-    hole.setAttribute("role", "img");
-    hole.setAttribute("aria-label", tSW(free ? "sw_hole_aria" : "sw_hole_pegged_aria", { n: n }));
+    const way = free ? ways.filter((w) => w.indexOf(n) >= 0)[0] : null;
+    const hole = document.createElement(way ? "button" : "span");
+    hole.className = "sw-hole" + (free ? "" : " sw-hole-pegged") + (way ? " sw-hole-way" : "");
+    if (way) {
+      hole.type = "button";
+      hole.setAttribute("aria-label", way.length === 1 ? tSW("sw_way_one", { n: way[0] }) : tSW("sw_way_two", { a: way[0], b: way[1] }));
+      hole.addEventListener("click", () => plugSW(way));
+    } else {
+      hole.setAttribute("role", "img");
+      hole.setAttribute("aria-label", tSW(free ? "sw_hole_aria" : "sw_hole_pegged_aria", { n: n }));
+    }
     hole.textContent = String(n);
     wrap.appendChild(hole);
   });
