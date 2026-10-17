@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 // tools/sw-hashes.js
 // Writes a short checksum for every APP_SHELL file into sw.js (the
-// FILE_HASHES block). With it, an update only downloads the files that
+// FILE_HASHES block), and for the rules and history texts of the other
+// languages (text/<lang>/<slug>.js, lang other than en): those are not in
+// APP_SHELL, sw.js stores them later for the language in use (see
+// "Texts of other languages" there), but they need their checksum too. With it, an update only downloads the files that
 // really changed; every other file is copied from the copy already stored
 // on the device (see the install step in sw.js). Run it after every change
 // to a file, before uploading:
@@ -29,6 +32,23 @@ function appShell(src) {
   return (m[1].match(/"([^"]*)"/g) || []).map((q) => q.slice(1, -1));
 }
 
+// The rules/history text files of the languages other than English, found
+// on disk: stored on demand, so they are not in APP_SHELL.
+function lazyText(root) {
+  const dir = path.join(root, "text");
+  if (!fs.existsSync(dir)) return [];
+  const out = [];
+  fs.readdirSync(dir).filter((l) => l !== "en").sort().forEach((l) => {
+    fs.readdirSync(path.join(dir, l)).filter((f) => f.endsWith(".js")).sort().forEach((f) => out.push("text/" + l + "/" + f));
+  });
+  return out;
+}
+
+// Everything that gets a checksum: APP_SHELL plus the lazy text files.
+function hashed(root, src) {
+  return appShell(src).concat(lazyText(root));
+}
+
 function fileOf(entry) {
   return entry === "./" ? "index.html" : entry.split("?")[0];
 }
@@ -40,7 +60,7 @@ function hashFile(root, entry) {
 
 // The FILE_HASHES block as it should be for the files in root.
 function buildBlock(root, src) {
-  const lines = appShell(src).map((e) => "  " + JSON.stringify(e) + ": \"" + hashFile(root, e) + "\"");
+  const lines = hashed(root, src).map((e) => "  " + JSON.stringify(e) + ": \"" + hashFile(root, e) + "\"");
   return START + "\nconst FILE_HASHES = {\n" + lines.join(",\n") + "\n};\n" + END;
 }
 
@@ -58,13 +78,13 @@ function staleEntries(root) {
   const re = /^\s*("(?:[^"\\]|\\.)*"): "([0-9a-f]{8})"/gm;
   let m;
   while ((m = re.exec(block))) stored[JSON.parse(m[1])] = m[2];
-  const entries = appShell(src);
+  const entries = hashed(root, src);
   const out = entries.filter((e) => stored[e] !== hashFile(root, e));
-  for (const k of Object.keys(stored)) if (entries.indexOf(k) === -1) out.push(k + " (no longer in APP_SHELL)");
+  for (const k of Object.keys(stored)) if (entries.indexOf(k) === -1) out.push(k + " (no longer a stored file)");
   return out;
 }
 
-module.exports = { buildBlock, staleEntries, appShell, fileOf, hashFile, START, END };
+module.exports = { buildBlock, staleEntries, appShell, lazyText, hashed, fileOf, hashFile, START, END };
 
 if (require.main === module) {
   const args = process.argv.slice(2);
@@ -80,7 +100,7 @@ if (require.main === module) {
       console.log("Run: node tools/sw-hashes.js");
       process.exit(1);
     }
-    console.log("sw.js FILE_HASHES up to date (" + appShell(src).length + " files)");
+    console.log("sw.js FILE_HASHES up to date (" + hashed(root, src).length + " files)");
     process.exit(0);
   }
   const block = buildBlock(root, src);
@@ -89,9 +109,9 @@ if (require.main === module) {
   if (old) next = src.replace(old, block);
   else next = src.replace(/(const APP_SHELL = \[[\s\S]*?\];\n)/, "$1\n" + block + "\n");
   if (next === src) {
-    console.log("sw.js FILE_HASHES unchanged (" + appShell(src).length + " files)");
+    console.log("sw.js FILE_HASHES unchanged (" + hashed(root, src).length + " files)");
   } else {
     fs.writeFileSync(swPath, next);
-    console.log("sw.js FILE_HASHES written (" + appShell(src).length + " files)");
+    console.log("sw.js FILE_HASHES written (" + hashed(root, src).length + " files)");
   }
 }

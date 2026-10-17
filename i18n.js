@@ -23,6 +23,7 @@ const STRINGS = {
     nav_about: "About",
     nav_history: "History",
     nav_stats: "Stats",
+    text_fallback_note: "The rules and history of this game are not saved on this device in your language, so they appear in English. They load in your language as soon as you are online.",
     footer_support: "Support",
     footer_quillwild: "New project in progress: Quillwild",
     home_categories_title: "Games by category",
@@ -5590,6 +5591,29 @@ const I18n = (function () {
     if (descEl) descEl.setAttribute("content", (active && seoText(descEl.getAttribute("data-seo-desc"), l, false)) || seoOriginal.desc);
   }
 
+  // A rules or history page whose text file for the chosen language is not
+  // on the device (offline, and that language was never stored: the offline
+  // storage keeps the texts of the language in use and of English) shows the
+  // English text, and this short note in the page's own language says why.
+  function updateTextNote(l) {
+    if (!pageNeedsText() || !document.body) return;
+    let note = document.getElementById("text-fallback-note");
+    if (l === DEFAULT_LANG || textLoaded[l]) {
+      if (note && note.parentNode) note.parentNode.removeChild(note);
+      return;
+    }
+    const main = document.querySelector("main");
+    if (!main) return;
+    if (!note) {
+      note = document.createElement("p");
+      note.id = "text-fallback-note";
+      note.className = "text-fallback-note";
+      note.setAttribute("role", "status");
+      main.insertBefore(note, main.firstChild);
+    }
+    note.textContent = t("text_fallback_note", l);
+  }
+
   function apply(lang) {
     const l = lang || getLang();
     applySeo(l);
@@ -5631,6 +5655,8 @@ const I18n = (function () {
       if (fallbackPage) page.setAttribute("dir", "ltr");
       else if (page.getAttribute("dir") === "ltr") page.removeAttribute("dir");
     });
+
+    updateTextNote(l);
 
     document.querySelectorAll("[data-i18n-msg]").forEach((el) => {
       el.textContent = msg(el.getAttribute("data-i18n-msg"), l);

@@ -11,6 +11,7 @@ STRINGS.ja = {
     nav_about: "概要",
     nav_history: "歴史",
     nav_stats: "統計",
+    text_fallback_note: "このゲームのルールと歴史は、お使いの言語ではこの端末に保存されていないため、英語で表示されています。オンラインになると、お使いの言語で読み込まれます。",
     footer_support: "応援する",
     footer_quillwild: "制作中の新しいプロジェクト：Quillwild",
     home_categories_title: "カテゴリー別のゲーム",

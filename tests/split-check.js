@@ -10,7 +10,8 @@
 //  2. no rule in css/<slug>.css could be needed by a page outside that
 //     game: a rule whose class/id names (all of them) are found in the HTML
 //     or in a script of a page of another game belongs in base.css;
-//  3. every css/ and text/ file is known to sw.js (offline), and every
+//  3. every css/ and text/ file is known to sw.js (offline: English texts in
+//     APP_SHELL, other languages on demand with a checksum), and every
 //     marked rules/history page has its game's text file in all 12 languages
 //     (the key-by-key check is in static-checks.js and i18n-messages.js).
 //
@@ -92,11 +93,15 @@ for (const f of cssFiles) {
   }
 }
 
-// 3. sw.js knows every file
+// 3. sw.js knows every file (offline: English texts in APP_SHELL, the other
+// languages stored on demand)
 const sw = read("sw.js");
 const shell = new Set((/const APP_SHELL = \[([\s\S]*?)\];/.exec(sw)[1].match(/"([^"]*)"/g) || []).map((q) => q.slice(1, -1)));
-const lazy = /const TEXT_LAZY = \[([\s\S]*?)\];/.exec(sw);
-const lazySet = new Set(lazy ? (lazy[1].match(/"([^"]*)"/g) || []).map((q) => q.slice(1, -1)) : []);
+// Other languages' rules/history texts are not in APP_SHELL: sw.js stores
+// them on demand for the language in use and lists their checksums in
+// FILE_HASHES (tools/sw-hashes.js), which also makes sw.js's TEXT_LAZY.
+const hashBlock = sw.slice(sw.indexOf("const FILE_HASHES"), sw.indexOf("// end FILE_HASHES"));
+const lazySet = new Set([...hashBlock.matchAll(/^\s*"(text\/[a-z]{2}\/[^"]+)":/gm)].map((m) => m[1]));
 const known = (p) => shell.has(p) || lazySet.has(p);
 cssFiles.forEach((f) => { if (!shell.has("css/" + f)) problems.push("sw.js APP_SHELL lacks css/" + f); });
 if (!shell.has("base.css")) problems.push("sw.js APP_SHELL lacks base.css");
@@ -106,6 +111,8 @@ for (const l of langs) {
   for (const f of fs.readdirSync(path.join(ROOT, "text", l)).filter((x) => x.endsWith(".js"))) {
     textFiles++;
     if (!known("text/" + l + "/" + f)) problems.push("sw.js does not know text/" + l + "/" + f);
+    if (l === "en" ? !shell.has("text/en/" + f) : shell.has("text/" + l + "/" + f)) problems.push("text/" + l + "/" + f + (l === "en" ? " must be in APP_SHELL" : " must not be in APP_SHELL (stored on demand)"));
+    if (!hashBlock.includes('"text/' + l + "/" + f + '"')) problems.push("FILE_HASHES lacks text/" + l + "/" + f);
   }
 }
 for (const h of htmls) {

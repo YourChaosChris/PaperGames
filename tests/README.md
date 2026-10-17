@@ -348,8 +348,11 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   server on a copy of the site. Checks the offline install of `sw.js`
   and the home page's status line: progress "X of Y files", a broken
   download retried and an interrupted install carried on, an update
-  that downloads only the changed file, and every game page loading
-  with the server off. `THROTTLE=1` runs a first visit over a slow line
+  that downloads only the changed file, every game page loading
+  with the server off, and the rules texts: the install stores English,
+  the language in use (German here) follows in the background, a new
+  version carries it over, and offline the rules are there in German and
+  English while Arabic shows the English rules with a note. `THROTTLE=1` runs a first visit over a slow line
   (500 kbit/s, 300 ms per request) instead; that takes several minutes.
 - `node tests/update-banner.js` - needs a browser; starts its own server
   on a copy of the site and makes updates by raising `CACHE_NAME` in the

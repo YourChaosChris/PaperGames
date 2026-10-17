@@ -11,6 +11,7 @@ STRINGS.zh = {
     nav_about: "关于",
     nav_history: "历史",
     nav_stats: "统计",
+    text_fallback_note: "此游戏的规则和历史没有以您的语言保存在这台设备上，因此显示为英文。联网后会自动以您的语言加载。",
     footer_support: "支持一下",
     footer_quillwild: "正在制作的新项目：Quillwild",
     home_categories_title: "按类别浏览游戏",

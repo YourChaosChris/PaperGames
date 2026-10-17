@@ -11,6 +11,7 @@ STRINGS.de = {
     nav_about: "Über",
     nav_history: "Geschichte",
     nav_stats: "Statistik",
+    text_fallback_note: "Die Regeln und die Geschichte dieses Spiels sind auf diesem Gerät nicht in deiner Sprache gespeichert, deshalb erscheinen sie auf Englisch. Sobald du online bist, werden sie in deiner Sprache geladen.",
     footer_support: "Unterstützen",
     footer_quillwild: "Neues Projekt in Arbeit: Quillwild",
     home_categories_title: "Spiele nach Kategorie",

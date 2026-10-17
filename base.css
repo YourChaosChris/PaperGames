@@ -3943,3 +3943,14 @@ button.concan-meld {
   width: 29%;
   max-width: 116px;
 }
+
+/* Rules and history pages without the text file of the chosen language
+   (offline): the English text with a short note on top. */
+.text-fallback-note {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--border);
+  background: #fff;
+  color: #000;
+  font-size: 0.95rem;
+}
