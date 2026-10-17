@@ -548,7 +548,7 @@ function renderPanelsSk(s) {
   }
   document.getElementById("sk-skat-panel").classList.toggle("hidden", !(s.phase === "skat" && mineTurn));
   const disc = document.getElementById("sk-discard-panel");
-  disc.disabled = !(s.phase === "discard");
+  disc.classList.toggle("hidden", !(s.phase === "discard" && mineTurn));
   if (s.phase === "discard") {
     const b = document.getElementById("sk-discard");
     b.disabled = AppStateSk.selected.length !== 2;

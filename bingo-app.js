@@ -174,8 +174,7 @@
     cells.forEach((el, i) => el.classList.toggle("wrong", res.incorrect.indexOf(i) !== -1));
     if (res.valid) {
       g.over = true;
-      const text = g.mode === "computer" ? t("ui_status_you_win") : t("bingo_correct");
-      setStatus(text);
+      setStatus(g.mode === "computer" ? t("ui_status_you_win") : "");
       setResult(t("bingo_correct"));
       if (g.mode === "computer" && typeof GameStats !== "undefined") GameStats.record("bingo", "win");
       $("bingo-draw").disabled = true;

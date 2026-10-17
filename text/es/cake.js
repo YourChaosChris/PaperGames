@@ -42,6 +42,6 @@ Object.assign(STRINGS.es, {
     cake_history_spread_p2: "Las versiones en cuadrícula colocan a los sospechosos en un plano en lugar de rellenar una tabla. Combinan el razonamiento de un acertijo lógico con la regla «uno por fila y columna» de los acertijos de cuadrado latino como el Sudoku.",
     cake_history_modern_title: "Cómo crea PaperGames cada caso",
     cake_history_modern_p1: "Cada caso sale del propio generador de PaperGames. Dibuja habitaciones y muebles al azar, coloca los animales y el pastel según las reglas, añade indicios verdaderos hasta que solo encaja una solución y quita todos los que no hacen falta.",
-    cake_history_modern_p2: "Un segundo solucionador, que solo razona paso a paso sin probar nada, comprueba después que el caso se resuelve sin adivinar. Los sospechosos son animales y el delito es un pastel desaparecido, así que el acertijo es apto para niños."
+    cake_history_modern_p2: "Un segundo solucionador, que solo razona paso a paso sin probar nada, comprueba después que el caso se resuelve sin adivinar. Según el tema, los sospechosos son animales o personas y el delito es un pastel desaparecido o un tesoro escondido, así que el acertijo es apto para niños."
 });
 I18n.markTextLoaded("es");

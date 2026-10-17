@@ -42,6 +42,6 @@ Object.assign(STRINGS.pl, {
     cake_history_spread_p2: "Wersje na planszy ustawiają podejrzanych na planie zamiast wypełniać tabelę. Łączą rozumowanie łamigłówki logicznej z zasadą „po jednym w wierszu i kolumnie”, znaną z łamigłówek opartych na kwadracie łacińskim, takich jak Sudoku.",
     cake_history_modern_title: "Jak PaperGames buduje każdą sprawę",
     cake_history_modern_p1: "Każda sprawa pochodzi z własnego generatora PaperGames. Losuje pokoje i meble, ustawia zwierzęta i ciasto zgodnie z zasadami, dodaje prawdziwe poszlaki, aż pasuje dokładnie jedno rozwiązanie, i usuwa każdą zbędną poszlakę.",
-    cake_history_modern_p2: "Drugi solver, który rozumuje tylko krok po kroku i niczego nie próbuje na ślepo, sprawdza potem, że sprawę da się rozwiązać bez zgadywania. Podejrzanymi są zwierzęta, a przewinieniem zniknięte ciasto, więc łamigłówka pozostaje przyjazna dzieciom."
+    cake_history_modern_p2: "Drugi solver, który rozumuje tylko krok po kroku i niczego nie próbuje na ślepo, sprawdza potem, że sprawę da się rozwiązać bez zgadywania. W zależności od motywu podejrzanymi są zwierzęta albo ludzie, a przewinieniem zniknięte ciasto lub ukryty skarb, więc łamigłówka pozostaje przyjazna dzieciom."
 });
 I18n.markTextLoaded("pl");

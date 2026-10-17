@@ -42,6 +42,6 @@ Object.assign(STRINGS.en, {
     cake_history_spread_p2: "Grid versions place the suspects on a floor plan instead of filling in a table. They combine the reasoning of a logic puzzle with the “one per row and column” rule known from Latin-square puzzles such as Sudoku.",
     cake_history_modern_title: "How PaperGames Builds Each Case",
     cake_history_modern_p1: "Every case here comes from PaperGames's own generator. It draws random rooms and furniture, places the animals and the cake by the rules, then adds true clues until exactly one placement fits, and removes every clue that is not needed.",
-    cake_history_modern_p2: "A second solver that only reasons step by step, without trying things out, then checks that the case can be solved without guessing. The suspects are animals and the crime is a missing cake, so the puzzle stays friendly for children."
+    cake_history_modern_p2: "A second solver that only reasons step by step, without trying things out, then checks that the case can be solved without guessing. Depending on the theme, the suspects are animals or people and the crime is a missing cake or a hidden treasure, so the puzzle stays friendly for children."
 });
 I18n.markTextLoaded("en");

@@ -42,6 +42,6 @@ Object.assign(STRINGS.it, {
     cake_history_spread_p2: "Le versioni a griglia mettono i sospettati su una pianta invece di compilare una tabella. Uniscono il ragionamento di un rompicapo logico alla regola «uno per riga e colonna» dei rompicapi a quadrato latino come il Sudoku.",
     cake_history_modern_title: "Come PaperGames costruisce ogni caso",
     cake_history_modern_p1: "Ogni caso nasce dal generatore di PaperGames. Disegna stanze e mobili a caso, mette gli animali e la torta secondo le regole, aggiunge indizi veri finché una sola soluzione funziona e toglie ogni indizio non necessario.",
-    cake_history_modern_p2: "Un secondo risolutore, che ragiona solo passo per passo senza fare tentativi, controlla poi che il caso si risolva senza tirare a indovinare. I sospettati sono animali e il misfatto è una torta sparita, così il rompicapo resta adatto ai bambini."
+    cake_history_modern_p2: "Un secondo risolutore, che ragiona solo passo per passo senza fare tentativi, controlla poi che il caso si risolva senza tirare a indovinare. A seconda del tema, i sospettati sono animali o persone e il misfatto è una torta sparita o un tesoro nascosto, così il rompicapo resta adatto ai bambini."
 });
 I18n.markTextLoaded("it");

@@ -1823,15 +1823,22 @@ margin: 2rem 0 var(--space-4);
   background: #fff;
   color: var(--text);
   box-sizing: border-box;
+  min-height: 44px;
 }
 
 .games-sort-select {
+  min-height: 44px;
   padding: var(--space-2) var(--space-2);
   font-size: 0.95rem;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   background: #fff;
   color: var(--text);
+}
+
+#force-update-button,
+#stats-reset {
+  min-height: 44px;
 }
 
 .games-no-results {

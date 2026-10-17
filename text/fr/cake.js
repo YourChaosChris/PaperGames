@@ -42,6 +42,6 @@ Object.assign(STRINGS.fr, {
     cake_history_spread_p2: "Les versions en grille placent les suspects sur un plan au lieu de remplir un tableau. Elles combinent le raisonnement d'une énigme logique avec la règle « un par ligne et par colonne » des énigmes de carré latin comme le Sudoku.",
     cake_history_modern_title: "Comment PaperGames construit chaque affaire",
     cake_history_modern_p1: "Chaque affaire provient du générateur de PaperGames. Il dessine des pièces et des meubles au hasard, place les animaux et le gâteau selon les règles, ajoute des pistes vraies jusqu'à ce qu'une seule solution convienne, puis retire toute piste inutile.",
-    cake_history_modern_p2: "Un second solveur, qui raisonne pas à pas sans rien essayer, vérifie ensuite que l'affaire se résout sans deviner. Les suspects sont des animaux et le méfait est un gâteau disparu : l'énigme reste adaptée aux enfants."
+    cake_history_modern_p2: "Un second solveur, qui raisonne pas à pas sans rien essayer, vérifie ensuite que l'affaire se résout sans deviner. Selon le thème, les suspects sont des animaux ou des personnes et le méfait est un gâteau disparu ou un trésor caché : l'énigme reste adaptée aux enfants."
 });
 I18n.markTextLoaded("fr");

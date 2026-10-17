@@ -42,6 +42,6 @@ Object.assign(STRINGS.de, {
     cake_history_spread_p2: "Gitter-Varianten setzen die Verdächtigen auf einen Grundriss, statt eine Tabelle auszufüllen. Sie verbinden das Schlussfolgern eines Logikrätsels mit der Regel „eins pro Zeile und Spalte“, die man von Lateinischen-Quadrat-Rätseln wie Sudoku kennt.",
     cake_history_modern_title: "Wie PaperGames jeden Fall baut",
     cake_history_modern_p1: "Jeder Fall hier stammt aus dem eigenen Generator von PaperGames. Er zeichnet zufällige Räume und Möbel, setzt Tiere und Kuchen nach den Regeln, fügt dann wahre Hinweise hinzu, bis genau eine Lösung passt, und entfernt jeden Hinweis, der nicht nötig ist.",
-    cake_history_modern_p2: "Ein zweiter Löser, der nur Schritt für Schritt schlussfolgert und nichts ausprobiert, prüft danach, dass der Fall ohne Raten lösbar ist. Die Verdächtigen sind Tiere und die Tat ist ein verschwundener Kuchen - so bleibt das Rätsel kinderfreundlich."
+    cake_history_modern_p2: "Ein zweiter Löser, der nur Schritt für Schritt schlussfolgert und nichts ausprobiert, prüft danach, dass der Fall ohne Raten lösbar ist. Die Verdächtigen sind je nach Motiv Tiere oder Personen und die Tat ist ein verschwundener Kuchen oder ein versteckter Schatz - so bleibt das Rätsel kinderfreundlich."
 });
 I18n.markTextLoaded("de");

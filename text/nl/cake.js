@@ -42,6 +42,6 @@ Object.assign(STRINGS.nl, {
     cake_history_spread_p2: "Rasterversies zetten de verdachten op een plattegrond in plaats van een tabel in te vullen. Ze combineren het redeneren van een logische puzzel met de regel ‘één per rij en kolom’ die je kent van Latijnse-vierkantpuzzels zoals Sudoku.",
     cake_history_modern_title: "Hoe PaperGames elke zaak maakt",
     cake_history_modern_p1: "Elke zaak komt uit de eigen generator van PaperGames. Die tekent willekeurige kamers en meubels, zet de dieren en de taart volgens de regels neer, voegt ware aanwijzingen toe tot precies één oplossing past en haalt elke overbodige aanwijzing weg.",
-    cake_history_modern_p2: "Een tweede oplosser, die alleen stap voor stap redeneert zonder iets uit te proberen, controleert daarna dat de zaak zonder gokken op te lossen is. De verdachten zijn dieren en het misdrijf is een verdwenen taart, zodat de puzzel kindvriendelijk blijft."
+    cake_history_modern_p2: "Een tweede oplosser, die alleen stap voor stap redeneert zonder iets uit te proberen, controleert daarna dat de zaak zonder gokken op te lossen is. Afhankelijk van het thema zijn de verdachten dieren of mensen en is het misdrijf een verdwenen taart of een verborgen schat, zodat de puzzel kindvriendelijk blijft."
 });
 I18n.markTextLoaded("nl");
