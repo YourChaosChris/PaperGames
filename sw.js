@@ -952,7 +952,7 @@ const FILE_HASHES = {
   "lang/zh-text.js": "1ab70aa5",
   "lang/ar.js": "abc72a94",
   "lang/ar-text.js": "12456e5e",
-  "game-switcher.js": "adf74304",
+  "game-switcher.js": "a8f29d25",
   "chess-core.js": "afc62048",
   "pieces.js": "d9b25aa1",
   "ai-engine.js": "57890ea9",
