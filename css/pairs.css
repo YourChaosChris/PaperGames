@@ -1,0 +1,42 @@
+/* pairs: rules used only by the pairs pages (loaded after base.css). */
+/* Pairs (pairs-app.js): cards as buttons placed by percentage in a box
+   whose height JS sets from its width (square cards). Face down: a card
+   with a diagonal hatch; face up: white with a heavy frame and a black
+   SVG shape; a taken pair leaves an empty dashed slot. All three states
+   differ in line and shape, none by a grey fill. */
+.pairs-board {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.pairs-card {
+  position: absolute;
+  box-sizing: border-box;
+  border: 4px solid var(--square-light);
+  border-radius: 10px;
+  padding: 0;
+  background-clip: padding-box;
+  cursor: pointer;
+}
+
+.pairs-card-down {
+  background-color: #fff;
+  background-image: repeating-linear-gradient(45deg, #111 0, #111 2px, #fff 2px, #fff 10px);
+  outline: 2px solid #111;
+  outline-offset: -6px;
+}
+
+.pairs-card-open {
+  background: #fff;
+  outline: 5px solid #111;
+  outline-offset: -9px;
+}
+
+.pairs-card-taken {
+  background: transparent;
+  outline: 2px dashed #111;
+  outline-offset: -8px;
+  cursor: default;
+}

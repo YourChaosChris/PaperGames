@@ -1,0 +1,27 @@
+/* patternrow: rules used only by the patternrow pages (loaded after base.css). */
+.kq-row {
+  margin: 8px auto 14px;
+  max-width: 520px;
+  text-align: center;
+  font-size: 0;
+}
+
+.kq-cell {
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+  max-width: 56px;
+  padding: 2px;
+  border: 2px solid var(--border);
+  background: #fff;
+}
+
+.kq-cell.kq-cell-q {
+  border-style: dashed;
+}
+
+.kq-cell.kq-cell-filled {
+  border-style: double;
+  border-width: 5px;
+  padding: 0;
+}

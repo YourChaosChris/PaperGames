@@ -44,13 +44,13 @@ for (const required of [
   if (!frame.includes(required)) failures.push(`game-frame.js: missing shared frame behavior ${required}`);
 }
 
-const style = fs.readFileSync(path.join(ROOT, "style.css"), "utf8");
+const style = fs.readFileSync(path.join(ROOT, "base.css"), "utf8");
 const homeStyle = style.match(/\.game-page \.game-home-link\s*\{([^}]*)\}/);
-if (!homeStyle || !/min-height:\s*44px/.test(homeStyle[1])) failures.push("style.css: home link must be at least 44 px high");
-if (!homeStyle || !/color:\s*#000/.test(homeStyle[1]) || !/background:\s*#fff/.test(homeStyle[1])) failures.push("style.css: home link must be black on white");
-if (!homeStyle || !/animation:\s*none/.test(homeStyle[1]) || !/transition:\s*none/.test(homeStyle[1])) failures.push("style.css: home link must not animate");
+if (!homeStyle || !/min-height:\s*44px/.test(homeStyle[1])) failures.push("base.css: home link must be at least 44 px high");
+if (!homeStyle || !/color:\s*#000/.test(homeStyle[1]) || !/background:\s*#fff/.test(homeStyle[1])) failures.push("base.css: home link must be black on white");
+if (!homeStyle || !/animation:\s*none/.test(homeStyle[1]) || !/transition:\s*none/.test(homeStyle[1])) failures.push("base.css: home link must not animate");
 if (!/\[dir="rtl"\] \.game-page \.game-home-link\s*\{[^}]*margin-right:\s*0;[^}]*margin-left:\s*4px;/s.test(style)) {
-  failures.push("style.css: home link needs physical RTL margin overrides");
+  failures.push("base.css: home link needs physical RTL margin overrides");
 }
 if (!fs.readFileSync(path.join(ROOT, "sw.js"), "utf8").includes('"game-frame.js"')) failures.push("sw.js: game-frame.js is missing from APP_SHELL");
 for (const [slug, reason] of Object.entries(exceptions)) if (!reason.trim()) failures.push(`${slug}: exception needs a reason`);

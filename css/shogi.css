@@ -1,0 +1,212 @@
+/* shogi: rules used only by the shogi pages (loaded after base.css). */
+/* Shogi board: a 9x9 float-grid (same technique as the chess/checkers/
+   Connect Four boards - a JS-enforced square cell size, since CSS
+   `aspect-ratio` is unreliable on E-Ink browsers). Pieces are plain
+   pentagons carrying their kanji, rotated 180deg for White - so which
+   side a piece belongs to is a shape fact, not a color fact, and
+   promoted pieces get their own traditional single-kanji abbreviation
+   instead of red ink. Both choices make this one of the more naturally
+   E-Ink-friendly games here already, without needing a color fix. */
+#shogi-board {
+  display: block;
+  width: 100%;
+  max-width: 620px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.shogi-square {
+  width: calc(100% / 9);
+  background: var(--square-light);
+  border: 1px solid var(--border);
+}
+
+.shogi-square-movable {
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
+}
+
+.shogi-square-last-from,
+.shogi-square-last-to {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.shogi-square-check {
+  background: var(--square-dark);
+}
+
+.shogi-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 84%;
+  transform: translate(-50%, -50%);
+  clip-path: polygon(50% 0%, 92% 26%, 100% 100%, 0% 100%, 8% 26%);
+  background: var(--square-light);
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.shogi-piece svg {
+  width: 80%;
+  height: 80%;
+  /* The pentagon is wider at the bottom, so the kanji sit a little low. */
+  margin-top: 8%;
+}
+
+/* Etwas kräftigere Striche: feine Pinselstriche (z. B. 金 gegenüber 全)
+   verschwimmen auf E-Ink sonst. !important, weil die Grafiken ihre
+   Strichstärke als Inline-Stil mitbringen. */
+.shogi-piece svg path {
+  stroke: #000 !important;
+  stroke-width: 0.45 !important;
+  stroke-linejoin: round;
+}
+
+.shogi-piece-w {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+/* Small pentagon icons for the color-choice picker and board
+   placeholder, matching the board's own piece styling. */
+.shogi-icon-piece {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.4em;
+  clip-path: polygon(50% 0%, 92% 26%, 100% 100%, 0% 100%, 8% 26%);
+  background: var(--square-light);
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  vertical-align: middle;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.shogi-icon-piece-w {
+  transform: rotate(180deg);
+}
+
+/* Captured pieces switch sides and join the capturing player's hand -
+   shown as a row of labelled buttons above/below the board, since they
+   have no board square of their own until dropped. */
+.shogi-hand {
+  display: flex;
+  flex-wrap: wrap;
+justify-content: center;
+  max-width: 620px;
+  margin: 0 auto 0.4rem;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Captured pieces switch sides and join the capturing player's hand -
+   shown as a row of labelled buttons above/below the board > *, since they
+   have no board square of their own until dropped. */
+.shogi-hand > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+/* Captured pieces switch sides and join the capturing player's hand -
+   shown as a row of labelled buttons above/below the board > *:last-child, since they
+   have no board square of their own until dropped. */
+.shogi-hand > *:last-child {
+  margin-right: 0;
+}
+
+.shogi-hand-piece {
+  display: flex;
+  align-items: center;
+padding: 0.25rem 0.5rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  font: inherit;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.shogi-hand-piece > * {
+  margin: 0 0.25rem 0.25rem 0;
+}
+
+.shogi-hand-piece > *:last-child {
+  margin-right: 0;
+}
+
+.shogi-hand-piece:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Selected hand piece: the grey plus the site's usual selection frame
+   (3 px solid, like .square.selected) - neither the corner triangle of
+   "can move" nor the thin inner frame of "last move". */
+.shogi-hand-piece-selected {
+  background: var(--square-dark);
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
+}
+
+.shogi-hand-piece-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8em;
+  height: 1.8em;
+  clip-path: polygon(50% 0%, 92% 26%, 100% 100%, 0% 100%, 8% 26%);
+  background: var(--square-light);
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+}
+
+.shogi-hand-piece-label svg {
+  /* The drawings carry generous empty margins of their own, so they are
+     scaled past the label's box; the pentagon clip trims only blank space. */
+  flex: none;
+  width: 118%;
+  height: 118%;
+  margin-top: 12%;
+}
+
+/* Same slightly heavier strokes as on the board (see .shogi-piece svg path). */
+.shogi-hand-piece-label svg path {
+  stroke: #000 !important;
+  stroke-width: 0.45 !important;
+  stroke-linejoin: round;
+}
+
+.shogi-hand-piece.shogi-piece-w .shogi-hand-piece-label {
+  transform: rotate(180deg);
+}
+
+.shogi-hand-piece-count {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.shogi-promotion-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.shogi-promotion-prompt > * {
+  margin: 0 0.6rem 0.6rem 0;
+}
+
+.shogi-promotion-prompt > *:last-child {
+  margin-right: 0;
+}

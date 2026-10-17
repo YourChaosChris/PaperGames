@@ -1,0 +1,37 @@
+// text/it/baghchal.js
+// Rules and history texts of baghchal (it). Loaded by baghchal-rules.html and baghchal-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.it, {
+    baghchal_rules_title: "Regole del Bagh-Chal",
+    baghchal_rules_intro: "Un riferimento rapido su come PaperGames gioca a Bagh-Chal (\"Tigri e Capre\") - utile se sei arrugginito, o se lo stai imparando.",
+    baghchal_rules_basics_title: "L'idea di base",
+    baghchal_term_board: "Il tavoliere",
+    baghchal_rules_board: "25 punti disposti in una griglia 5x5, collegati da linee orizzontali, verticali e alcune diagonali - lo stesso reticolo in stile alquerque del tavoliere del Fanorona, ma quadrato: i quattro angoli e il centro sono nodi completi a 8 direzioni, da cui si diramano le diagonali che danno al tavoliere il suo caratteristico intreccio di triangoli. Quattro tigri (bagh) iniziano sui quattro angoli. Gli altri 21 punti iniziano vuoti - le 20 capre (bakhera) non sono ancora sul tavoliere.",
+    baghchal_term_placement: "Fase di piazzamento",
+    baghchal_rules_placement: "Le capre muovono per prime a ogni turno: il giocatore delle capre piazza una nuova capra su un punto vuoto qualsiasi. Poi muove il giocatore delle tigri (vedi sotto) - le tigri possono già muoversi e catturare dal primo turno, anche mentre si continuano a piazzare capre. Questo continua finché tutte le 20 capre sono sul tavoliere.",
+    baghchal_term_movement: "Fase di movimento",
+    baghchal_rules_movement: "Una volta piazzate tutte le capre, entrambi gli schieramenti si limitano a muoversi: a ogni turno, fai scorrere una delle tue pedine di un passo lungo una linea di collegamento fino a un punto vuoto adiacente.",
+    baghchal_term_capture: "Catturare",
+    baghchal_rules_capture: "Una tigre accanto a una capra, in linea retta lungo un vero collegamento del tavoliere, può saltarla per atterrare sul punto vuoto immediatamente successivo, eliminando la capra. Qui la cattura è facoltativa, non obbligatoria: una tigre che può catturare può preferire fare invece una mossa tranquilla. (Alcuni regolamenti tradizionali rendono la cattura obbligatoria ogni volta che è possibile - questa è una scelta deliberata e documentata a favore del regolamento più diffuso nel gioco moderno, non una svista.) Le capre non catturano mai.",
+    baghchal_rules_example_title: "Esempio pratico: la cattura di una tigre",
+    baghchal_rules_example_intro: "Nel mini-diagramma qui sotto, ▲ è una tigre, ○ è una capra, e il cerchio tratteggiato è il punto vuoto verso cui la tigre sta per saltare.",
+    baghchal_rules_example_caption: "La tigre in A è accanto a una capra in B, e il punto C subito dopo di essa (nella stessa direzione, lungo una linea reale del tavoliere) è vuoto. La tigre può saltare da A a C, eliminando la capra in B. Se C fosse occupato, o se A-B-C non formassero una linea retta lungo un vero collegamento del tavoliere, il salto non sarebbe legale.",
+    baghchal_rules_end_title: "Come finisce una partita",
+    baghchal_term_tiger_win: "Le tigri vincono",
+    baghchal_rules_tiger_win: "Catturando in totale 5 capre - la soglia standard (alcune varianti regionali usano un numero diverso, ma 5 è la più comune).",
+    baghchal_term_goat_win: "Le capre vincono",
+    baghchal_rules_goat_win: "Intrappolando tutte e 4 le tigri in modo che la tigre di turno non abbia più alcuna mossa legale - né una mossa tranquilla né una cattura, per nessuna delle sue tigri.",
+    baghchal_term_resignation: "Abbandono",
+    baghchal_rules_resignation: "Un giocatore può abbandonare in qualsiasi momento, terminando immediatamente la partita a favore dell'avversario.",
+    baghchal_history_title: "La storia del Bagh-Chal",
+    baghchal_history_origins_title: "Un gioco antico dalle origini incerte",
+    baghchal_history_origins_p1: "Nessuno può datare con precisione il Bagh-Chal. Come la maggior parte dei giochi da tavolo tradizionali, tracciati sulla terra o sulla pietra invece che conservati in manoscritti, non ha lasciato un unico documento fondativo - solo una lunga e ininterrotta tradizione di gioco in tutto il Nepal, particolarmente radicata nelle regioni collinari intorno alla valle di Kathmandu. Il nome stesso è semplice e descrittivo: \"bagh\" significa tigre, \"chal\" significa mossa - la mossa delle tigri, o come viene solitamente reso in inglese, Tigers and Goats (Tigri e Capre).",
+    baghchal_history_origins_p2: "Il tavoliere stesso - un reticolo 5x5 di linee ortogonali e diagonali - segue la stessa geometria della famiglia dell'alquerque che si ritrova in molti altri giochi tradizionali in Asia, Europa e Africa (lo stesso Fanorona di PaperGames, originario del Madagascar, è un esempio ben documentato di quella stessa famiglia più ampia). Ciò che rende speciale il Bagh-Chal non è il tavoliere, ma l'asimmetria costruita sopra di esso: un piccolo numero di cacciatori potenti contro un grande gregge, inizialmente fuori dal tavoliere, che cerca di superarli in numero e immobilizzarli.",
+    baghchal_history_family_title: "Parte di una famiglia mondiale di giochi di caccia",
+    baghchal_history_family_p1: "Il Bagh-Chal appartiene a un'ampia famiglia di \"giochi di caccia\" inventati indipendentemente in tutto il mondo: numeri disuguali di pedine con obiettivi completamente diversi, invece di eserciti speculari. La Volpe e le Oche, giocato in Europa da secoli, gli è cugino stretto nello spirito; lo sono anche i vari giochi Tafl (scacchi vichinghi) del Nord Europa, dove la piccola guardia di un re cerca di sfuggire a una forza assediante molto più numerosa. Nessuno di questi giochi risulta derivare dall'altro - si comprendono meglio come la stessa idea semplice e avvincente (poche pedine forti contro molte deboli, fuggire/sopravvivere contro catturare/intrappolare) riscoperta indipendentemente in culture diverse.",
+    baghchal_history_family_p2: "In Nepal, il Bagh-Chal è da tempo associato al Dashain, la festa induista più grande e importante del paese: una celebrazione autunnale di più settimane durante la quale le famiglie allargate si riuniscono, e i giochi da tavolo - il Bagh-Chal in particolare - sono un modo tradizionale di trascorrere le lunghe ore di visita, insieme alle carte e ad altri giochi. Questa associazione festiva ha contribuito a mantenere vivo il gioco attraverso le generazioni, anche con l'arrivo di altre forme di intrattenimento.",
+    baghchal_history_modern_title: "Il gioco da tavolo del Nepal oggi - e oggetto di studio informatico",
+    baghchal_history_modern_p1: "Il Bagh-Chal resta ampiamente riconosciuto come il gioco da tavolo nazionale, o comunque più iconico, del Nepal, giocato in modo informale con tavolieri disegnati a mano e tappi di bottiglia o sassolini come pedine tanto spesso quanto con set intagliati nel legno, e ha seguito la diaspora nepalese all'estero. È anche approdato su app per cellulari e nel gioco online, facendolo conoscere a giocatori che non hanno mai avuto in mano un tavoliere fisico.",
+    baghchal_history_modern_p2: "Il gioco ha anche suscitato un vero interesse accademico: è stato studiato nella teoria combinatoria dei giochi e debolmente risolto tramite analisi al computer, con risultati per alcune varianti di regole che mostrano come lo schieramento delle capre possa almeno forzare la patta con un gioco perfetto - una certezza rara e faticosamente conquistata su un gioco la cui strategia più profonda è stata a lungo dibattuta tra i giocatori umani."
+});
+I18n.markTextLoaded("it");

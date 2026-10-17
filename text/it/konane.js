@@ -1,0 +1,40 @@
+// text/it/konane.js
+// Rules and history texts of konane (it). Loaded by konane-rules.html and konane-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.it, {
+    konane_rules_title: "Regole del Konane",
+    konane_rules_intro: "Un rapido riferimento su come PaperGames gioca a Konane (la dama hawaiana) - utile se sei arrugginito o se lo stai imparando.",
+    konane_rules_basics_title: "L'idea di base",
+    konane_term_board: "La plancia",
+    konane_rules_board: "Una plancia 8x8 in cui, all'inizio, ognuna delle 64 caselle è occupata da una pedina - a differenza della dama occidentale, che usa solo le caselle scure. Le pedine si alternano rigorosamente a scacchiera: il Nero su un colore di casella, il Bianco sull'altro.",
+    konane_term_moves: "Movimento",
+    konane_rules_moves: "Le pedine non scivolano mai semplicemente. L'unica mossa in Konane è il salto: una tua pedina salta sopra una pedina nemica ortogonalmente adiacente (su, giù, sinistra o destra - mai in diagonale) fino alla casella vuota subito dopo, catturando la pedina saltata.",
+    konane_rules_opening_title: "Il rituale di rimozione d'apertura",
+    konane_term_opening: "Inizio della partita",
+    konane_rules_opening: "Poiché all'inizio ogni casella è occupata, nessuno può ancora saltare - un salto richiede una casella di arrivo vuota. La partita si apre quindi con un breve rituale invece che con un primo salto: il Nero rimuove una propria pedina da un angolo oppure da una delle quattro caselle centrali. Poi il Bianco rimuove una propria pedina che si trova direttamente (ortogonalmente) accanto alla casella appena svuotata dal Nero. Sono queste due caselle vuote a rendere possibile il primissimo salto.",
+    konane_term_opening_next: "Dopo il rituale",
+    konane_rules_opening_next: "Una volta completate entrambe le rimozioni, il Nero effettua il primo salto vero e proprio, e la partita prosegue da lì con turni alterni normali.",
+    konane_rules_capture_title: "Saltare e catene di salti",
+    konane_term_mandatory: "Salto obbligatorio",
+    konane_rules_mandatory: "Se una qualsiasi delle tue pedine ha un salto legale in qualsiasi punto della plancia, devi giocarne uno - puoi scegliere quale pedina salta se più di una può farlo.",
+    konane_term_chain: "Continuare una catena di salti",
+    konane_rules_chain: "Dopo l'atterraggio, quella stessa pedina può continuare a saltare dalla sua nuova posizione, e può cambiare liberamente direzione tra un salto e l'altro (ogni singolo salto resta una linea ortogonale retta, ma la catena non deve proseguire nella stessa direzione). A differenza della dama, non sei mai obbligato a fare la catena più lunga disponibile: puoi fermarti dopo qualsiasi salto, scegliendo ogni volta fino a dove continuare.",
+    konane_term_example: "Esempio svolto",
+    konane_rules_example: "Supponi che la tua pedina sia in c4, con una pedina nemica in c5 e una casella vuota in c6: il salto c4-c6 cattura la pedina in c5. Se la tua pedina, ora in c6, ha anche una pedina nemica in b6 con d6 vuota dall'altro lato, potresti continuare nello stesso turno saltando c6-d6 (una svolta di 90 gradi rispetto alla direzione del primo salto) per catturare anche la pedina in b6 - oppure potresti semplicemente fermarti in c6 dopo il primo salto. Entrambe le opzioni sono legali; la scelta è tua a ogni passo.",
+    konane_rules_end_title: "Come finisce una partita",
+    konane_term_win: "Vittoria",
+    konane_rules_win: "Se al tuo turno non hai alcun salto legale disponibile in nessun punto della plancia, perdi immediatamente - in Konane, una volta avviata la partita, non esiste nessun altro tipo di mossa a cui ricorrere.",
+    konane_term_resignation: "Abbandono",
+    konane_rules_resignation: "Un giocatore può abbandonare in qualsiasi momento, terminando immediatamente la partita a favore dell'avversario.",
+    konane_history_title: "La storia del Konane",
+    konane_history_origins_title: "Pietre laviche su roccia scolpita",
+    konane_history_origins_p1: "Il Konane veniva giocato dagli antichi hawaiani con pietre di lava vulcanica nera ('ili'ili pōhaku) come pedine di uno schieramento e pezzi di corallo bianco o guscio di cocco sbiancato come pedine dell'altro, disposti su una griglia di piccole cavità scavate direttamente nella roccia piatta. Queste plance di gioco, chiamate kōnane papamū, venivano scolpite direttamente nella roccia stessa anziché realizzate come attrezzatura portatile separata.",
+    konane_history_origins_p2: "Molti kōnane papamū sopravvivono oggi in siti storici in tutte le isole hawaiane, con una notevole concentrazione sulla Big Island (Hawai'i Island) - alcuni scolpiti in colate laviche vicino a residenze reali e heiau (siti templari), alcuni abbastanza grandi da far pensare a plance considerevolmente più grandi dell'8x8 comunemente giocato oggi. Le dimensioni della plancia variavano parecchio nella pratica e non erano fisse come quelle di un gioco prodotto in serie.",
+    konane_history_kinship_title: "Un'invenzione indipendente, non un prestito",
+    konane_history_kinship_p1: "Il meccanismo di cattura per salto del Konane gli dà una chiara somiglianza di famiglia con giochi come l'Alquerque e la dama, che condividono la stessa idea di base: saltare sopra una pedina per rimuoverla. Ma il Konane non deriva da nessuno di essi - si è sviluppato in modo indipendente in Polinesia, isolato dai giochi del Vecchio Mondo che hanno prodotto l'Alquerque e i suoi discendenti nella dama. La somiglianza si spiega meglio come un'invenzione convergente: catturare saltando è un'idea semplice e potente a cui più di una cultura è arrivata separatamente, non una prova che una tradizione abbia preso in prestito dall'altra.",
+    konane_history_kinship_p2: "Ciò che è distintamente proprio del Konane è la plancia completamente piena di pedine alternate e il rituale di apertura con rimozione di due pedine spiegato nella pagina delle regole di questa app - nessuno dei due ha un vero equivalente nella dama o nell'Alquerque, ed entrambi danno al Konane il suo carattere particolare di gioco di pura tattica a catene di salti, senza nessun altro tipo di mossa disponibile.",
+    konane_history_modern_title: "Patrimonio hawaiano vivo",
+    konane_history_modern_p1: "Il Konane resta oggi una parte importante del patrimonio culturale vivo dei nativi hawaiani, non una semplice curiosità storica. Viene insegnato e giocato nell'ambito di programmi di educazione culturale, mostrato in festival culturali e siti del patrimonio, e le plance di pietra sopravvissute vengono attivamente preservate e, in alcuni luoghi, protette come siti storici e culturali a pieno titolo.",
+    konane_history_modern_p2: "Giocare una partita oggi - anche su uno schermo, con una plancia semplificata 8x8 invece di un papamū scolpito all'aperto - si ricollega a una tradizione strategica precedente di secoli al contatto scritto con l'Occidente, che gli hawaiani hanno mantenuto viva e tramandato da allora."
+});
+I18n.markTextLoaded("it");

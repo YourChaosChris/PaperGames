@@ -1,0 +1,153 @@
+/* surakarta: rules used only by the surakarta pages (loaded after base.css). */
+/* Surakarta board: a plain 6x6 grid of points, square (unlike Fanorona's
+   wider-than-tall 5x9), so it reuses the same percentage-based
+   absolute-positioning technique but with equal width/height totals.
+   The board's namesake "loop tracks" - the 4 corner arcs that let a
+   capturing slide curve off one edge and re-enter along a perpendicular
+   line - are drawn as curved SVG paths in the same non-interactive
+   layer as the ordinary grid lines, under the point buttons (see
+   surakarta-app.js's buildSurakartaBoardDOM). Pieces use the same
+   filled-disc-vs-outlined-disc convention as everywhere else in this
+   app. */
+.surakarta-board {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+}
+
+.surakarta-lines {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.surakarta-lines line {
+  stroke: var(--border);
+  stroke-width: 2;
+}
+
+/* The 4 corner loop-track arcs, plus their short straight stub lines
+   connecting the board's own edge points out to where each curve
+   begins - drawn a little thicker/lighter than the plain grid lines so
+   the loop tracks read as a visually distinct feature, per the task's
+   emphasis that this is the game's defining (and least obvious)
+   mechanic. */
+.surakarta-loop-arc {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  opacity: 0.75;
+}
+
+.surakarta-loop-stub {
+  stroke: var(--accent);
+  stroke-width: 2;
+  opacity: 0.55;
+}
+
+.surakarta-point {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: var(--square-light);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.surakarta-point-movable {
+  background: var(--square-dark);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--text);
+}
+
+.surakarta-point-capturable {
+  box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+.surakarta-point-selected {
+  border-color: var(--accent);
+  border-width: 3px;
+}
+
+.surakarta-point.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.surakarta-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 76%;
+  height: 76%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.surakarta-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.surakarta-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.surakarta-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.surakarta-icon-disc-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.surakarta-icon-disc-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Worked-example loop-capture diagram on the rules page: a single
+   wider figure (the loop makes for a wide diagram) rather than the
+   side-by-side pair Fanorona uses for its two capture types. */
+.surakarta-example-figure {
+  max-width: 100%;
+  margin: 0 0 1rem 0;
+}
+
+.surakarta-example-figure svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.surakarta-example-figure figcaption {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+
+.surakarta-point-movable.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent), 0 0 0 3px #fff, 0 0 0 6px var(--text);
+}

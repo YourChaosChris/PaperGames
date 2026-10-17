@@ -1,0 +1,40 @@
+// text/zh/konane.js
+// Rules and history texts of konane (zh). Loaded by konane-rules.html and konane-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.zh, {
+    konane_rules_title: "科纳内棋规则",
+    konane_rules_intro: "关于 PaperGames 如何实现科纳内棋(夏威夷跳棋)玩法的简要参考——无论你是生疏了还是刚开始学,都能用得上。",
+    konane_rules_basics_title: "基本理念",
+    konane_term_board: "棋盘",
+    konane_rules_board: "一个8x8的棋盘,开局时64个格子无一例外全部摆有棋子——这与西方跳棋只使用深色格子不同。棋子严格按棋盘格图案交替排列:黑方占一种颜色的格子,白方占另一种。",
+    konane_term_moves: "走法",
+    konane_rules_moves: "棋子从不做简单的滑动。科纳内棋中唯一的走法是跳吃:让己方一枚棋子越过与之直线相邻(上、下、左或右——绝不是斜向)的敌方棋子,落在其后紧邻的空格上,并吃掉被越过的棋子。",
+    konane_rules_opening_title: "开局的移除仪式",
+    konane_term_opening: "开局方式",
+    konane_rules_opening: "由于开局时每个格子都被占据,谁都还不能跳吃——跳吃需要一个空的落点。因此对局不是以第一次跳吃开始,而是以一个简短的仪式开始:黑方先从四个角或中央四格中选一个,移除自己的一枚棋子。接着白方移除自己的一枚棋子,该棋子必须与黑方刚腾出的格子直线相邻。正是这两个空格,才使得第一次跳吃成为可能。",
+    konane_term_opening_next: "仪式之后",
+    konane_rules_opening_next: "两次移除完成后,黑方走出第一步真正的跳吃,此后双方按正常顺序轮流行棋。",
+    konane_rules_capture_title: "跳吃与连续跳吃",
+    konane_term_mandatory: "强制跳吃",
+    konane_rules_mandatory: "只要你有任意一枚棋子在棋盘上任何位置存在合法的跳吃,你就必须走一步跳吃——如果不止一枚棋子可以跳吃,你可以自行选择用哪一枚。",
+    konane_term_chain: "延续连续跳吃",
+    konane_rules_chain: "落地后,同一枚棋子可以从新位置继续跳吃,并且可以在各次跳吃之间自由改变方向(每一次跳吃仍必须是直线方向,但整条连跳不必保持同一方向)。与跳棋不同,你从不会被强制走出可能的最长连跳:你可以在任意一次跳吃后停止,每一步都由你自己决定这一回合要继续多远。",
+    konane_term_example: "实例讲解",
+    konane_rules_example: "假设你的棋子位于c4,敌方棋子位于c5,c6为空:跳吃c4-c6会吃掉c5上的棋子。如果此时位于c6的这枚棋子,在b6还有一枚敌方棋子,而其另一侧的d6为空,你可以在同一回合继续跳吃c6-d6(相对第一次跳吃方向转了90度),从而也吃掉b6上的棋子——或者你也可以在第一次跳吃后就停在c6。两种做法都合法;每一步如何选择,由你决定。",
+    konane_rules_end_title: "对局如何结束",
+    konane_term_win: "获胜",
+    konane_rules_win: "如果轮到你走棋时,棋盘上任何地方都没有合法的跳吃可走,你就立即输掉——一旦对局开始,科纳内棋中没有任何其他类型的走法可以退而求其次。",
+    konane_term_resignation: "认输",
+    konane_rules_resignation: "任意一方玩家都可以随时认输,对局随即以对方获胜而结束。",
+    konane_history_title: "科纳内棋的历史",
+    konane_history_origins_title: "雕凿岩石上的熔岩石子",
+    konane_history_origins_p1: "古代夏威夷人用黑色火山熔岩石('ili'ili pōhaku)作为一方的棋子,用白色珊瑚或漂白椰壳碎片作为另一方的棋子,摆放在直接凿刻于平整岩石上的一格格浅坑之中对弈。这些被称为kōnane papamū的棋盘,是直接雕刻在岩石本身上的,而不是制成可携带的独立器具。",
+    konane_history_origins_p2: "如今,许多kōnane papamū仍保存在夏威夷群岛各地的历史遗址中,尤以大岛(夏威夷岛)最为集中——有些凿刻在靠近王室居所和heiau(神庙遗址)的熔岩流中,还有一些规模之大,足以说明当年的棋盘远大于今天常见的8x8规格。实际上棋盘的大小差异很大,并不像工厂制造的棋具那样有固定标准。",
+    konane_history_kinship_title: "独立发明,而非借鉴而来",
+    konane_history_kinship_p1: "科纳内棋的跳吃机制,使其与阿尔克尔克棋以及跳棋(西洋跳棋)等游戏有着明显的“家族相似性”——它们都共享同一个基本理念:跃过一枚棋子将其吃掉。但科纳内棋并非源自其中任何一种——它是在波利尼西亚独立发展起来的,与孕育出阿尔克尔克棋及其跳棋后裔的旧大陆游戏彼此隔绝。这种相似性最好理解为“趋同发明”:跳吃是一个简单而强大的构思,不止一种文化各自独立地想到了它,而不能作为某一传统借鉴了另一传统的证据。",
+    konane_history_kinship_p2: "科纳内棋真正独有的,是本应用规则页面详细讲解的——整盘交替排列的棋子,以及开局时的双子移除仪式,这两者在跳棋或阿尔克尔克棋中都没有真正的对应之物,也正是它们共同赋予了科纳内棋独特的性格:一款除连续跳吃战术之外别无其他走法的纯粹博弈游戏。",
+    konane_history_modern_title: "依然鲜活的夏威夷文化遗产",
+    konane_history_modern_p1: "科纳内棋至今仍是夏威夷原住民鲜活文化遗产的重要组成部分,而不仅仅是历史上的一件趣闻。它作为文化教育项目的一部分被教授和游玩,也会在文化节庆和遗产场所进行展示,现存的石制棋盘正被积极保护,在一些地方还被作为独立的历史文化遗址加以保护。",
+    konane_history_modern_p2: "即便是在今天,哪怕只是在屏幕上,用简化的8x8棋盘而非露天雕凿的papamū对弈一局,也是在与一种比与西方书面接触还要早上数个世纪的策略传统相连——这一传统,夏威夷人一直将其延续和传承至今。"
+});
+I18n.markTextLoaded("zh");

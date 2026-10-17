@@ -1,0 +1,32 @@
+// text/fr/surakarta.js
+// Rules and history texts of surakarta (fr). Loaded by surakarta-rules.html and surakarta-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.fr, {
+    surakarta_rules_title: "Règles du Surakarta",
+    surakarta_rules_intro: "Un aide-mémoire rapide sur la façon dont PaperGames joue au Surakarta - utile si vous êtes rouillé ou si vous apprenez. La capture par boucle est ce qui déroute presque tout le monde au début, un exemple détaillé est donc proposé plus bas.",
+    surakarta_rules_basics_title: "L'idée de base",
+    surakarta_term_board: "Le plateau",
+    surakarta_rules_board: "Une simple grille de points 6x6. Chaque joueur commence avec 12 pions qui remplissent les deux rangées les plus proches de son propre côté (Noir sur les deux rangées du haut, Blanc sur les deux du bas), les deux rangées du milieu restant vides. Noir joue en premier.",
+    surakarta_term_movement: "Se déplacer",
+    surakarta_rules_movement: "À votre tour, faites glisser un pion d'un seul pas vers un point vide adjacent - en ligne droite ou en diagonale, dans l'une des 8 directions. Un tel pas est toujours un déplacement simple : il ne capture jamais rien, même s'il atterrit juste à côté d'un pion ennemi.",
+    surakarta_term_loop: "Les boucles",
+    surakarta_rules_loop: "Quatre lignes du plateau - la 2e et la 5e rangée, ainsi que la 2e et la 5e colonne - ne s'arrêtent pas simplement au bord : chaque extrémité de ces quatre lignes s'incurve vers l'extérieur et rejoint l'extrémité la plus proche de la ligne spéciale voisine au même coin, formant une boucle autour de chacun des 4 coins du plateau. Un pion qui glisse le long de l'une de ces quatre lignes peut emprunter une boucle en sortant d'un bord et réapparaître en continuant sur la ligne connectée, toujours en ligne droite, aussi loin que la piste et d'éventuelles autres boucles le permettent.",
+    surakarta_term_capture: "Capturer",
+    surakarta_rules_capture: "Capturer est totalement distinct de se déplacer, et ne fonctionne que le long des boucles. Au lieu de faire un seul pas, un pion peut glisser entièrement dans l'une de ses 8 directions - en passant par-dessus tout autre pion, allié ou ennemi, sans effet - aussi longtemps que la ligne et ses connexions en boucle le permettent. Dès qu'il a emprunté au moins une boucle ET que le prochain pion rencontré est ennemi, ce pion est capturé et le pion qui glisse atterrit sur sa case, terminant le coup à cet endroit. Si la ligne sort du plateau sans boucle pour la prolonger, ou si elle boucle entièrement sans jamais rencontrer de pion ennemi valable, il n'y a pas de capture par ce chemin. Capturer est optionnel ici : même avec une capture disponible, vous pouvez jouer un simple déplacement à la place.",
+    surakarta_rules_example_title: "Exemple détaillé : une capture par boucle",
+    surakarta_rules_example_intro: "○ représente Blanc (le pion qui se déplace dans cet exemple), ● représente Noir. Le pion blanc en A se trouve sur l'une des quatre lignes porteuses de boucle. Rien ne le bloque jusqu'au bord, donc au lieu d'un simple déplacement, Blanc joue un glissement de capture complet.",
+    surakarta_rules_example_caption: "Le pion blanc en A glisse vers la gauche le long de la rangée. Il sort par le bord, emprunte la boucle autour du coin, et réapparaît en descendant la colonne connectée. Le premier pion qu'il rencontre après avoir emprunté cette boucle est le pion noir en B - B est donc capturé, et le pion blanc atterrit sur sa case désormais vide (cercle en pointillés). Si A s'était trouvé à un seul pas d'un pion ennemi sans qu'aucune boucle ne soit impliquée, cet ennemi adjacent n'aurait PAS été capturé - seul un glissement empruntant réellement une boucle peut capturer.",
+    surakarta_rules_end_title: "Fin de partie",
+    surakarta_term_win: "Gagner",
+    surakarta_rules_win: "Vous gagnez en capturant tous les pions de votre adversaire, ou si votre adversaire n'a plus aucun coup légal à jouer à son tour.",
+    surakarta_term_resignation: "Abandon",
+    surakarta_rules_resignation: "Un joueur peut abandonner à tout moment, ce qui met fin à la partie immédiatement en faveur de l'adversaire.",
+    surakarta_history_title: "L'histoire du Surakarta",
+    surakarta_history_origins_title: "Nommé d'après une ville de Java",
+    surakarta_history_origins_p1: "Surakarta - aussi largement connue sous son nom plus courant, Solo - est une ville du centre de Java, en Indonésie, et le jeu qui porte son nom est traditionnellement considéré comme y étant né. Comme pour beaucoup de jeux de plateau traditionnels transmis surtout par la pratique plutôt que par des écrits, son âge exact et les détails de ses débuts ne sont pas précisément documentés ; ce qui est clair, c'est qu'il est joué dans la région depuis très longtemps et reste fortement associé à la ville aujourd'hui.",
+    surakarta_history_unique_title: "Un exemple favori de règle de capture « non évidente »",
+    surakarta_history_unique_p1: "Le Surakarta est inhabituel, même parmi les jeux traditionnels, car il sépare complètement le déplacement et la capture en deux mécaniques distinctes : un déplacement simple n'est qu'un pas vers un point voisin, tandis que toute capture dépend entièrement des boucles d'angle caractéristiques du plateau - un pion sans ligne éligible à une boucle ne peut tout simplement pas capturer ce tour-ci, quel que soit le nombre d'ennemis qui l'entourent. Cette séparation nette, et le fait qu'un pion puisse se trouver juste à côté d'un pion ennemi en toute sécurité, est précisément ce qui rend le jeu limpide une fois compris - et ce qui en fait un exemple souvent cité dans les discussions de game design sur les mécaniques de capture qui ne sont pas immédiatement évidentes au premier regard sur le plateau.",
+    surakarta_history_modern_title: "Toujours joué aujourd'hui",
+    surakarta_history_modern_p1: "Le Surakarta reste une partie vivante de la culture traditionnelle des jeux indonésiens et a aussi voyagé bien au-delà : c'est un sujet récurrent dans les cercles d'amateurs de jeux abstraits et dans la recherche en jeux informatiques, précisément parce que sa règle de capture est si singulière, et il apparaît dans des compilations générales de jeux de plateau et des exercices de programmation de jeux comme un exemple compact et autonome d'une mécanique presque sans équivalent dans le canon des jeux de plateau traditionnels."
+});
+I18n.markTextLoaded("fr");

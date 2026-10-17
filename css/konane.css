@@ -1,0 +1,85 @@
+/* konane: rules used only by the konane pages (loaded after base.css). */
+/* Konane board: reuses .square's float-grid layout from the chess/
+   checkers boards (see ensureKonaneSquareAspectRatio in konane-app.js for
+   the JS-enforced row height), but unlike checkers every one of the 64
+   squares is playable - Konane fills the whole board with alternating
+   stones at the start, not just the dark squares - so both .light and
+   .dark squares get a piece span and a click handler here. */
+#konane-board {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.konane-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 78%;
+  height: 78%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.konane-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.konane-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Opening-ritual removal targets: a heavy inner frame (a reddish tint
+   before, invisible on e-ink), so the two-stone opening ritual reads as
+   different from an ordinary jump destination (grey) and from the last
+   move's thin frame. */
+.konane-square.konane-square-removable {
+  box-shadow: inset 0 0 0 5px var(--text);
+}
+
+.konane-square.konane-square-movable {
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.konane-icon-disc {
+  position: relative;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.konane-icon-disc-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.konane-icon-disc-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* The "continue or stop" jump-chain prompt: a plain stacked button,
+   margin-based spacing rather than flexbox `gap` (unsupported on the
+   Tolino's Chrome 61 WebView) - same pattern as Fanorona's own chain
+   controls (.fanorona-chain-controls) just above. */
+.konane-chain-controls {
+  margin-top: 0.6rem;
+}
+
+.konane-chain-controls button {
+  margin: 0 0.5rem 0.5rem 0;
+}

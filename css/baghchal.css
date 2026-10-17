@@ -1,0 +1,122 @@
+/* baghchal: rules used only by the baghchal pages (loaded after base.css). */
+/* Bagh-Chal board: 25 points in a 5x5 grid (square, unlike Fanorona's
+   wider-than-tall board), connected by horizontal, vertical, AND
+   diagonal lines wherever the alquerque-style lattice allows (see
+   baghchal-core.js's "strong"/"weak" point pattern). Uses the exact
+   same percentage-based absolute-positioning + SVG-line-layer technique
+   as .fanorona-board, just square: a JS-enforced pixel height (see
+   ensureBaghChalBoardAspect in baghchal-app.js) rather than CSS
+   `aspect-ratio`, which some E-Ink browsers silently ignore. Pieces are
+   told apart structurally, not by color alone: tigers are a filled
+   disc, goats an outlined disc, the same convention used everywhere
+   else in this app. */
+.baghchal-board {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+}
+
+.baghchal-lines {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.baghchal-lines line {
+  stroke: var(--border);
+  stroke-width: 2;
+}
+
+.baghchal-point {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: var(--square-light);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.baghchal-point-movable {
+  background: var(--square-dark);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--text);
+}
+
+.baghchal-point-selectable {
+  box-shadow: inset 0 0 0 2px var(--muted);
+}
+
+.baghchal-point-capture {
+  box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+.baghchal-point-selected {
+  border-color: var(--accent);
+  border-width: 3px;
+}
+
+.baghchal-point.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.baghchal-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 78%;
+  height: 78%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+/* Tigers are filled black discs, goats outlined white ones - the
+   filled-vs-outlined convention of the other games, instead of a brown
+   that turned into a middling grey on e-ink. */
+.baghchal-piece-tiger {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.baghchal-piece-goat {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Small disc icons for the side-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.baghchal-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.baghchal-icon-disc-tiger {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.baghchal-icon-disc-goat {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+.baghchal-point-movable.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent), 0 0 0 3px #fff, 0 0 0 6px var(--text);
+}

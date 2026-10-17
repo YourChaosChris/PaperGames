@@ -1,0 +1,41 @@
+// text/fr/seega.js
+// Rules and history texts of seega (fr). Loaded by seega-rules.html and seega-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.fr, {
+    seega_rules_title: "Règles du Seega",
+    seega_rules_intro: "Un aide-mémoire sur la façon dont PaperGames joue au Seega, le jeu égyptien de pose et d'encerclement.",
+    seega_rules_basics_title: "Le principe",
+    seega_term_board: "Le plateau",
+    seega_rules_board: "Le plateau compte 5x5 cases. Chaque camp a 12 pierres : Noir (disques pleins) et Blanc (anneaux).",
+    seega_term_placing: "Phase de pose",
+    seega_rules_placing: "La partie commence sur un plateau vide. Blanc commence : à tour de rôle, chaque camp pose deux pierres par tour sur n'importe quelles cases libres, sauf la case centrale, qui reste vide. Il n'y a pas de prise pendant la pose. Quand les 24 pierres sont posées, la phase de déplacement commence d'elle-même.",
+    seega_term_moving: "Phase de déplacement",
+    seega_rules_moving: "Celui qui a commencé la pose joue aussi en premier, et ce premier coup doit amener une pierre sur la case centrale libre. À votre tour, déplacez une de vos pierres d'une case horizontalement ou verticalement (jamais en diagonale) vers une case libre.",
+    seega_term_capture: "Prise",
+    seega_rules_capture: "Si votre coup laisse une pierre adverse entre la pierre déplacée et une autre de vos pierres, en ligne droite horizontale ou verticale, elle est prise et retirée. Un coup peut prendre plusieurs pierres dans des directions différentes. Une pierre qui se place elle-même entre deux pierres adverses n'est pas prise. La case centrale n'est pas une case sûre.",
+    seega_term_again: "Rejouer",
+    seega_rules_again: "Après une prise, vous pouvez rejouer si ce coup prend aussi. Règle de PaperGames : le coup suivant doit être joué avec la même pierre – comme une prise multiple dans d'autres jeux. Vous pouvez aussi vous arrêter.",
+    seega_rules_end_title: "Fin de la partie",
+    seega_term_pass: "Passer",
+    seega_rules_pass: "Si vous ne pouvez pas jouer à votre tour, vous passez.",
+    seega_term_win: "Gagner",
+    seega_rules_win: "Vous gagnez en prenant toutes les pierres de votre adversaire.",
+    seega_term_limit: "Fin d'une partie bloquée",
+    seega_rules_limit: "Règle de PaperGames, pas une règle traditionnelle : après 40 tours d'affilée sans prise (20 par camp ; passer compte comme un tour), ou quand aucun camp ne peut plus jouer, la partie s'arrête. Celui qui a le plus de pierres gagne ; à égalité, la partie est nulle.",
+    seega_term_resignation: "Abandon",
+    seega_rules_resignation: "Chaque camp peut abandonner à tout moment ; la partie se termine alors aussitôt en faveur de l'adversaire.",
+    seega_rules_versions_title: "Quelle version est jouée ici",
+    seega_rules_versions: "Le Seega s'est joué sur des plateaux de 5x5, 7x7 et 9x9 cases, et les anciennes descriptions diffèrent sur plusieurs points, par exemple sur le sort d'un joueur qui ne peut pas jouer. PaperGames joue la version 5x5 avec les règles ci-dessus. La case centrale n'est pas sûre ici, car aucune des sources consultées n'en mentionne. Deux points sont des règles de PaperGames et sont signalés comme tels : rejouer seulement avec la même pierre, et la fin d'une partie bloquée.",
+    seega_rules_sources_title: "Sources",
+    seega_rules_sources: "Ces règles suivent : Wikipedia, \"Seega (game)\": https://en.wikipedia.org/wiki/Seega_(game) · Ludii Portal, \"Seega\": https://ludii.games/details.php?keyword=Seega. Le portail Ludii renvoie à Lane (1836), p. 356-357, Davies (1925) et Bolton (1890).",
+    seega_history_title: "L'histoire du Seega",
+    seega_history_origins_title: "D'Égypte",
+    seega_history_origins_p1: "Le Seega est un jeu de stratégie originaire d'Égypte. On le connaît sous plusieurs graphies, dont Seejeh, Seeza, Cheza, Siga et Sidjah, et il est apparenté à des jeux comme le Polis.",
+    seega_history_lane_title: "Edward William Lane",
+    seega_history_lane_p1: "En 1836, le savant anglais Edward William Lane décrivit le jeu dans son livre sur les mœurs et coutumes des Égyptiens modernes. Il connaissait trois plateaux : le 5x5 (khamsáwee seega), le 7x7 (seb'áwee) et le 9x9 (tisáwee). Dans sa description, les pierres partaient d'une position fixe au lieu d'être posées par les joueurs.",
+    seega_history_sinai_title: "Près du mont Sinaï",
+    seega_history_sinai_p1: "En 1890, H. Carrington Bolton rapporta que le jeu se pratiquait près du mont Sinaï ; les pierres s'appelaient kelb.",
+    seega_history_modern_title: "Sur PaperGames",
+    seega_history_modern_p1: "PaperGames joue la version 5x5 avec 12 pierres chacun : d'abord la pose, deux pierres par tour, puis le déplacement et la prise par encadrement. La phase en cours est toujours indiquée sous le plateau."
+});
+I18n.markTextLoaded("fr");

@@ -1,0 +1,52 @@
+/* skat: rules used only by the skat pages (loaded after base.css). */
+.sk-values {
+  margin: 0.3rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.sk-values-head {
+  font-weight: 700;
+  margin-right: 0.3rem;
+}
+
+[dir="rtl"] .sk-values-head {
+  margin-right: 0;
+  margin-left: 0.3rem;
+}
+
+.sk-value {
+  display: inline-block;
+  margin: 0.1rem 0.25rem;
+  padding: 0 0.3rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.sk-note {
+  margin: 0.2rem 0;
+  text-align: center;
+}
+
+.sk-options {
+  margin: 0.3rem 0;
+  text-align: center;
+}
+
+.sk-options label {
+  display: inline-block;
+  margin: 0.2rem 0.5rem;
+}
+
+.sk-open {
+  margin: 0.3rem 0;
+}
+
+.sk-example {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  margin: 0 auto;
+}

@@ -1,0 +1,40 @@
+// text/fr/skat.js
+// Rules and history texts of skat (fr). Loaded by skat-rules.html and skat-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.fr, {
+    sk_rules_title: "Règles du Skat",
+    sk_rules_intro: "Le skat selon les règles officielles : trois joueurs, 32 cartes, enchères, skat et valeur du jeu.",
+    sk_rules_basics_title: "Les règles",
+    sk_term_deal: "Cartes et donne",
+    sk_rules_deal: "32 cartes, du 7 à l'as. Chacun en reçoit 10, deux vont faces cachées dans le skat. Points : as 11, dix 10, roi 4, dame 3, valet 2, neuf, huit et sept 0 – 120 en tout. Le joueur après le donneur est l'avant-main, le suivant le milieu, le donneur l'arrière-main.",
+    sk_term_bid: "Enchères",
+    sk_rules_bid: "Le milieu annonce des valeurs à l'avant-main : 18, 20, 22, 23, 24, 27, 30 et ainsi de suite – seulement des valeurs qu'un jeu peut avoir. L'avant-main tient ou passe. Celui qui reste entend ensuite les valeurs de l'arrière-main. Le dernier qui reste devient le déclarant. Si personne n'enchérit, l'avant-main peut encore jouer pour 18 ; sinon la donne est annulée.",
+    sk_term_skat: "Skat ou Hand",
+    sk_rules_skat: "Le déclarant prend le skat et écarte deux cartes au choix (leurs points comptent pour lui), ou joue Hand sans le regarder. Schneider, Schwarz ou Ouvert ne peuvent être annoncés que dans un jeu Hand.",
+    sk_term_games: "Les jeux",
+    sk_rules_games: "Jeu de couleur (trèfle 12, pique 11, cœur 10, carreau 9) : les quatre valets et la couleur choisie sont atout. Grand (24) : seuls les quatre valets sont atout. Null (23, Hand 35, Ouvert 46, Ouvert Hand 59) : pas d'atout, et le déclarant ne doit faire aucune levée.",
+    sk_term_trumps: "Ordre des cartes",
+    sk_rules_trumps: "Atouts : valet de trèfle, valet de pique, valet de cœur, valet de carreau, puis as, dix, roi, dame, neuf, huit, sept de la couleur d'atout. Autres couleurs : as, dix, roi, dame, neuf, huit, sept. Au Null : as, roi, dame, valet, dix, neuf, huit, sept.",
+    sk_term_follow: "Fournir",
+    sk_rules_follow: "L'avant-main entame la première levée, puis le gagnant de chaque levée entame. Vous devez fournir la couleur demandée (les valets font partie des atouts) ; sinon vous pouvez jouer n'importe quelle carte.",
+    sk_term_win: "Gagner",
+    sk_rules_win: "Le déclarant gagne avec 61 points ou plus. Schneider : un camp a 30 points ou moins. Schwarz : un camp ne fait aucune levée. Si Schneider est annoncé, le déclarant a besoin de 90 points ; si Schwarz est annoncé, de toutes les levées.",
+    sk_term_value: "Valeur du jeu",
+    sk_rules_value: "Valeur de base fois le niveau. Le niveau, ce sont les matadors (« avec » ou « sans » tant d'atouts maîtres, comptés depuis le valet de trèfle, skat compris) plus 1 pour le jeu, plus 1 chacun pour Hand, Schneider, Schneider annoncé, Schwarz, Schwarz annoncé et Ouvert. Les jeux Null ont des valeurs fixes.",
+    sk_term_lost: "Perdu et enchère dépassée",
+    sk_rules_lost: "Un jeu perdu compte double contre le déclarant. Si la valeur est inférieure à l'enchère, le jeu est perdu ; il compte le plus petit multiple de la valeur de base qui atteint l'enchère, doublé.",
+    sk_term_list: "La feuille de marque",
+    sk_rules_list: "Après chaque jeu, le déclarant reçoit la valeur (gagné) ou moins deux fois la valeur (perdu). La feuille additionne tous les jeux ; une donne annulée est notée sans points.",
+    sk_term_decks: "Cartes françaises et allemandes",
+    sk_rules_decks: "Sous Nouvelle partie, vous pouvez choisir les cartes françaises (trèfle, pique, cœur, carreau) ou allemandes (glands, feuilles, cœurs, grelots). Dans les cartes allemandes, l'Ober remplace la dame et l'Unter le valet (U) ; les règles restent les mêmes.",
+    sk_rules_example_title: "Compter les matadors",
+    sk_rules_example: "Trèfle, et le déclarant a le valet de trèfle et le valet de pique mais pas le valet de cœur : « avec 2, jeu 3 », la valeur est donc 3 × 12 = 36.",
+    sk_history_title: "L'histoire du Skat",
+    sk_history_origins_title: "Altenburg",
+    sk_history_origins_p1: "Le skat a été mis au point vers 1810 à 1813 à Altenburg, en Thuringe, par les membres d'un cercle de tarot, la Brommesche Tarok-Gesellschaft. Il est issu de jeux plus anciens de la région.",
+    sk_history_rules_title: "Des règles pour tous",
+    sk_history_rules_p1: "La première tentative d'unifier les règles fut un congrès de joueurs de skat le 7 août 1886 à Altenburg. La fédération allemande de skat a été fondée à Altenburg en 1899. Aujourd'hui, l'Ordre international du skat fixe les règles officielles.",
+    sk_history_modern_title: "Le skat aujourd'hui",
+    sk_history_modern_p1: "Le Tribunal international du skat a été fondé à Altenburg le 1er décembre 2001. En décembre 2016, la Commission allemande pour l'UNESCO a inscrit le skat au registre national du patrimoine culturel immatériel. PaperGames joue selon les règles officielles sans Ramsch, avec des cartes françaises ou allemandes dessinées pour l'encre électronique en noir et blanc, et détaille chaque valeur de jeu."
+});
+I18n.markTextLoaded("fr");

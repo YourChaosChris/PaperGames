@@ -1,0 +1,41 @@
+// text/it/ludo.js
+// Rules and history texts of ludo (it). Loaded by ludo-rules.html and ludo-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.it, {
+    ludo_rules_title: "Regole del Ludo",
+    ludo_rules_intro: "Un riferimento rapido per la versione di PaperGames di questo classico gioco di corsa a croce. Tu controlli un colore; gli altri 2-3 colori sono avversari del computer oppure, in locale, altri giocatori a turno sullo stesso dispositivo.",
+    ludo_rules_basics_title: "L'idea di base",
+    ludo_term_tokens: "Le pedine e il tabellone",
+    ludo_rules_tokens: "Ognuno dei 2-4 colori ha 4 pedine, che partono dalla propria casa. Le pedine percorrono un tracciato esterno condiviso di 52 caselle, poi il proprio corridoio privato di 5 caselle fino alla casella di arrivo centrale.",
+    ludo_term_die: "Il dado",
+    ludo_rules_die: "A ogni turno si lancia un singolo dado a sei facce. Se nessuna pedina può usare legalmente il numero uscito, il turno passa senza muovere.",
+    ludo_term_leaving_home: "Uscire di casa",
+    ludo_rules_leaving_home: "Una pedina può uscire dalla propria casa ed entrare in gioco solo con un 6, spostandosi sulla casella di partenza del proprio colore.",
+    ludo_term_extra_turn: "Fare un 6",
+    ludo_rules_extra_turn: "Un 6 concede un altro lancio subito dopo aver mosso (o anche senza mosse legali disponibili). Tre 6 di fila fanno invece perdere il turno senza muovere, così una serie fortunata non può continuare all'infinito.",
+    ludo_term_shapes: "Colori e forme",
+    ludo_rules_shapes: "Su uno schermo a inchiostro elettronico i quattro colori sembrano quasi uguali, quindi ogni colore ha anche una sua forma: rosso un cerchio pieno, verde un cerchio vuoto, giallo un triangolo pieno e blu un quadrato vuoto. La forma è usata ovunque: per le pedine, per quelle in attesa nella base e per il conteggio del traguardo sopra il tabellone. Un cuneo nero nell'angolo di una casella, o una spessa doppia cornice intorno a una pedina in attesa, indica una pedina che può muoversi con il lancio attuale.",
+    ludo_rules_capture_title: "Catture e caselle sicure",
+    ludo_term_capture: "Catturare",
+    ludo_rules_capture: "Arrivare esattamente su una casella occupata da una sola pedina avversaria la rimanda direttamente alla propria casa, da cui deve ripartire. Una pedina già nel proprio corridoio finale non può mai essere catturata.",
+    ludo_term_safe: "Caselle sicure",
+    ludo_rules_safe: "La casella di partenza di ogni colore, più un'altra casella contrassegnata da una stella più avanti sul tracciato, sono sicure: lì non può avvenire nessuna cattura, chiunque vi si trovi sopra.",
+    ludo_term_block: "Blocchi",
+    ludo_rules_block: "Due proprie pedine sulla stessa casella formano un blocco. Gli avversari non possono né fermarvisi né superarlo: un modo efficace per presidiare un tratto di percorso. Il tuo blocco non ferma le tue stesse pedine.",
+    ludo_rules_end_title: "Come finisce una partita",
+    ludo_term_win: "Vittoria",
+    ludo_rules_win: "Il primo colore a portare tutte e 4 le pedine nella casella di arrivo centrale vince immediatamente, terminando la partita. Una pedina deve arrivare esattamente sul traguardo: un lancio che lo supererebbe non può essere usato per quella pedina, anche se un'altra pedina potrebbe comunque avere una mossa legale.",
+    ludo_term_resignation: "Abbandono",
+    ludo_rules_resignation: "Chi è di turno può abbandonare in qualsiasi momento, terminando subito la partita a favore di uno dei colori rimanenti.",
+    ludo_history_title: "La storia del Ludo",
+    ludo_history_origins_title: "Il Pachisi, il gioco reale dell'India",
+    ludo_history_origins_p1: "L'antenato diretto del Ludo è il Pachisi, un gioco di corsa a croce e cerchio giocato in India da molti secoli. Il Pachisi è tradizionalmente associato alle corti reali indiane - si narra che l'imperatore Moghul Akbar (1542-1605) giocasse una versione a grandezza naturale in un enorme cortile di marmo rosso e bianco nel suo palazzo di Fatehpur Sikri, usando cortigiane e donne rese schiave vestite con costumi colorati come pedine viventi. Come per molte leggende così pittoresche, i dettagli precisi sono oggi difficili da verificare, ma il cortile stesso esiste ancora.",
+    ludo_history_origins_p2: "Il Pachisi tradizionale non si giocava affatto con un dado: i giocatori lanciavano sei o sette conchiglie di ciprea e contavano quante cadevano con l'apertura verso l'alto, un antico metodo casuale diffuso in gran parte dell'Asia meridionale.",
+    ludo_history_modern_title: "Un brevetto vittoriano lo trasforma in Ludo",
+    ludo_history_modern_p1: "Alla fine del XIX secolo i coloni britannici in India portarono a casa giochi in stile Pachisi e li adattarono alla produzione di massa. La versione semplificata giocata oggi - un singolo dado a sei facce al posto delle conchiglie di ciprea, e un regolamento fisso invece di varianti regionali - fu brevettata in Inghilterra nel 1896 col nome \"Ludo\", dal latino ludo, \"io gioco\".",
+    ludo_history_modern_p2: "Il Ludo divenne rapidamente un classico dell'armadio dei giochi vittoriano ed edoardiano, economico da stampare e facile da imparare, e da allora è rimasto un caposaldo delle serate di giochi in famiglia in Europa e in Asia.",
+    ludo_history_legacy_title: "Un solo gioco, tanti nomi",
+    ludo_history_legacy_p1: "Il successo del Ludo ha generato parenti stretti in tutto il mondo. Negli Stati Uniti, il Parcheesi - registrato come marchio già nel 1874, in realtà poco prima dello stesso Ludo - offriva una propria versione americanizzata del Pachisi, con proprie regole di tabellone e cattura. Il gioco da tavolo inglese Sorry!, pubblicato per la prima volta negli anni '30, riprese l'idea centrale di corsa e cattura del Ludo aggiungendovi mosse pescate da carte e caselle speciali supplementari.",
+    ludo_history_legacy_p2: "Oggi il Ludo si gioca dal cortile della scuola fino agli app store degli smartphone; il suo tabellone a croce e i quattro angoli colorati restano immediatamente riconoscibili a oltre un secolo da quel primo brevetto inglese - e a molti secoli dalla prima volta che i cortigiani di Akbar fecero da pedine viventi."
+});
+I18n.markTextLoaded("it");

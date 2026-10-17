@@ -1,0 +1,261 @@
+/* ur: rules used only by the ur pages (loaded after base.css). */
+/* Royal Game of Ur board: a 3x8 float-grid (same technique as the chess
+   and checkers boards) with the four corner squares at columns 4-5 of
+   rows 0/2 left as invisible gaps, forming the traditional H-shape - a
+   private 4-square lane per player top/bottom, connected by a shared
+   8-square lane through the middle row.
+   The board is clipped to that same H-shape (a 4-column block, a
+   2-column bridge through the middle row only, then a 2-column tail
+   block) instead of sitting inside a plain rectangle, so the outline
+   reads as the real board's silhouette rather than a box with two blank
+   corners top and bottom. Getting a border to trace that outline -
+   including its two inward-facing notch corners, where a plain CSS
+   `border` would just vanish since border stays rectangular under a
+   clip-path - takes two nested elements rather than one: #ur-board is
+   the frame (filled with the border color, clipped to the full
+   H-shape) and #ur-grid, the actual clickable grid inside it, is
+   clipped to the same H-shape inset by the border width on every edge.
+   Since #ur-grid's squares otherwise tile it edge-to-edge, that inset
+   clip trims a uniform border-width sliver off their outer-facing
+   edges everywhere - all along the perimeter and both notches alike -
+   letting the frame color show through as a continuous ring. */
+#ur-board {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  background: var(--border);
+  clip-path: polygon(
+    0% 0%, 50% 0%, 50% calc(100%/3), 75% calc(100%/3), 75% 0%, 100% 0%,
+    100% 100%, 75% 100%, 75% calc(200%/3), 50% calc(200%/3), 50% 100%, 0% 100%
+  );
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+#ur-grid {
+  display: block;
+  overflow: hidden;
+  clip-path: polygon(
+    calc(0% + 3px) calc(0% + 3px),
+    calc(50% - 3px) calc(0% + 3px),
+    calc(50% - 3px) calc(100%/3 + 3px),
+    calc(75% + 3px) calc(100%/3 + 3px),
+    calc(75% + 3px) calc(0% + 3px),
+    calc(100% - 3px) calc(0% + 3px),
+    calc(100% - 3px) calc(100% - 3px),
+    calc(75% + 3px) calc(100% - 3px),
+    calc(75% + 3px) calc(200%/3 - 3px),
+    calc(50% - 3px) calc(200%/3 - 3px),
+    calc(50% - 3px) calc(100% - 3px),
+    calc(0% + 3px) calc(100% - 3px)
+  );
+}
+
+.ur-square {
+  background: var(--square-light);
+  border: 1px solid var(--border);
+}
+
+/* The shared lane (middle row) is where captures can happen. It is set
+   apart from each player's own safe squares by a second, inner frame
+   line - shape, not a tint, which e-ink can't show. */
+.ur-square-shared {
+  box-shadow: inset 0 0 0 4px var(--square-light), inset 0 0 0 5px var(--border);
+}
+
+.ur-square-gap {
+  background: transparent;
+  border: none;
+  pointer-events: none;
+}
+
+/* A small layered rosette mark (a diamond behind a ring) rather than a
+   plain circle, closer to the flower motif on the real board, built
+   from flat shapes only - no gradients or shadows to stay e-ink safe. */
+.ur-square-rosette::before {
+  content: "";
+  position: absolute;
+  top: 38%;
+  left: 38%;
+  width: 24%;
+  height: 24%;
+  background: var(--muted);
+  transform: rotate(45deg);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.ur-square-rosette::after {
+  content: "";
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  border: 2px solid var(--muted);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+/* "Can move" (here and in Mancala, Mühle, Backgammon, Shogi, Hnefatafl,
+   Konane): the grey tint plus a shape, so it never rests on grey alone -
+   a small black triangle in the top-left corner of square cells, a ring
+   with a white gap around round points. Neither looks like "last move"
+   (thin frame/outline) or "selected" (3 px frame). */
+.ur-square-movable {
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
+}
+
+.ur-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 74%;
+  height: 74%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.ur-piece::after {
+  content: "";
+  position: absolute;
+  top: 22%;
+  left: 22%;
+  width: 56%;
+  height: 56%;
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.ur-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.ur-piece-black::after {
+  border: 2px solid #555;
+}
+
+.ur-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+.ur-piece-white::after {
+  border: 2px solid #bbb;
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.ur-piece-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.ur-piece-icon-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.ur-piece-icon-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Off-board "start" and finished "home" pieces have no board square of
+   their own, so they're shown as simple labelled counters above/below
+   the board instead. */
+.ur-tray {
+  display: flex;
+max-width: 760px;
+  margin: 0 auto 0.4rem;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Off-board "start" and finished "home" pieces have no board square of
+   their own > *, so they're shown as simple labelled counters above/below
+   the board instead. */
+.ur-tray > * {
+  margin: 0 0.6rem 0.6rem 0;
+}
+
+/* Off-board "start" and finished "home" pieces have no board square of
+   their own > *:last-child, so they're shown as simple labelled counters above/below
+   the board instead. */
+.ur-tray > *:last-child {
+  margin-right: 0;
+}
+
+.ur-tray-slot {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem 0.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  font-size: 0.85rem;
+  box-sizing: border-box;
+}
+
+button.ur-tray-slot {
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.ur-tray-slot-static {
+  cursor: default;
+}
+
+.ur-tray-slot-movable {
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
+}
+
+.ur-tray-slot-count {
+  font-weight: 700;
+}
+
+.ur-dice-display {
+  display: flex;
+  align-items: center;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.ur-dice-display > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+.ur-dice-display > *:last-child {
+  margin-right: 0;
+}
+
+.ur-die {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: var(--border-width) solid var(--border);
+  box-sizing: border-box;
+}
+
+.ur-die-marked {
+  background: var(--accent);
+}
+
+.ur-die-blank {
+  background: #fff;
+}
+
+.ur-die-total {
+  font-weight: 700;
+  margin-left: 0.3rem;
+}

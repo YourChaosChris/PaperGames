@@ -1,0 +1,41 @@
+// text/pl/ludo.js
+// Rules and history texts of ludo (pl). Loaded by ludo-rules.html and ludo-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.pl, {
+    ludo_rules_title: "Zasady Chińczyka (Ludo)",
+    ludo_rules_intro: "Szybkie podsumowanie wersji PaperGames tej klasycznej, krzyżowej gry wyścigowej. Ty grasz jednym kolorem; pozostałe 2-3 kolory to albo przeciwnicy komputerowi, albo, w trybie lokalnym, inni gracze na tym samym urządzeniu.",
+    ludo_rules_basics_title: "Podstawowa idea",
+    ludo_term_tokens: "Pionki i plansza",
+    ludo_rules_tokens: "Każdy z 2-4 kolorów ma 4 pionki, które startują w swojej bazie. Pionki poruszają się po wspólnym torze 52 pól, a następnie własnym prywatnym odcinkiem 5 pól do mety w centrum.",
+    ludo_term_die: "Kostka",
+    ludo_rules_die: "Co turę rzuca się jedną sześcienną kostką. Jeśli żaden pionek nie może legalnie wykorzystać wyrzuconej liczby, tura kończy się bez ruchu.",
+    ludo_term_leaving_home: "Wyjście z bazy",
+    ludo_rules_leaving_home: "Pionek może opuścić bazę i wejść na planszę tylko przy wyrzuceniu 6, przechodząc na pole startowe swojego koloru.",
+    ludo_term_extra_turn: "Wyrzucenie 6",
+    ludo_rules_extra_turn: "Wyrzucenie 6 daje dodatkowy rzut zaraz po ruchu (lub nawet gdy nie było legalnego ruchu). Trzy szóstki z rzędu odbierają jednak turę bez ruchu, żeby passa szczęścia nie trwała w nieskończoność.",
+    ludo_term_shapes: "Kolory i kształty",
+    ludo_rules_shapes: "Na ekranie e-ink cztery kolory wyglądają prawie tak samo, dlatego każdy kolor ma też własny kształt: czerwony to wypełnione koło, zielony puste koło, żółty wypełniony trójkąt, a niebieski pusty kwadrat. Kształt pojawia się wszędzie - na pionkach, na pionkach czekających w bazie i przy liczniku mety nad planszą. Czarny klin w rogu pola albo gruba podwójna ramka wokół czekającego pionka oznacza pionek, który może się ruszyć przy bieżącym rzucie.",
+    ludo_rules_capture_title: "Bicie i bezpieczne pola",
+    ludo_term_capture: "Bicie",
+    ludo_rules_capture: "Wejście dokładnie na pole zajęte przez pojedynczy pionek przeciwnika odsyła go z powrotem do bazy, skąd musi zacząć od nowa. Pionek będący już na własnym odcinku dojściowym nigdy nie może zostać zbity.",
+    ludo_term_safe: "Bezpieczne pola",
+    ludo_rules_safe: "Pole startowe każdego koloru oraz jedno pole oznaczone gwiazdką dalej na torze są bezpieczne: nie można tam nikogo zbić, bez względu na to, kto na nim stoi.",
+    ludo_term_block: "Blokady",
+    ludo_rules_block: "Dwa własne pionki na tym samym polu tworzą blokadę. Przeciwnicy nie mogą na nią wejść ani jej ominąć, więc to mocny sposób na utrzymanie odcinka toru. Twoja własna blokada nie zatrzymuje twoich pionków.",
+    ludo_rules_end_title: "Jak kończy się gra",
+    ludo_term_win: "Zwycięstwo",
+    ludo_rules_win: "Kolor, który jako pierwszy wprowadzi wszystkie 4 pionki na metę w centrum, wygrywa natychmiast i gra się kończy. Pionek musi trafić dokładnie na metę - rzutu, który by ją przekroczył, nie można wykorzystać dla tego pionka, choć inny pionek może wciąż mieć legalny ruch.",
+    ludo_term_resignation: "Poddanie się",
+    ludo_rules_resignation: "Gracz, którego jest tura, może w każdej chwili się poddać, co natychmiast kończy grę na korzyść jednego z pozostałych kolorów.",
+    ludo_history_title: "Historia gry Ludo",
+    ludo_history_origins_title: "Pachisi, królewska gra Indii",
+    ludo_history_origins_p1: "Bezpośrednim przodkiem Ludo jest Pachisi, krzyżowo-kołowa gra wyścigowa grana w Indiach od wielu stuleci. Pachisi tradycyjnie kojarzone jest z indyjskimi dworami królewskimi - mogolski cesarz Akbar (1542-1605) miał podobno grać w wersję naturalnej wielkości na ogromnym czerwono-białym marmurowym dziedzińcu swojego pałacu w Fatehpur Sikri, wykorzystując dworki i zniewolone kobiety w kolorowych strojach jako żywe pionki. Jak w przypadku wielu takich barwnych legend, dokładne szczegóły trudno dziś zweryfikować, ale sam dziedziniec wciąż istnieje.",
+    ludo_history_origins_p2: "Tradycyjne Pachisi w ogóle nie było grane kostką: gracze rzucali sześcioma lub siedmioma muszelkami kauri i liczyli, ile z nich wypadło otworem do góry - wczesną formę losowania stosowaną w dużej części Azji Południowej.",
+    ludo_history_modern_title: "Wiktoriański patent tworzy Ludo",
+    ludo_history_modern_p1: "Pod koniec XIX wieku brytyjscy kolonizatorzy w Indiach przywieźli do domu gry w stylu Pachisi i dostosowali je do produkcji masowej. Uproszczona wersja grana dziś - pojedyncza sześcienna kostka zamiast muszelek kauri oraz stały zestaw zasad zamiast regionalnych wariantów - została opatentowana w Anglii w 1896 roku pod nazwą \"Ludo\", od łacińskiego ludo, \"gram\".",
+    ludo_history_modern_p2: "Ludo szybko stało się stałym elementem wiktoriańskiej i edwardiańskiej szafki z grami, tanie w druku i łatwe do nauczenia, i od tamtej pory pozostaje filarem rodzinnych wieczorów gier w Europie i Azji.",
+    ludo_history_legacy_title: "Jedna gra, wiele nazw",
+    ludo_history_legacy_p1: "Sukces Ludo dał początek bliskim krewnym na całym świecie. W Stanach Zjednoczonych Parcheesi - zastrzeżone jako znak towarowy już w 1874 roku, właściwie jeszcze przed samym Ludo - zaproponowało własną, zamerykanizowaną wersję Pachisi, z własnymi zasadami planszy i bicia. Angielska gra planszowa Sorry!, wydana po raz pierwszy w latach 30. XX wieku, przejęła podstawową ideę wyścigu i bicia z Ludo, dokładając ruchy losowane z kart i dodatkowe pola specjalne.",
+    ludo_history_legacy_p2: "Dziś w Ludo gra się od szkolnego podwórka po sklep z aplikacjami; jego krzyżowa plansza i cztery kolorowe rogi wciąż są natychmiast rozpoznawalne ponad sto lat po tamtym pierwszym angielskim patencie - i wiele stuleci po tym, jak dworzanie Akbara po raz pierwszy posłużyli za jego pionki."
+});
+I18n.markTextLoaded("pl");

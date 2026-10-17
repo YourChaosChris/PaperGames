@@ -1,0 +1,101 @@
+/* chess: rules used only by the chess pages (loaded after base.css). */
+#user-status {
+  white-space: nowrap;
+  max-width: 100%;
+  overflow-x: auto;
+  font-weight: 600;
+}
+
+.user-panel-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.user-panel-buttons > * {
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+.user-panel-buttons > *:last-child {
+  margin-right: 0;
+}
+
+.user-status-row {
+  justify-content: space-between;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.checkbox-label > * {
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+[dir="rtl"] .checkbox-label > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
+.checkbox-label > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .checkbox-label > *:last-child {
+  margin-left: 0;
+}
+
+.game-clocks {
+  font-size: 0.8rem;
+}
+
+.piece-black {
+  color: #000;
+}
+
+.piece-white {
+  color: #000;
+}
+
+#online-controls .online-inline-row {
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+#online-controls .online-inline-row > select#time-profile {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+#online-controls .online-tabs-row {
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead (see the .mode-buttons
+   rule above) - this class is combined with .mode-buttons on the same
+   element (see chess.html), it just overrides the gap value. */
+.online-sub-tabs > * {
+  margin: 0 var(--space-1) var(--space-1) 0;
+}
+
+[dir="rtl"] .online-sub-tabs > * {
+  margin-right: 0;
+  margin-left: var(--space-1);
+}
+
+.online-sub-tabs > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .online-sub-tabs > *:last-child {
+  margin-left: 0;
+}
+
+.score-line-diff {
+  justify-self: end;
+  white-space: nowrap;
+}

@@ -1,0 +1,140 @@
+/* marblepush: rules used only by the marblepush pages (loaded after base.css). */
+.big-board-enabled .marblepush-board-wrap { width: 640px; max-width: none; margin: 0; }
+
+/* Marble Push board: a 61-cell hexagon rendered as plain circular buttons
+   at hex-grid positions (see marblepush-app.js's cube-coordinate pixel
+   math) - round holes/marbles read just as clearly on e-ink as true
+   hexagon cells and are far simpler to get pixel-perfect on an old
+   WebView. Height is JS-enforced from the measured width (see
+   ensureMarblePushBoardAspect) rather than via `aspect-ratio`, which some
+   E-Ink browsers silently ignore. */
+.marblepush-board-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.marblepush-board {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.marblepush-cell {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: var(--square-light);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.marblepush-cell-movable {
+  background: var(--square-dark);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--text);
+}
+
+.marblepush-cell-selected {
+  border-color: var(--accent);
+  border-width: 3px;
+}
+
+/* A push destination: dashed border on top of the movable shading, so
+   "this can capture" is conveyed structurally rather than by color
+   alone. */
+.marblepush-cell-sumito {
+  border-style: dashed;
+  border-width: 3px;
+  border-color: var(--accent);
+}
+
+.marblepush-cell.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.marblepush-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 78%;
+  height: 78%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.marblepush-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.marblepush-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own marble styling. */
+.marblepush-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.marblepush-icon-disc-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.marblepush-icon-disc-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* The current-selection hint and its "Clear selection" button: plain
+   stacked content, margin-based spacing rather than flexbox `gap`
+   (unsupported on the Tolino's Chrome 61 WebView). */
+.marblepush-selection-controls {
+  margin-top: 0.6rem;
+}
+
+.marblepush-selection-controls button {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+/* Worked-example diagram on the rules page. Flexbox `gap` fallback:
+   margin-based spacing instead, since some E-Ink browsers (Tolino
+   confirmed) don't support `gap` on a flex container and render items
+   with zero space between them. */
+.marblepush-example-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 1rem -1.5rem;
+}
+
+.marblepush-example-figure {
+  margin: 0 0 1rem 1.5rem;
+  max-width: 300px;
+}
+
+.marblepush-example-figure svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.marblepush-example-figure figcaption {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+
+.marblepush-cell-movable.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent), 0 0 0 3px #fff, 0 0 0 6px var(--text);
+}

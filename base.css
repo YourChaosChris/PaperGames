@@ -1,0 +1,3945 @@
+/* PaperGames base styles: shared by every page. Game-specific rules live in css/<game>.css. */
+/* PaperGames – einfache, E‑Ink-freundliche Gestaltung */
+:root {
+  --bg: #f5f5f5;
+  --bg-alt: #e3e3e3;
+  --border: #111;
+  --text: #111;
+  --muted: #333;
+  --accent: #111;
+  --danger: var(--text);
+  --square-light: #fdfdfd;
+  --square-dark: #d5d5d5;
+  --square-selected: #bbb;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --radius: 4px;
+  --border-width: 2px;
+  --shadow: 0 0 0 1px #000;
+  --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-main);
+  font-weight: 500;
+}
+
+/* Larger text sizes toggled by font-size-toggle.js. Tolino's own
+   system-wide font size setting only affects the e-book reader, not
+   this app's own web pages, so it needs its own independent control.
+   Scaling the root font-size rather than adding a separate CSS variable
+   works site-wide for free everywhere text is already sized in
+   rem/em (nearly everywhere in this file), while leaving fixed-px board
+   /card layouts (already sized to fit the viewport, board-a11y.js's
+   float-grids, etc.) untouched, since those are unrelated to reading
+   comfort and enlarging them would just waste screen space. */
+html.text-size-large {
+  font-size: 112.5%;
+}
+
+html.text-size-xlarge {
+  font-size: 125%;
+}
+
+#app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-1);
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+align-items: center;
+  margin-bottom: var(--space-1);
+  border-bottom: var(--border-width) solid var(--border);
+  padding-bottom: var(--space-1);
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.app-header > * {
+  margin: 0 var(--space-4) var(--space-4) 0;
+}
+
+.app-header > *:last-child {
+  margin-right: 0;
+}
+
+.title-wrap h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.app-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-title-link:visited {
+  color: inherit;
+}
+
+.app-title-link:active,
+.app-title-link:hover,
+.app-title-link:focus {
+  text-decoration: underline;
+}
+
+/* The PaperGames brand mark: a raised checkerboard tile. Pure flat fills
+   and hard-edged shapes only (no gradients, no blur/filter) so it renders
+   identically on 16-level-grayscale e-ink browsers, not just on phones -
+   see the logo review in project history for why. */
+.brand-icon {
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -0.2em;
+  margin-right: 0.15em;
+}
+
+.app-title-author-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-title-author-link:visited {
+  color: inherit;
+}
+
+.app-title-author-link:hover,
+.app-title-author-link:active,
+.app-title-author-link:focus {
+  text-decoration: underline;
+}
+
+.subtitle {
+  margin: var(--space-1) 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.user-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+font-size: 0.8rem;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.user-panel > * {
+  margin: 0 var(--space-1) var(--space-1) 0;
+}
+
+.user-panel > *:last-child {
+  margin-right: 0;
+}
+
+#settings-panel {
+  margin-bottom: var(--space-2);
+}
+
+/* Text links in the text colour instead of the browser's blue (and
+   purple once visited); the underline stays as the sign of a link. Links
+   styled as buttons or nav entries keep their own, more specific rules. */
+a {
+  color: var(--text);
+}
+
+button,
+a.primary,
+a.secondary {
+  font-family: inherit;
+  border-radius: var(--radius);
+  border: var(--border-width) solid var(--border);
+  background: #fff;
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  color: var(--text);
+}
+
+button.primary,
+a.primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+button.secondary,
+a.secondary {
+  background: var(--bg-alt);
+}
+
+button.small,
+a.small {
+  font-size: 0.7rem;
+  padding: var(--space-1) var(--space-2);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+button[data-i18n="undo_button"]:disabled {
+  opacity: 1;
+  color: #111;
+  background: #fff;
+  border-color: #111;
+}
+
+/* A greyed-out control button (Roll, Discard, ...) also gets its label
+   struck through, so "not available now" doesn't rest on paleness alone.
+   Only the labelled control buttons - board cells that are buttons keep
+   their own markings. */
+button.primary:disabled,
+button.secondary:disabled {
+  text-decoration: line-through;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Bis die Sprache der Seite angewendet ist, bleibt sie unsichtbar
+   (gesetzt von einem kleinen Skript im <head>, entfernt von i18n.js,
+   spätestens nach 4 Sekunden). Sonst zeichnet ein E-Ink-Display erst
+   den englischen Grundtext und kurz danach alles noch einmal. */
+html.i18n-pending body {
+  visibility: hidden;
+}
+
+.mode-section {
+  margin: var(--space-2) 0;
+}
+
+.mode-section h2 {
+  font-size: 1rem;
+  margin: 0 0 var(--space-1);
+}
+
+.mode-section-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+flex-wrap: wrap;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.mode-section-row > * {
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+[dir="rtl"] .mode-section-row > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
+.mode-section-row > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .mode-section-row > *:last-child {
+  margin-left: 0;
+}
+
+.mode-buttons {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.mode-buttons > * {
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+[dir="rtl"] .mode-buttons > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
+.mode-buttons > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .mode-buttons > *:last-child {
+  margin-left: 0;
+}
+
+.mode-buttons .mode-btn {
+  border-radius: var(--radius);
+}
+
+button.active-mode,
+.settings-segmented button.active {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  font-weight: 800;
+}
+
+.card {
+  background: #fff;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: none;
+  padding: var(--space-3) var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+/* A quick way to skip past 25 games' worth of cards to the category
+   you actually want - three plain anchor jumps, not JS, so they work
+   the same with scripting on or off and cost nothing on E-Ink. */
+.game-section-nav {
+  display: flex;
+  flex-wrap: wrap;
+margin: 0 0 var(--space-2);
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* A quick way to skip past 25 games' worth of cards to the category
+   you actually want - three plain anchor jumps > *, not JS > *, so they work
+   the same with scripting on or off and cost nothing on E-Ink. */
+.game-section-nav > * {
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+[dir="rtl"] .game-section-nav > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
+/* A quick way to skip past 25 games' worth of cards to the category
+   you actually want - three plain anchor jumps > *:last-child, not JS > *:last-child, so they work
+   the same with scripting on or off and cost nothing on E-Ink. */
+.game-section-nav > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .game-section-nav > *:last-child {
+  margin-left: 0;
+}
+
+.game-section-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.game-section-nav a > * {
+  margin: 0 var(--space-1) var(--space-1) 0;
+}
+
+[dir="rtl"] .game-section-nav a > * {
+  margin-right: 0;
+  margin-left: var(--space-1);
+}
+
+.game-section-nav a > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .game-section-nav a > *:last-child {
+  margin-left: 0;
+}
+
+.field-row {
+  margin-bottom: var(--space-2);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.field-row > * {
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+[dir="rtl"] .field-row > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
+.field-row > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .field-row > *:last-child {
+  margin-left: 0;
+}
+
+.field-row label {
+  font-size: 0.9rem;
+}
+
+.field-row select {
+  flex: 1;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius);
+  border: var(--border-width) solid var(--border);
+  background: #fff;
+  font-weight: 600;
+}
+
+.status-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  min-height: 1.2em;
+}
+
+.status-text:empty {
+  display: none;
+}
+
+/* Brett */
+#board-section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Brett */
+#board-section > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+/* Brett */
+#board-section > *:last-child {
+  margin-right: 0;
+}
+
+.board-header {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.board-header > * {
+  margin: 0 0.25rem 0.25rem 0;
+}
+
+.board-header > *:last-child {
+  margin-right: 0;
+}
+
+.board-header-tools {
+  display: flex;
+  justify-content: flex-end;
+margin-top: 0.15rem;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.board-header-tools > * {
+  margin: 0 0.25rem 0.25rem 0;
+}
+
+.board-header-tools > *:last-child {
+  margin-right: 0;
+}
+
+#game-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+#game-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+#game-result {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+#game-result:empty {
+  display: none;
+}
+
+#board-container {
+  width: 100%;
+  text-align: center;
+}
+
+/* Enlarged boards scroll inside this viewport so the page itself stays
+   within the screen width. LTR keeps the board's coordinate origin at the
+   left edge; RTL text and controls remain handled by the surrounding UI. */
+.big-board-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  direction: ltr;
+  -webkit-overflow-scrolling: touch;
+}
+
+#board {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+/* Fallback, falls aspect-ratio nicht unterstützt wird, kümmert sich JS */
+.square {
+  position: relative;
+  border-radius: 0;
+  width: 12.5%;
+  float: left;
+  border: none;
+  padding: 0;
+  font-size: 1.8rem;
+  line-height: 1;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.square.light {
+  background: var(--square-light);
+}
+
+.square.dark {
+  background: var(--square-dark);
+}
+
+/* Inline-SVG-Figuren zentriert im Feld, unabhängig von der tatsächlichen
+   Feldgröße (die per JS dynamisch gesetzt wird). */
+.square svg.piece-svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 82%;
+  height: 82%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Bolder outlines than the source artwork's default 1.5 - reads much
+   more clearly on E‑Ink, where thin strokes tend to look faint/grey. */
+.square svg.piece-svg [stroke-width] {
+  stroke-width: 2.2;
+}
+
+/* Auswahl-Markierung für ein Feld */
+/* Letzter Zug: nur ein dünner Rahmen, keine Tönung - eine halbdurchsichtige
+   Fläche wird auf E-Ink-Displays mit wenigen Graustufen zu gerastertem Grau
+   ohne zusätzliche Information. Dünner als der Auswahlrahmen (siehe
+   .square.selected), damit beides nicht verwechselt wird. */
+.square.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+/* Letzter Zug in Spielen mit eigenen Feldern (Reversi, Mancala, Mühle,
+   Backgammon ...): durchgezogen = Zielfeld, gestrichelt = Ausgangsfeld,
+   gepunktet = mitbetroffen (umgedreht, geschlagen, entfernt). Nur
+   Umrandungen, keine Graustufen, damit es auf E-Ink klar bleibt. Steht
+   früh in der Datei, damit spielspezifische Auswahlrahmen weiter unten
+   Vorrang haben. Gesperrte Felder sind sonst halbtransparent, der
+   Rahmen soll aber schwarz bleiben. */
+.lm-from {
+  outline: 2px dashed var(--text);
+  outline-offset: -4px;
+}
+
+.lm-changed {
+  outline: 2px dotted var(--text);
+  outline-offset: -4px;
+}
+
+.lm-to {
+  outline: 3px solid var(--text);
+  outline-offset: -3px;
+}
+
+.lm-from:disabled,
+.lm-changed:disabled,
+.lm-to:disabled {
+  opacity: 1;
+}
+
+.square.selected {
+  outline: 3px solid var(--border);
+  outline-offset: -3px;
+}
+
+/* Züge unter dem Brett in einer Zeile, horizontal scrollend */
+.moves-list {
+  font-size: 0.7rem;
+  line-height: 1.3;
+  border-top: 1px solid var(--border);
+  padding-top: 0.15rem;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.moves-list.hidden {
+  display: none;
+}
+
+/* Coordinate overlays inside squares.
+   We only draw them on the "outer" ranks/files of the *visible* board:
+   - left edge: rank number
+   - bottom edge: file letter
+   This works for both white and black orientation. */
+.square[data-show-rank="1"]::before {
+  content: attr(data-rank);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  font-size: 0.7rem;
+  opacity: 0.9;
+}
+
+.square[data-show-file="1"]::after {
+  content: attr(data-file);
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-size: 0.7rem;
+  opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+  /* Mobile tweaks */
+  .app-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .user-panel {
+      align-items: flex-start;
+    }
+  }
+
+/* Mode-Header mit About rechts */
+.mode-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Mode-Header mit About rechts */
+.mode-header > * {
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+/* Mode-Header mit About rechts */
+.mode-header > *:last-child {
+  margin-right: 0;
+}
+
+.mode-about-inline {
+  font-size: 0.6rem;
+  text-align: right;
+  flex: 1;
+}
+
+.mode-about-inline a {
+  text-decoration: underline;
+}
+
+.app-title-row {
+  display: flex;
+  align-items: baseline;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.app-title-row > * {
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+.app-title-row > *:last-child {
+  margin-right: 0;
+}
+
+.app-title-author {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.inline-options {
+  display: inline-flex;
+margin-left: var(--space-2);
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.inline-options > * {
+  margin: 0 var(--space-1) var(--space-1) 0;
+}
+
+[dir="rtl"] .inline-options > * {
+  margin-right: 0;
+  margin-left: var(--space-1);
+}
+
+.inline-options > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .inline-options > *:last-child {
+  margin-left: 0;
+}
+
+/* Compact selects for inline controls (offline level + online time) */
+#offline-ai-controls #ai-level-inline,
+#online-controls .online-inline-row > select#time-profile {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+.ai-color-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+#online-controls .online-inline-row .online-action-right {
+  margin-left: auto;
+  display: inline-flex;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+#online-controls .online-inline-row .online-action-right > * {
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+[dir="rtl"] #online-controls .online-inline-row .online-action-right > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
+#online-controls .online-inline-row .online-action-right > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] #online-controls .online-inline-row .online-action-right > *:last-child {
+  margin-left: 0;
+}
+
+.board-actions {
+  display: flex;
+justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.board-actions > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+[dir="rtl"] .board-actions > * {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+.board-actions > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .board-actions > *:last-child {
+  margin-left: 0;
+}
+
+.board-actions .small {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.85rem;
+}
+
+/* color-choice labels for AI color selection (pawns instead of text) */
+.inline-options .color-choice {
+  display: inline-flex;
+  align-items: center;
+font-size: 1.2rem;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* color-choice labels for AI color selection (pawns instead of text) */
+.inline-options .color-choice > * {
+  margin: 0 4px 4px 0;
+}
+
+/* color-choice labels for AI color selection (pawns instead of text) */
+.inline-options .color-choice > *:last-child {
+  margin-right: 0;
+}
+
+/* Same cburnett pawn SVGs as on the board itself, sized as small inline
+   icons here instead of the board's absolutely-positioned full-square use. */
+.color-choice-icon {
+  display: inline-flex;
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.color-choice-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+#undo-btn {
+  padding-left: var(--space-1);
+  padding-right: var(--space-1);
+}
+
+.board-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10rem;
+  padding: 1.5rem 0;
+  color: var(--muted);
+}
+
+.board-placeholder-icon {
+  font-size: 1em;
+  line-height: 1;
+  margin-right: 0.4em;
+  flex: 0 0 auto;
+}
+
+[dir="rtl"] .board-placeholder-icon {
+  margin-right: 0;
+  margin-left: 0.4em;
+}
+
+/* Raw inline SVG (e.g. chess's knight) has no intrinsic width/height of its
+   own, only a viewBox, so size it explicitly to match the other games'
+   1em icon classes (.go-stone-icon, .checkers-icon-disc). */
+.board-placeholder-icon-svg svg {
+  display: block;
+  width: 1em;
+  height: 1em;
+}
+
+.board-placeholder-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+/* The title is a flex item of a column with align-items: flex-start, so
+   without max-width it took the width of its text and pushed the page
+   wider than the screen (Hashiwokakero, Minesweeper at 632px). Capped to
+   the space left of the icon it wraps; clamp() also scales it down with
+   the viewport so long single words fit whole - browsers without clamp()
+   keep the 0.35em line and break such a word instead. */
+.board-placeholder-title {
+  max-width: 100%;
+  font-size: 0.35em;
+  font-size: clamp(1rem, calc(9vw - 1.6rem), 0.35em);
+  line-height: 1;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+@media (max-width: 600px) {
+  /* On narrow screens (phones) the 10rem placeholder pushed long game names
+     past the right edge; step it down so the page never scrolls sideways. */
+  .board-placeholder {
+      font-size: 6.5rem;
+    }
+    .board-placeholder-title {
+      font-size: clamp(1rem, calc(13vw - 2rem), 0.35em);
+    }
+  }
+
+@media (max-width: 420px) {
+  .board-placeholder {
+      font-size: 5rem;
+    }
+    .board-placeholder-title {
+      font-size: clamp(1rem, calc(13vw - 1.5rem), 0.35em);
+    }
+  }
+
+.board-placeholder-subtitle {
+  max-width: 100%;
+  font-size: 0.18em;
+  line-height: 1.1;
+  opacity: 0.8;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.score-line {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  font-size: 0.7rem;
+  line-height: 1.3;
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-1);
+  color: var(--muted);
+  column-gap: var(--space-2);
+}
+
+.score-line.hidden {
+  display: none;
+}
+
+.score-line-captures {
+  justify-self: center;
+  white-space: nowrap;
+}
+
+/* About page */
+.about-donate {
+  margin-top: var(--space-4);
+  font-size: 0.9rem;
+}
+
+.btn-donate {
+  display: inline-block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: 4px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  word-break: normal;
+}
+
+.btn-donate:visited {
+  color: #fff;
+}
+
+.btn-donate:hover,
+.btn-donate:active,
+.btn-donate:focus {
+  text-decoration: underline;
+}
+
+/* Keep long links in other contexts from breaking layouts */
+.about-donate a {
+  word-break: break-all;
+}
+
+.about-qr {
+  margin-top: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.about-qr > * {
+  margin: 0 var(--space-1) var(--space-1) 0;
+}
+
+.about-qr > *:last-child {
+  margin-right: 0;
+}
+
+.about-qr img {
+  max-width: 180px;
+  height: auto;
+  border: 1px solid var(--border);
+  padding: var(--space-1);
+  border-radius: 4px;
+}
+
+.about-credits {
+  margin-top: var(--space-4);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.about-back {
+  margin-top: var(--space-4);
+  font-size: 0.85rem;
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-4);
+}
+
+.stats-table th,
+.stats-table td {
+  border: var(--border-width) solid var(--border);
+  padding: var(--space-2) var(--space-2);
+  text-align: left;
+}
+
+.stats-table th {
+  background: var(--bg-alt);
+}
+
+.stats-table td:not(:first-child),
+.stats-table th:not(:first-child) {
+  text-align: center;
+}
+
+.stats-empty {
+  margin-top: var(--space-4);
+  color: var(--muted);
+}
+
+.stats-actions {
+  margin-top: var(--space-4);
+}
+
+/* Site-wide nav bar and language switch (home/rules/guide/about pages) */
+.lang-switch {
+  display: flex;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Site-wide nav bar and language switch (home/rules/guide/about pages) */
+.lang-switch > * {
+  margin: 0 var(--space-1) var(--space-1) 0;
+}
+
+[dir="rtl"] .lang-switch > * {
+  margin-right: 0;
+  margin-left: var(--space-1);
+}
+
+/* Site-wide nav bar and language switch (home/rules/guide/about pages) */
+.lang-switch > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .lang-switch > *:last-child {
+  margin-left: 0;
+}
+
+/* A native <select>, built dynamically by i18n.js from however many
+   languages exist - deliberately not a row of buttons, which stopped
+   scaling once the app grew past a couple of languages. A native
+   control also means the OS/browser draws the actual dropdown list,
+   which behaves correctly and predictably on E-Ink browsers without
+   any custom popover logic of our own. */
+.lang-select,
+.game-select {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.7rem;
+  padding: var(--space-1) var(--space-5) var(--space-1) var(--space-2);
+  border-radius: var(--radius);
+  border: var(--border-width) solid var(--border);
+  background: var(--bg-alt) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23111' d='M1 1l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 0.5rem center;
+  background-size: 0.6rem;
+  color: var(--text);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Game switcher: same treatment as the language picker, built at
+   runtime by game-switcher.js on every game/rules/history page (not on
+   the home page, which has no "current game" to switch away from). */
+.game-switch {
+  display: flex;
+  align-items: center;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Game switcher: same treatment as the language picker > *, built at
+   runtime by game-switcher.js on every game/rules/history page (not on
+   the home page > *, which has no "current game" to switch away from). */
+.game-switch > * {
+  margin: 0 var(--space-1) var(--space-1) 0;
+}
+
+[dir="rtl"] .game-switch > * {
+  margin-right: 0;
+  margin-left: var(--space-1);
+}
+
+/* Game switcher: same treatment as the language picker > *:last-child, built at
+   runtime by game-switcher.js on every game/rules/history page (not on
+   the home page > *:last-child, which has no "current game" to switch away from). */
+.game-switch > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .game-switch > *:last-child {
+  margin-left: 0;
+}
+
+.game-switch-icon {
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.game-select {
+  max-width: 11rem;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+margin: var(--space-2) 0;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.site-nav > * {
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+[dir="rtl"] .site-nav > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
+.site-nav > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .site-nav > *:last-child {
+  margin-left: 0;
+}
+
+.site-nav-link {
+  display: inline-block;
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  color: var(--text);
+  background: #fff;
+}
+
+.site-nav-link.active-mode {
+  background: var(--accent);
+  color: #fff;
+}
+
+@media (max-width: 800px) {
+  /* Narrow readers (Tolino Vision 6: 632 px, PocketBook Era, Tolino Vision
+     Color): the header stacked its four controls (game switcher, Rules,
+     Settings, Menu) on top of each other and took 171 px before the nav.
+     Here they sit side by side and wrap only when they must, the title is
+     smaller, the author line is left out, the spacing is tighter - and
+     every control you tap in the header and the nav is at least 44 px
+     high. Wider screens keep the layout above unchanged. */
+  .app-header {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .app-header > * {
+      margin: 0 var(--space-1) var(--space-1) 0;
+    }
+    .app-title-row > * {
+      margin: 0 var(--space-1) var(--space-1) 0;
+    }
+    .title-wrap h1 {
+      font-size: 1.1rem;
+    }
+    .app-title-author {
+      display: none;
+    }
+    .user-panel {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      margin-left: auto;
+    }
+    .user-panel > * {
+      margin: 0 var(--space-1) var(--space-1) 0;
+    }
+    .user-panel button,
+    .user-panel a,
+    .user-panel select {
+      box-sizing: border-box;
+      min-height: 44px;
+    }
+    .user-panel a {
+      display: inline-flex;
+      align-items: center;
+    }
+    .site-nav {
+      margin: var(--space-1) 0;
+    }
+    .site-nav > * {
+      margin: 0 var(--space-1) var(--space-1) 0;
+    }
+    .site-nav-link {
+      display: inline-flex;
+      align-items: center;
+      box-sizing: border-box;
+      min-height: 44px;
+      padding: var(--space-1) var(--space-2);
+    }
+  }
+
+/* A game page uses one compact toolbar above the board. The site navigation
+   remains available on the home, catalogue and information pages. */
+.game-page .site-nav {
+  display: none;
+}
+
+.game-page .app-header {
+  flex-wrap: nowrap;
+  margin-bottom: var(--space-1);
+}
+
+.game-page .title-wrap {
+  display: none;
+}
+
+.game-page .user-panel {
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.game-page .user-panel > * {
+  margin: 0 4px 0 0;
+}
+
+.game-page .user-panel > *:last-child {
+  margin-right: 0;
+}
+
+.game-page .game-switch {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  margin-right: auto;
+}
+
+.game-page .game-switch-icon {
+  margin-right: 4px;
+}
+
+.game-page .game-select {
+  max-width: 150px;
+}
+
+.game-page #rules-link-button,
+.game-page #menu-toggle {
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.game-page .game-home-link {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 2px solid #000;
+  border-radius: 0;
+  color: #000;
+  background: #fff;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  animation: none;
+  transition: none;
+}
+
+.game-page .game-home-link:focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .game-page .user-panel {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+    }
+    .game-page .game-switch {
+      margin-right: auto;
+      flex: 1 1 0;
+      min-width: 0;
+    }
+    .game-page .game-switch select {
+      min-width: 0;
+      max-width: 100%;
+    }
+  }
+
+[dir="rtl"] .game-page .game-home-link {
+  margin-right: 0;
+  margin-left: 4px;
+}
+
+[dir="rtl"] .game-page .user-panel > * {
+  margin-right: 0;
+  margin-left: 4px;
+}
+
+[dir="rtl"] .game-page .user-panel > *:last-child {
+  margin-left: 0;
+}
+
+[dir="rtl"] .game-page .game-switch-icon {
+  margin-right: 0;
+  margin-left: 4px;
+}
+
+/* History library page: a plain, image-free reading list of every game's
+   origin story, roughly in the order each game first appeared. */
+.history-intro-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0 0 var(--space-4);
+}
+
+.history-timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.history-timeline-item {
+  padding: var(--space-4) 0;
+  border-top: var(--border-width) solid var(--border);
+}
+
+.history-timeline-item:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.history-timeline-era {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: var(--space-1);
+}
+
+.history-timeline-title {
+  font-size: 1.05rem;
+  margin: 0 0 var(--space-1);
+}
+
+.history-timeline-title a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.history-timeline-title a:hover {
+  text-decoration: underline;
+}
+
+.history-timeline-desc {
+  margin: 0 0 var(--space-2);
+  color: var(--text);
+}
+
+.history-timeline-link {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+margin: 2rem 0 var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.site-footer > * {
+  margin: 0 var(--space-4) var(--space-1) 0;
+}
+
+[dir="rtl"] .site-footer > * {
+  margin-right: 0;
+  margin-left: var(--space-4);
+}
+
+.site-footer > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .site-footer > *:last-child {
+  margin-left: 0;
+}
+
+.site-footer a {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.site-footer a:hover,
+.site-footer a:focus {
+  text-decoration: underline;
+}
+
+/* Home page */
+.home-hero {
+  text-align: center;
+  padding: var(--space-4);
+}
+
+/* Icon and heading share one line, so the hero leaves room for the
+   first row of game tiles on a 632x840 e-reader screen. */
+.home-hero-icon {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: var(--space-2);
+  vertical-align: middle;
+}
+
+.home-hero h1 {
+  display: inline-block;
+  margin: var(--space-1) 0;
+  font-size: 2rem;
+  font-weight: 800;
+  vertical-align: middle;
+}
+
+.home-tagline {
+  color: var(--muted);
+  font-weight: 700;
+  margin: 0 0 var(--space-3);
+}
+
+.home-languages {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0 0 var(--space-2);
+}
+
+/* What PaperGames doesn't do (home-app.js): plain sentences under the
+   heading on the first visits. While it shows, it stands in for the
+   general intro paragraph, which says much the same about offline play
+   and e-ink - so the first row of game tiles still fits on the screen. */
+.home-pitch {
+  max-width: 34rem;
+  margin: var(--space-1) auto var(--space-2);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.home-hero.home-pitch-shown .home-intro {
+  display: none;
+}
+
+/* Quick rules box above the board on a game page (quick-rules.js): up to
+   three plain sentences and two buttons, in the normal page flow - it
+   pushes the board down a little but never covers it. */
+.quick-rules {
+  padding: var(--space-3) var(--space-4);
+}
+
+.quick-rules-sentence {
+  margin: 0 0 var(--space-2);
+  line-height: 1.4;
+}
+
+.quick-rules-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: var(--space-2);
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.quick-rules-actions > * {
+  margin: 0 var(--space-2) 0 0;
+}
+
+[dir="rtl"] .quick-rules-actions > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
+.quick-rules-actions > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .quick-rules-actions > *:last-child {
+  margin-left: 0;
+}
+
+/* Offline status line under the home intro (home-app.js, offline-status.js):
+   plain full-contrast text, a check mark or a dot as the only mark, no box.
+   The reserved height keeps the buttons below from jumping when the text
+   arrives. */
+.offline-status {
+  min-height: 1.5em;
+  margin: var(--space-1) 0 0;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.offline-status-icon svg {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  margin-right: 0.35em;
+}
+
+.home-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.home-hero-actions > * {
+  margin: var(--space-3) var(--space-2) 0 var(--space-2);
+}
+
+.home-play-button {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: var(--space-2) var(--space-5);
+}
+
+.nav-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
+}
+
+.nav-card {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.nav-card-title {
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin-bottom: var(--space-1);
+}
+
+.nav-card-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Rules / Guide content pages */
+.content-page h2 {
+  font-size: 1.1rem;
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+.content-page h2:first-child {
+  margin-top: 0;
+}
+
+.rule-list {
+  margin: 0 0 var(--space-3);
+}
+
+.rule-list dt {
+  font-weight: 800;
+  margin-top: var(--space-2);
+}
+
+.rule-list dd {
+  margin: var(--space-1) 0 0;
+  color: var(--text);
+}
+
+.go-grid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* A layered look (flat fill plus an inset rim) instead of a single flat
+   disc - the same technique as the Ur pieces (.ur-piece::after): a ring
+   set inside the stone reads as a lacquered highlight/shadow line without
+   an actual gradient, so it stays safe on a 16-level grayscale E-Ink
+   panel. Kept on ::before rather than ::after so ::after stays free for
+   the last-move halo further down. */
+.go-stone::before,
+.go-stone-icon::before {
+  content: "";
+  position: absolute;
+  top: 22%;
+  left: 22%;
+  width: 56%;
+  height: 56%;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.go-stone-black {
+  background: #111;
+  border: 1px solid #000;
+}
+
+.go-stone-black::before {
+  border: 2px solid #555;
+}
+
+.go-stone-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+.go-stone-white::before {
+  border: 2px solid #bbb;
+}
+
+/* Standalone stone icon for use outside the board (color-choice picker,
+   home page card, placeholder) - same .go-stone-black/.go-stone-white
+   coloring, including the inset rim above, so it reads as the same stone
+   rather than a flatter stand-in, but sized/positioned inline rather than
+   absolutely within a .go-point. Avoids relying on Unicode circle glyphs
+   (●/○), whose look varies by device font. */
+.go-stone-icon {
+  position: relative;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+/* Home page: game selection, Chess and Go shown with equal weight */
+.game-select-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
+}
+
+/* Empty-state message for a section whose nav link always points
+   somewhere real (e.g. My Favorites) - plain page text, not a muted
+   gray, since faint tones are hard to read on E-Ink. */
+.section-empty-state {
+  color: var(--text);
+  padding: var(--space-3) 0;
+  margin: 0;
+}
+
+.game-select-item {
+  position: relative;
+  background: #fff;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+  padding-right: 3.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+[dir="rtl"] .game-select-item {
+  padding-right: var(--space-3);
+  padding-left: 3.5rem;
+}
+
+/* Favorite star toggle: filled vs. outline glyph (★/☆) rather
+   than color, so it stays legible in grayscale on e-ink. Positioned over
+   the card's own top-right corner rather than taking up layout space. */
+.favorite-toggle {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+  line-height: 44px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--text);
+}
+
+[dir="rtl"] .favorite-toggle {
+  right: auto;
+  left: 0.4rem;
+}
+
+.favorite-toggle.is-favorite {
+  color: var(--text);
+}
+
+/* Opt-in "suggest difficulty" toggle, on its own row below every AI
+   opponent's level select rather than squeezed into that row (which is
+   already tight with the New game button, color choice, and the level
+   select's often-long option text, and .field-row doesn't wrap) - and
+   the small note shown when it has just nudged the selection.
+   See adaptive-difficulty.js. */
+.adaptive-difficulty-row {
+  flex-wrap: wrap;
+}
+
+.adaptive-difficulty-toggle {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.adaptive-difficulty-toggle input {
+  margin-right: var(--space-1);
+}
+
+.adaptive-difficulty-note {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* Stats page: achievement badges, derived from GameStats rather than
+   their own storage - locked ones stay visible (not hidden) so the
+   player can see what's still ahead, just faded via opacity like every
+   other "inactive" state in this app (:disabled buttons, etc.), since a
+   color-only distinction wouldn't read on grayscale e-ink. */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
+}
+
+.achievement-badge {
+  display: flex;
+  align-items: flex-start;
+  background: #fff;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-2) var(--space-3);
+}
+
+.achievement-badge.locked {
+  opacity: 0.5;
+}
+
+.achievement-badge-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-right: var(--space-2);
+  flex-shrink: 0;
+}
+
+.achievement-badge-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.achievement-badge-name {
+  font-weight: 600;
+}
+
+.achievement-badge-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.games-group-title {
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+.games-group-title:first-child {
+  margin-top: 0;
+}
+
+.games-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: var(--space-2) 0;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.games-toolbar > * {
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+[dir="rtl"] .games-toolbar > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
+.games-toolbar > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .games-toolbar > *:last-child {
+  margin-left: 0;
+}
+
+.games-search-input {
+  flex: 1 1 220px;
+  padding: var(--space-2) var(--space-2);
+  font-size: 0.95rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--text);
+  box-sizing: border-box;
+}
+
+.games-sort-select {
+  padding: var(--space-2) var(--space-2);
+  font-size: 0.95rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--text);
+}
+
+.games-no-results {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.game-select-title {
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin-bottom: var(--space-1);
+}
+
+.game-select-play-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.game-select-play-link:focus-visible,
+.game-kids-play-link:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* Every game icon sits in the same square box: 1.5rem is 24 px at the
+   normal text size, and rem (not px) so the icons grow with the A+/A++
+   text size setting (font-size-toggle.js scales the root) - icon, line
+   width and text stay in proportion. The catalog icons are drawn on one
+   24-unit grid with 2-2.25 unit lines, i.e. 2-2.25 px at this size. */
+.game-select-icon-svg {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.game-select-icon-svg svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.game-select-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 var(--space-2);
+}
+
+/* "Family: Sudoku" under the description of a game that has relatives. */
+.game-select-family {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 0 0 var(--space-2);
+}
+
+/* "Related games" at the end of a game page (game-switcher.js). */
+.related-games h2 {
+  margin-top: 0;
+}
+
+.related-games-family {
+  margin: 0 0 var(--space-2);
+}
+
+.related-games-list {
+  margin: 0;
+  padding-inline-start: 1.4rem;
+}
+
+.related-games-list li {
+  padding: 6px 0;
+}
+
+.related-games-list a,
+.related-games-family a {
+  display: inline-block;
+  min-height: 32px;
+  line-height: 32px;
+}
+
+.game-select-actions {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.game-select-actions > * {
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+[dir="rtl"] .game-select-actions > * {
+  margin-right: 0;
+  margin-left: var(--space-2);
+}
+
+.game-select-actions > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .game-select-actions > *:last-child {
+  margin-left: 0;
+}
+
+.game-select-actions a.small {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  box-sizing: border-box;
+  font-size: 0.85rem;
+}
+
+/* End-of-game result popup, shared by every game via result-modal.js.
+   Longhand top/right/bottom/left rather than the `inset` shorthand - a
+   real device in this project's own test history silently ignores that
+   shorthand entirely. */
+.result-modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  z-index: 1000;
+}
+
+.result-modal-overlay.hidden {
+  display: none !important;
+}
+
+.result-modal {
+  background: #fff;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+  max-width: 320px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Hidden by default; only .result-modal-win (a real win, not a loss or
+   a draw - see classifyOutcome() in result-modal.js) shows it. A plain
+   Unicode star rather than a drawn shape, matching how this project
+   already uses a handful of Unicode symbols elsewhere (e.g. the resign
+   button's flag) instead of an icon font. */
+.result-modal-ornament {
+  display: none;
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+
+.result-modal-win .result-modal-ornament {
+  display: block;
+}
+
+/* A real win also gets a slightly heavier frame - still just a border
+   weight/style change, no color, so it reads the same on a monochrome
+   E-Ink panel as anywhere else. */
+.result-modal-win {
+  border-width: calc(var(--border-width) * 2);
+}
+
+.result-modal-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: var(--space-2);
+}
+
+.result-modal-message {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: var(--space-4);
+}
+
+.result-modal-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.result-modal-actions button {
+  margin-top: var(--space-1);
+}
+
+.result-modal .result-modal-close,
+.result-modal .result-modal-replay {
+  min-width: 6rem;
+}
+
+.placeholder-play-button {
+  font-size: 1.2rem;
+  min-width: 10rem;
+  padding: var(--space-3) var(--space-5);
+}
+
+.board-placeholder.has-play-button > :not(.placeholder-play-button) {
+  display: none;
+}
+
+.direct-new-game-button {
+  margin: 0 0.25rem 0.25rem 0;
+}
+
+[dir="rtl"] .direct-new-game-button {
+  margin: 0 0 0.25rem 0.25rem;
+}
+
+.ur-dice-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+margin-top: 0.5rem;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.ur-dice-area > * {
+  margin: 0 0.6rem 0.6rem 0;
+}
+
+.ur-dice-area > *:last-child {
+  margin-right: 0;
+}
+
+/* Worked-example diagrams on the rules page: two small SVG figures side
+   by side on wide screens, stacked on narrow ones. Flexbox `gap`
+   fallback (margin-based spacing) - same reason as above. */
+.fanorona-example-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 1rem -1.5rem;
+}
+
+.fanorona-example-figure {
+  margin: 0 0 1rem 1.5rem;
+  max-width: 260px;
+}
+
+.fanorona-example-figure svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.fanorona-example-figure figcaption {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+
+.bg-point-top {
+  justify-content: flex-start;
+}
+
+.bg-point-bottom {
+  justify-content: flex-end;
+}
+
+.bg-point-top .bg-point-label {
+  order: -1;
+}
+
+.bg-point-top .bg-point-stack {
+  order: 1;
+}
+
+.bg-tray-slot-static {
+  cursor: default;
+}
+
+/* Plain, non-interactive list of not-yet-built game ideas on the home
+   page - deliberately undecorated (no icons, no action buttons) so it
+   never looks like it could be tapped, unlike the playable games above. */
+.coming-soon-list {
+  margin: var(--space-2) 0 0;
+  padding-left: var(--space-4);
+  color: var(--muted);
+}
+
+.coming-soon-list li {
+  margin-bottom: var(--space-2);
+}
+
+.coming-soon-list strong {
+  color: var(--text);
+}
+
+/* Gesperrt heißt hier nur "kein legaler Zug", nicht "inaktiv": ohne
+   das würden fast alle Steine halbtransparent und Schwarz sähe grau aus. */
+.reversi-square:disabled,
+.c4-square:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.sudoku-numpad {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+max-width: 540px;
+  margin: 0.6rem auto 0;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.sudoku-numpad > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.sudoku-numpad > *:last-child {
+  margin-right: 0;
+}
+
+.sudoku-numpad-btn {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* Nonogram board: a CSS grid rather than the usual float-grid, since a
+   Nonogram needs a row of column clues above the picture and a column
+   of row clues to its left, in addition to the picture cells - a shape
+   a simple square-per-cell float layout doesn't fit. A thicker border
+   every 5th cell marks off easy 5-cell counting groups, the same idea
+   as chess/checkers board coordinates but for line-counting instead. */
+.nonogram-mode-toggle {
+  display: flex;
+  justify-content: center;
+margin-bottom: 0.5rem;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Nonogram board: a CSS grid rather than the usual float-grid > *, since a
+   Nonogram needs a row of column clues above the picture and a column
+   of row clues to its left > *, in addition to the picture cells - a shape
+   a simple square-per-cell float layout doesn't fit. A thicker border
+   every 5th cell marks off easy 5-cell counting groups > *, the same idea
+   as chess/checkers board coordinates but for line-counting instead. */
+.nonogram-mode-toggle > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+/* Nonogram board: a CSS grid rather than the usual float-grid > *:last-child, since a
+   Nonogram needs a row of column clues above the picture and a column
+   of row clues to its left > *:last-child, in addition to the picture cells - a shape
+   a simple square-per-cell float layout doesn't fit. A thicker border
+   every 5th cell marks off easy 5-cell counting groups > *:last-child, the same idea
+   as chess/checkers board coordinates but for line-counting instead. */
+.nonogram-mode-toggle > *:last-child {
+  margin-right: 0;
+}
+
+.nonogram-grid {
+  display: grid;
+  width: fit-content;
+  margin: 0 auto;
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+  background: var(--square-light);
+}
+
+/* An emptied column: its min-height (set in JS) keeps it tappable, and a
+   dashed outline without fill marks it, like Ludo's empty home slots.
+   Klondike and Spider draw their own .klondike-empty-slot /
+   .spider-empty-slot inside the column instead, so this only ever
+   matches FreeCell in practice. */
+.freecell-column:empty,
+.klondike-column:empty,
+.spider-column:empty {
+  border: 2px dashed var(--border);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Card face from card-faces.js: rank text plus the suit as SVG. The
+   line height matches the label band CardFaces.layoutColumns reserves. */
+.card-face {
+  display: block;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.card-suit {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-left: 0.08em;
+  vertical-align: -0.1em;
+}
+
+.hnefatafl-square-last-from,
+.hnefatafl-square.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.bullsandcows-history {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.pairs-symbol {
+  display: block;
+  width: 70%;
+  height: 70%;
+  margin: 15%;
+}
+
+.fb-placement-status {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.ludo-cell-home-column-red::before,
+.ludo-home-base-red::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='44' fill='%23111'/%3E%3C/svg%3E"); }
+
+.ludo-cell-home-column-green::before,
+.ludo-home-base-green::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='37' fill='%23fff' stroke='%23111' stroke-width='16'/%3E%3C/svg%3E"); }
+
+.ludo-cell-home-column-yellow::before,
+.ludo-home-base-yellow::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,4 97,92 3,92' fill='%23111'/%3E%3C/svg%3E"); }
+
+.ludo-cell-home-column-blue::before,
+.ludo-home-base-blue::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='11' y='11' width='78' height='78' fill='%23fff' stroke='%23111' stroke-width='16'/%3E%3C/svg%3E"); }
+
+/* Print view for the paper puzzles (Sudoku, Kakuro, Nonogram, Slitherlink,
+   Killer Sudoku, Calcudoku, No Neighbors, Hashi, Skyscrapers - every
+   page with body.printable-puzzle, see print-puzzle.js): one A4 portrait
+   sheet with a title line and the EMPTY puzzle, black on white. Only the
+   board survives - not the site chrome around it, not the number pad,
+   and none of the player's own entries, selection or conflict marks, so
+   the sheet can be solved with a pen. The title line is filled in by
+   print-puzzle.js and never shown on screen. */
+.print-puzzle-title {
+  display: none;
+}
+
+@page puzzle {
+  size: A4 portrait;
+  margin: 12mm;
+}
+
+@media print {
+  html:has(body.printable-puzzle) {
+      background: #fff !important;
+    }
+    body.printable-puzzle {
+      page: puzzle;
+      --bg: #fff;
+      --bg-alt: #fff;
+      --text: #000;
+      --border: #000;
+      --muted: #000;
+      --accent: #000;
+      --danger: #000;
+      --square-light: #fff;
+      --square-selected: #fff;
+      background: #fff !important;
+      color: #000 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    body.printable-puzzle > *:not(#app),
+    body.printable-puzzle #app > *:not(main),
+    body.printable-puzzle main > *:not(#board-section),
+    body.printable-puzzle #board-section > *:not(#board-container):not(.print-puzzle-title),
+    body.printable-puzzle #board-container > [id$="-numpad"],
+    body.printable-puzzle #nonogram-mode-toggle {
+      display: none !important;
+    }
+    body.printable-puzzle #app,
+    body.printable-puzzle main,
+    body.printable-puzzle #board-section {
+      margin: 0 !important;
+      padding: 0 !important;
+      max-width: none !important;
+      min-height: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      background: #fff !important;
+    }
+    body.printable-puzzle .print-puzzle-title {
+      display: block;
+      margin: 0 0 6mm;
+      font-size: 14pt;
+      font-weight: 700;
+      text-align: center;
+      color: #000;
+    }
+    body.printable-puzzle #board-container {
+      width: var(--print-board-width, auto);
+      max-width: none;
+      margin: 0 auto;
+      zoom: var(--print-zoom, 1);
+      break-inside: avoid;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    body.printable-puzzle #board-container * {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      outline: none !important;
+      box-shadow: none !important;
+      text-decoration: none !important;
+    }
+    /* The player's own entries: digits, bridges, loop lines, filled and
+       crossed-out nonogram cells. Givens stay. */
+  body.printable-puzzle .sudoku-cell:not(.sudoku-cell-given) .sudoku-cell-value,
+    body.printable-puzzle .fs-cell:not(.fs-given) .fs-value,
+    body.printable-puzzle .rp-cell:not(.rp-given) .rp-value,
+    body.printable-puzzle .kakuro-cell-value,
+    body.printable-puzzle .skyscrapers-cell-value,
+    body.printable-puzzle .hashi-edge-line,
+    body.printable-puzzle .hashi-edge-hit,
+    body.printable-puzzle .slitherlink-edge-line,
+    body.printable-puzzle .slitherlink-edge-btn {
+      display: none !important;
+    }
+    /* Status decorations that would give away progress. */
+  body.printable-puzzle .rp-conflict .rp-value,
+    body.printable-puzzle .fs-conflict .fs-value {
+      background: none !important;
+      color: #000 !important;
+      padding: 0 !important;
+    }
+  }
+
+/* "New version available" banner - see update-banner.js. A normal,
+   in-flow element at the very top of <body> rather than position:fixed,
+   so it never overlaps the header underneath it and needs no dynamic
+   height bookkeeping - it just pushes the rest of the page down while
+   it's shown. */
+.update-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  background: #fff;
+  border-bottom: var(--border-width) solid var(--border);
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.update-banner > * {
+  margin: 0 var(--space-2) 0 0;
+}
+
+.update-banner > *:last-child {
+  margin-right: 0;
+}
+
+/* Also used directly (not inside .update-banner-lines) by
+   error-banner.js's single-line message - keep its own flex sizing so
+   that usage keeps working unchanged. */
+.update-banner-text {
+  flex: 1 1 auto;
+  font-size: 0.85rem;
+}
+
+/* Wraps the main message and the optional "what's new" line as two
+   stacked lines inside the same flex slot the plain text span used to
+   occupy - see update-banner.js. */
+.update-banner-lines {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.update-banner-whats-new {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.update-banner-close {
+  padding: 0 var(--space-2);
+  line-height: 1.4;
+}
+
+/* Tested devices (devices.html, devices-list.js): a plain bordered table
+   that wraps its text instead of scrolling sideways on a narrow reader. */
+.devices-table-wrap {
+  max-width: 100%;
+}
+
+.devices-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.9rem;
+}
+
+.devices-table th,
+.devices-table td {
+  border: 1px solid var(--border);
+  padding: var(--space-1) var(--space-2);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: break-word;
+}
+
+.devices-table th {
+  font-weight: 700;
+}
+
+/* Display density (density.js): the spacing scale times 0.75 (compact)
+   or 1.5 (spacious). Only the scale changes; boards don't use it. */
+:root[data-density="compact"] {
+  --space-1: 0.1875rem;
+  --space-2: 0.375rem;
+  --space-3: 0.5625rem;
+  --space-4: 0.75rem;
+  --space-5: 1.125rem;
+}
+
+:root[data-density="spacious"] {
+  --space-1: 0.375rem;
+  --space-2: 0.75rem;
+  --space-3: 1.125rem;
+  --space-4: 1.5rem;
+  --space-5: 2.25rem;
+}
+
+/* The board fills the width of its card, so the side spacing on its way
+   to the screen edge (#app's --space-1 plus the card's --space-3, 1rem
+   at normal) must stay 1rem in every density, or the squares would grow
+   or shrink. Only the board card's left/right padding makes up for it;
+   the space above and below still follows the density. */
+:root[data-density="compact"] #board-section {
+  padding-left: 0.8125rem;
+  padding-right: 0.8125rem;
+}
+
+:root[data-density="spacious"] #board-section {
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+}
+
+/* Opt-in high-contrast mode for low-light e-ink reading conditions -
+   see high-contrast.js. Overrides the same shared CSS custom
+   properties every card, button and board grid line across all 46
+   games already draws from, so this needs no per-component styling. */
+:root.high-contrast {
+  --bg: #ffffff;
+  --bg-alt: #ffffff;
+  --muted: #000000;
+  --border-width: 3px;
+  --square-dark: #bdbdbd;
+  --square-selected: #999999;
+}
+
+/* Settings menu - see settings-menu.js. Same fixed-overlay technique as
+   .result-modal-overlay (already proven on a real Tolino: longhand
+   top/right/bottom/left rather than the `inset` shorthand, which that
+   device silently ignores), and the same card look as .result-modal,
+   just taller and scrollable since this holds several sections instead
+   of one message. */
+.settings-modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  z-index: 1000;
+}
+
+.settings-modal-overlay.hidden {
+  display: none !important;
+}
+
+.settings-modal {
+  background: #fff;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+  max-width: 420px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.settings-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 var(--space-4) 0;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.settings-modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.settings-modal-close {
+  min-width: 2rem;
+  padding: var(--space-1) var(--space-2);
+}
+
+.settings-section {
+  margin-bottom: var(--space-4);
+}
+
+.settings-section:last-child {
+  margin-bottom: 0;
+}
+
+.settings-section h3 {
+  margin: 0 0 var(--space-2) 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+
+.settings-section .settings-subheading {
+  margin-top: var(--space-4);
+}
+
+.settings-section .lang-switch select {
+  width: 100%;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.settings-segmented {
+  display: flex;
+}
+
+.settings-segmented > * {
+  margin: 0 var(--space-1) 0 0;
+}
+
+[dir="rtl"] .settings-segmented > * {
+  margin-right: 0;
+  margin-left: var(--space-1);
+}
+
+.settings-segmented > *:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .settings-segmented > *:last-child {
+  margin-left: 0;
+}
+
+.settings-segmented button {
+  flex: 1;
+}
+
+.settings-segmented button.active {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  font-weight: 800;
+}
+
+.settings-checkbox-row {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.settings-checkbox-row input {
+  margin-right: var(--space-2);
+}
+
+.settings-hint {
+  color: var(--muted);
+  margin: 0 0 var(--space-3) 0;
+}
+
+/* ---------- Categories (Stadt, Land, Fluss) ---------- */
+.categories-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 1em;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* ---------- Right-to-left languages (Arabic) ----------
+   The page layout mirrors with dir="rtl" (set by i18n.js), but the game
+   boards keep their left-to-right geometry: board coordinates, dice rows
+   and card tableaus are positions, not text. Grid and flex rows would
+   otherwise flip. Text tables (scoresheets) are left to mirror. */
+[dir="rtl"] [id$="-board"]:not(table) {
+  direction: ltr;
+}
+
+[dir="rtl"] .rule-list dd,
+[dir="rtl"] .content-page {
+  text-align: start;
+}
+
+/* ---- Domino and Mau Mau: shared pieces ----
+   Players with their tile/card counts, the cover that hides a hand while
+   the device is passed on, and a row of action buttons. No flexbox `gap`
+   (Tolino drops it) - spacing comes from margins. */
+.game-players {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 var(--space-2);
+}
+
+.game-player {
+  display: inline-block;
+  margin: 0 var(--space-2) var(--space-1) 0;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  background: var(--square-light);
+}
+
+.game-player-active {
+  border-width: 3px;
+  font-weight: 700;
+}
+
+.game-player-active .game-player-name::before {
+  content: "\25B6\00A0";
+}
+
+.game-player-count {
+  margin-left: var(--space-2);
+}
+
+.game-player-stock {
+  border-style: dashed;
+}
+
+.hand-cover {
+  margin: 0.6rem 0;
+  padding: 1rem;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  background: var(--square-light);
+}
+
+.hand-cover p {
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+}
+
+.game-actions-row {
+  margin-top: var(--space-2);
+  text-align: center;
+}
+
+.game-actions-row button {
+  margin: 0 var(--space-1) var(--space-1);
+}
+
+[dir="rtl"] .game-player-count {
+  margin-left: 0;
+  margin-right: var(--space-2);
+}
+
+/* Settings dialog: running version and "force update", kept low-key. */
+.settings-version-section {
+  border-top: 1px dashed var(--border);
+  padding-top: var(--space-2);
+  font-size: 0.85rem;
+}
+
+.settings-version-line {
+  margin: 0 0 var(--space-2);
+}
+
+.settings-version-hint {
+  margin: var(--space-1) 0 0;
+  font-size: 0.8rem;
+}
+
+/* Long compound words ("Datenschutzerklärung", long URLs) must not push a
+   text page wider than a phone screen: hyphenate where the browser can,
+   otherwise break inside the word. */
+.content-page h1,
+.content-page h2,
+.content-page p,
+.content-page dd,
+.content-page li {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+/* The example rows use a negative start margin as a gutter; in right-to-
+   left pages that gutter belongs on the right, not past the left edge. */
+[dir="rtl"] .marblepush-example-row,
+[dir="rtl"] .fanorona-example-row {
+  margin: 0 -1.5rem 1rem 0;
+}
+
+[dir="rtl"] .marblepush-example-figure,
+[dir="rtl"] .fanorona-example-figure {
+  margin: 0 1.5rem 1rem 0;
+}
+
+/* Region puzzles (Calcudoku, No Neighbors, Killer Sudoku - see
+   region-puzzle.js): a float-grid of square cells like Sudoku's board.
+   Every cell draws only its left and top border; the board's own frame
+   closes the right and bottom edge. Region borders differ from cell
+   borders by line weight (thick 3px vs thin 1px), and Killer Sudoku's
+   cages by line shape (dashed, just inside the cells) - never by grey,
+   so all of it reads on a monochrome E-Ink screen. A conflicting digit
+   is shown inverted (white on black) so it can't be mistaken for a
+   cage line or the selection frame. */
+#rp-board {
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.rp-cell {
+  background: var(--square-light);
+  border: 0 solid var(--border);
+  border-left-width: 1px;
+  border-top-width: 1px;
+  color: var(--text);
+}
+
+.rp-cell.rp-edge-l {
+  border-left-width: 0;
+}
+
+.rp-cell.rp-edge-t {
+  border-top-width: 0;
+}
+
+.rp-cell.rp-thick-l {
+  border-left-width: 3px;
+}
+
+.rp-cell.rp-thick-t {
+  border-top-width: 3px;
+}
+
+.rp-value {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 4vw, 1.5rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.rp-board-dashed .rp-value {
+  font-size: clamp(0.85rem, 3.4vw, 1.3rem);
+}
+
+.rp-given .rp-value {
+  font-weight: 700;
+}
+
+.rp-conflict .rp-value {
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 3px;
+  padding: 0.05em 0.2em;
+}
+
+.rp-label {
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  font-size: 0.7rem;
+  font-size: clamp(0.55rem, 2.2vw, 0.8rem);
+  font-weight: 700;
+  line-height: 1;
+  background: var(--square-light);
+  padding: 0 1px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.rp-cage {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  right: 3px;
+  border: 0 dashed var(--text);
+  pointer-events: none;
+}
+
+.rp-cage-top { border-top-width: 1px; }
+
+.rp-cage-bottom { border-bottom-width: 1px; }
+
+.rp-cage-left { border-left-width: 1px; }
+
+.rp-cage-right { border-right-width: 1px; }
+
+/* Small puzzle icon in front of a rules-page term (inline SVG). */
+.rule-term-icon {
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  vertical-align: middle;
+}
+
+.rule-term-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.rp-board-dashed .rp-label {
+  top: 2px;
+  left: 2px;
+}
+
+/* ---- Card games with separate card tiles (Schwimmen, Durak, Concan) ----
+   Faces come from CardFaces.renderTall (card-faces.js): rank on top, the
+   suit below as SVG - hollow for red suits, filled for black - so the
+   colour reads on E-Ink. A selected card is raised with a double outline;
+   a card that can't be used now sits lower with a dashed border. */
+.pc-row {
+  margin: 0.4rem 0;
+  text-align: center;
+}
+
+.pc-row-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem; /* room for a raised, selected card */
+}
+
+.pc-card {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  width: 3.4rem;
+  height: 4.8rem;
+  margin: 0 0.2rem 0.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: 5px;
+  background: #fff;
+  color: var(--text);
+  box-sizing: border-box;
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.1;
+  padding: 0.3rem 0 0;
+  cursor: pointer;
+  text-align: center;
+}
+
+.pc-card .pc-rank {
+  display: block;
+}
+
+.pc-card .pc-suit {
+  display: block;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin: 0.2rem auto 0;
+}
+
+.pc-card-small {
+  width: 2.7rem;
+  height: 3.8rem;
+  font-size: 0.95rem;
+  padding-top: 0.2rem;
+  margin: 0 0.1rem 0.3rem;
+}
+
+.pc-card-small .pc-suit {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.pc-card-selected {
+  top: -0.4rem;
+  outline: 4px double var(--border);
+  outline-offset: 2px;
+}
+
+/* A card (or domino tile) just drawn from the stock, in any card game: a
+   bold ring in its bottom right corner - a shape, not grey, so it shows on
+   black-and-white e-ink. Removed with the player's next action. */
+.card-new {
+  position: relative;
+}
+
+.card-new::after {
+  content: "";
+  position: absolute;
+  bottom: 0.15rem;
+  right: 0.15rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  box-sizing: border-box;
+  border: 0.27rem solid var(--text);
+  border-radius: 50%;
+  background: #fff;
+  pointer-events: none;
+}
+
+.pc-card-dim {
+  top: 0.4rem;
+  border-style: dashed;
+}
+
+.pc-card:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.pc-card-back {
+  background: repeating-linear-gradient(45deg, #fff, #fff 4px, var(--border) 4px, var(--border) 5px);
+}
+
+.pc-count {
+  display: inline-block;
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.35rem;
+  font-size: 0.95rem;
+}
+
+.pc-player-extra {
+  margin-left: 0.3rem;
+}
+
+[dir="rtl"] .pc-player-extra {
+  margin-left: 0;
+  margin-right: 0.3rem;
+}
+
+/* Concan: melds as small grouped cards; the discard pile gets a thick
+   double frame while it must be taken. */
+.concan-melds {
+  min-height: 1rem;
+}
+
+.concan-meld {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 0.3rem 0.3rem;
+  padding: 0.15rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--square-light);
+  color: var(--text);
+}
+
+button.concan-meld {
+  border-width: 2px;
+  cursor: pointer;
+}
+
+.concan-meld .pc-card {
+  cursor: inherit;
+  margin-bottom: 0;
+}
+
+.concan-piles {
+  text-align: center;
+  margin: 0.4rem 0;
+}
+
+.concan-stock {
+  padding-top: 1.6rem;
+}
+
+.dk-party {
+  display: inline-block;
+  min-width: 3.6rem;
+  margin: 0 0.4rem;
+  padding: 0 0.3rem;
+  border: 1px solid var(--border);
+  text-align: center;
+  font-weight: 700;
+}
+
+.dk-trick {
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+.dk-slot {
+  display: inline-block;
+  vertical-align: top;
+  width: 4.6rem;
+  margin: 0 0.1rem;
+  padding: 0.2rem 0 0.1rem;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.dk-slot-name {
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+}
+
+.dk-slot .pc-card {
+  cursor: default;
+  margin-bottom: 0.1rem;
+}
+
+.dk-slot-empty {
+  border-style: dotted;
+}
+
+.dk-slot-win {
+  border: 4px double var(--border);
+}
+
+.dk-slot-mark {
+  display: block;
+  min-height: 1.2em;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.dk-score {
+  text-align: center;
+  border: 3px double var(--border);
+  border-radius: var(--radius);
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.dk-score p {
+  margin: 0.2rem 0;
+}
+
+.dk-score-table {
+  border-collapse: collapse;
+  margin: 0.4rem auto 0;
+}
+
+.dk-score-table th,
+.dk-score-table td {
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.5rem;
+  text-align: center;
+}
+
+.cp-cell.cp-wall {
+  border-color: #141413;
+  background: #141413;
+  cursor: default;
+}
+
+/* Tipp-Knopf der Zahlenrätsel und Hashi (hint-engine.js): mindestens
+   44 CSS-Pixel hoch, damit er auf dem Touchscreen sicher zu treffen ist. */
+.board-actions .hint-btn {
+  min-height: 44px;
+}
+
+/* Vom Tipp markiertes Feld bzw. markierte Insel: ein doppelter Rahmen -
+   eine andere Form als die einfache Auswahl (.selected) und der
+   gestrichelte Konfliktrahmen, also auch ohne Farbe oder Grau zu
+   erkennen. */
+.sudoku-cell.hint-cell,
+.rp-cell.hint-cell,
+.lightswitch-cell.hint-cell,
+.kakuro-cell-white.hint-cell,
+.skyscrapers-cell-board.hint-cell,
+.nonogram-cell.hint-cell,
+.mc-cell.hint-cell {
+  outline: 6px double var(--text);
+  outline-offset: -7px;
+}
+
+.foxandgeese-piece-goose {
+  border-radius: 50%;
+  background: #111;
+  border: 2px solid #000;
+}
+
+.romme-empty {
+  display: block;
+  font-style: italic;
+  margin: 0.3rem 0;
+}
+
+.pc-card.romme-joker {
+  border-style: double;
+  border-width: 4px;
+}
+
+.romme-round-end {
+  margin: 0.6rem 0;
+  padding: 0.5rem;
+  border: var(--border-width) solid var(--border);
+  text-align: center;
+}
+
+.romme-round-end ul {
+  text-align: left;
+  margin: 0.4rem 0;
+}
+
+.cake-window-left { left: 0; }
+
+.cake-window-right { right: 0; }
+
+.cake-palette {
+  text-align: center;
+  margin: 0.75rem 0 0.25rem;
+}
+
+/* Each button is at least as wide as an eighth of the 560px board
+   column and grows with its name, so a name is never cut off; the row
+   wraps onto a second line on narrow screens. */
+.cake-pick {
+  display: inline-block;
+  vertical-align: top;
+  width: auto;
+  min-width: 4.4rem;
+  margin: 2px;
+  padding: 4px 4px;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+}
+
+.cake-pick-icon {
+  display: block;
+  width: 34px;
+  height: 34px;
+  margin: 0 auto;
+}
+
+.cake-pick-name {
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* The chosen thing: a heavy frame plus a double outline - a shape, not a
+   shade. */
+.cake-pick.cake-pick-selected {
+  border-width: 4px;
+  outline: 3px double var(--text);
+  outline-offset: 1px;
+  font-weight: 700;
+}
+
+/* The hint button right under the things to place, where the hand
+   already is. */
+.board-actions.cake-actions {
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+
+/* "Stones per tube": more stones, smaller shapes, taller tubes. The tube
+   stays at least 44px wide to tap; JS puts the tubes in several rows. */
+.shapesort-cap-6 .shapesort-tube { width: 50px; }
+
+.shapesort-cap-6 .shapesort-slot { height: 37px; }
+
+.shapesort-cap-6 .shapesort-stone-icon { width: 32px; height: 32px; margin: 2px auto; }
+
+.shapesort-cap-8 .shapesort-tube { width: 46px; }
+
+.shapesort-cap-8 .shapesort-slot { height: 31px; margin: 1px 0; }
+
+.shapesort-cap-8 .shapesort-stone-icon { width: 27px; height: 27px; margin: 2px auto; }
+
+.shapesort-cap-10 .shapesort-tube { width: 44px; padding: 2px; }
+
+.shapesort-cap-10 .shapesort-slot { height: 27px; margin: 1px 0; }
+
+.shapesort-cap-10 .shapesort-stone-icon { width: 24px; height: 24px; margin: 1px auto; }
+
+.shapesort-cap-8 .shapesort-tube-wrap,
+.shapesort-cap-10 .shapesort-tube-wrap { margin: 0 4px 12px; }
+
+/* Rules page: the solved example drawn as a picture. */
+.cake-example-figure {
+  margin: 0.5rem 0 0.75rem;
+}
+
+.bj-bet-selected {
+  border-width: 3px;
+  font-weight: 700;
+}
+
+.bj-bet-selected::before {
+  content: "\2713\00A0";
+}
+
+/* Skat: the game line, the bidding and announcement panels, the open
+   hand of an Ouvert declarer and the score list (which may scroll on
+   its own on a narrow screen, the page does not). The trick and score
+   table reuse the Doppelkopf classes. */
+.sk-game-line {
+  margin: 0.2rem 0 0.4rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.sk-panel {
+  margin: 0.4rem 0;
+}
+
+.sk-buttons {
+  text-align: center;
+}
+
+.sk-buttons > button {
+  margin: 0.2rem 0.25rem;
+}
+
+.sk-list-wrap {
+  overflow-x: auto;
+}
+
+.sk-list {
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+.sk-list th,
+.sk-list td {
+  padding: 0.15rem 0.2rem;
+}
+
+.sk-list .sk-num {
+  white-space: nowrap;
+}
+
+.sk-list .sk-game-cell {
+  overflow-wrap: anywhere;
+}
+
+/* Schafkopf reuses the Skat and Doppelkopf classes; only the picture of
+   the trump order on the rules page is its own. */
+.sf-example {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Canasta: narrow hand cards (15 fit in two rows at 360 px), each meld as
+   one box with rank, number of cards and wild cards; a canasta has a
+   double frame and says "natural" or "mixed"; a frozen discard pile has a
+   double frame and the word "frozen" below. */
+.pc-card.cn-card {
+  width: 2.05rem;
+  height: 3.3rem;
+  margin: 0 0.1rem 0.4rem;
+  padding-top: 0.2rem;
+  font-size: 0.95rem;
+}
+
+.pc-card.cn-card .pc-suit {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.15rem;
+}
+
+/* Bridge: the four seats (North on top, West and East side by side, South
+   at the bottom), hands as rows by suit with narrow cards, the seat to
+   play with a thick frame, guided bidding as rows of buttons, auction and
+   score list as small tables. */
+.br-line {
+  text-align: center;
+  font-size: 0.85rem;
+  margin: 0.2rem 0;
+}
+
+/* Home page: one line under a section heading (Children's Games). */
+.section-intro {
+  margin: 0 0 var(--space-3);
+}
+
+/* Home page: "All new games" link under the New Games section. */
+.section-more-link {
+  text-align: center;
+  margin: 0.5rem 0 0;
+  font-weight: 700;
+}
+
+/* Pentomino Puzzle (Legepuzzle): the board as a drawing with an invisible
+   grid of buttons on top, the piece in hand with its dot, turn and flip
+   buttons, and the pieces to choose from. Laid pieces in the tray are
+   dashed, the chosen one has a thick frame. */
+.pt-board {
+  position: relative;
+  width: 100%;
+  margin: 0.4rem auto 0.6rem;
+}
+
+.pt-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pt-cells {
+  position: absolute;
+  display: grid;
+}
+
+.pt-cell {
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pt-cell:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: -3px;
+}
+
+.pt-hint {
+  fill: none;
+  stroke: #141413;
+  stroke-width: 4;
+  stroke-dasharray: 6 4;
+}
+
+.pt-hand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.pt-hand > * {
+  margin: 0 0.3rem 0.3rem;
+}
+
+.pt-current svg {
+  display: block;
+}
+
+.pt-tray {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.pt-piece {
+  width: 3.4rem;
+  height: 3.4rem;
+  margin: 0 0.25rem 0.4rem;
+  padding: 0.25rem;
+}
+
+.pt-piece svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pt-piece-selected {
+  border: 4px solid var(--border);
+}
+
+.pt-piece-laid {
+  border-style: dashed;
+}
+
+/* Short home page (home-app.js): compact game entries (symbol, name,
+   Play, star) in two or three columns, the category tiles and the page
+   navigation of the category pages and games.html (game-categories.js).
+   Margins instead of `gap` for the flex rows (older e-ink browsers). */
+.home-hero-short {
+  padding: var(--space-3) var(--space-4);
+}
+
+.home-hero-short .home-tagline {
+  margin: 0;
+}
+
+.home-hero-short .home-hero-actions > * {
+  margin-top: var(--space-2);
+}
+
+.game-compact-grid {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.game-select-item.game-compact {
+  padding: var(--space-2);
+  padding-right: 3.5rem;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+[dir="rtl"] .game-select-item.game-compact {
+  padding-right: var(--space-2);
+  padding-left: 3.5rem;
+}
+
+.game-compact .game-select-title {
+  flex: 1 1 100%;
+  margin: 0 0 var(--space-1);
+  font-size: 0.95rem;
+}
+
+.game-compact-play {
+  display: inline-block;
+}
+
+.game-kids-grid {
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+}
+
+.game-select-item.game-kids-card {
+  min-height: 124px;
+  box-sizing: border-box;
+  padding: 8px;
+  padding-right: 44px;
+  align-items: stretch;
+}
+
+[dir="rtl"] .game-select-item.game-kids-card {
+  padding-right: 8px;
+  padding-left: 44px;
+}
+
+.game-kids-play-link {
+  color: inherit;
+  text-decoration: none;
+  min-height: 108px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4px;
+}
+
+.game-kids-play-link .game-select-icon-svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 4px;
+}
+
+.game-kids-title {
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.no-read-mark {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[dir="rtl"] .no-read-mark {
+  right: auto;
+  left: 4px;
+}
+
+.no-read-icon {
+  width: 23px;
+  height: 23px;
+  fill: #fff;
+  stroke: #141413;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.category-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  margin: var(--space-2) 0 0;
+}
+
+.category-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 23.5%;
+  min-height: 5.5rem;
+  margin: 0 2% var(--space-2) 0;
+  padding: var(--space-2) var(--space-1);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--text);
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+.category-tile:nth-child(4n) {
+  margin-right: 0;
+}
+
+.category-tile-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-top: var(--space-1);
+  overflow-wrap: anywhere;
+}
+
+.category-tile-count {
+  font-size: 0.8rem;
+}
+
+.about-back-top {
+  margin-top: 0;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: var(--space-3) 0 var(--space-1);
+}
+
+.pager-btn {
+  min-width: 6.5rem;
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.pager-off {
+  visibility: hidden;
+}
+
+.pager-now {
+  flex: 1 1 auto;
+  text-align: center;
+  font-weight: 700;
+  margin: 0 var(--space-2);
+}
+
+@media (max-width: 520px) {
+  .category-tile {
+      width: 49%;
+    }
+    .category-tile:nth-child(2n) {
+      margin-right: 0;
+    }
+    .category-tile:nth-child(4n) {
+      margin-right: 0;
+    }
+    .category-tile:nth-child(odd) {
+      margin-right: 2%;
+    }
+    .pager-btn {
+      min-width: 5rem;
+      padding: var(--space-2);
+    }
+  }
+
+/* The three home sections stay compact, so the page fits on one e-reader
+   screen without started games or favorites. */
+#section-continue,
+#section-favorites,
+#section-categories {
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+#section-continue h2,
+#section-favorites h2,
+#section-categories h2 {
+  margin: 0 0 var(--space-1);
+  font-size: 1.15rem;
+}
+
+#section-favorites .section-empty-state {
+  padding: 0;
+  margin: 0;
+}
+
+#section-categories .section-more-link {
+  margin: 0;
+}
+
+.category-tile {
+  min-height: 4.6rem;
+}
+
+/* The tile grid uses physical margins; mirror their spacing for Arabic. */
+[dir="rtl"] .category-tile {
+  margin-right: 0;
+  margin-left: 2%;
+}
+
+[dir="rtl"] .category-tile:nth-child(4n) {
+  margin-left: 0;
+}
+
+@media (max-width: 520px) {
+  [dir="rtl"] .category-tile:nth-child(2n) {
+      margin-left: 0;
+    }
+    [dir="rtl"] .category-tile:nth-child(4n) {
+      margin-left: 0;
+    }
+    [dir="rtl"] .category-tile:nth-child(odd) {
+      margin-left: 2%;
+    }
+  }
+
+@media (min-width: 521px) {
+  /* Nine tiles: five per row on wider screens, so the home page still fits
+     one screen (the narrow two-column layout below 521 px is unchanged). */
+  .category-tile {
+      width: 18.4%;
+    }
+    .category-tile:nth-child(4n) {
+      margin-right: 2%;
+    }
+    .category-tile:nth-child(5n) {
+      margin-right: 0;
+    }
+    [dir="rtl"] .category-tile:nth-child(4n) {
+      margin-left: 2%;
+    }
+    [dir="rtl"] .category-tile:nth-child(5n) {
+      margin-left: 0;
+    }
+  }
+
+.pager-btn {
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .pager-btn {
+      min-width: 0;
+      font-size: 0.9rem;
+      padding: var(--space-2) var(--space-2);
+    }
+    .pager-now {
+      font-size: 0.9rem;
+      margin: 0 var(--space-1);
+    }
+  }
+
+/* Matchstick Puzzles (matches-app.js): the task as a sentence, the
+   matches as a drawing with an invisible button over every place a match
+   can lie; the match in hand leaves a dashed frame at its old place. */
+.mt-task {
+  font-weight: 700;
+  text-align: center;
+  margin: 0.3rem 0 0.2rem;
+}
+
+/* Category pages: the filter buttons and the icon-and-name link of a card
+   are real tap targets, at least 44 px high. */
+.mode-buttons .mode-btn[data-category] {
+  min-height: 44px;
+}
+
+.game-select-play-link {
+  display: block;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+.game-select-play-link .game-select-title {
+  padding: 8px 0;
+  margin-bottom: 0;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+/* ---- Number-dice games: Klappenkasten, Steckwuerfeln, Sternjagd ----
+   Shared pieces (dice-common.js): pip-dot dice, player markers, players
+   list, button row, score table. Black on white only, nothing animated;
+   spacing from margins, not flexbox `gap` (Tolino). Rows of numbers keep
+   their order in right-to-left languages (direction: ltr). */
+.dg-round {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin: 0 0 var(--space-1);
+}
+
+.dg-dice-line {
+  text-align: center;
+  margin: var(--space-2) 0;
+}
+
+.dg-dice {
+  display: inline-block;
+  direction: ltr;
+  vertical-align: middle;
+}
+
+.dg-die {
+  display: inline-block;
+  width: 72px;
+  height: 72px;
+  margin: 0 6px;
+  vertical-align: middle;
+}
+
+.dg-total {
+  display: inline-block;
+  min-width: 2.5rem;
+  margin-left: var(--space-2);
+  font-size: 2rem;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+[dir="rtl"] .dg-total {
+  margin-left: 0;
+  margin-right: var(--space-2);
+}
+
+.dg-marker {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  vertical-align: middle;
+}
+
+.dg-marker-small {
+  width: 20px;
+  height: 20px;
+}
+
+.dg-player .dg-marker {
+  margin: 0 var(--space-1);
+}
+
+.dg-player-extra {
+  font-weight: 400;
+}
+
+.dg-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: var(--space-2) 0;
+}
+
+.dg-actions > * {
+  min-height: 48px;
+  margin: 0 var(--space-2) var(--space-2) 0;
+}
+
+[dir="rtl"] .dg-actions > * {
+  margin: 0 0 var(--space-2) var(--space-2);
+}
+
+.dg-scores {
+  width: 100%;
+  margin-top: var(--space-2);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.dg-scores th:first-child,
+.dg-scores td:first-child {
+  text-align: start;
+}
+
+.kk-flaps-12 .kk-flap {
+  width: calc(25% - 8px);
+}
+
+/* Picture-logic games for children (patternrow-app.js, shadowmatch-app.js,
+   oddone-app.js): a picture or row on top, large answer buttons below.
+   Black and white only: a wrong answer gets a dashed frame and a cross,
+   the right one a double frame, the hint a double outline. Inline-blocks
+   and margins instead of grid/gap (old e-ink browsers); symmetric
+   margins, so right-to-left needs nothing more. */
+.kq-area {
+  text-align: center;
+}
+
+.kq-cell svg,
+.kq-option svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.kq-options {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.kq-option {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  box-sizing: border-box;
+  width: 84px;
+  height: 84px;
+  margin: 6px;
+  padding: 8px;
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.kq-option:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.kq-option.kq-wrong {
+  border-style: dashed;
+}
+
+.kq-option .kq-cross {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+}
+
+.kq-option.kq-right {
+  border-style: double;
+  border-width: 7px;
+  padding: 5px;
+}
+
+.kq-option.hint-cell {
+  outline: 5px double var(--text);
+  outline-offset: 3px;
+}
+
+.board-actions.kq-actions {
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.kq-actions .small {
+  min-height: 48px;
+  min-width: 96px;
+  font-size: 1rem;
+}
+
+.kq-example {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.kq-options-big .kq-option {
+  width: 44%;
+  max-width: 140px;
+  height: auto;
+  margin: 4px;
+}
+
+.kq-options-big.kq-n3 .kq-option {
+  width: 29%;
+  max-width: 116px;
+}

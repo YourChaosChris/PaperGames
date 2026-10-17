@@ -1,0 +1,41 @@
+// text/en/go.js
+// Rules and history texts of go (en). Loaded by go-rules.html and go-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.en, {
+    go_rules_title: "Go Rules",
+    go_rules_intro: "A quick reference for how PaperGames plays Go - useful if you're rusty, or learning.",
+    go_rules_basics_title: "The basic idea",
+    go_term_stones: "Stones",
+    go_rules_stones: "Black and White place stones on empty intersections in turn, starting with Black. Stones never move once placed - the board fills up rather than pieces sliding around.",
+    go_term_liberties: "Liberties",
+    go_rules_liberties: "A stone's liberties are the empty points directly next to it (up/down/left/right, not diagonally). Connected stones of the same color share their liberties as one group.",
+    go_term_capture: "Capture",
+    go_rules_capture: "A group with no liberties left is captured and removed from the board immediately after the opponent's move.",
+    go_rules_illegal_title: "Illegal moves",
+    go_term_suicide: "Suicide",
+    go_rules_suicide: "You may not play a stone that would leave your own group with zero liberties, unless doing so captures enough enemy stones to free it first.",
+    go_term_ko: "Ko",
+    go_rules_ko: "You may not immediately recapture a single stone in a way that would recreate the position from just before your opponent's last move - you must play elsewhere first.",
+    go_term_superko: "Superko",
+    go_rules_superko: "More generally, no move may recreate any whole-board position that has already occurred earlier in the game. This also rules out rarer, longer repetition cycles such as a triple ko.",
+    go_rules_end_title: "How a game ends",
+    go_term_passing: "Passing",
+    go_rules_passing: "Either player may pass instead of placing a stone. When both players pass one after another, the game ends and is scored.",
+    go_term_scoring: "Scoring",
+    go_rules_scoring: "PaperGames uses area scoring: your score is your own stones on the board plus empty points surrounded only by your stones. Points bordering both colors count for neither side. There is no separate step for removing dead stones: every stone still on the board when both players pass counts, so capture dead stones before passing.",
+    go_term_komi: "Komi",
+    go_rules_komi: "White moves second, so White gets a fixed bonus (komi, 7.5 points in PaperGames) to balance that disadvantage. Ties are therefore impossible.",
+    go_term_resignation: "Resignation",
+    go_rules_resignation: "A player can resign at any time, ending the game immediately in the opponent's favor.",
+    go_history_title: "The History of Go",
+    go_history_origins_title: "Ancient Chinese Roots",
+    go_history_origins_p1: "Go (weiqi in Chinese) is traditionally said to have been invented in China more than 4,000 years ago, though the earliest reliable written references date to around the 4th century BCE. It was considered one of the four essential arts a cultivated Chinese scholar should master, alongside calligraphy, painting and playing the guqin.",
+    go_history_origins_p2: "Unlike most ancient games, Go's rules have barely changed: the goal of surrounding more territory than your opponent on a grid of intersections is exactly as it was over two thousand years ago.",
+    go_history_spread_title: "Korea, Japan, and a Culture of Mastery",
+    go_history_spread_p1: "Go spread to Korea and then to Japan by around the 7th century CE, where it flourished under imperial patronage. Japan's Edo period (17th-19th century) formalized professional Go with government-sponsored schools and hereditary master titles like Meijin and Honinbo, some of which are still awarded in tournaments today.",
+    go_history_spread_p2: "This professional tradition is why Go terminology worldwide still often uses Japanese words - \"go,\" \"dan\" and \"sente\" all entered English through Japan, even though the game itself is Chinese in origin.",
+    go_history_modern_title: "Go Meets Artificial Intelligence",
+    go_history_modern_p1: "Go reached the West gradually over the 20th century, but for decades computers found it far harder to play well than chess - its huge branching factor defeated brute-force search.",
+    go_history_modern_p2: "That changed in March 2016, when Google DeepMind's AlphaGo defeated 18-time world champion Lee Sedol 4-1, a result many AI researchers had expected to take another decade. It remains one of the landmark moments in the history of artificial intelligence."
+});
+I18n.markTextLoaded("en");

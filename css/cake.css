@@ -1,0 +1,230 @@
+/* cake: rules used only by the cake pages (loaded after base.css). */
+/* Who Took the Cake? (cake-app.js): a floor plan of square cells
+   (float-grid, height set from JS like the other boards). Rooms are told
+   apart by wall thickness - thick lines between rooms, thin ones inside -
+   never by grey. The room's name sits on one line in the top strip of a
+   run of its cells wide enough for it (else a number, spelled out in the
+   legend under the board); furniture is drawn small in the bottom left
+   corner, a placed thing large on the right below that strip, so neither
+   ever covers the name. The window hangs
+   outside the board on the left or right wall of its row. */
+.cake-board-wrap {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 22px;
+  box-sizing: border-box;
+}
+
+.cake-board {
+  position: relative;
+  width: 100%;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.cake-cell {
+  float: left;
+  position: relative;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  background: var(--square-light);
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.cake-cell.cake-wall-t { border-top-width: 3px; }
+
+.cake-cell.cake-wall-b { border-bottom-width: 3px; }
+
+.cake-cell.cake-wall-l { border-left-width: 3px; }
+
+.cake-cell.cake-wall-r { border-right-width: 3px; }
+
+.cake-labels {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cake-room-label {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 3px 3px 0 5px;
+  font-size: 0.7rem;
+  line-height: 1.1;
+  font-weight: 700;
+  text-align: start;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* A room whose name fits nowhere in its cells shows a number; the legend
+   under the board spells it out. */
+.cake-legend {
+  margin: 0.4rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.cake-legend-item {
+  display: inline-block;
+  margin: 0 0.6rem;
+  white-space: nowrap;
+}
+
+.cake-furn,
+.cake-thing {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.cake-furn {
+  left: 3%;
+  bottom: 3%;
+  width: 40%;
+  height: 40%;
+}
+
+/* Table, cupboard, plant: no animal stands there, so the drawing fills
+   the cell, below the room name where one is written in this cell. */
+.cake-furn.cake-furn-big {
+  left: 6%;
+  right: 6%;
+  top: 6%;
+  bottom: 5%;
+  width: auto;
+  height: auto;
+}
+
+.cake-cell-labelled .cake-furn.cake-furn-big {
+  top: calc(0.77rem + 5px);
+}
+
+/* Chair, rug: small in the bottom-left corner, the animal large beside it. */
+.cake-furn.cake-furn-small {
+  left: 3%;
+  bottom: 3%;
+  width: 36%;
+  height: 36%;
+}
+
+.cake-thing {
+  right: 4%;
+  bottom: 5%;
+  width: 56%;
+  height: 56%;
+}
+
+.cake-furn svg,
+.cake-thing svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cake-window {
+  position: absolute;
+  width: 22px;
+}
+
+.cake-window svg {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: -11px;
+}
+
+.cake-clues-title {
+  font-size: 1.1rem;
+  margin: 0.75rem 0 0.25rem;
+}
+
+.cake-clues {
+  margin: 0;
+  padding-inline-start: 1.6rem;
+}
+
+@media (min-width: 560px) {
+  /* Two columns of clues where there is room, so board, buttons and clues
+     fit on one e-reader screen. */
+  .cake-clues {
+      -webkit-column-count: 2;
+      column-count: 2;
+      -webkit-column-gap: 2rem;
+      column-gap: 2rem;
+    }
+    .cake-clues li {
+      -webkit-column-break-inside: avoid;
+      break-inside: avoid;
+    }
+  }
+
+.cake-clue {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 6px 4px;
+  border: none;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+/* The clue the hint's reason uses: bold until the next move. */
+.cake-clue.cake-clue-used {
+  font-weight: 700;
+}
+
+/* "Always true": the four fixed rules, numbered, same size as the clues,
+   not tickable; a plain frame sets them apart from the clues. */
+.cake-always {
+  margin: 0.5rem 0 0;
+  padding: 0 0.5rem 0.25rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.cake-always-list {
+  margin: 0;
+  padding-inline-start: 1.6rem;
+}
+
+.cake-always-list li {
+  padding: 4px 4px;
+  text-align: start;
+}
+
+/* Ticked off: struck through and marked with a tick in front. */
+.cake-clue.cake-clue-done {
+  text-decoration: line-through;
+}
+
+.cake-clue.cake-clue-done::before {
+  content: "\2713\00a0";
+  font-weight: 700;
+}
+
+.cake-cell.hint-cell {
+  outline: 6px double var(--text);
+  outline-offset: -7px;
+}
+
+.cake-example {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+}

@@ -1,0 +1,121 @@
+/* hashi: rules used only by the hashi pages (loaded after base.css). */
+#board-container.big-board-enabled #hashi-board { width: 700px; max-width: none; margin: 0; }
+
+/* Hashiwokakero (Bridges) board: islands scattered over a sparse grid
+   rather than a filled one, so - like Fanorona/Hex/WallMaze/Go - it's
+   rendered as absolutely-positioned circular island buttons over a
+   single SVG line layer, with the container's height JS-enforced from
+   its measured width each time it's built or the window resizes (CSS
+   `aspect-ratio` is unreliable on E-Ink browsers; see hashi-app.js's
+   ensureHashiBoardAspect). Every candidate bridge connection is drawn as
+   an SVG line UNDER the islands, same as Fanorona's connection lines,
+   but unlike Fanorona's purely decorative lines these ARE the primary
+   clickable element: an invisible wide "hit" line sits under a thin
+   visible one (or two, offset apart, for a double bridge) that's shown
+   or hidden as bridges are placed/removed. */
+#hashi-board {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: var(--border-width) solid var(--border);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.hashi-lines {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.hashi-edge-hit {
+  stroke: rgba(0, 0, 0, 0.01);
+  stroke-width: 22;
+  cursor: pointer;
+}
+
+.hashi-edge-line {
+  stroke: var(--text);
+  stroke-width: 6;
+  pointer-events: none;
+}
+
+.hashi-island {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  background: #fff;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+.hashi-island-value {
+  font-size: 1rem;
+  font-size: clamp(0.7rem, 3.4vw, 1.3rem);
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.hashi-island-selected {
+  border-color: var(--accent);
+  border-width: 4px;
+  box-shadow: 0 0 0 3px var(--accent) inset;
+}
+
+/* An island whose current bridge count already matches its required
+   number - the positive counterpart to Kakuro's conflict highlighting
+   (see .kakuro-cell-conflict): a filled disc instead of an error
+   outline, since here reaching the target is progress, not a mistake. */
+.hashi-island-satisfied {
+  background: var(--border);
+}
+
+.hashi-island-satisfied .hashi-island-value {
+  color: #fff;
+}
+
+/* An island with MORE bridges than its number allows - always a mistake
+   to fix, flagged the same dashed-outline way KakuroCore flags an
+   overshot run sum. */
+.hashi-island-over {
+  outline: 2px dashed var(--border);
+  outline-offset: 2px;
+}
+
+.hashi-icon {
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  background: #fff;
+}
+
+@media print {
+  body.printable-puzzle .hashi-island {
+      background: #fff !important;
+      border: 3px solid #000 !important;
+    }
+    body.printable-puzzle .hashi-island-value {
+      color: #000 !important;
+    }
+  }
+
+.hashi-island.hint-cell {
+  outline: 6px double var(--text);
+  outline-offset: 2px;
+}

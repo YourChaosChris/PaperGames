@@ -1,0 +1,140 @@
+/* bullsandcows: rules used only by the bullsandcows pages (loaded after base.css). */
+/* Bulls and Cows: four guess slots, each a button that cycles through the
+   six flat shapes (see bullsandcows-app.js) on tap - no color, no
+   drag-and-drop, no hover state needed. Feedback pegs below each row of
+   the history are plain filled/hollow circles rather than colored dots. */
+.bullsandcows-guess-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.bullsandcows-guess-row > * {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+.bullsandcows-guess-row > *:last-child {
+  margin-right: 0;
+}
+
+.bullsandcows-slot {
+  display: block;
+  width: 3.2rem;
+  height: 3.2rem;
+  padding: 0.3rem;
+  background: var(--square-light);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.bullsandcows-slot:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.bullsandcows-slot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.bullsandcows-legend {
+  font-size: 0.85em;
+  color: var(--muted);
+  margin: 0.3rem 0 0.6rem;
+}
+
+.bullsandcows-legend-row {
+  display: flex;
+  align-items: center;
+  margin: 0.15rem 0;
+}
+
+.bullsandcows-legend-row .bullsandcows-peg {
+  margin-right: 0.4em;
+}
+
+.bullsandcows-history-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border-top: 1px solid var(--bg-alt);
+  padding: 0.4rem 0;
+}
+
+.bullsandcows-history-row:first-child {
+  border-top: none;
+}
+
+.bullsandcows-history-number {
+  width: 4.2rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.bullsandcows-history-shapes {
+  display: flex;
+  margin-right: 0.6rem;
+}
+
+.bullsandcows-history-shape {
+  display: block;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-right: 0.25rem;
+}
+
+.bullsandcows-history-shape svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.bullsandcows-history-pegs {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 0.9rem;
+  margin-left: auto;
+}
+
+.bullsandcows-peg {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 2px solid var(--text);
+  box-sizing: border-box;
+}
+
+.bullsandcows-peg-black {
+  background: var(--text);
+}
+
+.bullsandcows-peg-white {
+  background: var(--bg);
+}
+
+.bullsandcows-score {
+  display: inline-flex;
+  align-items: center;
+  min-width: 2.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Abstand per Rand statt "gap": Flexbox-gap kennen ältere
+   E-Reader-Browser (WebView vor Chrome 84) nicht. */
+.bullsandcows-score > * + * {
+  margin-left: 0.35rem;
+}
+
+.bullsandcows-score-num {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.bullsandcows-score-zero {
+  opacity: 0.45;
+}

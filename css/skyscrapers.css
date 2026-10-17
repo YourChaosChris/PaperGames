@@ -1,0 +1,152 @@
+/* skyscrapers: rules used only by the skyscrapers pages (loaded after base.css). */
+/* Skyscrapers board: a real CSS grid (n+2) x (n+2), unlike the other
+   puzzle boards' float-grid technique - a grid is a natural fit here
+   since a row/column of edge-clue cells needs to sit flush around all
+   four sides of the board, not just the fillable n x n interior. Grid
+   `gap` is fine to use on E-Ink per this project's compatibility notes
+   (only flexbox `gap` needs the margin-based fallback); the 1px gap on
+   top of a solid background acts as the grid line between cells. Each
+   cell's height is set inline by JS to match its computed square width,
+   since CSS `aspect-ratio` is unreliable on E-Ink browsers. */
+#skyscrapers-board {
+  display: grid;
+  gap: 1px;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  border: 3px solid var(--border);
+  background: var(--border);
+  overflow: hidden;
+}
+
+.skyscrapers-cell {
+  background: var(--square-light);
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skyscrapers-corner {
+  background: transparent;
+}
+
+.skyscrapers-clue-cell {
+  background: transparent;
+}
+
+.skyscrapers-clue-value {
+  font-weight: 700;
+  line-height: 1;
+  font-size: 0.9rem;
+  font-size: clamp(0.7rem, 3vw, 1.1rem);
+}
+
+.skyscrapers-clue-ok .skyscrapers-clue-value {
+  text-decoration: underline;
+}
+
+.skyscrapers-clue-violated .skyscrapers-clue-value {
+  outline: 2px dashed var(--border);
+  outline-offset: 2px;
+  padding: 0 0.15em;
+}
+
+.skyscrapers-cell-board {
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.skyscrapers-cell-board.selected {
+  outline: 3px solid var(--border);
+  outline-offset: -3px;
+}
+
+.skyscrapers-cell-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 3.5vw, 1.4rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.skyscrapers-cell-conflict {
+  outline: 2px dashed var(--border);
+  outline-offset: -2px;
+}
+
+.skyscrapers-numpad {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 540px;
+  margin: 0.6rem auto 0;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.skyscrapers-numpad > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.skyscrapers-numpad > *:last-child {
+  margin-right: 0;
+}
+
+.skyscrapers-numpad-btn {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* A tiny ascending skyline drawn with stacked background rectangles,
+   anchored to the bottom of the icon box - no raw SVG needed, the same
+   "one element, layered backgrounds" trick as .kakuro-icon's diagonal
+   split, just with four bars instead of two triangles. */
+.skyscrapers-icon {
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-image:
+    linear-gradient(var(--border), var(--border)),
+    linear-gradient(var(--border), var(--border)),
+    linear-gradient(var(--border), var(--border)),
+    linear-gradient(var(--border), var(--border));
+  background-size: 16% 32%, 16% 52%, 16% 42%, 16% 78%;
+  background-position: 8% 100%, 34% 100%, 60% 100%, 84% 100%;
+}
+
+@media print {
+  /* Skyscrapers draws its grid lines as a black board showing through
+       1px gaps, which would print the whole clue frame black. On paper:
+       white everywhere, each fillable cell outlined instead (the outlines
+       of two neighbours share the same 1px gap, so lines stay 1px). */
+  body.printable-puzzle #skyscrapers-board {
+      background: #fff !important;
+      border: none !important;
+    }
+    body.printable-puzzle .skyscrapers-cell {
+      background: #fff !important;
+      border-radius: 0 !important;
+    }
+    body.printable-puzzle #skyscrapers-board .skyscrapers-cell-board {
+      outline: 1px solid #000 !important;
+      outline-offset: 0 !important;
+    }
+  }

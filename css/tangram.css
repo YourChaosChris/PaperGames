@@ -1,0 +1,13 @@
+/* tangram: rules used only by the tangram pages (loaded after base.css). */
+/* Tangram (tangram-app.js): the outline as a dotted area with a thick
+   border, laid pieces with their own black-and-white patterns; the piece
+   in hand is shown next to the turn and flip buttons. */
+.tg-board {
+  cursor: pointer;
+}
+
+.tg-current svg {
+  display: block;
+  width: 3.6rem;
+  height: 3.6rem;
+}

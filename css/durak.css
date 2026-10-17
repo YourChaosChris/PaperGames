@@ -1,0 +1,67 @@
+/* durak: rules used only by the durak pages (loaded after base.css). */
+/* Durak: the trump suit stays visible at the top as symbol, word and
+   the face-up trump card; each beating card lies lower and to the right
+   over its attack card so both ranks stay readable. */
+.durak-trump {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 0.5rem;
+  padding: 0.3rem;
+  border: 3px double var(--border);
+  border-radius: var(--radius);
+  background: var(--square-light);
+}
+
+.durak-trump > * {
+  margin: 0 0.35rem;
+}
+
+.durak-trump-label {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.durak-trump-symbol .card-suit {
+  width: 1.6rem;
+  height: 1.6rem;
+  display: block;
+}
+
+.durak-trump .durak-trump-card {
+  margin-bottom: 0;
+  cursor: default;
+}
+
+.durak-table {
+  min-height: 5.8rem;
+}
+
+.durak-pair {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  width: 4.7rem;
+  height: 5.3rem;
+  margin: 0 0.15rem 0.3rem;
+}
+
+.durak-pair .pc-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  cursor: default;
+}
+
+.durak-pair .durak-defense {
+  left: 1.95rem;
+  top: 1.4rem;
+  border-width: 3px;
+}
+
+.durak-rule-option {
+  display: inline-block;
+  margin: 0.3rem 0 0;
+}

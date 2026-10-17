@@ -1,0 +1,15 @@
+/* schafkopf: rules used only by the schafkopf pages (loaded after base.css). */
+.sf-list .sk-game-cell {
+  text-align: left;
+}
+
+@media (max-width: 420px) {
+  /* Long player names (Computer 1 in some languages) on narrow screens. */
+  .sf-list {
+      font-size: 0.7rem;
+    }
+    .sf-list th,
+    .sf-list td {
+      padding: 0.1rem 0.15rem;
+    }
+  }

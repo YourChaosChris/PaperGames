@@ -1,0 +1,66 @@
+/* reversi: rules used only by the reversi pages (loaded after base.css). */
+/* Reversi board: reuses .square from the chess board (same
+   float-grid technique) but, unlike checkers, every square looks the
+   same - a real Reversi board is a uniform grid, not a checkered one. */
+#reversi-board {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.reversi-square {
+  background: var(--square-light);
+  border: 1px solid var(--border);
+}
+
+.reversi-square-movable {
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
+}
+
+.reversi-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 78%;
+  height: 78%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.reversi-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.reversi-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.reversi-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.reversi-icon-disc-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.reversi-icon-disc-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}

@@ -1,0 +1,132 @@
+/* spidersolitaire: rules used only by the spidersolitaire pages (loaded after base.css). */
+/* Spider Solitaire board: a stock indicator and completed-sequences
+   counter in a row above ten cascading tableau columns - the same
+   overlap-via-negative-margin cascade layout as Klondike/FreeCell,
+   just with more (narrower) columns since Spider deals 10 instead of
+   7/8. Card faces match Klondike/FreeCell (red suits hollow, black
+   suits filled). Like those two, `.spider-card` and `.spider-empty-slot`
+   get their height and overlap in JS from the measured column width
+   (CardFaces.layoutColumns in card-faces.js), since `aspect-ratio` is
+   unreliable on E-Ink browsers. No CSS min-height on the cards:
+   `min-height` always wins over a smaller explicit `height`, so on a
+   narrow board it silently overrode the computed height and stretched
+   every card. (The JS sets min-height on the columns only, so an empty
+   column can still be tapped.) */
+.spider-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+max-width: 900px;
+  margin: 0 auto 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.spider-top-row > * {
+  margin: 0 1rem 1rem 0;
+}
+
+.spider-top-row > *:last-child {
+  margin-right: 0;
+}
+
+.spider-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.6rem;
+  height: 3.6rem;
+  padding: 0 0.5rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.spider-stock-blocked {
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.spider-sequences {
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: default;
+}
+
+.spider-columns {
+  display: flex;
+max-width: 900px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.spider-columns > * {
+  margin: 0 0.25rem 0.4rem 0;
+}
+
+.spider-columns > *:last-child {
+  margin-right: 0;
+}
+
+.spider-column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.spider-card {
+  position: relative;
+  width: 100%;
+  border: var(--border-width) solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  padding: 0.15rem 0 0 0.25rem;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.7rem;
+  font-size: clamp(0.55rem, 2vw, 0.85rem);
+  cursor: pointer;
+}
+
+.spider-card:first-child {
+  margin-top: 0;
+}
+
+.spider-card-back {
+  background: repeating-linear-gradient(45deg, #fff, #fff 4px, var(--border) 4px, var(--border) 5px);
+}
+
+.spider-card-selected {
+  outline: 3px solid var(--border);
+  outline-offset: -2px;
+}
+
+.spider-empty-slot {
+  display: block;
+  width: 100%;
+  border: var(--border-width) dashed var(--muted);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.spider-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8em;
+  height: 1.4em;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 0.65rem;
+  font-weight: 700;
+}

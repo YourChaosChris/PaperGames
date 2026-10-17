@@ -7,11 +7,12 @@
 // lang/xx.js plus its entry in LANGUAGE_NAMES/LANGUAGE_ORDER.
 //
 // The long rules and history texts (keys with _rules, _term_ or
-// _history) live in separate files - i18n-text.js for English and
-// lang/xx-text.js - because only the <game>-rules.html and
+// _history) live in separate files, one per game and language
+// (text/<lang>/<slug>.js), because only the <game>-rules.html and
 // <game>-history.html pages show them. Those pages carry
-// <html data-i18n-text="1">, and only there are the text files loaded,
-// the same way as the language file (see the end of this file).
+// <html data-i18n-text="<slug>">, and only there are the text files of
+// that game loaded, the same way as the language file (see the end of
+// this file).
 
 const STRINGS = {
   en: {
@@ -5693,17 +5694,22 @@ const I18n = (function () {
     return scriptBase + "lang/" + lang + ".js";
   }
 
-  // Rules/history texts: i18n-text.js for English, lang/<lang>-text.js
-  // for the others. Each file calls markTextLoaded() when it has run.
+  // Rules/history texts: one file per game and language,
+  // text/<lang>/<slug>.js. A rules or history page names its game in
+  // <html data-i18n-text="<slug>">. Each file calls markTextLoaded() when
+  // it has run.
   const textLoaded = {};
   function markTextLoaded(lang) {
     textLoaded[lang] = true;
   }
+  function textSlug() {
+    return (document.documentElement && document.documentElement.getAttribute("data-i18n-text")) || "";
+  }
   function pageNeedsText() {
-    return !!(document.documentElement && document.documentElement.hasAttribute("data-i18n-text"));
+    return !!textSlug();
   }
   function textFileUrl(lang) {
-    return lang === DEFAULT_LANG ? scriptBase + "i18n-text.js" : scriptBase + "lang/" + lang + "-text.js";
+    return scriptBase + "text/" + lang + "/" + textSlug() + ".js";
   }
   function loadScript(src, done) {
     const script = document.createElement("script");

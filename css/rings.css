@@ -1,0 +1,45 @@
+/* rings: rules used only by the rings pages (loaded after base.css). */
+/* Turn the Rings (rings-app.js): the rings as one round picture, under it
+   one row per ring (outermost first) with its number and two large turn
+   buttons. */
+.rg-board {
+  width: 100%;
+  max-width: 24rem;
+  margin: 0.4rem auto 0.6rem;
+}
+
+.rg-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.rg-turns {
+  max-width: 24rem;
+  margin: 0 auto 0.5rem;
+}
+
+.rg-turn-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.35rem;
+}
+
+.rg-turn-label {
+  min-width: 4.5rem;
+  font-weight: 700;
+  text-align: end;
+  margin-inline-end: 0.6rem;
+}
+
+.rg-turn {
+  min-width: 3.4rem;
+  min-height: 2.8rem;
+  font-size: 1.4rem;
+  margin: 0 0.3rem;
+}
+
+.rg-turn.hint-cell {
+  border: 4px dashed var(--border);
+}

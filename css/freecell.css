@@ -1,0 +1,137 @@
+/* freecell: rules used only by the freecell pages (loaded after base.css). */
+/* FreeCell board: free cells and foundations in a row above eight
+   cascading tableau columns. Cards overlap via a negative margin
+   rather than the float-grid/percentage-grid techniques used
+   elsewhere, since a solitaire cascade is a variable-height stack, not
+   a fixed board shape - the page simply scrolls if a column grows
+   tall. The overlap is set in JS together with the card height
+   (CardFaces.layoutColumns in card-faces.js) so each card's label band
+   stays fully visible at any screen width. The red/black colour the
+   stacking rule depends on is shown by fill instead of colour: red
+   suits are drawn hollow, black suits filled (.card-suit below). */
+.freecell-top-row {
+  display: flex;
+  justify-content: space-between;
+max-width: 900px;
+  margin: 0 auto 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.freecell-top-row > * {
+  margin: 0 1rem 1rem 0;
+}
+
+.freecell-top-row > *:last-child {
+  margin-right: 0;
+}
+
+.freecell-freecells,
+.freecell-foundations {
+  display: flex;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.freecell-freecells > *, .freecell-foundations > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+.freecell-freecells > *:last-child, .freecell-foundations > *:last-child {
+  margin-right: 0;
+}
+
+.freecell-cell {
+  width: 2.6rem;
+  height: 3.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.freecell-foundation-empty {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.freecell-cell-selected {
+  outline: 3px solid var(--border);
+  outline-offset: 1px;
+}
+
+.freecell-columns {
+  display: flex;
+max-width: 900px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.freecell-columns > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.freecell-columns > *:last-child {
+  margin-right: 0;
+}
+
+.freecell-column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Height and overlap (margin-top) are set in JS from the measured
+   column width (CardFaces.layoutColumns in card-faces.js) rather than
+   CSS `aspect-ratio`, which some E-Ink browsers (Tolino confirmed)
+   don't support reliably. display:flex keeps the label at the top of
+   the button - a button centres its content vertically, which pushed
+   the label under the next card. */
+.freecell-card {
+  position: relative;
+  width: 100%;
+  border: var(--border-width) solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  padding: 0.2rem 0 0 0.3rem;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.8rem;
+  font-size: clamp(0.65rem, 2.4vw, 0.95rem);
+  cursor: pointer;
+}
+
+.freecell-card:first-child {
+  margin-top: 0;
+}
+
+.freecell-card-selected {
+  outline: 3px solid var(--border);
+  outline-offset: -2px;
+}
+
+.freecell-actions-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.6rem;
+}
+
+.freecell-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8em;
+  height: 1.4em;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 0.65rem;
+  font-weight: 700;
+}

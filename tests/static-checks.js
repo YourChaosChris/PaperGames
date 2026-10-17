@@ -165,29 +165,54 @@ function checkOrphanRefs(STRINGS) {
   }
 }
 
-// 5. Rules and history texts live in i18n-text.js / lang/xx-text.js and
-// are only loaded on pages marked <html data-i18n-text>. Any other page
-// referring to one of those keys would show a missing text, so it is
-// an error; and every page that does refer to them must carry the mark.
+// 5. Rules and history texts live in text/<lang>/<slug>.js (one file per
+// game and language) and are only loaded on pages marked
+// <html data-i18n-text="<slug>">. Any other page referring to one of those
+// keys would show a missing text, so it is an error; every page that does
+// refer to them must carry the mark with its own game's slug, and the
+// file of that game must hold every key the page uses, in all 12 languages.
 function checkTextSplit() {
   const vm = require("vm");
-  const ctx = { STRINGS: { en: {} }, I18n: { markTextLoaded() {} } };
-  vm.createContext(ctx);
-  vm.runInContext(fs.readFileSync(path.join(ROOT, "i18n-text.js"), "utf8").replace(/^const /m, "var "), ctx);
-  const textKeys = new Set(Object.keys(ctx.STRINGS.en));
+  const langs = fs.readdirSync(path.join(ROOT, "text")).sort();
+  const perSlug = {}; // slug -> lang -> Set of keys
+  const textKeys = new Set();
+  for (const lang of langs) {
+    for (const f of fs.readdirSync(path.join(ROOT, "text", lang)).filter((x) => x.endsWith(".js"))) {
+      const ctx = { STRINGS: { [lang]: {} }, I18n: { markTextLoaded() {} } };
+      vm.createContext(ctx);
+      vm.runInContext(fs.readFileSync(path.join(ROOT, "text", lang, f), "utf8"), ctx);
+      const slug = f.replace(/\.js$/, "");
+      (perSlug[slug] = perSlug[slug] || {})[lang] = new Set(Object.keys(ctx.STRINGS[lang]));
+      if (lang === "en") Object.keys(ctx.STRINGS.en).forEach((k) => textKeys.add(k));
+    }
+  }
   const problems = [];
+  if (langs.length !== 12) problems.push("text/ has " + langs.length + " language folders, expected 12");
+  for (const slug of Object.keys(perSlug)) {
+    for (const lang of langs) {
+      if (!perSlug[slug][lang]) { problems.push("text/" + lang + "/" + slug + ".js is missing"); continue; }
+      for (const k of perSlug[slug].en) if (!perSlug[slug][lang].has(k)) problems.push("text/" + lang + "/" + slug + ".js lacks " + k);
+    }
+  }
   for (const f of listFiles(".html")) {
     const content = fs.readFileSync(path.join(ROOT, f), "utf8");
-    const marked = /<html[^>]*\sdata-i18n-text=/.test(content);
+    const mark = /<html[^>]*\sdata-i18n-text="([^"]*)"/.exec(content);
     const used = [...extractRefs(content)].filter((k) => textKeys.has(k));
-    if (used.length && !marked) problems.push(f + " uses " + used.slice(0, 3).join(", ") + " without data-i18n-text");
+    if (used.length && !mark) problems.push(f + " uses " + used.slice(0, 3).join(", ") + " without data-i18n-text");
+    if (mark) {
+      const expected = f.replace(/-(rules|history)\.html$/, "");
+      if (mark[1] !== expected) problems.push(f + ' has data-i18n-text="' + mark[1] + '", expected "' + expected + '"');
+      const have = (perSlug[mark[1]] || {}).en || new Set();
+      const miss = used.filter((k) => !have.has(k));
+      if (miss.length) problems.push(f + " uses " + miss.slice(0, 3).join(", ") + " which text/en/" + mark[1] + ".js does not hold");
+    }
   }
-  for (const f of listFiles(".js").filter((f) => f !== "i18n-text.js" && !/^lang\//.test(f))) {
+  for (const f of listFiles(".js").filter((f) => f !== "i18n.js" && !/^lang\//.test(f))) {
     const content = fs.readFileSync(path.join(ROOT, f), "utf8");
     for (const k of textKeys) if (content.indexOf('"' + k + '"') !== -1 || content.indexOf("'" + k + "'") !== -1) problems.push(f + " refers to " + k);
   }
-  if (problems.length) problems.forEach((p) => fail("text split - " + p));
-  else ok(`rules/history texts only on marked pages (${textKeys.size} keys in i18n-text.js)`);
+  if (problems.length) problems.slice(0, 40).forEach((p) => fail("text split - " + p));
+  else ok(`rules/history texts only on marked pages (${textKeys.size} keys in ${Object.keys(perSlug).length} games x ${langs.length} languages)`);
 }
 
 // The service worker stores every APP_SHELL entry; an install only

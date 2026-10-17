@@ -1,0 +1,112 @@
+/* mancala: rules used only by the mancala pages (loaded after base.css). */
+/* Mancala board: a store well at each end of a 6x2 grid of pits,
+   matching a physical Kalaha board's layout. The top row shows Player
+   2's pits right-to-left and the bottom row shows Player 1's pits
+   left-to-right, so sowing always reads as one continuous loop around
+   the board rather than jumping between rows in raw array order. */
+.mancala-board {
+  display: flex;
+  align-items: stretch;
+max-width: 760px;
+  margin: 0 auto;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Mancala board: a store well at each end of a 6x2 grid of pits > *, matching a physical Kalaha board's layout. The top row shows Player
+   2's pits right-to-left and the bottom row shows Player 1's pits
+   left-to-right > *, so sowing always reads as one continuous loop around
+   the board rather than jumping between rows in raw array order. */
+.mancala-board > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+/* Mancala board: a store well at each end of a 6x2 grid of pits > *:last-child, matching a physical Kalaha board's layout. The top row shows Player
+   2's pits right-to-left and the bottom row shows Player 1's pits
+   left-to-right > *:last-child, so sowing always reads as one continuous loop around
+   the board rather than jumping between rows in raw array order. */
+.mancala-board > *:last-child {
+  margin-right: 0;
+}
+
+.mancala-store {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+flex: 0 0 15%;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--square-light);
+  box-sizing: border-box;
+  padding: 0.4rem;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.mancala-store > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+.mancala-store > *:last-child {
+  margin-right: 0;
+}
+
+.mancala-store-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.mancala-store-count {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.mancala-pits {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 0.3rem;
+}
+
+/* Pit height is set in JS to match its own measured width (see
+   ensureMancalaPitAspectRatio in mancala-app.js) - `aspect-ratio` alone
+   is silently ignored on some E-Ink browsers, the same issue noted in
+   the other games' board-rendering code. */
+.mancala-pit {
+  position: relative;
+  border-radius: 50%;
+  border: var(--border-width) solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font: inherit;
+}
+
+.mancala-pit:disabled {
+  opacity: 0.55;
+}
+
+.mancala-pit-movable {
+  background: var(--square-dark);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--text);
+}
+
+.mancala-pit-count {
+  font-size: 1.3rem;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+/* Small disc icon for the color-choice picker and board placeholder,
+   representing a single seed/counter. */
+.mancala-seed-icon {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 50%;
+  background: var(--muted);
+  vertical-align: middle;
+}

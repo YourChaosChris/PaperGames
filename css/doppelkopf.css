@@ -1,0 +1,73 @@
+/* doppelkopf: rules used only by the doppelkopf pages (loaded after base.css). */
+/* Doppelkopf: game type and trick number on top, the trump order list
+   behind a button, the trick as four fixed seats (the winning card gets
+   a double frame and "wins" underneath while the trick is still shown),
+   the hand split into a trump row and a plain-suit row. */
+.dk-top {
+  text-align: center;
+  margin: 0 0 0.4rem;
+}
+
+.dk-top > * {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0.15rem 0.3rem;
+}
+
+.dk-game-type {
+  font-weight: 700;
+}
+
+.dk-trump-order {
+  border: 3px double var(--border);
+  border-radius: var(--radius);
+  padding: 0.4rem;
+  margin: 0 0 0.5rem;
+  text-align: center;
+}
+
+.dk-trump-order-note {
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+}
+
+.dk-order-card {
+  cursor: default;
+}
+
+.dk-total {
+  font-weight: 700;
+}
+
+.dk-score-head {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.dk-score-items {
+  list-style: none;
+  margin: 0.3rem auto;
+  padding: 0;
+  display: table;
+}
+
+.dk-score-items li {
+  margin: 0.1rem 0;
+  text-align: left;
+}
+
+[dir="rtl"] .dk-score-items li {
+  text-align: right;
+}
+
+.dk-score-party {
+  display: inline-block;
+  min-width: 4.5rem;
+  margin-right: 0.4rem;
+  font-weight: 700;
+}
+
+[dir="rtl"] .dk-score-party {
+  margin-right: 0;
+  margin-left: 0.4rem;
+}

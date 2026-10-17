@@ -1,0 +1,40 @@
+// text/it/skat.js
+// Rules and history texts of skat (it). Loaded by skat-rules.html and skat-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.it, {
+    sk_rules_title: "Regole dello Skat",
+    sk_rules_intro: "Lo skat secondo le regole ufficiali: tre giocatori, 32 carte, dichiarazione, skat e valore del gioco.",
+    sk_rules_basics_title: "Le regole",
+    sk_term_deal: "Carte e distribuzione",
+    sk_rules_deal: "32 carte, dal 7 all'asso. Ognuno ne riceve 10, due restano coperte nello skat. Punti: asso 11, dieci 10, re 4, donna 3, fante 2, nove, otto e sette 0, in tutto 120. Il giocatore dopo il mazziere è il primo di mano, poi il secondo, il mazziere è l'ultimo.",
+    sk_term_bid: "Dichiarazione",
+    sk_rules_bid: "Il secondo dice valori al primo di mano: 18, 20, 22, 23, 24, 27, 30 e così via, solo valori che un gioco può avere. Il primo di mano tiene o passa. Chi resta sente poi i valori dell'ultimo. Chi resta per ultimo diventa il solista. Se nessuno dichiara, il primo di mano può ancora giocare per 18; altrimenti la mano è annullata.",
+    sk_term_skat: "Skat o Hand",
+    sk_rules_skat: "Il solista prende lo skat e scarta due carte a scelta (i loro punti contano per lui) oppure gioca Hand senza guardarlo. Solo in un gioco Hand si possono dichiarare Schneider, Schwarz o Ouvert.",
+    sk_term_games: "I giochi",
+    sk_rules_games: "Gioco a seme (fiori 12, picche 11, cuori 10, quadri 9): i quattro fanti e il seme scelto sono briscola. Grand (24): solo i quattro fanti sono briscola. Null (23, Hand 35, Ouvert 46, Ouvert Hand 59): nessuna briscola, e il solista non deve fare nemmeno una presa.",
+    sk_term_trumps: "Ordine delle carte",
+    sk_rules_trumps: "Briscole: fante di fiori, fante di picche, fante di cuori, fante di quadri, poi asso, dieci, re, donna, nove, otto, sette del seme di briscola. Altri semi: asso, dieci, re, donna, nove, otto, sette. Nel Null: asso, re, donna, fante, dieci, nove, otto, sette.",
+    sk_term_follow: "Rispondere al seme",
+    sk_rules_follow: "Il primo di mano apre la prima presa, poi apre chi vince ogni presa. Devi rispondere al seme di apertura (i fanti sono briscola); se non puoi, giochi qualsiasi carta.",
+    sk_term_win: "Vincere",
+    sk_rules_win: "Il solista vince con 61 punti o più. Schneider: una parte ha 30 punti o meno. Schwarz: una parte non fa nessuna presa. Se è dichiarato Schneider, il solista ha bisogno di 90 punti; se è dichiarato Schwarz, di tutte le prese.",
+    sk_term_value: "Valore del gioco",
+    sk_rules_value: "Valore base per livello. Il livello sono i matador («con» o «senza» tante briscole più alte, contate dal fante di fiori, skat compreso) più 1 per il gioco, più 1 ciascuno per Hand, Schneider, Schneider dichiarato, Schwarz, Schwarz dichiarato e Ouvert. I giochi Null hanno valori fissi.",
+    sk_term_lost: "Perso e dichiarazione troppo alta",
+    sk_rules_lost: "Un gioco perso conta doppio contro il solista. Se il valore è inferiore alla dichiarazione, il gioco è perso; conta il più piccolo multiplo del valore base che raggiunge la dichiarazione, raddoppiato.",
+    sk_term_list: "L'elenco dei punti",
+    sk_rules_list: "Dopo ogni gioco il solista riceve il valore (vinto) o meno il doppio del valore (perso). L'elenco somma tutti i giochi; una mano annullata è annotata senza punti.",
+    sk_term_decks: "Carte francesi e tedesche",
+    sk_rules_decks: "In Nuova partita puoi scegliere carte francesi (fiori, picche, cuori, quadri) o tedesche (ghiande, foglie, cuori, sonagli). Nelle carte tedesche l'Ober prende il posto della donna e l'Unter quello del fante (U); le regole restano uguali.",
+    sk_rules_example_title: "Contare i matador",
+    sk_rules_example: "Fiori, e il solista ha il fante di fiori e il fante di picche ma non il fante di cuori: «con 2, gioco 3», quindi il valore è 3 × 12 = 36.",
+    sk_history_title: "La storia dello Skat",
+    sk_history_origins_title: "Altenburg",
+    sk_history_origins_p1: "Lo skat fu sviluppato intorno al 1810-1813 ad Altenburg, in Turingia, dai membri di un circolo di tarocchi, la Brommesche Tarok-Gesellschaft. Nacque da giochi più antichi della zona.",
+    sk_history_rules_title: "Regole per tutti",
+    sk_history_rules_p1: "Il primo tentativo di rendere le regole uguali ovunque fu un congresso di giocatori di skat il 7 agosto 1886 ad Altenburg. La federazione tedesca di skat fu fondata ad Altenburg nel 1899. Oggi il Regolamento internazionale dello skat fissa le regole ufficiali.",
+    sk_history_modern_title: "Lo skat oggi",
+    sk_history_modern_p1: "Il Tribunale internazionale dello skat fu fondato ad Altenburg il 1° dicembre 2001. Nel dicembre 2016 la Commissione tedesca per l'UNESCO ha inserito lo skat nell'elenco nazionale del patrimonio culturale immateriale. PaperGames gioca con le regole ufficiali senza Ramsch, con carte francesi o tedesche disegnate per l'inchiostro elettronico in bianco e nero, e calcola passo per passo il valore di ogni gioco."
+});
+I18n.markTextLoaded("it");

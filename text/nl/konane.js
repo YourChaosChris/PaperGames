@@ -1,0 +1,40 @@
+// text/nl/konane.js
+// Rules and history texts of konane (nl). Loaded by konane-rules.html and konane-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.nl, {
+    konane_rules_title: "Konane-regels",
+    konane_rules_intro: "Een snel overzicht van hoe PaperGames Konane (Hawaiiaans dammen) speelt - handig als je wat roestig bent, of het net leert.",
+    konane_rules_basics_title: "Het basisidee",
+    konane_term_board: "Het bord",
+    konane_rules_board: "Een 8x8-bord waarop bij aanvang echt elk van de 64 velden bezet is met een steen - anders dan bij westers dammen, dat alleen de donkere velden gebruikt. Stenen wisselen elkaar strikt af in een schaakbordpatroon: Zwart op de ene kleur veld, Wit op de andere.",
+    konane_term_moves: "Zetten",
+    konane_rules_moves: "Stenen glijden nooit gewoon. De enige zet in Konane is een sprong: een van je stenen springt over een orthogonaal aangrenzende vijandelijke steen (omhoog, omlaag, links of rechts - nooit diagonaal) naar het lege veld direct daarachter, waarbij de overgesprongen steen wordt geslagen.",
+    konane_rules_opening_title: "Het openingsritueel met het verwijderen van stenen",
+    konane_term_opening: "Het spel starten",
+    konane_rules_opening: "Omdat elk veld bij aanvang bezet is, kan nog niemand springen - een sprong heeft een leeg landingsveld nodig. Daarom begint het spel met een kort ritueel in plaats van een eerste sprong: Zwart verwijdert een eigen steen uit ofwel een hoek, ofwel een van de vier middelste velden. Daarna verwijdert Wit een eigen steen die direct (orthogonaal) naast het door Zwart net geleegde veld ligt. Die twee lege velden maken de allereerste sprong pas mogelijk.",
+    konane_term_opening_next: "Na het ritueel",
+    konane_rules_opening_next: "Zodra beide verwijderingen zijn gedaan, doet Zwart de eerste echte sprong, en gaat het spel verder met normale afwisselende beurten.",
+    konane_rules_capture_title: "Springen en sprongketens",
+    konane_term_mandatory: "Sprongplicht",
+    konane_rules_mandatory: "Als een van je stenen ergens op het bord een legale sprong heeft, moet je die spelen - je mag zelf kiezen welke steen springt als er meerdere kunnen.",
+    konane_term_chain: "Een sprongketen voortzetten",
+    konane_rules_chain: "Na de landing mag diezelfde steen vanaf zijn nieuwe positie blijven springen, en vrij van richting wisselen tussen sprongen (elke afzonderlijke sprong blijft een rechte orthogonale lijn, maar een keten hoeft niet in dezelfde richting door te gaan). Anders dan bij dammen ben je nooit verplicht de langst mogelijke keten te nemen: je mag na elke afzonderlijke sprong stoppen en zelf bepalen hoe ver je elke beurt doorgaat.",
+    konane_term_example: "Uitgewerkt voorbeeld",
+    konane_rules_example: "Stel je steen staat op c4, met een vijandelijke steen op c5 en een leeg veld op c6: de sprong c4-c6 slaat de steen op c5. Als je steen, nu op c6, ook een vijandelijke steen op b6 heeft met d6 leeg aan de andere kant, zou je diezelfde beurt kunnen doorgaan met de sprong c6-d6 (een bocht van 90 graden ten opzichte van de richting van je eerste sprong) om ook de steen op b6 te slaan - of je zou na de eerste sprong gewoon op c6 kunnen stoppen. Beide zijn toegestaan; de keuze is elke stap aan jou.",
+    konane_rules_end_title: "Hoe een partij eindigt",
+    konane_term_win: "Winnen",
+    konane_rules_win: "Heb je op je beurt nergens op het bord een legale sprong beschikbaar, dan verlies je meteen - in Konane is er, zodra het spel bezig is, geen ander soort zet om op terug te vallen.",
+    konane_term_resignation: "Opgeven",
+    konane_rules_resignation: "Een speler kan op elk moment opgeven, waardoor de partij meteen eindigt in het voordeel van de tegenstander.",
+    konane_history_title: "De geschiedenis van Konane",
+    konane_history_origins_title: "Lavastenen op uitgehouwen rots",
+    konane_history_origins_p1: "Konane werd door de oude Hawaiianen gespeeld met zwarte vulkanische lavastenen ('ili'ili pōhaku) als stukken van de ene kant en witte koraal- of gebleekte kokosnootschaal-stukken als stukken van de andere kant, opgesteld op een raster van ondiepe kuiltjes die rechtstreeks in vlakke rots waren uitgehakt. Deze speelborden, kōnane papamū genoemd, werden rechtstreeks in de rots zelf uitgehouwen in plaats van als apart, draagbaar spelmateriaal gemaakt.",
+    konane_history_origins_p2: "Veel kōnane papamū zijn vandaag nog te zien op historische locaties door de Hawaiiaanse eilanden, met een opvallende concentratie op Big Island (Hawai'i Island) - sommige uitgehakt in lavastromen nabij koninklijke residenties en heiau (tempelplaatsen), enkele groot genoeg om te wijzen op borden die aanzienlijk groter waren dan het tegenwoordig gangbare 8x8-formaat. Bordafmetingen varieerden in de praktijk behoorlijk en lagen niet vast zoals bij een fabrieksmatig geproduceerd spel.",
+    konane_history_kinship_title: "Een onafhankelijke uitvinding, geen ontlening",
+    konane_history_kinship_p1: "Konanes sprong-en-slag-mechanisme geeft het een duidelijke familiegelijkenis met spellen als Alquerque en dammen, die hetzelfde basisidee delen: over een stuk springen om het te verwijderen. Maar Konane is aan geen van beide ontleend - het ontstond onafhankelijk in Polynesië, geïsoleerd van de spellen uit de Oude Wereld die Alquerque en zijn dam-afstammelingen voortbrachten. De gelijkenis is het best te begrijpen als convergente uitvinding: slaan door te springen is een eenvoudig, krachtig idee waar meer dan één cultuur onafhankelijk van elkaar op kwam, niet als bewijs dat de ene traditie van de andere zou hebben geleend.",
+    konane_history_kinship_p2: "Wat typisch van Konane zelf is, zijn het volledig gevulde bord met afwisselende stenen en het openingsritueel met het verwijderen van twee stenen dat de regelpagina van deze app doorneemt - geen van beide heeft een echt equivalent bij dammen of Alquerque, en beide geven Konane zijn heel eigen karakter als een spel van pure sprongketen-tactiek, zonder enig ander soort zet beschikbaar.",
+    konane_history_modern_title: "Levend Hawaiiaans erfgoed",
+    konane_history_modern_p1: "Konane blijft vandaag een belangrijk onderdeel van het levende culturele erfgoed van de oorspronkelijke Hawaiianen, geen loutere historische curiositeit. Het wordt onderwezen en gespeeld als onderdeel van culturele educatieprogramma's, gedemonstreerd op culturele festivals en erfgoedlocaties, en de overgebleven stenen borden worden actief behouden en op sommige plekken beschermd als historische en culturele locaties op eigen recht.",
+    konane_history_modern_p2: "Vandaag een partij spelen - zelfs op een scherm, met een vereenvoudigd 8x8-bord in plaats van een buiten uitgehouwen papamū - verbindt je met een strategische traditie die eeuwen ouder is dan het geschreven contact met het Westen, en die Hawaiianen sindsdien levend hebben gehouden en doorgegeven."
+});
+I18n.markTextLoaded("nl");

@@ -1,0 +1,41 @@
+// text/nl/go.js
+// Rules and history texts of go (nl). Loaded by go-rules.html and go-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.nl, {
+    go_rules_title: "Go-regels",
+    go_rules_intro: "Een korte samenvatting van hoe PaperGames Go speelt - handig als je wat roestig bent, of het net leert.",
+    go_rules_basics_title: "Het basisidee",
+    go_term_stones: "Stenen",
+    go_rules_stones: "Zwart en wit plaatsen om beurten stenen op lege snijpunten, Zwart begint. Stenen bewegen nooit meer nadat ze geplaatst zijn - het bord vult zich, in plaats van dat stukken verschuiven.",
+    go_term_liberties: "Vrijheden",
+    go_rules_liberties: "De vrijheden van een steen zijn de lege punten er direct naast (boven/onder/links/rechts, niet diagonaal). Verbonden stenen van dezelfde kleur delen hun vrijheden als één groep.",
+    go_term_capture: "Slaan",
+    go_rules_capture: "Een groep zonder overgebleven vrijheden wordt geslagen en direct na de zet van de tegenstander van het bord gehaald.",
+    go_rules_illegal_title: "Verboden zetten",
+    go_term_suicide: "Zelfmoordzet",
+    go_rules_suicide: "Je mag geen steen zetten die je eigen groep zonder vrijheden achterlaat, tenzij die zet eerst genoeg vijandige stenen slaat om de groep te bevrijden.",
+    go_term_ko: "Ko",
+    go_rules_ko: "Je mag een enkele steen niet direct terugslaan op een manier die de stelling van vlak vóór de laatste zet van je tegenstander zou herstellen - je moet eerst ergens anders zetten.",
+    go_term_superko: "Superko",
+    go_rules_superko: "Algemener gezegd mag geen enkele zet een volledige bordstelling herstellen die eerder in de partij al is voorgekomen. Dat sluit ook zeldzamere, langere herhalingscycli uit, zoals een drievoudige ko.",
+    go_rules_end_title: "Hoe een partij eindigt",
+    go_term_passing: "Passen",
+    go_rules_passing: "Elke speler mag passen in plaats van een steen te zetten. Passen beide spelers na elkaar, dan eindigt de partij en wordt ze geteld.",
+    go_term_scoring: "Telling",
+    go_rules_scoring: "PaperGames gebruikt gebiedstelling: jouw score is je eigen stenen op het bord plus lege punten die alleen door jouw stenen omringd zijn. Punten die aan beide kleuren grenzen, tellen voor geen van beide kanten. Dode stenen worden niet apart weggehaald: elke steen die nog op het bord staat als beide spelers passen, telt mee, dus sla dode stenen voordat je past.",
+    go_term_komi: "Komi",
+    go_rules_komi: "Wit zet als tweede, dus krijgt wit een vast compensatiepunt (komi, 7,5 punten in PaperGames) om dat nadeel goed te maken. Gelijkspel is daardoor onmogelijk.",
+    go_term_resignation: "Opgeven",
+    go_rules_resignation: "Een speler kan op elk moment opgeven, waarmee de partij meteen in het voordeel van de tegenstander eindigt.",
+    go_history_title: "De Geschiedenis van Go",
+    go_history_origins_title: "Oude Chinese Wortels",
+    go_history_origins_p1: "Go (weiqi in het Chinees) zou volgens de overlevering meer dan 4000 jaar geleden in China zijn uitgevonden, al dateren de vroegste betrouwbare geschreven verwijzingen pas van rond de 4e eeuw v.Chr. Het gold als een van de vier essentiële kunsten die een ontwikkelde Chinese geleerde moest beheersen, naast kalligrafie, schilderkunst en het spelen van de guqin.",
+    go_history_origins_p2: "Anders dan de meeste oude spellen zijn de regels van Go nauwelijks veranderd: het doel om op een raster van snijpunten meer gebied dan je tegenstander te omsingelen, is precies hetzelfde als meer dan tweeduizend jaar geleden.",
+    go_history_spread_title: "Korea, Japan en een Cultuur van Meesterschap",
+    go_history_spread_p1: "Go verspreidde zich rond de 7e eeuw n.Chr. naar Korea en vervolgens naar Japan, waar het onder keizerlijke bescherming tot bloei kwam. Japans Edo-periode (17e-19e eeuw) formaliseerde professioneel Go met door de overheid gesponsorde scholen en erfelijke meestertitels zoals Meijin en Honinbo, waarvan sommige nog steeds bij toernooien worden uitgereikt.",
+    go_history_spread_p2: "Aan deze professionele traditie is het te danken dat de Go-terminologie wereldwijd nog vaak Japanse woorden gebruikt - \"go\", \"dan\" en \"sente\" kwamen allemaal via Japan in andere talen terecht, ook al is het spel zelf Chinees van oorsprong.",
+    go_history_modern_title: "Go Ontmoet Kunstmatige Intelligentie",
+    go_history_modern_p1: "Go bereikte het Westen geleidelijk in de loop van de 20e eeuw, maar computers vonden het decennialang veel moeilijker om goed te spelen dan schaken - de enorme vertakkingsgraad versloeg brute-force-zoekmethodes.",
+    go_history_modern_p2: "Dat veranderde in maart 2016, toen Google DeepMinds AlphaGo de 18-voudig wereldkampioen Lee Sedol met 4-1 versloeg, een resultaat dat veel AI-onderzoekers pas nog een decennium later hadden verwacht. Het blijft een van de mijlpalen in de geschiedenis van kunstmatige intelligentie."
+});
+I18n.markTextLoaded("nl");

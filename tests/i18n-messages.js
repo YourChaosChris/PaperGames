@@ -987,16 +987,31 @@ function pageKeys(content) {
   return keys;
 }
 const pageCount = { game: 0, text: 0 };
+const textCache = {};
+function textOf(slug, lang) {
+  const id = lang + "/" + slug;
+  if (!textCache[id]) {
+    const file = path.join(ROOT, "text", lang, slug + ".js");
+    const ctx = { STRINGS: { [lang]: {} }, I18n: { markTextLoaded() {} } };
+    require("vm").createContext(ctx);
+    if (fs.existsSync(file)) require("vm").runInContext(fs.readFileSync(file, "utf8"), ctx);
+    textCache[id] = ctx.STRINGS[lang];
+  }
+  return textCache[id];
+}
 fs.readdirSync(ROOT).filter((f) => f.endsWith(".html")).sort().forEach((f) => {
   const content = fs.readFileSync(path.join(ROOT, f), "utf8");
-  const textPage = /<html[^>]*\sdata-i18n-text=/.test(content);
-  const table = textPage ? FULL.STRINGS : STRINGS;
+  const textMark = /<html[^>]*\sdata-i18n-text="([^"]*)"/.exec(content);
+  const textPage = !!textMark;
   const keys = pageKeys(content);
   if (!keys.size) return;
   pageCount[textPage ? "text" : "game"]++;
-  for (const lang of Object.keys(table)) {
-    const missing = [...keys].filter((k) => typeof table[lang][k] !== "string" && !(LEGAL_ENGLISH[lang] && LEGAL_ENGLISH[lang].test(k)));
-    if (missing.length) fail(`${lang}: ${f} (${textPage ? "main and text files" : "main files only"}) lacks ${missing.slice(0, 5).join(", ")}`);
+  for (const lang of Object.keys(STRINGS)) {
+    // A rules or history page loads the main files plus the text files of
+    // its own game only (text/<lang>/<slug>.js), nothing of other games.
+    const own = textPage ? textOf(textMark[1], lang) : {};
+    const missing = [...keys].filter((k) => typeof STRINGS[lang][k] !== "string" && typeof own[k] !== "string" && !(LEGAL_ENGLISH[lang] && LEGAL_ENGLISH[lang].test(k)));
+    if (missing.length) fail(`${lang}: ${f} (${textPage ? "main files and text/" + lang + "/" + textMark[1] + ".js" : "main files only"}) lacks ${missing.slice(0, 5).join(", ")}`);
   }
 });
 

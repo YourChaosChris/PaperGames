@@ -1,0 +1,15 @@
+/* schwimmen: rules used only by the schwimmen pages (loaded after base.css). */
+.pc-score {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 0.2rem 0 0.4rem;
+}
+
+.pc-life {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  vertical-align: -0.05em;
+  margin-left: 0.15em;
+}

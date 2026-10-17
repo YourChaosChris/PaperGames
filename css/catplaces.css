@@ -1,0 +1,15 @@
+/* catplaces: rules used only by the catplaces pages (loaded after base.css). */
+/* Cat Places (catplaces-app.js): uses the Pentomino board layout
+   (.pt-board, .pt-cells); cats that break a rule get a dashed frame. */
+.kz-conflict {
+  fill: none;
+  stroke: #141413;
+  stroke-width: 2.5;
+  stroke-dasharray: 5 3;
+}
+
+.kz-start-btn {
+  min-height: 44px;
+  min-width: 44px;
+  font-size: 0.8rem;
+}

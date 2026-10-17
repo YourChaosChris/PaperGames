@@ -1,0 +1,41 @@
+// text/de/ludo.js
+// Rules and history texts of ludo (de). Loaded by ludo-rules.html and ludo-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.de, {
+    ludo_rules_title: "Ludo-Regeln",
+    ludo_rules_intro: "Eine kurze Übersicht über PaperGames' Version des klassischen kreuzförmigen Wettlaufspiels. Du spielst selbst eine Farbe; die anderen 2-3 Farben sind entweder computergesteuert oder, im lokalen Modus, weitere Spieler am selben Gerät.",
+    ludo_rules_basics_title: "Die Grundidee",
+    ludo_term_tokens: "Figuren und das Feld",
+    ludo_rules_tokens: "Jede der 2-4 Farben hat 4 Figuren, die in ihrem Startbereich beginnen. Die Figuren laufen über ein gemeinsames 52-Felder-Rundfeld, dann über die eigene 5 Felder lange Zielgerade in das Zielfeld in der Mitte.",
+    ludo_term_die: "Der Würfel",
+    ludo_rules_die: "Jede Runde wird mit einem einzelnen Würfel gewürfelt. Kann keine Figur die gewürfelte Zahl nutzen, ist die Runde ohne Zug beendet.",
+    ludo_term_leaving_home: "Aus dem Haus starten",
+    ludo_rules_leaving_home: "Eine Figur darf ihren Startbereich nur bei einer gewürfelten 6 verlassen und zieht dann auf das eigene Startfeld.",
+    ludo_term_extra_turn: "Eine 6 würfeln",
+    ludo_rules_extra_turn: "Bei einer 6 gibt es direkt im Anschluss einen weiteren Wurf (auch wenn kein Zug möglich war). Drei Sechsen in Folge lassen die Runde dagegen verfallen, ohne zu ziehen - so kann eine Glückssträhne nicht endlos weitergehen.",
+    ludo_term_shapes: "Farben und Formen",
+    ludo_rules_shapes: "Auf einem E-Ink-Bildschirm sehen die vier Farben fast gleich aus, deshalb hat jede Farbe auch ihre eigene Form: Rot ein gefüllter Kreis, Grün ein offener Kreis, Gelb ein gefülltes Dreieck und Blau ein offenes Quadrat. Die Form steht überall – bei den Figuren, bei den wartenden Figuren im Startbereich und bei der Zähleranzeige über dem Brett. Ein schwarzer Keil in der Ecke eines Feldes oder ein dicker Doppelrahmen um eine wartende Figur zeigt, welche Figur mit dem aktuellen Wurf ziehen darf.",
+    ludo_rules_capture_title: "Schlagen und sichere Felder",
+    ludo_term_capture: "Schlagen",
+    ludo_rules_capture: "Landet man genau auf einem Feld mit genau einer gegnerischen Figur, wird diese zurück in ihren Startbereich geschickt und muss neu starten. Eine Figur auf ihrer eigenen Zielgeraden kann nie geschlagen werden.",
+    ludo_term_safe: "Sichere Felder",
+    ludo_rules_safe: "Das eigene Startfeld jeder Farbe sowie ein weiteres, mit einem Stern markiertes Feld weiter auf der Strecke sind sicher: Dort kann nicht geschlagen werden, egal wer darauf steht.",
+    ludo_term_block: "Blockaden",
+    ludo_rules_block: "Zwei eigene Figuren auf demselben Feld bilden eine Blockade. Gegner dürfen weder darauf ziehen noch daran vorbeiziehen - eine starke Verteidigung eines Streckenabschnitts. Deine eigenen Figuren hält deine Blockade nicht auf.",
+    ludo_rules_end_title: "Wie ein Spiel endet",
+    ludo_term_win: "Gewinnen",
+    ludo_rules_win: "Wer als Erster alle 4 Figuren ins Ziel in der Mitte bringt, gewinnt sofort. Eine Figur muss exakt auf das letzte Zielfeld ziehen - ein zu hoher Wurf kann für diese Figur nicht genutzt werden, auch wenn eine andere Figur vielleicht noch ziehen kann.",
+    ludo_term_resignation: "Aufgabe",
+    ludo_rules_resignation: "Wer gerade am Zug ist, kann jederzeit aufgeben - das Spiel endet dann sofort zugunsten einer der übrigen Farben.",
+    ludo_history_title: "Die Geschichte von Ludo",
+    ludo_history_origins_title: "Pachisi, das königliche Spiel Indiens",
+    ludo_history_origins_p1: "Ludos direkter Vorfahre ist Pachisi, ein kreuzförmiges Wettlaufspiel, das in Indien seit vielen Jahrhunderten gespielt wird. Pachisi wird traditionell mit den indischen Königshöfen in Verbindung gebracht - der Mogulkaiser Akbar (1542-1605) soll der Legende nach eine lebensgroße Version auf einem riesigen rot-weißen Marmorhof seines Palastes in Fatehpur Sikri gespielt haben, mit Hofdamen und versklavten Frauen in farbigen Gewändern als lebende Spielfiguren. Wie bei vielen solchen bunten Legenden lassen sich die genauen Details heute kaum noch überprüfen, doch der Hof selbst steht noch immer.",
+    ludo_history_origins_p2: "Das traditionelle Pachisi wurde gar nicht mit einem Würfel gespielt: Stattdessen warf man sechs oder sieben Kaurischnecken und zählte, wie viele mit der Öffnung nach oben landeten - eine frühe Zufallsmethode, die in weiten Teilen Südasiens verbreitet war.",
+    ludo_history_modern_title: "Ein viktorianisches Patent macht daraus Ludo",
+    ludo_history_modern_p1: "Im späten 19. Jahrhundert brachten britische Kolonisten Pachisi-artige Spiele mit nach Hause und passten sie für die Massenproduktion an. Die heute gespielte vereinfachte Version - ein einzelner sechsseitiger Würfel statt Kaurischnecken und feste Regeln statt regionaler Varianten - wurde 1896 in England unter dem Namen \"Ludo\" patentiert, nach dem lateinischen ludo, \"ich spiele\".",
+    ludo_history_modern_p2: "Ludo wurde schnell zu einem festen Bestandteil des viktorianischen und edwardianischen Spieleschranks, billig zu drucken und leicht zu lernen, und ist seither ein fester Bestandteil von Spieleabenden in Europa und Asien geblieben.",
+    ludo_history_legacy_title: "Ein Spiel, viele Namen",
+    ludo_history_legacy_p1: "Ludos Erfolg brachte weltweit nahe Verwandte hervor. In den USA bot Parcheesi - schon 1874 als Marke eingetragen, sogar noch vor Ludo selbst - eine eigene amerikanisierte Version von Pachisi mit eigenen Brett- und Schlagregeln. Das englische Brettspiel Sorry!, erstmals in den 1930er-Jahren veröffentlicht, übernahm Ludos Grundidee aus Wettlauf und Schlagen und legte kartengesteuerte Züge und zusätzliche Sonderfelder darüber. Im deutschsprachigen Raum wird das Spiel unter einem geschützten Markennamen vertrieben; PaperGames verwendet deshalb den internationalen Namen Ludo.",
+    ludo_history_legacy_p2: "Heute wird Ludo vom Schulhof bis zum App Store gespielt - sein kreuzförmiges Feld mit vier farbigen Ecken ist mehr als hundert Jahre nach dem ersten englischen Patent und viele Jahrhunderte nachdem Akbars Höflinge erstmals als seine Figuren dienten, immer noch sofort wiederzuerkennen."
+});
+I18n.markTextLoaded("de");
