@@ -1,2 +1,8 @@
 .claude/worktrees/
 eink-sim-out/
+__pycache__/
+*.pyc
+Thumbs.db
+.vscode/
+.idea/
+*.swp

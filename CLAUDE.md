@@ -139,3 +139,17 @@ Vorgaben für den Bericht:
   - die Kuchen-Geschichtsseite sagt noch „die Verdächtigen sind Tiere“;
   - eine „neu“-Markierung auf Spielkarten gibt es nicht
     (`msg_aria_card_new` ist ungenutzt).
+
+## Sicherungen (Prozess, damit Christopher nicht nachfragen muss)
+
+Gilt für jede Sitzung, auch für die geplanten Läufe. Ziel: Fehler früh finden, nicht erst nach der langen Testreihe. (Von Christopher am 17.10.2026 freigegeben.)
+
+1. Nach jeder Zusammenführung mehrerer Zweige zuerst `bash tools/preflight.sh` (etwa 1 Minute: Syntax aller JS-Dateien, Konfliktmarken, doppelte Listen, Seitenfehler auf 12 Seiten, Hashes, statische Prüfungen, Übersetzungen). Erst bei „PREFLIGHT OK“ die Testreihe starten.
+2. Nach JEDER Änderung an einer Datei, die in `sw.js` gelistet ist, `node tools/sw-hashes.js` erneut ausführen, auch bei einer Ein-Zeichen-Korrektur.
+3. Geteilte Testreihe auf einem Rechner: jede Hälfte mit eigenem `PORT` starten (zum Beispiel 8010 und 8011), nie beide mit dem Standardwert. Mit `setsid nohup` starten. Vor dem Warten prüfen, ob die Prozesse leben (`ps aux | grep "[_]shard"`). Ein stehendes Log ohne Prozess bedeutet: Neustart der Umgebung, Lauf neu starten.
+4. Erfolg nur melden, wenn die letzte Zeile jedes Logs `ALL CHECKS PASS` lautet. Eine Hälfte allein genügt nicht.
+5. Zusammenführen ohne `merge=union` in `.git/info/attributes`. Konflikte einzeln lösen. Union-Merge hat doppelte Listen, fehlende Kommas und unvollständige CSS-Blöcke erzeugt.
+6. Unsichere Entscheidungen nicht blockieren lassen: die vorsichtigere Lesart wählen, im Bericht unter „Eigene Entscheidungen“ nennen. Nur nachfragen bei Unumkehrbarem (Namen/Marken veröffentlichen, Mails, Löschen).
+7. Zweige früh sichern: `git push -u origin <Zweig>` (nicht `main`), danach `git fetch origin +refs/heads/<Zweig>:refs/remotes/origin/<Zweig>`.
+8. Ist eine Aufgabe fertig: sofort nach `erledigt/` verschieben und pushen, damit der nächste geplante Lauf sie nicht doppelt macht.
+9. Zwischen-Branches (`wip/…`, `int/…`) werden gelöscht, sobald sie in `main` zusammengeführt sind (lokal und auf dem Remote), außer ein Lauf arbeitet noch darauf.
