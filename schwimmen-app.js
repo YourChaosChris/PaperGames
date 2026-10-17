@@ -59,7 +59,7 @@ function setStatusSchwimmen(text) {
     const uiStatusState = AppStateSchwimmen.state || AppStateSchwimmen;
     const uiStatusGameOver = AppStateSchwimmen.gameOver === true || AppStateSchwimmen.over === true || uiStatusState.gameOver === true || uiStatusState.over === true;
     const uiStatusTurn = uiStatusState.turn !== undefined ? uiStatusState.turn : uiStatusState.current;
-    const uiStatusHuman = AppStateSchwimmen.humanColor !== undefined ? AppStateSchwimmen.humanColor : (AppStateSchwimmen.humanPlayer !== undefined ? AppStateSchwimmen.humanPlayer : AppStateSchwimmen.human);
+    const uiStatusHuman = AppStateSchwimmen.humanColor !== undefined ? AppStateSchwimmen.humanColor : (AppStateSchwimmen.humanPlayer !== undefined ? AppStateSchwimmen.humanPlayer : (AppStateSchwimmen.human !== undefined ? AppStateSchwimmen.human : 0));
     let uiStatusKey = null;
     if (uiStatusGameOver && !/\b(draw|drawn|tie|remis|stalemate)\b/i.test(uiStatusText) && /\b(win|wins|won|winner|lose|loses)\b/i.test(uiStatusText)) {
       if (/\b(you win|you won|you have won)\b/i.test(uiStatusText)) uiStatusKey = "ui_status_you_win";

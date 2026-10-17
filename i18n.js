@@ -656,6 +656,7 @@ const STRINGS = {
     release_v246: "Game cards on all category pages are big tap targets; the kids page shows every kids game on one page with large icons; Large board makes tiny boards easier to tap; Cake is no longer listed as a kids game.",
     release_v249: "Pages load faster because they need less data. New games: Kleeberg and Pasture Friends.",
     release_v250: "In Steckwürfeln you can tap the holes, Klappenkasten shows what the computer closed, and Bingo allows up to four computer opponents. Durak and Skat buttons work again.",
+    release_v251: "New game: Zoo Toss. Pasture Friends now explains itself with pictures, Schwimmen shows the right player's turn, the Kleeberg board is no longer cut off, and link previews show no game count.",
     release_v248: "Seven new games (Bingo, three dice games and three children's puzzles), a new hardest level in Arrows, a hint button in Cat Places, better search and a Card Games page.",
     release_v247: "All games use the same names and status texts (Against the computer, Two players, one device, New game, Your turn); every game page has a Home button; Undo takes back your move and the computer's answer in 32 games.",
     release_v240: "Game names have changed in all 12 languages.",
@@ -3892,12 +3893,14 @@ const STRINGS = {
     zw_rolls_aria: "Rolls: {n} of {m}",
     zw_count: "{n} of {m}",
     zw_full_hand: "{n} cards collected.",
+    zw_goal_line: "Goal: roll all animals of the card. Whoever wins four cards first wins.",
     game_klappenkasten: "Klappenkasten",
     home_klappenkasten_desc: "A traditional dice game: roll two dice and close the numbered flaps that add up to your roll. When nothing fits, the flaps still open count against you - the fewest points win, and closing every flap wins at once. Against the computer or with up to four players on one device.",
     kk_history_intro: "A traditional dice game with a row of numbered flaps, played in pubs and on ships - where and when exactly it began is not certain.",
     quickrules_klappenkasten_1: "Roll the two dice and close flaps whose numbers add up to the roll - one flap or several.",
     quickrules_klappenkasten_2: "Keep rolling and closing. When nothing fits, the numbers of the open flaps are your points.",
     quickrules_klappenkasten_3: "The fewest points win; closing all flaps wins at once. Undo takes back a closing.",
+    kk_goal_line: "Goal: close the flaps that add up to your roll. Few open flaps mean few points - the fewest points win.",
     kk_size_label: "Flaps:",
     kk_size_9: "1 to 9",
     kk_size_12: "1 to 12",
@@ -3922,6 +3925,7 @@ const STRINGS = {
     quickrules_steckwuerfeln_1: "Roll two dice. Peg the hole of the total, or the two holes of the single dice (2 and 4: hole 6, or holes 2 and 4).",
     quickrules_steckwuerfeln_2: "Keep rolling and pegging. When nothing fits, the numbers of the free holes are your points.",
     quickrules_steckwuerfeln_3: "The fewest points win. Double six is a joker (roll again). Undo takes back a peg.",
+    sw_goal_line: "Goal: put pegs into the holes. The holes left free count as points - the fewest points win.",
     sw_mode_label: "Game:",
     sw_mode_score: "Points",
     sw_mode_shared: "Shared board",
@@ -5201,6 +5205,7 @@ const STRINGS = {
     quickrules_bingo_1: "Press Draw next to call one number or picture - there is no timer.",
     quickrules_bingo_2: "Tap each called item on your card. A complete pattern (row, column, diagonal or full card, as set under Winning pattern) wins.",
     quickrules_bingo_3: "Press Bingo! to check your card: wrong marks are outlined, no penalty. With Caller only, print cards for the children.",
+    bingo_goal_line: "Goal: tap every drawn number or picture on your card. A full pattern wins.",
     bingo_picture_dog: 'Dog',
     bingo_picture_cat: 'Cat',
     bingo_picture_rabbit: 'Rabbit',
@@ -5323,7 +5328,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 102;
+  const GAME_COUNT = 103;
 
   function t(key, lang) {
     const l = lang || getLang();

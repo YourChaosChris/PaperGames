@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v251",
+    date: "2026-10-17",
+    key: "release_v251",
+    text: "New game: Zoo Toss. Pasture Friends now explains itself with pictures, Schwimmen shows the right player's turn, the Kleeberg board is no longer cut off, and link previews show no game count."
+  },
+  {
     version: "v250",
     date: "2026-10-17",
     key: "release_v250",

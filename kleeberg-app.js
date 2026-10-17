@@ -190,8 +190,8 @@ function pyramidHtmlKB(opts) {
   const line = opts.line || [];
   const size = opts.size || 400;
   const vh = KB_Y0 + (rows - 1) * KB_DY + KB_R + 6;
-  const h = Math.round(size * vh / 100);
-  let html = '<svg viewBox="0 0 100 ' + f1KB(vh) + '" width="' + size + '" height="' + h + '" role="group" aria-label="' + opts.label + '" focusable="false">';
+  const h = Math.round(size * vh / 108);
+  let html = '<svg viewBox="-4 0 108 ' + f1KB(vh) + '" width="' + size + '" height="' + h + '" role="group" aria-label="' + opts.label + '" focusable="false">';
   // the summit flag on the top field
   html += '<line x1="50" y1="' + (KB_Y0 - KB_R - 0.5) + '" x2="50" y2="1" stroke="#141413" stroke-width="1"/>' +
     '<polygon points="50,1 58,3.5 50,6" fill="#141413"/>';
