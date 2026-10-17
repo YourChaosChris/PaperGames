@@ -1232,6 +1232,18 @@ const GAMES_CATALOG = [
     added: "2026-10-17T00:30",
     noRead: true,
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"15\" height=\"15\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"10.5\" cy=\"10.5\" r=\"4.2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"22\" y=\"3\" width=\"15\" height=\"15\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"29.5\" cy=\"10.5\" r=\"4.2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"3\" y=\"22\" width=\"15\" height=\"15\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"10.5\" cy=\"29.5\" r=\"4.2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"22\" y=\"22\" width=\"15\" height=\"15\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"4\"/><rect x=\"26\" y=\"26\" width=\"7\" height=\"7\" fill=\"#141413\"/></svg></span>"
+  },
+  {
+    slug: "kleeberg",
+    category: "strategy",
+    family: "inarow",
+    nameKey: "game_kleeberg",
+    nameText: "Kleeberg",
+    descKey: "home_kleeberg_desc",
+    descText: "A building game for two on a pyramid of round fields: take turns putting hearts or clovers on free fields, but only on top of two filled fields. Three of your symbols in a straight line win.",
+    popular: false,
+    added: "2026-10-17T02:10",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><circle cx=\"20\" cy=\"7\" r=\"4.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"14\" cy=\"20\" r=\"4.5\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"26\" cy=\"20\" r=\"4.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"8\" cy=\"33\" r=\"4.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"20\" cy=\"33\" r=\"4.5\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"2\"/><circle cx=\"32\" cy=\"33\" r=\"4.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/></svg></span>"
   }
 ];
 

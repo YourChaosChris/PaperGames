@@ -123,7 +123,8 @@
     ["sternjagd", "game_sternjagd", "hunt"],
     ["patternrow", "game_patternrow", "picturelogic"],
     ["shadowmatch", "game_shadowmatch", "picturelogic"],
-    ["oddone", "game_oddone", "picturelogic"]
+    ["oddone", "game_oddone", "picturelogic"],
+    ["kleeberg", "game_kleeberg", "inarow"]
   ];
 
   var GAME_SLUGS = {};

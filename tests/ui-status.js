@@ -9,7 +9,7 @@ const games = [
   "alquerque", "amazons", "backgammon", "baghchal", "blockers", "cardduel",
   "cardtactics", "checkers", "concan", "domino", "doppelkopf", "dotsandboxes",
   "durak", "fanorona", "fleetbattle", "forestvillage", "fourinarow", "foxandgeese",
-  "go", "gomoku", "halma", "hex", "hnefatafl", "klappenkasten", "konane", "ludo", "mancala",
+  "go", "gomoku", "halma", "hex", "hnefatafl", "klappenkasten", "kleeberg", "konane", "ludo", "mancala",
   "marblepush", "maumau", "morris", "pairs", "poker", "reversi", "romme",
   "schwimmen", "seega", "senet", "shogi", "snakesladders", "steckwuerfeln", "sternhalma", "sternjagd",
   "surakarta", "tablut", "tictactoe", "trix", "ur", "villains", "wallmaze",

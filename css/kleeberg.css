@@ -1,0 +1,44 @@
+/* kleeberg: rules used only by the kleeberg pages (loaded after base.css). */
+/* Kleeberg: the pyramid is one svg (lines, fields, hearts, clovers). The
+   ringed fields are the ones that can be used now. Black and white only. */
+.kb-board {
+  direction: ltr;
+  max-width: 420px;
+  margin: var(--space-2) auto;
+  text-align: center;
+}
+
+.kb-board svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.kb-goal-cell {
+  cursor: pointer;
+}
+
+.kb-goal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  max-width: 420px;
+  margin: var(--space-2) auto;
+}
+
+.kb-goal-pic svg {
+  display: block;
+  width: 110px;
+  height: auto;
+}
+
+.kb-goal-text {
+  flex: 1 1 auto;
+  text-align: start;
+}
+
+[dir="rtl"] .kb-goal-text {
+  text-align: right;
+}

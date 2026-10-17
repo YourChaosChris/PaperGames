@@ -135,6 +135,8 @@ echo "=== steckwuerfeln-core.js ==="
 node "$ROOT/tests/steckwuerfeln-core.js" || status=1
 echo "=== sternjagd-core.js ==="
 node "$ROOT/tests/sternjagd-core.js" || status=1
+echo "=== kleeberg-core.js ==="
+node "$ROOT/tests/kleeberg-core.js" || status=1
 echo "=== patternrow-core.js ==="
 node "$ROOT/tests/patternrow-core.js" || status=1
 echo "=== shadowmatch-core.js ==="

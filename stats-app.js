@@ -98,7 +98,8 @@ const STATS_GAME_NAME_KEY = {
   sternjagd: "game_sternjagd",
   patternrow: "game_patternrow",
   shadowmatch: "game_shadowmatch",
-  oddone: "game_oddone"
+  oddone: "game_oddone",
+  kleeberg: "game_kleeberg"
 };
 
 function gameDisplayName(game) {

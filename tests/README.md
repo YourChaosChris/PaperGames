@@ -269,6 +269,12 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   stars and the return to a free corner, the last player left wins, the
   draw after 600 moves, the computer's capture and 1000 computer games
   (2-4 players) that all end without an error. A few seconds.
+- `node tests/kleeberg-core.js` - no server or browser needed. The pyramid of
+  Kleeberg (15 fields, 18 lines of three), fields open only above two filled
+  fields, three in a line along the row and both slopes, the draw on a full
+  board, refused moves, the computer's choices (complete a line, stop the
+  opponent's line, do not open a winning field) and 1000 computer games that
+  all end without an error. A few seconds.
 - `node tests/patternrow-core.js` - no server or browser needed. 200 games
   of "Continue the Pattern" per level (6 rows each): every row has exactly
   one symbol that continues it (no repeating part of at most half the row

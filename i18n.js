@@ -3902,6 +3902,22 @@ const STRINGS = {
     sj_field_piece_aria: "Field {n}: piece of {name}",
     sj_field_move_aria: "Field {n}: move here",
     sj_over_message: "The last player with stars left wins.",
+    game_kleeberg: "Kleeberg",
+    home_kleeberg_desc: "A building game for two on a pyramid of round fields: take turns putting hearts or clovers on free fields, but only on top of two filled fields. Three of your symbols in a straight line win.",
+    kb_history_intro: "Kleeberg is a new game with its own rules; it builds on the old idea of getting three in a row.",
+    quickrules_kleeberg_1: "Take turns: put a heart or a clover on a ringed field.",
+    quickrules_kleeberg_2: "Build upwards: a field is open only when both fields below it are filled.",
+    quickrules_kleeberg_3: "Three of your symbols in a straight line win. If the pyramid is full and nobody has a line, it is a draw.",
+    kb_move_hint: "Tap a ringed field. Fields with a dashed edge are not open yet.",
+    kb_hearts: "Hearts",
+    kb_clovers: "Clovers",
+    kb_board_aria: "Pyramid of fifteen round fields in five rows",
+    kb_goal_aria: "Example: three hearts in a straight line",
+    kb_goal_text: "Goal: three of your symbols in a straight line.",
+    kb_field_name: "Row {r}, field {c}",
+    kb_field_move: "free, tap to build here",
+    kb_field_locked: "not open yet",
+    kb_over_message: "Three in a straight line win. A full pyramid without a line is a draw.",
     kq_cards_label: "Cards",
     game_oddone: "Which One Is Different?",
     home_oddone_desc: "Several cards, all alike in one way except one: tap the one that does not belong. Drawings from the same group, or shapes that match in one feature. Six rounds per game, three levels, big buttons, no time limit, a hint when you are stuck.",
@@ -5243,7 +5259,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 100;
+  const GAME_COUNT = 101;
 
   function t(key, lang) {
     const l = lang || getLang();
