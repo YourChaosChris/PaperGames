@@ -305,6 +305,11 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   players: one full pasture ends the game, the 35 cards are always all there,
   the yard keeps 5 cards, the pile never runs out, every computer step is
   legal; the strategy beats random choices in 2000 games. A few seconds.
+- `node tests/zoowurf-ui.js` - needs the server and Playwright. "Zoo Toss" at
+  600 and 360 px: a full game against the computer; the paw is put on the
+  card by tapping a free place (at least 48 px, no sideways scroll), the
+  panel with the computer's turn and its "Next" button, an older saved game
+  without the pick rule. About 20 seconds.
 - `node tests/zoowurf-core.js` - no server or browser needed. "Zoo Toss":
   every rule with fixed rolls (dice that fit go onto the card, the paw, three
   rolls make a turn, the rest of the card goes on to the next player, four
