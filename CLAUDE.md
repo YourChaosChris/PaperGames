@@ -126,17 +126,18 @@ Vorgaben für den Bericht:
 
 ## Stand (17.10.2026)
 
-- `CACHE_NAME` `papergames-cache-v250`, 102 Spiele.
-- Aufgaben bis 99o, 99z und die Abschluss-Bereinigung erledigt, `offen/` leer.
+- `CACHE_NAME` `papergames-cache-v251`, 103 Spiele.
+- Aufgaben bis 99r erledigt, `offen/` leer.
 - Zuletzt gebaut:
-  - 99o: Steckwürfeln: Löcher antippbar (`sw-hole-way`); Klappenkasten: Zug des
-    Computers als Zeile über dem Brett (`kk_last_closed`); Bingo: 1 bis 4
-    Computergegner (`bingo-opponents`);
-  - Pflege: Durak und Skat wieder spielbar (Regression aus 0baa68a).
+  - 99p: Vorschaubild ohne Spielezahl (`og-image.png?v=251`);
+  - 99q: Zoowurf (Kinder-Würfelspiel, `zoowurf-core.js`);
+  - 99r: Spielprüfung aller Spiele; Weidefreunde mit Bilderklärung,
+    Zielzeilen, Kleeberg-Brett, Schwimmen-Status; keins entfernt.
 - Offen bemerkt, nicht beauftragt:
   - eine „neu“-Markierung auf Spielkarten gibt es nicht
     (`msg_aria_card_new` ist ungenutzt);
-  - Vorschläge siehe `vorschlaege/2026-10-17.md` im Aufgaben-Repository.
+  - Vorschläge siehe `vorschlaege/2026-10-17.md` und
+    `vorschlaege/2026-10-17_99r_Spielqualitaet.md` im Aufgaben-Repository.
 
 ## Sicherungen (Prozess, damit Christopher nicht nachfragen muss)
 
