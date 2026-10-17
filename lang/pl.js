@@ -11,6 +11,7 @@ STRINGS.pl = {
     nav_about: "O aplikacji",
     nav_history: "Historia",
     nav_stats: "Statystyki",
+    text_fallback_note: "Zasady i historia tej gry nie są zapisane na tym urządzeniu w Twoim języku, dlatego widać je po angielsku. Załadują się w Twoim języku, gdy tylko będziesz online.",
     footer_support: "Wesprzyj",
     footer_quillwild: "Nowy projekt w przygotowaniu: Quillwild",
     home_categories_title: "Gry według kategorii",

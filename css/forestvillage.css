@@ -1,0 +1,208 @@
+/* forestvillage: rules used only by the forestvillage pages (loaded after base.css). */
+/* Forest Village (forestvillage-app.js): own line, forest map (4 fields in
+   a row, 2 on a narrow screen), meadow / hand / village as card grids,
+   action buttons, task, points table and log. Fields and cards that can
+   be used now have a dashed outline, the selected card is inverted, cards
+   that can't be paid have a thin dashed frame. Margins instead of `gap`. */
+.fv-me,
+.fv-solo,
+.fv-task,
+.fv-info {
+  text-align: start;
+  margin: var(--space-1) 0;
+  font-size: 0.9rem;
+}
+
+.fv-solo:empty,
+.fv-info:empty {
+  display: none;
+}
+
+.fv-res {
+  font-weight: 700;
+}
+
+.fv-heading {
+  text-align: start;
+  font-size: 1rem;
+  margin: var(--space-3) 0 var(--space-1);
+}
+
+.fv-fields {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.fv-field {
+  display: flex;
+  flex-direction: column;
+  width: 23.5%;
+  margin: 0 2% var(--space-2) 0;
+  padding: var(--space-1);
+  background: #fff;
+  color: #141413;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  text-align: start;
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.fv-field:nth-child(4n) {
+  margin-right: 0;
+}
+
+.fv-field:disabled {
+  opacity: 1;
+  color: #141413;
+}
+
+.fv-field.fv-taken {
+  border-style: dashed;
+  border-width: 1px;
+}
+
+.fv-field.fv-target {
+  outline: 3px dashed #141413;
+  outline-offset: 2px;
+}
+
+.fv-field-name {
+  font-weight: 700;
+  font-size: 0.88rem;
+  overflow-wrap: break-word;
+}
+
+.fv-field-who {
+  font-weight: 700;
+  border-top: 1px dashed var(--border);
+  margin-top: 0.15rem;
+  padding-top: 0.1rem;
+}
+
+.fv-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.fv-cards > li {
+  width: 49%;
+  margin: 0 2% var(--space-2) 0;
+}
+
+.fv-cards > li:nth-child(2n) {
+  margin-right: 0;
+}
+
+.fv-card {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: start;
+  padding: var(--space-1) var(--space-2);
+  background: #fff;
+  color: #141413;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  line-height: 1.25;
+  font-size: 0.8rem;
+}
+
+li.fv-card {
+  width: 49%;
+  height: auto;
+}
+
+.fv-card.fv-unaffordable {
+  border-style: dashed;
+  border-width: 1px;
+}
+
+.fv-card.fv-selected {
+  background: #141413;
+  color: #fff;
+}
+
+.fv-card-name {
+  display: block;
+  font-weight: 700;
+  font-size: 0.9rem;
+  overflow-wrap: break-word;
+}
+
+.fv-card-line {
+  display: block;
+}
+
+.fv-village li.fv-card {
+  border-width: 1px;
+}
+
+.fv-actions {
+  margin: var(--space-2) 0;
+  text-align: center;
+}
+
+.fv-actions button {
+  margin: 0 var(--space-1) var(--space-1) 0;
+}
+
+.fv-score-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.fv-score-table {
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  width: 100%;
+}
+
+.fv-score-table th,
+.fv-score-table td {
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.3rem;
+  text-align: center;
+}
+
+.fv-score-table th[scope="row"] {
+  text-align: start;
+}
+
+.fv-score-count {
+  display: block;
+  font-weight: 400;
+  font-size: 0.85em;
+}
+
+.fv-log {
+  text-align: start;
+  margin: 0;
+  padding-inline-start: 1.4rem;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 520px) {
+  /* Narrow screens: forest 2 per row, cards one per row. */
+  .fv-field {
+      width: 49%;
+    }
+    .fv-field:nth-child(2n) {
+      margin-right: 0;
+    }
+    .fv-cards > li,
+    li.fv-card {
+      width: 100%;
+      margin-right: 0;
+    }
+    .fv-score-table {
+      font-size: 0.68rem;
+    }
+    .fv-score-table th,
+    .fv-score-table td {
+      padding: 0.1rem;
+    }
+  }

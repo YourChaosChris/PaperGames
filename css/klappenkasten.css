@@ -1,0 +1,42 @@
+/* klappenkasten: rules used only by the klappenkasten pages (loaded after base.css). */
+.dg-selected {
+  text-align: center;
+}
+
+.kk-flaps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  direction: ltr;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.kk-flap {
+  width: calc(20% - 8px);
+  min-height: 64px;
+  margin: 4px;
+  padding: 0;
+  border: 4px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+  color: #141413;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.kk-flap-selected {
+  background: #141413;
+  color: #fff;
+}
+
+.kk-flap-closed,
+.kk-flap:disabled {
+  border-width: 2px;
+  border-style: dashed;
+  background: #fff;
+  color: #141413;
+  font-size: 1.2rem;
+  text-decoration: line-through;
+  opacity: 1;
+}

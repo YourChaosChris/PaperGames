@@ -1,0 +1,18 @@
+/* shadowmatch: rules used only by the shadowmatch pages (loaded after base.css). */
+/* Whose Shadow Is It?: the picture in a frame, shadows as large square
+   buttons - two per row (four shadows) or three per row (three). */
+.kq-picture {
+  box-sizing: border-box;
+  width: 150px;
+  margin: 8px auto 14px;
+  padding: 8px;
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.kq-picture svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}

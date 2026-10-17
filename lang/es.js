@@ -11,6 +11,7 @@ STRINGS.es = {
     nav_about: "Acerca de",
     nav_history: "Historia",
     nav_stats: "Estadísticas",
+    text_fallback_note: "Las reglas y la historia de este juego no están guardadas en tu idioma en este dispositivo, por eso aparecen en inglés. Se cargarán en tu idioma en cuanto tengas conexión.",
     footer_support: "Apoyar",
     footer_quillwild: "Nuevo proyecto en marcha: Quillwild",
     home_categories_title: "Juegos por categoría",

@@ -1,0 +1,5 @@
+/* concan: rules used only by the concan pages (loaded after base.css). */
+.concan-discard-offer {
+  outline: 4px double var(--border);
+  outline-offset: 3px;
+}

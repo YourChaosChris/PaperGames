@@ -1,0 +1,41 @@
+// text/es/ludo.js
+// Rules and history texts of ludo (es). Loaded by ludo-rules.html and ludo-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.es, {
+    ludo_rules_title: "Reglas del Ludo",
+    ludo_rules_intro: "Una referencia rápida de la versión de PaperGames de este clásico juego de carreras en cruz. Tú controlas un color; los otros 2 o 3 colores son oponentes del ordenador o, en modo local, otros jugadores por turnos en el mismo dispositivo.",
+    ludo_rules_basics_title: "La idea básica",
+    ludo_term_tokens: "Las fichas y el tablero",
+    ludo_rules_tokens: "Cada uno de los 2 a 4 colores tiene 4 fichas, que empiezan en su casa. Las fichas recorren una pista exterior compartida de 52 casillas y luego suben por su propio pasillo privado de 5 casillas hasta la meta central.",
+    ludo_term_die: "El dado",
+    ludo_rules_die: "Se lanza un único dado de seis caras en cada turno. Si ninguna ficha puede usar legalmente el número obtenido, el turno pasa sin mover.",
+    ludo_term_leaving_home: "Salir de casa",
+    ludo_rules_leaving_home: "Una ficha solo puede salir de su casa y entrar al tablero con un 6, colocándose en la casilla de salida de su color.",
+    ludo_term_extra_turn: "Sacar un 6",
+    ludo_rules_extra_turn: "Sacar un 6 concede otra tirada justo después de mover (o de no encontrar ningún movimiento legal). Sacar tres 6 seguidos, en cambio, hace perder el turno sin mover, para que una racha de suerte no se alargue indefinidamente.",
+    ludo_term_shapes: "Colores y formas",
+    ludo_rules_shapes: "En una pantalla de tinta electrónica los cuatro colores se ven casi iguales, así que cada color tiene también su propia forma: rojo un círculo relleno, verde un círculo vacío, amarillo un triángulo relleno y azul un cuadrado vacío. La forma se usa en todas partes: en las fichas, en las fichas que esperan en cada casa y en el recuento de la meta sobre el tablero. Una cuña negra en la esquina de una casilla, o un marco doble grueso alrededor de una ficha en espera, señala una ficha que puede moverse con la tirada actual.",
+    ludo_rules_capture_title: "Capturas y casillas seguras",
+    ludo_term_capture: "Capturar",
+    ludo_rules_capture: "Caer exactamente en una casilla ocupada por una única ficha rival la envía directamente de vuelta a su casa, para empezar de nuevo. Una ficha que ya está en su propio pasillo final nunca puede ser capturada.",
+    ludo_term_safe: "Casillas seguras",
+    ludo_rules_safe: "La casilla de salida de cada color, además de otra casilla marcada con una estrella más adelante en la pista, son seguras: allí no puede haber capturas, sea quien sea el que esté encima.",
+    ludo_term_block: "Bloqueos",
+    ludo_rules_block: "Dos fichas propias en la misma casilla forman un bloqueo. Los rivales no pueden ni caer en él ni pasar por encima, así que es una forma fuerte de controlar un tramo de la pista. Tu propio bloqueo no detiene a tus propias fichas.",
+    ludo_rules_end_title: "Cómo termina una partida",
+    ludo_term_win: "Victoria",
+    ludo_rules_win: "El primer color en llevar sus 4 fichas a la meta central gana de inmediato, terminando la partida. Una ficha debe caer exactamente en la meta - una tirada que se pasara no se puede usar con esa ficha, aunque otra ficha sí podría tener un movimiento legal.",
+    ludo_term_resignation: "Rendición",
+    ludo_rules_resignation: "Quien tenga el turno puede rendirse en cualquier momento, terminando la partida de inmediato a favor de uno de los colores restantes.",
+    ludo_history_title: "La historia del Ludo",
+    ludo_history_origins_title: "El Pachisi, el juego real de la India",
+    ludo_history_origins_p1: "El antepasado directo del Ludo es el Pachisi, un juego de carreras en cruz y círculo jugado en la India desde hace muchos siglos. El Pachisi se asocia tradicionalmente con las cortes reales indias - se dice que el emperador mogol Akbar (1542-1605) llegó a jugar una versión a tamaño real en un enorme patio de mármol rojo y blanco de su palacio de Fatehpur Sikri, usando a cortesanas y mujeres esclavizadas vestidas con trajes de colores como fichas vivientes. Como ocurre con muchas leyendas tan pintorescas, los detalles exactos son difíciles de verificar hoy en día, aunque el patio en sí todavía existe.",
+    ludo_history_origins_p2: "El Pachisi tradicional ni siquiera se jugaba con dado: los jugadores lanzaban seis o siete conchas de cauri y contaban cuántas caían con la abertura hacia arriba, un método de azar antiguo usado en buena parte del sur de Asia.",
+    ludo_history_modern_title: "Una patente victoriana lo convierte en Ludo",
+    ludo_history_modern_p1: "A finales del siglo XIX, los colonos británicos en la India llevaron a casa juegos de estilo Pachisi y los adaptaron para la producción en masa. La versión simplificada que se juega hoy - un solo dado de seis caras en lugar de conchas de cauri, y un reglamento fijo en vez de variantes regionales - se patentó en Inglaterra en 1896 con el nombre «Ludo», del latín ludo, «yo juego».",
+    ludo_history_modern_p2: "El Ludo se convirtió rápidamente en un habitual del armario de juegos victoriano y eduardiano, barato de imprimir y fácil de aprender, y desde entonces ha seguido siendo un clásico de las noches de juegos en familia en Europa y Asia.",
+    ludo_history_legacy_title: "Un solo juego, muchos nombres",
+    ludo_history_legacy_p1: "El éxito del Ludo dio lugar a parientes cercanos en todo el mundo. En Estados Unidos, el Parchís americano (Parcheesi) - registrado como marca ya en 1874, incluso antes que el propio Ludo - ofreció su propia versión americanizada del Pachisi, con sus propias reglas de tablero y captura. El juego de mesa inglés Sorry!, publicado por primera vez en la década de 1930, tomó la idea central de carrera y captura del Ludo y le añadió movimientos sacados de cartas y casillas especiales adicionales.",
+    ludo_history_legacy_p2: "Hoy el Ludo se juega desde el patio del colegio hasta la tienda de aplicaciones del móvil; su tablero en cruz y sus cuatro esquinas de colores siguen siendo reconocibles al instante más de un siglo después de aquella primera patente inglesa, y muchos siglos después de que los cortesanos de Akbar hicieran por primera vez de fichas vivientes."
+});
+I18n.markTextLoaded("es");

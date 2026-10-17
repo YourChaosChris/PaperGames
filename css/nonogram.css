@@ -1,0 +1,127 @@
+/* nonogram: rules used only by the nonogram pages (loaded after base.css). */
+.nonogram-wrap {
+  overflow: auto;
+  max-width: 100%;
+}
+
+.nonogram-corner {
+  background: var(--square-light);
+  border-right: 2px solid var(--border);
+  border-bottom: 2px solid var(--border);
+}
+
+.nonogram-clue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--square-light);
+  padding: 0.15em;
+  box-sizing: border-box;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.nonogram-clue > * {
+  margin: 0 0.15em 0.15em 0;
+}
+
+.nonogram-clue > *:last-child {
+  margin-right: 0;
+}
+
+.nonogram-clue-col {
+  flex-direction: column;
+  border-bottom: 2px solid var(--border);
+}
+
+.nonogram-clue-row {
+  flex-direction: row;
+  justify-content: flex-end;
+  border-right: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead (see the
+   .mode-buttons rule earlier) - this class is combined with the
+   display:flex .nonogram-clue on the same element. */
+.nonogram-clue-row > * {
+  margin: 0 0.5em 0.5em 0;
+}
+
+.nonogram-clue-row > *:last-child {
+  margin-right: 0;
+}
+
+.nonogram-cell {
+  width: 1.8em;
+  height: 1.8em;
+  min-width: 1.4em;
+  min-height: 1.4em;
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  font-weight: 700;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nonogram-cell-block-left {
+  border-left-width: 2px;
+}
+
+.nonogram-cell-block-top {
+  border-top-width: 2px;
+}
+
+.nonogram-cell-filled {
+  background: #111;
+}
+
+.nonogram-cell-marked {
+  color: var(--muted);
+}
+
+.nonogram-icon {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 1.4em;
+  height: 1.4em;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  gap: 1px;
+  padding: 1px;
+}
+
+.nonogram-icon::before,
+.nonogram-icon::after {
+  content: "";
+  background: #111;
+  grid-column: 2;
+}
+
+.nonogram-icon::before {
+  grid-row: 1;
+}
+
+.nonogram-icon::after {
+  grid-row: 3;
+}
+
+@media print {
+  body.printable-puzzle .nonogram-wrap {
+      overflow: visible !important;
+    }
+    body.printable-puzzle .nonogram-cell {
+      background: #fff !important;
+      color: transparent !important;
+      border-radius: 0 !important;
+    }
+  }
+
+/* On a filled (black) Nonogram cell the same double frame is drawn in
+   the light colour, so it still shows. */
+.nonogram-cell-filled.hint-cell {
+  outline-color: var(--square-light);
+}

@@ -1,0 +1,214 @@
+/* maumau: rules used only by the maumau pages (loaded after base.css). */
+/* ---- Mau Mau ---- */
+.maumau-board {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem;
+  background: var(--bg-alt);
+}
+
+.maumau-pile {
+  width: 4.6rem;
+  height: 6.4rem;
+  margin: 0 0.5rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: 6px;
+  background: var(--square-light);
+  box-sizing: border-box;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  text-align: center;
+  padding: 0.4rem 0 0;
+}
+
+.maumau-stock {
+  background: repeating-linear-gradient(45deg, #fff, #fff 4px, var(--border) 4px, var(--border) 5px);
+  font-size: 1rem;
+  padding: 0;
+}
+
+.maumau-stock-count {
+  display: inline-block;
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.35rem;
+}
+
+.maumau-stock:disabled {
+  opacity: 1;
+}
+
+.maumau-discard-last {
+  border-width: 4px;
+}
+
+.maumau-card-rank,
+.maumau-card-suit {
+  display: block;
+}
+
+.maumau-card-suit {
+  font-size: 2rem;
+}
+
+.maumau-wish {
+  margin-left: 0.5rem;
+  padding: 0.3rem 0.5rem;
+  border: 3px double var(--border);
+  border-radius: var(--radius);
+  background: var(--square-light);
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.maumau-wish-suit {
+  display: block;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.maumau-wish-picker {
+  margin: 0.6rem 0;
+  text-align: center;
+}
+
+.maumau-wish-picker p {
+  margin: 0 0 0.4rem;
+  font-weight: 700;
+}
+
+.maumau-wish-btn {
+  width: 4rem;
+  height: 4rem;
+  margin: 0 0.3rem 0.3rem;
+  font-size: 2.4rem;
+  line-height: 1;
+  padding: 0;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--square-light);
+  color: var(--text);
+}
+
+.maumau-hand {
+  margin-top: 0.6rem;
+  text-align: center;
+}
+
+.maumau-card {
+  display: inline-block;
+  vertical-align: top;
+  width: 3.4rem;
+  height: 4.8rem;
+  margin: 0 0.25rem 0.8rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: 5px;
+  background: #fff;
+  color: var(--text);
+  box-sizing: border-box;
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.1;
+  padding: 0.3rem 0 0;
+  cursor: pointer;
+}
+
+.maumau-card .maumau-card-suit {
+  font-size: 1.6rem;
+}
+
+/* Cards that can't be played now sit lower with a dashed border. */
+.maumau-card-unplayable {
+  position: relative;
+  top: 0.5rem;
+  border-style: dashed;
+}
+
+.maumau-card-drawn {
+  outline: 4px double var(--border);
+  outline-offset: 2px;
+}
+
+.maumau-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0.75em;
+  height: 1em;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  box-sizing: border-box;
+  background: #fff;
+  text-align: center;
+  font-size: 1em;
+  line-height: 0.9;
+  color: var(--text);
+}
+
+/* Children's version: bigger cards - number as digit and die pips in
+   the top row, the animal large below. Shapes only, no grey. */
+.maumau-card.maumau-kid,
+.maumau-pile.maumau-kid {
+  width: 4.4rem;
+  height: 6.2rem;
+  padding: 0.25rem 0.25rem 0;
+}
+
+.maumau-pile.maumau-kid {
+  width: 4.8rem;
+  height: 6.6rem;
+}
+
+.maumau-kid-top {
+  display: block;
+  height: 1.6rem;
+  text-align: start;
+}
+
+.maumau-kid-num {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 1.3rem;
+  line-height: 1.5rem;
+  padding: 0 0.15rem;
+}
+
+.maumau-kid-pips {
+  float: right;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+[dir="rtl"] .maumau-kid-pips {
+  float: left;
+}
+
+.maumau-kid-animal {
+  display: block;
+  width: 3.4rem;
+  height: 3.4rem;
+  margin: 0.3rem auto 0;
+}
+
+.maumau-pile.maumau-kid .maumau-kid-animal {
+  width: 3.6rem;
+  height: 3.6rem;
+}
+
+/* Children's version: nothing fits - the stock gets a heavy frame. */
+.maumau-stock.maumau-stock-draw {
+  outline: 5px double var(--border);
+  outline-offset: 3px;
+}
+
+.maumau-discard-by {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-decoration: underline;
+}

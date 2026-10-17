@@ -1,0 +1,41 @@
+// text/fr/ludo.js
+// Rules and history texts of ludo (fr). Loaded by ludo-rules.html and ludo-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.fr, {
+    ludo_rules_title: "Règles du Ludo",
+    ludo_rules_intro: "Un aide-mémoire rapide pour la version de PaperGames de ce classique jeu de course en croix. Vous jouez vous-même une couleur ; les 2 ou 3 autres couleurs sont soit des adversaires informatiques, soit, en mode local, d'autres joueurs sur le même appareil.",
+    ludo_rules_basics_title: "L'idée de base",
+    ludo_term_tokens: "Les pions et le plateau",
+    ludo_rules_tokens: "Chacune des 2 à 4 couleurs a 4 pions, qui partent de sa maison. Les pions parcourent un circuit commun de 52 cases, puis leur propre couloir privé de 5 cases jusqu'à la case d'arrivée centrale.",
+    ludo_term_die: "Le dé",
+    ludo_rules_die: "Un seul dé à six faces est lancé à chaque tour. Si aucun pion ne peut légalement utiliser le chiffre obtenu, le tour passe sans déplacement.",
+    ludo_term_leaving_home: "Sortir de la maison",
+    ludo_rules_leaving_home: "Un pion ne peut sortir de sa maison et entrer sur le plateau que sur un 6, en se plaçant sur la case de départ de sa couleur.",
+    ludo_term_extra_turn: "Faire un 6",
+    ludo_rules_extra_turn: "Un 6 donne droit à un lancer supplémentaire, juste après avoir joué (ou même sans coup possible). Trois 6 d'affilée font en revanche perdre le tour sans jouer, pour éviter qu'une série de chance ne dure indéfiniment.",
+    ludo_term_shapes: "Couleurs et formes",
+    ludo_rules_shapes: "Sur un écran à encre électronique, les quatre couleurs se ressemblent presque, c'est pourquoi chaque couleur a aussi sa propre forme : rouge un cercle plein, vert un cercle vide, jaune un triangle plein et bleu un carré vide. La forme est utilisée partout - pour les pions, les pions en attente dans chaque base et le décompte des arrivées au-dessus du plateau. Un coin noir dans une case, ou un double cadre épais autour d'un pion en attente, signale un pion qui peut bouger avec le lancer en cours.",
+    ludo_rules_capture_title: "Captures et cases sûres",
+    ludo_term_capture: "Capturer",
+    ludo_rules_capture: "Arriver exactement sur une case occupée par un seul pion adverse le renvoie directement dans sa maison, pour repartir de zéro. Un pion déjà dans son propre couloir d'arrivée ne peut jamais être capturé.",
+    ludo_term_safe: "Cases sûres",
+    ludo_rules_safe: "La case de départ de chaque couleur, ainsi qu'une case marquée d'une étoile plus loin sur le circuit, sont sûres : aucune capture n'y est possible, quel que soit le pion qui s'y trouve.",
+    ludo_term_block: "Barrages",
+    ludo_rules_block: "Deux de vos propres pions sur la même case forment un barrage. Les adversaires ne peuvent ni s'y arrêter ni le franchir - une bonne façon de tenir un tronçon du circuit. Votre propre barrage ne gêne pas vos propres pions.",
+    ludo_rules_end_title: "Fin de partie",
+    ludo_term_win: "Victoire",
+    ludo_rules_win: "La première couleur à amener ses 4 pions dans la case d'arrivée centrale gagne immédiatement, ce qui met fin à la partie. Un pion doit arriver exactement sur l'arrivée - un lancer qui la dépasserait ne peut pas être joué avec ce pion, même si un autre pion peut encore bouger.",
+    ludo_term_resignation: "Abandon",
+    ludo_rules_resignation: "Le joueur dont c'est le tour peut abandonner à tout moment, ce qui met fin à la partie immédiatement en faveur d'une des couleurs restantes.",
+    ludo_history_title: "L'histoire du Ludo",
+    ludo_history_origins_title: "Le Pachisi, le jeu royal de l'Inde",
+    ludo_history_origins_p1: "L'ancêtre direct du Ludo est le Pachisi, un jeu de course en croix joué en Inde depuis de nombreux siècles. Le Pachisi est traditionnellement associé aux cours royales indiennes - l'empereur moghol Akbar (1542-1605) aurait, selon une légende célèbre, joué à une version grandeur nature sur une immense cour de marbre rouge et blanc de son palais de Fatehpur Sikri, en utilisant des courtisanes et des femmes réduites en esclavage vêtues de costumes colorés comme pions vivants. Comme souvent avec ce genre de légendes hautes en couleur, les détails précis sont difficiles à vérifier aujourd'hui, mais la cour elle-même existe toujours.",
+    ludo_history_origins_p2: "Le Pachisi traditionnel ne se jouait d'ailleurs pas du tout avec un dé : les joueurs lançaient six ou sept coquillages cauris et comptaient combien atterrissaient ouverture vers le haut, une méthode de hasard ancienne utilisée dans une grande partie de l'Asie du Sud.",
+    ludo_history_modern_title: "Un brevet victorien donne naissance au Ludo",
+    ludo_history_modern_p1: "À la fin du XIXe siècle, des colons britanniques en Inde rapportèrent chez eux des jeux inspirés du Pachisi et les adaptèrent à la production de masse. La version simplifiée jouée aujourd'hui - un simple dé à six faces à la place des cauris, et un règlement fixe plutôt que des variantes régionales - fut brevetée en Angleterre en 1896 sous le nom « Ludo », du latin ludo, « je joue ».",
+    ludo_history_modern_p2: "Le Ludo devint rapidement un incontournable des placards à jeux de l'époque victorienne et édouardienne, bon marché à imprimer et facile à apprendre, et il est resté depuis un pilier des soirées jeux en famille en Europe et en Asie.",
+    ludo_history_legacy_title: "Un seul jeu, plusieurs noms",
+    ludo_history_legacy_p1: "Le succès du Ludo a donné naissance à des proches cousins dans le monde entier. Aux États-Unis, le Parcheesi - déposé dès 1874, en fait juste avant le Ludo lui-même - proposait sa propre version américanisée du Pachisi, avec ses propres règles de plateau et de capture. Le jeu de plateau anglais Sorry!, publié pour la première fois dans les années 1930, a repris l'idée centrale du Ludo (course et capture) en y ajoutant des déplacements tirés de cartes et des cases spéciales supplémentaires.",
+    ludo_history_legacy_p2: "Aujourd'hui, le Ludo se joue de la cour de récréation jusqu'aux applications mobiles ; son plateau en croix et ses quatre coins colorés restent immédiatement reconnaissables plus d'un siècle après ce premier brevet anglais - et de nombreux siècles après que les courtisans d'Akbar aient pour la première fois tenu lieu de pions."
+});
+I18n.markTextLoaded("fr");

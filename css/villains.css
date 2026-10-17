@@ -1,0 +1,225 @@
+/* villains: rules used only by the villains pages (loaded after base.css). */
+/* Fairy-Tale Villains (villains-app.js): goal card, the four places of the
+   domain (4 in a row, 2 x 2 on a narrow screen), action buttons, a box for
+   choices, the hand, the other villains and the log. The place with the
+   figure has a thick frame, a place a hero blocks a dashed one, places
+   that can be tapped now a dashed outline. Margins instead of `gap`. */
+.vl-goal {
+  text-align: start;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-2);
+}
+
+.vl-goal-head {
+  font-size: 1rem;
+}
+
+.vl-goal-text {
+  margin: var(--space-1) 0;
+  font-size: 0.9rem;
+}
+
+.vl-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+.vl-steps li {
+  margin: 0 0 0.1rem;
+}
+
+.vl-steps .vl-done {
+  font-weight: 700;
+}
+
+.vl-heading {
+  text-align: start;
+  font-size: 1rem;
+  margin: var(--space-3) 0 var(--space-1);
+}
+
+.vl-domain {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.vl-place {
+  display: flex;
+  flex-direction: column;
+  width: 23.5%;
+  margin: 0 2% var(--space-2) 0;
+  padding: var(--space-1);
+  background: #fff;
+  color: #141413;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: start;
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.vl-place:nth-child(4n) {
+  margin-right: 0;
+}
+
+.vl-place.vl-here {
+  border-width: 4px;
+}
+
+.vl-place.vl-blocked {
+  border-style: dashed;
+  border-width: 2px;
+}
+
+.vl-place.vl-here.vl-blocked {
+  border-width: 4px;
+}
+
+.vl-place.vl-target {
+  outline: 3px dashed #141413;
+  outline-offset: 2px;
+}
+
+.vl-place-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  overflow-wrap: break-word;
+}
+
+.vl-place-acts {
+  margin: 0.15rem 0;
+}
+
+.vl-figure,
+.vl-hero,
+.vl-hedge {
+  font-weight: 700;
+}
+
+.vl-hero {
+  border-top: 1px dashed var(--border);
+  padding-top: 0.1rem;
+}
+
+.vl-actions {
+  margin: var(--space-2) 0;
+  text-align: center;
+}
+
+.vl-actions button,
+.vl-chooser button {
+  margin: 0 var(--space-1) var(--space-1) 0;
+}
+
+.vl-chooser {
+  margin: var(--space-2) 0;
+  padding: var(--space-2);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  text-align: start;
+}
+
+.vl-chooser-hint {
+  font-weight: 700;
+}
+
+.vl-hand,
+.vl-others {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vl-hand li,
+.vl-others li {
+  margin: 0 0 var(--space-2);
+}
+
+.vl-card,
+.vl-other {
+  display: block;
+  width: 100%;
+  text-align: start;
+  padding: var(--space-2);
+  background: #fff;
+  color: #141413;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  line-height: 1.3;
+}
+
+.vl-card.vl-unplayable {
+  border-style: dashed;
+  border-width: 1px;
+}
+
+.vl-card.vl-selected,
+.vl-other.vl-selected,
+.vl-card.vl-selected .vl-cost {
+  background: #141413;
+  color: #fff;
+}
+
+.vl-card.vl-marked {
+  outline: 3px dashed #141413;
+  outline-offset: 2px;
+}
+
+.vl-card-top {
+  display: flex;
+  align-items: center;
+}
+
+.vl-card-name {
+  flex: 1 1 auto;
+  font-weight: 700;
+}
+
+.vl-cost {
+  display: inline-block;
+  min-width: 1.6rem;
+  padding: 0.05rem 0.3rem;
+  border: 2px solid #141413;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: 700;
+}
+
+.vl-card-kind {
+  display: block;
+  font-size: 0.8rem;
+}
+
+.vl-card-text {
+  display: block;
+  font-size: 0.85rem;
+  margin-top: var(--space-1);
+}
+
+.vl-other-full {
+  margin-top: var(--space-1);
+}
+
+.vl-domain-small .vl-place {
+  font-size: 0.72rem;
+}
+
+.vl-log {
+  text-align: start;
+  margin: 0;
+  padding-inline-start: 1.4rem;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 520px) {
+  /* Narrow screens: the domain as 2 x 2. */
+  .vl-place {
+      width: 49%;
+    }
+    .vl-place:nth-child(2n) {
+      margin-right: 0;
+    }
+  }

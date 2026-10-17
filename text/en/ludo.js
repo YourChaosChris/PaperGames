@@ -1,0 +1,41 @@
+// text/en/ludo.js
+// Rules and history texts of ludo (en). Loaded by ludo-rules.html and ludo-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.en, {
+    ludo_rules_title: "Ludo Rules",
+    ludo_rules_intro: "A quick reference for PaperGames's version of the classic cross-shaped race game. You play one color yourself; the other 2-3 colors are either built-in computer opponents or, in local hotseat, other players taking turns on the same device.",
+    ludo_rules_basics_title: "The basic idea",
+    ludo_term_tokens: "Tokens and the board",
+    ludo_rules_tokens: "Each of the 2-4 colors has 4 tokens, starting in that color's home base. Tokens race around a shared 52-square outer track, then up their own color's private 5-square home stretch, into the center finish hub.",
+    ludo_term_die: "The die",
+    ludo_rules_die: "A single six-sided die is rolled each turn. If no token can legally use the number rolled, the turn passes without moving.",
+    ludo_term_leaving_home: "Leaving home",
+    ludo_rules_leaving_home: "A token can only leave its home base and enter the board on a roll of 6, moving onto that color's own start square.",
+    ludo_term_extra_turn: "Rolling a 6",
+    ludo_rules_extra_turn: "Rolling a 6 grants an extra roll straight after moving (or after failing to find a legal move). Rolling three 6s in a row forfeits the turn instead, without moving, to stop a lucky streak going on forever.",
+    ludo_term_shapes: "Colors and shapes",
+    ludo_rules_shapes: "On an e-ink screen the four colors look almost the same, so each color also has its own shape: red a filled circle, green an open circle, yellow a filled triangle and blue an open square. The shape is used everywhere - for the tokens, the waiting tokens in each home base and the finish count above the board. A black wedge in a square's corner, or a thick double frame around a waiting token, marks a token that may move with the current roll.",
+    ludo_rules_capture_title: "Capturing and safe squares",
+    ludo_term_capture: "Capturing",
+    ludo_rules_capture: "Landing exactly on a square occupied by a single opponent token sends that token straight back to its owner's home base, to start over. A token already safely inside its own home stretch can never be captured.",
+    ludo_term_safe: "Safe squares",
+    ludo_rules_safe: "Each color's own start square, plus one star-marked square further along the track, are safe: no capture can happen there, whoever is standing on it.",
+    ludo_term_block: "Blocks",
+    ludo_rules_block: "Two of your own tokens sharing a square form a block. Opponents can neither land on it nor move past it, so it's a strong way to hold a stretch of track. Your own tokens are not held up by your own block.",
+    ludo_rules_end_title: "How a game ends",
+    ludo_term_win: "Winning",
+    ludo_rules_win: "The first color to bring all 4 of its tokens into the center finish hub wins immediately, ending the game. A token must land exactly on the finish - a roll that would overshoot it can't be used for that token, though another token might still have a legal move.",
+    ludo_term_resignation: "Resignation",
+    ludo_rules_resignation: "Whoever's turn it is can resign at any time, ending the game immediately in favor of one of the remaining colors.",
+    ludo_history_title: "The History of Ludo",
+    ludo_history_origins_title: "Pachisi, the Royal Game of India",
+    ludo_history_origins_p1: "Ludo's direct ancestor is Pachisi, a cross-and-circle race game played in India for many centuries. Pachisi is traditionally associated with Indian royal courts - the Mughal emperor Akbar (1542-1605) is famously said to have played a life-size version on a huge red-and-white marble courtyard at his palace in Fatehpur Sikri, using courtiers and enslaved women dressed in colored costumes as the living playing pieces. As with many such colorful legends, the precise details are difficult to verify at this distance, but the courtyard itself still stands.",
+    ludo_history_origins_p2: "Traditional Pachisi wasn't played with a die at all: instead, players threw six or seven cowry shells and counted how many landed opening-side up, an early form of randomizer used across much of South Asia.",
+    ludo_history_modern_title: "A Victorian Patent Turns It Into Ludo",
+    ludo_history_modern_p1: "In the late 19th century, British colonists in India brought Pachisi-style games home and adapted them for mass production. The simplified version played today - a single six-sided die in place of cowry shells, and a fixed set of rules rather than regional variations - was patented in England in 1896 under the name \"Ludo\", from the Latin ludo, \"I play\".",
+    ludo_history_modern_p2: "Ludo quickly became a staple of the Victorian and Edwardian games cupboard, cheap to print and easy to learn, and it has stayed a mainstay of family game nights across Europe and Asia ever since.",
+    ludo_history_legacy_title: "One Game, Many Names",
+    ludo_history_legacy_p1: "Ludo's success spawned close relatives worldwide. In the United States, Parcheesi - trademarked in 1874, actually just before Ludo itself - offered its own Americanized take on Pachisi, with its own board conventions and capture rules. The English board game Sorry!, first published in the 1930s, borrowed Ludo's core race-and-capture idea and layered card-drawn moves and extra special squares on top.",
+    ludo_history_legacy_p2: "Today Ludo is played from the school playground to the smartphone app store, its cross-shaped board and four home-colored corners still instantly recognizable more than a century after that first English patent - and many centuries after Akbar's courtiers first stood in for its pieces."
+});
+I18n.markTextLoaded("en");

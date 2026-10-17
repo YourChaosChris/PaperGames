@@ -35,7 +35,11 @@ const BASE = "https://yourchaoschris.github.io/PaperGames/";
 function loadStrings() {
   const ctx = {};
   vm.createContext(ctx);
-  let src = fs.readFileSync(path.join(ROOT, "i18n.js"), "utf8") + "\n;" + fs.readFileSync(path.join(ROOT, "i18n-text.js"), "utf8");
+  let src = fs.readFileSync(path.join(ROOT, "i18n.js"), "utf8");
+  // English rules/history texts: one file per game (text/en/<slug>.js).
+  fs.readdirSync(path.join(ROOT, "text", "en")).filter((f) => f.endsWith(".js")).sort().forEach((f) => {
+    src += "\n;" + fs.readFileSync(path.join(ROOT, "text", "en", f), "utf8");
+  });
   vm.runInContext(src + ";this.STRINGS = STRINGS; this.LANGUAGE_ORDER = LANGUAGE_ORDER;", ctx);
   return ctx;
 }

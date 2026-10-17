@@ -1,0 +1,112 @@
+/* differences: rules used only by the differences pages (loaded after base.css). */
+/* Spot the Difference: two pictures, one above the other or side by side
+   on wide screens; invisible buttons over each picture's 5 x 3 areas; a
+   found difference gets a thick circle, the hint a dashed frame. */
+.df-pictures {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.df-pic {
+  position: relative;
+  flex: 1 1 400px;
+  max-width: 540px;
+  margin: 0 0.3rem 0.6rem;
+}
+
+.df-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.df-areas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.df-area {
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.df-area:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: -3px;
+}
+
+.df-found {
+  fill: none;
+  stroke: #141413;
+  stroke-width: 4.5;
+}
+
+.df-hint {
+  fill: none;
+  stroke: #141413;
+  stroke-width: 3;
+  stroke-dasharray: 7 5;
+}
+
+/* Spot the Difference, mode "Picture search": the drawings to find as
+   small pictures (found ones are crossed out), the room's name, then one
+   large picture of the room. */
+.df-search-pic {
+  max-width: 600px;
+  margin: 0 auto 0.5rem;
+}
+
+.df-room-name {
+  text-align: center;
+  margin: 0 0 0.3rem;
+}
+
+.df-room-name:empty {
+  display: none;
+}
+
+.df-targets-label {
+  text-align: center;
+  font-weight: 700;
+  margin: 0.2rem 0;
+}
+
+.df-targets {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 0 0.5rem;
+  padding: 0;
+}
+
+.df-target {
+  width: 3.4rem;
+  height: 3.4rem;
+  margin: 0 0.25rem 0.4rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.df-target svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.df-target-found {
+  border-style: dashed;
+}

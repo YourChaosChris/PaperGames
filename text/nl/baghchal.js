@@ -1,0 +1,37 @@
+// text/nl/baghchal.js
+// Rules and history texts of baghchal (nl). Loaded by baghchal-rules.html and baghchal-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.nl, {
+    baghchal_rules_title: "Bagh-Chal-regels",
+    baghchal_rules_intro: "Een snel overzicht van hoe PaperGames Bagh-Chal (\"Tijgers en Geiten\") speelt - handig als je wat roestig bent, of het net leert.",
+    baghchal_rules_basics_title: "Het basisidee",
+    baghchal_term_board: "Het bord",
+    baghchal_rules_board: "25 punten in een 5x5-raster, verbonden door horizontale, verticale en enkele diagonale lijnen - hetzelfde alquerque-achtige patroon als het bord van Fanorona, maar dan vierkant: de vier hoeken en het midden zijn volledige knooppunten met 8 richtingen, van waaruit de diagonalen uitwaaieren en het bord zijn kenmerkende patroon van driehoeken geven. Vier tijgers (bagh) beginnen op de vier hoeken. De overige 21 punten beginnen leeg - de 20 geiten (bakhera) staan nog niet op het bord.",
+    baghchal_term_placement: "Plaatsingsfase",
+    baghchal_rules_placement: "De geiten zetten elke beurt als eerste: de geitenspeler plaatst één nieuwe geit op een willekeurig leeg punt. Daarna zet de tijgerspeler (zie hieronder) - tijgers kunnen al vanaf de eerste zet bewegen en slaan, ook terwijl er nog geiten worden geplaatst. Dit gaat door tot alle 20 geiten op het bord staan.",
+    baghchal_term_movement: "Zetfase",
+    baghchal_rules_movement: "Zodra elke geit geplaatst is, doen beide kanten alleen nog maar zetten: elke beurt schuif je een van je eigen stukken één stap langs een verbindingslijn naar een aangrenzend leeg punt.",
+    baghchal_term_capture: "Slaan",
+    baghchal_rules_capture: "Een tijger naast een geit mag, in een rechte lijn langs een echte verbinding van het bord, over haar heen springen naar het lege punt er direct achter, waarbij de geit wordt verwijderd. Slaan is hier optioneel, niet verplicht: een tijger die kan slaan mag in plaats daarvan ook een rustige zet spelen. (Sommige traditionele regelsets maken slaan verplicht wanneer het mogelijk is - dit is hier een bewuste, gedocumenteerde keuze voor de in het moderne spel gebruikelijkere regelset, geen omissie.) Geiten slaan nooit.",
+    baghchal_rules_example_title: "Uitgewerkt voorbeeld: een slag van een tijger",
+    baghchal_rules_example_intro: "In het mini-diagram hieronder is ▲ een tijger, ○ een geit, en de gestippelde cirkel het lege punt waar de tijger naartoe gaat springen.",
+    baghchal_rules_example_caption: "De tijger op A staat naast een geit op B, en het punt C er direct achter (in dezelfde richting, langs een echte lijn van het bord) is leeg. De tijger mag van A naar C springen en verwijdert daarbij de geit op B. Als C bezet was, of als A-B-C geen rechte lijn vormden langs een echte verbinding van het bord, zou de sprong niet toegestaan zijn.",
+    baghchal_rules_end_title: "Hoe een partij eindigt",
+    baghchal_term_tiger_win: "De tijgers winnen",
+    baghchal_rules_tiger_win: "Door in totaal 5 geiten te slaan - de standaarddrempel (sommige regionale varianten gebruiken een ander aantal, maar 5 is het meest gebruikelijk).",
+    baghchal_term_goat_win: "De geiten winnen",
+    baghchal_rules_goat_win: "Door alle 4 de tijgers zo vast te zetten dat de tijger die aan zet is helemaal geen legale zet meer heeft - geen rustige zet en geen slag, voor geen enkele van zijn tijgers.",
+    baghchal_term_resignation: "Opgeven",
+    baghchal_rules_resignation: "Een speler kan op elk moment opgeven, waarmee de partij meteen eindigt in het voordeel van de tegenstander.",
+    baghchal_history_title: "De geschiedenis van Bagh-Chal",
+    baghchal_history_origins_title: "Een oeroud spel van onzekere oorsprong",
+    baghchal_history_origins_p1: "Niemand kan Bagh-Chal precies dateren. Zoals de meeste traditionele bordspelen, gekrast in aarde of steen in plaats van vastgelegd in bewaard gebleven manuscripten, liet het geen enkel oprichtingsdocument na - alleen een lange, ononderbroken speeltraditie door heel Nepal, bijzonder sterk in de heuvelachtige streken rond de Kathmandu-vallei. De naam zelf is eenvoudig en beschrijvend: \"bagh\" betekent tijger, \"chal\" betekent zet - Tijgerzet, of zoals het in het Engels meestal wordt weergegeven, Tigers and Goats (Tijgers en Geiten).",
+    baghchal_history_origins_p2: "Het bord zelf - een 5x5-raster van orthogonale en diagonale lijnen - volgt dezelfde alquerque-achtige geometrie die ook onder veel andere traditionele spellen in Azië, Europa en Afrika ligt (PaperGames' eigen Fanorona, uit Madagaskar, is een goed gedocumenteerd voorbeeld van diezelfde bredere familie). Wat Bagh-Chal onderscheidt, is niet het bord maar de asymmetrie die erop is gebouwd: een klein aantal krachtige jagers tegen een grote, aanvankelijk nog niet op het bord aanwezige kudde die probeert hen in aantal te overtreffen en te verlammen.",
+    baghchal_history_family_title: "Onderdeel van een wereldwijde familie van jachtspellen",
+    baghchal_history_family_p1: "Bagh-Chal behoort tot een brede, onafhankelijk van elkaar ontstane familie van \"jachtspellen\" die overal ter wereld voorkomt: ongelijke aantallen stukken met volledig verschillende doelen, in plaats van elkaars spiegelbeeld vormende legers. Vos en Ganzen, al eeuwenlang in Europa gespeeld, is er qua geest een naaste verwant van; net als de verschillende Tafl-spellen (Vikingschaak) uit Noord-Europa, waarbij de kleine lijfwacht van een koning probeert te ontsnappen aan een veel grotere belegerende troepenmacht. Van geen van deze spellen is bekend dat het van een ander afstamt - ze worden het best begrepen als hetzelfde eenvoudige, aansprekende idee (een paar sterke stukken tegen veel zwakke, ontsnappen/overleven tegenover slaan/vastzetten) dat onafhankelijk van elkaar in verschillende culturen opnieuw werd uitgevonden.",
+    baghchal_history_family_p2: "In Nepal wordt Bagh-Chal al lang geassocieerd met Dashain, het grootste en belangrijkste hindoefeest van het land: een meerdere weken durend herfstfeest waarbij uitgebreide families samenkomen, en bordspellen - Bagh-Chal in het bijzonder - zijn een traditionele manier om de lange bezoekuren door te brengen, naast kaartspellen en andere spellen. Die feestassociatie heeft ertoe bijgedragen dat het spel generatie na generatie levend is gebleven, ook toen er andere vormen van vermaak bijkwamen.",
+    baghchal_history_modern_title: "Nepals bordspel vandaag - en onderwerp van computeronderzoek",
+    baghchal_history_modern_p1: "Bagh-Chal wordt nog altijd algemeen erkend als Nepals nationale of meest iconische traditionele bordspel, net zo vaak losjes gespeeld met met de hand getekende borden en flessendoppen of kiezelstenen als stukken, als met houtgesneden sets, en het is de Nepalese diaspora naar het buitenland gevolgd. Het heeft ook de overstap gemaakt naar mobiele apps en online spel, waardoor het bekend is geworden bij spelers die nog nooit een fysiek bord in handen hebben gehad.",
+    baghchal_history_modern_p2: "Het spel heeft ook echte academische belangstelling getrokken: het is bestudeerd in de combinatorische speltheorie en zwak opgelost door computeranalyse, met resultaten voor sommige regelvarianten die laten zien dat de geitenkant bij perfect spel minstens een remise kan afdwingen - een zeldzame, hard bevochten zekerheid over een spel waarvan de diepere strategie lange tijd onderwerp van discussie is geweest onder menselijke spelers."
+});
+I18n.markTextLoaded("nl");

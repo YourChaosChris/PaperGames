@@ -1,0 +1,40 @@
+// text/de/konane.js
+// Rules and history texts of konane (de). Loaded by konane-rules.html and konane-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.de, {
+    konane_rules_title: "Konane-Regeln",
+    konane_rules_intro: "Eine kurze Übersicht, wie PaperGames Konane (hawaiianisches Damespiel) umsetzt - nützlich, wenn du aus der Übung bist oder gerade lernst.",
+    konane_rules_basics_title: "Die Grundidee",
+    konane_term_board: "Das Brett",
+    konane_rules_board: "Ein 8x8-Brett, auf dem zu Beginn wirklich jedes der 64 Felder mit einem Stein besetzt ist - anders als beim westlichen Damespiel, das nur die dunklen Felder nutzt. Die Steine wechseln sich strikt im Schachbrettmuster ab: Schwarz auf der einen Feldfarbe, Weiß auf der anderen.",
+    konane_term_moves: "Ziehen",
+    konane_rules_moves: "Steine gleiten nie einfach. Der einzige Zug in Konane ist ein Sprung: Ein eigener Stein springt über einen orthogonal benachbarten gegnerischen Stein (auf, ab, links oder rechts - nie diagonal) auf das leere Feld direkt dahinter und schlägt dabei den übersprungenen Stein.",
+    konane_rules_opening_title: "Das Eröffnungs-Entfernungsritual",
+    konane_term_opening: "Spielbeginn",
+    konane_rules_opening: "Da anfangs jedes Feld besetzt ist, kann noch niemand springen - ein Sprung braucht ein leeres Landefeld. Deshalb beginnt das Spiel mit einem kurzen Ritual statt einem ersten Sprung: Schwarz entfernt einen eigenen Stein entweder aus einer Ecke oder von einem der vier mittleren Felder. Danach entfernt Weiß einen eigenen Stein, der direkt (orthogonal) neben dem von Schwarz geleerten Feld liegt. Diese beiden leeren Felder machen den allerersten Sprung erst möglich.",
+    konane_term_opening_next: "Nach dem Ritual",
+    konane_rules_opening_next: "Sobald beide Entfernungen erledigt sind, macht Schwarz den ersten echten Sprung, und das Spiel setzt sich mit den üblichen abwechselnden Zügen fort.",
+    konane_rules_capture_title: "Springen und Sprungketten",
+    konane_term_mandatory: "Sprungzwang",
+    konane_rules_mandatory: "Hat irgendeiner deiner Steine irgendwo auf dem Brett einen legalen Sprung, musst du einen davon spielen - welcher Stein springt, darfst du wählen, wenn mehrere können.",
+    konane_term_chain: "Eine Sprungkette fortsetzen",
+    konane_rules_chain: "Nach der Landung darf derselbe Stein von seiner neuen Position aus weiterspringen und dabei frei die Richtung wechseln (jeder einzelne Sprung bleibt eine gerade orthogonale Linie, aber die Kette muss nicht in dieselbe Richtung weitergehen). Anders als beim Damespiel bist du nie gezwungen, die längstmögliche Kette zu spielen: Du kannst nach jedem einzelnen Sprung aufhören und selbst entscheiden, wie weit du in diesem Zug weitermachst.",
+    konane_term_example: "Durchgerechnetes Beispiel",
+    konane_rules_example: "Angenommen, dein Stein steht auf c4, ein gegnerischer Stein auf c5 und c6 ist leer: Der Sprung c4-c6 schlägt den Stein auf c5. Steht dein Stein nun auf c6 und gibt es außerdem einen gegnerischen Stein auf b6 mit leerem d6 dahinter, könntest du im selben Zug mit c6-d6 weiterspringen (eine 90-Grad-Wendung gegenüber deinem ersten Sprung) und auch den Stein auf b6 schlagen - oder du hörst nach dem ersten Sprung einfach auf c6 auf. Beides ist erlaubt; die Wahl triffst du bei jedem Schritt selbst.",
+    konane_rules_end_title: "Wie ein Spiel endet",
+    konane_term_win: "Gewinnen",
+    konane_rules_win: "Hast du an deinem Zug nirgendwo auf dem Brett einen legalen Sprung, verlierst du sofort - in Konane gibt es, sobald das Spiel läuft, keine andere Zugart als Ausweichmöglichkeit.",
+    konane_term_resignation: "Aufgabe",
+    konane_rules_resignation: "Ein Spieler kann jederzeit aufgeben, wodurch das Spiel sofort zugunsten des Gegners endet.",
+    konane_history_title: "Die Geschichte von Konane",
+    konane_history_origins_title: "Lavasteine auf gehauenem Fels",
+    konane_history_origins_p1: "Konane wurde von den alten Hawaiianern mit schwarzen vulkanischen Lavasteinen ('ili'ili pōhaku) als Steinen der einen Seite und weißen Korallen- oder gebleichten Kokosnussschalen-Stücken als Steinen der anderen Seite gespielt, aufgestellt auf einem Raster flacher, direkt in flachen Fels gehauener Vertiefungen. Diese Spielbretter, kōnane papamū genannt, wurden direkt in den Fels selbst gemeißelt statt als separates, tragbares Spielgerät hergestellt.",
+    konane_history_origins_p2: "Viele kōnane papamū sind bis heute an historischen Stätten auf den hawaiianischen Inseln erhalten, mit einer bemerkenswerten Häufung auf Big Island (Hawai'i Island) - manche in Lavaströme nahe königlicher Residenzen und heiau (Tempelstätten) geschlagen, einige groß genug, um auf Bretter deutlich größer als das heute übliche 8x8-Format schließen zu lassen. Die Brettgrößen schwankten in der Praxis erheblich und waren nicht so festgelegt wie bei einem industriell gefertigten Spiel.",
+    konane_history_kinship_title: "Eine unabhängige Erfindung, keine Übernahme",
+    konane_history_kinship_p1: "Konanes Sprung-und-Schlag-Mechanik verleiht dem Spiel eine deutliche Familienähnlichkeit zu Spielen wie Alquerque und Dame, die dieselbe Grundidee teilen, einen Stein durch Überspringen zu entfernen. Konane wurde jedoch von keinem dieser Spiele abgeleitet - es entstand unabhängig in Polynesien, isoliert von den Spielen der Alten Welt, aus denen Alquerque und seine Dame-Nachfolger hervorgingen. Die Ähnlichkeit lässt sich am besten als konvergente Erfindung verstehen: Schlagen durch Überspringen ist eine einfache, wirkungsvolle Idee, auf die mehr als eine Kultur unabhängig voneinander kam - kein Beleg dafür, dass die eine Tradition von der anderen übernommen hätte.",
+    konane_history_kinship_p2: "Was Konane wirklich eigen ist, sind das volle Brett aus abwechselnden Steinen und das Zwei-Stein-Eröffnungsritual, das die Regelseite dieser App erklärt - beides hat in Dame oder Alquerque kein echtes Gegenstück und verleiht Konane seinen ganz eigenen Charakter als Spiel reiner Sprungketten-Taktik ohne jede andere Zugart.",
+    konane_history_modern_title: "Lebendiges hawaiianisches Kulturerbe",
+    konane_history_modern_p1: "Konane ist bis heute ein wichtiger Teil des lebendigen kulturellen Erbes der Ureinwohner Hawaiis, keine bloße historische Kuriosität. Es wird im Rahmen kultureller Bildungsprogramme gelehrt und gespielt, bei Kulturfesten und an historischen Stätten vorgeführt, und die erhaltenen Steinbretter werden aktiv erhalten und mancherorts als historische und kulturelle Stätten eigenen Rechts geschützt.",
+    konane_history_modern_p2: "Eine Partie heute zu spielen - selbst auf einem Bildschirm, mit einem vereinfachten 8x8-Brett statt einem im Freien in Stein gehauenen papamū - knüpft an eine strategische Tradition an, die den schriftlichen Kontakt mit dem Westen um Jahrhunderte vorwegnimmt und die Hawaiianer seither lebendig gehalten und weitergegeben haben."
+});
+I18n.markTextLoaded("de");

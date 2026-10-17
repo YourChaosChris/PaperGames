@@ -79,7 +79,18 @@ Vorgaben für den Bericht:
 
 - Texte in 12 Sprachen (en de fr es it nl pl uk ru ja zh ar):
   - Oberfläche: `i18n.js` und die elf `lang/xx.js`;
-  - Regeln und Geschichte: `i18n-text.js` und die elf `lang/xx-text.js`;
+  - Regeln und Geschichte: je Spiel und Sprache eine Datei
+    `text/<lang>/<slug>.js` (Schlüssel, die nur `<slug>-rules.html` und
+    `<slug>-history.html` benutzen; die Seiten tragen
+    `<html data-i18n-text="<slug>">`);
+  - Styles: `base.css` (gemeinsam) und `css/<slug>.css` (nur Regeln dieses
+    Spiels, nach `base.css` geladen); `node tests/split-check.js` prüft die
+    Aufteilung;
+  - Offline: `APP_SHELL` in `sw.js` hat die englischen Regeltexte
+    (`text/en/*`); die Regeltexte der anderen Sprachen holt der Service
+    Worker nur für die benutzte Sprache nach (`TEXT_LAZY`, Prüfsummen in
+    `FILE_HASHES`, `tools/sw-hashes.js` schreibt sie). Ohne Netz zeigt die
+    Seite die englischen Regeln mit Hinweis (`text_fallback_note`);
   - neue Schlüssel jeweils hinter einem vorhandenen Nachbarschlüssel
     einfügen.
   - `msg_*`-Schlüssel übersetzen englische Laufzeitsätze. Wer den

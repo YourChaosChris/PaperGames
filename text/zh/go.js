@@ -1,0 +1,41 @@
+// text/zh/go.js
+// Rules and history texts of go (zh). Loaded by go-rules.html and go-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.zh, {
+    go_rules_title: "围棋规则",
+    go_rules_intro: "关于 PaperGames 如何演绎围棋的简明参考——无论你是想重新捡起来，还是刚开始学习，都能用得上。",
+    go_rules_basics_title: "基本玩法",
+    go_term_stones: "棋子",
+    go_rules_stones: "黑白双方轮流在空的交叉点上落子，黑先白后。棋子一旦落下便不再移动——棋盘是逐渐被填满的，而不是棋子在盘上滑动。",
+    go_term_liberties: "气",
+    go_rules_liberties: "一颗棋子的“气”是紧邻它的空点（上下左右，不含斜角）。同色相连的棋子共享彼此的气，视为一个整体。",
+    go_term_capture: "提子",
+    go_rules_capture: "一整块没有气的棋子会在对手落子后立即被提走，从棋盘上移除。",
+    go_rules_illegal_title: "禁着规则",
+    go_term_suicide: "自杀着法",
+    go_rules_suicide: "你不能下出会让自己一整块棋变成零气的着法，除非这手棋同时能吃掉足够的对方棋子，使自己重新获得气。",
+    go_term_ko: "打劫",
+    go_rules_ko: "如果提走单个棋子后会立即恢复到对手刚下之前的局面，你不能马上原路提回——必须先在别处下一手。",
+    go_term_superko: "全局同形禁止",
+    go_rules_superko: "更一般地说，任何一手棋都不能使整个棋盘重现本局中已经出现过的局面。这也排除了三劫循环等更长、更罕见的重复情形。",
+    go_rules_end_title: "对局如何结束",
+    go_term_passing: "停一手",
+    go_rules_passing: "任何一方都可以选择停一手，而不落子。当双方连续各停一手后，对局结束并开始计分。",
+    go_term_scoring: "计分",
+    go_rules_scoring: "PaperGames 采用数子法：你的得分为你自己棋盘上的棋子数，加上仅被你的棋子围住的空点数。同时与两色相邻的空点，双方都不计入。这里没有单独移除死子的步骤：双方都停一手时仍留在棋盘上的每颗棋子都计入，所以请在停一手之前把死子提掉。",
+    go_term_komi: "贴目",
+    go_rules_komi: "白棋后下，因此会获得固定的贴目（PaperGames 中为 7.5 目）以弥补这一劣势。因此对局不可能出现平局。",
+    go_term_resignation: "认输",
+    go_rules_resignation: "任何一方都可以随时认输，对局立即结束，对手获胜。",
+    go_history_title: "围棋的历史",
+    go_history_origins_title: "源远流长的中国根源",
+    go_history_origins_p1: "围棋相传发明于四千多年前的中国，不过现存最早可靠的文字记载大约出现在公元前 4 世纪。它曾被视为中国文人士大夫必须精通的“四艺”之一，与书法、绘画和古琴并列。",
+    go_history_origins_p2: "与大多数古老游戏不同，围棋的规则几乎从未改变：在交叉点棋盘上围出比对手更多地盘的目标，与两千多年前一模一样。",
+    go_history_spread_title: "朝鲜、日本，以及一种追求精深的文化",
+    go_history_spread_p1: "围棋大约在公元 7 世纪传入朝鲜，随后传入日本，并在日本获得皇室的扶持而蓬勃发展。日本的江户时代（17 至 19 世纪）建立了官方资助的棋院与世袭的“名人”“本因坊”等大师头衔，将围棋正式确立为一门职业，其中一些头衔至今仍在比赛中授予。",
+    go_history_spread_p2: "正是这一职业传统的影响，使得围棋在世界各地至今仍常常沿用日语词汇——“go”“dan”（段）“sente”（先手）都是经由日本传入英语的，尽管这款游戏本身起源于中国。",
+    go_history_modern_title: "围棋遇上人工智能",
+    go_history_modern_p1: "围棋在 20 世纪逐渐传入西方，但数十年来，计算机始终觉得围棋比国际象棋难下得多——极其庞大的分支因子让蛮力搜索无从下手。",
+    go_history_modern_p2: "这一局面在 2016 年 3 月发生了改变：谷歌 DeepMind 的 AlphaGo 以 4 比 1 击败了十八届世界冠军李世石，这一结果的到来比许多人工智能研究者预期的要早了整整十年。它至今仍是人工智能发展史上的标志性时刻之一。"
+});
+I18n.markTextLoaded("zh");

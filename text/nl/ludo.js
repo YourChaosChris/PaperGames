@@ -1,0 +1,41 @@
+// text/nl/ludo.js
+// Rules and history texts of ludo (nl). Loaded by ludo-rules.html and ludo-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.nl, {
+    ludo_rules_title: "Ludo-regels",
+    ludo_rules_intro: "Een snel overzicht van PaperGames' versie van dit klassieke kruisvormige racespel. Je speelt zelf één kleur; de andere 2-3 kleuren zijn ofwel computertegenstanders, ofwel, lokaal, andere spelers die om de beurt op hetzelfde apparaat spelen.",
+    ludo_rules_basics_title: "Het basisidee",
+    ludo_term_tokens: "Pionnen en het bord",
+    ludo_rules_tokens: "Elk van de 2-4 kleuren heeft 4 pionnen, die starten in het eigen basisvak. Pionnen rennen over een gedeeld rondje van 52 vakjes, en dan door hun eigen 5 vakjes lange finishbaan naar het middenveld.",
+    ludo_term_die: "De dobbelsteen",
+    ludo_rules_die: "Elke beurt wordt met één dobbelsteen gegooid. Kan geen enkele pion het gegooide getal geldig gebruiken, dan vervalt de beurt zonder zet.",
+    ludo_term_leaving_home: "Uit huis vertrekken",
+    ludo_rules_leaving_home: "Een pion mag zijn basisvak alleen verlaten en het bord op met een gegooide 6, waarna hij op het startvak van zijn kleur komt.",
+    ludo_term_extra_turn: "Een 6 gooien",
+    ludo_rules_extra_turn: "Een 6 geeft direct na het zetten (of zelfs zonder geldige zet) nog een worp. Drie zessen op rij laten de beurt juist vervallen zonder te zetten, zodat een geluksreeks niet eindeloos doorgaat.",
+    ludo_term_shapes: "Kleuren en vormen",
+    ludo_rules_shapes: "Op een e-inkscherm lijken de vier kleuren bijna hetzelfde, daarom heeft elke kleur ook een eigen vorm: rood een gevulde cirkel, groen een open cirkel, geel een gevulde driehoek en blauw een open vierkant. De vorm wordt overal gebruikt - voor de pionnen, de wachtende pionnen in elk huis en de telling van de finish boven het bord. Een zwarte wig in de hoek van een vakje, of een dik dubbel kader om een wachtende pion, geeft aan welke pion met de huidige worp mag zetten.",
+    ludo_rules_capture_title: "Slaan en veilige vakjes",
+    ludo_term_capture: "Slaan",
+    ludo_rules_capture: "Land je precies op een vakje met daarop één tegenstanderspion, dan gaat die pion direct terug naar zijn eigen basisvak om opnieuw te beginnen. Een pion die al op zijn eigen finishbaan staat, kan nooit worden geslagen.",
+    ludo_term_safe: "Veilige vakjes",
+    ludo_rules_safe: "Het startvak van elke kleur, plus nog een met een ster gemarkeerd vakje verderop, zijn veilig: daar kan niet geslagen worden, wie er ook op staat.",
+    ludo_term_block: "Blokkades",
+    ludo_rules_block: "Twee eigen pionnen op hetzelfde vakje vormen een blokkade. Tegenstanders mogen er niet op landen en er ook niet voorbij, dus het is een sterke manier om een stuk baan te bezetten. Je eigen pionnen worden niet door je eigen blokkade tegengehouden.",
+    ludo_rules_end_title: "Hoe een spel eindigt",
+    ludo_term_win: "Winnen",
+    ludo_rules_win: "De eerste kleur die alle 4 pionnen in het middenveld brengt, wint meteen en het spel is voorbij. Een pion moet precies op de finish landen - een worp die dat vakje voorbij zou schieten kan voor die pion niet gebruikt worden, ook al heeft een andere pion misschien nog wel een geldige zet.",
+    ludo_term_resignation: "Opgeven",
+    ludo_rules_resignation: "Wie aan de beurt is, kan op elk moment opgeven; het spel eindigt dan meteen in het voordeel van een van de overige kleuren.",
+    ludo_history_title: "De geschiedenis van Ludo",
+    ludo_history_origins_title: "Pachisi, het koninklijke spel van India",
+    ludo_history_origins_p1: "Ludo's directe voorouder is Pachisi, een kruis-en-cirkel-racespel dat al vele eeuwen in India wordt gespeeld. Pachisi wordt traditioneel geassocieerd met de Indiase koninklijke hoven - Mogolkeizer Akbar (1542-1605) zou volgens een bekende legende een levensgrote versie hebben gespeeld op een enorme rood-witte marmeren binnenplaats van zijn paleis in Fatehpur Sikri, met hovelingen en tot slaaf gemaakte vrouwen in gekleurde gewaden als levende speelstukken. Zoals bij veel van dit soort kleurrijke legendes zijn de precieze details nu moeilijk te verifiëren, maar de binnenplaats zelf bestaat nog altijd.",
+    ludo_history_origins_p2: "Traditioneel Pachisi werd trouwens helemaal niet met een dobbelsteen gespeeld: spelers gooiden zes of zeven kauri-schelpjes en telden hoeveel er met de opening naar boven landden, een vroege vorm van toeval die in grote delen van Zuid-Azië werd gebruikt.",
+    ludo_history_modern_title: "Een Victoriaans patent maakt er Ludo van",
+    ludo_history_modern_p1: "Eind 19e eeuw namen Britse kolonisten in India spellen in Pachisi-stijl mee naar huis en pasten ze aan voor massaproductie. De vereenvoudigde versie die vandaag wordt gespeeld - één zeszijdige dobbelsteen in plaats van kauri-schelpjes, en vaste regels in plaats van regionale varianten - werd in 1896 in Engeland gepatenteerd onder de naam \"Ludo\", naar het Latijnse ludo, \"ik speel\".",
+    ludo_history_modern_p2: "Ludo werd al snel een vaste waarde in de Victoriaanse en Edwardiaanse spellenkast, goedkoop om te drukken en makkelijk te leren, en is sindsdien een vast onderdeel gebleven van familiespelavonden in heel Europa en Azië.",
+    ludo_history_legacy_title: "Eén spel, veel namen",
+    ludo_history_legacy_p1: "Het succes van Ludo bracht wereldwijd nauwe verwanten voort. In de Verenigde Staten bood Parcheesi - al in 1874 als merk vastgelegd, zelfs nog vóór Ludo zelf - een eigen veramerikaniseerde versie van Pachisi, met eigen bord- en slagregels. Het Engelse bordspel Sorry!, voor het eerst uitgegeven in de jaren dertig, nam Ludo's kernidee van rennen en slaan over en voegde daar met kaarten getrokken zetten en extra speciale vakjes aan toe.",
+    ludo_history_legacy_p2: "Vandaag wordt Ludo gespeeld van het schoolplein tot de app store; het kruisvormige bord met vier gekleurde hoeken is nog altijd meteen herkenbaar, meer dan een eeuw na dat eerste Engelse patent - en vele eeuwen nadat Akbars hovelingen voor het eerst als speelstukken dienden."
+});
+I18n.markTextLoaded("nl");

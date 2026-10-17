@@ -1,0 +1,191 @@
+/* xiangqi: rules used only by the xiangqi pages (loaded after base.css). */
+/* Xiangqi board: a point-and-line grid, same technique as the Go board
+   (a JS-enforced square-per-cell container, since `aspect-ratio` alone
+   is silently ignored on some E-Ink browsers). */
+.xq-board {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+  padding: 6%;
+}
+
+.xq-grid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.xq-line {
+  position: absolute;
+  background: var(--border);
+}
+
+.xq-line-h {
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform: translateY(-1px);
+}
+
+.xq-line-v {
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-1px);
+}
+
+/* The river is a band without vertical lines (it covers them), the
+   palaces are told apart by their diagonal cross - neither needs a tint. */
+.xq-river {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: var(--square-light);
+}
+
+.xq-palace {
+  position: absolute;
+  background: transparent;
+}
+
+/* The palace's diagonal cross - same stroke color and thickness as
+   the board's own grid lines (.xq-line), so it stays clearly visible
+   in grayscale on E-Ink rather than reading as a faint decoration. */
+.xq-palace-diag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.xq-palace-diag line {
+  stroke: var(--border);
+  stroke-width: 2;
+}
+
+.xq-point {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  width: 11%;
+  height: 11%;
+}
+
+.xq-point-movable::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  width: 40%;
+  height: 40%;
+  border-radius: 50%;
+  background: var(--square-dark);
+}
+
+.xq-point-last-move::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  border: 2px dashed var(--muted);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.xq-point-selected .xq-piece.xq-piece-filled {
+  outline: 3px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.xq-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 88%;
+  height: 88%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.xq-piece-filled {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Red vs. Black is a color distinction, which doesn't exist at all on
+   a monochrome E-Ink display - both used to render as similarly dark
+   ink on the same light disc. Black pieces get their own solid dark
+   disc instead (the same filled-vs-outlined trick already used for
+   every other two-color game here), so which piece is whose reads
+   from the disc itself, not from a hue. Classic-character text color
+   and the symbol-style SVGs' own stroke color (in xiangqi-app.js) are
+   flipped to match: dark ink on Red's light disc, light ink on
+   Black's now-dark one. */
+.xq-piece-black.xq-piece-filled {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.xq-piece-red {
+  color: #111;
+}
+
+.xq-piece-black {
+  color: #fdfdfd;
+}
+
+.xq-piece svg {
+  width: 68%;
+  height: 68%;
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.xq-icon-disc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3em;
+  height: 1.3em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+  font-size: 0.7em;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.xq-icon-disc-red {
+  color: #111;
+}
+
+/* Same dark-filled-disc treatment as the board's own pieces - shown
+   side by side with the red icon in the color-choice picker, so it
+   needs the same monochrome-safe distinction, not just a text-color
+   change. */
+.xq-icon-disc-black {
+  background: #111;
+  border-color: #000;
+  color: #fdfdfd;
+}

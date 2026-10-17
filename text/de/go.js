@@ -1,0 +1,41 @@
+// text/de/go.js
+// Rules and history texts of go (de). Loaded by go-rules.html and go-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.de, {
+    go_rules_title: "Go-Regeln",
+    go_rules_intro: "Eine kurze Übersicht, wie PaperGames Go spielt – nützlich zum Auffrischen oder Lernen.",
+    go_rules_basics_title: "Die Grundidee",
+    go_term_stones: "Steine",
+    go_rules_stones: "Schwarz und Weiß setzen abwechselnd Steine auf freie Schnittpunkte, Schwarz beginnt. Steine bewegen sich nie – das Brett füllt sich, statt dass Figuren verschoben werden.",
+    go_term_liberties: "Freiheiten",
+    go_rules_liberties: "Die Freiheiten eines Steins sind die direkt angrenzenden freien Punkte (oben/unten/links/rechts, nicht diagonal). Verbundene Steine derselben Farbe teilen sich ihre Freiheiten als eine Gruppe.",
+    go_term_capture: "Schlagen",
+    go_rules_capture: "Eine Gruppe ohne verbleibende Freiheiten wird sofort nach dem gegnerischen Zug geschlagen und vom Brett entfernt.",
+    go_rules_illegal_title: "Verbotene Züge",
+    go_term_suicide: "Selbstmordzug",
+    go_rules_suicide: "Du darfst keinen Stein setzen, der die eigene Gruppe ohne Freiheiten zurücklässt – außer der Zug schlägt zuerst genug gegnerische Steine, um sie zu befreien.",
+    go_term_ko: "Ko",
+    go_rules_ko: "Du darfst einen einzelnen Stein nicht sofort so zurückschlagen, dass die Stellung von vor dem letzten gegnerischen Zug wiederhergestellt würde – du musst zuerst woanders ziehen.",
+    go_term_superko: "Superko",
+    go_rules_superko: "Allgemeiner gilt: Kein Zug darf eine Gesamtstellung des Bretts wiederherstellen, die in der Partie schon einmal vorkam. Das schließt auch seltenere, längere Wiederholungszyklen wie ein dreifaches Ko aus.",
+    go_rules_end_title: "Wie eine Partie endet",
+    go_term_passing: "Passen",
+    go_rules_passing: "Jeder Spieler kann passen, statt einen Stein zu setzen. Passen beide Spieler nacheinander, endet die Partie und wird gewertet.",
+    go_term_scoring: "Wertung",
+    go_rules_scoring: "PaperGames nutzt die Gebietszählung (chinesische Zählweise): Der Punktestand ist die Anzahl eigener Steine auf dem Brett plus freie Punkte, die nur von eigenen Steinen umgeben sind. Punkte, die an beide Farben grenzen, zählen für keine Seite. Tote Steine werden nicht extra entfernt: Jeder Stein, der beim zweiten Passen noch auf dem Brett steht, zählt mit. Schlag tote Steine also, bevor du passt.",
+    go_term_komi: "Komi",
+    go_rules_komi: "Weiß zieht als Zweiter, deshalb bekommt Weiß einen festen Ausgleichsbonus (Komi, in PaperGames 7,5 Punkte). Unentschieden sind dadurch unmöglich.",
+    go_term_resignation: "Aufgabe",
+    go_rules_resignation: "Ein Spieler kann jederzeit aufgeben, wodurch die Partie sofort zugunsten des Gegners endet.",
+    go_history_title: "Die Geschichte von Go",
+    go_history_origins_title: "Uralte chinesische Wurzeln",
+    go_history_origins_p1: "Go (chinesisch Weiqi) soll der Überlieferung nach vor mehr als 4000 Jahren in China erfunden worden sein, auch wenn die frühesten verlässlichen schriftlichen Erwähnungen erst auf etwa das 4. Jahrhundert v. Chr. datieren. Es galt als eine der vier Künste, die ein gebildeter chinesischer Gelehrter beherrschen sollte – neben Kalligrafie, Malerei und dem Spiel der Guqin-Zither.",
+    go_history_origins_p2: "Anders als die meisten uralten Spiele hat sich Go kaum verändert: Das Ziel, auf einem Gitter aus Schnittpunkten mehr Gebiet als der Gegner zu umschließen, ist exakt dasselbe wie vor über zweitausend Jahren.",
+    go_history_spread_title: "Korea, Japan und eine Kultur der Meisterschaft",
+    go_history_spread_p1: "Go verbreitete sich um das 7. Jahrhundert n. Chr. nach Korea und dann nach Japan, wo es unter kaiserlicher Förderung aufblühte. In der japanischen Edo-Zeit (17.–19. Jahrhundert) wurde professionelles Go mit staatlich geförderten Schulen und erblichen Meistertiteln wie Meijin und Honinbo institutionalisiert – einige davon werden bei Turnieren noch heute vergeben.",
+    go_history_spread_p2: "Dieser professionellen Tradition ist es zu verdanken, dass die Go-Fachsprache weltweit oft japanische Begriffe verwendet – „Go“, „Dan“ und „Sente“ gelangten alle über Japan in andere Sprachen, obwohl das Spiel selbst chinesischen Ursprungs ist.",
+    go_history_modern_title: "Go trifft auf Künstliche Intelligenz",
+    go_history_modern_p1: "Go erreichte den Westen im Laufe des 20. Jahrhunderts nur allmählich, doch Computern fiel es jahrzehntelang deutlich schwerer als Schach, gut zu spielen – der riesige Verzweigungsgrad besiegte reine Brute-Force-Suche.",
+    go_history_modern_p2: "Das änderte sich im März 2016, als Google DeepMinds AlphaGo den 18-fachen Weltmeister Lee Sedol mit 4:1 besiegte – ein Ergebnis, das viele KI-Forscher erst ein Jahrzehnt später erwartet hatten. Es bleibt einer der Meilensteine in der Geschichte der Künstlichen Intelligenz."
+});
+I18n.markTextLoaded("de");

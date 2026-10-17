@@ -1,0 +1,40 @@
+// text/pl/konane.js
+// Rules and history texts of konane (pl). Loaded by konane-rules.html and konane-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.pl, {
+    konane_rules_title: "Zasady Konane",
+    konane_rules_intro: "Szybkie przypomnienie, jak PaperGames realizuje zasady Konane (hawajskich warcabów) - przydatne, jeśli dawno nie grałeś albo dopiero się uczysz.",
+    konane_rules_basics_title: "Podstawowa idea",
+    konane_term_board: "Plansza",
+    konane_rules_board: "Plansza 8x8, na której na początku dosłownie każde z 64 pól jest zajęte przez pionek - inaczej niż w warcabach zachodnich, które używają tylko ciemnych pól. Pionki są ułożone ściśle na przemian jak szachownica: Czarne na jednym kolorze pola, Białe na drugim.",
+    konane_term_moves: "Ruch",
+    konane_rules_moves: "Pionki nigdy po prostu nie przesuwają się. Jedynym ruchem w Konane jest skok: jeden z twoich pionków przeskakuje przez sąsiedni (w linii prostej) pionek przeciwnika (w górę, w dół, w lewo lub w prawo - nigdy po skosie) na puste pole tuż za nim, zdejmując przeskoczony pionek.",
+    konane_rules_opening_title: "Rytuał otwarcia przez zdjęcie pionków",
+    konane_term_opening: "Rozpoczęcie gry",
+    konane_rules_opening: "Ponieważ na początku każde pole jest zajęte, nikt nie może jeszcze skakać - skok wymaga pustego pola docelowego. Dlatego gra zaczyna się krótkim rytuałem zamiast pierwszego skoku: Czarne zdejmują jeden ze swoich pionków z narożnika albo z jednego z czterech środkowych pól. Następnie Białe zdejmują jeden ze swoich pionków, który leży bezpośrednio (w linii prostej) obok pola właśnie opróżnionego przez Czarne. Te dwa puste pola umożliwiają dopiero pierwszy skok.",
+    konane_term_opening_next: "Po rytuale",
+    konane_rules_opening_next: "Gdy oba zdjęcia zostaną wykonane, Czarne wykonują pierwszy prawdziwy skok, a gra toczy się dalej normalnymi, na przemian wykonywanymi turami.",
+    konane_rules_capture_title: "Skoki i łańcuchy skoków",
+    konane_term_mandatory: "Obowiązek skoku",
+    konane_rules_mandatory: "Jeśli którykolwiek z twoich pionków ma legalny skok gdziekolwiek na planszy, musisz go wykonać - możesz wybrać, który pionek skacze, jeśli więcej niż jeden może to zrobić.",
+    konane_term_chain: "Kontynuowanie łańcucha skoków",
+    konane_rules_chain: "Po wylądowaniu ten sam pionek może dalej skakać ze swojej nowej pozycji i dowolnie zmieniać kierunek między skokami (każdy pojedynczy skok pozostaje prostą linią prostopadłą, ale łańcuch nie musi kontynuować w tym samym kierunku). W przeciwieństwie do warcabów nigdy nie musisz wykonywać najdłuższego dostępnego łańcucha: możesz zatrzymać się po dowolnym skoku, decydując przy każdym kroku, jak daleko chcesz kontynuować w danej turze.",
+    konane_term_example: "Przykład krok po kroku",
+    konane_rules_example: "Załóżmy, że twój pionek stoi na c4, pionek przeciwnika na c5, a pole c6 jest puste: skok c4-c6 zdejmuje pionek na c5. Jeśli twój pionek, teraz na c6, ma też pionek przeciwnika na b6 z pustym d6 po drugiej stronie, możesz w tej samej turze kontynuować skokiem c6-d6 (zwrot o 90 stopni względem kierunku pierwszego skoku), zdejmując również pionek na b6 - albo po prostu zatrzymać się na c6 po pierwszym skoku. Obie opcje są legalne; wybór należy do ciebie na każdym etapie.",
+    konane_rules_end_title: "Jak kończy się partia",
+    konane_term_win: "Zwycięstwo",
+    konane_rules_win: "Jeśli w swojej turze nie masz żadnego legalnego skoku dostępnego nigdzie na planszy, przegrywasz natychmiast - w Konane, gdy gra już trwa, nie ma żadnego innego rodzaju ruchu, na który można by się przestawić.",
+    konane_term_resignation: "Poddanie się",
+    konane_rules_resignation: "Gracz może poddać się w dowolnym momencie, co natychmiast kończy grę na korzyść przeciwnika.",
+    konane_history_title: "Historia Konane",
+    konane_history_origins_title: "Kamienie lawowe na rzeźbionej skale",
+    konane_history_origins_p1: "W Konane grali starożytni Hawajczycy, używając czarnych kamieni z lawy wulkanicznej ('ili'ili pōhaku) jako pionków jednej strony oraz białych kawałków koralowca lub wybielonej łupiny kokosa jako pionków drugiej strony, rozstawionych na siatce płytkich zagłębień wykutych wprost w płaskiej skale. Te plansze do gry, zwane kōnane papamū, wykuwano bezpośrednio w samej skale, zamiast wykonywać je jako osobny, przenośny sprzęt.",
+    konane_history_origins_p2: "Wiele kōnane papamū przetrwało do dziś w miejscach historycznych na Hawajach, ze szczególnym nagromadzeniem na Wielkiej Wyspie (Hawai'i Island) - niektóre wykute w potokach lawy w pobliżu królewskich rezydencji i heiau (miejsc świątynnych), a kilka na tyle dużych, że sugerują plansze znacznie większe niż powszechnie grywany dziś rozmiar 8x8. W praktyce rozmiary plansz bardzo się różniły i nie były ustalone tak jak w grze produkowanej fabrycznie.",
+    konane_history_kinship_title: "Niezależny wynalazek, a nie zapożyczenie",
+    konane_history_kinship_p1: "Mechanizm bicia przez przeskok w Konane daje mu wyraźne rodzinne podobieństwo do gier takich jak Alquerque i warcaby, które dzielą tę samą podstawową ideę: przeskoczenie przez pionek, by go zdjąć. Konane nie wywodzi się jednak z żadnej z nich - rozwinęło się niezależnie w Polinezji, w izolacji od gier Starego Świata, z których wywodzą się Alquerque i jego warcabowi potomkowie. To podobieństwo najlepiej rozumieć jako wynalazek zbieżny: bicie przez przeskok to prosty, skuteczny pomysł, do którego niezależnie doszła więcej niż jedna kultura, a nie dowód, że jedna tradycja zapożyczyła od drugiej.",
+    konane_history_kinship_p2: "To, co jest wyłącznie cechą samego Konane, to w pełni zapełniona plansza z na przemian ułożonymi pionkami oraz rytuał otwarcia polegający na zdjęciu dwóch pionków, omówiony na stronie zasad tej aplikacji - żadne z nich nie ma prawdziwego odpowiednika w warcabach ani w Alquerque, i oba nadają Konane jego szczególny charakter gry opartej wyłącznie na taktyce łańcuchów skoków, bez żadnego innego dostępnego rodzaju ruchu.",
+    konane_history_modern_title: "Żywe hawajskie dziedzictwo",
+    konane_history_modern_p1: "Konane pozostaje dziś ważną częścią żywego dziedzictwa kulturowego rdzennych Hawajczyków, a nie tylko historyczną ciekawostką. Jest nauczane i rozgrywane w ramach programów edukacji kulturalnej, prezentowane na festiwalach kulturalnych i w miejscach dziedzictwa, a zachowane kamienne plansze są aktywnie chronione, a w niektórych miejscach objęte ochroną jako samodzielne stanowiska historyczne i kulturowe.",
+    konane_history_modern_p2: "Rozegranie dziś partii - nawet na ekranie, na uproszczonej planszy 8x8 zamiast wykutego na zewnątrz papamū - łączy z tradycją strategiczną poprzedzającą pisemny kontakt z Zachodem o stulecia, którą Hawajczycy utrzymywali przy życiu i przekazywali od tamtej pory."
+});
+I18n.markTextLoaded("pl");

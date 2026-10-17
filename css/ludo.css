@@ -1,0 +1,321 @@
+/* ludo: rules used only by the ludo pages (loaded after base.css). */
+#board-container.big-board-enabled #ludo-board { width: 450px; max-width: none; margin: 0; }
+
+/* Ludo board: a single 15x15 CSS grid (CSS grid `gap` is fine on E-Ink
+   browsers - only flexbox `gap` isn't - though this board doesn't use
+   even that, every cell is simply placed at its own grid-area). Built
+   from a JS-measured square container (no `aspect-ratio`), holding the
+   52 shared track cells, each color's 5-cell home stretch, four 6x6
+   home bases and a purely decorative center hub - see ludo-app.js for
+   the coordinate tables. */
+#ludo-board {
+  display: grid;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  border: var(--border-width) solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.ludo-filler {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+
+.ludo-cell {
+  position: relative;
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  padding: 0;
+  overflow: hidden;
+}
+
+.ludo-cell-safe::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  width: 40%;
+  height: 40%;
+  border: 2px solid var(--muted);
+  transform: rotate(45deg);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+/* Whose home column and home base it is: a small copy of the colour's
+   shape in the corner (the same shapes as the tokens), instead of the
+   pale tints these used to have, which no e-ink screen can tell apart. */
+.ludo-cell-home-column::before,
+.ludo-home-base::before {
+  content: "";
+  position: absolute;
+  top: 6%;
+  left: 6%;
+  width: 24%;
+  height: 24%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+}
+
+.ludo-home-base::before {
+  width: 12%;
+  height: 12%;
+}
+
+/* A token that may move: a solid black wedge in the cell's bottom-right
+   corner. A light grey fill was invisible on e-ink (213 vs 253 grey), and
+   the wedge can't be mistaken for a token (shape), the last move's origin
+   (dashed square) or its target (thin frame). Drawn as a background
+   gradient so it leaves ::before (safe-square star) and ::after (origin
+   mark) free; it stays clear of the centred token. */
+.ludo-cell-movable,
+.ludo-cell-home-column.ludo-cell-movable {
+  background: var(--square-light) linear-gradient(135deg, transparent 72%, var(--text) 72%) no-repeat;
+}
+
+/* Width/height 100% here is load-bearing, not decorative: .ludo-token
+   below sizes itself as a PERCENTAGE of this element, and a percentage
+   only resolves against a definite parent size. Without an explicit
+   size here this box has none (absolute positioning alone doesn't give
+   it one), so every on-board token was silently collapsing to its
+   `min-width`/`min-height` floor - tiny and the same size regardless of
+   the board's actual size - instead of scaling with the cell like every
+   other board element. */
+.ludo-cell-last-from::after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  border: 2px dashed var(--text);
+  border-radius: 10%;
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ludo-cell-last-to,
+.ludo-home-slot-last {
+  outline: 2px solid var(--text);
+  outline-offset: -2px;
+}
+
+.ludo-cell-tokens {
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.ludo-cell-tokens > * {
+  margin: 0 1px 0 0;
+}
+
+.ludo-cell-tokens > *:last-child {
+  margin-right: 0;
+}
+
+.ludo-token {
+  display: inline-block;
+  width: 62%;
+  height: 62%;
+  min-width: 8px;
+  min-height: 8px;
+  box-sizing: border-box;
+  color: var(--text);
+}
+
+/* The color's shape (ludoShapeSvg in ludo-app.js) fills its box. */
+.ludo-shape {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ludo-token-stacked {
+  margin-left: -4px;
+}
+
+/* Four colors are indistinguishable on a grayscale E-Ink panel, so each
+   color has its own shape wherever it appears - token, home slot, finish
+   count, hub wedge, color picker: red a filled circle, green an open
+   circle, yellow a filled triangle, blue an open square. Home columns
+   and bases carry the same shape in a corner. */
+.ludo-home-base {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10%;
+  padding: 18%;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+}
+
+/* An empty slot is a faint dashed circle; an occupied one shows the
+   color's shape at full strength, so the tokens still waiting can be
+   counted for every color. */
+.ludo-home-slot {
+  border-radius: 50%;
+  border: 1px dashed var(--muted);
+  background: transparent;
+  box-sizing: border-box;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.ludo-home-slot-filled {
+  border: 0;
+}
+
+/* A waiting token that may enter: a thick double frame around it (the
+   last move's mark is a thin single line). */
+.ludo-home-slot-movable {
+  outline: 5px double var(--text);
+  outline-offset: 2px;
+}
+
+/* The center hub's decorative cells: a closed 3x3 block the track runs
+   around (see ludo-app.js). None of them take clicks. */
+.ludo-hub-corner {
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.ludo-hub-wedge {
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  pointer-events: none;
+  padding: 25%;
+  color: var(--text);
+  background: var(--square-light);
+}
+
+.ludo-hub-center {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--square-light);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+/* Turn indicator: one chip per active color, the current player's chip
+   highlighted - see the board header in ludo.html. */
+.ludo-turn-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.3rem 0;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.ludo-turn-indicator > * {
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+.ludo-turn-indicator > *:last-child {
+  margin-right: 0;
+}
+
+.ludo-turn-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* One chip per color: its shape and the number of its tokens in the
+   finish. The player to move gets a thick frame. */
+.ludo-turn-chip {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--square-light);
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.ludo-turn-chip .ludo-shape {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.ludo-turn-count {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.3rem;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.ludo-turn-chip-active {
+  border-width: 3px;
+  padding: 0.05rem 0.3rem;
+}
+
+.ludo-dice-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.ludo-dice-area > * {
+  margin: 0 0.6rem 0.6rem 0;
+}
+
+.ludo-dice-area > *:last-child {
+  margin-right: 0;
+}
+
+.ludo-dice-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ludo-die {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  font-weight: 700;
+  background: #fff;
+}
+
+/* Small shape icons for the color picker, board placeholder and game
+   card - the same shapes as the tokens. */
+.ludo-icon-shape {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  color: var(--text);
+}

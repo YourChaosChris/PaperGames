@@ -1,0 +1,228 @@
+/* domino: rules used only by the domino pages (loaded after base.css). */
+/* ---- Domino ---- */
+.domino-board {
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.5rem;
+  background: var(--bg-alt);
+}
+
+.domino-ends {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.domino-ends-label {
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0 0.4rem;
+}
+
+.domino-end {
+  width: 4.2rem;
+  height: 4.2rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--square-light);
+  color: var(--text);
+  padding: 0;
+}
+
+.domino-end:disabled {
+  opacity: 1;
+  color: var(--text);
+}
+
+/* A selected tile fits here: thick double border. */
+.domino-end-fits {
+  border: 6px double var(--border);
+}
+
+/* The end where the last tile went: underlined number. */
+.domino-end-last {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+}
+
+.domino-line {
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.3rem 0;
+  min-height: 3.2rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.domino-tile {
+  display: inline-block;
+  vertical-align: middle;
+  color: var(--text);
+}
+
+.domino-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.domino-face {
+  fill: var(--square-light);
+  stroke: currentColor;
+  stroke-width: 3;
+}
+
+.domino-divider {
+  stroke: currentColor;
+  stroke-width: 2.5;
+}
+
+.domino-pip {
+  fill: currentColor;
+}
+
+.domino-line-tile {
+  width: 3.4rem;
+  height: 1.7rem;
+  margin-right: 2px;
+}
+
+.domino-line-tile.domino-tile-double {
+  width: 1.7rem;
+  height: 3.4rem;
+}
+
+/* The tile placed last: a solid bar underneath it. */
+.domino-tile-last {
+  border-bottom: 4px solid var(--border);
+  padding-bottom: 2px;
+}
+
+.domino-hand {
+  margin-top: 0.6rem;
+  text-align: center;
+}
+
+.domino-hand-tile {
+  width: 5rem;
+  height: 2.5rem;
+  margin: 0 0.3rem 0.6rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Tiles that don't fit sit lower and get a dashed outline - never shown
+   by grey alone. */
+.domino-tile-unplayable {
+  position: relative;
+  top: 0.4rem;
+  outline: 2px dashed var(--border);
+  outline-offset: 2px;
+}
+
+.domino-tile-selected {
+  position: relative;
+  top: -0.4rem;
+  outline: 4px solid var(--border);
+  outline-offset: 3px;
+}
+
+/* Triangles variant: the board of triangles, scaled to the width (a very
+   wide board scrolls inside its frame), and the places a picked tile fits
+   on as dashed triangles with a numbered button in the middle. */
+.domino-grid {
+  overflow-x: auto;
+  overflow-y: hidden;
+  color: var(--text);
+}
+
+.domino-grid-inner {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.domino-grid-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.domino-tri-num {
+  font-size: 28px;
+  font-weight: 700;
+  text-anchor: middle;
+  fill: currentColor;
+}
+
+.domino-tri-num-board {
+  font-size: 13px;
+}
+
+.domino-tri-last {
+  stroke-width: 6;
+}
+
+.domino-tri-place {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-dasharray: 6 4;
+}
+
+.domino-grid-places {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.domino-place-btn {
+  position: absolute;
+  transform: translate(-50%, -40%);
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0 4px;
+  border: 3px solid var(--border);
+  border-radius: 50%;
+  background: var(--square-light);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.domino-hand-tile.domino-hand-tri {
+  width: 3.6rem;
+  height: 3.2rem;
+}
+
+/* Icons follow the other games' 1em icon size (game cards, placeholder). */
+.domino-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 2em;
+  height: 1em;
+  color: var(--text);
+}
+
+.domino-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* On a domino tile a ring in a half reads like a pip: put it at the bottom,
+   centred on the dividing line, where no pip ever sits. */
+.domino-tile.card-new::after {
+  right: auto;
+  left: 50%;
+  margin-left: -0.475rem;
+}

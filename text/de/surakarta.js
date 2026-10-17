@@ -1,0 +1,32 @@
+// text/de/surakarta.js
+// Rules and history texts of surakarta (de). Loaded by surakarta-rules.html and surakarta-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.de, {
+    surakarta_rules_title: "Surakarta-Regeln",
+    surakarta_rules_intro: "Eine kurze Übersicht, wie PaperGames Surakarta spielt - nützlich, wenn du aus der Übung bist oder es gerade lernst. Das Schlagen über die Schleifenbahnen ist der Teil, der fast alle anfangs verwirrt, deshalb gibt es unten ein ausführliches Beispiel.",
+    surakarta_rules_basics_title: "Die Grundidee",
+    surakarta_term_board: "Das Brett",
+    surakarta_rules_board: "Ein einfaches 6x6-Punktgitter. Jeder Spieler beginnt mit 12 Steinen, die die beiden Reihen nächst der eigenen Seite füllen (Schwarz auf den oberen beiden Reihen, Weiß auf den unteren beiden), die mittleren beiden Reihen bleiben leer. Schwarz beginnt.",
+    surakarta_term_movement: "Ziehen",
+    surakarta_rules_movement: "Du ziehst einen Stein pro Zug einen einzelnen Schritt auf einen benachbarten freien Punkt - geradeaus oder diagonal, in jede der 8 Richtungen. Ein solcher Schritt ist immer ein stiller Zug: Er schlägt nie etwas, selbst wenn er direkt neben einem gegnerischen Stein landet.",
+    surakarta_term_loop: "Die Schleifenbahnen",
+    surakarta_rules_loop: "Vier Linien auf dem Brett - die 2. und 5. Reihe sowie die 2. und 5. Spalte - enden nicht einfach am Rand: Jedes Ende dieser vier Linien biegt nach außen ab und verbindet sich mit dem nächstgelegenen Ende der benachbarten besonderen Linie an derselben Ecke, sodass um jede der 4 Ecken des Bretts eine Schleife entsteht. Ein Stein, der sich entlang einer dieser vier Linien bewegt, kann über eine Schleife den Rand verlassen und auf der verbundenen Linie weiterziehen - weiterhin geradeaus, so weit wie die Bahn und weitere Schleifen es erlauben.",
+    surakarta_term_capture: "Schlagen",
+    surakarta_rules_capture: "Schlagen ist vom Ziehen völlig getrennt und funktioniert nur über die Schleifenbahnen. Statt eines einzelnen Schritts kann ein Stein vollständig in eine seiner 8 Richtungen gleiten - dabei überspringt er jeden anderen Stein, eigenen wie gegnerischen, wirkungslos -, solange die Linie und ihre Schleifenverbindungen ihn tragen. Sobald er mindestens eine Schleife durchlaufen hat UND der nächste Stein, auf den er trifft, ein gegnerischer ist, wird dieser geschlagen, und der ziehende Stein landet auf seinem Feld - der Zug endet dort. Läuft die Linie ohne Schleife vom Brett, oder dreht sie sich einmal komplett im Kreis, ohne je auf einen passenden gegnerischen Stein zu treffen, gibt es auf diesem Weg kein Schlagen. Schlagen ist hier freiwillig: Auch wenn ein Schlagzug möglich ist, darfst du stattdessen einen stillen Zug spielen.",
+    surakarta_rules_example_title: "Beispiel: ein Schleifenschlag",
+    surakarta_rules_example_intro: "○ ist Weiß (der Stein, der in diesem Beispiel zieht), ● ist Schwarz. Weiß' Stein auf A steht auf einer der vier schleifentragenden Linien. Nichts blockiert den Weg bis zum Rand, also spielt Weiß statt eines stillen Zugs einen vollständigen Schlagzug.",
+    surakarta_rules_example_caption: "Weiß' Stein auf A gleitet die Reihe entlang nach links. Er läuft über den Rand hinaus, folgt der Schleifenbahn um die Ecke und tritt wieder ein, die verbundene Spalte hinab. Der erste Stein, auf den er nach dieser Schleife trifft, ist Schwarz' Stein auf B - B wird also geschlagen, und Weiß' Stein landet auf dessen nun leerem Feld (gestrichelter Kreis). Wäre A stattdessen nur einen Schritt von einem gegnerischen Stein entfernt gewesen, ohne dass eine Schleife im Spiel war, würde dieser benachbarte Gegner NICHT geschlagen - nur ein Zug, der tatsächlich eine Schleife nutzt, kann schlagen.",
+    surakarta_rules_end_title: "Wie ein Spiel endet",
+    surakarta_term_win: "Gewinnen",
+    surakarta_rules_win: "Du gewinnst, indem du alle gegnerischen Steine schlägst, oder wenn dein Gegner am Zug keinen einzigen legalen Zug mehr hat.",
+    surakarta_term_resignation: "Aufgabe",
+    surakarta_rules_resignation: "Ein Spieler kann jederzeit aufgeben, wodurch das Spiel sofort zugunsten des Gegners endet.",
+    surakarta_history_title: "Die Geschichte von Surakarta",
+    surakarta_history_origins_title: "Benannt nach einer Stadt auf Java",
+    surakarta_history_origins_p1: "Surakarta - auch weithin unter seinem alltäglicheren Namen Solo bekannt - ist eine Stadt in Zentraljava, Indonesien, und das Spiel, das ihren Namen trägt, soll traditionell dort entstanden sein. Wie bei vielen traditionellen Brettspielen, die vor allem durch das Spielen selbst und nicht durch schriftliche Aufzeichnungen weitergegeben wurden, sind das genaue Alter und die frühe Geschichte nicht genau dokumentiert; klar ist, dass es in der Region schon sehr lange gespielt wird und bis heute eng mit der Stadt verbunden ist.",
+    surakarta_history_unique_title: "Ein beliebtes Beispiel für eine „nicht offensichtliche” Schlagregel",
+    surakarta_history_unique_p1: "Surakarta ist selbst unter traditionellen Spielen ungewöhnlich, weil es Ziehen und Schlagen in zwei völlig getrennte Mechaniken aufteilt: Ein gewöhnlicher stiller Zug ist nur ein einzelner Schritt zu einem Nachbarpunkt, während jedes Schlagen vollständig von den charakteristischen Eckschleifen des Bretts abhängt - ein Stein ohne verfügbare schleifentaugliche Linie kann in diesem Zug schlicht nicht schlagen, egal wie sehr er umzingelt ist. Genau diese scharfe Trennung, und die Tatsache, dass ein Stein völlig sicher direkt neben einem gegnerischen liegen kann, macht das Spiel aus, sobald man es verstanden hat - und macht es zu einem oft zitierten Beispiel in Spieldesign-Diskussionen über Schlagmechaniken, die auf den ersten Blick nicht offensichtlich sind.",
+    surakarta_history_modern_title: "Bis heute gespielt",
+    surakarta_history_modern_p1: "Surakarta ist bis heute lebendiger Teil der traditionellen indonesischen Spielkultur und hat sich auch weit darüber hinaus verbreitet: Es ist ein wiederkehrendes Thema in Kreisen von Abstract-Games-Enthusiasten und in der Computerspielforschung, gerade weil seine Schlagregel so eigenständig ist, und es taucht in allgemeinen Brettspielsammlungen und Programmierübungen als kompaktes, in sich geschlossenes Beispiel für eine Mechanik auf, die kaum etwas anderem im traditionellen Brettspielkanon gleicht."
+});
+I18n.markTextLoaded("de");

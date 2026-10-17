@@ -1,0 +1,61 @@
+/* romme: rules used only by the romme pages (loaded after base.css). */
+/* Rommé: melds on the table carry the name of whoever laid them out; the
+   hand wraps into two rows so every card stays whole and readable; a
+   joker shows a star and a double frame. */
+.romme-table {
+  text-align: center;
+}
+
+/* One area per player on the table: the name above, the melds below,
+   wrapping inside the card so four players never need sideways scrolling. */
+.romme-owner-area {
+  margin: 0 0 0.4rem;
+  padding-top: 0.3rem;
+  border-top: 1px solid var(--border);
+}
+
+.romme-owner-area:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.romme-owner-name {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+/* House rule: a card that may be taken from a meld - a button with the
+   corner triangle used for "can move" elsewhere. */
+.pc-card.romme-takeable {
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 9px, transparent 9px) #fff;
+  border-width: 2px;
+  cursor: pointer;
+}
+
+.romme-hand {
+  max-width: 34rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.romme-player-status {
+  display: block;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+[dir="rtl"] .romme-player-status {
+  margin: 0;
+}
+
+/* Rommé: switch the hand order (suit / rank) - a full-size touch target. */
+.romme-sort-row {
+  text-align: center;
+  margin: 0 0 0.4rem;
+}
+
+.romme-sort-button {
+  min-height: 44px;
+}

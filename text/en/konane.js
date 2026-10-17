@@ -1,0 +1,40 @@
+// text/en/konane.js
+// Rules and history texts of konane (en). Loaded by konane-rules.html and konane-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.en, {
+    konane_rules_title: "Konane Rules",
+    konane_rules_intro: "A quick reference for how PaperGames plays Konane (Hawaiian checkers) - useful if you're rusty, or learning.",
+    konane_rules_basics_title: "The basic idea",
+    konane_term_board: "The board",
+    konane_rules_board: "An 8x8 board, and every single one of its 64 squares starts filled with a stone - unlike Western checkers, which only uses the dark squares. Stones alternate strictly in a checkerboard pattern: Black on one color of square, White on the other.",
+    konane_term_moves: "Movement",
+    konane_rules_moves: "Stones never simply slide. The only move in Konane is a jump: hop one of your stones over an orthogonally adjacent enemy stone (up, down, left or right - never diagonally) into the empty square immediately beyond it, removing the jumped stone.",
+    konane_rules_opening_title: "The opening removal ritual",
+    konane_term_opening: "Starting the game",
+    konane_rules_opening: "Since every square starts occupied, nobody can jump yet - a jump needs an empty landing square. So the game opens with a short ritual instead of a first jump: Black removes one of their own stones from either a corner or one of the four center-most squares. Then White removes one of their own stones that sits directly (orthogonally) next to the square Black just emptied. Those two empty squares are what make the very first jump possible.",
+    konane_term_opening_next: "After the ritual",
+    konane_rules_opening_next: "Once both removals are done, Black makes the first real jump, and play continues with normal alternating turns from there.",
+    konane_rules_capture_title: "Jumping and jump chains",
+    konane_term_mandatory: "Mandatory jump",
+    konane_rules_mandatory: "If any of your stones has a legal jump anywhere on the board, you must play one - you may choose which stone jumps if more than one can.",
+    konane_term_chain: "Continuing a jump chain",
+    konane_rules_chain: "After landing, that same stone may keep jumping again from its new position, and may change direction freely between jumps (each individual jump is still a straight orthogonal line, but a chain doesn't have to keep going the same way). Unlike checkers, you are never forced to take the longest chain available: you may stop after any single jump, choosing how far to continue each turn.",
+    konane_term_example: "Worked example",
+    konane_rules_example: "Say your stone sits at c4 with an enemy stone at c5 and an empty square at c6: jumping c4-c6 captures the stone on c5. If your stone, now on c6, also has an enemy stone at b6 with d6 empty on the far side, you could continue that same turn by jumping c6-d6 (a 90-degree turn from your first jump's direction) to capture the stone on b6 too - or you could simply stop at c6 after the first jump instead. Both are legal; the choice is yours each step.",
+    konane_rules_end_title: "How a game ends",
+    konane_term_win: "Winning",
+    konane_rules_win: "If you have no legal jump available anywhere on your turn, you lose immediately - there's no other kind of move to fall back on in Konane once the game is underway.",
+    konane_term_resignation: "Resignation",
+    konane_rules_resignation: "A player can resign at any time, ending the game immediately in the opponent's favor.",
+    konane_history_title: "The History of Konane",
+    konane_history_origins_title: "Lava Stones on Carved Rock",
+    konane_history_origins_p1: "Konane was played by ancient Hawaiians using black volcanic lava stones ('ili'ili pōhaku) as one side's pieces and white coral or bleached coconut-shell pieces as the other, set out on a grid of shallow pits pecked directly into flat stone. These game boards, called kōnane papamū, were carved straight into the rock itself rather than made as separate portable equipment.",
+    konane_history_origins_p2: "Many kōnane papamū survive today at historic sites across the Hawaiian Islands, with a notable concentration on the Big Island (Hawai'i Island) - some cut into lava flows near royal residences and heiau (temple sites), a few large enough to suggest boards considerably bigger than the 8x8 size commonly played today. Board sizes varied a good deal in practice, and were not fixed the way a manufactured game's board would be.",
+    konane_history_kinship_title: "An Independent Invention, Not a Borrowed One",
+    konane_history_kinship_p1: "Konane's jump-to-capture mechanic gives it a clear family resemblance to games like Alquerque and checkers/draughts, which share the same basic idea of hopping over a piece to remove it. But Konane was not derived from any of them - it developed independently in Polynesia, isolated from the Old World games that produced Alquerque and its checkers descendants. The resemblance is best understood as convergent invention: capturing by jumping is a simple, powerful idea that more than one culture arrived at separately, rather than evidence that either tradition borrowed from the other.",
+    konane_history_kinship_p2: "What is distinctly Konane's own is the full board of alternating stones and the two-stone opening removal ritual this app's rules page walks through - neither has a real equivalent in checkers or Alquerque, and both give Konane its own particular character as a game of pure jump-chain tactics with no other kind of move available.",
+    konane_history_modern_title: "Living Hawaiian Heritage",
+    konane_history_modern_p1: "Konane remains an important part of living Native Hawaiian cultural heritage today, not simply a historical curiosity. It's taught and played as part of cultural education programs, demonstrated at cultural festivals and heritage sites, and the surviving stone boards are actively preserved and, in places, protected as historic and cultural sites in their own right.",
+    konane_history_modern_p2: "Playing a round today - even on a screen, with a simplified 8x8 board rather than a carved outdoor papamū - connects to a strategic tradition that predates written contact with the West by centuries, and that Hawaiians have kept alive and passed down ever since."
+});
+I18n.markTextLoaded("en");

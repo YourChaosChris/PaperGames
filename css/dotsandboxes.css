@@ -1,0 +1,185 @@
+/* dotsandboxes: rules used only by the dotsandboxes pages (loaded after base.css). */
+/* Dots and Boxes board: percentage-based absolute positioning (the same
+   technique as WallMaze's board), since line segments need clickable
+   targets BETWEEN dots, not just on them - a plain float-grid has
+   nowhere to put those. The grid size (4x4 to 8x8 boxes) is chosen per
+   game. Both players are told apart by shape, not by colour: Player 1
+   draws solid lines and gets a cross in completed boxes, Player 2
+   draws dotted lines and gets a circle. */
+/* Up to 600 px wide, so on a 632 px reader the board fills its card
+   (594 px): a line's tap area (0.6 of a box) then stays at least 44 px
+   thick even on the 8x8 board. */
+.dab-board {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+}
+
+.dab-box {
+  position: absolute;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.dab-box-p1,
+.dab-box-p2 {
+  background: none;
+}
+
+.dab-box-mark {
+  position: absolute;
+  top: 18%;
+  left: 18%;
+  width: 64%;
+  height: 64%;
+  display: block;
+}
+
+.dab-box-mark line,
+.dab-box-mark circle {
+  stroke: var(--text);
+  stroke-width: 9;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.dab-line {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.dab-line:disabled {
+  cursor: default;
+  /* A drawn line lets taps through to the undrawn line it overlaps. */
+  pointer-events: none;
+  /* Here disabled means "already drawn", not "unavailable": keep the
+     line fully opaque instead of the global half-transparent
+     button:disabled, which turns black lines mid-grey on e-ink. */
+  opacity: 1;
+}
+
+.dab-line-bar {
+  position: absolute;
+  background: var(--square-dark);
+  pointer-events: none;
+}
+
+.dab-line-bar-h {
+  left: 4%;
+  right: 4%;
+  top: 50%;
+  height: 22%;
+  transform: translateY(-50%);
+}
+
+.dab-line-bar-v {
+  top: 4%;
+  bottom: 4%;
+  left: 50%;
+  width: 22%;
+  transform: translateX(-50%);
+}
+
+.dab-line-drawn .dab-line-bar {
+  background: var(--border);
+}
+
+/* Who drew a line is told apart by shape, not shade: Player 1 solid,
+   Player 2 dotted - full squares of about 6 px with 6 px gaps (a
+   dotted border on a bar this thin would be too fine for e-ink). */
+.dab-line-p2 .dab-line-bar-h {
+  background: repeating-linear-gradient(to right, var(--border) 0, var(--border) 6px, transparent 6px, transparent 12px);
+}
+
+.dab-line-p2 .dab-line-bar-v {
+  background: repeating-linear-gradient(to bottom, var(--border) 0, var(--border) 6px, transparent 6px, transparent 12px);
+}
+
+.dab-line:not(:disabled):hover .dab-line-bar {
+  opacity: 0.7;
+}
+
+/* All drawn lines are solid black now, so the latest one is marked by
+   shape alone: a frame drawn around it. */
+.dab-line-last .dab-line-bar {
+  background: var(--text);
+  outline: 3px solid var(--text);
+  outline-offset: 3px;
+}
+
+/* The latest line by Player 2 stays dotted inside the same frame. */
+.dab-line-last.dab-line-p2 .dab-line-bar-h {
+  background: repeating-linear-gradient(to right, var(--text) 0, var(--text) 6px, transparent 6px, transparent 12px);
+}
+
+.dab-line-last.dab-line-p2 .dab-line-bar-v {
+  background: repeating-linear-gradient(to bottom, var(--text) 0, var(--text) 6px, transparent 6px, transparent 12px);
+}
+
+/* Legend under the board: line style and box mark per player. */
+.dab-legend {
+  max-width: 600px;
+  margin: 0.5rem auto 0;
+}
+
+.dab-legend-item {
+  margin: 0.25rem 0;
+}
+
+.dab-legend-line {
+  display: inline-block;
+  width: 2.4em;
+  height: 6px;
+  margin-right: 0.4em;
+  vertical-align: middle;
+  background: var(--text);
+}
+
+.dab-legend-line-p2 {
+  background: repeating-linear-gradient(to right, var(--text) 0, var(--text) 6px, transparent 6px, transparent 12px);
+}
+
+[dir="rtl"] .dab-legend-line {
+  margin-right: 0;
+  margin-left: 0.4em;
+}
+
+.dab-dot {
+  position: absolute;
+  width: 3.5%;
+  height: 3.5%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--border);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Small icons for the player-choice picker and board placeholder,
+   showing the same cross / circle marks as the board. */
+.dab-icon-swatch {
+  display: inline-flex;
+  width: 1.1em;
+  height: 1.1em;
+  box-sizing: border-box;
+  vertical-align: middle;
+  border: 2px solid var(--border);
+  position: relative;
+}
+
+.dab-icon-swatch .dab-box-mark {
+  top: 8%;
+  left: 8%;
+  width: 84%;
+  height: 84%;
+}

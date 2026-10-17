@@ -1,0 +1,184 @@
+/* backgammon: rules used only by the backgammon pages (loaded after base.css). */
+/* Backgammon board: a 13-column x 2-row CSS grid (12 point lanes per
+   row plus a middle bar column spanning both rows), every cell placed
+   explicitly by grid-column/grid-row rather than relying on auto-flow.
+   Height is JS-enforced (see ensureBackgammonBoardSquare) rather than
+   via `aspect-ratio`, which some E-Ink browsers silently ignore. */
+.bg-board {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr) 0.7fr repeat(6, 1fr);
+  grid-template-rows: 1fr 1fr;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  gap: 1px;
+  padding: 1px;
+}
+
+.bg-bar {
+  background: var(--square-dark);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+
+.bg-point {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border: none;
+  padding: 2px 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* Every other point gets a line down each side instead of a beige tint,
+   so neighbouring points stay apart on a grey screen. */
+.bg-point-alt {
+  box-shadow: inset 1px 0 0 var(--border), inset -1px 0 0 var(--border);
+}
+
+.bg-point-movable {
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
+}
+
+.bg-point-selected {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.bg-point-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  line-height: 1;
+}
+
+.bg-point-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.bg-point-stack > * {
+  margin: 0 2px 2px 0;
+}
+
+.bg-point-stack > *:last-child {
+  margin-right: 0;
+}
+
+.bg-checker {
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.bg-checker-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.bg-checker-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+.bg-checker-overflow {
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+
+.bg-tray {
+  display: flex;
+max-width: 760px;
+  margin: 0 auto 0.4rem;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.bg-tray > * {
+  margin: 0 0.6rem 0.6rem 0;
+}
+
+.bg-tray > *:last-child {
+  margin-right: 0;
+}
+
+.bg-tray-slot {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem 0.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  font-size: 0.85rem;
+  box-sizing: border-box;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.bg-tray-movable {
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
+}
+
+.bg-tray-slot-count {
+  font-weight: 700;
+}
+
+.bg-dice-display {
+  display: flex;
+  align-items: center;
+}
+
+/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+.bg-dice-display > * {
+  margin: 0 0.4rem 0.4rem 0;
+}
+
+.bg-dice-display > *:last-child {
+  margin-right: 0;
+}
+
+.bg-die {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  font-weight: 700;
+  background: #fff;
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.bg-icon-checker {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.bg-icon-checker-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.bg-icon-checker-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}

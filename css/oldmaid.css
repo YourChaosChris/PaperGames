@@ -1,0 +1,160 @@
+/* oldmaid: rules used only by the oldmaid pages (loaded after base.css). */
+/* Old Maid: picture cards - the animal (or the Black Peter) large, the
+   name small underneath; hidden cards show the striped back. */
+.pc-card.oldmaid-card {
+  width: 4.8rem;
+  height: 5.3rem;
+  margin: 0 0.1rem 0.6rem;
+  padding: 0.2rem 0 0;
+  font-size: 0.6rem;
+  overflow: hidden;
+}
+
+.oldmaid-pic {
+  display: block;
+  width: 2.9rem;
+  height: 2.9rem;
+  margin: 0.15rem auto 0.1rem;
+}
+
+.oldmaid-name {
+  display: block;
+  font-size: 0.58rem;
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+
+/* Old Maid: player signs (a person for you, a screen with the number for
+   a computer), the "Drawn" field (giver, arrow, card or pair, arrow,
+   taker) and an open pile of laid-down pairs per player - the last pair
+   large, every pair as a small picture. Frames, never grey alone. */
+.oldmaid-sign {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.3rem;
+}
+
+.oldmaid-sign svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.oldmaid-drawn {
+  margin: 0.4rem 0 0.6rem;
+  padding: 0.5rem 0.3rem 0;
+  border: 3px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.oldmaid-drawn-cards {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.oldmaid-drawn-cards .oldmaid-sign {
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: 0 0 0.6rem;
+}
+
+.oldmaid-arrow {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0.3rem 0.6rem;
+}
+
+.oldmaid-drawn-group {
+  display: inline-flex;
+}
+
+.oldmaid-drawn-pair {
+  padding: 0.2rem 0.2rem 0;
+  margin-bottom: 0.4rem;
+  border: 3px double var(--border);
+  border-radius: var(--radius);
+}
+
+.pc-card.oldmaid-card-mid {
+  width: 3.6rem;
+  height: 4.2rem;
+  margin-bottom: 0.3rem;
+}
+
+.pc-card.oldmaid-card-mid .oldmaid-pic {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.oldmaid-piles-wrap {
+  margin: 0.8rem 0 0.4rem;
+  text-align: center;
+}
+
+.oldmaid-pile {
+  margin: 0 0 0.5rem;
+  padding: 0.3rem 0.3rem 0.2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: left;
+}
+
+.oldmaid-pile-head {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.oldmaid-pile-count {
+  margin-left: 0.6rem;
+}
+
+.oldmaid-pile-last {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 0.4rem;
+}
+
+.oldmaid-pile-strip {
+  display: inline-block;
+  vertical-align: top;
+  max-width: 100%;
+}
+
+.oldmaid-mini {
+  display: inline-block;
+  vertical-align: top;
+  width: 1.9rem;
+  height: 1.9rem;
+  margin: 0 0.15rem 0.2rem 0;
+  padding: 0.1rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.oldmaid-mini.pc-card-back {
+  background: repeating-linear-gradient(45deg, #fff, #fff 4px, var(--border) 4px, var(--border) 5px);
+}
+
+.oldmaid-mini .oldmaid-pic {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.oldmaid-example {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto;
+}

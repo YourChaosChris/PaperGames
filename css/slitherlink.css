@@ -1,0 +1,145 @@
+/* slitherlink: rules used only by the slitherlink pages (loaded after base.css). */
+/* Slitherlink board: a dot grid where every potential edge between two
+   neighboring dots is a real, invisible-until-drawn <button> - one tap
+   cycles it empty -> line -> marked-off -> empty. The dots, clue
+   numbers and the loop lines themselves are a purely decorative SVG
+   layer underneath those buttons (re-styled in place as state changes,
+   never rebuilt), the mirror image of fanorona-app.js's board, which
+   draws its fixed lines as decorative SVG *under* real button points -
+   here it's the lines that are clickable and the dots that are just
+   markers. Sized with a JS-enforced pixel height (see
+   ensureSlitherlinkAspectRatio in slitherlink-app.js) rather than CSS
+   `aspect-ratio`, which is unreliable on E-Ink browsers. */
+#slitherlink-board {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  border: 3px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+.slitherlink-svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.slitherlink-dot {
+  fill: var(--border);
+}
+
+.slitherlink-dot.slitherlink-conflict {
+  fill: var(--square-light);
+  stroke: var(--danger);
+  stroke-width: 3;
+}
+
+.slitherlink-edge-line {
+  stroke: var(--muted);
+  stroke-opacity: 0.28;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.slitherlink-edge-line.slitherlink-edge-on {
+  stroke: var(--border);
+  stroke-opacity: 1;
+  stroke-width: 9;
+}
+
+.slitherlink-edge-line.slitherlink-edge-marked {
+  stroke: var(--danger);
+  stroke-opacity: 0.85;
+  stroke-width: 4;
+  stroke-dasharray: 6 8;
+}
+
+.slitherlink-clue-ring {
+  fill: none;
+  stroke: none;
+}
+
+.slitherlink-clue-ring.slitherlink-conflict {
+  stroke: var(--danger);
+  stroke-width: 2.5;
+  stroke-dasharray: 5 4;
+}
+
+.slitherlink-clue-text {
+  font-weight: 700;
+  fill: var(--text);
+  font-size: 34px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.slitherlink-clue-text.slitherlink-conflict {
+  fill: var(--danger);
+}
+
+.slitherlink-edge-btn {
+  position: absolute;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.slitherlink-edge-btn:focus {
+  outline: 2px dashed var(--border);
+  outline-offset: 1px;
+}
+
+.slitherlink-icon {
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  box-sizing: border-box;
+  border: 2px solid var(--border);
+  border-radius: 2px;
+  position: relative;
+}
+
+.slitherlink-icon::before {
+  content: "";
+  position: absolute;
+  top: 25%;
+  right: 25%;
+  bottom: 25%;
+  left: 25%;
+  border: 2px solid var(--border);
+  border-right: none;
+  border-bottom: none;
+}
+
+@media print {
+  body.printable-puzzle .slitherlink-dot {
+      fill: #000 !important;
+      stroke: none !important;
+    }
+    body.printable-puzzle .slitherlink-clue-ring {
+      stroke: none !important;
+    }
+    body.printable-puzzle .slitherlink-clue-text {
+      fill: #000 !important;
+    }
+  }
+
+/* A Slitherlink hint marks an edge: the double frame goes round the
+   edge's (otherwise invisible) tap area between the two dots. */
+.slitherlink-edge-btn.hint-cell {
+  outline: 5px double var(--text);
+  outline-offset: 0;
+}

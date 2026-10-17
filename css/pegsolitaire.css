@@ -1,0 +1,74 @@
+/* pegsolitaire: rules used only by the pegsolitaire pages (loaded after base.css). */
+/* Peg Solitaire board: a 7x7 or 9x9 float-grid (same technique as the
+   chess/checkers/Connect Four boards - a JS-enforced square cell size,
+   since CSS `aspect-ratio` is unreliable on E-Ink browsers; the cell
+   width is set inline from the board size), with the off-board corners
+   left as invisible gaps - the same gap technique used for the Royal
+   Game of Ur's board. */
+/* --peg-cols is the board's grid size (5 to 9), set by
+   pegsolitaire-app.js. Each hole is at most 66 px wide, so a small
+   board stays small and the 9x9 one reaches 594 px - on a 632 px reader
+   every hole is about 66 px. The first lines are the fallback for a
+   browser without custom properties (the 7x7 boards). */
+#pegsolitaire-board {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  max-width: calc(var(--peg-cols, 7) * 66px);
+  background: var(--square-light);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.peg-square {
+  width: calc(100% / 7);
+  width: calc(100% / var(--peg-cols, 7));
+  background: var(--square-light);
+  border: 1px solid var(--border);
+}
+
+.peg-square-gap {
+  background: transparent;
+  border: none;
+  pointer-events: none;
+}
+
+.peg-square-movable {
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
+}
+
+.peg-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  height: 40%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.peg-piece-filled {
+  background: #111;
+}
+
+.peg-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.4em;
+}
+
+.peg-icon::before {
+  content: "";
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 50%;
+  background: #111;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+}

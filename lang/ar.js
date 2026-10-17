@@ -12,6 +12,7 @@ STRINGS.ar = {
     nav_about: "حول",
     nav_history: "التاريخ",
     nav_stats: "الإحصاءات",
+    text_fallback_note: "قواعد هذه اللعبة وتاريخها غير محفوظة بلغتك على هذا الجهاز، لذلك تظهر بالإنجليزية. ستُحمَّل بلغتك بمجرد اتصالك بالإنترنت.",
     footer_support: "ادعمنا",
     footer_quillwild: "مشروع جديد قيد العمل: Quillwild",
     home_categories_title: "الألعاب حسب الفئة",

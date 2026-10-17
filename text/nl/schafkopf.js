@@ -1,0 +1,40 @@
+// text/nl/schafkopf.js
+// Rules and history texts of schafkopf (nl). Loaded by schafkopf-rules.html and schafkopf-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.nl, {
+    sf_rules_title: "Regels van Schafkopf",
+    sf_rules_intro: "Het lange Beierse Schafkopf voor vier spelers met 32 Duitse kaarten: Sauspiel, Wenz en Solo.",
+    sf_rules_basics_title: "De regels",
+    sf_term_deal: "Kaarten en delen",
+    sf_rules_deal: "32 Duitse kaarten: eikels, bladeren, harten en bellen, elk met aas, tien, heer, Ober, Unter, negen, acht, zeven. Iedereen krijgt er 8. Punten: aas 11, tien 10, heer 4, Ober 3, Unter 2, negen, acht en zeven niets – samen 120. De speler na de gever kondigt als eerste aan en komt uit bij de eerste slag.",
+    sf_term_announce: "Aankondigen",
+    sf_rules_announce: "Om de beurt past iedereen (\"weiter\") of kondigt een spel aan. Een latere speler kan alleen overnemen met een hoger spel: Solo gaat voor Wenz, Wenz voor Sauspiel. Past iedereen, dan worden de kaarten weggegooid.",
+    sf_term_sau: "Sauspiel",
+    sf_rules_sau: "Troeven van hoog naar laag: de vier Obers (eikels, bladeren, harten, bellen), de vier Unters in dezelfde volgorde, dan hartenaas, tien, heer, negen, acht, zeven. De speler roept het eikel-, blad- of bellenaas: hij moet zelf een kaart van die kleur hebben, maar niet dat aas. Wie het heeft, speelt met hem mee – eerst weet alleen die het.",
+    sf_term_search: "Het aas zoeken",
+    sf_rules_search: "Wordt de geroepen kleur gespeeld, dan moet de bezitter van het aas het bijspelen. Afgooien mag hij het niet voordat die kleur gespeeld is. Uitspelen mag hij die kleur alleen met het aas zelf – tenzij hij nog minstens drie andere kaarten van die kleur heeft; dan mag hij met een andere \"weglopen\".",
+    sf_term_wenz: "Wenz",
+    sf_rules_wenz: "Alleen de vier Unters zijn troef (eikels, bladeren, harten, bellen). De Obers staan in hun kleur tussen heer en negen. De speler speelt alleen tegen drie.",
+    sf_term_solo: "Solo",
+    sf_rules_solo: "De speler kiest een kleur (eikels, bladeren, harten of bellen) en speelt alleen tegen drie. Troeven: de vier Obers, de vier Unters, dan aas, tien, heer, negen, acht, zeven van de gekozen kleur.",
+    sf_term_follow: "Kleur bekennen",
+    sf_rules_follow: "Je moet de gevraagde kleur bekennen; Obers en Unters (bij Wenz alleen de Unters) horen bij de troeven, niet bij hun kleur. Kun je niet bekennen, dan speel je een willekeurige kaart. De hoogste troef wint de slag, anders de hoogste kaart van de gevraagde kleur.",
+    sf_term_win: "Winnen",
+    sf_rules_win: "De spelende kant heeft 61 punten nodig, de anderen 60. Met 91 punten wint de spelende kant met Schneider, met 30 of minder verliest ze met Schneider. Schwarz: een kant haalt alle acht slagen.",
+    sf_term_lauf: "Laufende",
+    sf_rules_lauf: "De hoogste troeven die een kant zonder gat heeft of zonder gat mist, geteld vanaf de eikel-Ober (bij Wenz vanaf de eikel-Unter). Ze tellen vanaf drie, bij Wenz vanaf twee.",
+    sf_term_tariff: "Tarief",
+    sf_rules_tariff: "Sauspiel 10 punten, Wenz en Solo 50, plus elk 10 voor Schneider, voor Schwarz en voor elke Laufender. Bij Sauspiel betaalt elk van de twee verliezers één winnaar; bij Wenz en Solo betalen de drie anderen elk aan de speler of krijgen van hem.",
+    sf_term_list: "De puntenlijst",
+    sf_rules_list: "Na elk spel toont de lijst wat iedereen gewonnen of verloren heeft; de totalen zijn samen altijd nul. Een spel met weggegooide kaarten wordt zonder punten genoteerd.",
+    sf_rules_example_title: "De troeven bij Sauspiel",
+    sf_rules_example: "Eerst de vier Obers, dan de vier Unters, telkens in de volgorde eikels, bladeren, harten, bellen. Daarna komen de harten: aas, tien, heer, negen, acht, zeven.",
+    sf_history_title: "De geschiedenis van Schafkopf",
+    sf_history_origins_title: "Eerste vermeldingen",
+    sf_history_origins_p1: "Schafkopf wordt in 1782 voor het eerst genoemd, in een Saksische lijst van straffen en boetes. Voor Beieren staat het spel in 1837 in het Beierse woordenboek van Johann Andreas Schmeller, en het eerste duidelijk Beierse spel is voor 1849 in Gräfenberg vastgelegd.",
+    sf_history_name_title: "De naam",
+    sf_history_name_p1: "Waar de naam vandaan komt, is onbekend. De verklaring met krijtstrepen die een schapenkop vormen is niet bewezen, en de afleiding van een vat (\"Schaff\") geldt bij kenners als weerlegd.",
+    sf_history_modern_title: "Schafkopf nu",
+    sf_history_modern_p1: "Gezamenlijke regels werden in 1989 vastgelegd door de Beierse Schafkopf-vereniging; in 2007 publiceerde de Schafkopfschule een herziene versie. PaperGames speelt het lange Schafkopf met 32 kaarten, Sauspiel, Wenz en Solo, rekent alleen in punten en laat andere varianten zoals de Ramsch weg."
+});
+I18n.markTextLoaded("nl");

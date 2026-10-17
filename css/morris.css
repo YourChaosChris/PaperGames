@@ -1,0 +1,113 @@
+/* morris: rules used only by the morris pages (loaded after base.css). */
+/* Nine Men's Morris board: a point-and-line grid (same technique as the
+   Go board - a JS-enforced square container, since `aspect-ratio` alone
+   is silently ignored on some E-Ink browsers) rather than a filled
+   square grid, since the board is three nested squares of points
+   connected by lines, not a checkerboard. */
+.morris-board {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+  padding: 7%;
+}
+
+/* Points/lines are positioned inside this, not directly inside
+   .morris-board - see the comment in morris-app.js's buildMorrisBoardDOM
+   for why the padding above only acts as a margin for the outer ring of
+   points' own radius when they're one level further in like this. */
+.morris-grid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.morris-line {
+  position: absolute;
+  background: var(--border);
+}
+
+.morris-line-h {
+  height: 2px;
+  margin-top: -1px;
+}
+
+.morris-line-v {
+  width: 2px;
+  margin-left: -1px;
+}
+
+.morris-point {
+  position: absolute;
+  width: 11%;
+  height: 11%;
+  transform: translate(-50%, -50%);
+  background: var(--square-light);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.morris-point-movable {
+  background: var(--square-dark);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--text);
+}
+
+.morris-point-selected {
+  border-color: var(--accent);
+  border-width: 3px;
+}
+
+/* A piece that may be removed after a mill: a dashed ring (the reddish
+   tint it used to have was invisible on e-ink). */
+.morris-point-removable {
+  border: 3px dashed var(--border);
+}
+
+.morris-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 82%;
+  height: 82%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.morris-piece-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.morris-piece-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}
+
+/* Small disc icons for the color-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.morris-icon-disc {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.morris-icon-disc-black {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.morris-icon-disc-white {
+  background: #fdfdfd;
+  border: 2px solid var(--border);
+}

@@ -27,6 +27,14 @@ echo "=== static-checks.js ==="
 node "$ROOT/tests/static-checks.js" || status=1
 echo ""
 
+echo "=== split-check.js ==="
+node "$ROOT/tests/split-check.js" || status=1
+echo ""
+
+echo "=== split-pages.js ==="
+SPLIT_LANGS="${SPLIT_LANGS:-de,ar}" node "$ROOT/tests/split-pages.js" || status=1
+echo ""
+
 echo "=== i18n-messages.js ==="
 node "$ROOT/tests/i18n-messages.js" || status=1
 echo ""

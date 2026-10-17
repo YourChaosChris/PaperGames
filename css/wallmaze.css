@@ -1,0 +1,123 @@
+/* wallmaze: rules used only by the wallmaze pages (loaded after base.css). */
+/* WallMaze board: percentage-based absolute positioning (the same
+   technique as Go's line-and-point board), since walls need clickable
+   targets between cells, not just on them - a plain 9x9 float-grid
+   has nowhere to put those. Pawns are told apart structurally, not by
+   color alone: Player 1 is a filled disc, Player 2 an outlined disc,
+   the same convention used everywhere else in this app. */
+.wallmaze-board {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  background: var(--square-light);
+  border: 3px solid var(--border);
+  box-sizing: border-box;
+}
+
+.wallmaze-cell {
+  position: absolute;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  background: var(--square-light);
+  padding: 0;
+  margin: 0;
+}
+
+.wallmaze-cell-movable {
+  background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
+}
+
+.wallmaze-cell.last-move {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.wallmaze-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 62%;
+  height: 62%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.wallmaze-piece-p1 {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.wallmaze-piece-p2 {
+  background: var(--square-light);
+  border: 2px solid var(--border);
+}
+
+.wallmaze-wall-layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* The whole-board tap target for "place a wall" mode: inert (and
+   invisible) the rest of the time, so ordinary pawn-move clicks on
+   the cells beneath it pass straight through. Turning the entire
+   board into one forgiving target - rather than 64+ small, easily
+   overlapping candidate buttons squeezed between cells - is what
+   makes wall placement reliable to tap on a touchscreen; see
+   wallmaze-app.js's onWallMazeBoardTap/selectNearestWallAtPoint. */
+.wallmaze-wall-tap-catcher {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.wallmaze-wall-tap-catcher.active {
+  pointer-events: auto;
+  cursor: crosshair;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.wallmaze-wall-bar {
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.wallmaze-wall-bar-placed {
+  background: var(--border);
+}
+
+.wallmaze-wall-bar-preview {
+  background: var(--accent);
+  opacity: 0.55;
+}
+
+/* Small icons for the side-choice picker and board placeholder,
+   matching the board's own piece styling. */
+.wallmaze-icon-piece {
+  display: inline-flex;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.wallmaze-icon-piece-p1 {
+  background: #111;
+  border: 2px solid #000;
+}
+
+.wallmaze-icon-piece-p2 {
+  background: var(--square-light);
+  border: 2px solid var(--border);
+}

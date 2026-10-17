@@ -5,18 +5,26 @@
 // request it gets.
 //
 // Default run (part of run-all.sh), 300 ms delay per request:
-//  1. First visit; chess-rules.html fails all three tries. The home page shows
-//     "… X von 556 Dateien", then "Speichern unterbrochen", never "kann
-//     nicht ablegen"; the 555 stored files stay in the new cache.
+//  1. First visit (German); chess-rules.html fails all three tries. The home
+//     page shows "… X von N Dateien", then "Speichern unterbrochen", never
+//     "kann nicht ablegen"; the N-1 stored files stay in the new cache.
+//     N is APP_SHELL: all pages, scripts, the 12 interface languages and the
+//     English rules and history texts - not the rules texts of the other
+//     languages.
 //  2. Next try; chess-rules.html fails once more. The install retries it,
 //     downloads nothing but sw.js and chess-rules.html (carries on where it
-//     stopped) and ends with "Offline bereit".
+//     stopped) and ends with "Offline bereit". Then the page tells the worker
+//     its language and the German rules and history texts are stored too
+//     (text/de/*.js, and no other language).
 //  3. Update: a new version where only one file changed. Only sw.js and
-//     that file come from the network; the old cache is gone afterwards,
-//     a localStorage entry (stands for saved games and settings) is kept.
+//     that file come from the network (the German texts the device has come
+//     along from the old cache); the old cache is gone afterwards, a
+//     localStorage entry (stands for saved games and settings) is kept.
 //  4. Server off: every game page, its rules page, the home page, the games
 //     list and every category page load from the device without errors,
 //     the changed file in its new form.
+//  5. Still off: rules in German and in English are there; with the language
+//     Arabic the interface is Arabic and the rules are English with a note.
 //
 // THROTTLE=1 node tests/offline-install.js: first visit without errors
 // over a slow line (500 kbit/s in total, 300 ms per request), then step 4.
@@ -134,6 +142,33 @@ async function cacheInfo(page) {
   });
 }
 const countOf = (p) => server.log.filter((x) => x === p).length;
+// Requests for the rules texts of the language in use come on their own once
+// the install is done (the page tells the worker); steps 2 and 3 look at the
+// other requests.
+const isOwnText = (p) => /^\/text\/de\//.test(p);
+const GAME_SLUGS = fs.readdirSync(path.join(ROOT, "text", "de")).length;
+async function cacheTextLangs(page) {
+  return page.evaluate(async () => {
+    const out = {};
+    for (const k of await caches.keys()) {
+      for (const r of await (await caches.open(k)).keys()) {
+        const m = /\/text\/([a-z]{2})\//.exec(r.url);
+        if (m) out[m[1]] = (out[m[1]] || 0) + 1;
+      }
+    }
+    return out;
+  });
+}
+async function waitForTextLang(page, lang, n, ms) {
+  const end = Date.now() + ms;
+  let have = {};
+  while (Date.now() < end) {
+    have = await cacheTextLangs(page);
+    if (have[lang] === n) return have;
+    await page.waitForTimeout(250);
+  }
+  return have;
+}
 
 async function offlinePages(context, expectText) {
   const ctx = {};
@@ -161,6 +196,42 @@ async function offlinePages(context, expectText) {
   errors.slice(0, 5).forEach((e) => fails.push("offline: " + e));
   await page.close();
   return { pages: pages.length, ok: okCount };
+}
+
+// Step 5, server off: the rules in German and English, and in Arabic (never
+// stored) as English text with a note in Arabic. Returns a line for the report.
+async function offlineTexts(context) {
+  const ctx = {};
+  vm.createContext(ctx);
+  vm.runInContext(fs.readFileSync(path.join(ROOT, "i18n.js"), "utf8") + "\n;" +
+    fs.readFileSync(path.join(ROOT, "lang", "ar.js"), "utf8") + "\n;" + fs.readFileSync(path.join(ROOT, "lang", "de.js"), "utf8") +
+    "\n;" + fs.readFileSync(path.join(ROOT, "text", "en", "chess.js"), "utf8") + "\n;" + fs.readFileSync(path.join(ROOT, "text", "de", "chess.js"), "utf8") +
+    ";this.S = STRINGS;", ctx);
+  const S = ctx.S;
+  const page = await context.newPage();
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  const view = async (lang) => {
+    await page.goto(BASE + "chess-rules.html?lang=" + lang, { waitUntil: "load" });
+    await page.waitForTimeout(300);
+    return page.evaluate(() => ({
+      h1: document.querySelector("h1").textContent,
+      nav: document.querySelector(".site-nav-link").textContent,
+      note: (document.getElementById("text-fallback-note") || {}).textContent || "",
+      dir: document.documentElement.dir
+    }));
+  };
+  const en = await view("en");
+  check(en.h1 === S.en.chess_rules_title && !en.note, "step 5: English rules offline: " + JSON.stringify(en));
+  const de = await view("de");
+  check(de.h1 === S.de.chess_rules_title && de.h1 !== en.h1 && !de.note, "step 5: German rules offline: " + JSON.stringify(de));
+  const ar = await view("ar");
+  check(ar.h1 === S.en.chess_rules_title, "step 5: Arabic offline: the rules are not the English ones: " + ar.h1);
+  check(ar.nav === S.ar.nav_home && ar.dir === "rtl", "step 5: Arabic offline: interface is not Arabic: " + ar.nav + " " + ar.dir);
+  check(ar.note === S.ar.text_fallback_note, "step 5: Arabic offline: note missing: \"" + ar.note + "\"");
+  check(errors.length === 0, "step 5: page errors " + errors.slice(0, 3).join("; "));
+  await page.close();
+  return "en \"" + en.h1 + "\"; de \"" + de.h1 + "\"; ar interface \"" + ar.nav + "\" (rtl), rules \"" + ar.h1 + "\" with the Arabic note";
 }
 
 (async () => {
@@ -224,10 +295,14 @@ async function offlinePages(context, expectText) {
     const ready = await waitForText(page, RE_READY, 120000);
     texts = await page.evaluate(() => window.__offlineTexts);
     check(ready, "step 2: never reached 'Offline bereit' (last: " + texts[texts.length - 1] + ")");
-    const fetched2 = server.log.filter((p) => p !== "/sw.js");
+    const fetched2 = server.log.filter((p) => p !== "/sw.js" && !isOwnText(p));
     check(JSON.stringify(fetched2) === JSON.stringify(["/chess-rules.html", "/chess-rules.html"]), "step 2: fetched " + JSON.stringify(fetched2) + ", expected chess-rules.html twice");
     report.push("step 2: requests " + JSON.stringify(server.log) + "; status \"" + (await statusText(page)) + "\"");
     check(!texts.some((t) => RE_UNAVAILABLE.test(t)), "steps 1-2: 'cannot store' shown");
+    const langs2 = await waitForTextLang(page, "de", GAME_SLUGS, 120000);
+    check(langs2.de === GAME_SLUGS && langs2.en === GAME_SLUGS && Object.keys(langs2).length === 2,
+      "step 2: texts in the cache " + JSON.stringify(langs2) + ", expected en and de with " + GAME_SLUGS + " files each, no other language");
+    report.push("step 2: rules and history texts stored: " + JSON.stringify(langs2) + ", " + server.log.filter(isOwnText).length + " requests for text/de");
 
     // 3. Update with one changed file.
     await page.evaluate(() => localStorage.setItem("papergames_offline_test_keep", "kept"));
@@ -238,6 +313,7 @@ async function offlinePages(context, expectText) {
     require("child_process").execFileSync("node", [path.join(ROOT, "tools", "sw-hashes.js"), SITE]);
     const v2 = versionOf(swSrc());
     server.log = [];
+    const DE = GAME_SLUGS;
     await page.evaluate(() => navigator.serviceWorker.getRegistration().then((r) => r.update()));
     let caches2 = {};
     const end = Date.now() + 120000;
@@ -246,7 +322,7 @@ async function offlinePages(context, expectText) {
       if (Object.keys(caches2).length === 1 && caches2[v2]) break;
       await page.waitForTimeout(250);
     }
-    check(Object.keys(caches2).length === 1 && caches2[v2] === SHELL.length, "step 3: caches " + JSON.stringify(caches2) + ", expected only " + v2 + " with " + SHELL.length + " files");
+    check(Object.keys(caches2).length === 1 && caches2[v2] === SHELL.length + DE, "step 3: caches " + JSON.stringify(caches2) + ", expected only " + v2 + " with " + (SHELL.length + DE) + " files (APP_SHELL and the German texts)");
     const fetched3 = server.log.filter((p) => p !== "/sw.js");
     check(JSON.stringify(fetched3) === JSON.stringify(["/" + changed]), "step 3: fetched " + JSON.stringify(fetched3) + ", expected only /" + changed);
     check((await page.evaluate(() => localStorage.getItem("papergames_offline_test_keep"))) === "kept", "step 3: localStorage entry lost");
@@ -262,16 +338,24 @@ async function offlinePages(context, expectText) {
   // 4. Server off: everything from the device.
   await page.goto(BASE + "index.html");
   await page.waitForTimeout(500);
+  // The texts of the language in use are stored in the background after the install.
+  const langsOff = await waitForTextLang(page, "de", GAME_SLUGS, 10 * 60 * 1000);
+  check(langsOff.de === GAME_SLUGS, "step 4: German texts stored before going offline: " + JSON.stringify(langsOff));
   await stopServer();
   const off = await offlinePages(context, THROTTLE ? null : { page: "cake-rules.html", text: "<!-- offline update test -->" });
   report.push("step 4: server off, " + off.ok + " of " + off.pages + " pages (home, games list, category pages, every game and its rules page) loaded from the device");
+  const off5 = await offlineTexts(context);
+  report.push("step 5: server off: " + off5);
   pageErrors.slice(0, 5).forEach((e) => fails.push("page error: " + e));
 
   await browser.close();
   fs.rmSync(SITE, { recursive: true, force: true });
   report.forEach((l) => console.log(l));
   const shellBytes = SHELL.reduce((sum, e) => sum + fs.statSync(path.join(ROOT, tool.fileOf(e))).size, 0);
-  console.log("app shell: " + SHELL.length + " files, " + (shellBytes / 1e6).toFixed(1) + " MB");
+  const deBytes = fs.readdirSync(path.join(ROOT, "text", "de")).reduce((sum, f) => sum + fs.statSync(path.join(ROOT, "text", "de", f)).size, 0);
+  const lazyBytes = tool.lazyText(ROOT).reduce((sum, e) => sum + fs.statSync(path.join(ROOT, e)).size, 0);
+  console.log("app shell: " + SHELL.length + " files, " + (shellBytes / 1e6).toFixed(1) + " MB; plus the language in use (German): " +
+    GAME_SLUGS + " files, " + (deBytes / 1e6).toFixed(1) + " MB; not stored: the other 10 languages' texts (" + lazyBytes + " bytes in all 11 non-English languages)");
   fails.forEach((f) => console.log("FAIL: " + f));
   console.log("\n=== OFFLINE INSTALL" + (THROTTLE ? " (throttled)" : "") + ": " + fails.length + " failure(s) ===");
   process.exit(fails.length ? 1 : 0);

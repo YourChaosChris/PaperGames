@@ -1,0 +1,41 @@
+// text/pl/go.js
+// Rules and history texts of go (pl). Loaded by go-rules.html and go-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.pl, {
+    go_rules_title: "Zasady Go",
+    go_rules_intro: "Krótkie przypomnienie zasad, według których PaperGames rozgrywa Go - przydatne, jeśli dawno nie grałeś albo dopiero się uczysz.",
+    go_rules_basics_title: "Podstawowa idea",
+    go_term_stones: "Kamienie",
+    go_rules_stones: "Czarny i Biały na przemian kładą kamienie na pustych przecięciach linii, zaczynając od Czarnego. Kamienie po położeniu nigdy się nie ruszają - to plansza się zapełnia, a nie bierki po niej suną.",
+    go_term_liberties: "Oddechy",
+    go_rules_liberties: "Oddechy kamienia to puste punkty leżące bezpośrednio obok niego (góra/dół/lewo/prawo, nie po przekątnej). Połączone kamienie tego samego koloru dzielą swoje oddechy jako jedna grupa.",
+    go_term_capture: "Zbicie",
+    go_rules_capture: "Grupa, która straciła wszystkie oddechy, zostaje zbita i zdjęta z planszy zaraz po ruchu przeciwnika.",
+    go_rules_illegal_title: "Ruchy niedozwolone",
+    go_term_suicide: "Samobójstwo",
+    go_rules_suicide: "Nie wolno postawić kamienia, który pozbawiłby twoją własną grupę wszystkich oddechów - chyba że ten sam ruch najpierw zbija tyle wrogich kamieni, że grupa odzyskuje oddech.",
+    go_term_ko: "Ko",
+    go_rules_ko: "Nie wolno od razu odbić pojedynczego kamienia w sposób, który odtworzyłby pozycję sprzed ostatniego ruchu przeciwnika - najpierw trzeba zagrać gdzie indziej.",
+    go_term_superko: "Superko",
+    go_rules_superko: "Ogólniej: żaden ruch nie może odtworzyć pozycji całej planszy, która wystąpiła już wcześniej w partii. Wyklucza to także rzadsze, dłuższe cykle powtórzeń, takie jak potrójne ko.",
+    go_rules_end_title: "Jak kończy się partia",
+    go_term_passing: "Pas",
+    go_rules_passing: "Zamiast postawić kamień, każdy gracz może spasować. Gdy obaj gracze spasują jeden po drugim, partia się kończy i jest liczona.",
+    go_term_scoring: "Liczenie punktów",
+    go_rules_scoring: "PaperGames liczy punkty terytorialnie: twój wynik to twoje kamienie na planszy plus puste punkty otoczone wyłącznie przez twoje kamienie. Punkty graniczące z obydwoma kolorami nie liczą się dla żadnej ze stron. Nie ma osobnego usuwania martwych kamieni: liczy się każdy kamień, który jest na planszy, gdy obaj gracze spasują, więc zbij martwe kamienie, zanim spasujesz.",
+    go_term_komi: "Komi",
+    go_rules_komi: "Biały rusza się jako drugi, więc otrzymuje stały bonus (komi, w PaperGames wynoszący 7,5 punktu), by zrównoważyć tę niekorzystną pozycję. Remis jest przez to niemożliwy.",
+    go_term_resignation: "Poddanie się",
+    go_rules_resignation: "Gracz może poddać się w dowolnym momencie, co natychmiast kończy grę na korzyść przeciwnika.",
+    go_history_title: "Historia Go",
+    go_history_origins_title: "Starożytne chińskie korzenie",
+    go_history_origins_p1: "Go (po chińsku weiqi) zostało według tradycji wynalezione w Chinach ponad 4000 lat temu, choć najwcześniejsze wiarygodne wzmianki pisemne pochodzą z około IV wieku p.n.e. Uznawano je za jedną z czterech niezbędnych sztuk, które powinien opanować wykształcony chiński uczony, obok kaligrafii, malarstwa i gry na guqinie.",
+    go_history_origins_p2: "W przeciwieństwie do większości starożytnych gier, zasady Go niemal się nie zmieniły: cel, jakim jest otoczenie większego terytorium niż przeciwnik na siatce przecięć, jest dokładnie taki sam jak ponad dwa tysiące lat temu.",
+    go_history_spread_title: "Korea, Japonia i kultura mistrzostwa",
+    go_history_spread_p1: "Go rozprzestrzeniło się do Korei, a potem, około VII wieku n.e., do Japonii, gdzie rozkwitło pod cesarskim patronatem. Japoński okres Edo (XVII-XIX wiek) sformalizował profesjonalne Go, tworząc finansowane przez rząd szkoły i dziedziczne tytuły mistrzowskie, takie jak Meijin i Honinbo, z których niektóre są przyznawane w turniejach do dziś.",
+    go_history_spread_p2: "To właśnie ta profesjonalna tradycja sprawia, że terminologia Go na całym świecie wciąż często korzysta z japońskich słów - \"go\", \"dan\" i \"sente\" trafiły do angielskiego za pośrednictwem Japonii, mimo że sama gra ma chińskie pochodzenie.",
+    go_history_modern_title: "Go spotyka sztuczną inteligencję",
+    go_history_modern_p1: "Go docierało na Zachód stopniowo przez cały XX wiek, ale przez dziesięciolecia komputerom było znacznie trudniej grać w nie dobrze niż w szachy - ogromny współczynnik rozgałęzień pokonywał proste przeszukiwanie siłowe.",
+    go_history_modern_p2: "Zmieniło się to w marcu 2016 roku, gdy AlphaGo od Google DeepMind pokonało 18-krotnego mistrza świata Lee Sedola 4:1 - wynik, którego wielu badaczy AI spodziewało się dopiero za dekadę. Pozostaje to jednym z przełomowych momentów w historii sztucznej inteligencji."
+});
+I18n.markTextLoaded("pl");

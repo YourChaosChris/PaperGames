@@ -32,6 +32,18 @@ Set `PORT` to use a port other than 8000 if that one's busy.
 
 ## Running a single check
 
+- `node tests/split-check.js` - no server or browser needed. The page
+  split has no build step, so this guards it: every page links
+  `base.css` plus its own `css/<game>.css`, no rule in a game sheet could
+  be needed by another game's page, and `sw.js` knows every `css/` and
+  `text/` file. Rules and history texts live in `text/<lang>/<slug>.js`
+  (one file per game and language, named in `<html data-i18n-text>`).
+- `node tests/split-pages.js` - needs a browser and a running server
+  (`BASE_URL`). Opens every game page and its rules and history page in
+  several languages (`SPLIT_LANGS`, default en,de,ar; `run-all.sh` uses
+  de,ar) and fails on script errors, failed requests (a missing
+  `css/` or `text/` file), a raw i18n key anywhere on the page, or a
+  language that is not fully loaded.
 - `node tests/static-checks.js` - no server or browser needed. JS
   syntax on every file, HTML well-formedness on every real page, i18n
   key parity across all 12 languages (`i18n.js` for English,
@@ -336,8 +348,11 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   server on a copy of the site. Checks the offline install of `sw.js`
   and the home page's status line: progress "X of Y files", a broken
   download retried and an interrupted install carried on, an update
-  that downloads only the changed file, and every game page loading
-  with the server off. `THROTTLE=1` runs a first visit over a slow line
+  that downloads only the changed file, every game page loading
+  with the server off, and the rules texts: the install stores English,
+  the language in use (German here) follows in the background, a new
+  version carries it over, and offline the rules are there in German and
+  English while Arabic shows the English rules with a note. `THROTTLE=1` runs a first visit over a slow line
   (500 kbit/s, 300 ms per request) instead; that takes several minutes.
 - `node tests/update-banner.js` - needs a browser; starts its own server
   on a copy of the site and makes updates by raising `CACHE_NAME` in the
@@ -356,7 +371,8 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   containing an English word. Takes a few minutes. `SWEEP_LANG=ar` runs
   it in another non-Latin language (Arabic, Ukrainian, Japanese ...).
 - `node tests/css-check.js` - needs a browser only (no server): loads
-  `style.css` in a real page and confirms it parses cleanly.
+  `base.css` and every `css/<game>.css` in a real page and confirms each
+  parses cleanly.
 - `node tests/rtl-spacing.js` - needs a running server (`BASE_URL`) and a
   browser. Opens Mau Mau, Chess and the games list in Arabic at 360 px
   and fails if two buttons or links in the same row touch (gap under 1 px).

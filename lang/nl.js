@@ -11,6 +11,7 @@ STRINGS.nl = {
     nav_about: "Over",
     nav_history: "Geschiedenis",
     nav_stats: "Statistieken",
+    text_fallback_note: "De regels en de geschiedenis van dit spel zijn niet in jouw taal op dit apparaat opgeslagen, daarom staan ze in het Engels. Zodra je online bent, worden ze in jouw taal geladen.",
     footer_support: "Steun dit project",
     footer_quillwild: "Nieuw project in de maak: Quillwild",
     home_categories_title: "Spellen per categorie",

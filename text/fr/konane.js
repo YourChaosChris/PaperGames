@@ -1,0 +1,40 @@
+// text/fr/konane.js
+// Rules and history texts of konane (fr). Loaded by konane-rules.html and konane-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.fr, {
+    konane_rules_title: "Règles du Konane",
+    konane_rules_intro: "Un aide-mémoire rapide sur la façon dont PaperGames joue au Konane (les dames hawaïennes) - utile si vous êtes rouillé ou si vous apprenez.",
+    konane_rules_basics_title: "L'idée de base",
+    konane_term_board: "Le plateau",
+    konane_rules_board: "Un plateau de 8x8, dont chacune des 64 cases est occupée par un pion dès le départ - contrairement aux dames occidentales, qui n'utilisent que les cases sombres. Les pions alternent strictement en damier : le Noir sur une couleur de case, le Blanc sur l'autre.",
+    konane_term_moves: "Déplacement",
+    konane_rules_moves: "Les pions ne glissent jamais simplement. Le seul coup possible au Konane est le saut : un de vos pions saute par-dessus un pion ennemi orthogonalement adjacent (en haut, en bas, à gauche ou à droite - jamais en diagonale) pour atterrir sur la case vide juste après, capturant le pion sauté.",
+    konane_rules_opening_title: "Le rituel d'ouverture par retrait",
+    konane_term_opening: "Début de la partie",
+    konane_rules_opening: "Comme toutes les cases sont occupées au départ, personne ne peut encore sauter - un saut a besoin d'une case d'arrivée vide. La partie commence donc par un court rituel plutôt que par un premier saut : le Noir retire l'un de ses propres pions, soit d'un coin, soit de l'une des quatre cases centrales. Le Blanc retire ensuite l'un de ses propres pions situé juste (orthogonalement) à côté de la case que le Noir vient de vider. Ce sont ces deux cases vides qui rendent le tout premier saut possible.",
+    konane_term_opening_next: "Après le rituel",
+    konane_rules_opening_next: "Une fois les deux retraits effectués, le Noir joue le premier vrai saut, et la partie se poursuit ensuite avec des tours alternés normaux.",
+    konane_rules_capture_title: "Sauts et chaînes de sauts",
+    konane_term_mandatory: "Saut obligatoire",
+    konane_rules_mandatory: "Si l'un de vos pions dispose d'un saut légal n'importe où sur le plateau, vous devez en jouer un - vous pouvez choisir lequel si plusieurs pions le peuvent.",
+    konane_term_chain: "Poursuivre une chaîne de sauts",
+    konane_rules_chain: "Après avoir atterri, ce même pion peut continuer à sauter depuis sa nouvelle position, et peut changer librement de direction entre deux sauts (chaque saut individuel reste une ligne orthogonale droite, mais la chaîne n'est pas obligée de continuer dans le même sens). Contrairement aux dames, vous n'êtes jamais forcé de jouer la chaîne la plus longue possible : vous pouvez vous arrêter après n'importe quel saut, en choisissant à chaque étape jusqu'où continuer.",
+    konane_term_example: "Exemple détaillé",
+    konane_rules_example: "Supposons que votre pion soit en c4, avec un pion ennemi en c5 et une case vide en c6 : le saut c4-c6 capture le pion en c5. Si votre pion, maintenant en c6, a aussi un pion ennemi en b6 avec d6 vide de l'autre côté, vous pourriez continuer ce même tour par le saut c6-d6 (un virage à 90 degrés par rapport à la direction du premier saut) pour capturer aussi le pion en b6 - ou simplement vous arrêter en c6 après le premier saut. Les deux sont légaux ; le choix vous appartient à chaque étape.",
+    konane_rules_end_title: "Comment une partie se termine",
+    konane_term_win: "Victoire",
+    konane_rules_win: "Si vous n'avez aucun saut légal disponible nulle part sur le plateau à votre tour, vous perdez immédiatement - au Konane, une fois la partie lancée, il n'existe aucun autre type de coup de secours.",
+    konane_term_resignation: "Abandon",
+    konane_rules_resignation: "Un joueur peut abandonner à tout moment, ce qui met fin immédiatement à la partie en faveur de l'adversaire.",
+    konane_history_title: "L'histoire du Konane",
+    konane_history_origins_title: "Des pierres de lave sur de la roche taillée",
+    konane_history_origins_p1: "Le Konane était joué par les anciens Hawaïens avec des pierres de lave volcanique noire ('ili'ili pōhaku) comme pions d'un camp, et des morceaux de corail blanc ou de coquille de noix de coco blanchie comme pions de l'autre, disposés sur une grille de petites cavités creusées directement dans la roche plate. Ces plateaux de jeu, appelés kōnane papamū, étaient taillés à même la roche plutôt que fabriqués comme un équipement portable séparé.",
+    konane_history_origins_p2: "De nombreux kōnane papamū subsistent aujourd'hui sur des sites historiques à travers les îles hawaïennes, avec une concentration notable sur la Grande Île (Hawai'i Island) - certains taillés dans des coulées de lave près de résidences royales et de heiau (sites de temples), quelques-uns assez grands pour suggérer des plateaux nettement plus grands que le format 8x8 couramment joué aujourd'hui. Les dimensions du plateau variaient beaucoup dans la pratique, sans être fixées comme celles d'un jeu fabriqué en série.",
+    konane_history_kinship_title: "Une invention indépendante, pas un emprunt",
+    konane_history_kinship_p1: "Le mécanisme de capture par saut du Konane lui donne un air de famille évident avec des jeux comme l'Alquerque et les dames, qui partagent la même idée de base : sauter par-dessus un pion pour le retirer. Mais le Konane n'a été dérivé d'aucun d'eux - il s'est développé indépendamment en Polynésie, isolé des jeux de l'Ancien Monde qui ont donné naissance à l'Alquerque et à ses descendants du jeu de dames. Cette ressemblance s'explique mieux par une invention convergente : capturer en sautant est une idée simple et puissante à laquelle plusieurs cultures sont arrivées séparément, plutôt qu'une preuve qu'une tradition en aurait emprunté une autre.",
+    konane_history_kinship_p2: "Ce qui appartient en propre au Konane, c'est le plateau entièrement rempli de pions alternés et le rituel d'ouverture par retrait de deux pions que détaille la page des règles de cette application - ni l'un ni l'autre n'a de véritable équivalent aux dames ou à l'Alquerque, et tous deux donnent au Konane son caractère propre de jeu de pure tactique de chaînes de sauts, sans aucun autre type de coup possible.",
+    konane_history_modern_title: "Un patrimoine hawaïen vivant",
+    konane_history_modern_p1: "Le Konane demeure aujourd'hui un élément important du patrimoine culturel vivant des autochtones hawaïens, et non une simple curiosité historique. Il est enseigné et joué dans le cadre de programmes d'éducation culturelle, présenté lors de festivals culturels et sur des sites patrimoniaux, et les plateaux de pierre survivants sont activement préservés et, par endroits, protégés en tant que sites historiques et culturels à part entière.",
+    konane_history_modern_p2: "Jouer une partie aujourd'hui - même sur un écran, avec un plateau simplifié en 8x8 plutôt qu'un papamū gravé en extérieur - renoue avec une tradition stratégique antérieure de plusieurs siècles au contact écrit avec l'Occident, que les Hawaïens ont maintenue vivante et transmise depuis lors."
+});
+I18n.markTextLoaded("fr");

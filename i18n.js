@@ -7,11 +7,12 @@
 // lang/xx.js plus its entry in LANGUAGE_NAMES/LANGUAGE_ORDER.
 //
 // The long rules and history texts (keys with _rules, _term_ or
-// _history) live in separate files - i18n-text.js for English and
-// lang/xx-text.js - because only the <game>-rules.html and
+// _history) live in separate files, one per game and language
+// (text/<lang>/<slug>.js), because only the <game>-rules.html and
 // <game>-history.html pages show them. Those pages carry
-// <html data-i18n-text="1">, and only there are the text files loaded,
-// the same way as the language file (see the end of this file).
+// <html data-i18n-text="<slug>">, and only there are the text files of
+// that game loaded, the same way as the language file (see the end of
+// this file).
 
 const STRINGS = {
   en: {
@@ -22,6 +23,7 @@ const STRINGS = {
     nav_about: "About",
     nav_history: "History",
     nav_stats: "Stats",
+    text_fallback_note: "The rules and history of this game are not saved on this device in your language, so they appear in English. They load in your language as soon as you are online.",
     footer_support: "Support",
     footer_quillwild: "New project in progress: Quillwild",
     home_categories_title: "Games by category",
@@ -5589,6 +5591,29 @@ const I18n = (function () {
     if (descEl) descEl.setAttribute("content", (active && seoText(descEl.getAttribute("data-seo-desc"), l, false)) || seoOriginal.desc);
   }
 
+  // A rules or history page whose text file for the chosen language is not
+  // on the device (offline, and that language was never stored: the offline
+  // storage keeps the texts of the language in use and of English) shows the
+  // English text, and this short note in the page's own language says why.
+  function updateTextNote(l) {
+    if (!pageNeedsText() || !document.body) return;
+    let note = document.getElementById("text-fallback-note");
+    if (l === DEFAULT_LANG || textLoaded[l]) {
+      if (note && note.parentNode) note.parentNode.removeChild(note);
+      return;
+    }
+    const main = document.querySelector("main");
+    if (!main) return;
+    if (!note) {
+      note = document.createElement("p");
+      note.id = "text-fallback-note";
+      note.className = "text-fallback-note";
+      note.setAttribute("role", "status");
+      main.insertBefore(note, main.firstChild);
+    }
+    note.textContent = t("text_fallback_note", l);
+  }
+
   function apply(lang) {
     const l = lang || getLang();
     applySeo(l);
@@ -5630,6 +5655,8 @@ const I18n = (function () {
       if (fallbackPage) page.setAttribute("dir", "ltr");
       else if (page.getAttribute("dir") === "ltr") page.removeAttribute("dir");
     });
+
+    updateTextNote(l);
 
     document.querySelectorAll("[data-i18n-msg]").forEach((el) => {
       el.textContent = msg(el.getAttribute("data-i18n-msg"), l);
@@ -5693,17 +5720,22 @@ const I18n = (function () {
     return scriptBase + "lang/" + lang + ".js";
   }
 
-  // Rules/history texts: i18n-text.js for English, lang/<lang>-text.js
-  // for the others. Each file calls markTextLoaded() when it has run.
+  // Rules/history texts: one file per game and language,
+  // text/<lang>/<slug>.js. A rules or history page names its game in
+  // <html data-i18n-text="<slug>">. Each file calls markTextLoaded() when
+  // it has run.
   const textLoaded = {};
   function markTextLoaded(lang) {
     textLoaded[lang] = true;
   }
+  function textSlug() {
+    return (document.documentElement && document.documentElement.getAttribute("data-i18n-text")) || "";
+  }
   function pageNeedsText() {
-    return !!(document.documentElement && document.documentElement.hasAttribute("data-i18n-text"));
+    return !!textSlug();
   }
   function textFileUrl(lang) {
-    return lang === DEFAULT_LANG ? scriptBase + "i18n-text.js" : scriptBase + "lang/" + lang + "-text.js";
+    return scriptBase + "text/" + lang + "/" + textSlug() + ".js";
   }
   function loadScript(src, done) {
     const script = document.createElement("script");

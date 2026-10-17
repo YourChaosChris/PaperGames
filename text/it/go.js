@@ -1,0 +1,41 @@
+// text/it/go.js
+// Rules and history texts of go (it). Loaded by go-rules.html and go-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.it, {
+    go_rules_title: "Regole del Go",
+    go_rules_intro: "Una guida rapida a come PaperGames gioca a Go - utile se sei arrugginito, o se stai imparando.",
+    go_rules_basics_title: "L'idea di base",
+    go_term_stones: "Pietre",
+    go_rules_stones: "Nero e Bianco piazzano pietre sulle intersezioni vuote a turno, iniziando dal Nero. Le pietre non si muovono mai una volta piazzate - il tavoliere si riempie invece che i pezzi scorrere in giro.",
+    go_term_liberties: "Libertà",
+    go_rules_liberties: "Le libertà di una pietra sono i punti vuoti immediatamente adiacenti (sopra/sotto/sinistra/destra, non in diagonale). Le pietre dello stesso colore collegate condividono le loro libertà come un unico gruppo.",
+    go_term_capture: "Cattura",
+    go_rules_capture: "Un gruppo senza più libertà viene catturato e rimosso dal tavoliere subito dopo la mossa dell'avversario.",
+    go_rules_illegal_title: "Mosse illegali",
+    go_term_suicide: "Suicidio",
+    go_rules_suicide: "Non puoi giocare una pietra che lascerebbe il tuo stesso gruppo senza libertà, a meno che questa mossa non catturi prima abbastanza pietre avversarie da liberarlo.",
+    go_term_ko: "Ko",
+    go_rules_ko: "Non puoi ricatturare immediatamente una singola pietra in un modo che ricrei la posizione precedente all'ultima mossa dell'avversario - devi prima giocare altrove.",
+    go_term_superko: "Superko",
+    go_rules_superko: "Più in generale, nessuna mossa può ricreare una posizione dell'intero goban già verificatasi in precedenza nella partita. Questo esclude anche cicli di ripetizione più lunghi e rari, come un triplo ko.",
+    go_rules_end_title: "Come finisce una partita",
+    go_term_passing: "Passare",
+    go_rules_passing: "Ciascun giocatore può passare invece di piazzare una pietra. Quando entrambi i giocatori passano uno dopo l'altro, la partita finisce e viene calcolato il punteggio.",
+    go_term_scoring: "Punteggio",
+    go_rules_scoring: "PaperGames usa il conteggio ad area: il tuo punteggio è dato dalle tue pietre sul tavoliere più i punti vuoti circondati solo dalle tue pietre. I punti confinanti con entrambi i colori non contano per nessuno dei due. Non c'è una fase separata per togliere le pietre morte: conta ogni pietra ancora sul tavoliere quando entrambi passano, quindi cattura le pietre morte prima di passare.",
+    go_term_komi: "Komi",
+    go_rules_komi: "Il Bianco muove per secondo, quindi riceve un bonus fisso (komi, 7,5 punti in PaperGames) per compensare questo svantaggio. Il pareggio è quindi impossibile.",
+    go_term_resignation: "Abbandono",
+    go_rules_resignation: "Un giocatore può abbandonare in qualsiasi momento, terminando immediatamente la partita a favore dell'avversario.",
+    go_history_title: "La storia del Go",
+    go_history_origins_title: "Antiche radici cinesi",
+    go_history_origins_p1: "Si dice tradizionalmente che il Go (weiqi in cinese) sia stato inventato in Cina più di 4.000 anni fa, anche se i primi riferimenti scritti attendibili risalgono a circa il IV secolo a.C. Era considerato una delle quattro arti essenziali che un colto letterato cinese doveva padroneggiare, insieme alla calligrafia, alla pittura e al suonare il guqin.",
+    go_history_origins_p2: "A differenza della maggior parte dei giochi antichi, le regole del Go sono cambiate pochissimo: l'obiettivo di circondare più territorio dell'avversario su una griglia di intersezioni è esattamente lo stesso di oltre duemila anni fa.",
+    go_history_spread_title: "Corea, Giappone e una cultura della maestria",
+    go_history_spread_p1: "Il Go si diffuse in Corea e poi in Giappone verso il VII secolo d.C., dove fiorì sotto il patrocinio imperiale. Il periodo Edo giapponese (XVII-XIX secolo) formalizzò il Go professionistico con scuole finanziate dal governo e titoli di maestro ereditari come Meijin e Honinbo, alcuni dei quali vengono ancora assegnati nei tornei di oggi.",
+    go_history_spread_p2: "Questa tradizione professionistica è il motivo per cui la terminologia del Go nel mondo usa ancora spesso parole giapponesi - \"go\", \"dan\" e \"sente\" sono entrate nelle lingue occidentali attraverso il Giappone, anche se il gioco stesso è di origine cinese.",
+    go_history_modern_title: "Il Go incontra l'intelligenza artificiale",
+    go_history_modern_p1: "Il Go raggiunse gradualmente l'Occidente nel corso del Novecento, ma per decenni i computer trovarono molto più difficile giocarlo bene rispetto agli scacchi - il suo enorme fattore di ramificazione sconfiggeva la ricerca a forza bruta.",
+    go_history_modern_p2: "Questo cambiò nel marzo 2016, quando AlphaGo di Google DeepMind sconfisse per 4-1 il campione del mondo 18 volte Lee Sedol, un risultato che molti ricercatori di IA si aspettavano sarebbe arrivato solo un decennio più tardi. Resta uno dei momenti storici nella storia dell'intelligenza artificiale."
+});
+I18n.markTextLoaded("it");
