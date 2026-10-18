@@ -590,6 +590,7 @@ STRINGS.pl = {
     release_v250: "W Steckwürfeln można stukać w otwory, Klappenkasten pokazuje, co zamknął komputer, a bingo pozwala na maksymalnie czterech przeciwników komputerowych. Przyciski w Durak i Skat znów działają.",
     release_v251: "Nowa gra: Rzut w zoo. Przyjaciele z łąki tłumaczą się teraz obrazkami, Schwimmen pokazuje właściwego gracza, plansza Kleeberg nie jest już ucięta, a podglądy linków nie pokazują liczby gier.",
     release_v253: "Zoo Toss: łapy kładziesz teraz sam na karcie, a po ruchu komputera widzisz jego kartę, kostki i łapy i dotykasz Dalej.",
+    release_v254: "Licencja się zmieniła: z PaperGames wolno teraz korzystać tylko niekomercyjnie (PolyForm Noncommercial 1.0.0). W samej grze nic się nie zmienia.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss i Pasture Friends tłumaczą się teraz obrazkami, Zoo Toss ma poziom dla początkujących, a plansza z tortem oznacza pokoje numerami i ma większe pola.",
     release_v248: "Siedem nowych gier (bingo, trzy gry w kości i trzy zagadki dla dzieci), nowy bardzo trudny poziom w grze w strzałki, przycisk podpowiedzi w grze z kotami, lepsze wyszukiwanie i strona Gier karcianych.",
     release_v247: "Wszystkie gry używają tych samych nazw i komunikatów stanu („Przeciw komputerowi”, „Dwóch graczy na jednym urządzeniu”, „Nowa gra”, „Twój ruch”); każda strona gry ma przycisk Strona główna; „Cofnij” cofa Twój ruch i odpowiedź komputera w 32 grach.",

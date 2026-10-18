@@ -6,7 +6,7 @@
 // Every new CACHE_NAME needs its entry in release-notes.js (version, date
 // and one sentence in all 12 languages): the update banner shows it, and
 // tests/static-checks.js fails without it.
-const CACHE_NAME = "papergames-cache-v253";
+const CACHE_NAME = "papergames-cache-v254";
 
 const APP_SHELL = [
   "./",

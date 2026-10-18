@@ -106,13 +106,27 @@ whether that has finished.
 
 ## License
 
-The PaperGames source code (HTML, CSS, and JavaScript written for this
-project) is released under the [MIT License](LICENSE).
+PaperGames is licensed under the
+[PolyForm Noncommercial License 1.0.0](LICENSE)
+(SPDX: `PolyForm-Noncommercial-1.0.0`). It is source-available, not open
+source.
+
+- Allowed: private use, hobby, education, research, and use by charities
+  and other non-profit organisations.
+- Not allowed: selling it, showing ads with it, or offering paid services
+  based on it.
+- For commercial use, please ask first.
+
+Versions published up to and including v253 were released under the MIT
+License. The text that applied to those versions is kept in
+[LICENSE-MIT-bis-v253.txt](LICENSE-MIT-bis-v253.txt). Copies already
+received under the MIT License stay MIT.
 
 ### Third-party assets
 
 A few visual assets are third-party work, used here under their own
-licenses (not the MIT grant above) — see [NOTICE](NOTICE):
+licenses (not the PolyForm Noncommercial grant above, and not
+restricted to noncommercial use) — see [NOTICE](NOTICE):
 
 - Chess piece set ("cburnett") by Colin M.L. Burnett, used under the BSD
   license (`pieces.js` and the pawn icons in the CSS).

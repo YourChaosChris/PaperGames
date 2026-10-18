@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v254",
+    date: "2026-10-18",
+    key: "release_v254",
+    text: "The license changed: PaperGames may now be used for noncommercial purposes only (PolyForm Noncommercial 1.0.0). Nothing changes for playing."
+  },
+  {
     version: "v253",
     date: "2026-10-17",
     key: "release_v253",

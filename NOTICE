@@ -1,4 +1,9 @@
-The PaperGames source code is released under the MIT License in LICENSE.
+The PaperGames source code is licensed under the PolyForm Noncommercial
+License 1.0.0 in LICENSE. Versions up to and including v253 were released
+under the MIT License (see LICENSE-MIT-bis-v253.txt).
+
+The third-party parts listed below are not covered by the noncommercial
+restriction. They stay under their own licenses.
 
 The “cburnett” chess piece set is by Colin M.L. Burnett, from Wikimedia
 Commons (https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces), and

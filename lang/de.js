@@ -646,6 +646,7 @@ STRINGS.de = {
     release_v250: "In Steckwürfeln lassen sich die Löcher antippen, Klappenkasten zeigt, was der Computer zugeklappt hat, und Bingo erlaubt bis zu vier Computergegner. Die Knöpfe bei Durak und Skat funktionieren wieder.",
     release_v251: "Neues Spiel: Zoowurf. Weidefreunde erklärt sich jetzt mit Bildern, Schwimmen zeigt den richtigen Spieler am Zug, das Kleeberg-Brett ist nicht mehr abgeschnitten, und Link-Vorschauen zeigen keine Spielzahl mehr.",
     release_v253: "Zoowurf: Du legst die Pfoten jetzt selbst auf die Karte, und nach dem Zug des Computers siehst du seine Karte, Würfel und Pfoten und tippst auf Weiter.",
+    release_v254: "Die Lizenz hat sich geändert: PaperGames darf jetzt nur noch nicht kommerziell genutzt werden (PolyForm Noncommercial 1.0.0). Für das Spielen ändert sich nichts.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoowurf und Weidefreunde erklären sich jetzt mit Bildern, Zoowurf hat eine Stufe für Anfänger, und das Kuchenbrett nennt seine Räume mit Zahlen und hat größere Felder.",
     release_v248: "Sieben neue Spiele (Bingo, drei Würfelspiele und drei Kinderrätsel), eine neue schwerste Stufe bei Pfeile, ein Hinweisknopf bei Katzenplätze, bessere Suche und die Seite Kartenspiele.",
     release_v247: "Alle Spiele verwenden dieselben Namen und Statustexte („Gegen den Computer“, „Zu zweit an einem Gerät“, „Neues Spiel“, „Du bist dran“); jede Spielseite hat einen Home-Knopf; „Rückgängig“ nimmt in 32 Spielen deinen Zug und die Antwort des Computers zurück.",

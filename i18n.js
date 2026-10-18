@@ -658,6 +658,7 @@ const STRINGS = {
     release_v250: "In Steckwürfeln you can tap the holes, Klappenkasten shows what the computer closed, and Bingo allows up to four computer opponents. Durak and Skat buttons work again.",
     release_v251: "New game: Zoo Toss. Pasture Friends now explains itself with pictures, Schwimmen shows the right player's turn, the Kleeberg board is no longer cut off, and link previews show no game count.",
     release_v253: "Zoo Toss: you now put the paws on the card yourself, and after the computer's turn you see its card, dice and paws and tap Next.",
+    release_v254: "The license changed: PaperGames may now be used for noncommercial purposes only (PolyForm Noncommercial 1.0.0). Nothing changes for playing.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss and Pasture Friends now explain themselves with pictures, Zoo Toss has a beginner level, and the cake board names its rooms with numbers and has larger squares.",
     release_v248: "Seven new games (Bingo, three dice games and three children's puzzles), a new hardest level in Arrows, a hint button in Cat Places, better search and a Card Games page.",
     release_v247: "All games use the same names and status texts (Against the computer, Two players, one device, New game, Your turn); every game page has a Home button; Undo takes back your move and the computer's answer in 32 games.",

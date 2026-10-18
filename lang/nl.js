@@ -493,6 +493,7 @@ STRINGS.nl = {
     release_v250: "In Steckwürfeln kun je op de gaten tikken, Klappenkasten laat zien wat de computer dichtklapte en bingo kent tot vier computertegenstanders. De knoppen bij Durak en Skat werken weer.",
     release_v251: "Nieuw spel: Dierentuinworp. Weidevrienden legt zichzelf nu uit met plaatjes, Schwimmen toont de juiste speler aan de beurt, het Kleeberg-bord wordt niet meer afgesneden en linkvoorbeelden tonen geen aantal spellen meer.",
     release_v253: "Zoo Toss: je legt de poten nu zelf op de kaart, en na de beurt van de computer zie je zijn kaart, dobbelstenen en poten en tik je op Verder.",
+    release_v254: "De licentie is veranderd: PaperGames mag nu alleen nog niet-commercieel worden gebruikt (PolyForm Noncommercial 1.0.0). Voor het spelen verandert er niets.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss en Pasture Friends leggen zichzelf nu uit met plaatjes, Zoo Toss heeft een beginnersniveau en het taartbord noemt zijn kamers met cijfers en heeft grotere vakjes.",
     release_v248: "Zeven nieuwe spellen (bingo, drie dobbelspellen en drie kinderpuzzels), een nieuw zeer moeilijk niveau bij het pijlenspel, een hulpknop bij het kattenspel, betere zoekfunctie en de pagina Kaartspellen.",
     release_v247: "Alle spellen gebruiken dezelfde namen en statusteksten („Tegen de computer”, „Met twee op één apparaat”, „Nieuw spel”, „Jij bent aan de beurt”); elke spelpagina heeft een Home-knop; „Ongedaan maken” neemt je zet en het antwoord van de computer terug in 32 spellen.",

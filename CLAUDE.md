@@ -47,6 +47,7 @@ Aufgaben-Repositorys; hier nur, was dort fehlt.
   - kein Mord, keine Entführung, keine Gewalt;
   - Namen und Fakten mit WebSearch prüfen, eigene Namen gegen
     Spiele mit gleichem Namen.
+- Lizenz ist PolyForm Noncommercial 1.0.0; fremde Dateien nur mit kompatibler Lizenz (keine GPL, keine Copyleft-Pflicht, die die Nicht-Kommerziell-Regel aushebelt).
 - Technik:
   - keine Animationen, keine Töne, kein Zeitdruck (E-Ink);
   - schwarz-weiß, keine Grauflächen;
@@ -124,11 +125,12 @@ Vorgaben für den Bericht:
   - `ss` gibt es nicht, den Server mit `curl` prüfen;
   - Hilfsskripte im Scratchpad gehen mit der Sitzung verloren.
 
-## Stand (17.10.2026)
+## Stand (18.10.2026)
 
-- `CACHE_NAME` `papergames-cache-v253`, 103 Spiele.
-- Aufgaben bis 99t erledigt, `offen/` leer.
+- `CACHE_NAME` `papergames-cache-v254`, 103 Spiele.
+- Aufgaben bis 99u erledigt, `offen/` leer.
 - Zuletzt gebaut:
+  - 99u: Lizenz PolyForm Noncommercial 1.0.0 (`LICENSE`), alter MIT-Text in `LICENSE-MIT-bis-v253.txt`, README und NOTICE angepasst, v254 ohne volle Testreihe (Anweisung Christopher);
   - 99t: Zoowurf, Pfote selbst auf ein leeres Tier legen (`pick`, Phase `paw`, `placePaw`), Zug des Computers als Tafel mit „Weiter“ (`tests/zoowurf-ui.js`);
   - 99s: gemeinsames „Wie geht das?“ (`howto.js`, 5 Spiele), gemeinsamer Statustext (`ui-status.js` statt 45 Kopien), Kuchenbrett mit Raumzahlen und Legende, Zoowurf-Stufe Anfänger;
   - 99p: Vorschaubild ohne Spielezahl (`og-image.png?v=251`);

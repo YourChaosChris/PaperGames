@@ -584,6 +584,7 @@ STRINGS.it = {
     release_v250: "In Steckwürfeln si possono toccare i fori, Klappenkasten mostra cosa ha chiuso il computer e il bingo ammette fino a quattro avversari del computer. I pulsanti di Durak e Skat funzionano di nuovo.",
     release_v251: "Nuovo gioco: Dadi dello zoo. Amici del prato ora si spiega con le immagini, Schwimmen mostra il giocatore giusto, la tavola di Kleeberg non è più tagliata e le anteprime dei link non mostrano più il numero dei giochi.",
     release_v253: "Zoo Toss: ora metti tu stesso le zampe sulla carta, e dopo il turno del computer vedi la sua carta, i suoi dadi e le sue zampe e tocchi Avanti.",
+    release_v254: "La licenza è cambiata: PaperGames può essere usato solo per scopi non commerciali (PolyForm Noncommercial 1.0.0). Per giocare non cambia nulla.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss e Pasture Friends ora si spiegano con le immagini, Zoo Toss ha un livello principiante e il tabellone della torta indica le stanze con numeri e ha caselle più grandi.",
     release_v248: "Sette nuovi giochi (bingo, tre giochi di dadi e tre indovinelli per bambini), un nuovo livello molto difficile nel gioco delle frecce, un pulsante di aiuto nel gioco dei gatti, ricerca migliorata e la pagina Giochi di carte.",
     release_v247: "Tutti i giochi usano gli stessi nomi e testi di stato («Contro il computer», «In due su un dispositivo», «Nuova partita», «Tocca a te»); ogni pagina di gioco ha un pulsante Home; «Annulla» ritira la tua mossa e la risposta del computer in 32 giochi.",
