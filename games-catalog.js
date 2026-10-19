@@ -1070,7 +1070,7 @@ const GAMES_CATALOG = [
     nameKey: "game_forestvillage",
     nameText: "Forest Village",
     descKey: "home_forestvillage_desc",
-    descText: "Forest animals build a village through four seasons: send squirrels for wood, resin, pebbles and berries, build buildings and let the matching animals move in. 1 to 4 players, alone against a target score or against the computer.",
+    descText: "Forest animals gather clay, seeds and feathers, place workers and build a village of their own. Matching animals get one feather off their building cost. 1–4 players, solo or against the computer.",
     popular: false,
     added: "2026-10-12T00:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M10 4L3 18H7L2 28H18L13 18H17Z\" fill=\"#141413\"/><rect x=\"9\" y=\"28\" width=\"2\" height=\"6\" fill=\"#141413\"/><path d=\"M21 22L29 14L37 22V36H21Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"27\" y=\"28\" width=\"4\" height=\"8\" fill=\"#141413\"/></svg></span>"

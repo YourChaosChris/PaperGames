@@ -18,7 +18,7 @@ Object.assign(STRINGS.fr, {
     fv_term_solo: "Seul",
     fv_rules_solo: "À 1 joueur, les règles sont les mêmes et tu gagnes si tu as au moins 45 points à la fin.",
     fv_term_playing: "Jouer",
-    fv_rules_playing: "Touche un champ libre de la forêt pour y envoyer un écureuil. Touche une carte de ta main ou du pré pour la lire, puis Construire ; les cartes que tu ne peux pas payer maintenant te le disent. La liste en dessous montre les derniers coups, y compris ceux de l’ordinateur. Contre l’ordinateur : Facile joue souvent au hasard, Moyen construit ce qui semble le mieux sur le moment, Difficile pense aussi aux animaux et à la fin. Sur un seul appareil, la main est cachée entre les tours.",
+    fv_rules_playing: "Touche un champ libre de la forêt pour y envoyer un écureuil. Touche une carte de ta main ou de la Clairière pour la lire, puis Construire ; les cartes que tu ne peux pas payer maintenant te le disent. La liste en dessous montre les derniers coups, y compris ceux de l’ordinateur. Contre l’ordinateur : Facile joue souvent au hasard, Moyen construit ce qui semble le mieux sur le moment, Difficile pense aussi aux animaux et à la fin. Sur un seul appareil, la main est cachée entre les tours.",
     fv_rules_example_title: "Exemple",
     fv_rules_example: "Tu paies 2 argiles et 1 plume pour la Boulangerie. Elle rapporte 2 plumes à sa construction, puis encore après ton deuxième ouvrier. Plus tard, le Hérisson coûte une plume de moins grâce à sa Boulangerie.",
     fv_history_title: "Histoire du Village de la forêt",

@@ -18,7 +18,7 @@ Object.assign(STRINGS.nl, {
     fv_term_solo: "Alleen",
     fv_rules_solo: "Met 1 speler gelden dezelfde regels, en je wint als je aan het eind minstens 45 punten hebt.",
     fv_term_playing: "Bediening",
-    fv_rules_playing: "Tik een vrij veld in het bos aan om er een eekhoorn heen te sturen. Tik een kaart in je hand of op de weide aan om hem te lezen, dan Bouwen; kaarten die je nu niet kunt betalen, zeggen dat. De lijst eronder toont de laatste zetten, ook die van de computer. Tegen de computer: Makkelijk speelt vaak willekeurig, Gemiddeld bouwt wat nu het beste lijkt, Moeilijk plant ook voor de dieren en het einde. Op één apparaat wordt de hand tussen de beurten afgedekt.",
+    fv_rules_playing: "Tik een vrij veld in het bos aan om er een eekhoorn heen te sturen. Tik een kaart in je hand of in de Zonnehof aan om hem te lezen, dan Bouwen; kaarten die je nu niet kunt betalen, zeggen dat. De lijst eronder toont de laatste zetten, ook die van de computer. Tegen de computer: Makkelijk speelt vaak willekeurig, Gemiddeld bouwt wat nu het beste lijkt, Moeilijk plant ook voor de dieren en het einde. Op één apparaat wordt de hand tussen de beurten afgedekt.",
     fv_rules_example_title: "Voorbeeld",
     fv_rules_example: "Je betaalt 2 klei en 1 veer voor de Bakkerij. Bij het bouwen geeft die 2 veren; na je tweede werker opnieuw. Later kost de Egel één veer minder dankzij zijn Bakkerij.",
     fv_history_title: "Geschiedenis van Bosdorp",

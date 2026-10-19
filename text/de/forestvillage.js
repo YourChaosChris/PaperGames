@@ -18,7 +18,7 @@ Object.assign(STRINGS.de, {
     fv_term_solo: "Allein",
     fv_rules_solo: "Mit 1 Spieler gelten dieselben Regeln, und du gewinnst, wenn du am Ende mindestens 45 Punkte hast.",
     fv_term_playing: "Bedienung",
-    fv_rules_playing: "Tippe ein freies Feld des Waldes an, um ein Eichhörnchen dorthin zu schicken. Tippe eine Karte in deiner Hand oder auf der Wiese an, um sie zu lesen, dann „Bauen“; Karten, die du jetzt nicht bezahlen kannst, sagen dir das. Die Liste darunter zeigt die letzten Züge, auch die des Computers. Gegen den Computer: Leicht spielt oft zufällig, Mittel baut, was gerade am besten aussieht, Schwer plant auch für die Tiere und das Ende. An einem Gerät wird die Hand zwischen den Zügen verdeckt.",
+    fv_rules_playing: "Tippe ein freies Feld des Waldes an, um ein Eichhörnchen dorthin zu schicken. Tippe eine Karte in deiner Hand oder in der Senke an, um sie zu lesen, dann „Bauen“; Karten, die du jetzt nicht bezahlen kannst, sagen dir das. Die Liste darunter zeigt die letzten Züge, auch die des Computers. Gegen den Computer: Leicht spielt oft zufällig, Mittel baut, was gerade am besten aussieht, Schwer plant auch für die Tiere und das Ende. An einem Gerät wird die Hand zwischen den Zügen verdeckt.",
     fv_rules_example_title: "Beispiel",
     fv_rules_example: "Du zahlst 2 Lehm und 1 Feder für die Bäckerei. Beim Bau gibt sie dir 2 Federn. Nachdem du deinen zweiten Arbeiter eingesetzt hast, gibt sie erneut 2 Federn. Später kostet der Igel eine Feder weniger, weil seine Bäckerei in deiner Siedlung steht.",
     fv_history_title: "Geschichte der Waldsiedlung",

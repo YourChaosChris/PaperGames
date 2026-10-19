@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v255",
+    date: "2026-10-19",
+    key: "release_v255",
+    text: "Forest Village: the game description and the rules now name clay, seeds and feathers and the Clearing everywhere."
+  },
+  {
     version: "v254",
     date: "2026-10-18",
     key: "release_v254",

@@ -18,7 +18,7 @@ Object.assign(STRINGS.it, {
     fv_term_solo: "Da solo",
     fv_rules_solo: "Con 1 giocatore valgono le stesse regole e vinci se alla fine hai almeno 45 punti.",
     fv_term_playing: "Come si gioca",
-    fv_rules_playing: "Tocca un campo libero del bosco per mandarci uno scoiattolo. Tocca una carta della tua mano o del prato per leggerla, poi Costruisci; le carte che ora non puoi pagare te lo dicono. L’elenco sotto mostra le ultime mosse, anche quelle del computer. Contro il computer: Facile gioca spesso a caso, Medio costruisce ciò che sembra meglio al momento, Difficile pensa anche agli animali e alla fine. Su un solo dispositivo la mano viene coperta tra i turni.",
+    fv_rules_playing: "Tocca un campo libero del bosco per mandarci uno scoiattolo. Tocca una carta della tua mano o della Radura per leggerla, poi Costruisci; le carte che ora non puoi pagare te lo dicono. L’elenco sotto mostra le ultime mosse, anche quelle del computer. Contro il computer: Facile gioca spesso a caso, Medio costruisce ciò che sembra meglio al momento, Difficile pensa anche agli animali e alla fine. Su un solo dispositivo la mano viene coperta tra i turni.",
     fv_rules_example_title: "Esempio",
     fv_rules_example: "Paghi 2 argille e 1 piuma per il Forno. Alla costruzione dà 2 piume e le produce di nuovo dopo il secondo lavoratore. Più tardi il Riccio costa una piuma in meno grazie al suo Forno.",
     fv_history_title: "Storia del Villaggio del bosco",

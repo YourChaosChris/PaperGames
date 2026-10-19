@@ -18,7 +18,7 @@ Object.assign(STRINGS.pl, {
     fv_term_solo: "W pojedynkę",
     fv_rules_solo: "Przy 1 graczu obowiązują te same zasady, a wygrywasz, jeśli na koniec masz co najmniej 45 punktów.",
     fv_term_playing: "Sterowanie",
-    fv_rules_playing: "Dotknij wolnego pola lasu, by wysłać tam wiewiórkę. Dotknij karty w ręce lub na łące, by ją przeczytać, a potem Buduj; karty, za które teraz nie zapłacisz, mówią o tym. Lista poniżej pokazuje ostatnie ruchy, także komputera. Przeciw komputerowi: Łatwy często gra losowo, Średni buduje to, co teraz wygląda najlepiej, Trudny planuje też zwierzęta i koniec gry. Na jednym urządzeniu ręka jest zakrywana między turami.",
+    fv_rules_playing: "Dotknij wolnego pola lasu, by wysłać tam wiewiórkę. Dotknij karty w ręce lub na Polanie, by ją przeczytać, a potem Buduj; karty, za które teraz nie zapłacisz, mówią o tym. Lista poniżej pokazuje ostatnie ruchy, także komputera. Przeciw komputerowi: Łatwy często gra losowo, Średni buduje to, co teraz wygląda najlepiej, Trudny planuje też zwierzęta i koniec gry. Na jednym urządzeniu ręka jest zakrywana między turami.",
     fv_rules_example_title: "Przykład",
     fv_rules_example: "Płacisz 2 gliny i 1 pióro za Piekarnię. Przy budowie daje 2 pióra, a po wysłaniu drugiego pracownika ponownie. Jeż kosztuje później o jedno pióro mniej dzięki Piekarni.",
     fv_history_title: "Historia Leśnej osady",

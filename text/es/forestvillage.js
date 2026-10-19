@@ -18,7 +18,7 @@ Object.assign(STRINGS.es, {
     fv_term_solo: "Solo",
     fv_rules_solo: "Con 1 jugador las reglas son las mismas y ganas si tienes al menos 45 puntos al final.",
     fv_term_playing: "Cómo jugar",
-    fv_rules_playing: "Toca un campo libre del bosque para enviar allí una ardilla. Toca una carta de tu mano o del prado para leerla y luego Construir; las cartas que ahora no puedes pagar te lo indican. La lista de abajo muestra las últimas jugadas, también las del ordenador. Contra el ordenador: Fácil juega a menudo al azar, Medio construye lo que parece mejor ahora, Difícil también planea los animales y el final. En un solo dispositivo la mano se tapa entre turnos.",
+    fv_rules_playing: "Toca un campo libre del bosque para enviar allí una ardilla. Toca una carta de tu mano o del Claro para leerla y luego Construir; las cartas que ahora no puedes pagar te lo indican. La lista de abajo muestra las últimas jugadas, también las del ordenador. Contra el ordenador: Fácil juega a menudo al azar, Medio construye lo que parece mejor ahora, Difícil también planea los animales y el final. En un solo dispositivo la mano se tapa entre turnos.",
     fv_rules_example_title: "Ejemplo",
     fv_rules_example: "Pagas 2 arcillas y 1 pluma por la Panadería. Al construirla recibes 2 plumas; vuelve a producir tras colocar tu segundo trabajador. Más tarde el Erizo cuesta una pluma menos gracias a su Panadería.",
     fv_history_title: "Historia de la Aldea del bosque",

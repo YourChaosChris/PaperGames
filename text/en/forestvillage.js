@@ -18,7 +18,7 @@ Object.assign(STRINGS.en, {
     fv_term_solo: "Alone",
     fv_rules_solo: "With 1 player you play the same rules and win if you have at least 45 points at the end.",
     fv_term_playing: "Playing",
-    fv_rules_playing: "Tap a free field of the forest to send a squirrel there. Tap a card in your hand or on the meadow to read it, then Build; cards you cannot pay for now say so. The list below shows the last moves, including the computer's. Against the computer: Easy often plays at random, Medium builds what looks best now, Hard also plans for the animals and the end. On one device the hand is covered between turns.",
+    fv_rules_playing: "Tap a free field of the forest to send a squirrel there. Tap a card in your hand or in the Clearing to read it, then Build; cards you cannot pay for now say so. The list below shows the last moves, including the computer's. Against the computer: Easy often plays at random, Medium builds what looks best now, Hard also plans for the animals and the end. On one device the hand is covered between turns.",
     fv_rules_example_title: "Example",
     fv_rules_example: "You pay 2 clay and 1 feather for the Bakery. It gives you 2 feathers when built. After you place your second worker, it gives 2 feathers again. Later the Hedgehog costs one feather less because its Bakery is in your village.",
     fv_history_title: "History of Forest Village",

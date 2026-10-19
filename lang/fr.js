@@ -585,6 +585,7 @@ STRINGS.fr = {
     release_v251: "Nouveau jeu : Lancer au zoo. Les amis du pré s'expliquent maintenant par des images, Schwimmen indique le bon joueur, le plateau de Kleeberg n'est plus coupé et les aperçus de liens n'affichent plus de nombre de jeux.",
     release_v253: "Zoo Toss : tu poses maintenant toi-même les pattes sur la carte, et après le tour de l'ordinateur tu vois sa carte, ses dés et ses pattes et tu touches Suite.",
     release_v254: "La licence a changé : PaperGames ne peut plus être utilisé qu'à des fins non commerciales (PolyForm Noncommercial 1.0.0). Rien ne change pour jouer.",
+    release_v255: "Village de la forêt : la description et les règles parlent désormais partout d’argile, de graines, de plumes et de la Clairière.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss et Pasture Friends s'expliquent maintenant avec des images, Zoo Toss a un niveau débutant, et le plateau du gâteau désigne ses pièces par des numéros avec des cases plus grandes.",
     release_v248: "Sept nouveaux jeux (bingo, trois jeux de dés et trois énigmes pour enfants), un nouveau niveau très difficile dans le jeu de flèches, un bouton d’indice dans le jeu des chats, une meilleure recherche et la page Jeux de cartes.",
     release_v247: "Tous les jeux utilisent les mêmes noms et textes d’état (« Contre l’ordinateur », « À deux sur un appareil », « Nouvelle partie », « À toi de jouer ») ; chaque page de jeu a un bouton Accueil ; « Annuler » reprend ton coup et la réponse de l’ordinateur dans 32 jeux.",
