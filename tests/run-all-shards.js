@@ -14,13 +14,14 @@ function check(ok, msg) { if (!ok) { bad++; console.log("FAIL: " + msg); } }
 
 const entries = fs.readFileSync(path.join(root, "tests", "test-list.txt"), "utf8")
   .split("\n").filter((l) => l.trim() && !/^\s*#/.test(l))
-  .map((l, i) => { const p = l.trim().split(/\s+/); return { idx: i + 1, weight: Number(p[0]), file: p[1] }; });
+  .map((l, i) => { const p = l.trim().split(/\s+/); return { idx: i + 1, weight: Number(p[0]), file: p[1], key: p.slice(1).join(" ") }; });
 check(entries.length > 0, "test-list.txt is empty");
 const seen = {};
 entries.forEach((e) => {
   check(Number.isFinite(e.weight) && e.weight > 0, e.file + ": weight is not a positive number");
   check(fs.existsSync(path.join(root, "tests", e.file)), e.file + " does not exist");
-  check(!seen[e.file], e.file + " is listed twice");
+  check(!seen[e.key], e.key + " is listed twice");
+  seen[e.key] = true;
   seen[e.file] = true;
 });
 
