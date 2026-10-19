@@ -29,10 +29,12 @@ Aufgaben-Repositorys; hier nur, was dort fehlt.
   dann behebe sie.“ Gefundene Fehler kommen in den Bericht.
 - Hochladen nur, wenn die ganze Testreihe durchläuft:
   `PORT=8010 NODE_PATH=/opt/node22/lib/node_modules bash tests/run-all.sh > log 2>&1`
-  und dann `tail -n 1 log | grep -qx "ALL CHECKS PASS"`. Sie dauert
-  etwa 25 Minuten und läuft genau einmal am Ende, als Hintergrundbefehl.
-  Vorher einen eigenen Server auf demselben Port beenden, denn
-  `run-all.sh` startet seinen eigenen.
+  und dann `tail -n 1 log | grep -qx "ALL CHECKS PASS"`. `run-all.sh`
+  teilt sich selbst in parallele Teile (siehe „Sicherungen“ 3) und läuft
+  genau einmal am Ende, als Hintergrundbefehl. Dauer: etwa 45 Minuten in
+  der Cloud (2 Kerne, 1 Teil), etwa 25 Minuten auf dem Mac mini (12 Kerne,
+  6 Teile). Vorher einen eigenen Server auf denselben Ports (PORT bis
+  PORT + 5) beenden, denn `run-all.sh` startet je Teil einen eigenen.
 - Während der Arbeit nur die betroffenen Tests laufen lassen, zum
   Beispiel `node tests/<spiel>-core.js`. Simulationen höchstens 100
   Durchläufe; die verlangte volle Zahl einmal am Ende (Tempo-Regel).
@@ -125,11 +127,43 @@ Vorgaben für den Bericht:
   - `ss` gibt es nicht, den Server mit `curl` prüfen;
   - Hilfsskripte im Scratchpad gehen mit der Sitzung verloren.
 
-## Stand (18.10.2026)
+## Sparsam arbeiten (Christopher, 19.10.2026)
 
-- `CACHE_NAME` `papergames-cache-v254`, 103 Spiele.
-- Aufgaben bis 99u erledigt, `offen/` leer.
+Gilt für jede Sitzung und jeden geplanten Lauf. Alles sauber und
+ordentlich, aber mit so wenig Claude-Credits wie möglich.
+
+1. Lange Läufe (volle Testreihe, Simulationen, Vorabprüfung, Bildschirmfotos)
+   laufen auf dem Mac mini (12 Kerne, 32 GB), nicht in der Cloud (2 Kerne),
+   wenn er erreichbar ist. Testdienst: Zweigname in die Datei
+   `~/codex-work/pg-jobs/start-tests` schreiben; der Dienst lädt den Zweig
+   von GitHub und führt `tests/run-all.sh` mit `PORT=8010` aus. Den Zweig
+   vorher mit `git push -u origin <Zweig>` sichern. Ergebnis:
+   `~/codex-work/pg-jobs/status.txt` und `~/codex-work/pg-test/mac/log-1.txt`.
+   Der Dienst hat nur einen kleinen PATH (ohne `/usr/sbin`).
+2. Nur das Ergebnis lesen (`tail -n 1`, `grep -c "^=== "`, Fehlerzeilen),
+   nie ganze Logs in den Chat holen.
+3. Einfache Massenarbeit (Kommentare, Umbenennen, Texte formatieren, kleine
+   Dateien) und klar umrissene Programmieraufgaben an Ollama bzw. Codex
+   geben, wenn erreichbar (Skill `arbeitsteilung-codex-ollama`). Claude plant,
+   prüft den Diff und entscheidet. Keine Zugangsdaten und keine Mailadressen
+   an Codex.
+4. Ist der Mac nicht erreichbar, in der Cloud arbeiten und das im Bericht
+   unter „Sonstiges“ nennen.
+5. Fehlt ein Werkzeug (Paket, Browser, Modell), selbst beschaffen und
+   installieren. Nur wenn es wirklich nicht geht, Christopher fragen.
+6. Im Bericht unter „Eigene Entscheidungen“ nennen, was auf dem Mac, bei
+   Ollama/Codex und in der Cloud lief.
+
+## Stand (19.10.2026)
+
+- `CACHE_NAME` `papergames-cache-v256`, 103 Spiele.
+- Aufgaben bis 99x erledigt, `offen/` leer.
+- Testreihe: 71 Tests in `tests/test-list.txt`, 123 Abschnitte im Log
+  (`grep -c "^=== "`), automatisch in bis zu 6 parallele Teile geteilt.
 - Zuletzt gebaut:
+  - 99x: `run-all.sh` teilt die Testreihe selbst in parallele Teile (`SHARDS`, Liste in `tests/test-list.txt`, `tests/run-all-shards.js`), `arrows-core.js --levels`, `tools/preflight.sh` ohne festen Browser-Pfad; kein Release (nur Testwerkzeug);
+  - 99w: Service Worker schreibt aktualisierte Seiten nicht mehr in den Cache der laufenden Version, klarer Offline-Satz (`offline_waiting`, `offline_ready_update_waiting`), `tests/offline-update.js`, v256;
+  - 99v: Waldsiedlung ohne Everdell-Reste (Katalogtext, Senke/Clearing in den Regeln, 12 Sprachen), v255;
   - 99u: Lizenz PolyForm Noncommercial 1.0.0 (`LICENSE`), alter MIT-Text in `LICENSE-MIT-bis-v253.txt`, README und NOTICE angepasst, v254 ohne volle Testreihe (Anweisung Christopher);
   - 99t: Zoowurf, Pfote selbst auf ein leeres Tier legen (`pick`, Phase `paw`, `placePaw`), Zug des Computers als Tafel mit „Weiter“ (`tests/zoowurf-ui.js`);
   - 99s: gemeinsames „Wie geht das?“ (`howto.js`, 5 Spiele), gemeinsamer Statustext (`ui-status.js` statt 45 Kopien), Kuchenbrett mit Raumzahlen und Legende, Zoowurf-Stufe Anfänger;
@@ -149,8 +183,8 @@ Gilt für jede Sitzung, auch für die geplanten Läufe. Ziel: Fehler früh finde
 
 1. Nach jeder Zusammenführung mehrerer Zweige zuerst `bash tools/preflight.sh` (etwa 1 Minute: Syntax aller JS-Dateien, Konfliktmarken, doppelte Listen, Seitenfehler auf 12 Seiten, Hashes, statische Prüfungen, Übersetzungen). Erst bei „PREFLIGHT OK“ die Testreihe starten.
 2. Nach JEDER Änderung an einer Datei, die in `sw.js` gelistet ist, `node tools/sw-hashes.js` erneut ausführen, auch bei einer Ein-Zeichen-Korrektur.
-3. Geteilte Testreihe auf einem Rechner: jede Hälfte mit eigenem `PORT` starten (zum Beispiel 8010 und 8011), nie beide mit dem Standardwert. Mit `setsid nohup` starten. Vor dem Warten prüfen, ob die Prozesse leben (`ps aux | grep "[_]shard"`). Ein stehendes Log ohne Prozess bedeutet: Neustart der Umgebung, Lauf neu starten.
-4. Erfolg nur melden, wenn die letzte Zeile jedes Logs `ALL CHECKS PASS` lautet. Eine Hälfte allein genügt nicht.
+3. Die Testreihe teilt sich selbst: `PORT=8010 NODE_PATH=... bash tests/run-all.sh > log 2>&1` startet `SHARDS` Teile (ohne Angabe Kerne / 2, höchstens 6, höchstens 1 Teil je 2 GB freiem Speicher; `SHARDS=1` = alles nacheinander), jeder Teil mit eigenem Port (`PORT` bis `PORT + SHARDS - 1`) und eigenem Server, und fügt die Ausgabe zu einem Log zusammen. Keine Hilfsdateien `_shard1.sh`/`_shard2.sh` mehr und kein Start „in zwei Hälften“. Mit `setsid nohup` (nur Linux) oder als Hintergrundbefehl starten. Vor dem Warten prüfen, ob `run-all.sh` lebt (`ps aux | grep "[r]un-all"`). Ein stehendes Log ohne Prozess bedeutet: Neustart der Umgebung, Lauf neu starten. Neuer Test: in `tests/test-list.txt` eintragen (Gewicht = Sekunden), sonst läuft er nicht; `node tests/run-all-shards.js` prüft die Aufteilung. `tools/preflight.sh` prüft die Ports 8010 bis 8015.
+4. Erfolg nur melden, wenn die letzte Zeile des Logs `ALL CHECKS PASS` lautet (das Skript gibt sie nur aus, wenn jeder Teil durchlief).
 5. Zusammenführen ohne `merge=union` in `.git/info/attributes`. Konflikte einzeln lösen. Union-Merge hat doppelte Listen, fehlende Kommas und unvollständige CSS-Blöcke erzeugt.
 6. Unsichere Entscheidungen nicht blockieren lassen: die vorsichtigere Lesart wählen, im Bericht unter „Eigene Entscheidungen“ nennen. Nur nachfragen bei Unumkehrbarem (Namen/Marken veröffentlichen, Mails, Löschen).
 7. Zweige früh sichern: `git push -u origin <Zweig>` (nicht `main`), danach `git fetch origin +refs/heads/<Zweig>:refs/remotes/origin/<Zweig>`.
