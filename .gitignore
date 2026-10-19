@@ -6,3 +6,10 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Mac / Editor / Test-Ausgaben
+.DS_Store
+.schreibtest*
+*.log
+log-*.txt
+tests/_shard*
