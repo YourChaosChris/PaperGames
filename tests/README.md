@@ -115,6 +115,10 @@ all parts back into one log in list order. The last line is exactly
   marks the existing title, mode, start, status and result elements
   without replacing their IDs. Also checks its 44 px black-and-white
   styling, RTL spacing, and service-worker shell entry. No exceptions.
+- `node tests/seo-index-texts.js` - no server or browser needed. Home page
+  title and description exist in all 12 languages, name Kindle, Kobo,
+  Tolino and Boox, and the static English copies in `index.html` (title,
+  description, og:, twitter:, JSON-LD) match.
 - `node tests/i18n-messages.js` - no server or browser needed. Runs a
   sample of every runtime status/result message shape through
   `I18n.msg()` in all 10 non-English languages and fails on anything

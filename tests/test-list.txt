@@ -5,6 +5,7 @@
 1 run-all-shards.js
 194 split-pages.js
 9 i18n-messages.js
+1 seo-index-texts.js
 1 ui-names.js
 1 ui-status.js
 1 howto.js

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v257",
+    date: "2026-10-19",
+    key: "release_v257",
+    text: "Home page title and description now name Kindle, Kobo, Tolino and Boox (search results and link previews)."
+  },
+  {
     version: "v256",
     date: "2026-10-19",
     key: "release_v256",
