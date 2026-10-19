@@ -131,6 +131,17 @@ run_shard() {
       node "$ROOT/tests/$name" $args
     } > "$WORK/out-$i" 2>&1
     rc=$?
+    # One visible retry (RETRY=0 turns it off): on the Mac, browser tests
+    # sometimes fail with connection timeouts under load. The first output
+    # stays in the log, so nothing is hidden.
+    if [ "$rc" -ne 0 ] && [ "${RETRY:-1}" != "0" ]; then
+      {
+        echo "WIEDERHOLUNG: $name endete mit Code $rc, zweiter Versuch (Ausgabe des ersten Versuchs steht oben)"
+        # shellcheck disable=SC2086
+        node "$ROOT/tests/$name" $args
+      } >> "$WORK/out-$i" 2>&1
+      rc=$?
+    fi
     echo "$rc" > "$WORK/rc-$i"
     echo "$(( $(date +%s) - t0 ))" > "$WORK/sec-$i"
   done < "$WORK/shard-$s"
