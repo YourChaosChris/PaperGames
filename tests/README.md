@@ -23,15 +23,34 @@ plain Node scripts, matching the rest of the codebase.
 ## Running everything
 
 ```
-bash tests/run-all.sh
+PORT=8010 bash tests/run-all.sh > log 2>&1
 ```
 
-This starts a throwaway `python3 -m http.server` for the repo root,
-runs every check below against it, and shuts the server down again.
-Set `PORT` to use a port other than 8000 if that one's busy.
+The checks are listed in `tests/test-list.txt` (weight, file, arguments;
+a new check must be added there). `run-all.sh` spreads them over several
+parts that run in parallel, each with its own port (`PORT`, `PORT + 1`, ...)
+and its own throwaway `python3 -m http.server`, then merges the output of
+all parts back into one log in list order. The last line is exactly
+`ALL CHECKS PASS` only if every part passed; otherwise the exit code is 1.
+
+- Number of parts: `SHARDS` if set; otherwise cores / 2 (`nproc` or
+  `sysctl -n hw.ncpu`), at least 1, at most 6, and at most one part per 2 GB
+  of free memory (`/proc/meminfo` on Linux, `vm_stat` on macOS). `SHARDS=1`
+  runs everything one after another.
+- `bash tests/run-all.sh --plan` prints the split without running anything.
+- The three checks that start their own server use `PORT + 21` (offline-install),
+  `PORT + 22` (offline-update) and `PORT + 23` (update-banner); override with
+  `OFFLINE_TEST_PORT`, `OFFLINE_UPDATE_PORT`, `BANNER_TEST_PORT`.
+- Before the start every port is checked with `curl`; a busy port aborts the run.
+- The weights in `test-list.txt` are rough seconds. Every section of the merged
+  log ends with its real duration (`(Dauer: N s)`); adjust the weights from there.
+- Works with bash 3.2 (macOS) and Linux. `KEEP_WORK=1` keeps the part logs.
+- `node tests/run-all-shards.js` checks the split (every check in exactly one
+  part for 1 to 6 parts, none missing).
 
 ## Running a single check
 
+- `node tests/run-all-shards.js` - no server or browser needed. See above.
 - `node tests/split-check.js` - no server or browser needed. The page
   split has no build step, so this guards it: every page links
   `base.css` plus its own `css/<game>.css`, no rule in a game sheet could

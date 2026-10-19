@@ -21,7 +21,9 @@ cd "$ROOT"
 # ---- number of parts -------------------------------------------------------
 cores() {
   local n
-  n="$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 1)"
+  # The test service on the Mac has no /usr/sbin in PATH, so sysctl is tried
+  # by absolute path too; getconf (in /usr/bin) works on both systems.
+  n="$(nproc 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || /usr/sbin/sysctl -n hw.ncpu 2>/dev/null || echo 1)"
   case "$n" in ''|*[!0-9]*) n=1 ;; esac
   echo "$n"
 }
