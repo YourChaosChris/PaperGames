@@ -20,10 +20,15 @@
 // gets stuck in at least 60 % of all tries on Hard (20 tries per puzzle,
 // the share is printed). Easy and Medium make the same puzzles as before.
 //
-// Run: node tests/arrows-core.js
+// Run: node tests/arrows-core.js [--levels easy,medium]
+// (--levels runs only those levels, so run-all.sh can spread the levels over
+// several parts; the fingerprint check belongs to easy and medium.)
 
 const A = require("../arrows-core.js");
 
+const levelArg = process.argv.filter((a) => /^--levels=/.test(a))[0] || (process.argv.indexOf("--levels") > 0 ? "--levels=" + process.argv[process.argv.indexOf("--levels") + 1] : "");
+const ONLY = levelArg ? levelArg.replace(/^--levels=/, "").split(",") : null;
+const use = (lv) => !ONLY || ONLY.indexOf(lv) >= 0;
 const PER = 500;
 const GRAND_PER = 200;
 const SHAPE_PER = 50;
@@ -165,10 +170,11 @@ const finger = (lv) => {
   }
   return String(h);
 };
-Object.keys(FINGER).forEach((lv) => { const f = finger(lv); if (f !== FINGER[lv]) fails.push(lv + ": puzzles changed (fingerprint " + f + ")"); });
+Object.keys(FINGER).filter(use).forEach((lv) => { const f = finger(lv); if (f !== FINGER[lv]) fails.push(lv + ": puzzles changed (fingerprint " + f + ")"); });
 
 const t0 = Date.now();
-for (const lv of Object.keys(A.LEVELS)) {
+if (ONLY) ONLY.forEach((lv) => { if (!A.LEVELS[lv]) fails.push("unknown level " + lv); });
+for (const lv of Object.keys(A.LEVELS).filter(use)) {
   const shapes = lv === "pictures" ? Object.keys(A.SHAPES) : [null];
   const count = lv === "grandmaster" ? GRAND_PER : lv === "pictures" ? SHAPE_PER : PER;
   for (const shape of shapes) for (let seed = 1; seed <= count; seed++) {
