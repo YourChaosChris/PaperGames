@@ -157,7 +157,7 @@ ordentlich, aber mit so wenig Claude-Credits wie möglich.
 ## Stand (19.10.2026)
 
 - `CACHE_NAME` `papergames-cache-v256`, 103 Spiele.
-- Aufgaben bis 99x erledigt; offen: 99y (Offline-Install-Test stabil), 99z (Regel Releases bündeln).
+- Aufgaben bis 99z erledigt, nichts beauftragt offen. 99y: Offline-Install-Test stabil (`tests/serve.py`), 99z: Regel Releases bündeln. Nach Pushes startet `de.papergames.auto` die Tests auf dem Mac mini selbst.
 - Testreihe: 71 Tests in `tests/test-list.txt`, 126 Abschnitte im Log
   (`grep -c "^=== "`), automatisch in bis zu 6 parallele Teile geteilt.
 - Zuletzt gebaut:
