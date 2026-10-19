@@ -114,7 +114,7 @@ export BANNER_TEST_PORT="${BANNER_TEST_PORT:-$((PORT + 23))}"
 # Does one part: its own server, then its tests in list order.
 run_shard() {
   local s="$1" port=$((PORT + $1 - 1)) srv i line name args t0 rc
-  python3 -m http.server "$port" > "$WORK/server-$s.log" 2>&1 &
+  python3 "$ROOT/tests/serve.py" "$port" > "$WORK/server-$s.log" 2>&1 &
   srv=$!
   for i in $(seq 1 40); do
     curl -sf -o /dev/null "http://localhost:${port}/index.html" && break

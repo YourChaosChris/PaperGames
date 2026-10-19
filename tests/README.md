@@ -41,6 +41,9 @@ all parts back into one log in list order. The last line is exactly
 - The three checks that start their own server use `PORT + 21` (offline-install),
   `PORT + 22` (offline-update) and `PORT + 23` (update-banner); override with
   `OFFLINE_TEST_PORT`, `OFFLINE_UPDATE_PORT`, `BANNER_TEST_PORT`.
+- The parts use `tests/serve.py` instead of `python3 -m http.server`: HTTP/1.1 keep-alive and a
+  longer listen queue. With one connection per file the Mac ran out of ports in a serial run
+  (`ERR_CONNECTION_TIMED_OUT`, `page.goto` timeouts in the sweeps).
 - Before the start every port is checked with `curl`; a busy port aborts the run.
 - The weights in `test-list.txt` are rough seconds. Every section of the merged
   log ends with its real duration (`(Dauer: N s)`); adjust the weights from there.
