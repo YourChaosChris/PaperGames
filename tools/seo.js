@@ -17,8 +17,12 @@
 //  - <title> and <meta name="description"> get data-seo-title and
 //    data-seo-desc: which i18n keys translate them. i18n.js uses them only
 //    when the page was opened with ?lang=xx.
-//  - sitemap.xml lists every page in every language plus the address
-//    without parameter, each with xhtml:link alternates.
+//  - sitemap.xml lists every page once, at the address without parameter,
+//    with lastmod (date of the last commit of the file) and xhtml:link
+//    alternates to the 12 languages. The ?lang= addresses are NOT listed
+//    as own <url> entries (that made the file 7.5 MB with 4264 addresses
+//    and Search Console could not fetch it); they are reached through
+//    the alternates, and their canonical points to themselves.
 //  - the number of games (texts write it as {games}) is taken from
 //    games-catalog.js: GAME_COUNT in i18n.js, and every static English
 //    copy of such a text in the pages, manifest.json and README.md.
@@ -156,11 +160,19 @@ function oldPriorities() {
   const out = {};
   try {
     const xml = fs.readFileSync(path.join(ROOT, "sitemap.xml"), "utf8");
-    const re = /<loc>([^<?]+)<\/loc>\s*<priority>([0-9.]+)<\/priority>/g;
+    const re = /<loc>([^<?]+)<\/loc>\s*(?:<lastmod>[^<]*<\/lastmod>\s*)?<priority>([0-9.]+)<\/priority>/g;
     let m;
     while ((m = re.exec(xml))) out[m[1]] = m[2];
   } catch (e) { /* first run */ }
   return out;
+}
+
+function lastmod(file) {
+  try {
+    const d = require("child_process").execFileSync("git", ["log", "-1", "--format=%cs", "--", file], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
+  } catch (e) { /* no git: fall back to the file time */ }
+  return fs.statSync(path.join(ROOT, file)).mtime.toISOString().slice(0, 10);
 }
 
 function sitemap(pages, langs) {
@@ -172,11 +184,9 @@ function sitemap(pages, langs) {
     const p = prio[url] || (file === "index.html" ? "1.0" : "0.6");
     const alts = langs.map((l) => '    <xhtml:link rel="alternate" hreflang="' + l + '" href="' + url + "?lang=" + l + '"/>')
       .concat(['    <xhtml:link rel="alternate" hreflang="x-default" href="' + url + '"/>']);
-    [url].concat(langs.map((l) => url + "?lang=" + l)).forEach((loc) => {
-      out.push("  <url>", "    <loc>" + loc.replace(/&/g, "&amp;") + "</loc>", "    <priority>" + p + "</priority>");
-      alts.forEach((a) => out.push(a));
-      out.push("  </url>");
-    });
+    out.push("  <url>", "    <loc>" + url.replace(/&/g, "&amp;") + "</loc>", "    <lastmod>" + lastmod(file) + "</lastmod>", "    <priority>" + p + "</priority>");
+    alts.forEach((a) => out.push(a));
+    out.push("  </url>");
   });
   out.push("</urlset>", "");
   fs.writeFileSync(path.join(ROOT, "sitemap.xml"), out.join("\n"));
@@ -236,7 +246,7 @@ function main() {
   });
   sitemap(pages, LANGUAGE_ORDER);
   updateGameCount(en, catalog.length);
-  console.log("seo: " + pages.length + " pages, sitemap with " + pages.length * (LANGUAGE_ORDER.length + 1) + " addresses, " + catalog.length + " games");
+  console.log("seo: " + pages.length + " pages, sitemap with " + pages.length + " addresses, " + catalog.length + " games");
   problems.forEach((p) => console.log("  problem: " + p));
   process.exit(problems.length ? 1 : 0);
 }
