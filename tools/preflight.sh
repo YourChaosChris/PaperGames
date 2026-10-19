@@ -20,15 +20,15 @@ node tests/static-checks.js | tail -1
 echo "4/6 Uebersetzungen"
 node tests/i18n-messages.js | tail -1
 echo "5/6 Seitenfehler auf 12 Stichproben-Seiten"
-ps aux | grep "[h]ttp.server $PORT" | awk '{print $2}' | xargs -r kill
+for q in $(ps aux | grep "[h]ttp.server $PORT" | awk '{print $2}'); do kill "$q" 2>/dev/null || true; done
 python3 -m http.server "$PORT" >/dev/null 2>&1 &
 SRV=$!; trap 'kill $SRV 2>/dev/null' EXIT; sleep 1
 PORT=$PORT node -e '
 const {chromium}=require("playwright");
-(async()=>{const b=await chromium.launch({executablePath:"/opt/pw-browsers/chromium"});const p=await b.newPage();let bad=0;
+(async()=>{const b=await chromium.launch({executablePath:require("fs").existsSync("/opt/pw-browsers/chromium")?"/opt/pw-browsers/chromium":undefined});const p=await b.newPage();let bad=0;
 p.on("pageerror",e=>{bad++;console.log("SEITENFEHLER",p.url(),e.message)});
 for(const u of ["index","games","chess","domino","bingo","klappenkasten","sternjagd","patternrow","shadowmatch","oddone","arrows","catplaces"]){await p.goto("http://localhost:"+process.env.PORT+"/"+u+".html",{waitUntil:"networkidle"});await p.waitForTimeout(300);}
 await b.close();process.exit(bad?1:0)})()'
-echo "6/6 Ports fuer die Testreihe frei?"
-for p in 8010 8011; do curl -sf -o /dev/null "http://localhost:$p/" && { echo "PORT $p belegt"; exit 1; } || true; done
+echo "6/6 Ports fuer die Testreihe frei? (8010 bis 8015)"
+for p in 8010 8011 8012 8013 8014 8015; do curl -sf -o /dev/null "http://localhost:$p/" && { echo "PORT $p belegt"; exit 1; } || true; done
 echo "PREFLIGHT OK"

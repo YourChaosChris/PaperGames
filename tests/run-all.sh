@@ -1,223 +1,183 @@
 #!/usr/bin/env bash
 # run-all.sh
-# Starts a throwaway local server for the repo, runs every check in
-# tests/, and tears the server down again - the same sequence that's
-# been run by hand from a scratch script before every PR in this
-# project's history. See tests/README.md for prerequisites.
+# Runs every check listed in tests/test-list.txt. The checks are spread over
+# SHARDS parallel parts; each part has its own port (PORT + i) and its own
+# throwaway `python3 -m http.server`. The output of all parts is merged back
+# into one log in the order of the list. See tests/README.md.
+#
+#   PORT=8010 bash tests/run-all.sh          # SHARDS chosen automatically
+#   SHARDS=1 PORT=8010 bash tests/run-all.sh # everything one after another
+#   bash tests/run-all.sh --plan             # print the split, run nothing
+#
+# Works with bash 3.2 (macOS) and Linux: no wait -n, no mapfile, no
+# associative arrays, no setsid, no ss, no GNU-only options.
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PORT="${PORT:-8000}"
-export BASE_URL="http://localhost:${PORT}/"
-
+LIST="$ROOT/tests/test-list.txt"
 cd "$ROOT"
-python3 -m http.server "$PORT" > /tmp/papergames-test-server.log 2>&1 &
-SERVER_PID=$!
-trap 'kill "$SERVER_PID" 2>/dev/null' EXIT
 
-# Give the server a moment to bind before hitting it.
-for i in $(seq 1 20); do
-  curl -sf -o /dev/null "http://localhost:${PORT}/index.html" && break
-  sleep 0.5
+# ---- number of parts -------------------------------------------------------
+cores() {
+  local n
+  n="$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 1)"
+  case "$n" in ''|*[!0-9]*) n=1 ;; esac
+  echo "$n"
+}
+# Free memory in MB, empty when it cannot be found out.
+free_mb() {
+  if [ -r /proc/meminfo ]; then
+    awk '/^MemAvailable:/ { print int($2 / 1024) }' /proc/meminfo
+  elif command -v vm_stat >/dev/null 2>&1; then
+    vm_stat 2>/dev/null | awk '
+      /page size of/ { for (i = 1; i <= NF; i++) if ($i ~ /^[0-9]+$/) ps = $i }
+      /^Pages free:/ { f += $3 }
+      /^Pages inactive:/ { f += $3 }
+      /^Pages speculative:/ { f += $3 }
+      END { if (ps > 0) print int(f * ps / 1048576) }'
+  fi
+}
+choose_shards() {
+  local n c m
+  if [ -n "${SHARDS:-}" ]; then
+    n="$SHARDS"
+  else
+    c="$(cores)"
+    n=$((c / 2))
+    [ "$n" -gt 6 ] && n=6
+    m="$(free_mb)"
+    case "$m" in ''|*[!0-9]*) ;; *) [ $((m / 2048)) -lt "$n" ] && n=$((m / 2048)) ;; esac
+  fi
+  case "$n" in ''|*[!0-9]*) n=1 ;; esac
+  [ "$n" -lt 1 ] && n=1
+  echo "$n"
+}
+
+# ---- list and split --------------------------------------------------------
+# Lines: "idx weight file args..." (comments and empty lines dropped).
+numbered_list() {
+  grep -v '^[[:space:]]*#' "$LIST" | grep -v '^[[:space:]]*$' | awk '{ print NR, $0 }'
+}
+# "idx shard" per test; greedy: heaviest first onto the emptiest part, so
+# heavy tests land in different parts.
+plan() {
+  numbered_list | awk -v n="$1" '
+    { idx[NR] = $1; w[NR] = $2 + 0; total = NR }
+    END {
+      for (i = 1; i <= total; i++) used[i] = 0
+      for (s = 1; s <= n; s++) load[s] = 0
+      for (i = 1; i <= total; i++) order[i] = i
+      for (i = 2; i <= total; i++) {          # sort by weight, descending
+        v = order[i]; j = i - 1
+        while (j >= 1 && w[order[j]] < w[v]) { order[j + 1] = order[j]; j-- }
+        order[j + 1] = v
+      }
+      for (k = 1; k <= total; k++) {
+        t = order[k]; best = 1
+        for (s = 2; s <= n; s++) if (load[s] < load[best]) best = s
+        load[best] += w[t]; print idx[t], best
+      }
+    }' | sort -n
+}
+
+SHARDS="$(choose_shards)"
+TOTAL="$(numbered_list | wc -l | tr -d ' ')"
+
+if [ "${1:-}" = "--plan" ]; then
+  echo "SHARDS $SHARDS"
+  plan "$SHARDS" | awk '{ print "TEST " $1 " " $2 }'
+  exit 0
+fi
+
+# ---- helpers ---------------------------------------------------------------
+WORK="$(mktemp -d "${TMPDIR:-/tmp}/papergames-tests.XXXXXX")"
+SERVER_PIDS=""
+cleanup() {
+  local p
+  for p in $SERVER_PIDS; do kill "$p" 2>/dev/null; done
+  [ -n "${KEEP_WORK:-}" ] || rm -rf "$WORK"
+}
+trap cleanup EXIT
+trap 'exit 130' INT TERM
+
+port_busy() { curl -s -o /dev/null --max-time 2 "http://localhost:$1/"; }
+
+# Fixed ports of the tests that start their own server: one per test and part.
+export OFFLINE_TEST_PORT="${OFFLINE_TEST_PORT:-$((PORT + 21))}"
+export OFFLINE_UPDATE_PORT="${OFFLINE_UPDATE_PORT:-$((PORT + 22))}"
+export BANNER_TEST_PORT="${BANNER_TEST_PORT:-$((PORT + 23))}"
+
+# Does one part: its own server, then its tests in list order.
+run_shard() {
+  local s="$1" port=$((PORT + $1 - 1)) srv i line name args t0 rc
+  python3 -m http.server "$port" > "$WORK/server-$s.log" 2>&1 &
+  srv=$!
+  for i in $(seq 1 40); do
+    curl -sf -o /dev/null "http://localhost:${port}/index.html" && break
+    sleep 0.5
+  done
+  export BASE_URL="http://localhost:${port}/"
+  while read -r i; do
+    line="$(numbered_list | awk -v n="$i" '$1 == n')"
+    name="$(echo "$line" | awk '{ print $3 }')"
+    args="$(echo "$line" | awk '{ $1 = ""; $2 = ""; $3 = ""; sub(/^ +/, ""); print }')"
+    t0="$(date +%s)"
+    {
+      echo "=== $name ==="
+      # shellcheck disable=SC2086
+      node "$ROOT/tests/$name" $args
+    } > "$WORK/out-$i" 2>&1
+    rc=$?
+    echo "$rc" > "$WORK/rc-$i"
+    echo "$(( $(date +%s) - t0 ))" > "$WORK/sec-$i"
+  done < "$WORK/shard-$s"
+  kill "$srv" 2>/dev/null
+}
+
+# ---- start -----------------------------------------------------------------
+s=1
+while [ "$s" -le "$SHARDS" ]; do
+  if port_busy $((PORT + s - 1)); then
+    echo "PORT $((PORT + s - 1)) ist belegt - Abbruch." >&2
+    echo "SOME CHECKS FAILED - see above"
+    exit 1
+  fi
+  s=$((s + 1))
 done
+plan "$SHARDS" | while read -r i s; do echo "$i" >> "$WORK/shard-$s"; done
+s=1
+while [ "$s" -le "$SHARDS" ]; do touch "$WORK/shard-$s"; s=$((s + 1)); done
 
+echo "Testreihe: $TOTAL Tests in $SHARDS Teil(en), Ports $PORT bis $((PORT + SHARDS - 1))"
+START="$(date +%s)"
+PIDS=""
+s=1
+while [ "$s" -le "$SHARDS" ]; do
+  run_shard "$s" &
+  PIDS="$PIDS $!"
+  s=$((s + 1))
+done
+for p in $PIDS; do wait "$p"; done
+
+# ---- merge -----------------------------------------------------------------
 status=0
-
-echo "=== static-checks.js ==="
-node "$ROOT/tests/static-checks.js" || status=1
-echo ""
-
-echo "=== split-check.js ==="
-node "$ROOT/tests/split-check.js" || status=1
-echo ""
-
-echo "=== split-pages.js ==="
-SPLIT_LANGS="${SPLIT_LANGS:-de,ar}" node "$ROOT/tests/split-pages.js" || status=1
-echo ""
-
-echo "=== i18n-messages.js ==="
-node "$ROOT/tests/i18n-messages.js" || status=1
-echo ""
-echo "=== ui-names.js ==="
-node "$ROOT/tests/ui-names.js" || status=1
-echo ""
-echo "=== ui-status.js ==="
-node "$ROOT/tests/ui-status.js" || status=1
-echo "=== howto.js ==="
-node "$ROOT/tests/howto.js" || status=1
-echo ""
-echo "=== undo.js ==="
-node "$ROOT/tests/undo.js" || status=1
-echo ""
-echo "=== game-frame.js ==="
-node "$ROOT/tests/game-frame.js" || status=1
-echo ""
-echo "=== search-keywords.js ==="
-node "$ROOT/tests/search-keywords.js" || status=1
-echo ""
-
-echo "=== cake-core.js ==="
-node "$ROOT/tests/cake-core.js" || status=1
-echo ""
-
-echo "=== bingo-core.js ==="
-node "$ROOT/tests/bingo-core.js" || status=1
-
-echo "=== animalsudoku-core.js ==="
-node "$ROOT/tests/animalsudoku-core.js" || status=1
-echo ""
-
-echo "=== shapesort-core.js ==="
-node "$ROOT/tests/shapesort-core.js" || status=1
-echo ""
-
-echo "=== linkpairs-core.js ==="
-node "$ROOT/tests/linkpairs-core.js" || status=1
-echo ""
-
-echo "=== oldmaid-core.js ==="
-node "$ROOT/tests/oldmaid-core.js" || status=1
-echo ""
-
-echo "=== war-core.js ==="
-node "$ROOT/tests/war-core.js" || status=1
-echo ""
-
-echo "=== snakesladders-core.js ==="
-node "$ROOT/tests/snakesladders-core.js" || status=1
-echo ""
-
-echo "=== blockers-core.js ==="
-node "$ROOT/tests/blockers-core.js" || status=1
-echo ""
-
-echo "=== blackjack-core.js ==="
-node "$ROOT/tests/blackjack-core.js" || status=1
-echo ""
-
-echo "=== poker-core.js ==="
-node "$ROOT/tests/poker-core.js" || status=1
-echo ""
-
-echo "=== skat-core.js ==="
-node "$ROOT/tests/skat-core.js" || status=1
-echo ""
-
-echo "=== schafkopf-core.js ==="
-node "$ROOT/tests/schafkopf-core.js" || status=1
-echo "=== canasta-core.js ==="
-node "$ROOT/tests/canasta-core.js" || status=1
-echo "=== bridge-core.js ==="
-node "$ROOT/tests/bridge-core.js" || status=1
-echo "=== tenpairs-core.js ==="
-node "$ROOT/tests/tenpairs-core.js" || status=1
-echo "=== domino-core.js ==="
-node "$ROOT/tests/domino-core.js" || status=1
-echo "=== mathcross-core.js ==="
-node "$ROOT/tests/mathcross-core.js" || status=1
-echo "=== differences-core.js ==="
-node "$ROOT/tests/differences-core.js" || status=1
-echo "=== pentomino-core.js ==="
-node "$ROOT/tests/pentomino-core.js" || status=1
-echo "=== arrows-core.js ==="
-node "$ROOT/tests/arrows-core.js" || status=1
-echo "=== rings-core.js ==="
-node "$ROOT/tests/rings-core.js" || status=1
-echo "=== tangram-core.js ==="
-node "$ROOT/tests/tangram-core.js" || status=1
-echo "=== catplaces-core.js ==="
-node "$ROOT/tests/catplaces-core.js" || status=1
-echo "=== catplaces-start.js ==="
-node "$ROOT/tests/catplaces-start.js" || status=1
-echo "=== loosen-core.js ==="
-node "$ROOT/tests/loosen-core.js" || status=1
-echo "=== klappenkasten-core.js ==="
-node "$ROOT/tests/klappenkasten-core.js" || status=1
-echo "=== steckwuerfeln-core.js ==="
-node "$ROOT/tests/steckwuerfeln-core.js" || status=1
-echo "=== sternjagd-core.js ==="
-node "$ROOT/tests/sternjagd-core.js" || status=1
-echo "=== kleeberg-core.js ==="
-node "$ROOT/tests/kleeberg-core.js" || status=1
-echo "=== patternrow-core.js ==="
-node "$ROOT/tests/patternrow-core.js" || status=1
-echo "=== shadowmatch-core.js ==="
-node "$ROOT/tests/shadowmatch-core.js" || status=1
-echo "=== oddone-core.js ==="
-node "$ROOT/tests/oddone-core.js" || status=1
-echo "=== weidefreunde-core.js ==="
-node "$ROOT/tests/weidefreunde-core.js" || status=1
-echo "=== zoowurf-core.js ==="
-node "$ROOT/tests/zoowurf-core.js" || status=1
-echo "=== zoowurf-ui.js ==="
-node "$ROOT/tests/zoowurf-ui.js" || status=1
-echo "=== matches-core.js ==="
-node "$ROOT/tests/matches-core.js" || status=1
-echo "=== cardduel-core.js ==="
-node "$ROOT/tests/cardduel-core.js" || status=1
-echo "=== villains-core.js ==="
-node "$ROOT/tests/villains-core.js" || status=1
-echo "=== forestvillage-core.js ==="
-node "$ROOT/tests/forestvillage-core.js" || status=1
-echo "=== adventurebook-core.js ==="
-node "$ROOT/tests/adventurebook-core.js" || status=1
-echo "=== new-games-order.js ==="
-node "$ROOT/tests/new-games-order.js" || status=1
-echo "=== kids-games.js ==="
-node "$ROOT/tests/kids-games.js" || status=1
-echo "=== move-hints.js ==="
-node "$ROOT/tests/move-hints.js" || status=1
-echo "=== game-families.js ==="
-node "$ROOT/tests/game-families.js" || status=1
-echo "=== home-categories.js ==="
-node "$ROOT/tests/home-categories.js" || status=1
-echo ""
-
-echo "=== offline-install.js ==="
-node "$ROOT/tests/offline-install.js" || status=1
-echo "=== offline-update.js ==="
-node "$ROOT/tests/offline-update.js" || status=1
-echo ""
-
-echo "=== update-banner.js ==="
-node "$ROOT/tests/update-banner.js" || status=1
-echo ""
-
-echo "=== css-check.js ==="
-node "$ROOT/tests/css-check.js" || status=1
-echo ""
-
-echo "=== rtl-spacing.js ==="
-node "$ROOT/tests/rtl-spacing.js" || status=1
-echo ""
-
-echo "=== direct-start.js ==="
-node "$ROOT/tests/direct-start.js" || status=1
-echo ""
-
-echo "=== board-fit.js ==="
-node "$ROOT/tests/board-fit.js" --min 80 || status=1
-echo ""
-
-echo "=== tap-targets.js ==="
-node "$ROOT/tests/tap-targets.js" || status=1
-echo ""
-
-echo "=== cell-size.js ==="
-node "$ROOT/tests/cell-size.js" || status=1
-echo ""
-
-echo "=== board-sweep.js ==="
-node "$ROOT/tests/board-sweep.js" || status=1
-echo ""
-
-echo "=== interaction-sweep.js ==="
-node "$ROOT/tests/interaction-sweep.js" || status=1
-echo ""
-
-echo "=== i18n-runtime-sweep.js ==="
-node "$ROOT/tests/i18n-runtime-sweep.js" || status=1
-echo ""
+i=1
+while [ "$i" -le "$TOTAL" ]; do
+  if [ -f "$WORK/out-$i" ]; then
+    cat "$WORK/out-$i"
+    rc="$(cat "$WORK/rc-$i" 2>/dev/null || echo 1)"
+    [ "$rc" = "0" ] || { status=1; echo "FEHLER: Test endete mit Code $rc"; }
+    echo "(Dauer: $(cat "$WORK/sec-$i" 2>/dev/null || echo ?) s)"
+  else
+    status=1
+    echo "=== Test $i ==="
+    echo "FEHLER: Test wurde nicht ausgefuehrt"
+  fi
+  echo ""
+  i=$((i + 1))
+done
+echo "Gesamtdauer: $(( $(date +%s) - START )) s in $SHARDS Teil(en)"
 
 if [ "$status" -eq 0 ]; then
   echo "ALL CHECKS PASS"
