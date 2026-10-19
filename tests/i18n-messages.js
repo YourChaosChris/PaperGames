@@ -1089,6 +1089,20 @@ const SAME_AS_EN = { fv_computer_n: ["de", "it", "nl"], ab_gold: ["de"] };
   }
 }
 
+// The two lines the home page shows offline when the copy on the device is
+// incomplete or an update is waiting (home-app.js, offline-status.js).
+{
+  for (const k of ["offline_waiting", "offline_ready_update_waiting"]) {
+    for (const lang of langs) {
+      const own = STRINGS[lang][k];
+      if (typeof own !== "string" || !own) { fail(lang + ": no text " + k); continue; }
+      if (own === STRINGS.en[k]) fail(lang + ": " + k + " is the English text");
+      if (/\{/.test(own)) fail(lang + ": " + k + " has a placeholder");
+      if (["uk", "ru", "ja", "zh", "ar"].indexOf(lang) !== -1 && /[A-Za-z]{3,}/.test(own)) fail(lang + ": " + k + " has English words: " + own);
+    }
+  }
+}
+
 console.log(`=== I18N MESSAGES: ${SAMPLES.length + ARIA_SAMPLES.length} samples x ${langs.length} languages (main files only), ` +
   `page texts on ${pageCount.game} other and ${pageCount.text} rules/history pages, ${cakeSamples} cake clues, ${cdSamples} card duel and villains texts, ${failures} failure(s) ===`);
 process.exit(failures ? 1 : 0);

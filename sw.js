@@ -6,7 +6,7 @@
 // Every new CACHE_NAME needs its entry in release-notes.js (version, date
 // and one sentence in all 12 languages): the update banner shows it, and
 // tests/static-checks.js fails without it.
-const CACHE_NAME = "papergames-cache-v255";
+const CACHE_NAME = "papergames-cache-v256";
 
 const APP_SHELL = [
   "./",
@@ -1240,19 +1240,19 @@ const FILE_HASHES = {
   "css/war.css": "11165c26",
   "css/xiangqi.css": "46140063",
   "css/yatzy.css": "ab958e8f",
-  "i18n.js": "aad7d75f",
+  "i18n.js": "ac207534",
   "big-board.js": "e4968dce",
-  "lang/de.js": "74af30ae",
-  "lang/fr.js": "525cf30e",
-  "lang/es.js": "c8d682ef",
-  "lang/it.js": "74f2c165",
-  "lang/nl.js": "b4822f63",
-  "lang/pl.js": "090a3502",
-  "lang/uk.js": "85b1bd99",
-  "lang/ru.js": "2a197611",
-  "lang/ja.js": "d6a158ff",
-  "lang/zh.js": "f2a22f3a",
-  "lang/ar.js": "18a1c9d9",
+  "lang/de.js": "370b38e8",
+  "lang/fr.js": "63843e64",
+  "lang/es.js": "cef5c904",
+  "lang/it.js": "cddc7080",
+  "lang/nl.js": "6383fc9e",
+  "lang/pl.js": "85b9e571",
+  "lang/uk.js": "6866330e",
+  "lang/ru.js": "52dea219",
+  "lang/ja.js": "fecfa7a9",
+  "lang/zh.js": "81b84e69",
+  "lang/ar.js": "6a1b9c62",
   "text/en/abalone.js": "498fea56",
   "text/en/adventurebook.js": "fef98624",
   "text/en/alquerque.js": "cdd8ee0a",
@@ -1574,7 +1574,7 @@ const FILE_HASHES = {
   "high-contrast.js": "430d56a0",
   "ai-pacing.js": "f9662e76",
   "random-start.js": "328a18d0",
-  "offline-status.js": "77c757e0",
+  "offline-status.js": "05bf7463",
   "move-hints.js": "2aea1949",
   "settings-menu.js": "b1ac9ad8",
   "density.js": "6a222fe3",
@@ -1584,14 +1584,14 @@ const FILE_HASHES = {
   "quick-rules.js": "7b2b538d",
   "adaptive-difficulty.js": "abfa62fe",
   "update-banner.js": "2c928b7f",
-  "release-notes.js": "c8f8026e",
+  "release-notes.js": "7d6ede5a",
   "error-banner.js": "a67457c5",
   "force-update.js": "75f1558c",
   "games-catalog.js": "1bc90344",
   "devices-list.js": "d4fd9eef",
   "favorites.js": "4be2869d",
   "games-render.js": "95cc3c1d",
-  "home-app.js": "7d6a3fa6",
+  "home-app.js": "4d5533a4",
   "games-app.js": "e5523b21",
   "manifest.json": "40d56fe4",
   "favicon.png": "f97b9ff3",
@@ -3193,7 +3193,9 @@ self.addEventListener("fetch", (event) => {
   // (fast, works offline), but always also fetch from the network in the
   // background and refresh the cache for next time. Plain cache-first would
   // otherwise serve the exact same files forever after every future deploy,
-  // until the CACHE_NAME below happens to get bumped by hand.
+  // until the CACHE_NAME below happens to get bumped by hand. (Since v256
+  // this applies only to files NOT in FILE_HASHES; those are served as
+  // stored, see below.)
   //
   // { cache: "no-cache" } is required here: GitHub Pages sends
   // Cache-Control: max-age=600, so a plain fetch(req) can be silently
@@ -3211,14 +3213,20 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.open(CACHE_NAME).then((cache) =>
       cache.match(key, langPage ? { ignoreSearch: true } : undefined).then((cached) => {
-        // Files in FILE_HASHES are immutable for this worker version: a
-        // new worker gets a new cache after its install-time hash checks.
-        // Serve those assets directly from Cache Storage, including offline.
+        // Files in FILE_HASHES (scripts, styles AND pages) are immutable for
+        // this worker version: a new worker gets a new cache after its
+        // install-time hash checks. Serve those directly from Cache Storage,
+        // including offline, and never refresh them from the network: a page
+        // refreshed on its own (new HTML) over the scripts of this version,
+        // with the update itself broken off by a network failure, left a
+        // mixed copy that did not react (report of 19.10.2026, task 99w).
         // The name is the path below the worker's folder (lang/de.js,
-        // css/chess.css, text/de/chess.js, ...), as FILE_HASHES lists it.
+        // css/chess.css, text/de/chess.js, ...), as FILE_HASHES lists it;
+        // the folder itself is "./".
         const scopePath = new URL(self.registration.scope).pathname;
-        const assetName = url.pathname.indexOf(scopePath) === 0 ? url.pathname.slice(scopePath.length) : url.pathname.replace(/^.*\//, "");
-        if (cached && /\.(?:js|css)$/i.test(assetName) && FILE_HASHES[assetName]) return cached;
+        let assetName = url.pathname.indexOf(scopePath) === 0 ? url.pathname.slice(scopePath.length) : url.pathname.replace(/^.*\//, "");
+        if (assetName === "") assetName = "./";
+        if (cached && FILE_HASHES[assetName]) return cached;
 
         const networkUpdate = fetch(req, { cache: "no-cache" })
           .then((resp) => {

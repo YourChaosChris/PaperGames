@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v256",
+    date: "2026-10-19",
+    key: "release_v256",
+    text: "Offline: when the internet drops during an update, the old version now stays complete and keeps working, and the home page says in plain words what is missing and what to do."
+  },
+  {
     version: "v255",
     date: "2026-10-19",
     key: "release_v255",

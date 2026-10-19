@@ -33,6 +33,11 @@
 //                   (where sw-register.js never registers one), a
 //                   registration the browser refused (sw-register.js flags
 //                   it), or the device refused to store the files.
+// While the device reports no network (navigator.onLine === false), detail
+// has offline: true in the states "loading", "paused" and "ready" with
+// updating: true. Nothing is being loaded then, and the page says so
+// instead of "is being loaded now" (home-app.js). The states are read again
+// when the network comes or goes ("online" / "offline").
 // It returns stop(), which drops the timers and listeners; "unavailable"
 // stops on its own.
 
@@ -70,6 +75,10 @@ const OfflineStatus = (function () {
       if (sw) {
         sw.removeEventListener("message", onMessage);
         sw.removeEventListener("controllerchange", evaluate);
+      }
+      if (typeof window !== "undefined") {
+        window.removeEventListener("online", tick);
+        window.removeEventListener("offline", evaluate);
       }
       if (reg) reg.removeEventListener("updatefound", onUpdateFound);
       if (typeof document !== "undefined") document.removeEventListener("papergames-sw-failed", unavailable);
@@ -137,6 +146,13 @@ const OfflineStatus = (function () {
     function counts() {
       return progress && typeof progress.total === "number" ? { done: progress.done, total: progress.total } : {};
     }
+    function noNetwork() {
+      return typeof navigator !== "undefined" && navigator.onLine === false;
+    }
+    // detail plus offline: true while the device has no network.
+    function withNet(detail) {
+      return noNetwork() ? Object.assign({ offline: true }, detail) : detail;
+    }
     function evaluate() {
       if (finished) return;
       const installing = reg && (reg.installing || reg.waiting);
@@ -150,7 +166,7 @@ const OfflineStatus = (function () {
 
       if (active && version) {
         if (installing) {
-          report("ready", Object.assign({ version: version, updating: true }, counts()));
+          report("ready", withNet(Object.assign({ version: version, updating: true }, counts())));
           schedule();
         } else {
           // Stored and nothing new on the way: no more ticks until the
@@ -163,15 +179,15 @@ const OfflineStatus = (function () {
       if (active) {
         report("loading", { controlled: true });
       } else if (installing) {
-        report("loading", Object.assign({ controlled: false }, counts()));
+        report("loading", withNet(Object.assign({ controlled: false }, counts())));
       } else if (progress && progress.error === "storage") {
         unavailable();
         return;
       } else if (reg && sawInstall) {
-        report("paused", counts());
+        report("paused", withNet(counts()));
         scheduleRetry();
       } else {
-        report("loading", { controlled: false });
+        report("loading", withNet({ controlled: false }));
       }
       schedule();
     }
@@ -189,6 +205,8 @@ const OfflineStatus = (function () {
     document.addEventListener("papergames-sw-failed", unavailable);
     sw.addEventListener("message", onMessage);
     sw.addEventListener("controllerchange", evaluate);
+    window.addEventListener("online", tick);
+    window.addEventListener("offline", evaluate);
     evaluate();
     tick();
     return stop;

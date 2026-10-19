@@ -175,6 +175,8 @@ echo ""
 
 echo "=== offline-install.js ==="
 node "$ROOT/tests/offline-install.js" || status=1
+echo "=== offline-update.js ==="
+node "$ROOT/tests/offline-update.js" || status=1
 echo ""
 
 echo "=== update-banner.js ==="

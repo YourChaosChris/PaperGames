@@ -384,6 +384,17 @@ Set `PORT` to use a port other than 8000 if that one's busy.
   version carries it over, and offline the rules are there in German and
   English while Arabic shows the English rules with a note. `THROTTLE=1` runs a first visit over a slow line
   (500 kbit/s, 300 ms per request) instead; that takes several minutes.
+- `node tests/offline-update.js` - needs a browser; starts its own server
+  (port 8032, `OFFLINE_UPDATE_PORT`) on a copy of the site that can drop
+  every request from one moment on. A: a stored version, a new one starts
+  to load and the network drops; offline the home page still opens from the
+  old, complete version (also after a patchy connection where only the home
+  page got through: never new HTML over old scripts), says "Offline bereit.
+  Die neue Version wird geladen, sobald wieder Internet da ist.", has no
+  disabled buttons, a game opens; when the network is back the update is
+  stored completely. B: first install broken off; offline the home page
+  says "Noch nicht vollständig … Schalte das Internet ein", no disabled
+  buttons; with the network back the install ends with "Offline bereit".
 - `node tests/update-banner.js` - needs a browser; starts its own server
   on a copy of the site and makes updates by raising `CACHE_NAME` in the
   copy's `sw.js`. Checks the "what's new" lines of the update banner: a

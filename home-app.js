@@ -97,13 +97,18 @@
     const counted = typeof detail.total === "number";
     let key = "", icon = "dot";
     if (state === "ready") {
-      key = detail.updating ? "offline_ready_updating" : "offline_ready";
+      // No network: nothing is loading, the new version follows later.
+      key = detail.updating ? (detail.offline ? "offline_ready_update_waiting" : "offline_ready_updating") : "offline_ready";
       icon = "check";
     } else if (state === "loading" && detail.controlled) {
       // A worker already controls this page, so the files are stored and
       // its answer is a few milliseconds away - don't flash "loading" on
       // an e-ink screen for that.
       key = "";
+    } else if ((state === "loading" || state === "paused") && detail.offline) {
+      // Not complete on the device and no network: say what is missing and
+      // what to do, instead of "is being loaded now".
+      key = "offline_waiting";
     } else if (state === "loading") {
       key = counted ? "offline_loading_progress" : "offline_loading";
     } else if (state === "paused") {
