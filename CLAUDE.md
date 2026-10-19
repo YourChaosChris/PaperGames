@@ -177,6 +177,19 @@ ordentlich, aber mit so wenig Claude-Credits wie möglich.
   - Vorschläge siehe `vorschlaege/2026-10-17.md` und
     `vorschlaege/2026-10-17_99r_Spielqualitaet.md` im Aufgaben-Repository.
 
+## Releases bündeln (Christopher, 19.10.2026)
+
+Ziel: weniger Releases, weniger volle Testreihen, weniger Credits.
+
+1. Pro Kalendertag höchstens ein Release (`CACHE_NAME`, `release_vNNN`, volle Testreihe). Mehrere Aufgaben desselben Tages werden in ein Release gebündelt: erst alle Aufgaben bauen und einzeln prüfen, dann einmal Release und volle Testreihe.
+2. Ausnahmen, die sofort ein eigenes Release rechtfertigen:
+   - ein Fehler, der gespeicherte Spielstände zerstört oder das Spiel unbenutzbar macht;
+   - ein Fehler im Service Worker, der die Offline-Nutzung bricht;
+   - rechtliche Gründe (Lizenz, Marken, Namen).
+   Die Ausnahme steht im Bericht unter „Eigene Entscheidungen“.
+3. Reine Testwerkzeug- und Doku-Änderungen (`tests/`, `tools/`, `CLAUDE.md`, `README.md`) bekommen kein Release. Sie laufen mit dem nächsten ohnehin anstehenden Release mit oder werden einzeln gepusht, wenn die volle Testreihe durchläuft (wie bei 99x).
+4. Hat ein geplanter Lauf mehrere Aufgaben in `offen/`, arbeitet er sie ab und macht ein Release am Ende, nicht eines je Aufgabe. Jede Aufgabe bekommt trotzdem ihren eigenen Commit und Bericht; im Bericht steht dasselbe Release.
+
 ## Sicherungen (Prozess, damit Christopher nicht nachfragen muss)
 
 Gilt für jede Sitzung, auch für die geplanten Läufe. Ziel: Fehler früh finden, nicht erst nach der langen Testreihe. (Von Christopher am 17.10.2026 freigegeben.)
