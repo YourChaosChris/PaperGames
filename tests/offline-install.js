@@ -134,12 +134,18 @@ async function waitForText(page, re, ms) {
   }
   return false;
 }
+// caches.open(name) CREATES an empty cache when the name is gone. Listing the
+// names and then opening each one therefore brings back an old cache that the
+// new worker deleted in between, and it stays (found in 99y: "v256":0 in the
+// failures on the loaded Mac). Only the cache of the current version is
+// opened; every other name is reported with -1 ("present, not opened").
 async function cacheInfo(page) {
-  return page.evaluate(async () => {
+  const current = versionOf(swSrc());
+  return page.evaluate(async (cur) => {
     const out = {};
-    for (const k of await caches.keys()) out[k] = (await (await caches.open(k)).keys()).length;
+    for (const k of await caches.keys()) out[k] = k === cur ? (await (await caches.open(k)).keys()).length : -1;
     return out;
-  });
+  }, current);
 }
 const countOf = (p) => server.log.filter((x) => x === p).length;
 // Requests for the rules texts of the language in use come on their own once
@@ -148,16 +154,18 @@ const countOf = (p) => server.log.filter((x) => x === p).length;
 const isOwnText = (p) => /^\/text\/de\//.test(p);
 const GAME_SLUGS = fs.readdirSync(path.join(ROOT, "text", "de")).length;
 async function cacheTextLangs(page) {
-  return page.evaluate(async () => {
+  const current = versionOf(swSrc());
+  return page.evaluate(async (cur) => {
     const out = {};
     for (const k of await caches.keys()) {
+      if (k !== cur) continue; // see cacheInfo: never open a name that may be gone
       for (const r of await (await caches.open(k)).keys()) {
         const m = /\/text\/([a-z]{2})\//.exec(r.url);
         if (m) out[m[1]] = (out[m[1]] || 0) + 1;
       }
     }
     return out;
-  });
+  }, current);
 }
 async function waitForTextLang(page, lang, n, ms) {
   const end = Date.now() + ms;

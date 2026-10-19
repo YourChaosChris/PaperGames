@@ -88,12 +88,17 @@ async function waitForText(page, re, ms) {
   }
   return false;
 }
-async function cacheInfo(page) {
-  return page.evaluate(async () => {
+// caches.open(name) creates an empty cache when the name is gone, so listing
+// the names and opening each one can bring back an old cache that the new
+// worker deleted in between (99y, see offline-install.js). Where an old cache
+// may be deleted while this runs, pass the names to open; the others are
+// reported with -1 ("present, not opened").
+async function cacheInfo(page, only) {
+  return page.evaluate(async (names) => {
     const out = {};
-    for (const k of await caches.keys()) out[k] = (await (await caches.open(k)).keys()).length;
+    for (const k of await caches.keys()) out[k] = names && names.indexOf(k) === -1 ? -1 : (await (await caches.open(k)).keys()).length;
     return out;
-  });
+  }, only || null);
 }
 async function activeVersion(page) {
   return page.evaluate(() => new Promise((resolve) => {
@@ -219,7 +224,7 @@ async function newContext(browser) {
     const end2 = Date.now() + 120000;
     let c3 = {};
     while (Date.now() < end2) {
-      c3 = await cacheInfo(off);
+      c3 = await cacheInfo(off, [v2]);
       if (c3[v2] >= SHELL.length) break;
       await off.waitForTimeout(500);
     }

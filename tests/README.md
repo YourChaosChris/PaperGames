@@ -43,7 +43,14 @@ all parts back into one log in list order. The last line is exactly
   `OFFLINE_TEST_PORT`, `OFFLINE_UPDATE_PORT`, `BANNER_TEST_PORT`.
 - The parts use `tests/serve.py` instead of `python3 -m http.server`: HTTP/1.1 keep-alive and a
   longer listen queue. With one connection per file the Mac ran out of ports in a serial run
-  (`ERR_CONNECTION_TIMED_OUT`, `page.goto` timeouts in the sweeps).
+  (`ERR_CONNECTION_TIMED_OUT`, `page.goto` timeouts in the sweeps). Measured on the Mac
+  (99y, `interaction-sweep.js` alone): `http.server` leaves 16948 sockets in TIME_WAIT (the
+  port range holds 16384) and 2 games time out; `serve.py` leaves 408 and 0 games fail.
+  Run the sweeps by hand against `python3 tests/serve.py PORT`, not `http.server`.
+- Tests that list caches (`caches.keys()`) must not call `caches.open(name)` on a name that
+  the new worker may delete at that moment: `open` creates an empty cache again and it stays
+  (this was the `"papergames-cache-v256":0` failure of `offline-install.js`, 99y). Open only
+  the cache of the current version.
 - Before the start every port is checked with `curl`; a busy port aborts the run.
 - The weights in `test-list.txt` are rough seconds. Every section of the merged
   log ends with its real duration (`(Dauer: N s)`); adjust the weights from there.
