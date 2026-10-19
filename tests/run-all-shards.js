@@ -71,7 +71,7 @@ fs.writeFileSync(path.join(tmp, "once.js"), 'const fs=require("fs"),m=process.ar
 fs.writeFileSync(path.join(tmp, "always.js"), 'console.log("always fails");process.exit(1);\n');
 function runList(lines, extra) {
   fs.writeFileSync(path.join(tmp, "list.txt"), lines.join("\n") + "\n");
-  const r = spawnSync("bash", [path.join(root, "tests", "run-all.sh")], { encoding: "utf8", env: Object.assign({}, process.env, { SHARDS: "2", PORT: "8061", TEST_LIST: path.join(tmp, "list.txt"), TESTS_DIR: tmp }, extra || {}) });
+  const r = spawnSync("bash", [path.join(root, "tests", "run-all.sh")], { encoding: "utf8", env: Object.assign({}, process.env, { SHARDS: "2", PORT: "8061", TEST_LIST: path.join(tmp, "list.txt"), TESTS_DIR: tmp, RETRY: "1" }, extra || {}) });
   return { code: r.status, lines: (r.stdout || "").trim().split("\n") };
 }
 const marker = path.join(tmp, "marker");
