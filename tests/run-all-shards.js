@@ -58,5 +58,32 @@ for (let n = 1; n <= 6; n++) {
 const src = fs.readFileSync(path.join(root, "tests", "run-all.sh"), "utf8").split("\n").filter((l) => !/^\s*#/.test(l)).join("\n");
 [/\bwait -n\b/, /\bmapfile\b/, /\breadarray\b/, /\bdeclare -A\b/, /\bsetsid\b/, /\bss -/, /xargs -r/, /readlink -f/, /sed -i/, /date -d/, /pgrep -f/].forEach((re) => check(!re.test(src), "run-all.sh uses " + re));
 
+
+// Retry logic with a small fake list: a test that fails once is run once more
+// and named ("WIEDERHOLT: ..." and the summary line before the last line);
+// a test that fails twice keeps the run red; the last line is exactly
+// "ALL CHECKS PASS" only without a final failure.
+const os = require("os");
+const { spawnSync } = require("child_process");
+const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "pg-retry-"));
+fs.writeFileSync(path.join(tmp, "ok.js"), 'console.log("ok");\n');
+fs.writeFileSync(path.join(tmp, "once.js"), 'const fs=require("fs"),m=process.argv[2];if(fs.existsSync(m)){console.log("second ok");}else{fs.writeFileSync(m,"x");console.log("first fails");process.exit(1);}\n');
+fs.writeFileSync(path.join(tmp, "always.js"), 'console.log("always fails");process.exit(1);\n');
+function runList(lines, extra) {
+  fs.writeFileSync(path.join(tmp, "list.txt"), lines.join("\n") + "\n");
+  const r = spawnSync("bash", [path.join(root, "tests", "run-all.sh")], { encoding: "utf8", env: Object.assign({}, process.env, { SHARDS: "2", PORT: "8061", TEST_LIST: path.join(tmp, "list.txt"), TESTS_DIR: tmp }, extra || {}) });
+  return { code: r.status, lines: (r.stdout || "").trim().split("\n") };
+}
+const marker = path.join(tmp, "marker");
+let r = runList(["1 ok.js", "1 once.js " + marker]);
+check(r.code === 0, "retry: a test that passes the second time should keep the run green (exit " + r.code + ")");
+check(r.lines[r.lines.length - 1] === "ALL CHECKS PASS", "retry: last line is '" + r.lines[r.lines.length - 1] + "'");
+check(r.lines.some((l) => /^WIEDERHOLT: once\.js/.test(l)), "retry: no 'WIEDERHOLT: once.js' line");
+check(r.lines[r.lines.length - 2] === "1 Test(s) wiederholt: once.js", "retry: summary line before the last line is '" + r.lines[r.lines.length - 2] + "'");
+r = runList(["1 ok.js", "1 always.js"]);
+check(r.code === 1 && r.lines[r.lines.length - 1] !== "ALL CHECKS PASS", "retry: a test that fails twice must keep the run red");
+check(r.lines.filter((l) => l === "always fails").length === 2, "retry: always.js should run exactly twice");
+fs.rmSync(tmp, { recursive: true, force: true });
+
 if (bad) { console.log(bad + " problem(s)"); process.exit(1); }
 console.log("run-all-shards: " + entries.length + " tests, 1 to 6 parts, each test in exactly one part, ok");

@@ -15,7 +15,8 @@ set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PORT="${PORT:-8000}"
-LIST="$ROOT/tests/test-list.txt"
+LIST="${TEST_LIST:-$ROOT/tests/test-list.txt}"
+TESTS_DIR="${TESTS_DIR:-$ROOT/tests}"   # both overridable for tests/run-all-shards.js
 cd "$ROOT"
 
 # ---- number of parts -------------------------------------------------------
@@ -128,7 +129,7 @@ run_shard() {
     {
       echo "=== $name ==="
       # shellcheck disable=SC2086
-      node "$ROOT/tests/$name" $args
+      node "$TESTS_DIR/$name" $args
     } > "$WORK/out-$i" 2>&1
     rc=$?
     # One visible retry (RETRY=0 turns it off): on the Mac, browser tests
@@ -136,11 +137,12 @@ run_shard() {
     # stays in the log, so nothing is hidden.
     if [ "$rc" -ne 0 ] && [ "${RETRY:-1}" != "0" ]; then
       {
-        echo "WIEDERHOLUNG: $name endete mit Code $rc, zweiter Versuch (Ausgabe des ersten Versuchs steht oben)"
+        echo "WIEDERHOLT: $name (erster Versuch endete mit Code $rc, Ausgabe oben; zweiter Versuch folgt)"
         # shellcheck disable=SC2086
-        node "$ROOT/tests/$name" $args
+        node "$TESTS_DIR/$name" $args
       } >> "$WORK/out-$i" 2>&1
       rc=$?
+      echo "$name" > "$WORK/retried-$i"
     fi
     echo "$rc" > "$WORK/rc-$i"
     echo "$(( $(date +%s) - t0 ))" > "$WORK/sec-$i"
@@ -191,6 +193,17 @@ while [ "$i" -le "$TOTAL" ]; do
   i=$((i + 1))
 done
 echo "Gesamtdauer: $(( $(date +%s) - START )) s in $SHARDS Teil(en)"
+RETRIED=""
+NRETRIED=0
+i=1
+while [ "$i" -le "$TOTAL" ]; do
+  if [ -f "$WORK/retried-$i" ]; then
+    RETRIED="$RETRIED $(cat "$WORK/retried-$i")"
+    NRETRIED=$((NRETRIED + 1))
+  fi
+  i=$((i + 1))
+done
+[ "$NRETRIED" -eq 0 ] || echo "$NRETRIED Test(s) wiederholt:$RETRIED"
 
 if [ "$status" -eq 0 ]; then
   echo "ALL CHECKS PASS"

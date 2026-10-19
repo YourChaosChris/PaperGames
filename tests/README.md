@@ -44,9 +44,13 @@ all parts back into one log in list order. The last line is exactly
 - Before the start every port is checked with `curl`; a busy port aborts the run.
 - The weights in `test-list.txt` are rough seconds. Every section of the merged
   log ends with its real duration (`(Dauer: N s)`); adjust the weights from there.
-- A failed check is run once more (`RETRY=0` turns that off); the log keeps both
-  outputs and a line `WIEDERHOLUNG: ...`, because on the Mac browser checks sometimes
-  fail with connection timeouts under load.
+- Retry (Christopher, 19.10.2026): a check that fails is run exactly once more, never the
+  whole series (`RETRY=0` turns it off). The log keeps the first output, then the line
+  `WIEDERHOLT: <test> ...` and the second output; before the last line stands
+  `N Test(s) wiederholt: <names>`. If the second try fails too, the series stays red. The last
+  line is exactly `ALL CHECKS PASS` on success. Reason: on the Mac, browser checks sometimes
+  fail under load (connection timeouts). `run-all-shards.js` tests this logic with a fake list
+  (`TEST_LIST`, `TESTS_DIR`).
 - Works with bash 3.2 (macOS) and Linux. `KEEP_WORK=1` keeps the part logs.
 - `node tests/run-all-shards.js` checks the split (every check in exactly one
   part for 1 to 6 parts, none missing).
