@@ -1,11 +1,13 @@
 // tests/sitemap.js - sitemap.xml: valid, slim, every address answers 200.
 // Usage: PORT=8010 node tests/sitemap.js   (needs a server on PORT, as the other page tests)
+// Inside run-all.sh the part's own server (BASE_URL) is used, so the test
+// also passes when run-all.sh was started without PORT.
 const fs = require("fs");
 const path = require("path");
 const http = require("http");
 const ROOT = path.join(__dirname, "..");
 const BASE = "https://yourchaoschris.github.io/PaperGames/";
-const PORT = process.env.PORT || 8010;
+const PORT = (process.env.BASE_URL && new URL(process.env.BASE_URL).port) || process.env.PORT || 8010;
 let fails = 0;
 function check(ok, msg) { if (!ok) { fails++; console.log("FAIL: " + msg); } }
 const xml = fs.readFileSync(path.join(ROOT, "sitemap.xml"), "utf8");

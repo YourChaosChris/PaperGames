@@ -104,6 +104,41 @@ first install, so every game keeps working offline afterwards,
 including ones that have never been opened. The home page shows
 whether that has finished.
 
+## Requirements
+
+PaperGames needs a current browser. There is no build step and there are
+no polyfills, so the browser itself must support:
+
+- JavaScript ES2015 (`const`, arrow functions, classes, Promises)
+- `fetch`
+- CSS Flexbox
+- CSS variables (custom properties)
+- Service workers, for offline play
+
+On a browser without ES2015, Promises or `fetch`, every page shows a short
+note in English and German ("Your browser is too old for PaperGames")
+instead of the games. The check is the first script of every page
+(`tools/old-browser.js`, inserted by `tools/seo.js`) and is itself plain
+ES5.
+
+Devices:
+
+- **Tested** (someone reported back; the list on
+  [Tested devices](https://yourchaoschris.github.io/PaperGames/devices.html)
+  is the reference): PocketBook Era, Tolino Vision Color, Boox Go 7,
+  Tolino Vision 6.
+- **Not tested**: every other device, including the newer Kindle browser
+  (from firmware 5.16.4; its engine is not documented) and older Tolino
+  readers (Android 4.1; browser version not documented).
+- **Does not run, according to the sources** (not tried on a device): the
+  older Kindle browser (WebKit from about 2009, ES5 only, no `fetch`, no
+  Promises, no Flexbox) and the Kobo browser based on Qt WebKit 538.1.
+
+Sources: [documentation for the Kindle browser](https://thorgalle.me/notes/documentation-for-the-kindle-browser)
+(older Kindle browser), the-ebook-reader.com (7 Nov 2023, newer Kindle
+browser from firmware 5.16.4), MobileRead (2019, Kobo Qt WebKit 538.1),
+goodereader.com (Tolino: older devices Android 4.1, Vision 6 Android 8.1).
+
 ## License
 
 PaperGames is licensed under the

@@ -64,6 +64,7 @@
 126 offline-install.js
 29 offline-update.js
 18 update-banner.js
+6 old-browser.js
 2 css-check.js
 7 rtl-spacing.js
 172 direct-start.js

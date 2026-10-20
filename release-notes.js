@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v258",
+    date: "2026-10-20",
+    key: "release_v258",
+    text: "On a browser that is too old for PaperGames (for example the older Kindle browser), every page now shows a short note instead of a broken or blank page."
+  },
+  {
     version: "v257",
     date: "2026-10-19",
     key: "release_v257",

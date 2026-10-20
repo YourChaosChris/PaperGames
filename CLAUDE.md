@@ -118,6 +118,14 @@ Vorgaben für den Bericht:
     `tests/new-games-order.js` (fest erwartete neueste Spiele
     anpassen), Proben in `tests/i18n-messages.js`;
   - `README.md`: Spielezahl.
+- Alte Browser (Aufgabe 103): `tools/old-browser.js` steht als erstes
+  Skript im `<head>` jeder Seite (eingefügt von `tools/seo.js`, nach
+  einer Änderung `node tools/seo.js`). Es bleibt streng ES5 (nur `var`,
+  `function`, keine Pfeile, keine Template-Strings), nie Moderneres
+  einbauen; unter etwa 1 KB. Ohne ES2015/Promise/fetch/Symbol schreibt es
+  eine Meldung (en, de) und öffnet ein verstecktes `<plaintext>`, damit
+  kein weiteres Skript läuft. Test: `tests/old-browser.js` (braucht
+  `acorn`).
 - Playwright: Chromium unter `/opt/pw-browsers`, Module über
   `NODE_PATH=/opt/node22/lib/node_modules`. Nie `playwright install`.
 - Fallen:

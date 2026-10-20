@@ -444,6 +444,15 @@ all parts back into one log in list order. The last line is exactly
   second update without anything new shows the main line alone, and no
   sideways scrolling at 360 and 600 px. `SHOT=<file.png>` saves a
   screenshot at 360 px.
+- `node tests/old-browser.js` - needs a running server (`BASE_URL`), a
+  browser and `acorn` (test helper only, from `NODE_PATH`). The
+  old-browser check `tools/old-browser.js` is ES5 (acorn, `ecmaVersion: 5`),
+  under 1 KB, and the first script in the `<head>` of every real page.
+  In Chromium the home page, Sudoku and Chess start as before without the
+  note; with `Promise` and `fetch` removed by an init script the note
+  (English and German) shows on the home page, Sudoku and the devices
+  page, no other script element exists, no page or console error, no
+  sideways scrolling at 360 px.
 - `node tests/i18n-runtime-sweep.js` - needs a running server
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random
