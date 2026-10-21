@@ -162,10 +162,10 @@ ordentlich, aber mit so wenig Claude-Credits wie möglich.
 6. Im Bericht unter „Eigene Entscheidungen“ nennen, was auf dem Mac, bei
    Ollama/Codex und in der Cloud lief.
 
-## Stand (20.10.2026)
+## Stand (21.10.2026)
 
-- `CACHE_NAME` `papergames-cache-v257`, 103 Spiele.
-- Aufgaben bis 102 erledigt, nichts beauftragt offen. 100: Titel der Startseite mit Gerätenamen (v257); 101: Sitemap schlank (328 URLs); 102: Repo aufgeräumt, kein Release. 99y: Offline-Install-Test stabil (`tests/serve.py`), 99z: Regel Releases bündeln. Nach Pushes auf `main` oder `wip/*` startet `de.papergames.auto` (prüft alle 5 Minuten) die Tests auf dem Mac mini selbst; `de.papergames.runner` führt sie aus; Logdateien werden dort ab 500 KB gekürzt. Nicht in der Testliste: `tests/quick-rules-motifs.js`, `tests/eink-sim.js`, `tests/lib.js`, `tests/load-i18n.js` (Hilfsdateien bzw. Einzelprüfungen von Hand).
+- `CACHE_NAME` `papergames-cache-v259`, 103 Spiele.
+- Aufgaben bis 104 erledigt. 104: `msg()` mit Vorfilter je Vorlage und Zwischenspeicher für Teilsätze, schnellere Sudoku-/Killer-Löser (gleiche Seeds, gleiche Rätsel: `tests/sudoku-seeds.js`), `i18n-pending` endet bei `load` oder nach 15 s statt nach 4 s (englischer Aufblitzer auf langsamen Geräten), v259. Auf dem Mac ist Port 8021 von einem fremden Prozess belegt: `run-all.sh` ohne `PORT` scheitert dort an `offline-install.js`; mit `PORT=8010` bzw. über den Testdienst grün. Messskripte (eink-sim mit anderen Einstellungen, CPU-Profil, Spur) waren nur im Scratchpad. 100: Titel der Startseite mit Gerätenamen (v257); 101: Sitemap schlank (328 URLs); 102: Repo aufgeräumt, kein Release. 99y: Offline-Install-Test stabil (`tests/serve.py`), 99z: Regel Releases bündeln. Nach Pushes auf `main` oder `wip/*` startet `de.papergames.auto` (prüft alle 5 Minuten) die Tests auf dem Mac mini selbst; `de.papergames.runner` führt sie aus; Logdateien werden dort ab 500 KB gekürzt. Nicht in der Testliste: `tests/quick-rules-motifs.js`, `tests/eink-sim.js`, `tests/lib.js`, `tests/load-i18n.js` (Hilfsdateien bzw. Einzelprüfungen von Hand).
 - Testreihe: 73 Tests in `tests/test-list.txt`, 128 Abschnitte im Log
   (`grep -c "^=== "`), automatisch in bis zu 6 parallele Teile geteilt.
 - Zuletzt gebaut:
