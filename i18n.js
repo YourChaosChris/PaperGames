@@ -666,6 +666,7 @@ const STRINGS = {
     release_v256: "Offline: when the internet drops during an update, the old version now stays complete and keeps working, and the home page says in plain words what is missing and what to do.",
     release_v257: "Home page title and description now name Kindle, Kobo, Tolino and Boox (search results and link previews).",
     release_v258: "On a browser that is too old for PaperGames (for example the older Kindle browser), every page now shows a short note instead of a broken or blank page.",
+    release_v259: "Sudoku and Killer Sudoku start and make new puzzles faster on slow e-readers, and pages no longer show English text for a moment before your language.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss and Pasture Friends now explain themselves with pictures, Zoo Toss has a beginner level, and the cake board names its rooms with numbers and has larger squares.",
     release_v248: "Seven new games (Bingo, three dice games and three children's puzzles), a new hardest level in Arrows, a hint button in Cat Places, better search and a Card Games page.",
     release_v247: "All games use the same names and status texts (Against the computer, Two players, one device, New game, Your turn); every game page has a Home button; Undo takes back your move and the computer's answer in 32 games.",
@@ -5432,9 +5433,19 @@ const I18n = (function () {
           names.push(n);
           return MSG_PLACEHOLDER[n.charAt(0)] || "(.+?)";
         });
+        // The fixed text between the placeholders: a sentence that lacks
+        // it can't match, so msgSentence() skips the regular expression
+        // (built on first use). With over 700 templates this check is what
+        // keeps the 81 Sudoku cell labels from costing a second at start-up
+        // on a slow e-reader.
+        const pieces = v.split(/\{\w+\}/);
         templates.push({
           key: key,
-          re: new RegExp("^" + pattern + "$"),
+          re: null,
+          source: "^" + pattern + "$",
+          head: pieces[0],
+          tail: pieces.length > 1 ? pieces[pieces.length - 1] : "",
+          longest: pieces.reduce((a, b) => (b.length > a.length ? b : a), ""),
           names: names,
           weight: v.replace(/\{\w+\}/g, "").length
         });
@@ -5479,11 +5490,28 @@ const I18n = (function () {
     return out.join(l === "ja" || l === "zh" ? "\u3001" : ", ");
   }
 
+  // Labels are built from the same few parts ("Row 3", "column 4",
+  // "empty", "cage 17"), so each part's translation is kept as well, like
+  // whole texts in msg().
+  const sentenceCache = new Map();
   function msgSentence(s, l) {
+    const key = l + (msgSegmentMode ? "|s|" : "|m|") + s;
+    const hit = sentenceCache.get(key);
+    if (hit !== undefined) return hit;
+    const result = msgSentenceUncached(s, l);
+    if (sentenceCache.size >= MSG_CACHE_LIMIT) sentenceCache.clear();
+    sentenceCache.set(key, result);
+    return result;
+  }
+
+  function msgSentenceUncached(s, l) {
     const direct = msgExact(s, l);
     if (direct !== null) return direct;
     for (let i = 0; i < msgIndex.templates.length; i++) {
       const tpl = msgIndex.templates[i];
+      if (s.indexOf(tpl.longest) === -1 || s.slice(0, tpl.head.length) !== tpl.head ||
+          s.slice(s.length - tpl.tail.length) !== tpl.tail) continue;
+      if (!tpl.re) tpl.re = new RegExp(tpl.source);
       const m = tpl.re.exec(s);
       if (!m) continue;
       const values = {};

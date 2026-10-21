@@ -592,6 +592,7 @@ STRINGS.fr = {
     release_v256: "Hors ligne : si Internet tombe pendant une mise à jour, l’ancienne version reste complète et continue de fonctionner, et la page d’accueil dit clairement ce qui manque et quoi faire.",
     release_v257: "Le titre et la description de la page d'accueil citent maintenant Kindle, Kobo, Tolino et Boox (résultats de recherche et aperçus de liens).",
     release_v258: "Dans un navigateur trop ancien pour PaperGames (par exemple l'ancien navigateur Kindle), chaque page affiche maintenant un court message au lieu d'une page cassée ou vide.",
+    release_v259: "Sudoku et Sudoku Killer démarrent et créent de nouvelles grilles plus vite sur les liseuses lentes, et les pages n'affichent plus brièvement du texte en anglais avant ta langue.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss et Pasture Friends s'expliquent maintenant avec des images, Zoo Toss a un niveau débutant, et le plateau du gâteau désigne ses pièces par des numéros avec des cases plus grandes.",
     release_v248: "Sept nouveaux jeux (bingo, trois jeux de dés et trois énigmes pour enfants), un nouveau niveau très difficile dans le jeu de flèches, un bouton d’indice dans le jeu des chats, une meilleure recherche et la page Jeux de cartes.",
     release_v247: "Tous les jeux utilisent les mêmes noms et textes d’état (« Contre l’ordinateur », « À deux sur un appareil », « Nouvelle partie », « À toi de jouer ») ; chaque page de jeu a un bouton Accueil ; « Annuler » reprend ton coup et la réponse de l’ordinateur dans 32 jeux.",

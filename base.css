@@ -217,7 +217,8 @@ button.secondary:disabled {
 
 /* Bis die Sprache der Seite angewendet ist, bleibt sie unsichtbar
    (gesetzt von einem kleinen Skript im <head>, entfernt von i18n.js,
-   spätestens nach 4 Sekunden). Sonst zeichnet ein E-Ink-Display erst
+   spätestens beim load-Ereignis oder nach 15 Sekunden; die früheren
+   4 Sekunden reichten auf langsamen Readern nicht). Sonst zeichnet ein E-Ink-Display erst
    den englischen Grundtext und kurz danach alles noch einmal. */
 html.i18n-pending body {
   visibility: hidden;

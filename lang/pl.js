@@ -598,6 +598,7 @@ STRINGS.pl = {
     release_v256: "Offline: gdy internet zniknie podczas aktualizacji, stara wersja pozostaje kompletna i dalej działa, a strona główna jasno mówi, czego brakuje i co zrobić.",
     release_v257: "Tytuł i opis strony głównej zawierają teraz Kindle, Kobo, Tolino i Boox (wyniki wyszukiwania i podglądy linków).",
     release_v258: "W przeglądarce zbyt starej dla PaperGames (na przykład w starszej przeglądarce Kindle) każda strona pokazuje teraz krótki komunikat zamiast uszkodzonej lub pustej strony.",
+    release_v259: "Sudoku i Killer Sudoku uruchamiają się i tworzą nowe łamigłówki szybciej na wolnych czytnikach, a strony nie pokazują już przez chwilę angielskiego tekstu, zanim pojawi się twój język.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss i Pasture Friends tłumaczą się teraz obrazkami, Zoo Toss ma poziom dla początkujących, a plansza z tortem oznacza pokoje numerami i ma większe pola.",
     release_v248: "Siedem nowych gier (bingo, trzy gry w kości i trzy zagadki dla dzieci), nowy bardzo trudny poziom w grze w strzałki, przycisk podpowiedzi w grze z kotami, lepsze wyszukiwanie i strona Gier karcianych.",
     release_v247: "Wszystkie gry używają tych samych nazw i komunikatów stanu („Przeciw komputerowi”, „Dwóch graczy na jednym urządzeniu”, „Nowa gra”, „Twój ruch”); każda strona gry ma przycisk Strona główna; „Cofnij” cofa Twój ruch i odpowiedź komputera w 32 grach.",

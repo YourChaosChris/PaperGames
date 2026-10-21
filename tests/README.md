@@ -139,6 +139,10 @@ all parts back into one log in list order. The last line is exactly
   the 12 rooms and 12 pieces of furniture turns up in each level's 500,
   every piece stands in a room it belongs to and is named by some clue.
 - `node tests/bingo-core.js` - no server or browser needed. 1,000 decks (3 x 3 / 5 x 5, numbers / pictures), every item called exactly once, all win patterns against a brute-force check, wrong marks, 1,000 games against computer cards.
+- `node tests/sudoku-seeds.js` - no server or browser needed. 20 Sudoku
+  and 20 Killer Sudoku puzzles per level from fixed seeds; each must have
+  exactly one solution, and a fingerprint of all of them must equal the
+  one from before the faster solvers (Aufgabe 104): same seed, same puzzle.
 - `node tests/animalsudoku-core.js` - no server or browser needed.
   Generates 60 "Animal Sudoku" puzzles per size and level from fixed
   seeds and fails unless each has exactly one solution, can be solved

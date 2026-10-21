@@ -500,6 +500,7 @@ STRINGS.nl = {
     release_v256: "Offline: valt het internet uit tijdens een update, dan blijft de oude versie compleet en werkt ze gewoon door; de startpagina zegt in duidelijke woorden wat er ontbreekt en wat je moet doen.",
     release_v257: "Titel en beschrijving van de startpagina noemen nu Kindle, Kobo, Tolino en Boox (zoekresultaten en linkvoorbeelden).",
     release_v258: "In een browser die te oud is voor PaperGames (bijvoorbeeld de oudere Kindle-browser), toont elke pagina nu een korte melding in plaats van een kapotte of lege pagina.",
+    release_v259: "Sudoku en Killer Sudoku starten en maken nieuwe puzzels sneller op trage e-readers, en pagina's tonen niet meer even Engelse tekst voordat je eigen taal verschijnt.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss en Pasture Friends leggen zichzelf nu uit met plaatjes, Zoo Toss heeft een beginnersniveau en het taartbord noemt zijn kamers met cijfers en heeft grotere vakjes.",
     release_v248: "Zeven nieuwe spellen (bingo, drie dobbelspellen en drie kinderpuzzels), een nieuw zeer moeilijk niveau bij het pijlenspel, een hulpknop bij het kattenspel, betere zoekfunctie en de pagina Kaartspellen.",
     release_v247: "Alle spellen gebruiken dezelfde namen en statusteksten („Tegen de computer”, „Met twee op één apparaat”, „Nieuw spel”, „Jij bent aan de beurt”); elke spelpagina heeft een Home-knop; „Ongedaan maken” neemt je zet en het antwoord van de computer terug in 32 spellen.",

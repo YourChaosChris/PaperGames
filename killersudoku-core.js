@@ -124,8 +124,22 @@ const KillerSudokuCore = (function () {
     for (let d = 1; d <= 9; d++) if (m & (1 << (d - 1))) { count++; sum += d; }
     SUBSETS.push({ mask: m << 1, count, sum });
   }
-  const allowedCache = new Map();
+  // cageAllowed() results by (used digits, count, sum), filled on first
+  // use; -1 = not computed yet. A flat table instead of a Map, because the
+  // solver asks for it for every empty cell at every step.
+  const allowedCache = new Int32Array(512 * 10 * 46).fill(-1);
   const ALL_DIGITS = 0x3fe; // bits 1..9
+
+  // Row, column and box of every cell, looked up in the solver's loops.
+  const ROW_OF = [], COL_OF = [], BOX_OF = [];
+  for (let i = 0; i < CELLS; i++) {
+    ROW_OF.push(Math.floor(i / SIZE));
+    COL_OF.push(i % SIZE);
+    BOX_OF.push(boxIndex(ROW_OF[i], COL_OF[i]));
+  }
+  // Number of set bits of a candidate mask (bits 1..9).
+  const BIT_COUNT = new Uint8Array(1024);
+  for (let m = 1; m < 1024; m++) BIT_COUNT[m] = BIT_COUNT[m & (m - 1)] + 1;
 
   // The 27 rows, columns and boxes as cell-index lists.
   const UNITS = [];
@@ -143,15 +157,16 @@ const KillerSudokuCore = (function () {
   // `sum`.
   function cageAllowed(used, count, sum) {
     if (count <= 0 || sum <= 0) return 0;
-    const key = used * 1000 + count * 100 + sum;
-    const hit = allowedCache.get(key);
-    if (hit !== undefined) return hit;
+    if (count > 9 || sum > 45) return 0; // no set of distinct digits 1..9 fits
+    const key = (((used & ALL_DIGITS) >> 1) * 10 + count) * 46 + sum;
+    const hit = allowedCache[key];
+    if (hit !== -1) return hit;
     let out = 0;
     for (let k = 0; k < SUBSETS.length; k++) {
       const s = SUBSETS[k];
       if (s.count === count && s.sum === sum && !(s.mask & used)) out |= s.mask;
     }
-    allowedCache.set(key, out);
+    allowedCache[key] = out;
     return out;
   }
 
@@ -168,16 +183,18 @@ const KillerSudokuCore = (function () {
     let nodes = 0;
     let aborted = false;
 
+    const cLen = cages.map((cage) => cage.cells.length), cTotal = cages.map((cage) => cage.sum);
+
     function place(i, d) {
-      const r = Math.floor(i / SIZE), c = i % SIZE, bit = 1 << d, id = cageOf[i];
+      const bit = 1 << d, id = cageOf[i];
       grid[i] = d;
-      rows[r] |= bit; cols[c] |= bit; boxes[boxIndex(r, c)] |= bit;
+      rows[ROW_OF[i]] |= bit; cols[COL_OF[i]] |= bit; boxes[BOX_OF[i]] |= bit;
       cUsed[id] |= bit; cFilled[id]++; cSum[id] += d;
     }
     function unplace(i, d) {
-      const r = Math.floor(i / SIZE), c = i % SIZE, bit = 1 << d, id = cageOf[i];
+      const bit = 1 << d, id = cageOf[i];
       grid[i] = 0;
-      rows[r] &= ~bit; cols[c] &= ~bit; boxes[boxIndex(r, c)] &= ~bit;
+      rows[ROW_OF[i]] &= ~bit; cols[COL_OF[i]] &= ~bit; boxes[BOX_OF[i]] &= ~bit;
       cUsed[id] &= ~bit; cFilled[id]--; cSum[id] -= d;
     }
 
@@ -190,27 +207,25 @@ const KillerSudokuCore = (function () {
       place(i, d);
     }
 
-    function candidates(i) {
-      const r = Math.floor(i / SIZE), c = i % SIZE, id = cageOf[i];
-      const cage = cages[id];
-      const allowed = cageAllowed(cUsed[id], cage.cells.length - cFilled[id], cage.sum - cSum[id]);
-      return allowed & ~(rows[r] | cols[c] | boxes[boxIndex(r, c)]);
-    }
-
     const masks = new Array(CELLS).fill(0);
+    const nCages = cages.length;
+    const cageMask = new Array(nCages).fill(0);
 
     function rec() {
       if (solutions.length >= limit || aborted) return;
       if (++nodes > budget) { aborted = true; return; }
+      // What each cage still allows is the same for all its cells, so it
+      // is worked out once per step; a cell's candidates are that minus
+      // the digits in its row, column and box.
+      for (let id = 0; id < nCages; id++) cageMask[id] = cageAllowed(cUsed[id], cLen[id] - cFilled[id], cTotal[id] - cSum[id]);
       // Branch on the empty cell with the fewest candidates...
       let best = -1, bestMask = 0, bestCount = 99;
       for (let i = 0; i < CELLS; i++) {
         if (grid[i]) continue;
-        const m = candidates(i);
+        const m = cageMask[cageOf[i]] & ~(rows[ROW_OF[i]] | cols[COL_OF[i]] | boxes[BOX_OF[i]]);
         if (!m) return;
         masks[i] = m;
-        let cnt = 0;
-        for (let x = m; x; x &= x - 1) cnt++;
+        const cnt = BIT_COUNT[m];
         if (cnt < bestCount) { best = i; bestMask = m; bestCount = cnt; }
       }
       if (best === -1) {

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v259",
+    date: "2026-10-21",
+    key: "release_v259",
+    text: "Sudoku and Killer Sudoku start and make new puzzles faster on slow e-readers, and pages no longer show English text for a moment before your language."
+  },
+  {
     version: "v258",
     date: "2026-10-20",
     key: "release_v258",

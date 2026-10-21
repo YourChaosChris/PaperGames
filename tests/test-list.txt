@@ -16,6 +16,7 @@
 51 cake-core.js
 2 bingo-core.js
 1 animalsudoku-core.js
+2 sudoku-seeds.js
 5 shapesort-core.js
 3 linkpairs-core.js
 1 oldmaid-core.js

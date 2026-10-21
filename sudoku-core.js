@@ -96,37 +96,53 @@ const SudokuCore = (function () {
   // distinguish "unique" from "not unique" without solving further than
   // needed), using the minimum-remaining-values heuristic to keep the
   // search fast even on a nearly-empty grid.
+  // Row, column and box of every cell, looked up instead of computed in
+  // the solver's inner loop.
+  const ROW_OF = [], COL_OF = [], BOX_OF = [];
+  for (let i = 0; i < CELLS; i++) {
+    ROW_OF.push(Math.floor(i / SIZE));
+    COL_OF.push(i % SIZE);
+    BOX_OF.push(boxIndex(ROW_OF[i], COL_OF[i]));
+  }
+  const FREE = 0x3fe; // bits 1..9
+
+  // Candidates are bit masks here rather than digit lists (no arrays per
+  // cell on every step); the cells and digits are tried in the same order
+  // as before, so the count is the same, only reached faster.
   function countSolutions(grid, limit) {
     limit = limit || 2;
     const working = cloneGrid(grid);
     const masks = buildMasks(working);
+    const rows = masks.rows, cols = masks.cols, boxes = masks.boxes;
     let count = 0;
 
     function search() {
-      let bestPos = -1, bestDigits = null;
+      let bestPos = -1, bestMask = 0, bestCount = 10;
       for (let i = 0; i < CELLS; i++) {
         if (working[i]) continue;
-        const r = Math.floor(i / SIZE), c = i % SIZE;
-        const digits = candidateDigits(masks, r, c);
-        if (digits.length === 0) return; // dead end
-        if (!bestDigits || digits.length < bestDigits.length) {
-          bestPos = i; bestDigits = digits;
-          if (digits.length === 1) break; // can't do better than a forced cell
+        const m = FREE & ~(rows[ROW_OF[i]] | cols[COL_OF[i]] | boxes[BOX_OF[i]]);
+        if (!m) return; // dead end
+        let n = 0;
+        for (let x = m; x; x &= x - 1) n++;
+        if (n < bestCount) {
+          bestPos = i; bestMask = m; bestCount = n;
+          if (n === 1) break; // can't do better than a forced cell
         }
       }
       if (bestPos === -1) { // no empty cells left - a full valid solution
         count++;
         return;
       }
-      const r = Math.floor(bestPos / SIZE), c = bestPos % SIZE;
-      for (const d of bestDigits) {
-        if (count >= limit) return;
+      const r = ROW_OF[bestPos], c = COL_OF[bestPos], b = BOX_OF[bestPos];
+      for (let d = 1; d <= 9; d++) {
         const bit = 1 << d;
+        if (!(bestMask & bit)) continue;
+        if (count >= limit) return;
         working[bestPos] = d;
-        masks.rows[r] |= bit; masks.cols[c] |= bit; masks.boxes[boxIndex(r, c)] |= bit;
+        rows[r] |= bit; cols[c] |= bit; boxes[b] |= bit;
         search();
         working[bestPos] = 0;
-        masks.rows[r] &= ~bit; masks.cols[c] &= ~bit; masks.boxes[boxIndex(r, c)] &= ~bit;
+        rows[r] &= ~bit; cols[c] &= ~bit; boxes[b] &= ~bit;
         if (count >= limit) return;
       }
     }

@@ -592,6 +592,7 @@ STRINGS.es = {
     release_v256: "Sin conexión: si Internet se corta durante una actualización, la versión anterior sigue completa y funcionando, y la página de inicio dice con claridad qué falta y qué hacer.",
     release_v257: "El título y la descripción de la página de inicio nombran ahora Kindle, Kobo, Tolino y Boox (resultados de búsqueda y vistas previas de enlaces).",
     release_v258: "En un navegador demasiado antiguo para PaperGames (por ejemplo, el navegador antiguo de Kindle), cada página muestra ahora un breve aviso en lugar de una página rota o vacía.",
+    release_v259: "Sudoku y Sudoku Killer se abren y crean nuevos tableros más rápido en lectores electrónicos lentos, y las páginas ya no muestran por un momento texto en inglés antes de tu idioma.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss y Pasture Friends ahora se explican con imágenes, Zoo Toss tiene un nivel para principiantes, y el tablero de la tarta indica sus habitaciones con números y tiene casillas más grandes.",
     release_v248: "Siete juegos nuevos (bingo, tres juegos de dados y tres acertijos para niños), un nuevo nivel muy difícil en el juego de flechas, un botón de pista en el juego de los gatos, mejor búsqueda y la página Juegos de cartas.",
     release_v247: "Todos los juegos usan los mismos nombres y textos de estado («Contra el ordenador», «Dos jugadores en un dispositivo», «Partida nueva», «Te toca»); cada página de juego tiene un botón de Inicio; «Deshacer» retira tu jugada y la respuesta del ordenador en 32 juegos.",
