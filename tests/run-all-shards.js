@@ -31,6 +31,9 @@ const helpers = /^(lib|eink-sim|run-all-shards)\.js$|^_/;
 const unlisted = fs.readdirSync(path.join(root, "tests")).filter((f) => /\.js$/.test(f) && !helpers.test(f) && !seen[f]);
 if (process.env.SHOW_UNLISTED) console.log("not in the list (info): " + unlisted.join(" "));
 
+const ALONE = (/^ALONE_TESTS="\$\{ALONE_TESTS:-([^}]*)\}"/m.exec(fs.readFileSync(path.join(root, "tests", "run-all.sh"), "utf8")) || [, ""])[1].split(/\s+/).filter(Boolean);
+check(ALONE.includes("startup-limits.js"), "startup-limits.js should run alone (ALONE_TESTS in run-all.sh)");
+
 for (let n = 1; n <= 6; n++) {
   const out = execFileSync("bash", [path.join(root, "tests", "run-all.sh"), "--plan"], { env: Object.assign({}, process.env, { SHARDS: String(n) }), encoding: "utf8" });
   const lines = out.trim().split("\n");
@@ -41,7 +44,10 @@ for (let n = 1; n <= 6; n++) {
     check(!!m, "n=" + n + ": bad plan line '" + l + "'");
     if (!m) return;
     const idx = Number(m[1]), s = Number(m[2]);
-    check(s >= 1 && s <= n, "n=" + n + ": test " + idx + " in part " + s);
+    const entry = entries.find((e) => e.idx === idx);
+    // Part 0: timing tests that run alone after the parallel parts.
+    const alone = entry && ALONE.includes(entry.file);
+    check(alone ? s === 0 : s >= 1 && s <= n, "n=" + n + ": test " + idx + " in part " + s);
     check(!(idx in part), "n=" + n + ": test " + idx + " in two parts");
     part[idx] = s;
   });
@@ -83,6 +89,10 @@ check(r.lines[r.lines.length - 2] === "1 Test(s) wiederholt: once.js", "retry: s
 r = runList(["1 ok.js", "1 always.js"]);
 check(r.code === 1 && r.lines[r.lines.length - 1] !== "ALL CHECKS PASS", "retry: a test that fails twice must keep the run red");
 check(r.lines.filter((l) => l === "always fails").length === 2, "retry: always.js should run exactly twice");
+// Part 0: a test named in ALONE_TESTS runs too, after the parallel parts.
+r = runList(["1 ok.js", "1 once.js " + marker + "-alone"], { ALONE_TESTS: "once.js" });
+check(r.code === 0 && r.lines[r.lines.length - 1] === "ALL CHECKS PASS", "alone: run with part 0 should be green (exit " + r.code + ")");
+check(r.lines.includes("=== once.js ===") && r.lines.includes("second ok"), "alone: the part 0 test did not run (with its retry)");
 fs.rmSync(tmp, { recursive: true, force: true });
 
 if (bad) { console.log(bad + " problem(s)"); process.exit(1); }

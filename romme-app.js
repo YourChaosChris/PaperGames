@@ -425,7 +425,7 @@ const ROMME_REASON_TEXT = {
   "open-first": "You may add to melds only after your first meld.",
   "doesnt-fit": "That card doesn't fit this meld.",
   "no-joker-for-card": "That card doesn't fit this meld.",
-  "joker-unusable": "You can only swap that joker if you can lay it out again in a new meld right away.",
+  "joker-unusable": "You can only swap that joker if you can lay it out again in a new meld right away. With the house rule \"add the swapped joker to a meld\" (chosen when you start a new game) it may also go to a meld on the table.",
   "joker-first": "Lay out the joker you took back in a new meld first.",
   "staged-open": "Lay out the staged melds or take them back before discarding.",
   "draw-first": "Draw a card first.",
@@ -472,6 +472,7 @@ function humanMoveRomme(move) {
     return;
   }
   if (reason === "below-threshold") setStatusRomme("Not enough yet: the first meld needs at least " + s.threshold + " points.");
+  else if (reason === "joker-unusable" && s.jokerLayoffRule) setStatusRomme("You can only swap that joker if you can lay it out again in a new meld or add it to a meld on the table right away.");
   else if (reason === "joker-first" && s.jokerLayoffRule && !(s.takenIds || []).includes(s.pendingJoker)) setStatusRomme("Lay out the joker you took back in a new meld or add it to a meld first.");
   else setStatusRomme(ROMME_REASON_TEXT[reason] || "That isn't possible right now.");
 }

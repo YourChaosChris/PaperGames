@@ -9,6 +9,10 @@
 #   SHARDS=1 PORT=8010 bash tests/run-all.sh # everything one after another
 #   bash tests/run-all.sh --plan             # print the split, run nothing
 #
+# Tests named in ALONE_TESTS (time measurements) form part 0: they run
+# alone after all parallel parts, so the load of the others can't distort
+# their numbers.
+#
 # Works with bash 3.2 (macOS) and Linux: no wait -n, no mapfile, no
 # associative arrays, no setsid, no ss, no GNU-only options.
 set -uo pipefail
@@ -62,11 +66,14 @@ choose_shards() {
 numbered_list() {
   grep -v '^[[:space:]]*#' "$LIST" | grep -v '^[[:space:]]*$' | awk '{ print NR, $0 }'
 }
+# Tests that measure time run alone after all parallel parts ("part 0"),
+# because the load of the other parts would distort their numbers.
+ALONE_TESTS="${ALONE_TESTS:-startup-limits.js}"
 # "idx shard" per test; greedy: heaviest first onto the emptiest part, so
 # heavy tests land in different parts.
 plan() {
-  numbered_list | awk -v n="$1" '
-    { idx[NR] = $1; w[NR] = $2 + 0; total = NR }
+  numbered_list | awk -v n="$1" -v alone=" $ALONE_TESTS " '
+    { idx[NR] = $1; w[NR] = $2 + 0; solo[NR] = index(alone, " " $3 " ") > 0; total = NR }
     END {
       for (i = 1; i <= total; i++) used[i] = 0
       for (s = 1; s <= n; s++) load[s] = 0
@@ -78,6 +85,7 @@ plan() {
       }
       for (k = 1; k <= total; k++) {
         t = order[k]; best = 1
+        if (solo[t]) { print idx[t], 0; continue }
         for (s = 2; s <= n; s++) if (load[s] < load[best]) best = s
         load[best] += w[t]; print idx[t], best
       }
@@ -114,6 +122,12 @@ export BANNER_TEST_PORT="${BANNER_TEST_PORT:-$((PORT + 23))}"
 # Does one part: its own server, then its tests in list order.
 run_shard() {
   local s="$1" port=$((PORT + $1 - 1)) srv i line name args t0 rc
+  if [ "$s" -eq 0 ]; then
+    # Part 0 runs alone, after the others, on the port of part 1 once that
+    # part's server has really stopped.
+    port="$PORT"
+    for i in $(seq 1 20); do port_busy "$port" || break; sleep 0.5; done
+  fi
   python3 "$ROOT/tests/serve.py" "$port" > "$WORK/server-$s.log" 2>&1 &
   srv=$!
   for i in $(seq 1 40); do
@@ -161,7 +175,7 @@ while [ "$s" -le "$SHARDS" ]; do
   s=$((s + 1))
 done
 plan "$SHARDS" | while read -r i s; do echo "$i" >> "$WORK/shard-$s"; done
-s=1
+s=0
 while [ "$s" -le "$SHARDS" ]; do touch "$WORK/shard-$s"; s=$((s + 1)); done
 
 echo "Testreihe: $TOTAL Tests in $SHARDS Teil(en), Ports $PORT bis $((PORT + SHARDS - 1))"
@@ -174,6 +188,7 @@ while [ "$s" -le "$SHARDS" ]; do
   s=$((s + 1))
 done
 for p in $PIDS; do wait "$p"; done
+[ -s "$WORK/shard-0" ] && run_shard 0
 
 # ---- merge -----------------------------------------------------------------
 status=0

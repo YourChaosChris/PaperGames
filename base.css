@@ -1414,6 +1414,18 @@ margin: 2rem 0 var(--space-4);
   text-decoration: underline;
 }
 
+/* "Report an idea or bug" (rules-link.js, game pages only): a full-size
+   tap area, but in the footer below the game, so nothing above it moves. */
+.site-footer .report-link {
+  display: inline-block;
+  min-height: 44px;
+  line-height: 44px;
+  padding: 0 var(--space-2);
+  font-size: 0.9rem;
+  color: var(--text);
+  text-decoration: underline;
+}
+
 /* Home page */
 .home-hero {
   text-align: center;

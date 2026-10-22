@@ -506,7 +506,19 @@ all parts back into one log in list order. The last line is exactly
   the next frame, and whether English text was painted before the
   page's language arrived. Screenshots and `results.json` go to
   `outDir` (default `eink-sim-out/`, ignored by git). `PAGES=chess,go`
-  limits the run.
+  limits the run; `TAPS=0` measures only the start (no game, no
+  screenshot).
+- `node tests/startup-limits.js` - same prerequisites, part of
+  `run-all.sh` (about 40 s; it runs alone after the parallel parts,
+  `ALONE_TESTS` in `run-all.sh`, because their load makes the times
+  swing by a factor of up to 3). Loads the five heaviest game pages from
+  `tests/startup-limits.json` once each with `eink-sim.js` at CPU 10 and
+  fails when the start script time is more than 50 % above the value
+  measured on the Mac mini (date per page in the file). A page over the
+  limit is loaded two more times and the median of three decides. Off
+  macOS it is skipped (`STARTUP_LIMITS=1` forces it), because the values
+  only fit the Mac mini. New values only on purpose, with a new
+  measurement.
 
 The game list for the sweeps comes from `games-catalog.js` (this
 project's own single source of truth for which games exist), not a

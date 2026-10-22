@@ -16,7 +16,9 @@
 //
 // Usage: node tests/eink-sim.js [outDir]
 //   CPU=10 LANG_CODE=de BASE_URL=http://localhost:8000/ PAGES=chess,go
+//   TAPS=0 measures only the start (no game, no taps, no screenshot).
 // Requires a local server serving the repo root and Playwright.
+// tests/startup-limits.js reuses runPage() (require, nothing runs then).
 
 const fs = require("fs");
 const path = require("path");
@@ -27,11 +29,9 @@ const OUT = process.argv[2] || path.join(__dirname, "..", "eink-sim-out");
 const CPU = +process.env.CPU || 10;
 const LANG = process.env.LANG_CODE || "de";
 const PAGES = process.env.PAGES ? process.env.PAGES.split(",") : ["index"].concat(getGameSlugs());
-const TAPS = +process.env.TAPS || 6;
+const TAPS = process.env.TAPS === undefined || process.env.TAPS === "" ? 6 : +process.env.TAPS;
 const VIEWPORT = { width: 758, height: 1024 };
 const NETWORK = { offline: false, latency: 120, downloadThroughput: (4 * 1024 * 1024) / 8, uploadThroughput: (1024 * 1024) / 8 };
-
-fs.mkdirSync(OUT, { recursive: true });
 
 // Runs in the page before any of its own scripts.
 function probe(lang) {
@@ -61,9 +61,9 @@ function probe(lang) {
   requestAnimationFrame(frame);
 }
 
-async function throttle(page, withNetwork) {
+async function throttle(page, withNetwork, cpu) {
   const cdp = await page.context().newCDPSession(page);
-  await cdp.send("Emulation.setCPUThrottlingRate", { rate: CPU });
+  await cdp.send("Emulation.setCPUThrottlingRate", { rate: cpu });
   await cdp.send("Emulation.setEmulatedVisionDeficiency", { type: "achromatopsia" });
   await cdp.send("Network.enable");
   await cdp.send("Network.setCacheDisabled", { cacheDisabled: true });
@@ -93,7 +93,10 @@ async function tapLatency(page) {
   }));
 }
 
-async function runPage(browser, slug) {
+// opts: { cpu, lang, taps, out } - default the settings from the
+// environment; with taps 0 no game is started and no screenshot taken.
+async function runPage(browser, slug, opts) {
+  const o = Object.assign({ cpu: CPU, lang: LANG, taps: TAPS, out: OUT }, opts || {});
   const ctx = await browser.newContext({ viewport: VIEWPORT, hasTouch: true, isMobile: true, deviceScaleFactor: 1, reducedMotion: "reduce", serviceWorkers: "block" });
   const page = await ctx.newPage();
   page.on("dialog", (d) => d.accept().catch(() => {}));
@@ -101,8 +104,8 @@ async function runPage(browser, slug) {
   page.on("pageerror", (e) => errors.push(String(e).slice(0, 160)));
   let bytes = 0;
   page.on("response", async (r) => { try { const b = await r.body(); bytes += b.length; } catch (e) {} });
-  await page.addInitScript(probe, LANG);
-  const cdp = await throttle(page, true);
+  await page.addInitScript(probe, o.lang);
+  const cdp = await throttle(page, true, o.cpu);
 
   const t0 = Date.now();
   await page.goto(BASE_URL + slug + ".html", { waitUntil: "load", timeout: 180000 });
@@ -119,10 +122,10 @@ async function runPage(browser, slug) {
   // is network-bound), start a game and tap the board a few times.
   await cdp.send("Network.emulateNetworkConditions", { offline: false, latency: 0, downloadThroughput: -1, uploadThroughput: -1 });
   const taps = [];
-  if (slug !== "index") {
+  if (slug !== "index" && o.taps > 0) {
     await tryStart(page).catch(() => {});
     await page.waitForTimeout(400);
-    for (let i = 0; i < TAPS; i++) {
+    for (let i = 0; i < o.taps; i++) {
       const ms = await tapLatency(page).catch(() => null);
       if (ms !== null) taps.push(Math.round(ms));
       await page.waitForTimeout(250);
@@ -130,7 +133,10 @@ async function runPage(browser, slug) {
     // Let any computer reply finish before the screenshot.
     await page.waitForTimeout(1500);
   }
-  await page.screenshot({ path: path.join(OUT, slug + ".png") });
+  if (o.taps > 0) {
+    fs.mkdirSync(o.out, { recursive: true });
+    await page.screenshot({ path: path.join(o.out, slug + ".png") });
+  }
   const m2 = await metrics(cdp);
   await ctx.close();
 
@@ -145,7 +151,10 @@ async function runPage(browser, slug) {
   };
 }
 
-(async () => {
+module.exports = { runPage };
+
+if (require.main === module) (async () => {
+  fs.mkdirSync(OUT, { recursive: true });
   const browser = await chromium.launch();
   const results = [];
   for (const slug of PAGES) {

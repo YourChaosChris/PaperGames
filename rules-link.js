@@ -43,6 +43,7 @@
     document.body.classList.add("game-page");
     const siteNav = document.querySelector(".site-nav");
     if (siteNav) siteNav.remove();
+    injectReportLink(slug);
     if (!panel || document.getElementById("rules-link-button")) return;
 
     const link = document.createElement("a");
@@ -58,6 +59,55 @@
     if (window.I18n && typeof I18n.onChange === "function") {
       I18n.onChange(setLabel);
     }
+  }
+
+  // "Report an idea or bug": a plain mailto: link first in the footer of
+  // every game page (below the game, so the board never moves). It only
+  // opens the player's own email program with game, version and language
+  // filled in - nothing is sent from here, no server, no tracking. The
+  // version is the running CACHE_NAME, asked from the service worker
+  // (sw.js answers "papergames-version"); without one it says "unknown".
+  const REPORT_ADDRESS = "yourchaos@googlemail.com";
+
+  function injectReportLink(slug) {
+    const footer = document.querySelector(".site-footer");
+    if (!footer || document.getElementById("report-link")) return;
+    let version = "unknown";
+    const link = document.createElement("a");
+    link.id = "report-link";
+    link.className = "report-link";
+    function t(key, fallback) {
+      const s = (window.I18n && typeof I18n.t === "function") ? I18n.t(key) : "";
+      return s && s !== key ? s : fallback;
+    }
+    function update() {
+      const lang = (window.I18n && typeof I18n.getLang === "function") ? I18n.getLang() : (document.documentElement.lang || "en");
+      const label = t("report_link", "Report an idea or bug");
+      const game = t("game_" + slug, slug);
+      link.textContent = label;
+      const subject = "PaperGames: " + label + " (" + slug + ", " + version + ")";
+      const body = t("report_mail_prompt", "What happened? Please describe briefly what you did and what you saw:") +
+        "\n\n\n\n---\nGame: " + game + " (" + slug + ")\nVersion: " + version + "\nLanguage: " + lang + "\n";
+      link.href = "mailto:" + REPORT_ADDRESS + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    }
+    update();
+    footer.insertBefore(link, footer.firstChild);
+    if (window.I18n && typeof I18n.onChange === "function") I18n.onChange(update);
+
+    const sw = navigator.serviceWorker;
+    if (!sw) return;
+    sw.addEventListener("message", (event) => {
+      const data = event.data;
+      if (data && data.papergamesVersion) {
+        version = String(data.papergamesVersion);
+        update();
+      }
+    });
+    function ask() {
+      try { if (sw.controller) sw.controller.postMessage("papergames-version"); } catch (e) { /* stays "unknown" */ }
+    }
+    ask();
+    sw.addEventListener("controllerchange", ask);
   }
 
   document.addEventListener("DOMContentLoaded", injectRulesLink);

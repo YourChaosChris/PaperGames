@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v260",
+    date: "2026-10-22",
+    key: "release_v260",
+    text: "Every game now has a link “Report an idea or bug” at the bottom that opens your email program with game, version and language filled in. In Rummy the note on swapping a joker now names the house rule."
+  },
+  {
     version: "v259",
     date: "2026-10-21",
     key: "release_v259",

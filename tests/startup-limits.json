@@ -1,0 +1,15 @@
+{
+  "comment": "Start script time (ms) of the heaviest game pages in tests/eink-sim.js (Chromium, language de, cold load over the slow Wi-Fi, ScriptDuration up to load + 300 ms), measured on the Mac mini. tests/startup-limits.js fails when a page needs more than 50 % above its value at CPU 10. Change the values only on purpose, with a new measurement and date. sudoku, killersudoku, chess: report of task 104 (after the speed-up, one run each); futoshiki, sternhalma: the two heaviest other games of a run over all 103 games at CPU 10 on 2026-10-22, median of three runs. CPU 20 is kept for comparison and not tested.",
+  "measured": {
+    "sudoku": "2026-10-21",
+    "killersudoku": "2026-10-21",
+    "chess": "2026-10-21",
+    "futoshiki": "2026-10-22",
+    "sternhalma": "2026-10-22"
+  },
+  "tolerance": 0.5,
+  "scriptMs": {
+    "cpu10": { "sudoku": 368, "killersudoku": 684, "chess": 323, "futoshiki": 543, "sternhalma": 522 },
+    "cpu20": { "sudoku": 789, "killersudoku": 914, "chess": 761, "futoshiki": 959, "sternhalma": 866 }
+  }
+}
