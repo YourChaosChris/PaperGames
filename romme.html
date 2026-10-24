@@ -107,6 +107,8 @@
     <label class="romme-take-rule-label"><input type="checkbox" id="romme-discard-rule"> <span data-i18n="romme_discard_rule_label">Variant: take the discard only to lay it out</span></label>
     <label class="romme-take-rule-label"><input type="checkbox" id="romme-split-rule"> <span data-i18n="romme_split_rule_label">House rule: split runs</span></label>
     <label class="romme-take-rule-label"><input type="checkbox" id="romme-joker-layoff-rule"> <span data-i18n="romme_joker_layoff_rule_label">House rule: add the swapped joker to a meld</span></label>
+    <label class="romme-take-rule-label"><input type="checkbox" id="romme-hand-rule"> <span data-i18n="romme_hand_rule_label">Hand-Rommé: only lay out everything at once</span></label>
+    <label class="romme-take-rule-label"><input type="checkbox" id="romme-knock-rule"> <span data-i18n="romme_knock_rule_label">Knocking allowed (3 or more players)</span></label>
   </div>
   <div id="offline-romme-status" class="status-text"></div>
 </section>
@@ -139,6 +141,9 @@
       <button id="romme-stock" class="pc-card pc-card-back concan-stock" type="button"></button>
       <button id="romme-discard" class="pc-card romme-discard" type="button"></button>
     </div>
+    <div id="romme-knock-row" class="game-actions-row hidden">
+      <button id="romme-knock-button" class="primary" type="button"></button>
+    </div>
     <div id="romme-staged" class="pc-row hidden">
       <span id="romme-staged-label" class="pc-row-label"></span>
       <div id="romme-staged-melds" class="concan-melds"></div>
@@ -158,6 +163,8 @@
         <button id="romme-return-button" class="secondary hidden" type="button" data-i18n="romme_return_button">Put back and draw from the stock</button>
         <button id="romme-choice-extend" class="secondary hidden" type="button" data-i18n="romme_choice_extend">Add to the meld</button>
         <button id="romme-choice-split" class="secondary hidden" type="button" data-i18n="romme_choice_split">Split the run</button>
+        <button id="romme-choice-low" class="primary hidden" type="button"></button>
+        <button id="romme-choice-high" class="primary hidden" type="button"></button>
         <button id="romme-discard-button" class="secondary" type="button" data-i18n="romme_discard_button">Discard</button>
       </div>
     </div>

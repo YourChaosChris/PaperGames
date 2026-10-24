@@ -28,6 +28,7 @@
 148 skat-core.js
 74 schafkopf-core.js
 178 canasta-core.js
+6 romme-core.js
 181 bridge-core.js
 1 tenpairs-core.js
 68 domino-core.js
@@ -52,6 +53,7 @@
 1 weidefreunde-core.js
 25 zoowurf-core.js
 11 zoowurf-ui.js
+8 romme-ui.js
 3 matches-core.js
 135 cardduel-core.js
 75 villains-core.js

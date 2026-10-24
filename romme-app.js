@@ -26,6 +26,14 @@
 // "Take back" restores table and hand. Melds on the table are grouped by
 // the player who laid them out.
 //
+// A joker tapped onto a run with room at both ends asks "Add below (as
+// 3♥)" or "Add above (as 7♥)" (task 106). "Hand-Rommé" (task 107) uses
+// the staging of the first meld: "Lay out all cards" works once at most
+// one card is left in hand. Knocking (task 108, only against two or three
+// computers): after a computer discards and the human is not next, a
+// "Knock on the 7♥" button shows until the next player draws; the
+// computer then waits longer before drawing.
+//
 // Against the computer the human is "You" (seat 0), with one to three computer
 // opponents. With two to four people on one device each hand is covered
 // between turns ("Show my cards"). Computer steps wait AiPacing.delay().
@@ -92,13 +100,25 @@ function initRommeApp() {
   const seatsWrap = document.getElementById("romme-seats-wrap");
   let pendingMode = "vs-ai";
 
+  // Knocking: only against two or three computers (only the human knocks).
+  const knockEl = document.getElementById("romme-knock-rule");
+  const opponentsEl = document.getElementById("romme-opponents-inline");
+  function updateKnockOption() {
+    if (!knockEl) return;
+    const allowed = pendingMode === "vs-ai" && opponentsEl && (parseInt(opponentsEl.value, 10) || 1) >= 2;
+    knockEl.disabled = !allowed;
+    if (!allowed) knockEl.checked = false;
+  }
+
   function setMode(mode) {
     pendingMode = mode;
     if (modeOffline) modeOffline.classList.toggle("active-mode", mode === "hotseat");
     if (modeAi) modeAi.classList.toggle("active-mode", mode === "vs-ai");
     if (aiWrap) aiWrap.classList.toggle("hidden", mode !== "vs-ai");
     if (seatsWrap) seatsWrap.classList.toggle("hidden", mode !== "hotseat");
+    updateKnockOption();
   }
+  if (opponentsEl) opponentsEl.addEventListener("change", updateKnockOption);
 
   if (menuToggle && settingsPanel) {
     menuToggle.addEventListener("click", () => {
@@ -124,8 +144,11 @@ function initRommeApp() {
     const splitRule = !!(splitEl && splitEl.checked);
     const layoffEl = document.getElementById("romme-joker-layoff-rule");
     const jokerLayoffRule = !!(layoffEl && layoffEl.checked);
+    const handEl = document.getElementById("romme-hand-rule");
+    const handRule = !!(handEl && handEl.checked);
     const players = pendingMode === "vs-ai" ? opponents + 1 : seats;
-    startGameRomme(pendingMode, level, players, threshold, rounds, takeRule, discardRule, splitRule, jokerLayoffRule);
+    const knockRule = !!(knockEl && knockEl.checked && !knockEl.disabled) && pendingMode === "vs-ai" && players >= 3;
+    startGameRomme(pendingMode, level, players, threshold, rounds, takeRule, discardRule, splitRule, jokerLayoffRule, handRule, knockRule);
     const status = document.getElementById("offline-romme-status");
     if (status) {
       const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
@@ -144,6 +167,9 @@ function initRommeApp() {
   document.getElementById("romme-return-button").addEventListener("click", () => humanMoveRomme({ type: "returnDiscard" }));
   document.getElementById("romme-choice-extend").addEventListener("click", () => onChoiceRomme(false));
   document.getElementById("romme-choice-split").addEventListener("click", () => onChoiceRomme(true));
+  document.getElementById("romme-choice-low").addEventListener("click", () => onJokerEndRomme("low"));
+  document.getElementById("romme-choice-high").addEventListener("click", () => onJokerEndRomme("high"));
+  document.getElementById("romme-knock-button").addEventListener("click", onKnockRomme);
   document.getElementById("romme-sort-button").addEventListener("click", () => {
     setSortRomme(getSortRomme() === "rank" ? "suit" : "rank");
     renderRomme();
@@ -185,11 +211,12 @@ function showBoardRomme() {
   if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
 }
 
-function startGameRomme(mode, level, players, threshold, rounds, takeRule, discardRule, splitRule, jokerLayoffRule) {
+function startGameRomme(mode, level, players, threshold, rounds, takeRule, discardRule, splitRule, jokerLayoffRule, handRule, knockRule) {
   AppStateRomme.mode = mode;
   AppStateRomme.aiLevel = level;
   const dealer = typeof RandomStart !== "undefined" ? RandomStart.choose(0, Array.from({ length: players }, (_, i) => i)) : 0;
-  AppStateRomme.state = RommeCore.createInitialState({ players, threshold, dealer, rounds: rounds || 1, takeRule: !!takeRule, discardRule: !!discardRule, splitRule: !!splitRule, jokerLayoffRule: !!jokerLayoffRule });
+  AppStateRomme.state = RommeCore.createInitialState({ players, threshold, dealer, rounds: rounds || 1, takeRule: !!takeRule, discardRule: !!discardRule, splitRule: !!splitRule, jokerLayoffRule: !!jokerLayoffRule,
+    handRule: !!handRule, knockRule: !!knockRule && mode === "vs-ai" });
   AppStateRomme.started = true;
   AppStateRomme.busy = false;
   AppStateRomme.recorded = false;
@@ -230,9 +257,13 @@ function promptTextRomme() {
   const who = playerNameRomme(s.turn);
   const you = isYouRomme(s.turn);
   if (s.phase === "draw") return you ? "Your turn: draw a card from the stock or take the top discard." : who + ": draw a card from the stock or take the top discard.";
+  // (Worded with "must"/"not" so UiStatus.rewrite keeps the whole text.)
+  if (s.phase === "knockDiscard") return "You must discard a card now.";
   if (s.pendingJoker !== null) return s.jokerLayoffRule && !(s.takenIds || []).includes(s.pendingJoker) ? "Lay out the joker you took back in a new meld or add it to a meld first." : "Lay out the joker you took back in a new meld first.";
   if (s.takenIds && s.takenIds.length) return "Lay out the card you took in a new meld first, or take it back.";
   if (RommeCore.discardCardOpen(s) && !s.pending.length) return "Lay out the card from the discard pile in a meld first - or put it back and draw from the stock.";
+  if (s.handRule && s.pending.length) return "Staged for Hand-Rommé · cards still in hand: " + s.players[s.turn].hand.length;
+  if (s.handRule && !s.players[s.turn].opened) return you ? "Your turn: lay out all your cards at once (Hand-Rommé) or discard a card." : who + ": lay out all your cards at once (Hand-Rommé) or discard a card.";
   if (s.pending.length) return "Staged for the first meld: " + RommeCore.pendingValue(s) + " of " + s.threshold + " points.";
   if (s.firstTurn && s.turn === s.dealer) return you ? "Your turn: start the round by discarding a card (you may lay out melds first)." : who + ": start the round by discarding a card (you may lay out melds first).";
   if (!s.players[s.turn].opened) return you ? "Your turn: your first meld needs at least " + s.threshold + " points - lay out melds or discard a card." : who + ": your first meld needs at least " + s.threshold + " points - lay out melds or discard a card.";
@@ -268,7 +299,28 @@ function continueRomme() {
   const s = AppStateRomme.state;
   if (!s || s.over || !isAiRomme(s.turn) || AppStateRomme.busy) return;
   AppStateRomme.busy = true;
-  setTimeout(aiStepRomme, AiPacing.delay(700));
+  // Knocking: while "Knock" is offered the computer waits a little longer
+  // before drawing, so the button can be pressed on a slow e-ink screen.
+  setTimeout(aiStepRomme, AiPacing.delay(canKnockRomme() ? 2400 : 700));
+}
+
+// Knocking: may the human (seat 0) knock on the top discard now?
+function canKnockRomme() {
+  const s = AppStateRomme.state;
+  return !!(s && AppStateRomme.mode === "vs-ai" && AppStateRomme.started && RommeCore.canKnock(s, 0));
+}
+
+// The human knocks; the computer to move answers in its next step.
+function onKnockRomme() {
+  if (!canKnockRomme()) { renderRomme(); return; }
+  const before = AppStateRomme.state;
+  const r = RommeCore.applyMove(before, { type: "knock", player: 0 });
+  if (!r.ok) { renderRomme(); return; }
+  AppStateRomme.state = r.state;
+  saveRomme();
+  setStatusRomme("You knock on the " + cardLabelRomme(r.state.lastEvent.card) + ". " + playerNameRomme(r.state.turn) + " must decide.");
+  renderRomme();
+  continueRomme();
 }
 
 function aiStepRomme() {
@@ -280,7 +332,8 @@ function aiStepRomme() {
   if (err) {
     // Should not happen; never leave the computer stuck.
     const hand = s.players[s.turn].hand;
-    if (s.phase === "draw") applyRomme({ type: "draw" });
+    if (s.phase === "knocked") applyRomme({ type: "knockGive" });
+    else if (s.phase === "draw") applyRomme({ type: "draw" });
     else if (s.pending.length) applyRomme({ type: "cancelPending" });
     else applyRomme({ type: "discard", id: hand[hand.length - 1].id });
   }
@@ -310,6 +363,11 @@ function describeRomme(before, after, move) {
     if (move.type === "draw") return pre + (you ? "You draw the " + card + "." : who + " draws the " + card + ".");
     return you ? "You put the " + cardLabelRomme(ev.card) + " back and draw the " + card + "."
       : who + " puts the " + cardLabelRomme(ev.card) + " back and draws the " + card + ".";
+  }
+  if (move.type === "knockGive") return isYouRomme(ev.knocker) ? "You get the card." : playerNameRomme(ev.knocker) + " gets the card.";
+  if (move.type === "takeDiscard" && ev.knocked && !isYouRomme(before.turn)) return who + " keeps the card, you do not get it.";
+  if (move.type === "confirmOpen" && ev.type === "handOut") {
+    return isYouRomme(before.turn) ? "You lay out all your cards at once: Hand-Rommé!" : who + " lays out all cards at once: Hand-Rommé!";
   }
   if (isYouRomme(before.turn)) return describeYouRomme(before, after, move, ev);
   if (move.type === "draw") return (ev.type === "reshuffle" ? "The discard pile is shuffled into a new stock. " : "") + who + " draws a card.";
@@ -364,6 +422,7 @@ function showRoundEndRomme(prefix) {
     title = "Draw";
   } else {
     msg = pre + (isYouRomme(s.winner) ? "You have no cards left and win the round." : playerNameRomme(s.winner) + " has no cards left and wins the round.");
+    if (s.doubled) msg += " Hand-Rommé: the penalty points count double.";
     title = AppStateRomme.mode === "vs-ai" ? (s.winner === 0 ? "You win!" : "You lose") : playerNameRomme(s.winner) + " wins";
   }
   if (!multi) {
@@ -439,7 +498,9 @@ const ROMME_REASON_TEXT = {
   "discard-card-first": "Lay out the card from the discard pile in a meld first - or put it back and draw from the stock.",
   "split-set": "Sets can't be split.",
   "split-short": "Both runs must have at least three cards after the split.",
-  "split-joker": "A joker stands for that card - the run can't be split there."
+  "split-joker": "A joker stands for that card - the run can't be split there.",
+  "hand-all": "Hand-Rommé: you may only lay out when all your cards go on the table at once (one may go on the discard pile).",
+  "knock-discard": "You must discard a card now."
 };
 
 // Hand order: "suit" (suit, then rank - the default) or "rank" (equal
@@ -504,6 +565,13 @@ function onTableMeldRomme(index) {
   // one that could also be added there asks which is meant.
   const canSplit = !!(s.splitRule && card && meld && RommeCore.splitIndex(meld, card) !== -1);
   const canAdd = !!(card && meld && (RommeCore.extendMeld(meld, card) || RommeCore.jokerSlotFor(meld, card) !== -1));
+  // A joker on a run with room at both ends: ask which end (task 106).
+  if (card && card.joker && canAdd && RommeCore.jokerEnds(meld).length === 2) {
+    AppStateRomme.choice = { meld: index, id, ends: true };
+    setStatusRomme("The joker fits at both ends of the run: where should it go?");
+    renderRomme();
+    return;
+  }
   if (canSplit && canAdd) {
     AppStateRomme.choice = { meld: index, id };
     setStatusRomme("This card fits both ways: add it to the meld or split the run?");
@@ -531,6 +599,15 @@ function onChoiceRomme(split) {
   if (split) humanMoveRomme({ type: "split", meld: c.meld, id: c.id });
   else if (card && meld && RommeCore.jokerSlotFor(meld, card) !== -1) humanMoveRomme({ type: "swapJoker", meld: c.meld, id: c.id });
   else humanMoveRomme({ type: "extend", meld: c.meld, id: c.id });
+  renderRomme();
+}
+
+// The answer to "which end for the joker?".
+function onJokerEndRomme(end) {
+  const c = AppStateRomme.choice;
+  AppStateRomme.choice = null;
+  if (!c || !c.ends || !humanCanActRomme()) { renderRomme(); return; }
+  humanMoveRomme({ type: "extend", meld: c.meld, id: c.id, end });
   renderRomme();
 }
 
@@ -628,13 +705,20 @@ function renderRomme() {
     row.appendChild(cnt);
     const st = document.createElement("span");
     st.className = "pc-player-extra romme-player-status";
-    I18n.setMsg(st, (s.players[p].opened ? "First meld made" : "No first meld yet") + " · Penalty points: " + s.scores[p]);
+    I18n.setMsg(st, s.handRule ? "Hand-Rommé · Penalty points: " + s.scores[p]
+      : (s.players[p].opened ? "First meld made" : "No first meld yet") + " · Penalty points: " + s.scores[p]);
     row.appendChild(st);
     playersEl.appendChild(row);
   }
-  I18n.setMsg(document.getElementById("romme-round-line"), (s.rounds || 1) > 1
-    ? "Round " + s.round + " of " + s.rounds + " · first meld: at least " + s.threshold + " points"
-    : "Round " + s.round + " · first meld: at least " + s.threshold + " points");
+  if (s.handRule) {
+    I18n.setMsg(document.getElementById("romme-round-line"), (s.rounds || 1) > 1
+      ? "Round " + s.round + " of " + s.rounds + " · Hand-Rommé"
+      : "Round " + s.round + " · Hand-Rommé");
+  } else {
+    I18n.setMsg(document.getElementById("romme-round-line"), (s.rounds || 1) > 1
+      ? "Round " + s.round + " of " + s.rounds + " · first meld: at least " + s.threshold + " points"
+      : "Round " + s.round + " · first meld: at least " + s.threshold + " points");
+  }
 
   // Table: one area per player with their melds (adding to any meld is
   // still allowed; an added card stays in its owner's meld).
@@ -693,6 +777,11 @@ function renderRomme() {
   } else {
     I18n.setAria(discard, "Discard pile empty");
   }
+  // Knocking: "Knock on the 7♥" while the human may knock.
+  const knockBtn = document.getElementById("romme-knock-button");
+  const knockable = !over && canKnockRomme();
+  document.getElementById("romme-knock-row").classList.toggle("hidden", !knockable);
+  if (knockable) I18n.setMsg(knockBtn, "Knock on the " + cardLabelRomme(top));
 
   // Staged melds (before the first meld)
   const stagedEl = document.getElementById("romme-staged");
@@ -702,9 +791,13 @@ function renderRomme() {
   stagedMelds.innerHTML = "";
   if (showStaged) {
     s.pending.forEach((m) => stagedMelds.appendChild(renderMeldRomme(m, false)));
-    I18n.setMsg(document.getElementById("romme-staged-label"), "Staged for the first meld: " + RommeCore.pendingValue(s) + " of " + s.threshold + " points.");
+    I18n.setMsg(document.getElementById("romme-staged-label"), s.handRule
+      ? "Staged for Hand-Rommé · cards still in hand: " + s.players[s.turn].hand.length
+      : "Staged for the first meld: " + RommeCore.pendingValue(s) + " of " + s.threshold + " points.");
   }
-  document.getElementById("romme-confirm-button").disabled = !(myTurn && s.pending.length && RommeCore.pendingValue(s) >= s.threshold);
+  const confirmBtn = document.getElementById("romme-confirm-button");
+  I18n.setKey(confirmBtn, s.handRule ? "romme_confirm_all" : "romme_confirm_button");
+  confirmBtn.disabled = !(myTurn && s.pending.length && (s.handRule ? me.hand.length <= 1 : RommeCore.pendingValue(s) >= s.threshold));
 
   // Hand
   const cover = document.getElementById("romme-hand-cover");
@@ -721,19 +814,30 @@ function renderRomme() {
       const sel = AppStateRomme.selected.indexOf(c.id) !== -1;
       const fresh = (AppStateRomme.newIds || []).indexOf(c.id) !== -1;
       const btn = cardElRomme(c, "button", (sel ? "pc-card-selected" : "") + (fresh ? " card-new" : ""));
-      btn.disabled = !(myTurn && s.phase === "play");
+      btn.disabled = !(myTurn && (s.phase === "play" || s.phase === "knockDiscard"));
       I18n.setAria(btn, (c.joker ? "Joker" : "Card " + cardLabelRomme(c)) + (sel ? ", selected" : "") + (fresh ? ", new" : ""));
       btn.addEventListener("click", () => onHandCardRomme(c.id));
       handEl.appendChild(btn);
     });
   }
-  document.getElementById("romme-actions").classList.toggle("hidden", !(myTurn && s.phase === "play"));
+  const knockDiscard = s.phase === "knockDiscard";
+  document.getElementById("romme-actions").classList.toggle("hidden", !(myTurn && (s.phase === "play" || knockDiscard)));
+  document.getElementById("romme-meld-button").classList.toggle("hidden", knockDiscard);
   document.getElementById("romme-return-button").classList.toggle("hidden", !(myTurn && s.phase === "play" && RommeCore.discardCardOpen(s)));
   I18n.setKey(document.getElementById("romme-sort-button"), getSortRomme() === "rank" ? "romme_sort_by_suit" : "romme_sort_by_rank");
   document.getElementById("romme-cancel-button").classList.toggle("hidden", !s.pending.length && !(s.takenIds && s.takenIds.length));
-  const asking = !!AppStateRomme.choice;
+  const choice = AppStateRomme.choice;
+  const asking = !!choice && !choice.ends;
   document.getElementById("romme-choice-extend").classList.toggle("hidden", !asking);
   document.getElementById("romme-choice-split").classList.toggle("hidden", !asking);
+  // Which end for the joker: "Add below (as 3♥)" / "Add above (as 7♥)".
+  const ends = choice && choice.ends && s.melds[choice.meld] ? RommeCore.jokerEnds(s.melds[choice.meld]) : [];
+  ["low", "high"].forEach((end) => {
+    const btn = document.getElementById("romme-choice-" + end);
+    const e = ends.find((x) => x.end === end);
+    btn.classList.toggle("hidden", !e);
+    if (e) I18n.setMsg(btn, (end === "low" ? "Add below (as " : "Add above (as ") + CardFaces.labelAny({ rank: e.rank, suit: e.suit }) + ")");
+  });
   document.getElementById("romme-confirm-button").classList.toggle("hidden", !s.pending.length);
 
   // Round end
@@ -745,7 +849,9 @@ function renderRomme() {
     list.innerHTML = "";
     for (let p = 0; p < s.n; p++) {
       const li = document.createElement("li");
-      I18n.setMsg(li, playerNameRomme(p) + ": " + s.penalties[p] + " penalty points this round, " + s.scores[p] + " in total");
+      I18n.setMsg(li, s.doubled
+        ? playerNameRomme(p) + ": " + s.penalties[p] + " penalty points this round (x2 Hand-Rommé), " + s.scores[p] + " in total"
+        : playerNameRomme(p) + ": " + s.penalties[p] + " penalty points this round, " + s.scores[p] + " in total");
       list.appendChild(li);
     }
   }

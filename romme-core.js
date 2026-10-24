@@ -72,6 +72,23 @@
 //     allowed when the joker fits into a new meld or onto at least one
 //     meld on the table. Until it lies there, nothing else may be added
 //     and no card discarded; it can't be used to split a run.
+//   - A joker added to a run with room at both ends goes to the end the
+//     player chooses (move "extend" with `end`; task 106, 24.10.2026).
+//   - handRule, "Hand-Rommé" (default off; asked for by a player on
+//     24.10.2026, after pagat.com "Rummy"; the sources differ in detail,
+//     PaperGames fixed it like this): nobody lays out or adds to melds
+//     during the round and there is no minimum for the first meld. A
+//     player may lay out only when ALL their hand cards go into melds in
+//     one turn (staged like a first meld); one last card may go on the
+//     discard pile. That ends the round and the losers' penalty points
+//     count double.
+//   - knockRule, "knocking" (default off, 3 or 4 players; asked for by a
+//     player on 24.10.2026): after a discard a player who is neither the
+//     discarder nor next to move may knock on that card before the next
+//     player draws. The player to move decides: take the card themselves
+//     (as from the discard pile) or leave it to the knocker, who
+//     discards a card at once; then the player after the knocker moves,
+//     the players in between miss this turn. Only the first knock counts.
 //
 // Card: { id, rank 1..13, suit "C"|"S"|"H"|"D" } or { id, joker: true }.
 // Meld on the table: { owner, type: "set"|"run", entries: [{ card, rank,
@@ -180,8 +197,23 @@ const RommeCore = (function () {
     return null;
   }
 
-  // The meld after adding `card` at the fitting end/slot, or null.
-  function extendMeld(meld, card) {
+  // The ends of a run a joker may be added to: [{ end: "low"|"high",
+  // rank, suit }], "low" first. Empty for sets and full runs. (Task 106:
+  // with room at both ends the player chooses.)
+  function jokerEnds(meld) {
+    if (!meld || meld.type !== "run" || meld.entries.length >= 13) return [];
+    const suit = meld.entries[0].suit;
+    const low = meld.entries[0].rank, high = meld.entries[meld.entries.length - 1].rank;
+    const out = [];
+    if (low > 1) out.push({ end: "low", rank: low - 1, suit });
+    if (high < 14) out.push({ end: "high", rank: high + 1, suit });
+    return out;
+  }
+
+  // The meld after adding `card` at the fitting end/slot, or null. For a
+  // joker on a run `end` ("low" or "high") picks the end; without it the
+  // joker goes to the high end if there is room, else to the low end.
+  function extendMeld(meld, card, end) {
     const m = clone(meld);
     if (m.type === "set") {
       if (m.entries.length >= 4) return null;
@@ -196,7 +228,13 @@ const RommeCore = (function () {
     const low = m.entries[0].rank, high = m.entries[m.entries.length - 1].rank;
     if (m.entries.length >= 13) return null;
     if (card.joker) {
-      if (high < 14) m.entries.push({ card, rank: high + 1, suit });
+      if (end === "low") {
+        if (low <= 1) return null;
+        m.entries.unshift({ card, rank: low - 1, suit });
+      } else if (end === "high") {
+        if (high >= 14) return null;
+        m.entries.push({ card, rank: high + 1, suit });
+      } else if (high < 14) m.entries.push({ card, rank: high + 1, suit });
       else if (low > 1) m.entries.unshift({ card, rank: low - 1, suit });
       else return null;
       return m;
@@ -255,6 +293,8 @@ const RommeCore = (function () {
       discardRule: !!o.discardRule,
       splitRule: !!o.splitRule,
       jokerLayoffRule: !!o.jokerLayoffRule,
+      handRule: !!o.handRule,
+      knockRule: !!o.knockRule && n >= 3,
       scores: new Array(n).fill(0),
       round: 0,
       dealer: o.dealer !== undefined ? o.dealer : 0
@@ -278,6 +318,8 @@ const RommeCore = (function () {
       discardRule: !!base.discardRule,
       splitRule: !!base.splitRule,
       jokerLayoffRule: !!base.jokerLayoffRule,
+      handRule: !!base.handRule,
+      knockRule: !!base.knockRule && n >= 3,
       scores: base.scores.slice(),
       round: base.round + 1,
       dealer: base.dealer,
@@ -295,6 +337,9 @@ const RommeCore = (function () {
       takenIds: [],      // house rule: cards taken from the table, still to be laid out
       takeUndo: null,    // house rule: { melds, hand, pendingJoker } before the first take
       discardTakenId: null, // variant: id of the discard taken this turn, to be laid out
+      knockable: null,   // knocking: { id, from } - the discard others may knock on
+      knocker: null,     // knocking: who knocked (phase "knocked"), or null
+      doubled: false,    // Hand-Rommé: the penalties of this round count double
       over: false,
       winner: null,
       penalties: null,
@@ -303,7 +348,7 @@ const RommeCore = (function () {
   }
 
   function nextRound(s, rng) {
-    return startRound({ n: s.n, threshold: s.threshold, rounds: s.rounds || 1, takeRule: !!s.takeRule, discardRule: !!s.discardRule, splitRule: !!s.splitRule, jokerLayoffRule: !!s.jokerLayoffRule, scores: s.scores,
+    return startRound({ n: s.n, threshold: s.threshold, rounds: s.rounds || 1, takeRule: !!s.takeRule, discardRule: !!s.discardRule, splitRule: !!s.splitRule, jokerLayoffRule: !!s.jokerLayoffRule, handRule: !!s.handRule, knockRule: !!s.knockRule, scores: s.scores,
       round: s.round, dealer: (s.dealer + 1) % s.n }, rng);
   }
 
@@ -391,9 +436,25 @@ const RommeCore = (function () {
     s.over = true;
     s.phase = "over";
     s.winner = winner;
-    s.penalties = s.players.map((p, i) => (i === winner ? 0 : p.hand.reduce((t, c) => t + handValue(c), 0)));
+    // Hand-Rommé: a round won by laying out everything at once counts double.
+    s.doubled = !!s.handRule && winner !== null;
+    const factor = s.doubled ? 2 : 1;
+    s.penalties = s.players.map((p, i) => (i === winner ? 0 : factor * p.hand.reduce((t, c) => t + handValue(c), 0)));
     s.penalties.forEach((v, i) => { s.scores[i] += v; });
+    s.knockable = null;
+    s.knocker = null;
     return s;
+  }
+
+  // Knocking: may player `k` knock on the top discard now?
+  function canKnock(s, k) {
+    if (!s || !s.knockRule || s.over || s.phase !== "draw" || !s.knockable) return false;
+    if (k === s.turn || k === s.knockable.from || k < 0 || k >= s.n) return false;
+    // With the variant "take the discard only to lay it out" the knocker,
+    // who must discard at once, could never lay the card out.
+    if (s.discardRule) return false;
+    const top = topDiscard(s);
+    return !!top && top.id === s.knockable.id;
   }
 
   // PaperGames rule (not from the source): the discard pile becomes the
@@ -425,7 +486,11 @@ const RommeCore = (function () {
   //   { type: "take", meld, id }  house rule: take a card from a table meld
   //   { type: "returnDiscard" }   variant: put the taken discard back, draw
   //   { type: "split", meld, id } house rule: split a run with a hand card
-  //   { type: "discard", id }     end the turn
+  //   { type: "discard", id }     end the turn (also phase "knockDiscard")
+  //   { type: "knock", player }   knocking: another player knocks (phase "draw")
+  //   { type: "knockGive" }       knocking: leave the card to the knocker
+  //                               (or "takeDiscard" to keep it; phase "knocked")
+  // "extend" takes an optional `end` ("low"|"high") for a joker on a run.
   // Returns { ok, state, reason }.
   function applyMove(state, move) {
     if (state.over) return { ok: false, state, reason: "over" };
@@ -433,8 +498,37 @@ const RommeCore = (function () {
     const p = s.turn;
     const pl = s.players[p];
 
+    if (move.type === "knock") {
+      // Knocking: someone other than the player to move knocks on the discard.
+      const k = move.player;
+      if (!canKnock(s, k)) return { ok: false, state, reason: "no-knock" };
+      s.phase = "knocked";
+      s.knocker = k;
+      s.lastEvent = { type: "knock", player: k, card: topDiscard(s) };
+      return { ok: true, state: s };
+    }
+
+    if (move.type === "knockGive") {
+      // The player to move leaves the knocked card to the knocker, who
+      // must discard at once.
+      if (s.phase !== "knocked" || s.knocker === null) return { ok: false, state, reason: "not-now" };
+      const k = s.knocker;
+      const card = s.discard.pop();
+      s.players[k].hand.push(card);
+      s.lastEvent = { type: "knockGive", player: p, knocker: k, card };
+      s.turn = k;
+      s.phase = "knockDiscard";
+      s.knocker = null;
+      s.knockable = null;
+      return { ok: true, state: s };
+    }
+
     if (move.type === "draw" || move.type === "takeDiscard") {
-      if (s.phase !== "draw") return { ok: false, state, reason: "not-now" };
+      // In phase "knocked" the player to move may still take the card.
+      const knocked = s.phase === "knocked";
+      if (s.phase !== "draw" && !(knocked && move.type === "takeDiscard")) return { ok: false, state, reason: "not-now" };
+      s.knockable = null;
+      s.knocker = null;
       let card;
       if (move.type === "takeDiscard") {
         if (!s.discard.length) return { ok: false, state, reason: "no-discard" };
@@ -447,11 +541,13 @@ const RommeCore = (function () {
       pl.hand.push(card);
       s.phase = "play";
       s.discardTakenId = move.type === "takeDiscard" && s.discardRule ? card.id : null;
-      s.lastEvent = { type: move.type, player: p, card: move.type === "takeDiscard" ? card : null };
+      s.lastEvent = { type: move.type, player: p, card: move.type === "takeDiscard" ? card : null, knocked };
       return { ok: true, state: s };
     }
 
-    if (s.phase !== "play") return { ok: false, state, reason: "draw-first" };
+    // Knocking: the knocker got the card and only discards.
+    if (s.phase === "knockDiscard" && move.type !== "discard") return { ok: false, state, reason: "knock-discard" };
+    if (s.phase !== "play" && s.phase !== "knockDiscard") return { ok: false, state, reason: "draw-first" };
 
     if (move.type === "meld") {
       const cards = move.ids.map((id) => pl.hand.find((c) => c.id === id));
@@ -479,6 +575,20 @@ const RommeCore = (function () {
 
     if (move.type === "confirmOpen") {
       if (pl.opened || !s.pending.length) return { ok: false, state, reason: "nothing-staged" };
+      if (s.handRule) {
+        // Hand-Rommé: everything at once, one last card may be discarded.
+        if (pl.hand.length > 1) return { ok: false, state, reason: "hand-all" };
+        if (pl.hand.length && pl.hand[0].id === s.discardTakenId) return { ok: false, state, reason: "discard-card-first" };
+        const laidOut = s.pending;
+        s.pending = [];
+        laidOut.forEach((m) => s.melds.push(m));
+        pl.opened = true;
+        const last = pl.hand.length ? pl.hand.pop() : null;
+        if (last) { s.discard.push(last); s.seen.push(last); }
+        s.discardTakenId = null;
+        s.lastEvent = { type: "handOut", player: p, card: last, melds: laidOut.length };
+        return { ok: true, state: endRound(s, p) };
+      }
       if (pendingValue(s) < s.threshold) return { ok: false, state, reason: "below-threshold" };
       const laid = s.pending;
       s.pending = [];
@@ -557,7 +667,7 @@ const RommeCore = (function () {
       const meld = s.melds[move.meld];
       const i = findInHand(pl.hand, move.id);
       if (!meld || i === -1) return { ok: false, state, reason: "not-in-hand" };
-      const grown = extendMeld(meld, pl.hand[i]);
+      const grown = extendMeld(meld, pl.hand[i], move.end);
       if (!grown) return { ok: false, state, reason: "doesnt-fit" };
       const card = pl.hand.splice(i, 1)[0];
       s.melds[move.meld] = grown;
@@ -636,11 +746,13 @@ const RommeCore = (function () {
       s.discard.push(card);
       s.seen.push(card);
       s.discardTakenId = null;
-      s.lastEvent = { type: "discard", player: p, card };
+      s.lastEvent = { type: "discard", player: p, card, afterKnock: s.phase === "knockDiscard" };
       s.firstTurn = false;
       if (!pl.hand.length) return { ok: true, state: endRound(s, p) };
       s.turn = (p + 1) % s.n;
       s.phase = "draw";
+      s.knockable = s.knockRule ? { id: card.id, from: p } : null;
+      s.knocker = null;
       if (!s.stock.length && !canRefill(s)) {
         // Nothing left to draw: the round ends without a winner.
         s.over = true; s.phase = "over"; s.winner = null;
@@ -659,7 +771,7 @@ const RommeCore = (function () {
 
   return {
     SUITS, JOKERS, THRESHOLDS, DEFAULT_THRESHOLD, ROUND_CHOICES, MAX_RESHUFFLES, makeDeck, handValue, entryValue, meldValue, buildMeld,
-    extendMeld, jokerSlotFor, jokerUsable, jokerFitsTable, createInitialState, nextRound, matchResult, canTakeFrom, takeOptions, splitIndex, discardCardOpen, topDiscard, pendingValue,
+    extendMeld, jokerEnds, canKnock, jokerSlotFor, jokerUsable, jokerFitsTable, createInitialState, nextRound, matchResult, canTakeFrom, takeOptions, splitIndex, discardCardOpen, topDiscard, pendingValue,
     applyMove, cardCount, clone
   };
 })();

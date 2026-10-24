@@ -113,11 +113,29 @@ trap cleanup EXIT
 trap 'exit 130' INT TERM
 
 port_busy() { curl -s -o /dev/null --max-time 2 "http://localhost:$1/"; }
+# Free only when the connection is refused (curl exit 7). A port held by a
+# process that is not a web server answers with other codes (56: reset) and
+# counts as taken - on the Mac port 8021 is held like that, which broke
+# offline-install.js when run-all.sh ran without PORT.
+port_free() {
+  curl -s -o /dev/null --max-time 2 "http://localhost:$1/"
+  [ $? -eq 7 ]
+}
+# The first free port of $1, $1 + 10, $1 + 20, ...
+free_port() {
+  local p="$1" i
+  for i in 1 2 3 4 5 6 7 8 9 10; do
+    port_free "$p" && break
+    p=$((p + 10))
+  done
+  echo "$p"
+}
 
 # Fixed ports of the tests that start their own server: one per test and part.
-export OFFLINE_TEST_PORT="${OFFLINE_TEST_PORT:-$((PORT + 21))}"
-export OFFLINE_UPDATE_PORT="${OFFLINE_UPDATE_PORT:-$((PORT + 22))}"
-export BANNER_TEST_PORT="${BANNER_TEST_PORT:-$((PORT + 23))}"
+# Given ones are used as they are; chosen ones skip ports already taken.
+export OFFLINE_TEST_PORT="${OFFLINE_TEST_PORT:-$(free_port $((PORT + 21)))}"
+export OFFLINE_UPDATE_PORT="${OFFLINE_UPDATE_PORT:-$(free_port $((PORT + 22)))}"
+export BANNER_TEST_PORT="${BANNER_TEST_PORT:-$(free_port $((PORT + 23)))}"
 
 # Does one part: its own server, then its tests in list order.
 run_shard() {
@@ -179,6 +197,7 @@ s=0
 while [ "$s" -le "$SHARDS" ]; do touch "$WORK/shard-$s"; s=$((s + 1)); done
 
 echo "Testreihe: $TOTAL Tests in $SHARDS Teil(en), Ports $PORT bis $((PORT + SHARDS - 1))"
+echo "Feste Ports: offline-install $OFFLINE_TEST_PORT, offline-update $OFFLINE_UPDATE_PORT, update-banner $BANNER_TEST_PORT"
 START="$(date +%s)"
 PIDS=""
 s=1

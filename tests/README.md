@@ -210,6 +210,23 @@ all parts back into one log in list order. The last line is exactly
   fails unless every game ends, all 108 cards stay in play after every
   move, every meld is valid and the score of every hand matches a
   separate calculation.
+- `node tests/romme-core.js [GAMES]` - no server or browser needed (a few
+  seconds). Checks the joker at the chosen end of a run (task 106: low end,
+  then the next card; high end; Ace on top only low; sets unchanged; house
+  rule "add the swapped joker"; the computer picks the end a hand card can
+  follow), Hand-Rommé (task 107: everything at once plus one discard,
+  refused otherwise, no minimum, joker in a meld, penalties doubled, the
+  computer goes out that way) and knocking (task 108: who may knock, keep
+  or give, the knocker only discards, the players in between miss their
+  turn, no knocking with 2 players or the discard variant, together with
+  "take cards from melds"), then plays GAMES (default 200) computer rounds
+  with every option and fails unless each ends and all 110 cards stay in
+  play.
+- `node tests/romme-ui.js` - needs the server and Playwright. On the German
+  page at 600 and 360 px: the two "Unten/Oben anlegen (als …)" buttons for a
+  joker, the "Klopfen auf …" button only when allowed and the turn order
+  after a knock, "Alle Karten auslegen" with "x2 Hand-Rommé" in the round
+  list; the knocking option is off on one device and with one computer.
 - `node tests/bridge-core.js` - no server or browser needed (about 70
   seconds). Checks 60 fixed bridge examples (contract points, overtricks,
   doubled and redoubled contracts, slams, undertricks, honours, Chicago

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v261",
+    date: "2026-10-24",
+    key: "release_v261",
+    text: "Rummy: a joker that fits at both ends of a run now goes where you choose, and there are two new options - Hand-Rommé (lay out all cards at once, the others' penalty points count double) and knocking on a discarded card against two or three computers."
+  },
+  {
     version: "v260",
     date: "2026-10-22",
     key: "release_v260",

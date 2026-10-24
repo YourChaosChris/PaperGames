@@ -17,6 +17,11 @@
 // With the house rule "add the swapped joker" switched on, a swapped joker
 // that fits no new meld is added to a meld on the table instead, and a
 // swap is made when that is possible.
+// A joker added to a run with room at both ends goes to the end a hand
+// card can follow at once (task 106). With "Hand-Rommé" it lays out only
+// when its best split holds every card but one. With knocking it keeps a
+// knocked card that fits a meld or forms one with its hand; computers
+// never knock themselves.
 // chooseMove returns one step at a time; the page calls it until the
 // computer has discarded or the round is over.
 
@@ -139,6 +144,46 @@ const RommeAi = (function () {
     return s.melds.some((m) => C.extendMeld(m, card));
   }
 
+  // A joker added to a run with room at both ends goes to the end a
+  // natural hand card can follow at once (that saves a hand card); if
+  // none can, to the high end as before. undefined: only one end.
+  function jokerEndFor(meld, hand, jokerId) {
+    const ends = C.jokerEnds(meld);
+    if (ends.length < 2) return undefined;
+    const joker = hand.find((c) => c.id === jokerId);
+    const rest = hand.filter((c) => c.id !== jokerId && !c.joker);
+    for (const e of ends) {
+      const grown = C.extendMeld(meld, joker, e.end);
+      if (grown && rest.some((c) => C.extendMeld(grown, c))) return e.end;
+    }
+    return "high";
+  }
+
+  function extendMove(s, i, hand, card) {
+    const move = { type: "extend", meld: i, id: card.id };
+    if (card.joker) {
+      const end = jokerEndFor(s.melds[i], hand, card.id);
+      if (end) move.end = end;
+    }
+    return move;
+  }
+
+  // Cards covered by a split of melds.
+  function splitCards(plan) {
+    return plan.melds.reduce((t, m) => t + m.ids.length, 0);
+  }
+
+  // Knocking: keep the knocked card if it fits a meld on the table (after
+  // the first meld) or forms a new meld with two hand cards - the checks
+  // used for taking a discard.
+  function keepsKnocked(s) {
+    const top = C.topDiscard(s);
+    if (!top) return false;
+    const pl = s.players[s.turn];
+    if (pl.opened && canExtendAny(s, top)) return true;
+    return !!meldWith(pl.hand.concat([top]), top);
+  }
+
   // How much a card helps the hand: partners for sets and runs, less if
   // the cards it would need are already gone (hard level).
   function usefulness(card, hand, seen) {
@@ -181,8 +226,24 @@ const RommeAi = (function () {
     const pl = s.players[p];
     const hand = pl.hand;
 
+    // Knocking: the player to move decides about the knocked card.
+    if (s.phase === "knocked") return keepsKnocked(s) ? { type: "takeDiscard" } : { type: "knockGive" };
+    // (Computers never knock; should one have to discard after a knock,
+    // it gives up its least useful card.)
+    if (s.phase === "knockDiscard") {
+      const pool = hand.slice().sort((a, b) => usefulness(a, hand, null) - usefulness(b, hand, null) || C.handValue(b) - C.handValue(a));
+      return { type: "discard", id: pool[0].id };
+    }
+
     if (s.phase === "draw") {
       const top = C.topDiscard(s);
+      if (top && level >= 2 && s.handRule && !pl.opened && !s.discardRule) {
+        // Hand-Rommé: take the discard if then everything but one card
+        // can be laid out at once.
+        const all = hand.concat([top]);
+        if (splitCards(bestSplit(all, 2000)) >= all.length - 1 && splitCards(bestSplit(hand, 2000)) < hand.length - 1) return { type: "takeDiscard" };
+        return { type: "draw" };
+      }
       if (top && level >= 2 && s.discardRule) {
         // Variant: take the discard only if it can be laid out this turn.
         return { type: canLayOut(s, hand, top, level) ? "takeDiscard" : "draw" };
@@ -206,7 +267,7 @@ const RommeAi = (function () {
       }
       // A joker freed by a taken card must go into a new meld.
       if (s.jokerLayoffRule && !(s.takenIds || []).includes(joker.id)) {
-        for (let i = 0; i < s.melds.length; i++) if (C.extendMeld(s.melds[i], joker)) return { type: "extend", meld: i, id: joker.id };
+        for (let i = 0; i < s.melds.length; i++) if (C.extendMeld(s.melds[i], joker)) return extendMove(s, i, hand, joker);
       }
     }
 
@@ -242,7 +303,20 @@ const RommeAi = (function () {
       return { type: "cancelPending" };
     }
 
-    if (!pl.opened) {
+    if (!pl.opened && s.handRule) {
+      // Hand-Rommé: stage melds only when the plan holds every card but
+      // one (the same search as for the first meld), then lay out.
+      const stagedCards = s.pending.reduce((a, m) => a.concat(m.entries.map((e) => e.card)), []);
+      const whole = hand.concat(stagedCards).sort((a, b) => a.id - b.id);
+      const plan = level <= 1 ? greedySplit(whole) : bestSplit(whole);
+      if (splitCards(plan) >= whole.length - 1) {
+        const inHand = new Set(hand.map((c) => c.id));
+        const rest = plan.melds.filter((m) => m.ids.every((id) => inHand.has(id)));
+        if (rest.length) return { type: "meld", ids: rest[0].ids };
+        if (s.pending.length && hand.length <= 1) return { type: "confirmOpen" };
+      }
+      if (s.pending.length) return { type: "cancelPending" };
+    } else if (!pl.opened) {
       // Stage the melds of the best split one by one, then lay them out
       // together once they reach the threshold.
       // The plan is made from the whole hand including the staged cards
@@ -267,7 +341,7 @@ const RommeAi = (function () {
           // Keep jokers for own melds - unless the hand is nearly empty,
           // or the round could never end.
           if (card.joker && level >= 2 && hand.length > 3) continue;
-          if (C.extendMeld(s.melds[i], card)) return { type: "extend", meld: i, id: card.id };
+          if (C.extendMeld(s.melds[i], card)) return extendMove(s, i, hand, card);
         }
       }
       if (level >= 2) {
