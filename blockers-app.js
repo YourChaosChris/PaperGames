@@ -2,12 +2,14 @@
 // Wires BlockersCore/BlockersAi ("Blocked Path" / Wegesperre) to
 // blockers.html.
 //
-// 2 to 4 players on one device, any of them played by the computer
+// 2 to 6 players on one device (task 111; the quick board takes 4), any
+// of them played by the computer
 // (levels Easy, Medium, Hard). On your turn: tap Roll, tap one of your
 // tokens that can move (they get a dashed ring; tokens still in the house
 // are chosen with the house button under the board), then tap one of the
 // marked fields. Landing on a stone lets you put it on any free field:
-// tap one. Tokens differ by shape (circle, triangle, diamond, star);
+// tap one. Tokens differ by shape (circle, triangle, diamond, star, and
+// for 5 and 6 players ring and cross);
 // stones are black squares with a white bar.
 //
 // Before the game every person chooses a token and a start house (six
@@ -36,8 +38,8 @@
 // board of a saved game comes from its state (s.board).
 
 const BLOCKERS_SAVE_KEY = "einkchess_save_blockers";
-const BL_SHAPES = ["circle", "triangle", "diamond", "star"];
-const BL_SHAPE_NAME = { circle: "Circle", triangle: "Triangle", diamond: "Diamond", star: "Star" };
+const BL_SHAPES = ["circle", "triangle", "diamond", "star", "ring", "cross"];
+const BL_SHAPE_NAME = { circle: "Circle", triangle: "Triangle", diamond: "Diamond", star: "Star", ring: "Ring", cross: "Cross" };
 const BL_PACE_KEY = "papergames_blockers_pace";
 const BL_FINISH_KEY = "papergames_blockers_finish";
 const BL_TOKENS_KEY = "papergames_blockers_tokens";
@@ -118,6 +120,13 @@ function shapeMarkupBL(shape, x, y, r) {
   if (shape === "circle") return '<circle cx="' + f(x) + '" cy="' + f(y) + '" r="' + f(r) + '" fill="#141413"' + stroke + "/>";
   if (shape === "triangle") return '<polygon points="' + f(x) + "," + f(y - r * 1.1) + " " + f(x + r * 1.1) + "," + f(y + r * 0.85) + " " + f(x - r * 1.1) + "," + f(y + r * 0.85) + '" fill="#141413"' + stroke + "/>";
   if (shape === "diamond") return '<polygon points="' + f(x) + "," + f(y - r * 1.15) + " " + f(x + r * 1.0) + "," + f(y) + " " + f(x) + "," + f(y + r * 1.15) + " " + f(x - r * 1.0) + "," + f(y) + '" fill="#141413"' + stroke + "/>";
+  // Ring: a thick black circle with a white middle (task 111).
+  if (shape === "ring") return '<circle cx="' + f(x) + '" cy="' + f(y) + '" r="' + f(r * 0.78) + '" fill="#fff" stroke="#141413" stroke-width="' + f(r * 0.5) + '"/>';
+  // Cross: a filled plus sign.
+  if (shape === "cross") {
+    const a = r * 1.1, b = r * 0.38;
+    return '<path d="M' + f(x - b) + " " + f(y - a) + "H" + f(x + b) + "V" + f(y - b) + "H" + f(x + a) + "V" + f(y + b) + "H" + f(x + b) + "V" + f(y + a) + "H" + f(x - b) + "V" + f(y + b) + "H" + f(x - a) + "V" + f(y - b) + "H" + f(x - b) + 'Z" fill="#141413"' + stroke + "/>";
+  }
   const pts = [];
   for (let i = 0; i < 10; i++) {
     const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * 0.5 : r * 1.2;
@@ -189,8 +198,11 @@ function initBlockersApp() {
     const four = tokensSel.querySelector('option[value="4"]');
     if (four) four.disabled = !quick;
     const all = finishSel.value === "all";
-    tokensSel.disabled = quick || !all;
-    tokensSel.value = quick ? "4" : (all ? String(loadTokensBL()) : "5");
+    // With 5 or 6 players "all" is played with 3 tokens (5 would take
+    // about twice as long, see the report of task 111).
+    const many = parseInt(players.value, 10) >= 5;
+    tokensSel.disabled = quick || !all || many;
+    tokensSel.value = quick ? "4" : (all ? (many ? "3" : String(loadTokensBL())) : "5");
   };
   // The quick board has four houses and room for 2 to 4 players.
   const syncBoard = () => {
@@ -209,7 +221,11 @@ function initBlockersApp() {
   syncTokens();
   finishSel.addEventListener("change", () => { saveFinishBL(finishSel.value); syncTokens(); });
   tokensSel.addEventListener("change", () => { if (finishSel.value === "all") saveTokensBL(parseInt(tokensSel.value, 10)); });
-  players.addEventListener("change", () => { limitComputers(); buildChoicesBL(); });
+  players.addEventListener("change", () => {
+    // 5 and 6 players start with "One token in the goal" (task 111).
+    if (parseInt(players.value, 10) >= 5) finishSel.value = "one";
+    limitComputers(); syncTokens(); buildChoicesBL();
+  });
   computers.addEventListener("change", buildChoicesBL);
   limitComputers();
   buildChoicesBL();
@@ -266,7 +282,7 @@ function buildChoicesBL() {
   const houseBefore = Array.from(wrap.querySelectorAll(".bl-house-select")).map((sel) => parseInt(sel.value, 10));
   const board = boardChoiceBL();
   const houseCount = BlockersCore.boardOf(board).houseCols.length;
-  const toks = BlockersCore.assignShapes(n, tokBefore.slice(0, humans)).slice(0, humans);
+  const toks = BlockersCore.assignShapes(n, tokBefore.slice(0, humans).map((k) => (n > 4 || k < 4 ? k : 0))).slice(0, humans);
   // A new person starts in house 2 (as before this choice existed) or the next free one.
   const houses = BlockersCore.assignHouses(n, houseBefore.length ? houseBefore.slice(0, humans).concat([1, 1, 1]).slice(0, humans).map((h) => h < houseCount ? h : 1) : new Array(humans).fill(1), board).slice(0, humans);
   wrap.innerHTML = "";
@@ -287,7 +303,8 @@ function buildChoicesBL() {
     const ts = document.createElement("select");
     ts.id = "bl-token-" + h;
     ts.className = "bl-token-select";
-    BL_SHAPES.forEach((shape, k) => {
+    // Ring and cross only for 5 and 6 players; up to 4 the four shapes as before.
+    BL_SHAPES.slice(0, n > 4 ? BL_SHAPES.length : 4).forEach((shape, k) => {
       const o = document.createElement("option");
       o.value = String(k);
       I18n.setMsg(o, BL_SHAPE_NAME[shape]);
@@ -329,7 +346,7 @@ function renderChoicePicsBL() {
 
 function startGameBL(numPlayers, computers, level, tokenChoices, houseChoices, firstChoice, finish, tokenCount, board) {
   const quick = board === "quick";
-  const n = Math.max(2, Math.min(quick ? BlockersCore.QUICK_HOUSE_COLS.length : 4, numPlayers || 2));
+  const n = Math.max(2, Math.min(quick ? BlockersCore.QUICK_HOUSE_COLS.length : 6, numPlayers || 2));
   AppStateBL.numPlayers = n;
   AppStateBL.computers = Math.max(0, Math.min(n - 1, computers || 0));
   AppStateBL.level = level >= 1 && level <= 3 ? level : 2;
@@ -337,7 +354,7 @@ function startGameBL(numPlayers, computers, level, tokenChoices, houseChoices, f
   const shapes = BlockersCore.assignShapes(n, (tokenChoices || []).slice(0, humans));
   const houses = BlockersCore.assignHouses(n, (houseChoices || []).slice(0, humans), quick ? "quick" : undefined);
   const first = BlockersCore.firstPlayer(firstChoice || "random", n, AppStateBL.computers ? humans : n);
-  const opts = { houses, shapes, first, finish: finish === "all" ? "all" : "one", tokens: tokenCount === 5 ? 5 : 3 };
+  const opts = { houses, shapes, first, finish: finish === "all" ? "all" : "one", tokens: tokenCount === 5 && n <= 4 ? 5 : 3 };
   if (quick) opts.board = "quick";
   AppStateBL.state = BlockersCore.createInitialState(n, opts);
   AppStateBL.started = true;

@@ -3,7 +3,7 @@
 // (internally still called stones; ids and saved games use "blockers").
 // Dependency-free, no DOM. Board and rules are PaperGames' own.
 //
-// 2 to 4 players with 5 tokens each start in their houses below the board
+// 2 to 6 players with 5 tokens each start in their houses below the board
 // and race along a network of paths to the goal at the top. Blocking
 // stones stand on some fields: no token may pass over one. A token that
 // lands exactly on a stone takes it and puts it on any free field (not in
@@ -85,11 +85,15 @@ const BlockersCore = (function () {
   const ARRIVED = -2; // token position: reached the goal and left the board ("all")
   // Entry field (in the bottom row) of each player's house; with the
   // same number of players every entry is equally far from the goal.
-  const ENTRY_COLS = { 2: [2, 8], 3: [3, 5, 7], 4: [1, 3, 7, 9] };
+  // Games with 5 and 6 players (task 111) always have `houses`; their
+  // entries here only mark the numbers of players allowed.
+  const ENTRY_COLS = { 2: [2, 8], 3: [3, 5, 7], 4: [1, 3, 7, 9], 5: [0, 2, 4, 8, 10], 6: [0, 2, 4, 6, 8, 10] };
   // The six houses, left to right: entry columns all 14 steps from the goal.
   const HOUSE_COLS = [0, 2, 4, 6, 8, 10];
   const QUICK_HOUSE_COLS = [1, 3, 5, 7];
-  const SHAPES = ["circle", "triangle", "diamond", "star"];
+  // The last two (task 111, for 5 and 6 players): a ring - a circle with a
+  // white middle - and a cross, both unlike the four filled shapes.
+  const SHAPES = ["circle", "triangle", "diamond", "star", "ring", "cross"];
 
   // Fields, paths and distances of a board map.
   function makeBoard(map, houseCols, quick) {
@@ -175,7 +179,7 @@ const BlockersCore = (function () {
     return out;
   }
 
-  // Token shapes (0..3, SHAPES) for all seats, like assignHouses: the
+  // Token shapes (0..5, SHAPES) for all seats, like assignHouses: the
   // people's choices, the computers the shapes left over in order.
   function assignShapes(numPlayers, choices) {
     const n = ENTRY_COLS[numPlayers] ? numPlayers : 2;

@@ -16,7 +16,7 @@ Object.assign(STRINGS.fr, {
     bl_term_win: "Le gagnant",
     bl_rules_win: "La fin de partie se choisit avant de jouer. « Un pion à l'arrivée » (par défaut) : le premier joueur qui amène un pion à l'arrivée gagne ; chacun a 5 pions. « Tous les pions à l'arrivée » : chacun a 3 ou 5 pions, selon le choix ; un pion qui atteint l'arrivée quitte le plateau et l'arrivée est de nouveau libre ; aucun bloc ne se trouve sur les trois dernières cases avant l'arrivée. Le premier joueur dont tous les pions sont à l'arrivée gagne, les autres sont classés selon leurs pions à l'arrivée.",
     bl_term_players: "Joueurs",
-    bl_rules_players: "2 à 4 joueurs sur un appareil ; chacun peut être joué par l'ordinateur (Facile, Moyen ou Difficile). Les pions se distinguent par leur forme : cercle, triangle, losange et étoile.",
+    bl_rules_players: "2 à 6 joueurs sur un appareil ; chacun peut être joué par l'ordinateur (Facile, Moyen ou Difficile). Les pions se distinguent par leur forme : cercle, triangle, losange, étoile, anneau (un cercle au centre blanc) et croix.",
     bl_term_quick: "Le plateau rapide",
     bl_rules_quick: "Choisis « Plateau : Rapide » avant la partie pour une partie plus courte : un plateau propre, plus petit, avec quatre maisons, 9 pas de chaque maison jusqu’à l’arrivée, 4 pions par joueur et 6 blocs au départ. À la place de la moitié basse protégée, il a quatre cases de repos (octogones à double bord) : un pion sur une case de repos ne peut pas être renvoyé, un seul pion peut s’y trouver et aucun bloc ne peut y être posé.",
     bl_rules_example_title: "Un bloc sur le chemin",
@@ -25,7 +25,7 @@ Object.assign(STRINGS.fr, {
     bl_history_origins_title: "Les anciens jeux de course",
     bl_history_origins_p1: "Les jeux de course, où les pièces avancent aux dés le long d'un parcours vers un but, comptent parmi les plus anciens jeux de plateau ; le jeu royal d'Ur est le plus ancien jeu dont les règles nous sont parvenues. Renvoyer et bloquer sont aussi des idées anciennes : au pachisi, une pièce qui s'arrête sur une pièce adverse la renvoie au départ, et au backgammon, un mur de pièces sur des flèches consécutives, appelé prime, retient les pièces adverses derrière lui.",
     bl_history_modern_title: "Chemin barré chez PaperGames",
-    bl_history_modern_p1: "Chez PaperGames, Chemin barré se joue sur un réseau de chemins de 49 cases avec l'arrivée en haut, avec six blocs et jusqu'à quatre joueurs. Un bloc touché n'est pas retiré mais reposé, si bien que le chemin vers l'arrivée change sans cesse. Les maisons entrent sur le plateau par des cases également éloignées de l'arrivée, et les pions se distinguent par la forme plutôt que par la couleur, pour que le jeu fonctionne sur l'encre électronique en noir et blanc.",
+    bl_history_modern_p1: "Chez PaperGames, Chemin barré se joue sur un réseau de chemins de 49 cases avec l'arrivée en haut, avec six blocs et jusqu'à six joueurs. Un bloc touché n'est pas retiré mais reposé, si bien que le chemin vers l'arrivée change sans cesse. Les maisons entrent sur le plateau par des cases également éloignées de l'arrivée, et les pions se distinguent par la forme plutôt que par la couleur, pour que le jeu fonctionne sur l'encre électronique en noir et blanc.",
     bl_history_quick_p: "Le plateau rapide est un plateau plus petit, propre à PaperGames, conçu pour des parties plus courtes ; des cases de repos, où un pion ne peut pas être renvoyé, y remplacent la moitié basse protégée.",
 });
 I18n.markTextLoaded("fr");

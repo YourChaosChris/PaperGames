@@ -193,6 +193,17 @@ all parts back into one log in list order. The last line is exactly
   tokens, rest fields labelled and drawn), a move, saved with board
   "quick" and back after a reload, the block prompt names the rest
   fields, "Normal" starts the normal board again.
+- `node tests/blockers-six.js` - no server or browser needed. Blocked Path
+  with 5 and 6 players (task 111): houses and shapes all different (ring
+  and cross added), turn order, sending back, a block taken and put back,
+  the ranking with 6 places, save and load; computer games (`GAMES`,
+  default 200) with 5 and 6 players for "one" and "all"; fairness over
+  `FAIR` (default 600) games with 6 Medium computers - every house within
+  5 percentage points of 1/6; game lengths printed.
+- `node tests/blockers-six-ui.js` - needs the server and Playwright. 5 and
+  6 players only on the normal board, 6 shapes only for 5-6 players, six
+  player rows readable and at least 28 px high at 360 and 600 px, the game
+  back after a reload, "all" with 6 players uses 3 tokens.
 - `node tests/blockers-ui.js` - needs a local server (default port 8000)
   and Playwright. Task 113: German and English page at 360 x 640 name
   the game "Wegesperre" / "Blocked Path" and show no old name; a new

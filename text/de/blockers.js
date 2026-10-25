@@ -16,7 +16,7 @@ Object.assign(STRINGS.de, {
     bl_term_win: "Der Sieger",
     bl_rules_win: "Wann das Spiel endet, wählst du vor dem Spiel. „Eine Figur im Ziel“ (Standard): Wer als Erster eine Figur ins Ziel bringt, gewinnt; alle haben 5 Figuren. „Alle Figuren im Ziel“: Alle haben 3 oder 5 Figuren, wie gewählt; eine Figur, die das Ziel erreicht, verlässt das Brett, und das Ziel ist wieder frei; auf den letzten drei Feldern vor dem Ziel steht kein Sperrklotz. Wer zuerst alle Figuren im Ziel hat, gewinnt, die anderen folgen nach der Zahl ihrer Figuren im Ziel.",
     bl_term_players: "Spieler",
-    bl_rules_players: "2 bis 4 Spieler an einem Gerät; jeder von ihnen kann vom Computer gespielt werden (Leicht, Mittel oder Schwer). Die Figuren unterscheiden sich durch ihre Form: Kreis, Dreieck, Raute und Stern.",
+    bl_rules_players: "2 bis 6 Spieler an einem Gerät; jeder von ihnen kann vom Computer gespielt werden (Leicht, Mittel oder Schwer). Die Figuren unterscheiden sich durch ihre Form: Kreis, Dreieck, Raute, Stern, Ring (ein Kreis mit weißer Mitte) und Kreuz.",
     bl_term_quick: "Das schnelle Brett",
     bl_rules_quick: "Wähle vor dem Spiel „Brett: Schnell“ für eine kürzere Partie: ein eigenes, kleineres Brett mit vier Häusern, 9 Schritten von jedem Haus bis zum Ziel, 4 Figuren pro Person und 6 Sperrklötzen am Start. Statt der sicheren unteren Hälfte gibt es vier Ruhefelder (Achtecke mit doppeltem Rand): Eine Figur auf einem Ruhefeld kann nicht zurückgeschickt werden, dort darf nur eine Figur stehen, und kein Sperrklotz darf dorthin.",
     bl_rules_example_title: "Ein Sperrklotz im Weg",
@@ -25,7 +25,7 @@ Object.assign(STRINGS.de, {
     bl_history_origins_title: "Alte Laufspiele",
     bl_history_origins_p1: "Laufspiele, bei denen Figuren nach Würfelwurf auf einer Bahn zu einem Ziel ziehen, gehören zu den ältesten Brettspielen; das Königliche Spiel von Ur ist das älteste Spiel, dessen Regeln überliefert sind. Auch Hinauswerfen und Versperren sind alte Ideen: Beim Pachisi schickt eine Figur, die auf einer gegnerischen landet, diese zurück an den Start, und beim Backgammon hält eine Mauer aus Steinen auf aufeinanderfolgenden Feldern, Prime genannt, die gegnerischen Steine dahinter fest.",
     bl_history_modern_title: "Wegesperre bei PaperGames",
-    bl_history_modern_p1: "Bei PaperGames wird Wegesperre auf einem Wegenetz mit 49 Feldern und dem Ziel oben gespielt, mit sechs Sperrklötzen und bis zu vier Spielern. Ein getroffener Sperrklotz wird nicht entfernt, sondern neu gesetzt, so ändert sich der Weg zum Ziel ständig. Die Häuser kommen auf Feldern auf den Plan, die gleich weit vom Ziel entfernt sind, und die Figuren unterscheiden sich durch die Form statt durch die Farbe, damit das Spiel auf Schwarz-Weiß-E-Ink funktioniert.",
+    bl_history_modern_p1: "Bei PaperGames wird Wegesperre auf einem Wegenetz mit 49 Feldern und dem Ziel oben gespielt, mit sechs Sperrklötzen und bis zu sechs Spielern. Ein getroffener Sperrklotz wird nicht entfernt, sondern neu gesetzt, so ändert sich der Weg zum Ziel ständig. Die Häuser kommen auf Feldern auf den Plan, die gleich weit vom Ziel entfernt sind, und die Figuren unterscheiden sich durch die Form statt durch die Farbe, damit das Spiel auf Schwarz-Weiß-E-Ink funktioniert.",
     bl_history_quick_p: "Das schnelle Brett ist ein eigenes, kleineres Brett von PaperGames für kürzere Partien; Ruhefelder, auf denen eine Figur nicht zurückgeschickt werden kann, ersetzen dort die sichere untere Hälfte.",
 });
 I18n.markTextLoaded("de");
