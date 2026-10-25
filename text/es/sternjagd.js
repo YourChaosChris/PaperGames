@@ -16,7 +16,7 @@ Object.assign(STRINGS.es, {
     sj_term_win: "Ganar",
     sj_rules_win: "Gana el último que queda en juego. Si nadie ha ganado tras 600 jugadas, la partida termina en tablas.",
     sj_term_start: "Quién empieza",
-    sj_rules_start: "Quién empieza se sortea al comienzo de cada partida, porque mover primero es una pequeña ventaja.",
+    sj_rules_start: "Quién empieza se sortea al comienzo de cada partida, porque mover primero es una pequeña ventaja. Con dos jugadores, el otro juega dos veces seguidas la primera vez, porque si no quien empieza gana unas siete de cada diez partidas; se puede desactivar antes de la partida («Compensación para el segundo jugador»).",
     sj_term_computer: "El ordenador",
     sj_rules_computer: "El ordenador atrapa siempre que puede. Si no, elige la casilla donde los rivales tienen menos probabilidad de alcanzarlo en su turno.",
     sj_term_help: "Deshacer",

@@ -16,7 +16,7 @@ Object.assign(STRINGS.pl, {
     sj_term_win: "Wygrana",
     sj_rules_win: "Wygrywa ostatni gracz w grze. Jeśli po 600 ruchach nikt nie wygrał, jest remis.",
     sj_term_start: "Kto zaczyna",
-    sj_rules_start: "Kto zaczyna, jest losowane na początku każdej gry, bo pierwszy ruch to niewielka przewaga.",
+    sj_rules_start: "Kto zaczyna, jest losowane na początku każdej gry, bo pierwszy ruch to niewielka przewaga. Przy dwóch graczach drugi gracz ma za pierwszym razem dwa ruchy z rzędu, bo inaczej zaczynający wygrywa około siedmiu gier na dziesięć; można to wyłączyć przed grą („Wyrównanie dla drugiego gracza”).",
     sj_term_computer: "Komputer",
     sj_rules_computer: "Komputer łapie, gdy tylko może. W przeciwnym razie wybiera pole, na którym przeciwnicy najmniej prawdopodobnie go trafią w następnym ruchu.",
     sj_term_help: "Cofnij",

@@ -66,10 +66,12 @@ function validStateSJ(s) {
 function startGameSJ() {
   const mode = DiceCommon.activeMode();
   const n = parseInt(document.getElementById("sj-players").value, 10) || 2;
+  const balance = document.getElementById("sj-balance");
   AppStateSJ.state = SternjagdCore.newGame({
     players: n,
     computer: DiceCommon.seats(mode, n),
-    first: Math.floor(Math.random() * n)
+    first: Math.floor(Math.random() * n),
+    balance: n === 2 && !!(balance && balance.checked)
   });
   AppStateSJ.undoStack = [];
   AppStateSJ.log = [];
@@ -182,9 +184,12 @@ function setResultSJ(text) {
 
 function eventTextSJ(l) {
   const name = nameSJ(l.player);
-  if (l.kind === "capture") return tSJ("sj_last_capture", { name: name, n: l.die, victim: nameSJ(l.captured) });
-  if (l.kind === "pass") return tSJ("sj_last_pass", { name: name, n: l.die });
-  return tSJ("sj_last_move", { name: name, n: l.die });
+  let text;
+  if (l.kind === "capture") text = tSJ("sj_last_capture", { name: name, n: l.die, victim: nameSJ(l.captured) });
+  else if (l.kind === "pass") text = tSJ("sj_last_pass", { name: name, n: l.die });
+  else text = tSJ("sj_last_move", { name: name, n: l.die });
+  // The double turn of the balance (task 130).
+  return l.again ? text + " " + I18n.t("sj_last_again") : text;
 }
 
 function turnStatusSJ() {
@@ -274,8 +279,15 @@ function renderLogSJ() {
   if (AppStateSJ.starter >= 0) {
     const p = document.createElement("div");
     p.id = "sj-starter";
-    const you = humansSJ() === 1 && !AppStateSJ.state.computer[AppStateSJ.starter];
-    p.textContent = you ? I18n.t("sj_starts_you") : tSJ("sj_starts", { name: nameSJ(AppStateSJ.starter) });
+    const s = AppStateSJ.state;
+    const isYou = (i) => humansSJ() === 1 && !s.computer[i];
+    let text = isYou(AppStateSJ.starter) ? I18n.t("sj_starts_you") : tSJ("sj_starts", { name: nameSJ(AppStateSJ.starter) });
+    // With the balance (task 130) the line also names the double turn.
+    if (s.balance) {
+      const second = 1 - AppStateSJ.starter;
+      text += " " + (isYou(second) ? I18n.t("sj_balance_note_you") : tSJ("sj_balance_note", { name: nameSJ(second) }));
+    }
+    p.textContent = text;
     wrap.appendChild(p);
   }
 }
@@ -306,8 +318,21 @@ function nodeOfSJ(el) {
   return -1;
 }
 
+// The balance is only offered with 2 players (task 130).
+function updateBalanceRowSJ() {
+  const row = document.getElementById("sj-balance-row");
+  const n = parseInt(document.getElementById("sj-players").value, 10) || 2;
+  if (row) row.classList.toggle("hidden", n !== 2);
+}
+
 function initSternjagdApp() {
   DiceCommon.wireMenu();
+  const players = document.getElementById("sj-players");
+  players.addEventListener("change", updateBalanceRowSJ);
+  // quick-rules.js restores the remembered fields in a timeout after
+  // DOMContentLoaded (without a change event); look again after it.
+  updateBalanceRowSJ();
+  window.setTimeout(updateBalanceRowSJ, 0);
   document.getElementById("mode-ai").addEventListener("click", () => DiceCommon.setMode("ai"));
   document.getElementById("mode-offline").addEventListener("click", () => DiceCommon.setMode("hotseat"));
   document.getElementById("start-sj-game").addEventListener("click", startGameSJ);

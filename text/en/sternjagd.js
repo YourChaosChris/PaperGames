@@ -16,7 +16,7 @@ Object.assign(STRINGS.en, {
     sj_term_win: "Winning",
     sj_rules_win: "The last player left wins. If nobody has won after 600 moves, the game is a draw.",
     sj_term_start: "Who starts",
-    sj_rules_start: "The player who starts is drawn at the beginning of every game, because moving first is a small advantage.",
+    sj_rules_start: "The player who starts is drawn at the beginning of every game, because moving first is a small advantage. With two players the other player has two turns in a row the first time, because otherwise the starter wins about seven games in ten; you can switch this off before the game (“Balance for the second player”).",
     sj_term_computer: "The computer",
     sj_rules_computer: "The computer catches whenever it can. Otherwise it picks the field where opponents are least likely to hit it on their next turn.",
     sj_term_help: "Undo",

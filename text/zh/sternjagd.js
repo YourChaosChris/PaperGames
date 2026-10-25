@@ -16,7 +16,7 @@ Object.assign(STRINGS.zh, {
     sj_term_win: "获胜",
     sj_rules_win: "最后留下的玩家获胜。如果600步后仍无人获胜，则为平局。",
     sj_term_start: "谁先走",
-    sj_rules_start: "每局开始时抽签决定谁先走，因为先走略占优势。",
+    sj_rules_start: "每局开始时抽签决定谁先走，因为先走略占优势。两人对局时，后手第一次可以连走两次，否则先走的一方十局中约赢七局；开局前可以关闭（“后手补偿”）。",
     sj_term_computer: "电脑",
     sj_rules_computer: "电脑只要能抓就会抓。否则它会选择对手下一回合最不可能打到的格子。",
     sj_term_help: "撤销",

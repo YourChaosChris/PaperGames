@@ -16,7 +16,7 @@ Object.assign(STRINGS.de, {
     sj_term_win: "Gewinnen",
     sj_rules_win: "Es gewinnt, wer als Letzter übrig bleibt. Hat nach 600 Zügen noch niemand gewonnen, endet das Spiel unentschieden.",
     sj_term_start: "Wer beginnt",
-    sj_rules_start: "Wer beginnt, wird zu Beginn jeder Partie ausgelost, denn der erste Zug ist ein kleiner Vorteil.",
+    sj_rules_start: "Wer beginnt, wird zu Beginn jeder Partie ausgelost, denn der erste Zug ist ein kleiner Vorteil. Bei zwei Spielern ist der andere beim ersten Mal zweimal hintereinander dran, weil sonst der Beginner etwa sieben von zehn Partien gewinnt; das lässt sich vor Spielbeginn abschalten („Ausgleich für den Zweiten“).",
     sj_term_computer: "Der Computer",
     sj_rules_computer: "Der Computer fängt, wenn er kann. Sonst wählt er das Feld, auf dem ihn die Gegner im nächsten Zug am wenigsten wahrscheinlich treffen.",
     sj_term_help: "Rückgängig",

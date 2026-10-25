@@ -16,7 +16,7 @@ Object.assign(STRINGS.nl, {
     sj_term_win: "Winnen",
     sj_rules_win: "Wie als laatste overblijft, wint. Is er na 600 zetten nog geen winnaar, dan eindigt het spel gelijk.",
     sj_term_start: "Wie begint",
-    sj_rules_start: "Wie begint wordt aan het begin van elk spel geloot, want als eerste zetten is een klein voordeel.",
+    sj_rules_start: "Wie begint wordt aan het begin van elk spel geloot, want als eerste zetten is een klein voordeel. Met twee spelers is de ander de eerste keer twee keer achter elkaar aan de beurt, want anders wint wie begint ongeveer zeven van de tien spellen; je kunt dit voor het spel uitzetten («Compensatie voor de tweede speler»).",
     sj_term_computer: "De computer",
     sj_rules_computer: "De computer vangt zodra het kan. Anders kiest hij het veld waar tegenstanders hem in hun volgende beurt het minst waarschijnlijk raken.",
     sj_term_help: "Ongedaan maken",

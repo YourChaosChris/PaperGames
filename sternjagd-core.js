@@ -83,7 +83,15 @@ const SternjagdCore = (() => {
     return s.n === 3 ? [0, 1, 2] : startFields(s.n);
   }
 
-  // opts: { players: 2..4, computer: [bool, ...], first: seat that starts }
+  // opts: { players: 2..4, computer: [bool, ...], first: seat that starts,
+  //         balance: bool }
+  // Balance (task 130, only with 2 players): the player who does not start
+  // has two turns in a row the first time. Without it the starter won about
+  // 71 % of 1000 computer games, with it about 53 % ("one star more" for
+  // the second gave 40 %, half a die for the starter's first roll 59 %).
+  // The state keeps `balance` (the setting) and `bonus` (the seat still
+  // owed its double turn, -1 when used); games saved before task 130 have
+  // neither and play without a balance.
   function newGame(opts) {
     const o = opts || {};
     const n = Math.max(2, Math.min(4, o.players || 2));
@@ -93,6 +101,8 @@ const SternjagdCore = (() => {
       computer.push(!!(o.computer && o.computer[i]));
       alive.push(true);
     }
+    const first = o.first >= 0 && o.first < n ? o.first : 0;
+    const balance = n === 2 && !!o.balance;
     return {
       game: "sternjagd",
       n: n,
@@ -101,7 +111,9 @@ const SternjagdCore = (() => {
       homes: startFields(n),    // start corner of each piece
       alive: alive,
       stars: alive.map(() => STARS),
-      current: o.first >= 0 && o.first < n ? o.first : 0,
+      current: first,
+      balance: balance,         // task 130: the second player's double turn
+      bonus: balance ? 1 - first : -1,
       die: 0,                   // 0 until rolled
       phase: "roll",            // "roll" | "move" | "over"
       moves: 0,
@@ -141,6 +153,18 @@ const SternjagdCore = (() => {
     t.seq += 1;
   }
 
+  // Ends the turn of player p: the next player, or p again once if p is
+  // still owed the double turn of the balance (marked in the event).
+  function endTurn(t, p) {
+    if (t.bonus === p && t.alive[p]) {
+      t.bonus = -1;
+      t.last.again = true;
+      t.current = p;
+      return;
+    }
+    t.current = nextAlive(t, p);
+  }
+
   function roll(s, rng) {
     if (s.phase !== "roll") return s;
     const t = clone(s);
@@ -150,7 +174,7 @@ const SternjagdCore = (() => {
       event(t, { kind: "pass", player: t.current, die: t.die, from: t.pos[t.current], to: t.pos[t.current], captured: -1 });
       t.die = 0;
       t.phase = "roll";
-      t.current = nextAlive(t, t.current);
+      endTurn(t, t.current);
     }
     return t;
   }
@@ -187,7 +211,7 @@ const SternjagdCore = (() => {
       return t;
     }
     t.phase = "roll";
-    t.current = nextAlive(t, p);
+    endTurn(t, p);
     return t;
   }
 

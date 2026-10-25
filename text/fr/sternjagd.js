@@ -16,7 +16,7 @@ Object.assign(STRINGS.fr, {
     sj_term_win: "Gagner",
     sj_rules_win: "Le dernier joueur resté en jeu gagne. Si personne n'a gagné après 600 coups, la partie est nulle.",
     sj_term_start: "Qui commence",
-    sj_rules_start: "Le premier joueur est tiré au sort au début de chaque partie, car jouer en premier est un petit avantage.",
+    sj_rules_start: "Le premier joueur est tiré au sort au début de chaque partie, car jouer en premier est un petit avantage. À deux joueurs, l'autre joue deux fois de suite la première fois, car sinon celui qui commence gagne environ sept parties sur dix ; on peut le désactiver avant la partie (« Compensation pour le second joueur »).",
     sj_term_computer: "L'ordinateur",
     sj_rules_computer: "L'ordinateur attrape dès qu'il le peut. Sinon il choisit la case où les adversaires ont le moins de chances de l'atteindre au tour suivant.",
     sj_term_help: "Annuler",

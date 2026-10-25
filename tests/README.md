@@ -420,10 +420,21 @@ all parts back into one log in list order. The last line is exactly
   players, seat 1 always starting and a random starter; with the random
   starter every seat within 5 percentage points of the mean (3 players sit
   against the arrows, corners 1, 0, 2). Win rates printed.
+- `node tests/sternjagd-balance.js` - no server or browser needed. Balance
+  for the second player (task 130): with 2 players the one who does not
+  start has two turns in a row the first time. `GAMES` (default 1000)
+  computer games with 2 players, the starter changing seats, without and
+  with the balance; with it the starter must win 45-55 % (both rates
+  printed). Also the turn order, 3 and 4 players without the balance, and
+  an old state without `balance`/`bonus`. A few seconds.
 - `node tests/sternjagd-ui.js` - needs the server and Playwright. German
   page at 360 x 640: "Du beginnst." / "Computer beginnt.", both happen, the
   line goes after the first roll, save and load, an old 3-player save
-  without `homes` keeps its corners.
+  without `homes` keeps its corners. Task 130: the choice "Ausgleich für den
+  Zweiten" (2 players only, on by default), the starter line names the
+  double turn, your second move after the computer started, off and 3
+  players without it, `balance`/`bonus` saved and loaded, an old 2-player
+  save without them, remembered settings (quick-rules.js).
 - `node tests/trix-ai-games.js` - no server or browser needed. 60 Trix games
   computer against computer (all three levels and mixed seats, fixed seeds)
   that must reach the end of the fourth kingdom without a refused move:

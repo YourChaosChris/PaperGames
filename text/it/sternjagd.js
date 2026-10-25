@@ -16,7 +16,7 @@ Object.assign(STRINGS.it, {
     sj_term_win: "Vincere",
     sj_rules_win: "Vince l'ultimo rimasto in gioco. Se dopo 600 mosse nessuno ha vinto, la partita è patta.",
     sj_term_start: "Chi comincia",
-    sj_rules_start: "Chi comincia viene estratto a sorte all'inizio di ogni partita, perché muovere per primi è un piccolo vantaggio.",
+    sj_rules_start: "Chi comincia viene estratto a sorte all'inizio di ogni partita, perché muovere per primi è un piccolo vantaggio. In due, l'altro gioca due volte di fila la prima volta, perché altrimenti chi comincia vince circa sette partite su dieci; si può disattivare prima della partita («Compensazione per il secondo giocatore»).",
     sj_term_computer: "Il computer",
     sj_rules_computer: "Il computer prende ogni volta che può. Altrimenti sceglie la casella in cui gli avversari hanno meno probabilità di raggiungerlo al turno successivo.",
     sj_term_help: "Annulla",
