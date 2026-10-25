@@ -450,6 +450,21 @@ all parts back into one log in list order. The last line is exactly
   possible points on the sheet, a field written, the computer's panel and
   "Weiter", the game back after a reload, a whole game to the result; rows
   at least 44 px, no sideways scroll, no key names in the page.
+- `node tests/slidepuzzle-core.js`, `node tests/hanoi-core.js`,
+  `node tests/nim-core.js` - no server or browser needed (task 118).
+  Sliding puzzle: 1000 mixed 3 x 3 and 4 x 4 puzzles (100 of 5 x 5) all
+  solvable by parity and never solved, 4 x 4 mixed with at least 80
+  moves, single and multi-tile slides, the exact 3 x 3 solution in taps,
+  hints. Tower of Hanoi: 2^n - 1 moves from the start for n = 3..8, refused
+  moves with their reason, undo, shortest ways from 300 random positions.
+  Nim: the xor rule (and misère) against a full search for all positions
+  up to 3 heaps of 6, Hard wins 100 games each from winning positions.
+- `node tests/small-games-ui.js` - needs the server and Playwright. The
+  three games of task 118 at 360 px in German: sliding puzzle (taps, the
+  note outside row and column, hint, solved with the fewest moves, 5 x 5,
+  save and load), Tower of Hanoi (refused move, undo, solved with the
+  hints in 15 moves), Nim (start line, a move, the computer's answer,
+  undo, misère to the end).
 - `node tests/zoowurf-ui.js` - needs the server and Playwright. "Zoo Toss" at
   600 and 360 px: a full game against the computer; the paw is put on the
   card by tapping a free place (at least 48 px, no sideways scroll), the

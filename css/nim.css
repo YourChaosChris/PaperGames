@@ -1,0 +1,87 @@
+/* nim: rules used only by the nim pages (loaded after base.css). */
+/* ---- Nim ----
+   One row per heap: its number, then the stones as black circles (at least
+   40 px to tap). Stones marked to take turn white with a black cross. The
+   start information and the last move are plain text. Nothing animated;
+   spacing from margins (Tolino). */
+.nim-board {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.nim-row {
+  display: flex;
+  align-items: center;
+  direction: ltr;
+  margin: 0 0 8px;
+  padding: 4px;
+  border: 2px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.nim-row-label {
+  flex: 0 0 1.6em;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.nim-stones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 44px;
+}
+
+.nim-stone {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: 2px;
+  padding: 0;
+  border: 3px solid #141413;
+  border-radius: 50%;
+  background: #141413;
+  cursor: pointer;
+}
+
+.nim-stone:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+/* a stone marked to take: white with a cross */
+.nim-stone-marked {
+  background: #fff;
+}
+
+.nim-stone-marked::before,
+.nim-stone-marked::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 15%;
+  width: 4px;
+  height: 70%;
+  margin-left: -2px;
+  background: #141413;
+}
+
+.nim-stone-marked::before {
+  transform: rotate(45deg);
+}
+
+.nim-stone-marked::after {
+  transform: rotate(-45deg);
+}
+
+.nim-empty {
+  font-style: italic;
+  padding: 0 6px;
+}
+
+.nim-info {
+  max-width: 520px;
+  margin: var(--space-1) auto;
+}

@@ -1,0 +1,88 @@
+/* hanoi: rules used only by the hanoi pages (loaded after base.css). */
+/* ---- Tower of Hanoi ----
+   Three rods side by side, each a tall button: a thin pole, the discs as
+   black bars of different widths with their number in white, the name of
+   the rod underneath (the goal rod with a star). A picked-up rod has a
+   thick frame and its top disc turns white with a thick outline; the hint
+   gives the two rods of its move a double frame. Nothing animated. */
+.hanoi-rods {
+  display: flex;
+  justify-content: center;
+  direction: ltr;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.hanoi-rod {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 260px;
+  margin: 0 3px;
+  padding: 6px 2px 4px;
+  border: 2px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+  color: #141413;
+  cursor: pointer;
+}
+
+.hanoi-rod-picked {
+  border-width: 5px;
+  padding: 3px 0 1px;
+}
+
+.hanoi-rod-hint {
+  border: 6px double #141413;
+  padding: 2px 0 0;
+}
+
+.hanoi-pole {
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  bottom: 30px;
+  width: 4px;
+  margin-left: -2px;
+  background: #141413;
+}
+
+.hanoi-stack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hanoi-disc {
+  display: block;
+  box-sizing: border-box;
+  height: 26px;
+  margin: 1px 0;
+  border: 2px solid #141413;
+  border-radius: 6px;
+  background: #141413;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 22px;
+  text-align: center;
+}
+
+.hanoi-disc-lifted {
+  background: #fff;
+  color: #141413;
+  border-width: 4px;
+  line-height: 18px;
+}
+
+.hanoi-rod-name {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+}

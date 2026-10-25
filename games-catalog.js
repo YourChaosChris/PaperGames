@@ -1286,6 +1286,39 @@ const GAMES_CATALOG = [
     added: "2026-10-25T18:00",
     noRead: true,
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"7\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><rect x=\"8\" y=\"8\" width=\"11\" height=\"11\" rx=\"2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"21\" y=\"8\" width=\"11\" height=\"11\" rx=\"2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"8\" y=\"21\" width=\"11\" height=\"11\" rx=\"2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><ellipse cx=\"26.5\" cy=\"28.5\" rx=\"4\" ry=\"3\" fill=\"#141413\"/><circle cx=\"22.5\" cy=\"24\" r=\"1.6\" fill=\"#141413\"/><circle cx=\"26.5\" cy=\"22.5\" r=\"1.6\" fill=\"#141413\"/><circle cx=\"30.5\" cy=\"24\" r=\"1.6\" fill=\"#141413\"/><circle cx=\"13.5\" cy=\"13.5\" r=\"2.4\" fill=\"#141413\"/><circle cx=\"26.5\" cy=\"13.5\" r=\"2.4\" fill=\"#141413\"/><circle cx=\"13.5\" cy=\"26.5\" r=\"2.4\" fill=\"#141413\"/></svg></span>"
+  },
+  {
+    slug: "slidepuzzle",
+    category: "puzzles",
+    nameKey: "game_slidepuzzle",
+    nameText: "Sliding Puzzle",
+    descKey: "home_slidepuzzle_desc",
+    descText: "Slide the numbered tiles into order with the gap at the bottom right. Every puzzle can be solved; 3 × 3, 4 × 4 or 5 × 5, with hints and no timer.",
+    popular: false,
+    added: "2026-10-25T19:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"4\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><g fill=\"#fff\" stroke=\"#141413\" stroke-width=\"1.8\"><rect x=\"7\" y=\"7\" width=\"8\" height=\"8\" rx=\"1.5\"/><rect x=\"16\" y=\"7\" width=\"8\" height=\"8\" rx=\"1.5\"/><rect x=\"25\" y=\"7\" width=\"8\" height=\"8\" rx=\"1.5\"/><rect x=\"7\" y=\"16\" width=\"8\" height=\"8\" rx=\"1.5\"/><rect x=\"16\" y=\"16\" width=\"8\" height=\"8\" rx=\"1.5\"/><rect x=\"25\" y=\"16\" width=\"8\" height=\"8\" rx=\"1.5\"/><rect x=\"7\" y=\"25\" width=\"8\" height=\"8\" rx=\"1.5\"/><rect x=\"16\" y=\"25\" width=\"8\" height=\"8\" rx=\"1.5\"/></g><path d=\"M27 29H32M30 27L32 29L30 31\" fill=\"none\" stroke=\"#141413\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg></span>"
+  },
+  {
+    slug: "hanoi",
+    category: "puzzles",
+    nameKey: "game_hanoi",
+    nameText: "Tower of Hanoi",
+    descKey: "home_hanoi_desc",
+    descText: "Move the whole tower of discs to the right rod, one disc at a time, never a bigger disc on a smaller one. 3 to 8 discs, move counter, undo and hints.",
+    popular: false,
+    added: "2026-10-25T19:01",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M4 34H36M10 34V10M20 34V10M30 34V10\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><rect x=\"4\" y=\"27\" width=\"12\" height=\"5\" rx=\"1.5\" fill=\"#141413\"/><rect x=\"5.5\" y=\"21\" width=\"9\" height=\"5\" rx=\"1.5\" fill=\"#141413\"/><rect x=\"7\" y=\"15\" width=\"6\" height=\"5\" rx=\"1.5\" fill=\"#141413\"/><path d=\"M30 6L31.2 8.6L34 8.8L31.9 10.6L32.6 13.4L30 11.9L27.4 13.4L28.1 10.6L26 8.8L28.8 8.6Z\" fill=\"#141413\"/></svg></span>"
+  },
+  {
+    slug: "nim",
+    category: "strategy",
+    nameKey: "game_nim",
+    nameText: "Nim",
+    descKey: "home_nim_desc",
+    descText: "Take stones from the heaps in turn - whoever takes the last stone wins (or, in misère, loses). Against the computer at three levels or with two players.",
+    popular: false,
+    added: "2026-10-25T19:02",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"4\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><g fill=\"#141413\"><circle cx=\"11\" cy=\"11\" r=\"3.2\"/><circle cx=\"11\" cy=\"20\" r=\"3.2\"/><circle cx=\"20\" cy=\"20\" r=\"3.2\"/><circle cx=\"11\" cy=\"29\" r=\"3.2\"/><circle cx=\"20\" cy=\"29\" r=\"3.2\"/><circle cx=\"29\" cy=\"29\" r=\"3.2\"/></g></svg></span>"
   }
 ];
 

@@ -2126,7 +2126,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/games.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/games.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/games.html?lang=de"/>
@@ -2323,6 +2323,60 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/halma.html"/>
   </url>
   <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/hanoi-history.html</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/hanoi-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/hanoi-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/hanoi-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/hanoi-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/hanoi-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/hanoi-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/hanoi-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/hanoi-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/hanoi-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/hanoi-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/hanoi-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/hanoi-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/hanoi-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/hanoi-rules.html</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/hanoi-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/hanoi-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/hanoi-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/hanoi-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/hanoi-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/hanoi-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/hanoi-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/hanoi-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/hanoi-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/hanoi-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/hanoi-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/hanoi-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/hanoi-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/hanoi.html</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/hanoi.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/hanoi.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/hanoi.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/hanoi.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/hanoi.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/hanoi.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/hanoi.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/hanoi.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/hanoi.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/hanoi.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/hanoi.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/hanoi.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/hanoi.html"/>
+  </url>
+  <url>
     <loc>https://yourchaoschris.github.io/PaperGames/hashi-history.html</loc>
     <lastmod>2026-10-21</lastmod>
     <priority>0.6</priority>
@@ -2504,7 +2558,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/impressum.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/impressum.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/impressum.html?lang=de"/>
@@ -3509,6 +3563,60 @@
     <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/morris.html?lang=zh"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/morris.html?lang=ar"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/morris.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/nim-history.html</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/nim-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/nim-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/nim-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/nim-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/nim-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/nim-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/nim-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/nim-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/nim-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/nim-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/nim-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/nim-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/nim-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/nim-rules.html</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/nim-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/nim-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/nim-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/nim-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/nim-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/nim-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/nim-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/nim-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/nim-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/nim-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/nim-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/nim-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/nim-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/nim.html</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/nim.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/nim.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/nim.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/nim.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/nim.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/nim.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/nim.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/nim.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/nim.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/nim.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/nim.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/nim.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/nim.html"/>
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/noneighbors-history.html</loc>
@@ -4697,6 +4805,60 @@
     <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/skyscrapers.html?lang=zh"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/skyscrapers.html?lang=ar"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/skyscrapers.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/slidepuzzle.html</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/slidepuzzle.html"/>
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/slitherlink-history.html</loc>

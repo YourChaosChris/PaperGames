@@ -32,7 +32,7 @@ const exceptions = {
 const failures = [];
 const read = (name) => fs.readFileSync(path.join(ROOT, name), "utf8");
 const undoPages = fs.readdirSync(ROOT).filter((name) => name.endsWith(".html") && /id="undo-btn"/.test(read(name)));
-if (undoPages.length !== 54) failures.push(`expected the 54 existing Undo pages, found ${undoPages.length}`);
+if (undoPages.length !== 56) failures.push(`expected the 56 existing Undo pages, found ${undoPages.length}`);
 for (const page of undoPages) {
   const html = read(page);
   if (!/data-i18n="undo_button"/.test(html)) failures.push(`${page}: button must use the shared localized Undo label`);

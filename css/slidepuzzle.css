@@ -1,0 +1,52 @@
+/* slidepuzzle: rules used only by the slidepuzzle pages (loaded after base.css). */
+/* ---- Sliding puzzle ----
+   A square board of white tiles with large black numbers and one empty,
+   dashed gap. A tile that can slide has a thick frame; the hint marks a
+   tile with a double frame. Black on white only, nothing animated. Row
+   heights are set by slidepuzzle-app.js (no aspect-ratio). */
+.sp-board {
+  display: grid;
+  direction: ltr;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  border: 3px solid #141413;
+  border-radius: var(--radius);
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.sp-tile {
+  box-sizing: border-box;
+  margin: 2px;
+  padding: 0;
+  border: 2px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+  color: #141413;
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.sp-size-5 .sp-tile {
+  font-size: 1.3rem;
+}
+
+.sp-movable {
+  border-width: 4px;
+}
+
+.sp-hint {
+  border: 6px double #141413;
+}
+
+.sp-gap {
+  border: 2px dashed #141413;
+  cursor: default;
+}
+
+.sp-gap:disabled {
+  opacity: 1;
+}
