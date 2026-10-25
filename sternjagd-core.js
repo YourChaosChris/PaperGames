@@ -67,9 +67,20 @@ const SternjagdCore = (() => {
     return REACH[k][from].filter((v) => v !== from);
   }
 
-  // The corner of each seat: 2 players on opposite corners.
+  // The corner of each seat: 2 players on opposite corners. With 3 players
+  // (task 128) the seats go round against the arrows (corners 1, 0, 2):
+  // in the order 0, 1, 2 along the arrows seat 1 won only 23 % and seat 2
+  // 40 % of the computer games, even with a random starter; against the
+  // arrows every seat is within 5 points of a third.
   function startFields(n) {
-    return n === 2 ? [0, 2] : n === 3 ? [0, 1, 2] : [0, 1, 2, 3];
+    return n === 2 ? [0, 2] : n === 3 ? [1, 0, 2] : [0, 1, 2, 3];
+  }
+
+  // Home corners of a state: saved in `homes`; games saved before task
+  // 128 have none and keep the old corners (3 players: 0, 1, 2).
+  function homesOf(s) {
+    if (Array.isArray(s.homes)) return s.homes;
+    return s.n === 3 ? [0, 1, 2] : startFields(s.n);
   }
 
   // opts: { players: 2..4, computer: [bool, ...], first: seat that starts }
@@ -87,6 +98,7 @@ const SternjagdCore = (() => {
       n: n,
       computer: computer,
       pos: startFields(n),      // field of each piece
+      homes: startFields(n),    // start corner of each piece
       alive: alive,
       stars: alive.map(() => STARS),
       current: o.first >= 0 && o.first < n ? o.first : 0,
@@ -101,7 +113,7 @@ const SternjagdCore = (() => {
 
   // A start corner for a caught piece: its own if free, else the next free one.
   function freeCorner(t, player) {
-    const home = startFields(t.n)[player];
+    const home = homesOf(t)[player];
     for (let i = 0; i < 4; i++) {
       const c = (home + i) % 4;
       let taken = false;
@@ -225,7 +237,7 @@ const SternjagdCore = (() => {
     return s.winner === player ? "win" : "loss";
   }
 
-  return { NODES, NEXT, REACH, MAX_MOVES, STARS, newGame, reachable, destinations, roll, move, chooseAi, aiStep, threat, outcomeFor, startFields };
+  return { NODES, NEXT, REACH, MAX_MOVES, STARS, newGame, reachable, destinations, roll, move, chooseAi, aiStep, threat, outcomeFor, startFields, homesOf };
 })();
 
 if (typeof module !== "undefined") module.exports = SternjagdCore;

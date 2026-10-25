@@ -4086,6 +4086,8 @@ STRINGS.ru = {
     sj_roll_hint: "Брось кубик.",
     sj_move_hint: "Коснись отмеченного поля. Шагов по стрелкам: {n}.",
     sj_last_move: "{name}: выпало {n}, ход сделан.",
+    sj_starts: "Начинает: {name}.",
+    sj_starts_you: "Ты начинаешь.",
     sj_last_capture: "{name}: выпало {n}, пойман игрок {victim}: на одну звезду меньше.",
     sj_last_pass: "{name}: выпало {n}, ни одно поле не подходит.",
     sj_stars_tag: "Звёзды: {n}",

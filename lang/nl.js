@@ -4086,6 +4086,8 @@ STRINGS.nl = {
     sj_roll_hint: "Gooi de dobbelsteen.",
     sj_move_hint: "Tik op een omcirkeld veld. Stappen langs de pijlen: {n}.",
     sj_last_move: "{name}: {n} gegooid, gezet.",
+    sj_starts: "{name} begint.",
+    sj_starts_you: "Jij begint.",
     sj_last_capture: "{name}: {n} gegooid, {victim} gevangen: een ster minder.",
     sj_last_pass: "{name}: {n} gegooid, geen veld past.",
     sj_stars_tag: "Sterren: {n}",

@@ -4157,6 +4157,8 @@ STRINGS.de = {
     sj_roll_hint: "Würfle.",
     sj_move_hint: "Tippe auf ein umrandetes Feld. Schritte entlang der Pfeile: {n}.",
     sj_last_move: "{name}: {n} gewürfelt, gezogen.",
+    sj_starts: "{name} beginnt.",
+    sj_starts_you: "Du beginnst.",
     sj_last_capture: "{name}: {n} gewürfelt, {victim} gefangen: ein Stern weniger.",
     sj_last_pass: "{name}: {n} gewürfelt, kein Feld passt.",
     sj_stars_tag: "Sterne: {n}",

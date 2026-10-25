@@ -4086,6 +4086,8 @@ STRINGS.it = {
     sj_roll_hint: "Tira il dado.",
     sj_move_hint: "Tocca una casella cerchiata. Passi lungo le frecce: {n}.",
     sj_last_move: "{name}: uscito {n}, mossa fatta.",
+    sj_starts: "Inizia {name}.",
+    sj_starts_you: "Inizi tu.",
     sj_last_capture: "{name}: uscito {n}, preso {victim}: una stella in meno.",
     sj_last_pass: "{name}: uscito {n}, nessuna casella va bene.",
     sj_stars_tag: "Stelle: {n}",

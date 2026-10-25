@@ -19,7 +19,8 @@ const AppStateSJ = {
   state: null,
   undoStack: [],
   log: [],      // the last events, newest first (not saved)
-  logged: 0     // state.seq of the newest logged event
+  logged: 0,    // state.seq of the newest logged event
+  starter: -1   // who began the new game, shown until a person rolls (not saved)
 };
 
 // Centres of the twelve fields on the 100 x 100 board.
@@ -73,6 +74,8 @@ function startGameSJ() {
   AppStateSJ.undoStack = [];
   AppStateSJ.log = [];
   AppStateSJ.logged = 0;
+  // The starter is drawn at random (task 128) and named on the screen.
+  AppStateSJ.starter = AppStateSJ.state.current;
   setResultSJ("");
   DiceCommon.showBoard();
   afterActionSJ();
@@ -109,6 +112,7 @@ function afterActionSJ() {
 function rollSJ() {
   const s = AppStateSJ.state;
   if (!s || s.phase !== "roll" || s.computer[s.current]) return;
+  AppStateSJ.starter = -1;
   AppStateSJ.state = SternjagdCore.roll(s);
   afterActionSJ();
 }
@@ -267,6 +271,13 @@ function renderLogSJ() {
     p.textContent = eventTextSJ(l);
     wrap.appendChild(p);
   });
+  if (AppStateSJ.starter >= 0) {
+    const p = document.createElement("div");
+    p.id = "sj-starter";
+    const you = humansSJ() === 1 && !AppStateSJ.state.computer[AppStateSJ.starter];
+    p.textContent = you ? I18n.t("sj_starts_you") : tSJ("sj_starts", { name: nameSJ(AppStateSJ.starter) });
+    wrap.appendChild(p);
+  }
 }
 
 function renderSJ() {

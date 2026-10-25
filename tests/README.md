@@ -415,6 +415,15 @@ all parts back into one log in list order. The last line is exactly
   stars and the return to a free corner, the last player left wins, the
   draw after 600 moves, the computer's capture and 1000 computer games
   (2-4 players) that all end without an error. A few seconds.
+- `node tests/sternjagd-start.js` - no server or browser needed. Who starts
+  (task 128): `GAMES` (default 1000) computer games each with 2, 3 and 4
+  players, seat 1 always starting and a random starter; with the random
+  starter every seat within 5 percentage points of the mean (3 players sit
+  against the arrows, corners 1, 0, 2). Win rates printed.
+- `node tests/sternjagd-ui.js` - needs the server and Playwright. German
+  page at 360 x 640: "Du beginnst." / "Computer beginnt.", both happen, the
+  line goes after the first roll, save and load, an old 3-player save
+  without `homes` keeps its corners.
 - `node tests/trix-ai-games.js` - no server or browser needed. 60 Trix games
   computer against computer (all three levels and mixed seats, fixed seeds)
   that must reach the end of the fourth kingdom without a refused move:

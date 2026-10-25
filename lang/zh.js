@@ -4086,6 +4086,8 @@ STRINGS.zh = {
     sj_roll_hint: "请掷骰子。",
     sj_move_hint: "点按带圈的格子。沿箭头的步数：{n}。",
     sj_last_move: "{name}：掷出{n}，已走一步。",
+    sj_starts: "{name}先开始。",
+    sj_starts_you: "你先开始。",
     sj_last_capture: "{name}：掷出{n}，抓到了{victim}：少一颗星。",
     sj_last_pass: "{name}：掷出{n}，没有可走的格子。",
     sj_stars_tag: "星星：{n}",

@@ -3849,6 +3849,8 @@ STRINGS.ar = {
     sj_roll_hint: "ارمِ النرد.",
     sj_move_hint: "المس خانة محاطة بحلقة. عدد الخطوات على طول الأسهم: {n}.",
     sj_last_move: "{name}: ظهر {n}، وتحرّك.",
+    sj_starts: "يبدأ {name}.",
+    sj_starts_you: "أنت تبدأ.",
     sj_last_capture: "{name}: ظهر {n}، أُمسك {victim}: نجمة أقل.",
     sj_last_pass: "{name}: ظهر {n}، لا توجد خانة مناسبة.",
     sj_stars_tag: "النجوم: {n}",

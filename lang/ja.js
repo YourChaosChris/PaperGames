@@ -4086,6 +4086,8 @@ STRINGS.ja = {
     sj_roll_hint: "サイコロを振ってください。",
     sj_move_hint: "輪で囲まれたマスをタップ。矢印に沿って進む歩数：{n}。",
     sj_last_move: "{name}：{n}が出て、進みました。",
+    sj_starts: "{name}が先です。",
+    sj_starts_you: "あなたが先です。",
     sj_last_capture: "{name}：{n}が出て、{victim}をつかまえました。星が1つ減ります。",
     sj_last_pass: "{name}：{n}が出ましたが、進めるマスがありません。",
     sj_stars_tag: "星：{n}",

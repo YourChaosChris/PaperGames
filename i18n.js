@@ -4169,6 +4169,8 @@ const STRINGS = {
     sj_roll_hint: "Roll the die.",
     sj_move_hint: "Tap a ringed field. Steps along the arrows: {n}.",
     sj_last_move: "{name}: rolled {n}, moved.",
+    sj_starts: "{name} starts.",
+    sj_starts_you: "You start.",
     sj_last_capture: "{name}: rolled {n}, caught {victim}: one star less.",
     sj_last_pass: "{name}: rolled {n}, no field fits.",
     sj_stars_tag: "Stars: {n}",

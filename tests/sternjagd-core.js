@@ -77,7 +77,13 @@ for (let from = 0; from < 12; from++) {
 
 // ---- Start ----
 assert.deepStrictEqual(C.startFields(2), [0, 2]);
-assert.deepStrictEqual(C.startFields(3), [0, 1, 2]);
+assert.deepStrictEqual(C.startFields(3), [1, 0, 2], "3 players go round against the arrows (task 128)");
+assert.deepStrictEqual(C.newGame({ players: 3 }).homes, [1, 0, 2]);
+{
+  const old = C.newGame({ players: 3 });
+  delete old.homes;
+  assert.deepStrictEqual(C.homesOf(old), [0, 1, 2], "a 3-player game saved before task 128 keeps its corners");
+}
 assert.deepStrictEqual(C.startFields(4), [0, 1, 2, 3]);
 let s = C.newGame({ players: 2, computer: [false, true] });
 assert.deepStrictEqual(s.pos, [0, 2]);
@@ -130,14 +136,23 @@ assert.strictEqual(t.pos[0], 4);
 assert.strictEqual(t.pos[1], 2, "the caught piece goes back to its own corner");
 assert.strictEqual(t.current, 1);
 
-// own corner taken by another piece: the next free one
+// own corner taken by another piece: the next free one (a game saved
+// before task 128, corners 0, 1, 2)
 s = C.newGame({ players: 3 });
+delete s.homes;
 s.pos = [0, 4, 1];       // player 2 stands on player 1's corner (1)
 s = C.roll(s, face(1));
 t = C.move(s, 4);
 assert.strictEqual(t.last.kind, "capture");
 assert.strictEqual(t.pos[1], 2, "corner 1 is taken, so the next free corner (2)");
 assert.strictEqual(new Set(t.pos).size, 3, "no two pieces on one field");
+// a new 3-player game: the caught piece goes back to its own corner (0)
+s = C.newGame({ players: 3 });
+s.pos = [1, 5, 2];
+s = C.roll(s, face(1));
+t = C.move(s, 5);
+assert.strictEqual(t.last.kind, "capture");
+assert.strictEqual(t.pos[1], 0, "player 2's own corner is 0 since task 128");
 
 // ---- Out of stars: out of the game; the last one left wins ----
 s = C.newGame({ players: 3 });

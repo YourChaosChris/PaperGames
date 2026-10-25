@@ -4086,6 +4086,8 @@ STRINGS.uk = {
     sj_roll_hint: "Кинь кубик.",
     sj_move_hint: "Торкнись позначеного поля. Кроків уздовж стрілок: {n}.",
     sj_last_move: "{name}: випало {n}, хід зроблено.",
+    sj_starts: "Починає: {name}.",
+    sj_starts_you: "Ти починаєш.",
     sj_last_capture: "{name}: випало {n}, спіймано гравця {victim}: на одну зірку менше.",
     sj_last_pass: "{name}: випало {n}, жодне поле не підходить.",
     sj_stars_tag: "Зірки: {n}",

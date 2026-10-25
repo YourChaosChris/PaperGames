@@ -4086,6 +4086,8 @@ STRINGS.fr = {
     sj_roll_hint: "Lance le dé.",
     sj_move_hint: "Touche une case entourée. Pas le long des flèches : {n}.",
     sj_last_move: "{name} : {n} obtenu, pion déplacé.",
+    sj_starts: "{name} commence.",
+    sj_starts_you: "Tu commences.",
     sj_last_capture: "{name} : {n} obtenu, {victim} attrapé : une étoile de moins.",
     sj_last_pass: "{name} : {n} obtenu, aucune case ne convient.",
     sj_stars_tag: "Étoiles : {n}",

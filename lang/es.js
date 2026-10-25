@@ -4086,6 +4086,8 @@ STRINGS.es = {
     sj_roll_hint: "Tira el dado.",
     sj_move_hint: "Toca una casilla con anillo. Pasos siguiendo las flechas: {n}.",
     sj_last_move: "{name}: sacó {n}, movió.",
+    sj_starts: "Empieza {name}.",
+    sj_starts_you: "Empiezas tú.",
     sj_last_capture: "{name}: sacó {n}, atrapó a {victim}: una estrella menos.",
     sj_last_pass: "{name}: sacó {n}, no cabe ninguna casilla.",
     sj_stars_tag: "Estrellas: {n}",

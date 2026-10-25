@@ -4087,6 +4087,8 @@ STRINGS.pl = {
     sj_roll_hint: "Rzuć kością.",
     sj_move_hint: "Dotknij pola w ramce. Kroki wzdłuż strzałek: {n}.",
     sj_last_move: "{name}: wyrzucono {n}, ruch wykonany.",
+    sj_starts: "Zaczyna: {name}.",
+    sj_starts_you: "Zaczynasz ty.",
     sj_last_capture: "{name}: wyrzucono {n}, złapano gracza {victim}: o jedną gwiazdę mniej.",
     sj_last_pass: "{name}: wyrzucono {n}, żadne pole nie pasuje.",
     sj_stars_tag: "Gwiazdy: {n}",
