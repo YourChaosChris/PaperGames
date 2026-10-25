@@ -17,12 +17,15 @@ Object.assign(STRINGS.pl, {
     bl_rules_win: "Sposób zakończenia gry wybiera się przed grą. „Jeden pionek na mecie” (domyślnie): wygrywa gracz, który pierwszy wprowadzi pionek na metę; każdy ma 5 pionków. „Wszystkie pionki na mecie”: każdy ma 3 lub 5 pionków, zależnie od wyboru; pionek, który dotrze do mety, schodzi z planszy, a meta znów jest wolna; na trzech ostatnich polach przed metą nie stoi żaden klocek. Wygrywa gracz, który pierwszy ma wszystkie pionki na mecie, a pozostali są uszeregowani według liczby pionków na mecie.",
     bl_term_players: "Gracze",
     bl_rules_players: "Od 2 do 4 graczy na jednym urządzeniu; każdego z nich może grać komputer (Łatwy, Średni lub Trudny). Pionki różnią się kształtem: koło, trójkąt, romb i gwiazda.",
+    bl_term_quick: "Szybka plansza",
+    bl_rules_quick: "Przed grą wybierz „Plansza: Szybka”, aby partia była krótsza: własna, mniejsza plansza z czterema domkami, 9 krokami z każdego domku do mety, 4 pionkami na gracza i 6 klockami na starcie. Zamiast bezpiecznej dolnej połowy ma cztery pola odpoczynku (ośmiokąty z podwójną krawędzią): pionka na polu odpoczynku nie można odesłać, może tam stać tylko jeden pionek i nie wolno tam postawić klocka.",
     bl_rules_example_title: "Klocek na drodze",
     bl_rules_example: "Rysunek pokazuje pionek (koło) przed klockiem (czarny kwadrat). Z wynikiem 2 staje na klocku, bierze go i stawia na innym wolnym polu. Z wynikiem 3 nie może iść prosto, bo musiałby przejść przez klocek.",
     bl_history_title: "Historia gry Zablokowana droga",
     bl_history_origins_title: "Dawne gry wyścigowe",
     bl_history_origins_p1: "Gry wyścigowe, w których pionki posuwają się po rzucie kostką po trasie do celu, należą do najstarszych gier planszowych; Królewska gra z Ur to najstarsza gra, której zasady się zachowały. Odsyłanie i blokowanie to również stare pomysły: w pachisi pionek, który stanie na pionku przeciwnika, odsyła go na start, a w backgammonie mur pionków na kolejnych polach, zwany prime, zatrzymuje za sobą pionki przeciwnika.",
     bl_history_modern_title: "Zablokowana droga w PaperGames",
-    bl_history_modern_p1: "W PaperGames w Zablokowaną drogę gra się na sieci ścieżek z 49 polami i metą na górze, z sześcioma klockami i do czterech graczy. Trafiony klocek nie jest usuwany, lecz stawiany na nowo, więc droga do mety ciągle się zmienia. Domy wchodzą na planszę przez pola jednakowo oddalone od mety, a pionki różnią się kształtem, a nie kolorem, aby gra działała na czarno-białym e-papierze."
+    bl_history_modern_p1: "W PaperGames w Zablokowaną drogę gra się na sieci ścieżek z 49 polami i metą na górze, z sześcioma klockami i do czterech graczy. Trafiony klocek nie jest usuwany, lecz stawiany na nowo, więc droga do mety ciągle się zmienia. Domy wchodzą na planszę przez pola jednakowo oddalone od mety, a pionki różnią się kształtem, a nie kolorem, aby gra działała na czarno-białym e-papierze.",
+    bl_history_quick_p: "Szybka plansza to własna, mniejsza plansza PaperGames do krótszych partii; pola odpoczynku, na których pionka nie można odesłać, zastępują tam bezpieczną dolną połowę.",
 });
 I18n.markTextLoaded("pl");

@@ -29,6 +29,11 @@
 //
 // Fields in the safe lower half (no token can be sent back there) are
 // drawn as rounded squares, the others as circles.
+//
+// "Board" (task 110): "Normal" or "Quick" - a smaller board with four
+// houses, 4 tokens per player and rest fields (drawn as octagons with a
+// double outline) instead of the safe half; see blockers-core.js. The
+// board of a saved game comes from its state (s.board).
 
 const BLOCKERS_SAVE_KEY = "einkchess_save_blockers";
 const BL_SHAPES = ["circle", "triangle", "diamond", "star"];
@@ -36,6 +41,12 @@ const BL_SHAPE_NAME = { circle: "Circle", triangle: "Triangle", diamond: "Diamon
 const BL_PACE_KEY = "papergames_blockers_pace";
 const BL_FINISH_KEY = "papergames_blockers_finish";
 const BL_TOKENS_KEY = "papergames_blockers_tokens";
+
+// The board chosen in the settings ("normal" or "quick").
+function boardChoiceBL() {
+  const sel = document.getElementById("bl-board-size");
+  return sel && sel.value === "quick" ? "quick" : "normal";
+}
 
 function loadTokensBL() {
   try { return window.localStorage.getItem(BL_TOKENS_KEY) === "5" ? 5 : 3; } catch (e) { return 3; }
@@ -171,11 +182,29 @@ function initBlockersApp() {
   const finishSel = document.getElementById("bl-finish");
   const tokensSel = document.getElementById("bl-tokens");
   // "Tokens per player" only with "All tokens in the goal"; otherwise 5.
+  // The quick board always has 4 (the option "4" belongs to it alone).
+  const boardSel = document.getElementById("bl-board-size");
   const syncTokens = () => {
+    const quick = boardChoiceBL() === "quick";
+    const four = tokensSel.querySelector('option[value="4"]');
+    if (four) four.disabled = !quick;
     const all = finishSel.value === "all";
-    tokensSel.disabled = !all;
-    tokensSel.value = all ? String(loadTokensBL()) : "5";
+    tokensSel.disabled = quick || !all;
+    tokensSel.value = quick ? "4" : (all ? String(loadTokensBL()) : "5");
   };
+  // The quick board has four houses and room for 2 to 4 players.
+  const syncBoard = () => {
+    const quick = boardChoiceBL() === "quick";
+    Array.from(players.options).forEach((o) => { o.disabled = quick && parseInt(o.value, 10) > BlockersCore.QUICK_HOUSE_COLS.length; });
+    if (quick && parseInt(players.value, 10) > BlockersCore.QUICK_HOUSE_COLS.length) players.value = String(BlockersCore.QUICK_HOUSE_COLS.length);
+    limitComputers();
+    syncTokens();
+    buildChoicesBL();
+  };
+  if (boardSel) boardSel.addEventListener("change", syncBoard);
+  // Remembered settings are written back without change events
+  // (quick-rules.js), so the board choice is checked again after loading.
+  window.addEventListener("load", syncBoard);
   finishSel.value = loadFinishBL();
   syncTokens();
   finishSel.addEventListener("change", () => { saveFinishBL(finishSel.value); syncTokens(); });
@@ -190,10 +219,11 @@ function initBlockersApp() {
     if (paceSel.value === "auto" && AppStateBL.state) { renderBL(); continueBL(); }
   });
   document.getElementById("start-bl-game").addEventListener("click", () => {
+    syncBoard();
     const tokens = Array.from(document.querySelectorAll("#bl-choices .bl-token-select")).map((sel) => parseInt(sel.value, 10));
     const houses = Array.from(document.querySelectorAll("#bl-choices .bl-house-select")).map((sel) => parseInt(sel.value, 10));
     saveFinishBL(finishSel.value);
-    startGameBL(parseInt(players.value, 10), parseInt(computers.value, 10), parseInt(document.getElementById("bl-level").value, 10), tokens, houses, firstSel.value, finishSel.value, parseInt(tokensSel.value, 10));
+    startGameBL(parseInt(players.value, 10), parseInt(computers.value, 10), parseInt(document.getElementById("bl-level").value, 10), tokens, houses, firstSel.value, finishSel.value, parseInt(tokensSel.value, 10), boardChoiceBL());
   });
   document.getElementById("bl-roll").addEventListener("click", humanRollBL);
   document.getElementById("bl-next").addEventListener("click", nextComputerBL);
@@ -204,6 +234,7 @@ function initBlockersApp() {
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(BLOCKERS_SAVE_KEY) : null;
   if (saved && saved.state && !saved.state.gameOver && Array.isArray(saved.state.tokens)) {
     Object.assign(AppStateBL, { numPlayers: saved.numPlayers, computers: saved.computers, level: saved.level || 2, state: saved.state });
+    if (boardSel) { boardSel.value = saved.state.board === "quick" ? "quick" : "normal"; syncBoard(); }
     AppStateBL.started = true;
     AppStateBL.gameOver = false;
     AppStateBL.moves = AppStateBL.state.phase === "move" ? BlockersCore.legalMoves(AppStateBL.state) : [];
@@ -233,9 +264,11 @@ function buildChoicesBL() {
   const humans = n - parseInt(document.getElementById("bl-computers").value, 10);
   const tokBefore = Array.from(wrap.querySelectorAll(".bl-token-select")).map((sel) => parseInt(sel.value, 10));
   const houseBefore = Array.from(wrap.querySelectorAll(".bl-house-select")).map((sel) => parseInt(sel.value, 10));
+  const board = boardChoiceBL();
+  const houseCount = BlockersCore.boardOf(board).houseCols.length;
   const toks = BlockersCore.assignShapes(n, tokBefore.slice(0, humans)).slice(0, humans);
   // A new person starts in house 2 (as before this choice existed) or the next free one.
-  const houses = BlockersCore.assignHouses(n, houseBefore.length ? houseBefore.slice(0, humans).concat([1, 1, 1]).slice(0, humans) : new Array(humans).fill(1)).slice(0, humans);
+  const houses = BlockersCore.assignHouses(n, houseBefore.length ? houseBefore.slice(0, humans).concat([1, 1, 1]).slice(0, humans).map((h) => h < houseCount ? h : 1) : new Array(humans).fill(1), board).slice(0, humans);
   wrap.innerHTML = "";
   const swapper = (cls) => (sel) => {
     sel.dataset.prev = sel.value;
@@ -270,7 +303,7 @@ function buildChoicesBL() {
     const hs = document.createElement("select");
     hs.id = "bl-house-" + h;
     hs.className = "bl-house-select";
-    BlockersCore.HOUSE_COLS.forEach((_, k) => {
+    BlockersCore.boardOf(board).houseCols.forEach((_, k) => {
       const o = document.createElement("option");
       o.value = String(k);
       I18n.setKey(o, "bl_house_" + (k + 1));
@@ -294,16 +327,19 @@ function renderChoicePicsBL() {
   });
 }
 
-function startGameBL(numPlayers, computers, level, tokenChoices, houseChoices, firstChoice, finish, tokenCount) {
-  const n = Math.max(2, Math.min(4, numPlayers || 2));
+function startGameBL(numPlayers, computers, level, tokenChoices, houseChoices, firstChoice, finish, tokenCount, board) {
+  const quick = board === "quick";
+  const n = Math.max(2, Math.min(quick ? BlockersCore.QUICK_HOUSE_COLS.length : 4, numPlayers || 2));
   AppStateBL.numPlayers = n;
   AppStateBL.computers = Math.max(0, Math.min(n - 1, computers || 0));
   AppStateBL.level = level >= 1 && level <= 3 ? level : 2;
   const humans = n - AppStateBL.computers;
   const shapes = BlockersCore.assignShapes(n, (tokenChoices || []).slice(0, humans));
-  const houses = BlockersCore.assignHouses(n, (houseChoices || []).slice(0, humans));
+  const houses = BlockersCore.assignHouses(n, (houseChoices || []).slice(0, humans), quick ? "quick" : undefined);
   const first = BlockersCore.firstPlayer(firstChoice || "random", n, AppStateBL.computers ? humans : n);
-  AppStateBL.state = BlockersCore.createInitialState(n, { houses, shapes, first, finish: finish === "all" ? "all" : "one", tokens: tokenCount === 5 ? 5 : 3 });
+  const opts = { houses, shapes, first, finish: finish === "all" ? "all" : "one", tokens: tokenCount === 5 ? 5 : 3 };
+  if (quick) opts.board = "quick";
+  AppStateBL.state = BlockersCore.createInitialState(n, opts);
   AppStateBL.started = true;
   AppStateBL.gameOver = false;
   AppStateBL.busy = false;
@@ -334,7 +370,7 @@ function promptBL(prefix) {
   let text;
   if (isComputerBL(s.turn)) text = prefix && s.phase !== "roll" ? "" : (s.phase === "roll" && loadPaceBL() === "tap" ? who + "'s turn: tap Continue." : who + "'s turn.");
   else if (s.phase === "roll") text = you ? "Your turn: tap Roll." : who + "'s turn: tap Roll.";
-  else if (s.phase === "stone") text = "Tap a free field to put the block on (not in the bottom row).";
+  else if (s.phase === "stone") text = s.board === "quick" ? "Tap a free field to put the block on (not in the bottom row, not on a rest field)." : "Tap a free field to put the block on (not in the bottom row).";
   else if (AppStateBL.selected >= 0) text = "Now tap one of the marked fields.";
   else text = pickTextBL(s.roll);
   setStatusBL((pre + text).trim());
@@ -480,7 +516,7 @@ function onFieldBL(field) {
   const s = AppStateBL.state;
   if (!humanCanActBL()) return;
   if (s.phase === "stone") {
-    if (BlockersCore.stoneTargets(s).indexOf(field) === -1) { setStatusBL("The block can only go on a free field, not in the bottom row."); return; }
+    if (BlockersCore.stoneTargets(s).indexOf(field) === -1) { setStatusBL(s.board === "quick" ? "The block can only go on a free field, not in the bottom row and not on a rest field." : "The block can only go on a free field, not in the bottom row."); return; }
     doStoneBL(field);
     return;
   }
@@ -586,7 +622,10 @@ function renderRankingBL(over) {
 
 function renderBoardBL() {
   const s = AppStateBL.state;
-  const C = BlockersCore;
+  const B = BlockersCore.boardOf(s);
+  // The board's numbers under the names the drawing code uses.
+  const C = { COLS: B.cols, ROWS: B.rows, fields: B.fields, neighbours: B.neighbours, goal: B.goal, isSafe: B.isSafe, HOUSE_COLS: B.houseCols,
+    entryOf: BlockersCore.entryOf, stoneTargets: BlockersCore.stoneTargets, ownerAt: BlockersCore.ownerAt };
   const wrap = document.getElementById("bl-board-wrap");
   const boardEl = document.getElementById("bl-board");
   const width = Math.min((wrap.clientWidth || 324) - 4, 560);
@@ -616,6 +655,12 @@ function renderBoardBL() {
     if (f === C.goal) {
       out += '<circle cx="' + fx(x) + '" cy="' + fx(y) + '" r="' + fx(u * 0.42) + '" fill="#fff" stroke="#141413" stroke-width="' + fx(u * 0.1) + '"/>' +
         '<circle cx="' + fx(x) + '" cy="' + fx(y) + '" r="' + fx(u * 0.22) + '" fill="#fff" stroke="#141413" stroke-width="' + fx(u * 0.07) + '"/>';
+    } else if (B.isRest(f)) {
+      // Rest field: an octagon with a double outline.
+      const ro = u * 0.4, ri = u * 0.27;
+      const oct = (r) => { const pts = []; for (let i = 0; i < 8; i++) { const a = Math.PI / 8 + i * Math.PI / 4; pts.push(fx(x + r * Math.cos(a)) + "," + fx(y + r * Math.sin(a))); } return pts.join(" "); };
+      out += '<polygon points="' + oct(ro) + '" fill="#fff" stroke="#141413" stroke-width="' + fx(u * 0.07) + '"/>' +
+        '<polygon points="' + oct(ri) + '" fill="#fff" stroke="#141413" stroke-width="' + fx(u * 0.04) + '"/>';
     } else if (C.isSafe(f)) {
       // Safe half: a rounded square instead of a circle.
       const h = u * 0.31;
@@ -684,6 +729,7 @@ function renderBoardBL() {
     if (o) parts.push(nameBL(o.player) === "You" ? "your token" : "token of " + nameBL(o.player));
     if (entries.has(f)) parts.push("house entry");
     if (C.isSafe(f)) parts.push("safe");
+    if (B.isRest(f)) parts.push("rest field");
     if (targets.has(f) || stoneSpots.has(f)) parts.push("possible");
     I18n.setAria(btn, parts.join(", "));
     btn.addEventListener("click", () => onFieldBL(f));

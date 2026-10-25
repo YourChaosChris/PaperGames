@@ -17,12 +17,15 @@ Object.assign(STRINGS.en, {
     bl_rules_win: "How the game ends is chosen before the game. \"One token in the goal\" (the default): the first player to bring one token into the goal wins; everyone has 5 tokens. \"All tokens in the goal\": everyone has 3 or 5 tokens, as chosen; a token that reaches the goal leaves the board, and the goal is free again; no block stands on the last three fields before the goal. The first player with all tokens in the goal wins, and the others are ranked by their tokens in the goal.",
     bl_term_players: "Players",
     bl_rules_players: "2 to 4 players on one device; any of them can be played by the computer (Easy, Medium or Hard). Tokens are told apart by their shape: circle, triangle, diamond and star.",
+    bl_term_quick: "The quick board",
+    bl_rules_quick: "Choose \"Board: Quick\" before the game for a shorter game: a smaller board of its own with four houses, 9 steps from every house to the goal, 4 tokens per player and 6 blocks at the start. Instead of the safe lower half it has four rest fields (octagons with a double outline): a token on a rest field cannot be sent back, only one token may stand there, and no block may be put there.",
     bl_rules_example_title: "A block in the way",
     bl_rules_example: "The picture shows a token (circle) in front of a block (black square). With a 2 it lands on the block, takes it and puts it on another free field. With a 3 it cannot go straight on, because it would have to pass over the block.",
     bl_history_title: "The History of Blocked Path",
     bl_history_origins_title: "Old race games",
     bl_history_origins_p1: "Race games, in which pieces move by dice along a track towards a goal, are among the oldest board games; the Royal Game of Ur is the oldest game whose rules have been handed down. Sending home and blocking are old ideas too: in Pachisi a piece that lands on an opponent's piece sends it back to the start, and in Backgammon a wall of pieces on consecutive points, called a prime, keeps the opponent's pieces behind it.",
     bl_history_modern_title: "Blocked Path at PaperGames",
-    bl_history_modern_p1: "At PaperGames, Blocked Path is played on a network of paths with 49 fields and the goal at the top, with six blocks and up to four players. A block that is hit is not removed but placed again, so the way to the goal keeps changing. The houses come onto the board at fields that are equally far from the goal, and the tokens differ by shape rather than colour, so the game works on black-and-white e-ink."
+    bl_history_modern_p1: "At PaperGames, Blocked Path is played on a network of paths with 49 fields and the goal at the top, with six blocks and up to four players. A block that is hit is not removed but placed again, so the way to the goal keeps changing. The houses come onto the board at fields that are equally far from the goal, and the tokens differ by shape rather than colour, so the game works on black-and-white e-ink.",
+    bl_history_quick_p: "The quick board is a smaller board of PaperGames' own, made for shorter games; rest fields, on which a token cannot be sent back, take the place of the safe lower half.",
 });
 I18n.markTextLoaded("en");

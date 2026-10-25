@@ -34,11 +34,22 @@
 // rolls first is chosen too: "me", "computer" or "random". States saved
 // before this have no `houses`: they keep the old entry columns
 // (ENTRY_COLS) and shape p for player p.
+//
+// Quick board (task 110, s.board === "quick"): a smaller board of our own,
+// 9 x 7, with fewer forks and 9 steps from every house entry to the goal
+// (14 on the normal board), 4 tokens per player, 6 stones at the start
+// (with "all" the one next to the goal stays off, as on the normal board),
+// 2 to 4 players in four houses. Instead of the safe half it has four rest
+// fields ("R"): a token there cannot be sent back, only one token may stand
+// on a rest field, and no stone may be put on one. States without `board`
+// are the normal board, unchanged. The exported board numbers (MAP, ROWS,
+// fields, goal, ...) describe the normal board; boardOf(s) gives the board
+// of a state.
 
 const BlockersCore = (function () {
   // The board on an 11 x 10 grid: "G" goal, "#" field, "B" field with a
-  // stone at the start, "." no field. Fields next to each other
-  // (horizontally or vertically) are joined.
+  // stone at the start, "R" rest field (quick board only), "." no field.
+  // Fields next to each other (horizontally or vertically) are joined.
   const MAP = [
     ".....G.....",
     ".....#.....",
@@ -51,7 +62,22 @@ const BlockersCore = (function () {
     "#.#.#.#.#.#",
     "###########"
   ];
-  const ROWS = MAP.length, COLS = MAP[0].length;
+  // The quick board: houses under columns 1, 3, 5 and 7, every entry 9
+  // steps from the goal.
+  // Two ways up to the goal and no stone on them at the start; the rest
+  // field right below the goal lets a token wait there safely. (A first
+  // draft with stones on the single lane below the goal made games longer
+  // than on the normal board.)
+  const QUICK_MAP = [
+    "....G....",
+    "...#R#...",
+    "..R#.#R..",
+    "..#B.B#..",
+    "#B##R##B#",
+    "#.B.#.B.#",
+    "#########"
+  ];
+  const QUICK_TOKENS = 4;
   const TOKENS = 5;              // tokens per player with "one" (and the default)
   const TOKEN_CHOICES = [3, 5];  // tokens per player with "all"
   const SAFE_FROM_ROW = 5;
@@ -62,59 +88,76 @@ const BlockersCore = (function () {
   const ENTRY_COLS = { 2: [2, 8], 3: [3, 5, 7], 4: [1, 3, 7, 9] };
   // The six houses, left to right: entry columns all 14 steps from the goal.
   const HOUSE_COLS = [0, 2, 4, 6, 8, 10];
+  const QUICK_HOUSE_COLS = [1, 3, 5, 7];
   const SHAPES = ["circle", "triangle", "diamond", "star"];
 
-  const idx = (r, c) => r * COLS + c;
-  const fields = [];
-  let goal = -1;
-  const isField = new Array(ROWS * COLS).fill(false);
-  const startStones = [];
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
-      const ch = MAP[r][c];
-      if (ch === ".") continue;
-      const i = idx(r, c);
-      isField[i] = true;
-      fields.push(i);
-      if (ch === "G") goal = i;
-      if (ch === "B") startStones.push(i);
+  // Fields, paths and distances of a board map.
+  function makeBoard(map, houseCols, quick) {
+    const rows = map.length, cols = map[0].length;
+    const at = (r, c) => r * cols + c;
+    const b = { map, rows, cols, houseCols, quick: !!quick, fields: [], goal: -1, startStones: [], rest: [], neighbours: {}, distToGoal: {} };
+    const isField = new Array(rows * cols).fill(false);
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const ch = map[r][c];
+        if (ch === ".") continue;
+        const i = at(r, c);
+        isField[i] = true;
+        b.fields.push(i);
+        if (ch === "G") b.goal = i;
+        if (ch === "B") b.startStones.push(i);
+        if (ch === "R") b.rest.push(i);
+      }
     }
-  }
-  const neighbours = {};
-  fields.forEach((i) => {
-    const r = Math.floor(i / COLS), c = i % COLS, out = [];
-    [[-1, 0], [1, 0], [0, -1], [0, 1]].forEach(([dr, dc]) => {
-      const rr = r + dr, cc = c + dc;
-      if (rr >= 0 && rr < ROWS && cc >= 0 && cc < COLS && isField[idx(rr, cc)]) out.push(idx(rr, cc));
+    b.fields.forEach((i) => {
+      const r = Math.floor(i / cols), c = i % cols, out = [];
+      [[-1, 0], [1, 0], [0, -1], [0, 1]].forEach(([dr, dc]) => {
+        const rr = r + dr, cc = c + dc;
+        if (rr >= 0 && rr < rows && cc >= 0 && cc < cols && isField[at(rr, cc)]) out.push(at(rr, cc));
+      });
+      b.neighbours[i] = out;
     });
-    neighbours[i] = out;
-  });
-  // Steps from each field to the goal, ignoring stones and tokens.
-  const distToGoal = {};
-  (function () {
-    const queue = [goal];
-    distToGoal[goal] = 0;
+    // Steps from each field to the goal, ignoring stones and tokens.
+    const queue = [b.goal];
+    b.distToGoal[b.goal] = 0;
     while (queue.length) {
       const f = queue.shift();
-      neighbours[f].forEach((n) => { if (distToGoal[n] === undefined) { distToGoal[n] = distToGoal[f] + 1; queue.push(n); } });
+      b.neighbours[f].forEach((n) => { if (b.distToGoal[n] === undefined) { b.distToGoal[n] = b.distToGoal[f] + 1; queue.push(n); } });
     }
-  })();
-  const bottomRow = (i) => Math.floor(i / COLS) === ROWS - 1;
-  const isSafe = (i) => Math.floor(i / COLS) >= SAFE_FROM_ROW;
+    b.entry = (houseCol) => at(rows - 1, houseCol);
+    b.isBottomRow = (i) => Math.floor(i / cols) === rows - 1;
+    // The safe half on the normal board; the quick board has rest fields.
+    b.isSafe = quick ? () => false : (i) => Math.floor(i / cols) >= SAFE_FROM_ROW;
+    const restSet = new Set(b.rest);
+    b.isRest = (i) => restSet.has(i);
+    return b;
+  }
+  const NORMAL = makeBoard(MAP, HOUSE_COLS, false);
+  const QUICK = makeBoard(QUICK_MAP, QUICK_HOUSE_COLS, true);
+  function boardOf(s) {
+    return s && (s.board === "quick" || s === "quick") ? QUICK : NORMAL;
+  }
+
+  const ROWS = NORMAL.rows, COLS = NORMAL.cols;
+  const fields = NORMAL.fields, goal = NORMAL.goal, startStones = NORMAL.startStones;
+  const neighbours = NORMAL.neighbours, distToGoal = NORMAL.distToGoal;
+  const bottomRow = NORMAL.isBottomRow;
+  const isSafe = NORMAL.isSafe;
 
   // Entry field of player p's house.
   function entryOf(s, p) {
-    if (Array.isArray(s.houses)) return idx(ROWS - 1, HOUSE_COLS[s.houses[p]]);
-    return idx(ROWS - 1, ENTRY_COLS[s.numPlayers][p]);
+    const b = boardOf(s);
+    if (Array.isArray(s.houses)) return b.entry(b.houseCols[s.houses[p]]);
+    return b.entry(ENTRY_COLS[s.numPlayers][p]);
   }
 
-  // Houses (0..5) for all seats: the people get their choices in order (a
-  // house already taken goes to the next free one), each computer the
-  // free house farthest from the houses already taken (the leftmost of
-  // equals).
-  function assignHouses(numPlayers, choices) {
+  // Houses (0..5, on the quick board 0..3) for all seats: the people get
+  // their choices in order (a house already taken goes to the next free
+  // one), each computer the free house farthest from the houses already
+  // taken (the leftmost of equals).
+  function assignHouses(numPlayers, choices, board) {
     const n = ENTRY_COLS[numPlayers] ? numPlayers : 2;
-    const H = HOUSE_COLS.length, out = [];
+    const H = boardOf(board).houseCols.length, out = [];
     (choices || []).slice(0, n).forEach((c) => {
       let h = c >= 0 && c < H ? c : 0;
       while (out.indexOf(h) !== -1) h = (h + 1) % H;
@@ -156,21 +199,28 @@ const BlockersCore = (function () {
     return Math.floor((rng || Math.random)() * n);
   }
 
-  // opts: { houses, shapes, first, finish, tokens } - all optional (then
-  // houses from assignHouses, shapes 0..n-1, seat 0 first, finish "one",
-  // 5 tokens; tokens 3 only with finish "all").
+  // opts: { houses, shapes, first, finish, tokens, board } - all optional
+  // (then houses from assignHouses, shapes 0..n-1, seat 0 first, finish
+  // "one", 5 tokens; tokens 3 only with finish "all"; board "quick" for
+  // the quick board: 2 to 4 players, always 4 tokens).
   function createInitialState(numPlayers, opts) {
-    const n = ENTRY_COLS[numPlayers] ? numPlayers : 2;
     const o = opts || {};
+    const quick = o.board === "quick";
+    const b = quick ? QUICK : NORMAL;
+    let n = ENTRY_COLS[numPlayers] ? numPlayers : 2;
+    if (quick && n > b.houseCols.length) n = b.houseCols.length;
     const tokens = [];
-    const count = o.finish === "all" && TOKEN_CHOICES.indexOf(o.tokens) !== -1 ? o.tokens : TOKENS;
+    const count = quick ? QUICK_TOKENS : (o.finish === "all" && TOKEN_CHOICES.indexOf(o.tokens) !== -1 ? o.tokens : TOKENS);
     for (let p = 0; p < n; p++) tokens.push(new Array(count).fill(-1)); // -1 = in the house
-    const houses = Array.isArray(o.houses) && o.houses.length === n ? o.houses.slice() : assignHouses(n, []);
+    const housesOk = Array.isArray(o.houses) && o.houses.length === n && o.houses.every((h) => h >= 0 && h < b.houseCols.length);
+    const houses = housesOk ? o.houses.slice() : assignHouses(n, [], quick ? "quick" : undefined);
     const shapes = Array.isArray(o.shapes) && o.shapes.length === n ? o.shapes.slice() : assignShapes(n, []);
     const first = o.first >= 0 && o.first < n ? o.first : 0;
     const finish = o.finish === "all" ? "all" : "one";
-    const stones = startStones.filter((f) => finish !== "all" || distToGoal[f] > NEAR_GOAL);
-    return { numPlayers: n, tokens, stones, houses, shapes, first, finish, turn: first, roll: 0, phase: "roll", pendingStone: false, gameOver: false, winner: -1, turns: 0 };
+    const stones = b.startStones.filter((f) => finish !== "all" || b.distToGoal[f] > NEAR_GOAL);
+    const s = { numPlayers: n, tokens, stones, houses, shapes, first, finish, turn: first, roll: 0, phase: "roll", pendingStone: false, gameOver: false, winner: -1, turns: 0 };
+    if (quick) s.board = "quick";
+    return s;
   }
 
   function cloneState(s) {
@@ -179,6 +229,7 @@ const BlockersCore = (function () {
     if (Array.isArray(s.shapes)) c.shapes = s.shapes.slice();
     if (s.first !== undefined) c.first = s.first;
     if (s.finish) c.finish = s.finish;
+    if (s.board === "quick") c.board = "quick";
     return c;
   }
 
@@ -193,14 +244,16 @@ const BlockersCore = (function () {
   // Every field a token can end on with exactly `roll` steps:
   // [{ to, path }] - path lists the fields stepped on, in order.
   function targetsFor(s, player, token, roll) {
+    const b = boardOf(s);
     const from = s.tokens[player][token];
     const stones = new Set(s.stones);
     const out = new Map();
     const startPath = from === -1 ? [entryOf(s, player)] : [];
-    // Not on an own token, and not on another player's token in the safe half.
+    // Not on an own token, and not on another player's token in the safe
+    // half or on a rest field (one token per rest field).
     function allowedEnd(f) {
       const o = ownerAt(s, f);
-      return !(o && (o.player === player || isSafe(f)));
+      return !(o && (o.player === player || b.isSafe(f) || b.isRest(f)));
     }
     function walk(path, left) {
       const cur = path[path.length - 1];
@@ -209,8 +262,8 @@ const BlockersCore = (function () {
         return;
       }
       // A stone or the goal cannot be passed over.
-      if (stones.has(cur) || cur === goal) return;
-      for (const n of neighbours[cur]) {
+      if (stones.has(cur) || cur === b.goal) return;
+      for (const n of b.neighbours[cur]) {
         if (path.indexOf(n) !== -1) continue;
         if (from !== -1 && n === from) continue;
         path.push(n);
@@ -219,18 +272,18 @@ const BlockersCore = (function () {
       }
     }
     if (from === -1) walk(startPath, roll - 1);
-    else for (const n of neighbours[from]) walk([n], roll - 1);
+    else for (const n of b.neighbours[from]) walk([n], roll - 1);
     return Array.from(out.entries()).map(([to, path]) => ({ to, path }));
   }
 
   // All moves for the player on turn with the current roll:
   // [{ token, to, path }].
   function legalMoves(s) {
-    const p = s.turn, moves = [];
+    const p = s.turn, moves = [], g = boardOf(s).goal;
     let houseDone = false;
     for (let k = 0; k < s.tokens[p].length; k++) {
       const at = s.tokens[p][k];
-      if (at === goal || at === ARRIVED) continue;
+      if (at === g || at === ARRIVED) continue;
       if (at === -1) {
         if (houseDone) continue; // tokens in the house are all alike
         houseDone = true;
@@ -260,7 +313,7 @@ const BlockersCore = (function () {
   // goal and left the board ("all") }.
   function applyMove(s0, move) {
     const s = cloneState(s0);
-    const p = s.turn;
+    const p = s.turn, goal = boardOf(s).goal;
     let captured = null, stone = false;
     const o = ownerAt(s, move.to);
     if (o && o.player !== p) {
@@ -313,11 +366,12 @@ const BlockersCore = (function () {
   }
 
   // Free fields for a taken stone: no token, no stone, not the goal, not
-  // the bottom row - and with "all" not the last NEAR_GOAL fields before
-  // the goal.
+  // the bottom row, not a rest field - and with "all" not the last
+  // NEAR_GOAL fields before the goal.
   function stoneTargets(s) {
-    return fields.filter((f) => f !== goal && !bottomRow(f) && !s.stones.includes(f) && !ownerAt(s, f) &&
-      !(s.finish === "all" && distToGoal[f] <= NEAR_GOAL));
+    const b = boardOf(s);
+    return b.fields.filter((f) => f !== b.goal && !b.isBottomRow(f) && !b.isRest(f) && !s.stones.includes(f) && !ownerAt(s, f) &&
+      !(s.finish === "all" && b.distToGoal[f] <= NEAR_GOAL));
   }
 
   function placeStone(s0, field) {
@@ -338,14 +392,16 @@ const BlockersCore = (function () {
 
   // Steps to the goal for a token (house = entry distance + 1).
   function tokenDistance(s, player, token) {
+    const b = boardOf(s);
     const at = s.tokens[player][token];
-    if (at === goal || at === ARRIVED) return 0;
-    if (at === -1) return distToGoal[entryOf(s, player)] + 1;
-    return distToGoal[at];
+    if (at === b.goal || at === ARRIVED) return 0;
+    if (at === -1) return b.distToGoal[entryOf(s, player)] + 1;
+    return b.distToGoal[at];
   }
 
   return {
     MAP, ROWS, COLS, TOKENS, TOKEN_CHOICES, SAFE_FROM_ROW, NEAR_GOAL, ARRIVED, isSafe, HOUSE_COLS, SHAPES, fields, goal, neighbours, distToGoal, startStones, isBottomRow: bottomRow,
+    QUICK_MAP, QUICK_TOKENS, QUICK_HOUSE_COLS, boardOf,
     entryOf, assignHouses, assignShapes, firstPlayer, createInitialState, ownerAt, targetsFor, legalMoves, setRoll, applyMove, stoneTargets, placeStone,
     pass, tokenDistance, arrivedCount, ranking, rollDie: (rng) => 1 + Math.floor((rng || Math.random)() * 6)
   };

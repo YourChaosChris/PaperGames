@@ -181,6 +181,18 @@ all parts back into one log in list order. The last line is exactly
   computer levels and fails unless every move uses the full roll, steps
   only between joined fields, never visits a field twice or passes a
   stone, and every game ends with 6 stones and 5 tokens per player.
+- `node tests/blockers-quick.js` - no server or browser needed. The quick
+  board of Blocked Path (task 110): connected, every house 9 steps from the
+  goal, 6 blocks and 4 tokens per player at the start, four rest fields
+  (no sending back, one token only, no block there), no safe half;
+  computer games (`GAMES`, default 200) with 2, 3 and 4 players with all
+  rules checked and the game length against the normal board (must be
+  clearly shorter); "all" on the quick board.
+- `node tests/blockers-quick-ui.js` - needs the server and Playwright.
+  German page: "Brett: Schnell" starts the quick board (four houses, 4
+  tokens, rest fields labelled and drawn), a move, saved with board
+  "quick" and back after a reload, the block prompt names the rest
+  fields, "Normal" starts the normal board again.
 - `node tests/blockers-ui.js` - needs a local server (default port 8000)
   and Playwright. Task 113: German and English page at 360 x 640 name
   the game "Wegesperre" / "Blocked Path" and show no old name; a new

@@ -10,28 +10,33 @@
 // With the game end "all" (every token must reach the goal) Medium and
 // Hard do not just race their front token: they also value bringing
 // tokens out of the house and moving the ones far behind.
+// The board (normal or quick) comes from the state (C.boardOf); on the
+// quick board the rules alone keep tokens on rest fields safe and stones
+// off them - no extra scoring.
 
 const BlockersAi = (function () {
   const C = (typeof BlockersCore !== "undefined") ? BlockersCore : require("./blockers-core.js");
 
-  function bfsFrom(start) {
+  function bfsFrom(s, start) {
+    const nb = C.boardOf(s).neighbours;
     const dist = { [start]: 0 };
     const queue = [start];
     while (queue.length) {
       const f = queue.shift();
-      C.neighbours[f].forEach((n) => { if (dist[n] === undefined) { dist[n] = dist[f] + 1; queue.push(n); } });
+      nb[f].forEach((n) => { if (dist[n] === undefined) { dist[n] = dist[f] + 1; queue.push(n); } });
     }
     return dist;
   }
 
   function distAfter(s, player, token, to) {
-    if (to === C.goal) return 0;
-    return C.distToGoal[to];
+    const b = C.boardOf(s);
+    if (to === b.goal) return 0;
+    return b.distToGoal[to];
   }
 
   function scoreMove(s, m, level) {
     const p = s.turn;
-    if (m.to === C.goal) return 100000;
+    if (m.to === C.boardOf(s).goal) return 100000;
     const before = C.tokenDistance(s, p, m.token);
     const after = distAfter(s, p, m.token, m.to);
     let score = (before - after) * 10;
@@ -62,7 +67,7 @@ const BlockersAi = (function () {
     const moves = C.legalMoves(s);
     if (!moves.length) return null;
     if (level <= 1) {
-      const win = moves.find((m) => m.to === C.goal);
+      const win = moves.find((m) => m.to === C.boardOf(s).goal);
       return win || moves[Math.floor(rnd() * moves.length)];
     }
     let best = null, bestScore = -Infinity;
@@ -80,7 +85,7 @@ const BlockersAi = (function () {
       if (p === me) continue;
       for (let k = 0; k < s.tokens[p].length; k++) {
         const at = s.tokens[p][k];
-        if (at === C.ARRIVED || at === C.goal) continue; // already home
+        if (at === C.ARRIVED || at === C.boardOf(s).goal) continue; // already home
         const d = C.tokenDistance(s, p, k);
         if (!lead || d < lead.dist) lead = { player: p, token: k, at, dist: d };
       }
@@ -97,25 +102,26 @@ const BlockersAi = (function () {
     const lead = leaderOf(s, me);
     if (!lead) return free[0];
     const start = lead.at === -1 ? C.entryOf(s, lead.player) : lead.at;
-    const fromLead = bfsFrom(start);
-    const startDist = C.distToGoal[start];
+    const dg = C.boardOf(s).distToGoal;
+    const fromLead = bfsFrom(s, start);
+    const startDist = dg[start];
     // Fields on a shortest route of the leader, ahead of it.
-    let options = free.filter((f) => fromLead[f] !== undefined && fromLead[f] > 0 && fromLead[f] + C.distToGoal[f] === startDist);
+    let options = free.filter((f) => fromLead[f] !== undefined && fromLead[f] > 0 && fromLead[f] + dg[f] === startDist);
     if (!options.length) options = free;
     if (level >= 3) {
       // Not in the way of my own leading token, if that can be avoided.
       let mine = null;
       for (let k = 0; k < s.tokens[me].length; k++) {
         const at = s.tokens[me][k];
-        if (at === C.ARRIVED || at === C.goal) continue;
+        if (at === C.ARRIVED || at === C.boardOf(s).goal) continue;
         const d = C.tokenDistance(s, me, k);
         if (!mine || d < mine.dist) mine = { at, dist: d };
       }
       if (mine) {
         const myStart = mine.at === -1 ? C.entryOf(s, me) : mine.at;
-        const fromMine = bfsFrom(myStart);
-        const myDist = C.distToGoal[myStart];
-        const notMine = options.filter((f) => !(fromMine[f] + C.distToGoal[f] === myDist));
+        const fromMine = bfsFrom(s, myStart);
+        const myDist = dg[myStart];
+        const notMine = options.filter((f) => !(fromMine[f] + dg[f] === myDist));
         if (notMine.length) options = notMine;
       }
     }
@@ -129,7 +135,7 @@ const BlockersAi = (function () {
     }
     options.sort((a, b) => {
       const da = Math.abs((fromLead[a] || 99) - 3), db = Math.abs((fromLead[b] || 99) - 3);
-      return da - db || C.distToGoal[b] - C.distToGoal[a];
+      return da - db || dg[b] - dg[a];
     });
     return options[0];
   }

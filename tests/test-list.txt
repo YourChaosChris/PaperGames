@@ -27,6 +27,8 @@
 12 ludo-core.js
 20 ludo-ui.js
 8 blockers-ui.js
+15 blockers-quick.js
+8 blockers-quick-ui.js
 1 blackjack-core.js
 83 poker-core.js
 148 skat-core.js
