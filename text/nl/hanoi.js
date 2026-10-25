@@ -17,7 +17,7 @@ Object.assign(STRINGS.nl, {
     hanoi_history_lucas_title: "Édouard Lucas, 1883",
     hanoi_history_lucas_p1: "De Franse wiskundige Édouard Lucas presenteerde de puzzel in 1883 als een spel dat zogenaamd gevonden was door een \"N. Claus (de Siam)\" – de letters van \"Lucas d'Amiens\" in een andere volgorde. In 1889 gaf hij het uit als boekje.",
     hanoi_history_legend_title: "Een verzonnen legende",
-    hanoi_history_legend_p1: "Het boekje vertelde over priesters in een tempel in Benares die een toren van 64 gouden schijven verplaatsen; als ze klaar zijn, vergaat de wereld. De legende hoorde bij het verhaal van het spel, niet bij de echte geschiedenis.",
+    hanoi_history_legend_p1: "De legende die bij het spel hoorde, vertelde over priesters in een tempel in Benares die een toren van 64 gouden schijven verplaatsen; als ze klaar zijn, vergaat de wereld. De legende hoorde bij het verhaal van het spel, niet bij de echte geschiedenis.",
     hanoi_history_math_title: "Het kleinste aantal zetten",
     hanoi_history_math_p1: "Voor n schijven zijn minstens 2^n − 1 zetten nodig: eerst de n − 1 kleinere schijven naar de middelste staaf, dan de grootste naar het doel, dan de kleinere erbovenop. Met 64 schijven en één zet per seconde zou dat veel langer duren dan het heelal oud is."
 });

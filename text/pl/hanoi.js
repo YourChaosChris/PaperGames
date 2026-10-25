@@ -17,7 +17,7 @@ Object.assign(STRINGS.pl, {
     hanoi_history_lucas_title: "Édouard Lucas, 1883",
     hanoi_history_lucas_p1: "Francuski matematyk Édouard Lucas przedstawił łamigłówkę w 1883 roku jako grę rzekomo odnalezioną przez „N. Clausa (de Siam)” – litery „Lucas d'Amiens” w innej kolejności. W 1889 roku wydał ją jako broszurę.",
     hanoi_history_legend_title: "Wymyślona legenda",
-    hanoi_history_legend_p1: "Broszura opowiadała o kapłanach w świątyni w Benares, którzy przenoszą wieżę z 64 złotych krążków; gdy skończą, nastąpi koniec świata. Legenda była częścią opowieści o grze, a nie prawdziwej historii.",
+    hanoi_history_legend_p1: "Legenda dołączona do gry opowiadała o kapłanach w świątyni w Benares, którzy przenoszą wieżę z 64 złotych krążków; gdy skończą, nastąpi koniec świata. Legenda była częścią opowieści o grze, a nie prawdziwej historii.",
     hanoi_history_math_title: "Najmniej ruchów",
     hanoi_history_math_p1: "Przeniesienie n krążków wymaga co najmniej 2^n − 1 ruchów: najpierw n − 1 mniejszych krążków na środkowy pręt, potem największy na cel, a potem mniejsze na niego. Przy 64 krążkach i jednym ruchu na sekundę trwałoby to znacznie dłużej niż wiek wszechświata."
 });

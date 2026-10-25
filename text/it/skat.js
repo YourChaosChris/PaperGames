@@ -33,7 +33,7 @@ Object.assign(STRINGS.it, {
     sk_history_origins_title: "Altenburg",
     sk_history_origins_p1: "Lo skat fu sviluppato intorno al 1810-1813 ad Altenburg, in Turingia, dai membri di un circolo di tarocchi, la Brommesche Tarok-Gesellschaft. Nacque da giochi più antichi della zona.",
     sk_history_rules_title: "Regole per tutti",
-    sk_history_rules_p1: "Il primo tentativo di rendere le regole uguali ovunque fu un congresso di giocatori di skat il 7 agosto 1886 ad Altenburg. La federazione tedesca di skat fu fondata ad Altenburg nel 1899. Oggi il Regolamento internazionale dello skat fissa le regole ufficiali.",
+    sk_history_rules_p1: "Il primo tentativo di rendere le regole uguali ovunque fu un congresso di giocatori di skat il 7 agosto 1886 ad Altenburg. La federazione tedesca di skat fu fondata a Halle (Saale) nel 1899; la sua sede è ad Altenburg. Oggi il Regolamento internazionale dello skat fissa le regole ufficiali.",
     sk_history_modern_title: "Lo skat oggi",
     sk_history_modern_p1: "Il Tribunale internazionale dello skat fu fondato ad Altenburg il 1° dicembre 2001. Nel dicembre 2016 la Commissione tedesca per l'UNESCO ha inserito lo skat nell'elenco nazionale del patrimonio culturale immateriale. PaperGames gioca con le regole ufficiali senza Ramsch, con carte francesi o tedesche disegnate per l'inchiostro elettronico in bianco e nero, e calcola passo per passo il valore di ogni gioco."
 });

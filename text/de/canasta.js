@@ -39,6 +39,6 @@ Object.assign(STRINGS.de, {
     cn_history_spread_title: "In die USA",
     cn_history_spread_p1: "Josefina Artayeta de Viel brachte das Spiel 1949 nach New York. In den 1950er-Jahren wurde Canasta in den USA zur Mode; in den 1960er-Jahren ließ das Interesse nach, doch es gibt noch Clubs und Ligen. Aus den USA kam es nach Großbritannien und aufs europäische Festland.",
     cn_history_name_title: "Der Name",
-    cn_history_name_p1: "„Canasta“ ist das spanische Wort für Korb. Der Name kommt wahrscheinlich von dem Tablett oder Korb, in dem der Stapel in der Tischmitte lag. Santos und Serrato ließen die Regeln nie schützen und verdienten daher nichts daran."
+    cn_history_name_p1: "„Canasta“ ist das spanische Wort für Korb. Der Name kommt wahrscheinlich von dem Tablett oder Korb, in dem der Stapel in der Tischmitte lag. Santos und Serrato sicherten sich nie Rechte an dem Spiel und verdienten daher nichts an seinem späteren Erfolg."
 });
 I18n.markTextLoaded("de");

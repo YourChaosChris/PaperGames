@@ -33,7 +33,7 @@ Object.assign(STRINGS.de, {
     sk_history_origins_title: "Altenburg",
     sk_history_origins_p1: "Skat wurde um 1810 bis 1813 in Altenburg in Thüringen von Mitgliedern einer Tarockrunde entwickelt, der Brommeschen Tarok-Gesellschaft. Er ging aus älteren Spielen der Gegend hervor.",
     sk_history_rules_title: "Regeln für alle",
-    sk_history_rules_p1: "Der erste Versuch, die Regeln überall gleich zu machen, war ein Skatkongress am 7. August 1886 in Altenburg. 1899 wurde in Altenburg der Deutsche Skatverband gegründet. Heute legt die Internationale Skatordnung die offiziellen Regeln fest.",
+    sk_history_rules_p1: "Der erste Versuch, die Regeln überall gleich zu machen, war ein Skatkongress am 7. August 1886 in Altenburg. 1899 wurde in Halle (Saale) der Deutsche Skatverband gegründet; sein Sitz ist Altenburg. Heute legt die Internationale Skatordnung die offiziellen Regeln fest.",
     sk_history_modern_title: "Skat heute",
     sk_history_modern_p1: "Am 1. Dezember 2001 wurde in Altenburg das Internationale Skatgericht gegründet. Im Dezember 2016 nahm die Deutsche UNESCO-Kommission Skat in das Bundesweite Verzeichnis des immateriellen Kulturerbes auf. PaperGames spielt nach den offiziellen Regeln ohne Ramsch, mit französischem oder deutschem Blatt, gezeichnet für Schwarz-Weiß-E-Ink, und rechnet jeden Spielwert Schritt für Schritt vor."
 });

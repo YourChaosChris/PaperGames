@@ -20,12 +20,12 @@ Object.assign(STRINGS.pl, {
     bullsandcows_rules_levels: "Łatwy daje 12 prób, ale tajny kod nigdy nie powtarza kształtu. Średni daje 10 prób i pozwala na powtórzenia - to tradycyjny sposób gry. Trudny daje tylko 8 prób i również pozwala na powtórzenia, więc powtarzające się kształty to coś, na co warto uważać.",
     bullsandcows_history_title: "Historia gry Byki i krowy",
     bullsandcows_history_origins_title: "Klasyka papieru i ołówka",
-    bullsandcows_history_origins_p1: "Główna idea - zgadnąć ukryty kod i dowiedzieć się tylko, ile elementów pasuje dokładnie, a ile częściowo, ale nigdy które - pochodzi z Bulls and Cows (Byki i krowy), zgadywanki na papierze, w którą grano na długo przed 1970 rokiem. Tradycyjnie zgaduje się tajne liczby: właściwa cyfra na właściwym miejscu to byk, właściwa cyfra na złym miejscu to krowa.",
-    bullsandcows_history_origins_p2: "Była to też jedna z pierwszych gier napisanych na komputery: wersje, często nazywane Moo, działały na komputerach uniwersyteckich od końca lat 60., a zaprogramowanie jej wciąż jest klasycznym ćwiczeniem.",
+    bullsandcows_history_origins_p1: "Główna idea - zgadnąć ukryty kod i dowiedzieć się tylko, ile elementów pasuje dokładnie, a ile częściowo, ale nigdy które - pochodzi z Bulls and Cows (Byki i krowy), zgadywanki na papierze, starszej niż rok 1970 - według niektórych relacji nawet znacznie starszej. Tradycyjnie zgaduje się tajne liczby: właściwa cyfra na właściwym miejscu to byk, właściwa cyfra na złym miejscu to krowa.",
+    bullsandcows_history_origins_p2: "Wcześnie trafiła też na komputery: wersje, często nazywane Moo, działały na komputerach uniwersyteckich od końca lat 60., a zaprogramowanie jej wciąż jest klasycznym ćwiczeniem.",
     bullsandcows_history_spread_title: "Gra planszowa i nazwa",
     bullsandcows_history_spread_p1: "W 1970 roku z tego pomysłu powstała gra planszowa z kolorowymi kołeczkami, znana na całym świecie pod nazwą Mastermind. Mastermind to znak towarowy; prawa należą do Invicta Plastics. PaperGames nie ma żadnego związku z Invicta Plastics ani z tą grą planszową i dlatego używa starszej nazwy Bulls and Cows, czyli Byki i krowy.",
     bullsandcows_history_modern_title: "Ulubiona łamigłówka informatyków",
     bullsandcows_history_modern_p1: "Ponieważ sprowadza się do szukania ukrytej odpowiedzi wyłącznie na podstawie liczby trafień, gra stała się standardowym przykładem w informatyce i kombinatoryce do badania strategii zgadywania i algorytmów wyszukiwania.",
-    bullsandcows_history_modern_p2: "W znanym artykule z 1977 roku Donald Knuth wykazał, że klasyczną wersję z czterema pozycjami i sześcioma symbolami przy optymalnej strategii zawsze da się rozwiązać w najwyżej pięciu próbach - wynik ten jest cytowany do dziś, gdy mowa o algorytmach wyszukiwania."
+    bullsandcows_history_modern_p2: "W znanym artykule z lat 1976/77 Donald Knuth wykazał, że klasyczną wersję z czterema pozycjami i sześcioma symbolami przy optymalnej strategii zawsze da się rozwiązać w najwyżej pięciu próbach - wynik ten jest cytowany do dziś, gdy mowa o algorytmach wyszukiwania."
 });
 I18n.markTextLoaded("pl");

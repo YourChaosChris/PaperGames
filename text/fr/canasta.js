@@ -39,6 +39,6 @@ Object.assign(STRINGS.fr, {
     cn_history_spread_title: "Vers les États-Unis",
     cn_history_spread_p1: "Josefina Artayeta de Viel a apporté le jeu à New York en 1949. Dans les années 1950, la canasta est devenue une mode aux États-Unis ; l'intérêt a baissé dans les années 1960, mais il existe encore des clubs et des ligues. Des États-Unis, elle est arrivée en Grande-Bretagne et en Europe continentale.",
     cn_history_name_title: "Le nom",
-    cn_history_name_p1: "« Canasta » signifie panier en espagnol. Le nom vient probablement du plateau ou du panier qui contenait le talon au milieu de la table. Santos et Serrato n'ont jamais protégé les règles et n'en ont donc rien gagné."
+    cn_history_name_p1: "« Canasta » signifie panier en espagnol. Le nom vient probablement du plateau ou du panier qui contenait le talon au milieu de la table. Santos et Serrato ne se sont jamais assuré de droits sur le jeu et n'ont donc rien gagné à son succès ultérieur."
 });
 I18n.markTextLoaded("fr");

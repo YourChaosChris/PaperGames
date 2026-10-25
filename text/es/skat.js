@@ -33,7 +33,7 @@ Object.assign(STRINGS.es, {
     sk_history_origins_title: "Altenburg",
     sk_history_origins_p1: "El skat lo crearon hacia 1810-1813 en Altenburg (Turingia) miembros de un círculo de tarot, la Brommesche Tarok-Gesellschaft. Surgió de juegos más antiguos de la región.",
     sk_history_rules_title: "Reglas para todos",
-    sk_history_rules_p1: "El primer intento de unificar las reglas fue un congreso de jugadores de skat el 7 de agosto de 1886 en Altenburg. La federación alemana de skat se fundó en Altenburg en 1899. Hoy el Reglamento Internacional del Skat fija las reglas oficiales.",
+    sk_history_rules_p1: "El primer intento de unificar las reglas fue un congreso de jugadores de skat el 7 de agosto de 1886 en Altenburg. La federación alemana de skat se fundó en Halle (Saale) en 1899; su sede está en Altenburg. Hoy el Reglamento Internacional del Skat fija las reglas oficiales.",
     sk_history_modern_title: "El skat hoy",
     sk_history_modern_p1: "El Tribunal Internacional del Skat se fundó en Altenburg el 1 de diciembre de 2001. En diciembre de 2016, la Comisión Alemana para la UNESCO incluyó el skat en el registro nacional del patrimonio cultural inmaterial. PaperGames juega con las reglas oficiales sin Ramsch, con cartas francesas o alemanas dibujadas para tinta electrónica en blanco y negro, y calcula paso a paso el valor de cada juego."
 });

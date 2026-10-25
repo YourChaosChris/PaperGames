@@ -39,6 +39,6 @@ Object.assign(STRINGS.it, {
     cn_history_spread_title: "Verso gli Stati Uniti",
     cn_history_spread_p1: "Josefina Artayeta de Viel portò il gioco a New York nel 1949. Negli anni Cinquanta la canasta divenne una moda negli Stati Uniti; l'interesse calò negli anni Sessanta, ma esistono ancora club e leghe. Dagli Stati Uniti arrivò in Gran Bretagna e nell'Europa continentale.",
     cn_history_name_title: "Il nome",
-    cn_history_name_p1: "«Canasta» in spagnolo significa cesto. Il nome viene probabilmente dal vassoio o cesto che conteneva il mazzo al centro del tavolo. Santos e Serrato non brevettarono mai le regole e quindi non ne guadagnarono nulla."
+    cn_history_name_p1: "«Canasta» in spagnolo significa cesto. Il nome viene probabilmente dal vassoio o cesto che conteneva il mazzo al centro del tavolo. Santos e Serrato non si assicurarono mai alcun diritto sul gioco e quindi non guadagnarono nulla dal suo successo successivo."
 });
 I18n.markTextLoaded("it");

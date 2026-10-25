@@ -17,7 +17,7 @@ Object.assign(STRINGS.fr, {
     hanoi_history_lucas_title: "Édouard Lucas, 1883",
     hanoi_history_lucas_p1: "Le mathématicien français Édouard Lucas présenta le casse-tête en 1883 comme un jeu soi-disant trouvé par un « N. Claus (de Siam) » – les lettres de « Lucas d’Amiens » remises dans un autre ordre. En 1889, il le publia sous forme de livret.",
     hanoi_history_legend_title: "Une légende inventée",
-    hanoi_history_legend_p1: "Le livret racontait que des prêtres, dans un temple de Bénarès, déplacent une tour de 64 disques d’or ; quand ils auront fini, le monde prendra fin. La légende faisait partie de l’histoire du jeu, pas de l’histoire réelle.",
+    hanoi_history_legend_p1: "La légende qui accompagnait le jeu racontait que des prêtres, dans un temple de Bénarès, déplacent une tour de 64 disques d’or ; quand ils auront fini, le monde prendra fin. La légende faisait partie de l’histoire du jeu, pas de l’histoire réelle.",
     hanoi_history_math_title: "Le minimum de coups",
     hanoi_history_math_p1: "Déplacer n disques demande au moins 2^n − 1 coups : d’abord les n − 1 plus petits sur la tige du milieu, puis le plus grand sur la tige d’arrivée, puis les plus petits par-dessus. Avec 64 disques et un coup par seconde, il faudrait bien plus longtemps que l’âge de l’univers."
 });

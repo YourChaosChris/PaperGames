@@ -17,7 +17,7 @@ Object.assign(STRINGS.de, {
     hanoi_history_lucas_title: "Édouard Lucas, 1883",
     hanoi_history_lucas_p1: "Der französische Mathematiker Édouard Lucas stellte das Rätsel 1883 als Spiel vor, das angeblich ein „N. Claus (de Siam)“ gefunden hatte – die umgestellten Buchstaben von „Lucas d'Amiens“. 1889 veröffentlichte er es als Heft.",
     hanoi_history_legend_title: "Eine erfundene Legende",
-    hanoi_history_legend_p1: "Das Heft erzählte von Priestern in einem Tempel in Benares, die einen Turm aus 64 goldenen Scheiben versetzen; sind sie fertig, gehe die Welt unter. Die Legende gehörte zur Geschichte des Spiels, nicht zur wirklichen Geschichte.",
+    hanoi_history_legend_p1: "Die Legende, die dem Spiel beigegeben war, erzählte von Priestern in einem Tempel in Benares, die einen Turm aus 64 goldenen Scheiben versetzen; sind sie fertig, gehe die Welt unter. Die Legende gehörte zur Geschichte des Spiels, nicht zur wirklichen Geschichte.",
     hanoi_history_math_title: "Die wenigsten Züge",
     hanoi_history_math_p1: "Für n Scheiben braucht man mindestens 2^n − 1 Züge: erst die n − 1 kleineren Scheiben auf den mittleren Stab, dann die größte ans Ziel, dann die kleineren darauf. Mit 64 Scheiben und einem Zug pro Sekunde würde das weit länger dauern, als das Weltall alt ist."
 });

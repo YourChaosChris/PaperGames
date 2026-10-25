@@ -39,6 +39,6 @@ Object.assign(STRINGS.pl, {
     cn_history_spread_title: "Do Stanów Zjednoczonych",
     cn_history_spread_p1: "Josefina Artayeta de Viel przywiozła grę do Nowego Jorku w 1949 roku. W latach 50. canasta stała się w USA modą; w latach 60. zainteresowanie spadło, ale wciąż istnieją kluby i ligi. Ze Stanów Zjednoczonych trafiła do Wielkiej Brytanii i Europy kontynentalnej.",
     cn_history_name_title: "Nazwa",
-    cn_history_name_p1: "„Canasta” to po hiszpańsku kosz. Nazwa pochodzi prawdopodobnie od tacy lub kosza, w którym leżała talia na środku stołu. Santos i Serrato nigdy nie opatentowali zasad, więc nic na nich nie zarobili."
+    cn_history_name_p1: "„Canasta” to po hiszpańsku kosz. Nazwa pochodzi prawdopodobnie od tacy lub kosza, w którym leżała talia na środku stołu. Santos i Serrato nigdy nie zastrzegli sobie żadnych praw do gry, więc nic nie zarobili na jej późniejszym sukcesie."
 });
 I18n.markTextLoaded("pl");

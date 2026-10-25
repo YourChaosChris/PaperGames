@@ -17,7 +17,7 @@ Object.assign(STRINGS.es, {
     hanoi_history_lucas_title: "Édouard Lucas, 1883",
     hanoi_history_lucas_p1: "El matemático francés Édouard Lucas presentó el rompecabezas en 1883 como un juego que supuestamente había encontrado un tal «N. Claus (de Siam)», las letras de «Lucas d'Amiens» cambiadas de orden. En 1889 lo publicó como folleto.",
     hanoi_history_legend_title: "Una leyenda inventada",
-    hanoi_history_legend_p1: "El folleto contaba que unos sacerdotes de un templo de Benarés mueven una torre de 64 discos de oro; cuando terminen, el mundo se acabará. La leyenda formaba parte de la historia del juego, no de la historia real.",
+    hanoi_history_legend_p1: "La leyenda que acompañaba al juego contaba que unos sacerdotes de un templo de Benarés mueven una torre de 64 discos de oro; cuando terminen, el mundo se acabará. La leyenda formaba parte de la historia del juego, no de la historia real.",
     hanoi_history_math_title: "El mínimo de movimientos",
     hanoi_history_math_p1: "Mover n discos exige al menos 2^n − 1 movimientos: primero los n − 1 más pequeños a la varilla del medio, luego el más grande a la meta y después los pequeños encima. Con 64 discos y un movimiento por segundo se tardaría mucho más que la edad del universo."
 });

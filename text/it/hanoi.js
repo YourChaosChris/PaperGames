@@ -17,7 +17,7 @@ Object.assign(STRINGS.it, {
     hanoi_history_lucas_title: "Édouard Lucas, 1883",
     hanoi_history_lucas_p1: "Il matematico francese Édouard Lucas presentò il rompicapo nel 1883 come un gioco trovato, a suo dire, da un certo «N. Claus (de Siam)» – le lettere di «Lucas d'Amiens» in un altro ordine. Nel 1889 lo pubblicò come opuscolo.",
     hanoi_history_legend_title: "Una leggenda inventata",
-    hanoi_history_legend_p1: "L’opuscolo raccontava di sacerdoti in un tempio di Benares che spostano una torre di 64 dischi d’oro; quando avranno finito, il mondo finirà. La leggenda faceva parte della storia del gioco, non della storia vera.",
+    hanoi_history_legend_p1: "La leggenda che accompagnava il gioco raccontava di sacerdoti in un tempio di Benares che spostano una torre di 64 dischi d’oro; quando avranno finito, il mondo finirà. La leggenda faceva parte della storia del gioco, non della storia vera.",
     hanoi_history_math_title: "Il minimo di mosse",
     hanoi_history_math_p1: "Spostare n dischi richiede almeno 2^n − 1 mosse: prima gli n − 1 dischi più piccoli sul paletto centrale, poi il più grande sull’arrivo, poi i più piccoli sopra. Con 64 dischi e una mossa al secondo ci vorrebbe molto più dell’età dell’universo."
 });

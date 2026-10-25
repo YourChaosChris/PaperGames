@@ -20,12 +20,12 @@ Object.assign(STRINGS.zh, {
     bullsandcows_rules_levels: "简单难度给你12次猜测机会，但秘密代码中不会出现重复图形。中等难度给10次猜测机会，并允许重复图形，这是这款游戏传统的玩法。困难难度只给8次猜测机会，同样允许重复图形，因此需要留意重复出现的图形。",
     bullsandcows_history_title: "公牛与母牛的历史",
     bullsandcows_history_origins_title: "纸笔上的经典",
-    bullsandcows_history_origins_p1: "它的核心想法——猜一个隐藏的密码，只得知完全对上和部分对上的数量，却永远不知道是哪几个——来自“公牛与母牛”（Bulls and Cows），一种早在 1970 年之前就流行的纸笔猜谜游戏。传统上猜的是秘密数字：数字对、位置也对叫“公牛”，数字对但位置不对叫“母牛”。",
-    bullsandcows_history_origins_p2: "它也是最早为计算机编写的游戏之一：常被称为 Moo 的版本从 20 世纪 60 年代末起就在大学的计算机上运行，编写它至今仍是经典的编程练习。",
+    bullsandcows_history_origins_p1: "它的核心想法——猜一个隐藏的密码，只得知完全对上和部分对上的数量，却永远不知道是哪几个——来自“公牛与母牛”（Bulls and Cows），一种早于 1970 年的纸笔猜谜游戏，据一些说法还要古老得多。传统上猜的是秘密数字：数字对、位置也对叫“公牛”，数字对但位置不对叫“母牛”。",
+    bullsandcows_history_origins_p2: "它也很早就被搬上了计算机：常被称为 Moo 的版本从 20 世纪 60 年代末起就在大学的计算机上运行，编写它至今仍是经典的编程练习。",
     bullsandcows_history_spread_title: "棋盘游戏与名称",
     bullsandcows_history_spread_p1: "1970 年，这个想法被做成了使用彩色插针的棋盘游戏，并以 Mastermind 之名风靡全球。Mastermind 是一个商标，权利属于 Invicta Plastics。PaperGames 与 Invicta Plastics 及该棋盘游戏没有任何关联，因此使用更古老的名称“公牛与母牛”（Bulls and Cows）。",
     bullsandcows_history_modern_title: "计算机科学家钟爱的谜题",
     bullsandcows_history_modern_p1: "由于它归结为只凭匹配数量去寻找隐藏的答案，这个游戏成为计算机科学和组合数学中研究猜测策略与搜索算法的标准案例。",
-    bullsandcows_history_modern_p2: "在 1977 年一篇著名的论文中，高德纳证明：四个位置、六种符号的经典版本，用最优策略总能在五次以内猜中——每当谈到算法搜索，这一结果至今仍被引用。"
+    bullsandcows_history_modern_p2: "在 1976/77 年一篇著名的论文中，高德纳证明：四个位置、六种符号的经典版本，用最优策略总能在五次以内猜中——每当谈到算法搜索，这一结果至今仍被引用。"
 });
 I18n.markTextLoaded("zh");

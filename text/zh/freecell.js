@@ -17,7 +17,7 @@ Object.assign(STRINGS.zh, {
     freecell_history_title: "空当接龙的历史",
     freecell_history_origins_title: "一款信息完全公开的纸牌游戏",
     freecell_history_origins_p1: "空当接龙源自一类“公开牌型”或“贝克游戏”（Baker's Game）风格的耐心纸牌游戏家族，其历史至少可以追溯到 20 世纪初——这类游戏从第一步开始就把每一张牌都正面朝上发出，与大多数纸牌接龙不同，没有任何一张牌是藏起来的，因此一个足够熟练的玩家（或电脑）原则上可以在动手之前，就判断出某一局牌是否可解。",
-    freecell_history_origins_p2: "引入“空当”——用来临时存放单张牌的小小空位——这一构思，一般归功于保罗·阿尔菲耶（Paul Alfille）。他在 1978 年为 PLATO 计算机系统开发了一款早期数字版本，名为 FreeCell，把原本公开牌型的老玩法，改良成了如今这套具体规则。",
+    freecell_history_origins_p2: "“空当”本身——用来临时存放单张牌的小小空位——并不是新东西：贝克游戏（Baker's Game）等更早的玩法里就已经有了。保罗·阿尔菲耶（Paul Alfille）的改动在于：牌列不再按同一花色、而是按红黑交替来接牌。1978 年，他为 PLATO 系统编写了第一个电脑版本，名为 FreeCell，由此确立了如今的这套规则。",
     freecell_history_spread_title: "随 Windows 一同普及",
     freecell_history_spread_p1: "1995 年起，微软将空当接龙与纸牌接龙、扫雷一起内置进 Windows，这款游戏由此成为家喻户晓的名字，也让数以亿计从未接触过它的电脑用户第一次认识了它——这条走红之路，与扫雷的经历颇为相似。",
     freecell_history_spread_p2: "微软的这个版本内置了一套固定的、编号从 1 到 32000 的牌局，而不是每次都重新随机洗牌，这样玩家们就能相互交流心得，重玩同一局特定的牌局——本 PaperGames 版本没有沿用这一惯例，而是每次都真正生成一局全新的随机牌局。",

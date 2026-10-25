@@ -489,7 +489,7 @@ STRINGS.de = {
 
     mancala_history_intro: "Mancala ist nicht ein einzelnes Spiel, sondern eine ganze Spielfamilie – eine der ältesten der Welt, aufgebaut auf der einfachen, universellen Idee, Samen oder Steine zwischen Mulden zu verteilen.",
 
-    reversi_history_intro: "Ein viktorianisches Gesellschaftsspiel, ein Jahrhundert später gleich zweimal neu erfunden.",
+    reversi_history_intro: "Ein viktorianisches Gesellschaftsspiel, das fast ein Jahrhundert später in Japan unter neuem Namen und mit fester Startaufstellung zurückkehrte.",
 
     fourinarow_history_intro: "Eine simple, von der Schwerkraft angetriebene Idee, die zu einem der meistverkauften Spiele des 20. Jahrhunderts wurde.",
 
@@ -500,7 +500,7 @@ STRINGS.de = {
 
     shogi_history_intro: "Japans Variante der Schachfamilie – und die einzige große Variante, bei der ein geschlagener Stein das Spiel nicht verlässt, sondern zur schlagenden Seite wechselt.",
 
-    sudoku_history_intro: "Anders als jedes andere Spiel in dieser Sammlung hat Sudoku überhaupt keine alte Herkunft – es ist kaum älter als der Personal Computer.",
+    sudoku_history_intro: "Anders als jedes andere Spiel in dieser Sammlung hat Sudoku überhaupt keine alte Herkunft – das Rätsel in seiner heutigen Form stammt erst aus dem Jahr 1979.",
 
     pegsolitaire_history_intro: "Ein Einzelspieler-Rätsel, alt genug für eine eigene Hoflegende, und Gegenstand eines der überraschenderen Ergebnisse der Unterhaltungsmathematik.",
 
@@ -666,6 +666,7 @@ STRINGS.de = {
     release_v260: "Jedes Spiel hat unten einen Link „Idee oder Fehler melden“, der dein E-Mail-Programm mit Spiel, Version und Sprache öffnet. Im Rommé nennt der Hinweis zum Jokertausch jetzt die Hausregel.",
     release_v261: "Rommé: Passt ein Joker an beide Enden einer Folge, wählst du jetzt das Ende. Dazu zwei neue Optionen: Hand-Rommé (alle Karten auf einmal auslegen, die Strafpunkte der anderen zählen doppelt) und Klopfen auf eine abgelegte Karte gegen zwei oder drei Computer.",
     release_v264: "Ludo: ein Brett für 6 Spieler. Wegesperre: ein schnelles Brett mit Ruhefeldern und bis zu 6 Spieler. Hex: Schwarz und Weiß mit klarer Farbwahl. Bildanleitung für Verbinden, Schwarzer Peter und Leiterspiel. Lizenzhinweise, Datenschutzerklärung und drei Geschichtsseiten überarbeitet.",
+    release_v265: "Wegesperre: wenige, normal viele oder viele Sperrklötze wählen. Kleine Knöpfe sind jetzt groß genug zum Antippen, und drei weitere Spiele haben ein großes Spielfeld. Bildanleitung für Krieg und Paare. Sternjagd nennt, wer beginnt. Ludo-Texte und 15 Geschichtsseiten geprüft und berichtigt.",
     release_v263: "Das Würfel-Laufspiel mit Sperrklötzen auf den Wegen hat einen neuen Namen: „Wegesperre“. Regeln, Spielstände und Statistik bleiben gleich.",
     release_v262: "Minesweeper: Die Uhr bleibt verborgen, außer du schaltest „Zeit anzeigen“ ein, und zu viele Flaggen werden klar benannt. Hex: neue Tauschregel (standardmäßig an). Domino: Der Vorrat-Knopf ist immer zu sehen und groß genug zum Antippen. Schach: ein Hinweis, dass der Online-Modus Internet und ein Lichess-Konto braucht.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoowurf und Weidefreunde erklären sich jetzt mit Bildern, Zoowurf hat eine Stufe für Anfänger, und das Kuchenbrett nennt seine Räume mit Zahlen und hat größere Felder.",
@@ -1108,7 +1109,7 @@ STRINGS.de = {
     msg_hex_computer_swaps: "Der Computer tauscht: Er spielt jetzt Schwarz, und der erste Stein gehört ihm.",
 
 
-    hex_history_intro: "Ein seltener Fall, in dem dasselbe einfache, elegante Spiel zweimal unabhängig voneinander erfunden wurde – von zwei Personen, die später aus ganz unterschiedlichen Gründen bekannt werden sollten.",
+    hex_history_intro: "Ein seltener Fall, in dem dasselbe einfache, elegante Spiel zweimal erfunden wurde – nach der üblichen Darstellung unabhängig voneinander – von zwei Personen, die später aus ganz unterschiedlichen Gründen bekannt werden sollten.",
 
     game_halma: "Halma",
     home_halma_desc: "Bringe alle deine Figuren als Erster ins gegnerische Lager. Lokal zu zweit oder gegen die eingebaute KI.",
@@ -2600,7 +2601,7 @@ STRINGS.de = {
     sk_opt_schneider: "Schneider ansagen",
     sk_opt_schwarz: "Schwarz ansagen",
     sk_opt_ouvert: "Ouvert (Karten offen)",
-    sk_history_intro: "Skat entstand um 1810 bis 1813 in Altenburg in Thüringen; dort wurde 1899 der Deutsche Skatverband gegründet.",
+    sk_history_intro: "Skat entstand um 1810 bis 1813 in Altenburg in Thüringen; dort hat der 1899 gegründete Deutsche Skatverband seinen Sitz.",
     quickrules_skat_1: "Reize mit den Werten auf den Knöpfen; wer am höchsten reizt, ist Alleinspieler und spielt gegen die beiden anderen.",
     quickrules_skat_2: "Der Alleinspieler nimmt den Skat auf und drückt zwei Karten oder spielt Hand und wählt das Spiel: eine Farbe, Grand oder Null.",
     quickrules_skat_3: "Farbe bedienen. Der Alleinspieler braucht 61 der 120 Augen (beim Null: gar keinen Stich).",

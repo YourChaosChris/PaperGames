@@ -33,7 +33,7 @@ Object.assign(STRINGS.pl, {
     sk_history_origins_title: "Altenburg",
     sk_history_origins_p1: "Skat został opracowany około 1810–1813 roku w Altenburgu w Turyngii przez członków klubu tarokowego Brommesche Tarok-Gesellschaft. Wyrósł ze starszych gier z tego regionu.",
     sk_history_rules_title: "Zasady dla wszystkich",
-    sk_history_rules_p1: "Pierwszą próbą ujednolicenia zasad był kongres graczy w skata 7 sierpnia 1886 roku w Altenburgu. W 1899 roku założono w Altenburgu Niemiecki Związek Skata. Dziś oficjalne zasady określa Międzynarodowy Regulamin Skata.",
+    sk_history_rules_p1: "Pierwszą próbą ujednolicenia zasad był kongres graczy w skata 7 sierpnia 1886 roku w Altenburgu. W 1899 roku założono w Halle (Saale) Niemiecki Związek Skata; jego siedziba mieści się w Altenburgu. Dziś oficjalne zasady określa Międzynarodowy Regulamin Skata.",
     sk_history_modern_title: "Skat dziś",
     sk_history_modern_p1: "1 grudnia 2001 roku założono w Altenburgu Międzynarodowy Sąd Skata. W grudniu 2016 roku Niemiecka Komisja ds. UNESCO wpisała skata na krajową listę niematerialnego dziedzictwa kulturowego. PaperGames gra według oficjalnych zasad bez Ramscha, kartami francuskimi lub niemieckimi narysowanymi dla czarno-białego e-papieru, i wylicza krok po kroku wartość każdej gry."
 });

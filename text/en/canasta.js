@@ -39,6 +39,6 @@ Object.assign(STRINGS.en, {
     cn_history_spread_title: "To the United States",
     cn_history_spread_p1: "Josefina Artayeta de Viel brought the game to New York in 1949. In the 1950s Canasta became a craze in the United States; interest fell in the 1960s, but there are still clubs and leagues. From the United States it came to Great Britain and continental Europe.",
     cn_history_name_title: "The name",
-    cn_history_name_p1: "\"Canasta\" is Spanish for basket. The name probably comes from the tray or basket that held the stock in the middle of the table. Santos and Serrato never patented the rules, so they earned nothing from them."
+    cn_history_name_p1: "\"Canasta\" is Spanish for basket. The name probably comes from the tray or basket that held the stock in the middle of the table. Santos and Serrato never secured any rights to the game, so they earned nothing from its later success."
 });
 I18n.markTextLoaded("en");

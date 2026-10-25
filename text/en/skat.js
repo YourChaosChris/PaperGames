@@ -33,7 +33,7 @@ Object.assign(STRINGS.en, {
     sk_history_origins_title: "Altenburg",
     sk_history_origins_p1: "Skat was developed around 1810 to 1813 in Altenburg in Thuringia by members of a Tarock club, the Brommesche Tarok-Gesellschaft. It grew out of older games played in the region.",
     sk_history_rules_title: "Rules for everyone",
-    sk_history_rules_p1: "The first attempt to make the rules the same everywhere was a congress of Skat players on 7 August 1886 in Altenburg. The German Skat Association was founded in Altenburg in 1899. Today the International Skat Order sets the official rules.",
+    sk_history_rules_p1: "The first attempt to make the rules the same everywhere was a congress of Skat players on 7 August 1886 in Altenburg. The German Skat Association was founded in Halle (Saale) in 1899; its seat is in Altenburg. Today the International Skat Order sets the official rules.",
     sk_history_modern_title: "Skat today",
     sk_history_modern_p1: "The International Skat Court was founded in Altenburg on 1 December 2001. In December 2016 the German Commission for UNESCO added Skat to the national list of intangible cultural heritage. PaperGames plays the official rules without Ramsch, with French or German cards drawn for black-and-white e-ink, and works out every game value step by step."
 });

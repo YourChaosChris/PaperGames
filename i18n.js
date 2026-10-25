@@ -501,7 +501,7 @@ const STRINGS = {
 
     mancala_history_intro: "Mancala isn't one game but an entire family of them - among the oldest game families on Earth, built around the simple, universal act of moving seeds or stones between pits.",
 
-    reversi_history_intro: "A Victorian parlor game, reinvented twice over a century apart.",
+    reversi_history_intro: "A Victorian parlor game that came back almost a century later in Japan, under a new name and with a fixed start.",
 
     fourinarow_history_intro: "A simple gravity-powered idea that turned into one of the best-selling games of the 20th century.",
 
@@ -512,7 +512,7 @@ const STRINGS = {
 
     shogi_history_intro: "Japan's take on the chess family, and the only major variant where a captured piece doesn't leave the game - it joins the side that captured it.",
 
-    sudoku_history_intro: "Unlike every other game in this collection, Sudoku has no ancient pedigree at all - it's barely older than the personal computer.",
+    sudoku_history_intro: "Unlike every other game in this collection, Sudoku has no ancient pedigree at all - the puzzle in its modern form only dates from 1979.",
 
     pegsolitaire_history_intro: "A single-player puzzle old enough to have its own court legend, and the subject of one of the more surprising results in recreational mathematics.",
 
@@ -678,6 +678,7 @@ const STRINGS = {
     release_v260: "Every game now has a link “Report an idea or bug” at the bottom that opens your email program with game, version and language filled in. In Rummy the note on swapping a joker now names the house rule.",
     release_v261: "Rummy: a joker that fits at both ends of a run now goes where you choose, and there are two new options - Hand-Rommé (lay out all cards at once, the others' penalty points count double) and knocking on a discarded card against two or three computers.",
     release_v264: "Ludo: a board for 6 players. Blocked Path: a quick board with rest fields, and up to 6 players. Hex: Black and White with a clear colour choice. Picture help for Link the Pairs, Old Maid and Snakes and Ladders. Licence notes, privacy policy and three history pages updated.",
+    release_v265: "Blocked Path: choose few, normal or many blocks. Small buttons are now big enough to tap, and three more games have a large board. Picture help for War and Pairs. Sternjagd names who starts. Ludo texts and 15 history pages checked and corrected.",
     release_v263: "The dice race game with blocks on the paths has a new name: “Blocked Path”. Rules, saved games and statistics stay the same.",
     release_v262: "Minesweeper: the clock stays hidden unless you switch on “Show time”, and too many flags are named clearly. Hex: new swap rule (on by default). Domino: the stock button is always shown and big enough to tap. Chess: a note that the online mode needs internet and a Lichess account.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss and Pasture Friends now explain themselves with pictures, Zoo Toss has a beginner level, and the cake board names its rooms with numbers and has larger squares.",
@@ -1120,7 +1121,7 @@ const STRINGS = {
     msg_hex_computer_swaps: "The computer swaps: it now plays Black and owns the first stone.",
 
 
-    hex_history_intro: "A rare case of the same simple, elegant game being invented twice, independently, by two people who'd go on to become well known for entirely different reasons.",
+    hex_history_intro: "A rare case of the same simple, elegant game being invented twice - according to the usual account independently - by two people who'd go on to become well known for entirely different reasons.",
 
     game_halma: "Halma",
     home_halma_desc: "Race all your pieces across the board into your opponent's starting camp. Local 2-player or vs. the built-in engine.",
@@ -2612,7 +2613,7 @@ const STRINGS = {
     sk_opt_schneider: "Announce Schneider",
     sk_opt_schwarz: "Announce Schwarz",
     sk_opt_ouvert: "Ouvert (cards open)",
-    sk_history_intro: "Skat was created around 1810 to 1813 in Altenburg in Thuringia; the German Skat Association was founded there in 1899.",
+    sk_history_intro: "Skat was created around 1810 to 1813 in Altenburg in Thuringia; the German Skat Association, founded in 1899, has its seat there.",
     quickrules_skat_1: "Bid with the values on the buttons; whoever bids highest is the declarer and plays alone against the other two.",
     quickrules_skat_2: "The declarer takes the skat and puts two cards away, or plays Hand, and chooses the game: a suit, Grand or Null.",
     quickrules_skat_3: "Follow suit. The declarer needs 61 of the 120 points (in Null: no trick at all).",

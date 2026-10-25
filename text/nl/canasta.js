@@ -39,6 +39,6 @@ Object.assign(STRINGS.nl, {
     cn_history_spread_title: "Naar de Verenigde Staten",
     cn_history_spread_p1: "Josefina Artayeta de Viel bracht het spel in 1949 naar New York. In de jaren vijftig werd canasta een rage in de Verenigde Staten; in de jaren zestig nam de belangstelling af, maar er zijn nog clubs en competities. Vanuit de Verenigde Staten kwam het naar Groot-Brittannië en het Europese vasteland.",
     cn_history_name_title: "De naam",
-    cn_history_name_p1: "‘Canasta’ is Spaans voor mand. De naam komt waarschijnlijk van het blad of de mand waarin de stapel midden op tafel lag. Santos en Serrato hebben de regels nooit laten beschermen en verdienden er dus niets aan."
+    cn_history_name_p1: "‘Canasta’ is Spaans voor mand. De naam komt waarschijnlijk van het blad of de mand waarin de stapel midden op tafel lag. Santos en Serrato hebben nooit rechten op het spel vastgelegd en verdienden dus niets aan het latere succes."
 });
 I18n.markTextLoaded("nl");

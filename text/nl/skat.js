@@ -33,7 +33,7 @@ Object.assign(STRINGS.nl, {
     sk_history_origins_title: "Altenburg",
     sk_history_origins_p1: "Skat werd rond 1810 tot 1813 in Altenburg in Thüringen ontwikkeld door leden van een tarokclub, de Brommesche Tarok-Gesellschaft. Het groeide uit oudere spellen uit de streek.",
     sk_history_rules_title: "Regels voor iedereen",
-    sk_history_rules_p1: "De eerste poging om de regels overal gelijk te maken was een skatcongres op 7 augustus 1886 in Altenburg. In 1899 werd in Altenburg de Duitse skatbond opgericht. Vandaag legt de Internationale Skatordening de officiële regels vast.",
+    sk_history_rules_p1: "De eerste poging om de regels overal gelijk te maken was een skatcongres op 7 augustus 1886 in Altenburg. In 1899 werd in Halle (Saale) de Duitse skatbond opgericht; de zetel is in Altenburg. Vandaag legt de Internationale Skatordening de officiële regels vast.",
     sk_history_modern_title: "Skat nu",
     sk_history_modern_p1: "Op 1 december 2001 werd in Altenburg het Internationale Skatgerecht opgericht. In december 2016 nam de Duitse UNESCO-commissie Skat op in de nationale lijst van immaterieel cultureel erfgoed. PaperGames speelt volgens de officiële regels zonder Ramsch, met Franse of Duitse kaarten getekend voor zwart-wit e-ink, en rekent elke spelwaarde stap voor stap voor."
 });

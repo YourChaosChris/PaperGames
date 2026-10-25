@@ -39,6 +39,6 @@ Object.assign(STRINGS.es, {
     cn_history_spread_title: "Hacia Estados Unidos",
     cn_history_spread_p1: "Josefina Artayeta de Viel llevó el juego a Nueva York en 1949. En los años cincuenta la canasta fue una moda en Estados Unidos; el interés bajó en los sesenta, pero aún hay clubes y ligas. Desde Estados Unidos llegó a Gran Bretaña y a la Europa continental.",
     cn_history_name_title: "El nombre",
-    cn_history_name_p1: "«Canasta» significa cesta en español. El nombre viene probablemente de la bandeja o cesta que contenía el mazo en el centro de la mesa. Santos y Serrato nunca patentaron las reglas, así que no ganaron nada con ellas."
+    cn_history_name_p1: "«Canasta» significa cesta en español. El nombre viene probablemente de la bandeja o cesta que contenía el mazo en el centro de la mesa. Santos y Serrato nunca se aseguraron derechos sobre el juego, así que no ganaron nada con su éxito posterior."
 });
 I18n.markTextLoaded("es");
