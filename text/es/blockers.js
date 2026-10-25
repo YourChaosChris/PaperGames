@@ -19,6 +19,8 @@ Object.assign(STRINGS.es, {
     bl_rules_players: "De 2 a 6 jugadores en un dispositivo; cualquiera de ellos puede jugarlo el ordenador (Fácil, Medio o Difícil). Las fichas se distinguen por su forma: círculo, triángulo, rombo, estrella, anillo (un círculo con el centro blanco) y cruz.",
     bl_term_quick: "El tablero rápido",
     bl_rules_quick: "Elige «Tablero: Rápido» antes de jugar para una partida más corta: un tablero propio y más pequeño con cuatro casas, 9 pasos de cada casa a la meta, 4 fichas por jugador y 6 bloques al empezar. En lugar de la mitad inferior segura tiene cuatro casillas de descanso (octágonos con doble borde): una ficha en una casilla de descanso no puede ser devuelta, solo puede haber una ficha y no se puede poner ningún bloque.",
+    bl_term_blocks: "Número de bloques",
+    bl_rules_blocks: "Antes de jugar, elige cuántos bloques hay en el tablero al empezar: pocos (4), normal (6) o muchos (11). «Muchos» solo existe en el tablero normal con 2 a 4 jugadores. Las demás reglas no cambian.",
     bl_rules_example_title: "Un bloque en el camino",
     bl_rules_example: "La imagen muestra una ficha (círculo) delante de un bloque (cuadrado negro). Con un 2 cae en el bloque, lo coge y lo pone en otra casilla libre. Con un 3 no puede seguir recto, porque tendría que pasar por encima del bloque.",
     bl_history_title: "La historia de Camino cortado",

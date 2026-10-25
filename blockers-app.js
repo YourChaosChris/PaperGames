@@ -50,6 +50,12 @@ function boardChoiceBL() {
   return sel && sel.value === "quick" ? "quick" : "normal";
 }
 
+// The number of blocks chosen in the settings ("few", "normal", "many").
+function blocksChoiceBL() {
+  const sel = document.getElementById("bl-blocks");
+  return sel && (sel.value === "few" || sel.value === "many") ? sel.value : "normal";
+}
+
 function loadTokensBL() {
   try { return window.localStorage.getItem(BL_TOKENS_KEY) === "5" ? 5 : 3; } catch (e) { return 3; }
 }
@@ -204,6 +210,17 @@ function initBlockersApp() {
     tokensSel.disabled = quick || !all || many;
     tokensSel.value = quick ? "4" : (all ? (many ? "3" : String(loadTokensBL())) : "5");
   };
+  // "Many blocks" only on the normal board with 2 to 4 players (task 123);
+  // on the quick board the option is not shown at all.
+  const blocksSel = document.getElementById("bl-blocks");
+  const syncBlocks = () => {
+    if (!blocksSel) return;
+    const quick = boardChoiceBL() === "quick";
+    const many = blocksSel.querySelector('option[value="many"]');
+    many.hidden = quick;
+    many.disabled = quick || parseInt(players.value, 10) > BlockersCore.MANY_MAX_PLAYERS;
+    if (many.disabled && blocksSel.value === "many") blocksSel.value = "normal";
+  };
   // The quick board has four houses and room for 2 to 4 players.
   const syncBoard = () => {
     const quick = boardChoiceBL() === "quick";
@@ -211,6 +228,7 @@ function initBlockersApp() {
     if (quick && parseInt(players.value, 10) > BlockersCore.QUICK_HOUSE_COLS.length) players.value = String(BlockersCore.QUICK_HOUSE_COLS.length);
     limitComputers();
     syncTokens();
+    syncBlocks();
     buildChoicesBL();
   };
   if (boardSel) boardSel.addEventListener("change", syncBoard);
@@ -224,7 +242,7 @@ function initBlockersApp() {
   players.addEventListener("change", () => {
     // 5 and 6 players start with "One token in the goal" (task 111).
     if (parseInt(players.value, 10) >= 5) finishSel.value = "one";
-    limitComputers(); syncTokens(); buildChoicesBL();
+    limitComputers(); syncTokens(); syncBlocks(); buildChoicesBL();
   });
   computers.addEventListener("change", buildChoicesBL);
   limitComputers();
@@ -239,7 +257,7 @@ function initBlockersApp() {
     const tokens = Array.from(document.querySelectorAll("#bl-choices .bl-token-select")).map((sel) => parseInt(sel.value, 10));
     const houses = Array.from(document.querySelectorAll("#bl-choices .bl-house-select")).map((sel) => parseInt(sel.value, 10));
     saveFinishBL(finishSel.value);
-    startGameBL(parseInt(players.value, 10), parseInt(computers.value, 10), parseInt(document.getElementById("bl-level").value, 10), tokens, houses, firstSel.value, finishSel.value, parseInt(tokensSel.value, 10), boardChoiceBL());
+    startGameBL(parseInt(players.value, 10), parseInt(computers.value, 10), parseInt(document.getElementById("bl-level").value, 10), tokens, houses, firstSel.value, finishSel.value, parseInt(tokensSel.value, 10), boardChoiceBL(), blocksChoiceBL());
   });
   document.getElementById("bl-roll").addEventListener("click", humanRollBL);
   document.getElementById("bl-next").addEventListener("click", nextComputerBL);
@@ -251,6 +269,7 @@ function initBlockersApp() {
   if (saved && saved.state && !saved.state.gameOver && Array.isArray(saved.state.tokens)) {
     Object.assign(AppStateBL, { numPlayers: saved.numPlayers, computers: saved.computers, level: saved.level || 2, state: saved.state });
     if (boardSel) { boardSel.value = saved.state.board === "quick" ? "quick" : "normal"; syncBoard(); }
+    if (blocksSel) blocksSel.value = saved.state.blocks === "few" || saved.state.blocks === "many" ? saved.state.blocks : "normal";
     AppStateBL.started = true;
     AppStateBL.gameOver = false;
     AppStateBL.moves = AppStateBL.state.phase === "move" ? BlockersCore.legalMoves(AppStateBL.state) : [];
@@ -344,7 +363,7 @@ function renderChoicePicsBL() {
   });
 }
 
-function startGameBL(numPlayers, computers, level, tokenChoices, houseChoices, firstChoice, finish, tokenCount, board) {
+function startGameBL(numPlayers, computers, level, tokenChoices, houseChoices, firstChoice, finish, tokenCount, board, blocks) {
   const quick = board === "quick";
   const n = Math.max(2, Math.min(quick ? BlockersCore.QUICK_HOUSE_COLS.length : 6, numPlayers || 2));
   AppStateBL.numPlayers = n;
@@ -356,6 +375,7 @@ function startGameBL(numPlayers, computers, level, tokenChoices, houseChoices, f
   const first = BlockersCore.firstPlayer(firstChoice || "random", n, AppStateBL.computers ? humans : n);
   const opts = { houses, shapes, first, finish: finish === "all" ? "all" : "one", tokens: tokenCount === 5 && n <= 4 ? 5 : 3 };
   if (quick) opts.board = "quick";
+  if (blocks === "few" || blocks === "many") opts.blocks = blocks;
   AppStateBL.state = BlockersCore.createInitialState(n, opts);
   AppStateBL.started = true;
   AppStateBL.gameOver = false;

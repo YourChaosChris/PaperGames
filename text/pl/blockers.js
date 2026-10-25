@@ -19,6 +19,8 @@ Object.assign(STRINGS.pl, {
     bl_rules_players: "Od 2 do 6 graczy na jednym urządzeniu; każdego z nich może grać komputer (Łatwy, Średni lub Trudny). Pionki różnią się kształtem: koło, trójkąt, romb, gwiazda, pierścień (koło z białym środkiem) i krzyż.",
     bl_term_quick: "Szybka plansza",
     bl_rules_quick: "Przed grą wybierz „Plansza: Szybka”, aby partia była krótsza: własna, mniejsza plansza z czterema domkami, 9 krokami z każdego domku do mety, 4 pionkami na gracza i 6 klockami na starcie. Zamiast bezpiecznej dolnej połowy ma cztery pola odpoczynku (ośmiokąty z podwójną krawędzią): pionka na polu odpoczynku nie można odesłać, może tam stać tylko jeden pionek i nie wolno tam postawić klocka.",
+    bl_term_blocks: "Liczba klocków",
+    bl_rules_blocks: "Przed grą wybierz, ile klocków stoi na planszy na starcie: mało (4), normalnie (6) lub dużo (11). „Dużo” jest dostępne tylko na zwykłej planszy dla 2–4 graczy. Pozostałe zasady się nie zmieniają.",
     bl_rules_example_title: "Klocek na drodze",
     bl_rules_example: "Rysunek pokazuje pionek (koło) przed klockiem (czarny kwadrat). Z wynikiem 2 staje na klocku, bierze go i stawia na innym wolnym polu. Z wynikiem 3 nie może iść prosto, bo musiałby przejść przez klocek.",
     bl_history_title: "Historia gry Zablokowana droga",

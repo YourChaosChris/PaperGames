@@ -204,6 +204,17 @@ all parts back into one log in list order. The last line is exactly
   6 players only on the normal board, 6 shapes only for 5-6 players, six
   player rows readable and at least 28 px high at 360 and 600 px, the game
   back after a reload, "all" with 6 players uses 3 tokens.
+- `node tests/blockers-blocks.js` - no server or browser needed. Number of
+  blocks (task 123): "normal" unchanged (6, also without the option),
+  "few" 4, "many" 11 (normal board, 2 to 4 players only), none near the
+  goal with "all"; from every house the fewest blocks on a way to the goal
+  are equal and at most 3; save and load; computer games (`GAMES`,
+  default 200) per choice and number of players without a hang, game
+  lengths printed.
+- `node tests/blockers-blocks-ui.js` - needs the server and Playwright.
+  German page at 360 x 640: the choice "Sperrklötze" (Wenige/Normal/Viele),
+  "Viele" starts 11 blocks and is back after a reload, hidden on the quick
+  board, not available with 5 players, an old save loads with "Normal".
 - `node tests/blockers-ui.js` - needs a local server (default port 8000)
   and Playwright. Task 113: German and English page at 360 x 640 name
   the game "Wegesperre" / "Blocked Path" and show no old name; a new

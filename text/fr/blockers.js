@@ -19,6 +19,8 @@ Object.assign(STRINGS.fr, {
     bl_rules_players: "2 à 6 joueurs sur un appareil ; chacun peut être joué par l'ordinateur (Facile, Moyen ou Difficile). Les pions se distinguent par leur forme : cercle, triangle, losange, étoile, anneau (un cercle au centre blanc) et croix.",
     bl_term_quick: "Le plateau rapide",
     bl_rules_quick: "Choisis « Plateau : Rapide » avant la partie pour une partie plus courte : un plateau propre, plus petit, avec quatre maisons, 9 pas de chaque maison jusqu’à l’arrivée, 4 pions par joueur et 6 blocs au départ. À la place de la moitié basse protégée, il a quatre cases de repos (octogones à double bord) : un pion sur une case de repos ne peut pas être renvoyé, un seul pion peut s’y trouver et aucun bloc ne peut y être posé.",
+    bl_term_blocks: "Nombre de blocs",
+    bl_rules_blocks: "Avant la partie, choisis combien de blocs se trouvent sur le plateau au départ : peu (4), normal (6) ou beaucoup (11). « Beaucoup » n’existe que sur le plateau normal avec 2 à 4 joueurs. Toutes les autres règles restent les mêmes.",
     bl_rules_example_title: "Un bloc sur le chemin",
     bl_rules_example: "L'image montre un pion (cercle) devant un bloc (carré noir). Avec un 2, il s'arrête sur le bloc, le prend et le pose sur une autre case libre. Avec un 3, il ne peut pas continuer tout droit, car il devrait passer par-dessus le bloc.",
     bl_history_title: "L'histoire de Chemin barré",

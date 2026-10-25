@@ -19,6 +19,8 @@ Object.assign(STRINGS.it, {
     bl_rules_players: "Da 2 a 6 giocatori su un dispositivo; ognuno può essere giocato dal computer (Facile, Medio o Difficile). Le pedine si distinguono per la forma: cerchio, triangolo, rombo, stella, anello (un cerchio con il centro bianco) e croce.",
     bl_term_quick: "Il tabellone veloce",
     bl_rules_quick: "Scegli «Tabellone: Veloce» prima della partita per una partita più breve: un tabellone proprio, più piccolo, con quattro case, 9 passi da ogni casa al traguardo, 4 pedine per giocatore e 6 blocchi all’inizio. Al posto della metà inferiore sicura ha quattro caselle di riposo (ottagoni con doppio bordo): una pedina su una casella di riposo non può essere rimandata a casa, ci può stare una sola pedina e non ci si può mettere nessun blocco.",
+    bl_term_blocks: "Numero di blocchi",
+    bl_rules_blocks: "Prima della partita scegli quanti blocchi ci sono sul tabellone all’inizio: pochi (4), normale (6) o molti (11). «Molti» c’è solo sul tabellone normale con 2–4 giocatori. Tutte le altre regole restano uguali.",
     bl_rules_example_title: "Un blocco sulla strada",
     bl_rules_example: "L'immagine mostra una pedina (cerchio) davanti a un blocco (quadrato nero). Con un 2 si ferma sul blocco, lo prende e lo mette su un'altra casella libera. Con un 3 non può proseguire dritto, perché dovrebbe scavalcare il blocco.",
     bl_history_title: "La storia di Strada sbarrata",

@@ -31,6 +31,8 @@
 8 blockers-quick-ui.js
 40 blockers-six.js
 10 blockers-six-ui.js
+60 blockers-blocks.js
+8 blockers-blocks-ui.js
 1 blackjack-core.js
 83 poker-core.js
 148 skat-core.js

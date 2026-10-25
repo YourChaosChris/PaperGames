@@ -19,6 +19,8 @@ Object.assign(STRINGS.en, {
     bl_rules_players: "2 to 6 players on one device; any of them can be played by the computer (Easy, Medium or Hard). Tokens are told apart by their shape: circle, triangle, diamond, star, ring (a circle with a white middle) and cross.",
     bl_term_quick: "The quick board",
     bl_rules_quick: "Choose \"Board: Quick\" before the game for a shorter game: a smaller board of its own with four houses, 9 steps from every house to the goal, 4 tokens per player and 6 blocks at the start. Instead of the safe lower half it has four rest fields (octagons with a double outline): a token on a rest field cannot be sent back, only one token may stand there, and no block may be put there.",
+    bl_term_blocks: "Number of blocks",
+    bl_rules_blocks: "Before the game, choose how many blocks stand on the board at the start: few (4), normal (6) or many (11). \"Many\" is only available on the normal board with 2 to 4 players. All other rules stay the same.",
     bl_rules_example_title: "A block in the way",
     bl_rules_example: "The picture shows a token (circle) in front of a block (black square). With a 2 it lands on the block, takes it and puts it on another free field. With a 3 it cannot go straight on, because it would have to pass over the block.",
     bl_history_title: "The History of Blocked Path",

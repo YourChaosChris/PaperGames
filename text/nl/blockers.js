@@ -19,6 +19,8 @@ Object.assign(STRINGS.nl, {
     bl_rules_players: "2 tot 6 spelers op één apparaat; elk van hen kan door de computer worden gespeeld (Makkelijk, Gemiddeld of Moeilijk). De pionnen verschillen in vorm: cirkel, driehoek, ruit, ster, ring (een cirkel met een wit midden) en kruis.",
     bl_term_quick: "Het snelle bord",
     bl_rules_quick: "Kies vóór het spel \"Bord: Snel\" voor een kortere partij: een eigen, kleiner bord met vier huizen, 9 stappen van elk huis naar het doel, 4 pionnen per speler en 6 blokken aan het begin. In plaats van de veilige onderste helft heeft het vier rustvakjes (achthoeken met dubbele rand): een pion op een rustvakje kan niet teruggestuurd worden, er mag maar één pion staan en er mag geen blok op.",
+    bl_term_blocks: "Aantal blokken",
+    bl_rules_blocks: "Kies vóór het spel hoeveel blokken er aan het begin op het bord staan: weinig (4), normaal (6) of veel (11). \"Veel\" is er alleen op het normale bord met 2 tot 4 spelers. Alle andere regels blijven hetzelfde.",
     bl_rules_example_title: "Een blok in de weg",
     bl_rules_example: "De afbeelding toont een pion (cirkel) voor een blok (zwart vierkant). Met een 2 landt hij op het blok, pakt het en zet het op een ander vrij veld. Met een 3 kan hij niet rechtdoor, omdat hij dan over het blok zou moeten.",
     bl_history_title: "De geschiedenis van Wegversperring",

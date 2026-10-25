@@ -19,6 +19,8 @@ Object.assign(STRINGS.de, {
     bl_rules_players: "2 bis 6 Spieler an einem Gerät; jeder von ihnen kann vom Computer gespielt werden (Leicht, Mittel oder Schwer). Die Figuren unterscheiden sich durch ihre Form: Kreis, Dreieck, Raute, Stern, Ring (ein Kreis mit weißer Mitte) und Kreuz.",
     bl_term_quick: "Das schnelle Brett",
     bl_rules_quick: "Wähle vor dem Spiel „Brett: Schnell“ für eine kürzere Partie: ein eigenes, kleineres Brett mit vier Häusern, 9 Schritten von jedem Haus bis zum Ziel, 4 Figuren pro Person und 6 Sperrklötzen am Start. Statt der sicheren unteren Hälfte gibt es vier Ruhefelder (Achtecke mit doppeltem Rand): Eine Figur auf einem Ruhefeld kann nicht zurückgeschickt werden, dort darf nur eine Figur stehen, und kein Sperrklotz darf dorthin.",
+    bl_term_blocks: "Anzahl der Sperrklötze",
+    bl_rules_blocks: "Vor dem Spiel wählst du, wie viele Sperrklötze am Start auf dem Brett stehen: wenige (4), normal (6) oder viele (11). „Viele“ gibt es nur auf dem normalen Brett mit 2 bis 4 Spielern. Alle anderen Regeln bleiben gleich.",
     bl_rules_example_title: "Ein Sperrklotz im Weg",
     bl_rules_example: "Das Bild zeigt eine Figur (Kreis) vor einem Sperrklotz (schwarzes Quadrat). Mit einer 2 landet sie auf dem Sperrklotz, nimmt ihn und setzt ihn auf ein anderes freies Feld. Mit einer 3 kann sie nicht geradeaus weiter, weil sie über den Sperrklotz ziehen müsste.",
     bl_history_title: "Die Geschichte des Spiels Wegesperre",

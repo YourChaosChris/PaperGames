@@ -45,6 +45,12 @@
 // are the normal board, unchanged. The exported board numbers (MAP, ROWS,
 // fields, goal, ...) describe the normal board; boardOf(s) gives the board
 // of a state.
+//
+// Number of stones (task 123, s.blocks): "normal" - the stones of the map
+// (6 on both boards); "few" - 4 (the two lowest of the map stay off);
+// "many" - 11, normal board with 2 to 4 players only (the map's six and
+// MANY_EXTRA; otherwise "normal"). States
+// without `blocks` are "normal". After the start only s.stones counts.
 
 const BlockersCore = (function () {
   // The board on an 11 x 10 grid: "G" goal, "#" field, "B" field with a
@@ -77,6 +83,15 @@ const BlockersCore = (function () {
     "#.B.#.B.#",
     "#########"
   ];
+  // Stones left off with "few" (the two lowest of each map) and the five
+  // added with "many" (normal board only): [row, col].
+  const FEW_OFF = { normal: [[7, 3], [7, 7]], quick: [[5, 2], [5, 6]] };
+  const MANY_EXTRA = [[6, 1], [6, 9], [6, 5], [8, 2], [8, 8]];
+  const BLOCK_CHOICES = ["few", "normal", "many"];
+  // "many" only up to 4 players: with 5 or 6 players (30 tokens) and 11
+  // blocks the 38 fields a block may go to filled up, and a taken block
+  // found no free field.
+  const MANY_MAX_PLAYERS = 4;
   const QUICK_TOKENS = 4;
   const TOKENS = 5;              // tokens per player with "one" (and the default)
   const TOKEN_CHOICES = [3, 5];  // tokens per player with "all"
@@ -140,6 +155,21 @@ const BlockersCore = (function () {
   const QUICK = makeBoard(QUICK_MAP, QUICK_HOUSE_COLS, true);
   function boardOf(s) {
     return s && (s.board === "quick" || s === "quick") ? QUICK : NORMAL;
+  }
+
+  // Start stones of a board ("quick" or anything else for the normal
+  // board) with the number of stones `blocks` ("few", "normal", "many";
+  // "many" on the quick board is "normal").
+  function startStonesFor(board, blocks) {
+    const quick = board === "quick";
+    const b = quick ? QUICK : NORMAL;
+    const at = ([r, c]) => r * b.cols + c;
+    if (blocks === "few") {
+      const off = FEW_OFF[quick ? "quick" : "normal"].map(at);
+      return b.startStones.filter((f) => off.indexOf(f) === -1);
+    }
+    if (blocks === "many" && !quick) return b.startStones.concat(MANY_EXTRA.map(at));
+    return b.startStones.slice();
   }
 
   const ROWS = NORMAL.rows, COLS = NORMAL.cols;
@@ -221,9 +251,11 @@ const BlockersCore = (function () {
     const shapes = Array.isArray(o.shapes) && o.shapes.length === n ? o.shapes.slice() : assignShapes(n, []);
     const first = o.first >= 0 && o.first < n ? o.first : 0;
     const finish = o.finish === "all" ? "all" : "one";
-    const stones = b.startStones.filter((f) => finish !== "all" || b.distToGoal[f] > NEAR_GOAL);
+    const blocks = o.blocks === "few" || (o.blocks === "many" && !quick && n <= MANY_MAX_PLAYERS) ? o.blocks : "normal";
+    const stones = startStonesFor(quick ? "quick" : "normal", blocks).filter((f) => finish !== "all" || b.distToGoal[f] > NEAR_GOAL);
     const s = { numPlayers: n, tokens, stones, houses, shapes, first, finish, turn: first, roll: 0, phase: "roll", pendingStone: false, gameOver: false, winner: -1, turns: 0 };
     if (quick) s.board = "quick";
+    if (blocks !== "normal") s.blocks = blocks;
     return s;
   }
 
@@ -234,6 +266,7 @@ const BlockersCore = (function () {
     if (s.first !== undefined) c.first = s.first;
     if (s.finish) c.finish = s.finish;
     if (s.board === "quick") c.board = "quick";
+    if (s.blocks) c.blocks = s.blocks;
     return c;
   }
 
@@ -405,7 +438,7 @@ const BlockersCore = (function () {
 
   return {
     MAP, ROWS, COLS, TOKENS, TOKEN_CHOICES, SAFE_FROM_ROW, NEAR_GOAL, ARRIVED, isSafe, HOUSE_COLS, SHAPES, fields, goal, neighbours, distToGoal, startStones, isBottomRow: bottomRow,
-    QUICK_MAP, QUICK_TOKENS, QUICK_HOUSE_COLS, boardOf,
+    QUICK_MAP, QUICK_TOKENS, QUICK_HOUSE_COLS, boardOf, BLOCK_CHOICES, MANY_MAX_PLAYERS, startStonesFor,
     entryOf, assignHouses, assignShapes, firstPlayer, createInitialState, ownerAt, targetsFor, legalMoves, setRoll, applyMove, stoneTargets, placeStone,
     pass, tokenDistance, arrivedCount, ranking, rollDie: (rng) => 1 + Math.floor((rng || Math.random)() * 6)
   };
