@@ -1,5 +1,5 @@
 // blockers-core.js test
-// "Path Blockers": 500 computer games per number of players (2, 3, 4,
+// "Blocked Path" (blockers): 500 computer games per number of players (2, 3, 4,
 // levels mixed). Every game must end; no move may pass over a stone, use
 // a field twice or deviate from the roll; the number of stones stays the
 // same; every player keeps 5 tokens; stones never land in the bottom row
@@ -233,5 +233,5 @@ if (+lengths["all 3 tokens 4p"] > 185) fails.push("all, 3 tokens, 4 players too 
 
 fails.slice(0, 20).forEach((f) => console.log("FAIL " + f));
 console.log(JSON.stringify(stats));
-console.log("\n=== PATH BLOCKERS CORE: 1500 games, " + allGames + " games with game end all (500 per number of players, 3 and 5 tokens), 12000 fairness games (2000 per variant and number of players), " + houseTotal + " games with chosen house, token and starter (500 per house and number of players), " + fails.length + " failures ===");
+console.log("\n=== BLOCKED PATH CORE: 1500 games, " + allGames + " games with game end all (500 per number of players, 3 and 5 tokens), 12000 fairness games (2000 per variant and number of players), " + houseTotal + " games with chosen house, token and starter (500 per house and number of players), " + fails.length + " failures ===");
 process.exit(fails.length ? 1 : 0);

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v263",
+    date: "2026-10-25",
+    key: "release_v263",
+    text: "The dice race game with blocks on the paths has a new name: “Blocked Path”. Rules, saved games and statistics stay the same."
+  },
+  {
     version: "v262",
     date: "2026-10-25",
     key: "release_v262",

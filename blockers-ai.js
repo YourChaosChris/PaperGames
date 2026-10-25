@@ -1,5 +1,5 @@
 // blockers-ai.js
-// Computer players for "Path Blockers" (blockers-core.js).
+// Computer players for "Blocked Path" (blockers-core.js).
 //
 // Easy picks any move and puts a taken stone on any free field. Medium
 // scores moves by progress towards the goal, reaching the goal and

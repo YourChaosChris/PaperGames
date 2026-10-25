@@ -1,5 +1,5 @@
 /* blockers: rules used only by the blockers pages (loaded after base.css). */
-/* Path Blockers: the board is one SVG sized by script with a button
+/* Blocked Path (blockers): the board is one SVG sized by script with a button
    over every field; the houses are buttons below the board (dashed
    border = a token can come out, double border = chosen). */
 .bl-dice-row {

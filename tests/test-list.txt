@@ -23,6 +23,7 @@
 1 war-core.js
 1 snakesladders-core.js
 51 blockers-core.js
+8 blockers-ui.js
 1 blackjack-core.js
 83 poker-core.js
 148 skat-core.js

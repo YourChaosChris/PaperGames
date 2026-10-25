@@ -170,10 +170,17 @@ all parts back into one log in list order. The last line is exactly
   per board and finishing rule; every game must end with no token
   outside the board.
 - `node tests/blockers-core.js` - no server or browser needed. Plays
-  500 "Path Blockers" games each for 2, 3 and 4 players with mixed
+  500 "Blocked Path" games each for 2, 3 and 4 players with mixed
   computer levels and fails unless every move uses the full roll, steps
   only between joined fields, never visits a field twice or passes a
   stone, and every game ends with 6 stones and 5 tokens per player.
+- `node tests/blockers-ui.js` - needs a local server (default port 8000)
+  and Playwright. Task 113: German and English page at 360 x 640 name
+  the game "Wegesperre" / "Blocked Path" and show no old name; a new
+  game starts, rolls and moves and is saved under
+  `einkchess_save_blockers`; a save in the old format loads again, its
+  "put the block" phase asks with the new word, and the block goes back
+  on the board. No page error, no sideways scroll.
 - `node tests/blackjack-core.js` - no server or browser needed. Checks 20
   fixed "17 and 4" / "Blackjack" hands, then plays 10000 rounds per
   variant with a random player and fails unless the points are counted

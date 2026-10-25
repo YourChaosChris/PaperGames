@@ -1,5 +1,6 @@
 // blockers-core.js
-// "Path Blockers" (Sperrsteine), a dice race game with blocking stones.
+// "Blocked Path" (Wegesperre), a dice race game with blocks on the paths
+// (internally still called stones; ids and saved games use "blockers").
 // Dependency-free, no DOM. Board and rules are PaperGames' own.
 //
 // 2 to 4 players with 5 tokens each start in their houses below the board

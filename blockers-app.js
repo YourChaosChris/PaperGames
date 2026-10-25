@@ -1,5 +1,5 @@
 // blockers-app.js
-// Wires BlockersCore/BlockersAi ("Path Blockers" / Sperrsteine) to
+// Wires BlockersCore/BlockersAi ("Blocked Path" / Wegesperre) to
 // blockers.html.
 //
 // 2 to 4 players on one device, any of them played by the computer
@@ -334,7 +334,7 @@ function promptBL(prefix) {
   let text;
   if (isComputerBL(s.turn)) text = prefix && s.phase !== "roll" ? "" : (s.phase === "roll" && loadPaceBL() === "tap" ? who + "'s turn: tap Continue." : who + "'s turn.");
   else if (s.phase === "roll") text = you ? "Your turn: tap Roll." : who + "'s turn: tap Roll.";
-  else if (s.phase === "stone") text = "Tap a free field to put the stone on (not in the bottom row).";
+  else if (s.phase === "stone") text = "Tap a free field to put the block on (not in the bottom row).";
   else if (AppStateBL.selected >= 0) text = "Now tap one of the marked fields.";
   else text = pickTextBL(s.roll);
   setStatusBL((pre + text).trim());
@@ -422,7 +422,7 @@ function doMoveBL(move) {
     const left = r.state.tokens[p].length - BlockersCore.arrivedCount(r.state, p);
     parts.push(you ? "You bring a token into the goal: " + left + " still to go." : who + " brings a token into the goal: " + left + " still to go.");
   }
-  if (r.stone) parts.push(you ? "You take a stone." : who + " takes a stone and puts it on another field.");
+  if (r.stone) parts.push(you ? "You take a block." : who + " takes a block and puts it on another field.");
   saveBL();
   promptBL(parts.join(" "));
   continueBL();
@@ -480,7 +480,7 @@ function onFieldBL(field) {
   const s = AppStateBL.state;
   if (!humanCanActBL()) return;
   if (s.phase === "stone") {
-    if (BlockersCore.stoneTargets(s).indexOf(field) === -1) { setStatusBL("The stone can only go on a free field, not in the bottom row."); return; }
+    if (BlockersCore.stoneTargets(s).indexOf(field) === -1) { setStatusBL("The block can only go on a free field, not in the bottom row."); return; }
     doStoneBL(field);
     return;
   }
@@ -679,7 +679,7 @@ function renderBoardBL() {
     btn.style.height = u + "px";
     const parts = ["Row " + (Math.floor(f / C.COLS) + 1) + ", column " + ((f % C.COLS) + 1)];
     if (f === C.goal) parts.push("goal");
-    if (s.stones.indexOf(f) !== -1) parts.push("stone");
+    if (s.stones.indexOf(f) !== -1) parts.push("block");
     const o = C.ownerAt(s, f);
     if (o) parts.push(nameBL(o.player) === "You" ? "your token" : "token of " + nameBL(o.player));
     if (entries.has(f)) parts.push("house entry");

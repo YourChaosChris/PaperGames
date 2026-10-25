@@ -563,7 +563,7 @@ const SAMPLES = [
   "You are on field 17.",
   "Computer 1 is at the start.",
   "Ladder from field 2 to 23.",
-  // Path Blockers
+  // Blocked Path
   "You rolled 3. No move is possible with 3. Computer 1's turn.",
   "Computer 1 rolled 5. Computer 1 brings a token onto the board. Your turn: tap Roll.",
   "You rolled 4. Tap a token with a dashed ring (or the house button) to move it 4 fields.",
@@ -571,12 +571,12 @@ const SAMPLES = [
   "You move a token. You send a token of Computer 2 back to the house! Computer 1's turn.",
   "Computer 2 moves a token. Computer 2 sends one of your tokens back to the house! Player 1's turn: tap Roll.",
   "Player 2 moves a token. Player 2 sends a token of Player 1 back to the house! Player 3's turn: tap Roll.",
-  "You move a token. You take a stone. Tap a free field to put the stone on (not in the bottom row).",
-  "Computer 3 moves a token. Computer 3 takes a stone and puts it on another field. Computer 3's turn.",
+  "You move a token. You take a block. Tap a free field to put the block on (not in the bottom row).",
+  "Computer 3 moves a token. Computer 3 takes a block and puts it on another field. Computer 3's turn.",
   "You bring a token onto the board. You reach the goal and win!",
   "Computer 1 moves a token. Computer 1 reaches the goal and wins!",
   "This token cannot move 6 fields.",
-  "The stone can only go on a free field, not in the bottom row.",
+  "The block can only go on a free field, not in the bottom row.",
   "House: 5",
   // Blackjack / 17 and 4
   "Choose your bet and tap Deal.",
@@ -871,10 +871,10 @@ const ARIA_SAMPLES = [
   // Blackjack
   "Bet 10 chips",
   "face-down card",
-  // Path Blockers
+  // Blocked Path
   "Row 10, column 3, your token, house entry",
   "Row 1, column 6, goal, possible",
-  "Row 5, column 4, stone, possible",
+  "Row 5, column 4, block, possible",
   "Row 4, column 5, token of Computer 2",
   "Computer 1, diamond, House: 4",
   "You, circle, House: 5, can move",
