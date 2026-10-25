@@ -188,11 +188,25 @@ function initPairsApp() {
     boardContainer.addEventListener("click", (evt) => {
       const s = AppStatePairs.state;
       if (!s || !s.pendingMiss || s.gameOver) return;
+      if (evt.target.closest && evt.target.closest(".howto-bar, .howto")) return;
       evt.stopPropagation();
       AppStatePairs.state = PairsCore.resolveMiss(s);
       afterChangePairs();
     }, true);
   }
+
+  // Picture explanation (task 127): a hidden card as a hatched back, a
+  // turned card as a framed shape.
+  const pic = (body) => Howto.box('<svg class="pairs-howto-pic" viewBox="0 0 40 40" width="34" height="34" aria-hidden="true" focusable="false">' + body + "</svg>");
+  const BACK = pic('<path d="M4 12L12 4M4 22L22 4M4 32L32 4M8 36L36 8M18 36L36 18M28 36L36 28" stroke="#141413" stroke-width="2.5" stroke-linecap="round"/>');
+  const RING = pic('<circle cx="20" cy="20" r="13" fill="none" stroke="#141413" stroke-width="4"/>');
+  const TRI = pic('<path d="M20 6L34 33H6Z" fill="#141413"/>');
+  Howto.init({ slug: "pairs", actions: ["pairs-board"], steps: [
+    { pics: BACK + BACK + Howto.arrow() + RING + TRI, key: "pairs_howto_1" },
+    { pics: RING + RING + Howto.arrow() + Howto.tile("", "mark", 36), key: "pairs_howto_2" },
+    { pics: RING + TRI + Howto.arrow() + BACK + BACK, key: "pairs_howto_3" },
+    { pics: Howto.tile("3", "", 36) + Howto.sign("&gt;") + Howto.tile("2", "", 36), key: "pairs_howto_4" }
+  ] });
 
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(PAIRS_SAVE_KEY) : null;
   if (saved && saved.state && Array.isArray(saved.state.cards) && !saved.state.gameOver) {

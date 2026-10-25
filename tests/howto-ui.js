@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Picture explanation in the browser (task 116) for linkpairs, oldmaid and
-// snakesladders, German page at 360 px: on the first visit the panel is
+// snakesladders, and (task 127) war and pairs, German page at 360 px: on the first visit the panel is
 // open with four steps, the first game action hides it, the button opens
 // it again; no sideways scrolling and the panel fits on one screen.
 const { chromium } = require("playwright");
@@ -11,6 +11,9 @@ const GAMES = [
   { slug: "linkpairs", start: "#start-linkpairs-game", act: async (p) => p.click("#linkpairs-board .linkpairs-cell >> nth=0").catch(() => p.click("#linkpairs-board")) },
   { slug: "oldmaid", start: "#start-oldmaid-game", act: async (p) => { await p.waitForSelector("#oldmaid-from button", { timeout: 10000 }); await p.click("#oldmaid-from button >> nth=0"); } },
   { slug: "snakesladders", start: "#start-sl-game", before: (p) => p.selectOption("#sl-computers", "0"), act: async (p) => { await p.waitForSelector("#sl-roll:not(.hidden)", { timeout: 10000 }); await p.click("#sl-roll"); } },
+  // Task 127.
+  { slug: "war", start: "#start-war-game", act: (p) => p.click("#war-own-pile") },
+  { slug: "pairs", start: "#start-pairs-game", before: (p) => p.selectOption("#pairs-opponent", "solo"), act: async (p) => { await p.waitForSelector("#pairs-board .pairs-card", { timeout: 10000 }); await p.click("#pairs-board .pairs-card >> nth=0"); } },
 ];
 const panelOpen = (p) => p.evaluate(() => { const h = document.getElementById("howto"); return !!h && !h.classList.contains("hidden") && h.offsetHeight > 0; });
 

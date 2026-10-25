@@ -48,6 +48,16 @@ function initWarApp() {
   }
   document.getElementById("start-war-game").addEventListener("click", () => startGameWar(modeSelect ? modeSelect.value : "short"));
   document.getElementById("war-own-pile").addEventListener("click", playRoundWar);
+  // Picture explanation (task 127): cards as framed numbers, a hidden
+  // card as a hatched back.
+  const C = (rank) => Howto.box('<svg class="war-howto-pic" viewBox="0 0 40 40" width="34" height="34" aria-hidden="true" focusable="false"><text x="20" y="28" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="20" fill="#141413">' + rank + "</text></svg>");
+  const BACK = Howto.box('<svg class="war-howto-pic" viewBox="0 0 40 40" width="34" height="34" aria-hidden="true" focusable="false"><path d="M4 12L12 4M4 22L22 4M4 32L32 4M8 36L36 8M18 36L36 18M28 36L36 28" stroke="#141413" stroke-width="2.5" stroke-linecap="round"/></svg>');
+  Howto.init({ slug: "war", actions: ["war-own-pile"], steps: [
+    { pics: BACK + Howto.arrow() + C(9), key: "war_howto_1" },
+    { pics: C(9) + Howto.sign("&gt;") + C(7) + Howto.arrow() + Howto.tile("", "mark", 36), key: "war_howto_2" },
+    { pics: C(8) + Howto.sign("=") + C(8), key: "war_howto_3" },
+    { pics: BACK + C(10) + Howto.sign("&gt;") + BACK + C(7), key: "war_howto_4" }
+  ] });
   if (typeof I18n !== "undefined" && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateWar.state) renderWar(); });
   }
