@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v265",
+    date: "2026-10-25",
+    key: "release_v265",
+    text: "Blocked Path: choose few, normal or many blocks. Small buttons are now big enough to tap, and three more games have a large board. Picture help for War and Pairs. Sternjagd names who starts. Ludo texts and 15 history pages checked and corrected."
+  },
+  {
     version: "v264",
     date: "2026-10-25",
     key: "release_v264",
