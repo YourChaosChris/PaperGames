@@ -19,6 +19,11 @@
 //     includes the 3 cells across the tip of every arm, so each step
 //     on the board is exactly one die pip.
 //
+// Six-arm board (task 109, "6 players"): the same rules on a hexagon with
+// six arms, drawn with absolutely placed cells instead of the grid - see
+// buildLudoBoard6DOM() below. Each arm has the same 3 x 6 cells as an arm
+// of the cross, turned by 60 degrees per color.
+//
 // Turn flow: whoever's turn it is presses "Roll", then either clicks a
 // highlighted movable token (or its home base, to bring a new token onto
 // the board on a 6) or, with no legal move, the turn passes automatically
@@ -47,6 +52,7 @@ const LUDO_GRID_SIZE = 15;
 
 const AppStateLudo = {
   mode: "vs-ai",        // "vs-ai" | "hotseat"
+  board: 4,             // 4 = classic cross, 6 = six-arm board (state.board)
   numPlayers: 4,
   activeColors: LudoCore.COLOR_ORDER.slice(),
   humanColor: "red",    // ignored in hotseat mode
@@ -72,8 +78,10 @@ const LUDO_SAVE_KEY = "einkchess_save_ludo";
 // four colors as nearly the same grey: a filled circle, an open circle,
 // a filled triangle and an open square. Names carry the shape as well, so
 // no text relies on the color alone.
+// The six-arm board adds purple, a filled diamond, and orange, a filled
+// star - two more outlines that differ from the four above at a glance.
 function ludoColorName(color) {
-  const names = { red: "Red \u25CF", green: "Green \u25CB", yellow: "Yellow \u25B2", blue: "Blue \u25A1" };
+  const names = { red: "Red \u25CF", green: "Green \u25CB", yellow: "Yellow \u25B2", blue: "Blue \u25A1", purple: "Purple \u25C6", orange: "Orange \u2605" };
   return names[color] || color;
 }
 
@@ -81,8 +89,15 @@ const LUDO_SHAPE_MARKUP = {
   red: '<circle cx="50" cy="50" r="44" fill="currentColor"/>',
   green: '<circle cx="50" cy="50" r="37" fill="#fff" stroke="currentColor" stroke-width="16"/>',
   yellow: '<polygon points="50,4 97,92 3,92" fill="currentColor"/>',
-  blue: '<rect x="11" y="11" width="78" height="78" fill="#fff" stroke="currentColor" stroke-width="16"/>'
+  blue: '<rect x="11" y="11" width="78" height="78" fill="#fff" stroke="currentColor" stroke-width="16"/>',
+  purple: '<polygon points="50,2 98,50 50,98 2,50" fill="currentColor"/>',
+  orange: '<polygon points="50,3 62,37 98,37 69,59 80,95 50,73 20,95 31,59 2,37 38,37" fill="currentColor"/>'
 };
+
+// The track numbers of the board being played.
+function ludoGeom() {
+  return LudoCore.geometry(AppStateLudo.state || AppStateLudo.board);
+}
 
 // The shape of a color as inline SVG in the text colour (same idea as
 // bullsandcowsSymbolSvg in bullsandcows-app.js).
@@ -166,8 +181,8 @@ function pushUndoSnapshotLudo() {
   });
 }
 
-function pickActiveColors(numPlayers, startColor) {
-  const order = LudoCore.COLOR_ORDER;
+function pickActiveColors(numPlayers, startColor, board) {
+  const order = LudoCore.geometry(board).colors;
   const startIdx = Math.max(0, order.indexOf(startColor));
   const colors = [];
   for (let i = 0; i < numPlayers; i++) colors.push(order[(startIdx + i) % order.length]);
@@ -184,6 +199,7 @@ function initLudoApp() {
   const colorChoice = document.getElementById("ludo-color-choice");
   const levelInline = document.getElementById("ludo-level-inline");
   const numPlayersSelect = document.getElementById("ludo-num-players");
+  const boardSelect = document.getElementById("ludo-board-size");
   const startGameBtn = document.getElementById("start-ludo-game");
   const resignBtn = document.getElementById("resign-button");
   const rollBtn = document.getElementById("ludo-roll-button");
@@ -236,18 +252,19 @@ function initLudoApp() {
     });
   }
 
-  function startNewGameLudo(mode, numPlayers, humanColor, level) {
+  function startNewGameLudo(mode, numPlayers, humanColor, level, board) {
     const activeColors = mode === "hotseat"
-      ? LudoCore.COLOR_ORDER.slice(0, numPlayers)
-      : pickActiveColors(numPlayers, humanColor);
+      ? LudoCore.geometry(board).colors.slice(0, numPlayers)
+      : pickActiveColors(numPlayers, humanColor, board);
 
     AppStateLudo.mode = mode;
+    AppStateLudo.board = board === 6 ? 6 : 4;
     AppStateLudo.numPlayers = numPlayers;
     AppStateLudo.activeColors = activeColors;
     AppStateLudo.humanColor = mode === "vs-ai" ? humanColor : null;
     AppStateLudo.aiColors = mode === "vs-ai" ? activeColors.filter((c) => c !== humanColor) : [];
     AppStateLudo.aiLevel = level;
-    AppStateLudo.state = LudoCore.createInitialState(activeColors);
+    AppStateLudo.state = LudoCore.createInitialState(activeColors, AppStateLudo.board === 6 ? { board: 6 } : undefined);
     AppStateLudo.roll = null;
     AppStateLudo.legalMoves = [];
     AppStateLudo.sixStreak = 0;
@@ -271,17 +288,49 @@ function initLudoApp() {
     }
   }
 
+  // Board choice: the classic board takes 2 to 4 players and the four
+  // colors, the six-arm board 2 to 6 players and all six colors. The
+  // remembered settings (quick-rules.js) are written without change
+  // events, so this also runs once more after the page has loaded.
+  function syncBoardChoiceLudo() {
+    const board = boardSelect && boardSelect.value === "6" ? 6 : 4;
+    if (numPlayersSelect) {
+      Array.prototype.forEach.call(numPlayersSelect.options, (o) => {
+        o.disabled = board === 4 && parseInt(o.value, 10) > 4;
+      });
+      const n = parseInt(numPlayersSelect.value, 10);
+      if (!(n >= 2) || (board === 4 && n > 4)) numPlayersSelect.value = "4";
+    }
+    document.querySelectorAll(".ludo-color-six").forEach((label) => {
+      label.classList.toggle("hidden", board !== 6);
+      const input = label.querySelector("input");
+      if (board !== 6 && input && input.checked) {
+        input.checked = false;
+        const red = document.querySelector("input[name='ludo-color'][value='red']");
+        if (red) red.checked = true;
+      }
+    });
+    return board;
+  }
+  if (boardSelect) boardSelect.addEventListener("change", syncBoardChoiceLudo);
+  syncBoardChoiceLudo();
+  window.addEventListener("load", syncBoardChoiceLudo);
+
   if (startGameBtn) {
     startGameBtn.addEventListener("click", () => {
+      const board = syncBoardChoiceLudo();
       const numPlayers = numPlayersSelect ? parseInt(numPlayersSelect.value, 10) : 4;
       const level = levelInline ? parseInt(levelInline.value, 10) : 2;
       const colorInput = document.querySelector("input[name='ludo-color']:checked");
-      const chosenColor = colorInput ? colorInput.value : "red";
-      // The colors on offer come from the page's own radio group.
-      const colorOptions = Array.prototype.map.call(document.querySelectorAll("input[name='ludo-color']"), (el) => el.value);
+      const colorsOnBoard = LudoCore.geometry(board).colors;
+      const chosenColor = colorInput && colorsOnBoard.indexOf(colorInput.value) !== -1 ? colorInput.value : "red";
+      // The colors on offer come from the page's own radio group (the
+      // six-arm colors only on that board).
+      const colorOptions = Array.prototype.map.call(document.querySelectorAll("input[name='ludo-color']"), (el) => el.value)
+        .filter((c) => colorsOnBoard.indexOf(c) !== -1);
       const humanColor = pendingMode === "vs-ai" ? RandomStart.choose(chosenColor, colorOptions) : chosenColor;
       setActiveModeButtonLudo(pendingMode);
-      startNewGameLudo(pendingMode, numPlayers, humanColor, level);
+      startNewGameLudo(pendingMode, numPlayers, humanColor, level, board);
       if (pendingMode === "vs-ai") {
         const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
         setStatusLudo("offline-ludo-status",
@@ -320,6 +369,8 @@ function initLudoApp() {
     AppStateLudo.aiColors = savedGame.aiColors || [];
     AppStateLudo.aiLevel = savedGame.aiLevel;
     AppStateLudo.state = savedGame.state;
+    AppStateLudo.board = savedGame.state.board === 6 ? 6 : 4;
+    if (boardSelect) { boardSelect.value = String(AppStateLudo.board); syncBoardChoiceLudo(); }
     AppStateLudo.roll = savedGame.roll;
     AppStateLudo.sixStreak = savedGame.sixStreak || 0;
     AppStateLudo.legalMoves = savedGame.roll !== null
@@ -601,6 +652,17 @@ function buildLudoBoardDOM() {
   const boardEl = document.getElementById("ludo-board");
   if (!boardEl) return;
   boardEl.innerHTML = "";
+  boardEl.classList.toggle("ludo-board-6", AppStateLudo.board === 6);
+  if (AppStateLudo.board === 6) {
+    boardEl.style.gridTemplateColumns = "";
+    boardEl.style.gridTemplateRows = "";
+    buildLudoBoard6DOM(boardEl);
+    ensureLudoBoardSquare();
+    if (window.requestAnimationFrame) window.requestAnimationFrame(ensureLudoBoardSquare);
+    else setTimeout(ensureLudoBoardSquare, 0);
+    ensureLudoResizeHandler();
+    return;
+  }
   boardEl.style.gridTemplateColumns = "repeat(" + LUDO_GRID_SIZE + ", 1fr)";
   boardEl.style.gridTemplateRows = "repeat(" + LUDO_GRID_SIZE + ", 1fr)";
 
@@ -708,6 +770,118 @@ function buildLudoBoardDOM() {
   ensureLudoResizeHandler();
 }
 
+// The six-arm board. Lengths are in cells; the board is LUDO6_SIZE cells
+// wide and high, its centre at the middle. A regular hexagon with sides of
+// 3 cells sits in the middle; on each side stands an arm of 3 x 6 cells,
+// the arm of color j pointing at LUDO6_ANGLE[j] degrees (clockwise from
+// straight up). Inside an arm, cell (i, col): i = 0 next to the hexagon
+// up to 5 at the tip; col 0 on the counter-clockwise side, 1 in the
+// middle (the color's home column, with the tip square), 2 on the
+// clockwise side. Track square 13 * k + t, as on the cross:
+//   t = 0..4   arm k,     col 2, i = 4 - t  (the way in, from the start)
+//   t = 5..10  arm k + 1, col 0, i = t - 5  (the way out)
+//   t = 11     arm k + 1, col 1, i = 5      (the tip)
+//   t = 12     arm k + 1, col 2, i = 5
+// so square 13 * j is color j's start, as LudoCore expects. The home bases
+// are round, in the gap after each color's arm.
+const LUDO6_SIZE = 17.6;
+const LUDO6_APOTHEM = 1.5 * Math.sqrt(3);
+const LUDO6_ANGLE = [300, 0, 60, 120, 180, 240];
+
+function ludo6Point(arm, i, col) {
+  const a = LUDO6_ANGLE[arm] * Math.PI / 180;
+  const out = LUDO6_APOTHEM + i + 0.5;
+  const side = col - 1;
+  return { x: out * Math.sin(a) + side * Math.cos(a), y: -out * Math.cos(a) + side * Math.sin(a), angle: LUDO6_ANGLE[arm] };
+}
+
+function ludo6TrackCell(abs) {
+  const k = Math.floor(abs / 13), t = abs % 13;
+  if (t <= 4) return ludo6Point(k, 4 - t, 2);
+  const next = (k + 1) % 6;
+  if (t <= 10) return ludo6Point(next, t - 5, 0);
+  return ludo6Point(next, 5, t === 11 ? 1 : 2);
+}
+
+function ludo6Place(el, pt, size) {
+  const unit = 100 / LUDO6_SIZE;
+  const w = (size || 1) * unit;
+  el.style.width = w + "%";
+  el.style.height = w + "%";
+  el.style.left = (50 + pt.x * unit - w / 2) + "%";
+  el.style.top = (50 + pt.y * unit - w / 2) + "%";
+  if (pt.angle) el.style.transform = "rotate(" + pt.angle + "deg)";
+}
+
+function ludo6Cell(className, pt) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "ludo-cell " + className;
+  ludo6Place(btn, pt);
+  const tokensWrap = document.createElement("span");
+  tokensWrap.className = "ludo-cell-tokens";
+  // Tokens stand upright whatever the arm's direction.
+  if (pt.angle) tokensWrap.style.transform = "translate(-50%, -50%) rotate(" + (-pt.angle) + "deg)";
+  btn.appendChild(tokensWrap);
+  return btn;
+}
+
+function buildLudoBoard6DOM(boardEl) {
+  const g = LudoCore.geometry(6);
+  // The middle: a hexagon with lines to its corners and each color's
+  // shape at the end of its home column.
+  const unit = 100 / LUDO6_SIZE;
+  const pts = [];
+  for (let v = 0; v < 6; v++) {
+    const a = (LUDO6_ANGLE[v] + 30) * Math.PI / 180;
+    pts.push([50 + 3 * unit * Math.sin(a), 50 - 3 * unit * Math.cos(a)]);
+  }
+  let hub = '<polygon points="' + pts.map((q) => q[0].toFixed(2) + "," + q[1].toFixed(2)).join(" ") + '" fill="#fff" stroke="currentColor" stroke-width="0.4"/>';
+  pts.forEach((q) => { hub += '<line x1="50" y1="50" x2="' + q[0].toFixed(2) + '" y2="' + q[1].toFixed(2) + '" stroke="currentColor" stroke-width="0.25"/>'; });
+  g.colors.forEach((color, j) => {
+    const a = LUDO6_ANGLE[j] * Math.PI / 180;
+    const cx = 50 + 1.75 * unit * Math.sin(a), cy = 50 - 1.75 * unit * Math.cos(a), r = 0.55 * unit;
+    hub += '<svg x="' + (cx - r).toFixed(2) + '" y="' + (cy - r).toFixed(2) + '" width="' + (2 * r).toFixed(2) + '" height="' + (2 * r).toFixed(2) + '" viewBox="0 0 100 100">' + LUDO_SHAPE_MARKUP[color] + "</svg>";
+  });
+  const deco = document.createElement("div");
+  deco.className = "ludo6-hub";
+  deco.innerHTML = '<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">' + hub + "</svg>";
+  boardEl.appendChild(deco);
+
+  for (let abs = 0; abs < g.trackLength; abs++) {
+    const btn = ludo6Cell("ludo-cell-track", ludo6TrackCell(abs));
+    btn.dataset.trackIndex = abs;
+    if (LudoCore.isSafeAbs(abs, 6)) btn.classList.add("ludo-cell-safe");
+    btn.addEventListener("click", () => onLudoTrackCellClick(abs));
+    boardEl.appendChild(btn);
+  }
+  g.colors.forEach((color, j) => {
+    for (let step = 0; step < LudoCore.HOME_COLUMN_LENGTH; step++) {
+      const btn = ludo6Cell("ludo-cell-home-column ludo-cell-home-column-" + color, ludo6Point(j, 4 - step, 1));
+      btn.dataset.color = color;
+      btn.dataset.homeStep = step;
+      btn.addEventListener("click", () => onLudoHomeColumnCellClick(color, step));
+      boardEl.appendChild(btn);
+    }
+    // The home base: in the gap between this arm and the next one.
+    const a = (LUDO6_ANGLE[j] + 30) * Math.PI / 180;
+    const base = document.createElement("div");
+    base.className = "ludo-home-base ludo-home-base-" + color;
+    base.dataset.color = color;
+    ludo6Place(base, { x: 6.8 * Math.sin(a), y: -6.8 * Math.cos(a) }, 3.4);
+    for (let i = 0; i < LudoCore.PIECES_PER_COLOR; i++) {
+      const slot = document.createElement("button");
+      slot.type = "button";
+      slot.className = "ludo-home-slot ludo-home-slot-" + color;
+      slot.dataset.color = color;
+      slot.dataset.slot = i;
+      slot.addEventListener("click", () => onLudoHomeBaseClick(color));
+      base.appendChild(slot);
+    }
+    boardEl.appendChild(base);
+  });
+}
+
 let einkLudoResizeHandlerAttached = false;
 let einkLudoResizeTimeoutId = null;
 
@@ -735,14 +909,15 @@ function onLudoTrackCellClick(absIndex) {
   if (AppStateLudo.gameOver || !AppStateLudo.started) return;
   const color = currentColorLudo();
   if (isAiColorLudo(color) || AppStateLudo.roll === null) return;
-  const tokenIndex = findOwnTokenIndexAt(color, "active", (rel) => rel <= LudoCore.LAST_TRACK_REL && LudoCore.absTrackIndex(color, rel) === absIndex);
+  const g = ludoGeom();
+  const tokenIndex = findOwnTokenIndexAt(color, "active", (rel) => rel <= g.lastTrackRel && LudoCore.absTrackIndex(color, rel, AppStateLudo.state) === absIndex);
   if (tokenIndex === -1) return;
   attemptLudoMoveFrom(tokenIndex);
 }
 
 function onLudoHomeColumnCellClick(color, step) {
   if (color !== currentColorLudo()) return;
-  const rel = LudoCore.MAIN_TRACK_STEPS + step;
+  const rel = ludoGeom().mainTrackSteps + step;
   const tokenIndex = findOwnTokenIndexAt(color, "active", (r) => r === rel);
   if (tokenIndex === -1) return;
   attemptLudoMoveFrom(tokenIndex);
@@ -778,11 +953,12 @@ function ludoPositionElement(boardEl, color, state, rel, tokenIndex) {
     return boardEl.querySelector(".ludo-home-slot-" + color + "[data-slot='" + tokenIndex + "']");
   }
   if (state !== "active") return null;
-  if (rel <= LudoCore.LAST_TRACK_REL) {
-    const abs = LudoCore.absTrackIndex(color, rel);
+  const g = ludoGeom();
+  if (rel <= g.lastTrackRel) {
+    const abs = LudoCore.absTrackIndex(color, rel, AppStateLudo.state);
     return boardEl.querySelector(".ludo-cell-track[data-track-index='" + abs + "']");
   }
-  const step = rel - LudoCore.MAIN_TRACK_STEPS;
+  const step = rel - g.mainTrackSteps;
   return boardEl.querySelector(".ludo-cell-home-column-" + color + "[data-home-step='" + step + "']");
 }
 
@@ -813,7 +989,8 @@ function updateLudoBoard() {
     el.innerHTML = "";
   });
 
-  LudoCore.COLOR_ORDER.forEach((color) => {
+  const g = ludoGeom();
+  g.colors.forEach((color) => {
     if (state.activeColors.indexOf(color) === -1) return;
     const tokens = state.tokens[color];
     tokens.forEach((token, tokenIndex) => {
@@ -827,11 +1004,11 @@ function updateLudoBoard() {
         }
       } else if (token.state === "active") {
         let cellEl;
-        if (token.rel <= LudoCore.LAST_TRACK_REL) {
-          const abs = LudoCore.absTrackIndex(color, token.rel);
+        if (token.rel <= g.lastTrackRel) {
+          const abs = LudoCore.absTrackIndex(color, token.rel, state);
           cellEl = boardEl.querySelector(".ludo-cell-track[data-track-index='" + abs + "']");
         } else {
-          const step = token.rel - LudoCore.MAIN_TRACK_STEPS;
+          const step = token.rel - g.mainTrackSteps;
           cellEl = boardEl.querySelector(".ludo-cell-home-column-" + color + "[data-home-step='" + step + "']");
         }
         if (cellEl) {
@@ -865,7 +1042,7 @@ function updateLudoAriaLabels() {
   boardEl.querySelectorAll(".ludo-cell-track").forEach((el) => {
     const idx = parseInt(el.dataset.trackIndex, 10);
     let label = "Track square " + (idx + 1);
-    if (LudoCore.isSafeAbs(idx)) label += ", safe square";
+    if (LudoCore.isSafeAbs(idx, AppStateLudo.state)) label += ", safe square";
     const count = el.querySelectorAll(".ludo-token").length;
     if (count) label += ", " + count + " token" + (count > 1 ? "s" : "");
     if (el.classList.contains("ludo-cell-movable")) label += ", movable";

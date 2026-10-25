@@ -24,6 +24,8 @@
 1 war-core.js
 1 snakesladders-core.js
 51 blockers-core.js
+12 ludo-core.js
+20 ludo-ui.js
 8 blockers-ui.js
 1 blackjack-core.js
 83 poker-core.js

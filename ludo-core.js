@@ -5,7 +5,8 @@
 // is pure board/turn state plus legal-move generation, shared by
 // ludo-app.js (human interaction) and ludo-ai.js (computer players).
 //
-// Board model: up to 4 colors (red, green, yellow, blue), each with 4
+// Board model: up to 4 colors (red, green, yellow, blue) - 6 on the
+// six-arm board, plus purple and orange - each with 4
 // tokens. Rather than storing pixel/grid coordinates here (that's
 // ludo-app.js's job for rendering the cross-shaped board), each color's
 // journey is tracked as a single "relative position" number:
@@ -26,6 +27,16 @@
 // Colors are spaced 13 squares apart around the 52-square track (52 / 4
 // colors = 13), in clockwise order red -> green -> yellow -> blue, which
 // is also ludo-app.js's rendering order around the cross-shaped board.
+//
+// Six-player board (task 109): the same rules on a board with six arms.
+// Every arm still has 13 track squares, so the track has 6 x 13 = 78
+// squares, the colors start 13 apart (0, 13, 26, 39, 52, 65), a token
+// walks 77 squares of shared track before its 5-square home column and
+// reaches the finish at rel 82. A state for this board carries
+// `board: 6`; a state without `board` (every classic game and every
+// save from before) is the classic 4-arm board, unchanged. The exported
+// constants below (TRACK_LENGTH, START_INDEX, ...) describe the classic
+// board; geometry(board) gives the numbers for either board.
 
 const LudoCore = (function () {
   const COLOR_ORDER = ["red", "green", "yellow", "blue"];
@@ -41,38 +52,70 @@ const LudoCore = (function () {
   // The traditional "star" safe square on each arm, 8 squares ahead of
   // that color's own start square.
   const STAR_OFFSET = 8;
+  const SQUARES_PER_ARM = 13;
+  // The six colors in clockwise order around the six-arm board.
+  const COLOR_ORDER_6 = ["red", "green", "yellow", "blue", "purple", "orange"];
 
-  const SAFE_SQUARES = (function () {
-    const set = {};
-    COLOR_ORDER.forEach((c) => {
-      set[START_INDEX[c]] = true;
-      set[(START_INDEX[c] + STAR_OFFSET) % TRACK_LENGTH] = true;
+  // Track numbers for a board with 4 or 6 arms (anything else counts as
+  // the classic board).
+  const GEOMETRY = {};
+  [4, 6].forEach((arms) => {
+    const colors = arms === 6 ? COLOR_ORDER_6 : COLOR_ORDER;
+    const trackLength = arms * SQUARES_PER_ARM;
+    const start = {};
+    const safe = {};
+    colors.forEach((c, i) => {
+      start[c] = i * SQUARES_PER_ARM;
+      safe[start[c]] = true;
+      safe[(start[c] + STAR_OFFSET) % trackLength] = true;
     });
-    return set;
-  })();
+    const mainTrackSteps = trackLength - 1;
+    GEOMETRY[arms] = {
+      arms,
+      colors,
+      trackLength,
+      mainTrackSteps,
+      lastTrackRel: mainTrackSteps - 1,
+      finishRel: mainTrackSteps + HOME_COLUMN_LENGTH,
+      start,
+      safe
+    };
+  });
 
-  function isSafeAbs(absIndex) {
-    return !!SAFE_SQUARES[absIndex];
+  // `board` is 4, 6 or a game state (its `board` field, missing = 4).
+  function geometry(board) {
+    const arms = board && typeof board === "object" ? board.board : board;
+    return GEOMETRY[arms === 6 ? 6 : 4];
   }
 
-  function absTrackIndex(color, rel) {
-    return (START_INDEX[color] + rel) % TRACK_LENGTH;
+  function isSafeAbs(absIndex, board) {
+    return !!geometry(board).safe[absIndex];
   }
 
-  function createInitialState(activeColors) {
-    const colors = (activeColors && activeColors.length ? activeColors : COLOR_ORDER).slice();
+  function absTrackIndex(color, rel, board) {
+    const g = geometry(board);
+    return (g.start[color] + rel) % g.trackLength;
+  }
+
+  // options.board: 6 for the six-arm board; the classic state has no
+  // `board` field at all, exactly as before.
+  function createInitialState(activeColors, options) {
+    const board = options && options.board === 6 ? 6 : 4;
+    const colors = (activeColors && activeColors.length ? activeColors : geometry(board).colors).slice();
     const tokens = {};
     colors.forEach((c) => {
       tokens[c] = [];
       for (let i = 0; i < PIECES_PER_COLOR; i++) tokens[c].push({ state: "home", rel: null });
     });
-    return {
+    const state = {
       activeColors: colors,
       tokens,
       turnIndex: 0,
       gameOver: false,
       winner: null
     };
+    if (board === 6) state.board = 6;
+    return state;
   }
 
   function cloneState(state) {
@@ -80,13 +123,15 @@ const LudoCore = (function () {
     state.activeColors.forEach((c) => {
       tokens[c] = state.tokens[c].map((t) => ({ state: t.state, rel: t.rel }));
     });
-    return {
+    const copy = {
       activeColors: state.activeColors.slice(),
       tokens,
       turnIndex: state.turnIndex,
       gameOver: state.gameOver,
       winner: state.winner
     };
+    if (state.board === 6) copy.board = 6;
+    return copy;
   }
 
   function currentColor(state) {
@@ -103,11 +148,13 @@ const LudoCore = (function () {
   }
 
   // How many of `color`'s own active tokens (still on the shared track,
-  // rel <= 50) currently sit on absolute square `absIndex`.
+  // rel <= 50, or <= 76 on the six-arm board) currently sit on absolute
+  // square `absIndex`.
   function colorCountAtAbs(state, color, absIndex) {
+    const g = geometry(state);
     let count = 0;
     state.tokens[color].forEach((t) => {
-      if (t.state === "active" && t.rel <= LAST_TRACK_REL && absTrackIndex(color, t.rel) === absIndex) count++;
+      if (t.state === "active" && t.rel <= g.lastTrackRel && absTrackIndex(color, t.rel, state) === absIndex) count++;
     });
     return count;
   }
@@ -123,10 +170,11 @@ const LudoCore = (function () {
   // shared track for its own private home column. Returns true if any
   // of those shared-track squares holds an opposing block.
   function pathBlocked(state, color, fromRel, roll) {
+    const g = geometry(state);
     for (let step = 1; step <= roll; step++) {
       const r = fromRel + step;
-      if (r > LAST_TRACK_REL) break; // now inside the home column/hub - no shared squares left to cross
-      const abs = absTrackIndex(color, r);
+      if (r > g.lastTrackRel) break; // now inside the home column/hub - no shared squares left to cross
+      const abs = absTrackIndex(color, r, state);
       if (isBlockedForOpponent(state, color, abs)) return true;
     }
     return false;
@@ -139,12 +187,12 @@ const LudoCore = (function () {
 
     if (token.state === "home") {
       if (roll !== 6) return false;
-      return !isBlockedForOpponent(state, color, absTrackIndex(color, 0));
+      return !isBlockedForOpponent(state, color, absTrackIndex(color, 0, state));
     }
 
     // active
     const target = token.rel + roll;
-    if (target > FINISH_REL) return false; // would overshoot the finish hub
+    if (target > geometry(state).finishRel) return false; // would overshoot the finish hub
     return !pathBlocked(state, color, token.rel, roll);
   }
 
@@ -157,9 +205,9 @@ const LudoCore = (function () {
     if (token.state === "finished") return "finished";
     if (token.state === "home") {
       if (roll !== 6) return "needs-six";
-      return isBlockedForOpponent(state, color, absTrackIndex(color, 0)) ? "blocked" : null;
+      return isBlockedForOpponent(state, color, absTrackIndex(color, 0, state)) ? "blocked" : null;
     }
-    if (token.rel + roll > FINISH_REL) return "overshoot";
+    if (token.rel + roll > geometry(state).finishRel) return "overshoot";
     if (pathBlocked(state, color, token.rel, roll)) return "blocked";
     return null;
   }
@@ -176,6 +224,7 @@ const LudoCore = (function () {
   // list of { color, index } for opposing tokens sent back to their home
   // base by this move.
   function applyMove(state, color, tokenIndex, roll) {
+    const g = geometry(state);
     const next = cloneState(state);
     const token = next.tokens[color][tokenIndex];
     const captured = [];
@@ -188,17 +237,17 @@ const LudoCore = (function () {
       enteredPlay = true;
       // The start square is always one of the fixed safe squares, so
       // entering play never captures anything - kept generic anyway.
-      maybeCapture(next, color, absTrackIndex(color, 0), captured);
+      maybeCapture(next, color, absTrackIndex(color, 0, next), captured);
     } else {
       const target = token.rel + roll;
-      if (target === FINISH_REL) {
+      if (target === g.finishRel) {
         token.state = "finished";
         token.rel = null;
         finished = true;
       } else {
         token.rel = target;
-        if (target <= LAST_TRACK_REL) {
-          maybeCapture(next, color, absTrackIndex(color, target), captured);
+        if (target <= g.lastTrackRel) {
+          maybeCapture(next, color, absTrackIndex(color, target, next), captured);
         }
       }
     }
@@ -213,11 +262,12 @@ const LudoCore = (function () {
   }
 
   function maybeCapture(state, movingColor, absIndex, captured) {
-    if (isSafeAbs(absIndex)) return;
+    if (isSafeAbs(absIndex, state)) return;
+    const g = geometry(state);
     state.activeColors.forEach((oc) => {
       if (oc === movingColor) return;
       state.tokens[oc].forEach((t, i) => {
-        if (t.state === "active" && t.rel <= LAST_TRACK_REL && absTrackIndex(oc, t.rel) === absIndex) {
+        if (t.state === "active" && t.rel <= g.lastTrackRel && absTrackIndex(oc, t.rel, state) === absIndex) {
           t.state = "home";
           t.rel = null;
           captured.push({ color: oc, index: i });
@@ -245,6 +295,8 @@ const LudoCore = (function () {
     SIX_STREAK_LIMIT,
     START_INDEX,
     STAR_OFFSET,
+    COLOR_ORDER_6,
+    geometry,
     isSafeAbs,
     absTrackIndex,
     createInitialState,

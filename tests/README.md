@@ -290,6 +290,18 @@ all parts back into one log in list order. The last line is exactly
   condition unchanged, off in old saves; the computer's fixed swap rule;
   100 computer games without and 100 with the swap rule, each with one
   correct winner, and the share won by the first mover.
+- `node tests/ludo-core.js` - no server or browser needed. Ludo rules on the
+  classic board (numbers unchanged, no `board` field in a classic state)
+  and on the six-arm board (78 squares, starts 0/13/26/39/52/65, finish
+  82): capture across the seam 77 -> 0, blocks, the own home column, exact
+  finish, a win; save and load through JSON; computer against computer
+  (`GAMES`, default 200) with 6 and with 4 colors, every move legal, no
+  hang, never two colors on one unsafe square.
+- `node tests/ludo-ui.js` - needs the server and Playwright. German page at
+  360 px: classic board still the default; "6 Spieler" builds 78 track
+  cells, 30 home-column cells and six bases, offers 5-6 players and purple
+  and orange only there; a six-player hotseat game moves a token; the game
+  is back after a reload; large view cells at least 28 px.
 - `node tests/hex-ui.js` - needs the server and Playwright. German page at
   360 px: the "Tauschen" button with two players and its texts, the
   computer swapping a central first stone, Undo over a swap, no button

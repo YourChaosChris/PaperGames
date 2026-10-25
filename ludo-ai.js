@@ -13,18 +13,20 @@ const LudoAi = (function () {
   // Is `color`'s token `tokenIndex` currently sitting somewhere an
   // opponent could capture it with their very next roll (1-6)? Only
   // matters on the shared track - the home column is exclusive.
+  // The track numbers come from the state's board (4 or 6 arms).
   function isTokenInDanger(state, color, tokenIndex) {
+    const g = LudoCore.geometry(state);
     const token = state.tokens[color][tokenIndex];
-    if (token.state !== "active" || token.rel > LudoCore.LAST_TRACK_REL) return false;
-    const abs = LudoCore.absTrackIndex(color, token.rel);
-    if (LudoCore.isSafeAbs(abs)) return false;
+    if (token.state !== "active" || token.rel > g.lastTrackRel) return false;
+    const abs = LudoCore.absTrackIndex(color, token.rel, state);
+    if (LudoCore.isSafeAbs(abs, state)) return false;
 
     return state.activeColors.some((oc) => {
       if (oc === color) return false;
       return state.tokens[oc].some((ot) => {
-        if (ot.state !== "active" || ot.rel > LudoCore.LAST_TRACK_REL) return false;
-        const oppAbs = LudoCore.absTrackIndex(oc, ot.rel);
-        const distance = (abs - oppAbs + LudoCore.TRACK_LENGTH) % LudoCore.TRACK_LENGTH;
+        if (ot.state !== "active" || ot.rel > g.lastTrackRel) return false;
+        const oppAbs = LudoCore.absTrackIndex(oc, ot.rel, state);
+        const distance = (abs - oppAbs + g.trackLength) % g.trackLength;
         return distance >= 1 && distance <= 6;
       });
     });

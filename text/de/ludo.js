@@ -15,6 +15,8 @@ Object.assign(STRINGS.de, {
     ludo_rules_extra_turn: "Bei einer 6 gibt es direkt im Anschluss einen weiteren Wurf (auch wenn kein Zug möglich war). Drei Sechsen in Folge lassen die Runde dagegen verfallen, ohne zu ziehen - so kann eine Glückssträhne nicht endlos weitergehen.",
     ludo_term_shapes: "Farben und Formen",
     ludo_rules_shapes: "Auf einem E-Ink-Bildschirm sehen die vier Farben fast gleich aus, deshalb hat jede Farbe auch ihre eigene Form: Rot ein gefüllter Kreis, Grün ein offener Kreis, Gelb ein gefülltes Dreieck und Blau ein offenes Quadrat. Die Form steht überall – bei den Figuren, bei den wartenden Figuren im Startbereich und bei der Zähleranzeige über dem Brett. Ein schwarzer Keil in der Ecke eines Feldes oder ein dicker Doppelrahmen um eine wartende Figur zeigt, welche Figur mit dem aktuellen Wurf ziehen darf.",
+    ludo_term_six_board: "Das Brett für 6 Spieler",
+    ludo_rules_six_board: "Mit der Brettwahl „6 Spieler“ wird auf einem Brett mit sechs Armen gespielt: 2 bis 6 Farben, jede mit eigenem Arm, Startfeld und Zielspalte. Die Laufbahn hat 78 Felder (13 je Arm); alle Regeln bleiben gleich. Die zwei zusätzlichen Farben sind Lila, eine gefüllte Raute, und Orange, ein gefüllter Stern.",
     ludo_rules_capture_title: "Schlagen und sichere Felder",
     ludo_term_capture: "Schlagen",
     ludo_rules_capture: "Landet man genau auf einem Feld mit genau einer gegnerischen Figur, wird diese zurück in ihren Startbereich geschickt und muss neu starten. Eine Figur auf ihrer eigenen Zielgeraden kann nie geschlagen werden.",
@@ -36,6 +38,7 @@ Object.assign(STRINGS.de, {
     ludo_history_modern_p2: "Ludo wurde schnell zu einem festen Bestandteil des viktorianischen und edwardianischen Spieleschranks, billig zu drucken und leicht zu lernen, und ist seither ein fester Bestandteil von Spieleabenden in Europa und Asien geblieben.",
     ludo_history_legacy_title: "Ein Spiel, viele Namen",
     ludo_history_legacy_p1: "Ludos Erfolg brachte weltweit nahe Verwandte hervor. In den USA bot Parcheesi - schon 1874 als Marke eingetragen, sogar noch vor Ludo selbst - eine eigene amerikanisierte Version von Pachisi mit eigenen Brett- und Schlagregeln. Das englische Brettspiel Sorry!, erstmals in den 1930er-Jahren veröffentlicht, übernahm Ludos Grundidee aus Wettlauf und Schlagen und legte kartengesteuerte Züge und zusätzliche Sonderfelder darüber. Im deutschsprachigen Raum wird das Spiel unter einem geschützten Markennamen vertrieben; PaperGames verwendet deshalb den internationalen Namen Ludo.",
-    ludo_history_legacy_p2: "Heute wird Ludo vom Schulhof bis zum App Store gespielt - sein kreuzförmiges Feld mit vier farbigen Ecken ist mehr als hundert Jahre nach dem ersten englischen Patent und viele Jahrhunderte nachdem Akbars Höflinge erstmals als seine Figuren dienten, immer noch sofort wiederzuerkennen."
+    ludo_history_legacy_p2: "Heute wird Ludo vom Schulhof bis zum App Store gespielt - sein kreuzförmiges Feld mit vier farbigen Ecken ist mehr als hundert Jahre nach dem ersten englischen Patent und viele Jahrhunderte nachdem Akbars Höflinge erstmals als seine Figuren dienten, immer noch sofort wiederzuerkennen.",
+    ludo_history_six_p: "Neben dem klassischen Brett für vier gibt es auch Bretter mit sechs Armen für bis zu sechs Spieler; jede weitere Farbe bekommt einen eigenen Arm mit Haus und Zielspalte. PaperGames bietet ein solches Brett zur Wahl an, mit denselben Regeln.",
 });
 I18n.markTextLoaded("de");

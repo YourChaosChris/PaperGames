@@ -15,6 +15,8 @@ Object.assign(STRINGS.en, {
     ludo_rules_extra_turn: "Rolling a 6 grants an extra roll straight after moving (or after failing to find a legal move). Rolling three 6s in a row forfeits the turn instead, without moving, to stop a lucky streak going on forever.",
     ludo_term_shapes: "Colors and shapes",
     ludo_rules_shapes: "On an e-ink screen the four colors look almost the same, so each color also has its own shape: red a filled circle, green an open circle, yellow a filled triangle and blue an open square. The shape is used everywhere - for the tokens, the waiting tokens in each home base and the finish count above the board. A black wedge in a square's corner, or a thick double frame around a waiting token, marks a token that may move with the current roll.",
+    ludo_term_six_board: "The board for 6 players",
+    ludo_rules_six_board: "With the board choice \"6 players\" the game is played on a board with six arms: 2 to 6 colors, each with its own arm, start square and home column. The track has 78 squares (13 per arm); all rules stay the same. The two extra colors are purple, a filled diamond, and orange, a filled star.",
     ludo_rules_capture_title: "Capturing and safe squares",
     ludo_term_capture: "Capturing",
     ludo_rules_capture: "Landing exactly on a square occupied by a single opponent token sends that token straight back to its owner's home base, to start over. A token already safely inside its own home stretch can never be captured.",
@@ -36,6 +38,7 @@ Object.assign(STRINGS.en, {
     ludo_history_modern_p2: "Ludo quickly became a staple of the Victorian and Edwardian games cupboard, cheap to print and easy to learn, and it has stayed a mainstay of family game nights across Europe and Asia ever since.",
     ludo_history_legacy_title: "One Game, Many Names",
     ludo_history_legacy_p1: "Ludo's success spawned close relatives worldwide. In the United States, Parcheesi - trademarked in 1874, actually just before Ludo itself - offered its own Americanized take on Pachisi, with its own board conventions and capture rules. The English board game Sorry!, first published in the 1930s, borrowed Ludo's core race-and-capture idea and layered card-drawn moves and extra special squares on top.",
-    ludo_history_legacy_p2: "Today Ludo is played from the school playground to the smartphone app store, its cross-shaped board and four home-colored corners still instantly recognizable more than a century after that first English patent - and many centuries after Akbar's courtiers first stood in for its pieces."
+    ludo_history_legacy_p2: "Today Ludo is played from the school playground to the smartphone app store, its cross-shaped board and four home-colored corners still instantly recognizable more than a century after that first English patent - and many centuries after Akbar's courtiers first stood in for its pieces.",
+    ludo_history_six_p: "Besides the classic board for four, boards with six arms for up to six players are made as well; each extra color gets its own arm, home base and home column. PaperGames offers such a board as a choice, with the same rules.",
 });
 I18n.markTextLoaded("en");

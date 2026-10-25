@@ -1,5 +1,8 @@
 /* ludo: rules used only by the ludo pages (loaded after base.css). */
 #board-container.big-board-enabled #ludo-board { width: 450px; max-width: none; margin: 0; }
+/* The six-arm board needs about 17.6 cells across: 560 px keep a cell
+   above 28 px in the large view. */
+#board-container.big-board-enabled #ludo-board.ludo-board-6 { width: 560px; }
 
 /* Ludo board: a single 15x15 CSS grid (CSS grid `gap` is fine on E-Ink
    browsers - only flexbox `gap` isn't - though this board doesn't use
@@ -319,3 +322,68 @@
   vertical-align: middle;
   color: var(--text);
 }
+
+/* Six-arm board (task 109): cells placed absolutely by ludo-app.js
+   (left/top in percent of the square board, each arm turned by its
+   angle), no grid. The board itself has no frame - its outline is the
+   hexagon with the six arms. */
+#ludo-board.ludo-board-6 {
+  display: block;
+  border: 0;
+  background: transparent;
+}
+
+.ludo-board-6 .ludo-cell,
+.ludo-board-6 .ludo-home-base,
+.ludo6-hub {
+  position: absolute;
+}
+
+.ludo6-hub {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--text);
+  pointer-events: none;
+}
+
+.ludo6-hub svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Percent padding would count from the board's width, not the base's, so
+   the four slots are placed absolutely inside the round base instead. */
+.ludo-board-6 .ludo-home-base {
+  display: block;
+  border-radius: 50%;
+  padding: 0;
+  background: var(--square-light);
+}
+
+.ludo-board-6 .ludo-home-slot {
+  position: absolute;
+  width: 32%;
+  height: 32%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.ludo-board-6 .ludo-home-slot[data-slot="0"] { left: 15%; top: 15%; }
+.ludo-board-6 .ludo-home-slot[data-slot="1"] { left: 53%; top: 15%; }
+.ludo-board-6 .ludo-home-slot[data-slot="2"] { left: 15%; top: 53%; }
+.ludo-board-6 .ludo-home-slot[data-slot="3"] { left: 53%; top: 53%; }
+
+.ludo-board-6 .ludo-home-base::before {
+  top: 2%;
+  left: 44%;
+}
+
+/* The shapes of the two six-arm colors in the corner of their home
+   column and base (as for the four classic colors in base.css). */
+.ludo-cell-home-column-purple::before,
+.ludo-home-base-purple::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,2 98,50 50,98 2,50' fill='%23111'/%3E%3C/svg%3E"); }
+.ludo-cell-home-column-orange::before,
+.ludo-home-base-orange::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,3 62,37 98,37 69,59 80,95 50,73 20,95 31,59 2,37 38,37' fill='%23111'/%3E%3C/svg%3E"); }

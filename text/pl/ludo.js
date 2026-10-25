@@ -15,6 +15,8 @@ Object.assign(STRINGS.pl, {
     ludo_rules_extra_turn: "Wyrzucenie 6 daje dodatkowy rzut zaraz po ruchu (lub nawet gdy nie było legalnego ruchu). Trzy szóstki z rzędu odbierają jednak turę bez ruchu, żeby passa szczęścia nie trwała w nieskończoność.",
     ludo_term_shapes: "Kolory i kształty",
     ludo_rules_shapes: "Na ekranie e-ink cztery kolory wyglądają prawie tak samo, dlatego każdy kolor ma też własny kształt: czerwony to wypełnione koło, zielony puste koło, żółty wypełniony trójkąt, a niebieski pusty kwadrat. Kształt pojawia się wszędzie - na pionkach, na pionkach czekających w bazie i przy liczniku mety nad planszą. Czarny klin w rogu pola albo gruba podwójna ramka wokół czekającego pionka oznacza pionek, który może się ruszyć przy bieżącym rzucie.",
+    ludo_term_six_board: "Plansza dla 6 graczy",
+    ludo_rules_six_board: "Po wybraniu planszy „6 graczy” gra toczy się na planszy z sześcioma ramionami: od 2 do 6 kolorów, każdy z własnym ramieniem, polem startowym i kolumną mety. Trasa ma 78 pól (13 na ramię); wszystkie zasady pozostają takie same. Dwa dodatkowe kolory to fioletowy, pełny romb, i pomarańczowy, pełna gwiazda.",
     ludo_rules_capture_title: "Bicie i bezpieczne pola",
     ludo_term_capture: "Bicie",
     ludo_rules_capture: "Wejście dokładnie na pole zajęte przez pojedynczy pionek przeciwnika odsyła go z powrotem do bazy, skąd musi zacząć od nowa. Pionek będący już na własnym odcinku dojściowym nigdy nie może zostać zbity.",
@@ -36,6 +38,7 @@ Object.assign(STRINGS.pl, {
     ludo_history_modern_p2: "Ludo szybko stało się stałym elementem wiktoriańskiej i edwardiańskiej szafki z grami, tanie w druku i łatwe do nauczenia, i od tamtej pory pozostaje filarem rodzinnych wieczorów gier w Europie i Azji.",
     ludo_history_legacy_title: "Jedna gra, wiele nazw",
     ludo_history_legacy_p1: "Sukces Ludo dał początek bliskim krewnym na całym świecie. W Stanach Zjednoczonych Parcheesi - zastrzeżone jako znak towarowy już w 1874 roku, właściwie jeszcze przed samym Ludo - zaproponowało własną, zamerykanizowaną wersję Pachisi, z własnymi zasadami planszy i bicia. Angielska gra planszowa Sorry!, wydana po raz pierwszy w latach 30. XX wieku, przejęła podstawową ideę wyścigu i bicia z Ludo, dokładając ruchy losowane z kart i dodatkowe pola specjalne.",
-    ludo_history_legacy_p2: "Dziś w Ludo gra się od szkolnego podwórka po sklep z aplikacjami; jego krzyżowa plansza i cztery kolorowe rogi wciąż są natychmiast rozpoznawalne ponad sto lat po tamtym pierwszym angielskim patencie - i wiele stuleci po tym, jak dworzanie Akbara po raz pierwszy posłużyli za jego pionki."
+    ludo_history_legacy_p2: "Dziś w Ludo gra się od szkolnego podwórka po sklep z aplikacjami; jego krzyżowa plansza i cztery kolorowe rogi wciąż są natychmiast rozpoznawalne ponad sto lat po tamtym pierwszym angielskim patencie - i wiele stuleci po tym, jak dworzanie Akbara po raz pierwszy posłużyli za jego pionki.",
+    ludo_history_six_p: "Oprócz klasycznej planszy dla czterech osób są też plansze z sześcioma ramionami dla maksymalnie sześciu graczy; każdy dodatkowy kolor ma własne ramię, domek i kolumnę mety. PaperGames oferuje taką planszę do wyboru, z tymi samymi zasadami.",
 });
 I18n.markTextLoaded("pl");

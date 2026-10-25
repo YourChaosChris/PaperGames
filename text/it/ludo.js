@@ -15,6 +15,8 @@ Object.assign(STRINGS.it, {
     ludo_rules_extra_turn: "Un 6 concede un altro lancio subito dopo aver mosso (o anche senza mosse legali disponibili). Tre 6 di fila fanno invece perdere il turno senza muovere, così una serie fortunata non può continuare all'infinito.",
     ludo_term_shapes: "Colori e forme",
     ludo_rules_shapes: "Su uno schermo a inchiostro elettronico i quattro colori sembrano quasi uguali, quindi ogni colore ha anche una sua forma: rosso un cerchio pieno, verde un cerchio vuoto, giallo un triangolo pieno e blu un quadrato vuoto. La forma è usata ovunque: per le pedine, per quelle in attesa nella base e per il conteggio del traguardo sopra il tabellone. Un cuneo nero nell'angolo di una casella, o una spessa doppia cornice intorno a una pedina in attesa, indica una pedina che può muoversi con il lancio attuale.",
+    ludo_term_six_board: "Il tabellone per 6 giocatori",
+    ludo_rules_six_board: "Con la scelta di tabellone «6 giocatori» si gioca su un tabellone a sei bracci: da 2 a 6 colori, ognuno con il proprio braccio, la casella di partenza e la colonna d’arrivo. Il percorso ha 78 caselle (13 per braccio); tutte le regole restano uguali. I due colori in più sono il viola, un rombo pieno, e l’arancione, una stella piena.",
     ludo_rules_capture_title: "Catture e caselle sicure",
     ludo_term_capture: "Catturare",
     ludo_rules_capture: "Arrivare esattamente su una casella occupata da una sola pedina avversaria la rimanda direttamente alla propria casa, da cui deve ripartire. Una pedina già nel proprio corridoio finale non può mai essere catturata.",
@@ -36,6 +38,7 @@ Object.assign(STRINGS.it, {
     ludo_history_modern_p2: "Il Ludo divenne rapidamente un classico dell'armadio dei giochi vittoriano ed edoardiano, economico da stampare e facile da imparare, e da allora è rimasto un caposaldo delle serate di giochi in famiglia in Europa e in Asia.",
     ludo_history_legacy_title: "Un solo gioco, tanti nomi",
     ludo_history_legacy_p1: "Il successo del Ludo ha generato parenti stretti in tutto il mondo. Negli Stati Uniti, il Parcheesi - registrato come marchio già nel 1874, in realtà poco prima dello stesso Ludo - offriva una propria versione americanizzata del Pachisi, con proprie regole di tabellone e cattura. Il gioco da tavolo inglese Sorry!, pubblicato per la prima volta negli anni '30, riprese l'idea centrale di corsa e cattura del Ludo aggiungendovi mosse pescate da carte e caselle speciali supplementari.",
-    ludo_history_legacy_p2: "Oggi il Ludo si gioca dal cortile della scuola fino agli app store degli smartphone; il suo tabellone a croce e i quattro angoli colorati restano immediatamente riconoscibili a oltre un secolo da quel primo brevetto inglese - e a molti secoli dalla prima volta che i cortigiani di Akbar fecero da pedine viventi."
+    ludo_history_legacy_p2: "Oggi il Ludo si gioca dal cortile della scuola fino agli app store degli smartphone; il suo tabellone a croce e i quattro angoli colorati restano immediatamente riconoscibili a oltre un secolo da quel primo brevetto inglese - e a molti secoli dalla prima volta che i cortigiani di Akbar fecero da pedine viventi.",
+    ludo_history_six_p: "Oltre al tabellone classico per quattro esistono anche tabelloni a sei bracci per un massimo di sei giocatori; ogni colore in più riceve il proprio braccio, la casa e la colonna d’arrivo. PaperGames offre un tabellone così come scelta, con le stesse regole.",
 });
 I18n.markTextLoaded("it");

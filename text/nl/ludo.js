@@ -15,6 +15,8 @@ Object.assign(STRINGS.nl, {
     ludo_rules_extra_turn: "Een 6 geeft direct na het zetten (of zelfs zonder geldige zet) nog een worp. Drie zessen op rij laten de beurt juist vervallen zonder te zetten, zodat een geluksreeks niet eindeloos doorgaat.",
     ludo_term_shapes: "Kleuren en vormen",
     ludo_rules_shapes: "Op een e-inkscherm lijken de vier kleuren bijna hetzelfde, daarom heeft elke kleur ook een eigen vorm: rood een gevulde cirkel, groen een open cirkel, geel een gevulde driehoek en blauw een open vierkant. De vorm wordt overal gebruikt - voor de pionnen, de wachtende pionnen in elk huis en de telling van de finish boven het bord. Een zwarte wig in de hoek van een vakje, of een dik dubbel kader om een wachtende pion, geeft aan welke pion met de huidige worp mag zetten.",
+    ludo_term_six_board: "Het bord voor 6 spelers",
+    ludo_rules_six_board: "Met de bordkeuze \"6 spelers\" wordt op een bord met zes armen gespeeld: 2 tot 6 kleuren, elk met een eigen arm, startvak en eindkolom. De baan heeft 78 vakken (13 per arm); alle regels blijven gelijk. De twee extra kleuren zijn paars, een gevulde ruit, en oranje, een gevulde ster.",
     ludo_rules_capture_title: "Slaan en veilige vakjes",
     ludo_term_capture: "Slaan",
     ludo_rules_capture: "Land je precies op een vakje met daarop één tegenstanderspion, dan gaat die pion direct terug naar zijn eigen basisvak om opnieuw te beginnen. Een pion die al op zijn eigen finishbaan staat, kan nooit worden geslagen.",
@@ -36,6 +38,7 @@ Object.assign(STRINGS.nl, {
     ludo_history_modern_p2: "Ludo werd al snel een vaste waarde in de Victoriaanse en Edwardiaanse spellenkast, goedkoop om te drukken en makkelijk te leren, en is sindsdien een vast onderdeel gebleven van familiespelavonden in heel Europa en Azië.",
     ludo_history_legacy_title: "Eén spel, veel namen",
     ludo_history_legacy_p1: "Het succes van Ludo bracht wereldwijd nauwe verwanten voort. In de Verenigde Staten bood Parcheesi - al in 1874 als merk vastgelegd, zelfs nog vóór Ludo zelf - een eigen veramerikaniseerde versie van Pachisi, met eigen bord- en slagregels. Het Engelse bordspel Sorry!, voor het eerst uitgegeven in de jaren dertig, nam Ludo's kernidee van rennen en slaan over en voegde daar met kaarten getrokken zetten en extra speciale vakjes aan toe.",
-    ludo_history_legacy_p2: "Vandaag wordt Ludo gespeeld van het schoolplein tot de app store; het kruisvormige bord met vier gekleurde hoeken is nog altijd meteen herkenbaar, meer dan een eeuw na dat eerste Engelse patent - en vele eeuwen nadat Akbars hovelingen voor het eerst als speelstukken dienden."
+    ludo_history_legacy_p2: "Vandaag wordt Ludo gespeeld van het schoolplein tot de app store; het kruisvormige bord met vier gekleurde hoeken is nog altijd meteen herkenbaar, meer dan een eeuw na dat eerste Engelse patent - en vele eeuwen nadat Akbars hovelingen voor het eerst als speelstukken dienden.",
+    ludo_history_six_p: "Naast het klassieke bord voor vier zijn er ook borden met zes armen voor maximaal zes spelers; elke extra kleur krijgt een eigen arm, huis en eindkolom. PaperGames biedt zo'n bord als keuze aan, met dezelfde regels.",
 });
 I18n.markTextLoaded("nl");

@@ -15,6 +15,8 @@ Object.assign(STRINGS.fr, {
     ludo_rules_extra_turn: "Un 6 donne droit à un lancer supplémentaire, juste après avoir joué (ou même sans coup possible). Trois 6 d'affilée font en revanche perdre le tour sans jouer, pour éviter qu'une série de chance ne dure indéfiniment.",
     ludo_term_shapes: "Couleurs et formes",
     ludo_rules_shapes: "Sur un écran à encre électronique, les quatre couleurs se ressemblent presque, c'est pourquoi chaque couleur a aussi sa propre forme : rouge un cercle plein, vert un cercle vide, jaune un triangle plein et bleu un carré vide. La forme est utilisée partout - pour les pions, les pions en attente dans chaque base et le décompte des arrivées au-dessus du plateau. Un coin noir dans une case, ou un double cadre épais autour d'un pion en attente, signale un pion qui peut bouger avec le lancer en cours.",
+    ludo_term_six_board: "Le plateau pour 6 joueurs",
+    ludo_rules_six_board: "Avec le choix de plateau « 6 joueurs », on joue sur un plateau à six branches : de 2 à 6 couleurs, chacune avec sa branche, sa case de départ et sa colonne d’arrivée. Le parcours compte 78 cases (13 par branche) ; toutes les règles restent les mêmes. Les deux couleurs en plus sont le violet, un losange plein, et l’orange, une étoile pleine.",
     ludo_rules_capture_title: "Captures et cases sûres",
     ludo_term_capture: "Capturer",
     ludo_rules_capture: "Arriver exactement sur une case occupée par un seul pion adverse le renvoie directement dans sa maison, pour repartir de zéro. Un pion déjà dans son propre couloir d'arrivée ne peut jamais être capturé.",
@@ -36,6 +38,7 @@ Object.assign(STRINGS.fr, {
     ludo_history_modern_p2: "Le Ludo devint rapidement un incontournable des placards à jeux de l'époque victorienne et édouardienne, bon marché à imprimer et facile à apprendre, et il est resté depuis un pilier des soirées jeux en famille en Europe et en Asie.",
     ludo_history_legacy_title: "Un seul jeu, plusieurs noms",
     ludo_history_legacy_p1: "Le succès du Ludo a donné naissance à des proches cousins dans le monde entier. Aux États-Unis, le Parcheesi - déposé dès 1874, en fait juste avant le Ludo lui-même - proposait sa propre version américanisée du Pachisi, avec ses propres règles de plateau et de capture. Le jeu de plateau anglais Sorry!, publié pour la première fois dans les années 1930, a repris l'idée centrale du Ludo (course et capture) en y ajoutant des déplacements tirés de cartes et des cases spéciales supplémentaires.",
-    ludo_history_legacy_p2: "Aujourd'hui, le Ludo se joue de la cour de récréation jusqu'aux applications mobiles ; son plateau en croix et ses quatre coins colorés restent immédiatement reconnaissables plus d'un siècle après ce premier brevet anglais - et de nombreux siècles après que les courtisans d'Akbar aient pour la première fois tenu lieu de pions."
+    ludo_history_legacy_p2: "Aujourd'hui, le Ludo se joue de la cour de récréation jusqu'aux applications mobiles ; son plateau en croix et ses quatre coins colorés restent immédiatement reconnaissables plus d'un siècle après ce premier brevet anglais - et de nombreux siècles après que les courtisans d'Akbar aient pour la première fois tenu lieu de pions.",
+    ludo_history_six_p: "En plus du plateau classique pour quatre, il existe des plateaux à six branches pour jusqu’à six joueurs ; chaque couleur en plus reçoit sa branche, sa maison et sa colonne d’arrivée. PaperGames propose un tel plateau au choix, avec les mêmes règles.",
 });
 I18n.markTextLoaded("fr");
