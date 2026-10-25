@@ -1068,7 +1068,7 @@ STRINGS.fr = {
     fanorona_continue_capturing: "Vous pouvez continuer à capturer avec ce pion, ou vous arrêter ici.",
     fanorona_done_capturing_btn: "Terminer les captures",
     game_ludo: "Ludo (Petits Chevaux)",
-    home_ludo_desc: "Le classique jeu de course en forme de croix, descendant de l'ancien jeu indien Pachisi. Jouez une couleur vous-même contre jusqu'à trois adversaires informatiques (2 à 4 joueurs au total), ou jouez à plusieurs en local sur le même appareil.",
+    home_ludo_desc: "Le classique jeu de course en forme de croix, descendant de l'ancien jeu indien Pachisi. Jouez une couleur vous-même contre des adversaires informatiques, ou jouez à plusieurs en local sur le même appareil : 2 à 4 joueurs sur le plateau classique, jusqu'à 6 sur le plateau à six branches.",
     ludo_mode_hotseat: "Deux joueurs, un appareil",
     ludo_num_players: "Joueurs :",
     ludo_board_label: "Plateau :",

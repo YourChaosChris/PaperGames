@@ -976,7 +976,7 @@ STRINGS.nl = {
     fanorona_continue_capturing: "Je kunt met dit stuk doorslaan, of hier stoppen.",
     fanorona_done_capturing_btn: "Klaar met slaan",
     game_ludo: "Ludo",
-    home_ludo_desc: "Het klassieke kruisvormige racespel, afstammeling van het oude Indiase Pachisi. Speel zelf één kleur tegen maximaal drie computertegenstanders (2 tot 4 spelers in totaal), of speel lokaal om de beurt op hetzelfde apparaat.",
+    home_ludo_desc: "Het klassieke kruisvormige racespel, afstammeling van het oude Indiase Pachisi. Speel zelf één kleur tegen computertegenstanders, of speel lokaal om de beurt op hetzelfde apparaat: 2 tot 4 spelers op het klassieke bord, tot 6 op het bord met zes armen.",
     ludo_mode_hotseat: "Twee spelers, één apparaat",
     ludo_num_players: "Spelers:",
     ludo_board_label: "Bord:",

@@ -1155,7 +1155,7 @@ const STRINGS = {
     fanorona_continue_capturing: "You can continue capturing with this piece, or stop here.",
     fanorona_done_capturing_btn: "Done capturing",
     game_ludo: "Ludo",
-    home_ludo_desc: "The classic cross-shaped race game descended from ancient Pachisi. Play one color yourself against up to three built-in computer opponents (2-4 players total), or pass the device around in local hotseat.",
+    home_ludo_desc: "The classic cross-shaped race game descended from ancient Pachisi. Play one color yourself against computer opponents, or pass the device around in local hotseat: 2-4 players on the classic board, up to 6 on the six-arm board.",
     ludo_mode_hotseat: "Two players, one device",
     ludo_num_players: "Players:",
     ludo_board_label: "Board:",

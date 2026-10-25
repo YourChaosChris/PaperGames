@@ -1068,7 +1068,7 @@ STRINGS.zh = {
     fanorona_continue_capturing: "你可以用这枚棋子继续吃子,也可以就此停止。",
     fanorona_done_capturing_btn: "结束吃子",
     game_ludo: "飞行棋 (Ludo)",
-    home_ludo_desc: "经典的十字形竞速游戏,源自古印度的帕奇西棋。你自己操控一种颜色,对抗最多三名电脑对手(共2-4名玩家),也可以在本地轮流传递设备进行对战。",
+    home_ludo_desc: "经典的十字形竞速游戏,源自古印度的帕奇西棋。你自己操控一种颜色对抗电脑对手,也可以在本地轮流传递设备进行对战:经典棋盘2-4名玩家,六臂棋盘最多6名。",
     ludo_mode_hotseat: "两人共用一台设备",
     ludo_num_players: "玩家人数:",
     ludo_board_label: "棋盘：",

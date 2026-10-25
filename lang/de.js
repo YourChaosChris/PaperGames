@@ -1143,7 +1143,7 @@ STRINGS.de = {
     fanorona_continue_capturing: "Du kannst mit diesem Stein weiterschlagen oder hier aufhören.",
     fanorona_done_capturing_btn: "Fertig mit Schlagen",
     game_ludo: "Ludo",
-    home_ludo_desc: "Das klassische kreuzförmige Wettlaufspiel, ein Nachfahre des alten indischen Pachisi. Spiele selbst eine Farbe gegen bis zu drei computergesteuerte Gegner (2-4 Spieler insgesamt), oder spielt lokal abwechselnd am selben Gerät.",
+    home_ludo_desc: "Das klassische kreuzförmige Wettlaufspiel, ein Nachfahre des alten indischen Pachisi. Spiele selbst eine Farbe gegen computergesteuerte Gegner, oder spielt lokal abwechselnd am selben Gerät: 2-4 Spieler auf dem klassischen Brett, bis zu 6 auf dem Brett mit sechs Armen.",
     ludo_mode_hotseat: "Zu zweit an einem Gerät",
     ludo_num_players: "Spieler:",
     ludo_board_label: "Brett:",

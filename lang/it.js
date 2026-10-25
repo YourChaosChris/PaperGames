@@ -1068,7 +1068,7 @@ STRINGS.it = {
     fanorona_continue_capturing: "Puoi continuare a catturare con questa pedina, oppure fermarti qui.",
     fanorona_done_capturing_btn: "Fine catture",
     game_ludo: "Ludo",
-    home_ludo_desc: "Il classico gioco di corsa a forma di croce, discendente dell'antico Pachisi indiano. Gioca tu stesso un colore contro fino a tre avversari controllati dal computer (2-4 giocatori in totale), oppure gioca in locale passandovi il dispositivo a turno.",
+    home_ludo_desc: "Il classico gioco di corsa a forma di croce, discendente dell'antico Pachisi indiano. Gioca tu stesso un colore contro avversari controllati dal computer, oppure gioca in locale passandovi il dispositivo a turno: 2-4 giocatori sul tabellone classico, fino a 6 su quello a sei bracci.",
     ludo_mode_hotseat: "Due giocatori, un dispositivo",
     ludo_num_players: "Giocatori:",
     ludo_board_label: "Tabellone:",

@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.es, {
     ludo_rules_title: "Reglas del Ludo",
-    ludo_rules_intro: "Una referencia rápida de la versión de PaperGames de este clásico juego de carreras en cruz. Tú controlas un color; los otros 2 o 3 colores son oponentes del ordenador o, en modo local, otros jugadores por turnos en el mismo dispositivo.",
+    ludo_rules_intro: "Una referencia rápida de la versión de PaperGames de este clásico juego de carreras en cruz. Tú controlas un color; los demás colores son oponentes del ordenador o, en modo local, otros jugadores por turnos en el mismo dispositivo. El tablero clásico es para 2 a 4 jugadores; el de seis brazos, para hasta 6.",
     ludo_rules_basics_title: "La idea básica",
     ludo_term_tokens: "Las fichas y el tablero",
     ludo_rules_tokens: "Cada uno de los 2 a 4 colores tiene 4 fichas, que empiezan en su casa. Las fichas recorren una pista exterior compartida de 52 casillas y luego suben por su propio pasillo privado de 5 casillas hasta la meta central.",

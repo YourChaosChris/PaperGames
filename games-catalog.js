@@ -578,7 +578,7 @@ const GAMES_CATALOG = [
     nameKey: "game_ludo",
     nameText: "Ludo",
     descKey: "home_ludo_desc",
-    descText: "The classic cross-shaped race game descended from ancient Pachisi. Play one color yourself against up to three built-in computer opponents (2-4 players total), or pass the device around in local hotseat.",
+    descText: "The classic cross-shaped race game descended from ancient Pachisi. Play one color yourself against computer opponents, or pass the device around in local hotseat: 2-4 players on the classic board, up to 6 on the six-arm board.",
     popular: false,
     kids: true,
     added: "2026-07-01",

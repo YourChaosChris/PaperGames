@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.de, {
     ludo_rules_title: "Ludo-Regeln",
-    ludo_rules_intro: "Eine kurze Übersicht über PaperGames' Version des klassischen kreuzförmigen Wettlaufspiels. Du spielst selbst eine Farbe; die anderen 2-3 Farben sind entweder computergesteuert oder, im lokalen Modus, weitere Spieler am selben Gerät.",
+    ludo_rules_intro: "Eine kurze Übersicht über PaperGames' Version des klassischen kreuzförmigen Wettlaufspiels. Du spielst selbst eine Farbe; die anderen Farben sind entweder computergesteuert oder, im lokalen Modus, weitere Spieler am selben Gerät. Das klassische Brett ist für 2-4 Spieler, das Brett mit sechs Armen für bis zu 6.",
     ludo_rules_basics_title: "Die Grundidee",
     ludo_term_tokens: "Figuren und das Feld",
     ludo_rules_tokens: "Jede der 2-4 Farben hat 4 Figuren, die in ihrem Startbereich beginnen. Die Figuren laufen über ein gemeinsames 52-Felder-Rundfeld, dann über die eigene 5 Felder lange Zielgerade in das Zielfeld in der Mitte.",

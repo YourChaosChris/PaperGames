@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.pl, {
     ludo_rules_title: "Zasady Chińczyka (Ludo)",
-    ludo_rules_intro: "Szybkie podsumowanie wersji PaperGames tej klasycznej, krzyżowej gry wyścigowej. Ty grasz jednym kolorem; pozostałe 2-3 kolory to albo przeciwnicy komputerowi, albo, w trybie lokalnym, inni gracze na tym samym urządzeniu.",
+    ludo_rules_intro: "Szybkie podsumowanie wersji PaperGames tej klasycznej, krzyżowej gry wyścigowej. Ty grasz jednym kolorem; pozostałe kolory to albo przeciwnicy komputerowi, albo, w trybie lokalnym, inni gracze na tym samym urządzeniu. Klasyczna plansza jest dla 2-4 graczy, plansza z sześcioma ramionami dla maksymalnie 6.",
     ludo_rules_basics_title: "Podstawowa idea",
     ludo_term_tokens: "Pionki i plansza",
     ludo_rules_tokens: "Każdy z 2-4 kolorów ma 4 pionki, które startują w swojej bazie. Pionki poruszają się po wspólnym torze 52 pól, a następnie własnym prywatnym odcinkiem 5 pól do mety w centrum.",

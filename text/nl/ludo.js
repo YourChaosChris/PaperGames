@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.nl, {
     ludo_rules_title: "Ludo-regels",
-    ludo_rules_intro: "Een snel overzicht van PaperGames' versie van dit klassieke kruisvormige racespel. Je speelt zelf één kleur; de andere 2-3 kleuren zijn ofwel computertegenstanders, ofwel, lokaal, andere spelers die om de beurt op hetzelfde apparaat spelen.",
+    ludo_rules_intro: "Een snel overzicht van PaperGames' versie van dit klassieke kruisvormige racespel. Je speelt zelf één kleur; de andere kleuren zijn ofwel computertegenstanders, ofwel, lokaal, andere spelers die om de beurt op hetzelfde apparaat spelen. Het klassieke bord is voor 2 tot 4 spelers, het bord met zes armen voor maximaal 6.",
     ludo_rules_basics_title: "Het basisidee",
     ludo_term_tokens: "Pionnen en het bord",
     ludo_rules_tokens: "Elk van de 2-4 kleuren heeft 4 pionnen, die starten in het eigen basisvak. Pionnen rennen over een gedeeld rondje van 52 vakjes, en dan door hun eigen 5 vakjes lange finishbaan naar het middenveld.",

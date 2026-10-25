@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.it, {
     ludo_rules_title: "Regole del Ludo",
-    ludo_rules_intro: "Un riferimento rapido per la versione di PaperGames di questo classico gioco di corsa a croce. Tu controlli un colore; gli altri 2-3 colori sono avversari del computer oppure, in locale, altri giocatori a turno sullo stesso dispositivo.",
+    ludo_rules_intro: "Un riferimento rapido per la versione di PaperGames di questo classico gioco di corsa a croce. Tu controlli un colore; gli altri colori sono avversari del computer oppure, in locale, altri giocatori a turno sullo stesso dispositivo. Il tabellone classico è per 2-4 giocatori, quello a sei bracci per un massimo di 6.",
     ludo_rules_basics_title: "L'idea di base",
     ludo_term_tokens: "Le pedine e il tabellone",
     ludo_rules_tokens: "Ognuno dei 2-4 colori ha 4 pedine, che partono dalla propria casa. Le pedine percorrono un tracciato esterno condiviso di 52 caselle, poi il proprio corridoio privato di 5 caselle fino alla casella di arrivo centrale.",

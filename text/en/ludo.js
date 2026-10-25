@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.en, {
     ludo_rules_title: "Ludo Rules",
-    ludo_rules_intro: "A quick reference for PaperGames's version of the classic cross-shaped race game. You play one color yourself; the other 2-3 colors are either built-in computer opponents or, in local hotseat, other players taking turns on the same device.",
+    ludo_rules_intro: "A quick reference for PaperGames's version of the classic cross-shaped race game. You play one color yourself; the other colors are either built-in computer opponents or, in local hotseat, other players taking turns on the same device. The classic board is for 2-4 players, the six-arm board for up to 6.",
     ludo_rules_basics_title: "The basic idea",
     ludo_term_tokens: "Tokens and the board",
     ludo_rules_tokens: "Each of the 2-4 colors has 4 tokens, starting in that color's home base. Tokens race around a shared 52-square outer track, then up their own color's private 5-square home stretch, into the center finish hub.",

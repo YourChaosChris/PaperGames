@@ -1076,7 +1076,7 @@ STRINGS.pl = {
     fanorona_continue_capturing: "Możesz kontynuować bicie tym pionkiem albo zakończyć tutaj.",
     fanorona_done_capturing_btn: "Zakończ bicie",
     game_ludo: "Chińczyk (Ludo)",
-    home_ludo_desc: "Klasyczna, krzyżowa gra wyścigowa wywodząca się ze starożytnego indyjskiego Pachisi. Graj samodzielnie jednym kolorem przeciwko maksymalnie trzem przeciwnikom komputerowym (2-4 graczy łącznie) albo graj lokalnie, podając urządzenie po kolei.",
+    home_ludo_desc: "Klasyczna, krzyżowa gra wyścigowa wywodząca się ze starożytnego indyjskiego Pachisi. Graj samodzielnie jednym kolorem przeciwko przeciwnikom komputerowym albo graj lokalnie, podając urządzenie po kolei: 2-4 graczy na klasycznej planszy, do 6 na planszy z sześcioma ramionami.",
     ludo_mode_hotseat: "Dwóch graczy, jedno urządzenie",
     ludo_num_players: "Gracze:",
     ludo_board_label: "Plansza:",

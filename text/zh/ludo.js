@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.zh, {
     ludo_rules_title: "飞行棋规则",
-    ludo_rules_intro: "这是 PaperGames 版这款经典十字形竞速游戏的简明说明。你自己操控一种颜色;其余2-3种颜色要么是电脑对手,要么在本地对战模式下由同一设备上轮流操作的其他玩家扮演。",
+    ludo_rules_intro: "这是 PaperGames 版这款经典十字形竞速游戏的简明说明。你自己操控一种颜色;其余颜色要么是电脑对手,要么在本地对战模式下由同一设备上轮流操作的其他玩家扮演。经典棋盘供2-4名玩家使用,六臂棋盘最多6名。",
     ludo_rules_basics_title: "基本玩法",
     ludo_term_tokens: "棋子与棋盘",
     ludo_rules_tokens: "2-4种颜色各有4枚棋子,起始于各自的家。棋子沿共用的52格外圈跑道前进,再经过自己颜色专属的5格终点通道,进入中央的终点区。",

@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.fr, {
     ludo_rules_title: "Règles du Ludo",
-    ludo_rules_intro: "Un aide-mémoire rapide pour la version de PaperGames de ce classique jeu de course en croix. Vous jouez vous-même une couleur ; les 2 ou 3 autres couleurs sont soit des adversaires informatiques, soit, en mode local, d'autres joueurs sur le même appareil.",
+    ludo_rules_intro: "Un aide-mémoire rapide pour la version de PaperGames de ce classique jeu de course en croix. Vous jouez vous-même une couleur ; les autres couleurs sont soit des adversaires informatiques, soit, en mode local, d'autres joueurs sur le même appareil. Le plateau classique accueille 2 à 4 joueurs, le plateau à six branches jusqu'à 6.",
     ludo_rules_basics_title: "L'idée de base",
     ludo_term_tokens: "Les pions et le plateau",
     ludo_rules_tokens: "Chacune des 2 à 4 couleurs a 4 pions, qui partent de sa maison. Les pions parcourent un circuit commun de 52 cases, puis leur propre couloir privé de 5 cases jusqu'à la case d'arrivée centrale.",

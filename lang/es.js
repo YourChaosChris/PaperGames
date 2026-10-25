@@ -1068,7 +1068,7 @@ STRINGS.es = {
     fanorona_continue_capturing: "Puedes seguir capturando con esta ficha, o detenerte aquí.",
     fanorona_done_capturing_btn: "Terminar de capturar",
     game_ludo: "Ludo (Parchís)",
-    home_ludo_desc: "El clásico juego de carreras en forma de cruz, descendiente del antiguo Pachisi indio. Juega tú mismo un color contra hasta tres oponentes controlados por el ordenador (2 a 4 jugadores en total), o jugad por turnos en el mismo dispositivo.",
+    home_ludo_desc: "El clásico juego de carreras en forma de cruz, descendiente del antiguo Pachisi indio. Juega tú mismo un color contra oponentes controlados por el ordenador, o jugad por turnos en el mismo dispositivo: 2 a 4 jugadores en el tablero clásico, hasta 6 en el tablero de seis brazos.",
     ludo_mode_hotseat: "Dos jugadores, un dispositivo",
     ludo_num_players: "Jugadores:",
     ludo_board_label: "Tablero:",
