@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v264",
+    date: "2026-10-25",
+    key: "release_v264",
+    text: "Ludo: a board for 6 players. Blocked Path: a quick board with rest fields, and up to 6 players. Hex: Black and White with a clear colour choice. Picture help for Link the Pairs, Old Maid and Snakes and Ladders. Licence notes, privacy policy and three history pages updated."
+  },
+  {
     version: "v263",
     date: "2026-10-25",
     key: "release_v263",
