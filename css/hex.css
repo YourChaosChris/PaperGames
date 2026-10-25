@@ -133,3 +133,37 @@ margin: 0.5rem auto 0;
   background: var(--square-light);
   border: 2px solid var(--border);
 }
+
+/* Colour choice with words (task 120): each choice a framed row of at
+   least 44 px; the chosen one gets a thick frame. */
+#hex-color-choice {
+  display: block;
+  width: 100%;
+}
+
+.inline-options .hex-color-label {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  margin: 0 0 6px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.inline-options .hex-color-label-on {
+  border: 4px solid var(--text);
+  padding: 1px 5px;
+  font-weight: 700;
+}
+
+/* The fixed line above the board: your colour and your two edges. */
+.hex-side-line {
+  margin: 0 0 var(--space-1);
+  font-weight: 700;
+  text-align: center;
+}

@@ -9,21 +9,29 @@
 // is computed from the geometry below rather than assumed to be 1:1).
 //
 // Stones are told apart structurally, not by color alone (a filled
-// hexagon for Red, an outlined one for Blue), and each player's two
+// hexagon for Black, an outlined one for White), and each player's two
 // target edges get a distinct thicker border so it's clear which
 // side is trying to connect where without relying on color for that
 // either.
 //
+// Names (task 120): the sides are called Black and White, as the stones
+// look - printed Hex sets often use red and blue, and the game used those
+// names before. Inside the state they stay "r" (Black, moves first, top to
+// bottom) and "b" (White, left to right), so saved games load unchanged.
+// The colour choice is labelled ("I play Black ..."), the chosen one gets a
+// thick frame, and a fixed line above the board names your colour and
+// edges (against the computer) or the colour to move (two players).
+//
 // Swap rule (box #hex-swap-rule, on by default; quick-rules.js remembers
-// it with the other settings at game start): after Red's first stone,
-// Blue may tap Swap instead of moving; then the two players change
+// it with the other settings at game start): after Black's first stone,
+// White may tap Swap instead of moving; then the two players change
 // colours (see hex-core.js). Against the computer humanColor changes;
 // the computer swaps when the first stone lies in the middle half.
 
 const AppStateHex = {
   mode: "offline",        // "offline" | "offline-ai"
   state: HexCore.createInitialState(),
-  turn: "r",              // "r" | "b" - Red moves first
+  turn: "r",              // "r" (Black) | "b" (White) - Black moves first
   lastMove: null,         // [r,c] | null
   humanColor: "r",
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
@@ -60,7 +68,20 @@ function recordHexStatsIfVsAi(outcome) {
 }
 
 function colorNameHex(color) {
-  return color === "r" ? "Red" : "Blue";
+  return color === "r" ? "Black" : "White";
+}
+
+// The fixed line above the board: your colour and edges against the
+// computer, the colour to move and its edges with two players.
+function updateSideLineHex() {
+  const el = document.getElementById("hex-side-line");
+  if (!el) return;
+  const color = AppStateHex.mode === "offline-ai" ? AppStateHex.humanColor : AppStateHex.turn;
+  const key = AppStateHex.mode === "offline-ai"
+    ? (color === "r" ? "hex_you_black" : "hex_you_white")
+    : (color === "r" ? "hex_turn_black" : "hex_turn_white");
+  if (AppStateHex.mode !== "offline-ai" && AppStateHex.gameOver) { el.removeAttribute("data-i18n"); el.textContent = ""; return; }
+  I18n.setKey(el, key);
 }
 
 function setStatusHex(elementId, text) {
@@ -86,11 +107,20 @@ function resultTitleHex(winner) {
   return colorNameHex(winner) + " wins";
 }
 
+// Against the computer the result is one line: "Black wins by connecting
+// both sides! You win." (task 120) - not the colour in one line and "You
+// win." in another.
 function announceGameResultHex(resultCode, message) {
-  setGameResultHex(message);
-  setStatusHex("board-info", message);
+  let full = message;
+  if (AppStateHex.mode === "offline-ai" && typeof UiStatus !== "undefined") {
+    const short = UiStatus.rewrite(message, AppStateHex);
+    if (short && short !== message) full = message + " " + short;
+  }
+  setGameResultHex(full);
+  const info = document.getElementById("board-info");
+  if (info) I18n.setMsg(info, AppStateHex.mode === "offline-ai" ? "" : full);
   if (window.ResultModal) {
-    window.ResultModal.show(resultCode, message);
+    window.ResultModal.show(resultCode, full);
   }
 }
 
@@ -109,13 +139,13 @@ function pushUndoSnapshotHex() {
   });
 }
 
-// The status line when Blue may swap (only ever right after the first
+// The status line when White may swap (only ever right after the first
 // stone), else null.
 function swapOfferTextHex() {
   if (!HexCore.canSwap(AppStateHex.state) || !isHumanTurnHex()) return null;
   return AppStateHex.mode === "offline-ai"
-    ? "Your turn: place a stone, or tap Swap to take over the red stone."
-    : "Blue to move: place a stone, or tap Swap to take over the red stone.";
+    ? "Your turn: place a stone, or tap Swap to take over the black stone."
+    : "White to move: place a stone, or tap Swap to take over the black stone.";
 }
 
 function onSwapHex() {
@@ -133,12 +163,12 @@ function applySwapHex() {
   updateHexBoard();
   updateGameLabelsHex();
   if (!vsAi) {
-    setStatusHex("board-info", "Sides swapped: the player who was Blue now plays Red and owns the first stone. Blue to move.");
+    setStatusHex("board-info", "Sides swapped: the player who was White now plays Black and owns the first stone. White to move.");
     return;
   }
   const text = humanSwaps
-    ? "You swap: you now play Red and own the first stone."
-    : "The computer swaps: it now plays Red and owns the first stone. You play Blue.";
+    ? "You swap: you now play Black and own the first stone."
+    : "The computer swaps: it now plays Black and owns the first stone. You play White.";
   setStatusHex("offline-hex-status", text);
   setStatusHex("board-info", text);
   if (AppStateHex.turn !== AppStateHex.humanColor) setTimeout(aiTurnHex, AiPacing.delay(350));
@@ -159,7 +189,19 @@ function initHexApp() {
   function updateColorChoiceVisibility() {
     if (!colorChoice || !levelInline) return;
     colorChoice.classList.toggle("hidden", levelInline.value === "0");
+    markColorChoice();
   }
+
+  // The chosen colour gets a thick frame (not only the radio button).
+  function markColorChoice() {
+    document.querySelectorAll(".hex-color-label").forEach((label) => {
+      const input = label.querySelector("input");
+      label.classList.toggle("hex-color-label-on", !!(input && input.checked));
+    });
+  }
+  document.querySelectorAll("input[name='hex-color']").forEach((input) => input.addEventListener("change", markColorChoice));
+  // Remembered settings are written back without change events.
+  window.addEventListener("load", markColorChoice);
 
   function setActiveModeButton(mode) {
     if (!modeOffline || !modeOfflineAi) return;
@@ -489,6 +531,7 @@ function updateHexBoard() {
 }
 
 function updateGameLabelsHex() {
+  updateSideLineHex();
   const meta = document.getElementById("game-meta");
   if (meta) I18n.setMsg(meta, AppStateHex.moveCount ? "Move " + AppStateHex.moveCount : "");
   updateUndoButtonVisibilityHex();
