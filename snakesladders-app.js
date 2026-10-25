@@ -155,6 +155,13 @@ function initSnakesLaddersApp() {
   });
   document.getElementById("sl-roll").addEventListener("click", humanRollSL);
   document.getElementById("sl-next").addEventListener("click", nextComputerSL);
+  const F = (n, st) => Howto.tile(n, st, 36);
+  Howto.init({ slug: "snakesladders", actions: ["sl-roll"], steps: [
+    { pics: Howto.die(4, 44) + Howto.arrow() + F(1) + F(2) + F(3) + F(4, "peg"), key: "snakesladders_howto_1" },
+    { pics: F(3) + Howto.ladder() + F(12), key: "snakesladders_howto_2" },
+    { pics: F(17) + Howto.snake() + F(6), key: "snakesladders_howto_3" },
+    { pics: F("", "peg") + Howto.arrow() + F(100) + Howto.sign("=") + F("", "mark"), key: "snakesladders_howto_4" }
+  ] });
   window.addEventListener("resize", () => { if (AppStateSL.state) renderBoardSL(); });
   if (typeof I18n !== "undefined" && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateSL.state) renderSL(); });

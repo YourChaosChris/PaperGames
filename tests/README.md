@@ -99,10 +99,17 @@ all parts back into one log in list order. The last line is exactly
   computer-opponent games use the shared four localized turn and winner
   status keys (now in the shared `ui-status.js`); documents the
   simultaneous-round exception in War.
-- `node tests/howto.js` - no server or browser needed. Checks that the five
+- `node tests/howto.js` - no server or browser needed. Checks that the eight
   games with the shared picture explanation (`howto.js`) load it before
   their app, call `Howto.init` with four steps, and have all step
-  sentences in 12 languages.
+  sentences in 12 languages; for Link Pairs, Old Maid and Snakes and
+  Ladders each sentence has at most 8 words (24 characters in Japanese and
+  Chinese).
+- `node tests/howto-ui.js` - needs the server and Playwright. Link Pairs,
+  Old Maid and Snakes and Ladders, German page at 360 px: the explanation
+  is open on the first visit with four picture steps, fits on one screen,
+  hides after the first game action, the button opens it again, and it
+  stays closed after a reload.
 - `node tests/undo.js` - no server or browser needed. Checks Undo coverage for
   every computer-opponent game, verifies the shared localized button and
   enabled/disabled source behavior, exercises one-ply hotseat and paired

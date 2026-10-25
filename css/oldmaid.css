@@ -158,3 +158,9 @@
   height: auto;
   margin: 0 auto;
 }
+
+/* Cards in the picture explanation (howto.js) stay small. */
+.howto .oldmaid-pic {
+  width: 34px;
+  height: 34px;
+}

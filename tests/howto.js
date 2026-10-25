@@ -6,7 +6,7 @@ const fs = require("fs");
 const path = require("path");
 const ROOT = path.join(__dirname, "..");
 const LANGS = ["en", "de", "fr", "es", "it", "nl", "pl", "uk", "ru", "ja", "zh", "ar"];
-const GAMES = { bingo: "bingo", steckwuerfeln: "sw", klappenkasten: "kk", zoowurf: "zw", weidefreunde: "wf" };
+const GAMES = { bingo: "bingo", steckwuerfeln: "sw", klappenkasten: "kk", zoowurf: "zw", weidefreunde: "wf", linkpairs: "linkpairs", oldmaid: "oldmaid", snakesladders: "snakesladders" };
 const files = (l) => (l === "en" ? ["i18n.js"] : ["lang/" + l + ".js"]).map((f) => fs.readFileSync(path.join(ROOT, f), "utf8")).join("\n");
 const text = {};
 LANGS.forEach((l) => { text[l] = files(l); });
@@ -27,6 +27,21 @@ for (const [game, prefix] of Object.entries(GAMES)) {
     LANGS.forEach((l) => { keys++; if (!has(l, key)) failures.push(key + " missing in " + l); });
   }
 }
+// Short sentences (task 116): at most 8 words, in Japanese and Chinese at
+// most 24 characters, for the games added then.
+const SHORT = ["linkpairs", "oldmaid", "snakesladders"];
+SHORT.forEach((game) => {
+  for (let i = 1; i <= 4; i++) {
+    const key = GAMES[game] + "_howto_" + i;
+    LANGS.forEach((l) => {
+      const m = new RegExp("^    " + key + ": (\"(?:[^\"\\\\]|\\\\.)*\")", "m").exec(text[l]);
+      if (!m) return;
+      const v = JSON.parse(m[1]);
+      const long = l === "ja" || l === "zh" ? v.length > 24 : v.split(/\s+/).filter(Boolean).length > 8;
+      if (long) failures.push(key + " in " + l + " is too long: " + v);
+    });
+  }
+});
 ["howto_title", "howto_show", "howto_hide"].forEach((key) => LANGS.forEach((l) => { keys++; if (!has(l, key)) failures.push(key + " missing in " + l); }));
 if (failures.length) {
   console.error("Howto checks failed:\n- " + failures.join("\n- "));

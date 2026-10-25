@@ -117,5 +117,45 @@ const Howto = (function () {
     return '<span class="howto-card">' + inner + "</span>";
   }
 
-  return { init: init, die: die, arrow: arrow, sign: sign, tile: tile, box: box };
+  // A ladder leading up (an arrow at the top shows the way).
+  function ladder() {
+    return svg(30, 44, '<path d="M8 42V10M22 42V10M8 36H22M8 28H22M8 20H22" fill="none" stroke="' + INK + '" stroke-width="3" stroke-linecap="round"/>' +
+      '<path d="M9 8L15 2L21 8" fill="none" stroke="' + INK + '" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>');
+  }
+
+  // A snake leading down: black head at the top, the tail ends in an
+  // arrow at the bottom.
+  function snake() {
+    return svg(30, 44, '<path d="M15 8C25 12 5 18 15 23C25 28 5 32 15 37" fill="none" stroke="' + INK + '" stroke-width="3.5" stroke-linecap="round"/>' +
+      '<circle cx="15" cy="7" r="5" fill="' + INK + '"/><path d="M10 37L15 43L20 37" fill="none" stroke="' + INK + '" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>');
+  }
+
+  // A small board of cells. rows: strings, one character per cell ("." =
+  // empty, any other character is written in the cell); lines: lists of
+  // [row, col] cells joined by a thick line through their centres.
+  function grid(rows, lines, cellSize) {
+    const c = cellSize || 26;
+    const h = rows.length, w = rows[0].length;
+    let b = "";
+    for (let r = 0; r < h; r++) {
+      for (let k = 0; k < w; k++) {
+        b += '<rect x="' + (k * c + 1.5) + '" y="' + (r * c + 1.5) + '" width="' + c + '" height="' + c + '" fill="#fff" stroke="' + INK + '" stroke-width="1.5"/>';
+      }
+    }
+    (lines || []).forEach(function (cells) {
+      const pts = cells.map(function (p) { return (p[1] * c + c / 2 + 1.5) + "," + (p[0] * c + c / 2 + 1.5); }).join(" ");
+      b += '<polyline points="' + pts + '" fill="none" stroke="' + INK + '" stroke-width="' + Math.round(c / 4) + '" stroke-linecap="round" stroke-linejoin="round"/>';
+    });
+    for (let r = 0; r < h; r++) {
+      for (let k = 0; k < w; k++) {
+        const ch = rows[r][k];
+        if (ch === ".") continue;
+        b += '<circle cx="' + (k * c + c / 2 + 1.5) + '" cy="' + (r * c + c / 2 + 1.5) + '" r="' + (c * 0.36) + '" fill="#fff" stroke="' + INK + '" stroke-width="2"/>' +
+          '<text x="' + (k * c + c / 2 + 1.5) + '" y="' + (r * c + c / 2 + 1.5 + c * 0.2) + '" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="' + Math.round(c * 0.5) + '" fill="' + INK + '">' + ch + "</text>";
+      }
+    }
+    return svg(w * c + 3, h * c + 3, b);
+  }
+
+  return { init: init, die: die, arrow: arrow, sign: sign, tile: tile, box: box, ladder: ladder, snake: snake, grid: grid };
 })();

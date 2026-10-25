@@ -134,6 +134,16 @@ function initOldMaidApp() {
   document.getElementById("start-oldmaid-game").addEventListener("click", () => {
     startGameOldMaid(playersSelect ? parseInt(playersSelect.value, 10) : 2);
   });
+  // Picture explanation: cards as framed pictures, a hidden card as a
+  // hatched back.
+  const C = (card) => Howto.box(cardSvgOldMaid(card));
+  const BACK = Howto.box('<svg class="oldmaid-pic" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M4 12L12 4M4 22L22 4M4 32L32 4M8 36L36 8M18 36L36 18M28 36L36 28" stroke="#141413" stroke-width="2.5" stroke-linecap="round"/></svg>');
+  Howto.init({ slug: "oldmaid", actions: ["oldmaid-from"], steps: [
+    { pics: C(0) + C(0) + Howto.arrow() + Howto.tile("", "mark", 36), key: "oldmaid_howto_1" },
+    { pics: BACK + BACK + BACK + Howto.arrow() + C(1), key: "oldmaid_howto_2" },
+    { pics: C(1) + C(1) + Howto.arrow() + Howto.tile("", "mark", 36), key: "oldmaid_howto_3" },
+    { pics: C(OldMaidCore.PETER) + Howto.sign("=") + Howto.tile("", "shut", 36), key: "oldmaid_howto_4" }
+  ] });
   if (typeof I18n !== "undefined" && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateOldMaid.state) renderOldMaid(); });
   }

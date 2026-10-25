@@ -121,6 +121,14 @@ function initLinkPairsApp() {
   document.getElementById("linkpairs-undo").addEventListener("click", undoLinkPairs);
   document.getElementById("hint-btn").addEventListener("click", hintLinkPairs);
   wireLinkPairsBoard();
+  const ROWS = ["132", "...", "132"];
+  const L1 = [[0, 0], [1, 0], [2, 0]], L2 = [[0, 2], [1, 2], [2, 2]], L3 = [[0, 1], [1, 1], [2, 1]];
+  Howto.init({ slug: "linkpairs", actions: ["linkpairs-board"], steps: [
+    { pics: Howto.grid(ROWS, []), key: "linkpairs_howto_1" },
+    { pics: Howto.grid(ROWS, [L1]), key: "linkpairs_howto_2" },
+    { pics: Howto.grid([".1.", "2.2", ".1."], [[[0, 1], [1, 1], [2, 1]], [[1, 0], [1, 1], [1, 2]]]) + Howto.sign("=") + Howto.tile("", "shut", 36), key: "linkpairs_howto_3" },
+    { pics: Howto.grid(ROWS, [L1, L3, L2]) + Howto.sign("=") + Howto.tile("", "mark", 36), key: "linkpairs_howto_4" }
+  ] });
   window.addEventListener("resize", () => { if (AppStateLinkPairs.puzzle) sizeLinkPairsBoard(); });
   if (typeof I18n !== "undefined" && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateLinkPairs.puzzle) renderLinkPairs(); });

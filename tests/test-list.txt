@@ -10,6 +10,7 @@
 1 ui-names.js
 1 ui-status.js
 1 howto.js
+8 howto-ui.js
 1 undo.js
 1 game-frame.js
 1 search-keywords.js
