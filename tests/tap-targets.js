@@ -38,8 +38,37 @@ const pages = fs.readdirSync(ROOT).filter((f) => /^games(-[a-z]+)?\.html$/.test(
     if (res.overflow > 0) bad.push(name + ": horizontal overflow " + res.overflow);
     await context.close();
   }
+  // Task 125: small buttons (class "small") on game pages are at least
+  // 44 px high after the start, at 360 px.
+  const SMALL = ["bingo", "klappenkasten", "steckwuerfeln", "weidefreunde", "zoowurf", "minesweeper", "twenty48", "freecell", "mahjong", "nonogram", "doppelkopf", "fleetbattle", "shapesort", "chess", "fanorona", "hex", "matches"];
+  let small = 0;
+  for (const slug of SMALL) {
+    const context = await browser.newContext({ viewport: { width: 360, height: 740 }, serviceWorkers: "block" });
+    const page = await context.newPage();
+    page.on("dialog", (d) => d.accept());
+    await page.goto(BASE + slug + ".html?lang=de", { waitUntil: "load" });
+    await page.waitForTimeout(800);
+    await page.evaluate(() => { const b = document.querySelector('button[id^="start-"]'); if (b && b.offsetParent) b.click(); });
+    await page.waitForTimeout(800);
+    const res = await page.evaluate(() => {
+      const out = { n: 0, bad: [] };
+      document.querySelectorAll("main button.small").forEach((el) => {
+        const r = el.getBoundingClientRect(); const s = getComputedStyle(el);
+        if (r.width === 0 || r.height === 0 || s.visibility === "hidden" || s.display === "none") return;
+        out.n++;
+        if (r.height < 43.5) out.bad.push((el.id || el.className) + " " + Math.round(r.width) + "x" + Math.round(r.height));
+      });
+      out.overflow = document.documentElement.scrollWidth - innerWidth;
+      return out;
+    });
+    small += res.n;
+    res.bad.forEach((b) => bad.push(slug + ": small button " + b));
+    if (!res.n) bad.push(slug + ": no small button found");
+    if (res.overflow > 0) bad.push(slug + ": horizontal overflow " + res.overflow);
+    await context.close();
+  }
   await browser.close();
   bad.forEach((b) => console.log("FAIL " + b));
-  console.log("=== TAP TARGETS: " + pages.length + " category pages, " + checked + " targets, " + bad.length + " failure(s) ===");
+  console.log("=== TAP TARGETS: " + pages.length + " category pages, " + checked + " targets; " + SMALL.length + " game pages, " + small + " small buttons at least 44 px; " + bad.length + " failure(s) ===");
   process.exit(bad.length ? 1 : 0);
 })();

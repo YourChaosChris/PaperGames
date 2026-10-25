@@ -77,6 +77,7 @@
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
     <button id="start-hex-game" class="primary" data-i18n="ui_new_game">New game</button>
+    <button type="button" class="secondary small big-board-toggle" data-big-board="hex" data-i18n="big_board_on">Large board</button>
     <div id="hex-color-choice" class="inline-options">
       <label class="color-choice hex-color-label"><input type="radio" name="hex-color" value="r" checked> <span class="color-choice-icon hex-icon-piece hex-icon-piece-r"></span> <span data-i18n="hex_choose_black">I play Black (top to bottom, moves first)</span></label>
       <label class="color-choice hex-color-label"><input type="radio" name="hex-color" value="b"> <span class="color-choice-icon hex-icon-piece hex-icon-piece-b"></span> <span data-i18n="hex_choose_white">I play White (left to right)</span></label>
@@ -109,9 +110,9 @@
   </div>
   <div id="board-container" class="hidden">
     <div id="hex-side-line" class="hex-side-line" aria-live="polite"></div>
-    <div id="hex-board-wrap" class="hex-board-wrap">
+    <div class="big-board-scroll"><div id="hex-board-wrap" class="hex-board-wrap">
       <div id="hex-board" class="hex-board" role="group" aria-label="Hex board"></div>
-    </div>
+    </div></div>
     <div class="hex-legend">
       <span class="hex-legend-item"><span class="hex-icon-piece hex-icon-piece-r"></span> <span data-i18n="hex_legend_r">Black: top ↕ bottom</span></span>
       <span class="hex-legend-item"><span class="hex-icon-piece hex-icon-piece-b"></span> <span data-i18n="hex_legend_b">White: left ↔ right</span></span>
@@ -132,6 +133,7 @@
 
 <script src="error-banner.js"></script>
 <script src="i18n.js"></script>
+<script src="big-board.js"></script>
 <script src="font-size-toggle.js"></script>
 <script src="high-contrast.js"></script>
 <script src="force-update.js"></script>

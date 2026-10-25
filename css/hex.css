@@ -11,6 +11,9 @@
   margin: 0 auto;
 }
 
+/* Large board (task 125): cells of about 36 px instead of 25 px at 360 px. */
+.big-board-enabled .hex-board-wrap { min-width: 480px; margin: 0; }
+
 .hex-board {
   position: relative;
   width: 100%;

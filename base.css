@@ -190,6 +190,12 @@ a.small {
   padding: var(--space-1) var(--space-2);
 }
 
+/* Small buttons stay small in look, but are at least 44 px high to tap
+   (task 125). */
+button.small {
+  min-height: 44px;
+}
+
 button:disabled {
   opacity: 0.5;
   cursor: default;

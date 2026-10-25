@@ -3,8 +3,9 @@
 const { chromium } = require("playwright");
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const MIN = 28;
-// Large-board mode is the way to reach 28 px on these boards at 360 px.
-const GAMES = { marblepush: "Marble Push", hashi: "Hashi", gomoku: "Gomoku", sternhalma: "Sternhalma", ludo: "Ludo" };
+// Large-board mode is the way to reach 28 px on these boards at 360 px
+// (Fanorona, Hex and Matchstick Puzzles since task 125).
+const GAMES = { marblepush: "Marble Push", hashi: "Hashi", gomoku: "Gomoku", sternhalma: "Sternhalma", ludo: "Ludo", fanorona: "Fanorona", hex: "Hex", matches: "Matchstick Puzzles" };
 (async () => {
   const browser = await chromium.launch();
   const bad = [];
@@ -17,7 +18,7 @@ const GAMES = { marblepush: "Marble Push", hashi: "Hashi", gomoku: "Gomoku", ste
     await page.waitForTimeout(1500);
     const r = await page.evaluate(() => {
       const root = document.getElementById("board-container");
-      const cells = Array.from(root.querySelectorAll(".marblepush-cell, .hashi-island, .gomoku-point, .sternhalma-cell, .ludo-cell")).filter((el) => el.getBoundingClientRect().width > 3);
+      const cells = Array.from(root.querySelectorAll(".marblepush-cell, .hashi-island, .gomoku-point, .sternhalma-cell, .ludo-cell, .fanorona-point, .hex-cell, .mt-slot")).filter((el) => el.getBoundingClientRect().width > 3);
       const sizes = cells.map((el) => { const b = el.getBoundingClientRect(); return Math.min(b.width, b.height); });
       const toggle = document.querySelector(".big-board-toggle");
       return { n: sizes.length, min: sizes.length ? Math.round(Math.min.apply(null, sizes)) : 0, overflow: document.documentElement.scrollWidth - innerWidth, toggle: !!(toggle && toggle.offsetParent) };

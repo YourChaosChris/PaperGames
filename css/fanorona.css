@@ -1,4 +1,6 @@
 /* fanorona: rules used only by the fanorona pages (loaded after base.css). */
+/* Large board (task 125): points of about 35 px instead of 22 px at 360 px. */
+.big-board-enabled .fanorona-board { min-width: 520px; margin: 0; }
 /* Fanorona board: 45 points in a 5x9 grid (wider than tall, unlike most
    boards here), so it uses the same percentage-based absolute-positioning
    technique as WallMaze/Hex/Go rather than a plain float-grid, with a

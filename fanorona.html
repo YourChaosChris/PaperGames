@@ -67,6 +67,7 @@
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
     <button id="start-fanorona-game" class="primary" data-i18n="ui_new_game">New game</button>
+    <button type="button" class="secondary small big-board-toggle" data-big-board="fanorona" data-i18n="big_board_on">Large board</button>
     <div id="fanorona-color-choice" class="inline-options">
       <label class="color-choice"><input type="radio" name="fanorona-color" value="white" checked> <span class="color-choice-icon"><span class="fanorona-icon-disc fanorona-icon-disc-white"></span></span></label>
       <label class="color-choice"><input type="radio" name="fanorona-color" value="black"> <span class="color-choice-icon"><span class="fanorona-icon-disc fanorona-icon-disc-black"></span></span></label>
@@ -98,7 +99,7 @@
     </div>
   </div>
   <div id="board-container" class="hidden">
-    <div id="fanorona-board" class="fanorona-board" role="group" aria-label="Fanorona board"></div>
+    <div class="big-board-scroll"><div id="fanorona-board" class="fanorona-board" role="group" aria-label="Fanorona board"></div></div>
   </div>
   <div id="fanorona-capture-choice" class="fanorona-capture-choice hidden">
     <span data-i18n="fanorona_choose_capture_type">Both a forward and a backward capture are available - choose one:</span><br>
@@ -124,6 +125,7 @@
 
 <script src="error-banner.js"></script>
 <script src="i18n.js"></script>
+<script src="big-board.js"></script>
 <script src="font-size-toggle.js"></script>
 <script src="high-contrast.js"></script>
 <script src="force-update.js"></script>

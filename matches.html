@@ -65,6 +65,7 @@
     <section id="mt-controls" class="card">
   <div class="field-row">
     <button id="start-mt-game" class="primary" data-i18n="ui_new_game">New game</button>
+    <button type="button" class="secondary small big-board-toggle" data-big-board="matches" data-i18n="big_board_on">Large board</button>
     <select id="mt-level" data-i18n-attr="aria-label:bl_level_label" aria-label="Level">
         <option value="easy" selected data-i18n="level_easy">Easy</option>
         <option value="medium" data-i18n="level_medium">Medium</option>
@@ -95,7 +96,7 @@
   <div id="board-container" class="hidden">
     <p id="mt-task" class="mt-task"></p>
     <div id="mt-info" class="sk-game-line"></div>
-    <div id="mt-board" class="mt-board" role="group" aria-label="Matchstick Puzzles"></div>
+    <div class="big-board-scroll"><div id="mt-board" class="mt-board" role="group" aria-label="Matchstick Puzzles"></div></div>
     <div class="pt-hand">
       <button id="mt-undo" class="secondary" type="button" data-i18n="undo_button">Undo</button>
       <button id="mt-reset" class="secondary" type="button" data-i18n="mt_reset">Start over</button>
@@ -103,6 +104,7 @@
       <button id="mt-next" class="primary hidden" type="button" data-i18n="mt_next">Next puzzle</button>
     </div>
   </div>
+  <div id="board-actions" class="board-actions"></div>
 </section>
   </main>
   <footer class="site-footer">
@@ -113,6 +115,7 @@
 
 <script src="error-banner.js"></script>
 <script src="i18n.js"></script>
+<script src="big-board.js"></script>
 <script src="font-size-toggle.js"></script>
 <script src="high-contrast.js"></script>
 <script src="ai-pacing.js"></script>

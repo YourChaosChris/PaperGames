@@ -93,7 +93,7 @@
 7 rtl-spacing.js
 172 direct-start.js
 286 board-fit.js --min 80
-15 tap-targets.js
+40 tap-targets.js
 40 startup-limits.js
 11 cell-size.js
 36 board-sweep.js

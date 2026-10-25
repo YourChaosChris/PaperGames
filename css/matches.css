@@ -5,6 +5,10 @@
   margin: 0.4rem auto 0.6rem;
 }
 
+/* Large board (task 125): places for a match at least 28 px across at
+   360 px (21 px without it). The script sets a max-width per puzzle. */
+.big-board-enabled .mt-board { min-width: 460px; max-width: none !important; margin-left: 0; margin-right: 0; }
+
 .mt-slot {
   position: absolute;
   min-width: 0;
