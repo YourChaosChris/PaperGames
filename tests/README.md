@@ -479,6 +479,17 @@ all parts back into one log in list order. The last line is exactly
   moves with their reason, undo, shortest ways from 300 random positions.
   Nim: the xor rule (and misère) against a full search for all positions
   up to 3 heaps of 6, Hard wins 100 games each from winning positions.
+- `node tests/teufelsieben-core.js` - no server or browser needed. Devilish
+  Seven (task 121): the deck (79 number cards, 11 special cards), going
+  bust, the Rescue card, seven numbers with the bonus, Pause, Second
+  helping, +3, +5, Double, round points, the end and a tie; `GAMES`
+  (default 500) computer games each with 2, 3, 4 and 6 players without a
+  hang, cards conserved, Hard wins more often than Easy; the computer's
+  chance counts only open cards; save and load.
+- `node tests/teufelsieben-ui.js` - needs the server and Playwright. German
+  page at 360 x 640: start, turn up, stop, round end and next round, a
+  Pause makes the rows buttons (44 px), game end with the result, save and
+  load, no sideways scroll.
 - `node tests/small-games-ui.js` - needs the server and Playwright. The
   three games of task 118 at 360 px in German: sliding puzzle (taps, the
   note outside row and column, hint, solved with the fewest moves, 5 x 5,

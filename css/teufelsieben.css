@@ -1,0 +1,151 @@
+/* teufelsieben: rules used only by the teufelsieben pages (loaded after base.css). */
+/* ---- Devil's Seven ----
+   One framed row per player (the player to move: thick frame; a player who
+   may get a Pause / Second helping: dashed thick frame to tap). Cards are
+   white with a black number; special cards have a double frame, their sign
+   and their name. A bust number is struck through. Black on white,
+   nothing animated; spacing from margins (Tolino). */
+.ts-rows {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.ts-player {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  margin: 0 0 6px;
+  padding: 4px 6px;
+  border: 2px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+  color: #141413;
+  text-align: start;
+  font: inherit;
+}
+
+.ts-player-active {
+  border-width: 4px;
+  padding: 2px 4px;
+}
+
+button.ts-player-target {
+  border: 4px dashed #141413;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+
+.ts-player-head {
+  display: block;
+}
+
+.ts-player-name {
+  font-weight: 700;
+}
+
+.ts-player-status {
+  font-style: italic;
+}
+
+.ts-player-points {
+  display: block;
+}
+
+.ts-player-bust .ts-player-points {
+  text-decoration: line-through;
+}
+
+.ts-player-cards {
+  display: flex;
+  flex-wrap: wrap;
+  direction: ltr;
+}
+
+.ts-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 4.2rem;
+  height: 5.6rem;
+  margin: 2px;
+  border: 3px solid #141413;
+  border-radius: 6px;
+  background: #fff;
+  color: #141413;
+  vertical-align: top;
+}
+
+.ts-card .ts-num {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ts-card svg {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.ts-card-name {
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.ts-card-special {
+  border: 5px double #141413;
+}
+
+.ts-card-small {
+  width: 2.2rem;
+  height: 2.9rem;
+  border-width: 2px;
+  border-radius: 4px;
+}
+
+.ts-card-small .ts-num {
+  font-size: 1.15rem;
+}
+
+.ts-card-small svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.ts-card-small .ts-card-name {
+  display: none;
+}
+
+.ts-card-small.ts-card-special {
+  border: 4px double #141413;
+}
+
+/* the number that made the player go bust */
+.ts-card-bust {
+  border-style: dashed;
+}
+
+.ts-card-bust .ts-num {
+  text-decoration: line-through;
+}
+
+.ts-last {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 6rem;
+  margin: var(--space-1) 0;
+}
+
+.ts-last-text {
+  margin: 0 8px;
+  max-width: 16rem;
+}
+
+.ts-actions button {
+  min-height: 44px;
+}

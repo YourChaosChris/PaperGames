@@ -1319,6 +1319,17 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-25T19:02",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"4\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><g fill=\"#141413\"><circle cx=\"11\" cy=\"11\" r=\"3.2\"/><circle cx=\"11\" cy=\"20\" r=\"3.2\"/><circle cx=\"20\" cy=\"20\" r=\"3.2\"/><circle cx=\"11\" cy=\"29\" r=\"3.2\"/><circle cx=\"20\" cy=\"29\" r=\"3.2\"/><circle cx=\"29\" cy=\"29\" r=\"3.2\"/></g></svg></span>"
+  },
+  {
+    slug: "teufelsieben",
+    category: "party",
+    nameKey: "game_teufelsieben",
+    nameText: "Devilish Seven",
+    descKey: "home_teufelsieben_desc",
+    descText: "A push-your-luck card game: turn up cards one by one and stop in time. A number you already have makes you go bust, seven different numbers bring a bonus. 2 to 6 players, against the computer or on one device.",
+    popular: false,
+    added: "2026-10-25T20:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"8\" y=\"3\" width=\"24\" height=\"34\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><text x=\"20\" y=\"27\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"700\" font-size=\"17\" fill=\"#141413\">7</text><path d=\"M14 9V14M20 8V14M26 9V14M14 14H26\" fill=\"none\" stroke=\"#141413\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></span>"
   }
 ];
 

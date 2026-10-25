@@ -130,7 +130,8 @@
     ["tieryatzy", "game_tieryatzy", "dicegames"],
     ["slidepuzzle", "game_slidepuzzle"],
     ["hanoi", "game_hanoi"],
-    ["nim", "game_nim"]
+    ["nim", "game_nim"],
+    ["teufelsieben", "game_teufelsieben"]
   ];
 
   var GAME_SLUGS = {};

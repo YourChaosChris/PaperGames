@@ -13,7 +13,7 @@ const games = [
   "marblepush", "maumau", "morris", "pairs", "poker", "reversi", "romme",
   "schwimmen", "seega", "senet", "shogi", "snakesladders", "steckwuerfeln", "sternhalma", "sternjagd",
   "surakarta", "tablut", "tictactoe", "trix", "ur", "villains", "wallmaze",
-  "war", "weidefreunde", "xiangqi", "zoowurf", "tieryatzy", "nim"
+  "war", "weidefreunde", "xiangqi", "zoowurf", "tieryatzy", "nim", "teufelsieben"
 ];
 const statusKeys = [
   "ui_status_your_turn", "ui_status_computer_turn",
