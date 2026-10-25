@@ -5,16 +5,46 @@ under the MIT License (see LICENSE-MIT-bis-v253.txt).
 The third-party parts listed below are not covered by the noncommercial
 restriction. They stay under their own licenses.
 
-The “cburnett” chess piece set is by Colin M.L. Burnett, from Wikimedia
-Commons (https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces), and
-is used under the BSD option of its GFDL / CC BY-SA 3.0 / BSD licenses; it
-appears in pieces.js and style.css.
+The “cburnett” chess piece set is by Colin M.L. Burnett (Wikimedia Commons
+user Cburnett), from Wikimedia Commons
+(https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces, for example
+https://commons.wikimedia.org/wiki/File:Chess_klt45.svg), and is used under
+the BSD option of its GFDL / BSD / GPL licenses; it appears in pieces.js and
+base.css. The BSD license text as given on the Wikimedia Commons file pages
+(template “BSD”, three clauses):
 
-The Xiangqi symbol-style pieces are adapted from drawings by Inductiveload on Wikimedia Commons, with per-piece edits by Kadagaden in “xiangqi_wikipedia_intl_modded” at https://github.com/Kadagaden/chess-pieces. The adapted figures are used under CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/ They appear in xiangqi-app.js.
+  Copyright © The author (Colin M.L. Burnett)
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are
+  met:
+  1. Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+  3. Neither the name of The author nor the names of its contributors may be
+     used to endorse or promote products derived from this software without
+     specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY
+  EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  DISCLAIMED. IN NO EVENT SHALL THE AUTHOR AND CONTRIBUTORS BE LIABLE FOR ANY
+  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+  SUCH DAMAGE.
+
+The Xiangqi symbol-style pieces are adapted from drawings by Inductiveload on Wikimedia Commons, with per-piece edits by Kadagaden in “xiangqi_wikipedia_intl_modded” at https://github.com/Kadagaden/chess-pieces. The adapted figures are used under CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/ They appear in their own file, xiangqi-pieces.js, which is under CC BY-SA 4.0 (not under the PolyForm Noncommercial License); its header names the authors, the license and the changes made (background disc and outer ring removed, line art kept).
 
 The “kanji_light” Shogi piece kanji are by Kadagaden, from
-https://github.com/Kadagaden/shogi-pieces, under CC BY 4.0; they appear
-in shogi-app.js.
+https://github.com/Kadagaden/shogi-pieces, under CC BY 4.0
+(https://creativecommons.org/licenses/by/4.0/); they appear in
+shogi-app.js.
 
 The Minesweeper symbol by Skoll and the FreeCell symbol by Aussiesim are
 from https://game-icons.net under CC BY 3.0; they appear in

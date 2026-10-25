@@ -13,8 +13,9 @@
 //
 // The board and hand kanji themselves are real calligraphy (not a plain
 // system-font character), adapted from the "kanji_light" piece set by
-// Kadagaden (github.com/Kadagaden/shogi-pieces, CC BY 4.0) - the same
-// author and license family already credited for Xiangqi's symbol set.
+// Kadagaden (github.com/Kadagaden/shogi-pieces), under CC BY 4.0
+// (https://creativecommons.org/licenses/by/4.0/). Kadagaden also adapted
+// Xiangqi's symbol set, which is under CC BY-SA 4.0 (xiangqi-pieces.js).
 // Only the ink survives here: each source SVG's own pentagon/background
 // is stripped (this app draws its own via .shogi-piece's clip-path), and
 // every fill/stroke is forced to solid black even where the original art

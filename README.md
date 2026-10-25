@@ -164,14 +164,16 @@ licenses (not the PolyForm Noncommercial grant above, and not
 restricted to noncommercial use) — see [NOTICE](NOTICE):
 
 - Chess piece set ("cburnett") by Colin M.L. Burnett, used under the BSD
-  license (`pieces.js` and the pawn icons in the CSS).
+  license, three clauses, full text in [NOTICE](NOTICE) (`pieces.js` and
+  the pawn icons in `base.css`).
 - Xiangqi's symbol-style pieces are adapted from piece drawings originally
   by Inductiveload (Wikimedia Commons), adapted per piece by Kadagaden
   ([github.com/Kadagaden/chess-pieces](https://github.com/Kadagaden/chess-pieces),
   "xiangqi_wikipedia_intl_modded"), under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+  They are in their own file, `xiangqi-pieces.js`, under that license.
 - Shogi's piece kanji are adapted from the "kanji_light" piece set by
   Kadagaden ([github.com/Kadagaden/shogi-pieces](https://github.com/Kadagaden/shogi-pieces),
-  CC BY 4.0).
+  [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)).
 - The Minesweeper and FreeCell home-page icons are made by Skoll and
   Aussiesim respectively, available on [game-icons.net](https://game-icons.net)
   (CC BY 3.0).

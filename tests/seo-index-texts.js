@@ -1,14 +1,17 @@
 // tests/seo-index-texts.js
 // Title and description of the home page (seo_title_index, seo_desc_index)
-// exist in all 12 languages, are not empty, hold {games} and name the four
-// device brands; the static English <title> and description of index.html
-// are the English texts with the current game count.
+// exist in all 12 languages, are not empty and hold {games}. They do not
+// name Kindle or Kobo (not tested, the older browsers there do not run the
+// games); the description names the tested readers Tolino, Boox and
+// PocketBook (task 114). The static English <title> and description of
+// index.html are the English texts with the current game count.
 const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
 const LANGS = ["en", "de", "fr", "es", "it", "nl", "pl", "uk", "ru", "ja", "zh", "ar"];
-const BRANDS = ["Kindle", "Kobo", "Tolino", "Boox"];
+const NOT_PROMISED = ["Kindle", "Kobo"];
+const TESTED = ["Tolino", "Boox", "PocketBook"];
 let failed = 0;
 function check(ok, msg) { if (!ok) { failed++; console.log("FAIL: " + msg); } }
 
@@ -24,7 +27,9 @@ LANGS.forEach((l) => {
     all[l + "." + k] = v;
     check(v.trim().length > 10, l + ": " + k + " empty");
     check(v.indexOf("{games}") !== -1, l + ": " + k + " without {games}");
-    BRANDS.forEach((b) => check(v.indexOf(b) !== -1, l + ": " + k + " without " + b));
+    NOT_PROMISED.forEach((b) => check(v.indexOf(b) === -1, l + ": " + k + " names " + b + " (not tested)"));
+    if (k === "seo_desc_index") TESTED.forEach((b) => check(v.indexOf(b) !== -1, l + ": " + k + " without " + b));
+    if (k === "seo_title_index") check(v.length <= 60, l + ": title too long (" + v.length + ")");
     if (k === "seo_desc_index") check(v.length <= 175, l + ": description too long (" + v.length + ")");
   });
 });
@@ -34,7 +39,7 @@ const title = /<title[^>]*>([^<]*)<\/title>/.exec(html)[1].replace(/&amp;/g, "&"
 const desc = /<meta name="description"[^>]* content="([^"]*)"/.exec(html)[1];
 check(title === all["en.seo_title_index"].replace("{games}", n), "static <title> differs from the English text: " + title);
 check(desc === all["en.seo_desc_index"].replace("{games}", n), "static description differs from the English text");
-check(title.length <= 70, "English title too long (" + title.length + ")");
+check(title.length <= 60,"English title too long (" + title.length + ")");
 check(desc.length <= 160, "English description too long (" + desc.length + ")");
 const ld = /"description": "([^"]*)"/.exec(html)[1];
 check(ld === desc, "JSON-LD description differs from the meta description");

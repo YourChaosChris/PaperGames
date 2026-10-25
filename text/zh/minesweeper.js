@@ -19,7 +19,7 @@ Object.assign(STRINGS.zh, {
     minesweeper_history_title: "扫雷的历史",
     minesweeper_history_origins_title: "从大型机到桌面电脑",
     minesweeper_history_origins_p1: "揭示并推理的扫雷式游戏最早可追溯到 20 世纪 60 年代初，此后以各种名字出现在大型机和早期个人电脑上，一直延续到 1980 年代，其中包括 1989 年一款名为“Mined-Out”的 Windows/OS2 版本，以及若干名为“RLogic”“Cube”的免费克隆版。",
-    minesweeper_history_origins_p2: "真正让这款游戏家喻户晓的版本，是微软的罗伯特·唐纳（Robert Donner）和柯特·约翰逊（Curt Johnson）为 1992 年的 Windows 3.1 编写的，它取代了此前 Windows 自带的黑白棋，成为教新用户学习使用鼠标的“预装小游戏”——当年，左键点击和右键点击都还是需要真正练习的操作。",
+    minesweeper_history_origins_p2: "让这款游戏广为人知的 Windows 版本出自两位微软员工：柯特·约翰逊（Curt Johnson）最初为 IBM 的 OS/2 编写了这款游戏，罗伯特·唐纳（Robert Donner）把它移植到 Windows。它于1990年首次收录在 Microsoft Entertainment Pack 中，从1992年起成为 Windows 3.1 标准安装的一部分，取代了此前的 Windows 游戏“黑白棋”（Reversi）。",
     minesweeper_history_spread_title: "装进了每一台电脑",
     minesweeper_history_spread_p1: "由于 Windows 在 1990 年代和 2000 年代占据了全球个人电脑的绝对主导份额，扫雷几乎是理所当然地成了历史上被玩得最多的电脑游戏之一——它无处不在，不需要任何说明书，也很适合在工作间隙的碎片时间里玩上一把。",
     minesweeper_history_spread_p2: "如今被视为核心规则之一的“第一次点击保证安全”，本身也是一次改良：1992 年的最初版本，第一次点击偶尔也会直接踩雷，令人相当沮丧，后来的版本通过把地雷的放置推迟到第一次揭开之后，才修正了这一缺陷——本应用采用的正是这种做法。",

@@ -137,7 +137,7 @@
    disc instead (the same filled-vs-outlined trick already used for
    every other two-color game here), so which piece is whose reads
    from the disc itself, not from a hue. Classic-character text color
-   and the symbol-style SVGs' own stroke color (in xiangqi-app.js) are
+   and the symbol-style SVGs' own stroke color (in xiangqi-pieces.js) are
    flipped to match: dark ink on Red's light disc, light ink on
    Black's now-dark one. */
 .xq-piece-black.xq-piece-filled {

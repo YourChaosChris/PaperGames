@@ -20,7 +20,7 @@ Object.assign(STRINGS.zh, {
     yatzy_history_title: "快艇骰子的历史",
     yatzy_history_origins_title: "从骰子扑克到「快艇」游戏",
     yatzy_history_origins_p1: "早在快艇骰子出现之前，19世纪的「骰子扑克」游戏就使用五个印有扑克牌面（从9到A）的骰子，在完全不用纸牌的情况下组成对子、三条、四条、葫芦等扑克牌型。后来出现的「快艇」（Yacht）游戏改用普通的数字骰子，并允许每个回合多次重掷，把同样的一套扑克牌型分类搬到了带数字的记分表上，还加入了顺子和自己的五个相同点数的组合。",
-    yatzy_history_origins_p2: "据通常流传的说法，20世纪50年代中期，一对夫妇喜欢和朋友们在自己的私人游艇上玩「快艇」游戏，并制作了少量套装作为礼物送人，这引起了美国玩具公司E.S. Lowe的注意。",
+    yatzy_history_origins_p2: "据孩之宝（Hasbro）称，一对姓名不详的加拿大夫妇常和朋友在自家游艇上玩这个游戏，并称之为“The Yacht Game”。他们请美国玩具商埃德温·S·洛（Edwin S. Lowe）制作一些游戏套装，作为送给朋友的礼物。洛看到了销售的机会，以制作1000套礼品套装为交换，从这对夫妇手中获得了游戏的权利。",
     yatzy_history_spread_title: "米尔顿·布拉德利时代",
     yatzy_history_spread_p1: "E.S. Lowe 公司取得了这款游戏的权利，从1956年起以新的注册商标名「Yahtzee」进行生产。它成为20世纪最畅销的骰子游戏之一，E.S. Lowe 公司本身也在1973年被 Milton Bradley 公司收购，后者后来又并入了 Hasbro——如今 Yahtzee 商标仍归 Hasbro 所有。",
     yatzy_history_spread_p2: "由于「Yahtzee」是注册商标，想要销售或介绍同类游戏的其他出版商和地区通常不能直接使用这个名称——这也是同样玩法的记分表在数十年间以各种不同的地方名称流传的原因之一。",
