@@ -30,6 +30,8 @@ Object.assign(STRINGS.de, {
     chess_rules_threefold: "Die exakt gleiche Stellung tritt dreimal auf.",
     chess_rules_fifty_move: "50 Züge (beider Seiten) vergehen ohne Bauernzug und ohne Schlagen.",
     chess_rules_insufficient: "Keine Seite hat noch genug Material, um überhaupt matt setzen zu können (z. B. König gegen König, oder König und Läufer gegen König).",
+    chess_rules_online_title: "Online spielen",
+    chess_rules_online: "Der Online-Modus über Lichess ist freiwillig. Er braucht eine Internetverbindung und ein Lichess-Konto. Ohne ihn spielst du wie bisher offline gegen den Computer oder zu zweit an einem Gerät.",
     chess_history_title: "Die Geschichte des Schachs",
     chess_history_origins_title: "Ursprünge in Indien",
     chess_history_origins_p1: "Schach stammt vom Chaturanga ab, einem Kriegsspiel für vier Spieler, das um das 6. Jahrhundert n. Chr. in Nordindien gespielt wurde. Seine vier Truppengattungen – Infanterie, Kavallerie, Elefanten und Streitwagen – zogen jeweils unterschiedlich und nahmen damit Bauer, Springer, Läufer und Turm vorweg. Der Name des Spiels stammt von einem Sanskrit-Wort für diese vier Waffengattungen.",

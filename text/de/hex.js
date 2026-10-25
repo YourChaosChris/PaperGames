@@ -9,6 +9,8 @@ Object.assign(STRINGS.de, {
     hex_rules_setup: "Das Brett ist eine Raute aus sechseckigen Feldern. Rot gehören die obere und untere Kante, Blau die linke und rechte Kante. Rot zieht zuerst.",
     hex_term_moving: "Einen Zug ausführen",
     hex_rules_moving: "Am Zug platzierst du einen Stein deiner eigenen Farbe auf ein beliebiges leeres Feld – es wird nicht geschlagen, und einmal gesetzte Steine bewegen sich nie wieder.",
+    hex_term_swap: "Die Tauschregel",
+    hex_rules_swap: "Wer anfängt, ist im Vorteil. Deshalb gilt die Tauschregel, außer du schaltest sie vor dem Spiel aus. Nach dem ersten Stein von Rot darf Blau auf „Tauschen“ tippen, statt einen Stein zu setzen: Die Spieler tauschen die Farben, der erste Stein gehört jetzt dem, der Blau war, und der andere spielt als Blau weiter. Rot verbindet weiter oben und unten, Blau links und rechts. Der Computer tauscht, wenn der erste Stein in der Mitte des Bretts liegt.",
     hex_term_win: "Gewinnen",
     hex_rules_win: "Baue eine ununterbrochene Kette eigener Steine, die deine beiden Kanten verbindet. Hex kann nie unentschieden enden: Ist das Brett voll, existiert garantiert die Kette eines Spielers – unabhängig davon, ob eine Seite versucht hat, die andere zu blockieren.",
     hex_rules_end_title: "Eine Anmerkung zur Strategie",

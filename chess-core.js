@@ -1,6 +1,11 @@
 // chess-core.js
-// Sehr einfache Board-Verwaltung und FEN-Unterstützung.
-// KEINE vollständige Regelprüfung – Lichess validiert die Züge online.
+// Brett-Verwaltung, FEN-Unterstützung und das Ausführen eines Zuges mit
+// den Sonderregeln: Rochade (samt Rochaderechten), en passant und
+// Bauernumwandlung. Die übrigen Regeln prüfen andere Dateien, auch
+// offline gegen den Computer: ai-engine.js erzeugt die legalen Züge
+// (kein Zug, der den eigenen König im Schach lässt) und erkennt Matt,
+// Patt und zu wenig Material; app.js zählt Dreifachwiederholung und die
+// 50-Züge-Regel. In Partien über Lichess prüft zusätzlich Lichess.
 
 const ChessCore = (function () {
   let enPassantSquare = null;

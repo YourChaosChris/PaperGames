@@ -12,6 +12,13 @@
 // as row increases (the classic Hex rhombus), which is why each
 // cell's six neighbors are NOT simply the four orthogonal cells plus
 // two corners - see NEIGHBOR_OFFSETS below.
+//
+// Swap rule (state.swapRule, the usual Hex rule): right after Red's
+// first stone, Blue may swap sides instead of moving. The board stays
+// as it is; the two players change colours, so the one who was Blue now
+// plays Red and owns that first stone, and Blue (now the first player)
+// is to move. applySwap only marks the swap; who plays which colour is
+// the app's business. Old saved games have no swapRule: off.
 
 const HexCore = (function () {
   const SIZE = 9;
@@ -49,12 +56,14 @@ const HexCore = (function () {
     return board;
   }
 
-  function createInitialState() {
+  function createInitialState(opts) {
     return {
       board: createInitialBoard(),
       currentPlayer: "r",
       gameOver: false,
-      winner: null
+      winner: null,
+      swapRule: !!(opts && opts.swapRule),
+      swapped: false
     };
   }
 
@@ -63,8 +72,43 @@ const HexCore = (function () {
       board: state.board.map((row) => row.slice()),
       currentPlayer: state.currentPlayer,
       gameOver: state.gameOver,
-      winner: state.winner
+      winner: state.winner,
+      swapRule: !!state.swapRule,
+      swapped: !!state.swapped
     };
+  }
+
+  function stoneCount(state) {
+    let n = 0;
+    for (let r = 0; r < SIZE; r++) {
+      for (let c = 0; c < SIZE; c++) if (state.board[r][c]) n++;
+    }
+    return n;
+  }
+
+  // Blue may swap only right after Red's first stone, and only once.
+  function canSwap(state) {
+    return !!state.swapRule && !state.swapped && !state.gameOver &&
+      state.currentPlayer === "b" && stoneCount(state) === 1;
+  }
+
+  function applySwap(state) {
+    if (!canSwap(state)) return null;
+    const next = cloneState(state);
+    next.swapped = true;
+    return next;
+  }
+
+  // The computer's fixed swap rule: swap when the first stone lies in
+  // the middle half of the board (rows and columns 2 to 6 on 9x9).
+  function firstStoneCentral(state) {
+    const lo = Math.floor(SIZE / 4), hi = SIZE - 1 - lo;
+    for (let r = 0; r < SIZE; r++) {
+      for (let c = 0; c < SIZE; c++) {
+        if (state.board[r][c]) return r >= lo && r <= hi && c >= lo && c <= hi;
+      }
+    }
+    return false;
   }
 
   function getLegalMoves(state) {
@@ -130,7 +174,11 @@ const HexCore = (function () {
     cloneState,
     getLegalMoves,
     checkWin,
-    applyMove
+    applyMove,
+    stoneCount,
+    canSwap,
+    applySwap,
+    firstStoneCentral
   };
 })();
 

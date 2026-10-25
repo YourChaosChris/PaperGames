@@ -30,6 +30,8 @@ Object.assign(STRINGS.pl, {
     chess_rules_threefold: "Dokładnie ta sama pozycja pojawia się trzy razy.",
     chess_rules_fifty_move: "Mija pięćdziesiąt posunięć (obu stron) bez ruchu pionem i bez bicia.",
     chess_rules_insufficient: "Żadna ze stron nie ma już wystarczającego materiału, by dać mata (np. król przeciw królowi, albo król z gońcem przeciw królowi).",
+    chess_rules_online_title: "Gra online",
+    chess_rules_online: "Tryb online przez Lichess jest opcjonalny. Wymaga połączenia z internetem i konta Lichess. Bez niego grasz offline jak dotąd: z komputerem albo we dwoje na jednym urządzeniu.",
     chess_history_title: "Historia szachów",
     chess_history_origins_title: "Początki w Indiach",
     chess_history_origins_p1: "Szachy wywodzą się z czaturangi, gry wojennej dla czterech graczy rozgrywanej w północnych Indiach około VI wieku n.e. Jej cztery rodzaje wojsk - piechota, kawaleria, słonie i rydwany - poruszały się każdy inaczej, zapowiadając dzisiejsze piony, skoczki, gońce i wieże. Nazwa gry pochodzi od sanskryckiego słowa oznaczającego te cztery rodzaje wojsk.",

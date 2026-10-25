@@ -25,23 +25,44 @@ const MINESWEEPER_PRESETS = {
   expert: { rows: 16, cols: 30, mines: 99 }
 };
 
+// The clock: elapsedSeconds holds the time before the current run,
+// runStart the moment the current run began (null while stopped). The
+// time is always counted this way; the once-a-second interval that
+// redraws the clock only runs while "Show time" is on, because on e-ink
+// every redraw flickers and costs battery.
 const AppStateMinesweeper = {
   preset: "intermediate",
   state: null,
   flagMode: false,
   gameOver: false,
   elapsedSeconds: 0,
+  runStart: null,
+  showTime: false,
   timerHandle: null
 };
 
 const MINESWEEPER_SAVE_KEY = "einkchess_save_minesweeper";
+const MINESWEEPER_SHOW_TIME_KEY = "papergames_minesweeper_show_time";
+
+function loadShowTimeMinesweeper() {
+  try { return !!window.localStorage && window.localStorage.getItem(MINESWEEPER_SHOW_TIME_KEY) === "1"; } catch (e) { return false; }
+}
+
+function storeShowTimeMinesweeper(on) {
+  try { if (window.localStorage) window.localStorage.setItem(MINESWEEPER_SHOW_TIME_KEY, on ? "1" : "0"); } catch (e) { /* not remembered then */ }
+}
+
+function elapsedMinesweeper() {
+  const run = AppStateMinesweeper.runStart === null ? 0 : Math.floor((Date.now() - AppStateMinesweeper.runStart) / 1000);
+  return AppStateMinesweeper.elapsedSeconds + Math.max(0, run);
+}
 
 function saveMinesweeperGame() {
   if (typeof GameStorage === "undefined") return;
   GameStorage.save(MINESWEEPER_SAVE_KEY, {
     preset: AppStateMinesweeper.preset,
     state: AppStateMinesweeper.state,
-    elapsedSeconds: AppStateMinesweeper.elapsedSeconds
+    elapsedSeconds: elapsedMinesweeper()
   });
 }
 
@@ -76,23 +97,39 @@ function announceGameResultMinesweeper(title, message) {
   }
 }
 
-function stopMinesweeperTimer() {
+function clearTimerIntervalMinesweeper() {
   if (AppStateMinesweeper.timerHandle !== null) {
     clearInterval(AppStateMinesweeper.timerHandle);
     AppStateMinesweeper.timerHandle = null;
   }
 }
 
-function startMinesweeperTimer() {
-  stopMinesweeperTimer();
-  AppStateMinesweeper.timerHandle = setInterval(() => {
-    AppStateMinesweeper.elapsedSeconds++;
-    updateTimerDisplayMinesweeper();
-  }, 1000);
+// The redraw interval: only while the clock runs and "Show time" is on.
+function syncTimerIntervalMinesweeper() {
+  clearTimerIntervalMinesweeper();
+  if (AppStateMinesweeper.runStart === null || !AppStateMinesweeper.showTime) return;
+  AppStateMinesweeper.timerHandle = setInterval(updateTimerDisplayMinesweeper, 1000);
 }
 
+function stopMinesweeperTimer() {
+  AppStateMinesweeper.elapsedSeconds = elapsedMinesweeper();
+  AppStateMinesweeper.runStart = null;
+  clearTimerIntervalMinesweeper();
+}
+
+function startMinesweeperTimer() {
+  stopMinesweeperTimer();
+  AppStateMinesweeper.runStart = Date.now();
+  syncTimerIntervalMinesweeper();
+}
+
+// Hidden while "Show time" is off; the time then appears only once, in
+// the result at the end.
 function updateTimerDisplayMinesweeper() {
-  setStatusMinesweeper("minesweeper-timer", "⏱ " + AppStateMinesweeper.elapsedSeconds + "s");
+  const el = document.getElementById("minesweeper-timer");
+  if (!el) return;
+  el.classList.toggle("hidden", !AppStateMinesweeper.showTime);
+  setStatusMinesweeper("minesweeper-timer", AppStateMinesweeper.showTime ? "⏱ " + elapsedMinesweeper() + "s" : "");
 }
 
 function initMinesweeperApp() {
@@ -137,8 +174,8 @@ function initMinesweeperApp() {
     }
     AppStateMinesweeper.flagMode = false;
     AppStateMinesweeper.gameOver = false;
-    AppStateMinesweeper.elapsedSeconds = 0;
     stopMinesweeperTimer();
+    AppStateMinesweeper.elapsedSeconds = 0;
     setGameResultMinesweeper("");
     showBoardSectionMinesweeper();
     buildMinesweeperBoardDOM();
@@ -170,6 +207,19 @@ function initMinesweeperApp() {
       updateFlagModeButtonMinesweeper();
     });
   }
+
+  AppStateMinesweeper.showTime = loadShowTimeMinesweeper();
+  const showTimeEl = document.getElementById("minesweeper-show-time");
+  if (showTimeEl) {
+    showTimeEl.checked = AppStateMinesweeper.showTime;
+    showTimeEl.addEventListener("change", () => {
+      AppStateMinesweeper.showTime = showTimeEl.checked;
+      storeShowTimeMinesweeper(AppStateMinesweeper.showTime);
+      syncTimerIntervalMinesweeper();
+      updateTimerDisplayMinesweeper();
+    });
+  }
+  updateTimerDisplayMinesweeper();
 
   const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(MINESWEEPER_SAVE_KEY) : null;
   if (savedGame && savedGame.state) {
@@ -246,6 +296,7 @@ function finishMinesweeperAction() {
   if (AppStateMinesweeper.state.gameOver) {
     AppStateMinesweeper.gameOver = true;
     stopMinesweeperTimer();
+    updateTimerDisplayMinesweeper();
     if (AppStateMinesweeper.state.won) {
       announceGameResultMinesweeper("Cleared!", "All clear in " + AppStateMinesweeper.elapsedSeconds + " seconds - well done!");
       recordMinesweeperStats("win");
@@ -255,8 +306,15 @@ function finishMinesweeperAction() {
     }
     updateGameLabelsMinesweeper();
   } else {
-    setStatusMinesweeper("board-info", MinesweeperCore.countRemainingMines(AppStateMinesweeper.state) + " mines left.");
+    setStatusMinesweeper("board-info", minesLeftTextMinesweeper());
   }
+}
+
+// More flags than mines would give "-6 mines left.", which reads oddly
+// and has no translation ({n} stands for digits only).
+function minesLeftTextMinesweeper() {
+  const left = MinesweeperCore.countRemainingMines(AppStateMinesweeper.state);
+  return left < 0 ? "Flags: " + (-left) + " more than mines." : left + " mines left.";
 }
 
 function showBoardSectionMinesweeper() {

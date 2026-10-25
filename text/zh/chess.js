@@ -30,6 +30,8 @@ Object.assign(STRINGS.zh, {
     chess_rules_threefold: "完全相同的局面出现三次。",
     chess_rules_fifty_move: "双方连续五十步都没有兵的移动，也没有吃子。",
     chess_rules_insufficient: "任何一方剩余的子力都不足以将死对方（例如：王对王，或王和象对王）。",
+    chess_rules_online_title: "在线对局",
+    chess_rules_online: "通过 Lichess 的在线模式是可选的。它需要联网和 Lichess 账号。不使用它时，你照常可以离线与电脑对战，或两人在同一设备上对弈。",
     chess_history_title: "国际象棋的历史",
     chess_history_origins_title: "起源于印度",
     chess_history_origins_p1: "国际象棋源自恰图兰卡（chaturanga），一款约在公元 6 世纪于北印度流行的四人对弈的战争游戏。它的四个兵种——步兵、骑兵、象兵和战车——各有不同的走法，正是今日兵、马、象、车的雏形。这款游戏的名字来自梵语中表示这四种兵种的词。",

@@ -26,7 +26,7 @@ Object.assign(STRINGS.it, {
     domino_term_tri_tiles: "Le tessere",
     domino_rules_tri_tiles: "56 tessere triangolari con un numero da 0 a 5 in ogni angolo; ogni combinazione c'è una sola volta. Una tessera con tre numeri uguali conta come doppio. In due ognuno riceve 9 tessere, in tre o quattro 7.",
     domino_term_tri_lay: "Posare una tessera",
-    domino_rules_tri_lay: "Apre il triplo più alto (se nessuno ne ha uno, la tessera con la somma più alta), al centro del tavoliere. Poi una tessera può andare su ogni triangolo libero che ha un lato in comune con una tessera posata. Ogni angolo che condivide con tessere posate deve mostrare lo stesso numero: su un lato comune coincidono quindi entrambi i numeri. Le tessere si possono girare e capovolgere. Scegli una tessera, poi tocca uno dei posti numerati.",
+    domino_rules_tri_lay: "Apre il triplo più alto (se nessuno ne ha uno, la tessera con la somma più alta), al centro del tavoliere. Poi una tessera può andare su ogni triangolo libero che ha un lato in comune con una tessera posata. Ogni angolo che condivide con tessere posate deve mostrare lo stesso numero: su un lato comune coincidono quindi entrambi i numeri. Le tessere si possono girare e capovolgere. Scegli una tessera, poi tocca uno dei posti numerati. PaperGames gira la tessera da sé: su ogni posto si abbina in un solo modo.",
     domino_term_tri_draw: "Pescare e passare",
     domino_rules_tri_draw: "Se nessuna delle tue tessere va bene, peschi dal mazzo: al massimo tre tessere per turno. Se ancora nessuna va bene, passi, anche se il mazzo non è vuoto.",
     domino_term_tri_end: "Fine e punti",

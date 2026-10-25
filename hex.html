@@ -69,6 +69,9 @@
       <button id="mode-offline-ai" class="mode-btn secondary" data-i18n="ui_mode_computer" aria-pressed="false">Against the computer</button>
     </div>
   </div>
+  <div class="field-row">
+    <label><input type="checkbox" id="hex-swap-rule" checked> <span data-i18n="hex_swap_rule_label">Swap rule: after the first stone, the second player may swap sides</span></label>
+  </div>
 </section>
 
     <section id="offline-ai-controls" class="card hidden">
@@ -114,6 +117,7 @@
     </div>
   </div>
   <div id="board-actions" class="board-actions">
+    <button id="hex-swap-btn" type="button" class="secondary small hidden" data-i18n="hex_swap_button">Swap</button>
     <button id="undo-btn" class="secondary small" data-i18n="undo_button" onclick="undoLastMove()" disabled>Undo</button>
     <button id="resign-button" class="secondary small hidden" data-i18n="resign_button">Resign 🏳</button>
   </div>

@@ -130,9 +130,11 @@
     </div>
     <div id="domino-hand" class="domino-hand" role="group" aria-label="Your tiles"></div>
     <div class="game-actions-row">
-      <button id="domino-stock-button" class="secondary" type="button" data-i18n="domino_draw_button">Draw from stock</button>
+      <button id="domino-stock-button" class="secondary" type="button">Stock</button>
       <button id="domino-pass-button" class="secondary" type="button" data-i18n="domino_pass_button">Pass</button>
     </div>
+    <p id="domino-stock-hint" class="status-text domino-stock-hint" data-i18n="domino_draw_hint">Draw from the stock only when none of your tiles fits.</p>
+    <p id="domino-stock-note" class="status-text domino-stock-note" aria-live="polite"></p>
   </div>
   <div id="board-actions" class="board-actions">
     <button id="resign-button" class="secondary small hidden" data-i18n="resign_button">Resign 🏳</button>

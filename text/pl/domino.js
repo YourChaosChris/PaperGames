@@ -26,7 +26,7 @@ Object.assign(STRINGS.pl, {
     domino_term_tri_tiles: "Kamienie",
     domino_rules_tri_tiles: "56 trójkątnych kamieni z liczbą od 0 do 5 w każdym rogu; każda kombinacja występuje dokładnie raz. Kamień z trzema jednakowymi liczbami liczy się jako dublet. Przy dwóch graczach każdy dostaje 9 kamieni, przy trzech lub czterech 7.",
     domino_term_tri_lay: "Dokładanie",
-    domino_rules_tri_lay: "Grę otwiera najwyższy potrójny dublet (jeśli nikt go nie ma, kamień o najwyższej sumie) na środku planszy. Potem kamień można położyć na każdym wolnym trójkącie, który ma wspólny bok z położonym kamieniem. Każdy róg wspólny z położonymi kamieniami musi pokazywać tę samą liczbę - na wspólnym boku zgadzają się więc obie liczby. Kamienie można obracać i odwracać. Wybierz kamień, a potem dotknij jednego z ponumerowanych miejsc.",
+    domino_rules_tri_lay: "Grę otwiera najwyższy potrójny dublet (jeśli nikt go nie ma, kamień o najwyższej sumie) na środku planszy. Potem kamień można położyć na każdym wolnym trójkącie, który ma wspólny bok z położonym kamieniem. Każdy róg wspólny z położonymi kamieniami musi pokazywać tę samą liczbę - na wspólnym boku zgadzają się więc obie liczby. Kamienie można obracać i odwracać. Wybierz kamień, a potem dotknij jednego z ponumerowanych miejsc. PaperGames sam obraca kamień: na każdym miejscu pasuje tylko w jednym położeniu.",
     domino_term_tri_draw: "Dobieranie i pasowanie",
     domino_rules_tri_draw: "Jeśli żaden twój kamień nie pasuje, dobierasz z puli - najwyżej trzy kamienie na ruch. Jeśli nadal nic nie pasuje, pasujesz, nawet gdy pula nie jest jeszcze pusta.",
     domino_term_tri_end: "Koniec i punkty",

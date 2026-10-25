@@ -26,7 +26,7 @@ Object.assign(STRINGS.fr, {
     domino_term_tri_tiles: "Les dominos",
     domino_rules_tri_tiles: "56 dominos triangulaires avec un nombre de 0 à 5 à chaque coin ; chaque combinaison existe une seule fois. Un domino à trois nombres égaux compte comme un double. À deux, chacun reçoit 9 dominos, à trois ou quatre 7.",
     domino_term_tri_lay: "Poser un domino",
-    domino_rules_tri_lay: "Le triple le plus fort ouvre (si personne n'en a, le domino à la plus forte somme), au milieu du plateau. Ensuite, un domino peut aller sur tout triangle libre qui partage un côté avec un domino posé. Chaque coin qu'il partage avec des dominos posés doit montrer le même nombre : sur un côté commun, les deux nombres correspondent donc. On peut tourner et retourner les dominos. Choisissez un domino, puis touchez une des places numérotées.",
+    domino_rules_tri_lay: "Le triple le plus fort ouvre (si personne n'en a, le domino à la plus forte somme), au milieu du plateau. Ensuite, un domino peut aller sur tout triangle libre qui partage un côté avec un domino posé. Chaque coin qu'il partage avec des dominos posés doit montrer le même nombre : sur un côté commun, les deux nombres correspondent donc. On peut tourner et retourner les dominos. Choisissez un domino, puis touchez une des places numérotées. PaperGames tourne la tuile automatiquement : sur chaque place, elle ne convient que dans une seule position.",
     domino_term_tri_draw: "Piocher et passer",
     domino_rules_tri_draw: "Si aucun de vos dominos ne convient, vous piochez dans le talon : trois dominos au plus par tour. Si rien ne convient encore, vous passez, même si le talon n'est pas vide.",
     domino_term_tri_end: "Fin et points",

@@ -9,6 +9,8 @@ Object.assign(STRINGS.pl, {
     hex_rules_setup: "Plansza to romb złożony z sześciokątnych pól. Czerwony posiada górną i dolną krawędź, Niebieski lewą i prawą krawędź. Czerwony rusza się jako pierwszy.",
     hex_term_moving: "Wykonywanie ruchu",
     hex_rules_moving: "W swojej turze postaw jeden kamień swojego koloru na dowolnym pustym polu - nie ma bicia, a kamienie po postawieniu nigdy się nie ruszają.",
+    hex_term_swap: "Zasada zamiany",
+    hex_rules_swap: "Pierwszy ruch daje przewagę, dlatego obowiązuje zasada zamiany, chyba że wyłączysz ją przed grą. Po pierwszym kamieniu Czerwonego Niebieski może zamiast stawiać kamień dotknąć „Zamień”: gracze zamieniają się kolorami, pierwszy kamień należy teraz do gracza, który był Niebieskim, a drugi gra dalej jako Niebieski. Czerwony nadal łączy górę z dołem, Niebieski lewą stronę z prawą. Komputer zamienia, gdy pierwszy kamień leży na środku planszy.",
     hex_term_win: "Zwycięstwo",
     hex_rules_win: "Zbuduj nieprzerwany łańcuch swoich kamieni łączący twoje dwie krawędzie. Hex nigdy nie może zakończyć się remisem: gdy plansza jest pełna, zawsze gwarantowane jest istnienie łańcucha jednego z graczy, niezależnie od tego, czy któraś ze stron próbowała zablokować drugą.",
     hex_rules_end_title: "Uwaga o strategii",

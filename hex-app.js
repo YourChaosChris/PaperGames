@@ -13,6 +13,12 @@
 // target edges get a distinct thicker border so it's clear which
 // side is trying to connect where without relying on color for that
 // either.
+//
+// Swap rule (box #hex-swap-rule, on by default; quick-rules.js remembers
+// it with the other settings at game start): after Red's first stone,
+// Blue may tap Swap instead of moving; then the two players change
+// colours (see hex-core.js). Against the computer humanColor changes;
+// the computer swaps when the first stone lies in the middle half.
 
 const AppStateHex = {
   mode: "offline",        // "offline" | "offline-ai"
@@ -98,8 +104,44 @@ function pushUndoSnapshotHex() {
     turn: AppStateHex.turn,
     gameOver: AppStateHex.gameOver,
     moveCount: AppStateHex.moveCount,
-    lastMove: AppStateHex.lastMove
+    lastMove: AppStateHex.lastMove,
+    humanColor: AppStateHex.humanColor
   });
+}
+
+// The status line when Blue may swap (only ever right after the first
+// stone), else null.
+function swapOfferTextHex() {
+  if (!HexCore.canSwap(AppStateHex.state) || !isHumanTurnHex()) return null;
+  return AppStateHex.mode === "offline-ai"
+    ? "Your turn: place a stone, or tap Swap to take over the red stone."
+    : "Blue to move: place a stone, or tap Swap to take over the red stone.";
+}
+
+function onSwapHex() {
+  if (!isHumanTurnHex() || !HexCore.canSwap(AppStateHex.state)) return;
+  applySwapHex();
+}
+
+function applySwapHex() {
+  pushUndoSnapshotHex();
+  AppStateHex.state = HexCore.applySwap(AppStateHex.state);
+  AppStateHex.moveCount++;
+  const vsAi = AppStateHex.mode === "offline-ai";
+  const humanSwaps = vsAi && AppStateHex.turn === AppStateHex.humanColor;
+  if (vsAi) AppStateHex.humanColor = HexCore.otherPlayer(AppStateHex.humanColor);
+  updateHexBoard();
+  updateGameLabelsHex();
+  if (!vsAi) {
+    setStatusHex("board-info", "Sides swapped: the player who was Blue now plays Red and owns the first stone. Blue to move.");
+    return;
+  }
+  const text = humanSwaps
+    ? "You swap: you now play Red and own the first stone."
+    : "The computer swaps: it now plays Red and owns the first stone. You play Blue.";
+  setStatusHex("offline-hex-status", text);
+  setStatusHex("board-info", text);
+  if (AppStateHex.turn !== AppStateHex.humanColor) setTimeout(aiTurnHex, AiPacing.delay(350));
 }
 
 function initHexApp() {
@@ -144,9 +186,13 @@ function initHexApp() {
     });
   }
 
+  const swapRuleEl = document.getElementById("hex-swap-rule");
+  const swapBtn = document.getElementById("hex-swap-btn");
+  if (swapBtn) swapBtn.addEventListener("click", onSwapHex);
+
   function startNewGame(mode, humanColor, level) {
     AppStateHex.mode = mode;
-    AppStateHex.state = HexCore.createInitialState();
+    AppStateHex.state = HexCore.createInitialState({ swapRule: swapRuleEl ? swapRuleEl.checked : true });
     AppStateHex.turn = "r";
     AppStateHex.lastMove = null;
     AppStateHex.humanColor = humanColor;
@@ -240,7 +286,7 @@ function initHexApp() {
       setStatusHex("board-info", "Computer thinking…");
       setTimeout(aiTurnHex, AiPacing.delay(300));
     } else {
-      setStatusHex("board-info", colorNameHex(AppStateHex.turn) + " to move.");
+      setStatusHex("board-info", swapOfferTextHex() || colorNameHex(AppStateHex.turn) + " to move.");
     }
   }
   // Otherwise no mode is pre-selected and no game auto-starts: the
@@ -282,7 +328,7 @@ function applyHexMove(move) {
     return;
   }
 
-  setStatusHex("board-info", colorNameHex(mover) + " played. " + colorNameHex(AppStateHex.turn) + " to move.");
+  setStatusHex("board-info", swapOfferTextHex() || colorNameHex(mover) + " played. " + colorNameHex(AppStateHex.turn) + " to move.");
 
   if (AppStateHex.mode === "offline-ai" && AppStateHex.turn !== AppStateHex.humanColor) {
     setStatusHex("board-info", "Computer thinking…");
@@ -295,6 +341,10 @@ function aiTurnHex() {
   const aiColor = HexCore.otherPlayer(AppStateHex.humanColor);
   if (AppStateHex.turn !== aiColor) return;
 
+  if (HexCore.canSwap(AppStateHex.state) && HexCore.firstStoneCentral(AppStateHex.state)) {
+    applySwapHex();
+    return;
+  }
   const move = HexAi.chooseMove(AppStateHex.state, aiColor, AppStateHex.aiLevel);
   if (!move) return;
   applyHexMove(move);
@@ -303,10 +353,14 @@ function aiTurnHex() {
 function undoLastMove() {
   if (!AppStateHex.undoStack || !AppStateHex.undoStack.length) return;
   let prev = AppStateHex.undoStack.pop();
+  // A swap changes humanColor, so each snapshot is compared with the
+  // human's colour at that time (older snapshots have none: today's).
+  const humanAt = (snap) => snap.humanColor || AppStateHex.humanColor;
   if (AppStateHex.mode === "offline-ai") {
-    while (prev.turn !== AppStateHex.humanColor && AppStateHex.undoStack.length) {
+    while (prev.turn !== humanAt(prev) && AppStateHex.undoStack.length) {
       prev = AppStateHex.undoStack.pop();
     }
+    AppStateHex.humanColor = humanAt(prev);
   }
   AppStateHex.state = prev.state;
   AppStateHex.turn = prev.turn;
@@ -316,7 +370,7 @@ function undoLastMove() {
   setGameResultHex("");
   updateHexBoard();
   updateGameLabelsHex();
-  setStatusHex("board-info", "Move undone. " + colorNameHex(AppStateHex.turn) + " to move.");
+  setStatusHex("board-info", swapOfferTextHex() || "Move undone. " + colorNameHex(AppStateHex.turn) + " to move.");
 }
 
 function showBoardSectionHex() {
@@ -439,6 +493,8 @@ function updateGameLabelsHex() {
   if (meta) I18n.setMsg(meta, AppStateHex.moveCount ? "Move " + AppStateHex.moveCount : "");
   updateUndoButtonVisibilityHex();
   updateResignVisibilityHex();
+  const swapBtn = document.getElementById("hex-swap-btn");
+  if (swapBtn) swapBtn.classList.toggle("hidden", !(HexCore.canSwap(AppStateHex.state) && isHumanTurnHex()));
 
   if (AppStateHex.gameOver) clearSavedHexGame();
   else saveHexGame();

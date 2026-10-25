@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v262",
+    date: "2026-10-25",
+    key: "release_v262",
+    text: "Minesweeper: the clock stays hidden unless you switch on “Show time”, and too many flags are named clearly. Hex: new swap rule (on by default). Domino: the stock button is always shown and big enough to tap. Chess: a note that the online mode needs internet and a Lichess account."
+  },
+  {
     version: "v261",
     date: "2026-10-24",
     key: "release_v261",

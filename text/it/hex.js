@@ -9,6 +9,8 @@ Object.assign(STRINGS.it, {
     hex_rules_setup: "Il tavoliere è un rombo di celle esagonali. Il Rosso possiede i lati superiore e inferiore, il Blu possiede i lati sinistro e destro. Il Rosso muove per primo.",
     hex_term_moving: "Fare un turno",
     hex_rules_moving: "Al tuo turno, piazza una pietra del tuo colore su una cella vuota qualsiasi - non ci sono catture e le pietre non si muovono mai una volta piazzate.",
+    hex_term_swap: "La regola dello scambio",
+    hex_rules_swap: "Muovere per primi è un vantaggio; per questo la regola dello scambio è attiva, a meno che tu non la disattivi prima della partita. Dopo la prima pietra di Rosso, Blu può toccare «Scambia» invece di posare una pietra: i giocatori si scambiano i colori, la prima pietra appartiene ora a chi era Blu e l'altro prosegue come Blu. Rosso collega sempre alto e basso, Blu sinistra e destra. Il computer scambia quando la prima pietra si trova al centro del tabellone.",
     hex_term_win: "Vittoria",
     hex_rules_win: "Costruisci una catena ininterrotta delle tue pietre che colleghi i tuoi due lati. Hex non può mai finire in patta: una volta che il tavoliere è pieno, è sempre garantito che esista la catena di un giocatore, indipendentemente dal fatto che uno dei due stesse cercando di bloccare l'altro.",
     hex_rules_end_title: "Una nota sulla strategia",

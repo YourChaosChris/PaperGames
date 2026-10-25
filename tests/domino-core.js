@@ -10,7 +10,8 @@
 // line is blocked. Triangle only: every laid tile shares a side with an
 // earlier one, every grid corner has one number for all tiles that meet
 // there (so both numbers match on every shared side), and a player draws
-// at most 3 tiles per turn. An old classic save (no variant field) plays
+// at most 3 tiles per turn, and every legal move has exactly one laying
+// (no turning by hand needed, task 119). An old classic save (no variant field) plays
 // on.
 //
 // Run: node tests/domino-core.js
@@ -46,6 +47,28 @@ function checkTiles(s, total, tag) {
   return null;
 }
 
+// Task 119: on a given place a triangle can lie in one way only (the two
+// numbered corners of the shared side fix the third), so the game turns
+// it by itself and offers no turning by hand. Checked for every legal
+// move: all turnings and flips that keep the numbered corners give one
+// and the same laying, the one placement() returns.
+const PERMS = [[0, 1, 2], [0, 2, 1], [1, 0, 2], [1, 2, 0], [2, 0, 1], [2, 1, 0]];
+let layingsChecked = 0;
+function oneLayingOnly(s, legal, tag) {
+  for (const m of legal) {
+    const tile = s.hands[s.turn][m.index];
+    const rc = C.parseSlot(m.slot), pts = C.triCorners(rc[0], rc[1]);
+    const ways = new Set();
+    PERMS.forEach((p) => {
+      const nums = [tile[p[0]], tile[p[1]], tile[p[2]]];
+      if (pts.every((pt, i) => s.corners[pt] === undefined || s.corners[pt] === nums[i])) ways.add(nums.join("-"));
+    });
+    layingsChecked++;
+    if (ways.size !== 1 || !ways.has(C.placement(s, tile, m.slot).join("-"))) return tag + ": tile " + tile.join("-") + " can lie in " + ways.size + " ways on " + m.slot;
+  }
+  return null;
+}
+
 function play(variant, n, seed) {
   const random = rng(seed);
   let s = C.createInitialState(n, random, variant);
@@ -71,6 +94,10 @@ function play(variant, n, seed) {
     } else {
       const move = AI.chooseMove(s, levels[s.turn], random);
       const legal = C.legalMoves(s, s.turn);
+      if (C.isTriangle(s)) {
+        const bad = oneLayingOnly(s, legal, tag);
+        if (bad) return bad;
+      }
       if (!move || !legal.some((m) => m.index === move.index && m.side === move.side && m.slot === move.slot)) return tag + ": illegal move";
       const tile = s.hands[s.turn][move.index];
       const ends = C.openEnds(s);
@@ -136,6 +163,7 @@ Object.keys(stats).forEach((k) => {
   const st = stats[k];
   console.log(k + " players: " + st.games + " games, " + st.blocked + " blocked, " + (st.tiles / st.games).toFixed(1) + " tiles in the line on average");
 });
+console.log("triangle: " + layingsChecked + " legal moves checked, each with exactly one laying");
 fails.slice(0, 20).forEach((f) => console.log("FAIL " + f));
 console.log("\n=== DOMINO CORE: " + (GAMES * 6) + " games (500 per variant and number of players), " + fails.length + " failure(s) ===");
 process.exit(fails.length ? 1 : 0);

@@ -30,6 +30,8 @@ Object.assign(STRINGS.en, {
     chess_rules_threefold: "The exact same position occurs three times.",
     chess_rules_fifty_move: "Fifty moves pass (by both sides) with no pawn move and no capture.",
     chess_rules_insufficient: "Neither side has enough pieces left to possibly checkmate (e.g. king vs. king, or king and bishop vs. king).",
+    chess_rules_online_title: "Playing online",
+    chess_rules_online: "The online mode via Lichess is optional. It needs an internet connection and a Lichess account. Without it, you play against the computer or with two players on one device, offline as usual.",
     chess_history_title: "The History of Chess",
     chess_history_origins_title: "Origins in India",
     chess_history_origins_p1: "Chess descends from chaturanga, a four-player war game played in northern India around the 6th century CE. Its four divisions - infantry, cavalry, elephants and chariots - each moved differently, foreshadowing the pawns, knights, bishops and rooks of today. The game's name comes from a Sanskrit word for these four military arms.",

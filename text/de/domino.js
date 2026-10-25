@@ -26,7 +26,7 @@ Object.assign(STRINGS.de, {
     domino_term_tri_tiles: "Die Steine",
     domino_rules_tri_tiles: "56 dreieckige Steine mit einer Zahl von 0 bis 5 in jeder Ecke; jede Kombination gibt es genau einmal. Ein Stein mit drei gleichen Zahlen zählt als Pasch. Zu zweit bekommt jeder 9 Steine, zu dritt oder viert 7.",
     domino_term_tri_lay: "Anlegen",
-    domino_rules_tri_lay: "Der höchste Dreierpasch eröffnet (hat niemand einen, der Stein mit der höchsten Summe), in der Mitte des Spielfelds. Danach darf ein Stein auf jedes freie Dreieck, das eine Seite mit einem gelegten Stein teilt. Jede Ecke, die er mit gelegten Steinen teilt, muss dieselbe Zahl zeigen - an einer gemeinsamen Seite passen also beide Zahlen. Steine dürfen gedreht und gewendet werden. Wähle einen Stein und tippe dann auf einen der nummerierten Plätze.",
+    domino_rules_tri_lay: "Der höchste Dreierpasch eröffnet (hat niemand einen, der Stein mit der höchsten Summe), in der Mitte des Spielfelds. Danach darf ein Stein auf jedes freie Dreieck, das eine Seite mit einem gelegten Stein teilt. Jede Ecke, die er mit gelegten Steinen teilt, muss dieselbe Zahl zeigen - an einer gemeinsamen Seite passen also beide Zahlen. Steine dürfen gedreht und gewendet werden. Wähle einen Stein und tippe dann auf einen der nummerierten Plätze. PaperGames dreht den Stein dabei selbst: Auf jedem Platz passt er nur in einer Lage.",
     domino_term_tri_draw: "Ziehen und Passen",
     domino_rules_tri_draw: "Passt keiner deiner Steine, ziehst du aus dem Vorrat - höchstens drei Steine pro Zug. Passt dann noch immer keiner, passt du, auch wenn der Vorrat noch nicht leer ist.",
     domino_term_tri_end: "Ende und Punkte",

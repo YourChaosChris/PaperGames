@@ -9,6 +9,8 @@ Object.assign(STRINGS.es, {
     hex_rules_setup: "El tablero es un rombo de celdas hexagonales. Rojo posee los bordes superior e inferior, Azul posee los bordes izquierdo y derecho. Rojo mueve primero.",
     hex_term_moving: "Hacer un turno",
     hex_rules_moving: "En tu turno, coloca una piedra de tu propio color en cualquier celda vacía; no hay capturas y las piedras nunca se mueven una vez colocadas.",
+    hex_term_swap: "La regla de intercambio",
+    hex_rules_swap: "Mover primero es una ventaja; por eso la regla de intercambio está activa, salvo que la desactives antes de la partida. Tras la primera piedra de Rojo, Azul puede tocar «Intercambiar» en lugar de colocar una piedra: los jugadores cambian de color, la primera piedra pasa a ser del jugador que era Azul y el otro sigue como Azul. Rojo sigue uniendo arriba y abajo, Azul izquierda y derecha. El ordenador intercambia cuando la primera piedra está en el centro del tablero.",
     hex_term_win: "Victoria",
     hex_rules_win: "Construye una cadena ininterrumpida de piedras propias que conecte tus dos bordes. El Hex nunca puede terminar en tablas: una vez que el tablero está lleno, siempre existe garantizada la cadena de algún jugador, hayan intentado o no ambos bandos bloquear al otro.",
     hex_rules_end_title: "Una nota sobre estrategia",

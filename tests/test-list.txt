@@ -32,6 +32,7 @@
 181 bridge-core.js
 1 tenpairs-core.js
 68 domino-core.js
+6 hex-core.js
 3 mathcross-core.js
 1 differences-core.js
 50 pentomino-core.js
@@ -54,6 +55,9 @@
 25 zoowurf-core.js
 11 zoowurf-ui.js
 8 romme-ui.js
+12 domino-ui.js
+6 hex-ui.js
+5 minesweeper-ui.js
 3 matches-core.js
 135 cardduel-core.js
 75 villains-core.js

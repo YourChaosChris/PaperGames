@@ -30,6 +30,8 @@ Object.assign(STRINGS.fr, {
     chess_rules_threefold: "La même position exacte se produit trois fois.",
     chess_rules_fifty_move: "Cinquante coups se sont écoulés (des deux côtés) sans mouvement de pion ni capture.",
     chess_rules_insufficient: "Aucun camp n'a assez de pièces pour pouvoir mater (par ex. roi contre roi, ou roi et fou contre roi).",
+    chess_rules_online_title: "Jouer en ligne",
+    chess_rules_online: "Le mode en ligne via Lichess est facultatif. Il nécessite une connexion Internet et un compte Lichess. Sans lui, vous jouez hors ligne comme d'habitude, contre l'ordinateur ou à deux sur un même appareil.",
     chess_history_title: "L'histoire des échecs",
     chess_history_origins_title: "Origines en Inde",
     chess_history_origins_p1: "Les échecs descendent du chaturanga, un jeu de guerre à quatre joueurs pratiqué dans le nord de l'Inde vers le 6e siècle de notre ère. Ses quatre divisions - infanterie, cavalerie, éléphants et chars - se déplaçaient chacune différemment, préfigurant les pions, cavaliers, fous et tours d'aujourd'hui. Le nom du jeu vient d'un mot sanskrit désignant ces quatre corps militaires.",

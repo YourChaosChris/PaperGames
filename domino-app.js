@@ -484,10 +484,13 @@ function onHandTileClickDomino(index) {
       return;
     }
     AppStateDomino.selected = index;
-    if (!hintsDomino()) setStatusDomino("Tap a free place to lay tile " + tileTextDomino(tile) + ".");
-    else setStatusDomino(slots.length === 1
+    // On a given place a tile can lie in one way only, so there is no
+    // turning by hand; the sentence says so (task 119).
+    const turns = " The tile turns itself to fit.";
+    if (!hintsDomino()) setStatusDomino("Tap a free place to lay tile " + tileTextDomino(tile) + "." + turns);
+    else setStatusDomino((slots.length === 1
       ? "Tap the marked place to lay tile " + tileTextDomino(tile) + "."
-      : "Tile " + tileTextDomino(tile) + " fits in " + slots.length + " places - tap one.");
+      : "Tile " + tileTextDomino(tile) + " fits in " + slots.length + " places - tap one.") + turns);
     renderDomino();
     return;
   }
@@ -533,11 +536,21 @@ function onSlotClickDomino(slot) {
   playMoveDomino(AppStateDomino.selected, slot, 0);
 }
 
+// The line right below the stock and pass buttons, so the answer to a tap
+// is seen where the finger is (the status line may be scrolled away).
+function setStockNoteDomino(text) {
+  const el = document.getElementById("domino-stock-note");
+  if (el) I18n.setMsg(el, text || "");
+}
+
 function onDrawClickDomino() {
   if (!humanCanActDomino()) return;
   let s = AppStateDomino.state;
   if (DominoCore.requiredAction(s) !== "draw") {
-    setStatusDomino(DominoCore.canPlay(s, s.turn) ? "You have a tile that fits - no need to draw." : "The stock is empty.");
+    const why = DominoCore.canPlay(s, s.turn) ? "You have a tile that fits - no need to draw."
+      : s.stock.length ? "No tile fits after three draws - pass." : "The stock is empty.";
+    setStatusDomino(why);
+    setStockNoteDomino(why);
     return;
   }
   const player = s.turn;
@@ -565,7 +578,9 @@ function onPassClickDomino() {
   AppStateDomino.newKeys = [];
   const s = AppStateDomino.state;
   if (DominoCore.requiredAction(s) !== "pass") {
-    setStatusDomino(DominoCore.canPlay(s, s.turn) ? "You have a tile that fits - no need to pass." : "Draw from the stock first.");
+    const why = DominoCore.canPlay(s, s.turn) ? "You have a tile that fits - no need to pass." : "Draw from the stock first.";
+    setStatusDomino(why);
+    setStockNoteDomino(why);
     return;
   }
   finishPassDomino(0);
@@ -774,10 +789,17 @@ function renderButtonsDomino(s) {
   const humanTurn = AppStateDomino.started && !AppStateDomino.gameOver && !isAiPlayerDomino(s.turn) &&
     (AppStateDomino.mode !== "hotseat" || AppStateDomino.revealed);
   const action = DominoCore.requiredAction(s);
+  // The stock button stays visible on every human turn (task 119: hidden
+  // while a tile fits, players could not find the stock); tapping it then
+  // explains, right below it, why there is nothing to draw.
   if (drawBtn) {
-    drawBtn.disabled = !(humanTurn && action === "draw");
-    drawBtn.classList.toggle("hidden", !humanTurn || action !== "draw");
+    drawBtn.disabled = !humanTurn;
+    drawBtn.classList.toggle("hidden", !humanTurn);
+    I18n.setMsg(drawBtn, s.stock.length === 1 ? "Stock (1 tile)" : "Stock (" + s.stock.length + " tiles)");
   }
+  const hint = document.getElementById("domino-stock-hint");
+  if (hint) hint.classList.toggle("hidden", !humanTurn);
+  setStockNoteDomino("");
   if (passBtn) {
     passBtn.disabled = !(humanTurn && action === "pass");
     passBtn.classList.toggle("hidden", !humanTurn || action !== "pass");

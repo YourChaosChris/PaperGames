@@ -26,7 +26,7 @@ Object.assign(STRINGS.en, {
     domino_term_tri_tiles: "The tiles",
     domino_rules_tri_tiles: "56 triangular tiles with a number from 0 to 5 in each corner; every combination appears exactly once. A tile with three equal numbers counts as a double. With two players each gets 9 tiles, with three or four players 7.",
     domino_term_tri_lay: "Laying a tile",
-    domino_rules_tri_lay: "The highest triple opens (if nobody has one, the tile with the highest sum), in the middle of the board. After that a tile may go on any free triangle that shares a side with a laid tile. Every corner it shares with laid tiles must show the same number - so on a shared side both numbers match. Tiles may be turned and flipped. Pick a tile, then tap one of the numbered places on the board.",
+    domino_rules_tri_lay: "The highest triple opens (if nobody has one, the tile with the highest sum), in the middle of the board. After that a tile may go on any free triangle that shares a side with a laid tile. Every corner it shares with laid tiles must show the same number - so on a shared side both numbers match. Tiles may be turned and flipped. Pick a tile, then tap one of the numbered places on the board. PaperGames turns the tile for you: on each place it fits in one way only.",
     domino_term_tri_draw: "Drawing and passing",
     domino_rules_tri_draw: "If none of your tiles fits, you draw from the stock - at most three tiles per turn. If still nothing fits, you pass, even when the stock is not empty yet.",
     domino_term_tri_end: "End and points",

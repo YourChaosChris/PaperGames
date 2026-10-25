@@ -9,6 +9,8 @@ Object.assign(STRINGS.nl, {
     hex_rules_setup: "Het bord is een ruit van zeshoekige vakjes. Rood bezit de boven- en onderrand, Blauw bezit de linker- en rechterrand. Rood zet als eerste.",
     hex_term_moving: "Een beurt nemen",
     hex_rules_moving: "Op je beurt plaats je één steen van je eigen kleur op een willekeurig leeg vakje - er wordt niet geslagen en eenmaal geplaatste stenen bewegen nooit meer.",
+    hex_term_swap: "De ruilregel",
+    hex_rules_swap: "Wie begint, heeft een voordeel; daarom geldt de ruilregel, tenzij je hem vóór het spel uitzet. Na de eerste steen van Rood mag Blauw op ‘Ruilen’ tikken in plaats van een steen te zetten: de spelers wisselen van kleur, de eerste steen is nu van wie Blauw was, en de ander speelt verder als Blauw. Rood verbindt nog steeds boven en onder, Blauw links en rechts. De computer ruilt als de eerste steen in het midden van het bord ligt.",
     hex_term_win: "Winnen",
     hex_rules_win: "Bouw een ononderbroken keten van je eigen stenen die je twee randen verbindt. Hex kan nooit op remise eindigen: zodra het bord vol is, bestaat de keten van één speler altijd gegarandeerd, ongeacht of een van beide kanten de ander probeerde te blokkeren.",
     hex_rules_end_title: "Een woord over strategie",

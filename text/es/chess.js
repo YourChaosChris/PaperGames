@@ -30,6 +30,8 @@ Object.assign(STRINGS.es, {
     chess_rules_threefold: "La misma posición exacta se produce tres veces.",
     chess_rules_fifty_move: "Pasan cincuenta jugadas (de ambos bandos) sin mover un peón ni capturar.",
     chess_rules_insufficient: "Ningún bando tiene piezas suficientes para dar jaque mate (por ejemplo, rey contra rey, o rey y alfil contra rey).",
+    chess_rules_online_title: "Jugar en línea",
+    chess_rules_online: "El modo en línea a través de Lichess es opcional. Necesita conexión a internet y una cuenta de Lichess. Sin él, juegas sin conexión como siempre, contra el ordenador o dos personas en un mismo dispositivo.",
     chess_history_title: "La historia del ajedrez",
     chess_history_origins_title: "Orígenes en la India",
     chess_history_origins_p1: "El ajedrez desciende del chaturanga, un juego de guerra para cuatro jugadores que se practicaba en el norte de la India alrededor del siglo VI d. C. Sus cuatro divisiones —infantería, caballería, elefantes y carros— se movían cada una de forma distinta, anticipando a los peones, caballos, alfiles y torres de hoy. El nombre del juego proviene de una palabra sánscrita para estas cuatro armas militares.",

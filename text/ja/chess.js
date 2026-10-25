@@ -30,6 +30,8 @@ Object.assign(STRINGS.ja, {
     chess_rules_threefold: "まったく同じ局面が3回出現した場合。",
     chess_rules_fifty_move: "双方合わせて50手の間、ポーンの動きも駒を取ることもなかった場合。",
     chess_rules_insufficient: "どちらの側にも、チェックメイトを起こす可能性のある駒が残っていない場合（例:キング対キング、またはキング+ビショップ対キングなど）。",
+    chess_rules_online_title: "オンライン対局",
+    chess_rules_online: "Lichess を使うオンラインモードは任意です。インターネット接続と Lichess アカウントが必要です。使わない場合は、これまでどおりオフラインでコンピューターと、または1台の端末で2人で遊べます。",
     chess_history_title: "チェスの歴史",
     chess_history_origins_title: "インドでの起源",
     chess_history_origins_p1: "チェスは、6世紀頃の北インドで遊ばれていた4人用の戦争ゲーム「チャトランガ」に起源を持ちます。歩兵・騎兵・象・戦車という4つの兵科がそれぞれ異なる動きをし、これが現代のポーン・ナイト・ビショップ・ルークの原型になりました。ゲームの名前自体も、この4つの兵科を表すサンスクリット語に由来しています。",

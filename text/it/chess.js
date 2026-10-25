@@ -30,6 +30,8 @@ Object.assign(STRINGS.it, {
     chess_rules_threefold: "La stessa identica posizione si presenta tre volte.",
     chess_rules_fifty_move: "Passano cinquanta mosse (per entrambi i giocatori) senza spostare un pedone e senza catture.",
     chess_rules_insufficient: "Nessuno dei due giocatori ha abbastanza pezzi per dare scacco matto (per esempio re contro re, oppure re e alfiere contro re).",
+    chess_rules_online_title: "Giocare online",
+    chess_rules_online: "La modalità online tramite Lichess è facoltativa. Richiede una connessione a internet e un account Lichess. Senza di essa giochi offline come sempre, contro il computer o in due sullo stesso dispositivo.",
     chess_history_title: "La storia degli scacchi",
     chess_history_origins_title: "Le origini in India",
     chess_history_origins_p1: "Gli scacchi discendono dal chaturanga, un gioco di guerra a quattro giocatori diffuso nell'India settentrionale intorno al VI secolo d.C. Le sue quattro divisioni - fanteria, cavalleria, elefanti e carri - si muovevano ciascuna in modo diverso, anticipando i pedoni, i cavalli, gli alfieri e le torri di oggi. Il nome del gioco deriva da una parola sanscrita che indicava queste quattro armi militari.",

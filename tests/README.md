@@ -263,7 +263,27 @@ all parts back into one log in list order. The last line is exactly
   computer games per number of players (2-4) for classic Domino and for
   the triangles variant: every game ends, every move is legal, no tile is
   lost or doubled, and on the triangle board every corner keeps one
-  number for all tiles meeting there.
+  number for all tiles meeting there and every legal move has exactly one
+  laying (the game turns the tile, task 119).
+- `node tests/domino-ui.js` - needs the server and Playwright. German page
+  at 360 x 640 and 412 x 915 with touch, classic and triangles: the stock
+  button is shown on every human turn, at least 44 px high, labelled
+  "Vorrat (N Steine)"; with a fitting tile a tap draws nothing and says so
+  below the button, without one it draws; every offered triangle place
+  gives a valid move.
+- `node tests/hex-core.js` - no server or browser needed. The swap rule
+  (task 115): only right after Red's first stone, once, board and win
+  condition unchanged, off in old saves; the computer's fixed swap rule;
+  100 computer games without and 100 with the swap rule, each with one
+  correct winner, and the share won by the first mover.
+- `node tests/hex-ui.js` - needs the server and Playwright. German page at
+  360 px: the "Tauschen" button with two players and its texts, the
+  computer swapping a central first stone, Undo over a swap, no button
+  without the rule.
+- `node tests/minesweeper-ui.js` - needs the server and Playwright. German
+  page at 360 px: no once-a-second interval and no clock by default, the
+  result still names the seconds; "Zeit anzeigen" shows the clock and is
+  remembered; more flags than mines gives "Flaggen: 2 mehr als Minen.".
 - `node tests/mathcross-core.js` - no server or browser needed. 500
   "Math Cross" puzzles per level: worked from left to right with whole
   numbers above 0, only the level's operators, exactly one solution,

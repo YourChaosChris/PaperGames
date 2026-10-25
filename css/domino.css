@@ -226,3 +226,19 @@
   left: 50%;
   margin-left: -0.475rem;
 }
+
+/* Stock and pass: big enough to tap on a phone (task 119). */
+#domino-stock-button,
+#domino-pass-button {
+  min-height: 44px;
+}
+
+.domino-stock-hint,
+.domino-stock-note {
+  margin: var(--space-1) 0 0;
+  text-align: center;
+}
+
+.domino-stock-note:empty {
+  display: none;
+}

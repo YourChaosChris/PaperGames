@@ -26,7 +26,7 @@ Object.assign(STRINGS.nl, {
     domino_term_tri_tiles: "De stenen",
     domino_rules_tri_tiles: "56 driehoekige stenen met een getal van 0 tot 5 in elke hoek; elke combinatie komt precies één keer voor. Een steen met drie gelijke getallen telt als dubbele. Met twee spelers krijgt ieder 9 stenen, met drie of vier 7.",
     domino_term_tri_lay: "Een steen leggen",
-    domino_rules_tri_lay: "De hoogste drieling opent (heeft niemand er een, dan de steen met de hoogste som), midden op het speelveld. Daarna mag een steen op elke vrije driehoek die een zijde deelt met een gelegde steen. Elke hoek die hij met gelegde stenen deelt, moet hetzelfde getal tonen - op een gedeelde zijde passen dus beide getallen. Stenen mogen gedraaid en omgekeerd worden. Kies een steen en tik dan op een van de genummerde plekken.",
+    domino_rules_tri_lay: "De hoogste drieling opent (heeft niemand er een, dan de steen met de hoogste som), midden op het speelveld. Daarna mag een steen op elke vrije driehoek die een zijde deelt met een gelegde steen. Elke hoek die hij met gelegde stenen deelt, moet hetzelfde getal tonen - op een gedeelde zijde passen dus beide getallen. Stenen mogen gedraaid en omgekeerd worden. Kies een steen en tik dan op een van de genummerde plekken. PaperGames draait de steen zelf: op elke plek past hij maar op één manier.",
     domino_term_tri_draw: "Pakken en passen",
     domino_rules_tri_draw: "Past geen van je stenen, dan pak je uit de voorraad - hoogstens drie stenen per beurt. Past er dan nog steeds geen, dan pas je, ook als de voorraad nog niet leeg is.",
     domino_term_tri_end: "Einde en punten",

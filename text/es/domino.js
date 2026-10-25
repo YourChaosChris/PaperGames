@@ -26,7 +26,7 @@ Object.assign(STRINGS.es, {
     domino_term_tri_tiles: "Las fichas",
     domino_rules_tri_tiles: "56 fichas triangulares con un número del 0 al 5 en cada esquina; cada combinación aparece una sola vez. Una ficha con tres números iguales cuenta como doble. Con dos jugadores cada uno recibe 9 fichas, con tres o cuatro, 7.",
     domino_term_tri_lay: "Colocar una ficha",
-    domino_rules_tri_lay: "Abre el triple más alto (si nadie tiene uno, la ficha con la suma más alta), en el centro del tablero. Después, una ficha puede ir en cualquier triángulo libre que comparta un lado con una ficha colocada. Cada esquina que comparte con fichas colocadas debe mostrar el mismo número; así, en un lado común coinciden los dos números. Las fichas se pueden girar y dar la vuelta. Elige una ficha y toca uno de los lugares numerados.",
+    domino_rules_tri_lay: "Abre el triple más alto (si nadie tiene uno, la ficha con la suma más alta), en el centro del tablero. Después, una ficha puede ir en cualquier triángulo libre que comparta un lado con una ficha colocada. Cada esquina que comparte con fichas colocadas debe mostrar el mismo número; así, en un lado común coinciden los dos números. Las fichas se pueden girar y dar la vuelta. Elige una ficha y toca uno de los lugares numerados. PaperGames gira la ficha por ti: en cada lugar encaja de una sola manera.",
     domino_term_tri_draw: "Robar y pasar",
     domino_rules_tri_draw: "Si ninguna de tus fichas encaja, robas del pozo: como mucho tres fichas por turno. Si aún no encaja ninguna, pasas, aunque el pozo no esté vacío.",
     domino_term_tri_end: "Final y puntos",

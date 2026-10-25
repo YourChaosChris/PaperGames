@@ -30,6 +30,8 @@ Object.assign(STRINGS.nl, {
     chess_rules_threefold: "Precies dezelfde stelling komt drie keer voor.",
     chess_rules_fifty_move: "Er verstrijken vijftig zetten (van beide kanten samen) zonder pionzet en zonder slagzet.",
     chess_rules_insufficient: "Geen van beide kanten heeft nog genoeg materiaal om ooit schaakmat te kunnen zetten (bijvoorbeeld koning tegen koning, of koning en loper tegen koning).",
+    chess_rules_online_title: "Online spelen",
+    chess_rules_online: "De onlinemodus via Lichess is optioneel. Hij heeft een internetverbinding en een Lichess-account nodig. Zonder speel je zoals altijd offline, tegen de computer of met z'n tweeën op één apparaat.",
     chess_history_title: "De Geschiedenis van het Schaken",
     chess_history_origins_title: "Oorsprong in India",
     chess_history_origins_p1: "Schaken stamt af van chaturanga, een oorlogsspel voor vier spelers dat rond de 6e eeuw n.Chr. in Noord-India werd gespeeld. De vier troepenonderdelen - infanterie, cavalerie, olifanten en strijdwagens - bewogen elk anders, en liepen daarmee vooruit op de pionnen, paarden, lopers en torens van vandaag. De naam van het spel komt van een Sanskrietwoord voor deze vier wapenonderdelen.",

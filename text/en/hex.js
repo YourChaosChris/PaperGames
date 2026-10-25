@@ -9,6 +9,8 @@ Object.assign(STRINGS.en, {
     hex_rules_setup: "The board is a rhombus of hexagonal cells. Red owns the top and bottom edges, Blue owns the left and right edges. Red moves first.",
     hex_term_moving: "Taking a turn",
     hex_rules_moving: "On your turn, place one stone of your own color on any empty cell - there's no capturing and stones never move once placed.",
+    hex_term_swap: "The swap rule",
+    hex_rules_swap: "Moving first is an advantage, so the swap rule is on unless you turn it off before the game. After Red's first stone, Blue may tap Swap instead of placing a stone: the players change colors, the first stone now belongs to the player who was Blue, and the other player goes on as Blue. Red still connects top and bottom, Blue left and right. The computer swaps when the first stone lies in the middle of the board.",
     hex_term_win: "Winning",
     hex_rules_win: "Build an unbroken chain of your own stones connecting your two edges. Hex can never end in a draw: once the board is full, one player's chain is always guaranteed to exist, whether or not either side was trying to block the other.",
     hex_rules_end_title: "A note on strategy",
