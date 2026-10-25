@@ -362,6 +362,11 @@ all parts back into one log in list order. The last line is exactly
   stars and the return to a free corner, the last player left wins, the
   draw after 600 moves, the computer's capture and 1000 computer games
   (2-4 players) that all end without an error. A few seconds.
+- `node tests/trix-ai-games.js` - no server or browser needed. 60 Trix games
+  computer against computer (all three levels and mixed seats, fixed seeds)
+  that must reach the end of the fourth kingdom without a refused move:
+  twenty deals, five contracts and one owner per kingdom, every kingdom
+  adding up to zero. A few seconds.
 - `node tests/kleeberg-core.js` - no server or browser needed. The pyramid of
   Kleeberg (15 fields, 18 lines of three), fields open only above two filled
   fields, three in a line along the row and both slopes, the draw on a full

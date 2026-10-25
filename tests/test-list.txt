@@ -48,6 +48,7 @@
 1 klappenkasten-core.js
 1 steckwuerfeln-core.js
 1 sternjagd-core.js
+1 trix-ai-games.js
 1 kleeberg-core.js
 1 patternrow-core.js
 1 shadowmatch-core.js
