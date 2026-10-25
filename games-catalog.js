@@ -1272,6 +1272,20 @@ const GAMES_CATALOG = [
     added: "2026-10-17T19:00",
     noRead: true,
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"7\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><ellipse cx=\"20\" cy=\"26\" rx=\"8\" ry=\"6\" fill=\"#141413\"/><ellipse cx=\"10\" cy=\"19\" rx=\"3\" ry=\"4\" fill=\"#141413\"/><ellipse cx=\"16\" cy=\"12\" rx=\"3\" ry=\"4.5\" fill=\"#141413\"/><ellipse cx=\"24\" cy=\"12\" rx=\"3\" ry=\"4.5\" fill=\"#141413\"/><ellipse cx=\"30\" cy=\"19\" rx=\"3\" ry=\"4\" fill=\"#141413\"/></svg></span>"
+  },
+  {
+    slug: "tieryatzy",
+    category: "race",
+    family: "dicegames",
+    nameKey: "game_tieryatzy",
+    nameText: "Animal Yatzy",
+    descKey: "home_tieryatzy_desc",
+    descText: "A dice game for children with animal dice: roll up to three times, keep the animals you want and fill your sheet - lions, elephants, two or more the same, all different. The paw is a joker. Pictures only, no sums. Alone, against the computer or with up to four players on one device.",
+    popular: false,
+    kids: true,
+    added: "2026-10-25T18:00",
+    noRead: true,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"7\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><rect x=\"8\" y=\"8\" width=\"11\" height=\"11\" rx=\"2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"21\" y=\"8\" width=\"11\" height=\"11\" rx=\"2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><rect x=\"8\" y=\"21\" width=\"11\" height=\"11\" rx=\"2\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><ellipse cx=\"26.5\" cy=\"28.5\" rx=\"4\" ry=\"3\" fill=\"#141413\"/><circle cx=\"22.5\" cy=\"24\" r=\"1.6\" fill=\"#141413\"/><circle cx=\"26.5\" cy=\"22.5\" r=\"1.6\" fill=\"#141413\"/><circle cx=\"30.5\" cy=\"24\" r=\"1.6\" fill=\"#141413\"/><circle cx=\"13.5\" cy=\"13.5\" r=\"2.4\" fill=\"#141413\"/><circle cx=\"26.5\" cy=\"13.5\" r=\"2.4\" fill=\"#141413\"/><circle cx=\"13.5\" cy=\"26.5\" r=\"2.4\" fill=\"#141413\"/></svg></span>"
   }
 ];
 

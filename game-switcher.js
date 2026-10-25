@@ -126,7 +126,8 @@
     ["oddone", "game_oddone", "picturelogic"],
     ["kleeberg", "game_kleeberg", "inarow"],
     ["weidefreunde", "game_weidefreunde", "dicegames"],
-    ["zoowurf", "game_zoowurf", "dicegames"]
+    ["zoowurf", "game_zoowurf", "dicegames"],
+    ["tieryatzy", "game_tieryatzy", "dicegames"]
   ];
 
   var GAME_SLUGS = {};

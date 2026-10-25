@@ -63,6 +63,8 @@
 1 weidefreunde-core.js
 25 zoowurf-core.js
 11 zoowurf-ui.js
+3 tieryatzy-core.js
+10 tieryatzy-ui.js
 8 romme-ui.js
 12 domino-ui.js
 6 hex-ui.js

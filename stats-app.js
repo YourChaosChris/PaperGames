@@ -101,7 +101,8 @@ const STATS_GAME_NAME_KEY = {
   oddone: "game_oddone",
   kleeberg: "game_kleeberg",
   weidefreunde: "game_weidefreunde",
-  zoowurf: "game_zoowurf"
+  zoowurf: "game_zoowurf",
+  tieryatzy: "game_tieryatzy"
 };
 
 function gameDisplayName(game) {

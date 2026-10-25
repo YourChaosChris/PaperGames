@@ -1,0 +1,161 @@
+/* tieryatzy: rules used only by the tieryatzy pages (loaded after base.css). */
+/* ---- Animal Yatzy (Tier-Yatzy): dice game for children ----
+   Five animal dice (a kept die: thick frame and a black bar), three roll
+   dots and the sheet: one row per field with its picture, its name and the
+   points - written points in a solid box, possible points in a dashed box.
+   Black on white only; nothing animated; spacing from margins (Tolino). */
+.ty-dice {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  direction: ltr;
+}
+
+.ty-die-btn {
+  margin: 3px;
+  padding: 0;
+  border: 0;
+  background: #fff;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.ty-die-btn:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.ty-rolls {
+  text-align: center;
+  direction: ltr;
+  line-height: 0;
+  margin: var(--space-1) 0;
+}
+
+.ty-roll-dot {
+  margin: 0 4px;
+}
+
+.ty-sheet {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.ty-row {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  margin: 0 0 4px;
+  padding: 3px 6px;
+  border: 2px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+  color: #141413;
+  text-align: start;
+  font: inherit;
+}
+
+.ty-row:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.ty-row-can {
+  border-width: 4px;
+  padding: 1px 4px;
+  cursor: pointer;
+}
+
+.ty-row-marked {
+  border-width: 4px;
+  border-style: double;
+  padding: 1px 4px;
+}
+
+.ty-row-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 92px;
+  direction: ltr;
+  line-height: 0;
+}
+
+.ty-icon-row {
+  display: inline-flex;
+  line-height: 0;
+}
+
+.ty-row-name {
+  flex: 1 1 auto;
+  margin: 0 6px;
+}
+
+.ty-row-points {
+  flex: 0 0 auto;
+  min-width: 2.4em;
+  padding: 2px 4px;
+  border: 2px solid #141413;
+  border-radius: var(--radius);
+  text-align: center;
+  font-weight: 700;
+}
+
+.ty-row-points:empty {
+  border-color: transparent;
+}
+
+.ty-row-points-can {
+  border-style: dashed;
+}
+
+/* a field struck out with 0 points */
+.ty-row-struck {
+  text-decoration: line-through;
+}
+
+.ty-row-total {
+  border-width: 3px;
+  font-weight: 700;
+}
+
+/* the turn a computer has just played */
+.ty-review {
+  box-sizing: border-box;
+  max-width: 480px;
+  margin: 0 auto var(--space-2);
+  padding: 6px;
+  border: 3px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.ty-review-title {
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.ty-review-roll {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0;
+}
+
+.ty-review-label {
+  margin: 0 6px;
+}
+
+.ty-review-dice {
+  display: inline-flex;
+  direction: ltr;
+  line-height: 0;
+}
+
+.ty-review-dice .ty-die {
+  margin: 0 1px;
+}
