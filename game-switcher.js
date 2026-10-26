@@ -132,7 +132,8 @@
     ["hanoi", "game_hanoi"],
     ["nim", "game_nim"],
     ["teufelsieben", "game_teufelsieben"],
-    ["advent", "game_advent", "latin"]
+    ["advent", "game_advent", "latin"],
+    ["gipfelwurf", "game_gipfelwurf", "dicegames"]
   ];
 
   var GAME_SLUGS = {};

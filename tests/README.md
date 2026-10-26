@@ -522,6 +522,21 @@ all parts back into one log in list order. The last line is exactly
   kept over a reload, "Open all doors" from the menu, cells of the biggest
   puzzles at least 40 px, every door open after 24 December, broken and old
   saves, no sideways scroll.
+- `node tests/gipfelwurf-core.js` - no server or browser needed. Ridge Roll
+  / Gipfelwurf (rules of task 136): the ways of three dice (step die, ridge
+  by the sum of the other two), one ridge per turn, a lost turn, the hut
+  and the crevasse, stopping and camps, summit points (first and later), the
+  end after a full round, a tie, save and load, old states rejected;
+  `GAMES` (default 500, or `--games N`) computer games each with 2, 3 and 4
+  players without a hang (game length, wins per level: Hard clearly beats
+  Easy), wins per seat with the first player by lot (within 5 points of the
+  fair share); `FAIR` (default 1000, or `--fair N`) games: every ridge
+  reached at the top within 20 % of the mean.
+- `node tests/gipfelwurf-ui.js` - needs the server and Playwright. German
+  page at 360 x 640: three pip dice, the ways as buttons ("Grat 6: 3
+  hoch"), stop and make camp, a lost turn with its panel and "Weiter", save
+  and load, an old save of the first rules dropped, the end of the game with
+  the result, buttons at least 44 px, no sideways scroll.
 - `node tests/small-games-ui.js` - needs the server and Playwright. The
   three games of task 118 at 360 px in German: sliding puzzle (taps, the
   note outside row and column, hint, solved with the fewest moves, 5 x 5,

@@ -107,7 +107,8 @@ const STATS_GAME_NAME_KEY = {
   hanoi: "game_hanoi",
   nim: "game_nim",
   teufelsieben: "game_teufelsieben",
-  advent: "game_advent"
+  advent: "game_advent",
+  gipfelwurf: "game_gipfelwurf"
 };
 
 function gameDisplayName(game) {
