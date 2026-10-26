@@ -119,7 +119,7 @@ const SAMPLES = [
   "Player 2 takes the 7♠ from a meld.",
   "At least three cards must stay in the meld - from a run only the first or the last card.",
   "Jokers can't be taken - swap them instead.",
-  "A card taken from the table must go into a new meld.",
+  "A card taken from the table must go into a new meld of at least three cards (run or set). It can't be added to a meld already on the table.",
   "Round 3 of 10 · first meld: at least 40 points",
   "Player 2 has no cards left and wins the round. Game over after 3 rounds: Player 1 wins with 25 penalty points.",
   "Nothing is left to draw - the round ends without a winner. Game over after 5 rounds: a draw at 40 penalty points.",
