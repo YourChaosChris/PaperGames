@@ -102,7 +102,7 @@ const STATS_GAME_NAME_KEY = {
   kleeberg: "game_kleeberg",
   weidefreunde: "game_weidefreunde",
   zoowurf: "game_zoowurf",
-  tieryatzy: "game_tieryatzy",
+  pfotenwurf: "game_pfotenwurf",
   slidepuzzle: "game_slidepuzzle",
   hanoi: "game_hanoi",
   nim: "game_nim",

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Animal Yatzy (tieryatzy-core.js, task 112):
+// Critter Roll (pfotenwurf-core.js, task 112):
 //   - points of every field with examples, paws as jokers (lion, lion, paw,
 //     monkey, elephant: "three the same" 20, "all different" 0);
 //   - rolling, keeping dice, at most three rolls, a field only once,
@@ -10,7 +10,7 @@
 //     with 1 to 4 computers, every game ends after 11 turns per player;
 //   - save and load (JSON) in the middle of a game plays on.
 const path = require("path");
-const T = require(path.join(__dirname, "..", "tieryatzy-core.js"));
+const T = require(path.join(__dirname, "..", "pfotenwurf-core.js"));
 const GAMES = parseInt(process.env.GAMES || "200", 10);
 const fails = [];
 const check = (name, ok) => { if (!ok) fails.push(name); };
@@ -109,5 +109,5 @@ for (let g = 0; g < GAMES; g++) {
 const avg = totals.reduce((a, b) => a + b, 0) / Math.max(1, totals.length);
 console.log("computer games: " + GAMES + ", average total " + avg.toFixed(1) + " points (lowest " + Math.min.apply(null, totals) + ", highest " + Math.max.apply(null, totals) + ")");
 fails.slice(0, 20).forEach((f) => console.log("FAIL " + f));
-console.log("=== ANIMAL YATZY CORE: field points with paws, rolls and keeping, end and tie, " + GAMES + " computer games, " + fails.length + " failure(s) ===");
+console.log("=== PFOTENWURF CORE: field points with paws, rolls and keeping, end and tie, " + GAMES + " computer games, " + fails.length + " failure(s) ===");
 process.exit(fails.length ? 1 : 0);

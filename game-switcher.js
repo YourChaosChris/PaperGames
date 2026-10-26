@@ -127,7 +127,7 @@
     ["kleeberg", "game_kleeberg", "inarow"],
     ["weidefreunde", "game_weidefreunde", "dicegames"],
     ["zoowurf", "game_zoowurf", "dicegames"],
-    ["tieryatzy", "game_tieryatzy", "dicegames"],
+    ["pfotenwurf", "game_pfotenwurf", "dicegames"],
     ["slidepuzzle", "game_slidepuzzle"],
     ["hanoi", "game_hanoi"],
     ["nim", "game_nim"],

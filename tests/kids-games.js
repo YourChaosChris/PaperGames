@@ -28,7 +28,7 @@ const ctx = {};
 vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(ROOT, "games-catalog.js"), "utf8") + "\nthis.GAMES_CATALOG = GAMES_CATALOG;", ctx);
 const marked = ctx.GAMES_CATALOG.filter((g) => g.kids === true).map((g) => g.slug).sort();
-const AGREED = ["animalsudoku", "shapesort", "linkpairs", "pairs", "maumau", "oldmaid", "war", "snakesladders", "blockers", "ludo", "fourinarow", "tictactoe", "lightswitch", "tenpairs", "differences", "patternrow", "shadowmatch", "oddone", "bingo", "weidefreunde", "zoowurf", "tieryatzy"].sort();
+const AGREED = ["animalsudoku", "shapesort", "linkpairs", "pairs", "maumau", "oldmaid", "war", "snakesladders", "blockers", "ludo", "fourinarow", "tictactoe", "lightswitch", "tenpairs", "differences", "patternrow", "shadowmatch", "oddone", "bingo", "weidefreunde", "zoowurf", "pfotenwurf"].sort();
 const fails = [];
 const same = (name, got, want) => { if (JSON.stringify(got) !== JSON.stringify(want)) fails.push(name + ": " + JSON.stringify(got) + ", expected " + JSON.stringify(want)); };
 same("marked games", marked, AGREED);

@@ -471,12 +471,12 @@ all parts back into one log in list order. The last line is exactly
   players: one full pasture ends the game, the 35 cards are always all there,
   the yard keeps 5 cards, the pile never runs out, every computer step is
   legal; the strategy beats random choices in 2000 games. A few seconds.
-- `node tests/tieryatzy-core.js` - no server or browser needed. Animal Yatzy
+- `node tests/pfotenwurf-core.js` - no server or browser needed. Critter Roll
   (task 112): the points of every field with the paw as a joker, rolling
   and keeping dice, at most three rolls, striking a field with 0, the end
   after every field, a tie, 1 to 4 players; computer games (`GAMES`,
   default 200) with save and load in the middle.
-- `node tests/tieryatzy-ui.js` - needs the server and Playwright. German
+- `node tests/pfotenwurf-ui.js` - needs the server and Playwright. German
   page at 360 px: a game against the computer, roll, keep a die, the
   possible points on the sheet, a field written, the computer's panel and
   "Weiter", the game back after a reload, a whole game to the result; rows

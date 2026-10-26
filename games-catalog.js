@@ -1274,12 +1274,12 @@ const GAMES_CATALOG = [
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"7\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><ellipse cx=\"20\" cy=\"26\" rx=\"8\" ry=\"6\" fill=\"#141413\"/><ellipse cx=\"10\" cy=\"19\" rx=\"3\" ry=\"4\" fill=\"#141413\"/><ellipse cx=\"16\" cy=\"12\" rx=\"3\" ry=\"4.5\" fill=\"#141413\"/><ellipse cx=\"24\" cy=\"12\" rx=\"3\" ry=\"4.5\" fill=\"#141413\"/><ellipse cx=\"30\" cy=\"19\" rx=\"3\" ry=\"4\" fill=\"#141413\"/></svg></span>"
   },
   {
-    slug: "tieryatzy",
+    slug: "pfotenwurf",
     category: "race",
     family: "dicegames",
-    nameKey: "game_tieryatzy",
-    nameText: "Animal Yatzy",
-    descKey: "home_tieryatzy_desc",
+    nameKey: "game_pfotenwurf",
+    nameText: "Critter Roll",
+    descKey: "home_pfotenwurf_desc",
     descText: "A dice game for children with animal dice: roll up to three times, keep the animals you want and fill your sheet - lions, elephants, two or more the same, all different. The paw is a joker. Pictures only, no sums. Alone, against the computer or with up to four players on one device.",
     popular: false,
     kids: true,
