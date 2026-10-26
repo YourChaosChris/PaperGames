@@ -62,7 +62,10 @@ for (const game of games) {
   if (!/undoStack\.push\(/.test(app)) failures.push(`${game}: no pre-move snapshots are recorded`);
   if (!/GameStorage\.save\([\s\S]{0,900}undoStack: [^,]+\.slice\(-50\)/.test(app)) failures.push(`${game}: saved games do not include the bounded undo history`);
   if (!/undoStack = Array\.isArray\(\w+\.undoStack\) \? \w+\.undoStack : \[\]/.test(app)) failures.push(`${game}: old saves without history are not loaded safely`);
-  if (/setTimeout/.test(app) && !/(scheduledFor|state\s*!==|state\s*===|turn\s*!==|turn\s*===|currentPlayer|moveToken|generation)/.test(app)) {
+  // A zero-delay call of a named function (e.g. Sternjagd looking at its
+  // settings again after quick-rules.js restored them) is no computer work.
+  const timers = app.replace(/setTimeout\(\s*[A-Za-z_$][\w$]*\s*,\s*0\s*\)/g, "");
+  if (/setTimeout/.test(timers) && !/(scheduledFor|state\s*!==|state\s*===|turn\s*!==|turn\s*===|currentPlayer|moveToken|generation)/.test(app)) {
     failures.push(`${game}: pending computer work has no stale-turn/state guard after Undo`);
   }
 }
