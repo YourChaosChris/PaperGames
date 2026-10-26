@@ -84,7 +84,8 @@
 5 minesweeper-ui.js
 3 matches-core.js
 135 cardduel-core.js
-75 villains-core.js
+45 villains-core.js
+20 villains-ui.js
 8 forestvillage-core.js
 6 adventurebook-core.js
 1 new-games-order.js
