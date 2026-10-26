@@ -240,8 +240,9 @@ function initCardTacticsApp() {
     AppStateCardTactics.selectedCard = null;
     AppStateCardTactics.selectedPiece = null;
     AppStateCardTactics.legalTargets = {};
-    AppStateCardTactics.undoStack = Array.isArray(savedGame.undoStack)
-      ? savedGame.undoStack.filter((u) => u && CardTacticsCore.isCurrentState(u.state)) : [];
+    AppStateCardTactics.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
+    AppStateCardTactics.undoStack = AppStateCardTactics.undoStack
+      .filter((u) => u && CardTacticsCore.isCurrentState(u.state));
     setActiveModeButtonCardTactics(AppStateCardTactics.mode);
     setGameResultCardTactics("");
     showBoardSectionCardTactics();

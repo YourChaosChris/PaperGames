@@ -1553,7 +1553,7 @@ const FILE_HASHES = {
   "klondike-app.js": "fd1a308a",
   "cardtactics-core.js": "d0046325",
   "cardtactics-ai.js": "d2af76b2",
-  "cardtactics-app.js": "f34412e0",
+  "cardtactics-app.js": "80e32641",
   "hnefatafl-core.js": "40d5ade7",
   "hnefatafl-ai.js": "05b2e9db",
   "hnefatafl-app.js": "6a3b5695",
