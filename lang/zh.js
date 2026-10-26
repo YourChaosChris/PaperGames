@@ -4007,6 +4007,7 @@ STRINGS.zh = {
     zw_missing_aria: "还差 {n} 个",
     zw_dice_aria: "骰子：{dice}",
     zw_hit: "放到卡上",
+    zw_cpu_roll: "第{n}次：",
     zw_rolls_aria: "已掷：{n}／{m}",
     zw_count: "{n}／{m}",
     zw_goal_line: "目标：凑满的卡片上每只动物得一分。有人达到12分后，这一轮继续玩到结束。得分最多的人获胜。",

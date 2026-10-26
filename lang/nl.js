@@ -4007,6 +4007,7 @@ STRINGS.nl = {
     zw_missing_aria: "er ontbreken er nog {n}",
     zw_dice_aria: "Dobbelstenen: {dice}",
     zw_hit: "op de kaart",
+    zw_cpu_roll: "Worp {n}:",
     zw_rolls_aria: "Worpen: {n} van {m}",
     zw_count: "{n} van {m}",
     zw_goal_line: "Doel: elk dier op een volle kaart is één punt waard. Zodra iemand 12 punten heeft, wordt de ronde uitgespeeld. De meeste punten winnen.",

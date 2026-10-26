@@ -4078,6 +4078,7 @@ STRINGS.de = {
     zw_missing_aria: "{n} fehlen noch",
     zw_dice_aria: "Würfel: {dice}",
     zw_hit: "auf der Karte",
+    zw_cpu_roll: "Wurf {n}:",
     zw_rolls_aria: "Würfe: {n} von {m}",
     zw_count: "{n} von {m}",
     zw_goal_line: "Ziel: Jedes Tier auf einer vollen Karte ist ein Punkt. Hat jemand 12 Punkte, wird die Runde beendet; die meisten Punkte gewinnen.",

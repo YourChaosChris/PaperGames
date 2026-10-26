@@ -4008,6 +4008,7 @@ STRINGS.pl = {
     zw_missing_aria: "brakuje jeszcze {n}",
     zw_dice_aria: "Kostki: {dice}",
     zw_hit: "na karcie",
+    zw_cpu_roll: "Rzut {n}:",
     zw_rolls_aria: "Rzuty: {n} z {m}",
     zw_count: "{n} z {m}",
     zw_goal_line: "Cel: każde zwierzę na pełnej karcie jest warte punkt. Gdy ktoś zdobędzie 12 punktów, runda trwa do końca. Wygrywa osoba z największą liczbą punktów.",

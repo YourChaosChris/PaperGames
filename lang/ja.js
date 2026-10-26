@@ -4007,6 +4007,7 @@ STRINGS.ja = {
     zw_missing_aria: "あと{n}ひき",
     zw_dice_aria: "サイコロ：{dice}",
     zw_hit: "カードにのった",
+    zw_cpu_roll: "{n}回め：",
     zw_rolls_aria: "ふった回数：{n}／{m}",
     zw_count: "{n}／{m}",
     zw_goal_line: "もくてき：うまったカードのどうぶつ1ひきにつき1ポイントです。だれかが12ポイントになったら、ラウンドは最後までつづけます。いちばんポイントが多い人のかちです。",
