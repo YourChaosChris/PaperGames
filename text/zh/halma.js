@@ -15,13 +15,13 @@ Object.assign(STRINGS.zh, {
     halma_term_chains: "连跳是取胜关键",
     halma_rules_chains: "一次长长的连续跳跃，可以让一枚棋子在一回合内几乎跨越整个棋盘，因此提前搭建一条自己的棋子可以沿着跳跃的“走廊”，通常比一步一步走要快得多。",
     halma_history_title: "哈尔玛跳棋的历史",
-    halma_history_origins_title: "从德国到马萨诸塞州",
-    halma_history_origins_p1: "哈尔玛跳棋大约创作于 1883 至 1884 年间，作者是波士顿外科医生乔治·霍华德·蒙克斯（George Howard Monks）。他在德国求学期间接触到一款名为“Hoppity”的德国老游戏（其本身又受到法国游戏 Salta 的启发），并据此加以改编。",
-    halma_history_origins_p2: "“Halma”这个名字来自希腊语中表示“跳跃”或“跳高”的词——对于一款乐趣全在于在棋盘上连续跳跃的游戏来说，这个名字恰如其分——它自 1885 年起，由波士顿的游戏制造商 E. I. Horsman 公司在美国推广开来。",
+    halma_history_origins_title: "从英格兰到马萨诸塞州",
+    halma_history_origins_p1: "哈尔玛跳棋创作于 1883 年或 1884 年，作者是波士顿外科医生乔治·霍华德·蒙克斯（George Howard Monks）。他以一款名为“Hoppity”的英国老游戏为基础加以改编。",
+    halma_history_origins_p2: "“Halma”这个名字来自希腊语中表示“跳跃”的词——对于一款乐趣全在于在棋盘上连续跳跃的游戏来说，这个名字恰如其分——在美国，最早出版这款游戏的是纽约的玩具和游戏制造商 E. I. Horsman 公司，时间是 1885 年起。",
     halma_history_legacy_title: "深远的影响",
     halma_history_legacy_p1: "哈尔玛跳棋通常被视为“中国跳棋”的直接祖先，后者把哈尔玛的方形棋盘、以及支持四人对局的矩形布局，换成了一块六角星形棋盘——尽管名字里带着“中国”，中国跳棋其实与中国并无特别关联，也并非在中国发明。",
-    halma_history_legacy_p2: "原版哈尔玛跳棋支持二人或四人对局，传统上在 16x16 的棋盘上进行，每方营地各有 19 枚棋子；不过更小巧、节奏更快的双人变体也早已十分常见，尤其常见于旅行套装和儿童版本。",
+    halma_history_legacy_p2: "原版哈尔玛跳棋支持二人或四人对局，传统上在 16x16 的棋盘上进行，二人对局时每方营地各有 19 枚棋子，四人对局时各有 13 枚；此外也有更小巧、节奏更快的双人变体。",
     halma_history_version_title: "本应用的版本",
-    halma_history_version_p1: "PaperGames 采用一种更小巧、也更常见的双人变体：10x10 的棋盘、每方十枚棋子、四排三角形营地，保留了与原版相同的移动和连跳规则，但对局明显比完整的 16x16 原版要短得多。"
+    halma_history_version_p1: "PaperGames 采用一种更小巧的双人变体：10x10 的棋盘、每方十枚棋子、四排三角形营地，保留了与原版相同的移动和连跳规则，但对局明显比完整的 16x16 原版要短得多。"
 });
 I18n.markTextLoaded("zh");

@@ -21,7 +21,7 @@ Object.assign(STRINGS.fr, {
     bullsandcows_history_title: "L'histoire de Taureaux et vaches",
     bullsandcows_history_origins_title: "Un classique du papier et du crayon",
     bullsandcows_history_origins_p1: "L'idée centrale - deviner un code caché et n'apprendre que le nombre de correspondances exactes et partielles, jamais lesquelles - vient de Bulls and Cows (Taureaux et vaches), un jeu de devinettes sur papier antérieur à 1970 - et, selon certains récits, bien plus ancien. On le joue traditionnellement avec des nombres secrets : un bon chiffre à la bonne place est un taureau, un bon chiffre à la mauvaise place une vache.",
-    bullsandcows_history_origins_p2: "Il est aussi arrivé tôt sur ordinateur : des versions, souvent appelées Moo, tournaient sur les ordinateurs des universités dès la fin des années 1960, et le programmer reste aujourd'hui un exercice classique.",
+    bullsandcows_history_origins_p2: "Il est aussi arrivé tôt sur ordinateur : des versions, souvent appelées Moo, tournaient sur les ordinateurs des universités dès 1970 environ, et le programmer reste aujourd'hui un exercice classique.",
     bullsandcows_history_spread_title: "Le jeu de plateau et le nom",
     bullsandcows_history_spread_p1: "En 1970, l'idée devint un jeu de plateau à fiches colorées, connu dans le monde entier sous le nom de Mastermind. Mastermind est une marque ; les droits appartiennent à Invicta Plastics. PaperGames n'a aucun lien avec Invicta Plastics ni avec ce jeu de plateau et utilise donc le nom plus ancien de Bulls and Cows, Taureaux et vaches.",
     bullsandcows_history_modern_title: "Un casse-tête prisé des informaticiens",

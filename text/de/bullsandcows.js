@@ -21,7 +21,7 @@ Object.assign(STRINGS.de, {
     bullsandcows_history_title: "Die Geschichte von Kühe und Bullen",
     bullsandcows_history_origins_title: "Ein Klassiker für Papier und Stift",
     bullsandcows_history_origins_p1: "Der Kern des Spiels – einen verborgenen Code raten und nur erfahren, wie viele Teile genau und wie viele halb stimmen, aber nie welche – stammt von Bulls and Cows (Kühe und Bullen), einem Ratespiel mit Papier und Stift, das älter ist als 1970 – nach manchen Darstellungen sogar deutlich älter. Traditionell rät man geheime Zahlen: Eine richtige Ziffer an der richtigen Stelle ist ein Bulle, eine richtige Ziffer an der falschen Stelle eine Kuh.",
-    bullsandcows_history_origins_p2: "Auch auf Computer kam es früh: Fassungen, oft Moo genannt, liefen ab den späten 1960er-Jahren auf Universitätsrechnern, und es zu programmieren ist bis heute eine klassische Übung.",
+    bullsandcows_history_origins_p2: "Auch auf Computer kam es früh: Fassungen, oft Moo genannt, liefen etwa ab 1970 auf Universitätsrechnern, und es zu programmieren ist bis heute eine klassische Übung.",
     bullsandcows_history_spread_title: "Das Brettspiel und der Name",
     bullsandcows_history_spread_p1: "1970 wurde aus der Idee ein Brettspiel mit farbigen Steckern, das unter dem Namen Mastermind weltweit bekannt wurde. Mastermind ist eine Marke; die Rechte liegen bei Invicta Plastics. PaperGames steht in keiner Verbindung zu Invicta Plastics oder diesem Brettspiel und verwendet deshalb den älteren Namen Bulls and Cows, auf Deutsch Kühe und Bullen.",
     bullsandcows_history_modern_title: "Ein beliebtes Rätsel für Informatiker",

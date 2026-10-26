@@ -15,13 +15,13 @@ Object.assign(STRINGS.pl, {
     halma_term_chains: "Łańcuchy skoków są kluczowe",
     halma_rules_chains: "Jeden długi łańcuch skoków może przenieść pionek niemal przez całą planszę w jednej turze, więc zbudowanie korytarza pionków, po którym twoja bierka może skakać, jest zwykle znacznie szybsze niż chodzenie krok po kroku.",
     halma_history_title: "Historia Halmy",
-    halma_history_origins_title: "Z Niemiec do Massachusetts",
-    halma_history_origins_p1: "Halmę stworzył około 1883-1884 roku George Howard Monks, chirurg z Bostonu, który zaadaptował ją ze starszej niemieckiej gry o nazwie \"Hoppity\" (samej zainspirowanej francuską grą Salta) po tym, jak zetknął się z nią podczas studiów medycznych w Niemczech.",
-    halma_history_origins_p2: "Nazwa \"Halma\" pochodzi od greckiego słowa oznaczającego \"skok\" lub \"skok wzwyż\" - trafny wybór dla gry, której cały urok polega na łączeniu skoków przez planszę - a spopularyzował ją w Stanach Zjednoczonych bostoński producent gier E. I. Horsman, poczynając od 1885 roku.",
+    halma_history_origins_title: "Z Anglii do Massachusetts",
+    halma_history_origins_p1: "Halmę stworzył w 1883 lub 1884 roku George Howard Monks, chirurg z Bostonu, który zaadaptował ją ze starszej angielskiej gry o nazwie \"Hoppity\".",
+    halma_history_origins_p2: "Nazwa \"Halma\" pochodzi od greckiego słowa oznaczającego \"skok\" - trafny wybór dla gry, której cały urok polega na łączeniu skoków przez planszę - a w Stanach Zjednoczonych jako pierwszy wydawał ją od 1885 roku nowojorski producent zabawek i gier E. I. Horsman.",
     halma_history_legacy_title: "Trwały wpływ",
     halma_history_legacy_p1: "Halmę zwykle uznaje się za bezpośredniego przodka warcabów chińskich, późniejszej gry, która zamieniła kwadratową planszę Halmy i prostokątny układ obsługujący 4 graczy na planszę w kształcie sześcioramiennej gwiazdy - mimo nazwy, warcaby chińskie nie mają żadnego szczególnego związku z Chinami i nie zostały tam wynalezione.",
-    halma_history_legacy_p2: "Oryginalna gra obsługuje dwóch lub czterech graczy i tradycyjnie rozgrywa się ją na planszy 16x16 z obozami po 19 pionków każdy; od dawna powszechne są też mniejsze i szybsze warianty dla dwóch graczy, zwłaszcza w zestawach podróżnych i edycjach dla dzieci.",
+    halma_history_legacy_p2: "Oryginalna gra obsługuje dwóch lub czterech graczy i tradycyjnie rozgrywa się ją na planszy 16x16, z obozami po 19 pionków przy dwóch graczach i po 13 przy czterech; istnieją też mniejsze i szybsze warianty dla dwóch graczy.",
     halma_history_version_title: "Ta wersja",
-    halma_history_version_p1: "PaperGames rozgrywa mniejszy, powszechnie stosowany wariant dla dwóch graczy: planszę 10x10 z dziesięcioma pionkami i czterorzędowym trójkątnym obozem na stronę, zachowując te same zasady ruchu i łańcuchowych skoków, przy czym partie są zauważalnie krótsze niż w pełnym oryginale 16x16."
+    halma_history_version_p1: "PaperGames rozgrywa mniejszy wariant dla dwóch graczy: planszę 10x10 z dziesięcioma pionkami i czterorzędowym trójkątnym obozem na stronę, zachowując te same zasady ruchu i łańcuchowych skoków, przy czym partie są zauważalnie krótsze niż w pełnym oryginale 16x16."
 });
 I18n.markTextLoaded("pl");

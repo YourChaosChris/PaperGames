@@ -491,7 +491,7 @@ const STRINGS = {
 
     checkers_history_intro: "Checkers (draughts) is a game of simple rules and deep strategy, born from combining an ancient board with a newer way of capturing.",
 
-    ur_history_intro: "At roughly 4,600 years old, the Royal Game of Ur is one of the oldest board games ever discovered - and, thanks to a piece of detective work spanning two millennia, one of the few ancient games we can still play by its original rules.",
+    ur_history_intro: "At roughly 4,600 years old, the Royal Game of Ur is one of the oldest board games ever discovered - and, thanks to a piece of detective work spanning two millennia, one of the few ancient games we can still play by rules reconstructed from an ancient written source.",
 
     morris_history_intro: "Few games have been carved into as many different surfaces across as many centuries as Nine Men's Morris - from Egyptian temple roofs to English cathedral cloisters.",
 
@@ -503,7 +503,7 @@ const STRINGS = {
 
     reversi_history_intro: "A Victorian parlor game that came back almost a century later in Japan, under a new name and with a fixed start.",
 
-    fourinarow_history_intro: "A simple gravity-powered idea that turned into one of the best-selling games of the 20th century.",
+    fourinarow_history_intro: "A simple gravity-powered idea that turned into a worldwide classic.",
 
     gomoku_history_intro: "A simple line-them-up game whose very simplicity forced competitive players to change its rules.",
     tictactoe_history_intro: "Probably the best-known pencil-and-paper game of all - with roots in ancient Rome and a place in the history of computers.",
@@ -514,7 +514,7 @@ const STRINGS = {
 
     sudoku_history_intro: "Unlike every other game in this collection, Sudoku has no ancient pedigree at all - the puzzle in its modern form only dates from 1979.",
 
-    pegsolitaire_history_intro: "A single-player puzzle old enough to have its own court legend, and the subject of one of the more surprising results in recreational mathematics.",
+    pegsolitaire_history_intro: "A single-player puzzle old enough to have its own origin legend, and the subject of one of the more surprising results in recreational mathematics.",
 
     minesweeper_history_intro: "A puzzle whose defining rule - a completely safe first move - only became standard once computers, rather than a printed page, could generate a fresh board on demand.",
 
@@ -1126,7 +1126,7 @@ const STRINGS = {
     game_halma: "Halma",
     home_halma_desc: "Race all your pieces across the board into your opponent's starting camp. Local 2-player or vs. the built-in engine.",
 
-    halma_history_intro: "An American reworking of an older German game, popular for well over a century as a simple race that's easy to learn but still rewards careful planning.",
+    halma_history_intro: "An American reworking of an older English game, popular for well over a century as a simple race that's easy to learn but still rewards careful planning.",
     game_sternhalma: "Chinese Checkers",
     home_sternhalma_desc: "Race all ten of your marbles across the star-shaped board into the point opposite yours. Local 2-player or vs. the built-in engine.",
     sternhalma_history_intro: "A star-board descendant of the older game Halma, marketed under an exotic name that has nothing to do with where it was actually invented.",
@@ -2551,7 +2551,7 @@ const STRINGS = {
     home_poker_desc: "Texas Hold'em against 1 to 3 computers: two cards of your own, five shared cards, and fixed bet steps - fold, call or raise. The best five-card hand wins. Played with chips, which are only points in the game.",
     pk_fold: "Fold",
     pk_next: "Next hand",
-    pk_history_intro: "Poker spread in the American South in the early 19th century; Texas Hold'em, with two cards of your own and five shared ones, dates from the early 20th century.",
+    pk_history_intro: "Poker spread in the American South in the early 19th century; Texas Hold'em, with two cards of your own and five shared ones, is traditionally dated to the early 20th century.",
     quickrules_poker_1: "You get two cards of your own; up to five shared cards follow. Make the best hand of five cards.",
     quickrules_poker_2: "In each betting round: fold, check or call, or raise by the fixed step.",
     quickrules_poker_3: "Whoever is left at the end, or shows the best hand, wins the pot.",
@@ -2723,7 +2723,7 @@ const STRINGS = {
     msg_t_sf_isplayer_you: "You are the player: {s}.",
     game_canasta: "Canasta",
     home_canasta_desc: "The classic rummy game for two with 108 cards: melds of one rank, canastas of seven cards, wild jokers and Twos, red and black Threes. You against the computer, to 5000 points or a short game to 2000.",
-    cn_history_intro: "Canasta was devised in 1939 in Montevideo, Uruguay, and came to New York in 1949.",
+    cn_history_intro: "Canasta comes from Montevideo, Uruguay; it is usually dated to 1939, though some sources give a later year. It came to New York in 1949.",
     quickrules_canasta_1: "Draw two cards from the stock or take the whole discard pile - its top card must go straight into a meld.",
     quickrules_canasta_2: "Meld at least three cards of one rank; jokers and Twos are wild. Seven cards make a canasta.",
     quickrules_canasta_3: "With two canastas you may go out. Red Threes bring bonus points; the game goes to 5000 points (short game: 2000).",

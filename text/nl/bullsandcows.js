@@ -21,7 +21,7 @@ Object.assign(STRINGS.nl, {
     bullsandcows_history_title: "De geschiedenis van Stieren en koeien",
     bullsandcows_history_origins_title: "Een klassieker voor pen en papier",
     bullsandcows_history_origins_p1: "Het kernidee - een verborgen code raden en alleen horen hoeveel delen precies en hoeveel half kloppen, nooit welke - komt van Bulls and Cows (Stieren en koeien), een raadspel met pen en papier dat ouder is dan 1970 - volgens sommige bronnen zelfs veel ouder. Traditioneel raad je geheime getallen: een goed cijfer op de goede plek is een stier, een goed cijfer op de verkeerde plek een koe.",
-    bullsandcows_history_origins_p2: "Het kwam ook al vroeg op computers terecht: versies, vaak Moo genoemd, draaiden vanaf eind jaren zestig op universiteitscomputers, en het programmeren ervan is nog altijd een klassieke oefening.",
+    bullsandcows_history_origins_p2: "Het kwam ook al vroeg op computers terecht: versies, vaak Moo genoemd, draaiden vanaf ongeveer 1970 op universiteitscomputers, en het programmeren ervan is nog altijd een klassieke oefening.",
     bullsandcows_history_spread_title: "Het bordspel en de naam",
     bullsandcows_history_spread_p1: "In 1970 werd het idee een bordspel met gekleurde pinnen, dat wereldwijd bekend werd onder de naam Mastermind. Mastermind is een merk; de rechten liggen bij Invicta Plastics. PaperGames heeft geen band met Invicta Plastics of dat bordspel en gebruikt daarom de oudere naam Bulls and Cows, Stieren en koeien.",
     bullsandcows_history_modern_title: "Een geliefde puzzel voor informatici",

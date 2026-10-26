@@ -23,6 +23,6 @@ Object.assign(STRINGS.pl, {
     twenty48_history_spread_p2: "Ta wersja w PaperGames celowo zachowuje oryginalną planszę 4x4 oraz szansę pojawienia się dwójki lub czwórki w proporcji 90%/10%, zamiast wybierać jeden z tych wariantów - taki sam wybór, jaki ten zbiór gier stosuje wszędzie indziej, stawiając na standardowy, dobrze znany zestaw zasad zamiast nowatorskiej odmiany.",
     twenty48_history_modern_title: "Mała plansza, poważnie badana",
     twenty48_history_modern_p1: "Mimo prostych zasad, optymalna gra w 2048 okazuje się naprawdę trudnym problemem przeszukiwania z powodu losowości w pojawianiu się kafelków: silni komputerowi gracze używają przeszukiwania typu expectimax (ważącego ruchy według prawdopodobieństwa każdego możliwego kolejnego kafelka), a nie zwykłego przeszukiwania minimax, jakie umożliwia deterministyczna gra taka jak szachy.",
-    twenty48_history_modern_p2: "Najlepiej udokumentowani komputerowi gracze potrafią z dużym prawdopodobieństwem osiągnąć kafelek 32768, a sporadycznie osiągali nawet 65536 - dwa podwojenia poza kafelek, który większość ludzkich graczy cieszy się, widząc choć raz w życiu."
+    twenty48_history_modern_p2: "Najlepiej udokumentowani komputerowi gracze osiągają kafelek 32768 w większości partii, a sporadycznie nawet 65536 - cztery i pięć podwojeń poza kafelek 2048, który większość ludzkich graczy cieszy się, widząc choć raz w życiu."
 });
 I18n.markTextLoaded("pl");

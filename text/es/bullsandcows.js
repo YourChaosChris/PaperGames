@@ -21,7 +21,7 @@ Object.assign(STRINGS.es, {
     bullsandcows_history_title: "La historia de Toros y vacas",
     bullsandcows_history_origins_title: "Un clásico de lápiz y papel",
     bullsandcows_history_origins_p1: "La idea central - adivinar un código oculto y saber solo cuántas coincidencias exactas y parciales hay, nunca cuáles - viene de Bulls and Cows (Toros y vacas), un juego de adivinanzas con lápiz y papel anterior a 1970 y, según algunos relatos, mucho más antiguo. Tradicionalmente se juega con números secretos: una cifra correcta en su sitio es un toro, una cifra correcta fuera de sitio es una vaca.",
-    bullsandcows_history_origins_p2: "También llegó pronto a los ordenadores: versiones, a menudo llamadas Moo, funcionaban en ordenadores universitarios desde finales de los años sesenta, y programarlo sigue siendo un ejercicio clásico.",
+    bullsandcows_history_origins_p2: "También llegó pronto a los ordenadores: versiones, a menudo llamadas Moo, funcionaban en ordenadores universitarios desde alrededor de 1970, y programarlo sigue siendo un ejercicio clásico.",
     bullsandcows_history_spread_title: "El juego de tablero y el nombre",
     bullsandcows_history_spread_p1: "En 1970 la idea se convirtió en un juego de tablero con clavijas de colores, famoso en todo el mundo con el nombre de Mastermind. Mastermind es una marca; los derechos pertenecen a Invicta Plastics. PaperGames no tiene relación con Invicta Plastics ni con ese juego de tablero y por eso usa el nombre más antiguo, Bulls and Cows, Toros y vacas.",
     bullsandcows_history_modern_title: "Un rompecabezas favorito de los informáticos",

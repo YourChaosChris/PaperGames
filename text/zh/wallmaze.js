@@ -19,7 +19,7 @@ Object.assign(STRINGS.zh, {
     wallmaze_history_origins_p1: "夸若多棋由米尔科·马尔凯西（Mirko Marchesi）设计，1997 年由法国游戏公司 Gigamic 首次出版，很快便与该公司其他几款精巧的双人抽象游戏一道，成为其最知名的作品之一。",
     wallmaze_history_origins_p2: "它属于更广义的“阻挡迷宫”类游戏家族：棋盘本身会随着对局进行而不断改变形状，而不像国际象棋棋盘那样始终固定不变——玩家放下的每一面木墙，都会永久性地重新塑造此后整局对局中双方棋子可走的路径。",
     wallmaze_history_design_title: "简单规则，真实深度",
-    wallmaze_history_design_p1: "整套规则一张卡片就能写完——移动棋子或放置木墙，先到对面即获胜——然而在“加速冲刺”与“花一回合阻挡对手”之间的取舍，赋予了它真正的战略深度，常被游戏设计的相关文章引用，视为极简主义设计的典范。",
+    wallmaze_history_design_p1: "整套规则一张卡片就能写完——移动棋子或放置木墙，先到对面即获胜——然而在“加速冲刺”与“花一回合阻挡对手”之间的取舍，赋予了它真正的战略深度。",
     wallmaze_history_design_p2: "夸若多棋也被当作一个计算机科学问题加以研究：由于其状态空间庞大却结构清晰（棋子位置加上木墙布局，并需要维持路径连通性这一约束），它成了传统搜索式人工智能，以及近年来强化学习智能体都青睐的研究对象。",
     wallmaze_history_names_title: "为什么用另一个名字",
     wallmaze_history_names_p1: "同样的玩法在市面上以 Quoridor 之名出售，由 Mirko Marchesi 于 1997 年设计，Gigamic 出版。Quoridor 是注册商标。PaperGames 与 Gigamic 及该游戏没有任何关联，因此使用自己的名称“墙壁迷宫”。",

@@ -21,7 +21,7 @@ Object.assign(STRINGS.ja, {
     bullsandcows_history_title: "ブルズ・アンド・カウズの歴史",
     bullsandcows_history_origins_title: "紙と鉛筆の古典",
     bullsandcows_history_origins_p1: "隠されたコードを推理し、完全に合っている数と部分的に合っている数だけを教えてもらい、どこが合っているかは決して教えてもらえない――この中心となる考えは、1970年より前からある（一説にはずっと古いともいわれる）紙と鉛筆の当てっこ遊び「ブルズ・アンド・カウズ（雄牛と雌牛）」から来ています。伝統的には秘密の数字で遊び、正しい数字が正しい位置にあれば「ブル」、正しい数字が違う位置にあれば「カウ」です。",
-    bullsandcows_history_origins_p2: "このゲームは早くからコンピューターにも移され、「Moo」と呼ばれることの多い版が1960年代後半から大学のコンピューターで動いていました。今でもプログラミングの定番の練習問題です。",
+    bullsandcows_history_origins_p2: "このゲームは早くからコンピューターにも移され、「Moo」と呼ばれることの多い版が1970年ごろから大学のコンピューターで動いていました。今でもプログラミングの定番の練習問題です。",
     bullsandcows_history_spread_title: "ボードゲームと名前",
     bullsandcows_history_spread_p1: "1970年、このアイデアは色付きのピンを使うボードゲームになり、Mastermindという名前で世界的に知られるようになりました。Mastermindは商標で、権利はInvicta Plasticsにあります。PaperGamesはInvicta Plasticsともそのボードゲームとも関係がないため、より古い名前であるブルズ・アンド・カウズを使っています。",
     bullsandcows_history_modern_title: "計算機科学者に愛されるパズル",

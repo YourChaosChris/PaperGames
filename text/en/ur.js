@@ -21,13 +21,13 @@ Object.assign(STRINGS.en, {
     ur_rules_resignation: "A player can resign at any time, ending the game immediately in the opponent's favor.",
     ur_history_title: "The History of the Royal Game of Ur",
     ur_history_origins_title: "Buried with Kings in Mesopotamia",
-    ur_history_origins_p1: "Five gameboards were excavated between 1922 and 1934 by the British archaeologist Sir Leonard Woolley from the Royal Cemetery of Ur, in what is now southern Iraq - hence the game's name. Made of wood inlaid with shell, lapis lazuli and red limestone, they were buried alongside Sumerian royalty around 2600-2400 BCE.",
-    ur_history_origins_p2: "The game clearly wasn't confined to Mesopotamia: boards and fragments with the same distinctive shape have turned up as far away as Crete, Sri Lanka and Egypt, where a related game evolved into what's known today as Twenty Squares.",
+    ur_history_origins_p1: "Five gameboards were excavated between 1922 and 1934 by the British archaeologist Sir Leonard Woolley from the Royal Cemetery of Ur, in what is now southern Iraq - hence the game's name. The boards differ in materials and decoration; the finest is made of wood inlaid with shell, lapis lazuli and red limestone. They were buried alongside Sumerian royalty around 2600-2400 BCE.",
+    ur_history_origins_p2: "The game clearly wasn't confined to Mesopotamia: boards and fragments with the same distinctive shape have turned up as far away as Crete, Sri Lanka and Egypt. A closely related ancient game is known today as Twenty Squares.",
     ur_history_spread_title: "A Ruleset Lost, Then Found",
     ur_history_spread_p1: "For thousands of years, nobody knew how the game was actually played - the boards survived, but the rules didn't. That changed thanks to a Babylonian clay tablet, written around 177 BCE by the scribe Itti-Marduk-balatu, which recorded the rules in cuneiform as a kind of ancient rulebook.",
-    ur_history_spread_p2: "It took until the 1980s for British Museum curator Irving Finkel to fully translate and reconstruct the ruleset from that tablet - the same rules used in this app, more than 4,400 years after the game was first buried.",
+    ur_history_spread_p2: "It took until the 1980s for British Museum curator Irving Finkel to translate that tablet and, together with the shape of the boards, reconstruct a playable ruleset from it - the basis of the rules used in this app, more than 4,400 years after the game was first buried.",
     ur_history_modern_title: "A Surprise 21st-Century Revival",
-    ur_history_modern_p1: "The Royal Game of Ur remained a niche curiosity among historians until it found a huge new audience in 2017, when Irving Finkel taught the rules to popular YouTuber Tom Scott in a video that has since been watched tens of millions of times.",
-    ur_history_modern_p2: "That video sparked a small renaissance: dedicated fan sites, tournaments, and digital versions (including this one) now let anyone play a game that was already ancient by the time the pyramids of Giza were being built."
+    ur_history_modern_p1: "The Royal Game of Ur remained a niche curiosity among historians until it found a large new audience in 2017, when Irving Finkel played it against popular YouTuber Tom Scott in a British Museum video that has since been watched very widely.",
+    ur_history_modern_p2: "That video sparked a small renaissance: dedicated fan sites, tournaments, and digital versions (including this one) now let anyone play a game roughly as old as the pyramids of Giza."
 });
 I18n.markTextLoaded("en");

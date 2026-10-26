@@ -19,7 +19,7 @@ Object.assign(STRINGS.en, {
     mt_rules_example: "Move 1 match: 9 + 3 = 6 is wrong. Take the top right match of the 9 - it becomes a 5 - and lay it on the 6, which becomes an 8: 5 + 3 = 8.",
     mt_history_title: "History of Matchstick Puzzles",
     mt_history_matches_title: "From the friction match to the safety match",
-    mt_history_matches_p1: "The first friction matches were made by the English chemist John Walker in 1826; he never patented them. They lit all too easily. The safety match, which lights only on the striking surface of its box, came from Sweden: Gustaf Pasch suggested a separate striking surface in 1844, and Johan Edvard Lundström patented the safety match in 1855 and made it in large numbers in Jönköping.",
+    mt_history_matches_p1: "The first friction matches were made by the English chemist John Walker in 1826; he never patented them. Early friction matches were still dangerous to use. The safety match, which lights only on the striking surface of its box, came from Sweden: Gustaf Pasch suggested a separate striking surface in 1844, and Johan Edvard Lundström patented the safety match in 1855 and made it in large numbers in Jönköping.",
     mt_history_puzzles_title: "Matches as a puzzle",
     mt_history_puzzles_p1: "Cheap and found in every household, matches soon became puzzle material. Professor Hoffmann - the pen name of Angelo John Lewis - gave them a whole chapter, \"Puzzles with Lucifer Matches\", in his book Puzzles Old and New, published in London in 1893. Sums in the style of a digital clock are a younger form, from the time when such displays became common. The 90 puzzles here were found by computer for PaperGames."
 });

@@ -23,6 +23,6 @@ Object.assign(STRINGS.es, {
     twenty48_history_spread_p2: "Esta versión de PaperGames mantiene deliberadamente el tablero original de 4x4 y la probabilidad original de aparición del 90 %/10 % entre un dos y un cuatro, en lugar de elegir alguna de esas variantes: la misma elección que hace esta colección en todos los demás casos, favoreciendo el conjunto de reglas estándar y bien conocido frente a un giro novedoso sobre él.",
     twenty48_history_modern_title: "Un tablero pequeño, estudiado en serio",
     twenty48_history_modern_p1: "A pesar de sus reglas sencillas, el juego óptimo de 2048 resulta ser un problema de búsqueda genuinamente difícil debido a la aleatoriedad en la aparición de fichas: los mejores jugadores informáticos usan la búsqueda expectimax (sopesando las jugadas frente a la probabilidad de cada posible ficha siguiente) en lugar de la simple búsqueda minimax que permite un juego determinista como el ajedrez.",
-    twenty48_history_modern_p2: "Los mejores jugadores informáticos documentados pueden alcanzar la ficha de 32768 con alta probabilidad y en ocasiones han llegado a 65536: dos duplicaciones más allá de la ficha que la mayoría de los jugadores humanos se alegran de ver alguna vez."
+    twenty48_history_modern_p2: "Los mejores jugadores informáticos documentados alcanzan la ficha de 32768 en la mayoría de las partidas y en ocasiones incluso la de 65536: cuatro y cinco duplicaciones más allá de la ficha de 2048 que la mayoría de los jugadores humanos se alegran de ver alguna vez."
 });
 I18n.markTextLoaded("es");

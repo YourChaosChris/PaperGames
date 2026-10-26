@@ -19,7 +19,7 @@ Object.assign(STRINGS.de, {
     mt_rules_example: "Lege 1 Holz um: 9 + 3 = 6 ist falsch. Nimm das Holz oben rechts von der 9 – sie wird zur 5 – und lege es an die 6, die zur 8 wird: 5 + 3 = 8.",
     mt_history_title: "Geschichte der Streichholzrätsel",
     mt_history_matches_title: "Vom Reibzündholz zum Sicherheitszündholz",
-    mt_history_matches_p1: "Die ersten Reibzündhölzer stellte 1826 der englische Chemiker John Walker her; er ließ sie nie patentieren. Sie zündeten allzu leicht. Das Sicherheitszündholz, das nur an der Reibfläche seiner Schachtel zündet, kam aus Schweden: Gustaf Pasch schlug 1844 eine eigene Reibfläche vor, und Johan Edvard Lundström ließ das Sicherheitszündholz 1855 patentieren und stellte es in Jönköping in großen Mengen her.",
+    mt_history_matches_p1: "Die ersten Reibzündhölzer stellte 1826 der englische Chemiker John Walker her; er ließ sie nie patentieren. Die frühen Reibzündhölzer waren im Gebrauch noch gefährlich. Das Sicherheitszündholz, das nur an der Reibfläche seiner Schachtel zündet, kam aus Schweden: Gustaf Pasch schlug 1844 eine eigene Reibfläche vor, und Johan Edvard Lundström ließ das Sicherheitszündholz 1855 patentieren und stellte es in Jönköping in großen Mengen her.",
     mt_history_puzzles_title: "Streichhölzer als Rätsel",
     mt_history_puzzles_p1: "Billig und in jedem Haushalt zu finden, wurden Streichhölzer bald zum Rätselstoff. Professor Hoffmann – das Pseudonym von Angelo John Lewis – widmete ihnen in seinem Buch Puzzles Old and New, 1893 in London erschienen, ein ganzes Kapitel, „Puzzles with Lucifer Matches“. Rechnungen im Stil einer Digitaluhr sind eine jüngere Form aus der Zeit, als solche Anzeigen üblich wurden. Die 90 Aufgaben hier hat der Computer für PaperGames gefunden."
 });

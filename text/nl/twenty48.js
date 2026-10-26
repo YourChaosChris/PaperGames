@@ -23,6 +23,6 @@ Object.assign(STRINGS.nl, {
     twenty48_history_spread_p2: "Deze PaperGames-versie houdt bewust vast aan het originele 4x4-bord en de 90%/10%-verhouding voor tweeën en vieren, in plaats van een van die varianten te kiezen - dezelfde keuze die deze verzameling overal elders maakt: de voorkeur geven aan het standaard, goed begrepen regelwerk boven een nieuwe draai eraan.",
     twenty48_history_modern_title: "Een Klein Bord, Serieus Bestudeerd",
     twenty48_history_modern_p1: "Ondanks zijn eenvoudige regels blijkt optimaal 2048-spel een werkelijk lastig zoekprobleem te zijn, vanwege de willekeur bij het verschijnen van tegels: sterke computerspelers gebruiken expectimax-zoeken (dat zetten afweegt tegen de kans op elke mogelijke volgende tegel) in plaats van de eenvoudige minimax-zoekmethode die een deterministisch spel als schaken toelaat.",
-    twenty48_history_modern_p2: "De best gedocumenteerde computerspelers kunnen met hoge waarschijnlijkheid de tegel 32768 bereiken en hebben af en toe zelfs 65536 gehaald - twee verdubbelingen voorbij de tegel die de meeste menselijke spelers al als een triomf ervaren om ooit één keer te zien."
+    twenty48_history_modern_p2: "De best gedocumenteerde computerspelers bereiken in de meeste partijen de tegel 32768 en af en toe zelfs 65536 - vier en vijf verdubbelingen voorbij de tegel 2048 die de meeste menselijke spelers al als een triomf ervaren om ooit één keer te zien."
 });
 I18n.markTextLoaded("nl");

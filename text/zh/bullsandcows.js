@@ -21,7 +21,7 @@ Object.assign(STRINGS.zh, {
     bullsandcows_history_title: "公牛与母牛的历史",
     bullsandcows_history_origins_title: "纸笔上的经典",
     bullsandcows_history_origins_p1: "它的核心想法——猜一个隐藏的密码，只得知完全对上和部分对上的数量，却永远不知道是哪几个——来自“公牛与母牛”（Bulls and Cows），一种早于 1970 年的纸笔猜谜游戏，据一些说法还要古老得多。传统上猜的是秘密数字：数字对、位置也对叫“公牛”，数字对但位置不对叫“母牛”。",
-    bullsandcows_history_origins_p2: "它也很早就被搬上了计算机：常被称为 Moo 的版本从 20 世纪 60 年代末起就在大学的计算机上运行，编写它至今仍是经典的编程练习。",
+    bullsandcows_history_origins_p2: "它也很早就被搬上了计算机：常被称为 Moo 的版本从 1970 年前后起就在大学的计算机上运行，编写它至今仍是经典的编程练习。",
     bullsandcows_history_spread_title: "棋盘游戏与名称",
     bullsandcows_history_spread_p1: "1970 年，这个想法被做成了使用彩色插针的棋盘游戏，并以 Mastermind 之名风靡全球。Mastermind 是一个商标，权利属于 Invicta Plastics。PaperGames 与 Invicta Plastics 及该棋盘游戏没有任何关联，因此使用更古老的名称“公牛与母牛”（Bulls and Cows）。",
     bullsandcows_history_modern_title: "计算机科学家钟爱的谜题",

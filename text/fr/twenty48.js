@@ -23,6 +23,6 @@ Object.assign(STRINGS.fr, {
     twenty48_history_spread_p2: "Cette version d'PaperGames conserve délibérément le plateau 4x4 original et le taux d'apparition de 90 %/10 % pour les tuiles deux ou quatre, plutôt que d'adopter l'une de ces variantes - le même choix que fait cette collection partout ailleurs, en privilégiant le règlement standard et bien connu plutôt qu'une variation originale.",
     twenty48_history_modern_title: "Un petit plateau, sérieusement étudié",
     twenty48_history_modern_p1: "Malgré ses règles simples, jouer au 2048 de façon optimale se révèle être un problème de recherche véritablement difficile à cause du hasard dans l'apparition des tuiles : les meilleurs joueurs informatiques utilisent une recherche expectiminimax (pesant les coups selon la probabilité de chaque tuile suivante possible) plutôt que la simple recherche minimax que permet un jeu déterministe comme les échecs.",
-    twenty48_history_modern_p2: "Les meilleurs joueurs informatiques documentés peuvent atteindre la tuile 32768 avec une forte probabilité et ont occasionnellement atteint 65536 - deux doublements au-delà de la tuile que la plupart des joueurs humains sont ravis d'apercevoir ne serait-ce qu'une fois."
+    twenty48_history_modern_p2: "Les meilleurs joueurs informatiques documentés atteignent la tuile 32768 dans la plupart des parties et parfois même 65536 - quatre et cinq doublements au-delà de la tuile 2048 que la plupart des joueurs humains sont ravis d'apercevoir ne serait-ce qu'une fois."
 });
 I18n.markTextLoaded("fr");

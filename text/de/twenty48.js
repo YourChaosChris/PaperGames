@@ -23,6 +23,6 @@ Object.assign(STRINGS.de, {
     twenty48_history_spread_p2: "Diese PaperGames-Version behält bewusst das ursprüngliche 4x4-Brett und die 90/10-Spawn-Rate für Zweier und Vierer bei, statt eine dieser Varianten zu übernehmen – dieselbe Entscheidung, die diese Sammlung überall sonst trifft: dem Standard-Regelwerk den Vorzug vor einer neuartigen Abwandlung zu geben.",
     twenty48_history_modern_title: "Ein kleines Brett, ernsthaft erforscht",
     twenty48_history_modern_p1: "Trotz seiner einfachen Regeln erweist sich optimales 2048-Spiel wegen der Zufälligkeit beim Erscheinen neuer Kacheln als ein wirklich schwieriges Suchproblem: starke Computerspieler verwenden Expectimax-Suche (die Züge gegen die Wahrscheinlichkeit jeder möglichen nächsten Kachel abwägt) statt der einfachen Minimax-Suche, die ein deterministisches Spiel wie Schach erlaubt.",
-    twenty48_history_modern_p2: "Die dokumentiert besten Computerspieler erreichen mit hoher Wahrscheinlichkeit die Kachel 32768 und haben gelegentlich sogar 65536 erreicht – zwei Verdopplungen jenseits der Kachel, die die meisten menschlichen Spieler schon einmal zu sehen als Triumph empfinden."
+    twenty48_history_modern_p2: "Die dokumentiert besten Computerspieler erreichen in den meisten Partien die Kachel 32768 und gelegentlich sogar 65536 – vier bzw. fünf Verdopplungen jenseits der Kachel 2048, die die meisten menschlichen Spieler schon einmal zu sehen als Triumph empfinden."
 });
 I18n.markTextLoaded("de");

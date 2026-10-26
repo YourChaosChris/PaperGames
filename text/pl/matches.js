@@ -19,7 +19,7 @@ Object.assign(STRINGS.pl, {
     mt_rules_example: "Przełóż 1 zapałkę: 9 + 3 = 6 to błąd. Weź zapałkę z prawej góry dziewiątki - powstaje 5 - i dołóż ją do szóstki, z której powstaje 8: 5 + 3 = 8.",
     mt_history_title: "Historia gry Zagadki z zapałkami",
     mt_history_matches_title: "Od zapałki tarciowej do zapałki bezpiecznej",
-    mt_history_matches_p1: "Pierwsze zapałki tarciowe wytworzył w 1826 roku angielski chemik John Walker; nigdy ich nie opatentował. Zapalały się aż za łatwo. Zapałka bezpieczna, która zapala się tylko o draskę swojego pudełka, przyszła ze Szwecji: Gustaf Pasch zaproponował w 1844 roku osobną draskę, a Johan Edvard Lundström opatentował zapałkę bezpieczną w 1855 roku i produkował ją w dużych ilościach w Jönköping.",
+    mt_history_matches_p1: "Pierwsze zapałki tarciowe wytworzył w 1826 roku angielski chemik John Walker; nigdy ich nie opatentował. Pierwsze zapałki tarciowe były jeszcze niebezpieczne w użyciu. Zapałka bezpieczna, która zapala się tylko o draskę swojego pudełka, przyszła ze Szwecji: Gustaf Pasch zaproponował w 1844 roku osobną draskę, a Johan Edvard Lundström opatentował zapałkę bezpieczną w 1855 roku i produkował ją w dużych ilościach w Jönköping.",
     mt_history_puzzles_title: "Zapałki jako zagadka",
     mt_history_puzzles_p1: "Tanie i obecne w każdym domu zapałki szybko stały się materiałem na zagadki. Professor Hoffmann - pseudonim Angelo Johna Lewisa - poświęcił im cały rozdział, „Puzzles with Lucifer Matches”, w książce Puzzles Old and New, wydanej w Londynie w 1893 roku. Działania w stylu zegara cyfrowego to młodsza forma, z czasów, gdy takie wyświetlacze stały się powszechne. 90 zagadek tutaj znalazł komputer dla PaperGames."
 });

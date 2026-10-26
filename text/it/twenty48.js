@@ -23,6 +23,6 @@ Object.assign(STRINGS.it, {
     twenty48_history_spread_p2: "Questa versione di PaperGames mantiene deliberatamente il tavoliere 4x4 originale e la probabilità di comparsa 90%/10% tra il 2 e il 4, invece di scegliere una di quelle varianti - la stessa scelta che questa raccolta fa ovunque altrove, preferendo il regolamento standard e ben conosciuto a una variazione originale.",
     twenty48_history_modern_title: "Un piccolo tavoliere, studiato seriamente",
     twenty48_history_modern_p1: "Nonostante le sue regole semplici, il gioco ottimale di 2048 si rivela essere un problema di ricerca genuinamente difficile a causa della casualità nella comparsa delle tessere: i migliori giocatori computerizzati usano la ricerca expectimax (valutando le mosse rispetto alla probabilità di ogni possibile tessera successiva) invece della semplice ricerca minimax che un gioco deterministico come gli scacchi permette.",
-    twenty48_history_modern_p2: "I migliori giocatori computerizzati documentati riescono a raggiungere la tessera 32768 con alta probabilità e occasionalmente hanno raggiunto la 65536 - due raddoppi oltre la tessera che la maggior parte dei giocatori umani è entusiasta di vedere anche solo una volta."
+    twenty48_history_modern_p2: "I migliori giocatori computerizzati documentati raggiungono la tessera 32768 nella maggior parte delle partite e occasionalmente perfino la 65536 - quattro e cinque raddoppi oltre la tessera 2048 che la maggior parte dei giocatori umani è entusiasta di vedere anche solo una volta."
 });
 I18n.markTextLoaded("it");

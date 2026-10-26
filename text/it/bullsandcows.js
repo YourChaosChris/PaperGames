@@ -21,7 +21,7 @@ Object.assign(STRINGS.it, {
     bullsandcows_history_title: "La storia di Tori e mucche",
     bullsandcows_history_origins_title: "Un classico di carta e penna",
     bullsandcows_history_origins_p1: "L'idea centrale - indovinare un codice nascosto e sapere solo quante corrispondenze esatte e parziali ci sono, mai quali - viene da Bulls and Cows (Tori e mucche), un gioco di indovinelli con carta e penna precedente al 1970 e, secondo alcuni racconti, molto più antico. Tradizionalmente si gioca con numeri segreti: una cifra giusta al posto giusto è un toro, una cifra giusta al posto sbagliato è una mucca.",
-    bullsandcows_history_origins_p2: "Arrivò presto anche sui computer: versioni, spesso chiamate Moo, giravano sui computer universitari già dalla fine degli anni Sessanta, e programmarlo è ancora oggi un esercizio classico.",
+    bullsandcows_history_origins_p2: "Arrivò presto anche sui computer: versioni, spesso chiamate Moo, giravano sui computer universitari già dal 1970 circa, e programmarlo è ancora oggi un esercizio classico.",
     bullsandcows_history_spread_title: "Il gioco da tavolo e il nome",
     bullsandcows_history_spread_p1: "Nel 1970 l'idea divenne un gioco da tavolo con pioli colorati, famoso in tutto il mondo con il nome Mastermind. Mastermind è un marchio; i diritti appartengono a Invicta Plastics. PaperGames non ha alcun legame con Invicta Plastics né con quel gioco da tavolo e usa quindi il nome più antico, Bulls and Cows, Tori e mucche.",
     bullsandcows_history_modern_title: "Un rompicapo amato dagli informatici",

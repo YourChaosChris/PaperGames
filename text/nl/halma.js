@@ -15,13 +15,13 @@ Object.assign(STRINGS.nl, {
     halma_term_chains: "Ketens zijn de sleutel",
     halma_rules_chains: "Eén lange sprongketen kan een stuk in één beurt een groot deel van het bord over brengen, dus het bouwen van een gang van eigen stukken waarover een van je stukken kan hoppen, is meestal veel sneller dan stap voor stap lopen.",
     halma_history_title: "De Geschiedenis van Halma",
-    halma_history_origins_title: "Van Duitsland naar Massachusetts",
-    halma_history_origins_p1: "Halma werd rond 1883-1884 gemaakt door George Howard Monks, een chirurg uit Boston, die het afleidde van een ouder Duits spel genaamd \"Hoppity\" (zelf geïnspireerd door een Frans spel, Salta), nadat hij ermee in aanraking was gekomen tijdens zijn medicijnenstudie in Duitsland.",
-    halma_history_origins_p2: "De naam \"Halma\" komt van het Griekse woord voor \"sprong\" of \"verspringen\" - een passende keuze voor een spel waarvan de hele aantrekkingskracht draait om sprongen over het bord aan elkaar rijgen - en het werd in de Verenigde Staten vanaf 1885 populair gemaakt door de Bostonse spellenfabrikant E. I. Horsman.",
+    halma_history_origins_title: "Van Engeland naar Massachusetts",
+    halma_history_origins_p1: "Halma werd in 1883 of 1884 gemaakt door George Howard Monks, een chirurg uit Boston, die het afleidde van een ouder Engels spel genaamd \"Hoppity\".",
+    halma_history_origins_p2: "De naam \"Halma\" komt van het Griekse woord voor \"sprong\" - een passende keuze voor een spel waarvan de hele aantrekkingskracht draait om sprongen over het bord aan elkaar rijgen - en in de Verenigde Staten werd het spel vanaf 1885 voor het eerst uitgebracht door de New Yorkse speelgoed- en spellenfabrikant E. I. Horsman.",
     halma_history_legacy_title: "Een Blijvende Invloed",
     halma_history_legacy_p1: "Halma wordt meestal aangehaald als de directe voorloper van Chinese Checkers (Sterrendam), een later spel dat Halma's vierkante bord met zijn rechthoekige, voor 4 spelers geschikte indeling verruilde voor een zespuntig sterbord - ondanks de naam heeft Chinese Checkers geen bijzondere band met China en is het daar ook niet uitgevonden.",
-    halma_history_legacy_p2: "Het originele spel ondersteunt twee of vier spelers en wordt traditioneel gespeeld op een 16x16-bord met kampen van elk 19 stukken; kleinere en snellere varianten voor twee spelers zijn al lang gangbaar, vooral voor reissets en kinderversies.",
+    halma_history_legacy_p2: "Het originele spel ondersteunt twee of vier spelers en wordt traditioneel gespeeld op een 16x16-bord, met kampen van elk 19 stukken bij twee spelers en elk 13 bij vier; er bestaan ook kleinere en snellere varianten voor twee spelers.",
     halma_history_version_title: "Deze Versie",
-    halma_history_version_p1: "PaperGames speelt een kleinere, veelgebruikte tweespelersvariant: een 10x10-bord met tien stukken en een vierrijig driehoekig kamp per kant, met dezelfde beweeg- en sprongkettenregels, maar met merkbaar kortere partijen dan het volledige 16x16-origineel."
+    halma_history_version_p1: "PaperGames speelt een kleinere tweespelersvariant: een 10x10-bord met tien stukken en een vierrijig driehoekig kamp per kant, met dezelfde beweeg- en sprongkettenregels, maar met merkbaar kortere partijen dan het volledige 16x16-origineel."
 });
 I18n.markTextLoaded("nl");

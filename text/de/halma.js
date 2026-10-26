@@ -15,13 +15,13 @@ Object.assign(STRINGS.de, {
     halma_term_chains: "Ketten sind der Schlüssel",
     halma_rules_chains: "Eine einzelne lange Sprungkette kann eine Figur in einem Zug über einen Großteil des Bretts bewegen, weshalb der Aufbau eines Korridors aus eigenen Figuren, über den eine Figur hüpfen kann, meist viel schneller ist als Schritt für Schritt zu laufen.",
     halma_history_title: "Die Geschichte von Halma",
-    halma_history_origins_title: "Von Deutschland nach Massachusetts",
-    halma_history_origins_p1: "Halma wurde um 1883-1884 von George Howard Monks geschaffen, einem Bostoner Chirurgen, der es von einem älteren deutschen Spiel namens \"Hoppity\" ableitete (selbst inspiriert von einem französischen Spiel, Salta), nachdem er es während seines Medizinstudiums in Deutschland kennengelernt hatte.",
-    halma_history_origins_p2: "Der Name \"Halma\" stammt vom griechischen Wort für \"Sprung\" oder \"Weitsprung\" – eine passende Wahl für ein Spiel, dessen ganzer Reiz im Verketten von Sprüngen über das Brett liegt – und wurde in den USA ab 1885 vom Bostoner Spielehersteller E. I. Horsman populär gemacht.",
+    halma_history_origins_title: "Von England nach Massachusetts",
+    halma_history_origins_p1: "Halma wurde 1883 oder 1884 von George Howard Monks geschaffen, einem Bostoner Chirurgen, der es von einem älteren englischen Spiel namens \"Hoppity\" ableitete.",
+    halma_history_origins_p2: "Der Name \"Halma\" stammt vom griechischen Wort für \"Sprung\" – eine passende Wahl für ein Spiel, dessen ganzer Reiz im Verketten von Sprüngen über das Brett liegt – und in den USA brachte der New Yorker Spielwaren- und Spielehersteller E. I. Horsman das Spiel ab 1885 als Erster heraus.",
     halma_history_legacy_title: "Ein bleibender Einfluss",
     halma_history_legacy_p1: "Halma gilt gewöhnlich als direkter Vorläufer von Chinese Checkers (\"Sternhalma\"), einem späteren Spiel, das Halmas quadratisches Brett mit rechteckigem, für 4 Spieler geeignetem Layout gegen ein sechszackiges Sternbrett eintauschte – trotz des Namens hat Chinese Checkers keine besondere Verbindung zu China und wurde dort auch nicht erfunden.",
-    halma_history_legacy_p2: "Das Originalspiel unterstützt zwei oder vier Spieler und wird traditionell auf einem 16x16-Brett mit Lagern von je 19 Figuren gespielt; kleinere und schnellere Varianten für zwei Spieler waren schon lange verbreitet, besonders für Reisesets und Kinderausgaben.",
+    halma_history_legacy_p2: "Das Originalspiel unterstützt zwei oder vier Spieler und wird traditionell auf einem 16x16-Brett gespielt, mit Lagern von je 19 Figuren bei zwei und je 13 bei vier Spielern; daneben gibt es auch kleinere und schnellere Varianten für zwei Spieler.",
     halma_history_version_title: "Diese Version",
-    halma_history_version_p1: "PaperGames spielt eine kleinere, verbreitete Zweispieler-Variante: ein 10x10-Brett mit zehn Figuren und einem vierreihigen dreieckigen Lager pro Seite, wobei dieselben Zug- und Sprungkettenregeln gelten, während die Partien merklich kürzer ausfallen als im vollen 16x16-Original."
+    halma_history_version_p1: "PaperGames spielt eine kleinere Zweispieler-Variante: ein 10x10-Brett mit zehn Figuren und einem vierreihigen dreieckigen Lager pro Seite, wobei dieselben Zug- und Sprungkettenregeln gelten, während die Partien merklich kürzer ausfallen als im vollen 16x16-Original."
 });
 I18n.markTextLoaded("de");

@@ -23,6 +23,6 @@ Object.assign(STRINGS.en, {
     twenty48_history_spread_p2: "This PaperGames version deliberately keeps the original's 4x4 board and 90%/10% two-or-four spawn rate rather than picking one of those variants - the same choice this collection makes everywhere else, favoring the standard, well-understood ruleset over a novel spin on it.",
     twenty48_history_modern_title: "A Small Board, Seriously Studied",
     twenty48_history_modern_p1: "Despite its simple rules, optimal 2048 play turns out to be a genuinely hard search problem because of the randomness in tile spawning: strong computer players use expectimax search (weighing moves against the probability of each possible next tile) rather than the plain minimax search a deterministic game like chess allows.",
-    twenty48_history_modern_p2: "The very best documented computer players can reach the 32768 tile with high probability and have occasionally reached 65536 - two doublings beyond the tile most human players are thrilled to ever see once."
+    twenty48_history_modern_p2: "The very best documented computer players reach the 32768 tile in most games and occasionally even 65536 - four and five doublings beyond the 2048 tile that most human players are thrilled to ever see once."
 });
 I18n.markTextLoaded("en");

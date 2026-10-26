@@ -24,7 +24,7 @@ Object.assign(STRINGS.zh, {
     kakuro_rules_win: "当所有白色格子都已填满、每条数字条的总和都符合提示、且没有任何数字条出现重复数字时，谜题即告解出。",
     kakuro_history_title: "卡库罗的历史",
     kakuro_history_origins_title: "诞生于美国的「Cross Sums」",
-    kakuro_history_origins_p1: "如今被称为卡库罗的数字填字谜题，由加拿大人雅克·库森（Jacques Cousin）于1966年发明。他当时供职于谜题出版商Dell Magazines，并在美国以「Cross Sums」（也写作「Cross Sum」）之名将其推出。这款谜题很快成为Dell旗下谜题杂志的常规栏目，与该公司的其他数字与逻辑谜题并列刊载。",
+    kakuro_history_origins_p1: "如今被称为卡库罗的数字填字谜题，最早以「Cross Sums」（也写作「Cross Sum」）之名出现在美国出版商Dell的谜题杂志上；已知最早的例子来自1950年。人们通常认为它的发明者是加拿大人雅各布·E·芬克（Jacob E. Funk）。这款谜题过了几年才流行起来，但到20世纪60年代中期，它已成为Dell旗下谜题杂志的常规栏目，与该公司的其他数字与逻辑谜题并列刊载。",
     kakuro_history_origins_p2: "这个创意把填字游戏网格的外观，与词汇替换为算术结合了起来：黑色格子里写着提示数字，取代了填字游戏的释义；白色格子则要填入数字，其总和须与这些提示相符。",
     kakuro_history_spread_title: "获得日文名字，迎来第二次生命",
     kakuro_history_spread_p1: "Cross Sums传入日本后，被谜题出版商Nikoli（后来推广数独并为其命名的正是这家公司）看中，并为其取名「Kakuro（卡库罗）」，是日语「加算クロス（加法十字）」的缩略说法。",

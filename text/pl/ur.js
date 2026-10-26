@@ -21,13 +21,13 @@ Object.assign(STRINGS.pl, {
     ur_rules_resignation: "Gracz może poddać się w dowolnym momencie, co natychmiast kończy grę na korzyść przeciwnika.",
     ur_history_title: "Historia Królewskiej Gry z Ur",
     ur_history_origins_title: "Pochowana z królami w Mezopotamii",
-    ur_history_origins_p1: "Pięć plansz do gry wykopał między 1922 a 1934 rokiem brytyjski archeolog sir Leonard Woolley w Królewskim Cmentarzysku w Ur, na terenie dzisiejszego południowego Iraku - stąd nazwa gry. Wykonane z drewna inkrustowanego muszlami, lapis lazuli i czerwonym wapieniem, zostały pochowane wraz z sumeryjskimi władcami około 2600-2400 r. p.n.e.",
-    ur_history_origins_p2: "Gra wyraźnie nie ograniczała się do Mezopotamii: plansze i fragmenty o tym samym charakterystycznym kształcie znaleziono nawet tak daleko jak na Krecie, Sri Lance i w Egipcie, gdzie pokrewna gra przekształciła się w to, co dziś znane jest jako Twenty Squares.",
+    ur_history_origins_p1: "Pięć plansz do gry wykopał między 1922 a 1934 rokiem brytyjski archeolog sir Leonard Woolley w Królewskim Cmentarzysku w Ur, na terenie dzisiejszego południowego Iraku - stąd nazwa gry. Plansze różnią się materiałem i zdobieniem; najwspanialsza jest z drewna inkrustowanego muszlami, lapis lazuli i czerwonym wapieniem. Zostały pochowane wraz z sumeryjskimi władcami około 2600-2400 r. p.n.e.",
+    ur_history_origins_p2: "Gra wyraźnie nie ograniczała się do Mezopotamii: plansze i fragmenty o tym samym charakterystycznym kształcie znaleziono nawet tak daleko jak na Krecie, Sri Lance i w Egipcie. Blisko spokrewniona starożytna gra znana jest dziś jako Twenty Squares.",
     ur_history_spread_title: "Zasady zagubione, potem odnalezione",
     ur_history_spread_p1: "Przez tysiące lat nikt nie wiedział, jak naprawdę grało się w tę grę - plansze przetrwały, ale zasady nie. Zmieniło się to dzięki babilońskiej tabliczce glinianej, spisanej około 177 r. p.n.e. przez skrybę Itti-Marduk-balatu, która zapisała zasady pismem klinowym jako swego rodzaju starożytny podręcznik gry.",
-    ur_history_spread_p2: "Dopiero w latach 80. XX wieku kurator Muzeum Brytyjskiego Irving Finkel w pełni przetłumaczył i zrekonstruował zestaw zasad z tej tabliczki - te same zasady, których używa ta aplikacja, ponad 4400 lat po tym, jak grę po raz pierwszy pochowano.",
+    ur_history_spread_p2: "Dopiero w latach 80. XX wieku kurator Muzeum Brytyjskiego Irving Finkel przetłumaczył tę tabliczkę i na jej podstawie, wraz z kształtem plansz, zrekonstruował grywalny zestaw zasad - podstawę zasad, których używa ta aplikacja, ponad 4400 lat po tym, jak grę po raz pierwszy pochowano.",
     ur_history_modern_title: "Zaskakujący renesans w XXI wieku",
-    ur_history_modern_p1: "Królewska Gra z Ur pozostawała niszową ciekawostką wśród historyków, aż w 2017 roku zyskała ogromną nową publiczność, gdy Irving Finkel nauczył zasad popularnego youtubera Toma Scotta w filmie, który od tamtej pory obejrzano dziesiątki milionów razy.",
-    ur_history_modern_p2: "Ten film wywołał mały renesans: dedykowane strony fanowskie, turnieje i wersje cyfrowe (w tym ta) pozwalają dziś każdemu zagrać w grę, która była już starożytna, gdy budowano piramidy w Gizie."
+    ur_history_modern_p1: "Królewska Gra z Ur pozostawała niszową ciekawostką wśród historyków, aż w 2017 roku zyskała dużą nową publiczność, gdy Irving Finkel zagrał w nią z popularnym youtuberem Tomem Scottem w filmie British Museum, który od tamtej pory obejrzało bardzo wielu widzów.",
+    ur_history_modern_p2: "Ten film wywołał mały renesans: dedykowane strony fanowskie, turnieje i wersje cyfrowe (w tym ta) pozwalają dziś każdemu zagrać w grę mniej więcej tak starą jak piramidy w Gizie."
 });
 I18n.markTextLoaded("pl");

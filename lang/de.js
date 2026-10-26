@@ -479,7 +479,7 @@ STRINGS.de = {
 
     checkers_history_intro: "Dame ist ein Spiel mit einfachen Regeln und großer strategischer Tiefe, entstanden aus der Kombination eines uralten Bretts mit einer neueren Art des Schlagens.",
 
-    ur_history_intro: "Mit rund 4600 Jahren ist das Königliche Spiel von Ur eines der ältesten je entdeckten Brettspiele – und dank einer über zwei Jahrtausende reichenden Ermittlungsarbeit eines der wenigen antiken Spiele, das wir noch nach seinen ursprünglichen Regeln spielen können.",
+    ur_history_intro: "Mit rund 4600 Jahren ist das Königliche Spiel von Ur eines der ältesten je entdeckten Brettspiele – und dank einer über zwei Jahrtausende reichenden Ermittlungsarbeit eines der wenigen antiken Spiele, das wir noch nach Regeln spielen können, die aus einer antiken Schriftquelle rekonstruiert wurden.",
 
     morris_history_intro: "Kaum ein Spiel wurde über so viele Jahrhunderte in so viele verschiedene Oberflächen eingeritzt wie Mühle – von ägyptischen Tempeldächern bis zu englischen Kathedral-Kreuzgängen.",
 
@@ -491,7 +491,7 @@ STRINGS.de = {
 
     reversi_history_intro: "Ein viktorianisches Gesellschaftsspiel, das fast ein Jahrhundert später in Japan unter neuem Namen und mit fester Startaufstellung zurückkehrte.",
 
-    fourinarow_history_intro: "Eine simple, von der Schwerkraft angetriebene Idee, die zu einem der meistverkauften Spiele des 20. Jahrhunderts wurde.",
+    fourinarow_history_intro: "Eine simple, von der Schwerkraft angetriebene Idee, die zu einem weltweiten Klassiker wurde.",
 
     gomoku_history_intro: "Ein simples Reihenspiel, dessen Einfachheit Wettkampfspieler dazu zwang, seine Regeln zu ändern.",
     tictactoe_history_intro: "Wohl das bekannteste Spiel für Papier und Stift überhaupt – mit Wurzeln im alten Rom und einem Platz in der Geschichte der Computer.",
@@ -502,7 +502,7 @@ STRINGS.de = {
 
     sudoku_history_intro: "Anders als jedes andere Spiel in dieser Sammlung hat Sudoku überhaupt keine alte Herkunft – das Rätsel in seiner heutigen Form stammt erst aus dem Jahr 1979.",
 
-    pegsolitaire_history_intro: "Ein Einzelspieler-Rätsel, alt genug für eine eigene Hoflegende, und Gegenstand eines der überraschenderen Ergebnisse der Unterhaltungsmathematik.",
+    pegsolitaire_history_intro: "Ein Einzelspieler-Rätsel, alt genug für eine eigene Ursprungslegende, und Gegenstand eines der überraschenderen Ergebnisse der Unterhaltungsmathematik.",
 
     minesweeper_history_intro: "Ein Rätsel, dessen prägendste Regel – ein völlig sicherer erster Zug – erst zum Standard wurde, als Computer statt einer gedruckten Seite ein frisches Brett auf Abruf erzeugen konnten.",
 
@@ -1114,7 +1114,7 @@ STRINGS.de = {
     game_halma: "Halma",
     home_halma_desc: "Bringe alle deine Figuren als Erster ins gegnerische Lager. Lokal zu zweit oder gegen die eingebaute KI.",
 
-    halma_history_intro: "Eine amerikanische Überarbeitung eines älteren deutschen Spiels, seit weit über einem Jahrhundert beliebt als einfaches Wettrennen, das leicht zu lernen ist, aber dennoch sorgfältige Planung belohnt.",
+    halma_history_intro: "Eine amerikanische Überarbeitung eines älteren englischen Spiels, seit weit über einem Jahrhundert beliebt als einfaches Wettrennen, das leicht zu lernen ist, aber dennoch sorgfältige Planung belohnt.",
     game_sternhalma: "Sternhalma",
     home_sternhalma_desc: "Bringe alle zehn deiner Murmeln über das sternförmige Brett in die gegenüberliegende Spitze. Lokal zu zweit oder gegen die eingebaute KI.",
     sternhalma_history_intro: "Ein Nachfahre des älteren Spiels Halma mit sternförmigem Brett, vermarktet unter einem exotischen Namen, der nichts mit seinem tatsächlichen Ursprung zu tun hat.",
@@ -2539,7 +2539,7 @@ STRINGS.de = {
     home_poker_desc: "Texas Hold'em gegen 1 bis 3 Computer: zwei eigene Karten, fünf gemeinsame Karten und feste Einsatzstufen – passen, mitgehen oder erhöhen. Die beste Hand aus fünf Karten gewinnt. Gespielt wird mit Chips, die nur Punkte im Spiel sind.",
     pk_fold: "Passen",
     pk_next: "Nächste Hand",
-    pk_history_intro: "Poker verbreitete sich im frühen 19. Jahrhundert im Süden der USA; Texas Hold'em mit zwei eigenen und fünf gemeinsamen Karten stammt aus dem frühen 20. Jahrhundert.",
+    pk_history_intro: "Poker verbreitete sich im frühen 19. Jahrhundert im Süden der USA; Texas Hold'em mit zwei eigenen und fünf gemeinsamen Karten wird nach der Überlieferung ins frühe 20. Jahrhundert datiert.",
     quickrules_poker_1: "Du bekommst zwei eigene Karten, dazu kommen bis zu fünf gemeinsame. Bilde die beste Hand aus fünf Karten.",
     quickrules_poker_2: "In jeder Setzrunde: passen, checken oder mitgehen, oder um die feste Stufe erhöhen.",
     quickrules_poker_3: "Wer am Ende übrig ist oder die beste Hand zeigt, gewinnt den Pot.",
@@ -2711,7 +2711,7 @@ STRINGS.de = {
     msg_t_sf_isplayer_you: "Du bist der Spieler: {s}.",
     game_canasta: "Canasta",
     home_canasta_desc: "Das klassische Rommé-Spiel zu zweit mit 108 Karten: Kombinationen aus gleichen Rängen, Canastas aus sieben Karten, Joker und Zweien als wilde Karten, rote und schwarze Dreien. Du gegen den Computer, bis 5000 Punkte oder kurz bis 2000.",
-    cn_history_intro: "Canasta wurde 1939 in Montevideo (Uruguay) erfunden und kam 1949 nach New York.",
+    cn_history_intro: "Canasta stammt aus Montevideo (Uruguay); meist wird 1939 genannt, manche Quellen nennen ein späteres Jahr. 1949 kam es nach New York.",
     quickrules_canasta_1: "Zieh zwei Karten vom Stapel oder nimm den ganzen Ablagestapel – seine oberste Karte muss sofort in eine Kombination.",
     quickrules_canasta_2: "Leg mindestens drei Karten eines Rangs aus; Joker und Zweien sind wild. Sieben Karten ergeben eine Canasta.",
     quickrules_canasta_3: "Mit zwei Canastas darfst du ausmachen. Rote Dreien bringen Bonuspunkte; gespielt wird bis 5000 Punkte (kurz: 2000).",
