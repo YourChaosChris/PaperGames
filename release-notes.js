@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v266",
+    date: "2026-10-26",
+    key: "release_v266",
+    text: "Sternjagd: with 2 players the second player has two turns in a row the first time; you can switch this off. 15 more history pages checked and corrected."
+  },
+  {
     version: "v265",
     date: "2026-10-25",
     key: "release_v265",

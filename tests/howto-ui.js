@@ -3,7 +3,7 @@
 // snakesladders, and (task 127) war and pairs, German page at 360 px: on the first visit the panel is
 // open with four steps, the first game action hides it, the button opens
 // it again; no sideways scrolling and the panel fits on one screen.
-// Task 131: gipfelwurf. BASE_URL from the environment or as --base URL.
+// BASE_URL from the environment or as --base URL.
 const { chromium } = require("playwright");
 const argBase = process.argv.indexOf("--base");
 const BASE = (argBase > 0 && process.argv[argBase + 1]) || process.env.BASE_URL || "http://localhost:8000/";
@@ -16,8 +16,6 @@ const GAMES = [
   // Task 127.
   { slug: "war", start: "#start-war-game", act: (p) => p.click("#war-own-pile") },
   { slug: "pairs", start: "#start-pairs-game", before: (p) => p.selectOption("#pairs-opponent", "solo"), act: async (p) => { await p.waitForSelector("#pairs-board .pairs-card", { timeout: 10000 }); await p.click("#pairs-board .pairs-card >> nth=0"); } },
-  // Task 131.
-  { slug: "gipfelwurf", start: "#start-gw-game", before: (p) => p.selectOption("#gw-computers", "0"), act: async (p) => { await p.waitForSelector("#gw-roll:not([disabled])", { timeout: 10000 }); await p.click("#gw-roll"); } },
 ];
 const panelOpen = (p) => p.evaluate(() => { const h = document.getElementById("howto"); return !!h && !h.classList.contains("hidden") && h.offsetHeight > 0; });
 

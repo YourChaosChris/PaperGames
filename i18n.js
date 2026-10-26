@@ -679,6 +679,7 @@ const STRINGS = {
     release_v261: "Rummy: a joker that fits at both ends of a run now goes where you choose, and there are two new options - Hand-Rommé (lay out all cards at once, the others' penalty points count double) and knocking on a discarded card against two or three computers.",
     release_v264: "Ludo: a board for 6 players. Blocked Path: a quick board with rest fields, and up to 6 players. Hex: Black and White with a clear colour choice. Picture help for Link the Pairs, Old Maid and Snakes and Ladders. Licence notes, privacy policy and three history pages updated.",
     release_v265: "Blocked Path: choose few, normal or many blocks. Small buttons are now big enough to tap, and three more games have a large board. Picture help for War and Pairs. Sternjagd names who starts. Ludo texts and 15 history pages checked and corrected.",
+    release_v266: "Sternjagd: with 2 players the second player has two turns in a row the first time; you can switch this off. 15 more history pages checked and corrected.",
     release_v263: "The dice race game with blocks on the paths has a new name: “Blocked Path”. Rules, saved games and statistics stay the same.",
     release_v262: "Minesweeper: the clock stays hidden unless you switch on “Show time”, and too many flags are named clearly. Hex: new swap rule (on by default). Domino: the stock button is always shown and big enough to tap. Chess: a note that the online mode needs internet and a Lichess account.",
     release_v252: "Bingo, Steckwürfeln, Klappenkasten, Zoo Toss and Pasture Friends now explain themselves with pictures, Zoo Toss has a beginner level, and the cake board names its rooms with numbers and has larger squares.",
@@ -5747,7 +5748,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 110;
+  const GAME_COUNT = 109;
 
   function t(key, lang) {
     const l = lang || getLang();

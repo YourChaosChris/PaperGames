@@ -1332,18 +1332,6 @@ const GAMES_CATALOG = [
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"8\" y=\"3\" width=\"24\" height=\"34\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><text x=\"20\" y=\"27\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"700\" font-size=\"17\" fill=\"#141413\">7</text><path d=\"M14 9V14M20 8V14M26 9V14M14 14H26\" fill=\"none\" stroke=\"#141413\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></span>"
   },
   {
-    slug: "gipfelwurf",
-    category: "race",
-    family: "dicegames",
-    nameKey: "game_gipfelwurf",
-    nameText: "Ridge Roll",
-    descKey: "home_gipfelwurf_desc",
-    descText: "A push-your-luck dice game: roll four dice, pair them up and climb seven ridges. Roll on or stop and make camp - if no pair fits, the climbing of the turn is lost. Reach the top of three ridges first. 2 to 4 players, against the computer or on one device.",
-    popular: false,
-    added: "2026-10-26T00:30",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M3 35L15 13L21 22L27 9L37 35Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\" stroke-linejoin=\"round\"/><path d=\"M27 9V2L33 4.5L27 7\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><circle cx=\"16\" cy=\"29\" r=\"2.2\" fill=\"#141413\"/><circle cx=\"24\" cy=\"29\" r=\"2.2\" fill=\"#141413\"/></svg></span>"
-  },
-  {
     slug: "advent",
     category: "puzzles",
     family: "latin",
