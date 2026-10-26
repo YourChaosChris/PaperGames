@@ -1324,7 +1324,7 @@ const GAMES_CATALOG = [
     slug: "teufelsieben",
     category: "party",
     nameKey: "game_teufelsieben",
-    nameText: "Lucky Chain",
+    nameText: "Devilish Seven",
     descKey: "home_teufelsieben_desc",
     descText: "A push-your-luck card game: reveal cards one by one, then stop in time. Repeating a number makes you bust; runs of four or more numbers earn a bonus. 2 to 6 players, against the computer or on one device.",
     popular: false,

@@ -1,5 +1,5 @@
 // teufelsieben-core.js
-// Rules of "Lucky Chain" (Glückskette), a push-your-luck card game made for
+// Rules of "Devilish Seven" (Teuflische Sieben), a push-your-luck card game made for
 // PaperGames (task 121, own rules since task 134), without any DOM or
 // browser feature. File names, keys and the save slot keep the old slug
 // "teufelsieben"; states of the old rules (no `rules: 2`) are not loaded.

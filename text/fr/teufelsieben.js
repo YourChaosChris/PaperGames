@@ -2,7 +2,7 @@
 // Rules and history texts of teufelsieben (fr). Loaded by teufelsieben-rules.html and teufelsieben-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.fr, {
-    ts_rules_title: "Règles de Chaîne de chance",
+    ts_rules_title: "Règles du Sept du Diable",
     ts_rules_intro: "Révélez les cartes une à une et arrêtez-vous à temps : un nombre déjà devant vous vous élimine. Quand quelqu’un atteint la cible, le plus grand total gagne.",
     ts_rules_basics_title: "Les règles",
     ts_term_cards: "Les cartes",
@@ -21,10 +21,10 @@ Object.assign(STRINGS.fr, {
     ts_rules_computer: "L’ordinateur compte les cartes visibles et celle montrée par Regard. Facile s’arrête tôt ; Difficile compare gain possible et risque.",
     ts_rules_example_title: "Exemple",
     ts_rules_example: "Vous avez 3, 4, 5, 6 et 9 : 27 points en nombres. La suite de quatre ajoute 10, soit 37 avant les cartes spéciales.",
-    ts_history_title: "À propos de Chaîne de chance",
+    ts_history_title: "À propos du Sept du Diable",
     ts_history_family_title: "Continuer ou s’arrêter",
     ts_history_family_p1: "À chaque tour, on choisit de prendre un risque de plus ou de garder ce qu’on a : c’est la famille des jeux de prise de risque. Beaucoup de jeux de dés et de cartes fonctionnent ainsi.",
     ts_history_modern_title: "Cette version",
-    ts_history_modern_p1: "Chaîne de chance a été créée pour PaperGames, avec ses cartes, règles et textes : des nombres de 1 à 10 en quantité propre, un bonus de suite et les cartes Courage, Retrait, Passage, Pont, Collectionneur et Regard.",
+    ts_history_modern_p1: "Le Sept du Diable a été créé pour PaperGames, avec ses cartes, règles et textes : des nombres de 1 à 10 en quantité propre, un bonus de suite et les cartes Courage, Retrait, Passage, Pont, Collectionneur et Regard.",
 });
 I18n.markTextLoaded("fr");

@@ -1,5 +1,5 @@
 // teufelsieben-app.js
-// Connects TeufelSiebenCore (Lucky Chain) to the page. Each player takes
+// Connects TeufelSiebenCore (Devilish Seven) to the page. Each player takes
 // one turn per round, turning up cards until stopping or busting. Rows show
 // the open cards and points; computer turns are paced one step at a time.
 // The deck order stays hidden, so there is no undo.

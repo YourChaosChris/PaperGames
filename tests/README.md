@@ -490,8 +490,8 @@ all parts back into one log in list order. The last line is exactly
   moves with their reason, undo, shortest ways from 300 random positions.
   Nim: the xor rule (and misère) against a full search for all positions
   up to 3 heaps of 6, Hard wins 100 games each from winning positions.
-- `node tests/teufelsieben-core.js` - no server or browser needed. Lucky
-  Chain (rules 2): the 60-card deck, number mix, bust and Courage, Strike,
+- `node tests/teufelsieben-core.js` - no server or browser needed. Devilish
+  Seven (rules 2): the 60-card deck, number mix, bust and Courage, Strike,
   Pass, Bridge, Collector and Peek, run and round scoring, targets, ties and
   seat rotation; `GAMES` computer games with 2 to 6 players, card conservation,
   AI levels, open-card odds and save validation.
