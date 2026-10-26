@@ -83,7 +83,8 @@
 6 hex-ui.js
 5 minesweeper-ui.js
 3 matches-core.js
-135 cardduel-core.js
+90 cardduel-core.js
+10 cardduel-ui.js
 75 villains-core.js
 8 forestvillage-core.js
 6 adventurebook-core.js

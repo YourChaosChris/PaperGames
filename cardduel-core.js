@@ -1,25 +1,27 @@
 // cardduel-core.js
 // "Card Duel" (Kartenduell) - a fantasy card game for two: two mages, 20
-// life each, with ready-made decks of 30 cards, one per element (forest,
+// life each, with ready-made decks of 20 cards, one per element (forest,
 // fire, water, stone). Dependency-free, no DOM.
 //
-// Power: 1 in a player's first turn, 1 more each turn (at most 10); cards
-// cost power, unused power is lost. A turn: draw a card, play cards, attack
-// with creatures. A creature played this turn attacks from the next turn
-// on (unless Swift). The attacker picks the target - the other mage or one
-// of their creatures (a Guard must be attacked first); two creatures hit
-// each other at the same time. Damage on a creature stays. At most 6
-// creatures a side, 10 cards in hand (a card drawn beyond is lost). An
-// empty deck: drawing costs the mage 2 life instead.
-// Evening out the start: the player who does not start gets one card more
-// at the beginning (4 instead of 3) and 1 power more in their first turn;
-// the very first turn of the game draws no card. In computer games the
-// starter won 77 % with no evening out at all, 68 % with only the extra
-// card, and about 48 % with all three (tests/cardduel-core.js).
+// Rules (state.rules === 2, since task 149; older saves are not loaded):
+// - Power is a store: each turn 3 power is added (the starter gets only 2
+//   in the very first turn); power that is not used stays, up to 9.
+// - A turn: draw a card, play cards, attack with creatures, end. Cards in
+//   hand: at most 7 - with a full hand no card is drawn (it stays on the
+//   deck). An empty deck: the own discard pile (spells played, own
+//   creatures defeated) is shuffled and becomes the new deck.
+// - Every creature attacks once per turn, also in the turn it is played.
+//   The attacker picks the target - the other mage or one of their
+//   creatures; two creatures hit each other at the same time. Damage on a
+//   creature stays. At most 6 creatures a side.
+// - Evening out the start: both start with 4 cards; the starter's first
+//   turn brings 2 power instead of 3 (see START_GAIN, tests/cardduel-core.js).
 //
 // The six abilities (ABILITIES):
-//   guard  - must be attacked before the mage or any other creature
-//   swift  - can attack in the turn it is played
+//   ward   - when a creature attacks its owner's mage, the ward with the
+//            highest attack strikes the attacker first (its attack as
+//            damage); an attacker that does not survive this misses
+//   ranged - when it attacks a creature, that creature does not hit back
 //   armor  - takes 1 damage less from every hit
 //   regrow - gets 2 life back (up to its full life) at the end of its
 //            owner's turn
@@ -42,65 +44,70 @@
 // A target: { side: 0 | 1, index: board index | "mage" }.
 
 const CardDuelCore = (function () {
+  const RULES = 2;
   const START_LIFE = 20;
-  const MAX_POWER = 10;
+  const POWER_GAIN = 3;
+  const START_GAIN = 2;
+  const STARTER_LIFE = 17;
+  const MAX_STORE = 9;
   const MAX_BOARD = 6;
-  const MAX_HAND = 10;
-  const DECK_SIZE = 30;
-  const EMPTY_DECK_DAMAGE = 2;
+  const MAX_HAND = 7;
+  const START_HAND = 4;
+  const COPIES = 2;
+  const DECK_SIZE = 20;
   const REGROW = 2;
   const EMBER = 2;
   const ELEMENTS = ["forest", "fire", "water", "stone"];
-  const ABILITIES = ["guard", "swift", "armor", "regrow", "insight", "ember"];
+  const ABILITIES = ["ward", "ranged", "armor", "regrow", "insight", "ember"];
 
-  const C = (id, el, cost, atk, hp, abil, fx, count) => ({ id, el, kind: "creature", cost, atk, hp, abil: abil || [], fx: fx || null, count: count || 3 });
-  const S = (id, el, cost, fx, count) => ({ id, el, kind: "spell", cost, atk: 0, hp: 0, abil: [], fx, count: count || 3 });
+  const C = (id, el, cost, atk, hp, abil, fx, count) => ({ id, el, kind: "creature", cost, atk, hp, abil: abil || [], fx: fx || null, count: count === undefined ? COPIES : count });
+  const S = (id, el, cost, fx, count) => ({ id, el, kind: "spell", cost, atk: 0, hp: 0, abil: [], fx, count: count === undefined ? COPIES : count });
 
   const CARDS = [
     // Forest: many small creatures that grow back.
     C("forest_mosskin", "forest", 1, 1, 2),
-    C("forest_shroomrunner", "forest", 1, 2, 1, ["swift"]),
-    C("forest_barkbeetle", "forest", 2, 2, 3, ["regrow"]),
+    C("forest_shroomrunner", "forest", 1, 1, 1, ["ranged"]),
+    C("forest_barkbeetle", "forest", 2, 2, 4, ["regrow"]),
     C("forest_foxspirit", "forest", 2, 2, 2),
     S("forest_seedcall", "forest", 2, { type: "summon", n: 2, token: "forest_sapling" }),
     S("forest_growth", "forest", 1, { type: "buff", n: 2, m: 2 }),
     C("forest_mossbear", "forest", 4, 3, 5, ["regrow"]),
     S("forest_choir", "forest", 4, { type: "buffall", n: 1, m: 1 }),
     C("forest_stardeer", "forest", 5, 3, 4, [], { type: "buffall", n: 1, m: 1 }),
-    C("forest_oldlinden", "forest", 7, 5, 7, ["guard", "regrow"]),
+    C("forest_oldlinden", "forest", 7, 5, 7, ["ward", "regrow"]),
     // Fire: direct damage.
     C("fire_sparkimp", "fire", 1, 2, 2),
     C("fire_embersalamander", "fire", 2, 2, 2, ["ember"]),
     S("fire_sparkflight", "fire", 1, { type: "dmg", n: 2 }),
-    C("fire_ashwolf", "fire", 3, 3, 3, ["swift"]),
-    S("fire_emberwave", "fire", 2, { type: "aoe", n: 1 }),
+    C("fire_ashwolf", "fire", 3, 3, 3, ["ranged"]),
+    S("fire_emberwave", "fire", 3, { type: "aoe", n: 1 }),
     S("fire_lavaspear", "fire", 3, { type: "dmg", n: 4 }),
     C("fire_flamedancer", "fire", 3, 3, 3, ["ember"]),
-    C("fire_flamesteed", "fire", 4, 3, 3, ["swift"]),
+    C("fire_flamesteed", "fire", 4, 3, 3, ["ranged"]),
     S("fire_starblaze", "fire", 4, { type: "dmg", n: 5 }),
     C("fire_magmadrake", "fire", 6, 6, 6, ["ember"]),
     // Water: drawing cards and sending creatures back.
     C("water_dropsprite", "water", 2, 2, 3, ["insight"]),
     S("water_whirlpool", "water", 2, { type: "bounce", max: 4 }),
-    C("water_mistotter", "water", 2, 2, 4, ["guard"]),
+    C("water_mistotter", "water", 2, 2, 5, ["ward"]),
     S("water_tidesight", "water", 3, { type: "draw", n: 2 }),
-    C("water_shellsentry", "water", 3, 2, 5, ["guard"]),
-    C("water_waverider", "water", 4, 3, 4, ["insight"]),
+    C("water_shellsentry", "water", 3, 2, 5, ["ward"]),
+    C("water_waverider", "water", 4, 4, 4, ["insight"]),
     S("water_springwater", "water", 2, { type: "heal", n: 7 }),
     C("water_frostnixie", "water", 4, 4, 5),
     S("water_floodsurge", "water", 3, { type: "aoe", n: 2 }),
     C("water_tidesquid", "water", 6, 6, 7, ["insight"]),
     // Stone: few strong defenders.
-    C("stone_pebblewight", "stone", 1, 1, 2, ["guard"]),
-    C("stone_granitekeeper", "stone", 3, 2, 5, ["guard"]),
+    C("stone_pebblewight", "stone", 1, 1, 2, ["ward"]),
+    C("stone_granitekeeper", "stone", 3, 3, 5, ["ward"]),
     C("stone_rockram", "stone", 3, 3, 4),
     S("stone_rockhide", "stone", 2, { type: "buffall", n: 0, m: 2 }),
     C("stone_quartzknight", "stone", 2, 2, 3, ["armor"]),
     S("stone_boulder", "stone", 3, { type: "dmg", n: 3 }),
-    C("stone_basalttortoise", "stone", 5, 3, 8, ["guard"]),
+    C("stone_basalttortoise", "stone", 5, 3, 8, ["ward"]),
     S("stone_rumble", "stone", 3, { type: "quake", n: 2 }),
     C("stone_oregolem", "stone", 5, 4, 6, ["armor"]),
-    C("stone_peakcolossus", "stone", 7, 6, 7, ["guard", "armor"])
+    C("stone_peakcolossus", "stone", 7, 6, 7, ["ward", "armor"])
   ];
   // Creatures only ever summoned by a card, never in a deck.
   const TOKENS = [
@@ -110,6 +117,7 @@ const CardDuelCore = (function () {
   CARDS.concat(TOKENS).forEach((c) => { BY_ID[c.id] = c; });
 
   function card(id) { return BY_ID[id]; }
+  function isToken(id) { return TOKENS.some((t) => t.id === id); }
 
   function deckList(el) {
     const out = [];
@@ -138,23 +146,33 @@ const CardDuelCore = (function () {
 
   function clone(s) { return JSON.parse(JSON.stringify(s)); }
 
+  // Whether a saved state follows the current rules (older saves are
+  // dropped by the app).
+  function isCurrentState(s) {
+    return !!s && s.rules === RULES && Array.isArray(s.players) && s.players.length === 2 &&
+      s.players.every((p) => p && Array.isArray(p.deck) && Array.isArray(p.hand) && Array.isArray(p.board) && Array.isArray(p.grave));
+  }
+
   // A new game. decks: [element of player 0, element of player 1];
   // starter: the player who takes the first turn.
   function createGame(decks, starter, rng) {
     const rnd = rng || Math.random;
     const s = {
+      rules: RULES,
       decks: decks.slice(),
       starter,
       current: starter,
       turn: 0,
       winner: null,
       uid: 1,
+      seed: 0,
       log: [],
-      players: [0, 1].map((p) => ({ deck: shuffle(deckList(decks[p]), rnd), hand: [], board: [], life: START_LIFE, power: 0, maxPower: 0 }))
+      players: [0, 1].map((p) => ({ deck: shuffle(deckList(decks[p]), rnd), hand: [], board: [], grave: [], life: START_LIFE, power: 0 }))
     };
+    s.seed = Math.floor(rnd() * 4294967296) >>> 0;
+    s.players[starter].life = STARTER_LIFE;
     [0, 1].forEach((p) => {
-      const n = p === starter ? 3 : 4;
-      for (let i = 0; i < n; i++) s.players[p].hand.push(s.players[p].deck.pop());
+      for (let i = 0; i < START_HAND; i++) s.players[p].hand.push(s.players[p].deck.pop());
     });
     startTurn(s);
     return s;
@@ -175,40 +193,38 @@ const CardDuelCore = (function () {
 
   function draw(s, p) {
     const pl = s.players[p];
-    if (!pl.deck.length) {
-      pl.life -= EMPTY_DECK_DAMAGE;
-      log(s, { k: "empty", p, n: EMPTY_DECK_DAMAGE });
-      checkWinner(s);
-      return;
-    }
-    const id = pl.deck.pop();
     if (pl.hand.length >= MAX_HAND) {
-      log(s, { k: "burn", p, c: id });
+      log(s, { k: "full", p });
       return;
     }
-    pl.hand.push(id);
+    if (!pl.deck.length) {
+      if (!pl.grave.length) return;
+      const rnd = makeRng(s.seed);
+      pl.deck = shuffle(pl.grave, rnd);
+      pl.grave = [];
+      s.seed = Math.floor(rnd() * 4294967296) >>> 0;
+      log(s, { k: "reshuffle", p, n: pl.deck.length });
+    }
+    pl.hand.push(pl.deck.pop());
   }
 
   function startTurn(s) {
     const pl = s.players[s.current];
     s.turn++;
-    pl.maxPower = Math.min(MAX_POWER, pl.maxPower + 1);
-    pl.power = pl.maxPower;
-    if (s.turn === 2) pl.power += 1; // the second player's first turn: 1 power more
+    pl.power = Math.min(MAX_STORE, pl.power + (s.turn === 1 ? START_GAIN : POWER_GAIN));
     pl.board.forEach((m) => { m.ready = true; });
-    log(s, { k: "turn", p: s.current, n: pl.maxPower });
-    // The very first turn of the game draws no card (the starter's lead).
-    if (s.turn > 1) draw(s, s.current);
+    log(s, { k: "turn", p: s.current, n: pl.power });
+    draw(s, s.current);
   }
 
   function has(m, a) { return m.abil.indexOf(a) !== -1; }
 
   function makeCreature(s, id) {
     const c = card(id);
-    return { id, uid: s.uid++, atk: c.atk, hp: c.hp, max: c.hp, abil: c.abil.slice(), ready: c.abil.indexOf("swift") !== -1 };
+    return { id, uid: s.uid++, atk: c.atk, hp: c.hp, max: c.hp, abil: c.abil.slice(), ready: true };
   }
 
-  // Damage to a creature (armor counts); removes it when it dies.
+  // Damage to a creature (armor counts).
   function hurt(s, side, m, n) {
     const d = Math.max(0, n - (has(m, "armor") ? 1 : 0));
     m.hp -= d;
@@ -219,15 +235,22 @@ const CardDuelCore = (function () {
     [0, 1].forEach((p) => {
       const pl = s.players[p];
       const dead = pl.board.filter((m) => m.hp <= 0);
-      dead.forEach((m) => log(s, { k: "dies", p, c: m.id }));
+      dead.forEach((m) => {
+        log(s, { k: "dies", p, c: m.id });
+        if (!isToken(m.id)) pl.grave.push(m.id);
+      });
       pl.board = pl.board.filter((m) => m.hp > 0);
     });
   }
 
-  function guards(s, side) {
-    const out = [];
-    s.players[side].board.forEach((m, i) => { if (has(m, "guard")) out.push(i); });
-    return out;
+  // The ward of `side` that strikes an attacker of its mage: the one with
+  // the highest attack (the first of them in the row), or -1.
+  function wardOf(s, side) {
+    let best = -1;
+    s.players[side].board.forEach((m, i) => {
+      if (has(m, "ward") && m.hp > 0 && m.atk > 0 && (best === -1 || m.atk > s.players[side].board[best].atk)) best = i;
+    });
+    return best;
   }
 
   // What kind of target a card needs: null, "any" (creature or mage),
@@ -271,8 +294,6 @@ const CardDuelCore = (function () {
     const me = s.current, op = 1 - me;
     const m = s.players[me].board[a];
     if (!m || !m.ready || m.atk <= 0) return [];
-    const g = guards(s, op);
-    if (g.length) return g;
     const out = ["mage"];
     s.players[op].board.forEach((x, i) => out.push(i));
     return out;
@@ -350,7 +371,10 @@ const CardDuelCore = (function () {
         const m = owner.board[target.index];
         owner.board.splice(target.index, 1);
         log(s, { k: "bounce", p: me, c: id, side: target.side, t: m.id });
-        if (owner.hand.length < MAX_HAND) owner.hand.push(m.id);
+        if (!isToken(m.id)) {
+          if (owner.hand.length < MAX_HAND) owner.hand.push(m.id);
+          else owner.grave.push(m.id);
+        }
         break;
       }
       case "buff": {
@@ -390,6 +414,7 @@ const CardDuelCore = (function () {
         if (has(m, "ember")) { s.players[op].life -= EMBER; log(s, { k: "hitmage", p: me, c: id, side: op, n: EMBER }); }
       } else {
         runEffect(s, id, c.fx, act.target);
+        pl.grave.push(id);
       }
       sweepDead(s);
       checkWinner(s);
@@ -397,12 +422,20 @@ const CardDuelCore = (function () {
       const m = pl.board[act.attacker];
       m.ready = false;
       if (act.target === "mage") {
-        s.players[op].life -= m.atk;
-        log(s, { k: "attackmage", p: me, c: m.id, n: m.atk });
+        const w = wardOf(s, op);
+        if (w !== -1) {
+          const ward = s.players[op].board[w];
+          const d = hurt(s, me, m, ward.atk);
+          log(s, { k: "ward", p: op, c: ward.id, t: m.id, n: d });
+        }
+        if (m.hp > 0) {
+          s.players[op].life -= m.atk;
+          log(s, { k: "attackmage", p: me, c: m.id, n: m.atk });
+        }
       } else {
         const t = s.players[op].board[act.target];
         const d1 = hurt(s, op, t, m.atk);
-        const d2 = hurt(s, me, m, t.atk);
+        const d2 = has(m, "ranged") ? 0 : hurt(s, me, m, t.atk);
         log(s, { k: "attack", p: me, c: m.id, t: t.id, n: d1, m: d2 });
       }
       sweepDead(s);
@@ -420,7 +453,8 @@ const CardDuelCore = (function () {
 
   function creatureValue(m) {
     let v = m.atk * 1.0 + m.hp * 0.8;
-    if (has(m, "guard")) v += 1 + m.hp * 0.2;
+    if (has(m, "ward")) v += 1 + m.atk * 0.5;
+    if (has(m, "ranged")) v += 1;
     if (has(m, "armor")) v += 1.5;
     if (has(m, "regrow")) v += 1 + (m.max - m.hp) * 0.3;
     return v + 1;
@@ -435,7 +469,9 @@ const CardDuelCore = (function () {
     let v = lifeVal(me.life) - lifeVal(op.life);
     me.board.forEach((m) => { v += creatureValue(m); });
     op.board.forEach((m) => { v -= creatureValue(m); });
-    v += (Math.min(me.hand.length, 8) - Math.min(op.hand.length, 8)) * 1.2;
+    v += (Math.min(me.hand.length, 6) - Math.min(op.hand.length, 6)) * 1.2;
+    // Stored power is worth a little (it stays for the next turn).
+    v += (me.power - op.power) * 0.15;
     // Damage the other side can do next turn against my life.
     const threat = op.board.reduce((a, m) => a + m.atk, 0);
     if (threat >= me.life) v -= 30;
@@ -503,9 +539,9 @@ const CardDuelCore = (function () {
   }
 
   return {
-    START_LIFE, MAX_POWER, MAX_BOARD, MAX_HAND, DECK_SIZE, EMPTY_DECK_DAMAGE, ELEMENTS, ABILITIES, CARDS, TOKENS,
-    card, deckList, makeRng, createGame, legalActions, isLegal, apply, canPlay, targetKind, validTargets, attackTargets,
-    evaluate, chooseAction, clone
+    RULES, START_LIFE, POWER_GAIN, START_GAIN, MAX_STORE, MAX_BOARD, MAX_HAND, START_HAND, DECK_SIZE, ELEMENTS, ABILITIES, CARDS, TOKENS,
+    card, deckList, makeRng, createGame, isCurrentState, legalActions, isLegal, apply, canPlay, targetKind, validTargets, attackTargets,
+    wardOf, evaluate, chooseAction, clone
   };
 })();
 
