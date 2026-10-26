@@ -4007,6 +4007,7 @@ STRINGS.fr = {
     zw_missing_aria: "il en manque {n}",
     zw_dice_aria: "Dés : {dice}",
     zw_hit: "sur la carte",
+    zw_rolls_aria: "Lancers : {n} sur {m}",
     zw_count: "{n} sur {m}",
     zw_goal_line: "But : chaque animal d’une carte pleine rapporte un point. Dès que quelqu’un a 12 points, la manche va jusqu’au bout. Le plus de points gagne.",
     zw_level_label: "Ordinateur :",

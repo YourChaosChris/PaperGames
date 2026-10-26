@@ -4007,6 +4007,7 @@ STRINGS.es = {
     zw_missing_aria: "faltan {n}",
     zw_dice_aria: "Dados: {dice}",
     zw_hit: "en la carta",
+    zw_rolls_aria: "Tiradas: {n} de {m}",
     zw_count: "{n} de {m}",
     zw_goal_line: "Objetivo: cada animal de una carta completa vale un punto. Cuando alguien llega a 12 puntos, la ronda se juega hasta el final. Gana quien tenga más puntos.",
     zw_level_label: "Computadora:",

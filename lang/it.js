@@ -4007,6 +4007,7 @@ STRINGS.it = {
     zw_missing_aria: "ne mancano {n}",
     zw_dice_aria: "Dadi: {dice}",
     zw_hit: "sulla carta",
+    zw_rolls_aria: "Lanci: {n} di {m}",
     zw_count: "{n} su {m}",
     zw_goal_line: "Obiettivo: ogni animale su una carta completa vale un punto. Quando qualcuno arriva a 12 punti, il giro si gioca fino alla fine. Vince chi ha più punti.",
     zw_level_label: "Computer:",

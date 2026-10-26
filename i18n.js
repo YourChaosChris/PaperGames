@@ -4090,6 +4090,7 @@ const STRINGS = {
     zw_missing_aria: "{n} still missing",
     zw_dice_aria: "Dice: {dice}",
     zw_hit: "on the card",
+    zw_rolls_aria: "Rolls: {n} of {m}",
     zw_count: "{n} of {m}",
     zw_goal_line: "Goal: every animal on a full card is a point. When someone has 12 points, the round is finished; the most points win.",
     zw_level_label: "Computer:",
