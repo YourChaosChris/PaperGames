@@ -75,6 +75,8 @@
 2 nim-core.js
 40 teufelsieben-core.js
 8 teufelsieben-ui.js
+35 cardtactics-core.js
+8 cardtactics-ui.js
 2 advent-core.js
 8 advent-ui.js
 12 small-games-ui.js

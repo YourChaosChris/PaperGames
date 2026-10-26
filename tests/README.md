@@ -500,6 +500,18 @@ all parts back into one log in list order. The last line is exactly
   first card, paced computer turns, round end and next round, deterministic
   bust, game result, save/load, legacy-save rejection, 44 px buttons and no
   sideways scroll.
+- `node tests/cardtactics-core.js` - no server or browser needed. Card
+  Tactics (rules 2, task 151): 7 x 6 board, six stones each, twelve cards
+  (three open, queue of nine), card cycle, captures, crossing home, the
+  opening rule (first move one row at most), pass, move limit and save
+  validation; computer games per level pairing and first-move balance
+  (`--games N` or `GAMES=N`, default 40; with 200 or more the starter's
+  share must stay within 5 points of 50 %; `--seat-only` skips the levels).
+- `node tests/cardtactics-ui.js` - needs the server and Playwright. German
+  page at 360 x 640: three open and two next cards, 44 px cards, squares
+  and buttons, tap flow card - stone - square, computer reply, save/load,
+  win with two stones home, legacy save of the first rules dropped, two
+  players on one device, rules page, no sideways scroll.
 - `node tests/advent-core.js` - no server or browser needed. Puzzle Advent
   calendar (task 122): each of the 24 puzzles has exactly one solution,
   counted again with the games' own solvers (Light Switch 3 x 3: one set of
