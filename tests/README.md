@@ -520,19 +520,25 @@ all parts back into one log in list order. The last line is exactly
   save and load), Tower of Hanoi (refused move, undo, solved with the
   hints in 15 moves), Nim (start line, a move, the computer's answer,
   undo, misère to the end).
-- `node tests/zoowurf-ui.js` - needs the server and Playwright. "Zoo Toss" at
-  600 and 360 px: a full game against the computer; the paw is put on the
-  card by tapping a free place (at least 48 px, no sideways scroll), the
-  panel with the computer's turn and its "Next" button, an older saved game
-  without the pick rule. About 20 seconds.
-- `node tests/zoowurf-core.js` - no server or browser needed. "Zoo Toss":
-  every rule with fixed rolls (dice that fit go onto the card, the paw, three
-  rolls make a turn, the rest of the card goes on to the next player, four
-  cards win, refused moves), the 30 different cards, the exact chance of
-  filling a card first against a simulation of 10000 rounds, then 1000
-  games computer against computer for each of 2, 3 and 4 players (one winner
-  with 4 cards, no card lost, every step legal), and the card choice against
-  a player who always takes the worst open card (3000 games). A few seconds.
+- `node tests/zoowurf-ui.js` - needs the server and Playwright. "Zoo Toss"
+  (rules 2, task 145) at 600 x 800 with 2 players and 360 x 640 with 3: a
+  full game against the computers; one roll per turn on the own card, the
+  paw is put on the card by tapping a free place (at least 48 px), a new
+  open card after a full one, the panel with the own roll first and then
+  each computer turn and its "Next" button (at least 44 px), save and load
+  in the middle, a saved game of the first rules is dropped without an
+  error, no sideways scroll. About 20 seconds.
+- `node tests/zoowurf-core.js` - no server or browser needed. "Zoo Toss"
+  (rules 2): every rule with fixed rolls (own card from the pile at the
+  start, one roll per turn, dice that fit go onto the card, the paw, one
+  point per animal of a full card, choosing an open card, the round is
+  finished after someone reaches 12, most points win, equal points share
+  the win, refused moves, old states are not current), the 30 different
+  cards, the expected turns against a simulation, then computer games for 2,
+  3 and 4 players (default 1000 each, `--games N`): every game ends, no card
+  lost, every step legal; wins per seat at most 5 points from a fair share,
+  the level "normal" against beginners clearly above a fair share, rounds
+  per game. A few seconds.
 - `node tests/matches-core.js` - no server or browser needed. All 90
   "Matchstick Puzzles": the start is wrong (sums) or lacks the asked
   number of squares, a full search finds a solution with exactly 1 or 2
