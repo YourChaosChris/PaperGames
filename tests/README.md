@@ -501,6 +501,21 @@ all parts back into one log in list order. The last line is exactly
   page at 360 x 640: start, turn up, stop, round end and next round, a
   Pause makes the rows buttons (44 px), game end with the result, save and
   load, no sideways scroll.
+- `node tests/gipfelwurf-core.js` - no server or browser needed. Ridge Roll
+  / Gipfelwurf (task 131): the seven ridges (every sum 2..12 once, own
+  lengths), splitting four dice into pairs and the options, at most three
+  climbers, a lost turn, stopping and camps, the end of a ridge, a claimed
+  ridge, winning with 2 or 3 ridges and when every ridge is claimed, save
+  and load; `GAMES` (default 500, or `--games N`) computer games each with
+  2, 3 and 4 players without a hang (game length, wins per level, Hard
+  beats Easy), wins per seat with the first player by lot (within 5 points
+  of the fair share), the first player's edge without the lot; `FAIR`
+  (default 1000, or `--fair N`) games: every ridge claimed within 20 % of
+  the mean.
+- `node tests/gipfelwurf-ui.js` - needs the server and Playwright. German
+  page at 360 x 640: roll, choose a pair, stop and make camp, a lost turn
+  with its panel and "Weiter", the end of the game with the result, save
+  and load, buttons at least 44 px, no sideways scroll.
 - `node tests/small-games-ui.js` - needs the server and Playwright. The
   three games of task 118 at 360 px in German: sliding puzzle (taps, the
   note outside row and column, hint, solved with the fewest moves, 5 x 5,

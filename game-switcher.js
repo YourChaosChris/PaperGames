@@ -131,7 +131,8 @@
     ["slidepuzzle", "game_slidepuzzle"],
     ["hanoi", "game_hanoi"],
     ["nim", "game_nim"],
-    ["teufelsieben", "game_teufelsieben"]
+    ["teufelsieben", "game_teufelsieben"],
+    ["gipfelwurf", "game_gipfelwurf", "dicegames"]
   ];
 
   var GAME_SLUGS = {};
