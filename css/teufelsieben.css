@@ -1,7 +1,6 @@
 /* teufelsieben: rules used only by the teufelsieben pages (loaded after base.css). */
-/* ---- Devil's Seven ----
-   One framed row per player (the player to move: thick frame; a player who
-   may get a Pause / Second helping: dashed thick frame to tap). Cards are
+/* ---- Lucky Chain ----
+   One framed row per player (the active player has a thick frame). Cards are
    white with a black number; special cards have a double frame, their sign
    and their name. A bust number is struck through. Black on white,
    nothing animated; spacing from margins (Tolino). */
@@ -146,6 +145,19 @@ button.ts-player-target {
   max-width: 16rem;
 }
 
-.ts-actions button {
+.ts-actions button,
+.ts-roundover button {
   min-height: 44px;
+}
+
+.ts-peek-line, .ts-run-bonus {
+  display: block;
+  margin: 2px 0;
+  font-weight: 700;
+}
+
+@media (max-width: 380px) {
+  .ts-player { overflow-wrap: anywhere; }
+  .ts-card-small { flex: 0 0 2.2rem; }
+  .ts-last { flex-wrap: wrap; }
 }

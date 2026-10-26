@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v267",
+    date: "2026-10-26",
+    key: "release_v267",
+    text: "Devilish Seven is now Lucky Chain, with its own rules: numbers 1 to 10, a bonus for numbers in a row, six new special cards and targets of 60, 90 or 120 points. A game saved under the old rules starts anew."
+  },
+  {
     version: "v266",
     date: "2026-10-26",
     key: "release_v266",

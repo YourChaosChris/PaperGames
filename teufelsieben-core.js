@@ -1,52 +1,43 @@
 // teufelsieben-core.js
-// Rules of "Devilish Seven" (Teuflische Sieben), a push-your-luck card game
-// made for PaperGames (task 121), without any DOM or browser feature.
+// Rules of "Lucky Chain" (Glückskette), a push-your-luck card game made for
+// PaperGames (task 121, own rules since task 134), without any DOM or
+// browser feature. File names, keys and the save slot keep the old slug
+// "teufelsieben"; states of the old rules (no `rules: 2`) are not loaded.
 //
-// The deck (DECK, 90 cards): number cards 0 to 12, each number as often as
-// its value (the 0 once): 79 cards. Special cards: "Pause" x2 (a player of
-// your choice must stop and keeps the points of the round), "Second
-// helping" x2 (a player of your choice must turn up three cards one after
-// another), "Rescue" x2 (protects its owner once from going bust), "+3" x2,
-// "+5" x2 and "Double" x1 (doubles the number points of its owner).
+// The deck (DECK, 60 cards): numbers 1 to 10 after an own table (COUNTS:
+// 3, 4, 5, 6, 6, 6, 6, 5, 4, 3 = 48 cards) and two each of six special
+// cards: Courage (saves its owner once from going bust, costs 5 points),
+// Strike (takes the last number of the turn away), Pass (the next player
+// starts the turn with one card turned up), Bridge (fills one gap of a
+// run), Collector (+1 point per number card) and Peek (shows the next card).
 //
-// A round: every player gets one card, then in turn each player still in
-// the round turns up one card or stops. Stopping keeps the round points. A
-// number that the player already has makes them go bust: no points this
-// round (a Rescue card is used up instead and the second number is thrown
-// away). Seven different numbers end the round at once, with a bonus of
-// BONUS points. The round also ends when nobody is left in it.
-// Round points: the sum of the numbers (doubled with Double), plus +3/+5,
-// plus the bonus. The game ends after the round in which somebody reaches
-// the target (100, 150 or 200); the most points win, a tie lets all of
-// them win.
-// Special cards turned up during a Second helping (Pause, Second helping)
-// have no effect and are put away; Rescue and point cards are kept.
+// A round: one after another, every player has one whole turn and turns up
+// card after card; after the first card they may stop at any time. A number
+// they already have makes them go bust: no points this round. When every
+// player had a turn, the round ends; the first player moves on by one seat
+// every round. Round points: the sum of the numbers, plus 5 x (L - 2) for
+// the longest run of L >= 4 numbers in a row (Bridges fill gaps), plus the
+// Collectors, minus 5 per Courage used. The game ends after the round in
+// which somebody reaches the target (60, 90 or 120); the most points win,
+// a tie lets all of them win.
 //
-// The computer stops when the chance to go bust with the next card is
-// above the risk of its level, counted only from the cards that are known:
-// the deck minus every card lying open (in front of the players and on the
-// discard pile) - never from the hidden order of the deck. It also stops
-// when its round points reach the level's aim, or when stopping wins the
-// game. It gives Pause and Second helping to the player that is ahead.
+// The computer counts only open cards (never the hidden order of the deck)
+// or the card a Peek showed: level 1 and 2 stop at a fixed round score or
+// risk, level 3 compares the expected gain of the next card with the risk
+// of losing the round points.
 //
-// The state is a plain serialisable object; every function returns a new
-// state, or the very same object when the action is not allowed.
+// The state is plain JSON data; actions return a new state, or the same
+// object when the action is not allowed.
 
 const TeufelSiebenCore = (() => {
-  const BONUS = 20;
-  const SEVEN = 7;
-  const TARGETS = [100, 150, 200];
-  const SPECIALS = [
-    { kind: "pause", n: 2 }, { kind: "helping", n: 2 }, { kind: "rescue", n: 2 },
-    { kind: "plus3", n: 2 }, { kind: "plus5", n: 2 }, { kind: "double", n: 1 }
-  ];
-  // Risk (chance to go bust) and round points at which each level stops.
-  const LEVELS = { 1: { risk: 0.15, aim: 18 }, 2: { risk: 0.25, aim: 27 }, 3: { risk: 0.32, aim: 35 } };
+  const COUNTS = { 1: 3, 2: 4, 3: 5, 4: 6, 5: 6, 6: 6, 7: 6, 8: 5, 9: 4, 10: 3 };
+  const SPECIALS = ["courage", "strike", "pass", "bridge", "collector", "peek"];
+  const TARGETS = [60, 90, 120];
+  const DEFAULT_TARGET = 90;
+  const RUN_MIN = 4;
+  const LEVELS = { 1: { aim: 14, risk: 0.18 }, 2: { aim: 22, risk: 0.27 }, 3: { aim: 0, risk: 0 } };
 
-  function clone(s) {
-    return JSON.parse(JSON.stringify(s));
-  }
-
+  function clone(s) { return JSON.parse(JSON.stringify(s)); }
   function makeRng(seed) {
     let a = seed >>> 0;
     return function () {
@@ -56,346 +47,200 @@ const TeufelSiebenCore = (() => {
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
   }
-
-  // A card: a number 0..12, or a string for a special card.
   function buildDeck() {
-    const deck = [0];
-    for (let v = 1; v <= 12; v++) for (let k = 0; k < v; k++) deck.push(v);
-    SPECIALS.forEach((s) => { for (let k = 0; k < s.n; k++) deck.push(s.kind); });
-    return deck;
+    const d = [];
+    Object.keys(COUNTS).forEach((v) => { for (let i = 0; i < COUNTS[v]; i++) d.push(Number(v)); });
+    SPECIALS.forEach((v) => { d.push(v, v); });
+    return d;
   }
   const DECK = buildDeck();
-
   function shuffle(list, rng) {
     const a = list.slice(), r = rng || Math.random;
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(r() * (i + 1));
-      const t = a[i]; a[i] = a[j]; a[j] = t;
-    }
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
     return a;
   }
-
-  function isNumber(card) {
-    return typeof card === "number";
-  }
-
-  function newHand() {
-    return { numbers: [], extras: [], rescue: false, status: "in", forced: 0 };
-  }
-
-  // opts: { players: 2..6, computer: [bool...], levels: [1..3...], target }
-  function newGame(opts, rng) {
-    const o = opts || {};
-    const n = Math.max(2, Math.min(6, o.players || 2));
-    const s = {
-      game: "teufelsieben",
-      n,
-      computer: [],
-      levels: [],
-      totals: [],
-      target: TARGETS.indexOf(o.target) !== -1 ? o.target : 150,
-      deck: shuffle(DECK, rng),
-      discard: [],
-      hands: [],
-      dealer: 0,
-      current: 0,
-      phase: "deal",       // "deal" | "turn" | "target" | "roundover" | "over"
-      pending: null,       // { card, from } a Pause / Second helping waiting for its target
-      round: 0,
-      roundPoints: null,   // points of the last finished round, per player
-      winners: null,
-      last: null,          // the last thing that happened (for the screen)
-      seq: 0
-    };
-    for (let i = 0; i < n; i++) {
-      s.computer.push(!!(o.computer && o.computer[i]));
-      s.levels.push(o.levels && o.levels[i] ? o.levels[i] : 2);
-      s.totals.push(0);
-    }
-    return startRound(s, rng);
-  }
-
-  function drawCard(s, rng) {
-    if (!s.deck.length) {
-      s.deck = shuffle(s.discard, rng);
-      s.discard = [];
-    }
-    return s.deck.length ? s.deck.shift() : null;
-  }
-
-  function inRound(s) {
-    const out = [];
-    s.hands.forEach((h, i) => { if (h.status === "in") out.push(i); });
-    return out;
-  }
-
-  function nextInRound(s, from) {
-    for (let k = 1; k <= s.n; k++) {
-      const i = (from + k) % s.n;
-      if (s.hands[i].status === "in") return i;
-    }
-    return -1;
-  }
-
-  // Points of a hand as it stands (0 when bust).
-  function handPoints(h) {
-    if (h.status === "bust") return 0;
-    let sum = h.numbers.reduce((a, b) => a + b, 0);
-    if (h.extras.indexOf("double") !== -1) sum *= 2;
-    h.extras.forEach((e) => { if (e === "plus3") sum += 3; if (e === "plus5") sum += 5; });
-    if (h.numbers.length >= SEVEN) sum += BONUS;
-    return sum;
-  }
-
-  function note(s, what) {
+  function isNumber(card) { return typeof card === "number" && Number.isInteger(card) && card >= 1 && card <= 10; }
+  function newHand() { return { numbers: [], courage: false, courageUsed: 0, bridges: 0, collectors: 0, status: "wait", drawn: 0 }; }
+  function note(s, type, player, card, extra) {
     s.seq += 1;
-    s.last = Object.assign({ seq: s.seq }, what);
+    s.last = Object.assign({ seq: s.seq, type, player }, card === undefined ? {} : { card }, extra || {});
   }
-
-  // Deal: one card to every player, starting after the dealer. Special
-  // cards are dealt like in a turn (a Pause / Second helping waits for its
-  // target).
-  function startRound(s0, rng) {
-    const s = s0.phase === "deal" && !s0.round ? s0 : clone(s0);
-    s.round += 1;
-    s.hands = [];
-    for (let i = 0; i < s.n; i++) s.hands.push(newHand());
-    s.pending = null;
-    s.phase = "turn";
-    s.dealQueue = [];
-    for (let k = 1; k <= s.n; k++) s.dealQueue.push((s.dealer + k) % s.n);
-    s.current = s.dealQueue[0];
-    return continueDeal(s, rng);
-  }
-
-  // Deals the next card of the first round of cards; stops when a special
-  // card needs a target.
-  function continueDeal(s, rng) {
-    while (s.dealQueue && s.dealQueue.length && s.phase === "turn") {
-      const p = s.dealQueue.shift();
-      if (s.hands[p].status !== "in") continue;
-      s.current = p;
-      reveal(s, p, rng, false);
-      if (roundIsOver(s)) return endRound(s);
-    }
-    if (s.phase === "turn" && (!s.dealQueue || !s.dealQueue.length)) {
-      s.dealQueue = null;
-      s.current = nextInRound(s, s.dealer);
-      if (s.current < 0) return endRound(s);
-    }
+  function newGame(opts, rng) {
+    const o = opts || {}, n = Math.max(2, Math.min(6, Math.floor(o.players || 2)));
+    const s = { game: "teufelsieben", rules: 2, n, computer: [], levels: [], totals: [], target: TARGETS.indexOf(o.target) >= 0 ? o.target : DEFAULT_TARGET,
+      deck: shuffle(DECK, rng), discard: [], hands: [], dealer: n - 1, current: 0, turnsLeft: [], forced: 0, peek: null, phase: "turn", round: 0, roundPoints: null, winners: null, last: null, seq: 0 };
+    for (let i = 0; i < n; i++) { s.computer.push(!!(o.computer && o.computer[i])); s.levels.push(o.levels && o.levels[i] >= 1 && o.levels[i] <= 3 ? o.levels[i] : 2); s.totals.push(0); }
+    beginRound(s);
     return s;
   }
-
-  // Turns up one card for player p and applies it. inHelping: during a
-  // Second helping (Pause and Second helping have no effect then).
-  function reveal(s, p, rng, inHelping) {
-    const h = s.hands[p];
-    const card = drawCard(s, rng);
-    if (card === null) { h.status = "stop"; note(s, { type: "empty", player: p }); return; }
-    if (isNumber(card)) {
-      if (h.numbers.indexOf(card) !== -1) {
-        if (h.rescue) {
-          h.rescue = false;
-          s.discard.push(card, "rescue");
-          note(s, { type: "rescued", player: p, card });
-        } else {
-          h.status = "bust";
-          h.numbers.push(card);
-          note(s, { type: "bust", player: p, card });
-        }
-        return;
-      }
-      h.numbers.push(card);
-      note(s, { type: h.numbers.length >= SEVEN ? "seven" : "number", player: p, card });
-      return;
-    }
-    if (card === "rescue") {
-      if (h.rescue) { s.discard.push(card); note(s, { type: "rescue-extra", player: p, card }); }
-      else { h.rescue = true; note(s, { type: "rescue", player: p, card }); }
-      return;
-    }
-    if (card === "plus3" || card === "plus5" || card === "double") {
-      h.extras.push(card);
-      note(s, { type: "extra", player: p, card });
-      return;
-    }
-    // pause / helping
-    if (inHelping) {
-      s.discard.push(card);
-      note(s, { type: "void", player: p, card });
-      return;
-    }
-    s.pending = { card, from: p };
-    s.phase = "target";
-    note(s, { type: "special", player: p, card });
-  }
-
-  function roundIsOver(s) {
-    return s.hands.some((h) => h.status !== "bust" && h.numbers.length >= SEVEN) || inRound(s).length === 0;
-  }
-
-  // Players a Pause or Second helping may go to (everyone still in the
-  // round, the card's owner too).
-  function targets(s) {
-    return s.phase === "target" ? inRound(s) : [];
-  }
-
-  // The owner of a waiting special card gives it to player t.
-  function giveTo(s0, t, rng) {
-    if (s0.phase !== "target" || targets(s0).indexOf(t) === -1) return s0;
-    const s = clone(s0);
-    const card = s.pending.card, from = s.pending.from;
-    s.pending = null;
-    s.phase = "turn";
-    s.discard.push(card);
-    if (card === "pause") {
-      s.hands[t].status = "stop";
-      note(s, { type: "paused", player: from, target: t, card });
-    } else {
-      note(s, { type: "helping", player: from, target: t, card });
-      for (let k = 0; k < 3 && s.hands[t].status === "in"; k++) {
-        reveal(s, t, rng, true);
-        if (s.hands[t].numbers.length >= SEVEN) break;
-      }
-    }
-    if (roundIsOver(s)) return endRound(s);
-    if (s.dealQueue) return continueDeal(s, rng);
-    s.current = nextInRound(s, from);
-    if (s.current < 0) return endRound(s);
+  function beginRound(s) {
+    s.round += 1; s.hands = Array.from({ length: s.n }, newHand); s.forced = 0; s.peek = null;
+    s.turnsLeft = Array.from({ length: s.n }, (_, k) => (s.dealer + 1 + k) % s.n); s.current = s.turnsLeft[0];
+    s.hands[s.current].status = "in"; s.phase = "turn";
     return s;
   }
-
-  // The player to move turns up a card.
-  function draw(s0, rng) {
-    if (s0.phase !== "turn" || s0.dealQueue || s0.hands[s0.current].status !== "in") return s0;
-    const s = clone(s0);
-    const p = s.current;
-    reveal(s, p, rng, false);
-    if (s.phase === "target") return s;
-    if (roundIsOver(s)) return endRound(s);
-    s.current = nextInRound(s, p);
-    if (s.current < 0) return endRound(s);
-    return s;
+  function recycle(s, rng) {
+    if (!s.deck.length && s.discard.length) { s.deck = shuffle(s.discard, rng); s.discard = []; }
   }
-
-  // The player to move stops and keeps the round points.
-  function stop(s0) {
-    if (s0.phase !== "turn" || s0.dealQueue || s0.hands[s0.current].status !== "in") return s0;
-    const s = clone(s0);
-    const p = s.current;
-    s.hands[p].status = "stop";
-    note(s, { type: "stop", player: p, points: handPoints(s.hands[p]) });
-    if (roundIsOver(s)) return endRound(s);
-    s.current = nextInRound(s, p);
-    if (s.current < 0) return endRound(s);
-    return s;
-  }
-
-  function endRound(s) {
-    s.roundPoints = s.hands.map(handPoints);
-    s.roundPoints.forEach((pts, i) => { s.totals[i] += pts; });
-    // the cards of the round go to the discard pile (open)
-    s.hands.forEach((h) => {
-      h.numbers.forEach((c) => s.discard.push(c));
-      h.extras.forEach((c) => s.discard.push(c));
-      if (h.rescue) s.discard.push("rescue");
-    });
-    s.phase = "roundover";
-    s.pending = null;
-    s.dealQueue = null;
-    const best = Math.max.apply(null, s.totals);
-    if (best >= s.target) {
-      s.phase = "over";
-      s.winners = [];
-      s.totals.forEach((t, i) => { if (t === best) s.winners.push(i); });
+  function takeCard(s, rng) { recycle(s, rng); return s.deck.length ? s.deck.shift() : null; }
+  function runLength(numbers, bridges) {
+    const have = new Set(numbers.filter(isNumber));
+    let best = 0;
+    for (let start = 1; start <= 10; start++) for (let end = start; end <= 10; end++) {
+      const missing = end - start + 1 - [...have].filter((v) => v >= start && v <= end).length;
+      if (missing <= bridges && missing < end - start + 1) best = Math.max(best, end - start + 1);
     }
-    note(s, { type: s.phase === "over" ? "gameover" : "roundover" });
-    return s;
-  }
-
-  // The next round (after the screen showed the round's result).
-  function nextRound(s0, rng) {
-    if (s0.phase !== "roundover") return s0;
-    const s = clone(s0);
-    s.dealer = (s.dealer + 1) % s.n;
-    return startRound(s, rng);
-  }
-
-  // ---- Computer ----
-
-  // Cards not open anywhere: the whole deck minus the open cards (hands of
-  // this round and the discard pile). Their order is not looked at.
-  function unseen(s) {
-    const counts = {};
-    DECK.forEach((c) => { counts[c] = (counts[c] || 0) + 1; });
-    const open = s.discard.slice();
-    s.hands.forEach((h) => { h.numbers.forEach((c) => open.push(c)); h.extras.forEach((c) => open.push(c)); if (h.rescue) open.push("rescue"); });
-    open.forEach((c) => { if (counts[c]) counts[c] -= 1; });
-    return counts;
-  }
-
-  // Chance that player p goes bust with the next card.
-  function bustChance(s, p) {
-    const h = s.hands[p];
-    if (h.rescue) return 0;
-    const counts = unseen(s);
-    let total = 0, bad = 0;
-    Object.keys(counts).forEach((c) => {
-      total += counts[c];
-      const v = Number(c);
-      if (!isNaN(v) && h.numbers.indexOf(v) !== -1) bad += counts[c];
-    });
-    return total ? bad / total : 0;
-  }
-
-  // Draw or stop for the player to move (a computer).
-  function wantsToStop(s) {
-    const p = s.current, h = s.hands[p], lv = LEVELS[s.levels[p]] || LEVELS[2];
-    const pts = handPoints(h);
-    if (!h.numbers.length && !h.extras.length) return false;
-    if (s.totals[p] + pts >= s.target && s.levels[p] >= 2) return true;
-    if (pts >= lv.aim) return true;
-    return bustChance(s, p) > lv.risk;
-  }
-
-  // Where a computer gives Pause / Second helping: Pause to the opponent
-  // with the most points (total and round) - or itself when it is alone or
-  // ahead of everyone; Second helping to the opponent with the most round
-  // points (more cards, more risk) - itself only when nobody else is left.
-  function chooseTarget(s) {
-    const from = s.pending.from, card = s.pending.card;
-    const list = targets(s);
-    const others = list.filter((i) => i !== from);
-    if (!others.length) return from;
-    const score = (i) => s.totals[i] + handPoints(s.hands[i]);
-    if (card === "pause" && s.levels[from] >= 2 && handPoints(s.hands[from]) >= (LEVELS[s.levels[from]] || LEVELS[2]).aim * 0.6 && bustChance(s, from) > 0.2) return from;
-    if (s.levels[from] === 1) return others[0];
-    let best = others[0];
-    others.forEach((i) => { if ((card === "pause" ? score(i) : handPoints(s.hands[i])) > (card === "pause" ? score(best) : handPoints(s.hands[best]))) best = i; });
     return best;
   }
-
-  // One step of the computer whose turn it is.
-  function aiStep(s, rng) {
-    if (s.phase === "target") return giveTo(s, chooseTarget(s), rng);
-    if (s.phase !== "turn" || s.dealQueue) return s;
-    return wantsToStop(s) ? stop(s) : draw(s, rng);
+  function handPoints(h) {
+    if (h.status === "bust") return 0;
+    const count = h.numbers.length, l = runLength(h.numbers, h.bridges);
+    const bonus = l >= RUN_MIN ? 5 * (l - 2) : 0;
+    return Math.max(0, h.numbers.reduce((a, b) => a + b, 0) + bonus + h.collectors * count - 5 * h.courageUsed);
   }
-
-  // Whose decision it is now (the owner of a waiting special card, or the
-  // player to move).
-  function actor(s) {
-    if (s.phase === "target") return s.pending.from;
-    return s.current;
+  function resolveDraw(s, p, rng) {
+    const h = s.hands[p], card = takeCard(s, rng);
+    if (card === null) { h.status = "stop"; note(s, "empty", p); return false; }
+    h.drawn += 1;
+    if (isNumber(card)) {
+      if (h.numbers.includes(card)) {
+        if (h.courage) { h.courage = false; h.courageUsed += 1; s.discard.push(card, "courage"); note(s, "saved", p, card); return true; }
+        h.numbers.push(card); h.status = "bust"; note(s, "bust", p, card); return false;
+      }
+      h.numbers.push(card); note(s, "number", p, card); return true;
+    }
+    if (card === "courage") {
+      if (h.courage) { s.discard.push(card); note(s, "void", p, card); }
+      else { h.courage = true; note(s, "courage", p, card); }
+    } else if (card === "strike") {
+      if (h.numbers.length) s.discard.push(h.numbers.pop());
+      s.discard.push(card); note(s, "strike", p, card);
+    } else if (card === "pass") {
+      const next = s.turnsLeft.slice(1).find((i) => s.hands[i].status === "wait");
+      if (next !== undefined) s.forced += 1;
+      s.discard.push(card); note(s, "pass", p, card, { forced: s.forced });
+    } else if (card === "bridge") { h.bridges += 1; note(s, "bridge", p, card); }
+    else if (card === "collector") { h.collectors += 1; note(s, "collector", p, card); }
+    else if (card === "peek") {
+      recycle(s, rng); s.peek = s.deck.length ? s.deck[0] : null;
+      s.discard.push(card); note(s, "peek", p, card, { shown: s.peek });
+    }
+    return true;
   }
-
-  function outcomeFor(s, p) {
-    if (s.phase !== "over") return null;
-    if (s.winners.indexOf(p) === -1) return "loss";
-    return s.winners.length > 1 ? "draw" : "win";
+  // The cards of a finished round stay in front of the players (the screen
+  // shows them with the round's points) until the next round clears them.
+  function clearHands(s) {
+    s.hands.forEach((h) => {
+      s.discard.push(...h.numbers);
+      if (h.courage) s.discard.push("courage");
+      for (let k = 0; k < h.bridges; k++) s.discard.push("bridge");
+      for (let k = 0; k < h.collectors; k++) s.discard.push("collector");
+      h.numbers = []; h.courage = false; h.bridges = 0; h.collectors = 0;
+    });
   }
-
-  return { DECK, BONUS, SEVEN, TARGETS, LEVELS, makeRng, newGame, draw, stop, giveTo, targets, nextRound, handPoints, bustChance, unseen, wantsToStop, chooseTarget, aiStep, actor, outcomeFor, isNumber };
+  function endRound(s) {
+    s.roundPoints = s.hands.map(handPoints);
+    s.roundPoints.forEach((v, i) => { s.totals[i] += v; });
+    s.phase = "roundover"; s.turnsLeft = []; s.forced = 0; s.peek = null;
+    const best = Math.max(...s.totals);
+    if (best >= s.target) { s.phase = "over"; s.winners = s.totals.map((v, i) => v === best ? i : -1).filter((i) => i >= 0); }
+    note(s, s.phase === "over" ? "gameover" : "roundover", null);
+    return s;
+  }
+  function activateNext(s, rng) {
+    if (!s.turnsLeft.length) return endRound(s);
+    s.current = s.turnsLeft[0]; const h = s.hands[s.current]; h.status = "in"; s.peek = null;
+    let forcedNow = s.forced;
+    s.forced = 0;
+    while (forcedNow > 0 && h.status === "in") {
+      forcedNow -= 1;
+      if (!resolveDraw(s, s.current, rng)) break;
+    }
+    if (h.status !== "in") { s.turnsLeft.shift(); return activateNext(s, rng); }
+    return s;
+  }
+  function finishTurn(s, p, rng) {
+    s.peek = null;
+    if (s.turnsLeft[0] === p) s.turnsLeft.shift();
+    return activateNext(s, rng);
+  }
+  function draw(s0, rng) {
+    if (s0.phase !== "turn" || s0.hands[s0.current].status !== "in") return s0;
+    const s = clone(s0), p = s.current;
+    s.peek = null;
+    const alive = resolveDraw(s, p, rng);
+    if (!alive) return finishTurn(s, p, rng);
+    return s;
+  }
+  function stop(s0, rng) {
+    if (s0.phase !== "turn" || s0.hands[s0.current].status !== "in" || s0.hands[s0.current].drawn < 1) return s0;
+    const s = clone(s0), p = s.current; s.hands[p].status = "stop"; note(s, "stop", p, undefined, { points: handPoints(s.hands[p]) });
+    return finishTurn(s, p, rng);
+  }
+  function nextRound(s0, rng) {
+    if (s0.phase !== "roundover") return s0;
+    const s = clone(s0); clearHands(s); s.dealer = (s.dealer + 1) % s.n; return beginRound(s);
+  }
+  function unseen(s) {
+    const counts = {}; DECK.forEach((c) => { counts[c] = (counts[c] || 0) + 1; });
+    const open = s.discard.slice();
+    s.hands.forEach((h) => { open.push(...h.numbers); if (h.courage) open.push("courage"); for (let i = 0; i < h.bridges; i++) open.push("bridge"); for (let i = 0; i < h.collectors; i++) open.push("collector"); });
+    open.forEach((c) => { if (counts[c]) counts[c]--; });
+    return counts;
+  }
+  function bustChance(s, p) {
+    const h = s.hands[p]; if (h.courage) return 0;
+    // A Peek shows the very next card: the chance is then 0 or 1.
+    if (s.peek !== null && s.peek !== undefined) return isNumber(s.peek) && h.numbers.includes(s.peek) ? 1 : 0;
+    const counts = unseen(s); let total = 0, bad = 0;
+    Object.keys(counts).forEach((k) => { total += counts[k]; if (isNumber(Number(k)) && h.numbers.includes(Number(k))) bad += counts[k]; });
+    return total ? bad / total : 0;
+  }
+  function wantsToStop(s) {
+    const p = s.current, h = s.hands[p], level = s.levels[p], points = handPoints(h);
+    if (h.drawn === 0) return false;
+    if (level >= 2 && s.totals[p] + points >= s.target) return true;
+    const pOthers = s.turnsLeft.length === 1;
+    const reached = s.totals.some((v, i) => i !== p && v >= s.target);
+    if (level === 3 && pOthers && reached) return points + s.totals[p] > Math.max(...s.totals.filter((_, i) => i !== p));
+    if (level === 1) return points >= 14 || bustChance(s, p) > 0.18;
+    if (level === 2) return points >= 22 || bustChance(s, p) > 0.27;
+    const pBust = bustChance(s, p);
+    if (pBust >= 1) return true;
+    if (s.peek !== null && s.peek !== undefined) return false;
+    const unseenCards = unseen(s), total = Object.values(unseenCards).reduce((a, b) => a + b, 0);
+    let gainTotal = 0;
+    Object.keys(unseenCards).forEach((key) => {
+      const copies = unseenCards[key];
+      if (!copies) return;
+      const card = isNumber(Number(key)) ? Number(key) : key;
+      let gain = 0;
+      if (isNumber(card)) {
+        if (h.numbers.includes(card)) return;
+        const next = Object.assign({}, h, { numbers: h.numbers.concat(card) });
+        gain = handPoints(next) - points;
+      } else if (card === "bridge") gain = handPoints(Object.assign({}, h, { bridges: h.bridges + 1 })) - points;
+      else if (card === "collector") gain = handPoints(Object.assign({}, h, { collectors: h.collectors + 1 })) - points;
+      else if (card === "strike" && h.numbers.length) gain = handPoints(Object.assign({}, h, { numbers: h.numbers.slice(0, -1) })) - points;
+      gainTotal += gain * copies;
+    });
+    const gain = Math.max(0, gainTotal / Math.max(1, total - Object.keys(unseenCards).reduce((a, k) => a + (isNumber(Number(k)) && h.numbers.includes(Number(k)) ? unseenCards[k] : 0), 0)));
+    return (1 - pBust) * gain <= pBust * points;
+  }
+  function aiStep(s, rng) { if (s.phase !== "turn" || !s.computer[s.current]) return s; return wantsToStop(s) ? stop(s) : draw(s, rng); }
+  function actor(s) { return s.current; }
+  function outcomeFor(s, p) { if (s.phase !== "over") return null; if (!s.winners.includes(p)) return "loss"; return s.winners.length > 1 ? "draw" : "win"; }
+  function isCurrentState(s) {
+    if (!s || s.game !== "teufelsieben" || s.rules !== 2 || !Number.isInteger(s.n) || s.n < 2 || s.n > 6) return false;
+    if (![s.computer, s.levels, s.totals, s.hands].every((a) => Array.isArray(a) && a.length === s.n)) return false;
+    if (!Array.isArray(s.deck) || !Array.isArray(s.discard) || !Array.isArray(s.turnsLeft) || !Number.isInteger(s.current)) return false;
+    if (!["turn", "roundover", "over"].includes(s.phase) || !Number.isInteger(s.round) || !Number.isInteger(s.dealer) || !Number.isInteger(s.seq)) return false;
+    if (!Number.isInteger(s.target) || !Number.isInteger(s.forced) || !Object.prototype.hasOwnProperty.call(s, "peek") || !Object.prototype.hasOwnProperty.call(s, "last")) return false;
+    if (s.phase === "turn" && (!Array.isArray(s.roundPoints) && s.roundPoints !== null)) return false;
+    if ((s.phase === "roundover" || s.phase === "over") && (!Array.isArray(s.roundPoints) || s.roundPoints.length !== s.n)) return false;
+    return s.hands.every((h) => h && Array.isArray(h.numbers) && typeof h.courage === "boolean" && Number.isInteger(h.courageUsed) && Number.isInteger(h.bridges) && Number.isInteger(h.collectors) && Number.isInteger(h.drawn) && ["wait", "in", "stop", "bust"].includes(h.status));
+  }
+  return { DECK, COUNTS, SPECIALS, TARGETS, DEFAULT_TARGET, RUN_MIN, LEVELS, makeRng, newGame, draw, stop, nextRound, handPoints, runLength, bustChance, unseen, wantsToStop, aiStep, actor, outcomeFor, isNumber, isCurrentState };
 })();
 
 if (typeof module !== "undefined") module.exports = TeufelSiebenCore;

@@ -490,17 +490,16 @@ all parts back into one log in list order. The last line is exactly
   moves with their reason, undo, shortest ways from 300 random positions.
   Nim: the xor rule (and misère) against a full search for all positions
   up to 3 heaps of 6, Hard wins 100 games each from winning positions.
-- `node tests/teufelsieben-core.js` - no server or browser needed. Devilish
-  Seven (task 121): the deck (79 number cards, 11 special cards), going
-  bust, the Rescue card, seven numbers with the bonus, Pause, Second
-  helping, +3, +5, Double, round points, the end and a tie; `GAMES`
-  (default 500) computer games each with 2, 3, 4 and 6 players without a
-  hang, cards conserved, Hard wins more often than Easy; the computer's
-  chance counts only open cards; save and load.
+- `node tests/teufelsieben-core.js` - no server or browser needed. Lucky
+  Chain (rules 2): the 60-card deck, number mix, bust and Courage, Strike,
+  Pass, Bridge, Collector and Peek, run and round scoring, targets, ties and
+  seat rotation; `GAMES` computer games with 2 to 6 players, card conservation,
+  AI levels, open-card odds and save validation.
 - `node tests/teufelsieben-ui.js` - needs the server and Playwright. German
-  page at 360 x 640: start, turn up, stop, round end and next round, a
-  Pause makes the rows buttons (44 px), game end with the result, save and
-  load, no sideways scroll.
+  page at 360 x 640: two people and one computer, stop disabled before the
+  first card, paced computer turns, round end and next round, deterministic
+  bust, game result, save/load, legacy-save rejection, 44 px buttons and no
+  sideways scroll.
 - `node tests/advent-core.js` - no server or browser needed. Puzzle Advent
   calendar (task 122): each of the 24 puzzles has exactly one solution,
   counted again with the games' own solvers (Light Switch 3 x 3: one set of
