@@ -49,6 +49,11 @@ Aufgaben-Repositorys; hier nur, was dort fehlt.
   - kein Mord, keine Entführung, keine Gewalt;
   - Namen und Fakten mit WebSearch prüfen, eigene Namen gegen
     Spiele mit gleichem Namen.
+  - Spielablauf: `RECHTSCHECK.md` Punkt 11 (Abstand zu Handelsspielen,
+    Tabelle Vorbild/gleich/eigen, `ok`/`knapp`/`zu nah`) und das „Tor vor
+    Bau und Veröffentlichung“ dort gelten für jedes neue oder stark
+    geänderte Spiel; bei `zu nah` oder `unklar` kein Release, sondern eine
+    Frage an Christopher.
 - Lizenz ist PolyForm Noncommercial 1.0.0; fremde Dateien nur mit kompatibler Lizenz (keine GPL, keine Copyleft-Pflicht, die die Nicht-Kommerziell-Regel aushebelt).
 - Technik:
   - keine Animationen, keine Töne, kein Zeitdruck (E-Ink);
