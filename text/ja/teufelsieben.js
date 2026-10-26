@@ -2,7 +2,7 @@
 // Rules and history texts of teufelsieben (ja). Loaded by teufelsieben-rules.html and teufelsieben-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.ja, {
-    ts_rules_title: "ラッキーチェーンのルール",
+    ts_rules_title: "悪魔のセブンのルール",
     ts_rules_intro: "カードを1枚ずつめくり、ちょうどよいところで止めましょう。すでに持っている数字が出るとバーストです。だれかが目標に届いたら、得点がいちばん多い人の勝ちです。",
     ts_rules_basics_title: "ルール",
     ts_term_cards: "カード",
@@ -21,10 +21,10 @@ Object.assign(STRINGS.ja, {
     ts_rules_computer: "コンピューターは表向きのカードと、のぞくで見えたカードだけを数えます。簡単は早めに止まり、難しいは得点と危険を比べます。",
     ts_rules_example_title: "例",
     ts_rules_example: "3、4、5、6、9を持っています。数字は合計27点。4連続のボーナス10点を加えて、特殊効果の前に37点です。",
-    ts_history_title: "ラッキーチェーンについて",
+    ts_history_title: "悪魔のセブンについて",
     ts_history_family_title: "続けるか止めるか",
     ts_history_family_p1: "この種のゲームでは、もう一度リスクを取るか、得たものを守るかを何度も選びます。多くのカードゲームやサイコロゲームがこの形です。",
     ts_history_modern_title: "このバージョン",
-    ts_history_modern_p1: "ラッキーチェーンはPaperGames向けに独自のカード、ルール、文章で作られました。1〜10の独自配分、連番ボーナス、勇気、取り消し、パス、橋、収集家、のぞくを使います。",
+    ts_history_modern_p1: "悪魔のセブンはPaperGames向けに独自のカード、ルール、文章で作られました。1〜10の独自配分、連番ボーナス、勇気、取り消し、パス、橋、収集家、のぞくを使います。",
 });
 I18n.markTextLoaded("ja");

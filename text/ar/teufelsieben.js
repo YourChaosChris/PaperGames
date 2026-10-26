@@ -2,7 +2,7 @@
 // Rules and history texts of teufelsieben (ar). Loaded by teufelsieben-rules.html and teufelsieben-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.ar, {
-    ts_rules_title: "قواعد سلسلة الحظ",
+    ts_rules_title: "قواعد السبعة المشاكسة",
     ts_rules_intro: "اكشف البطاقات واحدة تلو الأخرى وتوقف في الوقت المناسب: الرقم الذي لديك بالفعل يجعلك تخسر الجولة. عندما يبلغ أحدهم الهدف، يفوز صاحب أكثر النقاط.",
     ts_rules_basics_title: "القواعد",
     ts_term_cards: "الأوراق",
@@ -21,10 +21,10 @@ Object.assign(STRINGS.ar, {
     ts_rules_computer: "يحسب الكمبيوتر الأوراق المكشوفة فقط والورقة التي تكشفها النظرة. المستوى السهل يتوقف مبكرًا؛ والصعب يوازن بين المكسب المحتمل والمخاطرة.",
     ts_rules_example_title: "مثال",
     ts_rules_example: "لديك 3 و4 و5 و6 و9: مجموع الأرقام 27 نقطة. يضيف التسلسل الرباعي 10 نقاط، فيصبح المجموع 37 قبل تأثير الأوراق الخاصة.",
-    ts_history_title: "عن سلسلة الحظ",
+    ts_history_title: "عن السبعة المشاكسة",
     ts_history_family_title: "المواصلة أو التوقف",
     ts_history_family_p1: "في هذه الألعاب تختار مرارًا بين خوض مخاطرة أخرى والاحتفاظ بما كسبته. تعمل كثير من ألعاب النرد والورق بهذه الطريقة.",
     ts_history_modern_title: "هذه النسخة",
-    ts_history_modern_p1: "صُنعت سلسلة الحظ لـPaperGames بأوراق وقواعد ونصوص خاصة: توزيع مميز للأرقام من 1 إلى 10، ومكافأة للتسلسل، وأوراق الشجاعة والإزالة والتمرير والجسر والجامع والنظرة.",
+    ts_history_modern_p1: "صُنعت السبعة المشاكسة لـPaperGames بأوراق وقواعد ونصوص خاصة: توزيع مميز للأرقام من 1 إلى 10، ومكافأة للتسلسل، وأوراق الشجاعة والإزالة والتمرير والجسر والجامع والنظرة.",
 });
 I18n.markTextLoaded("ar");

@@ -471,12 +471,12 @@ all parts back into one log in list order. The last line is exactly
   players: one full pasture ends the game, the 35 cards are always all there,
   the yard keeps 5 cards, the pile never runs out, every computer step is
   legal; the strategy beats random choices in 2000 games. A few seconds.
-- `node tests/tieryatzy-core.js` - no server or browser needed. Animal Yatzy
+- `node tests/pfotenwurf-core.js` - no server or browser needed. Critter Roll
   (task 112): the points of every field with the paw as a joker, rolling
   and keeping dice, at most three rolls, striking a field with 0, the end
   after every field, a tie, 1 to 4 players; computer games (`GAMES`,
   default 200) with save and load in the middle.
-- `node tests/tieryatzy-ui.js` - needs the server and Playwright. German
+- `node tests/pfotenwurf-ui.js` - needs the server and Playwright. German
   page at 360 px: a game against the computer, roll, keep a die, the
   possible points on the sheet, a field written, the computer's panel and
   "Weiter", the game back after a reload, a whole game to the result; rows
@@ -490,8 +490,8 @@ all parts back into one log in list order. The last line is exactly
   moves with their reason, undo, shortest ways from 300 random positions.
   Nim: the xor rule (and misère) against a full search for all positions
   up to 3 heaps of 6, Hard wins 100 games each from winning positions.
-- `node tests/teufelsieben-core.js` - no server or browser needed. Lucky
-  Chain (rules 2): the 60-card deck, number mix, bust and Courage, Strike,
+- `node tests/teufelsieben-core.js` - no server or browser needed. Devilish
+  Seven (rules 2): the 60-card deck, number mix, bust and Courage, Strike,
   Pass, Bridge, Collector and Peek, run and round scoring, targets, ties and
   seat rotation; `GAMES` computer games with 2 to 6 players, card conservation,
   AI levels, open-card odds and save validation.
@@ -514,6 +514,21 @@ all parts back into one log in list order. The last line is exactly
   kept over a reload, "Open all doors" from the menu, cells of the biggest
   puzzles at least 40 px, every door open after 24 December, broken and old
   saves, no sideways scroll.
+- `node tests/gipfelwurf-core.js` - no server or browser needed. Ridge Roll
+  / Gipfelwurf (rules of task 136): the ways of three dice (step die, ridge
+  by the sum of the other two), one ridge per turn, a lost turn, the hut
+  and the crevasse, stopping and camps, summit points (first and later), the
+  end after a full round, a tie, save and load, old states rejected;
+  `GAMES` (default 500, or `--games N`) computer games each with 2, 3 and 4
+  players without a hang (game length, wins per level: Hard clearly beats
+  Easy), wins per seat with the first player by lot (within 5 points of the
+  fair share); `FAIR` (default 1000, or `--fair N`) games: every ridge
+  reached at the top within 20 % of the mean.
+- `node tests/gipfelwurf-ui.js` - needs the server and Playwright. German
+  page at 360 x 640: three pip dice, the ways as buttons ("Grat 6: 3
+  hoch"), stop and make camp, a lost turn with its panel and "Weiter", save
+  and load, an old save of the first rules dropped, the end of the game with
+  the result, buttons at least 44 px, no sideways scroll.
 - `node tests/small-games-ui.js` - needs the server and Playwright. The
   three games of task 118 at 360 px in German: sliding puzzle (taps, the
   note outside row and column, hint, solved with the fewest moves, 5 x 5,

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v269",
+    date: "2026-10-27",
+    key: "release_v269",
+    text: "Lucky Chain is called Devilish Seven again; the rules stay the same. Bigger buttons in the result window; after a round no raw placeholder shows any more. Animal Yatzy is now called Critter Roll."
+  },
+  {
     version: "v268",
     date: "2026-10-27",
     key: "release_v268",

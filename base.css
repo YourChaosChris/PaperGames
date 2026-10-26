@@ -2047,6 +2047,7 @@ margin: 2rem 0 var(--space-4);
 
 .result-modal-actions button {
   margin-top: var(--space-1);
+  min-height: 44px;
 }
 
 .result-modal .result-modal-close,

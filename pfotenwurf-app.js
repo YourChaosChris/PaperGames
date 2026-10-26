@@ -1,5 +1,5 @@
-// tieryatzy-app.js
-// Wires TierYatzyCore ("Animal Yatzy") to tieryatzy.html.
+// pfotenwurf-app.js
+// Wires PfotenwurfCore ("Critter Roll") to pfotenwurf.html.
 //
 // One person against the computer, or 1 to 4 people passing the device
 // around. On a turn: "Roll the dice"; tap a die to keep it (it gets a thick
@@ -11,7 +11,7 @@
 // a short name for reading aloud; nothing is animated, no time limit,
 // black on white only.
 
-const TIERYATZY_SAVE_KEY = "einkchess_save_tieryatzy";
+const PFOTENWURF_SAVE_KEY = "einkchess_save_pfotenwurf";
 
 const AppStateTY = {
   state: null,
@@ -31,7 +31,7 @@ function humansTY() {
 }
 
 function faceNameTY(f) {
-  return tTY(f === TierYatzyCore.PAW ? "zw_wild" : "zw_animal_" + f);
+  return tTY(f === PfotenwurfCore.PAW ? "zw_wild" : "zw_animal_" + f);
 }
 
 function fieldNameTY(field) {
@@ -43,14 +43,14 @@ function fieldNameTY(field) {
 function saveTY() {
   if (typeof GameStorage === "undefined" || !AppStateTY.state) return;
   if (AppStateTY.state.phase === "over") {
-    GameStorage.clear(TIERYATZY_SAVE_KEY);
+    GameStorage.clear(PFOTENWURF_SAVE_KEY);
     return;
   }
-  GameStorage.save(TIERYATZY_SAVE_KEY, { state: AppStateTY.state });
+  GameStorage.save(PFOTENWURF_SAVE_KEY, { state: AppStateTY.state });
 }
 
 function validStateTY(s) {
-  return !!s && s.game === "tieryatzy" && Array.isArray(s.sheets) && Array.isArray(s.computer) && Array.isArray(s.dice) && Array.isArray(s.held) &&
+  return !!s && s.game === "pfotenwurf" && Array.isArray(s.sheets) && Array.isArray(s.computer) && Array.isArray(s.dice) && Array.isArray(s.held) &&
     s.sheets.length === s.computer.length && s.phase === "roll";
 }
 
@@ -61,7 +61,7 @@ function startGameTY() {
   const people = parseInt(document.getElementById("ty-players").value, 10) || 1;
   // Against the computer: one person and one computer.
   const n = mode === "ai" ? 2 : Math.max(1, Math.min(4, people));
-  AppStateTY.state = TierYatzyCore.newGame({ players: n, computer: mode === "ai" ? [false, true] : new Array(n).fill(false) });
+  AppStateTY.state = PfotenwurfCore.newGame({ players: n, computer: mode === "ai" ? [false, true] : new Array(n).fill(false) });
   AppStateTY.review = null;
   setResultTY("");
   if (window.ResultModal) window.ResultModal.hide();
@@ -76,7 +76,7 @@ function runComputerTurnTY() {
   const rec = { player: st.current, rolls: [] };
   let guard = 0;
   while (st.phase !== "over" && st.computer[st.current] && st.seq === seq && guard++ < 20) {
-    const next = TierYatzyCore.aiStep(st);
+    const next = PfotenwurfCore.aiStep(st);
     if (next === st) break;
     if (next.rolls > st.rolls) rec.rolls.push({ dice: next.dice.slice(), held: st.rolls > 0 ? st.held.slice() : [false, false, false, false, false] });
     st = next;
@@ -110,7 +110,7 @@ function humanTurnTY() {
 
 function rollTY() {
   if (!humanTurnTY()) return;
-  const next = TierYatzyCore.roll(AppStateTY.state);
+  const next = PfotenwurfCore.roll(AppStateTY.state);
   if (next === AppStateTY.state) return;
   AppStateTY.state = next;
   afterActionTY();
@@ -118,7 +118,7 @@ function rollTY() {
 
 function holdTY(i) {
   if (!humanTurnTY()) return;
-  const next = TierYatzyCore.toggleHold(AppStateTY.state, i);
+  const next = PfotenwurfCore.toggleHold(AppStateTY.state, i);
   if (next === AppStateTY.state) return;
   AppStateTY.state = next;
   renderTY();
@@ -127,7 +127,7 @@ function holdTY(i) {
 
 function chooseTY(field) {
   if (!humanTurnTY()) return;
-  const next = TierYatzyCore.choose(AppStateTY.state, field);
+  const next = PfotenwurfCore.choose(AppStateTY.state, field);
   if (next === AppStateTY.state) return;
   AppStateTY.state = next;
   afterActionTY();
@@ -151,11 +151,11 @@ function finishTY() {
     title = humans === 1 ? "You lose" : "Computer wins";
     text = humans === 1 ? I18n.t("ui_status_computer_wins") : tTY("dg_wins", { name: nameTY(s.winners[0]) });
   }
-  if (s.n === 1) { title = "You win!"; text = tTY("ty_solo_end", { n: TierYatzyCore.total(s.sheets[0]) }); }
+  if (s.n === 1) { title = "You win!"; text = tTY("ty_solo_end", { n: PfotenwurfCore.total(s.sheets[0]) }); }
   setResultTY(text);
   DiceCommon.showResult(title, text);
   if (humans === 1 && s.n > 1 && typeof GameStats !== "undefined") {
-    GameStats.record("tieryatzy", TierYatzyCore.outcomeFor(s, s.computer.indexOf(false)));
+    GameStats.record("pfotenwurf", PfotenwurfCore.outcomeFor(s, s.computer.indexOf(false)));
   }
 }
 
@@ -196,7 +196,7 @@ function fieldIconTY(field) {
   }
   if (field === "diff") {
     let h = "";
-    for (let a = 0; a < TierYatzyCore.ANIMALS; a++) h += ZooIcons.svg(a, 17);
+    for (let a = 0; a < PfotenwurfCore.ANIMALS; a++) h += ZooIcons.svg(a, 17);
     return '<span class="ty-icon-row">' + h + "</span>";
   }
   // lucky field: a four-leaf clover
@@ -211,7 +211,7 @@ function renderDiceTY() {
   const s = AppStateTY.state;
   const wrap = document.getElementById("ty-dice");
   wrap.innerHTML = "";
-  const canHold = humanTurnTY() && s.rolls > 0 && s.rolls < TierYatzyCore.MAX_ROLLS;
+  const canHold = humanTurnTY() && s.rolls > 0 && s.rolls < PfotenwurfCore.MAX_ROLLS;
   s.dice.forEach((f, i) => {
     const kept = s.rolls > 0 && s.held[i];
     const b = document.createElement("button");
@@ -225,12 +225,12 @@ function renderDiceTY() {
     wrap.appendChild(b);
   });
   let r = "";
-  for (let i = 0; i < TierYatzyCore.MAX_ROLLS; i++) {
+  for (let i = 0; i < PfotenwurfCore.MAX_ROLLS; i++) {
     r += '<svg class="ty-roll-dot" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="' + (i < s.rolls ? "#141413" : "#ffffff") + '" stroke="#141413" stroke-width="2.5"/></svg>';
   }
   const rolls = document.getElementById("ty-rolls");
   rolls.innerHTML = r;
-  rolls.setAttribute("aria-label", tTY("zw_rolls_aria", { n: s.rolls, m: TierYatzyCore.MAX_ROLLS }));
+  rolls.setAttribute("aria-label", tTY("zw_rolls_aria", { n: s.rolls, m: PfotenwurfCore.MAX_ROLLS }));
 }
 
 // The sheet of the player to move (or of the player whose turn the
@@ -241,11 +241,11 @@ function renderSheetTY() {
   const s = AppStateTY.state;
   const who = AppStateTY.review ? AppStateTY.review.player : (s.phase === "over" ? 0 : s.current);
   const sheet = s.sheets[who];
-  const opt = humanTurnTY() ? TierYatzyCore.options(s) : {};
+  const opt = humanTurnTY() ? PfotenwurfCore.options(s) : {};
   const wrap = document.getElementById("ty-sheet");
   wrap.innerHTML = "";
   document.getElementById("ty-sheet-label").textContent = tTY("ty_sheet_of", { name: nameTY(who) });
-  TierYatzyCore.FIELDS.forEach((field) => {
+  PfotenwurfCore.FIELDS.forEach((field) => {
     const done = sheet[field] !== null && sheet[field] !== undefined;
     const can = !done && opt[field] !== undefined;
     const marked = AppStateTY.review && AppStateTY.review.field === field;
@@ -266,7 +266,7 @@ function renderSheetTY() {
   });
   const sum = document.createElement("div");
   sum.className = "ty-row ty-row-total";
-  sum.innerHTML = '<span class="ty-row-icon"></span><span class="ty-row-name">' + tTY("ty_total") + '</span><span class="ty-row-points">' + TierYatzyCore.total(sheet) + "</span>";
+  sum.innerHTML = '<span class="ty-row-icon"></span><span class="ty-row-name">' + tTY("ty_total") + '</span><span class="ty-row-points">' + PfotenwurfCore.total(sheet) + "</span>";
   wrap.appendChild(sum);
 }
 
@@ -294,7 +294,7 @@ function statusTY() {
   const who = humansTY() === 1 ? I18n.t("ui_status_your_turn") : tTY("dg_turn_of", { name: nameTY(s.current) });
   let hint;
   if (s.rolls === 0) hint = tTY("ty_hint_roll");
-  else if (s.rolls < TierYatzyCore.MAX_ROLLS) hint = tTY("ty_hint_keep");
+  else if (s.rolls < PfotenwurfCore.MAX_ROLLS) hint = tTY("ty_hint_keep");
   else hint = tTY("ty_hint_field");
   return who + " " + hint;
 }
@@ -310,12 +310,12 @@ function renderTY() {
   const s = AppStateTY.state;
   if (!s) return;
   const over = s.phase === "over";
-  document.getElementById("ty-players-list").innerHTML = DiceCommon.playersHtml(s.computer, s.current, s.sheets.map((sh) => tTY("ty_count", { n: TierYatzyCore.total(sh) })), over);
+  document.getElementById("ty-players-list").innerHTML = DiceCommon.playersHtml(s.computer, s.current, s.sheets.map((sh) => tTY("ty_count", { n: PfotenwurfCore.total(sh) })), over);
   const showing = !!AppStateTY.review;
   document.getElementById("ty-play").classList.toggle("hidden", showing || over);
   renderReviewTY();
   if (!showing && !over) renderDiceTY();
-  document.getElementById("ty-roll").disabled = !(humanTurnTY() && s.rolls < TierYatzyCore.MAX_ROLLS);
+  document.getElementById("ty-roll").disabled = !(humanTurnTY() && s.rolls < PfotenwurfCore.MAX_ROLLS);
   renderSheetTY();
   setStatusTY(statusTY());
   renderLastTY();
@@ -323,7 +323,7 @@ function renderTY() {
 
 /*** Setup ***/
 
-function initTierYatzyApp() {
+function initPfotenwurfApp() {
   DiceCommon.wireMenu();
   // The number of people only matters without the computer.
   const showPlayersTY = () => document.getElementById("ty-players-wrap").classList.toggle("hidden", DiceCommon.activeMode() !== "hotseat");
@@ -333,7 +333,7 @@ function initTierYatzyApp() {
   document.getElementById("start-ty-game").addEventListener("click", startGameTY);
   document.getElementById("ty-roll").addEventListener("click", rollTY);
   const D = (face, kept) => dieSvgTY(face, kept, 40);
-  Howto.init({ slug: "tieryatzy", actions: ["ty-roll"], steps: [
+  Howto.init({ slug: "pfotenwurf", actions: ["ty-roll"], steps: [
     { pics: D(0) + D(3) + D(0) + D(5) + D(2), key: "ty_howto_1" },
     { pics: D(0, true) + D(0, true) + D(5, true) + D(1) + D(4), key: "ty_howto_2" },
     { pics: Howto.box(ZooIcons.svg(0, 30)) + Howto.sign("=") + Howto.sign("3"), key: "ty_howto_3" },
@@ -342,7 +342,7 @@ function initTierYatzyApp() {
   if (window.I18n && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateTY.state) renderTY(); });
   }
-  const saved = typeof GameStorage !== "undefined" ? GameStorage.load(TIERYATZY_SAVE_KEY) : null;
+  const saved = typeof GameStorage !== "undefined" ? GameStorage.load(PFOTENWURF_SAVE_KEY) : null;
   if (saved && validStateTY(saved.state)) {
     AppStateTY.state = saved.state;
     if (saved.state.computer.some((c) => c)) DiceCommon.setMode("ai");
@@ -353,4 +353,4 @@ function initTierYatzyApp() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", initTierYatzyApp);
+document.addEventListener("DOMContentLoaded", initPfotenwurfApp);

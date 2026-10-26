@@ -2,7 +2,7 @@
 // Rules and history texts of teufelsieben (pl). Loaded by teufelsieben-rules.html and teufelsieben-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.pl, {
-    ts_rules_title: "Zasady Szczęśliwego ciągu",
+    ts_rules_title: "Zasady gry Diabelska Siódemka",
     ts_rules_intro: "Odkrywaj karty po kolei i zatrzymaj się w porę: liczba, którą już masz, oznacza przepadek. Gdy ktoś osiągnie cel, wygrywa ten, kto ma najwięcej punktów.",
     ts_rules_basics_title: "Zasady",
     ts_term_cards: "Karty",
@@ -21,10 +21,10 @@ Object.assign(STRINGS.pl, {
     ts_rules_computer: "Komputer liczy tylko odkryte karty i kartę pokazaną przez Podgląd. Łatwy szybko przerywa; Trudny porównuje możliwy zysk z ryzykiem.",
     ts_rules_example_title: "Przykład",
     ts_rules_example: "Masz 3, 4, 5, 6 i 9: 27 punktów z liczb. Ciąg czterech daje 10, razem 37 przed efektami kart specjalnych.",
-    ts_history_title: "O Szczęśliwym ciągu",
+    ts_history_title: "O grze Diabelska Siódemka",
     ts_history_family_title: "Grać dalej czy przerwać",
     ts_history_family_p1: "W takich grach wciąż wybiera się między kolejnym ryzykiem a zachowaniem tego, co już zdobyto. Tak działa wiele gier w kości i karty.",
     ts_history_modern_title: "Ta wersja",
-    ts_history_modern_p1: "Szczęśliwy ciąg powstał dla PaperGames i ma własne karty, zasady i teksty: własny układ liczb 1–10, premię za ciąg i karty Odwaga, Skreślenie, Przekazanie, Most, Kolekcjoner oraz Podgląd.",
+    ts_history_modern_p1: "Diabelska Siódemka powstała dla PaperGames i ma własne karty, zasady i teksty: własny układ liczb 1–10, premię za ciąg i karty Odwaga, Skreślenie, Przekazanie, Most, Kolekcjoner oraz Podgląd.",
 });
 I18n.markTextLoaded("pl");

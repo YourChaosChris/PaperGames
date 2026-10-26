@@ -2,7 +2,7 @@
 // Rules and history texts of teufelsieben (nl). Loaded by teufelsieben-rules.html and teufelsieben-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.nl, {
-    ts_rules_title: "Regels van Geluksreeks",
+    ts_rules_title: "Regels van Duivelse Zeven",
     ts_rules_intro: "Draai kaart na kaart om en stop op tijd: een getal dat je al hebt, laat je springen. Haalt iemand het doel, dan wint wie de meeste punten heeft.",
     ts_rules_basics_title: "De regels",
     ts_term_cards: "De kaarten",
@@ -21,10 +21,10 @@ Object.assign(STRINGS.nl, {
     ts_rules_computer: "De computer telt alleen open kaarten en een kaart die Kijkje toont. Makkelijk stopt vroeg; Moeilijk weegt mogelijke winst tegen risico.",
     ts_rules_example_title: "Voorbeeld",
     ts_rules_example: "Je hebt 3, 4, 5, 6 en 9: 27 punten aan getallen. De reeks van vier geeft 10 extra, samen 37 vóór speciale effecten.",
-    ts_history_title: "Over Geluksreeks",
+    ts_history_title: "Over Duivelse Zeven",
     ts_history_family_title: "Doorgaan of stoppen",
     ts_history_family_p1: "Bij dit soort spellen kies je steeds opnieuw of je nog een risico neemt of houdt wat je hebt. Veel dobbel- en kaartspellen werken zo.",
     ts_history_modern_title: "Deze versie",
-    ts_history_modern_p1: "Geluksreeks is gemaakt voor PaperGames, met eigen kaarten, regels en teksten: een eigen mix van getallen 1 t/m 10, een bonus voor reeksen en Moed, Wissen, Doorgifte, Brug, Verzamelaar en Kijkje.",
+    ts_history_modern_p1: "Duivelse Zeven is gemaakt voor PaperGames, met eigen kaarten, regels en teksten: een eigen mix van getallen 1 t/m 10, een bonus voor reeksen en Moed, Wissen, Doorgifte, Brug, Verzamelaar en Kijkje.",
 });
 I18n.markTextLoaded("nl");
