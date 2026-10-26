@@ -1092,7 +1092,7 @@ let cakeSamples = 0;
 // left over and it differs from English.
 let cdSamples = 0;
 // Texts that are rightly the same as in English.
-const SAME_AS_EN = { fv_computer_n: ["de", "it", "nl"], ab_gold: ["de"] };
+const SAME_AS_EN = { fv_computer_n: ["de", "it", "nl"], fv_habitat_line: ["it"], ab_gold: ["de"] };
 {
   const CD = require(path.join(__dirname, "..", "cardduel-core.js"));
   const vars = (s) => (s.match(/\{[a-z]+\}/g) || []).sort().join(",");

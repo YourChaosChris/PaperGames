@@ -148,6 +148,7 @@ li.fv-card {
 
 .fv-actions button {
   margin: 0 var(--space-1) var(--space-1) 0;
+  min-height: 44px;
 }
 
 .fv-score-wrap {

@@ -1,17 +1,18 @@
 // forestvillage-app.js
 // Wires ForestVillageCore ("Forest Village") to forestvillage.html.
 //
-// Layout: a status line, the player's season, workers and resources, the
-// forest map (8 field buttons with what they give and who stands there),
-// the Clearing (6 open cards), the hand, the action buttons (Build, Change
-// season, Done), the village (cards built, pairs marked), the task card,
-// the points (also of the others) and the log. Tap a field to place a
-// worker; tap a card (meadow or hand) to see it - "Build" shows what is
-// missing when it can't be paid.
+// Layout: a status line, the shared season, the player's squirrels and
+// resources, the forest map (8 field buttons with what they give, the extra
+// for the first squirrel and who stands there), the Clearing (6 open
+// cards), the hand, the action buttons (Build, End turn), the village, the
+// task card, the points (also of the others) and the log. A turn: tap a
+// field to send a squirrel, then tap a card (Clearing or hand) and "Build",
+// or "End turn" - "Build" shows what is missing when it can't be paid.
 //
 // Against the computer the human is player 0; with several people on one
 // device the hand is covered between turns; alone there is no opponent,
 // the target score counts. Every text comes from fv_* i18n keys.
+// Saves of older rules (no `rules: 3`) are dropped without a message.
 
 const FV_SAVE_KEY = "einkchess_save_forestvillage_v2";
 const FV_OLD_SAVE_KEY = "einkchess_save_forestvillage";
@@ -62,11 +63,22 @@ function cardTextFv(id) {
   return parts.join(" ");
 }
 
+function drawTextFv(n) { return n === 1 ? tFv("fv_field_draw1") : fillFv("fv_field_draw", { n }); }
+
 function fieldTextFv(f) {
   const parts = [];
   if (f.gain) parts.push("+" + resTextFv(f.gain));
-  if (f.draw) parts.push(fillFv("fv_field_draw", { n: f.draw }));
+  if (f.draw) parts.push(drawTextFv(f.draw));
   return parts.join(tFv("fv_list_sep"));
+}
+
+// The extra for the first squirrel on a field: "first: +1 clay".
+function firstTextFv(f) {
+  const x = f.first || {};
+  const parts = [];
+  if (FC().RES.some((k) => x[k])) parts.push("+" + resTextFv(x));
+  if (x.draw) parts.push(drawTextFv(x.draw));
+  return parts.length ? fillFv("fv_field_first", { s: parts.join(tFv("fv_list_sep")) }) : "";
 }
 
 function taskTextFv(id) {
@@ -80,7 +92,7 @@ function setStatusFv(key, vars) {
   if (el) {
     if (AppStateFv.mode === "vs-ai" && key) {
       if (key === "fv_status_computer") el.textContent = I18n.t("ui_status_computer_turn") + " " + fillFv(key, vars);
-      else if (["fv_status_turn", "fv_status_winter", "fv_status_season"].includes(key)) el.textContent = I18n.t("ui_status_your_turn") + " " + fillFv(key, vars);
+      else if (["fv_status_turn", "fv_status_build_you"].includes(key)) el.textContent = I18n.t("ui_status_your_turn") + " " + fillFv(key, vars);
       else el.textContent = fillFv(key, vars);
     } else el.textContent = key ? fillFv(key, vars) : "";
   }
@@ -121,8 +133,7 @@ function initFvApp() {
   });
   document.getElementById("resign-button").addEventListener("click", resignFv);
   document.getElementById("fv-build").addEventListener("click", onBuildFv);
-  document.getElementById("fv-season").addEventListener("click", () => { if (humanTurnFv()) doFv({ type: "season" }); });
-  document.getElementById("fv-pass").addEventListener("click", () => { if (humanTurnFv()) doFv({ type: "pass" }); });
+  document.getElementById("fv-end").addEventListener("click", () => { if (humanTurnFv()) doFv({ type: "end" }); });
   document.getElementById("fv-show-hand").addEventListener("click", () => { AppStateFv.revealed = true; promptFv(); });
   if (typeof I18n !== "undefined" && typeof I18n.onChange === "function") {
     I18n.onChange(() => {
@@ -131,13 +142,11 @@ function initFvApp() {
     });
   }
   setMode("vs-ai");
-  const oldSave = typeof GameStorage !== "undefined" ? GameStorage.load(FV_OLD_SAVE_KEY) : null;
-  if (oldSave) {
-    GameStorage.clear(FV_OLD_SAVE_KEY);
-    setStatusFv("fv_old_save_discarded");
-  }
-  const saved = typeof GameStorage !== "undefined" ? GameStorage.load(FV_SAVE_KEY) : null;
-  if (saved && saved.state && saved.state.players && !saved.state.over) {
+  // Saves of the first rules (own key) and of rules 2 are dropped silently.
+  if (typeof GameStorage !== "undefined" && GameStorage.load(FV_OLD_SAVE_KEY)) GameStorage.clear(FV_OLD_SAVE_KEY);
+  let saved = typeof GameStorage !== "undefined" ? GameStorage.load(FV_SAVE_KEY) : null;
+  if (saved && (!saved.state || !FC().isCurrentState(saved.state))) { clearSavedFvGame(); saved = null; }
+  if (saved && !saved.state.over) {
     AppStateFv.mode = saved.mode === "hotseat" ? "hotseat" : "vs-ai";
     AppStateFv.level = saved.level || "medium";
     AppStateFv.state = saved.state;
@@ -184,10 +193,8 @@ function humanTurnFv() {
 function promptFv() {
   const s = AppStateFv.state;
   if (!s || AppStateFv.gameOver) return;
-  const p = s.players[s.current];
   if (AppStateFv.mode === "hotseat" && !AppStateFv.revealed) setStatusFv("fv_status_pass", { p: playerNameFv(s.current) });
-  else if (FC().season(p) === "winter") setStatusFv("fv_status_winter", { p: playerNameFv(s.current) });
-  else if (p.placed >= p.workers && !FC().legalActions(s).some((a) => a.type === "build")) setStatusFv("fv_status_season", { p: playerNameFv(s.current) });
+  else if (s.phase === "build") setStatusFv(s.players.length === 1 || AppStateFv.mode === "vs-ai" ? "fv_status_build_you" : "fv_status_build", { p: playerNameFv(s.current) });
   else setStatusFv(s.players.length === 1 || AppStateFv.mode === "vs-ai" ? "fv_status_turn" : "fv_status_turn_player", { p: playerNameFv(s.current) });
   renderFv();
 }
@@ -301,11 +308,9 @@ function cardHtmlFv(id, from, index, p, s, canTap) {
   if (sel) cls.push("fv-selected");
   if (!ok) cls.push("fv-unaffordable");
   // Cards already in the village show no price.
-  const shownCost = Object.assign({}, c.cost);
-  if (discounted) shownCost.f = Math.max(0, (shownCost.f || 0) - 1);
-  const cost = built ? "" : discounted ? fillFv("fv_cost_discount", { s: resTextFv(shownCost) }) : fillFv("fv_cost", { s: resTextFv(c.cost) });
+  const cost = built ? "" : discounted ? fillFv("fv_cost_discount", { s: resTextFv(FC().costFor(p, id)) }) : fillFv("fv_cost", { s: resTextFv(c.cost) });
   const kind = tFv(c.kind === "animal" ? "fv_kind_animal" : "fv_kind_building");
-  const lines = [kind + " · " + fillFv("fv_points", { n: c.pts }), cost, cardTextFv(id), fillFv("fv_partner", { c: cardNameFv(c.partner) })].filter(Boolean);
+  const lines = [kind + " · " + fillFv("fv_points", { n: c.pts }), cost, cardTextFv(id), fillFv("fv_habitat_line", { s: tFv("fv_habitat_" + c.habitat) })].filter(Boolean);
   const label = [cardNameFv(id)].concat(lines).concat(ok ? [] : [tFv("fv_aria_unaffordable")]).join(", ");
   const inner = '<span class="fv-card-name">' + escFv(cardNameFv(id)) + "</span>" + lines.map((l) => '<span class="fv-card-line">' + escFv(l) + "</span>").join("");
   if (!canTap) return '<li class="' + cls.join(" ") + '" aria-label="' + escFv(label) + '">' + inner + "</li>";
@@ -315,8 +320,7 @@ function cardHtmlFv(id, from, index, p, s, canTap) {
 function missingTextFv(p, id) {
   const c = FC().card(id);
   const miss = {};
-  const cost = Object.assign({}, c.cost);
-  if (FC().discountedAnimal(p, id)) cost.f = Math.max(0, (cost.f || 0) - 1);
+  const cost = FC().costFor(p, id);
   Object.keys(cost).forEach((k) => { if (p.res[k] < cost[k]) miss[k] = cost[k] - p.res[k]; });
   return resTextFv(miss);
 }
@@ -332,7 +336,7 @@ function renderFv() {
 
   // Season, workers, resources.
   document.getElementById("fv-me").innerHTML =
-    "<strong>" + escFv(playerNameFv(me)) + "</strong> · " + escFv(fillFv("fv_season_now", { s: tFv("fv_season_" + FC().season(p)) })) +
+    "<strong>" + escFv(playerNameFv(me)) + "</strong> · " + escFv(fillFv("fv_season_now", { s: tFv("fv_season_" + FC().season(s)) })) +
     " · " + escFv(fillFv("fv_workers", { n: p.workers - p.placed, m: p.workers })) +
     '<br><span class="fv-res">' + FC().RES.map((k) => escFv(fillFv("fv_res_amount", { n: p.res[k], r: tFv("fv_res_" + k) }))).join(" · ") + "</span>";
 
@@ -340,12 +344,14 @@ function renderFv() {
   const fields = document.getElementById("fv-fields");
   fields.innerHTML = FC().FIELDS.map((f, i) => {
     const who = s.fields[i].map(playerNameFv);
-    const free = f.shared || !s.fields[i].length;
+    const firstFree = !s.fields[i].length;
     const can = legal.some((a) => a.type === "place" && a.field === i);
     const cls = ["fv-field"];
-    if (!free) cls.push("fv-taken");
+    if (!firstFree) cls.push("fv-taken");
     if (can) cls.push("fv-target");
-    const text = fieldTextFv(f) + (f.shared ? " · " + tFv("fv_field_shared") : "");
+    // The extra is shown only while nobody has been there this season.
+    const first = firstFree ? firstTextFv(f) : "";
+    const text = fieldTextFv(f) + (first ? " · " + first : "");
     const whoText = who.length ? fillFv("fv_field_who", { p: who.join(tFv("fv_list_sep")) }) : "";
     const label = [tFv("fv_field_" + f.id), text, whoText].filter(Boolean).join(", ");
     return '<button type="button" class="' + cls.join(" ") + '" data-field="' + i + '"' + (can ? "" : " disabled") + ' aria-label="' + escFv(label) + '">' +
@@ -371,12 +377,13 @@ function renderFv() {
   const selId = sel ? (sel.from === "hand" ? p.hand[sel.index] : s.meadow[sel.index]) : null;
   const canBuild = !!selId && legal.some((a) => a.type === "build" && a.from === sel.from && a.index === sel.index);
   document.getElementById("fv-build").disabled = !canBuild;
-  document.getElementById("fv-season").disabled = !legal.some((a) => a.type === "season");
-  document.getElementById("fv-pass").disabled = !legal.some((a) => a.type === "pass");
+  document.getElementById("fv-end").disabled = !legal.some((a) => a.type === "end");
   document.getElementById("resign-button").classList.toggle("hidden", AppStateFv.gameOver);
   let info = "";
   if (selId && !canBuild && myTurn) {
-    info = p.village.length >= FC().MAX_VILLAGE ? tFv("fv_info_full") : fillFv("fv_info_missing", { c: cardNameFv(selId), s: missingTextFv(p, selId) });
+    if (p.village.length >= FC().MAX_VILLAGE) info = tFv("fv_info_full");
+    else if (s.phase === "place") info = tFv("fv_info_place_first");
+    else info = fillFv("fv_info_missing", { c: cardNameFv(selId), s: missingTextFv(p, selId) });
   } else if (selId) info = cardNameFv(selId) + ": " + (cardTextFv(selId) || fillFv("fv_points", { n: FC().card(selId).pts }));
   document.getElementById("fv-info").textContent = info;
 
@@ -390,7 +397,7 @@ function renderFv() {
     const sc = FC().score(s, i);
     // Second line in the name cell: cards in the village (saves a column on narrow screens).
     const count = tFv("fv_score_count") + ": " + q.village.length + " / " + FC().MAX_VILLAGE;
-    return "<tr><th scope=\"row\">" + escFv(playerNameFv(i)) + '<span class="fv-score-count">' + escFv(count) + "</span></th><td>" + sc.cards + "</td><td>" + sc.pairs + "</td><td>" + sc.bonus + "</td><td>" + sc.task + "</td><td><strong>" + sc.total + "</strong></td></tr>";
+    return "<tr><th scope=\"row\">" + escFv(playerNameFv(i)) + '<span class="fv-score-count">' + escFv(count) + "</span></th><td>" + sc.cards + "</td><td>" + sc.ranges + "</td><td>" + sc.bonus + "</td><td>" + sc.task + "</td><td><strong>" + sc.total + "</strong></td></tr>";
   }).join("");
   document.getElementById("fv-solo").textContent = s.players.length === 1 ? fillFv("fv_solo_target", { n: FC().SOLO_TARGET }) : "";
 
@@ -399,10 +406,10 @@ function renderFv() {
 
 function logLineFv(s, e) {
   switch (e.k) {
-    case "place": return fillFv("fv_log_place", { p: playerNameFv(e.p), x: tFv("fv_field_" + FC().FIELDS[e.field].id) });
+    case "place": return fillFv(e.first ? "fv_log_place_first" : "fv_log_place", { p: playerNameFv(e.p), x: tFv("fv_field_" + FC().FIELDS[e.field].id) }) +
+      (e.produced ? " " + tFv("fv_log_produced") : "");
     case "build": return fillFv(e.discounted ? "fv_log_build_discount" : "fv_log_build", { p: playerNameFv(e.p), c: cardNameFv(e.c) });
     case "season": return fillFv("fv_log_season", { p: playerNameFv(e.p), s: tFv("fv_season_" + e.season) });
-    case "pass": return fillFv("fv_log_pass", { p: playerNameFv(e.p) });
     case "end": return tFv("fv_log_end");
     default: return "";
   }

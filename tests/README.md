@@ -557,14 +557,26 @@ all parts back into one log in list order. The last line is exactly
   price, the Messenger, the thorn hedge, the wolf in the forest, a
   twist). About two minutes.
 - `node tests/forestvillage-core.js` - no server or browser needed.
-  "Forest Village": 50 different cards (25 buildings, 25 animals, every
-  animal with its building), all names in 12 languages; 500 computer
-  games for each number of players (1 to 4) - every game ends, every move
-  is legal, resources never below 0, at most 15 cards per village and 8
-  in hand, the first player wins within +/- 8 points of the fair share -,
-  Hard beats Easy in at least 70 % of 400 games, and single rules (free
-  animal next to its building, taken and shared fields, spring, full
-  village). About a minute.
+  "Forest Village" (rules 3): 50 different cards (25 buildings, 25
+  animals) in five habitats with 5 of each kind, all names in 12
+  languages; 500 computer games for each number of players (1 to 4),
+  levels mixed - every game ends, every move is legal, resources never
+  below 0, at most 12 cards per village and 6 squirrels, wins rise with
+  the level (printed per level, with points, cards and turns) -; 500
+  games per number of players (2 to 4) with Hard on every seat, each seat
+  within 5 points of its fair share; Hard beats Easy in at least 75 %,
+  Hard beats Medium and Medium beats Easy in more than 50 % of 400
+  two-player games; single rules (first squirrel extra, build phase,
+  habitat discount, home ranges, production after every second squirrel,
+  shared seasons and starter, more squirrels with a bigger village, hands
+  filled up to 4, full village, old saves not current). `GAMES=100` for a
+  short run. About a minute and a half.
+- `node tests/forestvillage-ui.js` - needs the server (`BASE_URL` or
+  `--base`). German page at 360 x 640: send a squirrel, the extra of the
+  first squirrel, build or end the turn, the computer moves, a whole game
+  to its result, save and reload, old saves (rules 2 and the first key)
+  dropped silently, buttons and fields at least 44 px, no horizontal
+  scrolling on the game and rules page, no console errors.
 - `node tests/adventurebook-core.js` - no server or browser needed.
   "Adventure Book": at least 60 room texts, 20 enemies and 30 items, all
   in 12 languages; creating a hero (6 points, at most 4 each); 1000

@@ -85,7 +85,8 @@
 3 matches-core.js
 135 cardduel-core.js
 75 villains-core.js
-8 forestvillage-core.js
+36 forestvillage-core.js
+12 forestvillage-ui.js
 6 adventurebook-core.js
 1 new-games-order.js
 8 kids-games.js
