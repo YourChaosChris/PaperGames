@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v268",
+    date: "2026-10-27",
+    key: "release_v268",
+    text: "Zoo Toss has new rules of its own. A game saved under the old rules starts anew."
+  },
+  {
     version: "v267",
     date: "2026-10-26",
     key: "release_v267",
