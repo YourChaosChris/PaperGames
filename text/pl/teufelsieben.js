@@ -13,6 +13,8 @@ Object.assign(STRINGS.pl, {
     ts_rules_bust: "Powtórzona liczba oznacza porażkę: zero punktów w tej rundzie. Odwaga raz ratuje; odrzuć powtórzoną liczbę i Odwagę. Każda użyta Odwaga kosztuje 5 punktów na koniec rundy.",
     ts_term_run: "Ciągi",
     ts_rules_run: "Najdłuższy ciąg co najmniej 4 liczb daje 5 × (długość − 2): cztery z rzędu to 10, pięć to 15. Każdy Most uzupełnia jedną brakującą liczbę.",
+    ts_term_extreme: "Dziki ciąg",
+    ts_rules_extreme: "Przed grą możesz wybrać karty „Dziki ciąg”: dochodzi 18 kart, razem 78 – liczby 11 (3 karty), 12 (3), 13 (2), 14 (2) i 15 (1), Gwiazda (2 karty, +7 punktów), Balast (2, −7 punktów), Ogniwo (2, premia za ciąg liczy się podwójnie, przy dwóch Ogniwach potrójnie) i Burza (1, wszyscy, którzy w tej rundzie jeszcze mają turę, zaczynają ją z jedną odkrytą kartą). Ciągi sięgają do 15. Gra toczy się do 250 lub 500 punktów.",
     ts_term_special: "Karty specjalne",
     ts_rules_special: "Odwaga raz ratuje i kosztuje 5 punktów po użyciu. Skreślenie usuwa ostatnią liczbę. Przekazanie sprawia, że następny gracz zaczyna od odkrytej karty. Most uzupełnia lukę. Kolekcjoner daje 1 punkt za liczbę. Podgląd pokazuje następną kartę.",
     ts_term_points: "Punkty i koniec",

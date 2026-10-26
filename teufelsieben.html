@@ -78,11 +78,20 @@
     <select id="ts-computers"><option value="0">0</option><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
   </div>
   <div class="field-row">
+    <label for="ts-mode" data-i18n="ts_mode_label">Cards:</label>
+    <select id="ts-mode">
+        <option value="normal" selected data-i18n="ts_mode_normal">Normal</option>
+        <option value="extreme" data-i18n="ts_mode_extreme">Extreme</option>
+      </select>
+  </div>
+  <div class="field-row">
     <label for="ts-target" data-i18n="ts_target_label">Play to:</label>
     <select id="ts-target">
         <option value="60" data-i18n="ts_target_60">60 points</option>
         <option value="90" selected data-i18n="ts_target_90">90 points</option>
         <option value="120" data-i18n="ts_target_120">120 points</option>
+        <option value="250" data-i18n="ts_target_250" hidden disabled>250 points</option>
+        <option value="500" data-i18n="ts_target_500" hidden disabled>500 points</option>
       </select>
   </div>
 </section>
@@ -99,7 +108,7 @@
     <p class="goal-line status-text" data-i18n="ts_goal_line">Reach the target; the most points win after that round. A repeated number makes you bust.</p>
   </div>
   <div id="board-placeholder" class="board-placeholder">
-    <span class="board-placeholder-icon board-placeholder-icon-svg" aria-hidden="true"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="8" y="3" width="24" height="34" rx="3" fill="#fff" stroke="#141413" stroke-width="2.6"/><text x="20" y="27" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="17" fill="#141413">7</text><path d="M14 9V14M20 8V14M26 9V14M14 14H26" fill="none" stroke="#141413" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+    <span class="board-placeholder-icon board-placeholder-icon-svg" aria-hidden="true"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="4" width="16" height="23" rx="2.5" fill="#fff" stroke="#141413" stroke-width="2.4"/><text x="11" y="21" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="13" fill="#141413">3</text><rect x="21" y="4" width="16" height="23" rx="2.5" fill="#fff" stroke="#141413" stroke-width="2.4"/><text x="29" y="21" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="13" fill="#141413">4</text><rect x="9" y="30" width="13" height="7" rx="3.5" fill="none" stroke="#141413" stroke-width="2.2"/><rect x="18" y="30" width="13" height="7" rx="3.5" fill="none" stroke="#141413" stroke-width="2.2"/></svg></span>
     <div class="board-placeholder-text">
       <span class="board-placeholder-title" data-i18n="game_teufelsieben">Lucky Chain</span>
       <span class="board-placeholder-subtitle">PaperGames</span>

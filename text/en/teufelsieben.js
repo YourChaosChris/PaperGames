@@ -13,6 +13,8 @@ Object.assign(STRINGS.en, {
     ts_rules_bust: "A number you already have makes you bust: you score zero this round. Courage saves you once; discard the repeated number and Courage. Each used Courage costs 5 points at round end.",
     ts_term_run: "Runs",
     ts_rules_run: "The longest run of consecutive numbers of length 4 or more scores 5 × (length − 2): four in a row score 10, five score 15. Each Bridge fills one missing number.",
+    ts_term_extreme: "Wild Chain",
+    ts_rules_extreme: "Before the game you can choose the cards \"Wild Chain\": 18 cards are added, 78 in all - the numbers 11 (3 cards), 12 (3), 13 (2), 14 (2) and 15 (1), Lucky star (2 cards, +7 points), Weight (2, −7 points), Link (2, the bonus for a row counts double, with two Links three times) and Storm (1, everyone who still has a turn in this round starts it with one card turned up). Rows can reach 15. You play to 250 or 500 points.",
     ts_term_special: "Special cards",
     ts_rules_special: "Courage saves you once from busting and costs 5 points when used. Strike removes your last number. Pass makes the next player start their turn with one card revealed. Bridge fills one gap in a run. Collector scores 1 point per number card. Peek shows the next card in the deck.",
     ts_term_points: "Points and the end",

@@ -13,6 +13,8 @@ Object.assign(STRINGS.it, {
     ts_rules_bust: "Un numero già presente ti fa scoppiare: zero punti nel round. Coraggio ti salva una volta; scarta il numero ripetuto e Coraggio. Ogni Coraggio usato costa 5 punti a fine round.",
     ts_term_run: "Sequenze",
     ts_rules_run: "La sequenza più lunga di almeno 4 numeri vale 5 × (lunghezza − 2): quattro in fila valgono 10, cinque 15. Ogni Ponte copre un numero mancante.",
+    ts_term_extreme: "Catena selvaggia",
+    ts_rules_extreme: "Prima della partita puoi scegliere le carte «Catena selvaggia»: si aggiungono 18 carte, 78 in tutto – i numeri 11 (3 carte), 12 (3), 13 (2), 14 (2) e 15 (1), Stella (2 carte, +7 punti), Zavorra (2, −7 punti), Anello (2, il bonus per i numeri di fila vale doppio, con due Anelli triplo) e Tempesta (1, chi in questo round deve ancora giocare inizia con una carta scoperta). Le file arrivano fino a 15. Si gioca fino a 250 o 500 punti.",
     ts_term_special: "Carte speciali",
     ts_rules_special: "Coraggio salva una volta e costa 5 punti quando usato. Rimuovi toglie l’ultimo numero. Passa fa iniziare il giocatore successivo con una carta scoperta. Ponte copre un vuoto. Collezionista dà 1 punto per numero. Sbircia mostra la carta successiva.",
     ts_term_points: "Punti e fine",
