@@ -1,26 +1,28 @@
 // cake-core.js test
-// "Who Took the Cake?": generates puzzles on every level from fixed seeds
-// and checks that each one
-//   - has exactly one solution and is solvable by deduction alone at its
-//     level (no trying out),
-//   - can be played to the end with the hint button: a wrong thing or a
-//     wrong X is pointed out first, then each hint sets an animal (never
-//     the cake), and once all animals stand the last hint only says that
-//     one row and one column are free - and that cell is the cake's,
-//   - has no "next to" clue that only holds through furniture behind a
-//     wall (in another room), exactly one animal in the cake's room, and
-//     no animal on a table or on furniture that fills its cell (plant,
-//     cupboard, shelf, crate, standard lamp, bathtub).
-// A fixed board checks "next to" across a wall directly.
-// Clue counts: Easy has exactly 2 clues more than needed, Medium 1, Hard
-// none (p.needed); the extra clues are positive ones ("is in", "sits on",
-// ...) wherever such a clue is left; every animal keeps a clue. Average and
-// range are printed. For the first 200 puzzles per level every hint step
-// carries a reason, and the reason is checked here on its own: "free",
-// "clue" and "row"/"col" are recomputed from the board, "lines", "rooms"
-// and "groups" by the deduction at that depth. Every reason has a text
-// with {A} (and {N}, {M} for clues) in all 12 languages.
+// "Who Took the Cake?" (rules 2, task 146): generates 500 puzzles per
+// level from fixed seeds and checks each one against the rules, written
+// out here on their own (not taken from the core), so a change there is
+// caught:
+//   1. N-1 rooms, exactly one animal in every room;
+//   2. the cake never on an animal's square;
+//   3. no two animals next to each other, not even diagonally;
+//   4. exactly one animal next to the cake (side or corner) - the culprit.
+// Every clue is true for the stored solution (recomputed here), the puzzle
+// has exactly one solution, is solvable by deduction alone at its level,
+// and has exactly cfg.extra clues more than needed (Easy 2, Medium 1, Hard
+// none); every animal is named by a clue. The hint button plays every
+// puzzle to the end: a wrong thing or a wrong X is pointed out first, then
+// each hint sets an animal (never the cake) with a reason that is checked
+// on its own for the first 200 puzzles per level ("free", "clue" and
+// "room" recomputed from the board, "rules", "pairs", "try" by the
+// deduction at that depth), and once all animals stand, "last".
+// Measured and printed per level: unique and deducible count, how many
+// need deduction level 2 or 3, clues (average and range), clues needed,
+// time to generate (average and slowest).
+// Also: a fixed board for each rule, old saves (rules 1, with furniture)
+// are not current, every text in all 12 languages, every theme.
 const path = require("path");
+const fs = require("fs");
 const CakeCore = require(path.join(__dirname, "..", "cake-core.js"));
 
 function rng(seed) {
@@ -29,106 +31,136 @@ function rng(seed) {
 }
 
 const PER_LEVEL = 500;
-// Furniture nobody stands on, written out here on its own (not taken from
-// the core), so a change there is caught.
-const BLOCK = ["table", "cupboard", "plant", "shelf", "box", "lamp", "bathtub"];
 const HINT_PLAY = 200;
-const fs = require("fs");
-const POSITIVE = ["in", "on", "next", "same", "window", "edge"];
-const clueStats = {};
-const reasonStats = {};
+const fails = [];
+let total = 0;
+
+// The rules, on their own.
+const touch = (n, i, j) => i !== j && Math.abs(Math.floor(i / n) - Math.floor(j / n)) <= 1 && Math.abs((i % n) - (j % n)) <= 1;
+function ruleProblem(p, cells) {
+  const n = p.n, cake = cells[n - 1], animals = cells.slice(0, n - 1);
+  const roomCount = new Set(p.rooms).size;
+  if (roomCount !== n - 1) return "board has " + roomCount + " rooms";
+  if (new Set(animals.map((i) => p.rooms[i])).size !== n - 1) return "not one animal in every room";
+  if (animals.indexOf(cake) !== -1) return "cake on an animal";
+  for (let a = 0; a < animals.length; a++) for (let b = a + 1; b < animals.length; b++) if (animals[a] === animals[b] || touch(n, animals[a], animals[b])) return "two animals next to each other";
+  if (animals.filter((i) => touch(n, i, cake)).length !== 1) return "not exactly one animal next to the cake";
+  return null;
+}
+function clueTrue(p, cl, cells) {
+  const n = p.n, at = cells[cl.a], size = (i) => p.rooms.filter((r) => r === p.rooms[i]).length;
+  const row = (i) => Math.floor(i / n), col = (i) => i % n;
+  switch (cl.t) {
+    case "size": return size(at) === cl.size;
+    case "higher": return row(at) < row(cells[cl.b]);
+    case "left": return col(at) < col(cells[cl.b]);
+    case "border": {
+      const x = p.rooms[at], y = p.rooms[cells[cl.b]];
+      if (x === y) return false;
+      for (let i = 0; i < n * n; i++) {
+        if (p.rooms[i] !== x) continue;
+        const r = row(i), c = col(i);
+        for (const [yy, xx] of [[r - 1, c], [r + 1, c], [r, c - 1], [r, c + 1]]) if (yy >= 0 && yy < n && xx >= 0 && xx < n && p.rooms[yy * n + xx] === y) return true;
+      }
+      return false;
+    }
+    case "steps": return cl.d >= 2 && Math.abs(row(at) - row(cells[n - 1])) + Math.abs(col(at) - col(cells[n - 1])) === cl.d;
+    default: return false;
+  }
+}
+const namesThing = (p, cl, k) => cl.a === k || cl.b === k || (cl.t === "steps" && k === p.n - 1);
+
+// A hint reason, recomputed from the board as it is.
 function checkReason(p, placed, h) {
   const n = p.n, k = h.thing, target = h.cell, r = h.reason;
   if (!r || !r.kind) return "no reason";
-  const takenR = new Set(), takenC = new Set();
-  placed.forEach((at, t) => { if (at >= 0 && t !== k) { takenR.add(Math.floor(at / n)); takenC.add(at % n); } });
-  const standable = (t, i) => (t === n - 1 ? p.furniture[i] === "table" : BLOCK.indexOf(p.furniture[i]) === -1);
-  const cells = (t, clueIdx) => {
+  const open = (t, clueIdx) => {
     const out = [];
-    for (let i = 0; i < n * n; i++) if (!takenR.has(Math.floor(i / n)) && !takenC.has(i % n) && standable(t, i) && clueIdx.every((ci) => CakeCore.clueAllows(p, p.clues[ci], i))) out.push(i);
+    for (let i = 0; i < n * n; i++) {
+      let ok = true;
+      placed.forEach((at, o) => {
+        if (o === t || at < 0) return;
+        if (at === i || (o < n - 1 && (p.rooms[at] === p.rooms[i] || touch(n, at, i)))) ok = false;
+      });
+      if (!ok) continue;
+      const cells = placed.slice(); cells[t] = i;
+      if (clueIdx.every((ci) => clueTrue(p, p.clues[ci], cells))) out.push(i);
+    }
     return out;
   };
   const single = (cs) => cs.length === 1 && cs[0] === target;
-  if (r.kind === "free") return single(cells(k, [])) ? null : "free does not hold";
+  const placedEnds = (ci) => { const cl = p.clues[ci]; return cl.t === "size" || [cl.a, cl.b, cl.t === "steps" ? n - 1 : undefined].every((x) => x === undefined || x === k || placed[x] >= 0); };
+  if (r.kind === "free") return single(open(k, [])) ? null : "free does not hold";
   if (r.kind === "clue") {
-    if (!r.clues.length || r.clues.some((ci) => p.clues[ci].a !== k)) return "clue not about this animal";
-    return single(cells(k, r.clues)) ? null : "clue reason does not hold";
+    if (!r.clues.length || r.clues.some((ci) => !namesThing(p, p.clues[ci], k) || !placedEnds(ci))) return "clue not about this animal or not checkable";
+    return single(open(k, r.clues)) ? null : "clue reason does not hold";
   }
-  if (r.kind === "row" || r.kind === "col") {
-    const f = r.kind === "row" ? (i) => Math.floor(i / n) : (i) => i % n;
-    const own = (t) => p.clues.map((cl, ci) => (cl.a === t && cl.t !== "same" ? ci : -1)).filter((ci) => ci >= 0);
-    for (let t = 0; t < n; t++) {
+  if (r.kind === "room") {
+    const room = p.rooms[target];
+    const usable = (t) => p.clues.map((cl, ci) => ci).filter((ci) => namesThing(p, p.clues[ci], t) && placedEnds(ci));
+    for (let t = 0; t < n - 1; t++) {
       if (t === k || placed[t] >= 0) continue;
-      if (cells(t, own(t)).some((i) => f(i) === f(target))) return r.kind + ": something else fits";
+      const own = p.clues.map((cl, ci) => ci).filter((ci) => namesThing(p, p.clues[ci], t) && (p.clues[ci].t === "size" || [p.clues[ci].a, p.clues[ci].b, p.clues[ci].t === "steps" ? n - 1 : undefined].every((x) => x === undefined || x === t || placed[x] >= 0)));
+      if (open(t, own).some((i) => p.rooms[i] === room)) return "room: another animal fits";
     }
-    const mine = cells(k, own(k)).filter((i) => f(i) === f(target));
-    return single(mine) ? null : r.kind + ": not the only square";
+    return single(open(k, usable(k)).filter((i) => p.rooms[i] === room)) ? null : "room: not the only square";
   }
-  const lv = { lines: 1, rooms: 2, groups: 3 }[r.kind];
+  const lv = { rules: 1, pairs: 2, try: 3 }[r.kind];
   if (lv) {
     const d = CakeCore.deduce(p, lv, { placed, crosses: [] });
     return d.fixedAt[k] !== -1 ? null : r.kind + " does not fix it";
   }
   return "unknown reason " + r.kind;
 }
-const fails = [];
-let total = 0;
+
+const stats = {};
+const reasonStats = {};
+const seenRooms = new Set();
+const seenTypes = new Set();
 for (const level of ["easy", "medium", "hard"]) {
+  const cfg = CakeCore.LEVELS[level];
+  const st = stats[level] = { made: 0, unique: 0, deducible: 0, needs2: 0, needs3: 0, sum: 0, min: 99, max: 0, needSum: 0, ms: 0, maxMs: 0 };
   for (let seed = 1; seed <= PER_LEVEL; seed++) {
     total++;
     const tag = level + " #" + seed;
+    const t0 = Date.now();
     const p = CakeCore.generatePuzzle(level, rng(seed * 7 + level.length * 1000));
+    const ms = Date.now() - t0;
+    st.ms += ms; st.maxMs = Math.max(st.maxMs, ms);
     if (!p) { fails.push(tag + ": no puzzle"); continue; }
+    st.made++;
     const n = p.n;
-    const wall = p.clues.find((cl) => {
-      if (cl.t !== "next") return false;
-      const i = p.solution[cl.a], r = Math.floor(i / n), c = i % n;
-      const near = [[r - 1, c], [r + 1, c], [r, c - 1], [r, c + 1]]
-        .filter(([y, x]) => y >= 0 && y < n && x >= 0 && x < n).map(([y, x]) => y * n + x);
-      return !near.some((j) => p.furniture[j] === cl.f && p.rooms[j] === p.rooms[i]);
-    });
-    if (wall) { fails.push(tag + ": \"next to\" only through another room"); continue; }
-    const cakeRoom = p.rooms[p.solution[n - 1]];
-    if (p.solution.slice(0, -1).filter((i) => p.rooms[i] === cakeRoom).length !== 1) { fails.push(tag + ": not one animal in the cake's room"); continue; }
-    if (p.solution.slice(0, -1).some((i) => BLOCK.indexOf(p.furniture[i]) !== -1)) { fails.push(tag + ": animal on a table or on furniture that fills its cell"); continue; }
-    if (p.furniture[p.solution[n - 1]] !== "table") { fails.push(tag + ": cake not on a table"); continue; }
+    if (n !== cfg.n || p.rules !== 2) { fails.push(tag + ": size " + n + ", rules " + p.rules); continue; }
+    const bad = ruleProblem(p, p.solution);
+    if (bad) { fails.push(tag + ": " + bad); continue; }
+    if (p.clues.some((cl) => !clueTrue(p, cl, p.solution))) { fails.push(tag + ": a clue is false"); continue; }
     if (CakeCore.countSolutions(p, 2) !== 1) { fails.push(tag + ": not exactly one solution"); continue; }
-    const d = CakeCore.deduce(p, CakeCore.LEVELS[level].level);
+    st.unique++;
+    const d = CakeCore.deduce(p, cfg.level);
     if (!d.solved || d.cells.some((c, k) => c !== p.solution[k])) { fails.push(tag + ": not solvable by deduction"); continue; }
-    const extra = CakeCore.LEVELS[level].extra;
-    if (typeof p.needed !== "number" || p.clues.length !== p.needed + extra) { fails.push(tag + ": " + p.clues.length + " clues, needed " + p.needed + " + " + extra); continue; }
-    for (let a = 0; a < n - 1; a++) if (!p.clues.some((cl) => cl.a === a || cl.b === a)) fails.push(tag + ": an animal without a clue");
-    const st = clueStats[level] || (clueStats[level] = { sum: 0, min: 99, max: 0, needSum: 0 });
+    st.deducible++;
+    if (!CakeCore.deduce(p, 1).solved) st.needs2++;
+    if (!CakeCore.deduce(p, 2).solved) st.needs3++;
+    if (!CakeCore.isCurrent(p)) fails.push(tag + ": new puzzle not current");
+    if (typeof p.needed !== "number" || p.clues.length !== p.needed + cfg.extra) { fails.push(tag + ": " + p.clues.length + " clues, needed " + p.needed + " + " + cfg.extra); continue; }
+    for (let a = 0; a < n - 1; a++) if (!p.clues.some((cl) => namesThing(p, cl, a))) fails.push(tag + ": an animal without a clue");
     st.sum += p.clues.length; st.min = Math.min(st.min, p.clues.length); st.max = Math.max(st.max, p.clues.length); st.needSum += p.needed;
-    // The extra clues are chosen positive first: from the full pool on an
-    // empty clue list, every pick is positive while positive ones are left,
-    // and no clue is picked twice.
-    if (extra) {
-      const pool = CakeCore.candidateClues(p, p.solution);
-      if (!pool.length) fails.push(tag + ": no clue pool");
-      const q = Object.assign({}, p, { clues: [] });
-      CakeCore.addExtraClues(q, pool, 4);
-      const posLeft = pool.filter((cl) => POSITIVE.indexOf(cl.t) !== -1).length;
-      q.clues.forEach((cl, i) => {
-        if (i < posLeft && POSITIVE.indexOf(cl.t) === -1) fails.push(tag + ": extra clue \"" + cl.t + "\" while positive ones were left");
-        if (q.clues.indexOf(cl) !== i) fails.push(tag + ": extra clue picked twice");
-      });
-    }
+    p.roomNames.forEach((r) => seenRooms.add(r));
+    p.clues.forEach((cl) => seenTypes.add(cl.t));
 
     const placed = new Array(n).fill(-1);
     placed[0] = p.solution[0] === 0 ? 1 : 0;
     if (CakeCore.findHint(p, placed, []).kind !== "wrong") { fails.push(tag + ": wrong thing not reported"); continue; }
     placed[0] = -1;
     if (CakeCore.findHint(p, placed, [p.solution[1]]).kind !== "wrongx") { fails.push(tag + ": wrong X not reported"); continue; }
-
     let h, steps = 0, ok = true;
     for (;;) {
       h = CakeCore.findHint(p, placed, []);
       if (h.kind !== "step") break;
       if (h.thing === n - 1 || h.cell !== p.solution[h.thing]) { ok = false; break; }
       if (seed <= HINT_PLAY) {
-        const bad = checkReason(p, placed, h);
-        if (bad) { fails.push(tag + ": reason " + bad); ok = false; break; }
+        const why = checkReason(p, placed, h);
+        if (why) { fails.push(tag + ": reason " + why); ok = false; break; }
         const key = level + "/" + h.reason.kind;
         reasonStats[key] = (reasonStats[key] || 0) + 1;
       }
@@ -136,39 +168,58 @@ for (const level of ["easy", "medium", "hard"]) {
       steps++;
     }
     if (!ok || h.kind !== "last" || steps !== n - 1) { fails.push(tag + ": hint sequence broken (" + h.kind + ", " + steps + " steps)"); continue; }
-    const rows = new Set(placed.slice(0, -1).map((i) => Math.floor(i / n)));
-    const cols = new Set(placed.slice(0, -1).map((i) => i % n));
-    let r = 0; while (rows.has(r)) r++;
-    let c = 0; while (cols.has(c)) c++;
-    if (r * n + c !== p.solution[n - 1]) { fails.push(tag + ": free row/column is not the cake's cell"); continue; }
+    // With all animals in place the cake follows from rule 4 and its clues.
+    const d2 = CakeCore.deduce(p, cfg.level, { placed, crosses: [] });
+    if (!d2.solved || d2.cells[n - 1] !== p.solution[n - 1]) fails.push(tag + ": cake not deducible once the animals stand");
     placed[n - 1] = p.solution[n - 1];
     if (CakeCore.findHint(p, placed, []).kind !== "done") fails.push(tag + ": not done with the cake in place");
+    const culprit = CakeCore.culprit(p);
+    if (culprit < 0 || !touch(n, p.solution[culprit], p.solution[n - 1])) fails.push(tag + ": culprit not next to the cake");
   }
 }
+CakeCore.ROOM_NAMES.forEach((r) => { if (!seenRooms.has(r)) fails.push("no " + r + " in " + 3 * PER_LEVEL + " puzzles"); });
+CakeCore.CLUE_TYPES.forEach((t) => { if (!seenTypes.has(t)) fails.push("no clue of type " + t + " in " + 3 * PER_LEVEL + " puzzles"); });
 
-// Fixed board, 4x4: rooms 0 (columns 0-1) and 1 (columns 2-3), a wall
-// between columns 1 and 2. The dog stands at row 0, column 1; a plant
-// stands right of it at row 0, column 2 - behind the wall.
+// Fixed board, 4x4: room 0 = columns 0-1 rows 0-1, room 1 = columns 2-3
+// rows 0-1, room 2 = rows 2-3.
 {
   total++;
-  const rooms = [0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1];
-  const furniture = new Array(16).fill(null);
-  furniture[2] = "plant";
-  furniture[8] = "table";
-  const p = { n: 4, rooms, roomNames: ["kitchen", "garden"], furniture, window: { row: 3, side: "left" },
-    clues: [{ t: "next", a: 0, f: "plant" }], solution: [1, 7, 14, 8] };
-  if (CakeCore.clueAllows(p, p.clues[0], 1)) fails.push("fixed board: plant behind the wall counts as next to");
-  if (CakeCore.isSolution(p, p.solution)) fails.push("fixed board: placement accepted with the plant behind the wall");
-  furniture[5] = "plant";
-  if (!CakeCore.clueAllows(p, p.clues[0], 1)) fails.push("fixed board: plant below in the same room does not count");
-  // No animal stands on a plant.
-  furniture[7] = "plant";
-  if (CakeCore.baseCandidates(p, 1).indexOf(7) !== -1) fails.push("fixed board: an animal may stand on a plant");
+  const rooms = [0, 0, 1, 1, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2];
+  const p = { n: 4, rules: 2, rooms, roomNames: ["kitchen", "garden", "hall"], clues: [], solution: [0, 3, 13, 9] };
+  const ok = (cells) => CakeCore.isSolution(p, cells);
+  if (!ok([0, 3, 13, 9])) fails.push("fixed board: a right placement is refused");
+  if (ok([0, 1, 13, 9])) fails.push("fixed board: two animals in one room accepted");
+  if (ok([5, 2, 15, 14])) fails.push("fixed board: animals touching diagonally accepted");
+  if (ok([5, 3, 9, 7])) fails.push("fixed board: animals touching across a wall accepted");
+  if (ok([0, 3, 13, 13])) fails.push("fixed board: cake on an animal accepted");
+  if (ok([0, 3, 13, 11])) fails.push("fixed board: cake with no animal next to it accepted");
+  if (ok([0, 3, 8, 4])) fails.push("fixed board: cake next to two animals accepted");
+  if (!ok([0, 3, 13, 4])) fails.push("fixed board: cake next to one animal in its room refused");
+  if (!ok([5, 3, 15, 8])) fails.push("fixed board: cake next to one animal in another room refused");
+  {
+    const q = Object.assign({}, p, { solution: [5, 3, 15, 8] });
+    if (CakeCore.culprit(q) !== 0) fails.push("fixed board: culprit across the wall not found");
+  }
+  p.clues = [{ t: "steps", a: 0, d: 3 }];
+  if (!ok([0, 3, 13, 9]) || ok([0, 3, 13, 4])) fails.push("fixed board: steps clue counted wrong");
+  p.clues = [{ t: "size", a: 3, size: 8 }];
+  if (!ok([0, 3, 13, 9]) || ok([0, 3, 13, 4])) fails.push("fixed board: size clue about the cake counted wrong");
+  p.clues = [{ t: "border", a: 0, b: 2 }, { t: "higher", a: 1, b: 2 }, { t: "left", a: 0, b: 1 }];
+  if (!ok([0, 3, 13, 9])) fails.push("fixed board: border/higher/left refused");
+  p.clues = [{ t: "border", a: 0, b: 1 }, { t: "higher", a: 2, b: 1 }];
+  if (ok([0, 3, 13, 9])) fails.push("fixed board: false higher clue accepted");
+  // Old saves (rules 1: one per row and column, furniture, window) are not
+  // current and do not throw.
+  const old = { n: 4, rooms, roomNames: ["kitchen", "garden", "hall"], furniture: new Array(16).fill(null), window: { row: 0, side: "left" },
+    clues: [{ t: "in", a: 0, room: 0 }, { t: "next", a: 1, f: "plant" }], solution: [0, 7, 9, 14] };
+  if (CakeCore.isCurrent(old)) fails.push("old save counted as current");
+  if (CakeCore.isCurrent(null) || CakeCore.isCurrent({})) fails.push("empty save counted as current");
 }
 
-// Every reason has its text in every language, with the right placeholders.
+// Every reason has its text in every language, with the right placeholders,
+// and every rule of "Always true".
 {
-  const kinds = { free: ["{A}"], clue: ["{A}", "{N}"], clue2: ["{A}", "{N}", "{M}"], row: ["{A}"], col: ["{A}"], lines: ["{A}"], rooms: ["{A}"], groups: ["{A}"], general: ["{A}"] };
+  const kinds = { free: ["{A}"], clue: ["{A}", "{N}"], clue2: ["{A}", "{N}", "{M}"], room: ["{A}"], rules: ["{A}"], pairs: ["{A}"], try: ["{A}"], general: ["{A}"] };
   const filesByLang = { en: "i18n.js" };
   ["de", "fr", "es", "it", "nl", "pl", "uk", "ru", "ja", "zh", "ar"].forEach((l) => { filesByLang[l] = "lang/" + l + ".js"; });
   for (const [lang, file] of Object.entries(filesByLang)) {
@@ -181,133 +232,82 @@ for (const level of ["easy", "medium", "hard"]) {
       if (/[{}]|cake_/.test(filled)) fails.push(lang + ": reason " + kind + " leaves a raw key or placeholder");
     }
     for (let i = 1; i <= 4; i++) if (!new RegExp("\\n\\s*cake_always_" + i + ": \"").test(src)) fails.push(lang + ": no rule " + i + " for Always true");
+    // Words of the old rules must be gone from this game's texts.
+    ["why_row", "why_col", "why_lines", "why_groups", "why_rooms", "clue_in", "clue_notin", "clue_on", "clue_next", "clue_window", "clue_top", "clue_bottom", "clue_left:", "clue_right", "clue_same", "furn_", "window_name", "_is:", "_isnot", "_sits", "room_\\w+_in:"].forEach((w) => {
+      if (new RegExp("\\n\\s*cake_\\w*" + w).test(src)) fails.push(lang + ": old key with " + w + " left");
+    });
   }
 }
 
-// The themes: the same puzzles with other suspects and things - cats and
-// a fish, bears and cookies, dogs and a ball, magpies and a key, a family
-// and the cake, children and a treasure. Every clue, thing name, win line
-// and the texts that name the thing read without a raw key in every
-// language, and no theme text mentions the cake unless the theme's thing
-// is the cake; themes with people have their own "nobody stands on ..."
-// text. Every suspect of a theme has a drawing, and so do the thing and
-// the thing on the table; suspects of one theme are drawn differently.
+// The themes: every clue, thing name, win line and the texts that name the
+// thing read without a raw key in every language, and no theme text
+// mentions the cake unless the theme's thing is the cake; themes with
+// people have their own rule 3. Every suspect and every thing has a
+// drawing, and suspects of one theme are drawn differently.
 let catTexts = 0;
-const THEMES = CakeCore.MOTIFS.filter((m) => m !== "animals");
 {
   const { loadI18n } = require("./load-i18n.js");
   const CakeIcons = require(path.join(__dirname, "..", "cake-icons.js"));
   const STRINGS = loadI18n({ texts: false }).STRINGS;
   const cakeWord = { en: /cake/i, de: /Kuchen/, fr: /gâteau/i, es: /pastel/i, it: /torta/i, nl: /taart/i, pl: /ciast(?!ecz)/i, uk: /торт/i, ru: /торт/i, ja: /ケーキ/, zh: /蛋糕/, ar: /كعك/ };
-  THEMES.forEach((motif) => {
+  const animalWord = { de: /Tier/, en: /animal/i };
+  CakeCore.MOTIFS.forEach((motif) => {
     const th = CakeCore.THEMES[motif];
     const drawn = new Set();
-    th.who.concat([th.thing, "table" + th.thing]).forEach((id) => {
+    th.who.concat([th.thing]).forEach((id) => {
       if (!CakeIcons.icons[id]) fails.push(motif + ": no drawing for " + id);
       else drawn.add(CakeIcons.icons[id]);
     });
-    if (drawn.size !== th.who.length + 2) fails.push(motif + ": two drawings are the same");
+    if (drawn.size !== th.who.length + 1) fails.push(motif + ": two drawings are the same");
   });
+  const samples = [];
+  for (const level of Object.keys(CakeCore.LEVELS)) for (let seed = 1; seed <= 20; seed++) {
+    const p = CakeCore.generatePuzzle(level, rng(seed * 977 + 13));
+    if (p) samples.push(p);
+  }
   for (const lang of Object.keys(STRINGS)) {
     const t = (k) => (STRINGS[lang][k] !== undefined ? STRINGS[lang][k] : STRINGS.en[k] !== undefined ? STRINGS.en[k] : k);
-    THEMES.forEach((motif) => {
+    CakeCore.MOTIFS.forEach((motif) => {
+      const th = CakeCore.THEMES[motif];
       const check = (what, text) => {
         catTexts++;
         if (/[{}]|cake_|undefined/.test(text)) fails.push(lang + " " + motif + ": " + what + " \"" + text + "\"");
-        if (CakeCore.THEMES[motif].thing !== "cake" && cakeWord[lang] && cakeWord[lang].test(text)) fails.push(lang + " " + motif + ": " + what + " names the cake: \"" + text + "\"");
+        if (th.thing !== "cake" && cakeWord[lang] && cakeWord[lang].test(text)) fails.push(lang + " " + motif + ": " + what + " names the cake: \"" + text + "\"");
+        if (th.people && animalWord[lang] && animalWord[lang].test(text)) fails.push(lang + " " + motif + ": " + what + " says animal: \"" + text + "\"");
       };
       if (STRINGS[lang]["cake_motif_" + motif] === undefined) fails.push(lang + " lacks cake_motif_" + motif);
-      CakeCore.THEMES[motif].who.forEach((id) => ["name", "cap", "mid", "is", "isnot", "sits"].forEach((f) => {
+      th.who.forEach((id) => ["name", "cap", "mid"].forEach((f) => {
         if (STRINGS[lang]["cake_" + id + "_" + f] === undefined) fails.push(lang + " lacks cake_" + id + "_" + f);
       }));
-      for (const level of Object.keys(CakeCore.LEVELS)) {
-        for (let seed = 1; seed <= 20; seed++) {
-          const p = CakeCore.generatePuzzle(level, rng(seed * 977 + 13));
-          if (!p) continue;
-          p.motif = motif;
-          p.clues.forEach((cl) => check("clue", CakeCore.clueText(p, cl, t)));
-          for (let k = 0; k < p.n; k++) check("thing", CakeCore.thingName(p, k, t));
-          check("win", t("cake_win_" + CakeCore.animalId(p, CakeCore.culprit(p))));
-        }
-      }
-      ["cake_hint_last", "cake_always_1", "cake_always_2", "cake_always_4"].forEach((k) => {
+      samples.forEach((src) => {
+        const p = Object.assign({}, src, { motif });
+        p.clues.forEach((cl) => check("clue", CakeCore.clueText(p, cl, t)));
+        for (let k = 0; k < p.n; k++) check("thing", CakeCore.thingName(p, k, t));
+        check("win", t("cake_win_" + CakeCore.animalId(p, CakeCore.culprit(p))));
+      });
+      // Every clue type about the cake, in the theme's words.
+      ["cake_clue_cakesize", "cake_clue_steps", "cake_hint_last", "cake_always_1", "cake_always_2", "cake_always_4"].forEach((k) => {
         const key = CakeCore.themed({ motif }, k);
         if (STRINGS[lang][key] === undefined) fails.push(lang + " lacks " + key);
-        check(k, t(key));
+        check(k, CakeCore.fill(t(key), { A: "X", N: "3" }));
       });
       const k3 = CakeCore.always3Key({ motif });
       if (STRINGS[lang][k3] === undefined) fails.push(lang + " lacks " + k3);
       check("cake_always_3", t(k3));
-      if (CakeCore.THEMES[motif].people && k3 === "cake_always_3") fails.push(motif + ": people theme says animals never stand on a table");
     });
+    CakeCore.ROOM_NAMES.forEach((r) => { if (!STRINGS[lang]["cake_room_" + r + "_name"]) fails.push(lang + " lacks cake_room_" + r + "_name"); });
+    ["cake_clue_size", "cake_clue_higher", "cake_clue_leftof", "cake_clue_border"].forEach((k) => { if (!STRINGS[lang][k]) fails.push(lang + " lacks " + k); });
   }
 }
 
-// 500 cases per level and theme (every theme, 3 x 7 = 21 x 500): the
-// theme is set on the generated puzzle, which keeps exactly one solution
-// and stays solvable by deduction at its level; culprit and thing come
-// from the theme. Every piece of furniture other than the table stands
-// in a room it belongs to, every room name and every piece of furniture
-// turns up in each level's 500 (all themes alike), and every one of them
-// is named by a clue somewhere ("sits on a sofa", "is next to a shelf").
-const themeCases = {};
-const seenFurn = {}, seenRoom = {}, seenClueF = new Set();
-CakeCore.MOTIFS.forEach((motif, ti) => {
-  let ok = 0;
-  for (const level of Object.keys(CakeCore.LEVELS)) {
-    seenFurn[level] = seenFurn[level] || {};
-    seenRoom[level] = seenRoom[level] || {};
-    const seenF = new Set(), seenR = new Set();
-    for (let i = 0; i < 500; i++) {
-      const p = CakeCore.generatePuzzle(level, rng(70000 + ti * 10007 + level.length * 1000003 + i));
-      const tag = motif + " " + level + " #" + (i + 1);
-      if (!p) { fails.push(tag + ": no puzzle"); continue; }
-      p.motif = motif;
-      if (CakeCore.countSolutions(p, 2) !== 1) { fails.push(tag + ": not exactly one solution"); continue; }
-      if (!CakeCore.isSolution(p, p.solution)) { fails.push(tag + ": stored solution breaks a rule"); continue; }
-      const d = CakeCore.deduce(p, CakeCore.LEVELS[level].level);
-      if (!d || !d.solved || d.cells.some((c, k) => c !== p.solution[k])) { fails.push(tag + ": not solvable by deduction"); continue; }
-      if (CakeCore.thingId(p, p.n - 1) !== CakeCore.THEMES[motif].thing) fails.push(tag + ": wrong thing");
-      if (CakeCore.THEMES[motif].who.indexOf(CakeCore.animalId(p, CakeCore.culprit(p))) === -1) fails.push(tag + ": culprit not from the theme");
-      p.furniture.forEach((f, cell) => {
-        if (!f) return;
-        seenF.add(f);
-        if (f === "table") return;
-        const fits = CakeCore.ROOM_FURNITURE[p.roomNames[p.rooms[cell]]];
-        if (!fits || (fits.sit.indexOf(f) === -1 && fits.block.indexOf(f) === -1)) fails.push(tag + ": " + f + " in the " + p.roomNames[p.rooms[cell]]);
-      });
-      p.roomNames.forEach((r) => seenR.add(r));
-      p.clues.forEach((cl) => { if (cl.f) seenClueF.add(cl.f); });
-      ok++;
-    }
-    CakeCore.FURNITURE.forEach((f) => { if (!seenF.has(f)) fails.push(motif + " " + level + ": no " + f + " in 500 puzzles"); });
-    CakeCore.ROOM_NAMES.forEach((r) => { if (!seenR.has(r)) fails.push(motif + " " + level + ": no " + r + " in 500 puzzles"); });
-  }
-  themeCases[motif] = ok;
-});
-CakeCore.FURNITURE.filter((f) => f !== "table").forEach((f) => { if (!seenClueF.has(f)) fails.push("no clue names the " + f); });
-if (JSON.stringify(CakeCore.BLOCKING.slice().sort()) !== JSON.stringify(BLOCK.slice().sort())) fails.push("furniture nobody stands on: " + CakeCore.BLOCKING.join(","));
-{
-  // Every room and piece of furniture has its words in all languages.
-  const { loadI18n } = require("./load-i18n.js");
-  const STR = loadI18n({ texts: false }).STRINGS;
-  const CakeIcons = require(path.join(__dirname, "..", "cake-icons.js"));
-  for (const lang of Object.keys(STR)) {
-    CakeCore.ROOM_NAMES.forEach((r) => ["name", "in"].forEach((x) => { if (!STR[lang]["cake_room_" + r + "_" + x]) fails.push(lang + " lacks cake_room_" + r + "_" + x); }));
-    CakeCore.FURNITURE.forEach((f) => { if (!STR[lang]["cake_furn_" + f + "_name"]) fails.push(lang + " lacks cake_furn_" + f + "_name"); });
-    CakeCore.SITTING.forEach((f) => { if (!STR[lang]["cake_furn_" + f + "_on"]) fails.push(lang + " lacks cake_furn_" + f + "_on"); });
-    CakeCore.NEXT_TO.forEach((f) => { if (!STR[lang]["cake_furn_" + f + "_next"]) fails.push(lang + " lacks cake_furn_" + f + "_next"); });
-  }
-  CakeCore.FURNITURE.forEach((f) => { if (!CakeIcons.icons[f]) fails.push("no drawing for " + f); });
-}
-console.log("themes: " + CakeCore.MOTIFS.map((m) => m + " " + themeCases[m] + "/1500").join(", ") + " solvable with exactly one solution (500 per level)");
-console.log("furniture and rooms: all " + CakeCore.FURNITURE.length + " pieces and all " + CakeCore.ROOM_NAMES.length + " rooms in every level's 500 puzzles of every theme, each piece fits its room, each piece named by a clue");
-
-Object.keys(clueStats).forEach((lv) => {
-  const st = clueStats[lv];
-  console.log(lv + ": clues on average " + (st.sum / PER_LEVEL).toFixed(2) + " (" + st.min + "-" + st.max + "), needed on average " + (st.needSum / PER_LEVEL).toFixed(2));
+Object.keys(stats).forEach((lv) => {
+  const st = stats[lv];
+  console.log(lv + ": " + st.made + "/" + PER_LEVEL + " made, " + st.unique + " with exactly one solution, " + st.deducible + " solvable by deduction at level " + CakeCore.LEVELS[lv].level +
+    "; need level 2: " + st.needs2 + ", need level 3: " + st.needs3 +
+    "; clues on average " + (st.sum / st.made).toFixed(2) + " (" + st.min + "-" + st.max + "), needed " + (st.needSum / st.made).toFixed(2) +
+    "; generating " + (st.ms / PER_LEVEL).toFixed(1) + " ms on average, slowest " + st.maxMs + " ms");
 });
 console.log("hint reasons (first " + HINT_PLAY + " puzzles per level): " + JSON.stringify(reasonStats));
-fails.forEach((f) => console.log("FAIL " + f));
+fails.slice(0, 40).forEach((f) => console.log("FAIL " + f));
 console.log("\n=== CAKE CORE: " + total + " puzzles, " + catTexts + " theme texts checked, " + fails.length + " failures ===");
 process.exit(fails.length ? 1 : 0);

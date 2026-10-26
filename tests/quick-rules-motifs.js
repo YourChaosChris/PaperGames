@@ -19,6 +19,8 @@ const { BASE_URL } = require("./lib");
       ["family", "kuchen", "tier"],
       ["treasure", "schatz", "kuchen"]
     ];
+    // The settings sit behind the menu button.
+    if (!(await page.isVisible("#cake-motif"))) await page.click("#menu-toggle");
     for (const [motif, thing, forbidden] of cakeChecks) {
       await page.locator("#cake-motif").selectOption(motif);
       const text = (await page.locator("#quick-rules").innerText()).toLowerCase();
@@ -39,6 +41,7 @@ const { BASE_URL } = require("./lib");
     assert(homeText.includes("schatz") && !homeText.includes("kuchen") && !homeText.includes("tier"), homeText);
 
     await page.goto(BASE_URL + "differences.html?lang=de", { waitUntil: "networkidle" });
+    if (!(await page.isVisible("#df-mode"))) await page.click("#menu-toggle");
     await page.locator("#df-mode").selectOption("search");
     const searchRules = (await page.locator("#quick-rules").innerText()).toLowerCase();
     assert(!searchRules.includes("die beiden bilder unterscheiden sich"), searchRules);

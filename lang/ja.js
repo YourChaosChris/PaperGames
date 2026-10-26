@@ -185,9 +185,9 @@ STRINGS.ja = {
     quickrules_skyscrapers_1: "各マスに1からNまでの高さを入れ、各行と各列に各高さが1回ずつ現れ、周囲のヒントがすべて合うようにします。",
     quickrules_skyscrapers_2: "マスを選び、盤面の下にある数字パッドから高さを選びます。",
     quickrules_skyscrapers_3: "ヒントはその方向から見える建物の数で、高い建物はその奥にある低い建物をすべて完全に隠します。",
-    quickrules_cake_1: "各行・各列にちょうど1つずつになるように、動物とケーキを置きます。",
-    quickrules_cake_2: "ケーキはいつもテーブルの上、動物はテーブルや大きな家具の上には決していません。残りは盤の下の手がかりでわかります。「隣」は同じ部屋の中だけです。",
-    quickrules_cake_3: "ケーキと同じ部屋にいるただ1匹の動物が犯人です。盤の下のボタンを選んでから、マスをタップします。",
+    quickrules_cake_1: "動物とケーキを間取り図に置きましょう。各部屋に動物は1匹ずつ。動物どうしは斜めも含めて隣り合いません。",
+    quickrules_cake_2: "盤面の下の手がかりが答えを教えてくれます。部屋のマス数、どちらが上／左にいるか、壁を共有する部屋、ケーキまでの歩数です。",
+    quickrules_cake_3: "ケーキのすぐ隣にいる動物は1匹だけ。その動物がケーキを取りました。盤面の下のボタンを選び、マスをタップしましょう。",
     quickrules_konane_1: "自分の手番に合法的なジャンプがない側が即座に負けるので、相手を手詰まりにすることを目指します。",
     quickrules_konane_2: "手はすべてジャンプで、自分の石で隣の相手の石を飛び越え(斜めは不可)、その先の空きマスへ移って飛び越えた石を取り除きます。",
     quickrules_konane_3: "最初のジャンプの前に、黒が四隅か中央から自分の石を1つ取り除き、次に白がその空きマスのすぐ隣の自分の石を1つ取り除きます。",
@@ -1585,13 +1585,10 @@ STRINGS.ja = {
     cake_dog_mid: "犬",
 
 
-    cake_dog_is: "犬は",
 
 
-    cake_dog_isnot: "犬は",
 
 
-    cake_dog_sits: "犬は",
 
 
     cake_win_dog: "ケーキを取ったのは犬です。",
@@ -1606,13 +1603,10 @@ STRINGS.ja = {
     cake_cat_mid: "ネコ",
 
 
-    cake_cat_is: "ネコは",
 
 
-    cake_cat_isnot: "ネコは",
 
 
-    cake_cat_sits: "ネコは",
 
 
     cake_win_cat: "ケーキを取ったのはネコです。",
@@ -1627,13 +1621,10 @@ STRINGS.ja = {
     cake_rabbit_mid: "ウサギ",
 
 
-    cake_rabbit_is: "ウサギは",
 
 
-    cake_rabbit_isnot: "ウサギは",
 
 
-    cake_rabbit_sits: "ウサギは",
 
 
     cake_win_rabbit: "ケーキを取ったのはウサギです。",
@@ -1648,13 +1639,10 @@ STRINGS.ja = {
     cake_mouse_mid: "ネズミ",
 
 
-    cake_mouse_is: "ネズミは",
 
 
-    cake_mouse_isnot: "ネズミは",
 
 
-    cake_mouse_sits: "ネズミは",
 
 
     cake_win_mouse: "ケーキを取ったのはネズミです。",
@@ -1669,13 +1657,10 @@ STRINGS.ja = {
     cake_hedgehog_mid: "ハリネズミ",
 
 
-    cake_hedgehog_is: "ハリネズミは",
 
 
-    cake_hedgehog_isnot: "ハリネズミは",
 
 
-    cake_hedgehog_sits: "ハリネズミは",
 
 
     cake_win_hedgehog: "ケーキを取ったのはハリネズミです。",
@@ -1684,130 +1669,103 @@ STRINGS.ja = {
     cake_room_kitchen_name: "台所",
 
 
-    cake_room_kitchen_in: "台所",
 
 
     cake_room_living_name: "居間",
 
 
-    cake_room_living_in: "居間",
 
 
     cake_room_hall_name: "廊下",
 
 
-    cake_room_hall_in: "廊下",
 
 
     cake_room_bath_name: "浴室",
 
 
-    cake_room_bath_in: "浴室",
 
 
     cake_room_bedroom_name: "寝室",
 
 
-    cake_room_bedroom_in: "寝室",
 
 
     cake_room_garden_name: "庭",
 
 
-    cake_room_garden_in: "庭",
 
 
     cake_room_cellar_name: "地下室",
 
 
-    cake_room_cellar_in: "地下室",
     cake_room_kids_name: "子ども部屋",
-    cake_room_kids_in: "子ども部屋",
     cake_room_attic_name: "屋根裏",
-    cake_room_attic_in: "屋根裏",
     cake_room_dining_name: "ダイニング",
-    cake_room_dining_in: "ダイニング",
     cake_room_office_name: "書斎",
-    cake_room_office_in: "書斎",
     cake_room_terrace_name: "テラス",
-    cake_room_terrace_in: "テラス",
 
 
-    cake_furn_table_name: "テーブル",
 
 
-    cake_furn_chair_name: "いす",
 
 
-    cake_furn_rug_name: "じゅうたん",
 
 
-    cake_furn_plant_name: "植木",
 
 
-    cake_furn_cupboard_name: "たんす",
-    cake_furn_sofa_name: "ソファ",
-    cake_furn_bed_name: "ベッド",
-    cake_furn_stool_name: "スツール",
-    cake_furn_shelf_name: "棚",
-    cake_furn_box_name: "木箱",
-    cake_furn_lamp_name: "フロアランプ",
-    cake_furn_bathtub_name: "浴槽",
 
 
-    cake_furn_chair_on: "いすの上に",
 
 
-    cake_furn_rug_on: "じゅうたんの上に",
 
 
-    cake_furn_plant_next: "植木の隣に",
 
 
-    cake_furn_cupboard_next: "たんすの隣に",
-    cake_furn_sofa_on: "ソファの上に",
-    cake_furn_bed_on: "ベッドの上に",
-    cake_furn_stool_on: "スツールの上に",
-    cake_furn_shelf_next: "棚の隣に",
-    cake_furn_box_next: "木箱の隣に",
-    cake_furn_lamp_next: "フロアランプの隣に",
-    cake_furn_bathtub_next: "浴槽の隣に",
 
 
-    cake_clue_in: "{IS}{ROOM}にいます。",
+    cake_clue_size: "{A}は、マスが{N}個ある部屋にいます。",
+    cake_clue_higher: "{A}は{B}より上にいます。",
+    cake_clue_leftof: "{A}は{B}より左にいます。",
+    cake_clue_border: "{A}と{B}は、壁を共有する部屋にいます。",
+    cake_clue_cakesize: "ケーキはマスが{N}個ある部屋にあります。",
+    cake_clue_cakesize_fish: "魚はマスが{N}個ある部屋にあります。",
+    cake_clue_cakesize_cookies: "クッキーはマスが{N}個ある部屋にあります。",
+    cake_clue_cakesize_ball: "ボールはマスが{N}個ある部屋にあります。",
+    cake_clue_cakesize_key: "鍵はマスが{N}個ある部屋にあります。",
+    cake_clue_cakesize_family: "ケーキはマスが{N}個ある部屋にあります。",
+    cake_clue_cakesize_treasure: "宝物はマスが{N}個ある部屋にあります。",
+    cake_clue_steps: "{A}からケーキまで{N}歩です。",
+    cake_clue_steps_fish: "{A}から魚まで{N}歩です。",
+    cake_clue_steps_cookies: "{A}からクッキーまで{N}歩です。",
+    cake_clue_steps_ball: "{A}からボールまで{N}歩です。",
+    cake_clue_steps_key: "{A}から鍵まで{N}歩です。",
+    cake_clue_steps_family: "{A}からケーキまで{N}歩です。",
+    cake_clue_steps_treasure: "{A}から宝物まで{N}歩です。",
 
 
-    cake_clue_notin: "{ISNOT}{ROOM}にはいません。",
 
 
-    cake_clue_on: "{SITS}{FURN}座っています。",
 
 
-    cake_clue_next: "{IS}{FURN}います。",
 
 
-    cake_clue_window: "{IS}窓と同じ行にいます。",
 
 
-    cake_clue_top: "{IS}一番上の行にいます。",
 
 
-    cake_clue_bottom: "{IS}一番下の行にいます。",
 
 
-    cake_clue_left: "{IS}一番左の列にいます。",
 
 
-    cake_clue_right: "{IS}一番右の列にいます。",
 
 
-    cake_clue_same: "{A}と{B}は同じ部屋にいます。",
 
 
     game_cake: "ケーキを取ったのはだれ?",
 
 
-    home_cake_desc: "手がかりを使う探偵パズルです。選んだ人物や物を各行・各列に一つずつ置き、テーマの品物と同じ部屋にいる人物を見つけます。",
+    home_cake_desc: "手がかりを使う探偵論理パズルです。各部屋に容疑者が1人ずついて、隣り合うことはありません。なくなった物と、そのすぐ隣にいる唯一の容疑者を見つけましょう。",
 
 
     cake_board_label: "間取り図",
@@ -1835,261 +1793,170 @@ STRINGS.ja = {
 
 
     cake_hint_step: "{THING}: {R}行目、{C}列目。",
-    cake_hint_last: "動物はすべて正しい場所にいます。空いているのは1つの行と1つの列だけです。そこにケーキがあります。",
+    cake_hint_last: "動物は全員正しい場所にいます。ケーキの隣にいる動物は1匹だけです。ケーキについての手がかりから場所がわかります。",
     cake_always_title: "いつも成り立つこと",
-    cake_always_1: "どの行にもどの列にも、ちょうど1つのもの(動物かケーキ)があります。",
-    cake_always_2: "ケーキはいつもテーブルの上にあります。",
-    cake_always_3: "動物は、テーブルや、マス全体をふさぐ家具(植木、たんす、棚、木箱、フロアランプ、浴槽)の上には決していません。",
-    cake_always_4: "ケーキの部屋にいる動物はちょうど1匹で、その動物がケーキを取りました。",
+    cake_always_1: "どの部屋にも動物が1匹ずついます。",
+    cake_always_2: "ケーキはどの部屋にあってもかまいませんが、動物のいるマスには置けません。",
+    cake_always_3: "動物どうしは、斜めも含めて隣り合いません。",
+    cake_always_4: "ケーキのすぐ隣には動物が1匹だけいます（斜めでも、壁をはさんでいても）。その動物がケーキを取りました。",
     cake_why_free: "{A}はここ:ルール1と3により、まだ空いているのはこのマスだけです。",
     cake_why_clue: "{A}はここ:手がかり{N}で、空いているのはこのマスだけになります。",
     cake_why_clue2: "{A}はここ:手がかり{N}と{M}を合わせると、空いているのはこのマスだけになります。",
-    cake_why_row: "{A}はここ:この行にはほかに入るものがなく、この行で入れるのはこのマスだけです。",
-    cake_why_col: "{A}はここ:この列にはほかに入るものがなく、この列で入れるのはこのマスだけです。",
-    cake_why_lines: "{A}はここ:ルール1により、ほかの候補のマスはほかのものが必要とする行や列にあります。",
-    cake_why_rooms: "{A}はここ:ルール4と部屋の手がかりからわかります。",
-    cake_why_groups: "{A}はここ:ルール1により、ほかのいくつかが合わせて特定の行や列を必要とするので、このマスだけが残ります。",
+    cake_why_room: "{A}はここです。この部屋にはもうほかの人は入れません。各部屋に1人必要で（ルール1）、残っているマスはここだけです。",
+    cake_why_rules: "{A}はここです。ルール1と3、そして手がかりから順に考えるとわかります。",
+    cake_why_pairs: "{A}はここです。2人についての手がかりとルール4からわかります。",
+    cake_why_try: "{A}はここです。ほかのマスだと、ルールと手がかりによって、ほかの誰かの置き場所がなくなります。",
     cake_why_general: "{A}はここ:手がかりと「いつも成り立つこと」のルールからわかります。",
     cake_cattiger_name: "タイガー",
     cake_cattiger_cap: "タイガー",
     cake_cattiger_mid: "タイガー",
-    cake_cattiger_is: "タイガーは",
-    cake_cattiger_isnot: "タイガーは",
-    cake_cattiger_sits: "タイガーは",
     cake_win_cattiger: "魚を取ったのはタイガーです。",
     cake_catluna_name: "ルナ",
     cake_catluna_cap: "ルナ",
     cake_catluna_mid: "ルナ",
-    cake_catluna_is: "ルナは",
-    cake_catluna_isnot: "ルナは",
-    cake_catluna_sits: "ルナは",
     cake_win_catluna: "魚を取ったのはルナです。",
     cake_catmimi_name: "ミミ",
     cake_catmimi_cap: "ミミ",
     cake_catmimi_mid: "ミミ",
-    cake_catmimi_is: "ミミは",
-    cake_catmimi_isnot: "ミミは",
-    cake_catmimi_sits: "ミミは",
     cake_win_catmimi: "魚を取ったのはミミです。",
     cake_catfelix_name: "フェリックス",
     cake_catfelix_cap: "フェリックス",
     cake_catfelix_mid: "フェリックス",
-    cake_catfelix_is: "フェリックスは",
-    cake_catfelix_isnot: "フェリックスは",
-    cake_catfelix_sits: "フェリックスは",
     cake_win_catfelix: "魚を取ったのはフェリックスです。",
     cake_catmax_name: "マックス",
     cake_catmax_cap: "マックス",
     cake_catmax_mid: "マックス",
-    cake_catmax_is: "マックスは",
-    cake_catmax_isnot: "マックスは",
-    cake_catmax_sits: "マックスは",
     cake_win_catmax: "魚を取ったのはマックスです。",
     cake_thing_fish: "魚",
-    cake_hint_last_fish: "ネコはすべて正しい場所にいます。空いているのは1つの行と1つの列だけです。そこに魚があります。",
-    cake_always_1_fish: "どの行にもどの列にも、ちょうど1つのもの(ネコか魚)があります。",
-    cake_always_2_fish: "魚はいつもテーブルの上にあります。",
-    cake_always_4_fish: "魚の部屋にいるネコはちょうど1匹で、そのネコが魚を取りました。",
+    cake_hint_last_fish: "ネコは全員正しい場所にいます。魚の隣にいるネコは1匹だけです。魚についての手がかりから場所がわかります。",
+    cake_always_1_fish: "どの部屋にもネコが1匹ずついます。",
+    cake_always_2_fish: "魚はどの部屋にあってもかまいませんが、ネコのいるマスには置けません。",
+    cake_always_4_fish: "魚のすぐ隣にはネコが1匹だけいます（斜めでも、壁をはさんでいても）。そのネコが魚を取りました。",
     cake_bearbruno_name: "ブルーノ",
     cake_bearbruno_cap: "ブルーノ",
     cake_bearbruno_mid: "ブルーノ",
-    cake_bearbruno_is: "ブルーノは",
-    cake_bearbruno_isnot: "ブルーノは",
-    cake_bearbruno_sits: "ブルーノは",
     cake_win_bearbruno: "クッキーをつまみ食いしたのはブルーノです。",
     cake_bearpaula_name: "パウラ",
     cake_bearpaula_cap: "パウラ",
     cake_bearpaula_mid: "パウラ",
-    cake_bearpaula_is: "パウラは",
-    cake_bearpaula_isnot: "パウラは",
-    cake_bearpaula_sits: "パウラは",
     cake_win_bearpaula: "クッキーをつまみ食いしたのはパウラです。",
     cake_bearotto_name: "オットー",
     cake_bearotto_cap: "オットー",
     cake_bearotto_mid: "オットー",
-    cake_bearotto_is: "オットーは",
-    cake_bearotto_isnot: "オットーは",
-    cake_bearotto_sits: "オットーは",
     cake_win_bearotto: "クッキーをつまみ食いしたのはオットーです。",
     cake_bearlilli_name: "リリー",
     cake_bearlilli_cap: "リリー",
     cake_bearlilli_mid: "リリー",
-    cake_bearlilli_is: "リリーは",
-    cake_bearlilli_isnot: "リリーは",
-    cake_bearlilli_sits: "リリーは",
     cake_win_bearlilli: "クッキーをつまみ食いしたのはリリーです。",
     cake_bearfritz_name: "フリッツ",
     cake_bearfritz_cap: "フリッツ",
     cake_bearfritz_mid: "フリッツ",
-    cake_bearfritz_is: "フリッツは",
-    cake_bearfritz_isnot: "フリッツは",
-    cake_bearfritz_sits: "フリッツは",
     cake_win_bearfritz: "クッキーをつまみ食いしたのはフリッツです。",
     cake_thing_cookies: "クッキー",
-    cake_hint_last_cookies: "クマはすべて正しい場所にいます。空いているのは1つの行と1つの列だけです。そこにクッキーがあります。",
-    cake_always_1_cookies: "どの行にもどの列にも、ちょうど1つのもの(クマかクッキー)があります。",
-    cake_always_2_cookies: "クッキーはいつもテーブルの上にあります。",
-    cake_always_4_cookies: "クッキーの部屋にいるクマはちょうど1匹で、そのクマがクッキーをつまみ食いしました。",
+    cake_hint_last_cookies: "クマは全員正しい場所にいます。クッキーの隣にいるクマは1匹だけです。クッキーについての手がかりから場所がわかります。",
+    cake_always_1_cookies: "どの部屋にもクマが1頭ずついます。",
+    cake_always_2_cookies: "クッキーはどの部屋にあってもかまいませんが、クマのいるマスには置けません。",
+    cake_always_4_cookies: "クッキーのすぐ隣にはクマが1頭だけいます（斜めでも、壁をはさんでいても）。そのクマがクッキーをつまみ食いしました。",
     cake_dogbello_name: "ベロ",
     cake_dogbello_cap: "ベロ",
     cake_dogbello_mid: "ベロ",
-    cake_dogbello_is: "ベロは",
-    cake_dogbello_isnot: "ベロは",
-    cake_dogbello_sits: "ベロは",
     cake_win_dogbello: "ボールを隠したのはベロです。",
     cake_doglotte_name: "ロッテ",
     cake_doglotte_cap: "ロッテ",
     cake_doglotte_mid: "ロッテ",
-    cake_doglotte_is: "ロッテは",
-    cake_doglotte_isnot: "ロッテは",
-    cake_doglotte_sits: "ロッテは",
     cake_win_doglotte: "ボールを隠したのはロッテです。",
     cake_dogbenny_name: "ベニー",
     cake_dogbenny_cap: "ベニー",
     cake_dogbenny_mid: "ベニー",
-    cake_dogbenny_is: "ベニーは",
-    cake_dogbenny_isnot: "ベニーは",
-    cake_dogbenny_sits: "ベニーは",
     cake_win_dogbenny: "ボールを隠したのはベニーです。",
     cake_dogsusi_name: "ズージ",
     cake_dogsusi_cap: "ズージ",
     cake_dogsusi_mid: "ズージ",
-    cake_dogsusi_is: "ズージは",
-    cake_dogsusi_isnot: "ズージは",
-    cake_dogsusi_sits: "ズージは",
     cake_win_dogsusi: "ボールを隠したのはズージです。",
     cake_dogrudi_name: "ルディ",
     cake_dogrudi_cap: "ルディ",
     cake_dogrudi_mid: "ルディ",
-    cake_dogrudi_is: "ルディは",
-    cake_dogrudi_isnot: "ルディは",
-    cake_dogrudi_sits: "ルディは",
     cake_win_dogrudi: "ボールを隠したのはルディです。",
     cake_thing_ball: "ボール",
-    cake_hint_last_ball: "イヌはすべて正しい場所にいます。空いているのは1つの行と1つの列だけです。そこにボールがあります。",
-    cake_always_1_ball: "どの行にもどの列にも、ちょうど1つのもの(イヌかボール)があります。",
-    cake_always_2_ball: "ボールはいつもテーブルの上にあります。",
-    cake_always_4_ball: "ボールの部屋にいるイヌはちょうど1匹で、そのイヌがボールを隠しました。",
+    cake_hint_last_ball: "イヌは全員正しい場所にいます。ボールの隣にいるイヌは1匹だけです。ボールについての手がかりから場所がわかります。",
+    cake_always_1_ball: "どの部屋にもイヌが1匹ずついます。",
+    cake_always_2_ball: "ボールはどの部屋にあってもかまいませんが、イヌのいるマスには置けません。",
+    cake_always_4_ball: "ボールのすぐ隣にはイヌが1匹だけいます（斜めでも、壁をはさんでいても）。そのイヌがボールを隠しました。",
     cake_magpiepip_name: "ピップ",
     cake_magpiepip_cap: "ピップ",
     cake_magpiepip_mid: "ピップ",
-    cake_magpiepip_is: "ピップは",
-    cake_magpiepip_isnot: "ピップは",
-    cake_magpiepip_sits: "ピップは",
     cake_win_magpiepip: "鍵をどこかに置き忘れたのはピップです。",
     cake_magpiekiki_name: "キキ",
     cake_magpiekiki_cap: "キキ",
     cake_magpiekiki_mid: "キキ",
-    cake_magpiekiki_is: "キキは",
-    cake_magpiekiki_isnot: "キキは",
-    cake_magpiekiki_sits: "キキは",
     cake_win_magpiekiki: "鍵をどこかに置き忘れたのはキキです。",
     cake_magpierosa_name: "ローザ",
     cake_magpierosa_cap: "ローザ",
     cake_magpierosa_mid: "ローザ",
-    cake_magpierosa_is: "ローザは",
-    cake_magpierosa_isnot: "ローザは",
-    cake_magpierosa_sits: "ローザは",
     cake_win_magpierosa: "鍵をどこかに置き忘れたのはローザです。",
     cake_magpiejakob_name: "ヤコブ",
     cake_magpiejakob_cap: "ヤコブ",
     cake_magpiejakob_mid: "ヤコブ",
-    cake_magpiejakob_is: "ヤコブは",
-    cake_magpiejakob_isnot: "ヤコブは",
-    cake_magpiejakob_sits: "ヤコブは",
     cake_win_magpiejakob: "鍵をどこかに置き忘れたのはヤコブです。",
     cake_magpielou_name: "ルー",
     cake_magpielou_cap: "ルー",
     cake_magpielou_mid: "ルー",
-    cake_magpielou_is: "ルーは",
-    cake_magpielou_isnot: "ルーは",
-    cake_magpielou_sits: "ルーは",
     cake_win_magpielou: "鍵をどこかに置き忘れたのはルーです。",
     cake_thing_key: "鍵",
-    cake_hint_last_key: "カササギはすべて正しい場所にいます。空いているのは1つの行と1つの列だけです。そこに鍵があります。",
-    cake_always_1_key: "どの行にもどの列にも、ちょうど1つのもの(カササギか鍵)があります。",
-    cake_always_2_key: "鍵はいつもテーブルの上にあります。",
-    cake_always_4_key: "鍵の部屋にいるカササギはちょうど1羽で、そのカササギが鍵を置き忘れました。",
+    cake_hint_last_key: "カササギは全員正しい場所にいます。鍵の隣にいるカササギは1羽だけです。鍵についての手がかりから場所がわかります。",
+    cake_always_1_key: "どの部屋にもカササギが1羽ずついます。",
+    cake_always_2_key: "鍵はどの部屋にあってもかまいませんが、カササギのいるマスには置けません。",
+    cake_always_4_key: "鍵のすぐ隣にはカササギが1羽だけいます（斜めでも、壁をはさんでいても）。そのカササギが鍵を置き忘れました。",
     cake_greta_name: "グレタ",
     cake_greta_cap: "グレタ",
     cake_greta_mid: "グレタ",
-    cake_greta_is: "グレタは",
-    cake_greta_isnot: "グレタは",
-    cake_greta_sits: "グレタは",
     cake_win_greta: "ケーキを取ったのはグレタです。",
     cake_anton_name: "アントン",
     cake_anton_cap: "アントン",
     cake_anton_mid: "アントン",
-    cake_anton_is: "アントンは",
-    cake_anton_isnot: "アントンは",
-    cake_anton_sits: "アントンは",
     cake_win_anton: "ケーキを取ったのはアントンです。",
     cake_lisa_name: "リサ",
     cake_lisa_cap: "リサ",
     cake_lisa_mid: "リサ",
-    cake_lisa_is: "リサは",
-    cake_lisa_isnot: "リサは",
-    cake_lisa_sits: "リサは",
     cake_win_lisa: "ケーキを取ったのはリサです。",
     cake_jonas_name: "ヨナス",
     cake_jonas_cap: "ヨナス",
     cake_jonas_mid: "ヨナス",
-    cake_jonas_is: "ヨナスは",
-    cake_jonas_isnot: "ヨナスは",
-    cake_jonas_sits: "ヨナスは",
     cake_win_jonas: "ケーキを取ったのはヨナスです。",
     cake_emma_name: "エマ",
     cake_emma_cap: "エマ",
     cake_emma_mid: "エマ",
-    cake_emma_is: "エマは",
-    cake_emma_isnot: "エマは",
-    cake_emma_sits: "エマは",
     cake_win_emma: "ケーキを取ったのはエマです。",
-    cake_hint_last_family: "家族はみんな正しい場所にいます。空いているのは1つの行と1つの列だけです。そこにケーキがあります。",
-    cake_always_1_family: "どの行にもどの列にも、ちょうど1つのもの(家族のだれかかケーキ)があります。",
-    cake_always_2_family: "ケーキはいつもテーブルの上にあります。",
-    cake_always_4_family: "ケーキの部屋にいる家族はちょうど1人で、その人がケーキを取りました。",
+    cake_hint_last_family: "家族はみんな正しい場所にいます。ケーキの隣にいる人は1人だけです。ケーキについての手がかりから場所がわかります。",
+    cake_always_1_family: "どの部屋にも家族が1人ずついます。",
+    cake_always_2_family: "ケーキはどの部屋にあってもかまいませんが、家族の人がいるマスには置けません。",
+    cake_always_4_family: "ケーキのすぐ隣には家族が1人だけいます（斜めでも、壁をはさんでいても）。その人がケーキを取りました。",
     cake_tom_name: "トム",
     cake_tom_cap: "トム",
     cake_tom_mid: "トム",
-    cake_tom_is: "トムは",
-    cake_tom_isnot: "トムは",
-    cake_tom_sits: "トムは",
     cake_win_tom: "宝物を隠したのはトムです。",
     cake_nora_name: "ノーラ",
     cake_nora_cap: "ノーラ",
     cake_nora_mid: "ノーラ",
-    cake_nora_is: "ノーラは",
-    cake_nora_isnot: "ノーラは",
-    cake_nora_sits: "ノーラは",
     cake_win_nora: "宝物を隠したのはノーラです。",
     cake_ben_name: "ベン",
     cake_ben_cap: "ベン",
     cake_ben_mid: "ベン",
-    cake_ben_is: "ベンは",
-    cake_ben_isnot: "ベンは",
-    cake_ben_sits: "ベンは",
     cake_win_ben: "宝物を隠したのはベンです。",
     cake_ida_name: "イーダ",
     cake_ida_cap: "イーダ",
     cake_ida_mid: "イーダ",
-    cake_ida_is: "イーダは",
-    cake_ida_isnot: "イーダは",
-    cake_ida_sits: "イーダは",
     cake_win_ida: "宝物を隠したのはイーダです。",
     cake_leo_name: "レオ",
     cake_leo_cap: "レオ",
     cake_leo_mid: "レオ",
-    cake_leo_is: "レオは",
-    cake_leo_isnot: "レオは",
-    cake_leo_sits: "レオは",
     cake_win_leo: "宝物を隠したのはレオです。",
     cake_thing_treasure: "宝物",
-    cake_hint_last_treasure: "子どもたちはみんな正しい場所にいます。空いているのは1つの行と1つの列だけです。そこに宝物があります。",
-    cake_always_1_treasure: "どの行にもどの列にも、ちょうど1つのもの(子どもか宝物)があります。",
-    cake_always_2_treasure: "宝物はいつもテーブルの上にあります。",
-    cake_always_4_treasure: "宝物の部屋にいる子どもはちょうど1人で、その子が宝物を隠しました。",
-    cake_always_3_people: "テーブルや、マス全体をふさぐ家具(植木、たんす、棚、木箱、フロアランプ、浴槽)の上にはだれも立ちません。",
+    cake_hint_last_treasure: "子どもたちはみんな正しい場所にいます。宝物の隣にいる子は1人だけです。宝物についての手がかりから場所がわかります。",
+    cake_always_1_treasure: "どの部屋にも子どもが1人ずついます。",
+    cake_always_2_treasure: "宝物はどの部屋にあってもかまいませんが、子どものいるマスには置けません。",
+    cake_always_4_treasure: "宝物のすぐ隣には子どもが1人だけいます（斜めでも、壁をはさんでいても）。その子が宝物を隠しました。",
+    cake_always_3_people: "人どうしは、斜めも含めて隣り合いません。",
     cake_motif_label: "テーマ",
     cake_motif_animals: "動物とケーキ",
     cake_motif_cats: "ネコと魚",
@@ -2109,7 +1976,6 @@ STRINGS.ja = {
     cake_tool_x: "ここには何もない",
 
 
-    cake_window_name: "窓",
 
 
     cake_thing_cake: "ケーキ",

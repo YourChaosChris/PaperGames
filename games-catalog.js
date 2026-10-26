@@ -821,7 +821,7 @@ const GAMES_CATALOG = [
     nameKey: "game_cake",
     nameText: "Who Took the Cake?",
     descKey: "home_cake_desc",
-    descText: "A detective logic puzzle: place the animals and the cake on the floor plan by the clues - one per row and column - and find out who took the cake. Theme: animals and cake, or cats and fish.",
+    descText: "A detective logic puzzle: one suspect in every room, never two side by side. Use the clues to find the missing thing and the only suspect standing right next to it.",
     popular: false,
     added: "2026-10-09T16:02",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M20 4C22 7 22 8.5 20 9.5C18 8.5 18 7 20 4Z\" fill=\"#141413\"/><path d=\"M20 10V15\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"11\" y=\"15\" width=\"18\" height=\"8\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"7\" y=\"23\" width=\"26\" height=\"11\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M7 27C10 30 12 25 15 28C18 31 20 25 23 28C26 31 28 25 33 28\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.8\"/></svg></span>"

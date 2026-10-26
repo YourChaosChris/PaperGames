@@ -189,9 +189,9 @@ STRINGS.pl = {
     quickrules_skyscrapers_1: "Wypełnij planszę wysokościami od 1 do N tak, aby każdy wiersz i każda kolumna zawierały każdą wysokość raz, a każda wskazówka się zgadzała.",
     quickrules_skyscrapers_2: "Wybierz pole, a następnie wysokość z panelu pod planszą.",
     quickrules_skyscrapers_3: "Wskazówka liczy budynki widoczne z tej strony, a wyższy budynek całkowicie zasłania każdy niższy stojący za nim.",
-    quickrules_cake_1: "Ustaw każde zwierzę i ciasto tak, aby w każdym wierszu i każdej kolumnie stała dokładnie jedna rzecz.",
-    quickrules_cake_2: "Ciasto zawsze stoi na stole, zwierzęta nigdy na stole ani na dużym meblu, a poszlaki pod planem mówią resztę. „Obok” liczy się tylko w tym samym pokoju.",
-    quickrules_cake_3: "Jedyne zwierzę w pokoju z ciastem je wzięło - wybierz przycisk pod planem, a potem dotknij pola.",
+    quickrules_cake_1: "Umieść zwierzęta i ciasto na planie: w każdym pokoju dokładnie jedno zwierzę, a żadne dwa zwierzęta nie stoją obok siebie, nawet po skosie.",
+    quickrules_cake_2: "Poszlaki pod planszą podpowiedzą resztę: wielkość pokoi, kto stoi wyżej lub bardziej na lewo, które pokoje mają wspólną ścianę i ile kroków dzieli zwierzę od ciasta.",
+    quickrules_cake_3: "Ciasto wziął jedyny zwierzak stojący tuż obok niego. Wybierz przycisk pod planszą, a potem dotknij pola.",
     quickrules_konane_1: "Pozostaw przeciwnika bez ruchu: kto w swojej turze nie ma legalnego skoku, przegrywa natychmiast.",
     quickrules_konane_2: "Każdy ruch to skok: pionek przeskakuje sąsiedni pionek przeciwnika, nigdy po skosie, na puste pole tuż za nim i zdejmuje go.",
     quickrules_konane_3: "Przed pierwszym skokiem Czarne zdejmują jeden swój pionek z narożnika lub ze środka, a potem Białe jeden swój tuż obok tego pustego pola.",
@@ -1586,13 +1586,10 @@ STRINGS.pl = {
     cake_dog_mid: "pies",
 
 
-    cake_dog_is: "Pies jest",
 
 
-    cake_dog_isnot: "Pies nie jest",
 
 
-    cake_dog_sits: "Pies siedzi",
 
 
     cake_win_dog: "Pies wziął ciasto.",
@@ -1607,13 +1604,10 @@ STRINGS.pl = {
     cake_cat_mid: "kot",
 
 
-    cake_cat_is: "Kot jest",
 
 
-    cake_cat_isnot: "Kot nie jest",
 
 
-    cake_cat_sits: "Kot siedzi",
 
 
     cake_win_cat: "Kot wziął ciasto.",
@@ -1628,13 +1622,10 @@ STRINGS.pl = {
     cake_rabbit_mid: "królik",
 
 
-    cake_rabbit_is: "Królik jest",
 
 
-    cake_rabbit_isnot: "Królik nie jest",
 
 
-    cake_rabbit_sits: "Królik siedzi",
 
 
     cake_win_rabbit: "Królik wziął ciasto.",
@@ -1649,13 +1640,10 @@ STRINGS.pl = {
     cake_mouse_mid: "mysz",
 
 
-    cake_mouse_is: "Mysz jest",
 
 
-    cake_mouse_isnot: "Mysz nie jest",
 
 
-    cake_mouse_sits: "Mysz siedzi",
 
 
     cake_win_mouse: "Mysz wzięła ciasto.",
@@ -1670,13 +1658,10 @@ STRINGS.pl = {
     cake_hedgehog_mid: "jeż",
 
 
-    cake_hedgehog_is: "Jeż jest",
 
 
-    cake_hedgehog_isnot: "Jeż nie jest",
 
 
-    cake_hedgehog_sits: "Jeż siedzi",
 
 
     cake_win_hedgehog: "Jeż wziął ciasto.",
@@ -1685,130 +1670,103 @@ STRINGS.pl = {
     cake_room_kitchen_name: "Kuchnia",
 
 
-    cake_room_kitchen_in: "w kuchni",
 
 
     cake_room_living_name: "Salon",
 
 
-    cake_room_living_in: "w salonie",
 
 
     cake_room_hall_name: "Korytarz",
 
 
-    cake_room_hall_in: "na korytarzu",
 
 
     cake_room_bath_name: "Łazienka",
 
 
-    cake_room_bath_in: "w łazience",
 
 
     cake_room_bedroom_name: "Sypialnia",
 
 
-    cake_room_bedroom_in: "w sypialni",
 
 
     cake_room_garden_name: "Ogród",
 
 
-    cake_room_garden_in: "w ogrodzie",
 
 
     cake_room_cellar_name: "Piwnica",
 
 
-    cake_room_cellar_in: "w piwnicy",
     cake_room_kids_name: "Pokój dziecięcy",
-    cake_room_kids_in: "w pokoju dziecięcym",
     cake_room_attic_name: "Strych",
-    cake_room_attic_in: "na strychu",
     cake_room_dining_name: "Jadalnia",
-    cake_room_dining_in: "w jadalni",
     cake_room_office_name: "Gabinet",
-    cake_room_office_in: "w gabinecie",
     cake_room_terrace_name: "Taras",
-    cake_room_terrace_in: "na tarasie",
 
 
-    cake_furn_table_name: "Stół",
 
 
-    cake_furn_chair_name: "Krzesło",
 
 
-    cake_furn_rug_name: "Dywan",
 
 
-    cake_furn_plant_name: "Roślina",
 
 
-    cake_furn_cupboard_name: "Szafa",
-    cake_furn_sofa_name: "Kanapa",
-    cake_furn_bed_name: "Łóżko",
-    cake_furn_stool_name: "Taboret",
-    cake_furn_shelf_name: "Regał",
-    cake_furn_box_name: "Skrzynia",
-    cake_furn_lamp_name: "Lampa stojąca",
-    cake_furn_bathtub_name: "Wanna",
 
 
-    cake_furn_chair_on: "na krześle",
 
 
-    cake_furn_rug_on: "na dywanie",
 
 
-    cake_furn_plant_next: "obok rośliny",
 
 
-    cake_furn_cupboard_next: "obok szafy",
-    cake_furn_sofa_on: "na kanapie",
-    cake_furn_bed_on: "na łóżku",
-    cake_furn_stool_on: "na taborecie",
-    cake_furn_shelf_next: "obok regału",
-    cake_furn_box_next: "obok skrzyni",
-    cake_furn_lamp_next: "obok lampy stojącej",
-    cake_furn_bathtub_next: "obok wanny",
 
 
-    cake_clue_in: "{IS} {ROOM}.",
+    cake_clue_size: "{A} jest w pokoju, w którym liczba pól wynosi: {N}.",
+    cake_clue_higher: "{A} stoi wyżej niż {B}.",
+    cake_clue_leftof: "{A} stoi bardziej na lewo niż {B}.",
+    cake_clue_border: "{A} i {B} są w pokojach, które mają wspólną ścianę.",
+    cake_clue_cakesize: "Ciasto jest w pokoju, w którym liczba pól wynosi: {N}.",
+    cake_clue_cakesize_fish: "Ryba jest w pokoju, w którym liczba pól wynosi: {N}.",
+    cake_clue_cakesize_cookies: "Ciasteczka są w pokoju, w którym liczba pól wynosi: {N}.",
+    cake_clue_cakesize_ball: "Piłka jest w pokoju, w którym liczba pól wynosi: {N}.",
+    cake_clue_cakesize_key: "Klucz jest w pokoju, w którym liczba pól wynosi: {N}.",
+    cake_clue_cakesize_family: "Ciasto jest w pokoju, w którym liczba pól wynosi: {N}.",
+    cake_clue_cakesize_treasure: "Skarb jest w pokoju, w którym liczba pól wynosi: {N}.",
+    cake_clue_steps: "{A}: liczba kroków do ciasta: {N}.",
+    cake_clue_steps_fish: "{A}: liczba kroków do ryby: {N}.",
+    cake_clue_steps_cookies: "{A}: liczba kroków do ciasteczek: {N}.",
+    cake_clue_steps_ball: "{A}: liczba kroków do piłki: {N}.",
+    cake_clue_steps_key: "{A}: liczba kroków do klucza: {N}.",
+    cake_clue_steps_family: "{A}: liczba kroków do ciasta: {N}.",
+    cake_clue_steps_treasure: "{A}: liczba kroków do skarbu: {N}.",
 
 
-    cake_clue_notin: "{ISNOT} {ROOM}.",
 
 
-    cake_clue_on: "{SITS} {FURN}.",
 
 
-    cake_clue_next: "{IS} {FURN}.",
 
 
-    cake_clue_window: "{IS} w tym samym wierszu co okno.",
 
 
-    cake_clue_top: "{IS} w górnym wierszu.",
 
 
-    cake_clue_bottom: "{IS} w dolnym wierszu.",
 
 
-    cake_clue_left: "{IS} w lewej kolumnie.",
 
 
-    cake_clue_right: "{IS} w prawej kolumnie.",
 
 
-    cake_clue_same: "{A} i {B} są w tym samym pokoju.",
 
 
     game_cake: "Kto wziął ciasto?",
 
 
-    home_cake_desc: "Logiczna zagadka detektywistyczna: zgodnie ze wskazówkami umieść jedną wybraną postać lub rzecz w każdym wierszu i każdej kolumnie. Ustal, kto dzieli pokój z przedmiotem z wybranego motywu.",
+    home_cake_desc: "Detektywistyczna łamigłówka logiczna: jeden podejrzany w każdym pokoju, nigdy dwóch obok siebie. Użyj poszlak, by znaleźć zaginioną rzecz i jedynego podejrzanego stojącego tuż obok niej.",
 
 
     cake_board_label: "Plan",
@@ -1836,261 +1794,170 @@ STRINGS.pl = {
 
 
     cake_hint_step: "{THING}: wiersz {R}, kolumna {C}.",
-    cake_hint_last: "Wszystkie zwierzęta stoją na swoich miejscach. Wolne zostały tylko jeden wiersz i jedna kolumna - tam stoi ciasto.",
+    cake_hint_last: "Wszystkie zwierzęta są już na swoich miejscach. Dokładnie jedno stoi obok ciasta. Poszlaki dotyczące ciasta mówią, gdzie ono jest.",
     cake_always_title: "Zawsze obowiązuje",
-    cake_always_1: "W każdym wierszu i w każdej kolumnie stoi dokładnie jedna rzecz: zwierzę albo ciasto.",
-    cake_always_2: "Ciasto zawsze stoi na stole.",
-    cake_always_3: "Zwierzęta nigdy nie stoją na stole ani na meblu, który wypełnia całe pole (roślina, szafa, regał, skrzynia, lampa stojąca, wanna).",
-    cake_always_4: "Dokładnie jedno zwierzę jest w pokoju z ciastem – to ono je wzięło.",
+    cake_always_1: "W każdym pokoju jest dokładnie jedno zwierzę.",
+    cake_always_2: "Ciasto może być w dowolnym pokoju, ale nigdy na polu zajętym przez zwierzę.",
+    cake_always_3: "Żadne dwa zwierzęta nie stoją bezpośrednio obok siebie, nawet po skosie.",
+    cake_always_4: "Dokładnie jedno zwierzę stoi bezpośrednio obok ciasta (także po skosie, nawet przez ścianę) – to ono wzięło ciasto.",
     cake_why_free: "{A} – tutaj: według zasad 1 i 3 to jedyne wolne jeszcze pole.",
     cake_why_clue: "{A} – tutaj: poszlaka {N} zostawia wolne tylko to pole.",
     cake_why_clue2: "{A} – tutaj: poszlaki {N} i {M} razem zostawiają wolne tylko to pole.",
-    cake_why_row: "{A} – tutaj: nic innego nie pasuje do tego wiersza, a w tym wierszu możliwe jest tylko to pole.",
-    cake_why_col: "{A} – tutaj: nic innego nie pasuje do tej kolumny, a w tej kolumnie możliwe jest tylko to pole.",
-    cake_why_lines: "{A} – tutaj: według zasady 1 pozostałe możliwe pola leżą w wierszach lub kolumnach potrzebnych innym.",
-    cake_why_rooms: "{A} – tutaj: wynika to z zasady 4 i poszlak o pokojach.",
-    cake_why_groups: "{A} – tutaj: według zasady 1 kilka innych razem potrzebuje pewnych wierszy lub kolumn i zostaje tylko to pole.",
+    cake_why_room: "{A} pasuje tutaj: nikt inny nie może już wejść do tego pokoju, każdy pokój musi mieć jednego mieszkańca (zasada 1), a zostało w nim tylko to pole.",
+    cake_why_rules: "{A} pasuje tutaj: wynika to krok po kroku z zasad 1 i 3 oraz z poszlak.",
+    cake_why_pairs: "{A} pasuje tutaj: wynika to z poszlak dotyczących dwóch zwierząt naraz oraz z zasady 4.",
+    cake_why_try: "{A} pasuje tutaj: na każdym innym polu zasady i poszlaki nie zostawiałyby miejsca jednemu z pozostałych.",
     cake_why_general: "{A} – tutaj: wynika to z poszlak i zasad z ramki Zawsze obowiązuje.",
     cake_cattiger_name: "Tygrys",
     cake_cattiger_cap: "Tygrys",
     cake_cattiger_mid: "Tygrys",
-    cake_cattiger_is: "Tygrys jest",
-    cake_cattiger_isnot: "Tygrys nie jest",
-    cake_cattiger_sits: "Tygrys siedzi",
     cake_win_cattiger: "Tygrys wziął rybę.",
     cake_catluna_name: "Luna",
     cake_catluna_cap: "Luna",
     cake_catluna_mid: "Luna",
-    cake_catluna_is: "Luna jest",
-    cake_catluna_isnot: "Luna nie jest",
-    cake_catluna_sits: "Luna siedzi",
     cake_win_catluna: "Luna wzięła rybę.",
     cake_catmimi_name: "Mimi",
     cake_catmimi_cap: "Mimi",
     cake_catmimi_mid: "Mimi",
-    cake_catmimi_is: "Mimi jest",
-    cake_catmimi_isnot: "Mimi nie jest",
-    cake_catmimi_sits: "Mimi siedzi",
     cake_win_catmimi: "Mimi wzięła rybę.",
     cake_catfelix_name: "Feliks",
     cake_catfelix_cap: "Feliks",
     cake_catfelix_mid: "Feliks",
-    cake_catfelix_is: "Feliks jest",
-    cake_catfelix_isnot: "Feliks nie jest",
-    cake_catfelix_sits: "Feliks siedzi",
     cake_win_catfelix: "Feliks wziął rybę.",
     cake_catmax_name: "Maks",
     cake_catmax_cap: "Maks",
     cake_catmax_mid: "Maks",
-    cake_catmax_is: "Maks jest",
-    cake_catmax_isnot: "Maks nie jest",
-    cake_catmax_sits: "Maks siedzi",
     cake_win_catmax: "Maks wziął rybę.",
     cake_thing_fish: "Ryba",
-    cake_hint_last_fish: "Wszystkie koty stoją na swoich miejscach. Wolne zostały tylko jeden wiersz i jedna kolumna - tam leży ryba.",
-    cake_always_1_fish: "W każdym wierszu i w każdej kolumnie stoi dokładnie jedna rzecz: kot albo ryba.",
-    cake_always_2_fish: "Ryba zawsze leży na stole.",
-    cake_always_4_fish: "Dokładnie jeden kot jest w pokoju z rybą – to on ją wziął.",
+    cake_hint_last_fish: "Wszystkie koty są już na swoich miejscach. Dokładnie jeden stoi obok ryby. Poszlaki dotyczące ryby mówią, gdzie ona leży.",
+    cake_always_1_fish: "W każdym pokoju jest dokładnie jeden kot.",
+    cake_always_2_fish: "Ryba może być w dowolnym pokoju, ale nigdy na polu zajętym przez kota.",
+    cake_always_4_fish: "Dokładnie jeden kot stoi bezpośrednio obok ryby (także po skosie, nawet przez ścianę) – to on ją wziął.",
     cake_bearbruno_name: "Bruno",
     cake_bearbruno_cap: "Bruno",
     cake_bearbruno_mid: "Bruno",
-    cake_bearbruno_is: "Bruno jest",
-    cake_bearbruno_isnot: "Bruno nie jest",
-    cake_bearbruno_sits: "Bruno siedzi",
     cake_win_bearbruno: "Bruno schrupał ciasteczka.",
     cake_bearpaula_name: "Paula",
     cake_bearpaula_cap: "Paula",
     cake_bearpaula_mid: "Paula",
-    cake_bearpaula_is: "Paula jest",
-    cake_bearpaula_isnot: "Paula nie jest",
-    cake_bearpaula_sits: "Paula siedzi",
     cake_win_bearpaula: "Paula schrupała ciasteczka.",
     cake_bearotto_name: "Otto",
     cake_bearotto_cap: "Otto",
     cake_bearotto_mid: "Otto",
-    cake_bearotto_is: "Otto jest",
-    cake_bearotto_isnot: "Otto nie jest",
-    cake_bearotto_sits: "Otto siedzi",
     cake_win_bearotto: "Otto schrupał ciasteczka.",
     cake_bearlilli_name: "Lilli",
     cake_bearlilli_cap: "Lilli",
     cake_bearlilli_mid: "Lilli",
-    cake_bearlilli_is: "Lilli jest",
-    cake_bearlilli_isnot: "Lilli nie jest",
-    cake_bearlilli_sits: "Lilli siedzi",
     cake_win_bearlilli: "Lilli schrupała ciasteczka.",
     cake_bearfritz_name: "Fritz",
     cake_bearfritz_cap: "Fritz",
     cake_bearfritz_mid: "Fritz",
-    cake_bearfritz_is: "Fritz jest",
-    cake_bearfritz_isnot: "Fritz nie jest",
-    cake_bearfritz_sits: "Fritz siedzi",
     cake_win_bearfritz: "Fritz schrupał ciasteczka.",
     cake_thing_cookies: "Ciasteczka",
-    cake_hint_last_cookies: "Wszystkie misie stoją na swoich miejscach. Wolne zostały tylko jeden wiersz i jedna kolumna - tam leżą ciasteczka.",
-    cake_always_1_cookies: "W każdym wierszu i w każdej kolumnie stoi dokładnie jedna rzecz: miś albo ciasteczka.",
-    cake_always_2_cookies: "Ciasteczka zawsze leżą na stole.",
-    cake_always_4_cookies: "Dokładnie jeden miś jest w pokoju z ciasteczkami – to on je schrupał.",
+    cake_hint_last_cookies: "Wszystkie misie są już na swoich miejscach. Dokładnie jeden stoi obok ciasteczek. Poszlaki dotyczące ciasteczek mówią, gdzie one są.",
+    cake_always_1_cookies: "W każdym pokoju jest dokładnie jeden miś.",
+    cake_always_2_cookies: "Ciasteczka mogą być w dowolnym pokoju, ale nigdy na polu zajętym przez misia.",
+    cake_always_4_cookies: "Dokładnie jeden miś stoi bezpośrednio obok ciasteczek (także po skosie, nawet przez ścianę) – to on je schrupał.",
     cake_dogbello_name: "Bello",
     cake_dogbello_cap: "Bello",
     cake_dogbello_mid: "Bello",
-    cake_dogbello_is: "Bello jest",
-    cake_dogbello_isnot: "Bello nie jest",
-    cake_dogbello_sits: "Bello siedzi",
     cake_win_dogbello: "Bello schował piłkę.",
     cake_doglotte_name: "Lotte",
     cake_doglotte_cap: "Lotte",
     cake_doglotte_mid: "Lotte",
-    cake_doglotte_is: "Lotte jest",
-    cake_doglotte_isnot: "Lotte nie jest",
-    cake_doglotte_sits: "Lotte siedzi",
     cake_win_doglotte: "Lotte schowała piłkę.",
     cake_dogbenny_name: "Benny",
     cake_dogbenny_cap: "Benny",
     cake_dogbenny_mid: "Benny",
-    cake_dogbenny_is: "Benny jest",
-    cake_dogbenny_isnot: "Benny nie jest",
-    cake_dogbenny_sits: "Benny siedzi",
     cake_win_dogbenny: "Benny schował piłkę.",
     cake_dogsusi_name: "Susi",
     cake_dogsusi_cap: "Susi",
     cake_dogsusi_mid: "Susi",
-    cake_dogsusi_is: "Susi jest",
-    cake_dogsusi_isnot: "Susi nie jest",
-    cake_dogsusi_sits: "Susi siedzi",
     cake_win_dogsusi: "Susi schowała piłkę.",
     cake_dogrudi_name: "Rudi",
     cake_dogrudi_cap: "Rudi",
     cake_dogrudi_mid: "Rudi",
-    cake_dogrudi_is: "Rudi jest",
-    cake_dogrudi_isnot: "Rudi nie jest",
-    cake_dogrudi_sits: "Rudi siedzi",
     cake_win_dogrudi: "Rudi schował piłkę.",
     cake_thing_ball: "Piłka",
-    cake_hint_last_ball: "Wszystkie psy stoją na swoich miejscach. Wolne zostały tylko jeden wiersz i jedna kolumna - tam leży piłka.",
-    cake_always_1_ball: "W każdym wierszu i w każdej kolumnie stoi dokładnie jedna rzecz: pies albo piłka.",
-    cake_always_2_ball: "Piłka zawsze leży na stole.",
-    cake_always_4_ball: "Dokładnie jeden pies jest w pokoju z piłką – to on ją schował.",
+    cake_hint_last_ball: "Wszystkie psy są już na swoich miejscach. Dokładnie jeden stoi obok piłki. Poszlaki dotyczące piłki mówią, gdzie ona leży.",
+    cake_always_1_ball: "W każdym pokoju jest dokładnie jeden pies.",
+    cake_always_2_ball: "Piłka może być w dowolnym pokoju, ale nigdy na polu zajętym przez psa.",
+    cake_always_4_ball: "Dokładnie jeden pies stoi bezpośrednio obok piłki (także po skosie, nawet przez ścianę) – to on ją schował.",
     cake_magpiepip_name: "Pip",
     cake_magpiepip_cap: "Pip",
     cake_magpiepip_mid: "Pip",
-    cake_magpiepip_is: "Pip jest",
-    cake_magpiepip_isnot: "Pip nie jest",
-    cake_magpiepip_sits: "Pip siedzi",
     cake_win_magpiepip: "Pip zapodział klucz.",
     cake_magpiekiki_name: "Kiki",
     cake_magpiekiki_cap: "Kiki",
     cake_magpiekiki_mid: "Kiki",
-    cake_magpiekiki_is: "Kiki jest",
-    cake_magpiekiki_isnot: "Kiki nie jest",
-    cake_magpiekiki_sits: "Kiki siedzi",
     cake_win_magpiekiki: "Kiki zapodziała klucz.",
     cake_magpierosa_name: "Rosa",
     cake_magpierosa_cap: "Rosa",
     cake_magpierosa_mid: "Rosa",
-    cake_magpierosa_is: "Rosa jest",
-    cake_magpierosa_isnot: "Rosa nie jest",
-    cake_magpierosa_sits: "Rosa siedzi",
     cake_win_magpierosa: "Rosa zapodziała klucz.",
     cake_magpiejakob_name: "Jakob",
     cake_magpiejakob_cap: "Jakob",
     cake_magpiejakob_mid: "Jakob",
-    cake_magpiejakob_is: "Jakob jest",
-    cake_magpiejakob_isnot: "Jakob nie jest",
-    cake_magpiejakob_sits: "Jakob siedzi",
     cake_win_magpiejakob: "Jakob zapodział klucz.",
     cake_magpielou_name: "Lou",
     cake_magpielou_cap: "Lou",
     cake_magpielou_mid: "Lou",
-    cake_magpielou_is: "Lou jest",
-    cake_magpielou_isnot: "Lou nie jest",
-    cake_magpielou_sits: "Lou siedzi",
     cake_win_magpielou: "Lou zapodziała klucz.",
     cake_thing_key: "Klucz",
-    cake_hint_last_key: "Wszystkie sroki stoją na swoich miejscach. Wolne zostały tylko jeden wiersz i jedna kolumna - tam leży klucz.",
-    cake_always_1_key: "W każdym wierszu i w każdej kolumnie stoi dokładnie jedna rzecz: sroka albo klucz.",
-    cake_always_2_key: "Klucz zawsze leży na stole.",
-    cake_always_4_key: "Dokładnie jedna sroka jest w pokoju z kluczem – to ona go zapodziała.",
+    cake_hint_last_key: "Wszystkie sroki są już na swoich miejscach. Dokładnie jedna stoi obok klucza. Poszlaki dotyczące klucza mówią, gdzie on leży.",
+    cake_always_1_key: "W każdym pokoju jest dokładnie jedna sroka.",
+    cake_always_2_key: "Klucz może być w dowolnym pokoju, ale nigdy na polu zajętym przez srokę.",
+    cake_always_4_key: "Dokładnie jedna sroka stoi bezpośrednio obok klucza (także po skosie, nawet przez ścianę) – to ona go zapodziała.",
     cake_greta_name: "Greta",
     cake_greta_cap: "Greta",
     cake_greta_mid: "Greta",
-    cake_greta_is: "Greta jest",
-    cake_greta_isnot: "Greta nie jest",
-    cake_greta_sits: "Greta siedzi",
     cake_win_greta: "Greta wzięła ciasto.",
     cake_anton_name: "Anton",
     cake_anton_cap: "Anton",
     cake_anton_mid: "Anton",
-    cake_anton_is: "Anton jest",
-    cake_anton_isnot: "Anton nie jest",
-    cake_anton_sits: "Anton siedzi",
     cake_win_anton: "Anton wziął ciasto.",
     cake_lisa_name: "Lisa",
     cake_lisa_cap: "Lisa",
     cake_lisa_mid: "Lisa",
-    cake_lisa_is: "Lisa jest",
-    cake_lisa_isnot: "Lisa nie jest",
-    cake_lisa_sits: "Lisa siedzi",
     cake_win_lisa: "Lisa wzięła ciasto.",
     cake_jonas_name: "Jonas",
     cake_jonas_cap: "Jonas",
     cake_jonas_mid: "Jonas",
-    cake_jonas_is: "Jonas jest",
-    cake_jonas_isnot: "Jonas nie jest",
-    cake_jonas_sits: "Jonas siedzi",
     cake_win_jonas: "Jonas wziął ciasto.",
     cake_emma_name: "Emma",
     cake_emma_cap: "Emma",
     cake_emma_mid: "Emma",
-    cake_emma_is: "Emma jest",
-    cake_emma_isnot: "Emma nie jest",
-    cake_emma_sits: "Emma siedzi",
     cake_win_emma: "Emma wzięła ciasto.",
-    cake_hint_last_family: "Cała rodzina stoi na swoich miejscach. Wolne zostały tylko jeden wiersz i jedna kolumna - tam stoi ciasto.",
-    cake_always_1_family: "W każdym wierszu i w każdej kolumnie stoi dokładnie jedna rzecz: członek rodziny albo ciasto.",
-    cake_always_2_family: "Ciasto zawsze stoi na stole.",
-    cake_always_4_family: "Dokładnie jeden członek rodziny jest w pokoju z ciastem – to on je wziął.",
+    cake_hint_last_family: "Cała rodzina jest już na swoich miejscach. Dokładnie jedna osoba stoi obok ciasta. Poszlaki dotyczące ciasta mówią, gdzie ono jest.",
+    cake_always_1_family: "W każdym pokoju jest dokładnie jeden członek rodziny.",
+    cake_always_2_family: "Ciasto może być w dowolnym pokoju, ale nigdy na polu zajętym przez członka rodziny.",
+    cake_always_4_family: "Dokładnie jeden członek rodziny stoi bezpośrednio obok ciasta (także po skosie, nawet przez ścianę) – ta osoba wzięła ciasto.",
     cake_tom_name: "Tom",
     cake_tom_cap: "Tom",
     cake_tom_mid: "Tom",
-    cake_tom_is: "Tom jest",
-    cake_tom_isnot: "Tom nie jest",
-    cake_tom_sits: "Tom siedzi",
     cake_win_tom: "Tom schował skarb.",
     cake_nora_name: "Nora",
     cake_nora_cap: "Nora",
     cake_nora_mid: "Nora",
-    cake_nora_is: "Nora jest",
-    cake_nora_isnot: "Nora nie jest",
-    cake_nora_sits: "Nora siedzi",
     cake_win_nora: "Nora schowała skarb.",
     cake_ben_name: "Ben",
     cake_ben_cap: "Ben",
     cake_ben_mid: "Ben",
-    cake_ben_is: "Ben jest",
-    cake_ben_isnot: "Ben nie jest",
-    cake_ben_sits: "Ben siedzi",
     cake_win_ben: "Ben schował skarb.",
     cake_ida_name: "Ida",
     cake_ida_cap: "Ida",
     cake_ida_mid: "Ida",
-    cake_ida_is: "Ida jest",
-    cake_ida_isnot: "Ida nie jest",
-    cake_ida_sits: "Ida siedzi",
     cake_win_ida: "Ida schowała skarb.",
     cake_leo_name: "Leo",
     cake_leo_cap: "Leo",
     cake_leo_mid: "Leo",
-    cake_leo_is: "Leo jest",
-    cake_leo_isnot: "Leo nie jest",
-    cake_leo_sits: "Leo siedzi",
     cake_win_leo: "Leo schował skarb.",
     cake_thing_treasure: "Skarb",
-    cake_hint_last_treasure: "Wszystkie dzieci stoją na swoich miejscach. Wolne zostały tylko jeden wiersz i jedna kolumna - tam stoi skarb.",
-    cake_always_1_treasure: "W każdym wierszu i w każdej kolumnie stoi dokładnie jedna rzecz: dziecko albo skarb.",
-    cake_always_2_treasure: "Skarb zawsze stoi na stole.",
-    cake_always_4_treasure: "Dokładnie jedno dziecko jest w pokoju ze skarbem – to ono go schowało.",
-    cake_always_3_people: "Nikt nigdy nie stoi na stole ani na meblu, który wypełnia całe pole (roślina, szafa, regał, skrzynia, lampa stojąca, wanna).",
+    cake_hint_last_treasure: "Wszystkie dzieci są już na swoich miejscach. Dokładnie jedno stoi obok skarbu. Poszlaki dotyczące skarbu mówią, gdzie on jest.",
+    cake_always_1_treasure: "W każdym pokoju jest dokładnie jedno dziecko.",
+    cake_always_2_treasure: "Skarb może być w dowolnym pokoju, ale nigdy na polu zajętym przez dziecko.",
+    cake_always_4_treasure: "Dokładnie jedno dziecko stoi bezpośrednio obok skarbu (także po skosie, nawet przez ścianę) – ono go ukryło.",
+    cake_always_3_people: "Żadne dwie osoby nie stoją bezpośrednio obok siebie, nawet po skosie.",
     cake_motif_label: "Motyw",
     cake_motif_animals: "Zwierzęta i ciasto",
     cake_motif_cats: "Koty i ryba",
@@ -2110,7 +1977,6 @@ STRINGS.pl = {
     cake_tool_x: "Tu nic nie ma",
 
 
-    cake_window_name: "Okno",
 
 
     cake_thing_cake: "Ciasto",

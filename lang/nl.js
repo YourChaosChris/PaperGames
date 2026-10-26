@@ -185,9 +185,9 @@ STRINGS.nl = {
     quickrules_skyscrapers_1: "Vul het rooster met hoogtes van 1 tot N, zodat elke rij en kolom elke hoogte één keer bevat en elke aanwijzing klopt.",
     quickrules_skyscrapers_2: "Selecteer een vakje en kies dan een hoogte van het paneel onder het bord.",
     quickrules_skyscrapers_3: "Een aanwijzing telt de gebouwen die je vanaf die kant ziet, en een hoger gebouw verbergt elk lager gebouw erachter volledig.",
-    quickrules_cake_1: "Zet elk dier en de taart zo neer dat in elke rij en elke kolom precies één ding staat.",
-    quickrules_cake_2: "De taart staat altijd op een tafel, dieren nooit op een tafel of een groot meubel, en de aanwijzingen onder het bord vertellen de rest. ‘Naast’ telt alleen in dezelfde kamer.",
-    quickrules_cake_3: "Het enige dier in de kamer van de taart heeft hem gepakt - kies een knop onder het bord en tik dan op een vakje.",
+    quickrules_cake_1: "Zet de dieren en de taart op de plattegrond: precies één dier in elke kamer, en nooit twee dieren naast elkaar, ook niet diagonaal.",
+    quickrules_cake_2: "De aanwijzingen onder het bord vertellen de rest: de grootte van kamers, wie hoger of verder naar links staat, welke kamers een muur delen en hoeveel stappen het tot de taart is.",
+    quickrules_cake_3: "Het enige dier dat direct naast de taart staat, heeft die gepakt. Kies een knop onder het bord en tik daarna op een vakje.",
     quickrules_konane_1: "Laat je tegenstander zonder zet: wie op zijn beurt geen legale sprong heeft, verliest meteen.",
     quickrules_konane_2: "Elke zet is een sprong: een steen springt over een aangrenzende vijandelijke steen, nooit diagonaal, naar het lege veld erachter en slaat hem.",
     quickrules_konane_3: "Voor de eerste sprong verwijdert Zwart een eigen steen uit een hoek of het midden, daarna Wit een eigen steen direct naast dat gat.",
@@ -1585,13 +1585,10 @@ STRINGS.nl = {
     cake_dog_mid: "de hond",
 
 
-    cake_dog_is: "De hond is",
 
 
-    cake_dog_isnot: "De hond is niet",
 
 
-    cake_dog_sits: "De hond zit",
 
 
     cake_win_dog: "De hond heeft de taart gepakt.",
@@ -1606,13 +1603,10 @@ STRINGS.nl = {
     cake_cat_mid: "de kat",
 
 
-    cake_cat_is: "De kat is",
 
 
-    cake_cat_isnot: "De kat is niet",
 
 
-    cake_cat_sits: "De kat zit",
 
 
     cake_win_cat: "De kat heeft de taart gepakt.",
@@ -1627,13 +1621,10 @@ STRINGS.nl = {
     cake_rabbit_mid: "het konijn",
 
 
-    cake_rabbit_is: "Het konijn is",
 
 
-    cake_rabbit_isnot: "Het konijn is niet",
 
 
-    cake_rabbit_sits: "Het konijn zit",
 
 
     cake_win_rabbit: "Het konijn heeft de taart gepakt.",
@@ -1648,13 +1639,10 @@ STRINGS.nl = {
     cake_mouse_mid: "de muis",
 
 
-    cake_mouse_is: "De muis is",
 
 
-    cake_mouse_isnot: "De muis is niet",
 
 
-    cake_mouse_sits: "De muis zit",
 
 
     cake_win_mouse: "De muis heeft de taart gepakt.",
@@ -1669,13 +1657,10 @@ STRINGS.nl = {
     cake_hedgehog_mid: "de egel",
 
 
-    cake_hedgehog_is: "De egel is",
 
 
-    cake_hedgehog_isnot: "De egel is niet",
 
 
-    cake_hedgehog_sits: "De egel zit",
 
 
     cake_win_hedgehog: "De egel heeft de taart gepakt.",
@@ -1684,130 +1669,103 @@ STRINGS.nl = {
     cake_room_kitchen_name: "Keuken",
 
 
-    cake_room_kitchen_in: "in de keuken",
 
 
     cake_room_living_name: "Woonkamer",
 
 
-    cake_room_living_in: "in de woonkamer",
 
 
     cake_room_hall_name: "Gang",
 
 
-    cake_room_hall_in: "in de gang",
 
 
     cake_room_bath_name: "Badkamer",
 
 
-    cake_room_bath_in: "in de badkamer",
 
 
     cake_room_bedroom_name: "Slaapkamer",
 
 
-    cake_room_bedroom_in: "in de slaapkamer",
 
 
     cake_room_garden_name: "Tuin",
 
 
-    cake_room_garden_in: "in de tuin",
 
 
     cake_room_cellar_name: "Kelder",
 
 
-    cake_room_cellar_in: "in de kelder",
     cake_room_kids_name: "Kinderkamer",
-    cake_room_kids_in: "in de kinderkamer",
     cake_room_attic_name: "Zolder",
-    cake_room_attic_in: "op zolder",
     cake_room_dining_name: "Eetkamer",
-    cake_room_dining_in: "in de eetkamer",
     cake_room_office_name: "Werkkamer",
-    cake_room_office_in: "in de werkkamer",
     cake_room_terrace_name: "Terras",
-    cake_room_terrace_in: "op het terras",
 
 
-    cake_furn_table_name: "Tafel",
 
 
-    cake_furn_chair_name: "Stoel",
 
 
-    cake_furn_rug_name: "Kleed",
 
 
-    cake_furn_plant_name: "Plant",
 
 
-    cake_furn_cupboard_name: "Kast",
-    cake_furn_sofa_name: "Bank",
-    cake_furn_bed_name: "Bed",
-    cake_furn_stool_name: "Kruk",
-    cake_furn_shelf_name: "Rek",
-    cake_furn_box_name: "Kist",
-    cake_furn_lamp_name: "Staande lamp",
-    cake_furn_bathtub_name: "Bad",
 
 
-    cake_furn_chair_on: "op een stoel",
 
 
-    cake_furn_rug_on: "op een kleed",
 
 
-    cake_furn_plant_next: "naast een plant",
 
 
-    cake_furn_cupboard_next: "naast een kast",
-    cake_furn_sofa_on: "op een bank",
-    cake_furn_bed_on: "op een bed",
-    cake_furn_stool_on: "op een kruk",
-    cake_furn_shelf_next: "naast een rek",
-    cake_furn_box_next: "naast een kist",
-    cake_furn_lamp_next: "naast een staande lamp",
-    cake_furn_bathtub_next: "naast een bad",
 
 
-    cake_clue_in: "{IS} {ROOM}.",
+    cake_clue_size: "{A} staat in een kamer met {N} vakjes.",
+    cake_clue_higher: "{A} staat hoger dan {B}.",
+    cake_clue_leftof: "{A} staat verder naar links dan {B}.",
+    cake_clue_border: "{A} en {B} staan in kamers die een muur delen.",
+    cake_clue_cakesize: "De taart staat in een kamer met {N} vakjes.",
+    cake_clue_cakesize_fish: "De vis ligt in een kamer met {N} vakjes.",
+    cake_clue_cakesize_cookies: "De koekjes liggen in een kamer met {N} vakjes.",
+    cake_clue_cakesize_ball: "De bal ligt in een kamer met {N} vakjes.",
+    cake_clue_cakesize_key: "De sleutel ligt in een kamer met {N} vakjes.",
+    cake_clue_cakesize_family: "De taart staat in een kamer met {N} vakjes.",
+    cake_clue_cakesize_treasure: "De schat ligt in een kamer met {N} vakjes.",
+    cake_clue_steps: "{A}: stappen tot de taart: {N}.",
+    cake_clue_steps_fish: "{A}: stappen tot de vis: {N}.",
+    cake_clue_steps_cookies: "{A}: stappen tot de koekjes: {N}.",
+    cake_clue_steps_ball: "{A}: stappen tot de bal: {N}.",
+    cake_clue_steps_key: "{A}: stappen tot de sleutel: {N}.",
+    cake_clue_steps_family: "{A}: stappen tot de taart: {N}.",
+    cake_clue_steps_treasure: "{A}: stappen tot de schat: {N}.",
 
 
-    cake_clue_notin: "{ISNOT} {ROOM}.",
 
 
-    cake_clue_on: "{SITS} {FURN}.",
 
 
-    cake_clue_next: "{IS} {FURN}.",
 
 
-    cake_clue_window: "{IS} in dezelfde rij als het raam.",
 
 
-    cake_clue_top: "{IS} in de bovenste rij.",
 
 
-    cake_clue_bottom: "{IS} in de onderste rij.",
 
 
-    cake_clue_left: "{IS} in de linkerkolom.",
 
 
-    cake_clue_right: "{IS} in de rechterkolom.",
 
 
-    cake_clue_same: "{A} en {B} zijn in dezelfde kamer.",
 
 
     game_cake: "Wie heeft de taart gepakt?",
 
 
-    home_cake_desc: "Een logisch detectivepuzzel: plaats volgens de aanwijzingen één gekozen personage of voorwerp in elke rij en kolom. Ontdek wie een kamer deelt met het voorwerp van het motief.",
+    home_cake_desc: "Een logische detectivepuzzel: één verdachte in elke kamer en nooit twee naast elkaar. Gebruik de aanwijzingen om het verdwenen voorwerp te vinden en de enige verdachte die er direct naast staat.",
 
 
     cake_board_label: "Plattegrond",
@@ -1835,261 +1793,170 @@ STRINGS.nl = {
 
 
     cake_hint_step: "{THING}: rij {R}, kolom {C}.",
-    cake_hint_last: "Alle dieren staan goed. Er zijn nog maar één rij en één kolom vrij - daar staat de taart.",
+    cake_hint_last: "Alle dieren staan op hun plek. Precies één dier staat naast de taart; de aanwijzingen over de taart vertellen waar die staat.",
     cake_always_title: "Geldt altijd",
-    cake_always_1: "In elke rij en elke kolom staat precies één ding: een dier of de taart.",
-    cake_always_2: "De taart staat altijd op een tafel.",
-    cake_always_3: "Dieren staan nooit op een tafel of op een meubel dat zijn hele vakje vult (plant, kast, rek, kist, staande lamp, bad).",
-    cake_always_4: "Precies één dier is in de kamer van de taart – dat heeft de taart gepakt.",
+    cake_always_1: "In elke kamer staat precies één dier.",
+    cake_always_2: "De taart kan in elke kamer liggen, maar nooit op het vakje van een dier.",
+    cake_always_3: "Twee dieren staan nooit direct naast elkaar, ook niet diagonaal.",
+    cake_always_4: "Precies één dier staat direct naast de taart (ook diagonaal en zelfs aan de andere kant van een muur); dat dier heeft de taart gepakt.",
     cake_why_free: "{A} hoort hier: volgens regel 1 en 3 is dit het enige vakje dat nog vrij is.",
     cake_why_clue: "{A} hoort hier: aanwijzing {N} laat alleen dit vakje vrij.",
     cake_why_clue2: "{A} hoort hier: aanwijzingen {N} en {M} laten samen alleen dit vakje vrij.",
-    cake_why_row: "{A} hoort hier: niets anders past in deze rij, en in deze rij is alleen dit vakje mogelijk.",
-    cake_why_col: "{A} hoort hier: niets anders past in deze kolom, en in deze kolom is alleen dit vakje mogelijk.",
-    cake_why_lines: "{A} hoort hier: volgens regel 1 liggen de andere mogelijke vakjes in rijen of kolommen die de anderen nodig hebben.",
-    cake_why_rooms: "{A} hoort hier: dat volgt uit regel 4 en de aanwijzingen over de kamers.",
-    cake_why_groups: "{A} hoort hier: volgens regel 1 hebben enkele anderen samen bepaalde rijen of kolommen nodig, en blijft alleen dit vakje over.",
+    cake_why_room: "{A} hoort hier: niemand anders kan nog in deze kamer, elke kamer heeft er één nodig (regel 1) en alleen dit vakje is nog vrij.",
+    cake_why_rules: "{A} hoort hier: dit volgt stap voor stap uit regels 1 en 3 en de aanwijzingen.",
+    cake_why_pairs: "{A} hoort hier: dit volgt uit de aanwijzingen over twee dieren samen en uit regel 4.",
+    cake_why_try: "{A} hoort hier: op elk ander vakje zouden de regels en aanwijzingen voor een van de anderen geen plaats overlaten.",
     cake_why_general: "{A} hoort hier: dat volgt uit de aanwijzingen en de regels onder Geldt altijd.",
     cake_cattiger_name: "Tijger",
     cake_cattiger_cap: "Tijger",
     cake_cattiger_mid: "Tijger",
-    cake_cattiger_is: "Tijger is",
-    cake_cattiger_isnot: "Tijger is niet",
-    cake_cattiger_sits: "Tijger zit",
     cake_win_cattiger: "Tijger heeft de vis gepakt.",
     cake_catluna_name: "Luna",
     cake_catluna_cap: "Luna",
     cake_catluna_mid: "Luna",
-    cake_catluna_is: "Luna is",
-    cake_catluna_isnot: "Luna is niet",
-    cake_catluna_sits: "Luna zit",
     cake_win_catluna: "Luna heeft de vis gepakt.",
     cake_catmimi_name: "Mimi",
     cake_catmimi_cap: "Mimi",
     cake_catmimi_mid: "Mimi",
-    cake_catmimi_is: "Mimi is",
-    cake_catmimi_isnot: "Mimi is niet",
-    cake_catmimi_sits: "Mimi zit",
     cake_win_catmimi: "Mimi heeft de vis gepakt.",
     cake_catfelix_name: "Felix",
     cake_catfelix_cap: "Felix",
     cake_catfelix_mid: "Felix",
-    cake_catfelix_is: "Felix is",
-    cake_catfelix_isnot: "Felix is niet",
-    cake_catfelix_sits: "Felix zit",
     cake_win_catfelix: "Felix heeft de vis gepakt.",
     cake_catmax_name: "Max",
     cake_catmax_cap: "Max",
     cake_catmax_mid: "Max",
-    cake_catmax_is: "Max is",
-    cake_catmax_isnot: "Max is niet",
-    cake_catmax_sits: "Max zit",
     cake_win_catmax: "Max heeft de vis gepakt.",
     cake_thing_fish: "Vis",
-    cake_hint_last_fish: "Alle katten staan goed. Er zijn nog maar één rij en één kolom vrij - daar ligt de vis.",
-    cake_always_1_fish: "In elke rij en elke kolom staat precies één ding: een kat of de vis.",
-    cake_always_2_fish: "De vis ligt altijd op een tafel.",
-    cake_always_4_fish: "Precies één kat is in de kamer van de vis – die heeft de vis gepakt.",
+    cake_hint_last_fish: "Alle katten staan op hun plek. Precies één kat staat naast de vis; de aanwijzingen over de vis vertellen waar die ligt.",
+    cake_always_1_fish: "In elke kamer staat precies één kat.",
+    cake_always_2_fish: "De vis kan in elke kamer liggen, maar nooit op het vakje van een kat.",
+    cake_always_4_fish: "Precies één kat staat direct naast de vis (ook diagonaal en zelfs aan de andere kant van een muur); die kat heeft de vis gepakt.",
     cake_bearbruno_name: "Bruno",
     cake_bearbruno_cap: "Bruno",
     cake_bearbruno_mid: "Bruno",
-    cake_bearbruno_is: "Bruno is",
-    cake_bearbruno_isnot: "Bruno is niet",
-    cake_bearbruno_sits: "Bruno zit",
     cake_win_bearbruno: "Bruno heeft van de koekjes gesnoept.",
     cake_bearpaula_name: "Paula",
     cake_bearpaula_cap: "Paula",
     cake_bearpaula_mid: "Paula",
-    cake_bearpaula_is: "Paula is",
-    cake_bearpaula_isnot: "Paula is niet",
-    cake_bearpaula_sits: "Paula zit",
     cake_win_bearpaula: "Paula heeft van de koekjes gesnoept.",
     cake_bearotto_name: "Otto",
     cake_bearotto_cap: "Otto",
     cake_bearotto_mid: "Otto",
-    cake_bearotto_is: "Otto is",
-    cake_bearotto_isnot: "Otto is niet",
-    cake_bearotto_sits: "Otto zit",
     cake_win_bearotto: "Otto heeft van de koekjes gesnoept.",
     cake_bearlilli_name: "Lilli",
     cake_bearlilli_cap: "Lilli",
     cake_bearlilli_mid: "Lilli",
-    cake_bearlilli_is: "Lilli is",
-    cake_bearlilli_isnot: "Lilli is niet",
-    cake_bearlilli_sits: "Lilli zit",
     cake_win_bearlilli: "Lilli heeft van de koekjes gesnoept.",
     cake_bearfritz_name: "Fritz",
     cake_bearfritz_cap: "Fritz",
     cake_bearfritz_mid: "Fritz",
-    cake_bearfritz_is: "Fritz is",
-    cake_bearfritz_isnot: "Fritz is niet",
-    cake_bearfritz_sits: "Fritz zit",
     cake_win_bearfritz: "Fritz heeft van de koekjes gesnoept.",
     cake_thing_cookies: "Koekjes",
-    cake_hint_last_cookies: "Alle beren staan goed. Er zijn nog maar één rij en één kolom vrij - daar liggen de koekjes.",
-    cake_always_1_cookies: "In elke rij en elke kolom staat precies één ding: een beer of de koekjes.",
-    cake_always_2_cookies: "De koekjes liggen altijd op een tafel.",
-    cake_always_4_cookies: "Precies één beer is in de kamer van de koekjes – die heeft van de koekjes gesnoept.",
+    cake_hint_last_cookies: "Alle beren staan op hun plek. Precies één beer staat naast de koekjes; de aanwijzingen over de koekjes vertellen waar die liggen.",
+    cake_always_1_cookies: "In elke kamer staat precies één beer.",
+    cake_always_2_cookies: "De koekjes kunnen in elke kamer liggen, maar nooit op het vakje van een beer.",
+    cake_always_4_cookies: "Precies één beer staat direct naast de koekjes (ook diagonaal en zelfs aan de andere kant van een muur); die beer heeft ervan gesnoept.",
     cake_dogbello_name: "Bello",
     cake_dogbello_cap: "Bello",
     cake_dogbello_mid: "Bello",
-    cake_dogbello_is: "Bello is",
-    cake_dogbello_isnot: "Bello is niet",
-    cake_dogbello_sits: "Bello zit",
     cake_win_dogbello: "Bello heeft de bal verstopt.",
     cake_doglotte_name: "Lotte",
     cake_doglotte_cap: "Lotte",
     cake_doglotte_mid: "Lotte",
-    cake_doglotte_is: "Lotte is",
-    cake_doglotte_isnot: "Lotte is niet",
-    cake_doglotte_sits: "Lotte zit",
     cake_win_doglotte: "Lotte heeft de bal verstopt.",
     cake_dogbenny_name: "Benny",
     cake_dogbenny_cap: "Benny",
     cake_dogbenny_mid: "Benny",
-    cake_dogbenny_is: "Benny is",
-    cake_dogbenny_isnot: "Benny is niet",
-    cake_dogbenny_sits: "Benny zit",
     cake_win_dogbenny: "Benny heeft de bal verstopt.",
     cake_dogsusi_name: "Susi",
     cake_dogsusi_cap: "Susi",
     cake_dogsusi_mid: "Susi",
-    cake_dogsusi_is: "Susi is",
-    cake_dogsusi_isnot: "Susi is niet",
-    cake_dogsusi_sits: "Susi zit",
     cake_win_dogsusi: "Susi heeft de bal verstopt.",
     cake_dogrudi_name: "Rudi",
     cake_dogrudi_cap: "Rudi",
     cake_dogrudi_mid: "Rudi",
-    cake_dogrudi_is: "Rudi is",
-    cake_dogrudi_isnot: "Rudi is niet",
-    cake_dogrudi_sits: "Rudi zit",
     cake_win_dogrudi: "Rudi heeft de bal verstopt.",
     cake_thing_ball: "Bal",
-    cake_hint_last_ball: "Alle honden staan goed. Er zijn nog maar één rij en één kolom vrij - daar ligt de bal.",
-    cake_always_1_ball: "In elke rij en elke kolom staat precies één ding: een hond of de bal.",
-    cake_always_2_ball: "De bal ligt altijd op een tafel.",
-    cake_always_4_ball: "Precies één hond is in de kamer van de bal – die heeft de bal verstopt.",
+    cake_hint_last_ball: "Alle honden staan op hun plek. Precies één hond staat naast de bal; de aanwijzingen over de bal vertellen waar die ligt.",
+    cake_always_1_ball: "In elke kamer staat precies één hond.",
+    cake_always_2_ball: "De bal kan in elke kamer liggen, maar nooit op het vakje van een hond.",
+    cake_always_4_ball: "Precies één hond staat direct naast de bal (ook diagonaal en zelfs aan de andere kant van een muur); die hond heeft de bal verstopt.",
     cake_magpiepip_name: "Pip",
     cake_magpiepip_cap: "Pip",
     cake_magpiepip_mid: "Pip",
-    cake_magpiepip_is: "Pip is",
-    cake_magpiepip_isnot: "Pip is niet",
-    cake_magpiepip_sits: "Pip zit",
     cake_win_magpiepip: "Pip is de sleutel kwijtgeraakt.",
     cake_magpiekiki_name: "Kiki",
     cake_magpiekiki_cap: "Kiki",
     cake_magpiekiki_mid: "Kiki",
-    cake_magpiekiki_is: "Kiki is",
-    cake_magpiekiki_isnot: "Kiki is niet",
-    cake_magpiekiki_sits: "Kiki zit",
     cake_win_magpiekiki: "Kiki is de sleutel kwijtgeraakt.",
     cake_magpierosa_name: "Rosa",
     cake_magpierosa_cap: "Rosa",
     cake_magpierosa_mid: "Rosa",
-    cake_magpierosa_is: "Rosa is",
-    cake_magpierosa_isnot: "Rosa is niet",
-    cake_magpierosa_sits: "Rosa zit",
     cake_win_magpierosa: "Rosa is de sleutel kwijtgeraakt.",
     cake_magpiejakob_name: "Jakob",
     cake_magpiejakob_cap: "Jakob",
     cake_magpiejakob_mid: "Jakob",
-    cake_magpiejakob_is: "Jakob is",
-    cake_magpiejakob_isnot: "Jakob is niet",
-    cake_magpiejakob_sits: "Jakob zit",
     cake_win_magpiejakob: "Jakob is de sleutel kwijtgeraakt.",
     cake_magpielou_name: "Lou",
     cake_magpielou_cap: "Lou",
     cake_magpielou_mid: "Lou",
-    cake_magpielou_is: "Lou is",
-    cake_magpielou_isnot: "Lou is niet",
-    cake_magpielou_sits: "Lou zit",
     cake_win_magpielou: "Lou is de sleutel kwijtgeraakt.",
     cake_thing_key: "Sleutel",
-    cake_hint_last_key: "Alle eksters staan goed. Er zijn nog maar één rij en één kolom vrij - daar ligt de sleutel.",
-    cake_always_1_key: "In elke rij en elke kolom staat precies één ding: een ekster of de sleutel.",
-    cake_always_2_key: "De sleutel ligt altijd op een tafel.",
-    cake_always_4_key: "Precies één ekster is in de kamer van de sleutel – die is de sleutel kwijtgeraakt.",
+    cake_hint_last_key: "Alle eksters staan op hun plek. Precies één ekster staat naast de sleutel; de aanwijzingen over de sleutel vertellen waar die ligt.",
+    cake_always_1_key: "In elke kamer staat precies één ekster.",
+    cake_always_2_key: "De sleutel kan in elke kamer liggen, maar nooit op het vakje van een ekster.",
+    cake_always_4_key: "Precies één ekster staat direct naast de sleutel (ook diagonaal en zelfs aan de andere kant van een muur); die ekster is de sleutel kwijtgeraakt.",
     cake_greta_name: "Greta",
     cake_greta_cap: "Greta",
     cake_greta_mid: "Greta",
-    cake_greta_is: "Greta is",
-    cake_greta_isnot: "Greta is niet",
-    cake_greta_sits: "Greta zit",
     cake_win_greta: "Greta heeft de taart gepakt.",
     cake_anton_name: "Anton",
     cake_anton_cap: "Anton",
     cake_anton_mid: "Anton",
-    cake_anton_is: "Anton is",
-    cake_anton_isnot: "Anton is niet",
-    cake_anton_sits: "Anton zit",
     cake_win_anton: "Anton heeft de taart gepakt.",
     cake_lisa_name: "Lisa",
     cake_lisa_cap: "Lisa",
     cake_lisa_mid: "Lisa",
-    cake_lisa_is: "Lisa is",
-    cake_lisa_isnot: "Lisa is niet",
-    cake_lisa_sits: "Lisa zit",
     cake_win_lisa: "Lisa heeft de taart gepakt.",
     cake_jonas_name: "Jonas",
     cake_jonas_cap: "Jonas",
     cake_jonas_mid: "Jonas",
-    cake_jonas_is: "Jonas is",
-    cake_jonas_isnot: "Jonas is niet",
-    cake_jonas_sits: "Jonas zit",
     cake_win_jonas: "Jonas heeft de taart gepakt.",
     cake_emma_name: "Emma",
     cake_emma_cap: "Emma",
     cake_emma_mid: "Emma",
-    cake_emma_is: "Emma is",
-    cake_emma_isnot: "Emma is niet",
-    cake_emma_sits: "Emma zit",
     cake_win_emma: "Emma heeft de taart gepakt.",
-    cake_hint_last_family: "De hele familie staat goed. Er zijn nog maar één rij en één kolom vrij - daar staat de taart.",
-    cake_always_1_family: "In elke rij en elke kolom staat precies één ding: een familielid of de taart.",
-    cake_always_2_family: "De taart staat altijd op een tafel.",
-    cake_always_4_family: "Precies één familielid is in de kamer van de taart – die heeft de taart gepakt.",
+    cake_hint_last_family: "Iedereen in de familie staat op zijn plek. Precies één familielid staat naast de taart; de aanwijzingen over de taart vertellen waar die staat.",
+    cake_always_1_family: "In elke kamer staat precies één familielid.",
+    cake_always_2_family: "De taart kan in elke kamer liggen, maar nooit op het vakje van een familielid.",
+    cake_always_4_family: "Precies één familielid staat direct naast de taart (ook diagonaal en zelfs aan de andere kant van een muur); dat familielid heeft de taart gepakt.",
     cake_tom_name: "Tom",
     cake_tom_cap: "Tom",
     cake_tom_mid: "Tom",
-    cake_tom_is: "Tom is",
-    cake_tom_isnot: "Tom is niet",
-    cake_tom_sits: "Tom zit",
     cake_win_tom: "Tom heeft de schat verstopt.",
     cake_nora_name: "Nora",
     cake_nora_cap: "Nora",
     cake_nora_mid: "Nora",
-    cake_nora_is: "Nora is",
-    cake_nora_isnot: "Nora is niet",
-    cake_nora_sits: "Nora zit",
     cake_win_nora: "Nora heeft de schat verstopt.",
     cake_ben_name: "Ben",
     cake_ben_cap: "Ben",
     cake_ben_mid: "Ben",
-    cake_ben_is: "Ben is",
-    cake_ben_isnot: "Ben is niet",
-    cake_ben_sits: "Ben zit",
     cake_win_ben: "Ben heeft de schat verstopt.",
     cake_ida_name: "Ida",
     cake_ida_cap: "Ida",
     cake_ida_mid: "Ida",
-    cake_ida_is: "Ida is",
-    cake_ida_isnot: "Ida is niet",
-    cake_ida_sits: "Ida zit",
     cake_win_ida: "Ida heeft de schat verstopt.",
     cake_leo_name: "Leo",
     cake_leo_cap: "Leo",
     cake_leo_mid: "Leo",
-    cake_leo_is: "Leo is",
-    cake_leo_isnot: "Leo is niet",
-    cake_leo_sits: "Leo zit",
     cake_win_leo: "Leo heeft de schat verstopt.",
     cake_thing_treasure: "Schat",
-    cake_hint_last_treasure: "Alle kinderen staan goed. Er zijn nog maar één rij en één kolom vrij - daar staat de schat.",
-    cake_always_1_treasure: "In elke rij en elke kolom staat precies één ding: een kind of de schat.",
-    cake_always_2_treasure: "De schat staat altijd op een tafel.",
-    cake_always_4_treasure: "Precies één kind is in de kamer van de schat – dat heeft de schat verstopt.",
-    cake_always_3_people: "Niemand staat ooit op een tafel of op een meubel dat zijn hele vakje vult (plant, kast, rek, kist, staande lamp, bad).",
+    cake_hint_last_treasure: "Alle kinderen staan op hun plek. Precies één kind staat naast de schat; de aanwijzingen over de schat vertellen waar die ligt.",
+    cake_always_1_treasure: "In elke kamer staat precies één kind.",
+    cake_always_2_treasure: "De schat kan in elke kamer liggen, maar nooit op het vakje van een kind.",
+    cake_always_4_treasure: "Precies één kind staat direct naast de schat (ook diagonaal en zelfs aan de andere kant van een muur); dat kind heeft de schat verstopt.",
+    cake_always_3_people: "Twee mensen staan nooit direct naast elkaar, ook niet diagonaal.",
     cake_motif_label: "Thema",
     cake_motif_animals: "Dieren en taart",
     cake_motif_cats: "Katten en vis",
@@ -2109,7 +1976,6 @@ STRINGS.nl = {
     cake_tool_x: "Hier staat niets",
 
 
-    cake_window_name: "Raam",
 
 
     cake_thing_cake: "Taart",

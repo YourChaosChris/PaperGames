@@ -185,9 +185,9 @@ STRINGS.uk = {
     quickrules_skyscrapers_1: "Заповніть сітку висотами від 1 до N так, щоб у кожному рядку й стовпці кожна висота траплялася один раз і всі підказки збігалися.",
     quickrules_skyscrapers_2: "Виберіть клітинку, а потім висоту на панелі під дошкою.",
     quickrules_skyscrapers_3: "Підказка рахує будівлі, видимі з того боку, і вища будівля повністю ховає будь-яку нижчу будівлю за нею.",
-    quickrules_cake_1: "Розставте кожну тварину й торт так, щоб у кожному рядку й кожному стовпці стояла рівно одна річ.",
-    quickrules_cake_2: "Торт завжди стоїть на столі, тварини ніколи не стоять на столі чи великих меблях, а зачіпки під планом підкажуть решту. «Поруч» рахується лише в тій самій кімнаті.",
-    quickrules_cake_3: "Єдина тварина в кімнаті з тортом його й узяла - виберіть кнопку під планом, а потім торкніться клітинки.",
+    quickrules_cake_1: "Розмістіть тварин і торт на плані: у кожній кімнаті рівно одна тварина, і жодні дві тварини не стоять поруч, навіть по діагоналі.",
+    quickrules_cake_2: "Зачіпки під полем підкажуть решту: розміри кімнат, хто стоїть вище або лівіше, які кімнати мають спільну стіну та скільки кроків до торта.",
+    quickrules_cake_3: "Торт узяла єдина тварина, що стоїть безпосередньо поруч із ним. Виберіть кнопку під полем, а потім торкніться клітинки.",
     quickrules_konane_1: "Залиште суперника без ходу: у кого на своєму ході немає жодного легального стрибка, той одразу програє.",
     quickrules_konane_2: "Кожен хід — стрибок: камінь перестрибує через сусідній камінь суперника, ніколи по діагоналі, на порожню клітинку за ним і знімає його.",
     quickrules_konane_3: "Перед першим стрибком Чорні знімають свій камінь із кута або з центру, потім Білі — свій камінь прямо поруч із цією порожньою клітинкою.",
@@ -1585,13 +1585,10 @@ STRINGS.uk = {
     cake_dog_mid: "пес",
 
 
-    cake_dog_is: "Пес",
 
 
-    cake_dog_isnot: "Пес не",
 
 
-    cake_dog_sits: "Пес сидить",
 
 
     cake_win_dog: "Пес узяв торт.",
@@ -1606,13 +1603,10 @@ STRINGS.uk = {
     cake_cat_mid: "кіт",
 
 
-    cake_cat_is: "Кіт",
 
 
-    cake_cat_isnot: "Кіт не",
 
 
-    cake_cat_sits: "Кіт сидить",
 
 
     cake_win_cat: "Кіт узяв торт.",
@@ -1627,13 +1621,10 @@ STRINGS.uk = {
     cake_rabbit_mid: "кролик",
 
 
-    cake_rabbit_is: "Кролик",
 
 
-    cake_rabbit_isnot: "Кролик не",
 
 
-    cake_rabbit_sits: "Кролик сидить",
 
 
     cake_win_rabbit: "Кролик узяв торт.",
@@ -1648,13 +1639,10 @@ STRINGS.uk = {
     cake_mouse_mid: "миша",
 
 
-    cake_mouse_is: "Миша",
 
 
-    cake_mouse_isnot: "Миша не",
 
 
-    cake_mouse_sits: "Миша сидить",
 
 
     cake_win_mouse: "Миша взяла торт.",
@@ -1669,13 +1657,10 @@ STRINGS.uk = {
     cake_hedgehog_mid: "їжак",
 
 
-    cake_hedgehog_is: "Їжак",
 
 
-    cake_hedgehog_isnot: "Їжак не",
 
 
-    cake_hedgehog_sits: "Їжак сидить",
 
 
     cake_win_hedgehog: "Їжак узяв торт.",
@@ -1684,130 +1669,103 @@ STRINGS.uk = {
     cake_room_kitchen_name: "Кухня",
 
 
-    cake_room_kitchen_in: "на кухні",
 
 
     cake_room_living_name: "Вітальня",
 
 
-    cake_room_living_in: "у вітальні",
 
 
     cake_room_hall_name: "Коридор",
 
 
-    cake_room_hall_in: "у коридорі",
 
 
     cake_room_bath_name: "Ванна",
 
 
-    cake_room_bath_in: "у ванній",
 
 
     cake_room_bedroom_name: "Спальня",
 
 
-    cake_room_bedroom_in: "у спальні",
 
 
     cake_room_garden_name: "Сад",
 
 
-    cake_room_garden_in: "у саду",
 
 
     cake_room_cellar_name: "Підвал",
 
 
-    cake_room_cellar_in: "у підвалі",
     cake_room_kids_name: "Дитяча",
-    cake_room_kids_in: "у дитячій",
     cake_room_attic_name: "Горище",
-    cake_room_attic_in: "на горищі",
     cake_room_dining_name: "Їдальня",
-    cake_room_dining_in: "в їдальні",
     cake_room_office_name: "Кабінет",
-    cake_room_office_in: "у кабінеті",
     cake_room_terrace_name: "Тераса",
-    cake_room_terrace_in: "на терасі",
 
 
-    cake_furn_table_name: "Стіл",
 
 
-    cake_furn_chair_name: "Стілець",
 
 
-    cake_furn_rug_name: "Килим",
 
 
-    cake_furn_plant_name: "Рослина",
 
 
-    cake_furn_cupboard_name: "Шафа",
-    cake_furn_sofa_name: "Диван",
-    cake_furn_bed_name: "Ліжко",
-    cake_furn_stool_name: "Табурет",
-    cake_furn_shelf_name: "Стелаж",
-    cake_furn_box_name: "Ящик",
-    cake_furn_lamp_name: "Торшер",
-    cake_furn_bathtub_name: "Ванна",
 
 
-    cake_furn_chair_on: "на стільці",
 
 
-    cake_furn_rug_on: "на килимі",
 
 
-    cake_furn_plant_next: "поруч із рослиною",
 
 
-    cake_furn_cupboard_next: "поруч із шафою",
-    cake_furn_sofa_on: "на дивані",
-    cake_furn_bed_on: "на ліжку",
-    cake_furn_stool_on: "на табуреті",
-    cake_furn_shelf_next: "поруч зі стелажем",
-    cake_furn_box_next: "поруч із ящиком",
-    cake_furn_lamp_next: "поруч із торшером",
-    cake_furn_bathtub_next: "поруч із ванною",
 
 
-    cake_clue_in: "{IS} {ROOM}.",
+    cake_clue_size: "{A} у кімнаті, де кількість клітинок така: {N}.",
+    cake_clue_higher: "{A} стоїть вище, ніж {B}.",
+    cake_clue_leftof: "{A} стоїть лівіше, ніж {B}.",
+    cake_clue_border: "{A} і {B} у кімнатах зі спільною стіною.",
+    cake_clue_cakesize: "Торт у кімнаті, де кількість клітинок така: {N}.",
+    cake_clue_cakesize_fish: "Риба в кімнаті, де кількість клітинок така: {N}.",
+    cake_clue_cakesize_cookies: "Печиво в кімнаті, де кількість клітинок така: {N}.",
+    cake_clue_cakesize_ball: "М'яч у кімнаті, де кількість клітинок така: {N}.",
+    cake_clue_cakesize_key: "Ключ у кімнаті, де кількість клітинок така: {N}.",
+    cake_clue_cakesize_family: "Торт у кімнаті, де кількість клітинок така: {N}.",
+    cake_clue_cakesize_treasure: "Скарб у кімнаті, де кількість клітинок така: {N}.",
+    cake_clue_steps: "{A}: кількість кроків до торта: {N}.",
+    cake_clue_steps_fish: "{A}: кількість кроків до риби: {N}.",
+    cake_clue_steps_cookies: "{A}: кількість кроків до печива: {N}.",
+    cake_clue_steps_ball: "{A}: кількість кроків до м'яча: {N}.",
+    cake_clue_steps_key: "{A}: кількість кроків до ключа: {N}.",
+    cake_clue_steps_family: "{A}: кількість кроків до торта: {N}.",
+    cake_clue_steps_treasure: "{A}: кількість кроків до скарбу: {N}.",
 
 
-    cake_clue_notin: "{ISNOT} {ROOM}.",
 
 
-    cake_clue_on: "{SITS} {FURN}.",
 
 
-    cake_clue_next: "{IS} {FURN}.",
 
 
-    cake_clue_window: "{IS} у тому самому рядку, що й вікно.",
 
 
-    cake_clue_top: "{IS} у верхньому рядку.",
 
 
-    cake_clue_bottom: "{IS} у нижньому рядку.",
 
 
-    cake_clue_left: "{IS} у лівому стовпці.",
 
 
-    cake_clue_right: "{IS} у правому стовпці.",
 
 
-    cake_clue_same: "{A} і {B} в одній кімнаті.",
 
 
     game_cake: "Хто взяв торт?",
 
 
-    home_cake_desc: "Детективна логічна загадка: за підказками розмісти по одному обраному персонажу або предмету в кожному рядку й стовпці. Знайди, хто перебуває в одній кімнаті з предметом теми.",
+    home_cake_desc: "Детективна логічна головоломка: по одному підозрюваному в кожній кімнаті, і ніколи двоє поруч. За зачіпками знайдіть зниклу річ і єдиного підозрюваного, що стоїть просто біля неї.",
 
 
     cake_board_label: "План",
@@ -1835,261 +1793,170 @@ STRINGS.uk = {
 
 
     cake_hint_step: "{THING}: рядок {R}, стовпець {C}.",
-    cake_hint_last: "Усі тварини на своїх місцях. Вільними залишилися лише один рядок і один стовпець - там і стоїть торт.",
+    cake_hint_last: "Усі тварини на місцях. Рівно одна з них стоїть поруч із тортом. Зачіпки про торт підкажуть, де він.",
     cake_always_title: "Завжди діє",
-    cake_always_1: "У кожному рядку й кожному стовпці стоїть рівно одна річ: тварина або торт.",
-    cake_always_2: "Торт завжди стоїть на столі.",
-    cake_always_3: "Тварини ніколи не стоять на столі чи на меблях, що займають усю клітинку (рослина, шафа, стелаж, ящик, торшер, ванна).",
-    cake_always_4: "Рівно одна тварина в кімнаті з тортом – це вона його взяла.",
+    cake_always_1: "У кожній кімнаті рівно одна тварина.",
+    cake_always_2: "Торт може бути в будь-якій кімнаті, але не на клітинці тварини.",
+    cake_always_3: "Жодні дві тварини не стоять безпосередньо поруч, навіть по діагоналі.",
+    cake_always_4: "Рівно одна тварина стоїть безпосередньо поруч із тортом (також по діагоналі, навіть через стіну) – вона його взяла.",
     cake_why_free: "{A} — сюди: за правилами 1 і 3 це єдина ще вільна клітинка.",
     cake_why_clue: "{A} — сюди: зачіпка {N} залишає вільною лише цю клітинку.",
     cake_why_clue2: "{A} — сюди: зачіпки {N} і {M} разом залишають вільною лише цю клітинку.",
-    cake_why_row: "{A} — сюди: більше ніщо не підходить до цього рядка, а в цьому рядку можлива лише ця клітинка.",
-    cake_why_col: "{A} — сюди: більше ніщо не підходить до цього стовпця, а в цьому стовпці можлива лише ця клітинка.",
-    cake_why_lines: "{A} — сюди: за правилом 1 інші можливі клітинки лежать у рядках чи стовпцях, потрібних іншим.",
-    cake_why_rooms: "{A} — сюди: це випливає з правила 4 і зачіпок про кімнати.",
-    cake_why_groups: "{A} — сюди: за правилом 1 кілька інших разом потребують певних рядків чи стовпців, і лишається тільки ця клітинка.",
+    cake_why_room: "{A} має бути тут: до цієї кімнати вже ніхто інший не може потрапити, у кожній кімнаті хтось потрібен (правило 1), і в ній залишилася лише ця клітинка.",
+    cake_why_rules: "{A} має бути тут: це крок за кроком випливає з правил 1 і 3 та зачіпок.",
+    cake_why_pairs: "{A} має бути тут: це випливає із зачіпок про двох підозрюваних разом і з правила 4.",
+    cake_why_try: "{A} має бути тут: на будь-якій іншій клітинці правила й зачіпки не залишили б місця комусь із решти.",
     cake_why_general: "{A} — сюди: це випливає із зачіпок і правил у рамці Завжди діє.",
     cake_cattiger_name: "Тигр",
     cake_cattiger_cap: "Тигр",
     cake_cattiger_mid: "Тигр",
-    cake_cattiger_is: "Тигр",
-    cake_cattiger_isnot: "Тигр не",
-    cake_cattiger_sits: "Тигр сидить",
     cake_win_cattiger: "Тигр узяв рибу.",
     cake_catluna_name: "Луна",
     cake_catluna_cap: "Луна",
     cake_catluna_mid: "Луна",
-    cake_catluna_is: "Луна",
-    cake_catluna_isnot: "Луна не",
-    cake_catluna_sits: "Луна сидить",
     cake_win_catluna: "Луна узяла рибу.",
     cake_catmimi_name: "Мімі",
     cake_catmimi_cap: "Мімі",
     cake_catmimi_mid: "Мімі",
-    cake_catmimi_is: "Мімі",
-    cake_catmimi_isnot: "Мімі не",
-    cake_catmimi_sits: "Мімі сидить",
     cake_win_catmimi: "Мімі узяла рибу.",
     cake_catfelix_name: "Фелікс",
     cake_catfelix_cap: "Фелікс",
     cake_catfelix_mid: "Фелікс",
-    cake_catfelix_is: "Фелікс",
-    cake_catfelix_isnot: "Фелікс не",
-    cake_catfelix_sits: "Фелікс сидить",
     cake_win_catfelix: "Фелікс узяв рибу.",
     cake_catmax_name: "Макс",
     cake_catmax_cap: "Макс",
     cake_catmax_mid: "Макс",
-    cake_catmax_is: "Макс",
-    cake_catmax_isnot: "Макс не",
-    cake_catmax_sits: "Макс сидить",
     cake_win_catmax: "Макс узяв рибу.",
     cake_thing_fish: "Риба",
-    cake_hint_last_fish: "Усі коти на своїх місцях. Вільними залишилися лише один рядок і один стовпець - там і лежить риба.",
-    cake_always_1_fish: "У кожному рядку й кожному стовпці стоїть рівно одна річ: кіт або риба.",
-    cake_always_2_fish: "Риба завжди лежить на столі.",
-    cake_always_4_fish: "Рівно один кіт у кімнаті з рибою – це він її взяв.",
+    cake_hint_last_fish: "Усі коти на місцях. Рівно один із них стоїть поруч із рибою. Зачіпки про рибу підкажуть, де вона.",
+    cake_always_1_fish: "У кожній кімнаті рівно один кіт.",
+    cake_always_2_fish: "Риба може бути в будь-якій кімнаті, але не на клітинці кота.",
+    cake_always_4_fish: "Рівно один кіт стоїть безпосередньо поруч із рибою (також по діагоналі, навіть через стіну) – він її взяв.",
     cake_bearbruno_name: "Бруно",
     cake_bearbruno_cap: "Бруно",
     cake_bearbruno_mid: "Бруно",
-    cake_bearbruno_is: "Бруно",
-    cake_bearbruno_isnot: "Бруно не",
-    cake_bearbruno_sits: "Бруно сидить",
     cake_win_bearbruno: "Бруно поласував печивом.",
     cake_bearpaula_name: "Паула",
     cake_bearpaula_cap: "Паула",
     cake_bearpaula_mid: "Паула",
-    cake_bearpaula_is: "Паула",
-    cake_bearpaula_isnot: "Паула не",
-    cake_bearpaula_sits: "Паула сидить",
     cake_win_bearpaula: "Паула поласувала печивом.",
     cake_bearotto_name: "Отто",
     cake_bearotto_cap: "Отто",
     cake_bearotto_mid: "Отто",
-    cake_bearotto_is: "Отто",
-    cake_bearotto_isnot: "Отто не",
-    cake_bearotto_sits: "Отто сидить",
     cake_win_bearotto: "Отто поласував печивом.",
     cake_bearlilli_name: "Лілі",
     cake_bearlilli_cap: "Лілі",
     cake_bearlilli_mid: "Лілі",
-    cake_bearlilli_is: "Лілі",
-    cake_bearlilli_isnot: "Лілі не",
-    cake_bearlilli_sits: "Лілі сидить",
     cake_win_bearlilli: "Лілі поласувала печивом.",
     cake_bearfritz_name: "Фріц",
     cake_bearfritz_cap: "Фріц",
     cake_bearfritz_mid: "Фріц",
-    cake_bearfritz_is: "Фріц",
-    cake_bearfritz_isnot: "Фріц не",
-    cake_bearfritz_sits: "Фріц сидить",
     cake_win_bearfritz: "Фріц поласував печивом.",
     cake_thing_cookies: "Печиво",
-    cake_hint_last_cookies: "Усі ведмеді на своїх місцях. Вільними залишилися лише один рядок і один стовпець - там і лежить печиво.",
-    cake_always_1_cookies: "У кожному рядку й кожному стовпці стоїть рівно одна річ: ведмідь або печиво.",
-    cake_always_2_cookies: "Печиво завжди лежить на столі.",
-    cake_always_4_cookies: "Рівно один ведмідь у кімнаті з печивом – це він ним поласував.",
+    cake_hint_last_cookies: "Усі ведмеді на місцях. Рівно один із них стоїть поруч із печивом. Зачіпки про печиво підкажуть, де воно.",
+    cake_always_1_cookies: "У кожній кімнаті рівно один ведмідь.",
+    cake_always_2_cookies: "Печиво може бути в будь-якій кімнаті, але не на клітинці ведмедя.",
+    cake_always_4_cookies: "Рівно один ведмідь стоїть безпосередньо поруч із печивом (також по діагоналі, навіть через стіну) – він ним поласував.",
     cake_dogbello_name: "Белло",
     cake_dogbello_cap: "Белло",
     cake_dogbello_mid: "Белло",
-    cake_dogbello_is: "Белло",
-    cake_dogbello_isnot: "Белло не",
-    cake_dogbello_sits: "Белло сидить",
     cake_win_dogbello: "Белло сховав м'яч.",
     cake_doglotte_name: "Лотте",
     cake_doglotte_cap: "Лотте",
     cake_doglotte_mid: "Лотте",
-    cake_doglotte_is: "Лотте",
-    cake_doglotte_isnot: "Лотте не",
-    cake_doglotte_sits: "Лотте сидить",
     cake_win_doglotte: "Лотте сховала м'яч.",
     cake_dogbenny_name: "Бенні",
     cake_dogbenny_cap: "Бенні",
     cake_dogbenny_mid: "Бенні",
-    cake_dogbenny_is: "Бенні",
-    cake_dogbenny_isnot: "Бенні не",
-    cake_dogbenny_sits: "Бенні сидить",
     cake_win_dogbenny: "Бенні сховав м'яч.",
     cake_dogsusi_name: "Сузі",
     cake_dogsusi_cap: "Сузі",
     cake_dogsusi_mid: "Сузі",
-    cake_dogsusi_is: "Сузі",
-    cake_dogsusi_isnot: "Сузі не",
-    cake_dogsusi_sits: "Сузі сидить",
     cake_win_dogsusi: "Сузі сховала м'яч.",
     cake_dogrudi_name: "Руді",
     cake_dogrudi_cap: "Руді",
     cake_dogrudi_mid: "Руді",
-    cake_dogrudi_is: "Руді",
-    cake_dogrudi_isnot: "Руді не",
-    cake_dogrudi_sits: "Руді сидить",
     cake_win_dogrudi: "Руді сховав м'яч.",
     cake_thing_ball: "М'яч",
-    cake_hint_last_ball: "Усі собаки на своїх місцях. Вільними залишилися лише один рядок і один стовпець - там і лежить м'яч.",
-    cake_always_1_ball: "У кожному рядку й кожному стовпці стоїть рівно одна річ: собака або м'яч.",
-    cake_always_2_ball: "М'яч завжди лежить на столі.",
-    cake_always_4_ball: "Рівно один собака в кімнаті з м'ячем – це він його сховав.",
+    cake_hint_last_ball: "Усі собаки на місцях. Рівно одна з них стоїть поруч із м'ячем. Зачіпки про м'яч підкажуть, де він.",
+    cake_always_1_ball: "У кожній кімнаті рівно один собака.",
+    cake_always_2_ball: "М'яч може бути в будь-якій кімнаті, але не на клітинці собаки.",
+    cake_always_4_ball: "Рівно один собака стоїть безпосередньо поруч із м'ячем (також по діагоналі, навіть через стіну) – він його сховав.",
     cake_magpiepip_name: "Піп",
     cake_magpiepip_cap: "Піп",
     cake_magpiepip_mid: "Піп",
-    cake_magpiepip_is: "Піп",
-    cake_magpiepip_isnot: "Піп не",
-    cake_magpiepip_sits: "Піп сидить",
     cake_win_magpiepip: "Піп кудись подів ключ.",
     cake_magpiekiki_name: "Кікі",
     cake_magpiekiki_cap: "Кікі",
     cake_magpiekiki_mid: "Кікі",
-    cake_magpiekiki_is: "Кікі",
-    cake_magpiekiki_isnot: "Кікі не",
-    cake_magpiekiki_sits: "Кікі сидить",
     cake_win_magpiekiki: "Кікі кудись поділа ключ.",
     cake_magpierosa_name: "Роза",
     cake_magpierosa_cap: "Роза",
     cake_magpierosa_mid: "Роза",
-    cake_magpierosa_is: "Роза",
-    cake_magpierosa_isnot: "Роза не",
-    cake_magpierosa_sits: "Роза сидить",
     cake_win_magpierosa: "Роза кудись поділа ключ.",
     cake_magpiejakob_name: "Якоб",
     cake_magpiejakob_cap: "Якоб",
     cake_magpiejakob_mid: "Якоб",
-    cake_magpiejakob_is: "Якоб",
-    cake_magpiejakob_isnot: "Якоб не",
-    cake_magpiejakob_sits: "Якоб сидить",
     cake_win_magpiejakob: "Якоб кудись подів ключ.",
     cake_magpielou_name: "Лу",
     cake_magpielou_cap: "Лу",
     cake_magpielou_mid: "Лу",
-    cake_magpielou_is: "Лу",
-    cake_magpielou_isnot: "Лу не",
-    cake_magpielou_sits: "Лу сидить",
     cake_win_magpielou: "Лу кудись поділа ключ.",
     cake_thing_key: "Ключ",
-    cake_hint_last_key: "Усі сороки на своїх місцях. Вільними залишилися лише один рядок і один стовпець - там і лежить ключ.",
-    cake_always_1_key: "У кожному рядку й кожному стовпці стоїть рівно одна річ: сорока або ключ.",
-    cake_always_2_key: "Ключ завжди лежить на столі.",
-    cake_always_4_key: "Рівно одна сорока в кімнаті з ключем – це вона його кудись поділа.",
+    cake_hint_last_key: "Усі сороки на місцях. Рівно одна з них стоїть поруч із ключем. Зачіпки про ключ підкажуть, де він.",
+    cake_always_1_key: "У кожній кімнаті рівно одна сорока.",
+    cake_always_2_key: "Ключ може бути в будь-якій кімнаті, але не на клітинці сороки.",
+    cake_always_4_key: "Рівно одна сорока стоїть безпосередньо поруч із ключем (також по діагоналі, навіть через стіну) – вона його загубила.",
     cake_greta_name: "Ґрета",
     cake_greta_cap: "Ґрета",
     cake_greta_mid: "Ґрета",
-    cake_greta_is: "Ґрета",
-    cake_greta_isnot: "Ґрета не",
-    cake_greta_sits: "Ґрета сидить",
     cake_win_greta: "Ґрета взяла торт.",
     cake_anton_name: "Антон",
     cake_anton_cap: "Антон",
     cake_anton_mid: "Антон",
-    cake_anton_is: "Антон",
-    cake_anton_isnot: "Антон не",
-    cake_anton_sits: "Антон сидить",
     cake_win_anton: "Антон взяв торт.",
     cake_lisa_name: "Ліза",
     cake_lisa_cap: "Ліза",
     cake_lisa_mid: "Ліза",
-    cake_lisa_is: "Ліза",
-    cake_lisa_isnot: "Ліза не",
-    cake_lisa_sits: "Ліза сидить",
     cake_win_lisa: "Ліза взяла торт.",
     cake_jonas_name: "Йонас",
     cake_jonas_cap: "Йонас",
     cake_jonas_mid: "Йонас",
-    cake_jonas_is: "Йонас",
-    cake_jonas_isnot: "Йонас не",
-    cake_jonas_sits: "Йонас сидить",
     cake_win_jonas: "Йонас взяв торт.",
     cake_emma_name: "Емма",
     cake_emma_cap: "Емма",
     cake_emma_mid: "Емма",
-    cake_emma_is: "Емма",
-    cake_emma_isnot: "Емма не",
-    cake_emma_sits: "Емма сидить",
     cake_win_emma: "Емма взяла торт.",
-    cake_hint_last_family: "Уся родина на своїх місцях. Вільними залишилися лише один рядок і один стовпець - там і стоїть торт.",
-    cake_always_1_family: "У кожному рядку й кожному стовпці стоїть рівно одна річ: член родини або торт.",
-    cake_always_2_family: "Торт завжди стоїть на столі.",
-    cake_always_4_family: "Рівно один член родини в кімнаті з тортом – це він його взяв.",
+    cake_hint_last_family: "Уся родина на місцях. Рівно один її член стоїть поруч із тортом. Зачіпки про торт підкажуть, де він.",
+    cake_always_1_family: "У кожній кімнаті рівно один член родини.",
+    cake_always_2_family: "Торт може бути в будь-якій кімнаті, але не на клітинці члена родини.",
+    cake_always_4_family: "Рівно один член родини стоїть безпосередньо поруч із тортом (також по діагоналі, навіть через стіну) – ця людина його взяла.",
     cake_tom_name: "Том",
     cake_tom_cap: "Том",
     cake_tom_mid: "Том",
-    cake_tom_is: "Том",
-    cake_tom_isnot: "Том не",
-    cake_tom_sits: "Том сидить",
     cake_win_tom: "Том сховав скарб.",
     cake_nora_name: "Нора",
     cake_nora_cap: "Нора",
     cake_nora_mid: "Нора",
-    cake_nora_is: "Нора",
-    cake_nora_isnot: "Нора не",
-    cake_nora_sits: "Нора сидить",
     cake_win_nora: "Нора сховала скарб.",
     cake_ben_name: "Бен",
     cake_ben_cap: "Бен",
     cake_ben_mid: "Бен",
-    cake_ben_is: "Бен",
-    cake_ben_isnot: "Бен не",
-    cake_ben_sits: "Бен сидить",
     cake_win_ben: "Бен сховав скарб.",
     cake_ida_name: "Іда",
     cake_ida_cap: "Іда",
     cake_ida_mid: "Іда",
-    cake_ida_is: "Іда",
-    cake_ida_isnot: "Іда не",
-    cake_ida_sits: "Іда сидить",
     cake_win_ida: "Іда сховала скарб.",
     cake_leo_name: "Лео",
     cake_leo_cap: "Лео",
     cake_leo_mid: "Лео",
-    cake_leo_is: "Лео",
-    cake_leo_isnot: "Лео не",
-    cake_leo_sits: "Лео сидить",
     cake_win_leo: "Лео сховав скарб.",
     cake_thing_treasure: "Скарб",
-    cake_hint_last_treasure: "Усі діти на своїх місцях. Вільними залишилися лише один рядок і один стовпець - там і стоїть скарб.",
-    cake_always_1_treasure: "У кожному рядку й кожному стовпці стоїть рівно одна річ: дитина або скарб.",
-    cake_always_2_treasure: "Скарб завжди стоїть на столі.",
-    cake_always_4_treasure: "Рівно одна дитина в кімнаті зі скарбом – це вона його сховала.",
-    cake_always_3_people: "Ніхто ніколи не стоїть на столі чи на меблях, що займають усю клітинку (рослина, шафа, стелаж, ящик, торшер, ванна).",
+    cake_hint_last_treasure: "Усі діти на місцях. Рівно одна дитина стоїть поруч зі скарбом. Зачіпки про скарб підкажуть, де він.",
+    cake_always_1_treasure: "У кожній кімнаті рівно одна дитина.",
+    cake_always_2_treasure: "Скарб може бути в будь-якій кімнаті, але не на клітинці дитини.",
+    cake_always_4_treasure: "Рівно одна дитина стоїть безпосередньо поруч зі скарбом (також по діагоналі, навіть через стіну) – вона його сховала.",
+    cake_always_3_people: "Жодні двоє людей не стоять безпосередньо поруч, навіть по діагоналі.",
     cake_motif_label: "Тема",
     cake_motif_animals: "Тварини й торт",
     cake_motif_cats: "Коти й риба",
@@ -2109,7 +1976,6 @@ STRINGS.uk = {
     cake_tool_x: "Тут нічого немає",
 
 
-    cake_window_name: "Вікно",
 
 
     cake_thing_cake: "Торт",

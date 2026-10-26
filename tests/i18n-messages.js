@@ -1054,27 +1054,26 @@ fs.readdirSync(ROOT).filter((f) => f.endsWith(".html")).sort().forEach((f) => {
 });
 
 // "Who Took the Cake?" builds its clue sentences from ready-made phrases
-// (CakeCore.clueText), not through msg(). Every clue type, with every
-// animal, room and fitting piece of furniture, in every language: no
+// (CakeCore.clueText), not through msg(). Every clue type (rules 2: room
+// size, higher, further left, rooms sharing a wall, steps to the cake),
+// with every animal and every theme's thing, in every language: no
 // placeholder or key may be left over, and the sentence must differ from
 // English.
 const CakeCore = require(path.join(__dirname, "..", "cake-core.js"));
 let cakeSamples = 0;
 {
-  const cakePuzzle = { n: 6, rooms: [0], roomNames: CakeCore.ROOM_NAMES.slice() };
+  const cakePuzzles = CakeCore.MOTIFS.map((motif) => ({ n: 6, rooms: [0], roomNames: CakeCore.ROOM_NAMES.slice(), motif }));
   const clueSamples = [];
   for (let a = 0; a < CakeCore.ANIMALS.length; a++) {
-    CakeCore.ROOM_NAMES.forEach((r, room) => { clueSamples.push({ t: "in", a, room }); clueSamples.push({ t: "notin", a, room }); });
-    CakeCore.SITTING.forEach((f) => clueSamples.push({ t: "on", a, f }));
-    CakeCore.NEXT_TO.forEach((f) => clueSamples.push({ t: "next", a, f }));
-    clueSamples.push({ t: "window", a });
-    ["top", "bottom", "left", "right"].forEach((side) => clueSamples.push({ t: "edge", a, side }));
-    for (let b = 0; b < CakeCore.ANIMALS.length; b++) if (b !== a) clueSamples.push({ t: "same", a, b });
+    [2, 5, 12].forEach((size) => clueSamples.push({ t: "size", a, size }));
+    [2, 3, 7].forEach((d) => clueSamples.push({ t: "steps", a, d }));
+    for (let b = 0; b < CakeCore.ANIMALS.length; b++) if (b !== a) ["higher", "left", "border"].forEach((t) => clueSamples.push({ t, a, b }));
   }
+  [3, 8].forEach((size) => clueSamples.push({ t: "size", a: 5, size }));
   const tEn = (k) => STRINGS.en[k] || k;
   for (const lang of ["en"].concat(langs)) {
     const tl = (k) => (STRINGS[lang] && STRINGS[lang][k]) || k;
-    for (const clue of clueSamples) {
+    for (const cakePuzzle of cakePuzzles) for (const clue of clueSamples) {
       const out = CakeCore.clueText(cakePuzzle, clue, tl);
       cakeSamples++;
       if (/\{|cake_/.test(out)) fail(lang + ": cake clue incomplete " + JSON.stringify(out));

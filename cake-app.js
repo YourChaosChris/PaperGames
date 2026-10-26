@@ -3,6 +3,10 @@
 // other logic puzzles: a level picker, a fresh generated puzzle each time,
 // a hint button, the game saved between visits.
 //
+// Rules (CakeCore, rules 2): one animal per room, animals never side by
+// side or diagonally next to each other, exactly one animal next to the
+// cake - the culprit.
+//
 // Pick a thing in the row of buttons under the board (an animal, the
 // cake, or "X" for "nothing here"), then tap a cell. Tapping the same cell
 // with the same pick takes it off again; a thing set somewhere new leaves
@@ -134,11 +138,12 @@ function initCakeApp() {
     // at once and keeps every move.
     motifSelect.addEventListener("change", () => {
       storeCakeMotif(motifSelect.value);
-      syncCakeQuickRules();
       const p = AppStateCake.puzzle;
-      if (!p) return;
+      if (!p) { syncCakeQuickRules(); return; }
       if (motifSelect.value !== "animals" && CakeCore.MOTIFS.indexOf(motifSelect.value) !== -1) p.motif = motifSelect.value;
       else delete p.motif;
+      // The quick rules follow the puzzle's new theme.
+      syncCakeQuickRules();
       showCakeBoard();
       if (!AppStateCake.gameOver) saveCakeGame();
     });
@@ -166,8 +171,10 @@ function initCakeApp() {
   syncCakeQuickRules();
 
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(CAKE_SAVE_KEY) : null;
-  // A saved puzzle whose clues no longer fit its solution under today's
-  // rules (for instance "next to" across a wall) is replaced by a new one.
+  // A saved puzzle made under older rules (no `rules: 2`: one per row and
+  // column, furniture, window) or whose clues no longer fit its solution is
+  // dropped quietly and a new one starts on the same level. The statistics
+  // are kept.
   if (saved && saved.puzzle && saved.puzzle.solution && !savedCakePuzzleValid(saved.puzzle)) {
     const lv = CakeCore.LEVELS[saved.level] ? saved.level : "easy";
     if (levelInline) levelInline.value = lv;
@@ -192,11 +199,7 @@ function initCakeApp() {
 }
 
 function savedCakePuzzleValid(p) {
-  try {
-    return CakeCore.isSolution(p, p.solution) && CakeCore.countSolutions(p, 2) === 1;
-  } catch (e) {
-    return false;
-  }
+  return CakeCore.isCurrent(p);
 }
 
 function startNewCakeGame(level) {
@@ -252,14 +255,12 @@ function buildCakeBoardDOM() {
     if (r === n - 1 || p.rooms[i + n] !== room) cell.classList.add("cake-wall-b");
     if (c === 0 || p.rooms[i - 1] !== room) cell.classList.add("cake-wall-l");
     if (c === n - 1 || p.rooms[i + 1] !== room) cell.classList.add("cake-wall-r");
-    cell.innerHTML = '<span class="cake-furn"></span><span class="cake-thing"></span>';
+    cell.innerHTML = '<span class="cake-thing"></span>';
     cell.addEventListener("click", () => onCakeCellClick(i));
     boardEl.appendChild(cell);
   }
-  // Room names: one label per room in the top strip of a run of the
-  // room's cells in one row - a strip furniture and placed things leave
-  // free. Which run is picked once the text and cell size are known
-  // (fitCakeLabels).
+  // Room labels: one per room in the top strip of a run of the room's
+  // cells in one row - a strip placed things leave free (fitCakeLabels).
   const labels = document.createElement("div");
   labels.className = "cake-labels";
   labels.setAttribute("aria-hidden", "true");
@@ -271,20 +272,6 @@ function buildCakeBoardDOM() {
     labels.appendChild(el);
   });
   boardEl.appendChild(labels);
-  // The window hangs on the outer wall of its row, outside the board.
-  const wrap = document.getElementById("cake-board-wrap");
-  let win = document.getElementById("cake-window");
-  if (!win) {
-    win = document.createElement("span");
-    win.id = "cake-window";
-    win.className = "cake-window";
-    wrap.appendChild(win);
-  }
-  win.innerHTML = CakeIcons.svg("window");
-  win.className = "cake-window cake-window-" + p.window.side;
-  wrap.className = "cake-board-wrap cake-wrap-" + p.window.side;
-  win.style.top = (p.window.row * 100 / n) + "%";
-  win.style.height = (100 / n) + "%";
   sizeCakeBoard();
   if (window.requestAnimationFrame) window.requestAnimationFrame(sizeCakeBoard);
   if (!buildCakeBoardDOM.resizeAttached) {
@@ -401,26 +388,14 @@ function renderCakeBoard() {
     const r = Math.floor(i / n), c = i % n;
     const room = p.rooms[i];
     const roomName = tCake("cake_room_" + p.roomNames[room] + "_name");
-    const f = p.furniture[i];
     const k = cakeThingAt(i);
-    // Furniture no animal can stand on fills its cell; a chair or rug is
-    // drawn small in a corner so the animal on it stays large. The cake
-    // on a table is drawn standing on the table top.
-    const furn = cell.querySelector(".cake-furn");
-    const blocking = CakeCore.BLOCKING.indexOf(f) !== -1;
-    const cakeOnTable = k === n - 1 && f === "table";
-    furn.className = "cake-furn" + (f ? (blocking ? " cake-furn-big" : " cake-furn-small") : "");
-    furn.innerHTML = f ? CakeIcons.svg(cakeOnTable ? "table" + CakeCore.thingId(p, k) : f, "cake-furn-icon") : "";
     const crossed = AppStateCake.crosses.indexOf(i) !== -1;
     const thing = cell.querySelector(".cake-thing");
-    if (cakeOnTable) thing.innerHTML = "";
-    else if (k >= 0) thing.innerHTML = CakeIcons.svg(CakeCore.thingId(p, k), "cake-thing-icon");
+    if (k >= 0) thing.innerHTML = CakeIcons.svg(CakeCore.thingId(p, k), "cake-thing-icon");
     else if (crossed) thing.innerHTML = CakeIcons.svg("x", "cake-thing-icon cake-cross-icon");
     else thing.innerHTML = "";
     cell.classList.toggle("hint-cell", AppStateCake.hintCell === i);
     const parts = [tCake("cake_aria_cell", { R: r + 1, C: c + 1 }), roomName];
-    if (f) parts.push(tCake("cake_furn_" + f + "_name"));
-    if (r === p.window.row && ((p.window.side === "left" && c === 0) || (p.window.side === "right" && c === n - 1))) parts.push(tCake("cake_window_name"));
     if (k >= 0) parts.push(CakeCore.thingName(p, k, tCake));
     else if (crossed) parts.push(tCake("cake_tool_x"));
     if (AppStateCake.hintCell === i) parts.unshift(tCake("cake_aria_hint"));
