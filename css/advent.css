@@ -1,0 +1,121 @@
+/* advent.html: the puzzle Advent calendar (loaded after base.css). Black on
+   white; closed, open and solved doors differ by line and pattern, not by
+   colour: closed = dashed edge on a striped field, open = thick plain edge,
+   solved = black with a white tick. */
+
+.adv-check { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+.adv-check input { width: 24px; height: 24px; }
+
+.adv-doors {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  max-width: 520px;
+  margin: 8px auto 0;
+}
+.adv-door-btn {
+  position: relative;
+  min-height: 60px;
+  min-width: 44px;
+  padding: 0;
+  background: #fff;
+  color: #141413;
+  border: 3px solid #141413;
+  border-radius: 6px;
+  font-size: 1.6em;
+  font-weight: bold;
+}
+.adv-door-btn .adv-num { position: relative; z-index: 1; background: #fff; padding: 0 4px; }
+.adv-door-btn.adv-closed {
+  border-style: dashed;
+  background: repeating-linear-gradient(45deg, #fff 0, #fff 7px, #141413 7px, #141413 9px);
+}
+.adv-door-btn.adv-open { border-width: 5px; }
+.adv-door-btn.adv-solved { background: #141413; color: #fff; }
+.adv-door-btn.adv-solved .adv-num { background: #141413; }
+.adv-door-btn .adv-mark { position: absolute; right: 4px; bottom: 0; font-size: 0.7em; }
+.adv-door-btn.adv-today { outline: 3px solid #141413; outline-offset: 3px; }
+
+.adv-legend { text-align: center; }
+.adv-legend-pic {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  border: 2px solid #141413;
+  border-radius: 3px;
+  line-height: 18px;
+  font-size: 14px;
+  text-align: center;
+}
+.adv-pic-closed { border-style: dashed; background: repeating-linear-gradient(45deg, #fff 0, #fff 4px, #141413 4px, #141413 5px); }
+.adv-pic-open { border-width: 4px; }
+.adv-pic-solved { background: #141413; color: #fff; }
+
+.adv-door-title { margin: 4px 0; font-size: 1.3em; }
+.adv-door-how { margin: 0 0 8px; }
+/* A puzzle grid keeps its left and right in every language: mirrored, the
+   signs and side clues would point the wrong way. */
+.adv-puzzle { max-width: 420px; margin: 0 auto; direction: ltr; }
+
+.adv-grid {
+  display: grid;
+  gap: 0;
+  width: 100%;
+  border: 3px solid #141413;
+  box-sizing: border-box;
+}
+.adv-grid-sky, .adv-grid-futo, .adv-grid-nono { border: 0; }
+.adv-cell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  min-height: 44px;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #141413;
+  border-radius: 0;
+  background: #fff;
+  color: #141413;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.adv-cell:disabled { opacity: 1; }
+.adv-cell.adv-given { font-weight: 900; text-decoration: underline; cursor: default; }
+.adv-cell.adv-selected { box-shadow: inset 0 0 0 5px #141413; }
+.adv-cell.adv-thick-l { border-left-width: 4px; }
+.adv-cell.adv-thick-t { border-top-width: 4px; }
+.adv-cage-label { position: absolute; top: 1px; left: 3px; font-size: 0.45em; font-weight: bold; line-height: 1; }
+
+.adv-sign { display: flex; align-items: center; justify-content: center; font-size: 1.3em; font-weight: bold; }
+.adv-sign-v { min-height: 22px; }
+.adv-clue { display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1em; }
+.adv-clue-col { align-items: flex-end; padding-bottom: 4px; line-height: 1.1; font-size: 0.95em; }
+.adv-clue-row { justify-content: flex-end; padding-right: 6px; white-space: nowrap; font-size: 0.95em; }
+.adv-grid-nono .adv-cell { font-size: 1.3em; }
+.adv-cell.adv-filled { background: #141413; color: #fff; }
+.adv-cell.adv-crossed { color: #141413; }
+
+.adv-grid-lights { max-width: 300px; margin: 0 auto; gap: 6px; border: 0; }
+.adv-grid-lights .adv-cell { border: 3px solid #141413; border-radius: 50%; }
+.adv-cell.adv-on { background: #141413; }
+.adv-cell.adv-off { background: #fff; }
+
+.adv-puzzle-solved .adv-cell.adv-selected { box-shadow: none; }
+
+.adv-pad {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 12px auto 0;
+  max-width: 420px;
+}
+.adv-pad-btn { min-width: 48px; min-height: 48px; font-size: 1.3em; font-weight: bold; }
+.adv-pad-erase { font-size: 1em; }
+.adv-door-note { text-align: center; }
+.adv-solved { border: 3px solid #141413; padding: 8px 12px; margin: 12px 0; text-align: center; }
+.adv-solved-title { font-weight: bold; font-size: 1.2em; margin: 0 0 4px; }
+.adv-solved-text { margin: 0; }
+.adv-door-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
+.adv-door-actions button { min-height: 44px; }

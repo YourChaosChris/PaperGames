@@ -516,6 +516,20 @@ all parts back into one log in list order. The last line is exactly
   page at 360 x 640: roll, choose a pair, stop and make camp, a lost turn
   with its panel and "Weiter", the end of the game with the result, save
   and load, buttons at least 44 px, no sideways scroll.
+- `node tests/advent-core.js` - no server or browser needed. Puzzle Advent
+  calendar (task 122): each of the 24 puzzles has exactly one solution,
+  counted again with the games' own solvers (Light Switch 3 x 3: one set of
+  presses); fixed seeds (a fresh copy of the modules gives the same
+  puzzles); the kinds take turns, small in the first week, bigger in the
+  last; unlocking on 30 November, 1, 5 (with and without door 4 solved), 10
+  and 25 December and with "open all doors"; broken and old saves.
+- `node tests/advent-ui.js` - needs the server and Playwright. German page
+  at 360 x 640: 24 doors (at least 44 px, closed ones dashed and striped),
+  the line before 1 December, door 1 open and door 2 waiting on 5 December,
+  door 1 solved by tapping with its text, door 2 opening after it, a digit
+  kept over a reload, "Open all doors" from the menu, cells of the biggest
+  puzzles at least 40 px, every door open after 24 December, broken and old
+  saves, no sideways scroll.
 - `node tests/small-games-ui.js` - needs the server and Playwright. The
   three games of task 118 at 360 px in German: sliding puzzle (taps, the
   note outside row and column, hint, solved with the fewest moves, 5 x 5,

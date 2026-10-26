@@ -1342,6 +1342,18 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-26T00:30",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M3 35L15 13L21 22L27 9L37 35Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\" stroke-linejoin=\"round\"/><path d=\"M27 9V2L33 4.5L27 7\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><circle cx=\"16\" cy=\"29\" r=\"2.2\" fill=\"#141413\"/><circle cx=\"24\" cy=\"29\" r=\"2.2\" fill=\"#141413\"/></svg></span>"
+  },
+  {
+    slug: "advent",
+    category: "puzzles",
+    family: "latin",
+    nameKey: "game_advent",
+    nameText: "Puzzle Advent Calendar",
+    descKey: "home_advent_desc",
+    descText: "24 doors, one small puzzle behind each: Light Switch, mini Sudoku, picture logic, Futoshiki, Skyscrapers and Calcudoku. A door opens on its day in December once the one before is solved.",
+    popular: false,
+    added: "2026-10-26T12:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"4\" y=\"4\" width=\"32\" height=\"32\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><path d=\"M4 15H36M4 26H36M15 4V36M26 4V36\" stroke=\"#141413\" stroke-width=\"1.6\"/><rect x=\"15\" y=\"15\" width=\"11\" height=\"11\" fill=\"#141413\"/></svg></span>"
   }
 ];
 
