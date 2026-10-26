@@ -20,29 +20,14 @@ function saveTS() {
   if (AppStateTS.state.phase === "over") { GameStorage.clear(TEUFELSIEBEN_SAVE_KEY); return; }
   GameStorage.save(TEUFELSIEBEN_SAVE_KEY, { state: AppStateTS.state });
 }
-// The targets offered fit the chosen cards (task 133): 60/90/120 for the
-// normal cards, 250/500 for "extreme".
-function syncTargetsTS() {
-  const extreme = document.getElementById("ts-mode").value === "extreme";
-  const allowed = extreme ? TeufelSiebenCore.EXTREME_TARGETS : TeufelSiebenCore.TARGETS;
-  const select = document.getElementById("ts-target");
-  Array.from(select.options).forEach((o) => {
-    const ok = allowed.indexOf(parseInt(o.value, 10)) !== -1;
-    o.hidden = !ok;
-    o.disabled = !ok;
-  });
-  if (allowed.indexOf(parseInt(select.value, 10)) === -1) select.value = String(extreme ? TeufelSiebenCore.EXTREME_DEFAULT : TeufelSiebenCore.DEFAULT_TARGET);
-}
 function startTS() {
-  syncTargetsTS();
   const n = parseInt(document.getElementById("ts-players").value, 10) || 2;
   const comps = Math.min(n - 1, parseInt(document.getElementById("ts-computers").value, 10) || 0);
   const level = parseInt(document.getElementById("ts-level").value, 10) || 2;
-  const mode = document.getElementById("ts-mode").value === "extreme" ? "extreme" : "normal";
   const target = parseInt(document.getElementById("ts-target").value, 10) || 90;
   const computer = [], levels = [];
   for (let i = 0; i < n; i++) { computer.push(i >= n - comps); levels.push(level); }
-  AppStateTS.state = TeufelSiebenCore.newGame({ players: n, computer, levels, target, mode });
+  AppStateTS.state = TeufelSiebenCore.newGame({ players: n, computer, levels, target });
   AppStateTS.generation++;
   setResultTS("");
   if (window.ResultModal) window.ResultModal.hide();
@@ -82,12 +67,7 @@ const TS_SIGNS = {
   pass: '<path d="M5 20H31M22 10L32 20L22 30" fill="none" stroke="#141413" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
   bridge: '<path d="M5 31C5 9 35 9 35 31M5 31H35" fill="none" stroke="#141413" stroke-width="3"/>',
   collector: '<rect x="6" y="11" width="19" height="23" rx="2" fill="none" stroke="#141413" stroke-width="2.5"/><rect x="12" y="6" width="19" height="23" rx="2" fill="#fff" stroke="#141413" stroke-width="2.5"/><path d="M30 27V37M25 32H35" stroke="#141413" stroke-width="2.5"/>',
-  peek: '<path d="M3 20S9 9 20 9S37 20 37 20S31 31 20 31S3 20 3 20Z" fill="none" stroke="#141413" stroke-width="2.5"/><circle cx="20" cy="20" r="5" fill="none" stroke="#141413" stroke-width="2.5"/>',
-  // "extreme" cards (task 133)
-  star: '<path d="M20 3L24.6 14.6H37L27 22.2L30.6 35L20 27.4L9.4 35L13 22.2L3 14.6H15.4Z" fill="none" stroke="#141413" stroke-width="2.4" stroke-linejoin="round"/><text x="20" y="25" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="9" fill="#141413">+7</text>',
-  weight: '<circle cx="20" cy="8" r="4" fill="none" stroke="#141413" stroke-width="2.5"/><path d="M12 12H28L35 35H5Z" fill="#141413"/><text x="20" y="30" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="11" fill="#fff">−7</text>',
-  link: '<rect x="3" y="14" width="20" height="12" rx="6" fill="none" stroke="#141413" stroke-width="3"/><rect x="17" y="14" width="20" height="12" rx="6" fill="none" stroke="#141413" stroke-width="3"/>',
-  storm: '<path d="M24 3L9 23H19L15 37L31 16H21Z" fill="#141413"/>'
+  peek: '<path d="M3 20S9 9 20 9S37 20 37 20S31 31 20 31S3 20 3 20Z" fill="none" stroke="#141413" stroke-width="2.5"/><circle cx="20" cy="20" r="5" fill="none" stroke="#141413" stroke-width="2.5"/>'
 };
 function cardHtmlTS(card, size, extraClass) {
   const cls = "ts-card" + (size ? " ts-card-" + size : "") + (TeufelSiebenCore.isNumber(card) ? "" : " ts-card-special") + (extraClass ? " " + extraClass : "");
@@ -97,7 +77,7 @@ function cardHtmlTS(card, size, extraClass) {
 function lastTextTS() {
   const s = AppStateTS.state, l = s.last; if (!l) return "";
   const v = { name: l.player === null ? "" : nameTS(l.player), n: l.card, card: l.card !== undefined ? cardNameTS(l.card) : "", r: s.round };
-  const key = { number: "ts_last_number", bust: "ts_last_bust", saved: "ts_last_saved", courage: "ts_last_courage", strike: "ts_last_strike", pass: "ts_last_pass", bridge: "ts_last_bridge", collector: "ts_last_collector", peek: "ts_last_peek", star: "ts_last_star", weight: "ts_last_weight", link: "ts_last_link", storm: "ts_last_storm", void: "ts_last_void", empty: "ts_last_empty", stop: "ts_last_stop", roundover: "ts_round_over", gameover: "ts_game_over_notice" }[l.type];
+  const key = { number: "ts_last_number", bust: "ts_last_bust", saved: "ts_last_saved", courage: "ts_last_courage", strike: "ts_last_strike", pass: "ts_last_pass", bridge: "ts_last_bridge", collector: "ts_last_collector", peek: "ts_last_peek", void: "ts_last_void", empty: "ts_last_empty", stop: "ts_last_stop", roundover: "ts_round_over", gameover: "ts_game_over_notice" }[l.type];
   if (!key) return "";
   if (l.type === "stop") v.n = l.points;
   if (l.type === "peek") v.card = l.shown === null ? I18n.t("ts_card_empty") : cardNameTS(l.shown);
@@ -123,9 +103,7 @@ function renderPlayersTS() {
     if (h.courage) cards += cardHtmlTS("courage", "small");
     for (let k = 0; k < h.bridges; k++) cards += cardHtmlTS("bridge", "small");
     for (let k = 0; k < h.collectors; k++) cards += cardHtmlTS("collector", "small");
-    ["star", "weight", "link"].forEach((c) => { for (let k = 0; k < (h[c + "s"] || 0); k++) cards += cardHtmlTS(c, "small"); });
-    const run = TeufelSiebenCore.runLength(h.numbers, h.bridges, s.mode === "extreme" ? 15 : undefined);
-    const bonus = run >= TeufelSiebenCore.RUN_MIN ? '<span class="ts-run-bonus">' + tTS("ts_run_bonus", { n: run, m: 5 * (run - 2) * (1 + (h.links || 0)) }) + "</span>" : "";
+    const run = TeufelSiebenCore.runLength(h.numbers, h.bridges), bonus = run >= 4 ? '<span class="ts-run-bonus">' + tTS("ts_run_bonus", { n: run, m: 5 * (run - 2) }) + "</span>" : "";
     row.innerHTML = '<span class="ts-player-head"><span class="ts-player-name">' + nameTS(i) + '</span> <span class="ts-player-status">' + status + "</span>" + '<span class="ts-player-points">' + tTS("ts_round", { n: pts }) + " · " + tTS("ts_total", { n: s.totals[i] }) + "</span>" + bonus + '</span><span class="ts-player-cards">' + cards + "</span>";
     row.setAttribute("aria-label", nameTS(i) + ", " + status + ", " + tTS("ts_round", { n: pts }) + ", " + tTS("ts_total", { n: s.totals[i] }) + (h.numbers.length ? ", " + h.numbers.join(" ") : "") + (h.courage ? ", " + tTS("ts_courage_aria") : "")); wrap.appendChild(row);
   });
@@ -139,8 +117,7 @@ function renderTS() {
   document.getElementById("ts-actions").classList.toggle("hidden", s.phase !== "turn");
   const roundWrap = document.getElementById("ts-roundover"); roundWrap.classList.toggle("hidden", s.phase !== "roundover");
   const peek = document.getElementById("ts-peek-line"); peek.textContent = s.peek !== null && s.peek !== undefined ? tTS("ts_peek_line", { card: cardNameTS(s.peek) }) : ""; peek.classList.toggle("hidden", !peek.textContent);
-  document.getElementById("game-meta").textContent = tTS("ts_meta", { r: s.round, n: s.target }) + (s.mode === "extreme" ? " · " + I18n.t("ts_mode_extreme") : "");
-  setStatusTS(statusTS());
+  document.getElementById("game-meta").textContent = tTS("ts_meta", { r: s.round, n: s.target }); setStatusTS(statusTS());
 }
 function initTeufelSiebenApp() {
   DiceCommon.wireMenu();
@@ -153,14 +130,8 @@ function initTeufelSiebenApp() {
     { pics: T("5") + T("9") + T("2"), key: "ts_howto_1" },
     { pics: T("5") + T("9") + Howto.arrow() + T("5", "shut"), key: "ts_howto_2" },
     { pics: T("5") + T("9") + Howto.sign("=") + Howto.sign("14"), key: "ts_howto_3" },
-    { pics: T("3") + T("4") + T("5") + T("6") + Howto.sign("+10"), key: "ts_howto_4" },
-    { pics: T("13") + T("14") + T("15") + Howto.sign("+7") + Howto.sign("−7"), key: "ts_howto_5" }
+    { pics: T("3") + T("4") + T("5") + T("6") + Howto.sign("+10"), key: "ts_howto_4" }
   ] });
-  // Targets fit the chosen cards; quick-rules.js restores the fields after
-  // this handler, so the targets are synced again right after.
-  document.getElementById("ts-mode").addEventListener("change", syncTargetsTS);
-  syncTargetsTS();
-  setTimeout(syncTargetsTS, 0);
   if (window.I18n && typeof I18n.onChange === "function") I18n.onChange(() => { if (AppStateTS.state) renderTS(); });
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(TEUFELSIEBEN_SAVE_KEY) : null;
   if (saved) {

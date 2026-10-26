@@ -16,7 +16,7 @@ const RELEASE_NOTES = [
     version: "v268",
     date: "2026-10-27",
     key: "release_v268",
-    text: "Lucky Chain: choose the cards \"Wild Chain\" with numbers up to 15 and new special cards, and play to 250 or 500. Bigger buttons in the result window; after a round no raw placeholder shows any more. Animal Yatzy is now called Critter Roll."
+    text: "Bigger buttons in the result window; after a round no raw placeholder shows any more. Animal Yatzy is now called Critter Roll."
   },
   {
     version: "v267",

@@ -1329,7 +1329,7 @@ const GAMES_CATALOG = [
     descText: "A push-your-luck card game: reveal cards one by one, then stop in time. Repeating a number makes you bust; runs of four or more numbers earn a bonus. 2 to 6 players, against the computer or on one device.",
     popular: false,
     added: "2026-10-25T20:00",
-    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"4\" width=\"16\" height=\"23\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><text x=\"11\" y=\"21\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"700\" font-size=\"13\" fill=\"#141413\">3</text><rect x=\"21\" y=\"4\" width=\"16\" height=\"23\" rx=\"2.5\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.4\"/><text x=\"29\" y=\"21\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"700\" font-size=\"13\" fill=\"#141413\">4</text><rect x=\"9\" y=\"30\" width=\"13\" height=\"7\" rx=\"3.5\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.2\"/><rect x=\"18\" y=\"30\" width=\"13\" height=\"7\" rx=\"3.5\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.2\"/></svg></span>"
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"8\" y=\"3\" width=\"24\" height=\"34\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><text x=\"20\" y=\"27\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"700\" font-size=\"17\" fill=\"#141413\">7</text><path d=\"M14 9V14M20 8V14M26 9V14M14 14H26\" fill=\"none\" stroke=\"#141413\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></span>"
   },
   {
     slug: "advent",
