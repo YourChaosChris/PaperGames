@@ -9,6 +9,9 @@
 //     moves next; the option is off on one device and with one computer;
 //   - Hand-Rommé: "Alle Karten auslegen" lays out everything, the round
 //     list shows "x2 Hand-Rommé".
+//   - task 154 (360 x 640, de and en): the note under the house rule "take
+//     cards"; a taken 8♠ tapped onto the run 9-Q♠ says it must go into a
+//     new meld of at least three cards and can't be added.
 // States are set up directly (AppStateRomme.busy blocks the computer's
 // timer). No page error, nothing scrolls sideways.
 const { chromium } = require("playwright");
@@ -201,11 +204,62 @@ const overflow = (page) => page.evaluate(() => document.documentElement.scrollWi
     check(w + "no page error: " + errors.join(" | "), errors.length === 0);
     await ctx.close();
   }
+
+  // ---- 154: a taken card tapped onto a run (360 x 640, German) ----------
+  for (const lang of ["de", "en"]) {
+    const w = "154 " + lang + ": ";
+    const ctx = await browser.newContext({ viewport: { width: 360, height: 640 }, serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    const errors = [];
+    page.on("pageerror", (e) => errors.push(String(e)));
+    await page.goto(BASE + "romme.html?lang=" + lang, { waitUntil: "load" });
+    await page.waitForTimeout(400);
+    const note = await page.evaluate(() => {
+      const panel = document.getElementById("settings-panel");
+      if (panel.classList.contains("hidden")) document.getElementById("menu-toggle").click();
+      const el = document.querySelector("#settings-panel .romme-rule-note");
+      if (!el || !el.offsetHeight) return { hidden: true };
+      const label = document.querySelector("label:has(#romme-take-rule)");
+      const r = el.getBoundingClientRect();
+      return { text: el.textContent, below: r.top >= label.getBoundingClientRect().bottom - 1, inside: r.left >= 0 && r.right <= innerWidth };
+    });
+    const noteWant = lang === "de" ? "An eine Auslage, die schon auf dem Tisch liegt, kannst du sie nicht anlegen." : "It can't be added to a meld already on the table.";
+    check(w + "settings note under the take rule: " + JSON.stringify(note), note.below && note.inside && note.text.includes(noteWant));
+    check(w + "no sideways scroll in the settings", (await overflow(page)) <= 0);
+    // 8♠ from a set of four 8s, run 9-Q♠ of the human on the table.
+    await setState(page, { players: 2, dealer: 1, takeRule: true }, `
+      const eights = C.buildMeld([card(8, "S"), card(8, "H"), card(8, "D"), card(8, "C")]); eights.owner = 1;
+      const spades = C.buildMeld([card(9, "S"), card(10, "S"), card(11, "S"), card(12, "S")]); spades.owner = 0;
+      s.players[0].hand = [card(7, "S"), card(2, "C"), card(13, "H")];
+      s.players[0].opened = true; s.players[1].opened = true;
+      s.melds = [eights, spades]; s.turn = 0; s.phase = "play"; s.firstTurn = false;
+      window.__eight = eights.entries.find((e) => e.suit === "S").card.id;`);
+    const eight = await page.evaluate(() => window.__eight);
+    const ti = await page.evaluate(() => [...document.querySelectorAll("#romme-table button.romme-takeable")].findIndex((b) => /^(8♠ nehmen|Take 8♠)$/.test(b.getAttribute("aria-label"))));
+    check(w + "8♠ can be taken", ti !== -1);
+    await page.locator("#romme-table button.romme-takeable").nth(ti).click();
+    check(w + "8♠ taken", await page.evaluate((id) => AppStateRomme.state.takenIds.includes(id), eight));
+    const afterTake = await text(page, "#board-info");
+    check(w + "prompt after taking: " + afterTake, lang === "de" ? afterTake.includes("Lege die genommene Karte zuerst in einer neuen Meldung aus") : afterTake.includes("Lay out the card you took in a new meld first"));
+    await tapCard(page, eight);
+    await page.locator('#romme-table button.romme-meld[aria-label*="10♠"]').click();
+    const msgText = await text(page, "#board-info");
+    const want = lang === "de"
+      ? "Eine vom Tisch genommene Karte muss in eine neue Meldung mit mindestens drei Karten (Folge oder Satz). An eine Auslage, die schon auf dem Tisch liegt, kannst du sie nicht anlegen."
+      : "A card taken from the table must go into a new meld of at least three cards (run or set). It can't be added to a meld already on the table.";
+    check(w + "message on tapping the run: " + msgText, msgText.trim() === want);
+    check(w + "run unchanged, 8♠ still in hand", await page.evaluate((id) => AppStateRomme.state.melds[1].entries.length === 4 && AppStateRomme.state.players[0].hand.some((c) => c.id === id), eight));
+    const box = await page.locator("#board-info").boundingBox();
+    check(w + "message fits the width: " + (box && box.width), box && box.x >= 0 && box.x + box.width <= 360);
+    check(w + "no sideways scroll", (await overflow(page)) <= 0);
+    check(w + "no page error: " + errors.join(" | "), errors.length === 0);
+    await ctx.close();
+  }
   await browser.close();
   if (fails.length) {
     fails.forEach((f) => console.log("FAIL " + f));
     console.log("ROMME UI: " + fails.length + " failure(s)");
     process.exit(1);
   }
-  console.log("ROMME UI: joker end, knocking, Hand-Rommé at 600 and 360 px - all checks pass");
+  console.log("ROMME UI: joker end, knocking, Hand-Rommé at 600 and 360 px, taken card at 360 x 640 - all checks pass");
 })().catch((e) => { console.error(e); process.exit(1); });

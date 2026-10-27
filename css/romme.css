@@ -34,6 +34,12 @@
   cursor: pointer;
 }
 
+/* Settings: a short note under the "take cards" house rule (task 154). */
+.romme-rule-note {
+  flex: 0 0 100%;
+  font-size: 0.85rem;
+}
+
 .romme-hand {
   max-width: 34rem;
   margin-left: auto;

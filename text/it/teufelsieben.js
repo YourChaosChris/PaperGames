@@ -2,7 +2,7 @@
 // Rules and history texts of teufelsieben (it). Loaded by teufelsieben-rules.html and teufelsieben-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.it, {
-    ts_rules_title: "Regole di Catena fortunata",
+    ts_rules_title: "Regole del Sette del Diavolo",
     ts_rules_intro: "Scopri le carte una alla volta e fermati in tempo: un numero che hai già ti fa sballare. Quando qualcuno raggiunge l’obiettivo, vince chi ha più punti.",
     ts_rules_basics_title: "Le regole",
     ts_term_cards: "Le carte",
@@ -21,10 +21,10 @@ Object.assign(STRINGS.it, {
     ts_rules_computer: "Il computer conta solo le carte scoperte e quella mostrata da Sbircia. Facile si ferma presto; Difficile confronta il possibile guadagno con il rischio.",
     ts_rules_example_title: "Esempio",
     ts_rules_example: "Hai 3, 4, 5, 6 e 9: 27 punti dai numeri. La sequenza di quattro aggiunge 10, per 37 prima degli effetti speciali.",
-    ts_history_title: "Informazioni su Catena fortunata",
+    ts_history_title: "Informazioni sul Sette del Diavolo",
     ts_history_family_title: "Continuare o fermarsi",
     ts_history_family_p1: "In questi giochi si decide ogni volta se rischiare ancora o tenere ciò che si è ottenuto. Molti giochi di dadi e carte funzionano così.",
     ts_history_modern_title: "Questa versione",
-    ts_history_modern_p1: "Catena fortunata è stata creata per PaperGames, con carte, regole e testi propri: numeri da 1 a 10 in una miscela originale, bonus per le sequenze e Coraggio, Rimuovi, Passa, Ponte, Collezionista e Sbircia.",
+    ts_history_modern_p1: "Il Sette del Diavolo è stato creato per PaperGames, con carte, regole e testi propri: numeri da 1 a 10 in una miscela originale, bonus per le sequenze e Coraggio, Rimuovi, Passa, Ponte, Collezionista e Sbircia.",
 });
 I18n.markTextLoaded("it");

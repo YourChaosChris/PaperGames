@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Animal Yatzy in the browser (task 112), German page at 360 x 740:
+// Critter Roll in the browser (task 112), German page at 360 x 740:
 //   - a game against the computer starts: five dashed dice, eleven field
 //     rows with pictures and names, "Würfeln";
 //   - a roll shows five animals; tapping a die keeps it (thick frame,
@@ -23,7 +23,7 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("dialog", (d) => d.accept());
-  await page.goto(BASE + "tieryatzy.html?lang=de", { waitUntil: "load" });
+  await page.goto(BASE + "pfotenwurf.html?lang=de", { waitUntil: "load" });
   await page.waitForTimeout(600);
   if (!(await page.isVisible("#start-ty-game"))) await page.click("#menu-toggle");
   await page.click("#mode-ai");
@@ -45,7 +45,7 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   check("kept die stays", await page.evaluate((f) => AppStateTY.state.dice[0] === f && AppStateTY.state.rolls === 2, first[0]));
   const can = await page.evaluate(() => document.querySelectorAll("#ty-sheet .ty-row-can").length);
   check("eleven fields to choose from: " + can, can === 11);
-  const pick = await page.evaluate(() => { const o = TierYatzyCore.options(AppStateTY.state); return { field: "luck", pts: o.luck }; });
+  const pick = await page.evaluate(() => { const o = PfotenwurfCore.options(AppStateTY.state); return { field: "luck", pts: o.luck }; });
   const luckRow = await page.$$("#ty-sheet .ty-row");
   await luckRow[10].click();
   await page.waitForTimeout(300);
@@ -74,20 +74,20 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
       const s = AppStateTY.state;
       if (s.phase === "over" && !AppStateTY.review) return true;
       if (AppStateTY.review) { nextTY(); return false; }
-      AppStateTY.state = TierYatzyCore.aiStep(s);
+      AppStateTY.state = PfotenwurfCore.aiStep(s);
       afterActionTY();
       return false;
     });
     if (done) break;
   }
   const end = await page.evaluate(() => ({ phase: AppStateTY.state.phase, winners: AppStateTY.state.winners, result: document.getElementById("game-result").textContent.trim(),
-    total: TierYatzyCore.total(AppStateTY.state.sheets[0]), totalShown: document.querySelector(".ty-row-total .ty-row-points").textContent.trim() }));
+    total: PfotenwurfCore.total(AppStateTY.state.sheets[0]), totalShown: document.querySelector(".ty-row-total .ty-row-points").textContent.trim() }));
   check("game over with a result: " + end.result, end.phase === "over" && end.result.length > 0 && Array.isArray(end.winners));
   check("sheet total shown", String(end.total) === end.totalShown);
-  check("save cleared at the end", await page.evaluate(() => localStorage.getItem("einkchess_save_tieryatzy") === null));
+  check("save cleared at the end", await page.evaluate(() => localStorage.getItem("einkchess_save_pfotenwurf") === null));
   check("no page error " + errors.join(" | "), !errors.length);
   await browser.close();
   fails.forEach((f) => console.log("FAIL " + f));
-  console.log("=== ANIMAL YATZY UI: start, roll and keep, fields, computer panel, save and load, a whole game, " + fails.length + " failure(s) ===");
+  console.log("=== PFOTENWURF UI: start, roll and keep, fields, computer panel, save and load, a whole game, " + fails.length + " failure(s) ===");
   process.exit(fails.length ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });
