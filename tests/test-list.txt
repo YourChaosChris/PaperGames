@@ -14,7 +14,8 @@
 1 undo.js
 1 game-frame.js
 1 search-keywords.js
-51 cake-core.js
+100 cake-core.js
+10 cake-ui.js
 2 bingo-core.js
 1 animalsudoku-core.js
 2 sudoku-seeds.js

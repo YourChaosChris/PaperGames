@@ -133,18 +133,27 @@ all parts back into one log in list order. The last line is exactly
   leftover English words; also checks `msg_t_*` template placeholders
   match across languages.
 - `node tests/cake-core.js` - no server or browser needed. Generates
-  500 "Who Took the Cake?" puzzles per level from fixed seeds and fails
-  unless each has exactly one solution, is solvable by deduction alone
-  at its level, has the needed clues plus 2 (easy) / 1 (medium) extra
-  ones, and can be played to the end with the hint button (mistakes
-  first, animals in the order of reasoning, the cake left to the
-  player). For the first 200 per level every hint's reason is checked
-  against the board and its sentence in all 12 languages. The themes
-  (cats, bears, dogs, magpies, family, children and treasure) each have
-  their drawings and all their texts in 12 languages; 500 cases per
-  level and theme stay solvable with exactly one solution, every one of
-  the 12 rooms and 12 pieces of furniture turns up in each level's 500,
-  every piece stands in a room it belongs to and is named by some clue.
+  500 "Who Took the Cake?" puzzles per level from fixed seeds (rules 3
+  since task 146: 5x5 with 3 rooms, 6x6 with 4, 7x7 with 5, one animal
+  per room, animals never next to each other, the cake given on the
+  board, exactly one animal next to it) and fails unless each obeys the
+  rules (checked by the test's own code), every clue is true, it has
+  exactly one solution, is solvable by deduction alone at its level, has
+  the needed clues plus 2 (easy) / 1 (medium) extra ones, and can be
+  played to the end with the hint button (mistakes first, animals in the
+  order of reasoning). For the first 200 per level every hint's reason is
+  checked against the board. Prints per level how many need deduction
+  level 2 or 3, clue counts and generating time. Also a fixed board for
+  every rule, old saves (rules 1 and 2) not current, every reason and
+  rule text in 12 languages, no old keys left, and every theme's drawings
+  and texts.
+- `BASE_URL=... node tests/cake-ui.js` - Playwright, German page at
+  360 x 640: old saves (rules 1 and 2) are dropped quietly (new puzzle on
+  the saved level, statistics kept), the cake shown on its cell from the
+  start and not changeable, no furniture or window, cells and buttons at
+  least 44 px, the four rules and German clues, hints and the last animal
+  solve the puzzle and count a win, family theme says "Personen", no
+  horizontal scrolling at 360 and 600 px (7x7 too), no page errors.
 - `node tests/bingo-core.js` - no server or browser needed. 1,000 decks (3 x 3 / 5 x 5, numbers / pictures), every item called exactly once, all win patterns against a brute-force check, wrong marks, 1,000 games against computer cards.
 - `node tests/sudoku-seeds.js` - no server or browser needed. 20 Sudoku
   and 20 Killer Sudoku puzzles per level from fixed seeds; each must have

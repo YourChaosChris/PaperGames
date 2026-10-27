@@ -190,9 +190,9 @@ STRINGS.de = {
     quickrules_skyscrapers_1: "Fülle das Gitter mit Höhen von 1 bis N, sodass jede Zeile und Spalte jede Höhe genau einmal enthält und jeder Hinweis am Rand stimmt.",
     quickrules_skyscrapers_2: "Wähle ein Feld und dann eine Höhe aus dem Ziffernblock unter dem Spielfeld.",
     quickrules_skyscrapers_3: "Ein Hinweis zählt die Gebäude, die man von dieser Seite aus sieht, und ein höheres Gebäude verdeckt jedes niedrigere dahinter.",
-    quickrules_cake_1: "Setze jedes Tier und den Kuchen so, dass in jeder Zeile und jeder Spalte genau ein Ding steht.",
-    quickrules_cake_2: "Der Kuchen steht immer auf einem Tisch, Tiere nie auf einem Tisch oder großen Möbeln, und die Hinweise unter dem Feld verraten den Rest. „Neben“ gilt nur im selben Raum.",
-    quickrules_cake_3: "Das einzige Tier im Raum des Kuchens hat ihn genommen - wähle einen Knopf unter dem Feld und tippe dann auf ein Kästchen.",
+    quickrules_cake_1: "Setze die Tiere auf den Grundriss: in jeden Raum genau ein Tier, und zwei Tiere stehen nie nebeneinander, auch nicht schräg.",
+    quickrules_cake_2: "Die Hinweise unter dem Feld verraten den Rest: Raumgrößen, wer weiter oben oder weiter links steht, Räume mit gemeinsamer Wand und Schritte bis zum Kuchen.",
+    quickrules_cake_3: "Der Kuchen liegt schon auf dem Grundriss. Das einzige Tier direkt daneben hat ihn genommen - wähle ein Tier unter dem Feld und tippe dann auf ein Kästchen.",
     quickrules_konane_1: "Lass deinen Gegner ohne Zug zurück: Wer an seinem Zug keinen legalen Sprung hat, verliert sofort.",
     quickrules_konane_2: "Jeder Zug ist ein Sprung: Ein Stein springt über einen benachbarten gegnerischen Stein, nie diagonal, auf das leere Feld dahinter und schlägt ihn.",
     quickrules_konane_3: "Vor dem ersten Sprung entfernt Schwarz einen eigenen Stein aus einer Ecke oder der Mitte, dann Weiß einen eigenen direkt neben dieser Lücke.",
@@ -1661,13 +1661,10 @@ STRINGS.de = {
     cake_dog_mid: "der Hund",
 
 
-    cake_dog_is: "Der Hund ist",
 
 
-    cake_dog_isnot: "Der Hund ist nicht",
 
 
-    cake_dog_sits: "Der Hund sitzt",
 
 
     cake_win_dog: "Der Hund hat den Kuchen genommen.",
@@ -1682,13 +1679,10 @@ STRINGS.de = {
     cake_cat_mid: "die Katze",
 
 
-    cake_cat_is: "Die Katze ist",
 
 
-    cake_cat_isnot: "Die Katze ist nicht",
 
 
-    cake_cat_sits: "Die Katze sitzt",
 
 
     cake_win_cat: "Die Katze hat den Kuchen genommen.",
@@ -1703,13 +1697,10 @@ STRINGS.de = {
     cake_rabbit_mid: "der Hase",
 
 
-    cake_rabbit_is: "Der Hase ist",
 
 
-    cake_rabbit_isnot: "Der Hase ist nicht",
 
 
-    cake_rabbit_sits: "Der Hase sitzt",
 
 
     cake_win_rabbit: "Der Hase hat den Kuchen genommen.",
@@ -1724,13 +1715,10 @@ STRINGS.de = {
     cake_mouse_mid: "die Maus",
 
 
-    cake_mouse_is: "Die Maus ist",
 
 
-    cake_mouse_isnot: "Die Maus ist nicht",
 
 
-    cake_mouse_sits: "Die Maus sitzt",
 
 
     cake_win_mouse: "Die Maus hat den Kuchen genommen.",
@@ -1745,13 +1733,10 @@ STRINGS.de = {
     cake_hedgehog_mid: "der Igel",
 
 
-    cake_hedgehog_is: "Der Igel ist",
 
 
-    cake_hedgehog_isnot: "Der Igel ist nicht",
 
 
-    cake_hedgehog_sits: "Der Igel sitzt",
 
 
     cake_win_hedgehog: "Der Igel hat den Kuchen genommen.",
@@ -1760,130 +1745,96 @@ STRINGS.de = {
     cake_room_kitchen_name: "Küche",
 
 
-    cake_room_kitchen_in: "in der Küche",
 
 
     cake_room_living_name: "Wohnzimmer",
 
 
-    cake_room_living_in: "im Wohnzimmer",
 
 
     cake_room_hall_name: "Flur",
 
 
-    cake_room_hall_in: "im Flur",
 
 
     cake_room_bath_name: "Bad",
 
 
-    cake_room_bath_in: "im Bad",
 
 
     cake_room_bedroom_name: "Schlafzimmer",
 
 
-    cake_room_bedroom_in: "im Schlafzimmer",
 
 
     cake_room_garden_name: "Garten",
 
 
-    cake_room_garden_in: "im Garten",
 
 
     cake_room_cellar_name: "Keller",
 
 
-    cake_room_cellar_in: "im Keller",
     cake_room_kids_name: "Kinderzimmer",
-    cake_room_kids_in: "im Kinderzimmer",
     cake_room_attic_name: "Dachboden",
-    cake_room_attic_in: "auf dem Dachboden",
     cake_room_dining_name: "Esszimmer",
-    cake_room_dining_in: "im Esszimmer",
     cake_room_office_name: "Büro",
-    cake_room_office_in: "im Büro",
     cake_room_terrace_name: "Terrasse",
-    cake_room_terrace_in: "auf der Terrasse",
 
 
-    cake_furn_table_name: "Tisch",
 
 
-    cake_furn_chair_name: "Stuhl",
 
 
-    cake_furn_rug_name: "Teppich",
 
 
-    cake_furn_plant_name: "Pflanze",
 
 
-    cake_furn_cupboard_name: "Schrank",
-    cake_furn_sofa_name: "Sofa",
-    cake_furn_bed_name: "Bett",
-    cake_furn_stool_name: "Hocker",
-    cake_furn_shelf_name: "Regal",
-    cake_furn_box_name: "Kiste",
-    cake_furn_lamp_name: "Stehlampe",
-    cake_furn_bathtub_name: "Badewanne",
 
 
-    cake_furn_chair_on: "auf einem Stuhl",
 
 
-    cake_furn_rug_on: "auf einem Teppich",
 
 
-    cake_furn_plant_next: "neben einer Pflanze",
 
 
-    cake_furn_cupboard_next: "neben einem Schrank",
-    cake_furn_sofa_on: "auf einem Sofa",
-    cake_furn_bed_on: "auf einem Bett",
-    cake_furn_stool_on: "auf einem Hocker",
-    cake_furn_shelf_next: "neben einem Regal",
-    cake_furn_box_next: "neben einer Kiste",
-    cake_furn_lamp_next: "neben einer Stehlampe",
-    cake_furn_bathtub_next: "neben einer Badewanne",
 
 
-    cake_clue_in: "{IS} {ROOM}.",
+    cake_clue_size: "{A} ist in einem Raum mit {N} Kästchen.",
+    cake_clue_higher: "{A} steht weiter oben als {B}.",
+    cake_clue_leftof: "{A} steht weiter links als {B}.",
+    cake_clue_border: "{A} und {B} sind in Räumen mit einer gemeinsamen Wand.",
+    cake_clue_steps: "{A} ist {N} Schritte vom Kuchen entfernt.",
+    cake_clue_steps_fish: "{A} ist {N} Schritte vom Fisch entfernt.",
+    cake_clue_steps_cookies: "{A} ist {N} Schritte von den Keksen entfernt.",
+    cake_clue_steps_ball: "{A} ist {N} Schritte vom Ball entfernt.",
+    cake_clue_steps_key: "{A} ist {N} Schritte vom Schlüssel entfernt.",
+    cake_clue_steps_family: "{A} ist {N} Schritte vom Kuchen entfernt.",
+    cake_clue_steps_treasure: "{A} ist {N} Schritte vom Schatz entfernt.",
 
 
-    cake_clue_notin: "{ISNOT} {ROOM}.",
 
 
-    cake_clue_on: "{SITS} {FURN}.",
 
 
-    cake_clue_next: "{IS} {FURN}.",
 
 
-    cake_clue_window: "{IS} in derselben Zeile wie das Fenster.",
 
 
-    cake_clue_top: "{IS} in der obersten Zeile.",
 
 
-    cake_clue_bottom: "{IS} in der untersten Zeile.",
 
 
-    cake_clue_left: "{IS} in der linken Spalte.",
 
 
-    cake_clue_right: "{IS} in der rechten Spalte.",
 
 
-    cake_clue_same: "{A} und {B} sind im selben Raum.",
 
 
     game_cake: "Wer hat den Kuchen?",
 
 
-    home_cake_desc: "Ein Detektiv-Logikrätsel: Setze nach den Hinweisen genau eine ausgewählte Person oder Sache in jede Zeile und Spalte. Finde heraus, welche Person mit der Sache des Motivs im selben Raum ist.",
+    home_cake_desc: "Ein Detektiv-Logikrätsel: In jedem Raum steht genau ein Verdächtiger, nie zwei nebeneinander. Setze mit den Hinweisen alle richtig und finde den Einzigen, der direkt neben dem Kuchen steht.",
 
 
     cake_board_label: "Grundriss",
@@ -1895,7 +1846,7 @@ STRINGS.de = {
     cake_clues_title: "Hinweise",
 
 
-    cake_status_pick: "Wähle unten etwas aus und tippe dann auf ein Kästchen.",
+    cake_status_pick: "Wähle unten ein Tier oder X und tippe dann auf ein Kästchen.",
 
 
     cake_meta_placed: "Gesetzt: {N} / {M}",
@@ -1911,261 +1862,163 @@ STRINGS.de = {
 
 
     cake_hint_step: "{THING}: Zeile {R}, Spalte {C}.",
-    cake_hint_last: "Alle Tiere stehen richtig. Nur noch eine Zeile und eine Spalte sind frei - dort steht der Kuchen.",
     cake_always_title: "Immer gilt",
-    cake_always_1: "In jeder Zeile und jeder Spalte steht genau eine Sache: ein Tier oder der Kuchen.",
-    cake_always_2: "Der Kuchen steht immer auf einem Tisch.",
-    cake_always_3: "Tiere stehen nie auf einem Tisch oder auf Möbeln, die ihr ganzes Kästchen füllen (Pflanze, Schrank, Regal, Kiste, Stehlampe, Badewanne).",
-    cake_always_4: "Genau ein Tier ist im Raum des Kuchens – es hat den Kuchen genommen.",
+    cake_always_1: "In jedem Raum steht genau ein Tier.",
+    cake_always_2: "Der Kuchen liegt von Anfang an auf dem Grundriss; kein Tier steht auf seinem Kästchen.",
+    cake_always_3: "Zwei Tiere stehen nie direkt nebeneinander, auch nicht schräg.",
+    cake_always_4: "Genau ein Tier steht direkt neben dem Kuchen (auch schräg, auch durch eine Wand) – es hat den Kuchen genommen.",
     cake_why_free: "{A} gehört hierhin: Nach Regel 1 und 3 ist das das einzige noch freie Kästchen.",
     cake_why_clue: "{A} gehört hierhin: Hinweis {N} lässt nur dieses Kästchen frei.",
     cake_why_clue2: "{A} gehört hierhin: Hinweis {N} und {M} lassen zusammen nur dieses Kästchen frei.",
-    cake_why_row: "{A} gehört hierhin: In diese Zeile passt sonst nichts, und in dieser Zeile ist nur dieses Kästchen möglich.",
-    cake_why_col: "{A} gehört hierhin: In diese Spalte passt sonst nichts, und in dieser Spalte ist nur dieses Kästchen möglich.",
-    cake_why_lines: "{A} gehört hierhin: Nach Regel 1 liegen die anderen möglichen Kästchen in Zeilen oder Spalten, die die anderen brauchen.",
-    cake_why_rooms: "{A} gehört hierhin: Das folgt aus Regel 4 und den Raum-Hinweisen.",
-    cake_why_groups: "{A} gehört hierhin: Nach Regel 1 brauchen einige der anderen zusammen bestimmte Zeilen oder Spalten, und nur dieses Kästchen bleibt übrig.",
+    cake_why_room: "{A} gehört hierhin: In diesen Raum kann sonst niemand mehr, jeder Raum braucht einen (Regel 1), und darin ist nur noch dieses Kästchen frei.",
+    cake_why_rules: "{A} gehört hierhin: Das folgt Schritt für Schritt aus Regel 1 und 3 und den Hinweisen.",
+    cake_why_pairs: "{A} gehört hierhin: Das folgt aus den Hinweisen über zwei von ihnen zusammen und aus Regel 4.",
+    cake_why_try: "{A} gehört hierhin: Auf jedem anderen Kästchen ließen die Regeln und Hinweise einem der anderen keinen Platz.",
     cake_why_general: "{A} gehört hierhin: Das folgt aus den Hinweisen und den Regeln unter Immer gilt.",
     cake_cattiger_name: "Tiger",
     cake_cattiger_cap: "Tiger",
     cake_cattiger_mid: "Tiger",
-    cake_cattiger_is: "Tiger ist",
-    cake_cattiger_isnot: "Tiger ist nicht",
-    cake_cattiger_sits: "Tiger sitzt",
     cake_win_cattiger: "Tiger hat den Fisch genommen.",
     cake_catluna_name: "Luna",
     cake_catluna_cap: "Luna",
     cake_catluna_mid: "Luna",
-    cake_catluna_is: "Luna ist",
-    cake_catluna_isnot: "Luna ist nicht",
-    cake_catluna_sits: "Luna sitzt",
     cake_win_catluna: "Luna hat den Fisch genommen.",
     cake_catmimi_name: "Mimi",
     cake_catmimi_cap: "Mimi",
     cake_catmimi_mid: "Mimi",
-    cake_catmimi_is: "Mimi ist",
-    cake_catmimi_isnot: "Mimi ist nicht",
-    cake_catmimi_sits: "Mimi sitzt",
     cake_win_catmimi: "Mimi hat den Fisch genommen.",
     cake_catfelix_name: "Felix",
     cake_catfelix_cap: "Felix",
     cake_catfelix_mid: "Felix",
-    cake_catfelix_is: "Felix ist",
-    cake_catfelix_isnot: "Felix ist nicht",
-    cake_catfelix_sits: "Felix sitzt",
     cake_win_catfelix: "Felix hat den Fisch genommen.",
     cake_catmax_name: "Max",
     cake_catmax_cap: "Max",
     cake_catmax_mid: "Max",
-    cake_catmax_is: "Max ist",
-    cake_catmax_isnot: "Max ist nicht",
-    cake_catmax_sits: "Max sitzt",
     cake_win_catmax: "Max hat den Fisch genommen.",
     cake_thing_fish: "Fisch",
-    cake_hint_last_fish: "Alle Katzen stehen richtig. Nur noch eine Zeile und eine Spalte sind frei - dort liegt der Fisch.",
-    cake_always_1_fish: "In jeder Zeile und jeder Spalte steht genau eine Sache: eine Katze oder der Fisch.",
-    cake_always_2_fish: "Der Fisch liegt immer auf einem Tisch.",
-    cake_always_4_fish: "Genau eine Katze ist im Raum des Fisches – sie hat den Fisch genommen.",
+    cake_always_1_fish: "In jedem Raum steht genau eine Katze.",
+    cake_always_2_fish: "Der Fisch liegt von Anfang an auf dem Grundriss; keine Katze steht auf seinem Kästchen.",
+    cake_always_4_fish: "Genau eine Katze steht direkt neben dem Fisch (auch schräg, auch durch eine Wand) – sie hat den Fisch genommen.",
     cake_bearbruno_name: "Bruno",
     cake_bearbruno_cap: "Bruno",
     cake_bearbruno_mid: "Bruno",
-    cake_bearbruno_is: "Bruno ist",
-    cake_bearbruno_isnot: "Bruno ist nicht",
-    cake_bearbruno_sits: "Bruno sitzt",
     cake_win_bearbruno: "Bruno hat die Kekse genascht.",
     cake_bearpaula_name: "Paula",
     cake_bearpaula_cap: "Paula",
     cake_bearpaula_mid: "Paula",
-    cake_bearpaula_is: "Paula ist",
-    cake_bearpaula_isnot: "Paula ist nicht",
-    cake_bearpaula_sits: "Paula sitzt",
     cake_win_bearpaula: "Paula hat die Kekse genascht.",
     cake_bearotto_name: "Otto",
     cake_bearotto_cap: "Otto",
     cake_bearotto_mid: "Otto",
-    cake_bearotto_is: "Otto ist",
-    cake_bearotto_isnot: "Otto ist nicht",
-    cake_bearotto_sits: "Otto sitzt",
     cake_win_bearotto: "Otto hat die Kekse genascht.",
     cake_bearlilli_name: "Lilli",
     cake_bearlilli_cap: "Lilli",
     cake_bearlilli_mid: "Lilli",
-    cake_bearlilli_is: "Lilli ist",
-    cake_bearlilli_isnot: "Lilli ist nicht",
-    cake_bearlilli_sits: "Lilli sitzt",
     cake_win_bearlilli: "Lilli hat die Kekse genascht.",
     cake_bearfritz_name: "Fritz",
     cake_bearfritz_cap: "Fritz",
     cake_bearfritz_mid: "Fritz",
-    cake_bearfritz_is: "Fritz ist",
-    cake_bearfritz_isnot: "Fritz ist nicht",
-    cake_bearfritz_sits: "Fritz sitzt",
     cake_win_bearfritz: "Fritz hat die Kekse genascht.",
     cake_thing_cookies: "Kekse",
-    cake_hint_last_cookies: "Alle Bären stehen richtig. Nur noch eine Zeile und eine Spalte sind frei - dort liegen die Kekse.",
-    cake_always_1_cookies: "In jeder Zeile und jeder Spalte steht genau eine Sache: ein Bär oder die Kekse.",
-    cake_always_2_cookies: "Die Kekse liegen immer auf einem Tisch.",
-    cake_always_4_cookies: "Genau ein Bär ist im Raum der Kekse – er hat die Kekse genascht.",
+    cake_always_1_cookies: "In jedem Raum steht genau ein Bär.",
+    cake_always_2_cookies: "Die Kekse liegen von Anfang an auf dem Grundriss; kein Bär steht auf ihrem Kästchen.",
+    cake_always_4_cookies: "Genau ein Bär steht direkt neben den Keksen (auch schräg, auch durch eine Wand) – er hat die Kekse genascht.",
     cake_dogbello_name: "Bello",
     cake_dogbello_cap: "Bello",
     cake_dogbello_mid: "Bello",
-    cake_dogbello_is: "Bello ist",
-    cake_dogbello_isnot: "Bello ist nicht",
-    cake_dogbello_sits: "Bello sitzt",
     cake_win_dogbello: "Bello hat den Ball versteckt.",
     cake_doglotte_name: "Lotte",
     cake_doglotte_cap: "Lotte",
     cake_doglotte_mid: "Lotte",
-    cake_doglotte_is: "Lotte ist",
-    cake_doglotte_isnot: "Lotte ist nicht",
-    cake_doglotte_sits: "Lotte sitzt",
     cake_win_doglotte: "Lotte hat den Ball versteckt.",
     cake_dogbenny_name: "Benny",
     cake_dogbenny_cap: "Benny",
     cake_dogbenny_mid: "Benny",
-    cake_dogbenny_is: "Benny ist",
-    cake_dogbenny_isnot: "Benny ist nicht",
-    cake_dogbenny_sits: "Benny sitzt",
     cake_win_dogbenny: "Benny hat den Ball versteckt.",
     cake_dogsusi_name: "Susi",
     cake_dogsusi_cap: "Susi",
     cake_dogsusi_mid: "Susi",
-    cake_dogsusi_is: "Susi ist",
-    cake_dogsusi_isnot: "Susi ist nicht",
-    cake_dogsusi_sits: "Susi sitzt",
     cake_win_dogsusi: "Susi hat den Ball versteckt.",
     cake_dogrudi_name: "Rudi",
     cake_dogrudi_cap: "Rudi",
     cake_dogrudi_mid: "Rudi",
-    cake_dogrudi_is: "Rudi ist",
-    cake_dogrudi_isnot: "Rudi ist nicht",
-    cake_dogrudi_sits: "Rudi sitzt",
     cake_win_dogrudi: "Rudi hat den Ball versteckt.",
     cake_thing_ball: "Ball",
-    cake_hint_last_ball: "Alle Hunde stehen richtig. Nur noch eine Zeile und eine Spalte sind frei - dort liegt der Ball.",
-    cake_always_1_ball: "In jeder Zeile und jeder Spalte steht genau eine Sache: ein Hund oder der Ball.",
-    cake_always_2_ball: "Der Ball liegt immer auf einem Tisch.",
-    cake_always_4_ball: "Genau ein Hund ist im Raum des Balls – er hat den Ball versteckt.",
+    cake_always_1_ball: "In jedem Raum steht genau ein Hund.",
+    cake_always_2_ball: "Der Ball liegt von Anfang an auf dem Grundriss; kein Hund steht auf seinem Kästchen.",
+    cake_always_4_ball: "Genau ein Hund steht direkt neben dem Ball (auch schräg, auch durch eine Wand) – er hat den Ball versteckt.",
     cake_magpiepip_name: "Pip",
     cake_magpiepip_cap: "Pip",
     cake_magpiepip_mid: "Pip",
-    cake_magpiepip_is: "Pip ist",
-    cake_magpiepip_isnot: "Pip ist nicht",
-    cake_magpiepip_sits: "Pip sitzt",
     cake_win_magpiepip: "Pip hat den Schlüssel verlegt.",
     cake_magpiekiki_name: "Kiki",
     cake_magpiekiki_cap: "Kiki",
     cake_magpiekiki_mid: "Kiki",
-    cake_magpiekiki_is: "Kiki ist",
-    cake_magpiekiki_isnot: "Kiki ist nicht",
-    cake_magpiekiki_sits: "Kiki sitzt",
     cake_win_magpiekiki: "Kiki hat den Schlüssel verlegt.",
     cake_magpierosa_name: "Rosa",
     cake_magpierosa_cap: "Rosa",
     cake_magpierosa_mid: "Rosa",
-    cake_magpierosa_is: "Rosa ist",
-    cake_magpierosa_isnot: "Rosa ist nicht",
-    cake_magpierosa_sits: "Rosa sitzt",
     cake_win_magpierosa: "Rosa hat den Schlüssel verlegt.",
     cake_magpiejakob_name: "Jakob",
     cake_magpiejakob_cap: "Jakob",
     cake_magpiejakob_mid: "Jakob",
-    cake_magpiejakob_is: "Jakob ist",
-    cake_magpiejakob_isnot: "Jakob ist nicht",
-    cake_magpiejakob_sits: "Jakob sitzt",
     cake_win_magpiejakob: "Jakob hat den Schlüssel verlegt.",
     cake_magpielou_name: "Lou",
     cake_magpielou_cap: "Lou",
     cake_magpielou_mid: "Lou",
-    cake_magpielou_is: "Lou ist",
-    cake_magpielou_isnot: "Lou ist nicht",
-    cake_magpielou_sits: "Lou sitzt",
     cake_win_magpielou: "Lou hat den Schlüssel verlegt.",
     cake_thing_key: "Schlüssel",
-    cake_hint_last_key: "Alle Elstern stehen richtig. Nur noch eine Zeile und eine Spalte sind frei - dort liegt der Schlüssel.",
-    cake_always_1_key: "In jeder Zeile und jeder Spalte steht genau eine Sache: eine Elster oder der Schlüssel.",
-    cake_always_2_key: "Der Schlüssel liegt immer auf einem Tisch.",
-    cake_always_4_key: "Genau eine Elster ist im Raum des Schlüssels – sie hat den Schlüssel verlegt.",
+    cake_always_1_key: "In jedem Raum steht genau eine Elster.",
+    cake_always_2_key: "Der Schlüssel liegt von Anfang an auf dem Grundriss; keine Elster steht auf seinem Kästchen.",
+    cake_always_4_key: "Genau eine Elster steht direkt neben dem Schlüssel (auch schräg, auch durch eine Wand) – sie hat den Schlüssel verlegt.",
     cake_greta_name: "Greta",
     cake_greta_cap: "Greta",
     cake_greta_mid: "Greta",
-    cake_greta_is: "Greta ist",
-    cake_greta_isnot: "Greta ist nicht",
-    cake_greta_sits: "Greta sitzt",
     cake_win_greta: "Greta hat den Kuchen genommen.",
     cake_anton_name: "Anton",
     cake_anton_cap: "Anton",
     cake_anton_mid: "Anton",
-    cake_anton_is: "Anton ist",
-    cake_anton_isnot: "Anton ist nicht",
-    cake_anton_sits: "Anton sitzt",
     cake_win_anton: "Anton hat den Kuchen genommen.",
     cake_lisa_name: "Lisa",
     cake_lisa_cap: "Lisa",
     cake_lisa_mid: "Lisa",
-    cake_lisa_is: "Lisa ist",
-    cake_lisa_isnot: "Lisa ist nicht",
-    cake_lisa_sits: "Lisa sitzt",
     cake_win_lisa: "Lisa hat den Kuchen genommen.",
     cake_jonas_name: "Jonas",
     cake_jonas_cap: "Jonas",
     cake_jonas_mid: "Jonas",
-    cake_jonas_is: "Jonas ist",
-    cake_jonas_isnot: "Jonas ist nicht",
-    cake_jonas_sits: "Jonas sitzt",
     cake_win_jonas: "Jonas hat den Kuchen genommen.",
     cake_emma_name: "Emma",
     cake_emma_cap: "Emma",
     cake_emma_mid: "Emma",
-    cake_emma_is: "Emma ist",
-    cake_emma_isnot: "Emma ist nicht",
-    cake_emma_sits: "Emma sitzt",
     cake_win_emma: "Emma hat den Kuchen genommen.",
-    cake_hint_last_family: "Die ganze Familie steht richtig. Nur noch eine Zeile und eine Spalte sind frei - dort steht der Kuchen.",
-    cake_always_1_family: "In jeder Zeile und jeder Spalte steht genau eine Sache: ein Familienmitglied oder der Kuchen.",
-    cake_always_2_family: "Der Kuchen steht immer auf einem Tisch.",
-    cake_always_4_family: "Genau ein Familienmitglied ist im Raum des Kuchens – es hat den Kuchen genommen.",
+    cake_always_1_family: "In jedem Raum steht genau ein Familienmitglied.",
+    cake_always_2_family: "Der Kuchen liegt von Anfang an auf dem Grundriss; kein Familienmitglied steht auf seinem Kästchen.",
+    cake_always_4_family: "Genau ein Familienmitglied steht direkt neben dem Kuchen (auch schräg, auch durch eine Wand) – es hat den Kuchen genommen.",
     cake_tom_name: "Tom",
     cake_tom_cap: "Tom",
     cake_tom_mid: "Tom",
-    cake_tom_is: "Tom ist",
-    cake_tom_isnot: "Tom ist nicht",
-    cake_tom_sits: "Tom sitzt",
     cake_win_tom: "Tom hat den Schatz versteckt.",
     cake_nora_name: "Nora",
     cake_nora_cap: "Nora",
     cake_nora_mid: "Nora",
-    cake_nora_is: "Nora ist",
-    cake_nora_isnot: "Nora ist nicht",
-    cake_nora_sits: "Nora sitzt",
     cake_win_nora: "Nora hat den Schatz versteckt.",
     cake_ben_name: "Ben",
     cake_ben_cap: "Ben",
     cake_ben_mid: "Ben",
-    cake_ben_is: "Ben ist",
-    cake_ben_isnot: "Ben ist nicht",
-    cake_ben_sits: "Ben sitzt",
     cake_win_ben: "Ben hat den Schatz versteckt.",
     cake_ida_name: "Ida",
     cake_ida_cap: "Ida",
     cake_ida_mid: "Ida",
-    cake_ida_is: "Ida ist",
-    cake_ida_isnot: "Ida ist nicht",
-    cake_ida_sits: "Ida sitzt",
     cake_win_ida: "Ida hat den Schatz versteckt.",
     cake_leo_name: "Leo",
     cake_leo_cap: "Leo",
     cake_leo_mid: "Leo",
-    cake_leo_is: "Leo ist",
-    cake_leo_isnot: "Leo ist nicht",
-    cake_leo_sits: "Leo sitzt",
     cake_win_leo: "Leo hat den Schatz versteckt.",
     cake_thing_treasure: "Schatz",
-    cake_hint_last_treasure: "Alle Kinder stehen richtig. Nur noch eine Zeile und eine Spalte sind frei - dort steht der Schatz.",
-    cake_always_1_treasure: "In jeder Zeile und jeder Spalte steht genau eine Sache: ein Kind oder der Schatz.",
-    cake_always_2_treasure: "Der Schatz steht immer auf einem Tisch.",
-    cake_always_4_treasure: "Genau ein Kind ist im Raum des Schatzes – es hat den Schatz versteckt.",
-    cake_always_3_people: "Niemand steht auf einem Tisch oder auf Möbeln, die ihr ganzes Kästchen füllen (Pflanze, Schrank, Regal, Kiste, Stehlampe, Badewanne).",
+    cake_always_1_treasure: "In jedem Raum steht genau ein Kind.",
+    cake_always_2_treasure: "Der Schatz liegt von Anfang an auf dem Grundriss; kein Kind steht auf seinem Kästchen.",
+    cake_always_4_treasure: "Genau ein Kind steht direkt neben dem Schatz (auch schräg, auch durch eine Wand) – es hat den Schatz versteckt.",
+    cake_always_3_people: "Zwei Personen stehen nie direkt nebeneinander, auch nicht schräg.",
     cake_motif_label: "Motiv",
     cake_motif_animals: "Tiere und Kuchen",
     cake_motif_cats: "Katzen und Fisch",
@@ -2185,7 +2038,6 @@ STRINGS.de = {
     cake_tool_x: "Hier steht nichts",
 
 
-    cake_window_name: "Fenster",
 
 
     cake_thing_cake: "Kuchen",
@@ -2197,13 +2049,13 @@ STRINGS.de = {
     cake_new_game: "Neues Rätsel",
 
 
-    cake_level_easy: "Leicht (4x4, 3 Verdächtige)",
+    cake_level_easy: "Leicht (5x5, 3 Verdächtige)",
 
 
-    cake_level_medium: "Mittel (5x5, 4 Verdächtige)",
+    cake_level_medium: "Mittel (6x6, 4 Verdächtige)",
 
 
-    cake_level_hard: "Schwer (6x6, 5 Verdächtige)",
+    cake_level_hard: "Schwer (7x7, 5 Verdächtige)",
     game_animalsudoku: "Tier-Sudoku",
     home_animalsudoku_desc: "Sudoku für Kinder mit Tieren statt Zahlen: 4 x 4 oder 6 x 6, jedes Tier einmal in jeder Zeile, Spalte und jedem Block. Tier wählen, Feld antippen – ganz ohne Lesen.",
     animalsudoku_new_game: "Neues Rätsel",

@@ -185,9 +185,9 @@ STRINGS.zh = {
     quickrules_skyscrapers_1: "在网格中填入1到N的高度，使每行每列每个高度恰好出现一次，并且四周每个提示都相符。",
     quickrules_skyscrapers_2: "先选择一个格子，再从棋盘下方的面板中选择高度。",
     quickrules_skyscrapers_3: "提示数字表示从那一侧能看到多少栋建筑，较高的建筑会把它后面所有较矮的建筑完全挡住。",
-    quickrules_cake_1: "放好每只动物和蛋糕，使每一行和每一列正好有一样东西。",
-    quickrules_cake_2: "蛋糕总在桌子上，动物从不在桌子或大件家具上，其余的看下面的线索。“旁边”只算同一个房间里的。",
-    quickrules_cake_3: "和蛋糕在同一个房间里的唯一一只动物拿走了它——先选下面的按钮，再点一个格子。",
+    quickrules_cake_1: "把动物放在平面图上：每个房间正好一只动物，动物之间不能相邻，斜对角也不行。",
+    quickrules_cake_2: "棋盘下方的线索会告诉你其余答案：房间有几格、谁的位置更靠上或靠左、哪些房间共用一面墙，以及到蛋糕要走几步。",
+    quickrules_cake_3: "蛋糕已经在平面图上。只有一只动物紧挨着蛋糕——它就是拿走蛋糕的动物。选择棋盘下方的一只动物，再点一个格子。",
     quickrules_konane_1: "让对手无棋可走：轮到自己时没有任何合法跳吃的一方立即输掉。",
     quickrules_konane_2: "每一步都是跳吃：让己方棋子越过直线相邻的敌方棋子（绝不斜向），落在其后的空格上并吃掉它。",
     quickrules_konane_3: "第一次跳吃之前，黑方先从角上或中央移除自己的一枚棋子，接着白方移除紧挨这个空格的一枚己方棋子。",
@@ -1590,13 +1590,10 @@ STRINGS.zh = {
     cake_dog_mid: "狗",
 
 
-    cake_dog_is: "狗在",
 
 
-    cake_dog_isnot: "狗不在",
 
 
-    cake_dog_sits: "狗坐在",
 
 
     cake_win_dog: "是狗拿走了蛋糕。",
@@ -1611,13 +1608,10 @@ STRINGS.zh = {
     cake_cat_mid: "猫",
 
 
-    cake_cat_is: "猫在",
 
 
-    cake_cat_isnot: "猫不在",
 
 
-    cake_cat_sits: "猫坐在",
 
 
     cake_win_cat: "是猫拿走了蛋糕。",
@@ -1632,13 +1626,10 @@ STRINGS.zh = {
     cake_rabbit_mid: "兔子",
 
 
-    cake_rabbit_is: "兔子在",
 
 
-    cake_rabbit_isnot: "兔子不在",
 
 
-    cake_rabbit_sits: "兔子坐在",
 
 
     cake_win_rabbit: "是兔子拿走了蛋糕。",
@@ -1653,13 +1644,10 @@ STRINGS.zh = {
     cake_mouse_mid: "老鼠",
 
 
-    cake_mouse_is: "老鼠在",
 
 
-    cake_mouse_isnot: "老鼠不在",
 
 
-    cake_mouse_sits: "老鼠坐在",
 
 
     cake_win_mouse: "是老鼠拿走了蛋糕。",
@@ -1674,13 +1662,10 @@ STRINGS.zh = {
     cake_hedgehog_mid: "刺猬",
 
 
-    cake_hedgehog_is: "刺猬在",
 
 
-    cake_hedgehog_isnot: "刺猬不在",
 
 
-    cake_hedgehog_sits: "刺猬坐在",
 
 
     cake_win_hedgehog: "是刺猬拿走了蛋糕。",
@@ -1689,130 +1674,96 @@ STRINGS.zh = {
     cake_room_kitchen_name: "厨房",
 
 
-    cake_room_kitchen_in: "厨房里",
 
 
     cake_room_living_name: "客厅",
 
 
-    cake_room_living_in: "客厅里",
 
 
     cake_room_hall_name: "走廊",
 
 
-    cake_room_hall_in: "走廊里",
 
 
     cake_room_bath_name: "浴室",
 
 
-    cake_room_bath_in: "浴室里",
 
 
     cake_room_bedroom_name: "卧室",
 
 
-    cake_room_bedroom_in: "卧室里",
 
 
     cake_room_garden_name: "花园",
 
 
-    cake_room_garden_in: "花园里",
 
 
     cake_room_cellar_name: "地下室",
 
 
-    cake_room_cellar_in: "地下室里",
     cake_room_kids_name: "儿童房",
-    cake_room_kids_in: "儿童房里",
     cake_room_attic_name: "阁楼",
-    cake_room_attic_in: "阁楼里",
     cake_room_dining_name: "餐厅",
-    cake_room_dining_in: "餐厅里",
     cake_room_office_name: "书房",
-    cake_room_office_in: "书房里",
     cake_room_terrace_name: "露台",
-    cake_room_terrace_in: "露台上",
 
 
-    cake_furn_table_name: "桌子",
 
 
-    cake_furn_chair_name: "椅子",
 
 
-    cake_furn_rug_name: "地毯",
 
 
-    cake_furn_plant_name: "植物",
 
 
-    cake_furn_cupboard_name: "柜子",
-    cake_furn_sofa_name: "沙发",
-    cake_furn_bed_name: "床",
-    cake_furn_stool_name: "凳子",
-    cake_furn_shelf_name: "架子",
-    cake_furn_box_name: "木箱",
-    cake_furn_lamp_name: "落地灯",
-    cake_furn_bathtub_name: "浴缸",
 
 
-    cake_furn_chair_on: "椅子上",
 
 
-    cake_furn_rug_on: "地毯上",
 
 
-    cake_furn_plant_next: "植物旁边",
 
 
-    cake_furn_cupboard_next: "柜子旁边",
-    cake_furn_sofa_on: "沙发上",
-    cake_furn_bed_on: "床上",
-    cake_furn_stool_on: "凳子上",
-    cake_furn_shelf_next: "架子旁边",
-    cake_furn_box_next: "木箱旁边",
-    cake_furn_lamp_next: "落地灯旁边",
-    cake_furn_bathtub_next: "浴缸旁边",
 
 
-    cake_clue_in: "{IS}{ROOM}。",
+    cake_clue_size: "{A}在有{N}格的房间里。",
+    cake_clue_higher: "{A}的位置比{B}靠上。",
+    cake_clue_leftof: "{A}的位置比{B}靠左。",
+    cake_clue_border: "{A}和{B}所在的房间共用一面墙。",
+    cake_clue_steps: "{A}到蛋糕的距离是{N}步。",
+    cake_clue_steps_fish: "{A}到鱼的距离是{N}步。",
+    cake_clue_steps_cookies: "{A}到饼干的距离是{N}步。",
+    cake_clue_steps_ball: "{A}到球的距离是{N}步。",
+    cake_clue_steps_key: "{A}到钥匙的距离是{N}步。",
+    cake_clue_steps_family: "{A}到蛋糕的距离是{N}步。",
+    cake_clue_steps_treasure: "{A}到宝藏的距离是{N}步。",
 
 
-    cake_clue_notin: "{ISNOT}{ROOM}。",
 
 
-    cake_clue_on: "{SITS}{FURN}。",
 
 
-    cake_clue_next: "{IS}{FURN}。",
 
 
-    cake_clue_window: "{A}和窗户在同一行。",
 
 
-    cake_clue_top: "{IS}最上面一行。",
 
 
-    cake_clue_bottom: "{IS}最下面一行。",
 
 
-    cake_clue_left: "{IS}最左边一列。",
 
 
-    cake_clue_right: "{IS}最右边一列。",
 
 
-    cake_clue_same: "{A}和{B}在同一个房间里。",
 
 
     game_cake: "谁拿走了蛋糕？",
 
 
-    home_cake_desc: "侦探逻辑谜题：根据线索，在每行每列放入一个所选人物或物品，找出谁与主题物品在同一个房间。",
+    home_cake_desc: "这是一款侦探逻辑谜题：每个房间里有一名嫌疑者，彼此不会相邻。根据线索放好所有动物，找出唯一紧挨着蛋糕的嫌疑者。",
 
 
     cake_board_label: "平面图",
@@ -1824,7 +1775,7 @@ STRINGS.zh = {
     cake_clues_title: "线索",
 
 
-    cake_status_pick: "先在下面选一样东西，再点一个格子。",
+    cake_status_pick: "在棋盘下方选择一种动物或X，再点一个格子。",
 
 
     cake_meta_placed: "已放：{N} / {M}",
@@ -1840,261 +1791,163 @@ STRINGS.zh = {
 
 
     cake_hint_step: "{THING}：第{R}行，第{C}列。",
-    cake_hint_last: "所有动物都放对了。只剩一行和一列是空的——蛋糕就在那里。",
     cake_always_title: "总是成立",
-    cake_always_1: "每一行和每一列都正好有一样东西:一只动物或蛋糕。",
-    cake_always_2: "蛋糕总是放在桌子上。",
-    cake_always_3: "动物从不站在桌子或占满整个格子的家具上(植物、柜子、架子、木箱、落地灯、浴缸)。",
-    cake_always_4: "正好有一只动物和蛋糕在同一个房间——就是它拿走了蛋糕。",
+    cake_always_1: "每个房间正好有一只动物。",
+    cake_always_2: "蛋糕从一开始就放在平面图上；动物不能放在蛋糕所在的格子上。",
+    cake_always_3: "两只动物不会直接相邻，斜对角也不行。",
+    cake_always_4: "正好有一只动物紧挨着蛋糕（斜对角也算，即使隔着墙也算）——它拿走了蛋糕。",
     cake_why_free: "{A}在这里:根据规则1和3,这是唯一还空着的格子。",
     cake_why_clue: "{A}在这里:线索{N}只留下这一个空格。",
     cake_why_clue2: "{A}在这里:线索{N}和{M}合起来只留下这一个空格。",
-    cake_why_row: "{A}在这里:这一行放不下别的东西,而这一行里只有这一格可以。",
-    cake_why_col: "{A}在这里:这一列放不下别的东西,而这一列里只有这一格可以。",
-    cake_why_lines: "{A}在这里:根据规则1,其他可能的格子都在别的东西需要的行或列里。",
-    cake_why_rooms: "{A}在这里:这是由规则4和关于房间的线索得出的。",
-    cake_why_groups: "{A}在这里:根据规则1,另外几样东西合起来需要某些行或列,只剩下这一格。",
+    cake_why_room: "{A}在这里：其他人都已经进不了这个房间；每个房间都需要一个（规则1），而这里是房间里唯一剩下的格子。",
+    cake_why_rules: "{A}在这里：根据规则1和规则3以及线索，一步步就能推出来。",
+    cake_why_pairs: "{A}在这里：根据关于两名嫌疑者的线索和规则4可以得出。",
+    cake_why_try: "{A}在这里：如果放在其他格子，规则和线索就会让其他某个人无处可放。",
     cake_why_general: "{A}在这里:这是由线索和“总是成立”里的规则得出的。",
     cake_cattiger_name: "泰格",
     cake_cattiger_cap: "泰格",
     cake_cattiger_mid: "泰格",
-    cake_cattiger_is: "泰格在",
-    cake_cattiger_isnot: "泰格不在",
-    cake_cattiger_sits: "泰格坐在",
     cake_win_cattiger: "是泰格拿走了鱼。",
     cake_catluna_name: "露娜",
     cake_catluna_cap: "露娜",
     cake_catluna_mid: "露娜",
-    cake_catluna_is: "露娜在",
-    cake_catluna_isnot: "露娜不在",
-    cake_catluna_sits: "露娜坐在",
     cake_win_catluna: "是露娜拿走了鱼。",
     cake_catmimi_name: "咪咪",
     cake_catmimi_cap: "咪咪",
     cake_catmimi_mid: "咪咪",
-    cake_catmimi_is: "咪咪在",
-    cake_catmimi_isnot: "咪咪不在",
-    cake_catmimi_sits: "咪咪坐在",
     cake_win_catmimi: "是咪咪拿走了鱼。",
     cake_catfelix_name: "菲利克斯",
     cake_catfelix_cap: "菲利克斯",
     cake_catfelix_mid: "菲利克斯",
-    cake_catfelix_is: "菲利克斯在",
-    cake_catfelix_isnot: "菲利克斯不在",
-    cake_catfelix_sits: "菲利克斯坐在",
     cake_win_catfelix: "是菲利克斯拿走了鱼。",
     cake_catmax_name: "麦克斯",
     cake_catmax_cap: "麦克斯",
     cake_catmax_mid: "麦克斯",
-    cake_catmax_is: "麦克斯在",
-    cake_catmax_isnot: "麦克斯不在",
-    cake_catmax_sits: "麦克斯坐在",
     cake_win_catmax: "是麦克斯拿走了鱼。",
     cake_thing_fish: "鱼",
-    cake_hint_last_fish: "所有的猫都放对了。只剩一行和一列是空的——鱼就在那里。",
-    cake_always_1_fish: "每一行和每一列都正好有一样东西:一只猫或鱼。",
-    cake_always_2_fish: "鱼总是放在桌子上。",
-    cake_always_4_fish: "正好有一只猫和鱼在同一个房间——就是它拿走了鱼。",
+    cake_always_1_fish: "每个房间正好有一只猫。",
+    cake_always_2_fish: "鱼从一开始就放在平面图上；猫不能放在鱼所在的格子上。",
+    cake_always_4_fish: "正好有一只猫紧挨着鱼（斜对角也算，即使隔着墙也算）——它拿走了鱼。",
     cake_bearbruno_name: "布鲁诺",
     cake_bearbruno_cap: "布鲁诺",
     cake_bearbruno_mid: "布鲁诺",
-    cake_bearbruno_is: "布鲁诺在",
-    cake_bearbruno_isnot: "布鲁诺不在",
-    cake_bearbruno_sits: "布鲁诺坐在",
     cake_win_bearbruno: "是布鲁诺偷吃了饼干。",
     cake_bearpaula_name: "宝拉",
     cake_bearpaula_cap: "宝拉",
     cake_bearpaula_mid: "宝拉",
-    cake_bearpaula_is: "宝拉在",
-    cake_bearpaula_isnot: "宝拉不在",
-    cake_bearpaula_sits: "宝拉坐在",
     cake_win_bearpaula: "是宝拉偷吃了饼干。",
     cake_bearotto_name: "奥托",
     cake_bearotto_cap: "奥托",
     cake_bearotto_mid: "奥托",
-    cake_bearotto_is: "奥托在",
-    cake_bearotto_isnot: "奥托不在",
-    cake_bearotto_sits: "奥托坐在",
     cake_win_bearotto: "是奥托偷吃了饼干。",
     cake_bearlilli_name: "莉莉",
     cake_bearlilli_cap: "莉莉",
     cake_bearlilli_mid: "莉莉",
-    cake_bearlilli_is: "莉莉在",
-    cake_bearlilli_isnot: "莉莉不在",
-    cake_bearlilli_sits: "莉莉坐在",
     cake_win_bearlilli: "是莉莉偷吃了饼干。",
     cake_bearfritz_name: "弗里茨",
     cake_bearfritz_cap: "弗里茨",
     cake_bearfritz_mid: "弗里茨",
-    cake_bearfritz_is: "弗里茨在",
-    cake_bearfritz_isnot: "弗里茨不在",
-    cake_bearfritz_sits: "弗里茨坐在",
     cake_win_bearfritz: "是弗里茨偷吃了饼干。",
     cake_thing_cookies: "饼干",
-    cake_hint_last_cookies: "所有的熊都放对了。只剩一行和一列是空的——饼干就在那里。",
-    cake_always_1_cookies: "每一行和每一列都正好有一样东西:一只熊或饼干。",
-    cake_always_2_cookies: "饼干总是放在桌子上。",
-    cake_always_4_cookies: "正好有一只熊和饼干在同一个房间——就是它偷吃了饼干。",
+    cake_always_1_cookies: "每个房间正好有一只熊。",
+    cake_always_2_cookies: "饼干从一开始就放在平面图上；熊不能放在饼干所在的格子上。",
+    cake_always_4_cookies: "正好有一只熊紧挨着饼干（斜对角也算，即使隔着墙也算）——它偷吃了饼干。",
     cake_dogbello_name: "贝罗",
     cake_dogbello_cap: "贝罗",
     cake_dogbello_mid: "贝罗",
-    cake_dogbello_is: "贝罗在",
-    cake_dogbello_isnot: "贝罗不在",
-    cake_dogbello_sits: "贝罗坐在",
     cake_win_dogbello: "是贝罗藏起了球。",
     cake_doglotte_name: "洛特",
     cake_doglotte_cap: "洛特",
     cake_doglotte_mid: "洛特",
-    cake_doglotte_is: "洛特在",
-    cake_doglotte_isnot: "洛特不在",
-    cake_doglotte_sits: "洛特坐在",
     cake_win_doglotte: "是洛特藏起了球。",
     cake_dogbenny_name: "本尼",
     cake_dogbenny_cap: "本尼",
     cake_dogbenny_mid: "本尼",
-    cake_dogbenny_is: "本尼在",
-    cake_dogbenny_isnot: "本尼不在",
-    cake_dogbenny_sits: "本尼坐在",
     cake_win_dogbenny: "是本尼藏起了球。",
     cake_dogsusi_name: "苏西",
     cake_dogsusi_cap: "苏西",
     cake_dogsusi_mid: "苏西",
-    cake_dogsusi_is: "苏西在",
-    cake_dogsusi_isnot: "苏西不在",
-    cake_dogsusi_sits: "苏西坐在",
     cake_win_dogsusi: "是苏西藏起了球。",
     cake_dogrudi_name: "鲁迪",
     cake_dogrudi_cap: "鲁迪",
     cake_dogrudi_mid: "鲁迪",
-    cake_dogrudi_is: "鲁迪在",
-    cake_dogrudi_isnot: "鲁迪不在",
-    cake_dogrudi_sits: "鲁迪坐在",
     cake_win_dogrudi: "是鲁迪藏起了球。",
     cake_thing_ball: "球",
-    cake_hint_last_ball: "所有的狗都放对了。只剩一行和一列是空的——球就在那里。",
-    cake_always_1_ball: "每一行和每一列都正好有一样东西:一只狗或球。",
-    cake_always_2_ball: "球总是放在桌子上。",
-    cake_always_4_ball: "正好有一只狗和球在同一个房间——就是它藏起了球。",
+    cake_always_1_ball: "每个房间正好有一只狗。",
+    cake_always_2_ball: "球从一开始就放在平面图上；狗不能放在球所在的格子上。",
+    cake_always_4_ball: "正好有一只狗紧挨着球（斜对角也算，即使隔着墙也算）——它藏起了球。",
     cake_magpiepip_name: "皮普",
     cake_magpiepip_cap: "皮普",
     cake_magpiepip_mid: "皮普",
-    cake_magpiepip_is: "皮普在",
-    cake_magpiepip_isnot: "皮普不在",
-    cake_magpiepip_sits: "皮普坐在",
     cake_win_magpiepip: "是皮普把钥匙放错了地方。",
     cake_magpiekiki_name: "琪琪",
     cake_magpiekiki_cap: "琪琪",
     cake_magpiekiki_mid: "琪琪",
-    cake_magpiekiki_is: "琪琪在",
-    cake_magpiekiki_isnot: "琪琪不在",
-    cake_magpiekiki_sits: "琪琪坐在",
     cake_win_magpiekiki: "是琪琪把钥匙放错了地方。",
     cake_magpierosa_name: "罗莎",
     cake_magpierosa_cap: "罗莎",
     cake_magpierosa_mid: "罗莎",
-    cake_magpierosa_is: "罗莎在",
-    cake_magpierosa_isnot: "罗莎不在",
-    cake_magpierosa_sits: "罗莎坐在",
     cake_win_magpierosa: "是罗莎把钥匙放错了地方。",
     cake_magpiejakob_name: "雅各布",
     cake_magpiejakob_cap: "雅各布",
     cake_magpiejakob_mid: "雅各布",
-    cake_magpiejakob_is: "雅各布在",
-    cake_magpiejakob_isnot: "雅各布不在",
-    cake_magpiejakob_sits: "雅各布坐在",
     cake_win_magpiejakob: "是雅各布把钥匙放错了地方。",
     cake_magpielou_name: "露",
     cake_magpielou_cap: "露",
     cake_magpielou_mid: "露",
-    cake_magpielou_is: "露在",
-    cake_magpielou_isnot: "露不在",
-    cake_magpielou_sits: "露坐在",
     cake_win_magpielou: "是露把钥匙放错了地方。",
     cake_thing_key: "钥匙",
-    cake_hint_last_key: "所有的喜鹊都放对了。只剩一行和一列是空的——钥匙就在那里。",
-    cake_always_1_key: "每一行和每一列都正好有一样东西:一只喜鹊或钥匙。",
-    cake_always_2_key: "钥匙总是放在桌子上。",
-    cake_always_4_key: "正好有一只喜鹊和钥匙在同一个房间——就是它把钥匙放错了地方。",
+    cake_always_1_key: "每个房间正好有一只喜鹊。",
+    cake_always_2_key: "钥匙从一开始就放在平面图上；喜鹊不能放在钥匙所在的格子上。",
+    cake_always_4_key: "正好有一只喜鹊紧挨着钥匙（斜对角也算，即使隔着墙也算）——它把钥匙放错了地方。",
     cake_greta_name: "格蕾塔",
     cake_greta_cap: "格蕾塔",
     cake_greta_mid: "格蕾塔",
-    cake_greta_is: "格蕾塔在",
-    cake_greta_isnot: "格蕾塔不在",
-    cake_greta_sits: "格蕾塔坐在",
     cake_win_greta: "是格蕾塔拿走了蛋糕。",
     cake_anton_name: "安东",
     cake_anton_cap: "安东",
     cake_anton_mid: "安东",
-    cake_anton_is: "安东在",
-    cake_anton_isnot: "安东不在",
-    cake_anton_sits: "安东坐在",
     cake_win_anton: "是安东拿走了蛋糕。",
     cake_lisa_name: "丽莎",
     cake_lisa_cap: "丽莎",
     cake_lisa_mid: "丽莎",
-    cake_lisa_is: "丽莎在",
-    cake_lisa_isnot: "丽莎不在",
-    cake_lisa_sits: "丽莎坐在",
     cake_win_lisa: "是丽莎拿走了蛋糕。",
     cake_jonas_name: "约纳斯",
     cake_jonas_cap: "约纳斯",
     cake_jonas_mid: "约纳斯",
-    cake_jonas_is: "约纳斯在",
-    cake_jonas_isnot: "约纳斯不在",
-    cake_jonas_sits: "约纳斯坐在",
     cake_win_jonas: "是约纳斯拿走了蛋糕。",
     cake_emma_name: "艾玛",
     cake_emma_cap: "艾玛",
     cake_emma_mid: "艾玛",
-    cake_emma_is: "艾玛在",
-    cake_emma_isnot: "艾玛不在",
-    cake_emma_sits: "艾玛坐在",
     cake_win_emma: "是艾玛拿走了蛋糕。",
-    cake_hint_last_family: "全家人都放对了。只剩一行和一列是空的——蛋糕就在那里。",
-    cake_always_1_family: "每一行和每一列都正好有一样东西:一位家人或蛋糕。",
-    cake_always_2_family: "蛋糕总是放在桌子上。",
-    cake_always_4_family: "正好有一位家人和蛋糕在同一个房间——就是这个人拿走了蛋糕。",
+    cake_always_1_family: "每个房间正好有一位家人。",
+    cake_always_2_family: "蛋糕从一开始就放在平面图上；家人不能放在蛋糕所在的格子上。",
+    cake_always_4_family: "正好有一位家人紧挨着蛋糕（斜对角也算，即使隔着墙也算）——这个人拿走了蛋糕。",
     cake_tom_name: "汤姆",
     cake_tom_cap: "汤姆",
     cake_tom_mid: "汤姆",
-    cake_tom_is: "汤姆在",
-    cake_tom_isnot: "汤姆不在",
-    cake_tom_sits: "汤姆坐在",
     cake_win_tom: "是汤姆藏起了宝藏。",
     cake_nora_name: "诺拉",
     cake_nora_cap: "诺拉",
     cake_nora_mid: "诺拉",
-    cake_nora_is: "诺拉在",
-    cake_nora_isnot: "诺拉不在",
-    cake_nora_sits: "诺拉坐在",
     cake_win_nora: "是诺拉藏起了宝藏。",
     cake_ben_name: "本",
     cake_ben_cap: "本",
     cake_ben_mid: "本",
-    cake_ben_is: "本在",
-    cake_ben_isnot: "本不在",
-    cake_ben_sits: "本坐在",
     cake_win_ben: "是本藏起了宝藏。",
     cake_ida_name: "伊达",
     cake_ida_cap: "伊达",
     cake_ida_mid: "伊达",
-    cake_ida_is: "伊达在",
-    cake_ida_isnot: "伊达不在",
-    cake_ida_sits: "伊达坐在",
     cake_win_ida: "是伊达藏起了宝藏。",
     cake_leo_name: "莱奥",
     cake_leo_cap: "莱奥",
     cake_leo_mid: "莱奥",
-    cake_leo_is: "莱奥在",
-    cake_leo_isnot: "莱奥不在",
-    cake_leo_sits: "莱奥坐在",
     cake_win_leo: "是莱奥藏起了宝藏。",
     cake_thing_treasure: "宝藏",
-    cake_hint_last_treasure: "所有的孩子都放对了。只剩一行和一列是空的——宝藏就在那里。",
-    cake_always_1_treasure: "每一行和每一列都正好有一样东西:一个孩子或宝藏。",
-    cake_always_2_treasure: "宝藏总是放在桌子上。",
-    cake_always_4_treasure: "正好有一个孩子和宝藏在同一个房间——就是这个孩子藏起了宝藏。",
-    cake_always_3_people: "没有人会站在桌子或占满整个格子的家具上(植物、柜子、架子、木箱、落地灯、浴缸)。",
+    cake_always_1_treasure: "每个房间正好有一个孩子。",
+    cake_always_2_treasure: "宝藏从一开始就放在平面图上；孩子不能放在宝藏所在的格子上。",
+    cake_always_4_treasure: "正好有一个孩子紧挨着宝藏（斜对角也算，即使隔着墙也算）——这个孩子藏起了宝藏。",
+    cake_always_3_people: "两个人不会直接相邻，斜对角也不行。",
     cake_motif_label: "主题",
     cake_motif_animals: "动物和蛋糕",
     cake_motif_cats: "猫和鱼",
@@ -2114,7 +1967,6 @@ STRINGS.zh = {
     cake_tool_x: "这里没有东西",
 
 
-    cake_window_name: "窗户",
 
 
     cake_thing_cake: "蛋糕",
@@ -2126,13 +1978,13 @@ STRINGS.zh = {
     cake_new_game: "新谜题",
 
 
-    cake_level_easy: "简单 (4x4，3名嫌疑人)",
+    cake_level_easy: "简单 (5x5，3名嫌疑人)",
 
 
-    cake_level_medium: "中等 (5x5，4名嫌疑人)",
+    cake_level_medium: "中等 (6x6，4名嫌疑人)",
 
 
-    cake_level_hard: "困难 (6x6，5名嫌疑人)",
+    cake_level_hard: "困难 (7x7，5名嫌疑人)",
     game_animalsudoku: "动物数独",
     home_animalsudoku_desc: "给孩子玩的数独，用动物代替数字：4×4或6×6，每种动物在每行、每列、每宫各出现一次。选一种动物，点一个格子，不用识字。",
     animalsudoku_new_game: "新谜题",

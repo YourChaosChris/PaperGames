@@ -1,48 +1,46 @@
 // cake-core.js
 // "Who Took the Cake?" - a detective logic puzzle. Dependency-free, no DOM.
 //
-// The board is an N x N floor plan split into rooms. Some cells hold
-// furniture that fits the room (table, chair, rug, sofa, bed, stool,
-// plant, cupboard, shelf, box, lamp, bathtub); a window sits on the
-// left or right outer wall of one row. N things are placed: N-1 animals
-// and the cake, one per row and one per column. The cake always stands
-// on a table; animals never stand on a table or on furniture that fills
-// its cell (plant, cupboard, shelf, box, lamp, bathtub). Exactly one
-// animal shares the cake's room - that animal took the cake. Clues about
-// the animals pin the placement down to a single solution.
+// Rules (puzzle.rules === 3; older saves without it are not used again):
+//   1. The board is an N x N floor plan split into rooms. The number of
+//      rooms (and animals) does not follow from N: Easy 5x5 with 3, Medium
+//      6x6 with 4, Hard 7x7 with 5. Exactly one animal stands in every room.
+//   2. The cake lies on the floor plan from the start, on a square of any
+//      room. It is not placed by the player, and no animal stands on it.
+//   3. Two animals never stand directly next to each other, not even
+//      diagonally.
+//   4. Exactly one animal stands directly next to the cake (side or corner,
+//      walls do not matter). That animal took the cake.
+// Clues about the animals pin their placement down to a single solution.
 //
 // A puzzle:
 //   n          board size
-//   rooms      room index per cell (cell i = row * n + col)
+//   rules      3
+//   rooms      room index per cell (cell i = row * n + col), rooms 0..m-1
 //   roomNames  room name id per room index ("kitchen", "garden", ...)
-//   furniture  one of FURNITURE or null per cell
-//   window     { row, side: "left" | "right" }
+//   cake       the cake's cell (given)
 //   clues      see below
-//   solution   cell per thing: things 0..n-2 are animals (ANIMALS order),
-//              thing n-1 is the cake
+//   solution   cell per animal (theme order), m animals
 //
 // Clues (a, b: animal index):
-//   { t: "in", a, room }       a is in that room
-//   { t: "notin", a, room }    a is not in that room
-//   { t: "on", a, f }          a sits on f (SITTING: chair, rug, sofa, bed, stool)
-//   { t: "next", a, f }        a is directly beside (not diagonally) f (NEXT_TO:
-//                              plant, cupboard, shelf, box, lamp, bathtub)
-//                              in the same room - not behind a wall
-//   { t: "window", a }         a is in the window's row
-//   { t: "edge", a, side }     a is in the top/bottom row or left/right column
-//   { t: "same", a, b }        a and b are in the same room
+//   { t: "size", a, size }    a is in a room of `size` squares
+//   { t: "higher", a, b }     a stands in a higher row than b
+//   { t: "left", a, b }       a stands in a column further left than b
+//   { t: "border", a, b }     the rooms of a and b share a wall
+//   { t: "steps", a, d }      a is d steps from the cake (up, down, left,
+//                             right; walls do not matter), d >= 2
 
 const CakeCore = (function () {
+  const RULES = 3;
   const ANIMALS = ["dog", "cat", "rabbit", "mouse", "hedgehog"];
   // Themes: the same puzzle with other pictures and names (p.motif). Each
   // has five suspects told apart by pattern and name, and its own thing
   // instead of the cake: cats and a fish, bears and cookies, dogs and a
   // ball, magpies and a key; a family and the cake, neighbours' children
   // and a treasure chest. Rules, generator and clues stay the same. A
-  // puzzle without p.motif (older saves) is the animals theme. suffix: the
-  // texts that name the thing have their own key (base + suffix); people:
-  // the suspects are people, so "Animals never stand on ..." has its own
-  // text too.
+  // puzzle without p.motif is the animals theme. suffix: the texts that
+  // name the thing have their own key (base + suffix); people: the
+  // suspects are people, so "Two animals never stand ..." has its own text.
   const CATS = ["cattiger", "catluna", "catmimi", "catfelix", "catmax"];
   const BEARS = ["bearbruno", "bearpaula", "bearotto", "bearlilli", "bearfritz"];
   const DOGS = ["dogbello", "doglotte", "dogbenny", "dogsusi", "dogrudi"];
@@ -63,45 +61,21 @@ const CakeCore = (function () {
     return (p && THEMES[p.motif]) || THEMES.animals;
   }
   const ROOM_NAMES = ["kitchen", "living", "hall", "bath", "bedroom", "garden", "cellar", "kids", "attic", "dining", "office", "terrace"];
-  const FURNITURE = ["table", "chair", "rug", "plant", "cupboard", "sofa", "bed", "stool", "shelf", "box", "lamp", "bathtub"];
-  // Furniture to sit on: an animal may stand there ("sits on a chair").
-  const SITTING = ["chair", "rug", "sofa", "bed", "stool"];
-  // Furniture that fills its cell: nobody stands there, and "is next to"
-  // clues name it.
-  const NEXT_TO = ["plant", "cupboard", "shelf", "box", "lamp", "bathtub"];
-  // Furniture no animal can stand on (the cake stands on a table).
-  const BLOCKING = ["table"].concat(NEXT_TO);
-  // What stands in which room: things to sit on and things that fill a
-  // cell, so a bed is in the bedroom, a bathtub in the bathroom, a shelf
-  // in the office and boxes in the cellar or the attic. Older puzzles
-  // keep the furniture they were made with.
-  const ROOM_FURNITURE = {
-    kitchen: { sit: ["chair", "stool", "rug"], block: ["cupboard", "plant", "shelf"] },
-    living: { sit: ["sofa", "chair", "rug"], block: ["plant", "lamp", "shelf", "cupboard"] },
-    hall: { sit: ["rug", "stool", "chair"], block: ["cupboard", "plant", "lamp"] },
-    bath: { sit: ["rug", "stool"], block: ["bathtub", "cupboard", "plant"] },
-    bedroom: { sit: ["bed", "rug", "chair"], block: ["cupboard", "lamp", "plant"] },
-    garden: { sit: ["chair", "rug", "stool"], block: ["plant", "box"] },
-    cellar: { sit: ["stool", "chair"], block: ["box", "shelf", "cupboard"] },
-    kids: { sit: ["bed", "rug", "stool"], block: ["box", "shelf", "lamp"] },
-    attic: { sit: ["chair", "rug", "sofa"], block: ["box", "cupboard", "lamp"] },
-    dining: { sit: ["chair", "rug"], block: ["cupboard", "plant", "lamp"] },
-    office: { sit: ["chair", "stool", "rug"], block: ["shelf", "lamp", "plant"] },
-    terrace: { sit: ["chair", "stool", "sofa"], block: ["plant", "box"] }
-  };
-  // extra: clues added on top of the ones that are needed (Easy 2,
-  // Medium 1, Hard none), positive ones first ("is in", "sits on", ...).
+  const CLUE_TYPES = ["size", "steps", "higher", "left", "border"];
+  // n: board size; m: rooms and animals; level: deduction depth the puzzle
+  // must be solvable with (see deduce); extra: clues added on top of the
+  // ones that are needed (Easy 2, Medium 1, Hard none), simplest kinds first.
   const LEVELS = {
-    easy: { n: 4, rooms: [3, 4], level: 1, extra: 2 },
-    medium: { n: 5, rooms: [4, 5], level: 2, extra: 1 },
-    hard: { n: 6, rooms: [5, 6], level: 3, extra: 0 }
+    easy: { n: 5, m: 3, level: 1, extra: 2 },
+    medium: { n: 6, m: 4, level: 2, extra: 1 },
+    hard: { n: 7, m: 5, level: 3, extra: 0 }
   };
-  const POSITIVE = ["in", "on", "next", "same", "window", "edge"];
 
   function rowOf(p, i) { return Math.floor(i / p.n); }
   function colOf(p, i) { return i % p.n; }
-  function isCake(p, k) { return k === p.n - 1; }
+  function animalCount(p) { return p.solution.length; }
 
+  // Side neighbours (for walls between rooms).
   function neighbours(n, i) {
     const r = Math.floor(i / n), c = i % n, out = [];
     if (r > 0) out.push(i - n);
@@ -111,101 +85,161 @@ const CakeCore = (function () {
     return out;
   }
 
-  // Is furniture f directly beside cell i (not diagonally) and in the
-  // same room? Something on the other side of a wall does not count.
-  function nextTo(p, i, f) {
-    return neighbours(p.n, i).some((j) => p.furniture[j] === f && p.rooms[j] === p.rooms[i]);
+  // Do cells i and j touch (side or corner)? A cell does not touch itself.
+  function touches(n, i, j) {
+    if (i === j) return false;
+    return Math.abs(Math.floor(i / n) - Math.floor(j / n)) <= 1 && Math.abs((i % n) - (j % n)) <= 1;
   }
 
-  // Does this clue hold if animal clue.a stands on cell i? ("same" is not
-  // a one-cell clue and always passes here.)
-  function clueAllows(p, clue, i) {
-    const r = rowOf(p, i), c = colOf(p, i);
-    switch (clue.t) {
-      case "in": return p.rooms[i] === clue.room;
-      case "notin": return p.rooms[i] !== clue.room;
-      case "on": return p.furniture[i] === clue.f;
-      case "next": return nextTo(p, i, clue.f);
-      case "window": return r === p.window.row;
-      case "edge":
-        if (clue.side === "top") return r === 0;
-        if (clue.side === "bottom") return r === p.n - 1;
-        if (clue.side === "left") return c === 0;
-        return c === p.n - 1;
-      default: return true;
-    }
-  }
-
-  // The cells thing k may stand on, from the furniture rule and its own
-  // one-cell clues.
-  function baseCandidates(p, k) {
-    const out = [];
-    for (let i = 0; i < p.n * p.n; i++) {
-      const f = p.furniture[i];
-      if (isCake(p, k)) { if (f === "table") out.push(i); continue; }
-      if (BLOCKING.indexOf(f) !== -1) continue;
-      if (p.clues.every((cl) => cl.a !== k || clueAllows(p, cl, i))) out.push(i);
+  // The cells touching cell i (up to eight).
+  function around(n, i) {
+    const out = [], r = Math.floor(i / n), c = i % n;
+    for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
+      if (!dr && !dc) continue;
+      const y = r + dr, x = c + dc;
+      if (y >= 0 && y < n && x >= 0 && x < n) out.push(y * n + x);
     }
     return out;
   }
 
-  // Checks a complete placement against every rule and clue.
-  function isSolution(p, cells) {
-    const n = p.n, rows = new Set(), cols = new Set();
-    for (let k = 0; k < n; k++) {
-      const i = cells[k];
-      if (i === undefined || i < 0) return false;
-      rows.add(rowOf(p, i)); cols.add(colOf(p, i));
-      if (baseCandidates(p, k).indexOf(i) === -1) return false;
-    }
-    if (rows.size !== n || cols.size !== n) return false;
-    for (const cl of p.clues) if (cl.t === "same" && p.rooms[cells[cl.a]] !== p.rooms[cells[cl.b]]) return false;
-    const cakeRoom = p.rooms[cells[n - 1]];
-    let inRoom = 0;
-    for (let k = 0; k < n - 1; k++) if (p.rooms[cells[k]] === cakeRoom) inRoom++;
-    return inRoom === 1;
+  function steps(n, i, j) {
+    return Math.abs(Math.floor(i / n) - Math.floor(j / n)) + Math.abs((i % n) - (j % n));
   }
 
-  // Counts solutions (up to `limit`) by plain backtracking.
+  // Room sizes and which rooms share a wall, worked out once per floor
+  // plan (keyed by the rooms array).
+  const roomInfoCache = new WeakMap();
+  function roomInfo(p) {
+    let info = roomInfoCache.get(p.rooms);
+    if (info) return info;
+    const n = p.n, count = Math.max.apply(null, p.rooms) + 1;
+    const size = new Array(count).fill(0);
+    const border = Array.from({ length: count }, () => new Array(count).fill(false));
+    for (let i = 0; i < n * n; i++) {
+      size[p.rooms[i]]++;
+      neighbours(n, i).forEach((j) => { if (p.rooms[j] !== p.rooms[i]) border[p.rooms[i]][p.rooms[j]] = true; });
+    }
+    info = { size, border };
+    roomInfoCache.set(p.rooms, info);
+    return info;
+  }
+
+  function roomSize(p, room) {
+    return roomInfo(p).size[room] || 0;
+  }
+
+  // Do rooms x and y share a wall (two side-by-side cells)?
+  function roomsBorder(p, x, y) {
+    const b = roomInfo(p).border[x];
+    return !!(b && b[y]);
+  }
+
+  // "size" and "steps" are about one animal (the cake is given).
+  function isSingle(cl) {
+    return cl.t === "size" || cl.t === "steps";
+  }
+
+  // The animal on the other end of a two-animal clue (-1 otherwise).
+  function otherOf(p, cl, k) {
+    if (isSingle(cl)) return -1;
+    if (cl.a === k) return cl.b;
+    if (cl.b === k) return cl.a;
+    return -1;
+  }
+
+  // Does clue cl hold with animal cl.a on cell i and cl.b on cell j?
+  // (One-animal clues ignore j.)
+  function pairHolds(p, cl, i, j) {
+    switch (cl.t) {
+      case "size": return roomSize(p, p.rooms[i]) === cl.size;
+      case "steps": return steps(p.n, i, p.cake) === cl.d;
+      case "higher": return rowOf(p, i) < rowOf(p, j);
+      case "left": return colOf(p, i) < colOf(p, j);
+      case "border": return roomsBorder(p, p.rooms[i], p.rooms[j]);
+      default: return true;
+    }
+  }
+
+  // Does clue cl hold for animal k on cell i, given where the others stand
+  // (cells: cell per animal, -1 = open)? Open ends always pass.
+  function clueHolds(p, cl, k, i, cells) {
+    if (isSingle(cl)) return cl.a !== k || pairHolds(p, cl, i, -1);
+    const o = otherOf(p, cl, k);
+    if (o < 0) return true;
+    const j = cells ? cells[o] : -1;
+    if (j === undefined || j < 0) return true;
+    return cl.a === k ? pairHolds(p, cl, i, j) : pairHolds(p, cl, j, i);
+  }
+
+  // The cells animal k may stand on by the cake and its one-animal clues.
+  function baseCandidates(p, k) {
+    const out = [];
+    for (let i = 0; i < p.n * p.n; i++) {
+      if (i === p.cake) continue;
+      if (p.clues.every((cl) => !isSingle(cl) || cl.a !== k || pairHolds(p, cl, i, -1))) out.push(i);
+    }
+    return out;
+  }
+
+  // Checks a complete placement of the animals against every rule and clue.
+  function isSolution(p, cells) {
+    const n = p.n;
+    const m = Math.max.apply(null, p.rooms) + 1;
+    if (!cells || cells.length !== m) return false;
+    if (!(p.cake >= 0 && p.cake < n * n)) return false;
+    for (let k = 0; k < m; k++) if (!(cells[k] >= 0 && cells[k] < n * n) || cells[k] === p.cake) return false;
+    const rooms = new Set();
+    let near = 0;
+    for (let a = 0; a < m; a++) {
+      rooms.add(p.rooms[cells[a]]);
+      for (let b = a + 1; b < m; b++) if (cells[a] === cells[b] || touches(n, cells[a], cells[b])) return false;
+      if (touches(n, cells[a], p.cake)) near++;
+    }
+    if (rooms.size !== m || near !== 1) return false;
+    return p.clues.every((cl) => (isSingle(cl) ? pairHolds(p, cl, cells[cl.a], -1) : pairHolds(p, cl, cells[cl.a], cells[cl.b])));
+  }
+
+  // Counts solutions (up to `limit`) by plain backtracking, animal by
+  // animal (fewest squares first).
   function countSolutions(p, limit) {
     limit = limit || 2;
-    const n = p.n;
-    const cand = [];
-    for (let k = 0; k < n; k++) cand.push(baseCandidates(p, k));
-    const order = Array.from({ length: n }, (_, k) => k).sort((x, y) => cand[x].length - cand[y].length);
-    const sames = p.clues.filter((cl) => cl.t === "same");
-    const cells = new Array(n).fill(-1), usedR = new Array(n).fill(false), usedC = new Array(n).fill(false);
-    let count = 0;
-    function ok(k) {
-      for (const cl of sames) {
-        const o = cl.a === k ? cl.b : (cl.b === k ? cl.a : -1);
-        if (o >= 0 && cells[o] >= 0 && p.rooms[cells[o]] !== p.rooms[cells[k]]) return false;
-      }
-      const cake = cells[n - 1];
-      if (cake >= 0) {
-        const room = p.rooms[cake];
-        let inRoom = 0;
-        for (let a = 0; a < n - 1; a++) if (cells[a] >= 0 && p.rooms[cells[a]] === room) inRoom++;
-        if (inRoom > 1) return false;
-      }
+    const n = p.n, m = Math.max.apply(null, p.rooms) + 1;
+    // Level 1 of the deduction only removes squares that cannot be right,
+    // so it is safe to start from there.
+    const sets = [];
+    for (let k = 0; k < m; k++) sets.push(new Set(baseCandidates(p, k)));
+    for (;;) {
+      if (broken(p, sets)) return 0;
+      if (!level1(p, sets)) break;
+    }
+    const cand = sets.map((s) => Array.from(s));
+    const order = Array.from({ length: m }, (_, k) => k).sort((x, y) => cand[x].length - cand[y].length);
+    const cells = new Array(m).fill(-1);
+    const usedRoom = new Array(m).fill(false);
+    const twoThing = p.clues.filter((cl) => !isSingle(cl));
+    let count = 0, near = 0;
+    function fits(k, i) {
+      for (const cl of twoThing) if (!clueHolds(p, cl, k, i, cells)) return false;
       return true;
     }
     function rec(d) {
       if (count >= limit) return;
-      if (d === n) {
-        const room = p.rooms[cells[n - 1]];
-        let inRoom = 0;
-        for (let a = 0; a < n - 1; a++) if (p.rooms[cells[a]] === room) inRoom++;
-        if (inRoom === 1) count++;
+      if (d === m) {
+        if (near === 1) count++;
         return;
       }
       const k = order[d];
       for (const i of cand[k]) {
-        const r = rowOf(p, i), c = colOf(p, i);
-        if (usedR[r] || usedC[c]) continue;
-        cells[k] = i; usedR[r] = usedC[c] = true;
-        if (ok(k)) rec(d + 1);
-        cells[k] = -1; usedR[r] = usedC[c] = false;
+        const room = p.rooms[i];
+        if (usedRoom[room]) continue;
+        const nearHere = touches(n, i, p.cake) ? 1 : 0;
+        if (near + nearHere > 1) continue;
+        let bad = false;
+        for (let a = 0; a < m && !bad; a++) if (cells[a] >= 0 && (cells[a] === i || touches(n, cells[a], i))) bad = true;
+        if (bad || !fits(k, i)) continue;
+        cells[k] = i; usedRoom[room] = true; near += nearHere;
+        rec(d + 1);
+        cells[k] = -1; usedRoom[room] = false; near -= nearHere;
         if (count >= limit) return;
       }
     }
@@ -213,132 +247,51 @@ const CakeCore = (function () {
     return count;
   }
 
-  /*** Solving by deduction only (no trying out, no backtracking) ***/
+  /*** Solving by deduction only ***/
 
-  // Level 1: a placed thing blocks its row and column; a thing whose cells
-  //          all lie in one row/column blocks it for the others; a row or
-  //          column only one thing can still reach gets that thing.
-  // Level 2: also "same room" clues and the cake rule (exactly one animal
-  //          in the cake's room).
-  // Level 3: also groups: k things that together can only use k rows (or
-  //          columns) block those rows for everyone else.
+  // Level 1: one-animal clues; an animal whose squares all lie in one room
+  //          keeps the others out of that room; a settled animal keeps the
+  //          others off the squares around it; a room only one animal can
+  //          still reach gets that animal; a square needs a square at the
+  //          other end of each two-animal clue that fits it; an animal
+  //          settled next to the cake keeps the others away from it, and
+  //          when all others are settled away from the cake, the last one
+  //          stands next to it.
+  // Level 2: also the rules between two open animals: the partner square
+  //          of a two-animal clue must not be in the same room or next to
+  //          it, an animal square must not leave another animal no square,
+  //          and the cake rule while several animals are open (only one
+  //          can reach the cake, or one can stand nowhere else).
+  // Level 3: also trying one square: if putting an animal there leads to a
+  //          contradiction by levels 1 and 2, the square is out.
   // `start` (optional) is what the player already knows for sure:
-  // { placed: cell per thing or -1, crosses: cells with nothing }.
+  // { placed: cell per animal or -1, crosses: cells with nothing }.
   // Returns { solved, cells, levelUsed, fixedAt } - fixedAt[k] counts the
-  // deduction steps until thing k had a single cell left (0 = from the
+  // deduction steps until animal k had a single cell left (0 = from the
   // start; -1 = never), so the hint can follow the order of reasoning.
   function deduce(p, maxLevel, start) {
-    const n = p.n;
-    const cand = [];
-    for (let k = 0; k < n; k++) cand.push(new Set(baseCandidates(p, k)));
+    const m = Math.max.apply(null, p.rooms) + 1;
+    let cand = [];
+    for (let k = 0; k < m; k++) cand.push(new Set(baseCandidates(p, k)));
     if (start) {
       const crosses = start.crosses || [];
-      for (let k = 0; k < n; k++) {
+      for (let k = 0; k < m; k++) {
         const at = start.placed ? start.placed[k] : -1;
         if (at >= 0) cand[k] = new Set(cand[k].has(at) ? [at] : []);
         else crosses.forEach((i) => cand[k].delete(i));
       }
     }
-    const sames = p.clues.filter((cl) => cl.t === "same");
     let levelUsed = 1;
     let step = 0;
-    const fixedAt = new Array(n).fill(-1);
-    const noteFixed = () => { for (let k = 0; k < n; k++) if (fixedAt[k] === -1 && cand[k].size === 1) fixedAt[k] = step; };
-
-    function removeWhere(k, pred) {
-      let changed = false;
-      for (const i of Array.from(cand[k])) if (pred(i)) { cand[k].delete(i); changed = true; }
-      return changed;
-    }
-    const linesOf = (k, f) => new Set(Array.from(cand[k]).map(f));
-    const R = (i) => rowOf(p, i), C = (i) => colOf(p, i);
-
-    function level1() {
-      let changed = false;
-      for (const f of [R, C]) {
-        for (let k = 0; k < n; k++) {
-          const lines = linesOf(k, f);
-          if (lines.size === 1) {
-            const line = lines.values().next().value;
-            for (let o = 0; o < n; o++) if (o !== k && removeWhere(o, (i) => f(i) === line)) changed = true;
-          }
-        }
-        for (let line = 0; line < n; line++) {
-          const who = [];
-          for (let k = 0; k < n; k++) if (Array.from(cand[k]).some((i) => f(i) === line)) who.push(k);
-          if (who.length === 1 && removeWhere(who[0], (i) => f(i) !== line)) changed = true;
-        }
-      }
-      return changed;
-    }
-
-    function level2() {
-      let changed = false;
-      for (const cl of sames) {
-        for (const [x, y] of [[cl.a, cl.b], [cl.b, cl.a]]) {
-          if (removeWhere(x, (i) => !Array.from(cand[y]).some((j) => j !== i && R(j) !== R(i) && C(j) !== C(i) && p.rooms[j] === p.rooms[i]))) changed = true;
-        }
-      }
-      const cake = n - 1;
-      const animalsIn = (room, notRow, notCol) => {
-        const can = [], forced = [];
-        for (let a = 0; a < n - 1; a++) {
-          const inside = Array.from(cand[a]).filter((i) => p.rooms[i] === room && R(i) !== notRow && C(i) !== notCol);
-          if (inside.length) can.push(a);
-          if (Array.from(cand[a]).every((i) => p.rooms[i] === room)) forced.push(a);
-        }
-        return { can, forced };
-      };
-      // A table is out if its room would hold no animal or two of them.
-      if (removeWhere(cake, (x) => {
-        const s = animalsIn(p.rooms[x], R(x), C(x));
-        return s.can.length === 0 || s.forced.length >= 2;
-      })) changed = true;
-      const cakeRooms = new Set(Array.from(cand[cake]).map((i) => p.rooms[i]));
-      if (cakeRooms.size === 1) {
-        const room = cakeRooms.values().next().value;
-        const s = animalsIn(room, -1, -1);
-        if (s.forced.length === 1) {
-          for (let a = 0; a < n - 1; a++) if (a !== s.forced[0] && removeWhere(a, (i) => p.rooms[i] === room)) changed = true;
-        } else if (s.can.length === 1) {
-          if (removeWhere(s.can[0], (i) => p.rooms[i] !== room)) changed = true;
-        }
-      }
-      // An animal cannot stand where it would be a second animal in the
-      // room of a cake whose place is already settled.
-      if (cand[cake].size === 1) {
-        const x = cand[cake].values().next().value, room = p.rooms[x];
-        const s = animalsIn(room, -1, -1);
-        if (s.forced.length === 1) {
-          for (let a = 0; a < n - 1; a++) if (a !== s.forced[0] && removeWhere(a, (i) => p.rooms[i] === room)) changed = true;
-        }
-      }
-      return changed;
-    }
-
-    function level3() {
-      let changed = false;
-      const things = Array.from({ length: n }, (_, k) => k);
-      for (const f of [R, C]) {
-        for (let size = 2; size < n - 1; size++) {
-          combinations(things, size, (group) => {
-            const lines = new Set();
-            group.forEach((k) => linesOf(k, f).forEach((l) => lines.add(l)));
-            if (lines.size !== size) return;
-            for (let o = 0; o < n; o++) if (group.indexOf(o) === -1 && removeWhere(o, (i) => lines.has(f(i)))) changed = true;
-          });
-        }
-      }
-      return changed;
-    }
-
+    const fixedAt = new Array(m).fill(-1);
+    const noteFixed = () => { for (let k = 0; k < m; k++) if (fixedAt[k] === -1 && cand[k].size === 1) fixedAt[k] = step; };
     noteFixed();
     for (;;) {
-      if (cand.some((s) => s.size === 0)) return { solved: false, cells: null, levelUsed, fixedAt };
+      if (broken(p, cand)) return { solved: false, cells: null, levelUsed, fixedAt };
       step++;
-      if (level1()) { noteFixed(); continue; }
-      if (maxLevel >= 2 && level2()) { levelUsed = Math.max(levelUsed, 2); noteFixed(); continue; }
-      if (maxLevel >= 3 && level3()) { levelUsed = Math.max(levelUsed, 3); noteFixed(); continue; }
+      if (level1(p, cand)) { noteFixed(); continue; }
+      if (maxLevel >= 2 && level2(p, cand)) { levelUsed = Math.max(levelUsed, 2); noteFixed(); continue; }
+      if (maxLevel >= 3 && level3(p, cand)) { levelUsed = Math.max(levelUsed, 3); noteFixed(); continue; }
       break;
     }
     if (cand.some((s) => s.size !== 1)) return { solved: false, cells: null, levelUsed, fixedAt };
@@ -346,12 +299,123 @@ const CakeCore = (function () {
     return { solved: isSolution(p, cells), cells, levelUsed, fixedAt };
   }
 
-  function combinations(arr, k, cb) {
-    const pick = [];
-    (function rec(start) {
-      if (pick.length === k) { cb(pick.slice()); return; }
-      for (let i = start; i < arr.length; i++) { pick.push(arr[i]); rec(i + 1); pick.pop(); }
-    })(0);
+  function removeWhere(cand, k, pred) {
+    let changed = false;
+    for (const i of Array.from(cand[k])) if (pred(i)) { cand[k].delete(i); changed = true; }
+    return changed;
+  }
+
+  // An animal without squares, a room no animal can reach any more, no
+  // animal that can reach the cake, or two that must stand next to it.
+  function broken(p, cand) {
+    if (cand.some((s) => s.size === 0)) return true;
+    const n = p.n, m = cand.length;
+    for (let room = 0; room < m; room++) {
+      let any = false;
+      for (let a = 0; a < m && !any; a++) for (const i of cand[a]) if (p.rooms[i] === room) { any = true; break; }
+      if (!any) return true;
+    }
+    let can = 0, must = 0;
+    for (let a = 0; a < m; a++) {
+      const list = Array.from(cand[a]);
+      if (list.some((i) => touches(n, i, p.cake))) can++;
+      if (list.every((i) => touches(n, i, p.cake))) must++;
+    }
+    return can === 0 || must >= 2;
+  }
+
+  function level1(p, cand) {
+    const n = p.n, m = cand.length;
+    let changed = false;
+    for (let a = 0; a < m; a++) {
+      const rooms = new Set(Array.from(cand[a]).map((i) => p.rooms[i]));
+      if (rooms.size === 1) {
+        const room = rooms.values().next().value;
+        for (let o = 0; o < m; o++) if (o !== a && removeWhere(cand, o, (i) => p.rooms[i] === room)) changed = true;
+      }
+      if (cand[a].size === 1) {
+        const x = cand[a].values().next().value;
+        for (let o = 0; o < m; o++) if (o !== a && removeWhere(cand, o, (i) => i === x || touches(n, i, x))) changed = true;
+        // Settled next to the cake: nobody else stands next to it.
+        if (touches(n, x, p.cake)) {
+          for (let o = 0; o < m; o++) if (o !== a && removeWhere(cand, o, (i) => touches(n, i, p.cake))) changed = true;
+        }
+      }
+    }
+    for (let room = 0; room < m; room++) {
+      const who = [];
+      for (let a = 0; a < m; a++) if (Array.from(cand[a]).some((i) => p.rooms[i] === room)) who.push(a);
+      if (who.length === 1 && removeWhere(cand, who[0], (i) => p.rooms[i] !== room)) changed = true;
+    }
+    // Two-animal clues: a square needs some square at the other end that
+    // fits the clue.
+    for (const cl of p.clues) {
+      if (isSingle(cl)) continue;
+      const cb = Array.from(cand[cl.b]);
+      if (removeWhere(cand, cl.a, (i) => !cb.some((j) => j !== i && pairHolds(p, cl, i, j)))) changed = true;
+      const ca = Array.from(cand[cl.a]);
+      if (removeWhere(cand, cl.b, (j) => !ca.some((i) => i !== j && pairHolds(p, cl, i, j)))) changed = true;
+    }
+    // All others settled away from the cake: the last one stands next to it.
+    const open = [];
+    let anyNear = false;
+    for (let a = 0; a < m; a++) {
+      if (cand[a].size !== 1) open.push(a);
+      else if (touches(n, cand[a].values().next().value, p.cake)) anyNear = true;
+    }
+    if (open.length === 1 && !anyNear && removeWhere(cand, open[0], (i) => !touches(n, i, p.cake))) changed = true;
+    return changed;
+  }
+
+  function level2(p, cand) {
+    const n = p.n, m = cand.length;
+    let changed = false;
+    // Two-animal clues: a square needs a partner square at the other end,
+    // in another room and not next to it.
+    for (const cl of p.clues) {
+      if (isSingle(cl)) continue;
+      const partner = (y, i, mine) => Array.from(cand[y]).some((j) => j !== i && !touches(n, i, j) && p.rooms[i] !== p.rooms[j] && (mine ? pairHolds(p, cl, i, j) : pairHolds(p, cl, j, i)));
+      if (removeWhere(cand, cl.a, (i) => !partner(cl.b, i, true))) changed = true;
+      if (removeWhere(cand, cl.b, (i) => !partner(cl.a, i, false))) changed = true;
+    }
+    // An animal square that leaves another animal no square at all.
+    for (let a = 0; a < m; a++) {
+      for (let o = 0; o < m; o++) {
+        if (o === a) continue;
+        if (removeWhere(cand, a, (i) => Array.from(cand[o]).every((j) => j === i || touches(n, i, j) || p.rooms[j] === p.rooms[i]))) changed = true;
+      }
+    }
+    // The cake: if only one animal can still reach it, that one stands
+    // next to it; if one can stand nowhere else, the others keep away.
+    const can = [];
+    for (let a = 0; a < m; a++) if (Array.from(cand[a]).some((i) => touches(n, i, p.cake))) can.push(a);
+    if (can.length === 1 && removeWhere(cand, can[0], (i) => !touches(n, i, p.cake))) changed = true;
+    for (let a = 0; a < m; a++) {
+      if (!Array.from(cand[a]).every((i) => touches(n, i, p.cake))) continue;
+      for (let o = 0; o < m; o++) if (o !== a && removeWhere(cand, o, (i) => touches(n, i, p.cake))) changed = true;
+    }
+    return changed;
+  }
+
+  function level3(p, cand) {
+    const m = cand.length;
+    for (let k = 0; k < m; k++) {
+      if (cand[k].size < 2) continue;
+      for (const i of Array.from(cand[k])) {
+        const trial = cand.map((s) => new Set(s));
+        trial[k] = new Set([i]);
+        let bad = false;
+        for (;;) {
+          if (broken(p, trial)) { bad = true; break; }
+          if (level1(p, trial)) continue;
+          if (level2(p, trial)) continue;
+          break;
+        }
+        if (!bad && trial.every((s) => s.size === 1) && !isSolution(p, trial.map((s) => s.values().next().value))) bad = true;
+        if (bad) { cand[k].delete(i); return true; }
+      }
+    }
+    return false;
   }
 
   /*** Generator ***/
@@ -364,7 +428,7 @@ const CakeCore = (function () {
     return arr;
   }
 
-  // k connected rooms of at least two cells, grown from random seeds.
+  // k connected rooms of at least three cells, grown from random seeds.
   function randomRooms(n, k, rnd) {
     for (let tries = 0; tries < 50; tries++) {
       const rooms = new Array(n * n).fill(-1);
@@ -384,76 +448,69 @@ const CakeCore = (function () {
       }
       const sizes = new Array(k).fill(0);
       rooms.forEach((r) => sizes[r]++);
-      if (sizes.every((s) => s >= 2)) return rooms;
+      if (sizes.every((s) => s >= 3)) return rooms;
     }
     return null;
   }
 
+  // Every true clue about the solution.
   function candidateClues(p, sol) {
-    const n = p.n, out = [];
-    for (let a = 0; a < n - 1; a++) {
-      const i = sol[a], room = p.rooms[i];
-      out.push({ t: "in", a, room });
-      const rooms = new Set(p.rooms);
-      rooms.forEach((r) => { if (r !== room) out.push({ t: "notin", a, room: r }); });
-      if (SITTING.indexOf(p.furniture[i]) !== -1) out.push({ t: "on", a, f: p.furniture[i] });
-      NEXT_TO.forEach((f) => { if (nextTo(p, i, f)) out.push({ t: "next", a, f }); });
-      if (rowOf(p, i) === p.window.row) out.push({ t: "window", a });
-      if (rowOf(p, i) === 0) out.push({ t: "edge", a, side: "top" });
-      if (rowOf(p, i) === n - 1) out.push({ t: "edge", a, side: "bottom" });
-      if (colOf(p, i) === 0) out.push({ t: "edge", a, side: "left" });
-      if (colOf(p, i) === n - 1) out.push({ t: "edge", a, side: "right" });
-      for (let b = a + 1; b < n - 1; b++) if (p.rooms[sol[b]] === room) out.push({ t: "same", a, b });
+    const n = p.n, m = sol.length, out = [];
+    for (let a = 0; a < m; a++) {
+      out.push({ t: "size", a, size: roomSize(p, p.rooms[sol[a]]) });
+      const d = steps(n, sol[a], p.cake);
+      if (d >= 2) out.push({ t: "steps", a, d });
+      for (let b = 0; b < m; b++) {
+        if (b === a) continue;
+        if (rowOf(p, sol[a]) < rowOf(p, sol[b])) out.push({ t: "higher", a, b });
+        if (colOf(p, sol[a]) < colOf(p, sol[b])) out.push({ t: "left", a, b });
+        if (a < b && roomsBorder(p, p.rooms[sol[a]], p.rooms[sol[b]])) out.push({ t: "border", a, b });
+      }
     }
     return out;
   }
 
   // One attempt at a board with a solution that obeys every rule.
   function randomBoard(cfg, rnd) {
-    const n = cfg.n;
-    const k = cfg.rooms[0] + Math.floor(rnd() * (cfg.rooms[1] - cfg.rooms[0] + 1));
+    const n = cfg.n, k = cfg.m;
     const rooms = randomRooms(n, k, rnd);
     if (!rooms) return null;
     const names = shuffle(ROOM_NAMES.slice(), rnd).slice(0, k);
     for (let tries = 0; tries < 30; tries++) {
-      const cols = shuffle(Array.from({ length: n }, (_, i) => i), rnd);
-      const rowsOf = shuffle(Array.from({ length: n }, (_, i) => i), rnd);
-      const sol = [];
-      for (let t = 0; t < n; t++) sol.push(rowsOf[t] * n + cols[rowsOf[t]]);
-      const cakeRoom = rooms[sol[n - 1]];
-      let inRoom = 0;
-      for (let a = 0; a < n - 1; a++) if (rooms[sol[a]] === cakeRoom) inRoom++;
-      if (inRoom !== 1) continue;
-      const furniture = new Array(n * n).fill(null);
-      furniture[sol[n - 1]] = "table";
-      const occupied = new Set(sol);
-      // Furniture of the cell's room, picked at random.
-      const pick = (i, kind) => {
-        const list = (ROOM_FURNITURE[names[rooms[i]]] || ROOM_FURNITURE.living)[kind];
-        return list[Math.floor(rnd() * list.length)];
-      };
-      for (let a = 0; a < n - 1; a++) {
-        // Animals sit on something of their room, or stand on a bare cell.
-        furniture[sol[a]] = rnd() < 0.6 ? pick(sol[a], "sit") : null;
+      // One animal per room, in random order, never touching.
+      const roomOrder = shuffle(Array.from({ length: k }, (_, r) => r), rnd);
+      const byRoom = [];
+      let ok = true;
+      for (const room of roomOrder) {
+        const free = shuffle(Array.from({ length: n * n }, (_, i) => i).filter((i) => rooms[i] === room && byRoom.every((j) => j !== i && !touches(n, i, j))), rnd);
+        if (!free.length) { ok = false; break; }
+        byRoom.push(free[0]);
       }
-      const free = shuffle(Array.from({ length: n * n }, (_, i) => i).filter((i) => !occupied.has(i)), rnd);
-      const tables = 1 + Math.floor(rnd() * (n - 2)), blocks = 2 + Math.floor(rnd() * 3), sits = Math.floor(rnd() * 4);
-      for (let c = 0; c < tables && free.length; c++) furniture[free.pop()] = "table";
-      for (let c = 0; c < blocks && free.length; c++) { const i = free.pop(); furniture[i] = pick(i, "block"); }
-      for (let c = 0; c < sits && free.length; c++) { const i = free.pop(); furniture[i] = pick(i, "sit"); }
-      const win = { row: Math.floor(rnd() * n), side: rnd() < 0.5 ? "left" : "right" };
-      return { n, rooms, roomNames: names, furniture, window: win, clues: [], solution: sol };
+      if (!ok) continue;
+      const spots = [];
+      for (let x = 0; x < n * n; x++) {
+        if (byRoom.indexOf(x) !== -1) continue;
+        if (byRoom.filter((i) => touches(n, i, x)).length === 1) spots.push(x);
+      }
+      if (!spots.length) continue;
+      // Animal a is the suspect in theme order; which room it lands in is
+      // random.
+      const sol = shuffle(byRoom.slice(), rnd);
+      return { n, rules: RULES, rooms, roomNames: names, cake: spots[Math.floor(rnd() * spots.length)], clues: [], solution: sol };
     }
     return null;
   }
 
+  // Does clue cl name animal k?
+  function names(p, cl, k) {
+    return cl.a === k || otherOf(p, cl, cl.a) === k;
+  }
+
   // Clues are added until the puzzle has exactly one solution, every
-  // clue that is not needed for that is removed again (each animal keeps
-  // at least one), and the result must be solvable by deduction alone at
-  // the level's depth. Then Easy and Medium get cfg.extra more true clues
-  // (p.needed keeps the number that was needed): positive ones first,
-  // for the animals with the fewest clues; "not in" only if nothing else
-  // is left.
+  // clue that is not needed for that is removed again (each animal stays
+  // named by at least one clue), and the result must be solvable by
+  // deduction alone at the level's depth. Then Easy and Medium get
+  // cfg.extra more true clues (p.needed keeps the number that was needed).
   function generatePuzzle(levelName, rng) {
     const rnd = rng || Math.random;
     const cfg = LEVELS[levelName] || LEVELS.medium;
@@ -462,8 +519,9 @@ const CakeCore = (function () {
       if (!p) continue;
       const pool = shuffle(candidateClues(p, p.solution), rnd);
       const clues = [];
-      for (let a = 0; a < p.n - 1; a++) {
-        const own = pool.filter((cl) => cl.a === a);
+      for (let a = 0; a < cfg.m; a++) {
+        if (clues.some((cl) => names(p, cl, a))) continue;
+        const own = pool.filter((cl) => names(p, cl, a));
         clues.push(own[Math.floor(rnd() * own.length)]);
       }
       p.clues = clues;
@@ -477,19 +535,21 @@ const CakeCore = (function () {
       if (!unique) continue;
       for (const cl of shuffle(clues.slice(), rnd)) {
         const rest = p.clues.filter((x) => x !== cl);
-        if (!rest.some((x) => x.a === cl.a)) continue;
+        let named = true;
+        for (let a = 0; a < cfg.m; a++) if (names(p, cl, a) && !rest.some((x) => names(p, x, a))) named = false;
+        if (!named) continue;
         const before = p.clues;
         p.clues = rest;
         if (countSolutions(p, 2) !== 1) p.clues = before;
       }
       const d = deduce(p, cfg.level);
       if (!d.solved) continue;
-      // Hard puzzles should need more than the simplest steps; after many
-      // tries any deducible one is taken, so a puzzle always comes out.
-      if (cfg.level >= 3 && attempt < 200 && deduce(p, 1).solved) continue;
+      // Medium and Hard should need more than the simplest steps; after
+      // many tries any deducible one is taken, so a puzzle always comes out.
+      if (cfg.level >= 2 && attempt < 200 && deduce(p, cfg.level - 1).solved) continue;
       p.needed = p.clues.length;
       addExtraClues(p, pool, cfg.extra || 0);
-      p.clues.sort((x, y) => x.a - y.a || (x.t < y.t ? -1 : x.t > y.t ? 1 : 0));
+      p.clues.sort((x, y) => x.a - y.a || CLUE_TYPES.indexOf(x.t) - CLUE_TYPES.indexOf(y.t));
       p.level = levelName;
       return p;
     }
@@ -497,15 +557,17 @@ const CakeCore = (function () {
   }
 
   function sameClue(x, y) {
-    return x.t === y.t && x.a === y.a && x.b === y.b && x.room === y.room && x.f === y.f && x.side === y.side;
+    return x.t === y.t && x.a === y.a && x.b === y.b && x.size === y.size && x.d === y.d;
   }
 
+  // Extra clues: the simplest kinds first ("size", then "steps", ...), for
+  // the animals named least so far.
   function addExtraClues(p, pool, count) {
     for (let added = 0; added < count; added++) {
       const left = pool.filter((cl) => !p.clues.some((x) => sameClue(x, cl)));
       if (!left.length) return;
-      const have = (a) => p.clues.filter((x) => x.a === a || x.b === a).length;
-      const score = (cl) => (POSITIVE.indexOf(cl.t) !== -1 ? 0 : 100) + have(cl.a);
+      const have = (k) => p.clues.filter((x) => names(p, x, k)).length;
+      const score = (cl) => CLUE_TYPES.indexOf(cl.t) * 100 + have(cl.a);
       let best = left[0];
       for (const cl of left) if (score(cl) < score(best)) best = cl;
       p.clues.push(best);
@@ -514,28 +576,22 @@ const CakeCore = (function () {
 
   /*** Hint ***/
 
-  // placed: cell per thing (-1 = not on the board); crosses: cells marked
+  // placed: cell per animal (-1 = not on the board); crosses: cells marked
   // "nothing here". Returns
-  //   { kind: "wrong", thing, cell }   a thing stands in the wrong cell
+  //   { kind: "wrong", thing, cell }   an animal stands in the wrong cell
   //   { kind: "wrongx", cell }         a cross marks a cell the solution uses
-  //   { kind: "step", thing, cell, reason }  where the next thing goes,
+  //   { kind: "step", thing, cell, reason }  where the next animal goes,
   //                                    and why (see explainStep)
-  //   { kind: "last" }                 all animals stand right, the cake is open
   //   { kind: "done" }
   function findHint(p, placed, crosses) {
-    for (let k = 0; k < p.n; k++) {
+    const m = animalCount(p);
+    for (let k = 0; k < m; k++) {
       if (placed[k] >= 0 && placed[k] !== p.solution[k]) return { kind: "wrong", thing: k, cell: placed[k] };
     }
     for (const i of crosses || []) if (p.solution.indexOf(i) !== -1) return { kind: "wrongx", cell: i };
-    // The next step is the thing that reasoning from what is already on
-    // the board pins down first. Animals come before the cake: setting the
-    // cake ends the puzzle, and that last step stays the player's.
-    if (placed[p.n - 1] === p.solution[p.n - 1]) return { kind: "done" };
     const animals = [];
-    for (let k = 0; k < p.n - 1; k++) if (placed[k] !== p.solution[k]) animals.push(k);
-    // Only the cake left: one row and one column are free, and saying so
-    // is the whole hint.
-    if (!animals.length) return { kind: "last" };
+    for (let k = 0; k < m; k++) if (placed[k] !== p.solution[k]) animals.push(k);
+    if (!animals.length) return { kind: "done" };
     const fixedAt = deduce(p, 3, { placed, crosses }).fixedAt;
     const rank = (k) => (fixedAt[k] === -1 ? Infinity : fixedAt[k]);
     // An animal whose place can be seen directly from the board as it is
@@ -549,79 +605,85 @@ const CakeCore = (function () {
     return { kind: "step", thing: best, cell: p.solution[best], reason: bestReason };
   }
 
-  // Why thing k must stand on its solution cell, seen from the board as
-  // it is (placed things and crosses; both already checked to be right):
+  // The cells animal t can still use on the board as it is: no cross, not
+  // the cake, not taken, not in the room of another placed animal, not next
+  // to one (rules 1 to 3), and every clue in clueIdx holds against the
+  // animals already placed.
+  function openCells(p, placed, crosses, t, clueIdx) {
+    const n = p.n, m = animalCount(p), out = [];
+    const crossSet = new Set(crosses || []);
+    for (let i = 0; i < n * n; i++) {
+      if (crossSet.has(i) || i === p.cake) continue;
+      let ok = true;
+      for (let o = 0; o < m && ok; o++) {
+        if (o === t || placed[o] < 0) continue;
+        if (placed[o] === i || p.rooms[placed[o]] === p.rooms[i] || touches(n, placed[o], i)) ok = false;
+      }
+      if (ok && clueIdx.every((ci) => clueHolds(p, p.clues[ci], t, i, placed))) out.push(i);
+    }
+    return out;
+  }
+
+  // The clues about animal t that can be checked on the board as it is:
+  // a one-animal clue, or a two-animal clue whose other end is placed.
+  function usableClues(p, placed, t) {
+    const out = [];
+    p.clues.forEach((cl, idx) => {
+      if (!names(p, cl, t)) return;
+      if (isSingle(cl) || placed[otherOf(p, cl, t)] >= 0) out.push(idx);
+    });
+    return out;
+  }
+
+  // Why animal k must stand on its solution cell, seen from the board as
+  // it is (placed animals and crosses; both already checked to be right):
   //   { kind: "free" }              only this cell is still free for it
-  //                                 (rows and columns taken, crosses,
-  //                                 furniture it cannot stand on)
+  //                                 (rules 1 to 3 with the placed animals)
   //   { kind: "clue", clues: [i] }  clue i (or clues i, j together) leave
   //                                 only this cell free
-  //   { kind: "row" } / "col"       nothing else fits in this row/column,
-  //                                 and this is its only cell there
-  //   { kind: "lines" }             its other cells lie in rows or columns
-  //                                 the other things need (level-1 steps)
-  //   { kind: "rooms" }             follows with the room rules (exactly
-  //                                 one animal in the cake's room, "same
-  //                                 room" clues)
-  //   { kind: "groups" }            several things together need certain
-  //                                 rows or columns
-  //   { kind: "general", clues }    none of these alone; clues lists the
-  //                                 clues about k
+  //   { kind: "room" }              no other animal can still go into this
+  //                                 room, and in it only this cell is free
+  //   { kind: "rules" }             follows by deduction level 1
+  //   { kind: "pairs" }             follows by level 2 (two-animal clues,
+  //                                 the cake rule)
+  //   { kind: "try" }               every other cell leads to a
+  //                                 contradiction (level 3)
+  //   { kind: "general", clues }    none of these; clues lists the clues
+  //                                 about k
   function explainStep(p, placed, crosses, k) {
-    const n = p.n, target = p.solution[k];
-    const takenR = new Set(), takenC = new Set();
-    for (let t = 0; t < n; t++) if (placed[t] >= 0 && t !== k) { takenR.add(rowOf(p, placed[t])); takenC.add(colOf(p, placed[t])); }
-    const crossSet = new Set(crosses || []);
-    const open = (i) => !takenR.has(rowOf(p, i)) && !takenC.has(colOf(p, i)) && !crossSet.has(i);
-    const standable = (t, i) => (isCake(p, t) ? p.furniture[i] === "table" : BLOCKING.indexOf(p.furniture[i]) === -1);
-    const own = [];
-    p.clues.forEach((cl, idx) => { if (cl.a === k && cl.t !== "same") own.push(idx); });
-    const cellsWith = (t, clueIdx) => {
-      const out = [];
-      for (let i = 0; i < n * n; i++) {
-        if (!open(i) || !standable(t, i)) continue;
-        if (clueIdx.every((ci) => clueAllows(p, p.clues[ci], i))) out.push(i);
-      }
-      return out;
-    };
+    const m = animalCount(p), target = p.solution[k];
     const only = (cells) => cells.length === 1 && cells[0] === target;
-    if (only(cellsWith(k, []))) return { kind: "free" };
-    for (const ci of own) if (only(cellsWith(k, [ci]))) return { kind: "clue", clues: [ci] };
+    if (only(openCells(p, placed, crosses, k, []))) return { kind: "free" };
+    const own = usableClues(p, placed, k);
+    for (const ci of own) if (only(openCells(p, placed, crosses, k, [ci]))) return { kind: "clue", clues: [ci] };
     for (let x = 0; x < own.length; x++) for (let y = x + 1; y < own.length; y++) {
-      if (only(cellsWith(k, [own[x], own[y]]))) return { kind: "clue", clues: [own[x], own[y]] };
+      if (only(openCells(p, placed, crosses, k, [own[x], own[y]]))) return { kind: "clue", clues: [own[x], own[y]] };
     }
-    // Rows and columns: every unplaced thing with all its own clues.
-    const cand = [];
-    for (let t = 0; t < n; t++) {
-      if (placed[t] >= 0 && t !== k) { cand.push([]); continue; }
-      const ownT = [];
-      p.clues.forEach((cl, idx) => { if (cl.a === t && cl.t !== "same") ownT.push(idx); });
-      cand.push(cellsWith(t, ownT));
+    const room = p.rooms[target];
+    const mine = openCells(p, placed, crosses, k, own).filter((i) => p.rooms[i] === room);
+    let others = false;
+    for (let t = 0; t < m && !others; t++) {
+      if (t === k || placed[t] >= 0) continue;
+      if (openCells(p, placed, crosses, t, usableClues(p, placed, t)).some((i) => p.rooms[i] === room)) others = true;
     }
-    for (const [kind, f] of [["row", (i) => rowOf(p, i)], ["col", (i) => colOf(p, i)]]) {
-      const line = f(target);
-      const mine = cand[k].filter((i) => f(i) === line);
-      const others = cand.some((cs, t) => t !== k && cs.some((i) => f(i) === line));
-      if (!others && mine.length === 1 && mine[0] === target) return { kind };
-    }
-    // Reasoning from the board as it is: which kind of step fixes k.
+    if (!others && only(mine)) return { kind: "room" };
     const start = { placed, crosses };
-    const levelKinds = ["lines", "rooms", "groups"];
+    const levelKinds = ["rules", "pairs", "try"];
     for (let lv = 1; lv <= 3; lv++) {
       const d = deduce(p, lv, start);
       if (d.fixedAt[k] !== -1) return { kind: levelKinds[lv - 1] };
     }
-    return { kind: "general", clues: own };
+    const all = [];
+    p.clues.forEach((cl, idx) => { if (names(p, cl, k)) all.push(idx); });
+    return { kind: "general", clues: all };
   }
 
   // How simple a reason is, for choosing the hint (lower = simpler).
-  const REASON_ORDER = ["free", "clue", "row", "col", "lines", "rooms", "groups", "general"];
+  const REASON_ORDER = ["free", "clue", "room", "rules", "pairs", "try", "general"];
 
   /*** Texts ***/
 
-  // Builds the sentence for a clue from ready-made phrases (t = I18n.t):
-  // every animal, room and furniture has its own phrase per sentence
-  // type, so articles, cases and word order stay right in every language.
+  // Builds the sentence for a clue from ready-made phrases (t = I18n.t).
   function fill(s, vars) {
     Object.keys(vars).forEach((k) => { s = s.split("{" + k + "}").join(vars[k]); });
     return s;
@@ -633,10 +695,9 @@ const CakeCore = (function () {
     return theme(p).who[k];
   }
 
-  // The id of thing k: an animal, or "cake" / "fish" for the last one.
-  function thingId(p, k) {
-    if (isCake(p, k)) return theme(p).thing;
-    return animalId(p, k);
+  // The id of the cake in the puzzle's theme ("cake", "fish", ...).
+  function cakeId(p) {
+    return theme(p).thing;
   }
 
   // A text key in the puzzle's theme: base + "_fish" when the cats look for
@@ -645,46 +706,52 @@ const CakeCore = (function () {
     return key + theme(p).suffix;
   }
 
-  // The key of the "never stands on a table ..." text for the theme.
+  // The key of rule 3 ("Two animals never ...") for the theme.
   function always3Key(p) {
     return theme(p).people ? "cake_always_3_people" : "cake_always_3";
   }
 
   function clueText(p, clue, t) {
-    const a = animalId(p, clue.a);
-    const vars = {
-      IS: t("cake_" + a + "_is"),
-      ISNOT: t("cake_" + a + "_isnot"),
-      SITS: t("cake_" + a + "_sits"),
-      A: t("cake_" + a + "_cap")
-    };
+    const vars = { A: t("cake_" + animalId(p, clue.a) + "_cap") };
+    if (clue.b !== undefined) vars.B = t("cake_" + animalId(p, clue.b) + "_mid");
     switch (clue.t) {
-      case "in": vars.ROOM = t("cake_room_" + p.roomNames[clue.room] + "_in"); return fill(t("cake_clue_in"), vars);
-      case "notin": vars.ROOM = t("cake_room_" + p.roomNames[clue.room] + "_in"); return fill(t("cake_clue_notin"), vars);
-      case "on": vars.FURN = t("cake_furn_" + clue.f + "_on"); return fill(t("cake_clue_on"), vars);
-      case "next": vars.FURN = t("cake_furn_" + clue.f + "_next"); return fill(t("cake_clue_next"), vars);
-      case "window": return fill(t("cake_clue_window"), vars);
-      case "edge": return fill(t("cake_clue_" + clue.side), vars);
-      case "same": vars.B = t("cake_" + animalId(p, clue.b) + "_mid"); return fill(t("cake_clue_same"), vars);
+      case "size": vars.N = String(clue.size); return fill(t("cake_clue_size"), vars);
+      case "higher": return fill(t("cake_clue_higher"), vars);
+      case "left": return fill(t("cake_clue_leftof"), vars);
+      case "border": return fill(t("cake_clue_border"), vars);
+      case "steps": vars.N = String(clue.d); return fill(t(themed(p, "cake_clue_steps")), vars);
       default: return "";
     }
   }
 
   function thingName(p, k, t) {
-    return isCake(p, k) ? t("cake_thing_" + thingId(p, k)) : t("cake_" + animalId(p, k) + "_name");
+    return t("cake_" + animalId(p, k) + "_name");
   }
 
-  // The animal in the cake's room, by the solution.
+  function cakeName(p, t) {
+    return t("cake_thing_" + cakeId(p));
+  }
+
+  // The animal next to the cake, by the solution.
   function culprit(p) {
-    const room = p.rooms[p.solution[p.n - 1]];
-    for (let a = 0; a < p.n - 1; a++) if (p.rooms[p.solution[a]] === room) return a;
+    for (let a = 0; a < p.solution.length; a++) if (touches(p.n, p.solution[a], p.cake)) return a;
     return -1;
   }
 
+  // Can a saved puzzle still be played under today's rules?
+  function isCurrent(p) {
+    try {
+      return !!p && p.rules === RULES && Array.isArray(p.rooms) && Array.isArray(p.clues) && Array.isArray(p.solution) &&
+        Number.isInteger(p.cake) && isSolution(p, p.solution) && countSolutions(p, 2) === 1;
+    } catch (e) {
+      return false;
+    }
+  }
+
   return {
-    ANIMALS, CATS, BEARS, DOGS, MAGPIES, FAMILY, KIDS, THEMES, MOTIFS, ROOM_NAMES, FURNITURE, SITTING, NEXT_TO, BLOCKING, ROOM_FURNITURE, LEVELS, animalId, thingId, themed, always3Key,
-    neighbours, nextTo, clueAllows, baseCandidates, isSolution, countSolutions, deduce,
-    randomRooms, candidateClues, generatePuzzle, addExtraClues, findHint, explainStep, clueText, thingName, culprit, fill
+    RULES, ANIMALS, CATS, BEARS, DOGS, MAGPIES, FAMILY, KIDS, THEMES, MOTIFS, ROOM_NAMES, CLUE_TYPES, LEVELS, animalId, cakeId, themed, always3Key,
+    neighbours, touches, around, steps, roomSize, roomsBorder, pairHolds, clueHolds, baseCandidates, isSolution, countSolutions, deduce,
+    randomRooms, candidateClues, generatePuzzle, addExtraClues, findHint, explainStep, openCells, usableClues, clueText, thingName, cakeName, culprit, isCurrent, fill
   };
 })();
 
