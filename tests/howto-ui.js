@@ -16,6 +16,8 @@ const GAMES = [
   // Task 127.
   { slug: "war", start: "#start-war-game", act: (p) => p.click("#war-own-pile") },
   { slug: "pairs", start: "#start-pairs-game", before: (p) => p.selectOption("#pairs-opponent", "solo"), act: async (p) => { await p.waitForSelector("#pairs-board .pairs-card", { timeout: 10000 }); await p.click("#pairs-board .pairs-card >> nth=0"); } },
+  // Task 136.
+  { slug: "gipfelwurf", start: "#start-gw-game", before: (p) => p.selectOption("#gw-computers", "0"), act: async (p) => { await p.waitForSelector("#gw-roll:not([disabled])", { timeout: 10000 }); await p.click("#gw-roll"); } },
 ];
 const panelOpen = (p) => p.evaluate(() => { const h = document.getElementById("howto"); return !!h && !h.classList.contains("hidden") && h.offsetHeight > 0; });
 

@@ -2,7 +2,7 @@
 // Rules and history texts of teufelsieben (de). Loaded by teufelsieben-rules.html and teufelsieben-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.de, {
-    ts_rules_title: "Regeln von Glückskette",
+    ts_rules_title: "Regeln von Teuflische Sieben",
     ts_rules_intro: "Decke Karte um Karte auf und hör rechtzeitig auf: Eine Zahl, die du schon hast, lässt dich platzen. Erreicht jemand das Ziel, gewinnen die meisten Punkte.",
     ts_rules_basics_title: "Die Regeln",
     ts_term_cards: "Die Karten",
@@ -21,10 +21,10 @@ Object.assign(STRINGS.de, {
     ts_rules_computer: "Der Computer zählt nur offene Karten oder eine mit Blick gezeigte Karte. Leicht hört früh auf; Schwer wägt Gewinn gegen Risiko ab.",
     ts_rules_example_title: "Beispiel",
     ts_rules_example: "Du hast 3, 4, 5, 6 und 9: 27 Punkte aus Zahlen. Die Reihe aus vier Zahlen gibt 10 dazu, also 37 Punkte vor Effekten der Sonderkarten.",
-    ts_history_title: "Über Glückskette",
+    ts_history_title: "Über Teuflische Sieben",
     ts_history_family_title: "Weitermachen oder aufhören",
     ts_history_family_p1: "Spiele, bei denen man immer wieder entscheidet, ob man noch etwas wagt oder behält, was man hat, gehören zur Familie der Risiko-Spiele. Viele Würfel- und Kartenspiele funktionieren so.",
     ts_history_modern_title: "Diese Fassung",
-    ts_history_modern_p1: "Glückskette wurde für PaperGames gemacht, mit eigenen Karten, Regeln und Texten: Zahlen von 1 bis 10 in eigener Mischung, ein Bonus für Zahlen in einer Reihe und die Sonderkarten Mut, Streichen, Weitergabe, Brücke, Sammler und Blick.",
+    ts_history_modern_p1: "Teuflische Sieben wurde für PaperGames gemacht, mit eigenen Karten, Regeln und Texten: Zahlen von 1 bis 10 in eigener Mischung, ein Bonus für Zahlen in einer Reihe und die Sonderkarten Mut, Streichen, Weitergabe, Brücke, Sammler und Blick.",
 });
 I18n.markTextLoaded("de");

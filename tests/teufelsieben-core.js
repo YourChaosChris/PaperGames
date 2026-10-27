@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Lucky Chain (teufelsieben-core.js, rules 2): deck, turn order, specials,
+// Devilish Seven (teufelsieben-core.js, rules 2): deck, turn order, specials,
 // scoring, computer play, card conservation, save/load, and seat balance.
 const path = require("path");
 const C = require(path.join(__dirname, "..", "teufelsieben-core.js"));
@@ -149,5 +149,5 @@ for (const n of [2, 3, 4, 5, 6]) {
   }
 }
 fails.slice(0, 30).forEach((f) => console.log("FAIL " + f));
-console.log("=== LUCKY CHAIN CORE: " + fails.length + " failure(s) ===");
+console.log("=== DEVILISH SEVEN CORE: " + fails.length + " failure(s) ===");
 process.exit(fails.length ? 1 : 0);
