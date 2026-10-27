@@ -16,7 +16,7 @@ const RELEASE_NOTES = [
     version: "v269",
     date: "2026-10-27",
     key: "release_v269",
-    text: "Lucky Chain is called Devilish Seven again; the rules stay the same. Bigger buttons in the result window; after a round no raw placeholder shows any more. Animal Yatzy is now called Critter Roll."
+    text: "Lucky Chain is called Devilish Seven again; the rules stay the same. Animal Yatzy is now called Critter Roll. Rummy says more clearly that a card taken from the table cannot be added to a meld on the table. Bigger buttons in the result window; after a round no raw placeholder shows any more."
   },
   {
     version: "v268",

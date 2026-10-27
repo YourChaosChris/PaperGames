@@ -680,7 +680,7 @@ const STRINGS = {
     release_v264: "Ludo: a board for 6 players. Blocked Path: a quick board with rest fields, and up to 6 players. Hex: Black and White with a clear colour choice. Picture help for Link the Pairs, Old Maid and Snakes and Ladders. Licence notes, privacy policy and three history pages updated.",
     release_v265: "Blocked Path: choose few, normal or many blocks. Small buttons are now big enough to tap, and three more games have a large board. Picture help for War and Pairs. Sternjagd names who starts. Ludo texts and 15 history pages checked and corrected.",
     release_v266: "Sternjagd: with 2 players the second player has two turns in a row the first time; you can switch this off. 15 more history pages checked and corrected.",
-    release_v269: "Lucky Chain is called Devilish Seven again; the rules stay the same. Bigger buttons in the result window; after a round no raw placeholder shows any more. Animal Yatzy is now called Critter Roll.",
+    release_v269: "Lucky Chain is called Devilish Seven again; the rules stay the same. Animal Yatzy is now called Critter Roll. Rummy says more clearly that a card taken from the table cannot be added to a meld on the table. Bigger buttons in the result window; after a round no raw placeholder shows any more.",
     release_v268: "Zoo Toss has new rules of its own. A game saved under the old rules starts anew.",
     release_v267: "Devilish Seven is now Lucky Chain, with its own rules: numbers 1 to 10, a bonus for numbers in a row, six new special cards and targets of 60, 90 or 120 points. A game saved under the old rules starts anew.",
     release_v263: "The dice race game with blocks on the paths has a new name: “Blocked Path”. Rules, saved games and statistics stay the same.",
