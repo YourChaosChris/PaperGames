@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Card Tactics core (rules 2, task 151): board, cards, card cycle, crossing
+// Card Tactics core (rules 3, task 151): board, cards, face-down pile
+// (used card back at a hidden place, blind search states), crossing
 // home, captures, passing, move limit, saves, and computer-vs-computer
 // games for the levels and the first-move balance.
 //   GAMES=500 node tests/cardtactics-core.js   (default 40 per pairing)
@@ -19,7 +20,7 @@ function empty(state) {
 
 // --- Setup ---
 let s = C.createInitialState(C.makeRng(1));
-check("rules version 2", s.rules === 2 && C.isCurrentState(s));
+check("rules version 3", s.rules === 3 && C.isCurrentState(s) && Number.isInteger(s.drawSeed));
 check("7 rows x 6 columns", s.board.length === 7 && s.board.every((row) => row.length === 6));
 check("six stones each on the back rows", C.countStones(s, "black") === 6 && C.countStones(s, "white") === 6
   && s.board[6].every((p) => p && p.color === "black") && s.board[0].every((p) => p && p.color === "white"));
@@ -46,7 +47,20 @@ check("only display cards are used", moves.every((m) => s.display.includes(m.car
 const firstQueued = s.queue[0];
 let n = C.applyMove(s, "black", { from: [4, 2], to: [3, 3], card: "fork" });
 check("capture removes the stone", C.countStones(n, "white") === 1 && n.board[3][3].color === "black");
-check("used card goes to the end of the queue, front card takes its slot", n.display[1] === firstQueued && n.queue[n.queue.length - 1] === "fork" && n.queue.length === 9);
+check("top pile card takes the used card's slot, the used card is back in the pile", n.display[1] === firstQueued && n.queue.includes("fork") && n.queue.length === 9 && !n.queue.includes(firstQueued));
+check("the used card goes back at different places", (() => {
+  const spots = new Set();
+  for (let k = 1; k <= 40; k++) {
+    const t = C.cloneState(s); t.drawSeed = k * 7919;
+    spots.add(C.applyMove(t, "black", { from: [4, 2], to: [3, 3], card: "fork" }).queue.indexOf("fork"));
+  }
+  return spots.size >= 5;
+})());
+check("a blind search state does not show the pile", (() => {
+  const b = C.blindState(s); const bn = C.applyMove(b, "black", { from: [4, 2], to: [3, 3], card: "fork" });
+  return b.queue.length === 0 && bn.display[1] === null && bn.display.filter(Boolean).length === 2 && !C.isCurrentState(b) &&
+    C.getLegalMoves(bn, "white").every((m) => m.card);
+})());
 check("turn passes", n.currentPlayer === "white" && n.ply === 3);
 moves = C.getLegalMoves(n, "white");
 check("white moves down the board", moves.every((m) => m.to[0] >= m.from[0] || C.CARDS[m.card].moves.some(([dr]) => dr > 0)));
@@ -82,7 +96,7 @@ s.display = ["arrow", "hook", "stairs"]; s.queue = C.CARD_IDS.filter((id) => !s.
 // black stones on row 0 cannot happen in play, but they have no forward room
 check("no legal move found", C.getLegalMoves(s, "black").length === 0);
 n = C.applyPass(s, "black");
-check("pass moves the first display card to the end", n.queue[n.queue.length - 1] === "arrow" && n.display[0] === s.queue[0] && n.currentPlayer === "white");
+check("pass puts the first display card back into the pile", n.queue.includes("arrow") && n.display[0] === s.queue[0] && n.currentPlayer === "white");
 s = C.createInitialState(C.makeRng(8)); s.ply = C.MAX_PLIES - 1; s.home.white = 1;
 n = C.applyMove(s, "black", C.getLegalMoves(s, "black").find((m) => !m.home));
 check("move limit: more stones home wins", n.gameOver && n.winner === "white" && n.winReason === "limit-home");
@@ -92,6 +106,7 @@ check("move limit: equal is a draw", n.gameOver && n.winner === "draw");
 
 // --- Saves ---
 check("old rules state rejected", !C.isCurrentState({ board: [], cards: { blue: ["wind", "wave"], red: ["stone", "flame"], neutral: "mist" }, currentPlayer: "blue" }));
+check("rules 2 state (open queue) rejected", (() => { const o = JSON.parse(JSON.stringify(C.createInitialState())); o.rules = 2; delete o.drawSeed; return !C.isCurrentState(o); })());
 check("broken state rejected", !C.isCurrentState(Object.assign(C.createInitialState(), { display: ["arrow", "arrow", "fork"] })));
 check("JSON round trip accepted", C.isCurrentState(JSON.parse(JSON.stringify(C.createInitialState()))));
 
@@ -174,5 +189,5 @@ if (GAMES >= 200) {
 }
 
 fails.forEach((f) => console.log("FAIL " + f));
-console.log(`=== CARD TACTICS CORE: rules 2, card cycle, home, pass, limit, saves, ${GAMES} games per pairing, ${fails.length} failure(s) ===`);
+console.log(`=== CARD TACTICS CORE: rules 3, face-down pile, home, pass, limit, saves, ${GAMES} games per pairing, ${fails.length} failure(s) ===`);
 process.exit(fails.length ? 1 : 0);

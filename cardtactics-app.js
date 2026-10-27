@@ -1,12 +1,12 @@
 // cardtactics-app.js
-// Wires CardTacticsCore/CardTacticsAi (rules 2) to cardtactics.html. The
+// Wires CardTacticsCore/CardTacticsAi (rules 3) to cardtactics.html. The
 // board is a 7 x 6 float-grid. Black stones are filled discs, White
 // stones outlined discs (told apart by shape, not by color).
 //
 // Turn flow: tap one of the three open cards, tap one of your stones,
-// tap a marked square. The used card goes to the end of the queue and
-// the next queue card takes its place; the page shows the open cards
-// (drawn from the view of the side to move) and the next two cards.
+// tap a marked square. The top card of the face-down pile takes the used
+// card's place; the page shows the open cards (their moves as arrows,
+// seen from the side to move) and how many cards lie face down.
 
 const AppStateCardTactics = {
   mode: "offline",        // "offline" | "offline-ai"
@@ -44,8 +44,8 @@ function clearSavedCardTacticsGame() {
   GameStorage.clear(CARDTACTICS_SAVE_KEY);
 }
 
-// A save of the first Card Tactics rules (5 x 5, hands of two cards) has
-// no `rules: 2`; it cannot be continued and is dropped without a message.
+// A save of older Card Tactics rules (rules 1: 5 x 5, hands of two cards;
+// rules 2: open queue) cannot be continued and is dropped without a message.
 function isCurrentCardTacticsSave(saved) {
   return !!saved && saved.rules === CardTacticsCore.RULES && CardTacticsCore.isCurrentState(saved.state)
     && (saved.humanColor === "black" || saved.humanColor === "white");
@@ -567,56 +567,59 @@ function updateCardTacticsBoard() {
   });
 }
 
-/*** Card rendering (small move-diagrams, seen from the side to move) ***/
+/*** Card rendering (moves as arrows, seen from the side to move) ***/
 
-function buildCardDiagram(cardId, forColor) {
+// One move as arrows: a straight or diagonal step repeats its arrow per
+// square ("↑↑"), any other move is its upward/downward part followed by
+// its sideways part ("↑↑←").
+const CT_ARROWS = { "-1,0": "↑", "1,0": "↓", "0,-1": "←", "0,1": "→", "-1,-1": "↖", "-1,1": "↗", "1,-1": "↙", "1,1": "↘" };
+function moveArrowsCardTactics(dr, dc) {
+  const sr = Math.sign(dr), sc = Math.sign(dc);
+  if (dr === 0 || dc === 0 || Math.abs(dr) === Math.abs(dc)) return CT_ARROWS[sr + "," + sc].repeat(Math.max(Math.abs(dr), Math.abs(dc)));
+  return CT_ARROWS[sr + ",0"].repeat(Math.abs(dr)) + CT_ARROWS["0," + sc].repeat(Math.abs(dc));
+}
+
+function buildCardMoves(cardId, forColor) {
   const wrap = document.createElement("div");
-  wrap.className = "cardtactics-card-diagram";
+  wrap.className = "cardtactics-card-moves";
   wrap.setAttribute("aria-hidden", "true");
-  const moves = CardTacticsCore.cardMovesFor(cardId, forColor);
-  for (let r = -2; r <= 2; r++) {
-    for (let c = -2; c <= 2; c++) {
-      const cell = document.createElement("span");
-      cell.className = "cardtactics-card-cell";
-      if (r === 0 && c === 0) cell.classList.add("cardtactics-card-cell-center");
-      else if (moves.some(([dr, dc]) => dr === r && dc === c)) cell.classList.add("cardtactics-card-cell-move");
-      wrap.appendChild(cell);
-    }
-  }
+  CardTacticsCore.cardMovesFor(cardId, forColor).forEach(([dr, dc]) => {
+    const m = document.createElement("span");
+    m.className = "cardtactics-card-move";
+    m.textContent = moveArrowsCardTactics(dr, dc);
+    wrap.appendChild(m);
+  });
   return wrap;
 }
 
-function buildCardElement(cardId, forColor, small) {
-  const card = document.createElement(small ? "div" : "button");
-  if (!small) card.type = "button";
-  card.className = "cardtactics-card" + (small ? " cardtactics-card-small" : "");
+function buildCardElement(cardId, forColor) {
+  const card = document.createElement("button");
+  card.type = "button";
+  card.className = "cardtactics-card";
   card.dataset.card = cardId;
-  if (!small) {
-    card.classList.toggle("cardtactics-card-selected", AppStateCardTactics.selectedCard === cardId);
-    card.setAttribute("aria-pressed", AppStateCardTactics.selectedCard === cardId ? "true" : "false");
-    card.addEventListener("click", () => onCardTacticsCardClick(cardId));
-  }
+  card.classList.toggle("cardtactics-card-selected", AppStateCardTactics.selectedCard === cardId);
+  card.setAttribute("aria-pressed", AppStateCardTactics.selectedCard === cardId ? "true" : "false");
+  card.addEventListener("click", () => onCardTacticsCardClick(cardId));
   const label = document.createElement("div");
   label.className = "cardtactics-card-name";
   I18n.setKey(label, "cardtactics_card_" + cardId);
   card.appendChild(label);
-  card.appendChild(buildCardDiagram(cardId, forColor));
+  card.appendChild(buildCardMoves(cardId, forColor));
   return card;
 }
 
 function updateCardTacticsCards() {
   const displayRow = document.getElementById("cardtactics-display");
-  const nextRow = document.getElementById("cardtactics-next");
+  const pileLine = document.getElementById("cardtactics-pile");
   const homeLine = document.getElementById("cardtactics-home-line");
   const s = AppStateCardTactics.state;
-  if (!displayRow || !nextRow) return;
+  if (!displayRow) return;
   const viewer = AppStateCardTactics.turn;
 
   displayRow.innerHTML = "";
-  s.display.forEach((id) => displayRow.appendChild(buildCardElement(id, viewer, false)));
+  s.display.forEach((id) => displayRow.appendChild(buildCardElement(id, viewer)));
 
-  nextRow.innerHTML = "";
-  CardTacticsCore.nextCards(s).forEach((id) => nextRow.appendChild(buildCardElement(id, viewer, true)));
+  if (pileLine) pileLine.textContent = fillCardTactics("cardtactics_pile", { n: s.queue.length });
 
   const forLine = document.getElementById("cardtactics-cards-for");
   if (forLine) I18n.setKey(forLine, viewer === "black" ? "cardtactics_cards_for_black" : "cardtactics_cards_for_white");

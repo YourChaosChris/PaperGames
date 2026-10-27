@@ -101,9 +101,9 @@
   max-width: 420px;
 }
 
-/* The three open cards (buttons) and the next two cards (small, not
-   tappable). Each card holds a name and a 5 x 5 dot diagram of its
-   moves as seen from the side to move. */
+/* The three open cards (buttons) and the line with the face-down pile.
+   Each card holds a name and its moves as arrows, seen from the side to
+   move. */
 .cardtactics-cards-row {
   display: flex;
   justify-content: center;
@@ -155,12 +155,6 @@
   cursor: pointer;
 }
 
-.cardtactics-card-small {
-  min-width: 0;
-  padding: 0.2rem;
-  cursor: default;
-}
-
 /* Flexbox `gap` fallback (see above). */
 .cardtactics-card > * {
   margin: 0 0 0.2rem 0;
@@ -181,34 +175,15 @@
   font-size: 0.8rem;
 }
 
-.cardtactics-card-small .cardtactics-card-name {
-  font-weight: 400;
-  font-size: 0.75rem;
+/* The moves: one line of arrows per move. */
+.cardtactics-card-moves {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.cardtactics-card-diagram {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  gap: 1px;
-  width: 3rem;
-  height: 3rem;
-  background: var(--border);
-}
-
-.cardtactics-card-small .cardtactics-card-diagram {
-  width: 2.2rem;
-  height: 2.2rem;
-}
-
-.cardtactics-card-cell {
-  background: #fff;
-}
-
-.cardtactics-card-cell-center {
-  background: repeating-linear-gradient(45deg, #000 0, #000 2px, #fff 2px, #fff 4px);
-}
-
-.cardtactics-card-cell-move {
-  background: #111;
+.cardtactics-card-move {
+  font-size: 1.1rem;
+  line-height: 1.25;
+  letter-spacing: 0.05em;
 }

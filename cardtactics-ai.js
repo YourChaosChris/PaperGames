@@ -4,9 +4,10 @@
 //   2 = medium - one move deep: material, progress and safety, picked
 //                among the best few with some randomness
 //   3 = hard   - alpha-beta search three moves deep with a node budget
-//                and a wall-clock deadline. Three moves only use the
-//                display and the two queue cards shown on the page, so
-//                the computer knows nothing the player cannot see.
+//                and a wall-clock deadline.
+// Levels 2 and 3 look ahead on a blind copy (CardTacticsCore.blindState):
+// a card that is used is replaced by an unknown one, so the computer never
+// looks into the face-down pile and knows nothing the player cannot see.
 
 const CardTacticsAi = (function () {
   const INF = 1e9;
@@ -36,6 +37,7 @@ const CardTacticsAi = (function () {
       const p = state.board[r][c];
       if (!p || p.color !== color) continue;
       state.display.forEach((id) => {
+        if (!id) return; // an unknown card in a blind search state
         C.cardMovesFor(id, color).forEach(([dr, dc]) => {
           const tr = r + dr, tc = c + dc;
           if (C.inBounds(tr, tc)) map[tr * C.COLS + tc] = true;
@@ -166,13 +168,14 @@ const CardTacticsAi = (function () {
     if (config.style === "random") {
       return moves[Math.floor(random() * moves.length)];
     }
+    const blind = C.blindState(state);
     if (config.style === "greedy") {
-      const scored = moves.map((m) => ({ move: m, score: evaluateFor(color, step(state, color, m)) + random() }));
+      const scored = moves.map((m) => ({ move: m, score: evaluateFor(color, step(blind, color, m)) + random() }));
       scored.sort((a, b) => b.score - a.score);
       const topN = Math.min(config.topN, scored.length);
       return scored[Math.floor(random() * topN)].move;
     }
-    return searchBestMove(state, color, moves, config, random);
+    return searchBestMove(blind, color, moves, config, random);
   }
 
   return { evaluateFor, chooseMove, LEVEL_CONFIG };
