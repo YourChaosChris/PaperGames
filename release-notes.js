@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v273",
+    date: "2026-10-27",
+    key: "release_v273",
+    text: "Card Duel has new rules: the Warden now takes 1 damage off every hit on its own mage, and creatures no longer have effects when played; drawing and direct damage come only from spells. A game saved under the old rules starts anew."
+  },
+  {
     version: "v272",
     date: "2026-10-27",
     key: "release_v272",

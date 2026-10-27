@@ -614,6 +614,7 @@ STRINGS.pl = {
     release_v266: "Sternjagd: przy 2 graczach drugi gracz za pierwszym razem ma dwa ruchy z rzędu (można wyłączyć). Kolejne 15 stron historii sprawdzone i poprawione.",
     release_v269: "Szczęśliwy ciąg znowu nazywa się Diabelska Siódemka; zasady się nie zmieniają. Zwierzęce Yatzy nazywa się teraz Rzut łapką. Remik wyraźniej mówi, że karty wziętej ze stołu nie można dołożyć do układu na stole. Większe przyciski w oknie wyniku; po rundzie nie widać już symbolu zastępczego.",
     release_v272: "Kto wziął ciasto? ma nowe zasady: mniej zwierząt, a ciasto leży na stałe na planie. W Taktyce Kart każda strona gra teraz tylko własnymi kartami. Gra zapisana według starych zasad zaczyna się od nowa.",
+    release_v273: "Pojedynek kart ma nowe zasady: Strażnik zmniejsza teraz o 1 obrażenia każdego trafienia we własnego maga, a stwory nie mają już efektów przy zagraniu; dobieranie kart i bezpośrednie obrażenia dają tylko zaklęcia. Gra zapisana według starych zasad zaczyna się od nowa.",
     release_v271: "Diabelska Siódemka: nowe karty Dziki ciąg do wyboru (liczby do 14, Ogniwo i Lustro, gra do 250 lub 500) i jaśniejsze komunikaty przy Moście i Przekazaniu. Strzałki nazywają się teraz Wolna droga i liczą pomyłki zamiast serc.",
     release_v270: "Leśna osada i Baśniowi złoczyńcy mają nowe, własne zasady; w grze „Baśniowi złoczyńcy” bohaterowie pojawiają się teraz z talii. Gra zapisana według starych zasad zaczyna się od nowa.",
     release_v268: "Rzut w zoo ma nowe, własne zasady. Gra zapisana według starych zasad zaczyna się od nowa.",
