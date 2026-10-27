@@ -185,7 +185,13 @@ function initCdApp() {
   }
   setMode("vs-ai");
 
-  const saved = typeof GameStorage !== "undefined" ? GameStorage.load(CD_SAVE_KEY) : null;
+  let saved = typeof GameStorage !== "undefined" ? GameStorage.load(CD_SAVE_KEY) : null;
+  // A game saved under the old rules (before task 149, no `rules: 2`)
+  // cannot go on under the new ones: drop it quietly.
+  if (saved && saved.state && !coreCd().isCurrentState(saved.state)) {
+    clearSavedCdGame();
+    saved = null;
+  }
   if (saved && saved.state && saved.state.players && saved.state.winner === null) {
     AppStateCd.mode = saved.mode === "hotseat" ? "hotseat" : "vs-ai";
     AppStateCd.level = saved.level || "medium";
@@ -279,7 +285,6 @@ function onPlayCd() {
     // Without move suggestions the Play button stays on: say why not.
     const pl = s.players[s.current], c = coreCd().card(pl.hand[i]);
     if (c.cost > pl.power) setStatusCd("cd_status_no_power");
-    else if (c.kind === "creature" && pl.board.length >= coreCd().MAX_BOARD) setStatusCd("cd_status_row_full");
     else setStatusCd("cd_status_no_target");
     renderCd();
     return;
@@ -456,11 +461,18 @@ function targetsCd() {
 function mageHtmlCd(side, targets) {
   const s = AppStateCd.state;
   const pl = s.players[side];
-  const facts = fillCd("cd_mage_facts", { l: pl.life, h: pl.hand.length, d: pl.deck.length, p: pl.power, m: pl.maxPower });
+  const facts = fillCd("cd_mage_facts", { l: pl.life, h: pl.hand.length, d: pl.deck.length, p: pl.power });
   return (typeof CardDuelArt !== "undefined" ? CardDuelArt.portrait(s.decks[side], "cda-portrait cd-mage-portrait") : emblemCd(s.decks[side], "cd-emblem cd-emblem-mage")) +
     '<span class="cd-mage-name">' + escCd(playerNameCd(side)) + "</span>" +
     '<span class="cd-mage-life">' + escCd(fillCd("cd_life_n", { n: pl.life })) + "</span>" +
     '<span class="cd-mage-facts">' + escCd(facts) + "</span>";
+}
+
+// A mage's numbers in one sentence (explanation line, label).
+function mageFactsLongCd(side) {
+  const s = AppStateCd.state;
+  const pl = s.players[side];
+  return fillCd("cd_mage_facts_long", { l: pl.life, h: pl.hand.length, d: pl.deck.length, g: pl.grave.length, p: pl.power, e: tCd("cd_el_" + s.decks[side]) });
 }
 
 function handCardHtmlCd(id, i, playable, selected) {
@@ -543,9 +555,8 @@ function infoHtmlCd() {
   const info = AppStateCd.info;
   if (!info) return escCd(tCd("cd_info_hint"));
   if (info.kind === "mage") {
-    const pl = s.players[info.side];
     return "<strong>" + escCd(playerNameCd(info.side)) + "</strong>: " +
-      escCd(fillCd("cd_mage_facts_long", { l: pl.life, h: pl.hand.length, d: pl.deck.length, p: pl.power, m: pl.maxPower, e: tCd("cd_el_" + s.decks[info.side]) }));
+      escCd(mageFactsLongCd(info.side));
   }
   let id, abil, head;
   if (info.kind === "card") {
@@ -585,8 +596,9 @@ function logLineCd(e) {
     case "buffall": return fillCd("cd_log_buffall", { p: playerNameCd(e.p), n: e.n, m: e.m });
     case "summon": return fillCd("cd_log_summon", { p: playerNameCd(e.p), n: e.n, t: name(e.t) });
     case "dies": return fillCd("cd_log_dies", { c: name(e.c) });
-    case "empty": return fillCd("cd_log_empty", { p: playerNameCd(e.p), n: e.n });
-    case "burn": return fillCd("cd_log_burn", { p: playerNameCd(e.p), c: name(e.c) });
+    case "ward": return fillCd("cd_log_ward", { c: name(e.c), t: name(e.t), n: e.n });
+    case "full": return fillCd("cd_log_full", { p: playerNameCd(e.p) });
+    case "reshuffle": return fillCd("cd_log_reshuffle", { p: playerNameCd(e.p), n: e.n });
     case "win": return fillCd("cd_log_win", { p: playerNameCd(e.p) });
     default: return "";
   }
@@ -605,8 +617,8 @@ function renderCd() {
   bottom.innerHTML = mageHtmlCd(me, targets);
   top.className = "cd-mage-btn" + (targets.some((t) => t.side === op && t.index === "mage") ? " cd-target" : "");
   bottom.className = "cd-mage-btn" + (targets.some((t) => t.side === me && t.index === "mage") ? " cd-target" : "");
-  top.setAttribute("aria-label", playerNameCd(op) + ": " + fillCd("cd_mage_facts_long", { l: s.players[op].life, h: s.players[op].hand.length, d: s.players[op].deck.length, p: s.players[op].power, m: s.players[op].maxPower, e: tCd("cd_el_" + s.decks[op]) }));
-  bottom.setAttribute("aria-label", playerNameCd(me) + ": " + fillCd("cd_mage_facts_long", { l: s.players[me].life, h: s.players[me].hand.length, d: s.players[me].deck.length, p: s.players[me].power, m: s.players[me].maxPower, e: tCd("cd_el_" + s.decks[me]) }));
+  top.setAttribute("aria-label", playerNameCd(op) + ": " + mageFactsLongCd(op));
+  bottom.setAttribute("aria-label", playerNameCd(me) + ": " + mageFactsLongCd(me));
   top.onclick = () => onTargetCd(op, "mage");
   bottom.onclick = () => onTargetCd(me, "mage");
 
