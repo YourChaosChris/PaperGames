@@ -13,6 +13,8 @@ Object.assign(STRINGS.de, {
     ts_rules_bust: "Eine Zahl, die du schon hast, lässt dich platzen: null Punkte in dieser Runde. Mut rettet dich einmal; die doppelte Zahl und Mut werden abgelegt. Jeder benutzte Mut kostet am Rundenende 5 Punkte.",
     ts_term_run: "Reihen",
     ts_rules_run: "Die längste Reihe aufeinanderfolgender Zahlen ab Länge 4 gibt 5 × (Länge − 2): vier in Folge geben 10, fünf geben 15. Jede Brücke füllt eine fehlende Zahl.",
+    ts_term_extreme: "Wilde Kette",
+    ts_rules_extreme: "Vor dem Spiel kannst du die Karten „Wilde Kette“ wählen: Dann kommen 18 Karten dazu, 78 insgesamt – die Zahlen 11 (3 Karten), 12 (3), 13 (2), 14 (2) und 15 (1), Glücksstern (2 Karten, +7 Punkte), Ballast (2, −7 Punkte), Kettenglied (2, der Bonus für eine Reihe zählt doppelt, mit zwei Kettengliedern dreifach) und Sturm (1, alle, die in dieser Runde noch ihren Zug haben, beginnen ihn mit einer aufgedeckten Karte). Reihen gehen dann bis 15. Gespielt wird bis 250 oder 500 Punkte.",
     ts_term_special: "Sonderkarten",
     ts_rules_special: "Mut rettet einmal vor dem Platzen und kostet bei Benutzung 5 Punkte. Streichen entfernt deine zuletzt aufgedeckte Zahl. Weitergabe lässt den nächsten Spieler seinen Zug mit einer aufgedeckten Karte beginnen. Brücke füllt eine Lücke. Sammler gibt 1 Punkt je Zahlenkarte. Blick zeigt die nächste Karte des Stapels.",
     ts_term_points: "Punkte und Spielende",
