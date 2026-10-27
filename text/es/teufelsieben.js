@@ -14,7 +14,7 @@ Object.assign(STRINGS.es, {
     ts_term_run: "Secuencias",
     ts_rules_run: "La secuencia más larga de 4 números o más da 5 × (longitud − 2): cuatro seguidos dan 10 y cinco dan 15. Cada Puente cubre un número que falta.",
     ts_term_extreme: "Cadena salvaje",
-    ts_rules_extreme: "Antes de jugar puedes elegir las cartas «Cadena salvaje»: se añaden 18 cartas, 78 en total – los números 11 (3 cartas), 12 (3), 13 (2), 14 (2) y 15 (1), Estrella (2 cartas, +7 puntos), Lastre (2, −7 puntos), Eslabón (2, el bonus por números seguidos cuenta doble, con dos Eslabones triple) y Tormenta (1, todos los que aún tienen turno en esta ronda lo empiezan con una carta descubierta). Las series llegan hasta 15. Se juega hasta 250 o 500 puntos.",
+    ts_rules_extreme: "Antes de jugar puedes elegir las cartas «Cadena salvaje»: se añaden 12 cartas, 72 en total – los números 11, 12, 13 y 14 (2 cartas de cada uno), Eslabón (2 cartas, +2 puntos por cada número de tu serie más larga de 2 o más, con dos Eslabones +4) y Espejo (2 cartas: tu último número n pasa a ser 15 − n, así se intercambian 1 y 14, 2 y 13 … 7 y 8; si ya tienes ese número, o aún no tienes ninguno, no pasa nada). Las series llegan hasta 14. Se juega hasta 250 o 500 puntos.",
     ts_term_special: "Cartas especiales",
     ts_rules_special: "Valor te salva una vez y cuesta 5 puntos al usarlo. Tachar quita tu último número. Pasar hace que el siguiente jugador empiece con una carta descubierta. Puente cubre un hueco. Coleccionista da 1 punto por número. Mirar muestra la siguiente carta.",
     ts_term_points: "Puntos y final",

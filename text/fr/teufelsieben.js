@@ -14,7 +14,7 @@ Object.assign(STRINGS.fr, {
     ts_term_run: "Suites",
     ts_rules_run: "La plus longue suite de 4 nombres ou plus rapporte 5 × (longueur − 2) : 10 pour quatre, 15 pour cinq. Chaque Pont comble un nombre manquant.",
     ts_term_extreme: "Chaîne sauvage",
-    ts_rules_extreme: "Avant la partie, vous pouvez choisir les cartes « Chaîne sauvage » : 18 cartes s’ajoutent, 78 en tout – les nombres 11 (3 cartes), 12 (3), 13 (2), 14 (2) et 15 (1), Bonne étoile (2 cartes, +7 points), Lest (2, −7 points), Maillon (2, le bonus de suite compte double, triple avec deux Maillons) et Tempête (1, tous ceux qui doivent encore jouer dans cette manche commencent avec une carte révélée). Les suites peuvent aller jusqu’à 15. On joue jusqu’à 250 ou 500 points.",
+    ts_rules_extreme: "Avant la partie, vous pouvez choisir les cartes « Chaîne sauvage » : 12 cartes s’ajoutent, 72 en tout – les nombres 11, 12, 13 et 14 (2 cartes chacun), Maillon (2 cartes, +2 points par nombre de votre plus longue suite d’au moins 2 nombres, +4 avec deux Maillons) et Miroir (2 cartes : votre dernier nombre n devient 15 − n, donc 1 et 14, 2 et 13 … 7 et 8 s’échangent ; si vous avez déjà ce nombre, ou aucun nombre, rien ne se passe). Les suites peuvent aller jusqu’à 14. On joue jusqu’à 250 ou 500 points.",
     ts_term_special: "Cartes spéciales",
     ts_rules_special: "Courage sauve une fois et coûte 5 points s’il est utilisé. Retrait enlève votre dernier nombre. Passage fait commencer le joueur suivant avec une carte révélée. Pont comble un écart. Collectionneur rapporte 1 point par carte nombre. Regard montre la carte suivante.",
     ts_term_points: "Points et fin de partie",

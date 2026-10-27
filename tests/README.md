@@ -495,13 +495,12 @@ all parts back into one log in list order. The last line is exactly
   Pass, Bridge, Collector and Peek, run and round scoring, targets, ties and
   seat rotation; `GAMES` computer games with 2 to 6 players, card conservation,
   AI levels, open-card odds and save validation. Task 133: the cards "Wild
-  Chain" (mode extreme, 78 cards): numbers 11-15, Lucky star, Weight, Link,
-  Storm, rows up to 15, targets 250/500, old states without `mode`;
-  `GAMES` extreme games with 2 to 6 players (wins per level and seat, rounds
-  for 250 and 500).
-- `node tests/teufelsieben-extreme-measure.js` - not in the test list; a
-  measurement for task 133: extreme with and without a doubling and a
-  halving card (skill gap, rounds, rounds with 0 points, spread).
+  Chain" (mode extreme, 72 cards): numbers 11-14 twice each, Link and
+  Mirror (15 - n, nothing if the hand has that number, strike and round end
+  put the real card back), rows up to 14, no plus/minus/storm cards,
+  targets 250/500, old states without `mode`; `GAMES` extreme games with 2
+  to 6 players (card conservation, wins per level and seat, rounds for 250
+  and 500).
 - `node tests/teufelsieben-ui.js` - needs the server and Playwright. German
   page at 360 x 640: two people and one computer, stop disabled before the
   first card, paced computer turns, round end and next round, deterministic

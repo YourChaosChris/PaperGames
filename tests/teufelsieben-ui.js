@@ -72,18 +72,21 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   check("extreme target defaults to 250", await page.evaluate(() => document.getElementById("ts-target").value === "250"));
   await page.selectOption("#ts-players", "2"); await page.selectOption("#ts-computers", "1");
   await page.tap("#start-ts-game"); await waitHuman();
-  check("extreme game started", await page.evaluate(() => AppStateTS.state.mode === "extreme" && AppStateTS.state.target === 250 && AppStateTS.state.deck.length + AppStateTS.state.discard.length === 78));
+  check("extreme game started", await page.evaluate(() => AppStateTS.state.mode === "extreme" && AppStateTS.state.target === 250 && AppStateTS.state.deck.length + AppStateTS.state.discard.length === 72));
   await page.evaluate(() => {
     const s = AppStateTS.state;
-    s.deck = ["star", 13, 14, 15, "link"].concat(s.deck.filter((c) => ["star", "link"].indexOf(c) === -1 && [13, 14, 15].indexOf(c) === -1));
-    s.current = 0; s.turnsLeft = [0, 1]; s.hands.forEach((h) => { h.status = "wait"; h.numbers = []; h.drawn = 0; }); s.hands[0].status = "in";
+    s.deck = [3, "mirror", 13, 14, "link"].concat(s.deck.filter((c) => ["mirror", "link"].indexOf(c) === -1 && [3, 13, 14].indexOf(c) === -1));
+    s.current = 0; s.turnsLeft = [0, 1]; s.hands.forEach((h) => { h.status = "wait"; h.numbers = []; h.mirrored = []; h.drawn = 0; }); s.hands[0].status = "in";
     renderTS();
   });
-  for (let k = 0; k < 5; k++) await page.tap("#ts-draw");
-  const ext = await page.evaluate(() => ({ stars: AppStateTS.state.hands[0].stars, links: AppStateTS.state.hands[0].links, special: document.querySelectorAll("#ts-rows .ts-card-special").length, meta: document.getElementById("game-meta").textContent, rowH: Math.round(document.querySelector("#ts-rows .ts-player").getBoundingClientRect().height) }));
-  check("extreme cards shown " + JSON.stringify(ext), ext.stars === 1 && ext.links === 1 && ext.special >= 2 && /Wilde Kette/.test(ext.meta));
+  for (let k = 0; k < 2; k++) await page.tap("#ts-draw");
+  const mirrorText = await page.evaluate(() => document.getElementById("ts-last-text").textContent);
+  check("mirror message names 3 and 12: " + mirrorText, /Spiegel/.test(mirrorText) && /\b3\b/.test(mirrorText) && /\b12\b/.test(mirrorText));
+  for (let k = 0; k < 3; k++) await page.tap("#ts-draw");
+  const ext = await page.evaluate(() => ({ numbers: AppStateTS.state.hands[0].numbers.join(), links: AppStateTS.state.hands[0].links, special: document.querySelectorAll("#ts-rows .ts-card-special").length, meta: document.getElementById("game-meta").textContent, rowH: Math.round(document.querySelector("#ts-rows .ts-player").getBoundingClientRect().height) }));
+  check("extreme cards shown " + JSON.stringify(ext), ext.numbers === "12,13,14" && ext.links === 1 && ext.special >= 1 && /Wilde Kette/.test(ext.meta));
   await page.reload({ waitUntil: "load" }); await page.waitForTimeout(500);
-  check("extreme game saved and loaded", await page.evaluate(() => !!AppStateTS.state && AppStateTS.state.mode === "extreme" && AppStateTS.state.hands[0].stars === 1));
+  check("extreme game saved and loaded", await page.evaluate(() => !!AppStateTS.state && AppStateTS.state.mode === "extreme" && AppStateTS.state.hands[0].mirrored.length === 1 && AppStateTS.state.hands[0].numbers.join() === "12,13,14"));
   check("no sideways scroll in extreme", await page.evaluate(() => document.documentElement.scrollWidth - innerWidth <= 0));
   // Set from another page: the game page saves its own state when it is left.
   const legacyState = await page.evaluate(() => { const x = TeufelSiebenCore.newGame({ players: 2 }); delete x.rules; return JSON.stringify({ state: x }); });

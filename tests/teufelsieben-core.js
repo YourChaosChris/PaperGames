@@ -152,56 +152,65 @@ for (const n of [2, 3, 4, 5, 6]) {
 // their measurement output remain byte-for-byte in place.
 {
   const deck = C.deckOf("extreme");
-  check("extreme deck has 78 cards", deck.length === 78);
+  check("extreme deck has 72 cards", deck.length === 72);
   for (const [v, n] of Object.entries(C.EXTREME_COUNTS)) check("extreme number " + v + " count", deck.filter((x) => x === Number(v)).length === n);
   for (const [v, n] of C.EXTREME_SPECIALS) check("extreme special " + v + " count", deck.filter((x) => x === v).length === n);
-  check("extreme extras add up", Object.values(C.EXTREME_COUNTS).reduce((a, b) => a + b, 0) === 11 && C.EXTREME_SPECIALS.reduce((a, x) => a + x[1], 0) === 7);
+  check("extreme extras: 11 to 14 twice each, no number with its own count", JSON.stringify(C.EXTREME_COUNTS) === JSON.stringify({ 11: 2, 12: 2, 13: 2, 14: 2 }));
+  check("extreme specials are only Link and Mirror", C.EXTREME_SPECIALS.map((x) => x[0]).join() === "link,mirror");
+  check("no plus, minus, multiply or storm cards", !deck.some((c) => ["star", "weight", "storm", "double", "halve"].includes(c)) && !deck.includes(15));
 }
 function extremeFixed(players, deck) {
   const s = clone(C.newGame({ players, mode: "extreme" }, C.makeRng(1)));
-  s.deck = deck.slice(); s.discard = []; s.hands = Array.from({ length: players }, () => ({ numbers: [], courage: false, courageUsed: 0, bridges: 0, collectors: 0, stars: 0, weights: 0, links: 0, status: "wait", drawn: 0 }));
+  s.deck = deck.slice(); s.discard = []; s.hands = Array.from({ length: players }, () => ({ numbers: [], courage: false, courageUsed: 0, bridges: 0, collectors: 0, links: 0, mirrored: [], mode: "extreme", status: "wait", drawn: 0 }));
   s.phase = "turn"; s.roundPoints = null; s.turnsLeft = Array.from({ length: players }, (_, i) => i); s.current = 0; s.hands[0].status = "in";
   return s;
 }
 {
-  check("star scores seven", C.handPoints({ numbers: [], bridges: 0, collectors: 0, status: "stop", courageUsed: 0, stars: 1 }) === 7);
-  check("weight subtracts seven", C.handPoints({ numbers: [10], bridges: 0, collectors: 0, status: "stop", courageUsed: 0, weights: 1 }) === 3);
-  check("weight score cannot go below zero", C.handPoints({ numbers: [], bridges: 0, collectors: 0, status: "stop", courageUsed: 0, weights: 3 }) === 0);
   let link = extremeFixed(2, [3, 4, 5, 6, "link", 1]);
   for (let i = 0; i < 5; i++) link = C.draw(link);
-  check("link doubles only run bonus", C.handPoints(link.hands[0]) === 38);
-  let storm = extremeFixed(4, ["storm", 2, 3, 4, 5, 6, 7]); storm = C.draw(storm);
-  check("storm queues one card per later player", storm.forcedFor[1] === 1 && storm.forcedFor[2] === 1 && storm.forcedFor[3] === 1 && storm.discard.includes("storm"));
-  storm = C.stop(storm);
-  check("storm forces following players at turn start", storm.hands[1].drawn === 1 && storm.hands[1].numbers[0] === 2 && storm.current === 1);
-  let last = extremeFixed(2, ["storm", 8]); last.turnsLeft = [0]; last = C.draw(last);
-  check("storm has no effect for last player", Object.keys(last.forcedFor).length === 0);
-  check("run reaches fifteen", C.isNumber(15) && C.runLength([11, 12, 13, 14, 15], 0) === 5);
-  check("extreme points are integers", Number.isInteger(C.handPoints({ numbers: [11, 12, 13, 14, 15], bridges: 0, collectors: 0, courageUsed: 0, status: "stop", links: 1, stars: 1, weights: 1 })));
+  check("link gives 2 points per number of the longest row (18 + 10 + 8)", C.handPoints(link.hands[0]) === 36);
+  check("link: two links 4 per number, a row needs 2 numbers", C.linkPoints(2, 3) === 12 && C.linkPoints(1, 1) === 0 && C.linkPoints(0, 6) === 0);
+  check("link counts a row of 2 or 3 too", C.handPoints({ numbers: [8, 9], bridges: 0, collectors: 0, courageUsed: 0, status: "stop", links: 1, mode: "extreme" }) === 21);
+  let mir = extremeFixed(2, [3, "mirror", 9]); mir = C.draw(mir); mir = C.draw(mir);
+  check("mirror turns the last number 3 into 12", mir.hands[0].numbers.join() === "12" && mir.last.type === "mirror" && mir.last.from === 3 && mir.last.to === 12 && mir.discard.includes("mirror"));
+  let same = extremeFixed(2, [12, 3, "mirror"]); for (let i = 0; i < 3; i++) same = C.draw(same);
+  check("mirror does nothing when the hand has 15 - n", same.hands[0].numbers.join() === "12,3" && same.last.type === "mirrornone");
+  let empty = extremeFixed(2, ["mirror", 5]); empty = C.draw(empty);
+  check("mirror without a number does nothing", empty.hands[0].numbers.length === 0 && empty.last.type === "mirrornone" && empty.hands[0].status === "in");
+  let bust = extremeFixed(2, [2, "mirror", 13]); for (let i = 0; i < 3; i++) bust = C.draw(bust);
+  check("a mirrored number counts as that number (13 after 2 -> 13 is bust)", bust.hands[0].status === "bust");
+  let back = extremeFixed(2, [3, "mirror", "strike", 5]); for (let i = 0; i < 3; i++) back = C.draw(back);
+  check("strike on a mirrored number puts the real card (3) on the discard pile", back.hands[0].numbers.length === 0 && back.discard.includes(3) && !back.discard.includes(12));
+  let twice = extremeFixed(2, [4, "mirror", "mirror", 8]); for (let i = 0; i < 3; i++) twice = C.draw(twice);
+  check("two mirrors give the number back", twice.hands[0].numbers.join() === "4");
+  check("mirrorOf: 1 and 14, 7 and 8", C.mirrorOf({ numbers: [1] }) === 14 && C.mirrorOf({ numbers: [8] }) === 7 && C.mirrorOf({ numbers: [7, 8] }) === null);
+  check("run reaches fourteen, not fifteen", !C.isNumber(15) && C.runLength([11, 12, 13, 14], 0) === 4 && C.runLength([12, 13, 14, 15], 0) === 3);
+  check("extreme points are integers", Number.isInteger(C.handPoints({ numbers: [11, 12, 13, 14], bridges: 0, collectors: 1, courageUsed: 1, status: "stop", links: 1, mode: "extreme" })));
 }
 {
   check("extreme target defaults to 250", C.newGame({ players: 2, mode: "extreme", target: 90 }).target === 250);
   check("extreme target 500 is allowed", C.newGame({ players: 2, mode: "extreme", target: 500 }).target === 500);
   check("normal target 250 falls back to 90", C.newGame({ players: 2, target: 250 }).target === 90);
   const old = clone(C.newGame({ players: 2 }, C.makeRng(3))); delete old.mode;
-  old.hands.forEach((h) => { delete h.stars; delete h.weights; delete h.links; delete h.doubles; delete h.halves; });
+  old.hands.forEach((h) => { delete h.links; delete h.mirrored; });
   check("old state without mode and new hand fields remains valid", C.isCurrentState(old));
-  check("old state without mode uses normal unseen deck", C.unseen(old)[11] === undefined && C.unseen(old).star === undefined);
+  check("old state without mode uses normal unseen deck", C.unseen(old)[11] === undefined && C.unseen(old).mirror === undefined);
   check("unknown mode normalizes to normal", C.newGame({ players: 2, mode: "x" }).mode === "normal");
 }
 function extremeCardsTotal(s) {
   let n = s.deck.length + s.discard.length;
-  s.hands.forEach((h) => { n += h.numbers.length + (h.courage ? 1 : 0) + h.bridges + h.collectors + (h.stars || 0) + (h.weights || 0) + (h.links || 0) + (h.doubles || 0) + (h.halves || 0); });
+  s.hands.forEach((h) => { n += h.numbers.length + (h.courage ? 1 : 0) + h.bridges + h.collectors + (h.links || 0); });
   return n;
 }
-function extremePlay(n, levels, target, seed, variant) {
+function extremePlay(n, levels, target, seed) {
   const rng = C.makeRng(seed), opts = { players: n, mode: "extreme", computer: Array(n).fill(true), levels, target };
-  if (variant) opts.measureVariant = variant;
   let s = C.newGame(opts, rng), steps = 0;
-  while (s.phase !== "over" && steps++ < 6000) {
+  while (s.phase !== "over" && steps++ < 8000) {
     const before = s; s = s.phase === "roundover" ? C.nextRound(s, rng) : C.aiStep(s, rng);
     if (s === before) return { s, problem: "stuck" };
-    if (extremeCardsTotal(s) !== (variant ? 80 : 78)) return { s, problem: "cards " + extremeCardsTotal(s) };
+    if (extremeCardsTotal(s) !== 72) return { s, problem: "cards " + extremeCardsTotal(s) };
+    const counts = {}; s.deck.concat(s.discard).forEach((c) => { counts[c] = (counts[c] || 0) + 1; });
+    if (Object.keys(counts).some((c) => counts[c] > C.deckOf("extreme").filter((x) => String(x) === c).length)) return { s, problem: "a card appears too often" };
   }
   return { s, problem: s.phase === "over" ? "" : "hang" };
 }
@@ -216,7 +225,9 @@ console.log("extreme wins per level (solo wins / player games): " + [1, 2, 3].ma
 const extremeSeats = {};
 for (const n of [2, 3, 4, 5, 6]) {
   extremeSeats[n] = Array.from({ length: n }, () => ({ games: 0, wins: 0 }));
-  for (let g = 0; g < GAMES; g++) {
+  // Twice the games: with 500 a seat can miss the 5-point limit by chance
+  // alone (3 players: 28.2 % at 500 games, 31.8 % at 3000).
+  for (let g = 0; g < 2 * GAMES; g++) {
     const r = extremePlay(n, Array(n).fill(3), 250, 3100000 + n * 100000 + g);
     if (r.problem) { fails.push("extreme seat " + n + " players game " + g + ": " + r.problem); continue; }
     for (let i = 0; i < n; i++) { extremeSeats[n][i].games++; if (r.s.winners.includes(i)) extremeSeats[n][i].wins++; }

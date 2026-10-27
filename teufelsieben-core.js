@@ -31,9 +31,13 @@
 
 const TeufelSiebenCore = (() => {
   const COUNTS = { 1: 3, 2: 4, 3: 5, 4: 6, 5: 6, 6: 6, 7: 6, 8: 5, 9: 4, 10: 3 };
-  const EXTREME_COUNTS = { 11: 3, 12: 3, 13: 2, 14: 2, 15: 1 };
+  // "Wild Chain" (task 133, own cards after decision 34): the numbers 11 to
+  // 14 twice each, no number with a role of its own; Link (+2 points per
+  // number of the longest row) and Mirror (the last number n turns into 15 - n).
+  const EXTREME_COUNTS = { 11: 2, 12: 2, 13: 2, 14: 2 };
   const SPECIALS = ["courage", "strike", "pass", "bridge", "collector", "peek"];
-  const EXTREME_SPECIALS = [["star", 2], ["weight", 2], ["link", 2], ["storm", 1]];
+  const EXTREME_SPECIALS = [["link", 2], ["mirror", 2]];
+  const MAX_NUMBER = 14, MIRROR_SUM = 15, LINK_POINTS = 2;
   const TARGETS = [60, 90, 120];
   const EXTREME_TARGETS = [250, 500];
   const EXTREME_DEFAULT = 250;
@@ -71,26 +75,36 @@ const TeufelSiebenCore = (() => {
     for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
     return a;
   }
-  function isNumber(card) { return typeof card === "number" && Number.isInteger(card) && card >= 1 && card <= 15; }
-  function newHand() { return { numbers: [], courage: false, courageUsed: 0, bridges: 0, collectors: 0, stars: 0, weights: 0, links: 0, doubles: 0, halves: 0, status: "wait", drawn: 0 }; }
+  function isNumber(card) { return typeof card === "number" && Number.isInteger(card) && card >= 1 && card <= MAX_NUMBER; }
+  function newHand() { return { numbers: [], courage: false, courageUsed: 0, bridges: 0, collectors: 0, links: 0, mirrored: [], status: "wait", drawn: 0 }; }
+  // A mirrored number is still the card that was turned up (`from`): that
+  // card goes back to the discard pile, so the deck never gains a card.
+  function cardOfNumber(h, v) {
+    const list = h.mirrored || [], k = list.findIndex((m) => m.to === v);
+    if (k < 0) return v;
+    const from = list[k].from; list.splice(k, 1); return from;
+  }
+  function physicalNumbers(h) {
+    const out = h.numbers.slice();
+    (h.mirrored || []).forEach((m) => { const k = out.indexOf(m.to); if (k >= 0) out[k] = m.from; });
+    return out;
+  }
   function note(s, type, player, card, extra) {
     s.seq += 1;
     s.last = Object.assign({ seq: s.seq, type, player }, card === undefined ? {} : { card }, extra || {});
   }
   function newGame(opts, rng) {
     const o = opts || {}, n = Math.max(2, Math.min(6, Math.floor(o.players || 2)));
-    const mode = o.mode === "extreme" ? "extreme" : "normal", variant = mode === "extreme" && o.measureVariant === "muldiv" ? "muldiv" : null;
-    const baseDeck = deckOf(mode);
-    if (variant) baseDeck.push("double", "halve");
+    const mode = o.mode === "extreme" ? "extreme" : "normal";
     const targets = mode === "extreme" ? EXTREME_TARGETS : TARGETS;
-    const s = { game: "teufelsieben", rules: 2, mode, variant, n, computer: [], levels: [], totals: [], target: targets.indexOf(o.target) >= 0 ? o.target : (mode === "extreme" ? EXTREME_DEFAULT : DEFAULT_TARGET),
-      deck: shuffle(baseDeck, rng), discard: [], hands: [], dealer: n - 1, current: 0, turnsLeft: [], forced: 0, forcedFor: {}, peek: null, phase: "turn", round: 0, roundPoints: null, winners: null, last: null, seq: 0 };
+    const s = { game: "teufelsieben", rules: 2, mode, n, computer: [], levels: [], totals: [], target: targets.indexOf(o.target) >= 0 ? o.target : (mode === "extreme" ? EXTREME_DEFAULT : DEFAULT_TARGET),
+      deck: shuffle(deckOf(mode), rng), discard: [], hands: [], dealer: n - 1, current: 0, turnsLeft: [], forced: 0, peek: null, phase: "turn", round: 0, roundPoints: null, winners: null, last: null, seq: 0 };
     for (let i = 0; i < n; i++) { s.computer.push(!!(o.computer && o.computer[i])); s.levels.push(o.levels && o.levels[i] >= 1 && o.levels[i] <= 3 ? o.levels[i] : 2); s.totals.push(0); }
     beginRound(s);
     return s;
   }
   function beginRound(s) {
-    s.round += 1; s.hands = Array.from({ length: s.n }, newHand); s.hands.forEach((h) => { h.mode = s.mode || "normal"; }); s.forced = 0; s.forcedFor = {}; s.peek = null;
+    s.round += 1; s.hands = Array.from({ length: s.n }, newHand); s.hands.forEach((h) => { h.mode = s.mode || "normal"; }); s.forced = 0; s.peek = null;
     s.turnsLeft = Array.from({ length: s.n }, (_, k) => (s.dealer + 1 + k) % s.n); s.current = s.turnsLeft[0];
     s.hands[s.current].status = "in"; s.phase = "turn";
     return s;
@@ -101,7 +115,7 @@ const TeufelSiebenCore = (() => {
   function takeCard(s, rng) { recycle(s, rng); return s.deck.length ? s.deck.shift() : null; }
   function runLength(numbers, bridges, maxNumber) {
     const have = new Set(numbers.filter(isNumber));
-    const limit = maxNumber || (have.has(11) || have.has(12) || have.has(13) || have.has(14) || have.has(15) ? 15 : 10);
+    const limit = maxNumber || ([...have].some((v) => v > 10) ? MAX_NUMBER : 10);
     let best = 0;
     for (let start = 1; start <= limit; start++) for (let end = start; end <= limit; end++) {
       const missing = end - start + 1 - [...have].filter((v) => v >= start && v <= end).length;
@@ -111,12 +125,19 @@ const TeufelSiebenCore = (() => {
   }
   function handPoints(h) {
     if (h.status === "bust") return 0;
-    const count = h.numbers.length, l = runLength(h.numbers, h.bridges, h.mode === "extreme" ? 15 : undefined);
+    const count = h.numbers.length, l = runLength(h.numbers, h.bridges, h.mode === "extreme" ? MAX_NUMBER : undefined);
     const bonus = l >= RUN_MIN ? 5 * (l - 2) : 0;
-    let sum = h.numbers.reduce((a, b) => a + b, 0);
-    if (h.doubles) sum *= 2;
-    if (h.halves) sum = Math.floor(sum / 2);
-    return Math.max(0, sum + bonus * (1 + (h.links || 0)) + h.collectors * count + 7 * (h.stars || 0) - 7 * (h.weights || 0) - 5 * h.courageUsed);
+    const sum = h.numbers.reduce((a, b) => a + b, 0);
+    return Math.max(0, sum + bonus + linkPoints(h.links, l) + h.collectors * count - 5 * h.courageUsed);
+  }
+  // Link: +2 points for every number of the longest row (2 or more in a row).
+  function linkPoints(links, run) { return links && run >= 2 ? LINK_POINTS * links * run : 0; }
+  // Mirror: the number turned up last becomes 15 - n (1 and 14, 2 and 13 ...),
+  // unless the hand already holds that number. Returns the new number or null.
+  function mirrorOf(h) {
+    if (!h.numbers.length) return null;
+    const to = MIRROR_SUM - h.numbers[h.numbers.length - 1];
+    return isNumber(to) && !h.numbers.includes(to) ? to : null;
   }
   function resolveDraw(s, p, rng) {
     const h = s.hands[p], card = takeCard(s, rng);
@@ -133,7 +154,7 @@ const TeufelSiebenCore = (() => {
       if (h.courage) { s.discard.push(card); note(s, "void", p, card); }
       else { h.courage = true; note(s, "courage", p, card); }
     } else if (card === "strike") {
-      if (h.numbers.length) s.discard.push(h.numbers.pop());
+      if (h.numbers.length) s.discard.push(cardOfNumber(h, h.numbers.pop()));
       s.discard.push(card); note(s, "strike", p, card);
     } else if (card === "pass") {
       const next = s.turnsLeft.slice(1).find((i) => s.hands[i].status === "wait");
@@ -145,36 +166,30 @@ const TeufelSiebenCore = (() => {
       recycle(s, rng); s.peek = s.deck.length ? s.deck[0] : null;
       s.discard.push(card); note(s, "peek", p, card, { shown: s.peek });
     }
-    if (card === "star") { h.stars = (h.stars || 0) + 1; note(s, "star", p, card); }
-    else if (card === "weight") { h.weights = (h.weights || 0) + 1; note(s, "weight", p, card); }
     else if (card === "link") { h.links = (h.links || 0) + 1; note(s, "link", p, card); }
-    else if (card === "storm") {
-      s.turnsLeft.slice(1).forEach((next) => { if (s.hands[next].status === "wait") s.forcedFor[next] = (s.forcedFor[next] || 0) + 1; });
-      s.discard.push(card); note(s, "storm", p, card);
-    } else if (card === "double") { h.doubles = (h.doubles || 0) + 1; note(s, "double", p, card); }
-    else if (card === "halve") { h.halves = (h.halves || 0) + 1; note(s, "halve", p, card); }
+    else if (card === "mirror") {
+      const to = mirrorOf(h), from = h.numbers.length ? h.numbers[h.numbers.length - 1] : null;
+      if (to !== null) { h.numbers[h.numbers.length - 1] = to; h.mirrored = (h.mirrored || []).concat({ from: cardOfNumber(h, from), to }); }
+      s.discard.push(card); note(s, to === null ? "mirrornone" : "mirror", p, card, { from, to });
+    }
     return true;
   }
   // The cards of a finished round stay in front of the players (the screen
   // shows them with the round's points) until the next round clears them.
   function clearHands(s) {
     s.hands.forEach((h) => {
-      s.discard.push(...h.numbers);
+      s.discard.push(...physicalNumbers(h));
       if (h.courage) s.discard.push("courage");
       for (let k = 0; k < h.bridges; k++) s.discard.push("bridge");
       for (let k = 0; k < h.collectors; k++) s.discard.push("collector");
-      for (let k = 0; k < (h.stars || 0); k++) s.discard.push("star");
-      for (let k = 0; k < (h.weights || 0); k++) s.discard.push("weight");
       for (let k = 0; k < (h.links || 0); k++) s.discard.push("link");
-      for (let k = 0; k < (h.doubles || 0); k++) s.discard.push("double");
-      for (let k = 0; k < (h.halves || 0); k++) s.discard.push("halve");
-      h.numbers = []; h.courage = false; h.bridges = 0; h.collectors = 0; h.stars = 0; h.weights = 0; h.links = 0; h.doubles = 0; h.halves = 0;
+      h.numbers = []; h.courage = false; h.bridges = 0; h.collectors = 0; h.links = 0; h.mirrored = [];
     });
   }
   function endRound(s) {
     s.roundPoints = s.hands.map(handPoints);
     s.roundPoints.forEach((v, i) => { s.totals[i] += v; });
-    s.phase = "roundover"; s.turnsLeft = []; s.forced = 0; s.forcedFor = {}; s.peek = null;
+    s.phase = "roundover"; s.turnsLeft = []; s.forced = 0; s.peek = null;
     const best = Math.max(...s.totals);
     if (best >= s.target) { s.phase = "over"; s.winners = s.totals.map((v, i) => v === best ? i : -1).filter((i) => i >= 0); }
     note(s, s.phase === "over" ? "gameover" : "roundover", null);
@@ -183,9 +198,8 @@ const TeufelSiebenCore = (() => {
   function activateNext(s, rng) {
     if (!s.turnsLeft.length) return endRound(s);
     s.current = s.turnsLeft[0]; const h = s.hands[s.current]; h.status = "in"; s.peek = null;
-    let forcedNow = s.forced + (s.forcedFor[s.current] || 0);
+    let forcedNow = s.forced;
     s.forced = 0;
-    delete s.forcedFor[s.current];
     while (forcedNow > 0 && h.status === "in") {
       forcedNow -= 1;
       if (!resolveDraw(s, s.current, rng)) break;
@@ -216,11 +230,10 @@ const TeufelSiebenCore = (() => {
     const s = clone(s0); clearHands(s); s.dealer = (s.dealer + 1) % s.n; return beginRound(s);
   }
   function unseen(s) {
-    const counts = {}; const cards = deckOf(s.mode || "normal");
-    if (s.variant === "muldiv") cards.push("double", "halve");
-    cards.forEach((c) => { counts[c] = (counts[c] || 0) + 1; });
+    const counts = {};
+    deckOf(s.mode || "normal").forEach((c) => { counts[c] = (counts[c] || 0) + 1; });
     const open = s.discard.slice();
-    s.hands.forEach((h) => { open.push(...h.numbers); if (h.courage) open.push("courage"); for (let i = 0; i < h.bridges; i++) open.push("bridge"); for (let i = 0; i < h.collectors; i++) open.push("collector"); for (let i = 0; i < (h.stars || 0); i++) open.push("star"); for (let i = 0; i < (h.weights || 0); i++) open.push("weight"); for (let i = 0; i < (h.links || 0); i++) open.push("link"); for (let i = 0; i < (h.doubles || 0); i++) open.push("double"); for (let i = 0; i < (h.halves || 0); i++) open.push("halve"); });
+    s.hands.forEach((h) => { open.push(...physicalNumbers(h)); if (h.courage) open.push("courage"); for (let i = 0; i < h.bridges; i++) open.push("bridge"); for (let i = 0; i < h.collectors; i++) open.push("collector"); for (let i = 0; i < (h.links || 0); i++) open.push("link"); });
     open.forEach((c) => { if (counts[c]) counts[c]--; });
     return counts;
   }
@@ -259,11 +272,8 @@ const TeufelSiebenCore = (() => {
       } else if (card === "bridge") gain = handPoints(Object.assign({}, h, { bridges: h.bridges + 1 })) - points;
       else if (card === "collector") gain = handPoints(Object.assign({}, h, { collectors: h.collectors + 1 })) - points;
       else if (card === "strike" && h.numbers.length) gain = handPoints(Object.assign({}, h, { numbers: h.numbers.slice(0, -1) })) - points;
-      else if (card === "star") gain = handPoints(Object.assign({}, h, { stars: (h.stars || 0) + 1 })) - points;
-      else if (card === "weight") gain = handPoints(Object.assign({}, h, { weights: (h.weights || 0) + 1 })) - points;
       else if (card === "link") gain = handPoints(Object.assign({}, h, { links: (h.links || 0) + 1 })) - points;
-      else if (card === "double") gain = handPoints(Object.assign({}, h, { doubles: (h.doubles || 0) + 1 })) - points;
-      else if (card === "halve") gain = handPoints(Object.assign({}, h, { halves: (h.halves || 0) + 1 })) - points;
+      else if (card === "mirror") { const to = mirrorOf(h); if (to !== null) gain = handPoints(Object.assign({}, h, { numbers: h.numbers.slice(0, -1).concat(to) })) - points; }
       gainTotal += gain * copies;
     });
     const expectedGain = gainTotal / Math.max(1, total - Object.keys(unseenCards).reduce((a, k) => a + (isNumber(Number(k)) && h.numbers.includes(Number(k)) ? unseenCards[k] : 0), 0));
@@ -284,7 +294,7 @@ const TeufelSiebenCore = (() => {
     if ((s.phase === "roundover" || s.phase === "over") && (!Array.isArray(s.roundPoints) || s.roundPoints.length !== s.n)) return false;
     return s.hands.every((h) => h && Array.isArray(h.numbers) && typeof h.courage === "boolean" && Number.isInteger(h.courageUsed) && Number.isInteger(h.bridges) && Number.isInteger(h.collectors) && Number.isInteger(h.drawn) && ["wait", "in", "stop", "bust"].includes(h.status));
   }
-  return { DECK, COUNTS, SPECIALS, TARGETS, DEFAULT_TARGET, EXTREME_COUNTS, EXTREME_SPECIALS, EXTREME_TARGETS, EXTREME_DEFAULT, LEVELS_EXTREME, deckOf, RUN_MIN, LEVELS, makeRng, newGame, draw, stop, nextRound, handPoints, runLength, bustChance, unseen, wantsToStop, aiStep, actor, outcomeFor, isNumber, isCurrentState };
+  return { DECK, COUNTS, SPECIALS, TARGETS, DEFAULT_TARGET, EXTREME_COUNTS, EXTREME_SPECIALS, EXTREME_TARGETS, EXTREME_DEFAULT, LEVELS_EXTREME, MAX_NUMBER, MIRROR_SUM, LINK_POINTS, deckOf, mirrorOf, linkPoints, RUN_MIN, LEVELS, makeRng, newGame, draw, stop, nextRound, handPoints, runLength, bustChance, unseen, wantsToStop, aiStep, actor, outcomeFor, isNumber, isCurrentState };
 })();
 
 if (typeof module !== "undefined") module.exports = TeufelSiebenCore;

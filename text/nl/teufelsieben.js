@@ -14,7 +14,7 @@ Object.assign(STRINGS.nl, {
     ts_term_run: "Reeksen",
     ts_rules_run: "De langste reeks van 4 of meer getallen levert 5 × (lengte − 2) op: vier op rij is 10, vijf is 15. Elke Brug vult één ontbrekend getal.",
     ts_term_extreme: "Wilde reeks",
-    ts_rules_extreme: "Voor het spel kun je de kaarten ‘Wilde reeks’ kiezen: er komen 18 kaarten bij, 78 in totaal – de getallen 11 (3 kaarten), 12 (3), 13 (2), 14 (2) en 15 (1), Geluksster (2 kaarten, +7 punten), Ballast (2, −7 punten), Schakel (2, de bonus voor een reeks telt dubbel, met twee Schakels driedubbel) en Storm (1, iedereen die deze ronde nog aan de beurt komt, begint met één omgedraaide kaart). Reeksen gaan dan tot 15. Er wordt gespeeld tot 250 of 500 punten.",
+    ts_rules_extreme: "Voor het spel kun je de kaarten ‘Wilde reeks’ kiezen: er komen 12 kaarten bij, 72 in totaal – de getallen 11, 12, 13 en 14 (elk 2 kaarten), Schakel (2 kaarten, +2 punten voor elk getal van je langste reeks van 2 of meer, met twee Schakels +4) en Spiegel (2 kaarten: je laatste getal n wordt 15 − n, dus 1 en 14, 2 en 13 … 7 en 8 wisselen; heb je dat getal al, of nog geen getal, dan gebeurt er niets). Reeksen gaan dan tot 14. Er wordt gespeeld tot 250 of 500 punten.",
     ts_term_special: "Speciale kaarten",
     ts_rules_special: "Moed redt één keer en kost 5 punten bij gebruik. Wissen verwijdert je laatste getal. Doorgifte laat de volgende speler met een open kaart beginnen. Brug vult een gat. Verzamelaar geeft 1 punt per getalkaart. Kijkje toont de volgende kaart.",
     ts_term_points: "Punten en einde",
