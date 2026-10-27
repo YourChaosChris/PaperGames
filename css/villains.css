@@ -1,9 +1,8 @@
 /* villains: rules used only by the villains pages (loaded after base.css). */
-/* Fairy-Tale Villains (villains-app.js): goal card, the four places of the
-   domain (4 in a row, 2 x 2 on a narrow screen), action buttons, a box for
-   choices, the hand, the other villains and the log. The place with the
-   figure has a thick frame, a place a hero blocks a dashed one, places
-   that can be tapped now a dashed outline. Margins instead of `gap`. */
+/* Fairy-Tale Villains (villains-app.js): plan card, the three places of the
+   domain in a row, the market, action buttons, a box for choices, the hand
+   as a row of cards, the other villains and the log. A place with a hero
+   has a dashed frame. Margins instead of `gap`. */
 .vl-goal {
   text-align: start;
   border: var(--border-width) solid var(--border);
@@ -31,7 +30,8 @@
   margin: 0 0 0.1rem;
 }
 
-.vl-steps .vl-done {
+.vl-steps .vl-done,
+.vl-place-step.vl-done {
   font-weight: 700;
 }
 
@@ -43,44 +43,31 @@
 
 .vl-domain {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .vl-place {
   display: flex;
   flex-direction: column;
-  width: 23.5%;
-  margin: 0 2% var(--space-2) 0;
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0 0 var(--space-2);
+  margin-inline-end: 2%;
   padding: var(--space-1);
   background: #fff;
   color: #141413;
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   border-radius: var(--radius);
   text-align: start;
   font-size: 0.78rem;
   line-height: 1.25;
 }
 
-.vl-place:nth-child(4n) {
-  margin-right: 0;
-}
-
-.vl-place.vl-here {
-  border-width: 4px;
+.vl-place:last-child {
+  margin-inline-end: 0;
 }
 
 .vl-place.vl-blocked {
   border-style: dashed;
-  border-width: 2px;
-}
-
-.vl-place.vl-here.vl-blocked {
-  border-width: 4px;
-}
-
-.vl-place.vl-target {
-  outline: 3px dashed #141413;
-  outline-offset: 2px;
 }
 
 .vl-place-name {
@@ -89,19 +76,27 @@
   overflow-wrap: break-word;
 }
 
-.vl-place-acts {
-  margin: 0.15rem 0;
-}
-
-.vl-figure,
-.vl-hero,
-.vl-hedge {
-  font-weight: 700;
+.vl-place-sign,
+.vl-place-step {
+  margin: 0.1rem 0 0;
+  overflow-wrap: break-word;
 }
 
 .vl-hero {
+  font-weight: 700;
   border-top: 1px dashed var(--border);
+  margin-top: 0.15rem;
   padding-top: 0.1rem;
+  overflow-wrap: break-word;
+}
+
+.vl-market {
+  text-align: start;
+  font-size: 0.9rem;
+}
+
+.vl-market p {
+  margin: 0 0 var(--space-1);
 }
 
 .vl-actions {
@@ -111,6 +106,7 @@
 
 .vl-actions button,
 .vl-chooser button {
+  min-height: 44px;
   margin: 0 var(--space-1) var(--space-1) 0;
 }
 
@@ -122,10 +118,6 @@
   text-align: start;
 }
 
-.vl-chooser-hint {
-  font-weight: 700;
-}
-
 .vl-hand,
 .vl-others {
   list-style: none;
@@ -133,15 +125,37 @@
   padding: 0;
 }
 
-.vl-hand li,
+.vl-hand {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.vl-hand li {
+  margin: 0 var(--space-1) var(--space-1) 0;
+}
+
 .vl-others li {
   margin: 0 0 var(--space-2);
 }
 
-.vl-card,
+.vl-card {
+  min-height: 44px;
+  padding: var(--space-1) var(--space-2);
+  background: #fff;
+  color: #141413;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-weight: 700;
+}
+
+.vl-card.vl-unplayable {
+  font-weight: 400;
+}
+
 .vl-other {
   display: block;
   width: 100%;
+  min-height: 44px;
   text-align: start;
   padding: var(--space-2);
   background: #fff;
@@ -151,52 +165,9 @@
   line-height: 1.3;
 }
 
-.vl-card.vl-unplayable {
-  border-style: dashed;
-  border-width: 1px;
-}
-
-.vl-card.vl-selected,
-.vl-other.vl-selected,
-.vl-card.vl-selected .vl-cost {
+.vl-other.vl-selected {
   background: #141413;
   color: #fff;
-}
-
-.vl-card.vl-marked {
-  outline: 3px dashed #141413;
-  outline-offset: 2px;
-}
-
-.vl-card-top {
-  display: flex;
-  align-items: center;
-}
-
-.vl-card-name {
-  flex: 1 1 auto;
-  font-weight: 700;
-}
-
-.vl-cost {
-  display: inline-block;
-  min-width: 1.6rem;
-  padding: 0.05rem 0.3rem;
-  border: 2px solid #141413;
-  border-radius: 50%;
-  text-align: center;
-  font-weight: 700;
-}
-
-.vl-card-kind {
-  display: block;
-  font-size: 0.8rem;
-}
-
-.vl-card-text {
-  display: block;
-  font-size: 0.85rem;
-  margin-top: var(--space-1);
 }
 
 .vl-other-full {
@@ -213,13 +184,3 @@
   padding-inline-start: 1.4rem;
   font-size: 0.85rem;
 }
-
-@media (max-width: 520px) {
-  /* Narrow screens: the domain as 2 x 2. */
-  .vl-place {
-      width: 49%;
-    }
-    .vl-place:nth-child(2n) {
-      margin-right: 0;
-    }
-  }

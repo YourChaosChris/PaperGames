@@ -92,6 +92,13 @@
         <option value="thornfairy" data-i18n="vl_villain_thornfairy">The Thorn Fairy</option>
       </select>
   </div>
+  <div class="field-row">
+    <select id="vl-level" data-i18n-attr="aria-label:bl_level_label" aria-label="Level">
+        <option value="1" data-i18n="level_easy">Easy</option>
+        <option value="2" selected data-i18n="level_medium">Medium</option>
+        <option value="3" data-i18n="level_hard">Hard</option>
+      </select>
+  </div>
 </section>
 </div>
 <section id="board-section" class="card">
@@ -110,6 +117,7 @@
     <div id="vl-goal" class="vl-goal"></div>
     <h2 class="vl-heading" data-i18n="vl_domain_title">Your domain</h2>
     <div id="vl-domain" class="vl-domain" role="group"></div>
+    <div id="vl-market" class="vl-market"></div>
     <div id="vl-actions" class="vl-actions"></div>
     <div id="vl-chooser" class="vl-chooser hidden"></div>
     <div class="vl-actions">
@@ -146,7 +154,6 @@
 <script src="random-start.js"></script>
 <script src="offline-status.js"></script>
 <script src="density.js"></script>
-<script src="move-hints.js"></script>
 <script src="settings-menu.js"></script>
 <script src="rules-link.js"></script>
 <script src="quick-rules.js"></script>
