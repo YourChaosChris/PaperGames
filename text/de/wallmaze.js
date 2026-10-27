@@ -15,15 +15,15 @@ Object.assign(STRINGS.de, {
     wallmaze_term_win: "Wie das Spiel endet",
     wallmaze_rules_win: "Sobald die Figur eines Spielers ein beliebiges Feld seiner Zielreihe erreicht, gewinnt er – die Spalte spielt keine Rolle.",
     wallmaze_history_title: "Die Geschichte von Mauerlabyrinth",
-    wallmaze_history_origins_title: "Ein Design aus den 1990er-Jahren",
-    wallmaze_history_origins_p1: "Quoridor wurde von Mirko Marchesi entworfen und 1997 erstmals vom französischen Spieleverlag Gigamic veröffentlicht, wo es rasch zu einem der bekanntesten Titel des Unternehmens neben anderen kompakten abstrakten Zweispielerspielen wurde.",
+    wallmaze_history_origins_title: "Spiele mit Mauern und Wegen",
+    wallmaze_history_origins_p1: "Wettlaufspiele, bei denen die Spieler das Brett während des Spiels verändern, sind eine alte Idee der abstrakten Strategiespiele: Statt nur vorwärtszuziehen, kann man einen Zug dafür verwenden, dem anderen ein Hindernis in den Weg zu stellen.",
     wallmaze_history_origins_p2: "Es gehört zu einer größeren Familie von \"Blockade-Labyrinth\"-Spielen, bei denen sich das Brett selbst im Laufe des Spiels verändert, statt fest zu bleiben wie ein Schachbrett – jede Mauer, die ein Spieler platziert, formt die möglichen Wege beider Figuren für den Rest des Spiels dauerhaft um.",
     wallmaze_history_design_title: "Einfache Regeln, echte Tiefe",
     wallmaze_history_design_p1: "Das gesamte Regelwerk passt auf eine einzige Karte – bewege deine Figur oder platziere eine Mauer, erreiche die gegenüberliegende Seite und gewinne – doch die Spannung zwischen Vorwärtsrennen und dem Verzicht auf einen Zug, um stattdessen den Gegner zu blockieren, verleiht ihm echte strategische Tiefe.",
-    wallmaze_history_design_p2: "Quoridor wurde auch als informatisches Problem untersucht: Da der Zustandsraum groß, aber gut strukturiert ist (Figurenpositionen plus Mauerplatzierungen, mit einer Wegverbindungs-Regel, die eingehalten werden muss), ist es ein beliebtes Ziel sowohl für klassische suchbasierte KI als auch, in jüngerer Zeit, für Agenten mit bestärkendem Lernen.",
+    wallmaze_history_design_p2: "Solche Spiele sind auch eine gute Übung für Computerprogramme: Es gibt sehr viele Stellungen, aber jede ist leicht zu beschreiben (zwei Figuren, die Mauern auf dem Brett und die Regel, dass ein Weg frei bleiben muss). Der Computergegner in PaperGames beurteilt eine Stellung vor allem danach, wie viele Schritte jede Figur noch bis zu ihrem Ziel braucht.",
     wallmaze_history_names_title: "Warum ein anderer Name",
-    wallmaze_history_names_p1: "Dasselbe Spielprinzip erscheint kommerziell unter dem Namen Quoridor, entworfen 1997 von Mirko Marchesi und veröffentlicht von Gigamic. Quoridor ist eine eingetragene Marke. PaperGames steht in keiner Verbindung zu Gigamic oder zu diesem Spiel und verwendet deshalb den eigenen Namen Mauerlabyrinth.",
+    wallmaze_history_names_p1: "Dasselbe Spielprinzip wird auch unter dem Namen Quoridor verkauft, einer eingetragenen Marke von Gigamic. PaperGames steht in keiner Verbindung zu Gigamic oder zu diesem Spiel und verwendet deshalb den eigenen Namen Mauerlabyrinth.",
     wallmaze_history_version_title: "Diese Version",
-    wallmaze_history_version_p1: "PaperGames spielt die Standardregeln auf dem Standard-9x9-Brett mit zehn Mauern pro Spieler. Eine Mauer zu platzieren ist ein eigener kleiner Modus: \"Mauer platzieren\" antippen, irgendwo auf dem Brett antippen, um die nächstgelegene erlaubte Mauer dort in der Vorschau zu sehen, und bestätigen – ein auf einem Touchscreen bewusst großzügiges Ziel, statt eine genaue Stelle treffen zu müssen."
+    wallmaze_history_version_p1: "PaperGames spielt auf einem 9x9-Brett mit zehn Mauern pro Spieler. Eine Mauer zu platzieren ist ein eigener kleiner Modus: \"Mauer platzieren\" antippen, irgendwo auf dem Brett antippen, um die nächstgelegene erlaubte Mauer dort in der Vorschau zu sehen, und bestätigen – ein auf einem Touchscreen bewusst großzügiges Ziel, statt eine genaue Stelle treffen zu müssen."
 });
 I18n.markTextLoaded("de");

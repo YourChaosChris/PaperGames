@@ -280,7 +280,29 @@ function checkReleaseNotes(STRINGS) {
   if (failures === before) ok("release notes: " + cache[1] + " has its entry, " + notes.length + " entries in " + Object.keys(STRINGS).length + " languages");
 }
 
+// 9. Brand names of a commercial game may only stand in the one
+// paragraph that explains our own name (RECHTSCHECK point 2, task 152):
+// checked in text/<lang>/<slug>.js and in <slug>-history.html.
+const BRAND_PARAGRAPHS = [
+  { slug: "wallmaze", words: /Quoridor|Gigamic|Marchesi/, key: "wallmaze_history_names_p1" },
+];
+function checkBrandParagraphs() {
+  const before = failures;
+  for (const b of BRAND_PARAGRAPHS) {
+    const files = fs.readdirSync(path.join(ROOT, "text")).map((l) => "text/" + l + "/" + b.slug + ".js")
+      .filter((f) => fs.existsSync(path.join(ROOT, f)));
+    files.push(b.slug + "-history.html");
+    for (const f of files) {
+      fs.readFileSync(path.join(ROOT, f), "utf8").split("\n").forEach((line, i) => {
+        if (b.words.test(line) && line.indexOf(b.key) < 0) fail("brand name outside " + b.key + ": " + f + ":" + (i + 1));
+      });
+    }
+  }
+  if (failures === before) ok("brand names only in their name paragraph: " + BRAND_PARAGRAPHS.map((b) => b.slug).join(", "));
+}
+
 checkJsSyntax();
+checkBrandParagraphs();
 checkAppShell();
 checkFileHashes();
 checkHtmlWellFormed();

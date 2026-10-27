@@ -15,15 +15,15 @@ Object.assign(STRINGS.it, {
     wallmaze_term_win: "Come finisce la partita",
     wallmaze_rules_win: "Nel momento in cui la pedina di un giocatore raggiunge una qualsiasi casella della propria traversa obiettivo, quel giocatore vince - non importa quale colonna.",
     wallmaze_history_title: "La Storia del Labirinto di Muri",
-    wallmaze_history_origins_title: "Un design degli anni '90",
-    wallmaze_history_origins_p1: "Quoridor fu progettato da Mirko Marchesi e pubblicato per la prima volta nel 1997 dall'azienda di giochi francese Gigamic, diventando rapidamente uno dei titoli più conosciuti dell'azienda insieme ad altri compatti giochi astratti a due giocatori.",
+    wallmaze_history_origins_title: "Giochi di muri e percorsi",
+    wallmaze_history_origins_p1: "I giochi di corsa in cui i giocatori modificano il tavoliere durante la partita sono un'idea antica della strategia astratta: invece di avanzare soltanto, un giocatore può usare un turno per mettere un ostacolo sulla strada dell'altro.",
     wallmaze_history_origins_p2: "Appartiene a una famiglia più ampia di giochi \"a labirinto bloccante\", in cui è il tavoliere stesso a cambiare forma nel corso della partita invece di restare fisso come una scacchiera - ogni muro che un giocatore piazza rimodella permanentemente i percorsi che entrambe le pedine possono seguire per il resto della partita.",
     wallmaze_history_design_title: "Regole semplici, vera profondità",
     wallmaze_history_design_p1: "L'intero regolamento sta su un'unica scheda - muovi la tua pedina o piazza un muro, raggiungi il lato opposto per vincere - eppure la tensione tra correre in avanti e spendere un turno per bloccare l'avversario gli dà una vera profondità strategica.",
-    wallmaze_history_design_p2: "Quoridor è stato studiato anche come problema di informatica: poiché lo spazio degli stati è ampio ma ben strutturato (posizioni delle pedine più piazzamenti dei muri, con una regola di connettività dei percorsi da far rispettare), è un obiettivo popolare sia per l'IA tradizionale basata sulla ricerca sia, più di recente, per gli agenti di apprendimento per rinforzo.",
+    wallmaze_history_design_p2: "Giochi come questo sono anche un buon esercizio per i programmi per computer: le posizioni sono moltissime, ma ognuna è facile da descrivere (due pedine, i muri sul tavoliere e la regola che un percorso deve restare aperto). L'avversario computer di PaperGames valuta una posizione soprattutto confrontando quanti passi servono ancora a ciascuna pedina per raggiungere la meta.",
     wallmaze_history_names_title: "Perché un altro nome",
-    wallmaze_history_names_p1: "Lo stesso principio di gioco esiste in commercio con il nome Quoridor, ideato nel 1997 da Mirko Marchesi e pubblicato da Gigamic. Quoridor è un marchio registrato. PaperGames non ha alcun legame con Gigamic né con quel gioco e usa quindi il proprio nome, Labirinto di Muri.",
+    wallmaze_history_names_p1: "Lo stesso principio di gioco è venduto anche con il nome Quoridor, un marchio registrato di Gigamic. PaperGames non ha alcun legame con Gigamic né con quel gioco e usa quindi il proprio nome, Labirinto di Muri.",
     wallmaze_history_version_title: "Questa versione",
-    wallmaze_history_version_p1: "PaperGames gioca con le regole standard sul tavoliere standard 9x9 con dieci muri per giocatore. Piazzare un muro è una piccola modalità a sé: tocca \"Piazza un muro\", tocca un punto qualsiasi del tavoliere per vedere in anteprima il muro legale più vicino lì, e conferma - un bersaglio deliberatamente tollerante su uno schermo touch, invece di dover colpire un punto preciso."
+    wallmaze_history_version_p1: "PaperGames gioca su un tavoliere 9x9 con dieci muri per giocatore. Piazzare un muro è una piccola modalità a sé: tocca \"Piazza un muro\", tocca un punto qualsiasi del tavoliere per vedere in anteprima il muro legale più vicino lì, e conferma - un bersaglio deliberatamente tollerante su uno schermo touch, invece di dover colpire un punto preciso."
 });
 I18n.markTextLoaded("it");

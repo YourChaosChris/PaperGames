@@ -15,15 +15,15 @@ Object.assign(STRINGS.pl, {
     wallmaze_term_win: "Jak kończy się partia",
     wallmaze_rules_win: "W chwili, gdy pionek gracza dotrze do dowolnego pola w jego rzędzie docelowym, gracz wygrywa - nie ma znaczenia, która to kolumna.",
     wallmaze_history_title: "Historia Labiryntu Murów",
-    wallmaze_history_origins_title: "Projekt z lat 90.",
-    wallmaze_history_origins_p1: "Quoridora zaprojektował Mirko Marchesi, a po raz pierwszy wydała go w 1997 roku francuska firma gier Gigamic, dzięki czemu szybko stał się jednym z najbardziej znanych tytułów firmy, obok innych kompaktowych abstrakcyjnych gier dla dwóch graczy.",
+    wallmaze_history_origins_title: "Gry ze ścianami i ścieżkami",
+    wallmaze_history_origins_p1: "Gry wyścigowe, w których gracze zmieniają planszę w trakcie rozgrywki, to stary pomysł w abstrakcyjnych grach strategicznych: zamiast tylko iść naprzód, można poświęcić ruch na postawienie przeszkody na drodze przeciwnika.",
     wallmaze_history_origins_p2: "Należy do szerszej rodziny gier typu \"blokujący labirynt\", w których sama plansza zmienia kształt w trakcie rozgrywki, zamiast pozostawać stała jak szachownica - każda postawiona przez gracza ściana trwale przekształca drogi, jakimi oba pionki mogą się poruszać do końca partii.",
     wallmaze_history_design_title: "Proste zasady, prawdziwa głębia",
     wallmaze_history_design_p1: "Cały zestaw zasad mieści się na jednej karcie - przesuń pionek albo postaw ścianę, dotrzyj na drugi koniec, by wygrać - a mimo to napięcie między pędzeniem naprzód a poświęceniem tury na zablokowanie przeciwnika daje grze prawdziwą głębię strategiczną.",
-    wallmaze_history_design_p2: "Quoridor był też badany jako problem informatyczny: ponieważ przestrzeń stanów jest duża, ale dobrze uporządkowana (pozycje pionków plus rozmieszczenie ścian, z regułą spójności ścieżki do wymuszenia), jest popularnym celem zarówno dla tradycyjnej AI opartej na przeszukiwaniu, jak i, ostatnio, dla agentów uczenia przez wzmacnianie.",
+    wallmaze_history_design_p2: "Takie gry są też dobrym ćwiczeniem dla programów komputerowych: pozycji jest bardzo wiele, ale każdą łatwo opisać (dwa pionki, ściany na planszy i zasada, że jakaś ścieżka musi zostać otwarta). Komputerowy przeciwnik w PaperGames ocenia pozycję głównie na podstawie tego, ile kroków każdy pionek potrzebuje jeszcze do celu.",
     wallmaze_history_names_title: "Dlaczego inna nazwa",
-    wallmaze_history_names_p1: "Ta sama zasada gry występuje w handlu pod nazwą Quoridor, zaprojektowana w 1997 roku przez Mirko Marchesiego i wydana przez Gigamic. Quoridor to zarejestrowany znak towarowy. PaperGames nie ma żadnego związku z Gigamic ani z tą grą i dlatego używa własnej nazwy Labirynt Murów.",
+    wallmaze_history_names_p1: "Ta sama zasada gry jest też sprzedawana pod nazwą Quoridor, zarejestrowanym znakiem towarowym firmy Gigamic. PaperGames nie ma żadnego związku z Gigamic ani z tą grą i dlatego używa własnej nazwy Labirynt Murów.",
     wallmaze_history_version_title: "Ta wersja",
-    wallmaze_history_version_p1: "PaperGames rozgrywa standardowe zasady na standardowej planszy 9x9, z dziesięcioma ścianami na gracza. Stawianie ściany to swój własny, niewielki tryb: dotknij \"Postaw ścianę\", dotknij dowolnego miejsca na planszy, by zobaczyć podgląd najbliższej legalnej ściany w tym miejscu, i potwierdź - celowo wybaczający cel na ekranie dotykowym, zamiast konieczności trafienia w dokładny punkt."
+    wallmaze_history_version_p1: "PaperGames gra na planszy 9x9, z dziesięcioma ścianami na gracza. Stawianie ściany to swój własny, niewielki tryb: dotknij \"Postaw ścianę\", dotknij dowolnego miejsca na planszy, by zobaczyć podgląd najbliższej legalnej ściany w tym miejscu, i potwierdź - celowo wybaczający cel na ekranie dotykowym, zamiast konieczności trafienia w dokładny punkt."
 });
 I18n.markTextLoaded("pl");

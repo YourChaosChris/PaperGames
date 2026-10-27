@@ -15,15 +15,15 @@ Object.assign(STRINGS.nl, {
     wallmaze_term_win: "Hoe het spel eindigt",
     wallmaze_rules_win: "Zodra de pion van een speler een willekeurig veld van zijn doelrij bereikt, wint hij - de kolom maakt niet uit.",
     wallmaze_history_title: "De Geschiedenis van het Muurlabyrint",
-    wallmaze_history_origins_title: "Een Ontwerp uit de Jaren 90",
-    wallmaze_history_origins_p1: "Quoridor werd ontworpen door Mirko Marchesi en in 1997 voor het eerst uitgebracht door het Franse spellenbedrijf Gigamic, en werd al snel een van de bekendste titels van het bedrijf, naast andere compacte abstracte tweespellersspellen.",
+    wallmaze_history_origins_title: "Spellen met muren en paden",
+    wallmaze_history_origins_p1: "Racespellen waarin de spelers het bord tijdens het spel veranderen, zijn een oud idee binnen de abstracte strategiespellen: in plaats van alleen vooruit te gaan, kun je een beurt gebruiken om de ander een obstakel in de weg te zetten.",
     wallmaze_history_origins_p2: "Het behoort tot een bredere familie van \"blokkerende doolhof\"-spellen, waarbij het bord zelf van vorm verandert in de loop van het spel, in plaats van vast te blijven zoals een schaakbord - elke muur die een speler plaatst, hervormt permanent de paden die beide pionnen voor de rest van het spel kunnen nemen.",
     wallmaze_history_design_title: "Eenvoudige Regels, Echte Diepgang",
     wallmaze_history_design_p1: "Het hele regelwerk past op één kaartje - beweeg je pion of plaats een muur, bereik de overkant om te winnen - toch geeft de spanning tussen vooruitrennen en een beurt opofferen om juist je tegenstander te blokkeren het echte strategische diepgang.",
-    wallmaze_history_design_p2: "Quoridor is ook bestudeerd als een informaticaprobleem: omdat de toestandsruimte groot maar goed gestructureerd is (pionposities plus muurplaatsingen, met een padverbindingsregel die gehandhaafd moet worden), is het een populair doelwit voor zowel klassieke zoekgebaseerde AI als, recenter, agents met reinforcement learning.",
+    wallmaze_history_design_p2: "Zulke spellen zijn ook een goede oefening voor computerprogramma's: er zijn heel veel stellingen, maar elke stelling is makkelijk te beschrijven (twee pionnen, de muren op het bord en de regel dat er altijd een pad open moet blijven). De computertegenstander in PaperGames beoordeelt een stelling vooral door te vergelijken hoeveel stappen elke pion nog nodig heeft om zijn doel te bereiken.",
     wallmaze_history_names_title: "Waarom een andere naam",
-    wallmaze_history_names_p1: "Hetzelfde spelprincipe verschijnt commercieel onder de naam Quoridor, in 1997 ontworpen door Mirko Marchesi en uitgegeven door Gigamic. Quoridor is een geregistreerd merk. PaperGames heeft geen band met Gigamic of dat spel en gebruikt daarom de eigen naam Muurlabyrint.",
+    wallmaze_history_names_p1: "Hetzelfde spelprincipe wordt ook verkocht onder de naam Quoridor, een geregistreerd merk van Gigamic. PaperGames heeft geen band met Gigamic of dat spel en gebruikt daarom de eigen naam Muurlabyrint.",
     wallmaze_history_version_title: "Deze Versie",
-    wallmaze_history_version_p1: "PaperGames speelt de standaardregels op het standaard 9x9-bord met tien muren per speler. Een muur plaatsen is een eigen kleine modus: tik op \"Muur plaatsen\", tik ergens op het bord om de dichtstbijzijnde toegestane muur daar in voorbeeld te zien, en bevestig - een op een touchscreen bewust ruim doelvlak, in plaats van een precieze plek te moeten raken."
+    wallmaze_history_version_p1: "PaperGames speelt op een 9x9-bord met tien muren per speler. Een muur plaatsen is een eigen kleine modus: tik op \"Muur plaatsen\", tik ergens op het bord om de dichtstbijzijnde toegestane muur daar in voorbeeld te zien, en bevestig - een op een touchscreen bewust ruim doelvlak, in plaats van een precieze plek te moeten raken."
 });
 I18n.markTextLoaded("nl");

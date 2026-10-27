@@ -15,15 +15,15 @@ Object.assign(STRINGS.es, {
     wallmaze_term_win: "Cómo termina la partida",
     wallmaze_rules_win: "En el momento en que el peón de un jugador llega a cualquier casilla de su fila de meta, gana; no importa en qué columna sea.",
     wallmaze_history_title: "La Historia del Laberinto de Muros",
-    wallmaze_history_origins_title: "Un diseño de los años 90",
-    wallmaze_history_origins_p1: "El Quoridor fue diseñado por Mirko Marchesi y publicado por primera vez en 1997 por la empresa francesa de juegos Gigamic, convirtiéndose rápidamente en uno de los títulos más conocidos de la compañía junto a otros juegos abstractos compactos para dos jugadores.",
+    wallmaze_history_origins_title: "Juegos de muros y caminos",
+    wallmaze_history_origins_p1: "Los juegos de carreras en los que los jugadores cambian el tablero mientras juegan son una idea antigua de la estrategia abstracta: en lugar de solo avanzar, un jugador puede dedicar un turno a poner un obstáculo en el camino del otro.",
     wallmaze_history_origins_p2: "Pertenece a una familia más amplia de juegos de \"laberinto de bloqueo\", donde el propio tablero cambia de forma a lo largo de la partida en lugar de permanecer fijo como un tablero de ajedrez: cada muro que coloca un jugador remodela de forma permanente los caminos que pueden tomar ambos peones durante el resto de la partida.",
     wallmaze_history_design_title: "Reglas sencillas, profundidad real",
     wallmaze_history_design_p1: "Todo el reglamento cabe en una sola tarjeta —mueve tu peón o coloca un muro, llega al otro extremo para ganar—, y sin embargo la tensión entre avanzar y gastar un turno para bloquear a tu oponente le da una profundidad estratégica real.",
-    wallmaze_history_design_p2: "El Quoridor también se ha estudiado como un problema de informática: como el espacio de estados es grande pero está bien estructurado (posiciones de peones más colocaciones de muros, con una regla de conectividad de caminos que hay que respetar), es un objetivo popular tanto para la IA tradicional basada en búsqueda como, más recientemente, para agentes de aprendizaje por refuerzo.",
+    wallmaze_history_design_p2: "Este tipo de juegos es también un buen ejercicio para los programas informáticos: hay muchísimas posiciones, pero cada una es fácil de describir (dos peones, los muros del tablero y la regla de que siempre debe quedar un camino libre). El rival informático de PaperGames juzga una posición sobre todo comparando cuántos pasos le faltan todavía a cada peón para llegar a su meta.",
     wallmaze_history_names_title: "Por qué otro nombre",
-    wallmaze_history_names_p1: "El mismo principio de juego aparece en el comercio con el nombre de Quoridor, diseñado en 1997 por Mirko Marchesi y publicado por Gigamic. Quoridor es una marca registrada. PaperGames no tiene relación con Gigamic ni con ese juego y por eso usa su propio nombre, Laberinto de Muros.",
+    wallmaze_history_names_p1: "El mismo principio de juego también se vende con el nombre de Quoridor, una marca registrada de Gigamic. PaperGames no tiene relación con Gigamic ni con ese juego y por eso usa su propio nombre, Laberinto de Muros.",
     wallmaze_history_version_title: "Esta versión",
-    wallmaze_history_version_p1: "PaperGames juega con las reglas estándar en el tablero estándar de 9x9 con diez muros por jugador. Colocar un muro es un pequeño modo propio: toca \"Colocar un muro\", toca en cualquier lugar del tablero para previsualizar el muro legal más cercano a ese punto, y confirma; un objetivo deliberadamente permisivo en una pantalla táctil, en lugar de tener que acertar en un punto exacto."
+    wallmaze_history_version_p1: "PaperGames juega en un tablero de 9x9 con diez muros por jugador. Colocar un muro es un pequeño modo propio: toca \"Colocar un muro\", toca en cualquier lugar del tablero para previsualizar el muro legal más cercano a ese punto, y confirma; un objetivo deliberadamente permisivo en una pantalla táctil, en lugar de tener que acertar en un punto exacto."
 });
 I18n.markTextLoaded("es");
