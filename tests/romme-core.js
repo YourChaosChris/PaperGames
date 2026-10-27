@@ -8,6 +8,8 @@
 //     penalties count double, computer goes out that way.
 //   - Task 108: knocking - who may knock, keep or give, the knocker
 //     discards, the players in between miss their turn.
+//   - Task 154: a card taken from the table (house rule) can't be added to
+//     a meld on the table, only laid out in a new meld of three or more.
 //   - Computer games with every option (GAMES, default 200): every round
 //     ends and all 110 cards stay in play.
 //   node tests/romme-core.js [GAMES]
@@ -317,6 +319,37 @@ function knockState(extra) {
   let n = knockState({ knockRule: false });
   n = apply(n, { type: "discard", id: n.players[1].hand[0].id }, "108: discard without option");
   ok(!C.canKnock(n, 0) && !C.applyMove(n, { type: "knock", player: 0 }).ok, "108: knocking off by default");
+}
+
+// ---- Task 154: a taken card only goes into a NEW meld --------------------
+{
+  // Kirsten's case: 8♠ taken from a set of four 8s, run 9-Q♠ on the table,
+  // 7♠ in hand. Adding the 8♠ to the run is refused; 8♠ with only the 7♠
+  // is no meld; 6-7-8 is; other hand cards may still be added.
+  const eights = C.buildMeld([card(8, "S"), card(8, "H"), card(8, "D"), card(8, "C")]);
+  eights.owner = 1;
+  const spades = run(0, "S", 9, 12);
+  const seven = card(7, "S"), six = card(6, "S"), king = card(13, "H"), kingS = card(13, "S");
+  let s = playState([seven, king, kingS], [eights, spades], { takeRule: true });
+  const eight = eights.entries.find((e) => e.suit === "S").card;
+  s = apply(s, { type: "take", meld: 0, id: eight.id }, "154: take the 8♠");
+  ok(s.takenIds.length === 1 && s.takenIds[0] === eight.id && s.melds[0].entries.length === 3, "154: 8♠ taken, three 8s stay");
+  const ext = C.applyMove(s, { type: "extend", meld: 1, id: eight.id });
+  ok(!ext.ok && ext.reason === "taken-new-meld", "154: taken 8♠ not added to the run: " + ext.reason);
+  const back = C.applyMove(s, { type: "extend", meld: 0, id: eight.id });
+  ok(!back.ok && back.reason === "taken-new-meld", "154: not even back to its own set: " + back.reason);
+  const two = C.applyMove(s, { type: "meld", ids: [seven.id, eight.id] });
+  ok(!two.ok && two.reason === "not-a-meld", "154: 7♠ 8♠ alone are no meld: " + two.reason);
+  const dis = C.applyMove(s, { type: "discard", id: king.id });
+  ok(!dis.ok && dis.reason === "taken-first", "154: no discard while the 8♠ is in hand: " + dis.reason);
+  const kAdd = apply(s, { type: "extend", meld: 1, id: kingS.id }, "154: another hand card (K♠) may still be added");
+  ok(ranks(kAdd.melds[1]) === "9,10,11,12,13" && kAdd.takenIds.length === 1, "154: run 9-K♠, the 8♠ still to lay out");
+  // With the 6♠ as third card: new run 6-7-8, then discarding is allowed.
+  let t = playState([seven, six, king], [C.clone(eights), C.clone(spades)], { takeRule: true });
+  t = apply(t, { type: "take", meld: 0, id: eight.id }, "154: take the 8♠ (b)");
+  t = apply(t, { type: "meld", ids: [six.id, seven.id, eight.id] }, "154: new run 6-7-8♠");
+  ok(!t.takenIds.length && t.melds.length === 3, "154: taken card laid out, duty gone");
+  t = apply(t, { type: "discard", id: king.id }, "154: discard allowed afterwards");
 }
 
 // ---- Computer games with every option ------------------------------------
