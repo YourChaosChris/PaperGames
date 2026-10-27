@@ -570,7 +570,8 @@ all parts back into one log in list order. The last line is exactly
   missing, none shared by two cards, a portrait per mage, the file under
   300 KB; the size is printed). About 90 seconds.
 - `node tests/villains-core.js` - no server or browser needed.
-  "Fairy-Tale Villains" (rules version 2): six villains with three places
+  "Fairy-Tale Villains" (rules version 3, heroes are events from the
+  deck): six villains with three places
   each (one per sign) and plans of three or four steps, 36 spell cards,
   all names in 12 languages; 3000 computer games (level 3) for each
   number of players (2, 3, 4) with random villains - every game ends,
@@ -579,14 +580,16 @@ all parts back into one log in list order. The last line is exactly
   per number of players with one player of level 3 against level 2 and
   one of level 2 against level 1 (the higher level wins at least 5
   points over its fair share); single rules (paying, heroes, final step,
-  scheme, dropping cards, the King's Son, end of the round and shared
-  wins, old states). About 45 seconds.
+  no scheme, a hero from the deck appears at the active player's place of
+  its sign or moves on, start cards, dropping cards, end of the round and
+  shared wins, old states of rules 1 and 2). About 45 seconds.
 - `node tests/villains-ui.js` - needs the local server (BASE_URL) and
   Playwright. "Fairy-Tale Villains" at 360 x 640 in German: start against
-  the computer (level 3), collect from the market, a step, sending a hero
-  (once per turn), the computer's turn, dropping cards over 6, finishing
-  the plan (the round is played to its end, result, save cleared), save
-  and resume, an old save dropped without an error, the rules page;
+  the computer (level 3), collect from the market, a step, no button to
+  send heroes, a hero drawn from the deck appears in the own domain and
+  is logged, the computer's turn, dropping cards over 6, finishing the
+  plan (the round is played to its end, result, save cleared), save and
+  resume, old saves (rules 1 and 2) dropped without an error, the rules page;
   buttons at least 44 px, no sideways scrolling, no console errors.
 - `node tests/forestvillage-core.js` - no server or browser needed.
   "Forest Village": 50 different cards (25 buildings, 25 animals, every
