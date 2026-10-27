@@ -590,13 +590,12 @@ function logLineCd(e) {
     case "quake": return fillCd("cd_log_quake", { c: name(e.c), n: e.n });
     case "heal": return fillCd("cd_log_heal", { p: playerNameCd(e.p), n: e.n });
     case "draw": return fillCd("cd_log_draw", { p: playerNameCd(e.p), n: e.n });
-    case "insight": return fillCd("cd_log_insight", { p: playerNameCd(e.p), c: name(e.c) });
     case "bounce": return fillCd("cd_log_bounce", { t: name(e.t) });
     case "buff": return fillCd("cd_log_buff", { t: name(e.t), n: e.n, m: e.m });
     case "buffall": return fillCd("cd_log_buffall", { p: playerNameCd(e.p), n: e.n, m: e.m });
     case "summon": return fillCd("cd_log_summon", { p: playerNameCd(e.p), n: e.n, t: name(e.t) });
     case "dies": return fillCd("cd_log_dies", { c: name(e.c) });
-    case "ward": return fillCd("cd_log_ward", { c: name(e.c), t: name(e.t), n: e.n });
+    case "ward": return fillCd("cd_log_ward", { c: name(e.c), n: e.n });
     case "full": return fillCd("cd_log_full", { p: playerNameCd(e.p) });
     case "reshuffle": return fillCd("cd_log_reshuffle", { p: playerNameCd(e.p), n: e.n });
     case "win": return fillCd("cd_log_win", { p: playerNameCd(e.p) });

@@ -12,9 +12,10 @@
 //     wins at least 60 / 70 / 80 %.
 //  4. Single rules (task 149): power store (3 a turn, at most 9, starter
 //     2 in the first turn), start life 17 / 20 and 4 cards each, new
-//     creatures attack at once, Warden, Ranged, Thick Skin, the hand limit
-//     of 7 (no draw), the discard pile as new deck, no limit on creatures
-//     a side, old saves (no rules: 2) are not current.
+//     creatures attack at once, Warden (1 damage less on its mage, never
+//     strikes back), Ranged, Thick Skin, no creature with an effect on
+//     play, the hand limit of 7 (no draw), the discard pile as new deck, no
+//     limit on creatures a side, old saves (not rules: 3) are not current.
 //  5. Pictures (cardduel-art.js): every card has its own drawing, no
 //     drawing belongs to two cards, no drawing without a card, a portrait
 //     for every element; the size of the picture file (under 300 KB).
@@ -142,7 +143,7 @@ function put(s, side, id, ready) {
 (function rules() {
   // Start: 4 cards each before the first draw, life 17 / 20, 2 power.
   let s = C.createGame(["water", "fire"], 1, C.makeRng(3));
-  check(s.rules === 2 && C.isCurrentState(s), "a new game is not current (rules: 2)");
+  check(s.rules === 3 && C.isCurrentState(s), "a new game is not current (rules: 3)");
   check(s.players[1].hand.length === 5 && s.players[0].hand.length === 4, "start: 4 cards each, the starter draws 1 in the first turn");
   check(s.players[1].life === 17 && s.players[0].life === 20, "start: the starter has 17 life, the other 20");
   check(s.players[1].power === 2, "the starter's first turn should bring 2 power, got " + s.players[1].power);
@@ -152,9 +153,11 @@ function put(s, side, id, ready) {
   check(s.players[1].power === 5, "unused power should stay (2 + 3 = 5), got " + s.players[1].power);
   for (let i = 0; i < 6; i++) C.apply(s, { type: "end" });
   check(s.players[1].power === 9, "the power store should stop at 9, got " + s.players[1].power);
-  // Old saves (no rules: 2) are not current.
+  // Old saves (no rules: 3) are not current.
   const old = C.clone(s); delete old.rules;
-  check(!C.isCurrentState(old), "a save without rules: 2 counts as current");
+  check(!C.isCurrentState(old), "a save without rules counts as current");
+  const old3 = C.clone(s); old3.rules = 2;
+  check(!C.isCurrentState(old3), "a save with rules: 2 (Warden strikes first) counts as current");
   const old2 = C.clone(s); old2.players.forEach((p) => { delete p.grave; });
   check(!C.isCurrentState(old2), "a save without discard piles counts as current");
   check(!C.isCurrentState(null) && !C.isCurrentState({}), "an empty save counts as current");
@@ -165,21 +168,36 @@ function put(s, side, id, ready) {
   check(C.attackTargets(s, 0).indexOf("mage") !== -1, "a creature should attack in the turn it is played");
   C.apply(s, { type: "attack", attacker: 0, target: "mage" });
   check(C.attackTargets(s, 0).length === 0, "a creature attacked twice in one turn");
-  // Warden: the one with the highest attack strikes the attacker of its mage first.
+  // Warden (rules 3, decision 40): it never strikes or stops an attacker;
+  // while one stands, every hit on its mage does 1 damage less (not more
+  // with two wardens), from creatures and from spells.
   s = blank();
   put(s, 0, "fire_sparkimp");
-  put(s, 1, "stone_pebblewight");
   put(s, 1, "stone_granitekeeper");
+  put(s, 1, "water_mistotter");
   let life = s.players[1].life;
   C.apply(s, { type: "attack", attacker: 0, target: "mage" });
-  check(s.players[0].board.length === 0 && s.players[1].life === life, "Warden: Granite Keeper (attack 3) should defeat the Spark Imp (2 life) before it hits the mage");
-  check(s.players[0].grave.indexOf("fire_sparkimp") !== -1, "a defeated creature should go to the discard pile");
+  check(s.players[0].board.length === 1 && s.players[0].board[0].hp === 2 && s.players[1].life === life - 1, "Warden: the Spark Imp (attack 2) should hit the mage for 1 and take no damage");
+  check(s.log.some((e) => e.k === "ward" && e.n === 1), "Warden: the log should name the protection");
+  s = blank(["fire", "stone"]);
+  put(s, 1, "stone_granitekeeper");
+  s.players[0].hand = ["fire_lavaspear"];
+  life = s.players[1].life;
+  C.apply(s, { type: "play", card: 0, target: { side: 1, index: "mage" } });
+  check(s.players[1].life === life - 3, "Warden: a 4-damage spell on the mage should do 3");
   s = blank();
   put(s, 0, "stone_oregolem");
-  put(s, 1, "stone_pebblewight");
   life = s.players[1].life;
   C.apply(s, { type: "attack", attacker: 0, target: "mage" });
-  check(s.players[0].board[0].hp === 6 && s.players[1].life === life - 4, "Warden 1 against Thick Skin: no damage, the golem still hits for 4");
+  check(s.players[1].life === life - 4, "without a Warden the golem hits for its full 4");
+  // A defeated creature goes to the discard pile.
+  s = blank();
+  put(s, 0, "fire_sparkimp");
+  put(s, 1, "stone_rockram");
+  C.apply(s, { type: "attack", attacker: 0, target: 0 });
+  check(s.players[0].board.length === 0 && s.players[0].grave.indexOf("fire_sparkimp") !== -1, "a defeated creature should go to the discard pile");
+  // No creature has an effect when played (decision 40).
+  check(C.CARDS.filter((c) => c.kind === "creature").every((c) => !c.fx && c.abil.every((a) => ["ward", "ranged", "armor", "regrow"].indexOf(a) !== -1)), "a creature with an effect on play or an old ability");
   check(C.attackTargets(blank(), 0).length === 0, "an empty row has no attacks");
   s = blank();
   put(s, 0, "forest_mossbear");

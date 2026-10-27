@@ -3,7 +3,8 @@
 // life each, with ready-made decks of 20 cards, one per element (forest,
 // fire, water, stone). Dependency-free, no DOM.
 //
-// Rules (state.rules === 2, since task 149; older saves are not loaded):
+// Rules (state.rules === 3, since task 149 and decision 40; older saves
+// are not loaded):
 // - Power is a store: each turn 3 power is added (the starter gets only 2
 //   in the very first turn); power that is not used stays, up to 9.
 // - A turn: draw a card, play cards, attack with creatures, end. Cards in
@@ -19,18 +20,18 @@
 // - Evening out the start: both start with 4 cards; the starter's first
 //   turn brings 2 power instead of 3 (see START_GAIN, tests/cardduel-core.js).
 //
-// The six abilities (ABILITIES):
-//   ward   - when a creature attacks its owner's mage, the ward with the
-//            highest attack strikes the attacker first (its attack as
-//            damage); an attacker that does not survive this misses
+// The four abilities (ABILITIES):
+//   ward   - while at least one ward stands on its owner's side, every
+//            hit on that mage does 1 damage less (several wards do not add
+//            up); it never stops or strikes an attacker
 //   ranged - when it attacks a creature, that creature does not hit back
 //   armor  - takes 1 damage less from every hit
 //   regrow - gets 2 life back (up to its full life) at the end of its
 //            owner's turn
-//   insight - when played, its owner draws a card
-//   ember  - when played, 2 damage to the other mage
+// No creature has an effect when it is played; drawing cards and damage
+// to a mage come from spells only.
 // Cards: { id, el, kind: "creature" | "spell", cost, atk, hp, abil, fx }.
-// fx is the effect of a spell (or a creature on play):
+// fx is the effect of a spell:
 //   { type: "dmg", n }      n damage to a chosen creature or mage
 //   { type: "aoe", n }      n damage to every creature of the other side
 //   { type: "quake", n }    n damage to every creature
@@ -46,7 +47,7 @@
 // A target: { side: 0 | 1, index: board index | "mage" }.
 
 const CardDuelCore = (function () {
-  const RULES = 2;
+  const RULES = 3;
   const START_LIFE = 20;
   const POWER_GAIN = 3;
   const START_GAIN = 2;
@@ -56,9 +57,9 @@ const CardDuelCore = (function () {
   const START_HAND = 4;
   const DECK_SIZE = 20;
   const REGROW = 2;
-  const EMBER = 2;
+  const WARD_GUARD = 1;
   const ELEMENTS = ["forest", "fire", "water", "stone"];
-  const ABILITIES = ["ward", "ranged", "armor", "regrow", "insight", "ember"];
+  const ABILITIES = ["ward", "ranged", "armor", "regrow"];
 
   // The last argument is the number of copies in the deck (1 to 3).
   const C = (id, el, cost, atk, hp, abil, fx, count) => ({ id, el, kind: "creature", cost, atk, hp, abil: abil || [], fx: fx || null, count });
@@ -66,7 +67,7 @@ const CardDuelCore = (function () {
 
   const CARDS = [
     // Forest: many small creatures that grow back.
-    C("forest_mosskin", "forest", 1, 1, 2, [], null, 3),
+    C("forest_mosskin", "forest", 1, 1, 3, [], null, 3),
     C("forest_shroomrunner", "forest", 1, 1, 1, ["ranged"], null, 3),
     C("forest_barkbeetle", "forest", 2, 2, 4, ["regrow"], null, 2),
     C("forest_foxspirit", "forest", 2, 2, 2, [], null, 2),
@@ -74,32 +75,32 @@ const CardDuelCore = (function () {
     S("forest_growth", "forest", 1, { type: "buff", n: 2, m: 2 }, 2),
     C("forest_mossbear", "forest", 4, 3, 5, ["regrow"], null, 2),
     S("forest_choir", "forest", 4, { type: "buffall", n: 1, m: 1 }, 1),
-    C("forest_stardeer", "forest", 5, 3, 4, [], { type: "buffall", n: 1, m: 1 }, 2),
+    C("forest_stardeer", "forest", 5, 4, 6, ["regrow"], null, 2),
     C("forest_oldlinden", "forest", 7, 5, 7, ["ward", "regrow"], null, 1),
     // Fire: direct damage.
     C("fire_sparkimp", "fire", 1, 2, 2, [], null, 3),
-    C("fire_embersalamander", "fire", 2, 2, 2, ["ember"], null, 2),
+    C("fire_embersalamander", "fire", 2, 3, 2, [], null, 2),
     S("fire_sparkflight", "fire", 1, { type: "dmg", n: 2 }, 3),
     C("fire_ashwolf", "fire", 3, 3, 3, ["ranged"], null, 2),
     S("fire_emberwave", "fire", 3, { type: "aoe", n: 1 }, 2),
     S("fire_lavaspear", "fire", 3, { type: "dmg", n: 4 }, 2),
-    C("fire_flamedancer", "fire", 3, 3, 3, ["ember"], null, 2),
+    C("fire_flamedancer", "fire", 3, 3, 4, [], null, 2),
     C("fire_flamesteed", "fire", 4, 3, 3, ["ranged"], null, 2),
     S("fire_starblaze", "fire", 4, { type: "dmg", n: 5 }, 1),
-    C("fire_magmadrake", "fire", 6, 6, 6, ["ember"], null, 1),
+    C("fire_magmadrake", "fire", 6, 7, 6, [], null, 1),
     // Water: drawing cards and sending creatures back.
-    C("water_dropsprite", "water", 2, 2, 3, ["insight"], null, 3),
+    C("water_dropsprite", "water", 2, 2, 3, [], null, 3),
     S("water_whirlpool", "water", 2, { type: "bounce", max: 4 }, 1),
     C("water_mistotter", "water", 2, 2, 5, ["ward"], null, 2),
-    S("water_tidesight", "water", 3, { type: "draw", n: 2 }, 2),
-    C("water_shellsentry", "water", 3, 2, 5, ["ward"], null, 2),
-    C("water_waverider", "water", 4, 4, 4, ["insight"], null, 2),
-    S("water_springwater", "water", 2, { type: "heal", n: 7 }, 3),
-    C("water_frostnixie", "water", 4, 4, 5, [], null, 2),
+    S("water_tidesight", "water", 2, { type: "draw", n: 2 }, 3),
+    C("water_shellsentry", "water", 3, 2, 5, ["armor"], null, 2),
+    C("water_waverider", "water", 4, 4, 4, [], null, 2),
+    S("water_springwater", "water", 2, { type: "heal", n: 5 }, 2),
+    C("water_frostnixie", "water", 4, 4, 5, ["armor"], null, 2),
     S("water_floodsurge", "water", 3, { type: "aoe", n: 2 }, 2),
-    C("water_tidesquid", "water", 6, 6, 7, ["insight"], null, 1),
+    C("water_tidesquid", "water", 6, 6, 7, [], null, 1),
     // Stone: few strong defenders.
-    C("stone_pebblewight", "stone", 1, 1, 2, ["ward"], null, 3),
+    C("stone_pebblewight", "stone", 1, 1, 3, [], null, 3),
     C("stone_granitekeeper", "stone", 3, 3, 5, ["ward"], null, 2),
     C("stone_rockram", "stone", 3, 3, 4, [], null, 3),
     S("stone_rockhide", "stone", 2, { type: "buffall", n: 0, m: 2 }, 2),
@@ -244,14 +245,20 @@ const CardDuelCore = (function () {
     });
   }
 
-  // The ward of `side` that strikes an attacker of its mage: the one with
-  // the highest attack (the first of them in the row), or -1.
+  // The ward of `side` that protects its mage (the first one in the row),
+  // or -1.
   function wardOf(s, side) {
-    let best = -1;
-    s.players[side].board.forEach((m, i) => {
-      if (has(m, "ward") && m.hp > 0 && m.atk > 0 && (best === -1 || m.atk > s.players[side].board[best].atk)) best = i;
-    });
-    return best;
+    return s.players[side].board.findIndex((m) => has(m, "ward") && m.hp > 0);
+  }
+
+  // n damage to the mage of `side`: 1 less while a ward stands there.
+  // Returns the damage done.
+  function hurtMage(s, side, n) {
+    const w = wardOf(s, side);
+    const d = Math.max(0, n - (w !== -1 ? WARD_GUARD : 0));
+    s.players[side].life -= d;
+    if (w !== -1 && n > d) log(s, { k: "ward", p: side, c: s.players[side].board[w].id, n: n - d });
+    return d;
   }
 
   // What kind of target a card needs: null, "any" (creature or mage),
@@ -332,8 +339,8 @@ const CardDuelCore = (function () {
 
   function damageTarget(s, t, n, src) {
     if (t.index === "mage") {
-      s.players[t.side].life -= n;
-      log(s, { k: "hitmage", p: s.current, c: src, side: t.side, n });
+      const d = hurtMage(s, t.side, n);
+      log(s, { k: "hitmage", p: s.current, c: src, side: t.side, n: d });
     } else {
       const m = s.players[t.side].board[t.index];
       const d = hurt(s, t.side, m, n);
@@ -407,11 +414,7 @@ const CardDuelCore = (function () {
       pl.power -= c.cost;
       log(s, { k: "play", p: me, c: id });
       if (c.kind === "creature") {
-        const m = makeCreature(s, id);
-        pl.board.push(m);
-        if (c.fx) runEffect(s, id, c.fx, act.target);
-        if (has(m, "insight")) { draw(s, me); log(s, { k: "insight", p: me, c: id }); }
-        if (has(m, "ember")) { s.players[op].life -= EMBER; log(s, { k: "hitmage", p: me, c: id, side: op, n: EMBER }); }
+        pl.board.push(makeCreature(s, id));
       } else {
         runEffect(s, id, c.fx, act.target);
         pl.grave.push(id);
@@ -422,16 +425,8 @@ const CardDuelCore = (function () {
       const m = pl.board[act.attacker];
       m.ready = false;
       if (act.target === "mage") {
-        const w = wardOf(s, op);
-        if (w !== -1) {
-          const ward = s.players[op].board[w];
-          const d = hurt(s, me, m, ward.atk);
-          log(s, { k: "ward", p: op, c: ward.id, t: m.id, n: d });
-        }
-        if (m.hp > 0) {
-          s.players[op].life -= m.atk;
-          log(s, { k: "attackmage", p: me, c: m.id, n: m.atk });
-        }
+        const d = hurtMage(s, op, m.atk);
+        log(s, { k: "attackmage", p: me, c: m.id, n: d });
       } else {
         const t = s.players[op].board[act.target];
         const d1 = hurt(s, op, t, m.atk);
@@ -453,7 +448,7 @@ const CardDuelCore = (function () {
 
   function creatureValue(m) {
     let v = m.atk * 1.0 + m.hp * 0.8;
-    if (has(m, "ward")) v += 1 + m.atk * 0.5;
+    if (has(m, "ward")) v += 1.5;
     if (has(m, "ranged")) v += 1;
     if (has(m, "armor")) v += 1.5;
     if (has(m, "regrow")) v += 1 + (m.max - m.hp) * 0.3;
@@ -473,7 +468,8 @@ const CardDuelCore = (function () {
     // Stored power is worth a little (it stays for the next turn).
     v += (me.power - op.power) * 0.15;
     // Damage the other side can do next turn against my life.
-    const threat = op.board.reduce((a, m) => a + m.atk, 0);
+    const guard = me.board.some((m) => has(m, "ward")) ? WARD_GUARD : 0;
+    const threat = op.board.reduce((a, m) => a + Math.max(0, m.atk - guard), 0);
     if (threat >= me.life) v -= 30;
     return v;
   }
@@ -539,7 +535,7 @@ const CardDuelCore = (function () {
   }
 
   return {
-    RULES, START_LIFE, POWER_GAIN, START_GAIN, MAX_STORE, MAX_HAND, START_HAND, DECK_SIZE, ELEMENTS, ABILITIES, CARDS, TOKENS,
+    RULES, START_LIFE, POWER_GAIN, START_GAIN, MAX_STORE, MAX_HAND, START_HAND, DECK_SIZE, WARD_GUARD, ELEMENTS, ABILITIES, CARDS, TOKENS,
     card, deckList, makeRng, createGame, isCurrentState, legalActions, isLegal, apply, canPlay, targetKind, validTargets, attackTargets,
     wardOf, evaluate, chooseAction, clone
   };
