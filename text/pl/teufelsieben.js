@@ -16,7 +16,7 @@ Object.assign(STRINGS.pl, {
     ts_term_extreme: "Dziki ciąg",
     ts_rules_extreme: "Przed grą możesz wybrać karty „Dziki ciąg”: dochodzi 12 kart, razem 72 – liczby 11, 12, 13 i 14 (po 2 karty), Ogniwo (2 karty, +2 punkty za każdą liczbę najdłuższego ciągu z co najmniej 2 liczb, przy dwóch Ogniwach +4) i Lustro (2 karty: twoja ostatnia liczba n staje się 15 − n, czyli zamieniają się 1 i 14, 2 i 13 … 7 i 8; jeśli masz już tę liczbę albo nie masz jeszcze żadnej, nic się nie dzieje). Ciągi sięgają do 14. Gra toczy się do 250 lub 500 punktów.",
     ts_term_special: "Karty specjalne",
-    ts_rules_special: "Odwaga raz ratuje i kosztuje 5 punktów po użyciu. Skreślenie usuwa ostatnią liczbę. Przekazanie sprawia, że następny gracz zaczyna od odkrytej karty. Most uzupełnia lukę. Kolekcjoner daje 1 punkt za liczbę. Podgląd pokazuje następną kartę.",
+    ts_rules_special: "Odwaga raz ratuje i kosztuje 5 punktów po użyciu. Skreślenie usuwa ostatnią liczbę. Przekazanie: następny gracz, który w tej rundzie jeszcze ma turę, musi ją zacząć od już odkrytej karty – przez nią może też odpaść; jeśli nikt już nie gra, karta nic nie robi. Most: zostaje u ciebie przez rundę i zastępuje jedną brakującą liczbę w ciągu, więc 4 5 _ 7 liczy się jak cztery po kolei. Kolekcjoner daje 1 punkt za liczbę. Podgląd pokazuje następną kartę.",
     ts_term_points: "Punkty i koniec",
     ts_rules_points: "Punkty rundy to suma liczb, premia za ciąg i 1 punkt za każdą liczbę za każdego Kolekcjonera, minus 5 za używaną Odwagę (minimum zero). Cel: 60, 90 lub 120; domyślnie 90. Po rundzie, w której ktoś osiągnie cel, wygrywa najwyższy wynik; remis oznacza wspólną wygraną.",
     ts_term_computer: "Komputer",

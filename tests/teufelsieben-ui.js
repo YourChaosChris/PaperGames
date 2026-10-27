@@ -88,6 +88,22 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   await page.reload({ waitUntil: "load" }); await page.waitForTimeout(500);
   check("extreme game saved and loaded", await page.evaluate(() => !!AppStateTS.state && AppStateTS.state.mode === "extreme" && AppStateTS.state.hands[0].mirrored.length === 1 && AppStateTS.state.hands[0].numbers.join() === "12,13,14"));
   check("no sideways scroll in extreme", await page.evaluate(() => document.documentElement.scrollWidth - innerWidth <= 0));
+  // Task 158: Pass and Bridge explain themselves after they are played.
+  await page.evaluate(() => {
+    const s = TeufelSiebenCore.newGame({ players: 2, computer: [false, false] });
+    s.deck = ["pass", 3, 4, 6, "bridge", 9].concat(s.deck.filter((c) => ["pass", "bridge"].indexOf(c) === -1 && [3, 4, 6, 9].indexOf(c) === -1));
+    AppStateTS.state = s; renderTS();
+  });
+  await page.tap("#ts-draw");
+  const passText = await page.evaluate(() => document.getElementById("ts-last-text").textContent);
+  check("pass names who must start with a card: " + passText, /Weitergabe/.test(passText) && /2/.test(passText) && /aufgedeckten Karte/.test(passText));
+  for (let k = 0; k < 4; k++) await page.tap("#ts-draw");
+  const bridgeText = await page.evaluate(() => document.getElementById("ts-last-text").textContent);
+  check("bridge says it closes the run: " + bridgeText, /Brücke/.test(bridgeText) && /4 Zahlen in Folge/.test(bridgeText));
+  check("bridge in the row explains itself", await page.evaluate(() => { const c = document.querySelector("#ts-rows .ts-card-special[title]"); return !!c && /fehlende Zahl/.test(c.getAttribute("title")) && c.getBoundingClientRect().right <= innerWidth; }));
+  await page.tap("#ts-stop");
+  const forcedText = await page.evaluate(() => document.getElementById("ts-last-text").textContent);
+  check("forced card says why: " + forcedText, /^Wegen der Weitergabe:/.test(forcedText) && /9/.test(forcedText));
   // Set from another page: the game page saves its own state when it is left.
   const legacyState = await page.evaluate(() => { const x = TeufelSiebenCore.newGame({ players: 2 }); delete x.rules; return JSON.stringify({ state: x }); });
   await page.goto(BASE + "about.html", { waitUntil: "load" });

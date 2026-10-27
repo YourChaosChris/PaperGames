@@ -16,7 +16,7 @@ Object.assign(STRINGS.nl, {
     ts_term_extreme: "Wilde reeks",
     ts_rules_extreme: "Voor het spel kun je de kaarten ‘Wilde reeks’ kiezen: er komen 12 kaarten bij, 72 in totaal – de getallen 11, 12, 13 en 14 (elk 2 kaarten), Schakel (2 kaarten, +2 punten voor elk getal van je langste reeks van 2 of meer, met twee Schakels +4) en Spiegel (2 kaarten: je laatste getal n wordt 15 − n, dus 1 en 14, 2 en 13 … 7 en 8 wisselen; heb je dat getal al, of nog geen getal, dan gebeurt er niets). Reeksen gaan dan tot 14. Er wordt gespeeld tot 250 of 500 punten.",
     ts_term_special: "Speciale kaarten",
-    ts_rules_special: "Moed redt één keer en kost 5 punten bij gebruik. Wissen verwijdert je laatste getal. Doorgifte laat de volgende speler met een open kaart beginnen. Brug vult een gat. Verzamelaar geeft 1 punt per getalkaart. Kijkje toont de volgende kaart.",
+    ts_rules_special: "Moed redt één keer en kost 5 punten bij gebruik. Wissen verwijdert je laatste getal. Doorgifte: de volgende speler die deze ronde nog aan de beurt komt, begint met een kaart die al is omgedraaid – daarmee kan hij ook kapotgaan; komt niemand meer, dan doet ze niets. Brug: blijft de hele ronde bij je en vervangt één ontbrekend getal in je reeks, zo telt 4 5 _ 7 als vier op rij. Verzamelaar geeft 1 punt per getalkaart. Kijkje toont de volgende kaart.",
     ts_term_points: "Punten en einde",
     ts_rules_points: "Rondepunten zijn de som van je getallen, plus reeksbonus en 1 per getal voor elke Verzamelaar, min 5 per gebruikte Moed (nooit onder nul). Doel: 60, 90 of 120; standaard 90. Na de ronde waarin iemand het doel bereikt, wint de hoogste score; gelijke scores delen de winst.",
     ts_term_computer: "De computer",

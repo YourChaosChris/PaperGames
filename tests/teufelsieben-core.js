@@ -52,6 +52,13 @@ function advanceByStop(s) { return s.hands[s.current].drawn ? C.stop(s) : s; }
   check("passes add and bust ends that forced turn", multi.hands[1].status === "bust" && multi.current === 2 && multi.hands[2].drawn === 0 && multi.forced === 0);
   let last = fixed(2, [1, "pass", 2]); last.hands[1].status = "stop"; last.turnsLeft = [0]; last = C.draw(last);
   check("pass has no effect when nobody follows", last.forced === 0);
+  // Task 158: the page can name who must start with a card, and mark that card.
+  let named = fixed(3, ["pass", 3, 4, 5]); named = C.draw(named);
+  check("pass names the next player", named.last.type === "pass" && named.last.next === 1);
+  named = C.stop(named);
+  check("the forced card is marked", named.last.type === "number" && named.last.card === 3 && named.last.player === 1 && named.last.forced === true);
+  const alone = C.draw(last);
+  check("pass without anybody after names nobody", alone.last.type === "pass" && alone.last.next === null && alone.forced === 0);
 }
 {
   const h = { numbers: [3, 4, 6, 7], bridges: 1, collectors: 0, courageUsed: 0, status: "in" };

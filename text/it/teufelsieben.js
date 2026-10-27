@@ -16,7 +16,7 @@ Object.assign(STRINGS.it, {
     ts_term_extreme: "Catena selvaggia",
     ts_rules_extreme: "Prima della partita puoi scegliere le carte «Catena selvaggia»: si aggiungono 12 carte, 72 in tutto – i numeri 11, 12, 13 e 14 (2 carte ciascuno), Anello (2 carte, +2 punti per ogni numero della tua fila più lunga di almeno 2, con due Anelli +4) e Specchio (2 carte: il tuo ultimo numero n diventa 15 − n, quindi si scambiano 1 e 14, 2 e 13 … 7 e 8; se hai già quel numero, o non hai ancora numeri, non succede nulla). Le file arrivano fino a 14. Si gioca fino a 250 o 500 punti.",
     ts_term_special: "Carte speciali",
-    ts_rules_special: "Coraggio salva una volta e costa 5 punti quando usato. Rimuovi toglie l’ultimo numero. Passa fa iniziare il giocatore successivo con una carta scoperta. Ponte copre un vuoto. Collezionista dà 1 punto per numero. Sbircia mostra la carta successiva.",
+    ts_rules_special: "Coraggio salva una volta e costa 5 punti quando usato. Rimuovi toglie l’ultimo numero. Passa: il prossimo giocatore che deve ancora giocare in questo round inizia il turno con una carta già scoperta, che può anche farlo sballare; se non resta nessuno, non ha effetto. Ponte: resta con te per il round e sostituisce un numero mancante della tua fila, così 4 5 _ 7 conta come quattro in sequenza. Collezionista dà 1 punto per numero. Sbircia mostra la carta successiva.",
     ts_term_points: "Punti e fine",
     ts_rules_points: "I punti del round sono la somma dei numeri, più bonus sequenza e 1 per numero per ogni Collezionista, meno 5 per Coraggio usato (mai sotto zero). Obiettivo: 60, 90 o 120; predefinito 90. Dopo il round in cui qualcuno raggiunge l’obiettivo, vince il punteggio maggiore; pari merito vincono insieme.",
     ts_term_computer: "Il computer",

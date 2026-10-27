@@ -159,7 +159,7 @@ const TeufelSiebenCore = (() => {
     } else if (card === "pass") {
       const next = s.turnsLeft.slice(1).find((i) => s.hands[i].status === "wait");
       if (next !== undefined) s.forced += 1;
-      s.discard.push(card); note(s, "pass", p, card, { forced: s.forced });
+      s.discard.push(card); note(s, "pass", p, card, { forced: s.forced, next: next === undefined ? null : next });
     } else if (card === "bridge") { h.bridges += 1; note(s, "bridge", p, card); }
     else if (card === "collector") { h.collectors += 1; note(s, "collector", p, card); }
     else if (card === "peek") {
@@ -200,9 +200,12 @@ const TeufelSiebenCore = (() => {
     s.current = s.turnsLeft[0]; const h = s.hands[s.current]; h.status = "in"; s.peek = null;
     let forcedNow = s.forced;
     s.forced = 0;
+    // A card turned up because of a Pass is marked, so the page can say why.
     while (forcedNow > 0 && h.status === "in") {
       forcedNow -= 1;
-      if (!resolveDraw(s, s.current, rng)) break;
+      const alive = resolveDraw(s, s.current, rng);
+      if (s.last) s.last.forced = true;
+      if (!alive) break;
     }
     if (h.status !== "in") { s.turnsLeft.shift(); return activateNext(s, rng); }
     return s;

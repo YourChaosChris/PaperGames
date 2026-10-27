@@ -16,7 +16,7 @@ Object.assign(STRINGS.es, {
     ts_term_extreme: "Cadena salvaje",
     ts_rules_extreme: "Antes de jugar puedes elegir las cartas «Cadena salvaje»: se añaden 12 cartas, 72 en total – los números 11, 12, 13 y 14 (2 cartas de cada uno), Eslabón (2 cartas, +2 puntos por cada número de tu serie más larga de 2 o más, con dos Eslabones +4) y Espejo (2 cartas: tu último número n pasa a ser 15 − n, así se intercambian 1 y 14, 2 y 13 … 7 y 8; si ya tienes ese número, o aún no tienes ninguno, no pasa nada). Las series llegan hasta 14. Se juega hasta 250 o 500 puntos.",
     ts_term_special: "Cartas especiales",
-    ts_rules_special: "Valor te salva una vez y cuesta 5 puntos al usarlo. Tachar quita tu último número. Pasar hace que el siguiente jugador empiece con una carta descubierta. Puente cubre un hueco. Coleccionista da 1 punto por número. Mirar muestra la siguiente carta.",
+    ts_rules_special: "Valor te salva una vez y cuesta 5 puntos al usarlo. Tachar quita tu último número. Pasar: el siguiente jugador que aún tiene turno en esta ronda debe empezarlo con una carta ya descubierta, que también puede hacerle pasarse; si no queda nadie, no tiene efecto. Puente: se queda contigo la ronda y sustituye un número que falta en tu serie, así 4 5 _ 7 cuenta como cuatro seguidos. Coleccionista da 1 punto por número. Mirar muestra la siguiente carta.",
     ts_term_points: "Puntos y final",
     ts_rules_points: "Los puntos de la ronda son la suma de números, más el bonus de secuencia y 1 por número por cada Coleccionista, menos 5 por Valor usado (mínimo cero). Meta: 60, 90 o 120; por defecto 90. Tras la ronda en que alguien llega a la meta, gana la puntuación más alta; los empates ganan juntos.",
     ts_term_computer: "El ordenador",

@@ -87,10 +87,13 @@ const TS_SIGNS = {
   link: '<rect x="3" y="14" width="20" height="12" rx="6" fill="none" stroke="#141413" stroke-width="3"/><rect x="17" y="14" width="20" height="12" rx="6" fill="none" stroke="#141413" stroke-width="3"/>',
   mirror: '<path d="M20 3V37" stroke="#141413" stroke-width="2.5" stroke-dasharray="4 3"/><path d="M16 9L4 20L16 31Z" fill="#141413"/><path d="M24 9L36 20L24 31Z" fill="none" stroke="#141413" stroke-width="2.5" stroke-linejoin="round"/>'
 };
-function cardHtmlTS(card, size, extraClass) {
+// `explain` (optional): a sentence on what the card does, read out and
+// shown as a tooltip (task 158).
+function cardHtmlTS(card, size, extraClass, explain) {
   const cls = "ts-card" + (size ? " ts-card-" + size : "") + (TeufelSiebenCore.isNumber(card) ? "" : " ts-card-special") + (extraClass ? " " + extraClass : "");
   if (TeufelSiebenCore.isNumber(card)) return '<span class="' + cls + '" role="img" aria-label="' + card + '"><span class="ts-num">' + card + "</span></span>";
-  return '<span class="' + cls + '" role="img" aria-label="' + cardNameTS(card) + '"><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">' + TS_SIGNS[card] + '</svg><span class="ts-card-name">' + cardNameTS(card) + "</span></span>";
+  const label = explain || cardNameTS(card);
+  return '<span class="' + cls + '" role="img" aria-label="' + label + '"' + (explain ? ' title="' + explain + '"' : "") + '><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">' + TS_SIGNS[card] + '</svg><span class="ts-card-name">' + cardNameTS(card) + "</span></span>";
 }
 function lastTextTS() {
   const s = AppStateTS.state, l = s.last; if (!l) return "";
@@ -100,7 +103,19 @@ function lastTextTS() {
   if (l.type === "stop") v.n = l.points;
   if (l.type === "mirror") { v.n = l.from; v.m = l.to; }
   if (l.type === "peek") v.card = l.shown === null ? I18n.t("ts_card_empty") : cardNameTS(l.shown);
-  return tTS(key, v);
+  // Task 158: Pass names who must start with a card; Bridge says what it does now.
+  let k = key;
+  if (l.type === "pass") {
+    const next = l.next !== undefined ? l.next : s.turnsLeft.slice(1).find((i) => s.hands[i].status === "wait");
+    if (next === null || next === undefined) k = "ts_last_pass_none"; else v.next = nameTS(next);
+  }
+  if (l.type === "bridge" && s.hands[l.player]) {
+    const h = s.hands[l.player], max = s.mode === "extreme" ? TeufelSiebenCore.MAX_NUMBER : undefined;
+    const now = TeufelSiebenCore.runLength(h.numbers, h.bridges, max), before = TeufelSiebenCore.runLength(h.numbers, h.bridges - 1, max);
+    if (now > before && now >= TeufelSiebenCore.RUN_MIN) { k = "ts_last_bridge_run"; v.n = now; }
+  }
+  const text = tTS(k, v);
+  return l.forced === true ? I18n.t("ts_forced_prefix") + " " + text : text;
 }
 function statusTS() {
   const s = AppStateTS.state;
@@ -120,7 +135,7 @@ function renderPlayersTS() {
     const pts = showRound && s.roundPoints ? s.roundPoints[i] : TeufelSiebenCore.handPoints(h), status = tTS("ts_status_" + h.status);
     let cards = h.numbers.map((c, k) => cardHtmlTS(c, "small", h.status === "bust" && k === h.numbers.length - 1 ? "ts-card-bust" : "")).join("");
     if (h.courage) cards += cardHtmlTS("courage", "small");
-    for (let k = 0; k < h.bridges; k++) cards += cardHtmlTS("bridge", "small");
+    for (let k = 0; k < h.bridges; k++) cards += cardHtmlTS("bridge", "small", "", I18n.t("ts_bridge_title"));
     for (let k = 0; k < h.collectors; k++) cards += cardHtmlTS("collector", "small");
     for (let k = 0; k < (h.links || 0); k++) cards += cardHtmlTS("link", "small");
     const run = TeufelSiebenCore.runLength(h.numbers, h.bridges, s.mode === "extreme" ? TeufelSiebenCore.MAX_NUMBER : undefined);
