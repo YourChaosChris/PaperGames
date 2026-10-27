@@ -148,6 +148,92 @@ for (const n of [2, 3, 4, 5, 6]) {
     check("seat balance n=" + n + " seat=" + i, Math.abs(rate - 100 / n) <= tolerance);
   }
 }
+// Extreme mode coverage is appended so the original normal-mode checks and
+// their measurement output remain byte-for-byte in place.
+{
+  const deck = C.deckOf("extreme");
+  check("extreme deck has 78 cards", deck.length === 78);
+  for (const [v, n] of Object.entries(C.EXTREME_COUNTS)) check("extreme number " + v + " count", deck.filter((x) => x === Number(v)).length === n);
+  for (const [v, n] of C.EXTREME_SPECIALS) check("extreme special " + v + " count", deck.filter((x) => x === v).length === n);
+  check("extreme extras add up", Object.values(C.EXTREME_COUNTS).reduce((a, b) => a + b, 0) === 11 && C.EXTREME_SPECIALS.reduce((a, x) => a + x[1], 0) === 7);
+}
+function extremeFixed(players, deck) {
+  const s = clone(C.newGame({ players, mode: "extreme" }, C.makeRng(1)));
+  s.deck = deck.slice(); s.discard = []; s.hands = Array.from({ length: players }, () => ({ numbers: [], courage: false, courageUsed: 0, bridges: 0, collectors: 0, stars: 0, weights: 0, links: 0, status: "wait", drawn: 0 }));
+  s.phase = "turn"; s.roundPoints = null; s.turnsLeft = Array.from({ length: players }, (_, i) => i); s.current = 0; s.hands[0].status = "in";
+  return s;
+}
+{
+  check("star scores seven", C.handPoints({ numbers: [], bridges: 0, collectors: 0, status: "stop", courageUsed: 0, stars: 1 }) === 7);
+  check("weight subtracts seven", C.handPoints({ numbers: [10], bridges: 0, collectors: 0, status: "stop", courageUsed: 0, weights: 1 }) === 3);
+  check("weight score cannot go below zero", C.handPoints({ numbers: [], bridges: 0, collectors: 0, status: "stop", courageUsed: 0, weights: 3 }) === 0);
+  let link = extremeFixed(2, [3, 4, 5, 6, "link", 1]);
+  for (let i = 0; i < 5; i++) link = C.draw(link);
+  check("link doubles only run bonus", C.handPoints(link.hands[0]) === 38);
+  let storm = extremeFixed(4, ["storm", 2, 3, 4, 5, 6, 7]); storm = C.draw(storm);
+  check("storm queues one card per later player", storm.forcedFor[1] === 1 && storm.forcedFor[2] === 1 && storm.forcedFor[3] === 1 && storm.discard.includes("storm"));
+  storm = C.stop(storm);
+  check("storm forces following players at turn start", storm.hands[1].drawn === 1 && storm.hands[1].numbers[0] === 2 && storm.current === 1);
+  let last = extremeFixed(2, ["storm", 8]); last.turnsLeft = [0]; last = C.draw(last);
+  check("storm has no effect for last player", Object.keys(last.forcedFor).length === 0);
+  check("run reaches fifteen", C.isNumber(15) && C.runLength([11, 12, 13, 14, 15], 0) === 5);
+  check("extreme points are integers", Number.isInteger(C.handPoints({ numbers: [11, 12, 13, 14, 15], bridges: 0, collectors: 0, courageUsed: 0, status: "stop", links: 1, stars: 1, weights: 1 })));
+}
+{
+  check("extreme target defaults to 250", C.newGame({ players: 2, mode: "extreme", target: 90 }).target === 250);
+  check("extreme target 500 is allowed", C.newGame({ players: 2, mode: "extreme", target: 500 }).target === 500);
+  check("normal target 250 falls back to 90", C.newGame({ players: 2, target: 250 }).target === 90);
+  const old = clone(C.newGame({ players: 2 }, C.makeRng(3))); delete old.mode;
+  old.hands.forEach((h) => { delete h.stars; delete h.weights; delete h.links; delete h.doubles; delete h.halves; });
+  check("old state without mode and new hand fields remains valid", C.isCurrentState(old));
+  check("old state without mode uses normal unseen deck", C.unseen(old)[11] === undefined && C.unseen(old).star === undefined);
+  check("unknown mode normalizes to normal", C.newGame({ players: 2, mode: "x" }).mode === "normal");
+}
+function extremeCardsTotal(s) {
+  let n = s.deck.length + s.discard.length;
+  s.hands.forEach((h) => { n += h.numbers.length + (h.courage ? 1 : 0) + h.bridges + h.collectors + (h.stars || 0) + (h.weights || 0) + (h.links || 0) + (h.doubles || 0) + (h.halves || 0); });
+  return n;
+}
+function extremePlay(n, levels, target, seed, variant) {
+  const rng = C.makeRng(seed), opts = { players: n, mode: "extreme", computer: Array(n).fill(true), levels, target };
+  if (variant) opts.measureVariant = variant;
+  let s = C.newGame(opts, rng), steps = 0;
+  while (s.phase !== "over" && steps++ < 6000) {
+    const before = s; s = s.phase === "roundover" ? C.nextRound(s, rng) : C.aiStep(s, rng);
+    if (s === before) return { s, problem: "stuck" };
+    if (extremeCardsTotal(s) !== (variant ? 80 : 78)) return { s, problem: "cards " + extremeCardsTotal(s) };
+  }
+  return { s, problem: s.phase === "over" ? "" : "hang" };
+}
+const extremeLevelStats = { 1: { games: 0, wins: 0, points: 0, rounds: 0 }, 2: { games: 0, wins: 0, points: 0, rounds: 0 }, 3: { games: 0, wins: 0, points: 0, rounds: 0 } };
+for (const n of [2, 3, 4, 5, 6]) for (let g = 0; g < GAMES; g++) {
+  const lv = Array.from({ length: n }, (_, i) => 1 + ((i + g) % 3)), r = extremePlay(n, lv, 250, 2100000 + n * 100000 + g);
+  if (r.problem) { fails.push("extreme " + n + " players game " + g + ": " + r.problem); continue; }
+  for (let i = 0; i < n; i++) { const x = extremeLevelStats[lv[i]]; x.games++; x.points += r.s.totals[i]; x.rounds += r.s.round; if (r.s.winners.includes(i)) x.wins++; }
+}
+const extremeRates = [1, 2, 3].map((l) => 100 * extremeLevelStats[l].wins / Math.max(1, extremeLevelStats[l].games));
+console.log("extreme wins per level (solo wins / player games): " + [1, 2, 3].map((l) => "level " + l + " " + extremeRates[l - 1].toFixed(1) + "%").join(", "));
+const extremeSeats = {};
+for (const n of [2, 3, 4, 5, 6]) {
+  extremeSeats[n] = Array.from({ length: n }, () => ({ games: 0, wins: 0 }));
+  for (let g = 0; g < GAMES; g++) {
+    const r = extremePlay(n, Array(n).fill(3), 250, 3100000 + n * 100000 + g);
+    if (r.problem) { fails.push("extreme seat " + n + " players game " + g + ": " + r.problem); continue; }
+    for (let i = 0; i < n; i++) { extremeSeats[n][i].games++; if (r.s.winners.includes(i)) extremeSeats[n][i].wins++; }
+  }
+}
+const extremeSeatLines = [2, 3, 4, 5, 6].map((n) => n + "p " + extremeSeats[n].map((x, i) => "seat " + i + " " + (100 * x.wins / Math.max(1, x.games)).toFixed(1) + "%").join(" / "));
+console.log("extreme wins per seat (level 3): " + extremeSeatLines.join("; "));
+const extremeRoundLines = [];
+for (const target of [250, 500]) for (const n of [2, 3, 4, 5, 6]) {
+  let sum = 0;
+  for (let g = 0; g < GAMES; g++) { const lv = Array.from({ length: n }, (_, i) => 1 + ((i + g) % 3)), r = extremePlay(n, lv, target, 4100000 + target * 100 + n * 100000 + g); if (!r.problem) sum += r.s.round; else fails.push("extreme target " + target + " " + n + "p game " + g + ": " + r.problem); }
+  extremeRoundLines.push(target + " target " + n + "p " + (sum / GAMES).toFixed(1));
+}
+console.log("extreme rounds per game: " + extremeRoundLines.join(", "));
+console.log("extreme mean round points per level: " + [1, 2, 3].map((l) => "level " + l + " " + (extremeLevelStats[l].points / Math.max(1, extremeLevelStats[l].rounds)).toFixed(1)).join(", "));
+check("extreme level 3 wins more than level 1", extremeRates[2] > extremeRates[0]);
+for (const n of [2, 3, 4, 5, 6]) for (let i = 0; i < n; i++) check("extreme seat balance n=" + n + " seat=" + i, Math.abs(100 * extremeSeats[n][i].wins / Math.max(1, extremeSeats[n][i].games) - 100 / n) <= 5);
 fails.slice(0, 30).forEach((f) => console.log("FAIL " + f));
 console.log("=== DEVILISH SEVEN CORE: " + fails.length + " failure(s) ===");
 process.exit(fails.length ? 1 : 0);
