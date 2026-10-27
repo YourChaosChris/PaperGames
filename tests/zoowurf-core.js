@@ -1,249 +1,172 @@
-// zoowurf-core.js test
-// "Zoo Toss": fixed rolls check every rule (dice that fit go onto the card,
-// the paw counts for the animal needed most, three rolls make a turn, the
-// rest of the card goes on to the next player, a full card ends the round
-// and the next player chooses, four cards win, refused moves); the card set
-// (30 cards, three to five animals, all different, each fillable with five
-// dice); the exact win chance function against a simulation; then 1000
-// games computer against computer for each of 2, 3 and 4 players from fixed
-// seeds: every game ends with exactly one winner with 4 cards, the cards are
-// always all there (30 in pile, yard, play and won), every computer step is
-// a legal move, the state survives JSON.stringify/parse. Finally the
-// computer's card choice plays 3000 games against a player who always takes
-// the worst open card and wins clearly more than half of them.
+// zoowurf-core.js test (rules 2, task 145)
+// "Zoo Toss": fixed rolls check every rule (everyone starts with an own
+// card from the pile, one roll per turn, dice that fit go onto the card,
+// the player puts a paw where there is a choice, a full card brings one
+// point per animal and the next turn starts with one of two open cards,
+// reaching the target finishes the round, the most points win, equal
+// points share the win, refused moves, old states are not current); the
+// card set (30 cards, three to five animals, all different); the expected
+// turns against a simulation; then computer games for 2, 3 and 4 players
+// from fixed seeds (default 300 each, `--games 500` for the full
+// measurement): every game ends, the cards are always all there (30 in
+// pile, yard, own cards and won), every computer step is legal, the state
+// survives JSON. Measured and checked: the share of wins per seat when all
+// computers play "normal" (at most 5 points from a fair share), the share
+// of a "normal" computer against "beginners" (clearly above a fair share),
+// rounds per game, draws.
 const path = require("path");
 const C = require(path.join(__dirname, "..", "zoowurf-core.js"));
 
+const argGames = process.argv.indexOf("--games");
+const GAMES = argGames > 0 ? parseInt(process.argv[argGames + 1], 10) : 1000;
 const fails = [];
 const check = (name, ok) => { if (!ok) fails.push(name); };
 
-function fixed(cards, pile, players) {
+// a game with given own cards, open cards and pile
+function fixed(own, yard, pile, players) {
   const s = C.newGame({ players: players || 2, rng: C.makeRng(1) });
-  s.yard = cards.map((c) => c.slice());
+  s.plays = own.map((c) => (c ? { card: c.slice(), need: c.slice(), size: C.sum(c) } : null));
+  s.yard = yard.map((c) => c.slice());
   s.pile = (pile || []).map((c) => c.slice());
+  s.phase = s.plays[0] ? "roll" : "choose";
   return s;
 }
 
 // ---- single rules ----
+const g0 = C.newGame({ players: 3, rng: C.makeRng(5) });
+check("new game: rules 2, everyone has an own card, two open cards, the first player rolls", g0.rules === 2 && g0.plays.every((p) => p && C.sum(p.need) === p.size && p.size >= 3) && g0.yard.length === 2 && g0.pile.length === 30 - 3 - 2 && g0.phase === "roll" && g0.current === 0 && C.isCurrentState(g0));
+check("choose refused while the player has a card", C.choose(g0, 0) === g0);
 const LLM = [2, 0, 0, 1, 0]; // two lions and a monkey
-let s = C.choose(fixed([LLM, [1, 1, 1, 0, 0]], [[0, 0, 0, 1, 2]]), 0);
-check("choose: card in play, replaced from the pile, roll phase", s.phase === "roll" && s.play.size === 3 && s.play.need.join() === "2,0,0,1,0" && s.play.card.join() === "2,0,0,1,0" && s.yard.length === 2 && s.yard[0].join() === "0,0,0,1,2" && s.pile.length === 0);
-check("choose refused outside the choose phase or out of range", C.choose(s, 0) === s && (() => { const g = fixed([LLM]); return C.choose(g, 5) === g && C.choose(g, -1) === g; })());
-check("roll refused in the choose phase", (() => { const g = fixed([LLM]); return C.roll(g, null, [0, 0, 0]) === g; })());
-let t = C.roll(s, null, [0, 4, 3]);
-check("matching dice go onto the card, others do not", t.play.need.join() === "1,0,0,0,0" && t.dice.hits.join() === "true,false,true" && t.rolls === 1 && t.current === 0 && t.phase === "roll");
-check("more dice of an animal than needed: only the needed ones count", C.applyDice([1, 0, 0, 0, 0], [0, 0, 0]).need.join() === "0,0,0,0,0" && C.applyDice([1, 0, 0, 0, 0], [0, 0, 0]).hits.join() === "true,false,false");
-check("paw counts for the animal needed most", C.applyDice([2, 0, 0, 1, 0], [5, 4, 3]).need.join() === "1,0,0,0,0" && C.applyDice([1, 0, 0, 2, 0], [5]).need.join() === "1,0,0,1,0");
-check("paw with nothing to fill does nothing", C.applyDice([0, 0, 0, 0, 0], [5]).hits.join() === "false");
-check("animals are used before the paw (a paw rolled first still fills the other place)", C.applyDice([1, 0, 0, 1, 0], [5, 0]).need.join() === "0,0,0,0,0" && C.applyDice([1, 0, 0, 1, 0], [5, 3]).need.join() === "0,0,0,0,0" && C.applyDice([1, 0, 0, 1, 0], [5, 3]).hits.join() === "true,true");
-t = C.roll(t, null, [1]);
-check("a miss keeps the rest, second roll counted", t.rolls === 2 && t.play.need.join() === "1,0,0,0,0" && t.current === 0);
-t = C.roll(t, null, [2]);
-check("after three rolls the turn passes, the card stays", t.current === 1 && t.rolls === 0 && t.phase === "roll" && t.play.need.join() === "1,0,0,0,0" && t.last.action === "pass" && t.last.left === 1 && t.seq === 1);
-let u = C.roll(t, null, [5]);
-check("the next player fills the card: one point, next round, next player chooses", u.scores[1] === 1 && u.scores[0] === 0 && u.phase === "choose" && u.current === 0 && u.play === null && u.last.action === "win" && u.last.player === 1 && u.last.left === 0);
-check("number of dice rolled equals the number needed", (() => { const g = C.choose(fixed([[1, 1, 1, 1, 1]]), 0); const r = C.roll(g, C.makeRng(3)); return r.dice.faces.length === 5; })());
-check("a roll from the generator gives faces 0..5", (() => { const r = C.makeRng(5); for (let i = 0; i < 100; i++) { const g = C.roll(C.choose(fixed([[1, 1, 1, 1, 1]]), 0), r); if (!g.dice.faces.every((f) => f >= 0 && f <= 5)) return false; } return true; })());
-// the fourth card ends the game
-s = fixed([[1, 0, 0, 0, 0]], [], 2);
-s.scores[0] = 3;
-s = C.choose(s, 0);
+let s = fixed([LLM, [1, 1, 1, 0, 0]], [[0, 0, 0, 1, 2], [1, 0, 1, 0, 1]], [[0, 1, 1, 1, 0]]);
+let t = C.roll(s, null, [0, 4, 2]);
+check("one roll: matching dice go onto the own card, then the next player", t.plays[0].need.join() === "1,0,0,1,0" && t.last.dice.hits.join() === "true,false,false" && t.last.got === 1 && t.last.left === 2 && t.current === 1 && t.phase === "roll" && t.seq === 1);
+check("the other player's card is untouched", t.plays[1].need.join() === "1,1,1,0,0");
+check("more dice of an animal than needed: only the needed ones count", C.applyDice([1, 0, 0, 0, 0], [0, 0, 0]).need.join() === "0,0,0,0,0");
+check("a roll uses as many dice as the card still needs", (() => { const r = C.roll(t, C.makeRng(3)); return r.last.dice.faces.length === 3; })());
+check("a roll from the generator gives faces 0..5", (() => { const r = C.makeRng(5); for (let i = 0; i < 100; i++) { const g = C.roll(s, r); if (!g.dice.faces.every((f) => f >= 0 && f <= 5)) return false; } return true; })());
+let u = C.roll(t, null, [0, 1, 2]);
+check("a full card brings one point per animal; the player has no card now", u.scores[1] === 3 && u.won[1] === 1 && u.plays[1] === null && u.last.action === "win" && u.last.size === 3 && u.current === 0 && u.phase === "roll" && u.round === 2);
+u = C.roll(u, null, [3, 4]);
+check("player 1 without a card chooses first", u.current === 1 && u.phase === "choose" && C.roll(u, null, [0]) === u);
+let v = C.choose(u, 1);
+check("choose: the open card becomes the own card, replaced from the pile", v.phase === "roll" && v.plays[1].card.join() === "1,0,1,0,1" && v.yard[1].join() === "0,1,1,1,0" && v.pile.length === 0 && v.current === 1);
+check("choose refused out of range", C.choose(u, 5) === u && C.choose(u, -1) === u);
+// paws
+s = fixed([[1, 0, 0, 1, 1], [1, 1, 1, 0, 0]], [[1, 1, 1, 0, 0], [1, 1, 1, 0, 0]], []);
+t = C.roll(s, null, [5, 1, 2]);
+check("paw: one paw and three open animals waits for the player", t.phase === "paw" && t.paws.join() === "0" && t.current === 0);
+check("paw: roll and choose are refused while a paw waits; a closed place is refused", C.roll(t, null, [0]) === t && C.choose(t, 0) === t && C.placePaw(t, 1) === t && C.placePaw(t, 9) === t);
+u = C.placePaw(t, 4);
+check("paw: the paw goes on the chosen animal, then the next player", u.plays[0].need.join() === "1,0,0,1,0" && u.last.dice.on.join() === "4,-1,-1" && u.current === 1 && u.phase === "roll");
+t = C.roll(s, null, [3, 5, 5]);
+check("paw: as many paws as places fill the card without a question", t.scores[0] === 3 && t.last.action === "win");
+t = C.roll(fixed([[2, 0, 0, 1, 0], [1, 1, 1, 0, 0]], [[1, 1, 1, 0, 0]], []), null, [3, 5, 4]);
+check("paw: one open animal left means no choice", t.plays[0].need.join() === "1,0,0,0,0" && t.current === 1);
+// the end: the round is finished, then the most points win
+s = fixed([[1, 0, 0, 0, 0], [0, 1, 0, 0, 0], [0, 0, 1, 0, 0]], [[1, 1, 1, 0, 0]], [], 3);
+s.target = 12; s.scores = [11, 10, 5];
 t = C.roll(s, null, [0]);
-check("the fourth card wins at once", t.phase === "over" && t.winner === 0 && t.scores[0] === 4 && C.outcomeFor(t, 0) === "win" && C.outcomeFor(t, 1) === "loss" && C.outcomeFor(s, 0) === null);
+check("reaching the target does not end the game at once", t.phase === "roll" && t.ending === true && t.endedBy === 0 && t.scores[0] === 12 && t.current === 1);
+t = C.roll(t, null, [1]);
+t = C.roll(t, null, [3]);
+check("after the last seat the game is over, the most points win", t.phase === "over" && t.winner === 0 && t.winners.join() === "0" && C.outcomeFor(t, 0) === "win" && C.outcomeFor(t, 1) === "loss" && C.outcomeFor(s, 0) === null);
 check("no action after the end", C.roll(t, null, [0]) === t && C.aiStep(t) === t && C.choose(t, 0) === t);
+s.scores = [11, 11, 5];
+t = C.roll(C.roll(C.roll(s, null, [0]), null, [1]), null, [3]);
+check("equal points share the win (a draw for each of them)", t.phase === "over" && t.winner === null && t.winners.join() === "0,1" && C.outcomeFor(t, 0) === "draw" && C.outcomeFor(t, 1) === "draw" && C.outcomeFor(t, 2) === "loss");
 check("same seed, same game", JSON.stringify(C.newGame({ players: 3, rng: C.makeRng(7) })) === JSON.stringify(C.newGame({ players: 3, rng: C.makeRng(7) })));
 check("player count limited to 2..4", C.newGame({ players: 9 }).n === 4 && C.newGame({ players: 1 }).n === 2);
+check("an old state (first rules: shared card, no rules field) is not current", !C.isCurrentState({ game: "zoowurf", n: 2, computer: [false, true], current: 0, target: 4, scores: [0, 0], yard: [], pile: [], phase: "choose", play: null, rolls: 0 }) && !C.isCurrentState(null));
+check("no level means normal; beginner is stored", !("level" in C.newGame({ players: 2 })) && C.newGame({ players: 2, level: "beginner" }).level === "beginner" && !("level" in C.newGame({ players: 2, level: "x" })));
 
 // ---- the cards ----
-const g0 = C.newGame({ players: 2, rng: C.makeRng(11) });
-const cards = g0.pile.concat(g0.yard);
+const g1 = C.newGame({ players: 2, rng: C.makeRng(11) });
+const cards = g1.pile.concat(g1.yard, g1.plays.map((p) => p.card));
 const keys = {};
-cards.forEach((c) => { keys[c.join()] = (keys[c.join()] || 0) + 1; });
+cards.forEach((c) => { keys[c.join()] = 1; });
 check("30 cards, all different", cards.length === 30 && Object.keys(keys).length === 30);
 check("each size 3, 4, 5 appears 10 times", [3, 4, 5].every((n) => cards.filter((c) => C.sum(c) === n).length === 10));
 check("a card needs at most 3 of the same animal", cards.every((c) => Math.max.apply(null, c) <= 3));
-check("every card is fillable (chance of the first player is between 0.4 and 0.95)", cards.every((c) => { const p = C.firstChance(C.key(c)); return p > 0.4 && p < 0.95; }));
 
-// ---- the win chance against a simulation ----
-function simulate(card, games, seed) {
+// ---- expected turns against a simulation ----
+function simulate(card, n, seed) {
   const rng = C.makeRng(seed);
-  let first = 0;
-  for (let i = 0; i < games; i++) {
-    let g = C.newGame({ players: 2, rng: rng });
-    g.yard = [card.slice(), card.slice()];
-    g = C.choose(g, 0);
-    const starter = g.current;
-    let guard = 0;
-    while (g.phase === "roll" && guard++ < 500) g = C.roll(g, rng);
-    if (g.last.player === starter) first++;
+  let total = 0;
+  for (let i = 0; i < n; i++) {
+    let need = card.slice(), turns = 0;
+    while (C.sum(need) > 0 && turns < 200) {
+      const faces = [];
+      for (let k = 0; k < C.sum(need); k++) faces.push(Math.floor(rng() * 6));
+      need = C.applyDice(need, faces).need;
+      turns++;
+    }
+    total += turns;
   }
-  return first / games;
+  return total / n;
 }
 [[1, 1, 1, 1, 1], [3, 0, 0, 0, 0], [2, 1, 1, 0, 0]].forEach((card) => {
-  const exact = C.firstChance(C.key(card));
-  const sim = simulate(card, 10000, 17);
-  console.log("first-player chance " + card.join("") + ": exact " + exact.toFixed(3) + ", simulated " + sim.toFixed(3));
-  check("exact chance matches simulation " + card.join(""), Math.abs(exact - sim) < 0.02);
+  const exact = C.expectedTurns(C.key(card));
+  const sim = simulate(card, 20000, 17);
+  console.log("expected turns " + card.join("") + ": exact " + exact.toFixed(2) + ", simulated " + sim.toFixed(2));
+  check("expected turns match the simulation " + card.join(""), Math.abs(exact - sim) < 0.08);
 });
 
 // ---- games ----
 function conserved(g) {
-  const all = g.pile.length + g.yard.length + (g.play ? 1 : 0) + g.scores.reduce((a, b) => a + b, 0);
-  return all === 30;
+  return g.pile.length + g.yard.length + g.plays.filter(Boolean).length + g.won.reduce((a, b) => a + b, 0) === 30;
 }
 
-function playGame(n, seed, pickWorst, seat) {
+// dumb: seats that play like the beginner level
+function playGame(n, seed, dumb) {
   const rng = C.makeRng(seed);
   let g = C.newGame({ players: n, computer: new Array(n).fill(true), rng: rng });
   let guard = 0;
-  while (g.phase !== "over" && guard++ < 5000) {
-    let next;
-    if (pickWorst && g.phase === "choose" && g.current === seat) {
-      let best = 0, bv = 9;
-      g.yard.forEach((c, i) => { const v = C.cardValue(c); if (v < bv) { bv = v; best = i; } });
-      next = C.choose(g, best);
-    } else next = C.aiStep(g, rng);
+  while (g.phase !== "over" && guard++ < 3000) {
+    const next = C.aiStep(g, rng, { dumb: !!(dumb && dumb[g.current]) });
     if (next === g) { fails.push("computer step refused in game " + n + "/" + seed); return g; }
     g = next;
     if (!conserved(g)) { fails.push("cards not conserved " + n + "/" + seed); return g; }
-    if (JSON.stringify(JSON.parse(JSON.stringify(g))) !== JSON.stringify(g)) { fails.push("state not serialisable"); return g; }
+    if (!C.isCurrentState(g)) { fails.push("state not current " + n + "/" + seed); return g; }
   }
+  if (JSON.stringify(JSON.parse(JSON.stringify(g))) !== JSON.stringify(g)) fails.push("state not serialisable");
   return g;
 }
 
+const t0 = Date.now();
 [2, 3, 4].forEach((n) => {
-  let turns = 0, maxTurns = 0, bad = 0;
-  for (let i = 0; i < 1000; i++) {
-    const g = playGame(n, i + 1);
-    if (g.phase !== "over" || g.winner === null || g.scores[g.winner] !== C.TARGET || g.scores.filter((x) => x >= C.TARGET).length !== 1) bad++;
-    turns += g.turns;
-    maxTurns = Math.max(maxTurns, g.turns);
+  const seat = new Array(n).fill(0);
+  let rounds = 0, maxRounds = 0, turns = 0, draws = 0, bad = 0;
+  for (let i = 0; i < GAMES; i++) {
+    const g = playGame(n, 1000 + i);
+    if (g.phase !== "over" || !g.winners.length || Math.max.apply(null, g.scores) < g.target) bad++;
+    g.winners.forEach((w) => { seat[w] += 1 / g.winners.length; });
+    if (g.winners.length > 1) draws++;
+    rounds += g.round; turns += g.turns; maxRounds = Math.max(maxRounds, g.round);
   }
-  console.log(n + " players: 1000 games, average " + (turns / 1000).toFixed(1) + " turns, longest " + maxTurns + " turns");
-  check(n + " players: every game ends with one winner of 4 cards", bad === 0);
-  check(n + " players: games are not too long", maxTurns < 60);
+  const shares = seat.map((x) => 100 * x / GAMES);
+  const dev = Math.max.apply(null, shares.map((x) => Math.abs(x - 100 / n)));
+  console.log(n + " players, " + GAMES + " games, all normal: wins per seat " + shares.map((x, i) => "seat " + i + " " + x.toFixed(1) + "%").join(" / ") + " (largest gap to fair " + dev.toFixed(1) + " points), draws " + (100 * draws / GAMES).toFixed(1) + "%, rounds " + (rounds / GAMES).toFixed(1) + " (longest " + maxRounds + "), turns " + (turns / GAMES).toFixed(1));
+  check(n + " players: every game ends with a winner at the target", bad === 0);
+  check(n + " players: seat advantage at most 5 points", dev <= 5);
+  check(n + " players: games are not too long", maxRounds <= 30);
+  // one normal computer against beginners, on every seat in turn
+  let w = 0;
+  for (let i = 0; i < GAMES; i++) {
+    const me = i % n;
+    const dumb = {};
+    for (let k = 0; k < n; k++) if (k !== me) dumb[k] = true;
+    const g = playGame(n, 5000 + i, dumb);
+    if (g.winners.indexOf(me) >= 0) w += 1 / g.winners.length;
+  }
+  const share = 100 * w / GAMES;
+  console.log(n + " players, " + GAMES + " games: level normal against beginners wins " + share.toFixed(1) + "% (fair share " + (100 / n).toFixed(1) + "%), each beginner " + ((100 - share) / (n - 1)).toFixed(1) + "%");
+  check(n + " players: level normal clearly beats beginners", share >= 100 / n + 5);
 });
-
-let wins = 0;
-const N = 3000;
-for (let i = 0; i < N; i++) {
-  const seat = i % 2;
-  const g = playGame(2, 5000 + i, true, seat);
-  if (g.winner !== seat) wins++;
-}
-console.log("card choice against always-the-worst-card: " + wins + " of " + N + " (" + (100 * wins / N).toFixed(1) + " %)");
-check("the card choice wins more than half against the worst choice", wins / N > 0.52);
-
-
-// ---- level "Beginner" (task 99s): the computers choose the open card at random ----
-(() => {
-  const old = C.newGame({ players: 2, computer: [false, true], rng: C.makeRng(3) });
-  check("a game without a level has no level field (older saved states are the same)", old.level === undefined && !("level" in old));
-  const beg = C.newGame({ players: 2, computer: [false, true], rng: C.makeRng(3), level: "beginner" });
-  check("level beginner is stored in the state and survives a save", beg.level === "beginner" && JSON.parse(JSON.stringify(beg)).level === "beginner");
-  check("an unknown level is the standard", C.newGame({ players: 2, level: "x" }).level === undefined);
-  // the standard picks the same open card every time; the beginner picks both
-  const at = (g) => ({ ...g, current: 1 });
-  const normalPicks = new Set(), beginnerPicks = new Set();
-  const r = C.makeRng(99);
-  for (let i = 0; i < 100; i++) {
-    const a = C.newGame({ players: 2, computer: [false, true], rng: C.makeRng(200 + i) });
-    const b = C.newGame({ players: 2, computer: [false, true], rng: C.makeRng(200 + i), level: "beginner" });
-    const na = C.aiStep(at(a), r), nb = C.aiStep(at(b), r);
-    check("the beginner step is a legal choice " + i, nb !== at(b) && nb.phase === "roll");
-    normalPicks.add(i + ":" + (na.play.card.join("") === a.yard[C.chooseCard(a)].join("")));
-    beginnerPicks.add(nb.play.card.join("") === b.yard[0].join("") ? "first" : "second");
-  }
-  check("the standard always picks the card with the best chance", [...normalPicks].every((x) => x.endsWith("true")));
-  check("the beginner picks both open cards over 100 rounds", beginnerPicks.has("first") && beginnerPicks.has("second"));
-  // 100 games, two players: the standard against the beginner
-  let smartWins = 0;
-  const N2 = 100;
-  for (let i = 0; i < N2; i++) {
-    const smartSeat = i % 2, rr = C.makeRng(7000 + i);
-    let g = C.newGame({ players: 2, computer: [true, true], rng: rr });
-    let guard = 0;
-    while (g.phase !== "over" && guard++ < 2000) {
-      const next = C.aiStep(g, rr, { dumb: g.current !== smartSeat });
-      if (next === g) break;
-      g = next;
-    }
-    if (g.winner === smartSeat) smartWins++;
-  }
-  console.log("level beginner: the standard computer wins " + smartWins + " of " + N2 + " games against a computer that chooses cards at random");
-  check("the standard computer beats the random chooser more often than not", smartWins >= 50);
-})();
-
-
-// ---- pick rule (task 99t): the player puts the paws on the card ----
-(() => {
-  const mk = (card, players) => { const g = C.newGame({ players: players || 2, rng: C.makeRng(1), pick: true }); g.yard = [card.slice(), [1, 1, 1, 0, 0]]; g.pile = []; return C.choose(g, 0); };
-  const old = C.newGame({ players: 2, rng: C.makeRng(3) });
-  check("pick: a game without pick has no pick field (older saves play as before)", old.pick === undefined && !("pick" in old) && C.newGame({ players: 2, pick: true }).pick === true);
-  // lion, monkey, penguin open; one paw: the player chooses
-  let g = mk([1, 0, 0, 1, 1]);
-  let t = C.roll(g, null, [5, 1, 2]);
-  check("pick: one paw and three open animals waits for the player", t.phase === "paw" && t.paws.join() === "0" && t.dice.hits.join() === "false,false,false" && t.play.need.join() === "1,0,0,1,1" && t.rolls === 1 && t.current === 0);
-  check("pick: roll and choose are refused while a paw waits", C.roll(t, null, [0]) === t && C.choose(t, 0) === t);
-  check("pick: a place that is not open is refused", C.placePaw(t, 1) === t && C.placePaw(t, 9) === t && C.placePaw(g, 0) === g);
-  let u = C.placePaw(t, 4);
-  check("pick: the paw goes on the chosen animal, the die is marked, the roll goes on", u.phase === "roll" && u.play.need.join() === "1,0,0,1,0" && u.dice.hits.join() === "true,false,false" && u.paws.length === 0 && u.current === 0);
-  // plain animals are put first, then the paw
-  t = C.roll(g, null, [3, 5, 5]);
-  check("pick: the monkey goes on at once, two paws and two open places fill the card without a question", t.phase === "choose" && t.scores[0] === 1 && t.last.action === "win");
-  g = mk([2, 0, 0, 1, 1]);
-  t = C.roll(g, null, [5, 5, 3, 3]);
-  check("pick: two paws, two open animals after the monkey: the player chooses twice", t.phase === "paw" && t.paws.length === 2 && t.play.need.join() === "2,0,0,0,1");
-  u = C.placePaw(t, 0);
-  check("pick: after the first paw the second still waits", u.phase === "paw" && u.paws.length === 1 && u.play.need.join() === "1,0,0,0,1" && u.dice.hits.filter(Boolean).length === 2);
-  u = C.placePaw(u, 4);
-  check("pick: after the second paw the roll goes on with one place open", u.phase === "roll" && u.play.need.join() === "1,0,0,0,0" && u.dice.hits.filter(Boolean).length === 3);
-  // only one open animal: no choice, the paw goes on at once
-  g = mk([2, 0, 0, 1, 0]);
-  t = C.roll(g, null, [3, 5, 4]);
-  check("pick: one open animal left means no choice", t.phase === "roll" && t.play.need.join() === "1,0,0,0,0" && t.dice.hits.join() === "true,true,false");
-  // paws fill the card when there are enough
-  t = C.roll(g, null, [5, 5, 5]);
-  check("pick: as many paws as places fill the card without a question", t.phase === "choose" && t.scores[0] === 1);
-  // the third roll with a waiting paw: after the choice the turn passes
-  g = mk([1, 0, 0, 1, 1]);
-  g.rolls = 2;
-  t = C.roll(g, null, [5, 2, 2]);
-  u = C.placePaw(t, 0);
-  check("pick: third roll, paw placed, card not full: the turn passes to the next player", u.current === 1 && u.rolls === 0 && u.play.need.join() === "0,0,0,1,1" && u.last.action === "pass");
-  check("pick: the state with a waiting paw survives a save", JSON.stringify(JSON.parse(JSON.stringify(t))) === JSON.stringify(t));
-  // the computer answers in the paw phase, the beginner at random
-  t = C.roll(mk([1, 0, 0, 1, 1]), null, [5, 2, 2]);
-  const ai = C.aiStep(t, C.makeRng(4));
-  check("pick: the computer places the paw", ai !== t && ai.phase === "roll" && C.sum(ai.play.need) === 2);
-  const seen = {};
-  for (let i = 0; i < 60; i++) { const b = C.aiStep({ ...t, level: "beginner" }, C.makeRng(300 + i)); seen[b.play.need.join("")] = 1; }
-  check("pick: the beginner places the paw on different animals", Object.keys(seen).length >= 2);
-  // 100 games: every one ends, cards are kept; the computer that chooses
-  // the paw against one that chooses at random
-  let ended = 0, smart = 0;
-  const N3 = 100;
-  for (let i = 0; i < N3; i++) {
-    const rr = C.makeRng(9000 + i), seat = i % 2;
-    let x = C.newGame({ players: 2, computer: [true, true], rng: rr, pick: true });
-    let guard = 0, bad = false;
-    while (x.phase !== "over" && guard++ < 3000) {
-      const next = C.aiStep(x, rr, { dumb: x.current !== seat });
-      if (next === x) { bad = true; break; }
-      x = next;
-      if (!conserved(x)) { bad = true; break; }
-    }
-    if (!bad && x.phase === "over" && x.scores[x.winner] === C.TARGET) ended++;
-    if (x.winner === seat) smart++;
-  }
-  console.log("pick rule: " + ended + " of " + N3 + " computer games ended with a winner of 4 cards; the standard computer wins " + smart + " of " + N3 + " against a computer that chooses cards and paws at random");
-  check("pick: all 100 games end correctly", ended === N3);
-  check("pick: the standard computer beats the random one more often than not", smart >= 50);
-})();
+console.log("time " + ((Date.now() - t0) / 1000).toFixed(1) + " s");
 
 if (fails.length) {
   console.log(fails.slice(0, 30).join("\n"));
   console.log("=== ZOOWURF CORE: " + fails.length + " failure(s) ===");
   process.exit(1);
 }
-console.log("=== ZOOWURF CORE: 3 x 1000 computer games (2, 3, 4 players), every game ended with one winner of 4 cards, 0 failures ===");
+console.log("=== ZOOWURF CORE: rules 2, 3 x " + (2 * GAMES) + " computer games (2, 3, 4 players), seat advantage at most 5 points, normal beats beginner, 0 failures ===");

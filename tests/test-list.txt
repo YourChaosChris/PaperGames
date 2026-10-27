@@ -68,8 +68,8 @@
 1 weidefreunde-core.js
 25 zoowurf-core.js
 11 zoowurf-ui.js
-3 tieryatzy-core.js
-10 tieryatzy-ui.js
+3 pfotenwurf-core.js
+10 pfotenwurf-ui.js
 4 slidepuzzle-core.js
 2 hanoi-core.js
 2 nim-core.js
@@ -79,6 +79,8 @@
 8 cardtactics-ui.js
 2 advent-core.js
 8 advent-ui.js
+30 gipfelwurf-core.js
+10 gipfelwurf-ui.js
 12 small-games-ui.js
 8 romme-ui.js
 12 domino-ui.js

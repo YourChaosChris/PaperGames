@@ -127,12 +127,13 @@
     ["kleeberg", "game_kleeberg", "inarow"],
     ["weidefreunde", "game_weidefreunde", "dicegames"],
     ["zoowurf", "game_zoowurf", "dicegames"],
-    ["tieryatzy", "game_tieryatzy", "dicegames"],
+    ["pfotenwurf", "game_pfotenwurf", "dicegames"],
     ["slidepuzzle", "game_slidepuzzle"],
     ["hanoi", "game_hanoi"],
     ["nim", "game_nim"],
     ["teufelsieben", "game_teufelsieben"],
-    ["advent", "game_advent", "latin"]
+    ["advent", "game_advent", "latin"],
+    ["gipfelwurf", "game_gipfelwurf", "dicegames"]
   ];
 
   var GAME_SLUGS = {};

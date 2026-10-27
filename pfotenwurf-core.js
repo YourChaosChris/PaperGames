@@ -1,5 +1,5 @@
-// tieryatzy-core.js
-// Rules of "Animal Yatzy" (Tier-Yatzy), PaperGames' own dice game for
+// pfotenwurf-core.js
+// Rules of "Critter Roll" (Pfotenwurf), PaperGames' own dice game for
 // children with animal dice, without any DOM or browser feature.
 //
 // Five dice; each die shows one of five zoo animals (lion, elephant,
@@ -27,7 +27,7 @@
 // The state is a plain serialisable object. Every function returns a new
 // state, or the very same object when the action is not allowed.
 
-const TierYatzyCore = (() => {
+const PfotenwurfCore = (() => {
   const ANIMALS = 5;
   const PAW = 5;             // the sixth face
   const DICE = 5;
@@ -104,7 +104,7 @@ const TierYatzyCore = (() => {
       sheets.push(emptySheet());
     }
     return {
-      game: "tieryatzy",
+      game: "pfotenwurf",
       n: n,
       computer: computer,
       current: 0,
@@ -233,5 +233,5 @@ const TierYatzyCore = (() => {
   return { ANIMALS, PAW, DICE, MAX_ROLLS, FIELDS, POINTS, makeRng, counts, biggest, score, total, freeFields, newGame, roll, toggleHold, options, choose, bestField, keepFor, aiStep, outcomeFor };
 })();
 
-if (typeof module !== "undefined") module.exports = TierYatzyCore;
-if (typeof window !== "undefined") window.TierYatzyCore = TierYatzyCore;
+if (typeof module !== "undefined") module.exports = PfotenwurfCore;
+if (typeof window !== "undefined") window.PfotenwurfCore = PfotenwurfCore;

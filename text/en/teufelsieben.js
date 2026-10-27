@@ -2,7 +2,7 @@
 // Rules and history texts of teufelsieben (en). Loaded by teufelsieben-rules.html and teufelsieben-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.en, {
-    ts_rules_title: "Rules of Lucky Chain",
+    ts_rules_title: "Devilish Seven Rules",
     ts_rules_intro: "Turn up card after card and stop in time: a number you already have makes you go bust. When someone reaches the target, the most points win.",
     ts_rules_basics_title: "The rules",
     ts_term_cards: "The cards",
@@ -21,10 +21,10 @@ Object.assign(STRINGS.en, {
     ts_rules_computer: "The computer counts only open cards and a card shown by Peek. Easy stops early; Hard weighs the possible gain against the risk.",
     ts_rules_example_title: "Example",
     ts_rules_example: "You have 3, 4, 5, 6 and 9: 27 points in numbers. The run of four adds 10, for 37 points before special-card effects.",
-    ts_history_title: "About Lucky Chain",
+    ts_history_title: "About Devilish Seven",
     ts_history_family_title: "Go on or stop",
     ts_history_family_p1: "Games where you repeatedly choose whether to take another risk or keep what you have belong to the push-your-luck family. Many dice and card games work this way.",
     ts_history_modern_title: "This version",
-    ts_history_modern_p1: "Lucky Chain was made for PaperGames, with its own cards, rules and texts: a custom mix of numbers from 1 to 10, a bonus for runs of numbers, and the special cards Courage, Strike, Pass, Bridge, Collector and Peek.",
+    ts_history_modern_p1: "Devilish Seven was made for PaperGames, with its own cards, rules and texts: a custom mix of numbers from 1 to 10, a bonus for runs of numbers, and the special cards Courage, Strike, Pass, Bridge, Collector and Peek.",
 });
 I18n.markTextLoaded("en");

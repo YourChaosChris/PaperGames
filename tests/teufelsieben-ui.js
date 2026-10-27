@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Lucky Chain UI: new rules, German page, 360 x 640, storage compatibility.
+// Devilish Seven UI: new rules, German page, 360 x 640, storage compatibility.
 const { chromium } = require("playwright");
 const argBase = process.argv.indexOf("--base");
 const BASE = (argBase > 0 && process.argv[argBase + 1]) || process.env.BASE_URL || "http://localhost:8000/";
@@ -76,6 +76,6 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   check("no horizontal scrolling at 360 px", overflow <= 0);
   check("no console or page errors: " + errors.join(" | "), errors.length === 0);
   await browser.close(); fails.forEach((x) => console.log("FAIL " + x));
-  console.log("=== LUCKY CHAIN UI: 360 px rules, round flow, bust, save/load, legacy save, " + fails.length + " failure(s) ===");
+  console.log("=== DEVILISH SEVEN UI: 360 px rules, round flow, bust, save/load, legacy save, " + fails.length + " failure(s) ===");
   process.exit(fails.length ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });
