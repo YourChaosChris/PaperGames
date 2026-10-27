@@ -1,6 +1,6 @@
 // kidspics.js
 // Twenty simple drawings for the children's picture games ("Find the
-// Shadow", "Which One Is Different?"). Dependency-free, no DOM; every
+// Shadow", "Find the Misfit"). Dependency-free, no DOM; every
 // drawing is returned as SVG markup. All drawn here for PaperGames.
 //
 // A drawing is made for a 60 x 60 box. `body` is drawn in both modes:

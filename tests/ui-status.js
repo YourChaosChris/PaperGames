@@ -8,7 +8,7 @@ const games = [
   "bingo",
   "alquerque", "amazons", "backgammon", "baghchal", "blockers", "cardduel",
   "cardtactics", "checkers", "concan", "domino", "doppelkopf", "dotsandboxes",
-  "durak", "fanorona", "fleetbattle", "forestvillage", "fourinarow", "foxandgeese",
+  "durak", "fanorona", "admiralsgrid", "forestvillage", "fourinarow", "foxandgeese",
   "go", "gomoku", "halma", "hex", "hnefatafl", "klappenkasten", "kleeberg", "konane", "ludo", "mancala",
   "marblepush", "maumau", "morris", "pairs", "poker", "reversi", "romme",
   "schwimmen", "seega", "senet", "shogi", "snakesladders", "steckwuerfeln", "sternhalma", "sternjagd",

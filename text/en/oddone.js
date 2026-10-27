@@ -2,7 +2,7 @@
 // Rules and history texts of oddone (en). Loaded by oddone-rules.html and oddone-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.en, {
-    oddone_rules_title: "Which One Is Different? Rules",
+    oddone_rules_title: "Find the Misfit Rules",
     oddone_rules_intro: "Several cards are alike in one way - except one. Tap the card that does not belong.",
     oddone_rules_basics_title: "The rules",
     oddone_term_goal: "The goal",

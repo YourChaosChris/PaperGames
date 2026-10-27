@@ -14,7 +14,7 @@ const exceptions = {
   domino: "The computer's hidden tiles and the boneyard are not stored in undo history; undoing a played tile would reveal information.",
   doppelkopf: "Hands are private; undoing a revealed card would preserve information the player has learned.",
   durak: "Hands and the draw pile are private; undoing a revealed attack or defense would preserve information.",
-  fleetbattle: "The opponent's ship placement is hidden; undo would expose information about the hidden board.",
+  admiralsgrid: "The opponent's ship placement is hidden; undo would expose information about the hidden board.",
   forestvillage: "Private hands and the shared card supply are not stored in undo history; undoing a computer build or draw would expose hidden information.",
   maumau: "Hands and the draw pile are private and the discard pile can be shuffled back into stock; exact random state is not saved.",
   pairs: "Face-down card locations are hidden; undoing a computer reveal would disclose their positions.",

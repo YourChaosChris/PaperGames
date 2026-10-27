@@ -361,8 +361,8 @@ all parts back into one log in list order. The last line is exactly
   fills the board legally, the free fields have the right sizes, the
   start-pieces puzzles have exactly one solution, and the first 50 of
   each can be finished with the hint alone. About 45 seconds.
-- `node tests/arrows-core.js` - no server or browser needed. 500
-  "Arrows" puzzles per level: every arrow a line of neighbouring cells
+- `node tests/glidelanes-core.js` - no server or browser needed. 500
+  "Glide Lanes" puzzles per level: every arrow a line of neighbouring cells
   with its head pointing the way of its last step, no overlaps, the
   level's field and arrow lengths, nesting of at least 3 / 5 / 7 rounds;
   played with the hint alone each field is cleared in exactly the fewest
@@ -460,7 +460,7 @@ all parts back into one log in list order. The last line is exactly
   from other groups, medium from the same group, hard two turned shadows of
   the same drawing plus one from the group. Under a second.
 - `node tests/oddone-core.js` - no server or browser needed. 200 games of
-  "Which One Is Different?" per level (6 rounds each): in every round exactly
+  "Find the Misfit" per level (6 rounds each): in every round exactly
   one card is the odd one (checked by brute force over all rules); easy has
   group rounds with 4 drawings, medium and hard mix group rounds with
   attribute rounds (shape, filling, number) with 5 and 6 cards. Under a

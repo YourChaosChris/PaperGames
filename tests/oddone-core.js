@@ -1,5 +1,5 @@
 // oddone-core.js test
-// "Which One Is Different?": for every level 200 games (6 rounds each)
+// "Find the Misfit": for every level 200 games (6 rounds each)
 // from fixed seeds. In every round exactly one card is odd (the only one
 // of its kind in some feature while all others agree in it) and that is
 // the marked one - no second reading is possible; cards are all different,

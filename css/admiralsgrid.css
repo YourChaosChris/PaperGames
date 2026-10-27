@@ -1,0 +1,159 @@
+/* admiralsgrid: rules used only by the admiralsgrid pages (loaded after base.css). */
+/* Fleet Battle: two 10x10 grids (own fleet + enemy waters), each an 11-
+   column CSS grid (a fixed-width row/column-label column plus the 10
+   1fr board-cell columns). CSS grid `gap` is fine on this project's
+   target E-Ink browsers (unlike flexbox `gap`, which several of this
+   file's other rules work around with margin-based spacing instead), so
+   no fallback is needed for the small gutters below. Cell WIDTH is left
+   to the grid engine's own 1fr distribution; cell HEIGHT is set from JS
+   (see ensureFbSquareCells in admiralsgrid-app.js) once the grid has been
+   measured, the same JS-enforced-square-cell approach checkers/kakuro
+   use, since `aspect-ratio` isn't reliable on this project's target E-Ink
+   browsers. */
+.fb-boards {
+  margin-top: 0.5rem;
+}
+
+.fb-board-block {
+  margin-bottom: 1.25rem;
+}
+
+.fb-board-block:last-child {
+  margin-bottom: 0;
+}
+
+.fb-board-block h2 {
+  font-size: 1rem;
+  margin: 0 0 0.4rem;
+}
+
+.fb-grid-wrap {
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.fb-grid {
+  display: grid;
+  grid-template-columns: 1.7em repeat(10, 1fr);
+  gap: 1px;
+  width: 100%;
+  border: 2px solid var(--border);
+  background: var(--border);
+  box-sizing: border-box;
+}
+
+.fb-label,
+.fb-corner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  color: var(--muted);
+  background: var(--bg-alt);
+}
+
+.fb-cell {
+  position: relative;
+  display: block;
+  width: 100%;
+  background: var(--square-light);
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  cursor: default;
+}
+
+.fb-cell.fb-clickable:not(:disabled) {
+  cursor: pointer;
+}
+
+/* Own ship, not yet hit - a plain filled square (hull). */
+.fb-cell.fb-ship::before {
+  content: "";
+  position: absolute;
+  top: 14%;
+  left: 14%;
+  width: 72%;
+  height: 72%;
+  background: var(--square-dark);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+
+/* Miss - a small hollow ring, distinct from a hit without relying on color. */
+.fb-cell.fb-miss::before {
+  content: "";
+  position: absolute;
+  top: 37%;
+  left: 37%;
+  width: 26%;
+  height: 26%;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  box-sizing: border-box;
+}
+
+/* Hit (ship not yet fully sunk) - a filled circle. */
+.fb-cell.fb-hit::before {
+  content: "";
+  position: absolute;
+  top: 18%;
+  left: 18%;
+  width: 64%;
+  height: 64%;
+  border-radius: 50%;
+  background: #000;
+  border: 2px solid #000;
+  box-sizing: border-box;
+}
+
+/* Sunk ship - every cell gets a diagonal hatch fill plus an inverted
+   ring marker, the same "distinct pattern, not just a color" technique
+   as .amazons-icon-burned above, so a fully destroyed ship reads as
+   clearly different from a plain in-progress hit. */
+.fb-cell.fb-sunk {
+  background-image: repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 2px, transparent 6px);
+}
+
+.fb-cell.fb-sunk::after {
+  content: "";
+  position: absolute;
+  top: 27%;
+  left: 27%;
+  width: 46%;
+  height: 46%;
+  border-radius: 50%;
+  background: var(--square-light);
+  border: 2px solid #000;
+  box-sizing: border-box;
+}
+
+.fb-cell.fb-last {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.fb-legend {
+  margin-top: 0.75rem;
+}
+
+.fb-legend-row {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0.35rem;
+  font-size: 0.85rem;
+}
+
+.fb-legend-mark {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--square-light);
+  box-sizing: border-box;
+}

@@ -40,7 +40,7 @@ const pages = fs.readdirSync(ROOT).filter((f) => /^games(-[a-z]+)?\.html$/.test(
   }
   // Task 125: small buttons (class "small") on game pages are at least
   // 44 px high after the start, at 360 px.
-  const SMALL = ["bingo", "klappenkasten", "steckwuerfeln", "weidefreunde", "zoowurf", "minesweeper", "twenty48", "freecell", "mahjong", "nonogram", "doppelkopf", "fleetbattle", "shapesort", "chess", "fanorona", "hex", "matches"];
+  const SMALL = ["bingo", "klappenkasten", "steckwuerfeln", "weidefreunde", "zoowurf", "minesweeper", "twenty48", "freecell", "mahjong", "nonogram", "doppelkopf", "admiralsgrid", "shapesort", "chess", "fanorona", "hex", "matches"];
   let small = 0;
   for (const slug of SMALL) {
     const context = await browser.newContext({ viewport: { width: 360, height: 740 }, serviceWorkers: "block" });

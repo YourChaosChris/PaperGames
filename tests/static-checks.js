@@ -23,7 +23,7 @@ const ROOT = path.join(__dirname, "..");
 // the meta-refresh redirect stubs left at the pre-rename URLs for
 // renamed games (see the trademark-safe renames
 // in git history) - those intentionally have no <head>/scripts/i18n.
-const REDIRECT_STUB_PREFIXES = ["othello", "connectfour", "onitama", "quoridor", "mastermind", "abalone", "lightsout"];
+const REDIRECT_STUB_PREFIXES = ["othello", "connectfour", "onitama", "quoridor", "mastermind", "abalone", "lightsout", "fleetbattle", "arrows"];
 const NON_DOCUMENT_FILES = new Set(["google5b539baba76c839b.html"]);
 
 function isRedirectStub(file) {

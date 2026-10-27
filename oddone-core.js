@@ -1,5 +1,5 @@
 // oddone-core.js
-// "Which One Is Different?" - a few pictures, all alike in one way except
+// "Find the Misfit" - a few pictures, all alike in one way except
 // one: tap the one that does not belong. Dependency-free, no DOM; the
 // drawings of the "group" rounds come from kidspics.js (KidsPics), random
 // numbers only from a seedable generator (makeRng).

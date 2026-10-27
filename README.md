@@ -60,7 +60,7 @@ no internet connection at all.
 - Pyramid Solitaire
 - Surakarta
 - Hashiwokakero
-- Fleet Battle
+- Admiral's Grid
 - Skyscrapers
 - Konane
 - Slitherlink

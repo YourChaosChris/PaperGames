@@ -9,11 +9,11 @@
 // Games" (GameCategories.games("new"), as on 11 Oct 2026) has exactly
 // GameCategories.NEW_MAX = 10 games, the 10 newest, newest first - Continue the Pattern, Loosen
 // the Rings, Cat Places, Matchstick Puzzles, Tangram, Turn the Rings,
-// Arrows, Adventure Book, Forest Village, Fairy-Tale Villains, Card Duel;
+// Glide Lanes, Adventure Book, Forest Village, Fairy-Tale Villains, Card Duel;
 // Games" (GameCategories.games("new"), as on 11 Oct 2026) has exactly
 // GameCategories.NEW_MAX = 10 games, the 10 newest, newest first - Sternjagd,
 // Steckwuerfeln, Klappenkasten, Loosen the Rings, Cat Places, Matchstick
-// Puzzles, Tangram, Turn the Rings, Arrows, Adventure Book;
+// Puzzles, Tangram, Turn the Rings, Glide Lanes, Adventure Book;
 // a game older than 60 days is not new even among the 10 newest; the
 // full newest-first order never has an older game before a newer one.
 //

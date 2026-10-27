@@ -1,5 +1,5 @@
 // oddone-app.js
-// Wires OddOneCore ("Which One Is Different?") to oddone.html.
+// Wires OddOneCore ("Find the Misfit") to oddone.html.
 //
 // A game is 6 rounds. Each round shows a few cards - all alike in one way
 // but one. Tap the card that does not belong. The right one gets a double

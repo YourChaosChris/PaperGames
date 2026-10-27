@@ -46,9 +46,9 @@
 3 mathcross-core.js
 1 differences-core.js
 50 pentomino-core.js
-190 arrows-core.js --levels=grandmaster
-310 arrows-core.js --levels=pictures
-180 arrows-core.js --levels=easy,medium,hard,master
+190 glidelanes-core.js --levels=grandmaster
+310 glidelanes-core.js --levels=pictures
+180 glidelanes-core.js --levels=easy,medium,hard,master
 58 rings-core.js
 1 tangram-core.js
 169 catplaces-core.js
