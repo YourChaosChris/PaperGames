@@ -3,22 +3,22 @@
 
 Object.assign(STRINGS.it, {
     zoowurf_rules_title: "Regole: Dadi dello zoo",
-    zoowurf_rules_intro: "Tira i dadi con gli animali e completa la carta con gli animali che mostra. Chi vince per primo quattro carte vince la partita.",
+    zoowurf_rules_intro: "Tira i dadi degli animali e completa la tua carta con gli animali che escono. Ogni animale su una carta completa vale un punto. Vince chi ha più punti alla fine.",
     zoowurf_rules_basics_title: "Le regole",
     zoowurf_term_goal: "L'obiettivo",
-    zoowurf_rules_goal: "Ogni carta mostra da tre a cinque animali. Quando li hai ottenuti tutti con i dadi, la carta è tua. Vince chi ha per primo quattro carte. Il gioco ha 30 carte; all'inizio di ogni giro due sono scoperte.",
-    zoowurf_term_choose: "Scegliere una carta",
-    zoowurf_rules_choose: "Chi inizia il giro tocca una delle due carte scoperte. Una carta con molti animali diversi si completa più facilmente: più dadi possono servire insieme. Una carta che chiede lo stesso animale due o tre volte richiede più fortuna.",
+    zoowurf_rules_goal: "Ogni carta mostra da tre a cinque animali e ogni animale vale un punto: una carta completa con cinque animali dà cinque punti. Il gioco ha 30 carte.",
+    zoowurf_term_start: "La tua carta",
+    zoowurf_rules_start: "All’inizio ognuno prende una carta dal mazzo. È la tua carta: nessun altro tira per te. Ci sono altre due carte scoperte.",
     zoowurf_term_turn: "Il tuo turno",
-    zoowurf_rules_turn: "Tira tanti dadi quanti ne servono ancora alla carta. Ogni dado che mostra un animale della carta va sulla carta e ci resta, segnato con un segno di spunta. Ritira gli altri dadi. Puoi tirare fino a tre volte. Quando il computer ha giocato, vedi la sua carta, i suoi dadi e le sue zampe e tocchi Avanti.",
+    zoowurf_rules_turn: "Al tuo turno tira una volta tanti dadi quanti animali mancano alla tua carta. Ogni dado che mostra un animale della tua carta va sulla carta e resta lì, segnato con una spunta. Poi tocca al giocatore successivo. Al tuo turno dopo, tira di nuovo per gli animali che mancano.",
     zoowurf_term_paw: "La zampa",
     zoowurf_rules_paw: "La sesta faccia dei dadi mostra una zampa. È un jolly: la metti tu stesso sulla carta. Tocca un posto libero di un animale di cui la carta ha ancora bisogno. Se manca un solo animale, o ci sono tante zampe quanti posti liberi, le zampe vanno sulla carta da sole.",
-    zoowurf_term_pass: "Non ancora completa",
-    zoowurf_rules_pass: "Se la carta non è completa dopo tre lanci, i dadi restano su di essa. Il giocatore dopo continua con gli animali che mancano e può vincere la carta.",
+    zoowurf_term_choose: "Una nuova carta",
+    zoowurf_rules_choose: "Quando la tua carta è completa, ottieni i suoi punti. Al tuo turno dopo, tocca una delle due carte scoperte e tira subito per quella. Una carta grande dà più punti ma richiede più turni. Una carta con animali diversi si completa più facilmente di una che richiede lo stesso animale due o tre volte.",
     zoowurf_term_win: "La fine",
-    zoowurf_rules_win: "Quando una carta è completa, il giocatore la prende e il successivo inizia un nuovo giro. La partita finisce subito quando qualcuno ha quattro carte. Con da due a quattro giocatori una partita dura circa cinque minuti. Non c'è limite di tempo e non si deve leggere nulla: ogni carta e ogni dado mostrano immagini.",
+    zoowurf_rules_win: "Quando qualcuno arriva a 12 punti, il giro si gioca fino alla fine, così tutti hanno fatto lo stesso numero di turni. Vince chi ha più punti; a pari punti la vittoria è condivisa. Con due, tre o quattro giocatori, una partita dura circa cinque minuti. Dopo i turni del computer vedi le sue carte e i suoi dadi e tocchi Avanti. Non c’è limite di tempo e non c’è nulla da leggere: carte e dadi mostrano immagini.",
     zoowurf_rules_example_title: "Esempio",
-    zoowurf_rules_example: "La carta mostra tre leoni e una scimmia. Tiri quattro dadi: leone, pinguino, zampa, giraffa. Il leone va sulla carta. Per la zampa tocchi un posto libero, per esempio la scimmia. Restano liberi due posti di leone: ritira due dadi, ancora fino a due volte.",
+    zoowurf_rules_example: "La tua carta mostra tre leoni e una scimmia. Tiri quattro dadi: leone, pinguino, zampa, giraffa. Il leone va sulla carta. Per la zampa, tocca un posto libero, per esempio quello della scimmia. Restano liberi due posti per i leoni: al tuo turno dopo tira due dadi.",
     zoowurf_history_title: "La storia dei giochi di dadi e di immagini",
     zoowurf_history_dice_title: "I dadi",
     zoowurf_history_dice_p1: "I dadi sono tra i più antichi pezzi da gioco che conosciamo. Piccoli dadi di osso, argilla o pietra sono stati trovati in luoghi vecchi di diverse migliaia di anni. Tirare i dadi sperando in una certa faccia non richiede spiegazioni, perciò è un gioco per ogni età.",
@@ -27,6 +27,6 @@ Object.assign(STRINGS.it, {
     zoowurf_history_zoo_title: "Animali dello zoo",
     zoowurf_history_zoo_p1: "Leoni, elefanti, giraffe, scimmie e pinguini sono animali di cui i bambini imparano presto il nome, dai libri illustrati, dai giocattoli e dalle visite allo zoo. Sono così diversi tra loro che basta un piccolo disegno per distinguerli.",
     zoowurf_history_modern_title: "Questa versione",
-    zoowurf_history_modern_p1: "Dadi dello zoo è stato inventato per PaperGames, con regole e disegni propri. Il computer sceglie la carta scoperta che gli dà più possibilità di completarla per primo."
+    zoowurf_history_modern_p1: "Dadi dello zoo è stato creato per PaperGames, con regole e disegni propri. Ogni giocatore raccoglie animali sulla propria carta, con un lancio per turno. Il computer sceglie la carta scoperta che gli dà più punti per turno."
 });
 I18n.markTextLoaded("it");

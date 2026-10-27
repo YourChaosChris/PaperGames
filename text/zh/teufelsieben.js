@@ -2,7 +2,7 @@
 // Rules and history texts of teufelsieben (zh). Loaded by teufelsieben-rules.html and teufelsieben-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.zh, {
-    ts_rules_title: "幸运连串规则",
+    ts_rules_title: "魔鬼七规则",
     ts_rules_intro: "一张一张翻牌，及时停下：翻到已有的数字就爆掉。有人达到目标后，分数最多者获胜。",
     ts_rules_basics_title: "规则",
     ts_term_cards: "卡牌",
@@ -21,10 +21,10 @@ Object.assign(STRINGS.zh, {
     ts_rules_computer: "电脑只计算明牌和窥视展示的牌。简单模式会较早停下；困难模式会权衡潜在收益和风险。",
     ts_rules_example_title: "示例",
     ts_rules_example: "你有3、4、5、6和9：数字共27分。连续4张加10分，特殊牌效果前共37分。",
-    ts_history_title: "关于幸运连串",
+    ts_history_title: "关于魔鬼七",
     ts_history_family_title: "继续还是停止",
     ts_history_family_p1: "这类游戏需要反复选择是否再冒一次险，或保住已有成果。许多骰子和卡牌游戏都采用这种玩法。",
     ts_history_modern_title: "本版本",
-    ts_history_modern_p1: "幸运连串为PaperGames制作，采用自有卡牌、规则和文字：数字1至10的独特配比、连续数字奖励，以及勇气、划掉、传递、桥梁、收藏家和窥视。",
+    ts_history_modern_p1: "魔鬼七为PaperGames制作，采用自有卡牌、规则和文字：数字1至10的独特配比、连续数字奖励，以及勇气、划掉、传递、桥梁、收藏家和窥视。",
 });
 I18n.markTextLoaded("zh");
