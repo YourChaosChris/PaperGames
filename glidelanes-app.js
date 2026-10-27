@@ -260,7 +260,7 @@ function winAw() {
   AppStateAw.gameOver = true;
   AppStateAw.hint = -1;
   AppStateAw.blocker = -1;
-  const text = missesModeAw(AppStateAw.puzzle) ? "Solved with " + AppStateAw.misses + " misses." : "All arrows are out - solved in " + AppStateAw.moves + " moves!";
+  const text = missesModeAw(AppStateAw.puzzle) ? "Solved! Misses: " + AppStateAw.misses + "." : "All arrows are out - solved in " + AppStateAw.moves + " moves!";
   const result = document.getElementById("game-result");
   if (result) I18n.setMsg(result, text);
   setStatusAw(text);

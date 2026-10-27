@@ -4472,7 +4472,7 @@ const STRINGS = {
     msg_aw_undone: "Undone: the arrow is back.",
     msg_aw_hint: "Hint: the marked arrow can leave.",
     msg_t_aw_won_moves: "All arrows are out - solved in {n} moves!",
-    msg_t_aw_won: "Solved with {k} misses.",
+    msg_t_aw_won: "Solved! Misses: {k}.",
     msg_t_aw_info_fewest: "Arrows left: {n} · Moves: {m} · Fewest: {k}",
     msg_t_aw_info: "Arrows left: {n} · Moves: {m} · Misses: {k}",
     game_rings: "Turn the Rings",

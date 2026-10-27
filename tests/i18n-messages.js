@@ -401,7 +401,7 @@ const SAMPLES = [
   "Blocked - another arrow is in the way.",
   "Undone: the arrow is back.",
   "Hint: the marked arrow can leave.",
-  "Solved with 3 misses.",
+  "Solved! Misses: 3.",
   "All arrows are out - solved in 17 moves!",
   "Arrows left: 12 · Moves: 5 · Misses: 3",
   "Arrows left: 12 · Moves: 5 · Fewest: 17",

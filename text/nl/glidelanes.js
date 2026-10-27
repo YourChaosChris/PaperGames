@@ -1,5 +1,5 @@
 // text/nl/glidelanes.js
-// Rules and history texts of arrows (nl). Loaded by glidelanes-rules.html and glidelanes-history.html only (see i18n.js, data-i18n-text).
+// Rules and history texts of glidelanes (nl). Loaded by glidelanes-rules.html and glidelanes-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.nl, {
     aw_rules_title: "Vrije baan – regels",
@@ -12,11 +12,11 @@ Object.assign(STRINGS.nl, {
     aw_term_glide: "Glijdende pijlen (Moeilijk en Meester)",
     aw_rules_glide: "Op Moeilijk blijft een geblokkeerde pijl niet staan: hij glijdt door, het lijf volgt de kop, tot de volgende pijl en stopt daar. Dat kan andere pijlen voorgoed blokkeren - eerst denken, dan tikken. Ongedaan maken neemt een zet terug, en Tip zoekt een uitweg vanaf de huidige stand. De pijlen hebben daar tot twee hoeken en liggen op 11 × 11 vakjes.",
     aw_term_master: "Meester",
-    aw_rules_master: "Zoals Moeilijk, zonder hint. Een tik waardoor geen pijl het veld verlaat, telt als misser.",
+    aw_rules_master: "Als Moeilijk, maar zonder tip en zonder kader om de pijl die in de weg staat. Elke tik die geen pijl uit het veld haalt, telt als misser; de infoweergave toont de missers en je kunt altijd verder.",
     aw_term_goal: "Doel",
     aw_rules_goal: "Maak het hele veld leeg. Elke puzzel is zo gemaakt dat hij oplosbaar is, en een pijl weghalen blokkeert nooit een andere, dus je kunt niet vastlopen. Het minste aantal zetten is het aantal pijlen; ook ongedaan maken telt als zet.",
     aw_term_levels: "Niveaus",
-    aw_rules_levels: "Makkelijk: 5 × 5 met korte pijlen. Gemiddeld: 7 × 7 met pijlen van twee tot vier vakjes. Moeilijk: 11 × 11 met glijdende pijlen tot zeven vakjes en twee bochten. Meester: zoals Moeilijk, met getelde missers. Grootmeester: 15 × 15 met pijlen tot 15 vakjes en zes bochten. Beeldpuzzels gebruiken een van twaalf silhouetten.",
+    aw_rules_levels: "Makkelijk: 5 × 5 vakjes met korte pijlen. Gemiddeld: 7 × 7 met pijlen van twee tot vier vakjes. Moeilijk: 11 × 11 met glijdende pijlen van tot zeven vakjes en twee hoeken. Meester: als Moeilijk, missers worden geteld. Grootmeester: 15 × 15 met glijdende pijlen tot 15 vakjes en zes bochten, ook hier worden missers geteld. Beeldpuzzels gebruiken een van twaalf omtrekvormen van vakjes. Tips werken in Grootmeester en bij de beeldpuzzels.",
     aw_term_help: "Tip",
     aw_rules_help: "‘Tip’ markeert een pijl die nu eruit kan.",
     aw_rules_example_title: "Voorbeeld",
@@ -24,7 +24,7 @@ Object.assign(STRINGS.nl, {
     aw_history_title: "Geschiedenis van Vrije baan",
     aw_history_slide_title: "Schuivende stukken",
     aw_history_slide_p1: "Puzzels waarin stukken binnen een kader schuiven, zijn oud. De bekendste is de vijftienpuzzel: vijftien genummerde blokjes in een doos met plaats voor zestien. Hij werd bedacht door Noyes Palmer Chapman, postmeester in Canastota in de staat New York. Vanaf december 1879 maakte de Bostonse houtbewerker Matthias Rice hem als ‘Gem Puzzle’, en in 1880 werd hij een rage in Amerika en al snel ook in Europa. Sam Loyd beweerde later dat hij hem had uitgevonden, maar hij had er niets mee te maken.",
-    aw_history_arrows_title: "Vrije baan die vertrekken",
-    aw_history_arrows_p1: "Bij de Vrije baan mag elk stuk maar één kant op en verlaat het het veld in plaats van heen en weer te schuiven. Zulke puzzels zijn de laatste jaren populair geworden in spellen voor aanraakschermen; één bepaalde uitvinder is niet bekend. De puzzels hier zijn gemaakt voor PaperGames: achterstevoren gebouwd, zodat elk veld leeg kan."
+    aw_history_arrows_title: "Pijlen die vertrekken",
+    aw_history_arrows_p1: "Bij de pijlenpuzzel mag elk stuk maar één kant op en verlaat het het veld in plaats van heen en weer te schuiven. Zulke puzzels zijn de laatste jaren populair geworden in spellen voor aanraakschermen; één bepaalde uitvinder is niet bekend. De puzzels hier zijn gemaakt voor PaperGames: achterstevoren gebouwd, zodat elk veld leeg kan."
 });
 I18n.markTextLoaded("nl");

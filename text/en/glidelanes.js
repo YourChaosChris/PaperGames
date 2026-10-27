@@ -1,5 +1,5 @@
 // text/en/glidelanes.js
-// Rules and history texts of arrows (en). Loaded by glidelanes-rules.html and glidelanes-history.html only (see i18n.js, data-i18n-text).
+// Rules and history texts of glidelanes (en). Loaded by glidelanes-rules.html and glidelanes-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.en, {
     aw_rules_title: "Glide Lanes Rules",
@@ -12,16 +12,16 @@ Object.assign(STRINGS.en, {
     aw_term_glide: "Gliding arrows (Hard and Master)",
     aw_rules_glide: "On Hard a blocked arrow does not stay put: it glides forward, body following head, up to the next arrow and stops there. That can block other arrows for good - think before you tap. Undo takes a move back, and Hint looks for a way out from where you are now. The arrows there have up to two corners and lie on 11 × 11 squares.",
     aw_term_master: "Master",
-    aw_rules_master: "As Hard, with no hint. A tap that does not let an arrow leave counts as a miss.",
+    aw_rules_master: "As Hard, but without a hint and without a frame for the arrow in the way. Every tap that does not take an arrow out of the field counts as a miss; the info line shows the misses, and you can always go on.",
     aw_term_goal: "Goal",
     aw_rules_goal: "Clear the whole field. Every puzzle is made so that it can be solved, and taking an arrow out never blocks another one, so you cannot get stuck. The fewest moves are the number of arrows; Undo counts as a move too.",
     aw_term_levels: "Levels",
-    aw_rules_levels: "Easy: 5 × 5 squares with short arrows. Medium: 7 × 7 with arrows of two to four squares. Hard: 11 × 11 with gliding arrows of up to seven squares and two corners. Master: as Hard, with counted misses. Grandmaster: 15 × 15 with gliding arrows up to 15 squares and six bends. Picture puzzles use one of 12 silhouettes.",
+    aw_rules_levels: "Easy: 5 × 5 squares with short arrows. Medium: 7 × 7 with arrows of two to four squares. Hard: 11 × 11 with gliding arrows of up to seven squares and two corners. Master: as Hard, misses are counted. Grandmaster: 15 × 15, with gliding arrows up to 15 squares and six bends, misses are counted here too. Picture puzzles use one of twelve outlined cell shapes. Hints work on Grandmaster and picture puzzles.",
     aw_term_help: "Hint",
     aw_rules_help: "Hint marks an arrow that can leave now.",
     aw_rules_example_title: "Example",
     aw_rules_example: "The long arrow points right, but the short arrow stands in its way. The short arrow can leave upwards; after that the way is free for the long arrow.",
-    aw_history_title: "Glide Lanes History",
+    aw_history_title: "History of Glide Lanes",
     aw_history_slide_title: "Sliding pieces",
     aw_history_slide_p1: "Puzzles in which pieces slide inside a frame are old. The best known is the 15 puzzle: fifteen numbered blocks in a box with room for sixteen. It was invented by Noyes Palmer Chapman, a postmaster in Canastota, New York. From December 1879 the Boston woodworker Matthias Rice made it as the \"Gem Puzzle\", and in 1880 it became a craze in America and soon in Europe. Sam Loyd later claimed to have invented it, but he had nothing to do with it.",
     aw_history_arrows_title: "Arrows that leave",

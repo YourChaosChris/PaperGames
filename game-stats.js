@@ -10,7 +10,7 @@ const GameStats = (function () {
 
   // Games renamed for trademark reasons: new name -> old name. Results
   // recorded under the old name are carried over once.
-  const RENAMED = { bullsandcows: ["mastermind"], marblepush: ["abalone"], lightswitch: ["lightsout"], reversi: ["othello"], wallmaze: ["quoridor"], fourinarow: ["connectfour"], cardtactics: ["onitama"], noneighbors: ["touchingdigits", "numberblocks"], pfotenwurf: ["tieryatzy"], glidelanes: ["arrows"] };
+  const RENAMED = { bullsandcows: ["mastermind"], marblepush: ["abalone"], lightswitch: ["lightsout"], reversi: ["othello"], wallmaze: ["quoridor"], fourinarow: ["connectfour"], cardtactics: ["onitama"], noneighbors: ["touchingdigits", "numberblocks"], pfotenwurf: ["tieryatzy"], glidelanes: ["arrows"], admiralsgrid: ["fleetbattle"] };
 
   function loadAll() {
     try {
