@@ -11,6 +11,8 @@ Object.assign(STRINGS.fr, {
     go_rules_liberties: "Les libertés d'une pierre sont les points vides directement à côté d'elle (haut/bas/gauche/droite, pas en diagonale). Les pierres connectées de la même couleur partagent leurs libertés en tant que groupe.",
     go_term_capture: "Capture",
     go_rules_capture: "Un groupe qui n'a plus de liberté est capturé et retiré du plateau immédiatement après le coup de l'adversaire.",
+    go_term_setup: "Taille du plateau et couleur",
+    go_rules_setup: "Tu choisis la taille du plateau sous le plateau lui-même : 9 × 9 pour une partie rapide, 13 × 13 ou 19 × 19 pour le plateau complet. Contre l’ordinateur, tu choisis aussi ta couleur : Noir, Blanc ou Au hasard ; l’ordinateur prend l’autre couleur. Noir joue toujours en premier et Blanc reçoit le komi. Tant qu’aucune pierre n’est posée, ton choix s’applique immédiatement ; sinon, il s’applique à la prochaine nouvelle partie.",
     go_rules_illegal_title: "Coups interdits",
     go_term_suicide: "Suicide",
     go_rules_suicide: "Vous ne pouvez pas jouer une pierre qui laisserait votre propre groupe sans aucune liberté, sauf si ce coup capture suffisamment de pierres ennemies pour le libérer d'abord.",

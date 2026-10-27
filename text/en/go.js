@@ -11,6 +11,8 @@ Object.assign(STRINGS.en, {
     go_rules_liberties: "A stone's liberties are the empty points directly next to it (up/down/left/right, not diagonally). Connected stones of the same color share their liberties as one group.",
     go_term_capture: "Capture",
     go_rules_capture: "A group with no liberties left is captured and removed from the board immediately after the opponent's move.",
+    go_term_setup: "Board size and color",
+    go_rules_setup: "You choose the board under the board itself: 9 × 9 for a quick game, 13 × 13, or 19 × 19, the full board. Against the computer you also choose your color: Black, White or Random; the computer takes the other color. Black always moves first, and White gets the komi. While no stone is on the board a choice applies at once; otherwise it applies to the next new game.",
     go_rules_illegal_title: "Illegal moves",
     go_term_suicide: "Suicide",
     go_rules_suicide: "You may not play a stone that would leave your own group with zero liberties, unless doing so captures enough enemy stones to free it first.",

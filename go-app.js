@@ -2,6 +2,9 @@
 // Wires GoCore/GoAi to the go.html UI. Mirrors app.js's structure and
 // conventions (settings panel, undo stack, board-fit handling) but Go's
 // own flow: click-to-place stones, Pass to end a game, area scoring.
+// Board size and colour (Black, White, Random) sit under the board
+// (#go-setup, task 160), because the page starts a game at once and the
+// settings panel is closed then. Saves keep their old format.
 
 const AppStateGo = {
   mode: "offline",        // "offline" | "offline-ai"
@@ -30,6 +33,42 @@ let einkGoResizeHandlerAttached = false;
 let einkGoResizeTimeoutId = null;
 
 const GO_SAVE_KEY = "einkchess_save_go";
+
+// Board size and colour for the next game, chosen under the board (task 160).
+// color: "b" | "w" | "random". Kept on the device like the other settings.
+const GO_SETUP_KEY = "papergames_go_setup";
+const GO_SIZES = [9, 13, 19];
+const GoSetup = { size: 9, color: "b" };
+
+function loadGoSetup() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(GO_SETUP_KEY) || "null");
+    if (raw && GO_SIZES.indexOf(raw.size) !== -1) GoSetup.size = raw.size;
+    if (raw && ["b", "w", "random"].indexOf(raw.color) !== -1) GoSetup.color = raw.color;
+  } catch (e) { /* storage unavailable - defaults */ }
+}
+
+function saveGoSetup() {
+  try { localStorage.setItem(GO_SETUP_KEY, JSON.stringify({ size: GoSetup.size, color: GoSetup.color })); } catch (e) {}
+}
+
+// The human's colour for a new game against the computer: Random draws one;
+// otherwise the shared "who starts: random" setting may still decide.
+function pickHumanColorGo() {
+  if (GoSetup.color === "random") return { color: Math.random() < 0.5 ? "b" : "w", drawn: true };
+  return { color: RandomStart.choose(GoSetup.color, ["w", "b"]), drawn: RandomStart.enabled() };
+}
+
+function renderGoSetup() {
+  document.querySelectorAll("#go-setup .go-pick").forEach((b) => {
+    const on = b.dataset.size ? Number(b.dataset.size) === GoSetup.size : b.dataset.color === GoSetup.color;
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+  const colorRow = document.getElementById("go-color-row");
+  if (colorRow) colorRow.classList.toggle("hidden", AppStateGo.mode === "offline");
+  const next = document.getElementById("go-setup-next");
+  if (next) next.classList.toggle("hidden", !(AppStateGo.moveCount > 0 && !AppStateGo.gameOver));
+}
 
 function saveGoGame() {
   if (typeof GameStorage === "undefined") return;
@@ -153,17 +192,11 @@ function initGoApp() {
   const modeOffline = document.getElementById("mode-offline");
   const modeOfflineAi = document.getElementById("mode-offline-ai");
   const offlineAiControls = document.getElementById("offline-ai-controls");
-  const goColorChoice = document.getElementById("go-color-choice");
   const goLevelInline = document.getElementById("go-level-inline");
-  const goSizeInline = document.getElementById("go-size-inline");
   const startGoGameBtn = document.getElementById("start-go-game");
   const passBtn = document.getElementById("pass-button");
   const resignBtn = document.getElementById("resign-button");
-
-  function updateGoColorChoiceVisibility() {
-    if (!goColorChoice || !goLevelInline) return;
-    goColorChoice.classList.toggle("hidden", goLevelInline.value === "0");
-  }
+  loadGoSetup();
 
   function setActiveModeButtonGo(mode) {
     if (!modeOffline || !modeOfflineAi) return;
@@ -221,42 +254,56 @@ function initGoApp() {
     }
   }
 
-  modeOffline.addEventListener("click", () => {
+  function startTwoPlayerGo() {
     setActiveModeButtonGo("offline");
     offlineAiControls.classList.add("hidden");
-    startNewGame(9, "offline", "b", 0);
-  });
+    startNewGame(GoSetup.size, "offline", "b", 0);
+    setStatusGo("offline-go-status", "Local 2-player game (no computer).");
+  }
+
+  function startVsComputerGo(level) {
+    setActiveModeButtonGo("offline-ai");
+    const pick = pickHumanColorGo();
+    startNewGame(GoSetup.size, "offline-ai", pick.color, level);
+    const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
+    const text = "You play " + colorNameGo(pick.color) + ", computer level: " + (levelNames[level] || level) + ".";
+    setStatusGo("offline-go-status", pick.drawn ? text.replace(/^You play /, "Chance decided: you play ") : text);
+  }
+
+  modeOffline.addEventListener("click", startTwoPlayerGo);
 
   modeOfflineAi.addEventListener("click", () => {
     setActiveModeButtonGo("offline-ai");
     offlineAiControls.classList.remove("hidden");
     if (goLevelInline) goLevelInline.value = String(AppStateGo.aiLevel || 2);
-    updateGoColorChoiceVisibility();
     setStatusGo("board-info", "");
   });
 
-  if (goLevelInline) {
-    goLevelInline.addEventListener("change", updateGoColorChoiceVisibility);
-  }
-
+  // "New game" (also the one next to the board) keeps the current mode:
+  // with the computer controls closed it is a 2-player game.
   startGoGameBtn.addEventListener("click", () => {
-    const size = goSizeInline ? parseInt(goSizeInline.value, 10) : 9;
     const level = goLevelInline ? parseInt(goLevelInline.value, 10) : 2;
-    const colorInput = document.querySelector("input[name='go-color']:checked");
-    const humanColor = RandomStart.choose(colorInput && colorInput.value === "white" ? "w" : "b", ["w", "b"]);
-
-    if (level === 0) {
-      setActiveModeButtonGo("offline-ai");
-      startNewGame(size, "offline", "b", 0);
-      setStatusGo("offline-go-status", "Local 2-player game (no computer).");
+    if (level === 0 || offlineAiControls.classList.contains("hidden")) {
+      startTwoPlayerGo();
       return;
     }
+    startVsComputerGo(level);
+  });
 
-    setActiveModeButtonGo("offline-ai");
-    startNewGame(size, "offline-ai", humanColor, level);
-    const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
-    setStatusGo("offline-go-status",
-      RandomStart.label("You play " + colorNameGo(humanColor) + ", computer level: " + (levelNames[level] || level) + "."));
+  // Size and colour buttons under the board: while no stone is on the
+  // board they start the game again at once, otherwise they count for the
+  // next new game.
+  document.querySelectorAll("#go-setup .go-pick").forEach((b) => {
+    b.addEventListener("click", () => {
+      if (b.dataset.size) GoSetup.size = Number(b.dataset.size);
+      else GoSetup.color = b.dataset.color;
+      saveGoSetup();
+      if (AppStateGo.moveCount === 0 && !AppStateGo.gameOver) {
+        if (AppStateGo.mode === "offline") startTwoPlayerGo();
+        else startVsComputerGo(AppStateGo.aiLevel || 2);
+      }
+      renderGoSetup();
+    });
   });
 
   if (passBtn) {
@@ -295,7 +342,7 @@ function initGoApp() {
     });
   }
 
-  updateGoColorChoiceVisibility();
+  renderGoSetup();
 
   const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(GO_SAVE_KEY) : null;
   if (savedGame && savedGame.board) {
@@ -576,6 +623,7 @@ function updateGameLabelsGo() {
   if (meta) I18n.setMsg(meta, AppStateGo.moveCount ? "Move " + AppStateGo.moveCount : "");
   updateUndoButtonVisibilityGo();
   updatePassResignVisibilityGo();
+  renderGoSetup();
 
   if (AppStateGo.gameOver) clearSavedGoGame();
   else saveGoGame();

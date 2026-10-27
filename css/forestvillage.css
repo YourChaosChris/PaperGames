@@ -1,6 +1,6 @@
 /* forestvillage: rules used only by the forestvillage pages (loaded after base.css). */
 /* Forest Village (forestvillage-app.js): own line, forest map (4 fields in
-   a row, 2 on a narrow screen), meadow / hand / village as card grids,
+   a row, 2 on a narrow screen), clearing / hand / village as card grids,
    action buttons, task, points table and log. Fields and cards that can
    be used now have a dashed outline, the selected card is inverted, cards
    that can't be paid have a thin dashed frame. Margins instead of `gap`. */

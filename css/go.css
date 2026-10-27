@@ -65,6 +65,45 @@
   pointer-events: none;
 }
 
+/* Board size and colour under the board (task 160): always visible, since
+   the page starts a game at once and the settings panel stays closed. */
+.go-setup {
+  margin-top: 12px;
+}
+
+.go-setup-title {
+  font-size: 1em;
+  margin: 10px 0 6px;
+}
+
+.go-picks {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* margin instead of flex `gap` (old E-Ink browsers) */
+.go-picks .go-pick {
+  min-height: 44px;
+  min-width: 44px;
+  margin: 0 6px 6px 0;
+  flex: 1 1 auto;
+}
+
+.go-pick[aria-pressed="true"] {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  font-weight: 800;
+}
+
+.go-pick[aria-pressed="true"] .go-stone-black {
+  border: 2px solid #ffffff;
+}
+
+.go-setup-note {
+  margin: 6px 0 0;
+}
+
 .go-point.last-move .go-stone::after {
   content: "";
   position: absolute;

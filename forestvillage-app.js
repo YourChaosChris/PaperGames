@@ -25,7 +25,7 @@ const AppStateFv = {
   gameOver: false,
   revealed: true,
   busy: false,
-  sel: null,         // { from: "hand" | "meadow", index }
+  sel: null,         // { from: "hand" | "clearing", index }
   status: null
 };
 
@@ -362,19 +362,19 @@ function renderFv() {
   fields.querySelectorAll(".fv-field").forEach((b) => b.addEventListener("click", () => onFieldFv(parseInt(b.getAttribute("data-field"), 10))));
 
   // Clearing and hand.
-  const meadow = document.getElementById("fv-meadow");
-  meadow.innerHTML = s.meadow.map((id, i) => (id ? cardHtmlFv(id, "meadow", i, p, s, true) : "")).join("");
+  const clearing = document.getElementById("fv-clearing");
+  clearing.innerHTML = s.clearing.map((id, i) => (id ? cardHtmlFv(id, "clearing", i, p, s, true) : "")).join("");
   const cover = document.getElementById("fv-hand-cover");
   const hand = document.getElementById("fv-hand");
   cover.classList.toggle("hidden", !covered);
   if (covered) document.getElementById("fv-hand-cover-text").textContent = fillFv("fv_status_pass", { p: playerNameFv(s.current) });
   hand.classList.toggle("hidden", covered);
   hand.innerHTML = covered ? "" : p.hand.map((id, i) => cardHtmlFv(id, "hand", i, p, s, true)).join("");
-  [meadow, hand].forEach((box) => box.querySelectorAll(".fv-card").forEach((b) => b.addEventListener("click", () => onCardFv(b.getAttribute("data-from"), parseInt(b.getAttribute("data-index"), 10)))));
+  [clearing, hand].forEach((box) => box.querySelectorAll(".fv-card").forEach((b) => b.addEventListener("click", () => onCardFv(b.getAttribute("data-from"), parseInt(b.getAttribute("data-index"), 10)))));
 
   // Buttons and the line under them.
   const sel = AppStateFv.sel;
-  const selId = sel ? (sel.from === "hand" ? p.hand[sel.index] : s.meadow[sel.index]) : null;
+  const selId = sel ? (sel.from === "hand" ? p.hand[sel.index] : s.clearing[sel.index]) : null;
   const canBuild = !!selId && legal.some((a) => a.type === "build" && a.from === sel.from && a.index === sel.index);
   document.getElementById("fv-build").disabled = !canBuild;
   document.getElementById("fv-end").disabled = !legal.some((a) => a.type === "end");

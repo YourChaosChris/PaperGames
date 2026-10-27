@@ -101,6 +101,21 @@ const KEY = "einkchess_save_forestvillage_v2";
   }, KEY);
   check("old saves are dropped silently " + JSON.stringify(legacy), legacy.stateOk && legacy.savedOk && legacy.first === null);
 
+  // A save of rules 3 from before the own names (key `meadow`, v273) is dropped too.
+  await page.evaluate((k) => {
+    const s = ForestVillageCore.createGame(2);
+    s.meadow = s.clearing; delete s.clearing; s.turn = 7;
+    localStorage.setItem(k, JSON.stringify({ mode: "vs-ai", level: "medium", state: s }));
+  }, KEY);
+  await load(); await page.waitForTimeout(500);
+  // The page may start a fresh game on its own; the old one must be gone.
+  const v273 = await page.evaluate((k) => {
+    const s = AppStateFv.state, raw = JSON.parse(localStorage.getItem(k) || "null");
+    const fresh = (x) => !x || (Array.isArray(x.clearing) && !("meadow" in x) && x.turn !== 7);
+    return { state: fresh(s), saved: !raw || fresh(raw.state), title: document.querySelector('[data-i18n="fv_clearing_title"]').textContent };
+  }, KEY);
+  check("a v273 save with meadow is dropped silently " + JSON.stringify(v273), v273.state && v273.saved && /Senke/.test(v273.title));
+
   // Rules page in German.
   await page.goto(BASE + "forestvillage-rules.html?lang=de", { waitUntil: "load" }); await page.waitForTimeout(500);
   const rules = await page.evaluate(() => ({ text: document.body.textContent, over: document.documentElement.scrollWidth - innerWidth }));

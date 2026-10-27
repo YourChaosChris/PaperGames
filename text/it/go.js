@@ -11,6 +11,8 @@ Object.assign(STRINGS.it, {
     go_rules_liberties: "Le libertà di una pietra sono i punti vuoti immediatamente adiacenti (sopra/sotto/sinistra/destra, non in diagonale). Le pietre dello stesso colore collegate condividono le loro libertà come un unico gruppo.",
     go_term_capture: "Cattura",
     go_rules_capture: "Un gruppo senza più libertà viene catturato e rimosso dal tavoliere subito dopo la mossa dell'avversario.",
+    go_term_setup: "Dimensione del tavoliere e colore",
+    go_rules_setup: "Scegli la dimensione del tavoliere sotto il tavoliere stesso: 9 × 9 per una partita rapida, 13 × 13 o 19 × 19 per il tavoliere completo. Contro il computer scegli anche il tuo colore: Nero, Bianco o Casuale; il computer prende l’altro colore. Il Nero muove sempre per primo e il Bianco riceve il komi. Finché non c’è nessuna pietra sul tavoliere, la tua scelta si applica subito; altrimenti, si applica alla prossima nuova partita.",
     go_rules_illegal_title: "Mosse illegali",
     go_term_suicide: "Suicidio",
     go_rules_suicide: "Non puoi giocare una pietra che lascerebbe il tuo stesso gruppo senza libertà, a meno che questa mossa non catturi prima abbastanza pietre avversarie da liberarlo.",

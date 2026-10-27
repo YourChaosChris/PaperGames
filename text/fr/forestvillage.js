@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.fr, {
     fv_rules_title: "Village de la forêt – règles",
-    fv_rules_intro: "Les animaux de la forêt construisent un village pendant un an, du printemps à l’hiver. Après l’hiver, la personne avec le plus de points gagne ; en solo, tu vises un score donné.",
+    fv_rules_intro: "Chaque joueur envoie des écureuils sur une carte forestière, récolte de l’argile, des graines et des plumes, puis remplit son village avec jusqu’à 12 cartes. Après quatre saisons, la personne qui a le plus de points gagne ; en solo, tu joues pour atteindre un score cible.",
     fv_rules_basics_title: "Les règles",
     fv_term_res: "Ressources et forêt",
     fv_rules_res: "Il y a 3 ressources : argile, graines et plumes. La forêt compte 8 lieux : Berge d’argile (2 argiles), Carré de graines (2 graines), Nid de plumes (2 plumes), Sentier des fougères (1 argile et 1 plume), Chemin moussu (1 graine et 1 plume), Clairière ensoleillée (1 argile et 1 graine), Vieux chêne (1 argile et 1 carte) et Marché (2 cartes). Chaque lieu accueille autant d’écureuils que souhaité. Le premier écureuil sur un lieu pendant une saison reçoit aussi son bonus : 1 ressource de plus du lieu, 1 carte ou, au Vieux chêne, 1 plume.",

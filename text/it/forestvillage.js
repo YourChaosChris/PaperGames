@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.it, {
     fv_rules_title: "Villaggio del bosco – regole",
-    fv_rules_intro: "Gli animali della foresta costruiscono un villaggio nel corso di un anno, dalla primavera all’inverno. Vince chi ha più punti dopo l’inverno; in solitario giochi per raggiungere un punteggio obiettivo.",
+    fv_rules_intro: "Ogni giocatore invia scoiattoli sulla mappa di una foresta, raccoglie argilla, semi e piume e riempie un insediamento con fino a 12 carte. Dopo quattro stagioni vince chi totalizza più punti; in solitaria giochi per raggiungere un punteggio obiettivo.",
     fv_rules_basics_title: "Le regole",
     fv_term_res: "Risorse e bosco",
     fv_rules_res: "Ci sono 3 risorse: argilla, semi e piume. La foresta ha 8 luoghi: Riva d’argilla (2 argille), Orto dei semi (2 semi), Nido di piume (2 piume), Sentiero delle felci (1 argilla e 1 piuma), Traccia muschiosa (1 seme e 1 piuma), Radura assolata (1 argilla e 1 seme), Vecchia quercia (1 argilla e 1 carta) e Mercato (2 carte). Ogni luogo può ospitare scoiattoli senza limite. Il primo scoiattolo a raggiungere un luogo in una stagione riceve anche il bonus: 1 risorsa del luogo in più, 1 carta o, alla Vecchia quercia, 1 piuma.",

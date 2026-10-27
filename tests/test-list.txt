@@ -94,6 +94,8 @@
 20 villains-ui.js
 36 forestvillage-core.js
 12 forestvillage-ui.js
+2 go-core.js
+10 go-ui.js
 6 adventurebook-core.js
 1 new-games-order.js
 8 kids-games.js

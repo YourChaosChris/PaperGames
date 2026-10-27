@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.en, {
     fv_rules_title: "Forest Village Rules",
-    fv_rules_intro: "Forest animals build a village through one year, from spring to winter. Whoever has the most points after winter wins; alone you play for a target score.",
+    fv_rules_intro: "Each player sends squirrels across a forest map, gathers clay, seeds and feathers and fills a settlement with up to 12 cards. After four seasons the most points win; alone you play for a target score.",
     fv_rules_basics_title: "The rules",
     fv_term_res: "Resources and the forest",
     fv_rules_res: "There are three resources: clay, seeds and feathers. The forest has eight fields: Clay Bank (2 clay), Seed Patch (2 seeds), Feather Nest (2 feathers), Fern Path (1 clay and 1 feather), Moss Trail (1 seed and 1 feather), Sunny Hollow (1 clay and 1 seed), Old Oak (1 clay and 1 card) and Market (2 cards). Every field takes any number of squirrels. The first squirrel on a field in a season also gets its extra: 1 more of the field's resource, 1 card, or at the Old Oak 1 feather.",

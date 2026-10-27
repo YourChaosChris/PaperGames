@@ -1,7 +1,9 @@
 // forestvillage-core.js
-// "Forest Village" (Waldsiedlung) - forest animals build a village through
-// one shared year; 1 to 4 players (alone against a target score, or against
-// the computer). Dependency-free, no DOM.
+// "Forest Village" (Waldsiedlung) - squirrels gather clay, seeds and feathers
+// on a forest map for a settlement of buildings and animals; 1 to 4 players
+// (alone against a target score, or against the computer). Dependency-free,
+// no DOM. Saves from before the card and key names of v274 (`meadow`, old
+// card ids) fail isCurrentState and are dropped.
 //
 // Rules (version 3, `state.rules === RULES`):
 // - Resources: clay, seeds and feathers (c, s, f).
@@ -33,7 +35,7 @@ const ForestVillageCore = (function () {
   const MAX_WORKERS = 6;
   const HAND_FILL = 4;          // hands are filled up to 4 at each season start
   const MAX_VILLAGE = 12;
-  const MEADOW = 6;
+  const CLEARING = 6;
   const RANGE_MIN = 3;          // cards of one habitat for a home range
   const RANGE_PTS = 3;
   const SOLO_TARGET = 45;
@@ -60,72 +62,57 @@ const ForestVillageCore = (function () {
   //   "prod" | "range" | "leftover").
   const C = (id, kind, cost, pts, fx, habitat, copies) => ({ id, kind, cost, pts, fx: fx || {}, habitat, copies: copies || 2 });
   const CARDS = [
-    C("bakery", "building", { w: 2, p: 1 }, 2, { prod: { b: 2 } }, "hedge", 3),
-    C("sawmill", "building", { r: 1, p: 1 }, 2, { prod: { w: 2 } }, "stream", 3),
-    C("resinkettle", "building", { w: 2, p: 1 }, 2, { prod: { r: 1 } }, "treetop", 3),
-    C("gravelpit", "building", { w: 2, r: 1 }, 2, { prod: { p: 1 } }, "rock", 3),
-    C("pantry", "building", { w: 2 }, 1, { prod: { w: 1, b: 1 } }, "hedge", 3),
-    C("watermill", "building", { w: 3, p: 1 }, 3, { prod: { r: 1, b: 1 } }, "stream"),
-    C("beehive", "building", { w: 1, b: 1 }, 1, { prod: { r: 1 } }, "heath"),
-    C("school", "building", { w: 2, r: 1 }, 2, { draw: 3 }, "treetop"),
-    C("library", "building", { r: 2, p: 1 }, 3, { draw: 2, gain: { p: 1 } }, "rock"),
-    C("inn", "building", { w: 2, r: 1 }, 2, { gain: { b: 3 } }, "heath"),
-    C("well", "building", { w: 2 }, 1, { gain: { r: 1, p: 1 } }, "stream"),
-    C("lookout", "building", { w: 3, p: 2 }, 4, {}, "treetop"),
-    C("workshop", "building", { w: 2, r: 1 }, 2, { gain: { w: 1, r: 1, p: 1 } }, "rock"),
-    C("markethall", "building", { w: 2, r: 1, p: 1 }, 3, { gain: { w: 1, r: 1, p: 1, b: 1 } }, "treetop"),
-    C("teahouse", "building", { w: 2, r: 2, p: 1 }, 2, { end: { per: "animal", n: 1 } }, "stream", 1),
-    C("bandstand", "building", { w: 2, r: 2, p: 1 }, 2, { end: { per: "prod", n: 1 } }, "heath", 1),
-    C("townhall", "building", { w: 3, r: 2, p: 2 }, 2, { end: { per: "building", n: 1 } }, "heath", 1),
-    C("herbgarden", "building", { w: 1, r: 1 }, 1, { prod: { b: 1 }, draw: 1 }, "hedge"),
-    C("mushroomcellar", "building", { w: 1, p: 1 }, 1, { prod: { b: 2 } }, "rock"),
-    C("pottery", "building", { w: 2, p: 1 }, 2, { end: { per: "leftover", n: 1 } }, "hedge", 1),
-    C("bridge", "building", { r: 1, p: 1 }, 2, { gain: { w: 3 } }, "stream"),
-    C("lanternhouse", "building", { w: 2, r: 1 }, 2, { draw: 2 }, "heath"),
-    C("observatory", "building", { r: 2, p: 3 }, 2, { end: { per: "range", n: 2 } }, "treetop", 1),
-    C("tailor", "building", { w: 2, r: 1, p: 1 }, 3, {}, "rock"),
-    C("fairground", "building", { w: 2, r: 1, b: 2 }, 3, {}, "hedge"),
-    C("hedgehog", "animal", { b: 2 }, 1, { prod: { b: 1 } }, "hedge", 3),
-    C("beaver", "animal", { b: 2 }, 1, { prod: { w: 1 } }, "stream", 3),
-    C("woodpecker", "animal", { b: 2, w: 1 }, 1, { prod: { r: 1 } }, "treetop", 3),
-    C("mole", "animal", { b: 3 }, 1, { prod: { p: 1 } }, "rock", 3),
-    C("hamster", "animal", { b: 1 }, 1, { draw: 1 }, "hedge", 3),
-    C("otter", "animal", { b: 2 }, 2, { gain: { w: 2 } }, "stream"),
-    C("bear", "animal", { b: 4 }, 3, {}, "heath"),
-    C("owl", "animal", { b: 2 }, 2, { draw: 2 }, "treetop"),
-    C("badger", "animal", { b: 2, w: 1 }, 2, { gain: { p: 1 } }, "rock"),
-    C("fox", "animal", { b: 3 }, 2, { gain: { r: 1, p: 1 } }, "heath"),
-    C("frog", "animal", { b: 2 }, 1, { gain: { p: 1 } }, "stream"),
-    C("hawk", "animal", { b: 3 }, 2, { draw: 1, gain: { r: 1 } }, "treetop"),
-    C("raccoon", "animal", { b: 3 }, 2, { gain: { w: 2, r: 1 } }, "rock"),
-    C("magpie", "animal", { b: 2, w: 1 }, 2, { gain: { p: 1 } }, "treetop"),
-    C("snail", "animal", { b: 2 }, 2, {}, "stream"),
-    C("cricket", "animal", { b: 2 }, 1, { end: { per: "animal", n: 1 } }, "heath", 1),
-    C("stag", "animal", { b: 4 }, 3, {}, "heath"),
-    C("rabbit", "animal", { b: 1 }, 1, { gain: { b: 1 }, draw: 1 }, "hedge"),
-    C("boar", "animal", { b: 3 }, 2, { gain: { w: 1, b: 1 } }, "rock"),
-    C("blackbird", "animal", { b: 1, w: 1 }, 1, { gain: { r: 1 } }, "hedge"),
-    C("duck", "animal", { b: 1 }, 1, { gain: { b: 2 } }, "stream"),
-    C("firefly", "animal", { b: 1 }, 1, { draw: 1 }, "heath"),
-    C("bat", "animal", { b: 3 }, 1, { end: { per: "animal", n: 1 } }, "treetop", 1),
-    C("spider", "animal", { b: 2, r: 1 }, 2, {}, "rock"),
-    C("lark", "animal", { b: 2 }, 2, {}, "hedge")
+    C("bakery", "building", { c: 2, f: 1 }, 2, { prod: { f: 2 } }, "hedge", 3),
+    C("sawmill", "building", { s: 1, f: 1 }, 2, { prod: { c: 2 } }, "stream", 3),
+    C("seedloft", "building", { c: 2, f: 1 }, 2, { prod: { s: 1 } }, "treetop", 3),
+    C("gravelpit", "building", { c: 2, s: 1 }, 2, { prod: { f: 1 } }, "rock", 3),
+    C("pantry", "building", { c: 2 }, 1, { prod: { c: 1, f: 1 } }, "hedge", 3),
+    C("watermill", "building", { c: 3, f: 1 }, 3, { prod: { s: 1, f: 1 } }, "stream"),
+    C("beehive", "building", { c: 1, f: 1 }, 1, { prod: { s: 1 } }, "heath"),
+    C("noticeboard", "building", { c: 2, s: 1 }, 2, { draw: 3 }, "treetop"),
+    C("library", "building", { s: 2, f: 1 }, 3, { draw: 2, gain: { f: 1 } }, "rock"),
+    C("orchard", "building", { c: 2, s: 1 }, 2, { gain: { f: 3 } }, "heath"),
+    C("well", "building", { c: 2 }, 1, { gain: { s: 1, f: 1 } }, "stream"),
+    C("treehouse", "building", { c: 3, f: 2 }, 4, {}, "treetop"),
+    C("workshop", "building", { c: 2, s: 1 }, 2, { gain: { c: 1, s: 1, f: 1 } }, "rock"),
+    C("markethall", "building", { c: 2, s: 1, f: 1 }, 3, { gain: { c: 1, s: 1, f: 2 } }, "treetop"),
+    C("teahouse", "building", { c: 2, s: 2, f: 1 }, 2, { end: { per: "animal", n: 1 } }, "stream", 1),
+    C("bandstand", "building", { c: 2, s: 2, f: 1 }, 2, { end: { per: "prod", n: 1 } }, "heath", 1),
+    C("townhall", "building", { c: 3, s: 2, f: 2 }, 2, { end: { per: "building", n: 1 } }, "heath", 1),
+    C("herbgarden", "building", { c: 1, s: 1 }, 1, { prod: { f: 1 }, draw: 1 }, "hedge"),
+    C("mushroomcellar", "building", { c: 1, f: 1 }, 1, { prod: { f: 2 } }, "rock"),
+    C("pottery", "building", { c: 2, f: 1 }, 2, { end: { per: "leftover", n: 1 } }, "hedge", 1),
+    C("bridge", "building", { s: 1, f: 1 }, 2, { gain: { c: 3 } }, "stream"),
+    C("lanternhouse", "building", { c: 2, s: 1 }, 2, { draw: 2 }, "heath"),
+    C("observatory", "building", { s: 2, f: 3 }, 2, { end: { per: "range", n: 2 } }, "treetop", 1),
+    C("tailor", "building", { c: 2, s: 1, f: 1 }, 3, {}, "rock"),
+    C("rosearbor", "building", { c: 2, s: 1, f: 2 }, 3, {}, "hedge"),
+    C("hedgehog", "animal", { f: 2 }, 1, { prod: { f: 1 } }, "hedge", 3),
+    C("beaver", "animal", { f: 2 }, 1, { prod: { c: 1 } }, "stream", 3),
+    C("woodpecker", "animal", { c: 1, f: 2 }, 1, { prod: { s: 1 } }, "treetop", 3),
+    C("mole", "animal", { f: 3 }, 1, { prod: { f: 1 } }, "rock", 3),
+    C("hamster", "animal", { f: 1 }, 1, { draw: 1 }, "hedge", 3),
+    C("otter", "animal", { f: 2 }, 2, { gain: { c: 2 } }, "stream"),
+    C("bear", "animal", { f: 4 }, 3, {}, "heath"),
+    C("owl", "animal", { f: 2 }, 2, { draw: 2 }, "treetop"),
+    C("badger", "animal", { c: 1, f: 2 }, 2, { gain: { f: 1 } }, "rock"),
+    C("fox", "animal", { f: 3 }, 2, { gain: { s: 1, f: 1 } }, "heath"),
+    C("frog", "animal", { f: 2 }, 1, { gain: { f: 1 } }, "stream"),
+    C("hawk", "animal", { f: 3 }, 2, { draw: 1, gain: { s: 1 } }, "treetop"),
+    C("raccoon", "animal", { f: 3 }, 2, { gain: { c: 2, s: 1 } }, "rock"),
+    C("magpie", "animal", { c: 1, f: 2 }, 2, { gain: { f: 1 } }, "treetop"),
+    C("snail", "animal", { f: 2 }, 2, {}, "stream"),
+    C("cricket", "animal", { f: 2 }, 1, { end: { per: "animal", n: 1 } }, "heath", 1),
+    C("stag", "animal", { f: 4 }, 3, {}, "heath"),
+    C("rabbit", "animal", { f: 1 }, 1, { gain: { f: 1 }, draw: 1 }, "hedge"),
+    C("boar", "animal", { f: 3 }, 2, { gain: { c: 1, f: 1 } }, "rock"),
+    C("blackbird", "animal", { c: 1, f: 1 }, 1, { gain: { s: 1 } }, "hedge"),
+    C("duck", "animal", { f: 1 }, 1, { gain: { f: 2 } }, "stream"),
+    C("firefly", "animal", { f: 1 }, 1, { draw: 1 }, "heath"),
+    C("bat", "animal", { f: 3 }, 1, { end: { per: "animal", n: 1 } }, "treetop", 1),
+    C("spider", "animal", { s: 1, f: 2 }, 2, {}, "rock"),
+    C("lark", "animal", { f: 2 }, 2, {}, "hedge")
   ];
-  // Cards began with a four-resource prototype. Convert their costs and effects
-  // into the current three-resource economy, combining stone/food into feathers.
-  const convertResources = (obj) => {
-    const out = {};
-    Object.keys(obj || {}).forEach((k) => {
-      const key = ({ w: "c", r: "s", p: "f", b: "f" })[k] || k;
-      out[key] = (out[key] || 0) + obj[k];
-    });
-    return out;
-  };
-  CARDS.forEach((c) => {
-    c.cost = convertResources(c.cost);
-    if (c.fx.prod) c.fx.prod = convertResources(c.fx.prod);
-    if (c.fx.gain) c.fx.gain = convertResources(c.fx.gain);
-  });
   const BY_ID = {};
   CARDS.forEach((c) => { BY_ID[c.id] = c; });
   function card(id) { return BY_ID[id]; }
@@ -173,7 +160,7 @@ const ForestVillageCore = (function () {
     const rnd = rng || Math.random;
     const s = {
       rules: RULES,
-      deck: shuffle(fullDeck(), rnd), discard: [], meadow: [],
+      deck: shuffle(fullDeck(), rnd), discard: [], clearing: [],
       fields: FIELDS.map(() => []),   // player indexes per field, in order
       task: TASKS[Math.floor(rnd() * TASKS.length)].id,
       players: [], season: 0, starter: 0, current: 0, phase: "place", turn: 0, over: false, log: []
@@ -183,7 +170,7 @@ const ForestVillageCore = (function () {
       if (n > 1) addRes({ res }, SEAT_RES[i]);
       s.players.push({ res, hand: [], village: [], workers: START_WORKERS, placed: 0, placementsSinceProduction: 0, turns: 0 });
     }
-    for (let i = 0; i < MEADOW; i++) s.meadow.push(drawOne(s, rnd));
+    for (let i = 0; i < CLEARING; i++) s.clearing.push(drawOne(s, rnd));
     s.players.forEach((p) => fillHand(s, p, rnd));
     return s;
   }
@@ -191,7 +178,7 @@ const ForestVillageCore = (function () {
   // Is this a game of the current rules? (Older saves are dropped.)
   function isCurrentState(s) {
     return !!s && s.rules === RULES && Array.isArray(s.players) && s.players.length >= 1 && s.players.length <= 4 &&
-      Array.isArray(s.fields) && s.fields.length === FIELDS.length && Array.isArray(s.meadow) &&
+      Array.isArray(s.fields) && s.fields.length === FIELDS.length && Array.isArray(s.clearing) &&
       typeof s.season === "number" && s.season >= 0 && s.season < SEASONS.length && (s.phase === "place" || s.phase === "build") &&
       s.players.every((p) => p && p.res && Array.isArray(p.hand) && Array.isArray(p.village) &&
         p.village.every((v) => v && card(v.id)) && p.hand.every((id) => !!card(id)));
@@ -248,13 +235,13 @@ const ForestVillageCore = (function () {
   function buildActions(s, p) {
     const out = [];
     p.hand.forEach((id, i) => { if (canBuild(s, p, id)) out.push({ type: "build", from: "hand", index: i }); });
-    s.meadow.forEach((id, i) => { if (id && canBuild(s, p, id)) out.push({ type: "build", from: "meadow", index: i }); });
+    s.clearing.forEach((id, i) => { if (id && canBuild(s, p, id)) out.push({ type: "build", from: "clearing", index: i }); });
     return out;
   }
 
   // Legal actions of the active player:
   //   place phase: { type: "place", field };
-  //   build phase: { type: "build", from: "hand" | "meadow", index }, { type: "end" }.
+  //   build phase: { type: "build", from: "hand" | "clearing", index }, { type: "end" }.
   function legalActions(s) {
     if (s.over) return [];
     const p = s.players[s.current];
@@ -323,13 +310,13 @@ const ForestVillageCore = (function () {
       return true;
     }
     if (act.type === "build") {
-      const id = act.from === "hand" ? p.hand[act.index] : s.meadow[act.index];
+      const id = act.from === "hand" ? p.hand[act.index] : s.clearing[act.index];
       const c = card(id);
       const discounted = discountedAnimal(p, id);
       const cost = costFor(p, id);
       Object.keys(cost).forEach((k) => { p.res[k] -= cost[k]; });
       if (act.from === "hand") p.hand.splice(act.index, 1);
-      else s.meadow[act.index] = drawOne(s, rnd);
+      else s.clearing[act.index] = drawOne(s, rnd);
       p.village.push({ id });
       if (c.fx.prod) addRes(p, c.fx.prod);
       addRes(p, c.fx.gain);
@@ -434,7 +421,7 @@ const ForestVillageCore = (function () {
   function bestBuildValue(s, p, level) {
     let best = 0;
     if (p.village.length >= MAX_VILLAGE) return 0;
-    p.hand.concat(s.meadow).forEach((id) => {
+    p.hand.concat(s.clearing).forEach((id) => {
       if (!id || !canAfford(p, costFor(p, id))) return;
       best = Math.max(best, cardValue(s, p, id, level));
     });
@@ -449,7 +436,7 @@ const ForestVillageCore = (function () {
     if (level === "easy") return v;
     // Production pays out after this squirrel?
     const want = { c: 0, s: 0, f: 0 };
-    p.hand.concat(s.meadow).forEach((id) => {
+    p.hand.concat(s.clearing).forEach((id) => {
       if (!id) return;
       const c = card(id);
       if (cardValue(s, p, id, level) < 2) return;
@@ -479,7 +466,7 @@ const ForestVillageCore = (function () {
     acts.forEach((a) => {
       let v;
       if (a.type === "build") {
-        const id = a.from === "hand" ? p.hand[a.index] : s.meadow[a.index];
+        const id = a.from === "hand" ? p.hand[a.index] : s.clearing[a.index];
         v = cardValue(s, p, id, level) + 0.5;
         if (p.village.length >= MAX_VILLAGE - 2 && card(id).pts <= 1 && !discountedAnimal(p, id)) v -= 2;
       } else if (a.type === "place") v = fieldValue(s, p, a.field, level);
@@ -490,7 +477,7 @@ const ForestVillageCore = (function () {
     return best;
   }
 
-  return { RULES, RES, SEASONS, HABITATS, FIELDS, CARDS, TASKS, START_WORKERS, WORKER_STEP, MAX_WORKERS, HAND_FILL, MAX_VILLAGE, MEADOW,
+  return { RULES, RES, SEASONS, HABITATS, FIELDS, CARDS, TASKS, START_WORKERS, WORKER_STEP, MAX_WORKERS, HAND_FILL, MAX_VILLAGE, CLEARING,
     RANGE_MIN, RANGE_PTS, SOLO_TARGET, SEAT_RES,
     card, makeRng, createGame, isCurrentState, legalActions, isLegal, apply, canBuild, costFor, discountedAnimal, workersFor,
     gainOf, score, winners, taskDone, ranges, chooseAction, clone, season };

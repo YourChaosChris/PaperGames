@@ -11,6 +11,8 @@ Object.assign(STRINGS.es, {
     go_rules_liberties: "Las libertades de una piedra son los puntos vacíos justo a su lado (arriba/abajo/izquierda/derecha, no en diagonal). Las piedras conectadas del mismo color comparten sus libertades como un solo grupo.",
     go_term_capture: "Captura",
     go_rules_capture: "Un grupo sin libertades restantes es capturado y retirado del tablero inmediatamente después de la jugada del oponente.",
+    go_term_setup: "Tamaño del tablero y color",
+    go_rules_setup: "Eliges el tamaño debajo del tablero: 9 × 9 para una partida rápida, 13 × 13 o 19 × 19 para el tablero completo. Contra el ordenador también eliges tu color: Negro, Blanco o Al azar; el ordenador juega con el otro color. Negro siempre juega primero y Blanco recibe el komi. Mientras no haya ninguna piedra en el tablero, tu elección se aplica de inmediato; después, se aplicará en la próxima partida nueva.",
     go_rules_illegal_title: "Jugadas ilegales",
     go_term_suicide: "Suicidio",
     go_rules_suicide: "No puedes colocar una piedra que deje a tu propio grupo sin libertades, a menos que al hacerlo captures suficientes piedras enemigas como para liberarlo primero.",

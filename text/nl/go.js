@@ -11,6 +11,8 @@ Object.assign(STRINGS.nl, {
     go_rules_liberties: "De vrijheden van een steen zijn de lege punten er direct naast (boven/onder/links/rechts, niet diagonaal). Verbonden stenen van dezelfde kleur delen hun vrijheden als één groep.",
     go_term_capture: "Slaan",
     go_rules_capture: "Een groep zonder overgebleven vrijheden wordt geslagen en direct na de zet van de tegenstander van het bord gehaald.",
+    go_term_setup: "Bordgrootte en kleur",
+    go_rules_setup: "Je kiest de bordgrootte onder het bord zelf: 9 × 9 voor een snel spel, 13 × 13 of 19 × 19 voor het volledige bord. Tegen de computer kies je ook jouw kleur: Zwart, Wit of Willekeurig; de computer speelt met de andere kleur. Zwart zet altijd als eerste en Wit krijgt de komi. Zolang er nog geen steen op het bord ligt, geldt je keuze meteen; daarna geldt die voor het volgende nieuwe spel.",
     go_rules_illegal_title: "Verboden zetten",
     go_term_suicide: "Zelfmoordzet",
     go_rules_suicide: "Je mag geen steen zetten die je eigen groep zonder vrijheden achterlaat, tenzij die zet eerst genoeg vijandige stenen slaat om de groep te bevrijden.",

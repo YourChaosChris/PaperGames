@@ -66,18 +66,7 @@
 
     <section id="offline-ai-controls" class="card hidden">
   <div class="field-row">
-    <select id="go-size-inline">
-      <option value="9" data-i18n="go_board_size_9">9 × 9 (fast)</option>
-      <option value="13">13 × 13</option>
-      <option value="19" data-i18n="go_board_size_19">19 × 19 (full size)</option>
-    </select>
-  </div>
-  <div class="field-row">
     <button id="start-go-game" class="primary" data-i18n="ui_new_game">New game</button>
-    <div id="go-color-choice" class="inline-options">
-      <label class="color-choice"><input type="radio" name="go-color" value="black" checked> <span class="color-choice-icon"><span class="go-stone-icon go-stone-black"></span></span> <span data-i18n="go_color_black">Black</span></label>
-      <label class="color-choice"><input type="radio" name="go-color" value="white"> <span class="color-choice-icon"><span class="go-stone-icon go-stone-white"></span></span> <span data-i18n="go_color_white">White</span></label>
-    </div>
     <select id="go-level-inline">
         <option value="1" data-i18n="level_easy">Easy</option>
         <option value="2" data-i18n="level_medium">Medium</option>
@@ -113,6 +102,24 @@
     <button id="resign-button" class="secondary small hidden" data-i18n="resign_button">Resign 🏳</button>
   </div>
   <div id="score-line" class="score-line hidden"><span id="score-captures" class="score-line-captures"></span></div>
+  <div id="go-setup" class="go-setup">
+    <h2 class="go-setup-title" data-i18n="go_setup_size">Board size</h2>
+    <div class="go-picks" role="group">
+      <button type="button" class="secondary go-pick" data-size="9" aria-pressed="true" data-i18n="go_board_size_9">9 × 9 (fast)</button>
+      <button type="button" class="secondary go-pick" data-size="13" aria-pressed="false" data-i18n="go_board_size_13">13 × 13</button>
+      <button type="button" class="secondary go-pick" data-size="19" aria-pressed="false" data-i18n="go_board_size_19">19 × 19 (full size)</button>
+    </div>
+    <div id="go-color-row">
+      <h2 class="go-setup-title" data-i18n="go_setup_color">Your color</h2>
+      <div class="go-picks" role="group">
+        <button type="button" class="secondary go-pick" data-color="b" aria-pressed="true"><span class="go-stone-icon go-stone-black" aria-hidden="true"></span> <span data-i18n="go_color_black">Black</span></button>
+        <button type="button" class="secondary go-pick" data-color="w" aria-pressed="false"><span class="go-stone-icon go-stone-white" aria-hidden="true"></span> <span data-i18n="go_color_white">White</span></button>
+        <button type="button" class="secondary go-pick" data-color="random" aria-pressed="false" data-i18n="go_color_random">Random</button>
+      </div>
+    </div>
+    <p class="go-setup-note" data-i18n="go_setup_note">9 × 9 is quick, 19 × 19 is the full board. Black moves first; White gets 7.5 points (komi) for moving second. The computer plays the other color.</p>
+    <p id="go-setup-next" class="go-setup-note hidden" data-i18n="go_setup_next">Your choice applies to the next game – tap New game.</p>
+  </div>
 </section>
   </main>
   <footer class="site-footer">

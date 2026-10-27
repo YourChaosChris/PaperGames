@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.es, {
     fv_rules_title: "Aldea del bosque – reglas",
-    fv_rules_intro: "Los animales del bosque construyen una aldea durante un año, de primavera a invierno. Gana quien tenga más puntos después del invierno; en solitario juegas para alcanzar una puntuación objetivo.",
+    fv_rules_intro: "Cada jugador envía ardillas por un mapa del bosque, reúne arcilla, semillas y plumas, y llena un asentamiento con hasta 12 cartas. Tras cuatro estaciones, gana quien consiga más puntos; en solitario, juegas para alcanzar una puntuación objetivo.",
     fv_rules_basics_title: "Las reglas",
     fv_term_res: "Recursos y bosque",
     fv_rules_res: "Hay 3 recursos: arcilla, semillas y plumas. El bosque tiene 8 lugares: Orilla de arcilla (2 arcillas), Parcela de semillas (2 semillas), Nido de plumas (2 plumas), Sendero de helechos (1 arcilla y 1 pluma), Camino de musgo (1 semilla y 1 pluma), Claro soleado (1 arcilla y 1 semilla), Viejo roble (1 arcilla y 1 carta) y Mercado (2 cartas). En cada lugar caben tantas ardillas como quieras. La primera ardilla que llega a un lugar en una estación también recibe su bonificación: 1 recurso más del lugar, 1 carta o, en el Viejo roble, 1 pluma.",

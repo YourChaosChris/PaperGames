@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.de, {
     fv_rules_title: "Waldsiedlung – Regeln",
-    fv_rules_intro: "Waldtiere bauen ein Jahr lang, vom Frühling bis zum Winter, ein Dorf. Wer nach dem Winter die meisten Punkte hat, gewinnt; allein spielst du auf ein Punkteziel.",
+    fv_rules_intro: "Jede Person schickt Eichhörnchen über eine Waldkarte, sammelt Lehm, Samen und Federn und füllt eine Siedlung mit bis zu 12 Karten. Nach vier Jahreszeiten gewinnt, wer die meisten Punkte hat; allein spielst du auf ein Punkteziel.",
     fv_rules_basics_title: "Die Regeln",
     fv_term_res: "Rohstoffe und der Wald",
     fv_rules_res: "Es gibt drei Rohstoffe: Lehm, Samen und Federn. Der Wald hat acht Felder: Lehmufer (2 Lehm), Samenbeet (2 Samen), Federbett (2 Federn), Farnpfad (1 Lehm und 1 Feder), Moosweg (1 Samen und 1 Feder), Sonnensenke (1 Lehm und 1 Samen), Alte Eiche (1 Lehm und 1 Karte) und Markt (2 Karten). Auf jedes Feld passen beliebig viele Eichhörnchen. Das erste Eichhörnchen auf einem Feld in einer Jahreszeit bekommt zusätzlich die Zugabe: 1 weiteren Rohstoff des Feldes, 1 Karte oder bei der Alten Eiche 1 Feder.",

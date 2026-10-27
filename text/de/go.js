@@ -11,6 +11,8 @@ Object.assign(STRINGS.de, {
     go_rules_liberties: "Die Freiheiten eines Steins sind die direkt angrenzenden freien Punkte (oben/unten/links/rechts, nicht diagonal). Verbundene Steine derselben Farbe teilen sich ihre Freiheiten als eine Gruppe.",
     go_term_capture: "Schlagen",
     go_rules_capture: "Eine Gruppe ohne verbleibende Freiheiten wird sofort nach dem gegnerischen Zug geschlagen und vom Brett entfernt.",
+    go_term_setup: "Brettgröße und Farbe",
+    go_rules_setup: "Das Brett wählst du unter dem Brett selbst: 9 × 9 für ein schnelles Spiel, 13 × 13 oder 19 × 19, das volle Brett. Gegen den Computer wählst du auch deine Farbe: Schwarz, Weiß oder Zufall; der Computer nimmt die andere Farbe. Schwarz zieht immer zuerst, Weiß bekommt das Komi. Solange kein Stein auf dem Brett liegt, gilt eine Wahl sofort, sonst ab dem nächsten neuen Spiel.",
     go_rules_illegal_title: "Verbotene Züge",
     go_term_suicide: "Selbstmordzug",
     go_rules_suicide: "Du darfst keinen Stein setzen, der die eigene Gruppe ohne Freiheiten zurücklässt – außer der Zug schlägt zuerst genug gegnerische Steine, um sie zu befreien.",

@@ -40,7 +40,11 @@ F.CARDS.forEach((c) => {
   check(F.HABITATS.indexOf(c.habitat) !== -1, c.id + ": unknown habitat " + c.habitat);
   check(!("partner" in c), c.id + ": cards have no fixed partner any more");
   check(Object.keys(c.cost).every((k) => F.RES.indexOf(k) !== -1 && c.cost[k] > 0), c.id + ": bad cost");
+  ["prod", "gain"].forEach((x) => check(!c.fx[x] || Object.keys(c.fx[x]).every((k) => F.RES.indexOf(k) !== -1), c.id + ": " + x + " uses an unknown resource"));
 });
+// Own names only (task 159): none of the old card ids, no `meadow`.
+["lookout", "inn", "school", "fairground", "resinkettle"].forEach((id) => check(ids.indexOf(id) === -1, "old card id " + id + " is still used"));
+check(!("MEADOW" in F) && F.CLEARING === 6, "the open row is called CLEARING");
 const keys = ids.map((id) => "fv_card_" + id)
   .concat(F.FIELDS.map((f) => "fv_field_" + f.id), F.RES.map((r) => "fv_res_" + r), F.SEASONS.map((x) => "fv_season_" + x),
     F.TASKS.map((t) => "fv_task_" + t.id), F.HABITATS.map((h) => "fv_habitat_" + h));
@@ -143,7 +147,7 @@ console.log("(" + Math.round((Date.now() - t0) / 1000) + " s)");
   // First squirrel on a field gets the extra, the second one does not.
   let p0 = s.players[0], p1 = s.players[1];
   p0.res = { c: 0, s: 0, f: 0 }; p1.res = { c: 0, s: 0, f: 0 };
-  p0.hand = []; p1.hand = []; s.meadow = s.meadow.map(() => "bear");
+  p0.hand = []; p1.hand = []; s.clearing = s.clearing.map(() => "bear");
   F.apply(s, { type: "place", field: 0 }, rng);
   check(p0.res.c === 3, "the first squirrel on the Clay Bank gets 3 clay: " + JSON.stringify(p0.res));
   check(s.current === 1 && s.phase === "place", "nothing to build: the turn passes on at once");
@@ -176,9 +180,9 @@ console.log("(" + Math.round((Date.now() - t0) / 1000) + " s)");
   // Production after every second squirrel; shared seasons; more squirrels.
   s = F.createGame(1, rng);
   const p = s.players[0];
-  p.village = [{ id: "sawmill" }, { id: "pantry" }, { id: "well" }, { id: "inn" }];
+  p.village = [{ id: "sawmill" }, { id: "pantry" }, { id: "well" }, { id: "orchard" }];
   p.res = { c: 0, s: 0, f: 0 };
-  p.hand = []; s.meadow = s.meadow.map(() => "bear");
+  p.hand = []; s.clearing = s.clearing.map(() => "bear");
   F.apply(s, { type: "place", field: 1 }, rng);
   check(p.res.c === 0, "no production after the first squirrel");
   F.apply(s, { type: "place", field: 2 }, rng);
@@ -205,6 +209,13 @@ console.log("(" + Math.round((Date.now() - t0) / 1000) + " s)");
   // Old saves are not current.
   const old = { deck: [], discard: [], meadow: [], fields: [[], [], [], [], [], [], [], []], task: "pairs", players: [{ res: { c: 0, s: 0, f: 0 }, hand: [], village: [], workers: 2, placed: 0, season: 0, passed: false, turns: 0 }], current: 0, turn: 0, over: false, log: [] };
   check(!F.isCurrentState(old), "a save of the old rules is not current");
+  // Saves from before the new card and key names (rules 3 with `meadow`) are dropped too.
+  const before = F.createGame(2, F.makeRng(5));
+  before.meadow = before.clearing; delete before.clearing;
+  check(!F.isCurrentState(before), "a save with the old key meadow is not current");
+  const oldIds = F.createGame(2, F.makeRng(6));
+  oldIds.players[0].hand.push("inn");
+  check(!F.isCurrentState(oldIds), "a save with an old card id is not current");
   check(!F.isCurrentState(null), "no save is not current");
 })();
 

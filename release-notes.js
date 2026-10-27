@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v274",
+    date: "2026-10-27",
+    key: "release_v274",
+    text: "Go: board size and your color (Black, White or Random) are now chosen right under the board. Forest Village has its own card names; a game saved before this version starts anew."
+  },
+  {
     version: "v273",
     date: "2026-10-27",
     key: "release_v273",
@@ -298,7 +304,7 @@ const RELEASE_NOTES = [
     version: "v226",
     date: "2026-10-12",
     key: "release_v226",
-    text: "Forest Village: forest animals build a village through the seasons, for 1 to 4 players."
+    text: "New: Forest Village, a card game with squirrels for 1 to 4 players."
   },
   {
     version: "v225",

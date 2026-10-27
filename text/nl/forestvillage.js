@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.nl, {
     fv_rules_title: "Bosdorp – regels",
-    fv_rules_intro: "Bosdieren bouwen een dorp in de loop van 1 jaar, van lente tot winter. Wie na de winter de meeste punten heeft, wint; in je eentje speel je voor een doelscore.",
+    fv_rules_intro: "Elke speler stuurt eekhoorns over een boskaart, verzamelt klei, zaden en veren en vult een nederzetting met maximaal 12 kaarten. Na vier seizoenen wint degene met de meeste punten; alleen speel je voor een doelscore.",
     fv_rules_basics_title: "De regels",
     fv_term_res: "Grondstoffen en het bos",
     fv_rules_res: "Er zijn 3 grondstoffen: klei, zaden en veren. Het bos heeft 8 plekken: Kleioever (2 klei), Zaaiveld (2 zaden), Vederennest (2 veren), Varenspoor (1 klei en 1 veer), Mospaadje (1 zaad en 1 veer), Zonnige kuil (1 klei en 1 zaad), Oude eik (1 klei en 1 kaart) en Markt (2 kaarten). Op elke plek passen onbeperkt veel eekhoorns. De eerste eekhoorn op een plek in een seizoen krijgt ook de bonus: 1 extra grondstof van die plek, 1 kaart of bij de Oude eik 1 veer.",

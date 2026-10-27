@@ -11,6 +11,8 @@ Object.assign(STRINGS.pl, {
     go_rules_liberties: "Oddechy kamienia to puste punkty leżące bezpośrednio obok niego (góra/dół/lewo/prawo, nie po przekątnej). Połączone kamienie tego samego koloru dzielą swoje oddechy jako jedna grupa.",
     go_term_capture: "Zbicie",
     go_rules_capture: "Grupa, która straciła wszystkie oddechy, zostaje zbita i zdjęta z planszy zaraz po ruchu przeciwnika.",
+    go_term_setup: "Rozmiar planszy i kolor",
+    go_rules_setup: "Rozmiar planszy wybierasz pod samą planszą: 9 × 9 do szybkiej gry, 13 × 13 albo 19 × 19, czyli pełną planszę. W grze przeciwko komputerowi wybierasz też swój kolor: Czarne, Białe lub Losowo; komputer gra drugim kolorem. Czarne zawsze wykonują pierwszy ruch, a Białe dostają komi. Dopóki na planszy nie ma żadnego kamienia, wybór obowiązuje od razu; później zacznie obowiązywać od następnej nowej gry.",
     go_rules_illegal_title: "Ruchy niedozwolone",
     go_term_suicide: "Samobójstwo",
     go_rules_suicide: "Nie wolno postawić kamienia, który pozbawiłby twoją własną grupę wszystkich oddechów - chyba że ten sam ruch najpierw zbija tyle wrogich kamieni, że grupa odzyskuje oddech.",

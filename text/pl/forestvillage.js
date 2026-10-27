@@ -3,7 +3,7 @@
 
 Object.assign(STRINGS.pl, {
     fv_rules_title: "Leśna osada – zasady",
-    fv_rules_intro: "Leśne zwierzęta budują osadę przez 1 rok, od wiosny do zimy. Wygrywa osoba z największą liczbą punktów po zimie; w pojedynkę grasz o wynik docelowy.",
+    fv_rules_intro: "Każdy gracz wysyła wiewiórki na leśną mapę, zbiera glinę, nasiona i pióra oraz zapełnia osadę maksymalnie 12 kartami. Po czterech porach roku wygrywa osoba z największą liczbą punktów; w trybie solo grasz o osiągnięcie wyznaczonego wyniku.",
     fv_rules_basics_title: "Zasady",
     fv_term_res: "Surowce i las",
     fv_rules_res: "Są 3 zasoby: glina, nasiona i pióra. Las ma 8 pól: Brzeg gliny (2 gliny), Grządka nasion (2 nasiona), Pierzaste gniazdo (2 pióra), Ścieżka paproci (1 glina i 1 pióro), Omszały szlak (1 nasiono i 1 pióro), Słoneczna polana (1 glina i 1 nasiono), Stary dąb (1 glina i 1 karta) oraz Targ (2 karty). Na każdym polu może być dowolnie dużo wiewiórek. Pierwsza wiewiórka na polu w danej porze roku dostaje też premię: 1 dodatkowy zasób z pola, 1 kartę albo, przy Starym dębie, 1 pióro.",
