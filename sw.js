@@ -6,7 +6,7 @@
 // Every new CACHE_NAME needs its entry in release-notes.js (version, date
 // and one sentence in all 12 languages): the update banner shows it, and
 // tests/static-checks.js fails without it.
-const CACHE_NAME = "papergames-cache-v271";
+const CACHE_NAME = "papergames-cache-v272";
 
 const APP_SHELL = [
   "./",
@@ -1297,19 +1297,19 @@ const FILE_HASHES = {
   "css/war.css": "11165c26",
   "css/xiangqi.css": "d8b9b654",
   "css/yatzy.css": "ab958e8f",
-  "i18n.js": "33513ec4",
+  "i18n.js": "7765c3ae",
   "big-board.js": "e4968dce",
-  "lang/de.js": "52f418fe",
-  "lang/fr.js": "8792ccff",
-  "lang/es.js": "5ab58b09",
-  "lang/it.js": "60648bf9",
-  "lang/nl.js": "6a539dff",
-  "lang/pl.js": "c0e15b9e",
-  "lang/uk.js": "4150a03a",
-  "lang/ru.js": "045925e2",
-  "lang/ja.js": "e1ce3c2f",
-  "lang/zh.js": "84903717",
-  "lang/ar.js": "a2ea452a",
+  "lang/de.js": "9ee835b3",
+  "lang/fr.js": "6e64a99a",
+  "lang/es.js": "2562fd1a",
+  "lang/it.js": "dbd0a4e7",
+  "lang/nl.js": "d18e4bc0",
+  "lang/pl.js": "02ac2eb8",
+  "lang/uk.js": "39151430",
+  "lang/ru.js": "b7476f45",
+  "lang/ja.js": "d5708c68",
+  "lang/zh.js": "9ef0a820",
+  "lang/ar.js": "e0dde941",
   "text/en/abalone.js": "498fea56",
   "text/en/adventurebook.js": "fef98624",
   "text/en/alquerque.js": "cdd8ee0a",
@@ -1649,7 +1649,7 @@ const FILE_HASHES = {
   "quick-rules.js": "7b2b538d",
   "adaptive-difficulty.js": "abfa62fe",
   "update-banner.js": "2c928b7f",
-  "release-notes.js": "df229596",
+  "release-notes.js": "a4b047f6",
   "error-banner.js": "a67457c5",
   "force-update.js": "75f1558c",
   "games-catalog.js": "79a0e839",

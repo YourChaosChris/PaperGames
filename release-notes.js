@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v272",
+    date: "2026-10-27",
+    key: "release_v272",
+    text: "Who Took the Cake? has new rules: fewer animals, and the cake lies fixed on the floor plan. In Card Tactics each side now plays only its own cards. A game saved under the old rules starts anew."
+  },
+  {
     version: "v271",
     date: "2026-10-27",
     key: "release_v271",
