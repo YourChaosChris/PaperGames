@@ -1,14 +1,13 @@
 /* cardtactics: rules used only by the cardtactics pages (loaded after base.css). */
-/* Card Tactics board: a 5x5 float-grid (same technique as chess/checkers -
+/* Card Tactics board: a 7 x 6 float-grid (same technique as chess/checkers -
    note the explicit width override below, since the shared .square
    base class hardcodes 12.5% for an 8-column board). Sides are told
-   apart structurally, not by color alone: Blue is a filled disc, Red
-   is an outlined disc, and either side's master gets its own ring
-   marker on top - the same convention used for checkers kings. */
+   apart by shape, not by color: Black is a filled disc, White an
+   outlined disc. The two back rows (the goal rows) carry a dashed frame. */
 #cardtactics-board {
   display: block;
   width: 100%;
-  max-width: 460px;
+  max-width: 420px;
   border: 3px solid var(--border);
   background: var(--square-light);
   box-sizing: border-box;
@@ -17,7 +16,7 @@
 }
 
 .cardtactics-square {
-  width: calc(100% / 5);
+  width: calc(100% / 6);
   background: var(--square-light);
   border: 1px solid var(--border);
 }
@@ -26,14 +25,14 @@
   background: linear-gradient(135deg, var(--text) 0, var(--text) 12px, transparent 12px) var(--square-dark);
 }
 
-.cardtactics-square-shrine::before {
+.cardtactics-square-goal::before {
   content: "";
   position: absolute;
-  top: 8%;
-  left: 8%;
-  width: 84%;
-  height: 84%;
-  border: 2px dashed var(--muted);
+  top: 6%;
+  left: 6%;
+  width: 88%;
+  height: 88%;
+  border: 2px dashed var(--border);
   box-sizing: border-box;
   pointer-events: none;
 }
@@ -42,41 +41,22 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 74%;
-  height: 74%;
+  width: 72%;
+  height: 72%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
   box-sizing: border-box;
   pointer-events: none;
 }
 
-.cardtactics-piece-blue {
+.cardtactics-piece-black {
   background: #111;
   border: 2px solid #000;
 }
 
-.cardtactics-piece-red {
-  background: var(--square-light);
-  border: 2px solid var(--border);
-}
-
-.cardtactics-piece-king::after {
-  content: "";
-  position: absolute;
-  top: 25%;
-  left: 25%;
-  width: 50%;
-  height: 50%;
-  border-radius: 50%;
-  box-sizing: border-box;
-}
-
-.cardtactics-piece-blue.cardtactics-piece-king::after {
-  border: 2px solid #fff;
-}
-
-.cardtactics-piece-red.cardtactics-piece-king::after {
-  border: 2px solid var(--border);
+.cardtactics-piece-white {
+  background: #fff;
+  border: 3px solid var(--border);
 }
 
 /* Small icons for the color-choice picker and board placeholder,
@@ -90,63 +70,73 @@
   vertical-align: middle;
 }
 
-.cardtactics-icon-piece-blue {
+.cardtactics-icon-piece-black {
   background: #111;
   border: 2px solid #000;
 }
 
-.cardtactics-icon-piece-red {
-  background: var(--square-light);
+.cardtactics-icon-piece-white {
+  background: #fff;
   border: 2px solid var(--border);
 }
 
-/* Card rows above/below the board (each side's two cards) and the
-   neutral-card display between them. Cards are plain buttons holding
-   a name and a tiny 5x5 dot-diagram of that card's actual move
-   offsets, so a player can read a card's moves without memorizing
-   names. */
+.cardtactics-home-line {
+  text-align: center;
+  font-weight: 700;
+  margin: 0 auto 0.3rem;
+  max-width: 420px;
+}
+
+.cardtactics-goal-label {
+  text-align: center;
+  font-size: 0.85rem;
+  margin: 0.15rem auto;
+  max-width: 420px;
+}
+
+.cardtactics-cards-head {
+  text-align: center;
+  font-weight: 700;
+  margin: 0.6rem auto 0.3rem;
+  max-width: 420px;
+}
+
+/* The three open cards (buttons) and the line with the face-down pile.
+   Each card holds a name and its moves as arrows, seen from the side to
+   move. */
 .cardtactics-cards-row {
   display: flex;
   justify-content: center;
-margin: 0 auto 0.4rem;
-  max-width: 460px;
+  flex-wrap: wrap;
+  margin: 0 auto 0.4rem;
+  max-width: 420px;
 }
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
-/* Card rows above/below the board (each side's two cards) and the
-   neutral-card display between them. Cards are plain buttons holding
-   a name and a tiny 5x5 dot-diagram of that card's actual move
-   offsets > *, so a player can read a card's moves without memorizing
-   names. */
 .cardtactics-cards-row > * {
-  margin: 0 0.6rem 0.6rem 0;
+  margin: 0 0.5rem 0.5rem 0;
 }
 
-/* Card rows above/below the board (each side's two cards) and the
-   neutral-card display between them. Cards are plain buttons holding
-   a name and a tiny 5x5 dot-diagram of that card's actual move
-   offsets > *:last-child, so a player can read a card's moves without memorizing
-   names. */
 .cardtactics-cards-row > *:last-child {
   margin-right: 0;
 }
 
-.cardtactics-neutral-row {
+.cardtactics-next-row {
   display: flex;
   align-items: center;
   justify-content: center;
-margin: 0.4rem auto 0;
-  max-width: 460px;
+  flex-wrap: wrap;
+  margin: 0.2rem auto 0;
+  max-width: 420px;
   font-size: 0.85rem;
-  color: var(--muted);
 }
 
-/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
-.cardtactics-neutral-row > * {
-  margin: 0 0.5rem 0.5rem 0;
+/* Flexbox `gap` fallback (see above). */
+.cardtactics-next-row > * {
+  margin: 0 0.5rem 0.3rem 0;
 }
 
-.cardtactics-neutral-row > *:last-child {
+.cardtactics-next-row > *:last-child {
   margin-right: 0;
 }
 
@@ -154,21 +144,24 @@ margin: 0.4rem auto 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-padding: 0.3rem;
+  min-width: 88px;
+  min-height: 44px;
+  padding: 0.3rem;
   border: var(--border-width) solid var(--border);
   border-radius: 4px;
   background: #fff;
+  color: var(--text);
   box-sizing: border-box;
   cursor: pointer;
 }
 
-/* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* Flexbox `gap` fallback (see above). */
 .cardtactics-card > * {
-  margin: 0 0.2rem 0.2rem 0;
+  margin: 0 0 0.2rem 0;
 }
 
 .cardtactics-card > *:last-child {
-  margin-right: 0;
+  margin-bottom: 0;
 }
 
 .cardtactics-card-selected {
@@ -179,28 +172,18 @@ padding: 0.3rem;
 
 .cardtactics-card-name {
   font-weight: 700;
-  font-size: 0.7rem;
-  font-size: clamp(0.6rem, 2.2vw, 0.8rem);
+  font-size: 0.8rem;
 }
 
-.cardtactics-card-diagram {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  gap: 1px;
-  width: 2.6rem;
-  height: 2.6rem;
-  background: var(--border);
+/* The moves: one line of arrows per move. */
+.cardtactics-card-moves {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.cardtactics-card-cell {
-  background: var(--square-light);
-}
-
-.cardtactics-card-cell-center {
-  background: var(--muted);
-}
-
-.cardtactics-card-cell-move {
-  background: #111;
+.cardtactics-card-move {
+  font-size: 1.1rem;
+  line-height: 1.25;
+  letter-spacing: 0.05em;
 }

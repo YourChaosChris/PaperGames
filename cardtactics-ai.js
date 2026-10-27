@@ -1,110 +1,116 @@
 // cardtactics-ai.js
-// Offline opponent for the Card Tactics duel, mirroring xiangqi-ai.js's
-// structure:
-//   1 = easy   - random legal move
-//   2 = medium - 1-ply material/positional evaluation with light randomness
-//   3 = hard   - iterative deepening alpha-beta with a shared node
-//                budget AND a wall-clock deadline (the branching factor
-//                here is small, but the deadline is still the real
-//                safety net across very different devices - the same
-//                lesson learned tuning the Reversi AI)
+// Offline opponent for Card Tactics (rules 2):
+//   1 = easy   - random legal move, but takes a winning move it sees
+//   2 = medium - one move deep: material, progress and safety, picked
+//                among the best few with some randomness
+//   3 = hard   - alpha-beta search three moves deep with a node budget
+//                and a wall-clock deadline.
+// Levels 2 and 3 look ahead on a blind copy (CardTacticsCore.blindState):
+// a card that is used is replaced by an unknown one, so the computer never
+// looks into the face-down pile and knows nothing the player cannot see.
 
 const CardTacticsAi = (function () {
   const INF = 1e9;
-  const PAWN_VALUE = 100;
-  const KING_VALUE = 100000;
+  const WIN = INF / 2;
+  const HOME_VALUE = 900;
+  const STONE_VALUE = 100;
 
-  // A gentle pull toward the center and toward the opponent's shrine
-  // for pawns - the king's positional value is dominated by safety
-  // (captured/shrine-reached is already a hard win/loss, handled
-  // separately), so it gets no positional bonus here.
-  function positionalBonus(color, r, c) {
-    const centerBonus = 2 - (Math.abs(c - 2));
-    const advance = color === "blue" ? (4 - r) : r;
-    return centerBonus + advance * 0.5;
+  function core() { return CardTacticsCore; }
+
+  // Progress of a stone toward its goal row: 0 on the start row, rising
+  // faster near the goal so a stone close to crossing counts more.
+  function progressBonus(color, r) {
+    const C = core();
+    const dist = Math.abs(C.goalRow(color) - r);
+    const steps = C.ROWS - 1 - dist;
+    return steps * steps * 4;
+  }
+
+  // Squares each side attacks with the cards it could use next: the
+  // side to move uses the display; the other side, after this move, sees
+  // the same display with one card swapped, so the display is a fair
+  // estimate for both.
+  function attackMap(state, color) {
+    const C = core();
+    const map = {};
+    for (let r = 0; r < C.ROWS; r++) for (let c = 0; c < C.COLS; c++) {
+      const p = state.board[r][c];
+      if (!p || p.color !== color) continue;
+      state.display.forEach((id) => {
+        if (!id) return; // an unknown card in a blind search state
+        C.cardMovesFor(id, color).forEach(([dr, dc]) => {
+          const tr = r + dr, tc = c + dc;
+          if (C.inBounds(tr, tc)) map[tr * C.COLS + tc] = true;
+        });
+      });
+    }
+    return map;
   }
 
   function evaluateFor(color, state) {
+    const C = core();
     if (state.gameOver) {
-      if (state.winner === color) return INF / 2;
-      if (state.winner) return -INF / 2;
+      if (state.winner === color) return WIN;
+      if (state.winner === "draw") return 0;
+      return -WIN;
     }
-    const opp = CardTacticsCore.otherPlayer(color);
-    let score = 0;
-    for (let r = 0; r < CardTacticsCore.SIZE; r++) {
-      for (let c = 0; c < CardTacticsCore.SIZE; c++) {
+    const opp = C.otherPlayer(color);
+    let score = (state.home[color] - state.home[opp]) * HOME_VALUE;
+    const toMove = state.currentPlayer;
+    const attacks = { black: attackMap(state, "black"), white: attackMap(state, "white") };
+    for (let r = 0; r < C.ROWS; r++) {
+      for (let c = 0; c < C.COLS; c++) {
         const piece = state.board[r][c];
         if (!piece) continue;
         const sign = piece.color === color ? 1 : -1;
-        const value = piece.king ? KING_VALUE : PAWN_VALUE;
+        let value = STONE_VALUE + progressBonus(piece.color, r);
+        const enemy = C.otherPlayer(piece.color);
+        // A stone the side to move can take is mostly lost.
+        if (enemy === toMove && attacks[enemy][r * C.COLS + c]) value *= 0.45;
         score += sign * value;
-        if (!piece.king) score += sign * positionalBonus(piece.color, r, c);
       }
     }
-    // Being one move from delivering a shrine win is worth a lot -
-    // reward the king for being close to the target shrine.
-    [color, opp].forEach((who) => {
-      const king = findKing(state, who);
-      if (!king) return;
-      const [sr, sc] = CardTacticsCore.shrineFor(who);
-      const dist = Math.abs(king[0] - sr) + Math.abs(king[1] - sc);
-      const sign = who === color ? 1 : -1;
-      score += sign * (8 - dist) * 3;
+    // Stones of the side to move that can cross right now.
+    C.getLegalMoves(state, toMove).some((m) => {
+      if (!m.home) return false;
+      score += (toMove === color ? 1 : -1) * HOME_VALUE * 0.6;
+      return true;
     });
     return score;
   }
 
-  function findKing(state, color) {
-    for (let r = 0; r < CardTacticsCore.SIZE; r++) {
-      for (let c = 0; c < CardTacticsCore.SIZE; c++) {
-        const piece = state.board[r][c];
-        if (piece && piece.color === color && piece.king) return [r, c];
-      }
-    }
-    return null;
-  }
-
   function orderMoves(moves, state) {
-    return moves.slice().sort((a, b) => {
-      const aCap = state.board[a.to[0]][a.to[1]] ? 1 : 0;
-      const bCap = state.board[b.to[0]][b.to[1]] ? 1 : 0;
-      return bCap - aCap;
-    });
+    const key = (m) => (m.home ? 2 : 0) + (state.board[m.to[0]][m.to[1]] ? 1 : 0);
+    return moves.slice().sort((a, b) => key(b) - key(a));
   }
 
-  function minimax(state, colorToMove, depth, maxDepth, alpha, beta, perspective, searchState) {
-    if (searchState) {
-      if (searchState.aborted) return 0;
-      searchState.nodes++;
-      if (searchState.nodes > searchState.budget || Date.now() > searchState.deadline) {
-        searchState.aborted = true;
-        return 0;
-      }
-    }
+  function step(state, color, m) {
+    return m ? core().applyMove(state, color, m) : core().applyPass(state, color);
+  }
 
+  function minimax(state, depth, alpha, beta, perspective, searchState) {
+    const C = core();
+    if (searchState.aborted) return 0;
+    searchState.nodes++;
+    if (searchState.nodes > searchState.budget || Date.now() > searchState.deadline) {
+      searchState.aborted = true;
+      return 0;
+    }
     if (state.gameOver) {
-      return colorToMove === perspective
-        ? (state.winner === perspective ? INF / 2 : -INF / 2)
-        : (state.winner === perspective ? INF / 2 : -INF / 2);
+      const v = evaluateFor(perspective, state);
+      // Prefer quicker wins and slower losses.
+      return v > 0 ? v - state.ply : (v < 0 ? v + state.ply : 0);
     }
-
-    const moves = CardTacticsCore.getLegalMoves(state, colorToMove);
-    if (!moves.length) {
-      return colorToMove === perspective ? -INF / 2 : INF / 2;
-    }
-    if (depth >= maxDepth) {
-      return evaluateFor(perspective, state);
-    }
-
-    const ordered = orderMoves(moves, state);
-    const isMaximizing = colorToMove === perspective;
-    let best = isMaximizing ? -INF : INF;
-
-    for (const m of ordered) {
-      const next = CardTacticsCore.applyMove(state, colorToMove, m);
-      const score = minimax(next, CardTacticsCore.otherPlayer(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState);
-      if (searchState && searchState.aborted) return best;
-      if (isMaximizing) {
+    if (depth <= 0) return evaluateFor(perspective, state);
+    const colorToMove = state.currentPlayer;
+    let moves = orderMoves(C.getLegalMoves(state, colorToMove), state);
+    if (!moves.length) moves = [null];
+    const maximizing = colorToMove === perspective;
+    let best = maximizing ? -INF : INF;
+    for (const m of moves) {
+      const score = minimax(step(state, colorToMove, m), depth - 1, alpha, beta, perspective, searchState);
+      if (searchState.aborted) return best;
+      if (maximizing) {
         if (score > best) best = score;
         if (score > alpha) alpha = score;
       } else {
@@ -116,79 +122,63 @@ const CardTacticsAi = (function () {
     return best;
   }
 
-  function searchBestMove(state, color, moves, maxDepth, nodeBudget, timeBudgetMs) {
-    const searchState = { nodes: 0, budget: nodeBudget, aborted: false, deadline: Date.now() + timeBudgetMs };
-    let ordered = orderMoves(moves, state);
-
-    const rootScored = ordered.map((m) => ({
-      move: m,
-      score: evaluateFor(color, CardTacticsCore.applyMove(state, color, m)) + (Math.random() - 0.5) * 2
-    }));
-    rootScored.sort((a, b) => b.score - a.score);
-    ordered = rootScored.map((e) => e.move);
-
-    let lastCompleteBest = null;
-
-    for (let depth = 1; depth <= maxDepth; depth++) {
+  function searchBestMove(state, color, moves, config, random) {
+    const searchState = { nodes: 0, budget: config.nodeBudget, aborted: false, deadline: Date.now() + config.timeBudgetMs };
+    let ordered = moves.map((m) => ({ move: m, score: evaluateFor(color, step(state, color, m)) + (random() - 0.5) * config.noise }))
+      .sort((a, b) => b.score - a.score).map((e) => e.move);
+    let lastCompleteBest = ordered[0];
+    for (let depth = 1; depth <= config.maxDepth; depth++) {
       let bestScore = -INF;
       let bestMove = null;
       let alpha = -INF;
-      let depthAborted = false;
-
       for (const m of ordered) {
-        const next = CardTacticsCore.applyMove(state, color, m);
-        const score = minimax(next, CardTacticsCore.otherPlayer(color), 1, depth, alpha, INF, color, searchState);
-        if (searchState.aborted) {
-          depthAborted = true;
-          break;
-        }
+        const score = minimax(step(state, color, m), depth - 1, alpha, INF, color, searchState);
+        if (searchState.aborted) break;
         if (score > bestScore) {
           bestScore = score;
           bestMove = m;
           if (score > alpha) alpha = score;
         }
       }
-
-      if (depthAborted || !bestMove) break;
-
+      if (searchState.aborted || !bestMove) break;
       lastCompleteBest = bestMove;
       ordered = [bestMove].concat(ordered.filter((m) => m !== bestMove));
     }
-
-    return lastCompleteBest || moves[Math.floor(Math.random() * moves.length)];
+    return lastCompleteBest;
   }
 
   const LEVEL_CONFIG = {
     1: { style: "random" },
-    2: { style: "greedy", topN: 4 },
-    3: { style: "search", maxDepth: 3, nodeBudget: 100000, timeBudgetMs: 2000 }
+    2: { style: "greedy", topN: 3 },
+    3: { style: "search", maxDepth: 3, nodeBudget: 60000, timeBudgetMs: 1500, noise: 6 }
   };
 
-  function chooseMove(state, color, level) {
-    const moves = CardTacticsCore.getLegalMoves(state, color);
+  // Returns a move from getLegalMoves, or null when the player has to pass.
+  function chooseMove(state, color, level, rng) {
+    const C = core();
+    const random = rng || Math.random;
+    const moves = C.getLegalMoves(state, color);
     if (!moves.length) return null;
-
     if (typeof level !== "number" || level < 1) level = 1;
     const config = LEVEL_CONFIG[level] || LEVEL_CONFIG[3];
 
-    if (config.style === "random") {
-      return moves[Math.floor(Math.random() * moves.length)];
-    }
+    const winning = moves.find((m) => step(state, color, m).winner === color);
+    if (winning) return winning;
 
+    if (config.style === "random") {
+      return moves[Math.floor(random() * moves.length)];
+    }
+    const blind = C.blindState(state);
     if (config.style === "greedy") {
-      const scored = moves.map((m) => ({
-        move: m,
-        score: evaluateFor(color, CardTacticsCore.applyMove(state, color, m))
-      }));
+      const scored = moves.map((m) => ({ move: m, score: evaluateFor(color, step(blind, color, m)) + random() }));
       scored.sort((a, b) => b.score - a.score);
       const topN = Math.min(config.topN, scored.length);
-      return scored[Math.floor(Math.random() * topN)].move;
+      return scored[Math.floor(random() * topN)].move;
     }
-
-    return searchBestMove(state, color, moves, config.maxDepth, config.nodeBudget, config.timeBudgetMs);
+    return searchBestMove(blind, color, moves, config, random);
   }
 
-  return { evaluateFor, chooseMove };
+  return { evaluateFor, chooseMove, LEVEL_CONFIG };
 })();
 
 if (typeof module !== "undefined" && module.exports) {

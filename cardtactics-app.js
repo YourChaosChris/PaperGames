@@ -1,26 +1,18 @@
 // cardtactics-app.js
-// Wires CardTacticsCore/CardTacticsAi to the cardtactics.html UI. The board is a
-// 5x5 float-grid (same technique as chess/checkers, with the width
-// override the Connect Four lesson calls for whenever a board isn't 8
-// columns wide). Pieces are told apart by fill (Blue solid, Red
-// outlined) plus the master getting its own distinct ring marker, the
-// same structural-not-color-based convention used everywhere else in
-// this app.
+// Wires CardTacticsCore/CardTacticsAi (rules 3) to cardtactics.html. The
+// board is a 7 x 6 float-grid. Black stones are filled discs, White
+// stones outlined discs (told apart by shape, not by color).
 //
-// Turn flow mirrors the physical game: click one of your two cards to
-// make it active, click one of your own pieces to see where that card
-// lets it go, then click a highlighted destination to move. The used
-// card swaps into the middle and the previous middle card joins your
-// hand in its place - shown directly by redrawing all three card rows
-// after every move rather than animating the exchange.
-
-const CARDTACTICS_KANJI = {}; // reserved, not currently used - cards render as small move-diagrams instead of text
+// Turn flow: tap one of the three open cards, tap one of your stones,
+// tap a marked square. The top card of the face-down pile takes the used
+// card's place; the page shows the open cards (their moves as arrows,
+// seen from the side to move) and how many cards lie face down.
 
 const AppStateCardTactics = {
   mode: "offline",        // "offline" | "offline-ai"
   state: CardTacticsCore.createInitialState(),
-  turn: "blue",           // "blue" | "red" - Blue always moves first
-  humanColor: "blue",
+  turn: "black",
+  humanColor: "black",
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
   gameOver: false,
   selectedCard: null,     // cardId or null
@@ -36,6 +28,7 @@ const CARDTACTICS_SAVE_KEY = "einkchess_save_cardtactics";
 function saveCardTacticsGame() {
   if (typeof GameStorage === "undefined") return;
   GameStorage.save(CARDTACTICS_SAVE_KEY, {
+    rules: CardTacticsCore.RULES,
     mode: AppStateCardTactics.mode,
     state: AppStateCardTactics.state,
     turn: AppStateCardTactics.turn,
@@ -51,6 +44,13 @@ function clearSavedCardTacticsGame() {
   GameStorage.clear(CARDTACTICS_SAVE_KEY);
 }
 
+// A save of older Card Tactics rules (rules 1: 5 x 5, hands of two cards;
+// rules 2: open queue) cannot be continued and is dropped without a message.
+function isCurrentCardTacticsSave(saved) {
+  return !!saved && saved.rules === CardTacticsCore.RULES && CardTacticsCore.isCurrentState(saved.state)
+    && (saved.humanColor === "black" || saved.humanColor === "white");
+}
+
 function recordCardTacticsStatsIfVsAi(outcome) {
   if (typeof GameStats === "undefined") return;
   if (AppStateCardTactics.mode !== "offline-ai") return;
@@ -58,7 +58,13 @@ function recordCardTacticsStatsIfVsAi(outcome) {
 }
 
 function colorNameCardTactics(color) {
-  return color === "blue" ? "Blue" : "Red";
+  return color === "black" ? "Black" : "White";
+}
+
+function fillCardTactics(key, values) {
+  let text = I18n.t(key);
+  Object.keys(values || {}).forEach((k) => { text = text.split("{" + k + "}").join(String(values[k])); });
+  return text;
 }
 
 function setStatusCardTactics(elementId, text) {
@@ -78,6 +84,7 @@ function setGameResultCardTactics(text) {
 }
 
 function resultTitleCardTactics(winner) {
+  if (winner === "draw") return "Draw";
   if (AppStateCardTactics.mode === "offline-ai") {
     return winner === AppStateCardTactics.humanColor ? "You win!" : "You lose";
   }
@@ -89,6 +96,18 @@ function announceGameResultCardTactics(resultCode, message) {
   setStatusCardTactics("board-info", message);
   if (window.ResultModal) {
     window.ResultModal.show(resultCode, message);
+  }
+}
+
+function resultMessageCardTactics(state) {
+  const name = colorNameCardTactics(state.winner);
+  const limit = CardTacticsCore.MAX_PLIES;
+  switch (state.winReason) {
+    case "home": return name + " wins with two stones home!";
+    case "captured": return name + " wins: the other side can no longer bring two stones home.";
+    case "limit-home": return name + " wins after " + limit + " moves with more stones home.";
+    case "limit-stones": return name + " wins after " + limit + " moves with more stones on the board.";
+    default: return "Draw after " + limit + " moves: same number of stones.";
   }
 }
 
@@ -104,6 +123,12 @@ function pushUndoSnapshotCardTactics() {
     moveCount: AppStateCardTactics.moveCount,
     lastMove: AppStateCardTactics.lastMove
   });
+}
+
+function toMoveTextCardTactics() {
+  let text = colorNameCardTactics(AppStateCardTactics.turn) + " to move. Choose a card.";
+  if (AppStateCardTactics.state.ply === 0) text += " Opening move: one row at most.";
+  return text;
 }
 
 function initCardTacticsApp() {
@@ -148,38 +173,10 @@ function initCardTacticsApp() {
     });
   }
 
-  function startNewGameCardTactics(mode, humanColor, level) {
-    AppStateCardTactics.mode = mode;
-    AppStateCardTactics.state = CardTacticsCore.createInitialState();
-    AppStateCardTactics.turn = "blue";
-    AppStateCardTactics.humanColor = humanColor;
-    AppStateCardTactics.aiLevel = level;
-    AppStateCardTactics.gameOver = false;
-    AppStateCardTactics.selectedCard = null;
-    AppStateCardTactics.selectedPiece = null;
-    AppStateCardTactics.legalTargets = {};
-    AppStateCardTactics.moveCount = 0;
-    AppStateCardTactics.lastMove = null;
-    resetUndoStackCardTactics();
-    setGameResultCardTactics("");
-    showBoardSectionCardTactics();
-    buildCardTacticsBoardDOM();
-    updateCardTacticsBoard();
-    updateCardTacticsCards();
-    updateGameLabelsCardTactics();
-
-    if (mode === "offline-ai" && humanColor !== "blue") {
-      setStatusCardTactics("board-info", "Computer thinking…");
-      setTimeout(aiTurnCardTactics, AiPacing.delay(300));
-    } else {
-      setStatusCardTactics("board-info", colorNameCardTactics(AppStateCardTactics.turn) + " to move. Choose a card.");
-    }
-  }
-
   modeOffline.addEventListener("click", () => {
     setActiveModeButtonCardTactics("offline");
     offlineAiControls.classList.add("hidden");
-    startNewGameCardTactics("offline", "blue", 0);
+    startNewGameCardTactics("offline", "black", 0);
   });
 
   modeOfflineAi.addEventListener("click", () => {
@@ -197,11 +194,11 @@ function initCardTacticsApp() {
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const colorInput = document.querySelector("input[name='cardtactics-color']:checked");
-    const humanColor = RandomStart.choose(colorInput && colorInput.value === "red" ? "red" : "blue", ["red", "blue"]);
+    const humanColor = RandomStart.choose(colorInput && colorInput.value === "white" ? "white" : "black", ["white", "black"]);
 
     if (level === 0) {
       setActiveModeButtonCardTactics("offline-ai");
-      startNewGameCardTactics("offline", "blue", 0);
+      startNewGameCardTactics("offline", "black", 0);
       setStatusCardTactics("offline-cardtactics-status", "Local 2-player game (no computer).");
       return;
     }
@@ -216,7 +213,7 @@ function initCardTacticsApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateCardTactics.gameOver) return;
-      const loser = AppStateCardTactics.turn;
+      const loser = AppStateCardTactics.mode === "offline-ai" ? AppStateCardTactics.humanColor : AppStateCardTactics.turn;
       const winner = CardTacticsCore.otherPlayer(loser);
       AppStateCardTactics.gameOver = true;
       announceGameResultCardTactics(resultTitleCardTactics(winner), colorNameCardTactics(winner) + " wins by resignation.");
@@ -226,21 +223,26 @@ function initCardTacticsApp() {
   }
 
   updateColorChoiceVisibilityCardTactics();
+  if (window.I18n && typeof I18n.onChange === "function") I18n.onChange(() => updateCardTacticsCards());
 
   const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(CARDTACTICS_SAVE_KEY) : null;
-  if (savedGame && savedGame.state) {
-    AppStateCardTactics.mode = savedGame.mode;
+  if (savedGame && !isCurrentCardTacticsSave(savedGame)) {
+    clearSavedCardTacticsGame();
+  } else if (savedGame) {
+    AppStateCardTactics.mode = savedGame.mode === "offline-ai" ? "offline-ai" : "offline";
     AppStateCardTactics.state = savedGame.state;
-    AppStateCardTactics.turn = savedGame.turn;
+    AppStateCardTactics.turn = savedGame.state.currentPlayer;
     AppStateCardTactics.humanColor = savedGame.humanColor;
-    AppStateCardTactics.aiLevel = savedGame.aiLevel;
-    AppStateCardTactics.moveCount = savedGame.moveCount;
+    AppStateCardTactics.aiLevel = savedGame.aiLevel || 2;
+    AppStateCardTactics.moveCount = savedGame.moveCount || 0;
     AppStateCardTactics.lastMove = null;
     AppStateCardTactics.gameOver = false;
     AppStateCardTactics.selectedCard = null;
     AppStateCardTactics.selectedPiece = null;
     AppStateCardTactics.legalTargets = {};
     AppStateCardTactics.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
+    AppStateCardTactics.undoStack = AppStateCardTactics.undoStack
+      .filter((u) => u && CardTacticsCore.isCurrentState(u.state));
     setActiveModeButtonCardTactics(AppStateCardTactics.mode);
     setGameResultCardTactics("");
     showBoardSectionCardTactics();
@@ -252,12 +254,40 @@ function initCardTacticsApp() {
       setStatusCardTactics("board-info", "Computer thinking…");
       setTimeout(aiTurnCardTactics, AiPacing.delay(300));
     } else {
-      setStatusCardTactics("board-info", colorNameCardTactics(AppStateCardTactics.turn) + " to move. Choose a card.");
+      setStatusCardTactics("board-info", toMoveTextCardTactics());
     }
   }
   // Otherwise no mode is pre-selected and no game auto-starts: the
   // placeholder shows until the player picks 2-player or configures
   // vs-computer and presses New game, matching chess.html's behavior.
+}
+
+function startNewGameCardTactics(mode, humanColor, level) {
+  AppStateCardTactics.mode = mode;
+  AppStateCardTactics.state = CardTacticsCore.createInitialState();
+  AppStateCardTactics.turn = AppStateCardTactics.state.currentPlayer;
+  AppStateCardTactics.humanColor = humanColor;
+  AppStateCardTactics.aiLevel = level;
+  AppStateCardTactics.gameOver = false;
+  AppStateCardTactics.selectedCard = null;
+  AppStateCardTactics.selectedPiece = null;
+  AppStateCardTactics.legalTargets = {};
+  AppStateCardTactics.moveCount = 0;
+  AppStateCardTactics.lastMove = null;
+  resetUndoStackCardTactics();
+  setGameResultCardTactics("");
+  showBoardSectionCardTactics();
+  buildCardTacticsBoardDOM();
+  updateCardTacticsBoard();
+  updateCardTacticsCards();
+  updateGameLabelsCardTactics();
+
+  if (mode === "offline-ai" && humanColor !== AppStateCardTactics.turn) {
+    setStatusCardTactics("board-info", "Computer thinking…");
+    setTimeout(aiTurnCardTactics, AiPacing.delay(300));
+  } else {
+    setStatusCardTactics("board-info", toMoveTextCardTactics());
+  }
 }
 
 function targetKeyCardTactics(r, c) {
@@ -275,30 +305,30 @@ function computeLegalTargetsCardTactics() {
   return targets;
 }
 
-function onCardTacticsCardClick(color, cardId) {
-  if (AppStateCardTactics.gameOver) return;
-  if (color !== AppStateCardTactics.turn) return;
-  if (AppStateCardTactics.mode === "offline-ai" && AppStateCardTactics.turn !== AppStateCardTactics.humanColor) return;
+function humanMayActCardTactics() {
+  if (AppStateCardTactics.gameOver) return false;
+  return !(AppStateCardTactics.mode === "offline-ai" && AppStateCardTactics.turn !== AppStateCardTactics.humanColor);
+}
 
+function onCardTacticsCardClick(cardId) {
+  if (!humanMayActCardTactics()) return;
   if (AppStateCardTactics.selectedCard === cardId) {
     AppStateCardTactics.selectedCard = null;
-    AppStateCardTactics.selectedPiece = null;
-    AppStateCardTactics.legalTargets = {};
   } else {
     AppStateCardTactics.selectedCard = cardId;
-    AppStateCardTactics.selectedPiece = null;
-    AppStateCardTactics.legalTargets = {};
   }
+  AppStateCardTactics.selectedPiece = null;
+  AppStateCardTactics.legalTargets = {};
   updateCardTacticsBoard();
   updateCardTacticsCards();
   setStatusCardTactics("board-info", AppStateCardTactics.selectedCard
     ? "Choose one of your pieces to move with this card."
-    : colorNameCardTactics(AppStateCardTactics.turn) + " to move. Choose a card.");
+    : toMoveTextCardTactics());
 }
 
 function onCardTacticsSquareClick(r, c) {
   if (AppStateCardTactics.gameOver) return;
-  if (AppStateCardTactics.mode === "offline-ai" && AppStateCardTactics.turn !== AppStateCardTactics.humanColor) {
+  if (!humanMayActCardTactics()) {
     setStatusCardTactics("board-info", "Computer to move.");
     return;
   }
@@ -333,36 +363,56 @@ function onCardTacticsSquareClick(r, c) {
   }
 }
 
+// move = a legal move, or null for a pass (no legal move).
 function applyCardTacticsMove(move) {
   pushUndoSnapshotCardTactics();
   const mover = AppStateCardTactics.turn;
-  AppStateCardTactics.state = CardTacticsCore.applyMove(AppStateCardTactics.state, mover, move);
-  AppStateCardTactics.lastMove = { from: move.from.slice(), to: move.to.slice() };
+  const before = AppStateCardTactics.state;
+  AppStateCardTactics.state = move
+    ? CardTacticsCore.applyMove(before, mover, move)
+    : CardTacticsCore.applyPass(before, mover);
+  AppStateCardTactics.lastMove = move ? { from: move.from.slice(), to: move.to.slice() } : null;
   AppStateCardTactics.moveCount++;
   AppStateCardTactics.selectedCard = null;
   AppStateCardTactics.selectedPiece = null;
   AppStateCardTactics.legalTargets = {};
-  updateCardTacticsBoard();
-  updateCardTacticsCards();
-  updateGameLabelsCardTactics();
 
   if (AppStateCardTactics.state.gameOver) {
     AppStateCardTactics.gameOver = true;
-    const winnerName = colorNameCardTactics(AppStateCardTactics.state.winner);
-    const reason = AppStateCardTactics.state.winReason === "shrine" ? " by reaching the shrine!" : " by capturing the master!";
-    announceGameResultCardTactics(resultTitleCardTactics(AppStateCardTactics.state.winner), winnerName + " wins" + reason);
-    recordCardTacticsStatsIfVsAi(AppStateCardTactics.state.winner === AppStateCardTactics.humanColor ? "win" : "loss");
+    updateCardTacticsBoard();
+    updateCardTacticsCards();
+    const winner = AppStateCardTactics.state.winner;
+    announceGameResultCardTactics(resultTitleCardTactics(winner), resultMessageCardTactics(AppStateCardTactics.state));
+    if (winner === "draw") recordCardTacticsStatsIfVsAi("draw");
+    else recordCardTacticsStatsIfVsAi(winner === AppStateCardTactics.humanColor ? "win" : "loss");
     updateGameLabelsCardTactics();
     return;
   }
 
-  AppStateCardTactics.turn = CardTacticsCore.otherPlayer(mover);
+  AppStateCardTactics.turn = AppStateCardTactics.state.currentPlayer;
   updateCardTacticsBoard();
   updateCardTacticsCards();
   updateGameLabelsCardTactics();
-  maybeTriggerAiTurnCardTactics();
-  if (!(AppStateCardTactics.mode === "offline-ai" && AppStateCardTactics.turn !== AppStateCardTactics.humanColor)) {
-    setStatusCardTactics("board-info", colorNameCardTactics(mover) + " played. " + colorNameCardTactics(AppStateCardTactics.turn) + " to move. Choose a card.");
+
+  let note = colorNameCardTactics(mover) + (move ? " played." : " has no legal move and passes.");
+  if (move && AppStateCardTactics.state.home[mover] > before.home[mover]) {
+    note = colorNameCardTactics(mover) + " brings a stone home (" + AppStateCardTactics.state.home[mover] + " of " + CardTacticsCore.GOAL + ").";
+  }
+  const next = AppStateCardTactics.turn;
+  if (!CardTacticsCore.getLegalMoves(AppStateCardTactics.state, next).length) {
+    // The next player cannot move: pass for them after a short pause.
+    setStatusCardTactics("board-info", note + " " + colorNameCardTactics(next) + " has no legal move and passes.");
+    const scheduledFor = AppStateCardTactics.state;
+    setTimeout(() => {
+      if (AppStateCardTactics.gameOver || AppStateCardTactics.state !== scheduledFor) return;
+      applyCardTacticsMove(null);
+    }, AiPacing.delay(900));
+    return;
+  }
+  if (AppStateCardTactics.mode === "offline-ai" && next !== AppStateCardTactics.humanColor) {
+    maybeTriggerAiTurnCardTactics();
+  } else {
+    setStatusCardTactics("board-info", note + " " + colorNameCardTactics(next) + " to move. Choose a card.");
   }
 }
 
@@ -385,7 +435,6 @@ function aiTurnCardTactics() {
   setTimeout(() => {
     if (AppStateCardTactics.gameOver || AppStateCardTactics.state !== scheduledFor || AppStateCardTactics.turn !== aiColor) return;
     const move = CardTacticsAi.chooseMove(AppStateCardTactics.state, aiColor, AppStateCardTactics.aiLevel);
-    if (!move) return;
     applyCardTacticsMove(move);
   }, AiPacing.delay(350));
 }
@@ -411,6 +460,9 @@ function undoLastMove() {
   updateCardTacticsCards();
   updateGameLabelsCardTactics();
   setStatusCardTactics("board-info", "Move undone. " + colorNameCardTactics(AppStateCardTactics.turn) + " to move. Choose a card.");
+  if (AppStateCardTactics.mode === "offline-ai" && AppStateCardTactics.turn !== AppStateCardTactics.humanColor) {
+    maybeTriggerAiTurnCardTactics();
+  }
 }
 
 function showBoardSectionCardTactics() {
@@ -434,15 +486,14 @@ function buildCardTacticsBoardDOM() {
   if (!boardEl) return;
   boardEl.innerHTML = "";
 
-  for (let r = 0; r < CardTacticsCore.SIZE; r++) {
-    for (let c = 0; c < CardTacticsCore.SIZE; c++) {
+  for (let r = 0; r < CardTacticsCore.ROWS; r++) {
+    for (let c = 0; c < CardTacticsCore.COLS; c++) {
       const square = document.createElement("button");
       square.className = "square cardtactics-square";
       square.type = "button";
       square.dataset.row = r;
       square.dataset.col = c;
-      if (r === CardTacticsCore.RED_SHRINE[0] && c === CardTacticsCore.RED_SHRINE[1]) square.classList.add("cardtactics-square-shrine");
-      if (r === CardTacticsCore.BLUE_SHRINE[0] && c === CardTacticsCore.BLUE_SHRINE[1]) square.classList.add("cardtactics-square-shrine");
+      if (r === 0 || r === CardTacticsCore.ROWS - 1) square.classList.add("cardtactics-square-goal");
 
       const piece = document.createElement("span");
       piece.className = "cardtactics-piece";
@@ -470,7 +521,7 @@ function ensureCardTacticsSquareAspectRatio() {
   if (!boardEl) return;
   const rect = boardEl.getBoundingClientRect();
   if (!rect || !rect.width) return;
-  const squareSize = rect.width / CardTacticsCore.SIZE;
+  const squareSize = (rect.width - 6) / CardTacticsCore.COLS;
   boardEl.querySelectorAll(".cardtactics-square").forEach((sq) => {
     sq.style.height = squareSize + "px";
   });
@@ -498,11 +549,8 @@ function updateCardTacticsBoard() {
     const piece = AppStateCardTactics.state.board[r][c];
     const pieceEl = sq.querySelector(".cardtactics-piece");
     if (pieceEl) {
-      pieceEl.classList.remove("cardtactics-piece-blue", "cardtactics-piece-red", "cardtactics-piece-king");
-      if (piece) {
-        pieceEl.classList.add(piece.color === "blue" ? "cardtactics-piece-blue" : "cardtactics-piece-red");
-        if (piece.king) pieceEl.classList.add("cardtactics-piece-king");
-      }
+      pieceEl.classList.remove("cardtactics-piece-black", "cardtactics-piece-white");
+      if (piece) pieceEl.classList.add(piece.color === "black" ? "cardtactics-piece-black" : "cardtactics-piece-white");
     }
 
     const isSelected = AppStateCardTactics.selectedPiece
@@ -514,62 +562,70 @@ function updateCardTacticsBoard() {
     sq.classList.toggle("lm-to", !!last && last.to[0] === r && last.to[1] === c);
 
     let label = "Row " + (r + 1) + ", column " + (c + 1);
-    label += piece ? ", " + colorNameCardTactics(piece.color) + (piece.king ? " master" : " pawn") : ", empty";
+    label += piece ? ", " + colorNameCardTactics(piece.color) + " stone" : ", empty";
     I18n.setAria(sq, label);
   });
 }
 
-/*** Card rendering (small move-diagrams) ***/
+/*** Card rendering (moves as arrows, seen from the side to move) ***/
 
-function buildCardDiagram(cardId, forColor) {
+// One move as arrows: a straight or diagonal step repeats its arrow per
+// square ("↑↑"), any other move is its upward/downward part followed by
+// its sideways part ("↑↑←").
+const CT_ARROWS = { "-1,0": "↑", "1,0": "↓", "0,-1": "←", "0,1": "→", "-1,-1": "↖", "-1,1": "↗", "1,-1": "↙", "1,1": "↘" };
+function moveArrowsCardTactics(dr, dc) {
+  const sr = Math.sign(dr), sc = Math.sign(dc);
+  if (dr === 0 || dc === 0 || Math.abs(dr) === Math.abs(dc)) return CT_ARROWS[sr + "," + sc].repeat(Math.max(Math.abs(dr), Math.abs(dc)));
+  return CT_ARROWS[sr + ",0"].repeat(Math.abs(dr)) + CT_ARROWS["0," + sc].repeat(Math.abs(dc));
+}
+
+function buildCardMoves(cardId, forColor) {
   const wrap = document.createElement("div");
-  wrap.className = "cardtactics-card-diagram";
-  const moves = CardTacticsCore.cardMovesFor(cardId, forColor);
-  for (let r = -2; r <= 2; r++) {
-    for (let c = -2; c <= 2; c++) {
-      const cell = document.createElement("span");
-      cell.className = "cardtactics-card-cell";
-      if (r === 0 && c === 0) cell.classList.add("cardtactics-card-cell-center");
-      else if (moves.some(([dr, dc]) => dr === r && dc === c)) cell.classList.add("cardtactics-card-cell-move");
-      wrap.appendChild(cell);
-    }
-  }
+  wrap.className = "cardtactics-card-moves";
+  wrap.setAttribute("aria-hidden", "true");
+  CardTacticsCore.cardMovesFor(cardId, forColor).forEach(([dr, dc]) => {
+    const m = document.createElement("span");
+    m.className = "cardtactics-card-move";
+    m.textContent = moveArrowsCardTactics(dr, dc);
+    wrap.appendChild(m);
+  });
   return wrap;
 }
 
-function buildCardElement(cardId, ownerColor) {
+function buildCardElement(cardId, forColor) {
   const card = document.createElement("button");
   card.type = "button";
   card.className = "cardtactics-card";
-  const isSelected = AppStateCardTactics.selectedCard === cardId && AppStateCardTactics.turn === ownerColor;
-  card.classList.toggle("cardtactics-card-selected", isSelected);
+  card.dataset.card = cardId;
+  card.classList.toggle("cardtactics-card-selected", AppStateCardTactics.selectedCard === cardId);
+  card.setAttribute("aria-pressed", AppStateCardTactics.selectedCard === cardId ? "true" : "false");
+  card.addEventListener("click", () => onCardTacticsCardClick(cardId));
   const label = document.createElement("div");
   label.className = "cardtactics-card-name";
   I18n.setKey(label, "cardtactics_card_" + cardId);
   card.appendChild(label);
-  card.appendChild(buildCardDiagram(cardId, ownerColor));
-  card.addEventListener("click", () => onCardTacticsCardClick(ownerColor, cardId));
+  card.appendChild(buildCardMoves(cardId, forColor));
   return card;
 }
 
 function updateCardTacticsCards() {
-  const redRow = document.getElementById("cardtactics-cards-red");
-  const blueRow = document.getElementById("cardtactics-cards-blue");
-  const neutralEl = document.getElementById("cardtactics-neutral-card");
-  if (!redRow || !blueRow || !neutralEl) return;
+  const displayRow = document.getElementById("cardtactics-display");
+  const pileLine = document.getElementById("cardtactics-pile");
+  const homeLine = document.getElementById("cardtactics-home-line");
+  const s = AppStateCardTactics.state;
+  if (!displayRow) return;
+  const viewer = AppStateCardTactics.turn;
 
-  redRow.innerHTML = "";
-  AppStateCardTactics.state.cards.red.forEach((id) => redRow.appendChild(buildCardElement(id, "red")));
+  displayRow.innerHTML = "";
+  s.display.forEach((id) => displayRow.appendChild(buildCardElement(id, viewer)));
 
-  blueRow.innerHTML = "";
-  AppStateCardTactics.state.cards.blue.forEach((id) => blueRow.appendChild(buildCardElement(id, "blue")));
+  if (pileLine) pileLine.textContent = fillCardTactics("cardtactics_pile", { n: s.queue.length });
 
-  neutralEl.innerHTML = "";
-  neutralEl.appendChild(buildCardDiagram(AppStateCardTactics.state.cards.neutral, "blue"));
-  const label = document.createElement("div");
-  label.className = "cardtactics-card-name";
-  I18n.setKey(label, "cardtactics_card_" + AppStateCardTactics.state.cards.neutral);
-  neutralEl.insertBefore(label, neutralEl.firstChild);
+  const forLine = document.getElementById("cardtactics-cards-for");
+  if (forLine) I18n.setKey(forLine, viewer === "black" ? "cardtactics_cards_for_black" : "cardtactics_cards_for_white");
+  if (homeLine) {
+    homeLine.textContent = fillCardTactics("cardtactics_home_line", { b: s.home.black, w: s.home.white, n: CardTacticsCore.GOAL });
+  }
 }
 
 function updateGameLabelsCardTactics() {
