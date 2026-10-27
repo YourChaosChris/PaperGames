@@ -588,15 +588,24 @@ all parts back into one log in list order. The last line is exactly
   moved matches and none with fewer, sums have exactly one solution, the
   hint solves each in the stated number of moves. About 3 seconds.
 - `node tests/cardduel-core.js` - no server or browser needed. "Card
-  Duel": 4 decks of 30 cards, at most 6 abilities, every card and ability
-  named in 12 languages; 500 computer games (medium against medium) for
-  each of the 16 deck pairings - every game ends, every move is legal,
-  each deck wins 40-60 % in every pairing, the starter at most 55 % -,
-  hard beats easy in at least 70 % of 200 games, and single rules
-  (Bulwark, Nimble, Thick Skin, empty deck, 6 creatures, the evening out
-  of the start); every card has its own picture in cardduel-art.js (none
-  missing, none shared by two cards, a portrait per mage, the file under
-  300 KB; the size is printed). About 90 seconds.
+  Duel" (rules of task 149): 4 decks of 20 cards, at most 6 abilities,
+  every card and ability named in 12 languages; 500 computer games (medium
+  against medium) for each of the 16 deck pairings - every game ends,
+  every move is legal, no card gets lost, each deck wins 40-60 % in every
+  pairing, the starter 45-55 % -, the levels (200 games each: hard beats
+  medium at least 60 %, medium beats easy 70 %, hard beats easy 80 %), and
+  single rules (power store 3 a turn up to 9, start life 17 / 20, attack
+  at once, Warden, Ranged, Thick Skin, hand limit 7, discard pile as new
+  deck, 6 creatures, old saves not current); every card has its own
+  picture in cardduel-art.js (none missing, none shared by two cards, a
+  portrait per mage, the file under 300 KB; the size is printed). About
+  60 seconds.
+- `node tests/cardduel-ui.js` - needs the server and Playwright. German
+  page at 360 x 640: new game with rules 2 and start life 17, a creature
+  attacks in the turn it is played, a Warden strikes the attacker first,
+  computer turn, stored power, 44 px buttons, save/load, an old save is
+  dropped, the rules page names Warden and Ranged; no sideways scroll, no
+  page errors.
 - `node tests/villains-core.js` - no server or browser needed.
   "Fairy-Tale Villains" (rules version 3, heroes are events from the
   deck): six villains with three places
