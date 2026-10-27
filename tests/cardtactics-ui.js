@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// Card Tactics UI (rules 3, task 151): German page at 360 x 640, open cards
+// Card Tactics UI (rules 4, task 151, decision 41): German page at 360 x 640, open cards
 // with arrows (no 5 x 5 diagram), face-down pile shown only as a number,
 // tap flow, computer reply, crossing home and game end, save/load, legacy
-// saves (rules 1 and 2), 44 px targets, no sideways scrolling.
+// saves (rules 1, 2 and 3), 44 px targets, no sideways scrolling.
 const { chromium } = require("playwright");
 const argBase = process.argv.indexOf("--base");
 const BASE = (argBase > 0 && process.argv[argBase + 1]) || process.env.BASE_URL || "http://localhost:8000/";
@@ -26,12 +26,12 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   await page.selectOption("#cardtactics-level-inline", "1");
   await page.check("input[name='cardtactics-color'][value='black']");
   await page.tap("#start-cardtactics-game");
-  await page.waitForFunction(() => AppStateCardTactics.mode === "offline-ai" && AppStateCardTactics.state.rules === 3);
+  await page.waitForFunction(() => AppStateCardTactics.mode === "offline-ai" && AppStateCardTactics.state.rules === 4);
   const humanFirst = await page.evaluate(() => AppStateCardTactics.humanColor === AppStateCardTactics.turn);
   if (!humanFirst) await page.waitForFunction(() => AppStateCardTactics.turn === AppStateCardTactics.humanColor, null, { timeout: 15000 });
   check("42 squares", await page.locator("#cardtactics-board .cardtactics-square").count() === 42);
-  check("three open cards, no preview of the pile", await page.locator("#cardtactics-display button.cardtactics-card").count() === 3
-    && await page.locator("#cardtactics-next").count() === 0 && (await page.textContent("#cardtactics-pile")) === "Verdeckter Stapel: 9 Karten");
+  check("three own open cards, own pile of 3, the other side's open cards named", await page.locator("#cardtactics-display button.cardtactics-card").count() === 3
+    && await page.locator("#cardtactics-next").count() === 0 && (await page.textContent("#cardtactics-pile")) === "Eigener verdeckter Stapel: 3 Karten" && /Offene Karten der anderen Seite: .+, .+, .+/.test(await page.textContent("#cardtactics-other")));
   const arrows = await page.evaluate(() => Array.from(document.querySelectorAll("#cardtactics-display .cardtactics-card")).map((b) => ({
     grid: b.querySelectorAll(".cardtactics-card-cell, .cardtactics-card-diagram").length, moves: Array.from(b.querySelectorAll(".cardtactics-card-move")).map((m) => m.textContent),
     n: CardTacticsCore.cardMovesFor(b.dataset.card, AppStateCardTactics.turn).length })));
@@ -44,21 +44,21 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   // Human move by tapping: card, stone, target.
   const plan = await page.evaluate(() => {
     const m = CardTacticsCore.getLegalMoves(AppStateCardTactics.state, AppStateCardTactics.humanColor)[0];
-    return { slot: AppStateCardTactics.state.display.indexOf(m.card), from: m.from, to: m.to, card: m.card };
+    return { slot: AppStateCardTactics.state.hands[AppStateCardTactics.humanColor].indexOf(m.card), from: m.from, to: m.to, card: m.card };
   });
   await page.locator("#cardtactics-display button.cardtactics-card").nth(plan.slot).tap();
   check("card selected", await page.evaluate((c) => AppStateCardTactics.selectedCard === c, plan.card));
   await page.tap(`#cardtactics-board .cardtactics-square[data-row="${plan.from[0]}"][data-col="${plan.from[1]}"]`);
   check("targets marked", await page.locator(".cardtactics-square-movable").count() > 0);
   await page.tap(`#cardtactics-board .cardtactics-square[data-row="${plan.to[0]}"][data-col="${plan.to[1]}"]`);
-  check("move applied and card back in the pile", await page.evaluate((c) => AppStateCardTactics.state.ply >= 1 && (AppStateCardTactics.state.queue.includes(c) || AppStateCardTactics.state.display.includes(c)), plan.card));
+  check("move applied and card back in the pile", await page.evaluate((c) => AppStateCardTactics.state.ply >= 1 && (AppStateCardTactics.state.piles.black.includes(c) || AppStateCardTactics.state.hands.black.includes(c) || AppStateCardTactics.state.piles.white.includes(c) || AppStateCardTactics.state.hands.white.includes(c)), plan.card));
   await page.waitForFunction(() => AppStateCardTactics.turn === AppStateCardTactics.humanColor && AppStateCardTactics.moveCount >= 2, null, { timeout: 15000 });
   check("computer replied", await page.evaluate(() => AppStateCardTactics.moveCount >= 2));
 
   // Save and reload resumes the game.
   const plyBefore = await page.evaluate(() => AppStateCardTactics.state.ply);
   await load(); await page.waitForTimeout(500);
-  check("save resumes on reload", await page.evaluate((p) => AppStateCardTactics.state.rules === 3 && AppStateCardTactics.state.ply === p && !document.getElementById("board-container").classList.contains("hidden"), plyBefore));
+  check("save resumes on reload", await page.evaluate((p) => AppStateCardTactics.state.rules === 4 && AppStateCardTactics.state.ply === p && !document.getElementById("board-container").classList.contains("hidden"), plyBefore));
 
   // Crossing home and winning (two players on one device).
   await page.evaluate(() => {
@@ -67,7 +67,7 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
     s.board = s.board.map((row) => row.map(() => null));
     s.board[1][2] = { color: "black" }; s.board[3][4] = { color: "black" };
     s.board[0][2] = { color: "white" }; s.board[6][0] = { color: "white" }; s.board[6][5] = { color: "white" };
-    s.display = ["arrow", "fork", "bow"]; s.queue = C.CARD_IDS.filter((id) => !s.display.includes(id));
+    s.hands = { black: ["arrow", "fork", "bow"], white: ["hook", "stairs", "fan"] }; s.piles = { black: ["wave", "zigzag", "ladder"], white: ["anchor", "bridge", "key"] };
     s.home.black = 1; s.ply = 10;
     AppStateCardTactics.mode = "offline"; AppStateCardTactics.state = s; AppStateCardTactics.turn = "black";
     AppStateCardTactics.gameOver = false; updateCardTacticsBoard(); updateCardTacticsCards();
@@ -88,7 +88,7 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   // Like every game page, a fresh game then starts directly (game-frame.js).
   const after = await page.evaluate(() => {
     const raw = JSON.parse(localStorage.getItem("einkchess_save_cardtactics") || "null");
-    return { fresh: AppStateCardTactics.state.rules === 3 && AppStateCardTactics.state.ply === 0, saved: !raw || (raw.rules === 3 && raw.state.rules === 3) };
+    return { fresh: AppStateCardTactics.state.rules === 4 && AppStateCardTactics.state.ply === 0, saved: !raw || (raw.rules === 4 && raw.state.rules === 4) };
   });
   check("legacy save (rules 1) dropped " + JSON.stringify(after), after.fresh && after.saved);
   // A save of rules 2 (open queue) is dropped too.
@@ -100,7 +100,7 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
       state: { rules: 2, board, display: ids.slice(0, 3), queue: ids.slice(3), home: { black: 0, white: 0 }, currentPlayer: "black", starter: "black", ply: 4, gameOver: false, winner: null, winReason: null } }));
   });
   await load(); await page.waitForTimeout(500);
-  check("legacy save (rules 2) dropped", await page.evaluate(() => AppStateCardTactics.state.rules === 3 && AppStateCardTactics.state.ply === 0));
+  check("legacy save (rules 2) dropped", await page.evaluate(() => AppStateCardTactics.state.rules === 4 && AppStateCardTactics.state.ply === 0));
 
   // Two players on one device start and the board fits.
   if (!(await page.isVisible("#mode-offline"))) await page.tap("#menu-toggle");

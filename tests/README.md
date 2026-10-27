@@ -517,14 +517,14 @@ all parts back into one log in list order. The last line is exactly
   sideways scroll; the cards "Wild Chain" with only 250/500 as targets,
   their special cards in the rows, save and load.
 - `node tests/cardtactics-core.js` - no server or browser needed. Card
-  Tactics (rules 2, task 151): 7 x 6 board, six stones each, twelve cards
-  (three open, queue of nine), card cycle, captures, crossing home, the
-  opening rule (first move one row at most), pass, move limit and save
+  Tactics (rules 4, task 151): 7 x 6 board, six stones each, twelve cards
+  (six per side: three open, three in the own pile), own card cycle, captures, crossing home, the
+  opening rule (starter: first move one row at most, second not two rows straight), pass, move limit and save
   validation; computer games per level pairing and first-move balance
   (`--games N` or `GAMES=N`, default 40; with 200 or more the starter's
   share must stay within 5 points of 50 %; `--seat-only` skips the levels).
 - `node tests/cardtactics-ui.js` - needs the server and Playwright. German
-  page at 360 x 640: three open and two next cards, 44 px cards, squares
+  page at 360 x 640: three own open cards, own pile, the other side's cards named, 44 px cards, squares
   and buttons, tap flow card - stone - square, computer reply, save/load,
   win with two stones home, legacy save of the first rules dropped, two
   players on one device, rules page, no sideways scroll.
