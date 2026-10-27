@@ -8,15 +8,15 @@ Object.assign(STRINGS.en, {
     cardtactics_term_setup: "The setup",
     cardtactics_rules_setup: "The board has 7 rows and 6 columns. Black's six stones fill the bottom row, White's six stones the top row. Black starts.",
     cardtactics_term_cards: "Move cards",
-    cardtactics_rules_cards: "There are twelve move cards, all in play. Three lie open below the board and belong to both players; the other nine lie face down in a pile. Each card shows its moves as arrows: ↑↑ means two squares forward, ↑← one forward and one to the left, ↗ one square diagonally. Each player uses a card in their own direction, so the page always shows the arrows for the side to move.",
+    cardtactics_rules_cards: "There are twelve move cards; at the start they are shuffled and each side gets six. Three of them lie open in front of their side (both players can see them), the other three face down in that side's own pile. Each card shows its moves as arrows: ↑↑ means two squares forward, ↑← one forward and one to the left, ↗ one square diagonally. Forward always means towards the other side.",
     cardtactics_term_moving: "Making a move",
-    cardtactics_rules_moving: "Pick one of the three open cards, then one of your stones, then a square the card allows. You may move onto an empty square or onto an enemy stone, which is captured. Your own stones block.",
+    cardtactics_rules_moving: "Pick one of your own three open cards, then one of your stones, then a square the card allows. You may move onto an empty square or onto an enemy stone, which is captured. Your own stones block. You never use a card of the other side.",
     cardtactics_term_cycle: "The card pile",
-    cardtactics_rules_cycle: "The top card of the face-down pile takes the place of the card you used, and the used card goes back into the pile at a hidden place. So nobody knows which card comes next.",
+    cardtactics_rules_cycle: "The top card of your own face-down pile takes the place of the card you used, and the used card goes back into your pile at a hidden place. So you never know which of your cards comes next, and your cards never go to the other side.",
     cardtactics_term_opening: "Opening move",
-    cardtactics_rules_opening: "The very first move of the game goes one row at most. This evens out the advantage of starting.",
+    cardtactics_rules_opening: "The starter's first move goes one row at most, and their second move may not go two rows straight ahead. This evens out the advantage of starting.",
     cardtactics_term_pass: "No move possible",
-    cardtactics_rules_pass: "If you cannot move, you pass, and the first open card goes back into the pile.",
+    cardtactics_rules_pass: "If you cannot move, you pass, and your first open card goes back into your own pile.",
     cardtactics_rules_end_title: "Winning the game",
     cardtactics_term_win: "Two stones home",
     cardtactics_rules_win: "A stone that reaches the opponent's back row (the goal row) has crossed: it leaves the board and counts as home; an enemy stone standing there is captured. Whoever brings two stones home first wins. You also win if the other side no longer has two stones on the board and at home together.",
@@ -25,8 +25,8 @@ Object.assign(STRINGS.en, {
     cardtactics_history_title: "The History of Card Tactics",
     cardtactics_history_origins_title: "Races to the other side",
     cardtactics_history_origins_p1: "Bringing your own pieces across the board to the other side is an old goal in board games. Halma, invented in 1883 or 1884 by the American surgeon George Howard Monks, is won by the first player to move all their pieces into the camp in the opposite corner.",
-    cardtactics_history_origins_p2: "In Halma and in chess, every piece always moves the same way. In Card Tactics, a stone has no movement of its own: open cards decide which steps are possible, and both players choose from the same cards.",
+    cardtactics_history_origins_p2: "In Halma and in chess, every piece always moves the same way. In Card Tactics, a stone has no movement of its own: your own open cards decide which steps are possible, and every side has cards of its own.",
     cardtactics_history_version_title: "This Version",
-    cardtactics_history_version_p1: "PaperGames rewrote the rules in October 2026: a board of 7 rows by 6 columns, six identical stones per side, a shared row of three open cards with a face-down pile, and the goal of bringing two stones home. The twelve cards, their arrows and their names are PaperGames' own."
+    cardtactics_history_version_p1: "PaperGames rewrote the rules in October 2026: a board of 7 rows by 6 columns, six identical stones per side, six cards of its own for each side (three open, three in a face-down pile), and the goal of bringing two stones home. The twelve cards, their arrows and their names are PaperGames' own."
 });
 I18n.markTextLoaded("en");

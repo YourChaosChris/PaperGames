@@ -102,7 +102,7 @@ const GAMES_CATALOG = [
     nameKey: "game_card_tactics",
     nameText: "Card Tactics",
     descKey: "home_card_tactics_desc",
-    descText: "Race your stones across the board - three shared move cards decide how they may go.",
+    descText: "Race your stones across the board - each side plays its own move cards, three open, the rest face down.",
     popular: false,
     added: "2026-07-01",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"2.5\" width=\"14\" height=\"19\" rx=\"2\"/><circle cx=\"12\" cy=\"12\" r=\"2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"8.5\" cy=\"8\" r=\"1.5\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"15.5\" cy=\"8\" r=\"1.5\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"17\" r=\"1.5\" fill=\"#141413\" stroke=\"none\"/></svg></span>"

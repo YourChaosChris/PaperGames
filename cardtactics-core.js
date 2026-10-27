@@ -1,41 +1,42 @@
 // cardtactics-core.js
-// Dependency-free rules engine for Card Tactics (rules 2, task 151).
-// Rules only, no DOM/UI. Rules 3 (task 151, decision 33): the card pile is
-// face down; older saves are dropped.
+// Dependency-free rules engine for Card Tactics (task 151). Rules only, no
+// DOM/UI. Rules 4 (decision 41): every side has cards of its own; older
+// saves are dropped.
 //
 // Board: 7 rows x 6 columns. Black starts on the bottom row (row 6), White
 // on the top row (row 0), six identical stones each. A card's moves are
-// written from Black's point of view (negative dr = up the board =
-// "forward" for Black); White uses the same card turned round (every
-// offset negated).
+// written as seen by its owner: negative dr = towards the other side.
+// The table holds them from Black's side, so for White every offset is
+// negated (cardMovesFor).
 //
-// Cards: twelve original cards, all of them in play. Three lie open in a
-// shared row (the "display") that both players choose from; the other
-// nine lie face down in a pile (`queue`, never shown). On your turn you
-// pick one display card and move one of your stones by one of its moves
-// (onto an empty square or an enemy stone, which is captured). The top
-// card of the pile takes the used card's place, and the used card is
-// slipped back into the pile at a hidden place (from `drawSeed`), so the
-// order of the cards cannot be foreseen.
+// Cards: twelve original cards, shuffled and dealt six to each side. Each
+// side has three of them open in front of it (`hands[player]`, both can
+// see them) and three face down in its own pile (`piles[player]`, never
+// shown). On your turn you pick one of your own open cards and move one
+// of your stones by one of its moves (onto an empty square or an enemy
+// stone, which is captured). The top card of your pile takes the used
+// card's place, and the used card is slipped back into your pile at a
+// hidden place (from `drawSeed`). Nobody ever plays a card of the other
+// side.
 // Search states of the computer carry `blind: true`: a used card is then
 // replaced by an unknown card (null), so the computer never looks into
-// the pile.
+// a pile.
 //
 // Goal: a stone that lands on the opponent's back row has crossed and
 // leaves the board ("home"). The first player with two stones home
 // wins. A player whose stones on the board plus stones home can no
 // longer reach two loses. A player without a legal move passes and puts
-// the first display card at the end of the queue. After MAX_PLIES moves
+// their first open card back into their pile. After MAX_PLIES moves
 // the game ends: more stones home wins, then more stones on the board,
 // otherwise it is a draw.
 
 const CardTacticsCore = (function () {
-  const RULES = 3;
+  const RULES = 4;
   const ROWS = 7;
   const COLS = 6;
   const STONES = 6;
   const GOAL = 2;
-  const DISPLAY = 3;
+  const HAND = 3; // open cards per side; the other three of its six lie in its pile
   const MAX_PLIES = 120;
 
   const CARDS = {
@@ -107,11 +108,12 @@ const CardTacticsCore = (function () {
 
   function createInitialState(rng, starter) {
     const order = shuffle(CARD_IDS, rng);
+    const half = CARD_IDS.length / 2;
     return {
       rules: RULES,
       board: createInitialBoard(),
-      display: order.slice(0, DISPLAY),
-      queue: order.slice(DISPLAY),
+      hands: { black: order.slice(0, HAND), white: order.slice(half, half + HAND) },
+      piles: { black: order.slice(HAND, half), white: order.slice(half + HAND) },
       drawSeed: Math.floor((rng || Math.random)() * 2147483646) + 1,
       home: { black: 0, white: 0 },
       currentPlayer: starter === "white" ? "white" : "black",
@@ -127,8 +129,8 @@ const CardTacticsCore = (function () {
     return {
       rules: state.rules,
       board: state.board.map((row) => row.map((cell) => (cell ? { color: cell.color } : null))),
-      display: state.display.slice(),
-      queue: state.queue.slice(),
+      hands: { black: state.hands.black.slice(), white: state.hands.white.slice() },
+      piles: { black: state.piles.black.slice(), white: state.piles.white.slice() },
       drawSeed: state.drawSeed,
       blind: state.blind,
       home: { black: state.home.black, white: state.home.white },
@@ -142,14 +144,18 @@ const CardTacticsCore = (function () {
   }
 
   // True for a saved state that follows these rules (older saves - rules 1
-  // without a `rules` field, rules 2 with an open queue - are dropped).
+  // without a `rules` field, rules 2 and 3 with a shared display - are
+  // dropped).
   function isCurrentState(state) {
     if (!state || state.rules !== RULES || state.blind) return false;
     if (!Number.isInteger(state.drawSeed) || state.drawSeed < 1) return false;
     if (!Array.isArray(state.board) || state.board.length !== ROWS) return false;
     if (!state.board.every((row) => Array.isArray(row) && row.length === COLS)) return false;
-    if (!Array.isArray(state.display) || !Array.isArray(state.queue)) return false;
-    const all = state.display.concat(state.queue);
+    if (!state.hands || !state.piles) return false;
+    const half = CARD_IDS.length / 2;
+    if (!["black", "white"].every((p) => Array.isArray(state.hands[p]) && Array.isArray(state.piles[p]) &&
+      state.hands[p].length === HAND && state.hands[p].length + state.piles[p].length === half)) return false;
+    const all = state.hands.black.concat(state.piles.black, state.hands.white, state.piles.white);
     if (all.length !== CARD_IDS.length || !all.every((id) => CARDS[id])) return false;
     if (new Set(all).size !== all.length) return false;
     if (!state.home || typeof state.home.black !== "number" || typeof state.home.white !== "number") return false;
@@ -173,10 +179,13 @@ const CardTacticsCore = (function () {
       for (let c = 0; c < COLS; c++) {
         const piece = state.board[r][c];
         if (!piece || piece.color !== player) continue;
-        state.display.forEach((cardId) => {
+        state.hands[player].forEach((cardId) => {
           if (!cardId) return; // an unknown card in a search state
           cardMovesFor(cardId, player).forEach(([dr, dc]) => {
-            if (state.ply === 0 && Math.abs(dr) > 1) return; // balance: the opening move goes one row at most
+            // Balance: the starter's first move goes one row at most, its
+            // second move not two rows straight ahead.
+            if (state.ply === 0 && Math.abs(dr) > 1) return;
+            if (state.ply === 2 && Math.abs(dr) > 1 && dc === 0) return;
             const tr = r + dr, tc = c + dc;
             if (!inBounds(tr, tc)) return;
             const target = state.board[tr][tc];
@@ -189,14 +198,16 @@ const CardTacticsCore = (function () {
     return moves;
   }
 
-  // The used card leaves the display; the top card of the pile takes its
-  // place and the used card goes back into the pile at a hidden place.
-  function cycleCard(next, cardId) {
-    const slot = next.display.indexOf(cardId);
-    if (next.blind) { next.display[slot] = null; return; }
-    next.display[slot] = next.queue.shift();
+  // The used card leaves the player's open cards; the top card of the
+  // player's own pile takes its place and the used card goes back into
+  // that pile at a hidden place.
+  function cycleCard(next, player, cardId) {
+    const hand = next.hands[player], pile = next.piles[player];
+    const slot = hand.indexOf(cardId);
+    if (next.blind) { hand[slot] = null; return; }
+    hand[slot] = pile.shift();
     next.drawSeed = (next.drawSeed * 48271) % 2147483647;
-    next.queue.splice(next.drawSeed % (next.queue.length + 1), 0, cardId);
+    pile.splice(next.drawSeed % (pile.length + 1), 0, cardId);
   }
 
   function finish(next, winner, reason) {
@@ -232,19 +243,19 @@ const CardTacticsCore = (function () {
     } else {
       next.board[tr][tc] = moving;
     }
-    cycleCard(next, move.card);
+    cycleCard(next, player, move.card);
     next.ply++;
     next.currentPlayer = otherPlayer(player);
     checkEnd(next, player);
     return next;
   }
 
-  // No legal move: the player passes and the first open card goes back
-  // into the pile, so the display changes.
+  // No legal move: the player passes and their first open card goes back
+  // into their pile, so their open cards change.
   function applyPass(state, player) {
     const next = cloneState(state);
-    const first = next.display.find((id) => id);
-    if (first) cycleCard(next, first);
+    const first = next.hands[player].find((id) => id);
+    if (first) cycleCard(next, player, first);
     next.ply++;
     next.currentPlayer = otherPlayer(player);
     checkEnd(next, player);
@@ -255,7 +266,7 @@ const CardTacticsCore = (function () {
   function blindState(state) {
     const s = cloneState(state);
     s.blind = true;
-    s.queue = [];
+    s.piles = { black: [], white: [] };
     return s;
   }
 
@@ -265,7 +276,7 @@ const CardTacticsCore = (function () {
     COLS,
     STONES,
     GOAL,
-    DISPLAY,
+    HAND,
     MAX_PLIES,
     CARDS,
     CARD_IDS,

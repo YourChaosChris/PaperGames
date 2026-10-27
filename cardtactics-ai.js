@@ -36,7 +36,7 @@ const CardTacticsAi = (function () {
     for (let r = 0; r < C.ROWS; r++) for (let c = 0; c < C.COLS; c++) {
       const p = state.board[r][c];
       if (!p || p.color !== color) continue;
-      state.display.forEach((id) => {
+      state.hands[color].forEach((id) => {
         if (!id) return; // an unknown card in a blind search state
         C.cardMovesFor(id, color).forEach(([dr, dc]) => {
           const tr = r + dr, tc = c + dc;

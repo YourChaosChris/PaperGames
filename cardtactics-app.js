@@ -127,7 +127,7 @@ function pushUndoSnapshotCardTactics() {
 
 function toMoveTextCardTactics() {
   let text = colorNameCardTactics(AppStateCardTactics.turn) + " to move. Choose a card.";
-  if (AppStateCardTactics.state.ply === 0) text += " Opening move: one row at most.";
+  if (AppStateCardTactics.state.ply < 3 && AppStateCardTactics.state.ply % 2 === 0) text += " Opening move: one row at most.";
   return text;
 }
 
@@ -616,10 +616,17 @@ function updateCardTacticsCards() {
   if (!displayRow) return;
   const viewer = AppStateCardTactics.turn;
 
+  // Rules 4: the side to move plays only its own open cards; the other
+  // side's open cards are named below (both sides can see them).
   displayRow.innerHTML = "";
-  s.display.forEach((id) => displayRow.appendChild(buildCardElement(id, viewer)));
+  s.hands[viewer].forEach((id) => { if (id) displayRow.appendChild(buildCardElement(id, viewer)); });
 
-  if (pileLine) pileLine.textContent = fillCardTactics("cardtactics_pile", { n: s.queue.length });
+  if (pileLine) pileLine.textContent = fillCardTactics("cardtactics_pile", { n: s.piles[viewer].length });
+  const otherLine = document.getElementById("cardtactics-other");
+  if (otherLine) {
+    const names = s.hands[CardTacticsCore.otherPlayer(viewer)].filter((id) => id).map((id) => I18n.t("cardtactics_card_" + id)).join(", ");
+    otherLine.textContent = fillCardTactics("cardtactics_other_cards", { s: names });
+  }
 
   const forLine = document.getElementById("cardtactics-cards-for");
   if (forLine) I18n.setKey(forLine, viewer === "black" ? "cardtactics_cards_for_black" : "cardtactics_cards_for_white");
