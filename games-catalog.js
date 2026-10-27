@@ -484,7 +484,7 @@ const GAMES_CATALOG = [
     slug: "marblepush",
     category: "strategy",
     nameKey: "game_marblepush",
-    nameText: "Marble Push",
+    nameText: "Marble Brink",
     descKey: "home_marblepush_desc",
     descText: "Push 6 of your opponent's marbles off the hexagonal board to win. Local 2-player or vs. the built-in engine, with full rules for pushing and for sideways line moves.",
     popular: false,

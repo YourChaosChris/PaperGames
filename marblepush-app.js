@@ -21,7 +21,7 @@
 //   - Once 1-3 marbles are selected, every legal destination for that
 //     exact group is highlighted (MarblePushCore.moveNewCells gives the
 //     cell(s) that actually change for each move); tapping one of them
-//     plays that move immediately, including a sumito push into an
+//     plays that move immediately, including a push into an
 //     enemy-occupied cell.
 
 const AppStateMarblePush = {
@@ -531,13 +531,13 @@ function updateMarblePushBoard() {
   const sel = AppStateMarblePush.selected;
 
   let highlightSet = new Set();
-  let sumitoSet = new Set();
+  let pushSet = new Set();
   if (!AppStateMarblePush.gameOver && isHumanTurnMarblePush()) {
     if (sel.length) {
       currentSelectionMoves().forEach((m) => {
         MarblePushCore.moveNewCells(m).forEach((c) => {
           highlightSet.add(c);
-          if (m.capturedCount > 0 || board[c] !== null) sumitoSet.add(c);
+          if (m.capturedCount > 0 || board[c] !== null) pushSet.add(c);
         });
       });
     } else {
@@ -559,7 +559,7 @@ function updateMarblePushBoard() {
     const isSelected = sel.indexOf(i) !== -1;
     cellEl.classList.toggle("marblepush-cell-selected", isSelected);
     cellEl.classList.toggle("marblepush-cell-movable", highlightSet.has(i) && !isSelected);
-    cellEl.classList.toggle("marblepush-cell-sumito", sumitoSet.has(i) && !isSelected);
+    cellEl.classList.toggle("marblepush-cell-push", pushSet.has(i) && !isSelected);
     cellEl.classList.toggle("last-move", !!(AppStateMarblePush.lastMove &&
       (AppStateMarblePush.lastMove.from.indexOf(i) !== -1 || AppStateMarblePush.lastMove.to.indexOf(i) !== -1)));
 

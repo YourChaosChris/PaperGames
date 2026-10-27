@@ -5190,7 +5190,6 @@ STRINGS.nl = {
     msg_aria_withdrawal_example: "Voorbeeld: slaan door terugtrekking",
     msg_aria_approach_example: "Voorbeeld: slaan door nadering",
     msg_aria_tiger_example: "Voorbeeld: tijger slaat",
-    msg_aria_sumito_example: "Voorbeeld van duwen",
     msg_aria_loop_example: "Voorbeeld: slaan via een lus",
     msg_aria_tap_cycle: "Tik om de vormen te doorlopen.",
     msg_shape_triangle: "Driehoek",

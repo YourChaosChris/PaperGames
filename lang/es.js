@@ -5190,7 +5190,6 @@ STRINGS.es = {
     msg_aria_withdrawal_example: "Ejemplo de captura por retirada",
     msg_aria_approach_example: "Ejemplo de captura por aproximación",
     msg_aria_tiger_example: "Ejemplo de captura de un tigre",
-    msg_aria_sumito_example: "Ejemplo de empuje",
     msg_aria_loop_example: "Ejemplo de captura por bucle",
     msg_aria_tap_cycle: "Toca para cambiar entre las formas.",
     msg_shape_triangle: "Triángulo",

@@ -5190,7 +5190,6 @@ STRINGS.uk = {
     msg_aria_withdrawal_example: "Приклад взяття відходом",
     msg_aria_approach_example: "Приклад взяття наближенням",
     msg_aria_tiger_example: "Приклад взяття тигром",
-    msg_aria_sumito_example: "Приклад поштовху",
     msg_aria_loop_example: "Приклад взяття по петлі",
     msg_aria_tap_cycle: "Натисни, щоб перемикати фігури.",
     msg_shape_triangle: "Трикутник",

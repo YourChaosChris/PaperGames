@@ -1,7 +1,7 @@
 /* marblepush: rules used only by the marblepush pages (loaded after base.css). */
 .big-board-enabled .marblepush-board-wrap { width: 640px; max-width: none; margin: 0; }
 
-/* Marble Push board: a 61-cell hexagon rendered as plain circular buttons
+/* Marble Brink board: a 61-cell hexagon rendered as plain circular buttons
    at hex-grid positions (see marblepush-app.js's cube-coordinate pixel
    math) - round holes/marbles read just as clearly on e-ink as true
    hexagon cells and are far simpler to get pixel-perfect on an old
@@ -44,7 +44,7 @@
 /* A push destination: dashed border on top of the movable shading, so
    "this can capture" is conveyed structurally rather than by color
    alone. */
-.marblepush-cell-sumito {
+.marblepush-cell-push {
   border-style: dashed;
   border-width: 3px;
   border-color: var(--accent);

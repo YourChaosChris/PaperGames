@@ -5190,7 +5190,6 @@ STRINGS.ja = {
     msg_aria_withdrawal_example: "離脱取りの例",
     msg_aria_approach_example: "接近取りの例",
     msg_aria_tiger_example: "トラの取りの例",
-    msg_aria_sumito_example: "押し出しの例",
     msg_aria_loop_example: "ループ取りの例",
     msg_aria_tap_cycle: "タップで形を切り替えます。",
     msg_shape_triangle: "三角",

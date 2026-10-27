@@ -9,7 +9,7 @@
 // (x, y, z) with x + y + z = 0 and max(|x|,|y|,|z|) <= 4 - the standard
 // "hexagon of radius 4" coordinate system (61 = 3*4*5 + 1 cells), which
 // makes the 6 hex directions simple unit vectors and keeps line/axis
-// detection (needed for inline vs. broadside moves) trivial. Each cell
+// detection (needed for along vs. sideways moves) trivial. Each cell
 // also carries a (row, col) pair, with row 0 at one edge of the
 // hexagon (5 cells) widening to row 4 in the middle (9 cells) and back
 // down to row 8 (5 cells) - this is only used for a11y labels and
@@ -19,11 +19,11 @@
 // Moves: a "group" is 1, 2 or 3 of the mover's own marbles, contiguous
 // along one of the board's 3 axes. A single marble may step into any
 // adjacent empty cell. A 2- or 3-marble group may move along its own
-// axis ("inline") or sideways ("broadside"). A broadside move requires
-// every destination cell to be empty (no pushing). An inline move
+// axis ("along") or sideways ("sideways"). A sideways move requires
+// every destination cell to be empty (no pushing). A move along the line
 // requires the cell immediately ahead to be empty (plain slide) OR to
 // hold a contiguous line of enemy marbles shorter than the mover's own
-// group ("sumito") with room to give: either an empty cell right past
+// group (a push) with room to give: either an empty cell right past
 // that enemy line, or the edge of the board (in which case the last
 // enemy marble in the line is eliminated - this is how a player
 // scores). A group can never move off the board itself; only marbles
@@ -200,9 +200,9 @@ const MarblePushCore = (function () {
   }
 
   // Every legal move for a specific group:
-  // { cells, dir, type: "single"|"inline"|"broadside", enemyLine: [idx,...], capturedCount: 0|1 }
+  // { cells, dir, type: "single"|"along"|"sideways", enemyLine: [idx,...], capturedCount: 0|1 }
   // enemyLine is ordered nearest-to-farthest from the group and is only
-  // non-empty for an inline sumito; capturedCount is 1 only when the
+  // non-empty for a push along the line; capturedCount is 1 only when the
   // farthest enemy marble in that line is pushed off the board.
   function getGroupMoves(board, color, group) {
     const moves = [];
@@ -225,7 +225,7 @@ const MarblePushCore = (function () {
         const dest = NEIGHBORS[front][dir];
         if (dest === null) continue; // a group may never move itself off the board
         if (board[dest] === null) {
-          moves.push({ cells, dir, type: "inline", enemyLine: [], capturedCount: 0 });
+          moves.push({ cells, dir, type: "along", enemyLine: [], capturedCount: 0 });
         } else if (board[dest] === opp) {
           const enemyLine = [];
           let cur = dest;
@@ -235,9 +235,9 @@ const MarblePushCore = (function () {
           }
           if (cells.length > enemyLine.length) {
             if (cur === null) {
-              moves.push({ cells, dir, type: "inline", enemyLine, capturedCount: 1 });
+              moves.push({ cells, dir, type: "along", enemyLine, capturedCount: 1 });
             } else if (board[cur] === null) {
-              moves.push({ cells, dir, type: "inline", enemyLine, capturedCount: 0 });
+              moves.push({ cells, dir, type: "along", enemyLine, capturedCount: 0 });
             }
             // else: blocked by another marble past the enemy line - illegal
           }
@@ -245,12 +245,12 @@ const MarblePushCore = (function () {
         }
         // else: blocked by the mover's own marble - illegal
       } else {
-        // Broadside: every cell in the group shifts sideways by one step;
-        // every destination must be empty (no pushing on a broadside).
+        // Sideways: every cell in the group shifts sideways by one step;
+        // every destination must be empty (no pushing on a sideways move).
         const destCells = cells.map((c) => NEIGHBORS[c][dir]);
         if (destCells.some((d) => d === null)) continue;
         if (destCells.every((d) => board[d] === null)) {
-          moves.push({ cells, dir, type: "broadside", enemyLine: [], capturedCount: 0 });
+          moves.push({ cells, dir, type: "sideways", enemyLine: [], capturedCount: 0 });
         }
       }
     }
@@ -266,9 +266,9 @@ const MarblePushCore = (function () {
 
   // The set of cells the move lands on that weren't already occupied by
   // the group itself - i.e. the cell(s) a UI should highlight as this
-  // move's clickable destination. Always 1 cell for an inline move
+  // move's clickable destination. Always 1 cell for a move along the line
   // (the rest of the group slides into cells it already touched) and
-  // exactly `cells.length` cells for a broadside or single move.
+  // exactly `cells.length` cells for a sideways or single move.
   function moveNewCells(move) {
     const originalSet = new Set(move.cells);
     const result = [];

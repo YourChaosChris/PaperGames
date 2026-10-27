@@ -1178,7 +1178,7 @@ const STRINGS = {
     home_surakarta_desc: "The Indonesian looping-track capture game: quiet steps never capture, only a slide that rides one of the board's 4 corner loop tracks does. Local 2-player or vs. the built-in engine.",
     surakarta_history_intro: "A traditional Indonesian board game named after the very city on Java where it is believed to have originated.",
 
-    game_marblepush: "Marble Push",
+    game_marblepush: "Marble Brink",
     home_marblepush_desc: "Push 6 of your opponent's marbles off the hexagonal board to win. Local 2-player or vs. the built-in engine, with full rules for pushing and for sideways line moves.",
     marblepush_history_intro: "A pushing game for two on a hexagonal board, in which the only way to capture is to shove the opponent's marbles over the edge.",
     marblepush_selection_hint: "Tap a highlighted cell to move this selection, or clear it below.",
@@ -5273,7 +5273,6 @@ const STRINGS = {
     msg_aria_withdrawal_example: "Withdrawal capture example",
     msg_aria_approach_example: "Approach capture example",
     msg_aria_tiger_example: "Tiger capture example",
-    msg_aria_sumito_example: "Example of a push",
     msg_aria_loop_example: "Loop capture example",
     msg_aria_tap_cycle: "Tap to cycle through the shapes.",
     msg_shape_triangle: "Triangle",

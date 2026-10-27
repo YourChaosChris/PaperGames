@@ -699,7 +699,7 @@ all parts back into one log in list order. The last line is exactly
 - `node tests/tap-targets.js` - same prerequisites. On every category page
   (games*.html) at 360 px, links and buttons must be at least 44 px high
   (links in running text excepted) and the page must not scroll sideways.
-- `node tests/cell-size.js` - same prerequisites. Starts Marble Push, Hashi,
+- `node tests/cell-size.js` - same prerequisites. Starts Marble Brink, Hashi,
   Gomoku, Chinese Checkers and Ludo at 360 px with "Large board" on and
   requires every cell to be at least 28 px, a visible switch next to "New
   game", and no sideways scrolling of the page.

@@ -5261,7 +5261,6 @@ STRINGS.de = {
     msg_aria_withdrawal_example: "Beispiel: Schlagen durch Rückzug",
     msg_aria_approach_example: "Beispiel: Schlagen durch Annäherung",
     msg_aria_tiger_example: "Beispiel: Tiger schlägt",
-    msg_aria_sumito_example: "Beispiel für einen Schub",
     msg_aria_loop_example: "Beispiel: Schlagen über eine Schleife",
     msg_aria_tap_cycle: "Tippen, um die Formen durchzuschalten.",
     msg_shape_triangle: "Dreieck",

@@ -280,21 +280,22 @@ function checkReleaseNotes(STRINGS) {
   if (failures === before) ok("release notes: " + cache[1] + " has its entry, " + notes.length + " entries in " + Object.keys(STRINGS).length + " languages");
 }
 
-// 9. Brand names of a commercial game may only stand in the one
-// paragraph that explains our own name (RECHTSCHECK point 2, task 152):
-// checked in text/<lang>/<slug>.js and in <slug>-history.html.
+// 9. Brand names and terms of a commercial game may only stand in the one
+// paragraph that explains our own name (RECHTSCHECK point 2, tasks 152
+// and 153; key null = nowhere): checked in all files of the game.
 const BRAND_PARAGRAPHS = [
   { slug: "wallmaze", words: /Quoridor|Gigamic|Marchesi/, key: "wallmaze_history_names_p1" },
+  { slug: "marblepush", words: /sumito|broadside|inline move|Marble Push\b/i, key: null },
 ];
 function checkBrandParagraphs() {
   const before = failures;
   for (const b of BRAND_PARAGRAPHS) {
-    const files = fs.readdirSync(path.join(ROOT, "text")).map((l) => "text/" + l + "/" + b.slug + ".js")
-      .filter((f) => fs.existsSync(path.join(ROOT, f)));
-    files.push(b.slug + "-history.html");
-    for (const f of files) {
+    const files = fs.readdirSync(path.join(ROOT, "text")).map((l) => "text/" + l + "/" + b.slug + ".js");
+    ["-history.html", "-rules.html", ".html", "-core.js", "-app.js", "-ai.js"].forEach((s) => files.push(b.slug + s));
+    files.push("css/" + b.slug + ".css");
+    for (const f of files.filter((f) => fs.existsSync(path.join(ROOT, f)))) {
       fs.readFileSync(path.join(ROOT, f), "utf8").split("\n").forEach((line, i) => {
-        if (b.words.test(line) && line.indexOf(b.key) < 0) fail("brand name outside " + b.key + ": " + f + ":" + (i + 1));
+        if (b.words.test(line) && (!b.key || line.indexOf(b.key) < 0)) fail("brand name or term outside " + (b.key || "allowed text") + ": " + f + ":" + (i + 1));
       });
     }
   }

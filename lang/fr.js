@@ -5190,7 +5190,6 @@ STRINGS.fr = {
     msg_aria_withdrawal_example: "Exemple de prise par retrait",
     msg_aria_approach_example: "Exemple de prise par approche",
     msg_aria_tiger_example: "Exemple de prise par un tigre",
-    msg_aria_sumito_example: "Exemple de poussée",
     msg_aria_loop_example: "Exemple de prise par boucle",
     msg_aria_tap_cycle: "Touchez pour faire défiler les formes.",
     msg_shape_triangle: "Triangle",

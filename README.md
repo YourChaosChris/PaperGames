@@ -56,7 +56,7 @@ no internet connection at all.
 - Spider Solitaire
 - Bagh-Chal
 - Tablut
-- Marble Push
+- Marble Brink
 - Pyramid Solitaire
 - Surakarta
 - Hashiwokakero

@@ -5190,7 +5190,6 @@ STRINGS.zh = {
     msg_aria_withdrawal_example: "撤离吃子示例",
     msg_aria_approach_example: "接近吃子示例",
     msg_aria_tiger_example: "老虎吃子示例",
-    msg_aria_sumito_example: "推挤示例",
     msg_aria_loop_example: "环线吃子示例",
     msg_aria_tap_cycle: "点击切换形状。",
     msg_shape_triangle: "三角形",

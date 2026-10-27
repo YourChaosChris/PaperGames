@@ -5190,7 +5190,6 @@ STRINGS.ru = {
     msg_aria_withdrawal_example: "Пример взятия отходом",
     msg_aria_approach_example: "Пример взятия приближением",
     msg_aria_tiger_example: "Пример взятия тигром",
-    msg_aria_sumito_example: "Пример толчка",
     msg_aria_loop_example: "Пример взятия по петле",
     msg_aria_tap_cycle: "Нажмите, чтобы переключать фигуры.",
     msg_shape_triangle: "Треугольник",

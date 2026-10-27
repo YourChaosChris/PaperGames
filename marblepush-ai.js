@@ -30,7 +30,7 @@ const MarblePushAi = (function () {
   // the board's center are safer and more flexible - a marble on the
   // rim is one push away from real danger) and cohesion (marbles
   // touching friendly marbles are harder to isolate and push out) -
-  // plus a light "threat of sumito" term counting how many pushing
+  // plus a light "threat of a push" term counting how many pushing
   // moves are immediately available to each side right now, which
   // rewards setting up an actual capture over merely centralizing.
   function evaluateFor(color, board) {

@@ -5191,7 +5191,6 @@ STRINGS.pl = {
     msg_aria_withdrawal_example: "Przykład bicia przez wycofanie",
     msg_aria_approach_example: "Przykład bicia przez podejście",
     msg_aria_tiger_example: "Przykład bicia przez tygrysa",
-    msg_aria_sumito_example: "Przykład pchnięcia",
     msg_aria_loop_example: "Przykład bicia po pętli",
     msg_aria_tap_cycle: "Dotknij, aby przełączać kształty.",
     msg_shape_triangle: "Trójkąt",

@@ -5190,7 +5190,6 @@ STRINGS.it = {
     msg_aria_withdrawal_example: "Esempio di cattura per allontanamento",
     msg_aria_approach_example: "Esempio di cattura per avvicinamento",
     msg_aria_tiger_example: "Esempio di cattura della tigre",
-    msg_aria_sumito_example: "Esempio di spinta",
     msg_aria_loop_example: "Esempio di cattura ad anello",
     msg_aria_tap_cycle: "Tocca per scorrere le forme.",
     msg_shape_triangle: "Triangolo",

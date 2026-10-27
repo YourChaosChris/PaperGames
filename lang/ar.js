@@ -4933,7 +4933,6 @@ STRINGS.ar = {
     msg_aria_withdrawal_example: "مثال على الأسر بالانسحاب",
     msg_aria_approach_example: "مثال على الأسر بالاقتراب",
     msg_aria_tiger_example: "مثال على أسر النمر",
-    msg_aria_sumito_example: "مثال على الدفع",
     msg_aria_loop_example: "مثال على الأسر عبر المسار الدائري",
     msg_aria_tap_cycle: "اضغط للتنقل بين الأشكال.",
     msg_shape_triangle: "مثلث",

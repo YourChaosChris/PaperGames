@@ -5,7 +5,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const MIN = 28;
 // Large-board mode is the way to reach 28 px on these boards at 360 px
 // (Fanorona, Hex and Matchstick Puzzles since task 125).
-const GAMES = { marblepush: "Marble Push", hashi: "Hashi", gomoku: "Gomoku", sternhalma: "Sternhalma", ludo: "Ludo", fanorona: "Fanorona", hex: "Hex", matches: "Matchstick Puzzles" };
+const GAMES = { marblepush: "Marble Brink", hashi: "Hashi", gomoku: "Gomoku", sternhalma: "Sternhalma", ludo: "Ludo", fanorona: "Fanorona", hex: "Hex", matches: "Matchstick Puzzles" };
 (async () => {
   const browser = await chromium.launch();
   const bad = [];
