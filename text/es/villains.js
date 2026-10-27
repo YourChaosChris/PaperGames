@@ -8,7 +8,7 @@ Object.assign(STRINGS.es, {
     vl_term_domain: "Dominio y plan",
     vl_rules_domain: "Cada villano tiene un dominio con tres lugares. Cada lugar tiene un signo: luna, estrella o hierba. El plan enumera los pasos (tres o cuatro); cada paso corresponde a un lugar y tiene un coste. Los pasos pueden hacerse en cualquier orden; un paso marcado «al final» solo se puede hacer cuando los demás estén completos.",
     vl_term_cards: "Cartas de hechizo",
-    vl_rules_cards: "Todos roban de un mazo común: por cada signo, cuatro cartas de valor 1, cuatro de valor 2 y tres de valor 3, más tres Polvos de hada (valor 2, cualquier signo): 36 cartas de hechizo. Hay tres cartas boca arriba en el mercado. Cada jugador empieza con 3 cartas; los dos últimos en el orden de turno (nunca el primero) reciben además una carta de valor 1. Puedes conservar como máximo 6. Tras repartir, se barajan 8 héroes en el mazo.",
+    vl_rules_cards: "Todos roban de un mazo común: por cada signo, cuatro cartas de valor 1, cuatro de valor 2 y tres de valor 3, más tres Polvos de hada (valor 2, cualquier signo): 36 cartas de hechizo. Hay tres cartas boca arriba en el mercado. Cada jugador empieza con 3 cartas. El jugador inicial empieza con un héroe de fuerza 1 en el dominio. Puedes conservar como máximo 6. Tras repartir, se barajan 8 héroes en el mazo.",
     vl_term_turn: "Un turno",
     vl_rules_turn: "Un turno tiene dos acciones, en cualquier orden; se puede repetir la misma acción. Reunir: toma dos cartas, cada una del mercado o de la parte superior del mazo. Paso: paga el coste de un paso disponible con cartas de tu mano. También puedes terminar el turno antes.",
     vl_term_pay: "Pagar",

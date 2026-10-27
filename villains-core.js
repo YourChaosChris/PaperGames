@@ -10,9 +10,9 @@
 //
 // Cards: one shared deck of 36 spell cards (a sign and a value 1 to 3, and
 // "fairy dust" that counts as any sign with value 2). Three cards lie open
-// in the market. Everyone starts with 3 cards, the last two players in turn
-// order (never the first) also with a card of value 1; at most 6 at the
-// end of an action (more: drop cards).
+// in the market. Everyone starts with 3 cards; at most 6 at the end of an
+// action (more: drop cards). The starting player begins with a hero of
+// strength 1 in the domain.
 //
 // A turn has 2 actions, in any order, the same one twice allowed:
 //   collect  take 2 cards, each one from the market or the top of the deck
@@ -187,18 +187,15 @@ const VillainsCore = (function () {
       finished: [], winner: null, winners: [], log: [], seed: Math.floor(rnd() * 1e9)
     };
     s.players.forEach((p) => { for (let i = 0; i < START_HAND; i++) p.hand.push(drawSpell(s, rnd)); });
-    // The last two players in turn order (never the first) also get the
-    // next card of value 1 from the deck (balance for the starting player,
-    // from computer games).
-    const n = s.players.length;
-    s.players.forEach((p, k) => {
-      const at = s.deck.map((id) => card(id).value).lastIndexOf(1);
-      if (k > 0 && k >= n - 2 && at !== -1) p.hand.push(s.deck.splice(at, 1)[0]);
-    });
     refillMarket(s, rnd);
+    const pool = shuffle(HEROES.map((h) => h[0]), rnd);
+    // The starting player begins with a hero of strength 1 in the domain
+    // (balance for starting first, from computer games).
+    const first = pool.find((id) => card(id).str === 1);
+    pool.splice(pool.indexOf(first), 1);
+    heroEvent(s, first);
     // Only now the heroes go into the deck.
-    const heroes = shuffle(HEROES.map((h) => h[0]), rnd).slice(0, EVENTS);
-    s.deck = shuffle(s.deck.concat(heroes), rnd);
+    s.deck = shuffle(s.deck.concat(pool.slice(0, EVENTS)), rnd);
     return s;
   }
   function placeSign(p, i) { return VILLAINS[p.villain].places[i][1]; }

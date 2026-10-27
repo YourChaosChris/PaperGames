@@ -8,7 +8,7 @@ Object.assign(STRINGS.en, {
     vl_term_domain: "Domain and plan",
     vl_rules_domain: "Each villain has a domain of three places. Every place has a sign: moon, star or herb. The plan lists the steps (three or four); each step belongs to a place and has a price. The steps can be done in any order; a step marked \"last\" only when all the others are done.",
     vl_term_cards: "Spell cards",
-    vl_rules_cards: "All players draw from one deck: for each sign four spell cards of value 1, four of value 2 and three of value 3, plus three Fairy Dust (value 2, any sign) – 36 spell cards. Three cards lie open as the market. Everyone starts with 3 cards; the last two players in turn order (never the first) also get a card of value 1. You may keep at most 6. After dealing, 8 heroes are shuffled into the deck.",
+    vl_rules_cards: "All players draw from one deck: for each sign four spell cards of value 1, four of value 2 and three of value 3, plus three Fairy Dust (value 2, any sign) – 36 spell cards. Three cards lie open as the market. Everyone starts with 3 cards and may keep at most 6. The starting player begins with a hero of strength 1 in the domain. After dealing, 8 heroes are shuffled into the deck.",
     vl_term_turn: "A turn",
     vl_rules_turn: "A turn has two actions, in any order; the same action twice is allowed. Collect: take two cards, each one from the market or from the top of the deck. Step: pay the price of one open step with cards from your hand. You may also end your turn early.",
     vl_term_pay: "Paying",

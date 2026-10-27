@@ -8,7 +8,7 @@ Object.assign(STRINGS.nl, {
     vl_term_domain: "Gebied en plan",
     vl_rules_domain: "Elke schurk heeft een gebied met drie plekken. Elke plek heeft een teken: maan, ster of kruid. Het plan bevat de stappen (drie of vier); elke stap hoort bij een plek en heeft een prijs. De stappen mogen in elke volgorde; een stap met “laatste” mag pas als alle andere zijn voltooid.",
     vl_term_cards: "Spreukkaarten",
-    vl_rules_cards: "Alle spelers trekken uit één stapel: voor elk teken vier spreukkaarten met waarde 1, vier met waarde 2 en drie met waarde 3, plus drie Feeënstof (waarde 2, elk teken) – 36 spreukkaarten. Drie kaarten liggen open als markt. Iedereen begint met 3 kaarten; de laatste twee spelers in de beurtvolgorde (nooit de eerste) krijgen ook een kaart met waarde 1. Je mag maximaal 6 kaarten houden. Na het delen worden 8 helden door de stapel geschud.",
+    vl_rules_cards: "Alle spelers trekken uit één stapel: voor elk teken vier spreukkaarten met waarde 1, vier met waarde 2 en drie met waarde 3, plus drie Feeënstof (waarde 2, elk teken) – 36 spreukkaarten. Drie kaarten liggen open als markt. Iedereen begint met 3 kaarten. De startspeler begint met een held met kracht 1 in zijn gebied. Je mag maximaal 6 kaarten houden. Na het delen worden 8 helden door de stapel geschud.",
     vl_term_turn: "Een beurt",
     vl_rules_turn: "Een beurt heeft twee acties, in willekeurige volgorde; dezelfde actie mag tweemaal. Verzamelen: neem twee kaarten, elk van de markt of boven op de stapel. Stap: betaal de prijs van één open stap met kaarten uit je hand. Je mag je beurt ook eerder beëindigen.",
     vl_term_pay: "Betalen",

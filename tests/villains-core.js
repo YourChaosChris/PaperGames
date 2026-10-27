@@ -138,10 +138,11 @@ console.log("(" + Math.round((Date.now() - t0) / 1000) + " s)");
   let s = V.createGame(["witch", "wolf"], rng);
   check(s.rules === 3 && V.isCurrentState(s), "a new game is current (rules 3)");
   check(s.actionsLeft === 2 && s.finished.length === 0 && s.winners.length === 0, "a turn has two actions");
-  check(s.players.every((p, k) => p.hand.length === (k ? 4 : 3) && p.hand.every((id) => V.card(id).kind === "spell") && !p.heroes.length) && V.card(s.players[1].hand[3]).value === 1 &&
-    s.market.length === 3 && s.market.every((id) => V.card(id).kind === "spell"),
-    "3 spell cards for the first player, 3 and a value-1 card for the second, 3 in the market, no hero at the start");
-  check(V.heroesInDeck(s) === V.EVENTS && s.deck.length === 36 - 10 + V.EVENTS, "the heroes are shuffled into the deck after dealing: " + V.heroesInDeck(s) + " heroes, " + s.deck.length + " cards");
+  check(s.players.every((p) => p.hand.length === 3 && p.hand.every((id) => V.card(id).kind === "spell")) && s.market.length === 3 && s.market.every((id) => V.card(id).kind === "spell"),
+    "3 spell cards each, 3 in the market");
+  check(s.players[0].heroes.length === 1 && V.card(s.players[0].heroes[0].card).str === 1 && V.placeSign(s.players[0], s.players[0].heroes[0].place) === V.card(s.players[0].heroes[0].card).sign &&
+    !s.players[1].heroes.length, "the starting player begins with a hero of strength 1 at the place of its sign, the other with none");
+  check(V.heroesInDeck(s) === V.EVENTS && s.deck.length === 36 - 9 + V.EVENTS && s.deck.indexOf(s.players[0].heroes[0].card) === -1, "the heroes are shuffled into the deck after dealing: " + V.heroesInDeck(s) + " heroes, " + s.deck.length + " cards");
   check(V.SIGNS.every((sg) => V.HEROES.filter((h) => V.card(h[0]).sign === sg).reduce((a, h) => a + h[1], 0) === 18), "hero strengths add up to 18 per sign");
   check(!V.HEROES.some((h) => h[0] === "kingsson"), "the King's Son is not a hero any more");
   check(!V.VILLAINS.thornfairy.steps.some((st) => st[0] === "hedge"), "the Thorn Fairy has no hedge step");
@@ -155,6 +156,8 @@ console.log("(" + Math.round((Date.now() - t0) / 1000) + " s)");
   // same sign moves on.
   {
     const e = V.createGame(["witch", "wolf"], V.makeRng(77));
+    e.players[0].heroes = [];
+    e.log = [];
     const moonHeroes = V.HEROES.map((h) => h[0]).filter((id) => V.card(id).sign === "moon");
     e.deck.push("moon1", moonHeroes[1], "star2", moonHeroes[0]);
     e.actionsLeft = 2;
@@ -171,6 +174,7 @@ console.log("(" + Math.round((Date.now() - t0) / 1000) + " s)");
 
   // Price, hero and payment.
   let p = s.players[0];
+  p.heroes = [];
   p.hand = ["star3", "star2", "moon3", "dust"];
   check(V.stepPrice(p, 0) === 5, "the witch's dough costs 5");
   p.heroes.push({ card: "hunter", place: 1 });

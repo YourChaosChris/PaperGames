@@ -8,7 +8,7 @@ Object.assign(STRINGS.pl, {
     vl_term_domain: "Kraina i plan",
     vl_rules_domain: "Każdy złoczyńca ma krainę złożoną z trzech miejsc. Każde miejsce ma znak: księżyc, gwiazdę lub zioło. Plan zawiera kroki (trzy lub cztery); każdy krok należy do miejsca i ma koszt. Kroki można wykonać w dowolnej kolejności; krok oznaczony jako „ostatni” dopiero po wykonaniu pozostałych.",
     vl_term_cards: "Karty zaklęć",
-    vl_rules_cards: "Wszyscy dobierają karty ze wspólnego stosu: dla każdego znaku są cztery karty o wartości 1, cztery o wartości 2 i trzy o wartości 3, a także trzy Wróżkowe pyły (wartość 2, dowolny znak) – 36 kart zaklęć. Na rynku leżą odkryte 3 karty. Każdy zaczyna z 3 kartami; dwaj ostatni gracze w kolejności tur (nigdy pierwszy) dostają też kartę o wartości 1. Możesz mieć najwyżej 6 kart. Po rozdaniu 8 bohaterów zostaje wtasowanych do stosu.",
+    vl_rules_cards: "Wszyscy dobierają karty ze wspólnego stosu: dla każdego znaku są cztery karty o wartości 1, cztery o wartości 2 i trzy o wartości 3, a także trzy Wróżkowe pyły (wartość 2, dowolny znak) – 36 kart zaklęć. Na rynku leżą odkryte 3 karty. Każdy zaczyna z 3 kartami. Pierwszy gracz zaczyna z bohaterem o sile 1 w swojej krainie. Możesz mieć najwyżej 6 kart. Po rozdaniu 8 bohaterów zostaje wtasowanych do stosu.",
     vl_term_turn: "Tura",
     vl_rules_turn: "W turze wykonuje się dwie akcje w dowolnej kolejności; tę samą akcję wolno wykonać dwa razy. Dobierz: weź dwie karty, każdą z targu lub wierzchu talii. Krok: opłać kartami z ręki koszt jednego odkrytego kroku. Możesz też wcześniej zakończyć turę.",
     vl_term_pay: "Płacenie",

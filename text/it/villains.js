@@ -8,7 +8,7 @@ Object.assign(STRINGS.it, {
     vl_term_domain: "Regno e piano",
     vl_rules_domain: "Ogni malvagio ha un regno con tre luoghi. Ogni luogo ha un segno: luna, stella o erba. Il piano elenca i passi (tre o quattro); ogni passo appartiene a un luogo e ha un costo. I passi si possono compiere in qualsiasi ordine; un passo indicato come «per ultimo» si può fare solo dopo aver completato tutti gli altri.",
     vl_term_cards: "Carte incantesimo",
-    vl_rules_cards: "Tutti pescano da un unico mazzo: per ogni segno, quattro carte di valore 1, quattro di valore 2 e tre di valore 3, più tre Polveri di fata (valore 2, qualsiasi segno) – 36 carte incantesimo. Tre carte sono scoperte nel mercato. Ognuno inizia con 3 carte; gli ultimi due nell’ordine di turno (mai il primo) ricevono anche una carta di valore 1. Puoi tenere al massimo 6 carte. Dopo la distribuzione, 8 eroi vengono mescolati nel mazzo.",
+    vl_rules_cards: "Tutti pescano da un unico mazzo: per ogni segno, quattro carte di valore 1, quattro di valore 2 e tre di valore 3, più tre Polveri di fata (valore 2, qualsiasi segno) – 36 carte incantesimo. Tre carte sono scoperte nel mercato. Ognuno inizia con 3 carte. Il giocatore iniziale inizia con un eroe di forza 1 nel suo regno. Puoi tenere al massimo 6 carte. Dopo la distribuzione, 8 eroi vengono mescolati nel mazzo.",
     vl_term_turn: "Un turno",
     vl_rules_turn: "Un turno ha due azioni, in qualsiasi ordine; si può ripetere la stessa azione. Raccogli: prendi due carte, ciascuna dal mercato o dalla cima del mazzo. Passo: paga il costo di un passo scoperto con carte dalla tua mano. Puoi anche terminare il turno in anticipo.",
     vl_term_pay: "Pagare",
