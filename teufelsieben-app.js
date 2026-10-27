@@ -1,5 +1,5 @@
 // teufelsieben-app.js
-// Connects TeufelSiebenCore (Lucky Chain) to the page. Each player takes
+// Connects TeufelSiebenCore (Devilish Seven) to the page. Each player takes
 // one turn per round, turning up cards until stopping or busting. Rows show
 // the open cards and points; computer turns are paced one step at a time.
 // The deck order stays hidden, so there is no undo.
@@ -76,7 +76,7 @@ function cardHtmlTS(card, size, extraClass) {
 }
 function lastTextTS() {
   const s = AppStateTS.state, l = s.last; if (!l) return "";
-  const v = { name: l.player === null ? "" : nameTS(l.player), n: l.card, card: l.card !== undefined ? cardNameTS(l.card) : "" };
+  const v = { name: l.player === null ? "" : nameTS(l.player), n: l.card, card: l.card !== undefined ? cardNameTS(l.card) : "", r: s.round };
   const key = { number: "ts_last_number", bust: "ts_last_bust", saved: "ts_last_saved", courage: "ts_last_courage", strike: "ts_last_strike", pass: "ts_last_pass", bridge: "ts_last_bridge", collector: "ts_last_collector", peek: "ts_last_peek", void: "ts_last_void", empty: "ts_last_empty", stop: "ts_last_stop", roundover: "ts_round_over", gameover: "ts_game_over_notice" }[l.type];
   if (!key) return "";
   if (l.type === "stop") v.n = l.points;

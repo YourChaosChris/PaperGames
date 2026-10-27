@@ -1,5 +1,5 @@
 // teufelsieben-core.js
-// Rules of "Lucky Chain" (Glückskette), a push-your-luck card game made for
+// Rules of "Devilish Seven" (Teuflische Sieben), a push-your-luck card game made for
 // PaperGames (task 121, own rules since task 134), without any DOM or
 // browser feature. File names, keys and the save slot keep the old slug
 // "teufelsieben"; states of the old rules (no `rules: 2`) are not loaded.
@@ -227,7 +227,7 @@ const TeufelSiebenCore = (() => {
     const gain = Math.max(0, gainTotal / Math.max(1, total - Object.keys(unseenCards).reduce((a, k) => a + (isNumber(Number(k)) && h.numbers.includes(Number(k)) ? unseenCards[k] : 0), 0)));
     return (1 - pBust) * gain <= pBust * points;
   }
-  function aiStep(s, rng) { if (s.phase !== "turn" || !s.computer[s.current]) return s; return wantsToStop(s) ? stop(s) : draw(s, rng); }
+  function aiStep(s, rng) { if (s.phase !== "turn" || !s.computer[s.current]) return s; return wantsToStop(s) ? stop(s, rng) : draw(s, rng); }
   function actor(s) { return s.current; }
   function outcomeFor(s, p) { if (s.phase !== "over") return null; if (!s.winners.includes(p)) return "loss"; return s.winners.length > 1 ? "draw" : "win"; }
   function isCurrentState(s) {

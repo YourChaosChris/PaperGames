@@ -493,7 +493,7 @@ const ROMME_REASON_TEXT = {
   "take-breaks-meld": "At least three cards must stay in the meld - from a run only the first or the last card.",
   "take-joker": "Jokers can't be taken - swap them instead.",
   "taken-first": "Lay out the card you took in a new meld first, or take it back.",
-  "taken-new-meld": "A card taken from the table must go into a new meld.",
+  "taken-new-meld": "A card taken from the table must go into a new meld of at least three cards (run or set). It can't be added to a meld already on the table.",
   "taken-joker-unusable": "A joker freed by a card you took must go into a new meld - you have no cards for one.",
   "discard-card-first": "Lay out the card from the discard pile in a meld first - or put it back and draw from the stock.",
   "split-set": "Sets can't be split.",

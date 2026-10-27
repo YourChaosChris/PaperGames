@@ -2,7 +2,7 @@
 // Rules and history texts of teufelsieben (es). Loaded by teufelsieben-rules.html and teufelsieben-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.es, {
-    ts_rules_title: "Reglas de Cadena de suerte",
+    ts_rules_title: "Reglas del Siete del Diablo",
     ts_rules_intro: "Descubre cartas una a una y para a tiempo: un número que ya tienes te hace pasarte. Cuando alguien alcanza el objetivo, gana quien tenga más puntos.",
     ts_rules_basics_title: "Las reglas",
     ts_term_cards: "Las cartas",
@@ -21,10 +21,10 @@ Object.assign(STRINGS.es, {
     ts_rules_computer: "El ordenador cuenta solo cartas visibles y la que muestra Mirar. Fácil para pronto; Difícil compara la ganancia posible con el riesgo.",
     ts_rules_example_title: "Ejemplo",
     ts_rules_example: "Tienes 3, 4, 5, 6 y 9: 27 puntos en números. La secuencia de cuatro suma 10: 37 antes de los efectos especiales.",
-    ts_history_title: "Acerca de Cadena de suerte",
+    ts_history_title: "Acerca del Siete del Diablo",
     ts_history_family_title: "Seguir o parar",
     ts_history_family_p1: "En estos juegos se decide una y otra vez si asumir otro riesgo o conservar lo conseguido. Muchos juegos de dados y cartas funcionan así.",
     ts_history_modern_title: "Esta versión",
-    ts_history_modern_p1: "Cadena de suerte se creó para PaperGames, con cartas, reglas y textos propios: una mezcla de números del 1 al 10, un bonus por secuencias y Valor, Tachar, Pasar, Puente, Coleccionista y Mirar.",
+    ts_history_modern_p1: "El Siete del Diablo se creó para PaperGames, con cartas, reglas y textos propios: una mezcla de números del 1 al 10, un bonus por secuencias y Valor, Tachar, Pasar, Puente, Coleccionista y Mirar.",
 });
 I18n.markTextLoaded("es");

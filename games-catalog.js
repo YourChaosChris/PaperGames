@@ -1274,12 +1274,12 @@ const GAMES_CATALOG = [
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"7\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><ellipse cx=\"20\" cy=\"26\" rx=\"8\" ry=\"6\" fill=\"#141413\"/><ellipse cx=\"10\" cy=\"19\" rx=\"3\" ry=\"4\" fill=\"#141413\"/><ellipse cx=\"16\" cy=\"12\" rx=\"3\" ry=\"4.5\" fill=\"#141413\"/><ellipse cx=\"24\" cy=\"12\" rx=\"3\" ry=\"4.5\" fill=\"#141413\"/><ellipse cx=\"30\" cy=\"19\" rx=\"3\" ry=\"4\" fill=\"#141413\"/></svg></span>"
   },
   {
-    slug: "tieryatzy",
+    slug: "pfotenwurf",
     category: "race",
     family: "dicegames",
-    nameKey: "game_tieryatzy",
-    nameText: "Animal Yatzy",
-    descKey: "home_tieryatzy_desc",
+    nameKey: "game_pfotenwurf",
+    nameText: "Critter Roll",
+    descKey: "home_pfotenwurf_desc",
     descText: "A dice game for children with animal dice: roll up to three times, keep the animals you want and fill your sheet - lions, elephants, two or more the same, all different. The paw is a joker. Pictures only, no sums. Alone, against the computer or with up to four players on one device.",
     popular: false,
     kids: true,
@@ -1324,7 +1324,7 @@ const GAMES_CATALOG = [
     slug: "teufelsieben",
     category: "party",
     nameKey: "game_teufelsieben",
-    nameText: "Lucky Chain",
+    nameText: "Devilish Seven",
     descKey: "home_teufelsieben_desc",
     descText: "A push-your-luck card game: reveal cards one by one, then stop in time. Repeating a number makes you bust; runs of four or more numbers earn a bonus. 2 to 6 players, against the computer or on one device.",
     popular: false,
@@ -1342,6 +1342,18 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-26T12:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"4\" y=\"4\" width=\"32\" height=\"32\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\"/><path d=\"M4 15H36M4 26H36M15 4V36M26 4V36\" stroke=\"#141413\" stroke-width=\"1.6\"/><rect x=\"15\" y=\"15\" width=\"11\" height=\"11\" fill=\"#141413\"/></svg></span>"
+  },
+  {
+    slug: "gipfelwurf",
+    category: "race",
+    family: "dicegames",
+    nameKey: "game_gipfelwurf",
+    nameText: "Ridge Roll",
+    descKey: "home_gipfelwurf_desc",
+    descText: "A push-your-luck dice game: roll three dice - two choose the ridge, the third the steps. Climb on or make camp; a roll that misses your ridge loses the climbing of the turn. Huts keep you safe, crevasses send you back. 2 to 4 players, against the computer or on one device.",
+    popular: false,
+    added: "2026-10-26T13:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M3 35L15 13L21 22L27 9L37 35Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\" stroke-linejoin=\"round\"/><path d=\"M27 9V2L33 4.5L27 7\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><circle cx=\"16\" cy=\"29\" r=\"2.2\" fill=\"#141413\"/><circle cx=\"24\" cy=\"29\" r=\"2.2\" fill=\"#141413\"/></svg></span>"
   }
 ];
 

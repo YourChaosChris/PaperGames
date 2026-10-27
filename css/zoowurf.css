@@ -84,17 +84,6 @@
   margin: 4px;
 }
 
-.zw-rolls {
-  text-align: center;
-  direction: ltr;
-  line-height: 0;
-  margin: var(--space-1) 0;
-}
-
-.zw-roll-dot {
-  margin: 0 4px;
-}
-
 .zw-log-line {
   margin-bottom: 4px;
 }
@@ -133,6 +122,12 @@ button.zw-slot-tap {
   border: 3px solid #141413;
   border-radius: var(--radius);
   background: #fff;
+}
+
+.zw-review-turn + .zw-review-turn {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 2px solid #141413;
 }
 
 .zw-review-title {
