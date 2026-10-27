@@ -1,6 +1,7 @@
 // tests/cardduel-core.js
 // CardDuelCore ("Card Duel"): the decks, the rules and the computer.
-//  1. Decks: 4 elements, 20 cards each, at most 6 abilities in the game,
+//  1. Decks: 4 elements, 20 cards each, ten different cards per deck with
+//     1 to 3 copies (each count used), at most 6 abilities in the game,
 //     every card name and ability has its texts (cd_card_*, cd_ab_*).
 //  2. Balance: GAMES (500) games per deck pairing (all 16), medium against
 //     medium, the starter chosen in turn. Every game ends, every move is
@@ -12,8 +13,8 @@
 //  4. Single rules (task 149): power store (3 a turn, at most 9, starter
 //     2 in the first turn), start life 17 / 20 and 4 cards each, new
 //     creatures attack at once, Warden, Ranged, Thick Skin, the hand limit
-//     of 7 (no draw), the discard pile as new deck, 6 creatures, old saves
-//     (no rules: 2) are not current.
+//     of 7 (no draw), the discard pile as new deck, no limit on creatures
+//     a side, old saves (no rules: 2) are not current.
 //  5. Pictures (cardduel-art.js): every card has its own drawing, no
 //     drawing belongs to two cards, no drawing without a card, a portrait
 //     for every element; the size of the picture file (under 300 KB).
@@ -30,6 +31,11 @@ const LN = parseInt(process.env.LEVEL_GAMES || "200", 10);
 
 // --- 1. decks -----------------------------------------------------------
 C.ELEMENTS.forEach((el) => check(C.deckList(el).length === C.DECK_SIZE && C.DECK_SIZE === 20, el + ": deck has " + C.deckList(el).length + " cards, expected 20"));
+C.ELEMENTS.forEach((el) => {
+  const counts = C.CARDS.filter((c) => c.el === el).map((c) => c.count);
+  check(counts.length === 10 && counts.every((n) => n >= 1 && n <= 3) && [1, 2, 3].every((n) => counts.indexOf(n) !== -1),
+    el + ": ten cards with 1 to 3 copies each, every count used; got " + counts.join());
+});
 const used = {};
 C.CARDS.concat(C.TOKENS).forEach((c) => {
   c.abil.forEach((a) => { used[a] = true; });
@@ -215,11 +221,14 @@ function put(s, side, id, ready) {
   s.players[0].hand = ["fire_sparkflight"];
   C.apply(s, { type: "play", card: 0, target: { side: 1, index: "mage" } });
   check(s.players[0].grave.join() === "fire_sparkflight", "a played spell should go to the discard pile");
-  // At most 6 creatures.
+  // No limit on creatures a side: a 9th creature and a summon on top.
   s = blank();
-  for (let i = 0; i < 6; i++) put(s, 0, "forest_mosskin");
-  s.players[0].hand = ["forest_mosskin"];
-  check(!C.canPlay(s, 0), "a 7th creature could be played");
+  for (let i = 0; i < 8; i++) put(s, 0, "forest_mosskin");
+  s.players[0].hand = ["forest_mosskin", "forest_seedcall"];
+  check(C.canPlay(s, 0), "a 9th creature cannot be played");
+  C.apply(s, { type: "play", card: 0 });
+  C.apply(s, { type: "play", card: 0 });
+  check(s.players[0].board.length === 11, "a summon with 9 creatures should bring 2 more (11), got " + s.players[0].board.length);
 })();
 
 // --- 5. pictures ------------------------------------------------------------

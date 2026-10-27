@@ -2845,7 +2845,6 @@ STRINGS.ru = {
     cd_status_player_turn: "Ход: {p}.",
     cd_status_pass: "Передай устройство: {p}.",
     cd_status_no_power: "Не хватает силы для этой карты.",
-    cd_status_row_full: "Твой ряд полон - нет места для ещё одного существа.",
     cd_status_no_target: "У этой карты сейчас нет цели.",
     cd_status_choose_target: "{c}: коснись цели.",
     cd_status_choose_attack: "{c}: коснись того, что атаковать.",

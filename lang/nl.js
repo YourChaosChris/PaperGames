@@ -2845,7 +2845,6 @@ STRINGS.nl = {
     cd_status_player_turn: "{p} is aan de beurt.",
     cd_status_pass: "Geef het apparaat aan {p}.",
     cd_status_no_power: "Niet genoeg kracht voor deze kaart.",
-    cd_status_row_full: "Je rij is vol - geen ruimte voor nog een wezen.",
     cd_status_no_target: "Deze kaart heeft nu geen doel.",
     cd_status_choose_target: "{c}: tik op het doel.",
     cd_status_choose_attack: "{c}: tik op wat het aanvalt.",

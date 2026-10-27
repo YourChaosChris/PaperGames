@@ -2916,7 +2916,6 @@ STRINGS.de = {
     cd_status_player_turn: "{p} ist am Zug.",
     cd_status_pass: "Gib das Gerät an {p}.",
     cd_status_no_power: "Nicht genug Kraft für diese Karte.",
-    cd_status_row_full: "Deine Reihe ist voll - kein Platz für ein weiteres Wesen.",
     cd_status_no_target: "Diese Karte hat gerade kein Ziel.",
     cd_status_choose_target: "{c}: Tippe das Ziel an.",
     cd_status_choose_attack: "{c}: Tippe an, was es angreift.",

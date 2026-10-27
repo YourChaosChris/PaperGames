@@ -2845,7 +2845,6 @@ STRINGS.es = {
     cd_status_player_turn: "Turno de {p}.",
     cd_status_pass: "Pasa el dispositivo a {p}.",
     cd_status_no_power: "No tienes poder suficiente para esta carta.",
-    cd_status_row_full: "Tu fila está llena: no cabe otra criatura.",
     cd_status_no_target: "Esta carta no tiene objetivo ahora.",
     cd_status_choose_target: "{c}: toca el objetivo.",
     cd_status_choose_attack: "{c}: toca lo que ataca.",

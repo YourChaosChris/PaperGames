@@ -2845,7 +2845,6 @@ STRINGS.fr = {
     cd_status_player_turn: "Au tour de {p}.",
     cd_status_pass: "Passe l’appareil à {p}.",
     cd_status_no_power: "Pas assez de puissance pour cette carte.",
-    cd_status_row_full: "Ta rangée est pleine - plus de place pour une créature.",
     cd_status_no_target: "Cette carte n'a pas de cible pour l'instant.",
     cd_status_choose_target: "{c} : touche la cible.",
     cd_status_choose_attack: "{c} : touche ce qu’elle attaque.",

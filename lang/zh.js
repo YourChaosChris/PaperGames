@@ -2845,7 +2845,6 @@ STRINGS.zh = {
     cd_status_player_turn: "轮到{p}。",
     cd_status_pass: "把设备交给{p}。",
     cd_status_no_power: "力量不足，不能出这张牌。",
-    cd_status_row_full: "你的一排已满，放不下更多生物。",
     cd_status_no_target: "这张牌现在没有目标。",
     cd_status_choose_target: "{c}：点选目标。",
     cd_status_choose_attack: "{c}：点选要攻击的目标。",

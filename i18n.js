@@ -2928,7 +2928,6 @@ const STRINGS = {
     cd_status_player_turn: "{p}'s turn.",
     cd_status_pass: "Pass the device to {p}.",
     cd_status_no_power: "Not enough power for this card.",
-    cd_status_row_full: "Your row is full - no room for another creature.",
     cd_status_no_target: "This card has no target right now.",
     cd_status_choose_target: "{c}: tap the target.",
     cd_status_choose_attack: "{c}: tap what it attacks.",

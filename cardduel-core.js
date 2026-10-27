@@ -13,7 +13,9 @@
 // - Every creature attacks once per turn, also in the turn it is played.
 //   The attacker picks the target - the other mage or one of their
 //   creatures; two creatures hit each other at the same time. Damage on a
-//   creature stays. At most 6 creatures a side.
+//   creature stays. There is no limit on creatures a side.
+// - Decks: ten different cards per element, one to three copies of each
+//   (cheap cards more often, the strongest only once), 20 cards in all.
 // - Evening out the start: both start with 4 cards; the starter's first
 //   turn brings 2 power instead of 3 (see START_GAIN, tests/cardduel-core.js).
 //
@@ -50,64 +52,63 @@ const CardDuelCore = (function () {
   const START_GAIN = 2;
   const STARTER_LIFE = 17;
   const MAX_STORE = 9;
-  const MAX_BOARD = 6;
   const MAX_HAND = 7;
   const START_HAND = 4;
-  const COPIES = 2;
   const DECK_SIZE = 20;
   const REGROW = 2;
   const EMBER = 2;
   const ELEMENTS = ["forest", "fire", "water", "stone"];
   const ABILITIES = ["ward", "ranged", "armor", "regrow", "insight", "ember"];
 
-  const C = (id, el, cost, atk, hp, abil, fx, count) => ({ id, el, kind: "creature", cost, atk, hp, abil: abil || [], fx: fx || null, count: count === undefined ? COPIES : count });
-  const S = (id, el, cost, fx, count) => ({ id, el, kind: "spell", cost, atk: 0, hp: 0, abil: [], fx, count: count === undefined ? COPIES : count });
+  // The last argument is the number of copies in the deck (1 to 3).
+  const C = (id, el, cost, atk, hp, abil, fx, count) => ({ id, el, kind: "creature", cost, atk, hp, abil: abil || [], fx: fx || null, count });
+  const S = (id, el, cost, fx, count) => ({ id, el, kind: "spell", cost, atk: 0, hp: 0, abil: [], fx, count });
 
   const CARDS = [
     // Forest: many small creatures that grow back.
-    C("forest_mosskin", "forest", 1, 1, 2),
-    C("forest_shroomrunner", "forest", 1, 1, 1, ["ranged"]),
-    C("forest_barkbeetle", "forest", 2, 2, 4, ["regrow"]),
-    C("forest_foxspirit", "forest", 2, 2, 2),
-    S("forest_seedcall", "forest", 2, { type: "summon", n: 2, token: "forest_sapling" }),
-    S("forest_growth", "forest", 1, { type: "buff", n: 2, m: 2 }),
-    C("forest_mossbear", "forest", 4, 3, 5, ["regrow"]),
-    S("forest_choir", "forest", 4, { type: "buffall", n: 1, m: 1 }),
-    C("forest_stardeer", "forest", 5, 3, 4, [], { type: "buffall", n: 1, m: 1 }),
-    C("forest_oldlinden", "forest", 7, 5, 7, ["ward", "regrow"]),
+    C("forest_mosskin", "forest", 1, 1, 2, [], null, 3),
+    C("forest_shroomrunner", "forest", 1, 1, 1, ["ranged"], null, 3),
+    C("forest_barkbeetle", "forest", 2, 2, 4, ["regrow"], null, 2),
+    C("forest_foxspirit", "forest", 2, 2, 2, [], null, 2),
+    S("forest_seedcall", "forest", 2, { type: "summon", n: 2, token: "forest_sapling" }, 2),
+    S("forest_growth", "forest", 1, { type: "buff", n: 2, m: 2 }, 2),
+    C("forest_mossbear", "forest", 4, 3, 5, ["regrow"], null, 2),
+    S("forest_choir", "forest", 4, { type: "buffall", n: 1, m: 1 }, 1),
+    C("forest_stardeer", "forest", 5, 3, 4, [], { type: "buffall", n: 1, m: 1 }, 2),
+    C("forest_oldlinden", "forest", 7, 5, 7, ["ward", "regrow"], null, 1),
     // Fire: direct damage.
-    C("fire_sparkimp", "fire", 1, 2, 2),
-    C("fire_embersalamander", "fire", 2, 2, 2, ["ember"]),
-    S("fire_sparkflight", "fire", 1, { type: "dmg", n: 2 }),
-    C("fire_ashwolf", "fire", 3, 3, 3, ["ranged"]),
-    S("fire_emberwave", "fire", 3, { type: "aoe", n: 1 }),
-    S("fire_lavaspear", "fire", 3, { type: "dmg", n: 4 }),
-    C("fire_flamedancer", "fire", 3, 3, 3, ["ember"]),
-    C("fire_flamesteed", "fire", 4, 3, 3, ["ranged"]),
-    S("fire_starblaze", "fire", 4, { type: "dmg", n: 5 }),
-    C("fire_magmadrake", "fire", 6, 6, 6, ["ember"]),
+    C("fire_sparkimp", "fire", 1, 2, 2, [], null, 3),
+    C("fire_embersalamander", "fire", 2, 2, 2, ["ember"], null, 2),
+    S("fire_sparkflight", "fire", 1, { type: "dmg", n: 2 }, 3),
+    C("fire_ashwolf", "fire", 3, 3, 3, ["ranged"], null, 2),
+    S("fire_emberwave", "fire", 3, { type: "aoe", n: 1 }, 2),
+    S("fire_lavaspear", "fire", 3, { type: "dmg", n: 4 }, 2),
+    C("fire_flamedancer", "fire", 3, 3, 3, ["ember"], null, 2),
+    C("fire_flamesteed", "fire", 4, 3, 3, ["ranged"], null, 2),
+    S("fire_starblaze", "fire", 4, { type: "dmg", n: 5 }, 1),
+    C("fire_magmadrake", "fire", 6, 6, 6, ["ember"], null, 1),
     // Water: drawing cards and sending creatures back.
-    C("water_dropsprite", "water", 2, 2, 3, ["insight"]),
-    S("water_whirlpool", "water", 2, { type: "bounce", max: 4 }),
-    C("water_mistotter", "water", 2, 2, 5, ["ward"]),
-    S("water_tidesight", "water", 3, { type: "draw", n: 2 }),
-    C("water_shellsentry", "water", 3, 2, 5, ["ward"]),
-    C("water_waverider", "water", 4, 4, 4, ["insight"]),
-    S("water_springwater", "water", 2, { type: "heal", n: 7 }),
-    C("water_frostnixie", "water", 4, 4, 5),
-    S("water_floodsurge", "water", 3, { type: "aoe", n: 2 }),
-    C("water_tidesquid", "water", 6, 6, 7, ["insight"]),
+    C("water_dropsprite", "water", 2, 2, 3, ["insight"], null, 3),
+    S("water_whirlpool", "water", 2, { type: "bounce", max: 4 }, 1),
+    C("water_mistotter", "water", 2, 2, 5, ["ward"], null, 2),
+    S("water_tidesight", "water", 3, { type: "draw", n: 2 }, 2),
+    C("water_shellsentry", "water", 3, 2, 5, ["ward"], null, 2),
+    C("water_waverider", "water", 4, 4, 4, ["insight"], null, 2),
+    S("water_springwater", "water", 2, { type: "heal", n: 7 }, 3),
+    C("water_frostnixie", "water", 4, 4, 5, [], null, 2),
+    S("water_floodsurge", "water", 3, { type: "aoe", n: 2 }, 2),
+    C("water_tidesquid", "water", 6, 6, 7, ["insight"], null, 1),
     // Stone: few strong defenders.
-    C("stone_pebblewight", "stone", 1, 1, 2, ["ward"]),
-    C("stone_granitekeeper", "stone", 3, 3, 5, ["ward"]),
-    C("stone_rockram", "stone", 3, 3, 4),
-    S("stone_rockhide", "stone", 2, { type: "buffall", n: 0, m: 2 }),
-    C("stone_quartzknight", "stone", 2, 2, 3, ["armor"]),
-    S("stone_boulder", "stone", 3, { type: "dmg", n: 3 }),
-    C("stone_basalttortoise", "stone", 5, 3, 8, ["ward"]),
-    S("stone_rumble", "stone", 3, { type: "quake", n: 2 }),
-    C("stone_oregolem", "stone", 5, 4, 6, ["armor"]),
-    C("stone_peakcolossus", "stone", 7, 6, 7, ["ward", "armor"])
+    C("stone_pebblewight", "stone", 1, 1, 2, ["ward"], null, 3),
+    C("stone_granitekeeper", "stone", 3, 3, 5, ["ward"], null, 2),
+    C("stone_rockram", "stone", 3, 3, 4, [], null, 3),
+    S("stone_rockhide", "stone", 2, { type: "buffall", n: 0, m: 2 }, 2),
+    C("stone_quartzknight", "stone", 2, 2, 3, ["armor"], null, 3),
+    S("stone_boulder", "stone", 3, { type: "dmg", n: 3 }, 2),
+    C("stone_basalttortoise", "stone", 5, 3, 8, ["ward"], null, 2),
+    S("stone_rumble", "stone", 3, { type: "quake", n: 2 }, 1),
+    C("stone_oregolem", "stone", 5, 4, 6, ["armor"], null, 1),
+    C("stone_peakcolossus", "stone", 7, 6, 7, ["ward", "armor"], null, 1)
   ];
   // Creatures only ever summoned by a card, never in a deck.
   const TOKENS = [
@@ -284,7 +285,6 @@ const CardDuelCore = (function () {
     if (id === undefined) return false;
     const c = card(id);
     if (c.cost > pl.power) return false;
-    if (c.kind === "creature" && pl.board.length >= MAX_BOARD) return false;
     if (targetKind(id) && !validTargets(s, id).length) return false;
     return true;
   }
@@ -388,7 +388,7 @@ const CardDuelCore = (function () {
         log(s, { k: "buffall", p: me, c: id, n: fx.n, m: fx.m });
         break;
       case "summon":
-        for (let i = 0; i < fx.n && pl.board.length < MAX_BOARD; i++) pl.board.push(makeCreature(s, fx.token));
+        for (let i = 0; i < fx.n; i++) pl.board.push(makeCreature(s, fx.token));
         log(s, { k: "summon", p: me, c: id, t: fx.token, n: fx.n });
         break;
     }
@@ -539,7 +539,7 @@ const CardDuelCore = (function () {
   }
 
   return {
-    RULES, START_LIFE, POWER_GAIN, START_GAIN, MAX_STORE, MAX_BOARD, MAX_HAND, START_HAND, DECK_SIZE, ELEMENTS, ABILITIES, CARDS, TOKENS,
+    RULES, START_LIFE, POWER_GAIN, START_GAIN, MAX_STORE, MAX_HAND, START_HAND, DECK_SIZE, ELEMENTS, ABILITIES, CARDS, TOKENS,
     card, deckList, makeRng, createGame, isCurrentState, legalActions, isLegal, apply, canPlay, targetKind, validTargets, attackTargets,
     wardOf, evaluate, chooseAction, clone
   };

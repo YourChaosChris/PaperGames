@@ -285,7 +285,6 @@ function onPlayCd() {
     // Without move suggestions the Play button stays on: say why not.
     const pl = s.players[s.current], c = coreCd().card(pl.hand[i]);
     if (c.cost > pl.power) setStatusCd("cd_status_no_power");
-    else if (c.kind === "creature" && pl.board.length >= coreCd().MAX_BOARD) setStatusCd("cd_status_row_full");
     else setStatusCd("cd_status_no_target");
     renderCd();
     return;

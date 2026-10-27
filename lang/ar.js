@@ -2608,7 +2608,6 @@ STRINGS.ar = {
     cd_status_player_turn: "دور {p}.",
     cd_status_pass: "أعطِ الجهاز إلى {p}.",
     cd_status_no_power: "لا تملك قوة كافية لهذه الورقة.",
-    cd_status_row_full: "صفّك ممتلئ - لا مكان لمخلوق آخر.",
     cd_status_no_target: "ليس لهذه الورقة هدف الآن.",
     cd_status_choose_target: "{c}: اضغط على الهدف.",
     cd_status_choose_attack: "{c}: اضغط على ما يهاجمه.",

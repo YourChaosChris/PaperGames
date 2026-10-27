@@ -2846,7 +2846,6 @@ STRINGS.pl = {
     cd_status_player_turn: "Kolej: {p}.",
     cd_status_pass: "Przekaż urządzenie: {p}.",
     cd_status_no_power: "Za mało mocy na tę kartę.",
-    cd_status_row_full: "Twój rząd jest pełny - nie ma miejsca na kolejną istotę.",
     cd_status_no_target: "Ta karta nie ma teraz celu.",
     cd_status_choose_target: "{c}: dotknij celu.",
     cd_status_choose_attack: "{c}: dotknij tego, co atakuje.",

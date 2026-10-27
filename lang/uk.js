@@ -2845,7 +2845,6 @@ STRINGS.uk = {
     cd_status_player_turn: "Хід: {p}.",
     cd_status_pass: "Передай пристрій: {p}.",
     cd_status_no_power: "Замало сили для цієї карти.",
-    cd_status_row_full: "Твій ряд повний - немає місця для ще однієї істоти.",
     cd_status_no_target: "Ця карта зараз не має цілі.",
     cd_status_choose_target: "{c}: торкнися цілі.",
     cd_status_choose_attack: "{c}: торкнися того, що атакувати.",

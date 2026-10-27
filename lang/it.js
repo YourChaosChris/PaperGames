@@ -2845,7 +2845,6 @@ STRINGS.it = {
     cd_status_player_turn: "Tocca a {p}.",
     cd_status_pass: "Passa il dispositivo a {p}.",
     cd_status_no_power: "Non hai abbastanza potere per questa carta.",
-    cd_status_row_full: "La tua fila è piena: non c'è posto per un'altra creatura.",
     cd_status_no_target: "Questa carta ora non ha un bersaglio.",
     cd_status_choose_target: "{c}: tocca il bersaglio.",
     cd_status_choose_attack: "{c}: tocca ciò che attacca.",

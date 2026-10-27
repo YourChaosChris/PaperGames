@@ -2845,7 +2845,6 @@ STRINGS.ja = {
     cd_status_player_turn: "{p}の番です。",
     cd_status_pass: "{p}に端末を渡してください。",
     cd_status_no_power: "このカードを出す力が足りません。",
-    cd_status_row_full: "列がいっぱいです。これ以上生き物を出せません。",
     cd_status_no_target: "このカードには今、対象がありません。",
     cd_status_choose_target: "{c}：目標をタップしてください。",
     cd_status_choose_attack: "{c}：攻撃する相手をタップしてください。",
