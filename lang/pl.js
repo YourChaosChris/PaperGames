@@ -613,6 +613,7 @@ STRINGS.pl = {
     release_v265: "Zablokowana droga: wybierz mało, normalnie lub dużo klocków. Małe przyciski są teraz wystarczająco duże, by je dotknąć, a trzy kolejne gry mają dużą planszę. Obrazkowa instrukcja do Wojny i Par. Sternjagd podaje, kto zaczyna. Teksty Ludo i 15 stron historii sprawdzone i poprawione.",
     release_v266: "Sternjagd: przy 2 graczach drugi gracz za pierwszym razem ma dwa ruchy z rzędu (można wyłączyć). Kolejne 15 stron historii sprawdzone i poprawione.",
     release_v269: "Szczęśliwy ciąg znowu nazywa się Diabelska Siódemka; zasady się nie zmieniają. Zwierzęce Yatzy nazywa się teraz Rzut łapką. Remik wyraźniej mówi, że karty wziętej ze stołu nie można dołożyć do układu na stole. Większe przyciski w oknie wyniku; po rundzie nie widać już symbolu zastępczego.",
+    release_v270: "Leśna osada i Baśniowi złoczyńcy mają nowe, własne zasady; w grze „Baśniowi złoczyńcy” bohaterowie pojawiają się teraz z talii. Gra zapisana według starych zasad zaczyna się od nowa.",
     release_v268: "Rzut w zoo ma nowe, własne zasady. Gra zapisana według starych zasad zaczyna się od nowa.",
     release_v267: "Diabelska Siódemka nazywa się teraz Szczęśliwy ciąg i ma własne zasady: liczby od 1 do 10, premia za liczby po kolei, sześć nowych kart specjalnych i cele 60, 90 lub 120 punktów. Gra zapisana według starych zasad zaczyna się od nowa.",
     release_v263: "Wyścigowa gra z kostką i klockami na ścieżkach ma nową nazwę: „Zablokowana droga”. Zasady, zapisane gry i statystyki pozostają bez zmian.",

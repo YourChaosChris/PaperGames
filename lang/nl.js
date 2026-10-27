@@ -513,6 +513,7 @@ STRINGS.nl = {
     release_v265: "Wegversperring: kies weinig, normaal of veel blokken. Kleine knoppen zijn nu groot genoeg om aan te tikken, en nog drie spellen hebben een groot speelveld. Uitleg met plaatjes voor Oorlog en Paren. Sternjagd zegt wie begint. Ludo-teksten en 15 geschiedenispagina’s gecontroleerd en verbeterd.",
     release_v266: "Sternjagd: met 2 spelers is de tweede de eerste keer twee keer achter elkaar aan de beurt (uit te zetten). Nog 15 geschiedenispagina’s gecontroleerd en verbeterd.",
     release_v269: "Geluksreeks heet weer Duivelse Zeven; de regels blijven hetzelfde. Dieren-Yatzy heet nu Pootjesworp. Rummy zegt duidelijker dat een van tafel gepakte kaart niet bij een combinatie op tafel kan. Grotere knoppen in het uitslagvenster; na een ronde staat er geen plaatshouder meer.",
+    release_v270: "Bosdorp en Sprookjesschurken hebben nieuwe eigen regels; in Sprookjesschurken komen de helden nu uit de stapel. Een spel dat met de oude regels is opgeslagen, begint opnieuw.",
     release_v268: "Dierentuinworp heeft nieuwe, eigen regels. Een spel dat met de oude regels is opgeslagen, begint opnieuw.",
     release_v267: "Duivelse Zeven heet nu Geluksreeks en heeft eigen regels: getallen 1 tot 10, een bonus voor getallen op rij, zes nieuwe speciale kaarten en doelen van 60, 90 of 120 punten. Een spel dat met de oude regels is opgeslagen, begint opnieuw.",
     release_v263: "Het dobbelracespel met blokken op de paden heeft een nieuwe naam: ‘Wegversperring’. Regels, opgeslagen spellen en statistieken blijven gelijk.",

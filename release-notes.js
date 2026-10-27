@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v270",
+    date: "2026-10-27",
+    key: "release_v270",
+    text: "Forest Village and Fairy-Tale Villains have new rules of their own; in Fairy-Tale Villains the heroes now turn up from the deck. A game saved under the old rules starts anew."
+  },
+  {
     version: "v269",
     date: "2026-10-27",
     key: "release_v269",

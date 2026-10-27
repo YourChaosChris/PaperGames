@@ -669,6 +669,7 @@ STRINGS.de = {
     release_v265: "Wegesperre: wenige, normal viele oder viele Sperrklötze wählen. Kleine Knöpfe sind jetzt groß genug zum Antippen, und drei weitere Spiele haben ein großes Spielfeld. Bildanleitung für Krieg und Paare. Sternjagd nennt, wer beginnt. Ludo-Texte und 15 Geschichtsseiten geprüft und berichtigt.",
     release_v266: "Sternjagd: Bei 2 Spielern ist der Zweite beim ersten Mal zweimal hintereinander dran, abschaltbar. 15 weitere Geschichtsseiten geprüft und berichtigt.",
     release_v269: "Glückskette heißt wieder Teuflische Sieben; die Regeln bleiben gleich. Tier-Yatzy heißt jetzt Pfotenwurf. Rommé sagt deutlicher, dass eine vom Tisch genommene Karte nicht an eine Auslage angelegt werden kann. Größere Knöpfe im Ergebnisfenster; nach einer Runde steht kein Platzhalter mehr da.",
+    release_v270: "Waldsiedlung und Märchen-Schurken haben eigene neue Regeln; bei Märchen-Schurken tauchen die Helden jetzt aus dem Stapel auf. Ein Spielstand nach den alten Regeln beginnt neu.",
     release_v268: "Zoowurf hat neue, eigene Regeln. Eine nach den alten Regeln gespeicherte Partie beginnt neu.",
     release_v267: "Teuflische Sieben heißt jetzt Glückskette und hat eigene Regeln: Zahlen 1 bis 10, ein Bonus für Zahlen in Folge, sechs neue Sonderkarten und Ziele von 60, 90 oder 120 Punkten. Eine nach den alten Regeln gespeicherte Partie beginnt neu.",
     release_v263: "Das Würfel-Laufspiel mit Sperrklötzen auf den Wegen hat einen neuen Namen: „Wegesperre“. Regeln, Spielstände und Statistik bleiben gleich.",
