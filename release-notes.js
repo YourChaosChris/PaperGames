@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v271",
+    date: "2026-10-27",
+    key: "release_v271",
+    text: "Devilish Seven: new cards Wild Chain to choose (numbers up to 14, Link and Mirror, play to 250 or 500) and clearer messages for Bridge and Pass. Arrows is now Glide Lanes and counts misses instead of hearts; Fleet Battle is now Admiral's Grid, and Which One Is Different? is Find the Misfit."
+  },
+  {
     version: "v270",
     date: "2026-10-27",
     key: "release_v270",
