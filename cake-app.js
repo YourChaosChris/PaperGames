@@ -3,15 +3,15 @@
 // other logic puzzles: a level picker, a fresh generated puzzle each time,
 // a hint button, the game saved between visits.
 //
-// Rules (CakeCore, rules 2): one animal per room, animals never side by
+// Rules (CakeCore, rules 3): one animal per room, animals never side by
 // side or diagonally next to each other, exactly one animal next to the
-// cake - the culprit.
+// cake - the culprit. The cake lies on the board from the start.
 //
-// Pick a thing in the row of buttons under the board (an animal, the
-// cake, or "X" for "nothing here"), then tap a cell. Tapping the same cell
-// with the same pick takes it off again; a thing set somewhere new leaves
-// its old cell. Clues are numbered under the board and can be ticked off
-// as a memory aid.
+// Pick an animal in the row of buttons under the board, or "X" for
+// "nothing here", then tap a cell. Tapping the same cell with the same
+// pick takes it off again; an animal set somewhere new leaves its old
+// cell. Clues are numbered under the board and can be ticked off as a
+// memory aid. The puzzle is solved when every animal stands right.
 //
 // All text comes from I18n.t() with ready-made phrases (see
 // CakeCore.clueText) and is rebuilt when the language changes.
@@ -19,9 +19,9 @@
 const AppStateCake = {
   level: "easy",
   puzzle: null,
-  placed: [],        // cell per thing, -1 = not on the board
+  placed: [],        // cell per animal, -1 = not on the board
   crosses: [],       // cells marked "nothing here"
-  tool: 0,           // thing index, or "x"
+  tool: 0,           // animal index, or "x"
   cluesDone: [],     // clue index -> ticked off
   hinted: false,     // the hint button was used on this puzzle
   hintCell: -1,      // cell the current hint marks
@@ -171,8 +171,8 @@ function initCakeApp() {
   syncCakeQuickRules();
 
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(CAKE_SAVE_KEY) : null;
-  // A saved puzzle made under older rules (no `rules: 2`: one per row and
-  // column, furniture, window) or whose clues no longer fit its solution is
+  // A saved puzzle made under older rules (no `rules: 3`: the cake placed
+  // by the player, furniture, window) or whose clues no longer fit its solution is
   // dropped quietly and a new one starts on the same level. The statistics
   // are kept.
   if (saved && saved.puzzle && saved.puzzle.solution && !savedCakePuzzleValid(saved.puzzle)) {
@@ -256,6 +256,11 @@ function buildCakeBoardDOM() {
     if (c === 0 || p.rooms[i - 1] !== room) cell.classList.add("cake-wall-l");
     if (c === n - 1 || p.rooms[i + 1] !== room) cell.classList.add("cake-wall-r");
     cell.innerHTML = '<span class="cake-thing"></span>';
+    // The cake's square is part of the floor plan and cannot be changed.
+    if (i === p.cake) {
+      cell.classList.add("cake-cell-cake");
+      cell.setAttribute("aria-disabled", "true");
+    }
     cell.addEventListener("click", () => onCakeCellClick(i));
     boardEl.appendChild(cell);
   }
@@ -327,7 +332,7 @@ function buildCakePalette() {
   const el = document.getElementById("cake-palette");
   el.innerHTML = "";
   const tools = [];
-  for (let k = 0; k < p.n; k++) tools.push(k);
+  for (let k = 0; k < p.solution.length; k++) tools.push(k);
   tools.push("x");
   tools.forEach((tool) => {
     const btn = document.createElement("button");
@@ -335,7 +340,7 @@ function buildCakePalette() {
     btn.className = "secondary cake-pick";
     btn.setAttribute("data-i18n-attr", "");
     btn.dataset.tool = String(tool);
-    const icon = tool === "x" ? "x" : CakeCore.thingId(p, tool);
+    const icon = tool === "x" ? "x" : CakeCore.animalId(p, tool);
     btn.innerHTML = CakeIcons.svg(icon, "cake-pick-icon") + '<span class="cake-pick-name"></span>';
     btn.addEventListener("click", () => {
       AppStateCake.tool = tool;
@@ -391,12 +396,14 @@ function renderCakeBoard() {
     const k = cakeThingAt(i);
     const crossed = AppStateCake.crosses.indexOf(i) !== -1;
     const thing = cell.querySelector(".cake-thing");
-    if (k >= 0) thing.innerHTML = CakeIcons.svg(CakeCore.thingId(p, k), "cake-thing-icon");
+    if (i === p.cake) thing.innerHTML = CakeIcons.svg(CakeCore.cakeId(p), "cake-thing-icon");
+    else if (k >= 0) thing.innerHTML = CakeIcons.svg(CakeCore.animalId(p, k), "cake-thing-icon");
     else if (crossed) thing.innerHTML = CakeIcons.svg("x", "cake-thing-icon cake-cross-icon");
     else thing.innerHTML = "";
     cell.classList.toggle("hint-cell", AppStateCake.hintCell === i);
     const parts = [tCake("cake_aria_cell", { R: r + 1, C: c + 1 }), roomName];
-    if (k >= 0) parts.push(CakeCore.thingName(p, k, tCake));
+    if (i === p.cake) parts.push(CakeCore.cakeName(p, tCake));
+    else if (k >= 0) parts.push(CakeCore.thingName(p, k, tCake));
     else if (crossed) parts.push(tCake("cake_tool_x"));
     if (AppStateCake.hintCell === i) parts.unshift(tCake("cake_aria_hint"));
     cell.setAttribute("aria-label", parts.join(", "));
@@ -496,7 +503,7 @@ function renderCakeClues() {
 function renderCakeMeta() {
   const meta = document.getElementById("game-meta");
   const p = AppStateCake.puzzle;
-  if (meta && p) meta.textContent = tCake("cake_meta_placed", { N: AppStateCake.placed.filter((x) => x >= 0).length, M: p.n });
+  if (meta && p) meta.textContent = tCake("cake_meta_placed", { N: AppStateCake.placed.filter((x) => x >= 0).length, M: p.solution.length });
   const hintBtn = document.getElementById("hint-btn");
   if (hintBtn) hintBtn.classList.toggle("hidden", AppStateCake.gameOver || !p);
 }
@@ -504,7 +511,7 @@ function renderCakeMeta() {
 /*** Moves ***/
 
 function onCakeCellClick(i) {
-  if (AppStateCake.gameOver || !AppStateCake.puzzle) return;
+  if (AppStateCake.gameOver || !AppStateCake.puzzle || i === AppStateCake.puzzle.cake) return;
   AppStateCake.hintCell = -1;
   AppStateCake.hintClues = [];
   const tool = AppStateCake.tool;
@@ -530,10 +537,9 @@ function onCakeCellClick(i) {
 
 function afterCakeMove() {
   const p = AppStateCake.puzzle;
-  // Solved as soon as the cake is on its cell; the rest is then shown.
-  if (AppStateCake.placed[p.n - 1] === p.solution[p.n - 1]) {
+  // Solved as soon as every animal stands on its cell.
+  if (p.solution.every((cell, k) => AppStateCake.placed[k] === cell)) {
     AppStateCake.gameOver = true;
-    AppStateCake.placed = p.solution.slice();
     AppStateCake.crosses = [];
     AppStateCake.hintCell = -1;
     AppStateCake.hintClues = [];
@@ -570,11 +576,6 @@ function hintCake() {
   } else if (h.kind === "wrongx") {
     AppStateCake.hintCell = h.cell;
     setCakeStatus("cake_hint_wrongx");
-    renderCakeAll();
-  } else if (h.kind === "last") {
-    AppStateCake.hintCell = -1;
-    AppStateCake.hintClues = [];
-    setCakeStatus(CakeCore.themed(p, "cake_hint_last"));
     renderCakeAll();
   } else if (h.kind === "step") {
     const k = cakeThingAt(h.cell);

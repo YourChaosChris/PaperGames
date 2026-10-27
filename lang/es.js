@@ -185,9 +185,9 @@ STRINGS.es = {
     quickrules_skyscrapers_1: "Rellena la cuadrícula con alturas del 1 al N para que cada fila y columna tenga cada altura una vez y cada pista coincida.",
     quickrules_skyscrapers_2: "Selecciona una casilla y luego elige una altura en el panel bajo el tablero.",
     quickrules_skyscrapers_3: "Una pista cuenta los edificios visibles desde ese lado, y un edificio más alto oculta por completo a cualquier edificio más bajo detrás de él.",
-    quickrules_cake_1: "Coloca los animales y el pastel en el plano: exactamente un animal en cada habitación, y nunca hay dos animales uno junto al otro, ni siquiera en diagonal.",
+    quickrules_cake_1: "Coloca los animales en el plano: exactamente un animal en cada habitación, y nunca hay dos animales uno junto al otro, ni siquiera en diagonal.",
     quickrules_cake_2: "Las pistas bajo el tablero te cuentan el resto: el tamaño de las habitaciones, quién está más arriba o más a la izquierda, qué habitaciones comparten una pared y cuántos pasos hay hasta el pastel.",
-    quickrules_cake_3: "El único animal que está justo al lado del pastel se lo llevó: elige un botón bajo el tablero y toca una casilla.",
+    quickrules_cake_3: "El pastel ya está en el plano. El único animal que está justo al lado se lo llevó: elige un animal bajo el tablero y toca una casilla.",
     quickrules_konane_1: "Deja al rival sin movimiento: quien no tiene ningún salto legal en su turno pierde de inmediato.",
     quickrules_konane_2: "Cada movimiento es un salto: una ficha salta sobre una ficha enemiga adyacente, nunca en diagonal, hasta la casilla vacía de detrás y la captura.",
     quickrules_konane_3: "Antes del primer salto, las Negras retiran una de sus fichas de una esquina o del centro, y luego las Blancas una suya justo junto a ese hueco.",
@@ -1731,13 +1731,6 @@ STRINGS.es = {
     cake_clue_higher: "{A} está más arriba que {B}.",
     cake_clue_leftof: "{A} está más a la izquierda que {B}.",
     cake_clue_border: "{A} y {B} están en habitaciones que comparten una pared.",
-    cake_clue_cakesize: "El pastel está en una habitación con {N} casillas.",
-    cake_clue_cakesize_fish: "El pescado está en una habitación con {N} casillas.",
-    cake_clue_cakesize_cookies: "Las galletas están en una habitación con {N} casillas.",
-    cake_clue_cakesize_ball: "La pelota está en una habitación con {N} casillas.",
-    cake_clue_cakesize_key: "La llave está en una habitación con {N} casillas.",
-    cake_clue_cakesize_family: "El pastel está en una habitación con {N} casillas.",
-    cake_clue_cakesize_treasure: "El tesoro está en una habitación con {N} casillas.",
     cake_clue_steps: "{A}: número de pasos hasta el pastel: {N}.",
     cake_clue_steps_fish: "{A}: número de pasos hasta el pescado: {N}.",
     cake_clue_steps_cookies: "{A}: número de pasos hasta las galletas: {N}.",
@@ -1768,7 +1761,7 @@ STRINGS.es = {
     game_cake: "¿Quién se llevó el pastel?",
 
 
-    home_cake_desc: "Un rompecabezas de detectives: un sospechoso en cada habitación, nunca dos juntos. Usa las pistas para encontrar lo que ha desaparecido y al único sospechoso que está justo al lado.",
+    home_cake_desc: "Un rompecabezas de detectives: un sospechoso en cada habitación, nunca dos juntos. Usa las pistas para colocarlos a todos y encontrar al único sospechoso que está justo al lado del pastel.",
 
 
     cake_board_label: "Plano",
@@ -1780,7 +1773,7 @@ STRINGS.es = {
     cake_clues_title: "Indicios",
 
 
-    cake_status_pick: "Elige algo debajo del plano y toca una casilla.",
+    cake_status_pick: "Elige un animal o X debajo del tablero y toca una casilla.",
 
 
     cake_meta_placed: "Colocados: {N} / {M}",
@@ -1796,10 +1789,9 @@ STRINGS.es = {
 
 
     cake_hint_step: "{THING}: fila {R}, columna {C}.",
-    cake_hint_last: "Todos los animales están en su sitio. Solo uno está justo al lado del pastel: las pistas sobre el pastel te dicen dónde está.",
     cake_always_title: "Siempre vale",
     cake_always_1: "En cada habitación hay exactamente un animal.",
-    cake_always_2: "El pastel puede estar en cualquier habitación, pero nunca en la casilla de un animal.",
+    cake_always_2: "El pastel ya está en el plano desde el principio; ningún animal ocupa su casilla.",
     cake_always_3: "Nunca hay dos animales justo uno al lado del otro, ni siquiera en diagonal.",
     cake_always_4: "Solo un animal está justo al lado del pastel (también en diagonal, incluso al otro lado de una pared): es quien se lo llevó.",
     cake_why_free: "{A} va aquí: según las reglas 1 y 3, es la única casilla que queda libre.",
@@ -1831,9 +1823,8 @@ STRINGS.es = {
     cake_catmax_mid: "Max",
     cake_win_catmax: "Max se llevó el pescado.",
     cake_thing_fish: "Pescado",
-    cake_hint_last_fish: "Todos los gatos están en su sitio. Solo uno está justo al lado del pescado: las pistas sobre el pescado te dicen dónde está.",
     cake_always_1_fish: "En cada habitación hay exactamente un gato.",
-    cake_always_2_fish: "El pescado puede estar en cualquier habitación, pero nunca en la casilla de un gato.",
+    cake_always_2_fish: "El pescado ya está en el plano desde el principio; ningún gato ocupa su casilla.",
     cake_always_4_fish: "Solo un gato está justo al lado del pescado (también en diagonal, incluso al otro lado de una pared): es quien se lo llevó.",
     cake_bearbruno_name: "Bruno",
     cake_bearbruno_cap: "Bruno",
@@ -1856,9 +1847,8 @@ STRINGS.es = {
     cake_bearfritz_mid: "Fritz",
     cake_win_bearfritz: "Fritz se comió las galletas.",
     cake_thing_cookies: "Galletas",
-    cake_hint_last_cookies: "Todos los osos están en su sitio. Solo uno está justo al lado de las galletas: las pistas sobre las galletas te dicen dónde están.",
     cake_always_1_cookies: "En cada habitación hay exactamente un oso.",
-    cake_always_2_cookies: "Las galletas pueden estar en cualquier habitación, pero nunca en la casilla de un oso.",
+    cake_always_2_cookies: "Las galletas ya están en el plano desde el principio; ningún oso ocupa su casilla.",
     cake_always_4_cookies: "Solo un oso está justo al lado de las galletas (también en diagonal, incluso al otro lado de una pared): es quien se las comió.",
     cake_dogbello_name: "Bello",
     cake_dogbello_cap: "Bello",
@@ -1881,9 +1871,8 @@ STRINGS.es = {
     cake_dogrudi_mid: "Rudi",
     cake_win_dogrudi: "Rudi escondió la pelota.",
     cake_thing_ball: "Pelota",
-    cake_hint_last_ball: "Todos los perros están en su sitio. Solo uno está justo al lado de la pelota: las pistas sobre la pelota te dicen dónde está.",
     cake_always_1_ball: "En cada habitación hay exactamente un perro.",
-    cake_always_2_ball: "La pelota puede estar en cualquier habitación, pero nunca en la casilla de un perro.",
+    cake_always_2_ball: "La pelota ya está en el plano desde el principio; ningún perro ocupa su casilla.",
     cake_always_4_ball: "Solo un perro está justo al lado de la pelota (también en diagonal, incluso al otro lado de una pared): es quien la escondió.",
     cake_magpiepip_name: "Pip",
     cake_magpiepip_cap: "Pip",
@@ -1906,9 +1895,8 @@ STRINGS.es = {
     cake_magpielou_mid: "Lou",
     cake_win_magpielou: "Lou extravió la llave.",
     cake_thing_key: "Llave",
-    cake_hint_last_key: "Todas las urracas están en su sitio. Solo una está justo al lado de la llave: las pistas sobre la llave te dicen dónde está.",
     cake_always_1_key: "En cada habitación hay exactamente una urraca.",
-    cake_always_2_key: "La llave puede estar en cualquier habitación, pero nunca en la casilla de una urraca.",
+    cake_always_2_key: "La llave ya está en el plano desde el principio; ninguna urraca ocupa su casilla.",
     cake_always_4_key: "Solo una urraca está justo al lado de la llave (también en diagonal, incluso al otro lado de una pared): es quien la extravió.",
     cake_greta_name: "Greta",
     cake_greta_cap: "Greta",
@@ -1930,9 +1918,8 @@ STRINGS.es = {
     cake_emma_cap: "Emma",
     cake_emma_mid: "Emma",
     cake_win_emma: "Emma se llevó el pastel.",
-    cake_hint_last_family: "Toda la familia está en su sitio. Solo una persona está justo al lado del pastel: las pistas sobre el pastel te dicen dónde está.",
     cake_always_1_family: "En cada habitación hay exactamente un miembro de la familia.",
-    cake_always_2_family: "El pastel puede estar en cualquier habitación, pero nunca en la casilla de un miembro de la familia.",
+    cake_always_2_family: "El pastel ya está en el plano desde el principio; ningún miembro de la familia ocupa su casilla.",
     cake_always_4_family: "Solo un miembro de la familia está justo al lado del pastel (también en diagonal, incluso al otro lado de una pared): es quien se lo llevó.",
     cake_tom_name: "Tom",
     cake_tom_cap: "Tom",
@@ -1955,9 +1942,8 @@ STRINGS.es = {
     cake_leo_mid: "Leo",
     cake_win_leo: "Leo escondió el tesoro.",
     cake_thing_treasure: "Tesoro",
-    cake_hint_last_treasure: "Todos los niños están en su sitio. Solo uno está justo al lado del tesoro: las pistas sobre el tesoro te dicen dónde está.",
     cake_always_1_treasure: "En cada habitación hay exactamente un niño.",
-    cake_always_2_treasure: "El tesoro puede estar en cualquier habitación, pero nunca en la casilla de un niño.",
+    cake_always_2_treasure: "El tesoro ya está en el plano desde el principio; ningún niño ocupa su casilla.",
     cake_always_4_treasure: "Solo un niño está justo al lado del tesoro (también en diagonal, incluso al otro lado de una pared): es quien lo escondió.",
     cake_always_3_people: "Nunca hay dos personas justo una al lado de la otra, ni siquiera en diagonal.",
     cake_motif_label: "Tema",
@@ -1990,13 +1976,13 @@ STRINGS.es = {
     cake_new_game: "Nuevo puzle",
 
 
-    cake_level_easy: "Fácil (4x4, 3 sospechosos)",
+    cake_level_easy: "Fácil (5x5, 3 sospechosos)",
 
 
-    cake_level_medium: "Medio (5x5, 4 sospechosos)",
+    cake_level_medium: "Medio (6x6, 4 sospechosos)",
 
 
-    cake_level_hard: "Difícil (6x6, 5 sospechosos)",
+    cake_level_hard: "Difícil (7x7, 5 sospechosos)",
     game_animalsudoku: "Sudoku de animales",
     home_animalsudoku_desc: "Sudoku para niños con animales en lugar de números: 4 x 4 o 6 x 6, cada animal una vez en cada fila, columna y bloque. Elige un animal, toca una casilla, sin necesidad de leer.",
     animalsudoku_new_game: "Nuevo sudoku",

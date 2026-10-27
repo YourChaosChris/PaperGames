@@ -202,9 +202,9 @@ const STRINGS = {
     quickrules_skyscrapers_1: "Fill the grid with heights from 1 to N so each row and column has every height once and every edge clue matches.",
     quickrules_skyscrapers_2: "Select a cell, then pick a height from the pad below the board.",
     quickrules_skyscrapers_3: "A clue counts the buildings visible from that side, and a taller building hides every shorter one behind it.",
-    quickrules_cake_1: "Place the animals and the cake on the floor plan: exactly one animal in every room, and two animals never stand next to each other, not even diagonally.",
+    quickrules_cake_1: "Place the animals on the floor plan: exactly one animal in every room, and two animals never stand next to each other, not even diagonally.",
     quickrules_cake_2: "The clues below the board tell you the rest: room sizes, who stands higher up or further left, rooms that share a wall, and steps to the cake.",
-    quickrules_cake_3: "The only animal directly next to the cake took it - choose a button under the board, then tap a cell.",
+    quickrules_cake_3: "The cake already lies on the floor plan. The only animal directly next to it took it - choose an animal under the board, then tap a cell.",
     quickrules_konane_1: "Leave your opponent without a move: whoever has no legal jump on their turn loses immediately.",
     quickrules_konane_2: "Every move is a jump: hop a stone over an adjacent enemy stone, never diagonally, into the empty square beyond, removing the jumped stone.",
     quickrules_konane_3: "Before the first jump, Black removes one of its stones from a corner or the center, then White removes one directly beside that gap.",
@@ -1814,13 +1814,6 @@ const STRINGS = {
     cake_clue_higher: "{A} stands higher up than {B}.",
     cake_clue_leftof: "{A} stands further left than {B}.",
     cake_clue_border: "{A} and {B} are in rooms that share a wall.",
-    cake_clue_cakesize: "The cake is in a room with {N} squares.",
-    cake_clue_cakesize_fish: "The fish is in a room with {N} squares.",
-    cake_clue_cakesize_cookies: "The cookies are in a room with {N} squares.",
-    cake_clue_cakesize_ball: "The ball is in a room with {N} squares.",
-    cake_clue_cakesize_key: "The key is in a room with {N} squares.",
-    cake_clue_cakesize_family: "The cake is in a room with {N} squares.",
-    cake_clue_cakesize_treasure: "The treasure is in a room with {N} squares.",
     cake_clue_steps: "{A} is {N} steps away from the cake.",
     cake_clue_steps_fish: "{A} is {N} steps away from the fish.",
     cake_clue_steps_cookies: "{A} is {N} steps away from the cookies.",
@@ -1851,7 +1844,7 @@ const STRINGS = {
     game_cake: "Who Took the Cake?",
 
 
-    home_cake_desc: "A detective logic puzzle: one suspect in every room, never two side by side. Use the clues to find the missing thing and the only suspect standing right next to it.",
+    home_cake_desc: "A detective logic puzzle: one suspect in every room, never two side by side. Use the clues to place them all and find the only one standing right next to the cake.",
 
 
     cake_board_label: "Floor plan",
@@ -1863,7 +1856,7 @@ const STRINGS = {
     cake_clues_title: "Clues",
 
 
-    cake_status_pick: "Choose something below the board, then tap a cell.",
+    cake_status_pick: "Choose an animal or X below the board, then tap a cell.",
 
 
     cake_meta_placed: "Placed: {N} / {M}",
@@ -1879,10 +1872,9 @@ const STRINGS = {
 
 
     cake_hint_step: "{THING}: row {R}, column {C}.",
-    cake_hint_last: "All the animals are in place. Exactly one of them stands next to the cake - the clues about the cake tell you where it is.",
     cake_always_title: "Always true",
     cake_always_1: "Every room holds exactly one animal.",
-    cake_always_2: "The cake can be in any room, but never on an animal's square.",
+    cake_always_2: "The cake lies on the floor plan from the start; no animal stands on its square.",
     cake_always_3: "Two animals never stand directly next to each other, not even diagonally.",
     cake_always_4: "Exactly one animal stands directly next to the cake (diagonally too, even across a wall) - it took the cake.",
     cake_why_free: "{A} goes here: by rules 1 and 3 this is the only square still free for it.",
@@ -1914,9 +1906,8 @@ const STRINGS = {
     cake_catmax_mid: "Max",
     cake_win_catmax: "Max took the fish.",
     cake_thing_fish: "Fish",
-    cake_hint_last_fish: "All the cats are in place. Exactly one of them stands next to the fish - the clues about the fish tell you where it lies.",
     cake_always_1_fish: "Every room holds exactly one cat.",
-    cake_always_2_fish: "The fish can be in any room, but never on a cat's square.",
+    cake_always_2_fish: "The fish lies on the floor plan from the start; no cat stands on its square.",
     cake_always_4_fish: "Exactly one cat stands directly next to the fish (diagonally too, even across a wall) - it took the fish.",
     cake_bearbruno_name: "Bruno",
     cake_bearbruno_cap: "Bruno",
@@ -1939,9 +1930,8 @@ const STRINGS = {
     cake_bearfritz_mid: "Fritz",
     cake_win_bearfritz: "Fritz nibbled the cookies.",
     cake_thing_cookies: "Cookies",
-    cake_hint_last_cookies: "All the bears are in place. Exactly one of them stands next to the cookies - the clues about the cookies tell you where they are.",
     cake_always_1_cookies: "Every room holds exactly one bear.",
-    cake_always_2_cookies: "The cookies can be in any room, but never on a bear's square.",
+    cake_always_2_cookies: "The cookies lie on the floor plan from the start; no bear stands on their square.",
     cake_always_4_cookies: "Exactly one bear stands directly next to the cookies (diagonally too, even across a wall) - it nibbled the cookies.",
     cake_dogbello_name: "Bello",
     cake_dogbello_cap: "Bello",
@@ -1964,9 +1954,8 @@ const STRINGS = {
     cake_dogrudi_mid: "Rudi",
     cake_win_dogrudi: "Rudi hid the ball.",
     cake_thing_ball: "Ball",
-    cake_hint_last_ball: "All the dogs are in place. Exactly one of them stands next to the ball - the clues about the ball tell you where it lies.",
     cake_always_1_ball: "Every room holds exactly one dog.",
-    cake_always_2_ball: "The ball can be in any room, but never on a dog's square.",
+    cake_always_2_ball: "The ball lies on the floor plan from the start; no dog stands on its square.",
     cake_always_4_ball: "Exactly one dog stands directly next to the ball (diagonally too, even across a wall) - it hid the ball.",
     cake_magpiepip_name: "Pip",
     cake_magpiepip_cap: "Pip",
@@ -1989,9 +1978,8 @@ const STRINGS = {
     cake_magpielou_mid: "Lou",
     cake_win_magpielou: "Lou mislaid the key.",
     cake_thing_key: "Key",
-    cake_hint_last_key: "All the magpies are in place. Exactly one of them stands next to the key - the clues about the key tell you where it lies.",
     cake_always_1_key: "Every room holds exactly one magpie.",
-    cake_always_2_key: "The key can be in any room, but never on a magpie's square.",
+    cake_always_2_key: "The key lies on the floor plan from the start; no magpie stands on its square.",
     cake_always_4_key: "Exactly one magpie stands directly next to the key (diagonally too, even across a wall) - it mislaid the key.",
     cake_greta_name: "Greta",
     cake_greta_cap: "Greta",
@@ -2013,9 +2001,8 @@ const STRINGS = {
     cake_emma_cap: "Emma",
     cake_emma_mid: "Emma",
     cake_win_emma: "Emma took the cake.",
-    cake_hint_last_family: "Everyone in the family is in place. Exactly one of them stands next to the cake - the clues about the cake tell you where it is.",
     cake_always_1_family: "Every room holds exactly one family member.",
-    cake_always_2_family: "The cake can be in any room, but never on a family member's square.",
+    cake_always_2_family: "The cake lies on the floor plan from the start; no family member stands on its square.",
     cake_always_4_family: "Exactly one family member stands directly next to the cake (diagonally too, even across a wall) - they took the cake.",
     cake_tom_name: "Tom",
     cake_tom_cap: "Tom",
@@ -2038,9 +2025,8 @@ const STRINGS = {
     cake_leo_mid: "Leo",
     cake_win_leo: "Leo hid the treasure.",
     cake_thing_treasure: "Treasure",
-    cake_hint_last_treasure: "All the children are in place. Exactly one of them stands next to the treasure - the clues about the treasure tell you where it is.",
     cake_always_1_treasure: "Every room holds exactly one child.",
-    cake_always_2_treasure: "The treasure can be in any room, but never on a child's square.",
+    cake_always_2_treasure: "The treasure lies on the floor plan from the start; no child stands on its square.",
     cake_always_4_treasure: "Exactly one child stands directly next to the treasure (diagonally too, even across a wall) - they hid the treasure.",
     cake_always_3_people: "Two people never stand directly next to each other, not even diagonally.",
     cake_motif_label: "Theme",
@@ -2073,13 +2059,13 @@ const STRINGS = {
     cake_new_game: "New puzzle",
 
 
-    cake_level_easy: "Easy (4x4, 3 suspects)",
+    cake_level_easy: "Easy (5x5, 3 suspects)",
 
 
-    cake_level_medium: "Medium (5x5, 4 suspects)",
+    cake_level_medium: "Medium (6x6, 4 suspects)",
 
 
-    cake_level_hard: "Hard (6x6, 5 suspects)",
+    cake_level_hard: "Hard (7x7, 5 suspects)",
     game_animalsudoku: "Animal Sudoku",
     home_animalsudoku_desc: "Sudoku for children with animals instead of numbers: 4 x 4 or 6 x 6, every animal once in each row, column and box. Pick an animal, tap a cell - no reading needed.",
     animalsudoku_new_game: "New puzzle",

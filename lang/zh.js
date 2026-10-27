@@ -185,9 +185,9 @@ STRINGS.zh = {
     quickrules_skyscrapers_1: "在网格中填入1到N的高度，使每行每列每个高度恰好出现一次，并且四周每个提示都相符。",
     quickrules_skyscrapers_2: "先选择一个格子，再从棋盘下方的面板中选择高度。",
     quickrules_skyscrapers_3: "提示数字表示从那一侧能看到多少栋建筑，较高的建筑会把它后面所有较矮的建筑完全挡住。",
-    quickrules_cake_1: "把动物和蛋糕放在平面图上：每个房间正好一只动物，动物之间不能相邻，斜对角也不行。",
+    quickrules_cake_1: "把动物放在平面图上：每个房间正好一只动物，动物之间不能相邻，斜对角也不行。",
     quickrules_cake_2: "棋盘下方的线索会告诉你其余答案：房间有几格、谁的位置更靠上或靠左、哪些房间共用一面墙，以及到蛋糕要走几步。",
-    quickrules_cake_3: "只有一只动物紧挨着蛋糕——它就是拿走蛋糕的动物。选择棋盘下方的按钮，再点一个格子。",
+    quickrules_cake_3: "蛋糕已经在平面图上。只有一只动物紧挨着蛋糕——它就是拿走蛋糕的动物。选择棋盘下方的一只动物，再点一个格子。",
     quickrules_konane_1: "让对手无棋可走：轮到自己时没有任何合法跳吃的一方立即输掉。",
     quickrules_konane_2: "每一步都是跳吃：让己方棋子越过直线相邻的敌方棋子（绝不斜向），落在其后的空格上并吃掉它。",
     quickrules_konane_3: "第一次跳吃之前，黑方先从角上或中央移除自己的一枚棋子，接着白方移除紧挨这个空格的一枚己方棋子。",
@@ -1731,13 +1731,6 @@ STRINGS.zh = {
     cake_clue_higher: "{A}的位置比{B}靠上。",
     cake_clue_leftof: "{A}的位置比{B}靠左。",
     cake_clue_border: "{A}和{B}所在的房间共用一面墙。",
-    cake_clue_cakesize: "蛋糕在有{N}格的房间里。",
-    cake_clue_cakesize_fish: "鱼在有{N}格的房间里。",
-    cake_clue_cakesize_cookies: "饼干在有{N}格的房间里。",
-    cake_clue_cakesize_ball: "球在有{N}格的房间里。",
-    cake_clue_cakesize_key: "钥匙在有{N}格的房间里。",
-    cake_clue_cakesize_family: "蛋糕在有{N}格的房间里。",
-    cake_clue_cakesize_treasure: "宝藏在有{N}格的房间里。",
     cake_clue_steps: "{A}到蛋糕的距离是{N}步。",
     cake_clue_steps_fish: "{A}到鱼的距离是{N}步。",
     cake_clue_steps_cookies: "{A}到饼干的距离是{N}步。",
@@ -1768,7 +1761,7 @@ STRINGS.zh = {
     game_cake: "谁拿走了蛋糕？",
 
 
-    home_cake_desc: "这是一款侦探逻辑谜题：每个房间里有一名嫌疑者，彼此不会相邻。根据线索，找出失踪的东西和唯一紧挨着它的嫌疑者。",
+    home_cake_desc: "这是一款侦探逻辑谜题：每个房间里有一名嫌疑者，彼此不会相邻。根据线索放好所有动物，找出唯一紧挨着蛋糕的嫌疑者。",
 
 
     cake_board_label: "平面图",
@@ -1780,7 +1773,7 @@ STRINGS.zh = {
     cake_clues_title: "线索",
 
 
-    cake_status_pick: "先在下面选一样东西，再点一个格子。",
+    cake_status_pick: "在棋盘下方选择一种动物或X，再点一个格子。",
 
 
     cake_meta_placed: "已放：{N} / {M}",
@@ -1796,10 +1789,9 @@ STRINGS.zh = {
 
 
     cake_hint_step: "{THING}：第{R}行，第{C}列。",
-    cake_hint_last: "所有动物都放好了。正好有一只动物紧挨着蛋糕；关于蛋糕的线索会告诉你它的位置。",
     cake_always_title: "总是成立",
     cake_always_1: "每个房间正好有一只动物。",
-    cake_always_2: "蛋糕可以在任何房间，但不能放在动物所在的格子上。",
+    cake_always_2: "蛋糕从一开始就放在平面图上；动物不能放在蛋糕所在的格子上。",
     cake_always_3: "两只动物不会直接相邻，斜对角也不行。",
     cake_always_4: "正好有一只动物紧挨着蛋糕（斜对角也算，即使隔着墙也算）——它拿走了蛋糕。",
     cake_why_free: "{A}在这里:根据规则1和3,这是唯一还空着的格子。",
@@ -1831,9 +1823,8 @@ STRINGS.zh = {
     cake_catmax_mid: "麦克斯",
     cake_win_catmax: "是麦克斯拿走了鱼。",
     cake_thing_fish: "鱼",
-    cake_hint_last_fish: "所有的猫都放好了。正好有一只猫紧挨着鱼；关于鱼的线索会告诉你它的位置。",
     cake_always_1_fish: "每个房间正好有一只猫。",
-    cake_always_2_fish: "鱼可以在任何房间，但不能放在猫所在的格子上。",
+    cake_always_2_fish: "鱼从一开始就放在平面图上；猫不能放在鱼所在的格子上。",
     cake_always_4_fish: "正好有一只猫紧挨着鱼（斜对角也算，即使隔着墙也算）——它拿走了鱼。",
     cake_bearbruno_name: "布鲁诺",
     cake_bearbruno_cap: "布鲁诺",
@@ -1856,9 +1847,8 @@ STRINGS.zh = {
     cake_bearfritz_mid: "弗里茨",
     cake_win_bearfritz: "是弗里茨偷吃了饼干。",
     cake_thing_cookies: "饼干",
-    cake_hint_last_cookies: "所有的熊都放好了。正好有一只熊紧挨着饼干；关于饼干的线索会告诉你它们的位置。",
     cake_always_1_cookies: "每个房间正好有一只熊。",
-    cake_always_2_cookies: "饼干可以在任何房间，但不能放在熊所在的格子上。",
+    cake_always_2_cookies: "饼干从一开始就放在平面图上；熊不能放在饼干所在的格子上。",
     cake_always_4_cookies: "正好有一只熊紧挨着饼干（斜对角也算，即使隔着墙也算）——它偷吃了饼干。",
     cake_dogbello_name: "贝罗",
     cake_dogbello_cap: "贝罗",
@@ -1881,9 +1871,8 @@ STRINGS.zh = {
     cake_dogrudi_mid: "鲁迪",
     cake_win_dogrudi: "是鲁迪藏起了球。",
     cake_thing_ball: "球",
-    cake_hint_last_ball: "所有的狗都放好了。正好有一只狗紧挨着球；关于球的线索会告诉你它的位置。",
     cake_always_1_ball: "每个房间正好有一只狗。",
-    cake_always_2_ball: "球可以在任何房间，但不能放在狗所在的格子上。",
+    cake_always_2_ball: "球从一开始就放在平面图上；狗不能放在球所在的格子上。",
     cake_always_4_ball: "正好有一只狗紧挨着球（斜对角也算，即使隔着墙也算）——它藏起了球。",
     cake_magpiepip_name: "皮普",
     cake_magpiepip_cap: "皮普",
@@ -1906,9 +1895,8 @@ STRINGS.zh = {
     cake_magpielou_mid: "露",
     cake_win_magpielou: "是露把钥匙放错了地方。",
     cake_thing_key: "钥匙",
-    cake_hint_last_key: "所有的喜鹊都放好了。正好有一只喜鹊紧挨着钥匙；关于钥匙的线索会告诉你它的位置。",
     cake_always_1_key: "每个房间正好有一只喜鹊。",
-    cake_always_2_key: "钥匙可以在任何房间，但不能放在喜鹊所在的格子上。",
+    cake_always_2_key: "钥匙从一开始就放在平面图上；喜鹊不能放在钥匙所在的格子上。",
     cake_always_4_key: "正好有一只喜鹊紧挨着钥匙（斜对角也算，即使隔着墙也算）——它把钥匙放错了地方。",
     cake_greta_name: "格蕾塔",
     cake_greta_cap: "格蕾塔",
@@ -1930,9 +1918,8 @@ STRINGS.zh = {
     cake_emma_cap: "艾玛",
     cake_emma_mid: "艾玛",
     cake_win_emma: "是艾玛拿走了蛋糕。",
-    cake_hint_last_family: "全家人都放好了。正好有一位家人紧挨着蛋糕；关于蛋糕的线索会告诉你它的位置。",
     cake_always_1_family: "每个房间正好有一位家人。",
-    cake_always_2_family: "蛋糕可以在任何房间，但不能放在家人所在的格子上。",
+    cake_always_2_family: "蛋糕从一开始就放在平面图上；家人不能放在蛋糕所在的格子上。",
     cake_always_4_family: "正好有一位家人紧挨着蛋糕（斜对角也算，即使隔着墙也算）——这个人拿走了蛋糕。",
     cake_tom_name: "汤姆",
     cake_tom_cap: "汤姆",
@@ -1955,9 +1942,8 @@ STRINGS.zh = {
     cake_leo_mid: "莱奥",
     cake_win_leo: "是莱奥藏起了宝藏。",
     cake_thing_treasure: "宝藏",
-    cake_hint_last_treasure: "所有孩子都放好了。正好有一个孩子紧挨着宝藏；关于宝藏的线索会告诉你它的位置。",
     cake_always_1_treasure: "每个房间正好有一个孩子。",
-    cake_always_2_treasure: "宝藏可以在任何房间，但不能放在孩子所在的格子上。",
+    cake_always_2_treasure: "宝藏从一开始就放在平面图上；孩子不能放在宝藏所在的格子上。",
     cake_always_4_treasure: "正好有一个孩子紧挨着宝藏（斜对角也算，即使隔着墙也算）——这个孩子藏起了宝藏。",
     cake_always_3_people: "两个人不会直接相邻，斜对角也不行。",
     cake_motif_label: "主题",
@@ -1990,13 +1976,13 @@ STRINGS.zh = {
     cake_new_game: "新谜题",
 
 
-    cake_level_easy: "简单 (4x4，3名嫌疑人)",
+    cake_level_easy: "简单 (5x5，3名嫌疑人)",
 
 
-    cake_level_medium: "中等 (5x5，4名嫌疑人)",
+    cake_level_medium: "中等 (6x6，4名嫌疑人)",
 
 
-    cake_level_hard: "困难 (6x6，5名嫌疑人)",
+    cake_level_hard: "困难 (7x7，5名嫌疑人)",
     game_animalsudoku: "动物数独",
     home_animalsudoku_desc: "给孩子玩的数独，用动物代替数字：4×4或6×6，每种动物在每行、每列、每宫各出现一次。选一种动物，点一个格子，不用识字。",
     animalsudoku_new_game: "新谜题",

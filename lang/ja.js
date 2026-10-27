@@ -185,9 +185,9 @@ STRINGS.ja = {
     quickrules_skyscrapers_1: "各マスに1からNまでの高さを入れ、各行と各列に各高さが1回ずつ現れ、周囲のヒントがすべて合うようにします。",
     quickrules_skyscrapers_2: "マスを選び、盤面の下にある数字パッドから高さを選びます。",
     quickrules_skyscrapers_3: "ヒントはその方向から見える建物の数で、高い建物はその奥にある低い建物をすべて完全に隠します。",
-    quickrules_cake_1: "動物とケーキを間取り図に置きましょう。各部屋に動物は1匹ずつ。動物どうしは斜めも含めて隣り合いません。",
+    quickrules_cake_1: "動物を間取り図に置きましょう。各部屋に動物は1匹ずつ。動物どうしは斜めも含めて隣り合いません。",
     quickrules_cake_2: "盤面の下の手がかりが答えを教えてくれます。部屋のマス数、どちらが上／左にいるか、壁を共有する部屋、ケーキまでの歩数です。",
-    quickrules_cake_3: "ケーキのすぐ隣にいる動物は1匹だけ。その動物がケーキを取りました。盤面の下のボタンを選び、マスをタップしましょう。",
+    quickrules_cake_3: "ケーキは最初から間取り図にあります。すぐ隣にいる唯一の動物がケーキを取りました。盤面の下から動物を選び、マスをタップしましょう。",
     quickrules_konane_1: "自分の手番に合法的なジャンプがない側が即座に負けるので、相手を手詰まりにすることを目指します。",
     quickrules_konane_2: "手はすべてジャンプで、自分の石で隣の相手の石を飛び越え(斜めは不可)、その先の空きマスへ移って飛び越えた石を取り除きます。",
     quickrules_konane_3: "最初のジャンプの前に、黒が四隅か中央から自分の石を1つ取り除き、次に白がその空きマスのすぐ隣の自分の石を1つ取り除きます。",
@@ -1731,13 +1731,6 @@ STRINGS.ja = {
     cake_clue_higher: "{A}は{B}より上にいます。",
     cake_clue_leftof: "{A}は{B}より左にいます。",
     cake_clue_border: "{A}と{B}は、壁を共有する部屋にいます。",
-    cake_clue_cakesize: "ケーキはマスが{N}個ある部屋にあります。",
-    cake_clue_cakesize_fish: "魚はマスが{N}個ある部屋にあります。",
-    cake_clue_cakesize_cookies: "クッキーはマスが{N}個ある部屋にあります。",
-    cake_clue_cakesize_ball: "ボールはマスが{N}個ある部屋にあります。",
-    cake_clue_cakesize_key: "鍵はマスが{N}個ある部屋にあります。",
-    cake_clue_cakesize_family: "ケーキはマスが{N}個ある部屋にあります。",
-    cake_clue_cakesize_treasure: "宝物はマスが{N}個ある部屋にあります。",
     cake_clue_steps: "{A}からケーキまで{N}歩です。",
     cake_clue_steps_fish: "{A}から魚まで{N}歩です。",
     cake_clue_steps_cookies: "{A}からクッキーまで{N}歩です。",
@@ -1768,7 +1761,7 @@ STRINGS.ja = {
     game_cake: "ケーキを取ったのはだれ?",
 
 
-    home_cake_desc: "手がかりを使う探偵論理パズルです。各部屋に容疑者が1人ずついて、隣り合うことはありません。なくなった物と、そのすぐ隣にいる唯一の容疑者を見つけましょう。",
+    home_cake_desc: "手がかりを使う探偵論理パズルです。各部屋に容疑者が1人ずついて、隣り合うことはありません。手がかりを使って全員を配置し、ケーキのすぐ隣にいる唯一の容疑者を見つけましょう。",
 
 
     cake_board_label: "間取り図",
@@ -1780,7 +1773,7 @@ STRINGS.ja = {
     cake_clues_title: "手がかり",
 
 
-    cake_status_pick: "下から置くものを選んで、マスをタップしてください。",
+    cake_status_pick: "盤面の下から動物かXを選び、マスをタップしてください。",
 
 
     cake_meta_placed: "置いた数: {N} / {M}",
@@ -1796,10 +1789,9 @@ STRINGS.ja = {
 
 
     cake_hint_step: "{THING}: {R}行目、{C}列目。",
-    cake_hint_last: "動物は全員正しい場所にいます。ケーキの隣にいる動物は1匹だけです。ケーキについての手がかりから場所がわかります。",
     cake_always_title: "いつも成り立つこと",
     cake_always_1: "どの部屋にも動物が1匹ずついます。",
-    cake_always_2: "ケーキはどの部屋にあってもかまいませんが、動物のいるマスには置けません。",
+    cake_always_2: "ケーキは最初から間取り図にあります。ケーキのマスに動物は置けません。",
     cake_always_3: "動物どうしは、斜めも含めて隣り合いません。",
     cake_always_4: "ケーキのすぐ隣には動物が1匹だけいます（斜めでも、壁をはさんでいても）。その動物がケーキを取りました。",
     cake_why_free: "{A}はここ:ルール1と3により、まだ空いているのはこのマスだけです。",
@@ -1831,9 +1823,8 @@ STRINGS.ja = {
     cake_catmax_mid: "マックス",
     cake_win_catmax: "魚を取ったのはマックスです。",
     cake_thing_fish: "魚",
-    cake_hint_last_fish: "ネコは全員正しい場所にいます。魚の隣にいるネコは1匹だけです。魚についての手がかりから場所がわかります。",
     cake_always_1_fish: "どの部屋にもネコが1匹ずついます。",
-    cake_always_2_fish: "魚はどの部屋にあってもかまいませんが、ネコのいるマスには置けません。",
+    cake_always_2_fish: "魚は最初から間取り図にあります。魚のマスにネコは置けません。",
     cake_always_4_fish: "魚のすぐ隣にはネコが1匹だけいます（斜めでも、壁をはさんでいても）。そのネコが魚を取りました。",
     cake_bearbruno_name: "ブルーノ",
     cake_bearbruno_cap: "ブルーノ",
@@ -1856,9 +1847,8 @@ STRINGS.ja = {
     cake_bearfritz_mid: "フリッツ",
     cake_win_bearfritz: "クッキーをつまみ食いしたのはフリッツです。",
     cake_thing_cookies: "クッキー",
-    cake_hint_last_cookies: "クマは全員正しい場所にいます。クッキーの隣にいるクマは1匹だけです。クッキーについての手がかりから場所がわかります。",
     cake_always_1_cookies: "どの部屋にもクマが1頭ずついます。",
-    cake_always_2_cookies: "クッキーはどの部屋にあってもかまいませんが、クマのいるマスには置けません。",
+    cake_always_2_cookies: "クッキーは最初から間取り図にあります。クッキーのマスにクマは置けません。",
     cake_always_4_cookies: "クッキーのすぐ隣にはクマが1頭だけいます（斜めでも、壁をはさんでいても）。そのクマがクッキーをつまみ食いしました。",
     cake_dogbello_name: "ベロ",
     cake_dogbello_cap: "ベロ",
@@ -1881,9 +1871,8 @@ STRINGS.ja = {
     cake_dogrudi_mid: "ルディ",
     cake_win_dogrudi: "ボールを隠したのはルディです。",
     cake_thing_ball: "ボール",
-    cake_hint_last_ball: "イヌは全員正しい場所にいます。ボールの隣にいるイヌは1匹だけです。ボールについての手がかりから場所がわかります。",
     cake_always_1_ball: "どの部屋にもイヌが1匹ずついます。",
-    cake_always_2_ball: "ボールはどの部屋にあってもかまいませんが、イヌのいるマスには置けません。",
+    cake_always_2_ball: "ボールは最初から間取り図にあります。ボールのマスにイヌは置けません。",
     cake_always_4_ball: "ボールのすぐ隣にはイヌが1匹だけいます（斜めでも、壁をはさんでいても）。そのイヌがボールを隠しました。",
     cake_magpiepip_name: "ピップ",
     cake_magpiepip_cap: "ピップ",
@@ -1906,9 +1895,8 @@ STRINGS.ja = {
     cake_magpielou_mid: "ルー",
     cake_win_magpielou: "鍵をどこかに置き忘れたのはルーです。",
     cake_thing_key: "鍵",
-    cake_hint_last_key: "カササギは全員正しい場所にいます。鍵の隣にいるカササギは1羽だけです。鍵についての手がかりから場所がわかります。",
     cake_always_1_key: "どの部屋にもカササギが1羽ずついます。",
-    cake_always_2_key: "鍵はどの部屋にあってもかまいませんが、カササギのいるマスには置けません。",
+    cake_always_2_key: "鍵は最初から間取り図にあります。鍵のマスにカササギは置けません。",
     cake_always_4_key: "鍵のすぐ隣にはカササギが1羽だけいます（斜めでも、壁をはさんでいても）。そのカササギが鍵を置き忘れました。",
     cake_greta_name: "グレタ",
     cake_greta_cap: "グレタ",
@@ -1930,9 +1918,8 @@ STRINGS.ja = {
     cake_emma_cap: "エマ",
     cake_emma_mid: "エマ",
     cake_win_emma: "ケーキを取ったのはエマです。",
-    cake_hint_last_family: "家族はみんな正しい場所にいます。ケーキの隣にいる人は1人だけです。ケーキについての手がかりから場所がわかります。",
     cake_always_1_family: "どの部屋にも家族が1人ずついます。",
-    cake_always_2_family: "ケーキはどの部屋にあってもかまいませんが、家族の人がいるマスには置けません。",
+    cake_always_2_family: "ケーキは最初から間取り図にあります。ケーキのマスに家族は置けません。",
     cake_always_4_family: "ケーキのすぐ隣には家族が1人だけいます（斜めでも、壁をはさんでいても）。その人がケーキを取りました。",
     cake_tom_name: "トム",
     cake_tom_cap: "トム",
@@ -1955,9 +1942,8 @@ STRINGS.ja = {
     cake_leo_mid: "レオ",
     cake_win_leo: "宝物を隠したのはレオです。",
     cake_thing_treasure: "宝物",
-    cake_hint_last_treasure: "子どもたちはみんな正しい場所にいます。宝物の隣にいる子は1人だけです。宝物についての手がかりから場所がわかります。",
     cake_always_1_treasure: "どの部屋にも子どもが1人ずついます。",
-    cake_always_2_treasure: "宝物はどの部屋にあってもかまいませんが、子どものいるマスには置けません。",
+    cake_always_2_treasure: "宝物は最初から間取り図にあります。宝物のマスに子どもは置けません。",
     cake_always_4_treasure: "宝物のすぐ隣には子どもが1人だけいます（斜めでも、壁をはさんでいても）。その子が宝物を隠しました。",
     cake_always_3_people: "人どうしは、斜めも含めて隣り合いません。",
     cake_motif_label: "テーマ",
@@ -1990,13 +1976,13 @@ STRINGS.ja = {
     cake_new_game: "新しいパズル",
 
 
-    cake_level_easy: "やさしい (4x4、容疑者3人)",
+    cake_level_easy: "やさしい (5x5、容疑者3人)",
 
 
-    cake_level_medium: "ふつう (5x5、容疑者4人)",
+    cake_level_medium: "ふつう (6x6、容疑者4人)",
 
 
-    cake_level_hard: "むずかしい (6x6、容疑者5人)",
+    cake_level_hard: "むずかしい (7x7、容疑者5人)",
     game_animalsudoku: "動物数独",
     home_animalsudoku_desc: "数字のかわりに動物を使う子ども向けの数独：4x4か6x6で、どの動物も各行・各列・各ブロックに1回ずつ。動物を選んでマスをタップするだけで、文字を読む必要はありません。",
     animalsudoku_new_game: "新しい問題",

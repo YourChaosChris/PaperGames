@@ -1054,7 +1054,7 @@ fs.readdirSync(ROOT).filter((f) => f.endsWith(".html")).sort().forEach((f) => {
 });
 
 // "Who Took the Cake?" builds its clue sentences from ready-made phrases
-// (CakeCore.clueText), not through msg(). Every clue type (rules 2: room
+// (CakeCore.clueText), not through msg(). Every clue type (rules 3: room
 // size, higher, further left, rooms sharing a wall, steps to the cake),
 // with every animal and every theme's thing, in every language: no
 // placeholder or key may be left over, and the sentence must differ from
@@ -1069,7 +1069,6 @@ let cakeSamples = 0;
     [2, 3, 7].forEach((d) => clueSamples.push({ t: "steps", a, d }));
     for (let b = 0; b < CakeCore.ANIMALS.length; b++) if (b !== a) ["higher", "left", "border"].forEach((t) => clueSamples.push({ t, a, b }));
   }
-  [3, 8].forEach((size) => clueSamples.push({ t: "size", a: 5, size }));
   const tEn = (k) => STRINGS.en[k] || k;
   for (const lang of ["en"].concat(langs)) {
     const tl = (k) => (STRINGS[lang] && STRINGS[lang][k]) || k;

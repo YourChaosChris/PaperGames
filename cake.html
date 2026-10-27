@@ -66,9 +66,9 @@
   <div class="field-row">
     <button id="start-cake-game" class="primary" data-i18n="ui_new_puzzle">New puzzle</button>
     <select id="cake-level-inline">
-        <option value="easy" selected data-i18n="cake_level_easy">Easy (4x4, 3 suspects)</option>
-        <option value="medium" data-i18n="cake_level_medium">Medium (5x5, 4 suspects)</option>
-        <option value="hard" data-i18n="cake_level_hard">Hard (6x6, 5 suspects)</option>
+        <option value="easy" selected data-i18n="cake_level_easy">Easy (5x5, 3 suspects)</option>
+        <option value="medium" data-i18n="cake_level_medium">Medium (6x6, 4 suspects)</option>
+        <option value="hard" data-i18n="cake_level_hard">Hard (7x7, 5 suspects)</option>
       </select>
     <select id="cake-motif" data-i18n-attr="aria-label:cake_motif_label" aria-label="Theme">
         <option value="animals" selected data-i18n="cake_motif_animals">Animals and cake</option>
@@ -114,7 +114,7 @@
       <h2 class="cake-clues-title" data-i18n="cake_always_title">Always true</h2>
       <ol class="cake-always-list">
         <li data-cake-always="1" data-i18n="cake_always_1">Every room holds exactly one animal.</li>
-        <li data-cake-always="2" data-i18n="cake_always_2">The cake can be in any room, but never on an animal's square.</li>
+        <li data-cake-always="2" data-i18n="cake_always_2">The cake lies on the floor plan from the start; no animal stands on its square.</li>
         <li data-cake-always="3" data-i18n="cake_always_3">Two animals never stand directly next to each other, not even diagonally.</li>
         <li data-cake-always="4" data-i18n="cake_always_4">Exactly one animal stands directly next to the cake (diagonally too, even across a wall) - it took the cake.</li>
       </ol>

@@ -185,9 +185,9 @@ STRINGS.fr = {
     quickrules_skyscrapers_1: "Remplissez la grille de hauteurs de 1 à N pour que chaque ligne et chaque colonne contienne chaque hauteur une fois et que chaque indice corresponde.",
     quickrules_skyscrapers_2: "Sélectionnez une case, puis choisissez une hauteur sur le pavé sous la grille.",
     quickrules_skyscrapers_3: "Un indice compte les bâtiments visibles depuis ce côté, et un bâtiment plus haut cache complètement tout bâtiment plus bas derrière lui.",
-    quickrules_cake_1: "Place les animaux et le gâteau sur le plan : exactement un animal dans chaque pièce, et deux animaux ne se tiennent jamais côte à côte, même en diagonale.",
+    quickrules_cake_1: "Place les animaux sur le plan : exactement un animal dans chaque pièce, et deux animaux ne se tiennent jamais côte à côte, même en diagonale.",
     quickrules_cake_2: "Les pistes sous le plateau te donnent le reste : la taille des pièces, qui se trouve plus haut ou plus à gauche, les pièces qui partagent un mur et le nombre de pas jusqu’au gâteau.",
-    quickrules_cake_3: "Le seul animal juste à côté du gâteau l’a pris : choisis un bouton sous le plateau, puis touche une case.",
+    quickrules_cake_3: "Le gâteau est déjà sur le plan. Le seul animal juste à côté l’a pris : choisis un animal sous le plateau, puis touche une case.",
     quickrules_konane_1: "Privez l'adversaire de coup : celui qui n'a aucun saut légal à son tour perd immédiatement.",
     quickrules_konane_2: "Chaque coup est un saut : un pion saute par-dessus un pion ennemi adjacent, jamais en diagonale, vers la case vide juste après, et le capture.",
     quickrules_konane_3: "Avant le premier saut, le Noir retire l'un de ses pions d'un coin ou du centre, puis le Blanc l'un des siens juste à côté de ce vide.",
@@ -1731,13 +1731,6 @@ STRINGS.fr = {
     cake_clue_higher: "{A} se trouve plus haut que {B}.",
     cake_clue_leftof: "{A} se trouve plus à gauche que {B}.",
     cake_clue_border: "{A} et {B} se trouvent dans des pièces qui partagent un mur.",
-    cake_clue_cakesize: "Le gâteau se trouve dans une pièce de {N} cases.",
-    cake_clue_cakesize_fish: "Le poisson se trouve dans une pièce de {N} cases.",
-    cake_clue_cakesize_cookies: "Les biscuits se trouvent dans une pièce de {N} cases.",
-    cake_clue_cakesize_ball: "Le ballon se trouve dans une pièce de {N} cases.",
-    cake_clue_cakesize_key: "La clé se trouve dans une pièce de {N} cases.",
-    cake_clue_cakesize_family: "Le gâteau se trouve dans une pièce de {N} cases.",
-    cake_clue_cakesize_treasure: "Le trésor se trouve dans une pièce de {N} cases.",
     cake_clue_steps: "{A} : nombre de pas jusqu’au gâteau : {N}.",
     cake_clue_steps_fish: "{A} : nombre de pas jusqu’au poisson : {N}.",
     cake_clue_steps_cookies: "{A} : nombre de pas jusqu’aux biscuits : {N}.",
@@ -1768,7 +1761,7 @@ STRINGS.fr = {
     game_cake: "Qui a pris le gâteau ?",
 
 
-    home_cake_desc: "Une énigme policière : un suspect dans chaque pièce, jamais deux côte à côte. Sers-toi des pistes pour trouver ce qui a disparu et le seul suspect juste à côté.",
+    home_cake_desc: "Une énigme policière : un suspect dans chaque pièce, jamais deux côte à côte. Sers-toi des pistes pour les placer tous et trouver le seul suspect juste à côté du gâteau.",
 
 
     cake_board_label: "Plan",
@@ -1780,7 +1773,7 @@ STRINGS.fr = {
     cake_clues_title: "Pistes",
 
 
-    cake_status_pick: "Choisissez un élément sous le plan, puis touchez une case.",
+    cake_status_pick: "Choisis un animal ou X sous le plateau, puis touche une case.",
 
 
     cake_meta_placed: "Placés : {N} / {M}",
@@ -1796,10 +1789,9 @@ STRINGS.fr = {
 
 
     cake_hint_step: "{THING} : ligne {R}, colonne {C}.",
-    cake_hint_last: "Tous les animaux sont en place. Un seul se trouve juste à côté du gâteau : les pistes sur le gâteau indiquent où il se trouve.",
     cake_always_title: "Toujours vrai",
     cake_always_1: "Chaque pièce contient exactement un animal.",
-    cake_always_2: "Le gâteau peut se trouver dans n’importe quelle pièce, mais jamais sur la case d’un animal.",
+    cake_always_2: "Le gâteau se trouve déjà sur le plan au début ; aucun animal ne se trouve sur sa case.",
     cake_always_3: "Deux animaux ne se tiennent jamais juste à côté l’un de l’autre, même en diagonale.",
     cake_always_4: "Un seul animal se trouve juste à côté du gâteau (aussi en diagonale, même de l’autre côté d’un mur) : c’est lui qui l’a pris.",
     cake_why_free: "{A} va ici : d'après les règles 1 et 3, c'est la seule case encore libre.",
@@ -1831,9 +1823,8 @@ STRINGS.fr = {
     cake_catmax_mid: "Max",
     cake_win_catmax: "Max a pris le poisson.",
     cake_thing_fish: "Poisson",
-    cake_hint_last_fish: "Tous les chats sont en place. Un seul se trouve juste à côté du poisson : les pistes sur le poisson indiquent où il se trouve.",
     cake_always_1_fish: "Chaque pièce contient exactement un chat.",
-    cake_always_2_fish: "Le poisson peut se trouver dans n’importe quelle pièce, mais jamais sur la case d’un chat.",
+    cake_always_2_fish: "Le poisson se trouve déjà sur le plan au début ; aucun chat ne se trouve sur sa case.",
     cake_always_4_fish: "Un seul chat se trouve juste à côté du poisson (aussi en diagonale, même de l’autre côté d’un mur) : c’est lui qui l’a pris.",
     cake_bearbruno_name: "Bruno",
     cake_bearbruno_cap: "Bruno",
@@ -1856,9 +1847,8 @@ STRINGS.fr = {
     cake_bearfritz_mid: "Fritz",
     cake_win_bearfritz: "Fritz a grignoté les biscuits.",
     cake_thing_cookies: "Biscuits",
-    cake_hint_last_cookies: "Tous les ours sont en place. Un seul se trouve juste à côté des biscuits : les pistes sur les biscuits indiquent où ils se trouvent.",
     cake_always_1_cookies: "Chaque pièce contient exactement un ours.",
-    cake_always_2_cookies: "Les biscuits peuvent se trouver dans n’importe quelle pièce, mais jamais sur la case d’un ours.",
+    cake_always_2_cookies: "Les biscuits se trouvent déjà sur le plan au début ; aucun ours ne se trouve sur leur case.",
     cake_always_4_cookies: "Un seul ours se trouve juste à côté des biscuits (aussi en diagonale, même de l’autre côté d’un mur) : c’est lui qui les a grignotés.",
     cake_dogbello_name: "Bello",
     cake_dogbello_cap: "Bello",
@@ -1881,9 +1871,8 @@ STRINGS.fr = {
     cake_dogrudi_mid: "Rudi",
     cake_win_dogrudi: "Rudi a caché le ballon.",
     cake_thing_ball: "Ballon",
-    cake_hint_last_ball: "Tous les chiens sont en place. Un seul se trouve juste à côté du ballon : les pistes sur le ballon indiquent où il se trouve.",
     cake_always_1_ball: "Chaque pièce contient exactement un chien.",
-    cake_always_2_ball: "Le ballon peut se trouver dans n’importe quelle pièce, mais jamais sur la case d’un chien.",
+    cake_always_2_ball: "Le ballon se trouve déjà sur le plan au début ; aucun chien ne se trouve sur sa case.",
     cake_always_4_ball: "Un seul chien se trouve juste à côté du ballon (aussi en diagonale, même de l’autre côté d’un mur) : c’est lui qui l’a caché.",
     cake_magpiepip_name: "Pip",
     cake_magpiepip_cap: "Pip",
@@ -1906,9 +1895,8 @@ STRINGS.fr = {
     cake_magpielou_mid: "Lou",
     cake_win_magpielou: "Lou a égaré la clé.",
     cake_thing_key: "Clé",
-    cake_hint_last_key: "Toutes les pies sont en place. Une seule se trouve juste à côté de la clé : les pistes sur la clé indiquent où elle se trouve.",
     cake_always_1_key: "Chaque pièce contient exactement une pie.",
-    cake_always_2_key: "La clé peut se trouver dans n’importe quelle pièce, mais jamais sur la case d’une pie.",
+    cake_always_2_key: "La clé se trouve déjà sur le plan au début ; aucune pie ne se trouve sur sa case.",
     cake_always_4_key: "Une seule pie se trouve juste à côté de la clé (aussi en diagonale, même de l’autre côté d’un mur) : c’est elle qui a égaré la clé.",
     cake_greta_name: "Greta",
     cake_greta_cap: "Greta",
@@ -1930,9 +1918,8 @@ STRINGS.fr = {
     cake_emma_cap: "Emma",
     cake_emma_mid: "Emma",
     cake_win_emma: "Emma a pris le gâteau.",
-    cake_hint_last_family: "Toute la famille est en place. Une seule personne se trouve juste à côté du gâteau : les pistes sur le gâteau indiquent où il se trouve.",
     cake_always_1_family: "Chaque pièce contient exactement un membre de la famille.",
-    cake_always_2_family: "Le gâteau peut se trouver dans n’importe quelle pièce, mais jamais sur la case d’un membre de la famille.",
+    cake_always_2_family: "Le gâteau se trouve déjà sur le plan au début ; aucun membre de la famille ne se trouve sur sa case.",
     cake_always_4_family: "Un seul membre de la famille se trouve juste à côté du gâteau (aussi en diagonale, même de l’autre côté d’un mur) : cette personne l’a pris.",
     cake_tom_name: "Tom",
     cake_tom_cap: "Tom",
@@ -1955,9 +1942,8 @@ STRINGS.fr = {
     cake_leo_mid: "Leo",
     cake_win_leo: "Leo a caché le trésor.",
     cake_thing_treasure: "Trésor",
-    cake_hint_last_treasure: "Tous les enfants sont en place. Un seul se trouve juste à côté du trésor : les pistes sur le trésor indiquent où il se trouve.",
     cake_always_1_treasure: "Chaque pièce contient exactement un enfant.",
-    cake_always_2_treasure: "Le trésor peut se trouver dans n’importe quelle pièce, mais jamais sur la case d’un enfant.",
+    cake_always_2_treasure: "Le trésor se trouve déjà sur le plan au début ; aucun enfant ne se trouve sur sa case.",
     cake_always_4_treasure: "Un seul enfant se trouve juste à côté du trésor (aussi en diagonale, même de l’autre côté d’un mur) : c’est lui qui l’a caché.",
     cake_always_3_people: "Deux personnes ne se tiennent jamais juste à côté l’une de l’autre, même en diagonale.",
     cake_motif_label: "Thème",
@@ -1990,13 +1976,13 @@ STRINGS.fr = {
     cake_new_game: "Nouvelle grille",
 
 
-    cake_level_easy: "Facile (4x4, 3 suspects)",
+    cake_level_easy: "Facile (5x5, 3 suspects)",
 
 
-    cake_level_medium: "Moyen (5x5, 4 suspects)",
+    cake_level_medium: "Moyen (6x6, 4 suspects)",
 
 
-    cake_level_hard: "Difficile (6x6, 5 suspects)",
+    cake_level_hard: "Difficile (7x7, 5 suspects)",
     game_animalsudoku: "Sudoku des animaux",
     home_animalsudoku_desc: "Un sudoku pour enfants avec des animaux au lieu de chiffres : 4 x 4 ou 6 x 6, chaque animal une fois par ligne, colonne et bloc. Choisissez un animal, touchez une case - sans rien lire.",
     animalsudoku_new_game: "Nouvelle grille",

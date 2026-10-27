@@ -190,9 +190,9 @@ STRINGS.de = {
     quickrules_skyscrapers_1: "Fülle das Gitter mit Höhen von 1 bis N, sodass jede Zeile und Spalte jede Höhe genau einmal enthält und jeder Hinweis am Rand stimmt.",
     quickrules_skyscrapers_2: "Wähle ein Feld und dann eine Höhe aus dem Ziffernblock unter dem Spielfeld.",
     quickrules_skyscrapers_3: "Ein Hinweis zählt die Gebäude, die man von dieser Seite aus sieht, und ein höheres Gebäude verdeckt jedes niedrigere dahinter.",
-    quickrules_cake_1: "Setze die Tiere und den Kuchen auf den Grundriss: in jeden Raum genau ein Tier, und zwei Tiere stehen nie nebeneinander, auch nicht schräg.",
+    quickrules_cake_1: "Setze die Tiere auf den Grundriss: in jeden Raum genau ein Tier, und zwei Tiere stehen nie nebeneinander, auch nicht schräg.",
     quickrules_cake_2: "Die Hinweise unter dem Feld verraten den Rest: Raumgrößen, wer weiter oben oder weiter links steht, Räume mit gemeinsamer Wand und Schritte bis zum Kuchen.",
-    quickrules_cake_3: "Das einzige Tier direkt neben dem Kuchen hat ihn genommen - wähle einen Knopf unter dem Feld und tippe dann auf ein Kästchen.",
+    quickrules_cake_3: "Der Kuchen liegt schon auf dem Grundriss. Das einzige Tier direkt daneben hat ihn genommen - wähle ein Tier unter dem Feld und tippe dann auf ein Kästchen.",
     quickrules_konane_1: "Lass deinen Gegner ohne Zug zurück: Wer an seinem Zug keinen legalen Sprung hat, verliert sofort.",
     quickrules_konane_2: "Jeder Zug ist ein Sprung: Ein Stein springt über einen benachbarten gegnerischen Stein, nie diagonal, auf das leere Feld dahinter und schlägt ihn.",
     quickrules_konane_3: "Vor dem ersten Sprung entfernt Schwarz einen eigenen Stein aus einer Ecke oder der Mitte, dann Weiß einen eigenen direkt neben dieser Lücke.",
@@ -1802,13 +1802,6 @@ STRINGS.de = {
     cake_clue_higher: "{A} steht weiter oben als {B}.",
     cake_clue_leftof: "{A} steht weiter links als {B}.",
     cake_clue_border: "{A} und {B} sind in Räumen mit einer gemeinsamen Wand.",
-    cake_clue_cakesize: "Der Kuchen ist in einem Raum mit {N} Kästchen.",
-    cake_clue_cakesize_fish: "Der Fisch ist in einem Raum mit {N} Kästchen.",
-    cake_clue_cakesize_cookies: "Die Kekse sind in einem Raum mit {N} Kästchen.",
-    cake_clue_cakesize_ball: "Der Ball ist in einem Raum mit {N} Kästchen.",
-    cake_clue_cakesize_key: "Der Schlüssel ist in einem Raum mit {N} Kästchen.",
-    cake_clue_cakesize_family: "Der Kuchen ist in einem Raum mit {N} Kästchen.",
-    cake_clue_cakesize_treasure: "Der Schatz ist in einem Raum mit {N} Kästchen.",
     cake_clue_steps: "{A} ist {N} Schritte vom Kuchen entfernt.",
     cake_clue_steps_fish: "{A} ist {N} Schritte vom Fisch entfernt.",
     cake_clue_steps_cookies: "{A} ist {N} Schritte von den Keksen entfernt.",
@@ -1839,7 +1832,7 @@ STRINGS.de = {
     game_cake: "Wer hat den Kuchen?",
 
 
-    home_cake_desc: "Ein Detektiv-Logikrätsel: In jedem Raum steht genau ein Verdächtiger, nie zwei nebeneinander. Finde mit den Hinweisen die gesuchte Sache und den Einzigen, der direkt daneben steht.",
+    home_cake_desc: "Ein Detektiv-Logikrätsel: In jedem Raum steht genau ein Verdächtiger, nie zwei nebeneinander. Setze mit den Hinweisen alle richtig und finde den Einzigen, der direkt neben dem Kuchen steht.",
 
 
     cake_board_label: "Grundriss",
@@ -1851,7 +1844,7 @@ STRINGS.de = {
     cake_clues_title: "Hinweise",
 
 
-    cake_status_pick: "Wähle unten etwas aus und tippe dann auf ein Kästchen.",
+    cake_status_pick: "Wähle unten ein Tier oder X und tippe dann auf ein Kästchen.",
 
 
     cake_meta_placed: "Gesetzt: {N} / {M}",
@@ -1867,10 +1860,9 @@ STRINGS.de = {
 
 
     cake_hint_step: "{THING}: Zeile {R}, Spalte {C}.",
-    cake_hint_last: "Alle Tiere stehen richtig. Genau eines von ihnen steht neben dem Kuchen - die Hinweise zum Kuchen verraten, wo er ist.",
     cake_always_title: "Immer gilt",
     cake_always_1: "In jedem Raum steht genau ein Tier.",
-    cake_always_2: "Der Kuchen kann in jedem Raum sein, aber nie auf dem Kästchen eines Tieres.",
+    cake_always_2: "Der Kuchen liegt von Anfang an auf dem Grundriss; kein Tier steht auf seinem Kästchen.",
     cake_always_3: "Zwei Tiere stehen nie direkt nebeneinander, auch nicht schräg.",
     cake_always_4: "Genau ein Tier steht direkt neben dem Kuchen (auch schräg, auch durch eine Wand) – es hat den Kuchen genommen.",
     cake_why_free: "{A} gehört hierhin: Nach Regel 1 und 3 ist das das einzige noch freie Kästchen.",
@@ -1902,9 +1894,8 @@ STRINGS.de = {
     cake_catmax_mid: "Max",
     cake_win_catmax: "Max hat den Fisch genommen.",
     cake_thing_fish: "Fisch",
-    cake_hint_last_fish: "Alle Katzen stehen richtig. Genau eine von ihnen steht neben dem Fisch - die Hinweise zum Fisch verraten, wo er liegt.",
     cake_always_1_fish: "In jedem Raum steht genau eine Katze.",
-    cake_always_2_fish: "Der Fisch kann in jedem Raum sein, aber nie auf dem Kästchen einer Katze.",
+    cake_always_2_fish: "Der Fisch liegt von Anfang an auf dem Grundriss; keine Katze steht auf seinem Kästchen.",
     cake_always_4_fish: "Genau eine Katze steht direkt neben dem Fisch (auch schräg, auch durch eine Wand) – sie hat den Fisch genommen.",
     cake_bearbruno_name: "Bruno",
     cake_bearbruno_cap: "Bruno",
@@ -1927,9 +1918,8 @@ STRINGS.de = {
     cake_bearfritz_mid: "Fritz",
     cake_win_bearfritz: "Fritz hat die Kekse genascht.",
     cake_thing_cookies: "Kekse",
-    cake_hint_last_cookies: "Alle Bären stehen richtig. Genau einer von ihnen steht neben den Keksen - die Hinweise zu den Keksen verraten, wo sie liegen.",
     cake_always_1_cookies: "In jedem Raum steht genau ein Bär.",
-    cake_always_2_cookies: "Die Kekse können in jedem Raum sein, aber nie auf dem Kästchen eines Bären.",
+    cake_always_2_cookies: "Die Kekse liegen von Anfang an auf dem Grundriss; kein Bär steht auf ihrem Kästchen.",
     cake_always_4_cookies: "Genau ein Bär steht direkt neben den Keksen (auch schräg, auch durch eine Wand) – er hat die Kekse genascht.",
     cake_dogbello_name: "Bello",
     cake_dogbello_cap: "Bello",
@@ -1952,9 +1942,8 @@ STRINGS.de = {
     cake_dogrudi_mid: "Rudi",
     cake_win_dogrudi: "Rudi hat den Ball versteckt.",
     cake_thing_ball: "Ball",
-    cake_hint_last_ball: "Alle Hunde stehen richtig. Genau einer von ihnen steht neben dem Ball - die Hinweise zum Ball verraten, wo er liegt.",
     cake_always_1_ball: "In jedem Raum steht genau ein Hund.",
-    cake_always_2_ball: "Der Ball kann in jedem Raum sein, aber nie auf dem Kästchen eines Hundes.",
+    cake_always_2_ball: "Der Ball liegt von Anfang an auf dem Grundriss; kein Hund steht auf seinem Kästchen.",
     cake_always_4_ball: "Genau ein Hund steht direkt neben dem Ball (auch schräg, auch durch eine Wand) – er hat den Ball versteckt.",
     cake_magpiepip_name: "Pip",
     cake_magpiepip_cap: "Pip",
@@ -1977,9 +1966,8 @@ STRINGS.de = {
     cake_magpielou_mid: "Lou",
     cake_win_magpielou: "Lou hat den Schlüssel verlegt.",
     cake_thing_key: "Schlüssel",
-    cake_hint_last_key: "Alle Elstern stehen richtig. Genau eine von ihnen steht neben dem Schlüssel - die Hinweise zum Schlüssel verraten, wo er liegt.",
     cake_always_1_key: "In jedem Raum steht genau eine Elster.",
-    cake_always_2_key: "Der Schlüssel kann in jedem Raum sein, aber nie auf dem Kästchen einer Elster.",
+    cake_always_2_key: "Der Schlüssel liegt von Anfang an auf dem Grundriss; keine Elster steht auf seinem Kästchen.",
     cake_always_4_key: "Genau eine Elster steht direkt neben dem Schlüssel (auch schräg, auch durch eine Wand) – sie hat den Schlüssel verlegt.",
     cake_greta_name: "Greta",
     cake_greta_cap: "Greta",
@@ -2001,9 +1989,8 @@ STRINGS.de = {
     cake_emma_cap: "Emma",
     cake_emma_mid: "Emma",
     cake_win_emma: "Emma hat den Kuchen genommen.",
-    cake_hint_last_family: "Die ganze Familie steht richtig. Genau einer von ihnen steht neben dem Kuchen - die Hinweise zum Kuchen verraten, wo er ist.",
     cake_always_1_family: "In jedem Raum steht genau ein Familienmitglied.",
-    cake_always_2_family: "Der Kuchen kann in jedem Raum sein, aber nie auf dem Kästchen eines Familienmitglieds.",
+    cake_always_2_family: "Der Kuchen liegt von Anfang an auf dem Grundriss; kein Familienmitglied steht auf seinem Kästchen.",
     cake_always_4_family: "Genau ein Familienmitglied steht direkt neben dem Kuchen (auch schräg, auch durch eine Wand) – es hat den Kuchen genommen.",
     cake_tom_name: "Tom",
     cake_tom_cap: "Tom",
@@ -2026,9 +2013,8 @@ STRINGS.de = {
     cake_leo_mid: "Leo",
     cake_win_leo: "Leo hat den Schatz versteckt.",
     cake_thing_treasure: "Schatz",
-    cake_hint_last_treasure: "Alle Kinder stehen richtig. Genau eines von ihnen steht neben dem Schatz - die Hinweise zum Schatz verraten, wo er ist.",
     cake_always_1_treasure: "In jedem Raum steht genau ein Kind.",
-    cake_always_2_treasure: "Der Schatz kann in jedem Raum sein, aber nie auf dem Kästchen eines Kindes.",
+    cake_always_2_treasure: "Der Schatz liegt von Anfang an auf dem Grundriss; kein Kind steht auf seinem Kästchen.",
     cake_always_4_treasure: "Genau ein Kind steht direkt neben dem Schatz (auch schräg, auch durch eine Wand) – es hat den Schatz versteckt.",
     cake_always_3_people: "Zwei Personen stehen nie direkt nebeneinander, auch nicht schräg.",
     cake_motif_label: "Motiv",
@@ -2061,13 +2047,13 @@ STRINGS.de = {
     cake_new_game: "Neues Rätsel",
 
 
-    cake_level_easy: "Leicht (4x4, 3 Verdächtige)",
+    cake_level_easy: "Leicht (5x5, 3 Verdächtige)",
 
 
-    cake_level_medium: "Mittel (5x5, 4 Verdächtige)",
+    cake_level_medium: "Mittel (6x6, 4 Verdächtige)",
 
 
-    cake_level_hard: "Schwer (6x6, 5 Verdächtige)",
+    cake_level_hard: "Schwer (7x7, 5 Verdächtige)",
     game_animalsudoku: "Tier-Sudoku",
     home_animalsudoku_desc: "Sudoku für Kinder mit Tieren statt Zahlen: 4 x 4 oder 6 x 6, jedes Tier einmal in jeder Zeile, Spalte und jedem Block. Tier wählen, Feld antippen – ganz ohne Lesen.",
     animalsudoku_new_game: "Neues Rätsel",

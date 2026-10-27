@@ -189,9 +189,9 @@ STRINGS.pl = {
     quickrules_skyscrapers_1: "Wypełnij planszę wysokościami od 1 do N tak, aby każdy wiersz i każda kolumna zawierały każdą wysokość raz, a każda wskazówka się zgadzała.",
     quickrules_skyscrapers_2: "Wybierz pole, a następnie wysokość z panelu pod planszą.",
     quickrules_skyscrapers_3: "Wskazówka liczy budynki widoczne z tej strony, a wyższy budynek całkowicie zasłania każdy niższy stojący za nim.",
-    quickrules_cake_1: "Umieść zwierzęta i ciasto na planie: w każdym pokoju dokładnie jedno zwierzę, a żadne dwa zwierzęta nie stoją obok siebie, nawet po skosie.",
+    quickrules_cake_1: "Umieść zwierzęta na planie: w każdym pokoju dokładnie jedno zwierzę, a żadne dwa zwierzęta nie stoją obok siebie, nawet po skosie.",
     quickrules_cake_2: "Poszlaki pod planszą podpowiedzą resztę: wielkość pokoi, kto stoi wyżej lub bardziej na lewo, które pokoje mają wspólną ścianę i ile kroków dzieli zwierzę od ciasta.",
-    quickrules_cake_3: "Ciasto wziął jedyny zwierzak stojący tuż obok niego. Wybierz przycisk pod planszą, a potem dotknij pola.",
+    quickrules_cake_3: "Ciasto już leży na planie. Wziął je jedyny zwierzak stojący tuż obok niego. Wybierz zwierzę pod planszą, a potem dotknij pola.",
     quickrules_konane_1: "Pozostaw przeciwnika bez ruchu: kto w swojej turze nie ma legalnego skoku, przegrywa natychmiast.",
     quickrules_konane_2: "Każdy ruch to skok: pionek przeskakuje sąsiedni pionek przeciwnika, nigdy po skosie, na puste pole tuż za nim i zdejmuje go.",
     quickrules_konane_3: "Przed pierwszym skokiem Czarne zdejmują jeden swój pionek z narożnika lub ze środka, a potem Białe jeden swój tuż obok tego pustego pola.",
@@ -1732,13 +1732,6 @@ STRINGS.pl = {
     cake_clue_higher: "{A} stoi wyżej niż {B}.",
     cake_clue_leftof: "{A} stoi bardziej na lewo niż {B}.",
     cake_clue_border: "{A} i {B} są w pokojach, które mają wspólną ścianę.",
-    cake_clue_cakesize: "Ciasto jest w pokoju, w którym liczba pól wynosi: {N}.",
-    cake_clue_cakesize_fish: "Ryba jest w pokoju, w którym liczba pól wynosi: {N}.",
-    cake_clue_cakesize_cookies: "Ciasteczka są w pokoju, w którym liczba pól wynosi: {N}.",
-    cake_clue_cakesize_ball: "Piłka jest w pokoju, w którym liczba pól wynosi: {N}.",
-    cake_clue_cakesize_key: "Klucz jest w pokoju, w którym liczba pól wynosi: {N}.",
-    cake_clue_cakesize_family: "Ciasto jest w pokoju, w którym liczba pól wynosi: {N}.",
-    cake_clue_cakesize_treasure: "Skarb jest w pokoju, w którym liczba pól wynosi: {N}.",
     cake_clue_steps: "{A}: liczba kroków do ciasta: {N}.",
     cake_clue_steps_fish: "{A}: liczba kroków do ryby: {N}.",
     cake_clue_steps_cookies: "{A}: liczba kroków do ciasteczek: {N}.",
@@ -1769,7 +1762,7 @@ STRINGS.pl = {
     game_cake: "Kto wziął ciasto?",
 
 
-    home_cake_desc: "Detektywistyczna łamigłówka logiczna: jeden podejrzany w każdym pokoju, nigdy dwóch obok siebie. Użyj poszlak, by znaleźć zaginioną rzecz i jedynego podejrzanego stojącego tuż obok niej.",
+    home_cake_desc: "Detektywistyczna łamigłówka logiczna: jeden podejrzany w każdym pokoju, nigdy dwóch obok siebie. Użyj poszlak, by rozmieścić wszystkie zwierzęta i znaleźć jedynego podejrzanego stojącego tuż obok ciasta.",
 
 
     cake_board_label: "Plan",
@@ -1781,7 +1774,7 @@ STRINGS.pl = {
     cake_clues_title: "Poszlaki",
 
 
-    cake_status_pick: "Wybierz coś pod planem, a potem dotknij pola.",
+    cake_status_pick: "Wybierz zwierzę albo X pod planszą, a potem dotknij pola.",
 
 
     cake_meta_placed: "Postawiono: {N} / {M}",
@@ -1797,10 +1790,9 @@ STRINGS.pl = {
 
 
     cake_hint_step: "{THING}: wiersz {R}, kolumna {C}.",
-    cake_hint_last: "Wszystkie zwierzęta są już na swoich miejscach. Dokładnie jedno stoi obok ciasta. Poszlaki dotyczące ciasta mówią, gdzie ono jest.",
     cake_always_title: "Zawsze obowiązuje",
     cake_always_1: "W każdym pokoju jest dokładnie jedno zwierzę.",
-    cake_always_2: "Ciasto może być w dowolnym pokoju, ale nigdy na polu zajętym przez zwierzę.",
+    cake_always_2: "Ciasto leży na planie od początku; żadne zwierzę nie stoi na jego polu.",
     cake_always_3: "Żadne dwa zwierzęta nie stoją bezpośrednio obok siebie, nawet po skosie.",
     cake_always_4: "Dokładnie jedno zwierzę stoi bezpośrednio obok ciasta (także po skosie, nawet przez ścianę) – to ono wzięło ciasto.",
     cake_why_free: "{A} – tutaj: według zasad 1 i 3 to jedyne wolne jeszcze pole.",
@@ -1832,9 +1824,8 @@ STRINGS.pl = {
     cake_catmax_mid: "Maks",
     cake_win_catmax: "Maks wziął rybę.",
     cake_thing_fish: "Ryba",
-    cake_hint_last_fish: "Wszystkie koty są już na swoich miejscach. Dokładnie jeden stoi obok ryby. Poszlaki dotyczące ryby mówią, gdzie ona leży.",
     cake_always_1_fish: "W każdym pokoju jest dokładnie jeden kot.",
-    cake_always_2_fish: "Ryba może być w dowolnym pokoju, ale nigdy na polu zajętym przez kota.",
+    cake_always_2_fish: "Ryba leży na planie od początku; żaden kot nie stoi na jej polu.",
     cake_always_4_fish: "Dokładnie jeden kot stoi bezpośrednio obok ryby (także po skosie, nawet przez ścianę) – to on ją wziął.",
     cake_bearbruno_name: "Bruno",
     cake_bearbruno_cap: "Bruno",
@@ -1857,9 +1848,8 @@ STRINGS.pl = {
     cake_bearfritz_mid: "Fritz",
     cake_win_bearfritz: "Fritz schrupał ciasteczka.",
     cake_thing_cookies: "Ciasteczka",
-    cake_hint_last_cookies: "Wszystkie misie są już na swoich miejscach. Dokładnie jeden stoi obok ciasteczek. Poszlaki dotyczące ciasteczek mówią, gdzie one są.",
     cake_always_1_cookies: "W każdym pokoju jest dokładnie jeden miś.",
-    cake_always_2_cookies: "Ciasteczka mogą być w dowolnym pokoju, ale nigdy na polu zajętym przez misia.",
+    cake_always_2_cookies: "Ciasteczka leżą na planie od początku; żaden miś nie stoi na ich polu.",
     cake_always_4_cookies: "Dokładnie jeden miś stoi bezpośrednio obok ciasteczek (także po skosie, nawet przez ścianę) – to on je schrupał.",
     cake_dogbello_name: "Bello",
     cake_dogbello_cap: "Bello",
@@ -1882,9 +1872,8 @@ STRINGS.pl = {
     cake_dogrudi_mid: "Rudi",
     cake_win_dogrudi: "Rudi schował piłkę.",
     cake_thing_ball: "Piłka",
-    cake_hint_last_ball: "Wszystkie psy są już na swoich miejscach. Dokładnie jeden stoi obok piłki. Poszlaki dotyczące piłki mówią, gdzie ona leży.",
     cake_always_1_ball: "W każdym pokoju jest dokładnie jeden pies.",
-    cake_always_2_ball: "Piłka może być w dowolnym pokoju, ale nigdy na polu zajętym przez psa.",
+    cake_always_2_ball: "Piłka leży na planie od początku; żaden pies nie stoi na jej polu.",
     cake_always_4_ball: "Dokładnie jeden pies stoi bezpośrednio obok piłki (także po skosie, nawet przez ścianę) – to on ją schował.",
     cake_magpiepip_name: "Pip",
     cake_magpiepip_cap: "Pip",
@@ -1907,9 +1896,8 @@ STRINGS.pl = {
     cake_magpielou_mid: "Lou",
     cake_win_magpielou: "Lou zapodziała klucz.",
     cake_thing_key: "Klucz",
-    cake_hint_last_key: "Wszystkie sroki są już na swoich miejscach. Dokładnie jedna stoi obok klucza. Poszlaki dotyczące klucza mówią, gdzie on leży.",
     cake_always_1_key: "W każdym pokoju jest dokładnie jedna sroka.",
-    cake_always_2_key: "Klucz może być w dowolnym pokoju, ale nigdy na polu zajętym przez srokę.",
+    cake_always_2_key: "Klucz leży na planie od początku; żadna sroka nie stoi na jego polu.",
     cake_always_4_key: "Dokładnie jedna sroka stoi bezpośrednio obok klucza (także po skosie, nawet przez ścianę) – to ona go zapodziała.",
     cake_greta_name: "Greta",
     cake_greta_cap: "Greta",
@@ -1931,9 +1919,8 @@ STRINGS.pl = {
     cake_emma_cap: "Emma",
     cake_emma_mid: "Emma",
     cake_win_emma: "Emma wzięła ciasto.",
-    cake_hint_last_family: "Cała rodzina jest już na swoich miejscach. Dokładnie jedna osoba stoi obok ciasta. Poszlaki dotyczące ciasta mówią, gdzie ono jest.",
     cake_always_1_family: "W każdym pokoju jest dokładnie jeden członek rodziny.",
-    cake_always_2_family: "Ciasto może być w dowolnym pokoju, ale nigdy na polu zajętym przez członka rodziny.",
+    cake_always_2_family: "Ciasto leży na planie od początku; żaden członek rodziny nie stoi na jego polu.",
     cake_always_4_family: "Dokładnie jeden członek rodziny stoi bezpośrednio obok ciasta (także po skosie, nawet przez ścianę) – ta osoba wzięła ciasto.",
     cake_tom_name: "Tom",
     cake_tom_cap: "Tom",
@@ -1956,9 +1943,8 @@ STRINGS.pl = {
     cake_leo_mid: "Leo",
     cake_win_leo: "Leo schował skarb.",
     cake_thing_treasure: "Skarb",
-    cake_hint_last_treasure: "Wszystkie dzieci są już na swoich miejscach. Dokładnie jedno stoi obok skarbu. Poszlaki dotyczące skarbu mówią, gdzie on jest.",
     cake_always_1_treasure: "W każdym pokoju jest dokładnie jedno dziecko.",
-    cake_always_2_treasure: "Skarb może być w dowolnym pokoju, ale nigdy na polu zajętym przez dziecko.",
+    cake_always_2_treasure: "Skarb leży na planie od początku; żadne dziecko nie stoi na jego polu.",
     cake_always_4_treasure: "Dokładnie jedno dziecko stoi bezpośrednio obok skarbu (także po skosie, nawet przez ścianę) – ono go ukryło.",
     cake_always_3_people: "Żadne dwie osoby nie stoją bezpośrednio obok siebie, nawet po skosie.",
     cake_motif_label: "Motyw",
@@ -1991,13 +1977,13 @@ STRINGS.pl = {
     cake_new_game: "Nowa łamigłówka",
 
 
-    cake_level_easy: "Łatwy (4x4, 3 podejrzanych)",
+    cake_level_easy: "Łatwy (5x5, 3 podejrzanych)",
 
 
-    cake_level_medium: "Średni (5x5, 4 podejrzanych)",
+    cake_level_medium: "Średni (6x6, 4 podejrzanych)",
 
 
-    cake_level_hard: "Trudny (6x6, 5 podejrzanych)",
+    cake_level_hard: "Trudny (7x7, 5 podejrzanych)",
     game_animalsudoku: "Sudoku ze zwierzętami",
     home_animalsudoku_desc: "Sudoku dla dzieci ze zwierzętami zamiast cyfr: 4 x 4 lub 6 x 6, każde zwierzę raz w każdym wierszu, kolumnie i bloku. Wybierz zwierzę, dotknij pola - bez czytania.",
     animalsudoku_new_game: "Nowa łamigłówka",

@@ -185,9 +185,9 @@ STRINGS.nl = {
     quickrules_skyscrapers_1: "Vul het rooster met hoogtes van 1 tot N, zodat elke rij en kolom elke hoogte één keer bevat en elke aanwijzing klopt.",
     quickrules_skyscrapers_2: "Selecteer een vakje en kies dan een hoogte van het paneel onder het bord.",
     quickrules_skyscrapers_3: "Een aanwijzing telt de gebouwen die je vanaf die kant ziet, en een hoger gebouw verbergt elk lager gebouw erachter volledig.",
-    quickrules_cake_1: "Zet de dieren en de taart op de plattegrond: precies één dier in elke kamer, en nooit twee dieren naast elkaar, ook niet diagonaal.",
+    quickrules_cake_1: "Zet de dieren op de plattegrond: precies één dier in elke kamer, en nooit twee dieren naast elkaar, ook niet diagonaal.",
     quickrules_cake_2: "De aanwijzingen onder het bord vertellen de rest: de grootte van kamers, wie hoger of verder naar links staat, welke kamers een muur delen en hoeveel stappen het tot de taart is.",
-    quickrules_cake_3: "Het enige dier dat direct naast de taart staat, heeft die gepakt. Kies een knop onder het bord en tik daarna op een vakje.",
+    quickrules_cake_3: "De taart ligt al op de plattegrond. Het enige dier dat er direct naast staat, heeft die gepakt: kies een dier onder het bord en tik op een vakje.",
     quickrules_konane_1: "Laat je tegenstander zonder zet: wie op zijn beurt geen legale sprong heeft, verliest meteen.",
     quickrules_konane_2: "Elke zet is een sprong: een steen springt over een aangrenzende vijandelijke steen, nooit diagonaal, naar het lege veld erachter en slaat hem.",
     quickrules_konane_3: "Voor de eerste sprong verwijdert Zwart een eigen steen uit een hoek of het midden, daarna Wit een eigen steen direct naast dat gat.",
@@ -1731,13 +1731,6 @@ STRINGS.nl = {
     cake_clue_higher: "{A} staat hoger dan {B}.",
     cake_clue_leftof: "{A} staat verder naar links dan {B}.",
     cake_clue_border: "{A} en {B} staan in kamers die een muur delen.",
-    cake_clue_cakesize: "De taart staat in een kamer met {N} vakjes.",
-    cake_clue_cakesize_fish: "De vis ligt in een kamer met {N} vakjes.",
-    cake_clue_cakesize_cookies: "De koekjes liggen in een kamer met {N} vakjes.",
-    cake_clue_cakesize_ball: "De bal ligt in een kamer met {N} vakjes.",
-    cake_clue_cakesize_key: "De sleutel ligt in een kamer met {N} vakjes.",
-    cake_clue_cakesize_family: "De taart staat in een kamer met {N} vakjes.",
-    cake_clue_cakesize_treasure: "De schat ligt in een kamer met {N} vakjes.",
     cake_clue_steps: "{A}: stappen tot de taart: {N}.",
     cake_clue_steps_fish: "{A}: stappen tot de vis: {N}.",
     cake_clue_steps_cookies: "{A}: stappen tot de koekjes: {N}.",
@@ -1768,7 +1761,7 @@ STRINGS.nl = {
     game_cake: "Wie heeft de taart gepakt?",
 
 
-    home_cake_desc: "Een logische detectivepuzzel: één verdachte in elke kamer en nooit twee naast elkaar. Gebruik de aanwijzingen om het verdwenen voorwerp te vinden en de enige verdachte die er direct naast staat.",
+    home_cake_desc: "Een logische detectivepuzzel: één verdachte in elke kamer en nooit twee naast elkaar. Gebruik de aanwijzingen om ze allemaal te plaatsen en de enige verdachte naast de taart te vinden.",
 
 
     cake_board_label: "Plattegrond",
@@ -1780,7 +1773,7 @@ STRINGS.nl = {
     cake_clues_title: "Aanwijzingen",
 
 
-    cake_status_pick: "Kies iets onder de plattegrond en tik dan op een vakje.",
+    cake_status_pick: "Kies een dier of X onder het bord en tik daarna op een vakje.",
 
 
     cake_meta_placed: "Geplaatst: {N} / {M}",
@@ -1796,10 +1789,9 @@ STRINGS.nl = {
 
 
     cake_hint_step: "{THING}: rij {R}, kolom {C}.",
-    cake_hint_last: "Alle dieren staan op hun plek. Precies één dier staat naast de taart; de aanwijzingen over de taart vertellen waar die staat.",
     cake_always_title: "Geldt altijd",
     cake_always_1: "In elke kamer staat precies één dier.",
-    cake_always_2: "De taart kan in elke kamer liggen, maar nooit op het vakje van een dier.",
+    cake_always_2: "De taart ligt vanaf het begin op de plattegrond; geen dier staat op het vakje ervan.",
     cake_always_3: "Twee dieren staan nooit direct naast elkaar, ook niet diagonaal.",
     cake_always_4: "Precies één dier staat direct naast de taart (ook diagonaal en zelfs aan de andere kant van een muur); dat dier heeft de taart gepakt.",
     cake_why_free: "{A} hoort hier: volgens regel 1 en 3 is dit het enige vakje dat nog vrij is.",
@@ -1831,9 +1823,8 @@ STRINGS.nl = {
     cake_catmax_mid: "Max",
     cake_win_catmax: "Max heeft de vis gepakt.",
     cake_thing_fish: "Vis",
-    cake_hint_last_fish: "Alle katten staan op hun plek. Precies één kat staat naast de vis; de aanwijzingen over de vis vertellen waar die ligt.",
     cake_always_1_fish: "In elke kamer staat precies één kat.",
-    cake_always_2_fish: "De vis kan in elke kamer liggen, maar nooit op het vakje van een kat.",
+    cake_always_2_fish: "De vis ligt vanaf het begin op de plattegrond; geen kat staat op het vakje ervan.",
     cake_always_4_fish: "Precies één kat staat direct naast de vis (ook diagonaal en zelfs aan de andere kant van een muur); die kat heeft de vis gepakt.",
     cake_bearbruno_name: "Bruno",
     cake_bearbruno_cap: "Bruno",
@@ -1856,9 +1847,8 @@ STRINGS.nl = {
     cake_bearfritz_mid: "Fritz",
     cake_win_bearfritz: "Fritz heeft van de koekjes gesnoept.",
     cake_thing_cookies: "Koekjes",
-    cake_hint_last_cookies: "Alle beren staan op hun plek. Precies één beer staat naast de koekjes; de aanwijzingen over de koekjes vertellen waar die liggen.",
     cake_always_1_cookies: "In elke kamer staat precies één beer.",
-    cake_always_2_cookies: "De koekjes kunnen in elke kamer liggen, maar nooit op het vakje van een beer.",
+    cake_always_2_cookies: "De koekjes liggen vanaf het begin op de plattegrond; geen beer staat op hun vakje.",
     cake_always_4_cookies: "Precies één beer staat direct naast de koekjes (ook diagonaal en zelfs aan de andere kant van een muur); die beer heeft ervan gesnoept.",
     cake_dogbello_name: "Bello",
     cake_dogbello_cap: "Bello",
@@ -1881,9 +1871,8 @@ STRINGS.nl = {
     cake_dogrudi_mid: "Rudi",
     cake_win_dogrudi: "Rudi heeft de bal verstopt.",
     cake_thing_ball: "Bal",
-    cake_hint_last_ball: "Alle honden staan op hun plek. Precies één hond staat naast de bal; de aanwijzingen over de bal vertellen waar die ligt.",
     cake_always_1_ball: "In elke kamer staat precies één hond.",
-    cake_always_2_ball: "De bal kan in elke kamer liggen, maar nooit op het vakje van een hond.",
+    cake_always_2_ball: "De bal ligt vanaf het begin op de plattegrond; geen hond staat op het vakje ervan.",
     cake_always_4_ball: "Precies één hond staat direct naast de bal (ook diagonaal en zelfs aan de andere kant van een muur); die hond heeft de bal verstopt.",
     cake_magpiepip_name: "Pip",
     cake_magpiepip_cap: "Pip",
@@ -1906,9 +1895,8 @@ STRINGS.nl = {
     cake_magpielou_mid: "Lou",
     cake_win_magpielou: "Lou is de sleutel kwijtgeraakt.",
     cake_thing_key: "Sleutel",
-    cake_hint_last_key: "Alle eksters staan op hun plek. Precies één ekster staat naast de sleutel; de aanwijzingen over de sleutel vertellen waar die ligt.",
     cake_always_1_key: "In elke kamer staat precies één ekster.",
-    cake_always_2_key: "De sleutel kan in elke kamer liggen, maar nooit op het vakje van een ekster.",
+    cake_always_2_key: "De sleutel ligt vanaf het begin op de plattegrond; geen ekster staat op het vakje ervan.",
     cake_always_4_key: "Precies één ekster staat direct naast de sleutel (ook diagonaal en zelfs aan de andere kant van een muur); die ekster is de sleutel kwijtgeraakt.",
     cake_greta_name: "Greta",
     cake_greta_cap: "Greta",
@@ -1930,9 +1918,8 @@ STRINGS.nl = {
     cake_emma_cap: "Emma",
     cake_emma_mid: "Emma",
     cake_win_emma: "Emma heeft de taart gepakt.",
-    cake_hint_last_family: "Iedereen in de familie staat op zijn plek. Precies één familielid staat naast de taart; de aanwijzingen over de taart vertellen waar die staat.",
     cake_always_1_family: "In elke kamer staat precies één familielid.",
-    cake_always_2_family: "De taart kan in elke kamer liggen, maar nooit op het vakje van een familielid.",
+    cake_always_2_family: "De taart ligt vanaf het begin op de plattegrond; geen familielid staat op het vakje ervan.",
     cake_always_4_family: "Precies één familielid staat direct naast de taart (ook diagonaal en zelfs aan de andere kant van een muur); dat familielid heeft de taart gepakt.",
     cake_tom_name: "Tom",
     cake_tom_cap: "Tom",
@@ -1955,9 +1942,8 @@ STRINGS.nl = {
     cake_leo_mid: "Leo",
     cake_win_leo: "Leo heeft de schat verstopt.",
     cake_thing_treasure: "Schat",
-    cake_hint_last_treasure: "Alle kinderen staan op hun plek. Precies één kind staat naast de schat; de aanwijzingen over de schat vertellen waar die ligt.",
     cake_always_1_treasure: "In elke kamer staat precies één kind.",
-    cake_always_2_treasure: "De schat kan in elke kamer liggen, maar nooit op het vakje van een kind.",
+    cake_always_2_treasure: "De schat ligt vanaf het begin op de plattegrond; geen kind staat op het vakje ervan.",
     cake_always_4_treasure: "Precies één kind staat direct naast de schat (ook diagonaal en zelfs aan de andere kant van een muur); dat kind heeft de schat verstopt.",
     cake_always_3_people: "Twee mensen staan nooit direct naast elkaar, ook niet diagonaal.",
     cake_motif_label: "Thema",
@@ -1990,13 +1976,13 @@ STRINGS.nl = {
     cake_new_game: "Nieuwe puzzel",
 
 
-    cake_level_easy: "Makkelijk (4x4, 3 verdachten)",
+    cake_level_easy: "Makkelijk (5x5, 3 verdachten)",
 
 
-    cake_level_medium: "Gemiddeld (5x5, 4 verdachten)",
+    cake_level_medium: "Gemiddeld (6x6, 4 verdachten)",
 
 
-    cake_level_hard: "Moeilijk (6x6, 5 verdachten)",
+    cake_level_hard: "Moeilijk (7x7, 5 verdachten)",
     game_animalsudoku: "Dierensudoku",
     home_animalsudoku_desc: "Sudoku voor kinderen met dieren in plaats van cijfers: 4 x 4 of 6 x 6, elk dier één keer in elke rij, kolom en elk blok. Kies een dier, tik op een vakje - lezen is niet nodig.",
     animalsudoku_new_game: "Nieuwe puzzel",
