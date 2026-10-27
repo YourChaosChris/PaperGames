@@ -494,20 +494,12 @@ all parts back into one log in list order. The last line is exactly
   Seven (rules 2): the 60-card deck, number mix, bust and Courage, Strike,
   Pass, Bridge, Collector and Peek, run and round scoring, targets, ties and
   seat rotation; `GAMES` computer games with 2 to 6 players, card conservation,
-  AI levels, open-card odds and save validation. Task 133: the cards "Wild
-  Chain" (mode extreme, 78 cards): numbers 11-15, Lucky star, Weight, Link,
-  Storm, rows up to 15, targets 250/500, old states without `mode`;
-  `GAMES` extreme games with 2 to 6 players (wins per level and seat, rounds
-  for 250 and 500).
-- `node tests/teufelsieben-extreme-measure.js` - not in the test list; a
-  measurement for task 133: extreme with and without a doubling and a
-  halving card (skill gap, rounds, rounds with 0 points, spread).
+  AI levels, open-card odds and save validation.
 - `node tests/teufelsieben-ui.js` - needs the server and Playwright. German
   page at 360 x 640: two people and one computer, stop disabled before the
   first card, paced computer turns, round end and next round, deterministic
   bust, game result, save/load, legacy-save rejection, 44 px buttons and no
-  sideways scroll; the cards "Wild Chain" with only 250/500 as targets,
-  their special cards in the rows, save and load.
+  sideways scroll.
 - `node tests/advent-core.js` - no server or browser needed. Puzzle Advent
   calendar (task 122): each of the 24 puzzles has exactly one solution,
   counted again with the games' own solvers (Light Switch 3 x 3: one set of

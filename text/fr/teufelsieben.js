@@ -13,8 +13,6 @@ Object.assign(STRINGS.fr, {
     ts_rules_bust: "Un nombre déjà devant vous vous élimine : zéro point pour la manche. Courage vous sauve une fois ; défaussez le nombre répété et Courage. Chaque Courage utilisé coûte 5 points en fin de manche.",
     ts_term_run: "Suites",
     ts_rules_run: "La plus longue suite de 4 nombres ou plus rapporte 5 × (longueur − 2) : 10 pour quatre, 15 pour cinq. Chaque Pont comble un nombre manquant.",
-    ts_term_extreme: "Chaîne sauvage",
-    ts_rules_extreme: "Avant la partie, vous pouvez choisir les cartes « Chaîne sauvage » : 18 cartes s’ajoutent, 78 en tout – les nombres 11 (3 cartes), 12 (3), 13 (2), 14 (2) et 15 (1), Bonne étoile (2 cartes, +7 points), Lest (2, −7 points), Maillon (2, le bonus de suite compte double, triple avec deux Maillons) et Tempête (1, tous ceux qui doivent encore jouer dans cette manche commencent avec une carte révélée). Les suites peuvent aller jusqu’à 15. On joue jusqu’à 250 ou 500 points.",
     ts_term_special: "Cartes spéciales",
     ts_rules_special: "Courage sauve une fois et coûte 5 points s’il est utilisé. Retrait enlève votre dernier nombre. Passage fait commencer le joueur suivant avec une carte révélée. Pont comble un écart. Collectionneur rapporte 1 point par carte nombre. Regard montre la carte suivante.",
     ts_term_points: "Points et fin de partie",

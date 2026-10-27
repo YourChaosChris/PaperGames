@@ -64,27 +64,6 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   await page.reload({ waitUntil: "load" }); await page.waitForTimeout(500);
   check("save resumes on reload", await page.evaluate(() => !!AppStateTS.state && AppStateTS.state.rules === 2));
   // Legacy save without rules is silently cleared and the start screen remains.
-  // Task 133: the cards "Wild Chain" (mode extreme) with the targets 250/500.
-  if (!(await page.isVisible("#ts-mode"))) await page.tap("#menu-toggle");
-  await page.selectOption("#ts-mode", "extreme");
-  const targets = await page.evaluate(() => Array.from(document.querySelectorAll("#ts-target option")).filter((o) => !o.disabled).map((o) => o.value).join(","));
-  check("extreme offers 250 and 500 only: " + targets, targets === "250,500");
-  check("extreme target defaults to 250", await page.evaluate(() => document.getElementById("ts-target").value === "250"));
-  await page.selectOption("#ts-players", "2"); await page.selectOption("#ts-computers", "1");
-  await page.tap("#start-ts-game"); await waitHuman();
-  check("extreme game started", await page.evaluate(() => AppStateTS.state.mode === "extreme" && AppStateTS.state.target === 250 && AppStateTS.state.deck.length + AppStateTS.state.discard.length === 78));
-  await page.evaluate(() => {
-    const s = AppStateTS.state;
-    s.deck = ["star", 13, 14, 15, "link"].concat(s.deck.filter((c) => ["star", "link"].indexOf(c) === -1 && [13, 14, 15].indexOf(c) === -1));
-    s.current = 0; s.turnsLeft = [0, 1]; s.hands.forEach((h) => { h.status = "wait"; h.numbers = []; h.drawn = 0; }); s.hands[0].status = "in";
-    renderTS();
-  });
-  for (let k = 0; k < 5; k++) await page.tap("#ts-draw");
-  const ext = await page.evaluate(() => ({ stars: AppStateTS.state.hands[0].stars, links: AppStateTS.state.hands[0].links, special: document.querySelectorAll("#ts-rows .ts-card-special").length, meta: document.getElementById("game-meta").textContent, rowH: Math.round(document.querySelector("#ts-rows .ts-player").getBoundingClientRect().height) }));
-  check("extreme cards shown " + JSON.stringify(ext), ext.stars === 1 && ext.links === 1 && ext.special >= 2 && /Wilde Kette/.test(ext.meta));
-  await page.reload({ waitUntil: "load" }); await page.waitForTimeout(500);
-  check("extreme game saved and loaded", await page.evaluate(() => !!AppStateTS.state && AppStateTS.state.mode === "extreme" && AppStateTS.state.hands[0].stars === 1));
-  check("no sideways scroll in extreme", await page.evaluate(() => document.documentElement.scrollWidth - innerWidth <= 0));
   // Set from another page: the game page saves its own state when it is left.
   const legacyState = await page.evaluate(() => { const x = TeufelSiebenCore.newGame({ players: 2 }); delete x.rules; return JSON.stringify({ state: x }); });
   await page.goto(BASE + "about.html", { waitUntil: "load" });
@@ -97,6 +76,6 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   check("no horizontal scrolling at 360 px", overflow <= 0);
   check("no console or page errors: " + errors.join(" | "), errors.length === 0);
   await browser.close(); fails.forEach((x) => console.log("FAIL " + x));
-  console.log("=== DEVILISH SEVEN UI: 360 px rules, round flow, bust, save/load, legacy save, Wild Chain (extreme) cards, targets, save/load, " + fails.length + " failure(s) ===");
+  console.log("=== DEVILISH SEVEN UI: 360 px rules, round flow, bust, save/load, legacy save, " + fails.length + " failure(s) ===");
   process.exit(fails.length ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

@@ -73,8 +73,8 @@
 4 slidepuzzle-core.js
 2 hanoi-core.js
 2 nim-core.js
-130 teufelsieben-core.js
-10 teufelsieben-ui.js
+40 teufelsieben-core.js
+8 teufelsieben-ui.js
 2 advent-core.js
 8 advent-ui.js
 30 gipfelwurf-core.js
