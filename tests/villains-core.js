@@ -1,13 +1,13 @@
 // tests/villains-core.js
-// VillainsCore ("Fairy-Tale Villains", rules version 2): data, rules and
-// balance.
+// VillainsCore ("Fairy-Tale Villains", rules version 3: heroes are events
+// from the deck, nobody places them): data, rules and balance.
 //  1. Six villains, three places each (one of each sign), plans of 3 or 4
 //     steps; every villain, place, step and hero has its name in 12
 //     languages. The spell deck has 36 cards.
 //  2. Balance: GAMES (default 3000; fewer games scatter too much for the
 //     +/- 5 seat limit) computer games (level 3) for each number
 //     of players (2, 3, 4) with random villains. Every game ends, every move
-//     is legal, cards are neither lost nor doubled; each villain wins within
+//     is legal, cards (spells and heroes) are neither lost nor doubled; each villain wins within
 //     +/- 8 points of its fair share (1 / players), each seat within +/- 5
 //     points (a shared win counts as a part for each winner). Average
 //     rounds and the share of shared wins are printed.
@@ -17,11 +17,13 @@
 //     least 5 points more than the fair share.
 //  4. Single rules: paying (own sign full value, other signs 1, least
 //     spent), a hero raises the price at his place and leaves when the step
-//     there is done, the final step comes last, a scheme costs the lowest
-//     card and no action, collecting over 6 cards asks to drop one, the
-//     King's Son cuts a hedge, finishing ends the turn and the round is
-//     played to its end (most value left wins, a full tie is shared), old
-//     states are not current.
+//     there is done, the final step comes last, there is no scheme action,
+//     a hero drawn from the deck appears at the active player's place of
+//     its sign (or moves on when a hero stands there) and the draw goes on
+//     to a spell card, collecting over 6 cards asks to drop one, finishing
+//     ends the turn and the round is played to its end (most value left
+//     wins, a full tie is shared), old states (rules 1 and 2) are not
+//     current.
 // No server or browser needed.
 
 const path = require("path");
@@ -53,8 +55,8 @@ check(new Set([].concat(...V.VILLAIN_IDS.map((v) => V.VILLAINS[v].places.map((p)
 
 // --- 2./3. computer games -----------------------------------------------------
 function totalCards(s) {
-  let n = s.deck.length + s.discard.length + s.market.filter((c) => c !== null).length;
-  s.players.forEach((p) => { n += p.hand.length; });
+  let n = s.deck.length + s.discard.length + s.heroDiscard.length + s.market.filter((c) => c !== null).length;
+  s.players.forEach((p) => { n += p.hand.length + p.heroes.length; });
   return n;
 }
 function play(vs, levels, seed) {
@@ -134,10 +136,38 @@ console.log("(" + Math.round((Date.now() - t0) / 1000) + " s)");
 (function rules() {
   const rng = V.makeRng(5);
   let s = V.createGame(["witch", "wolf"], rng);
-  check(s.rules === 2 && V.isCurrentState(s), "a new game is current (rules 2)");
+  check(s.rules === 3 && V.isCurrentState(s), "a new game is current (rules 3)");
   check(s.actionsLeft === 2 && s.finished.length === 0 && s.winners.length === 0, "a turn has two actions");
-  check(s.players.every((p) => p.hand.length === 3) && s.market.length === 3 && s.heroRow.length === 2, "3 cards each, 3 in the market, 2 open heroes");
-  check(!V.isCurrentState({ players: [{ villain: "witch", place: 0, gold: 2, hand: [], heroes: [], prog: {} }], current: 0 }), "an old state is not current");
+  check(s.players.every((p, k) => p.hand.length === (k ? 4 : 3) && p.hand.every((id) => V.card(id).kind === "spell") && !p.heroes.length) && V.card(s.players[1].hand[3]).value === 1 &&
+    s.market.length === 3 && s.market.every((id) => V.card(id).kind === "spell"),
+    "3 spell cards for the first player, 3 and a value-1 card for the second, 3 in the market, no hero at the start");
+  check(V.heroesInDeck(s) === V.EVENTS && s.deck.length === 36 - 10 + V.EVENTS, "the heroes are shuffled into the deck after dealing: " + V.heroesInDeck(s) + " heroes, " + s.deck.length + " cards");
+  check(V.SIGNS.every((sg) => V.HEROES.filter((h) => V.card(h[0]).sign === sg).reduce((a, h) => a + h[1], 0) === 18), "hero strengths add up to 18 per sign");
+  check(!V.HEROES.some((h) => h[0] === "kingsson"), "the King's Son is not a hero any more");
+  check(!V.VILLAINS.thornfairy.steps.some((st) => st[0] === "hedge"), "the Thorn Fairy has no hedge step");
+  check(V.SIGNS.every((sg) => V.HEROES.some((h) => V.card(h[0]).sign === sg)), "heroes of every sign");
+  check(!V.isCurrentState({ players: [{ villain: "witch", place: 0, gold: 2, hand: [], heroes: [], prog: {} }], current: 0 }), "an old state (rules 1) is not current");
+  check(!V.isCurrentState({ rules: 2, players: [{ villain: "witch", hand: [], done: [false, false, false, false], heroes: [] }], finished: [], market: [], heroRow: [], deck: [], heroDiscard: [] }), "an old state (rules 2) is not current");
+  check(!V.legalActions(s).some((a) => a.type === "scheme"), "no scheme action");
+
+  // A hero comes up from the deck: it appears at the active player's place
+  // of its sign, the draw goes on to a spell card; a second hero of the
+  // same sign moves on.
+  {
+    const e = V.createGame(["witch", "wolf"], V.makeRng(77));
+    const moonHeroes = V.HEROES.map((h) => h[0]).filter((id) => V.card(id).sign === "moon");
+    e.deck.push("moon1", moonHeroes[1], "star2", moonHeroes[0]);
+    e.actionsLeft = 2;
+    V.apply(e, { type: "collect" }, rng);
+    V.apply(e, { type: "take", from: -1 }, rng);
+    const w = e.players[0];
+    check(w.heroes.length === 1 && w.heroes[0].card === moonHeroes[0] && w.heroes[0].place === 0 && w.hand[w.hand.length - 1] === "star2",
+      "a moon hero appears at the witch's moon place (Gingerbread House), she gets the next spell card; got " + JSON.stringify(w.heroes) + " " + w.hand.join());
+    V.apply(e, { type: "take", from: -1 }, rng);
+    check(w.heroes.length === 1 && e.heroDiscard.indexOf(moonHeroes[1]) !== -1 && w.hand[w.hand.length - 1] === "moon1", "a second moon hero moves on");
+    check(e.log.some((x) => x.k === "hero") && e.log.some((x) => x.k === "herogone"), "both events are in the log");
+    check(e.players[1].heroes.length === 0, "the other player gets no hero");
+  }
 
   // Price, hero and payment.
   let p = s.players[0];
@@ -155,13 +185,6 @@ console.log("(" + Math.round((Date.now() - t0) / 1000) + " s)");
   V.apply(s, { type: "step", step: 0 }, rng);
   check(p.done[0] && !p.heroes.length && s.heroDiscard.indexOf("dwarf") !== -1, "the step at the bakery is done and the dwarf leaves");
   check(s.current === 1 && s.actionsLeft === 2, "after the last action the other player has 2 actions");
-
-  // Scheme once per turn, for the lowest card, without using an action.
-  s.players[1].hand = ["herb2", "dust", "star1", "moon3"];
-  const sc = V.legalActions(s).find((a) => a.type === "scheme");
-  V.apply(s, sc, rng);
-  check(s.players[0].heroes.length === 1 && !V.legalActions(s).some((a) => a.type === "scheme"), "one scheme per turn");
-  check(s.players[1].hand.join() === "herb2,dust,moon3" && s.actionsLeft === 2, "a scheme costs the lowest card and no action");
 
   // Finishing: the round is played to its end; most value in hand wins,
   // a full tie is shared.
@@ -193,13 +216,6 @@ console.log("(" + Math.round((Date.now() - t0) / 1000) + " s)");
   check(s.phase === "trim" && p.hand.length === 7, "7 cards: drop one");
   V.apply(s, { type: "drop", card: 0 }, rng);
   check(s.phase === "act" && p.hand.length === 6 && s.actionsLeft === 1, "after dropping the turn goes on");
-
-  // The King's Son cuts a hedge.
-  s = V.createGame(["wolf", "thornfairy"], rng);
-  s.players[1].done = [true, false, false];
-  s.heroRow[0] = "kingsson";
-  V.apply(s, { type: "scheme", hero: 0, target: 1, place: 0 }, rng);
-  check(!s.players[1].done[0], "the King's Son cuts down the hedge at his place");
 })();
 
 if (fails.length) {

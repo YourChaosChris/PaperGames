@@ -1,19 +1,19 @@
 // villains-app.js
-// Wires VillainsCore ("Fairy-Tale Villains", rules version 2) to
+// Wires VillainsCore ("Fairy-Tale Villains", rules version 3) to
 // villains.html.
 //
 // Layout: the plan card of the player whose turn it is (villain, steps with
 // place and price), their domain as three place boxes, the market (3 open
-// spell cards) and the 2 open heroes, the action buttons, a "chooser" box
-// for choices (which card to take, which hero, whom, where), the hand, the
-// other villains as short lines (tap one to see the whole domain) and the
-// log of the last moves.
+// spell cards) and how many heroes are still in the deck, the action
+// buttons, a "chooser" box for the card to take, the hand, the other
+// villains as short lines (tap one to see the whole domain) and the log of
+// the last moves (heroes that turn up from the deck are logged there).
 //
-// A turn: 2 actions (collect 2 cards, or do a step of the plan), and once
-// per turn a scheme (send a hero). Against the computer the human is
-// player 0; with several people on one device the hand is covered between
-// turns. Saved games of the older rules (no state.rules === 2) are dropped
-// without a word. Every text comes from vl_* i18n keys.
+// A turn: 2 actions (collect 2 cards, or do a step of the plan). Against
+// the computer the human is player 0; with several people on one device
+// the hand is covered between turns. Saved games of the older rules (no
+// state.rules === 3) are dropped without a word. Every text comes from
+// vl_* i18n keys.
 
 const VL_SAVE_KEY = "einkchess_save_villains";
 const VL_LOG_LINES = 8;
@@ -58,7 +58,6 @@ function spellNameVl(id) {
   if (c.sign === "any") return VL_SIGN_MARK.any + " " + tVl("vl_card_dust") + " " + c.value;
   return signNameVl(c.sign) + " " + c.value;
 }
-function heroNameVl(id) { return fillVl("vl_hero_str", { c: tVl("vl_card_" + id), n: VC().card(id).str }); }
 
 function setStatusVl(key, vars) {
   AppStateVl.status = key ? { key, vars: vars || {} } : null;
@@ -174,13 +173,9 @@ function humanTurnVl() {
 function promptVl() {
   const s = AppStateVl.state;
   if (!s || AppStateVl.gameOver) return;
-  const pk = AppStateVl.pick;
   if (AppStateVl.mode === "hotseat" && !AppStateVl.revealed) setStatusVl("vl_status_pass", { p: playerNameVl(s.current) });
   else if (s.phase === "collect") setStatusVl("vl_status_collect", { n: s.collectLeft });
   else if (s.phase === "trim") setStatusVl("vl_status_trim");
-  else if (pk && pk.kind === "hero") setStatusVl("vl_status_pick_hero");
-  else if (pk && pk.kind === "target") setStatusVl("vl_status_pick_target");
-  else if (pk && pk.kind === "place") setStatusVl("vl_status_pick_place", { c: tVl("vl_card_" + s.heroRow[pk.hero]) });
   else if (s.finished.length) setStatusVl("vl_status_last_round", { p: playerNameVl(s.finished[0]), n: s.actionsLeft });
   else setStatusVl(AppStateVl.mode === "vs-ai" ? "vl_status_turn" : "vl_status_turn_player", { p: playerNameVl(s.current), n: s.actionsLeft });
   renderVl();
@@ -207,38 +202,14 @@ function onActVl(kind, extra) {
   const s = AppStateVl.state;
   if (!humanTurnVl() || s.phase !== "act") return;
   if (kind === "collect") { doVl({ type: "collect" }); return; }
-  if (kind === "step") { doVl({ type: "step", step: parseInt(extra, 10) }); return; }
-  if (kind === "scheme") { AppStateVl.pick = { kind: "hero" }; promptVl(); }
+  if (kind === "step") doVl({ type: "step", step: parseInt(extra, 10) });
 }
 
-// A button in the chooser box.
+// A button in the chooser box (the card to take while collecting).
 function onChooseVl(value) {
   const s = AppStateVl.state;
-  const pk = AppStateVl.pick;
   if (!humanTurnVl()) return;
-  if (s.phase === "collect") { doVl({ type: "take", from: parseInt(value, 10) }); return; }
-  if (!pk) return;
-  if (value === "cancel") { AppStateVl.pick = null; promptVl(); return; }
-  if (pk.kind === "hero") {
-    const hero = parseInt(value, 10);
-    const targets = schemeTargetsVl(hero);
-    if (targets.length === 1) AppStateVl.pick = { kind: "place", hero, target: targets[0] };
-    else AppStateVl.pick = { kind: "target", hero };
-    promptVl();
-  } else if (pk.kind === "target") {
-    AppStateVl.pick = { kind: "place", hero: pk.hero, target: parseInt(value, 10) };
-    promptVl();
-  } else if (pk.kind === "place") {
-    doVl({ type: "scheme", hero: pk.hero, target: pk.target, place: parseInt(value, 10) });
-  }
-}
-
-function schemeTargetsVl(hero) {
-  const out = [];
-  VC().legalActions(AppStateVl.state).forEach((a) => {
-    if (a.type === "scheme" && a.hero === hero && out.indexOf(a.target) === -1) out.push(a.target);
-  });
-  return out;
+  if (s.phase === "collect") doVl({ type: "take", from: parseInt(value, 10) });
 }
 
 function onHandVl(i) {
@@ -368,28 +339,13 @@ function goalHtmlVl(s, pi) {
 }
 
 function chooserHtmlVl(s) {
-  const pk = AppStateVl.pick;
   const btn = (v, text) => '<button type="button" class="secondary vl-choose" data-value="' + escVl(v) + '">' + escVl(text) + "</button>";
   let out = "";
   if (s.phase === "collect") {
     s.market.forEach((id, i) => { if (id !== null) out += btn(String(i), spellNameVl(id)); });
     if (s.deck.length + s.discard.length > 0) out += btn("-1", tVl("vl_take_deck"));
-    return out;
   }
-  if (!pk) return "";
-  if (pk.kind === "hero") {
-    s.heroRow.forEach((id, k) => { if (id !== null && schemeTargetsVl(k).length) out += btn(String(k), heroNameVl(id)); });
-  } else if (pk.kind === "target") {
-    schemeTargetsVl(pk.hero).forEach((t) => { out += btn(String(t), playerNameVl(t)); });
-  } else if (pk.kind === "place") {
-    const q = s.players[pk.target];
-    [0, 1, 2].forEach((i) => {
-      if (VC().heroAt(q, i)) return;
-      const open = VC().stepsOf(q).filter((st, j) => st[1] === i && !q.done[j]).length;
-      out += btn(String(i), placeNameVl(q, i) + " (" + fillVl("vl_open_steps_n", { n: open }) + ")");
-    });
-  }
-  return out + btn("cancel", tVl("vl_cancel"));
+  return out;
 }
 
 function renderVl() {
@@ -403,10 +359,10 @@ function renderVl() {
   document.getElementById("vl-goal").innerHTML = goalHtmlVl(s, me);
   document.getElementById("vl-domain").innerHTML = [0, 1, 2].map((i) => placeHtmlVl(s, me, i)).join("");
 
-  // The market and the open heroes.
+  // The market and how many heroes are still hidden in the deck.
   document.getElementById("vl-market").innerHTML =
     "<p><strong>" + escVl(tVl("vl_market_title")) + "</strong> " + escVl(s.market.filter((c) => c !== null).map(spellNameVl).join(" · ")) + "</p>" +
-    "<p><strong>" + escVl(tVl("vl_heroes_title")) + "</strong> " + escVl(s.heroRow.filter((c) => c !== null).map(heroNameVl).join(" · ")) + "</p>";
+    '<p class="vl-heroes-left">' + escVl(fillVl("vl_heroes_title", { n: VC().heroesInDeck(s) })) + "</p>";
 
   // Action buttons.
   const actsBox = document.getElementById("vl-actions");
@@ -423,10 +379,6 @@ function renderVl() {
       ah += '<button type="button" class="secondary vl-act" data-kind="step" data-extra="' + j + '"' + (ok ? "" : " disabled") + ">" +
         escVl(fillVl("vl_act_step", { s: stepNameVl(p, j), n: VC().stepPrice(p, j) })) + "</button>";
     });
-    if (!s.schemed) {
-      const ok = legal.some((a) => a.type === "scheme");
-      ah += '<button type="button" class="secondary vl-act" data-kind="scheme"' + (ok ? "" : " disabled") + ">" + escVl(tVl("vl_act_scheme")) + "</button>";
-    }
   }
   actsBox.innerHTML = ah;
   actsBox.querySelectorAll(".vl-act").forEach((b) => b.addEventListener("click", () => onActVl(b.getAttribute("data-kind"), b.getAttribute("data-extra"))));
@@ -480,8 +432,8 @@ function logLineVl(s, e) {
     case "drop": return fillVl("vl_log_drop", { p: who(e.p) });
     case "step": return fillVl("vl_log_step", { p: who(e.p), s: stepNameVl(pl(e.p), e.step) });
     case "leave": return fillVl("vl_log_leave", { p: who(e.p), c: tVl("vl_card_" + e.c) });
-    case "hero": return fillVl("vl_log_hero", { p: who(e.p), t: who(e.t), c: tVl("vl_card_" + e.c), x: placeNameVl(pl(e.t), e.place) });
-    case "cuthedge": return fillVl("vl_log_cuthedge", { t: who(e.t) });
+    case "hero": return fillVl("vl_log_hero", { p: who(e.p), c: tVl("vl_card_" + e.c), x: placeNameVl(pl(e.p), e.place) });
+    case "herogone": return fillVl("vl_log_hero_gone", { p: who(e.p), c: tVl("vl_card_" + e.c), x: placeNameVl(pl(e.p), e.place) });
     case "done": return fillVl("vl_log_done", { p: who(e.p) });
     case "win": return fillVl("vl_log_win", { p: who(e.p) });
     default: return "";

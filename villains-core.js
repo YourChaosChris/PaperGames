@@ -1,7 +1,7 @@
 // villains-core.js
 // "Fairy-Tale Villains" (Märchen-Schurken) - every player is a villain from
 // the Grimms' fairy tales with an own plan, 2 to 4 players. Dependency-free,
-// no DOM. Rules version 2 (state.rules === 2); states of the older rules
+// no DOM. Rules version 3 (state.rules === 3); states of the older rules
 // are not valid any more (isCurrentState).
 //
 // Each villain has a domain of 3 places; every place has a sign (moon, star
@@ -10,8 +10,9 @@
 //
 // Cards: one shared deck of 36 spell cards (a sign and a value 1 to 3, and
 // "fairy dust" that counts as any sign with value 2). Three cards lie open
-// in the market. Everyone starts with 3 cards; at most 6 at the end of an
-// action (more: drop cards).
+// in the market. Everyone starts with 3 cards, the last two players in turn
+// order (never the first) also with a card of value 1; at most 6 at the
+// end of an action (more: drop cards).
 //
 // A turn has 2 actions, in any order, the same one twice allowed:
 //   collect  take 2 cards, each one from the market or the top of the deck
@@ -19,44 +20,48 @@
 //            the price; a card of the place's sign (and fairy dust) counts
 //            its value, any other card 1. The game picks the cards (least
 //            value spent).
-// Besides, once per turn and without using an action:
-//   scheme   give up your lowest card and put one of the 2 open heroes on a
-//            free place of another villain. A hero raises the price of the
-//            steps at his place by his strength; when that villain does a
-//            step there, the hero is outwitted and leaves.
-// The King's Son, sent to the Thorn Fairy, cuts down the hedge at his place.
+// Heroes are events: after the start hands are dealt, EVENTS hero cards are
+// shuffled into the deck. Whenever a hero comes up (drawn from the deck or
+// when the market is filled), it appears at once in the domain of the
+// player whose turn it is, at the place of the hero's own sign; if a hero
+// already stands there, the new one moves on (discard). A hero raises the
+// price of the steps at his place by his strength; when the villain does a
+// step there, the hero is outwitted and leaves. Heroes that left are
+// shuffled back with the discard pile. Nobody places heroes.
 // Whoever finishes the plan ends his turn; the round is played to its end
 // (everyone has the same number of turns). Of those who finished, the one
 // with the most value left in the hand wins (then the most cards); a full
 // tie is a shared win.
 //
-// State: { rules: 2, players: [{ villain, hand, done: [bool per step],
-// heroes: [{ card, place }] }], deck, discard, market, heroPile, heroRow,
-// heroDiscard, current, turn, actionsLeft, phase ("act" | "collect" |
-// "trim"), collectLeft, schemed, finished, winner (first winner), winners,
-// log, seed }.
+// State: { rules: 3, players: [{ villain, hand, done: [bool per step],
+// heroes: [{ card, place }] }], deck (spells and heroes), discard,
+// heroDiscard, market, current, turn, actionsLeft, phase ("act" | "collect"
+// | "trim"), collectLeft, finished, winner (first winner), winners, log,
+// seed }.
 
 const VillainsCore = (function () {
-  const RULES = 2;
+  const RULES = 3;
   const HAND_MAX = 6;
   const START_HAND = 3;
   const ACTIONS = 2;
   const MARKET = 3;
-  const HERO_ROW = 2;
+  // Hero cards shuffled into the deck per game (tuned with computer games).
+  const EVENTS = 8;
   const SIGNS = ["moon", "star", "herb"];
   // Spell cards per sign: value -> count. Fairy dust: value 2, any sign.
   const VALUES = { 1: 4, 2: 4, 3: 3 };
   const DUST = 3;
   const DUST_VALUE = 2;
 
-  // Heroes (all in one shared pile): [id, strength].
+  // Heroes: [id, strength]; each hero's sign follows the list (moon, star,
+  // herb, moon, ...), so the strengths add up to 18 per sign.
   const HEROES = [
-    ["hansel", 2], ["gretel", 2], ["woodcutter", 2], ["whiteduck", 1], ["whitebird", 1],
-    ["mothergoat", 3], ["youngestkid", 1], ["hunter", 3], ["redcap", 2], ["grandmother", 1],
+    ["hansel", 2], ["gretel", 2], ["woodcutter", 2], ["hunter", 3], ["whitebird", 1],
+    ["mothergoat", 3], ["youngestkid", 1], ["whiteduck", 1], ["redcap", 2], ["grandmother", 1],
     ["queen", 3], ["king", 3], ["messenger", 2], ["miller", 1], ["guard", 2],
     ["snowwhite", 2], ["huntsman", 2], ["dwarf", 1], ["prince", 3], ["sevendwarfs", 3],
     ["joringel", 2], ["jorinde", 2], ["shepherd", 1], ["redflower", 1], ["nightingale", 1],
-    ["kingsson", 3], ["princess", 2], ["oldking", 2], ["cook", 1], ["twelfthfairy", 2]
+    ["princess", 2], ["oldking", 2], ["cook", 1], ["twelfthfairy", 2]
   ];
 
   // Per villain: 3 places [id, sign] and the plan [step id, place, price,
@@ -84,7 +89,7 @@ const VillainsCore = (function () {
     },
     thornfairy: {
       places: [["festhall", "moon"], ["spindletower", "star"], ["castleyard", "herb"]],
-      steps: [["hedge", 0, 6], ["hedge", 1, 6], ["hedge", 2, 6], ["spindle", 1, 4, true]]
+      steps: [["curse", 0, 6], ["flax", 2, 5], ["spindle", 1, 5], ["sleep", 0, 6, true]]
     }
   };
   const VILLAIN_IDS = Object.keys(VILLAINS);
@@ -114,7 +119,7 @@ const VillainsCore = (function () {
     CARDS[sg + v] = { id: sg + v, kind: "spell", sign: sg, value: +v };
   }));
   CARDS.dust = { id: "dust", kind: "spell", sign: "any", value: DUST_VALUE };
-  HEROES.forEach((h) => { CARDS[h[0]] = { id: h[0], kind: "hero", str: h[1] }; });
+  HEROES.forEach((h, i) => { CARDS[h[0]] = { id: h[0], kind: "hero", str: h[1], sign: SIGNS[i % SIGNS.length] }; });
   function card(id) { return CARDS[id]; }
 
   function spellDeck() {
@@ -125,47 +130,8 @@ const VillainsCore = (function () {
   }
 
   function isCurrentState(s) {
-    return !!s && s.rules === RULES && Array.isArray(s.players) && Array.isArray(s.finished) && Array.isArray(s.market) && Array.isArray(s.heroRow) &&
+    return !!s && s.rules === RULES && Array.isArray(s.players) && Array.isArray(s.finished) && Array.isArray(s.market) && Array.isArray(s.deck) && Array.isArray(s.heroDiscard) &&
       s.players.every((p) => VILLAINS[p.villain] && Array.isArray(p.done) && p.done.length === VILLAINS[p.villain].steps.length && Array.isArray(p.hand) && Array.isArray(p.heroes));
-  }
-
-  function drawSpell(s, rnd) {
-    if (!s.deck.length) {
-      if (!s.discard.length) return null;
-      s.deck = shuffle(s.discard, rnd);
-      s.discard = [];
-    }
-    return s.deck.pop();
-  }
-  function drawHero(s, rnd) {
-    if (!s.heroPile.length) {
-      if (!s.heroDiscard.length) return null;
-      s.heroPile = shuffle(s.heroDiscard, rnd);
-      s.heroDiscard = [];
-    }
-    return s.heroPile.pop();
-  }
-  function refillMarket(s, rnd) {
-    for (let i = 0; i < MARKET; i++) if (s.market[i] === null || s.market[i] === undefined) s.market[i] = drawSpell(s, rnd);
-  }
-  function refillHeroes(s, rnd) {
-    for (let i = 0; i < HERO_ROW; i++) if (s.heroRow[i] === null || s.heroRow[i] === undefined) s.heroRow[i] = drawHero(s, rnd);
-  }
-
-  function createGame(villains, rng) {
-    const rnd = rng || Math.random;
-    const s = {
-      rules: RULES,
-      players: villains.map((v) => ({ villain: v, hand: [], done: VILLAINS[v].steps.map(() => false), heroes: [] })),
-      deck: shuffle(spellDeck(), rnd), discard: [], market: [],
-      heroPile: shuffle(HEROES.map((h) => h[0]), rnd), heroRow: [], heroDiscard: [],
-      current: 0, turn: 1, actionsLeft: ACTIONS, phase: "act", collectLeft: 0, schemed: false,
-      finished: [], winner: null, winners: [], log: [], seed: Math.floor(rnd() * 1e9)
-    };
-    s.players.forEach((p) => { for (let i = 0; i < START_HAND; i++) p.hand.push(drawSpell(s, rnd)); });
-    refillMarket(s, rnd);
-    refillHeroes(s, rnd);
-    return s;
   }
 
   function log(s, e) {
@@ -174,6 +140,67 @@ const VillainsCore = (function () {
   }
 
   function heroAt(p, i) { return p.heroes.find((h) => h.place === i) || null; }
+
+  // A hero comes up: it appears in the active player's domain at the place
+  // of its sign, or moves on when a hero already stands there.
+  function heroEvent(s, id) {
+    const me = s.current, p = s.players[me];
+    const place = VILLAINS[p.villain].places.findIndex((pl) => pl[1] === card(id).sign);
+    if (heroAt(p, place)) {
+      s.heroDiscard.push(id);
+      log(s, { k: "herogone", p: me, c: id, place });
+    } else {
+      p.heroes.push({ card: id, place });
+      log(s, { k: "hero", p: me, c: id, place });
+    }
+  }
+
+  // The next spell card from the deck; heroes on the way are events. When
+  // the deck is used up, the discard pile and the heroes that left are
+  // shuffled into a new deck. null when no spell card is left anywhere.
+  function drawSpell(s, rnd) {
+    for (;;) {
+      if (!s.deck.length) {
+        if (!s.discard.length) return null;
+        s.deck = shuffle(s.discard.concat(s.heroDiscard), rnd);
+        s.discard = [];
+        s.heroDiscard = [];
+      }
+      const id = s.deck.pop();
+      if (card(id).kind === "spell") return id;
+      heroEvent(s, id);
+    }
+  }
+  function refillMarket(s, rnd) {
+    for (let i = 0; i < MARKET; i++) if (s.market[i] === null || s.market[i] === undefined) s.market[i] = drawSpell(s, rnd);
+  }
+  // Heroes still in the deck (anyone could count them).
+  function heroesInDeck(s) { return s.deck.filter((id) => card(id).kind === "hero").length; }
+
+  function createGame(villains, rng) {
+    const rnd = rng || Math.random;
+    const s = {
+      rules: RULES,
+      players: villains.map((v) => ({ villain: v, hand: [], done: VILLAINS[v].steps.map(() => false), heroes: [] })),
+      deck: shuffle(spellDeck(), rnd), discard: [], heroDiscard: [], market: [],
+      current: 0, turn: 1, actionsLeft: ACTIONS, phase: "act", collectLeft: 0,
+      finished: [], winner: null, winners: [], log: [], seed: Math.floor(rnd() * 1e9)
+    };
+    s.players.forEach((p) => { for (let i = 0; i < START_HAND; i++) p.hand.push(drawSpell(s, rnd)); });
+    // The last two players in turn order (never the first) also get the
+    // next card of value 1 from the deck (balance for the starting player,
+    // from computer games).
+    const n = s.players.length;
+    s.players.forEach((p, k) => {
+      const at = s.deck.map((id) => card(id).value).lastIndexOf(1);
+      if (k > 0 && k >= n - 2 && at !== -1) p.hand.push(s.deck.splice(at, 1)[0]);
+    });
+    refillMarket(s, rnd);
+    // Only now the heroes go into the deck.
+    const heroes = shuffle(HEROES.map((h) => h[0]), rnd).slice(0, EVENTS);
+    s.deck = shuffle(s.deck.concat(heroes), rnd);
+    return s;
+  }
   function placeSign(p, i) { return VILLAINS[p.villain].places[i][1]; }
   function stepsOf(p) { return VILLAINS[p.villain].steps; }
 
@@ -216,13 +243,6 @@ const VillainsCore = (function () {
     }
     return best;
   }
-  // The card a scheme costs: the lowest value, fairy dust only when there
-  // is nothing else; the last such card of the hand.
-  function schemeCard(hand) {
-    let best = -1, bv = Infinity;
-    hand.forEach((id, i) => { const c = card(id); const v = c.value + (c.sign === "any" ? 10 : 0); if (v <= bv) { bv = v; best = i; } });
-    return best;
-  }
   function stepPayment(p, j) { return payment(p.hand, placeSign(p, stepsOf(p)[j][1]), stepPrice(p, j)); }
 
   function progress(s, p) {
@@ -238,7 +258,7 @@ const VillainsCore = (function () {
   }
 
   // What the active player can do now: [{ type, ... }].
-  //   phase "act":     collect | step { step } | scheme { hero, target, place } | end
+  //   phase "act":     collect | step { step } | end
   //   phase "collect": take { from } (market index 0-2, or -1 for the deck)
   function legalActions(s) {
     if (s.winner !== null) return [];
@@ -255,15 +275,6 @@ const VillainsCore = (function () {
     }
     if (canCollect(s)) out.push({ type: "collect" });
     stepsOf(p).forEach((st, j) => { if (stepOpen(p, j) && stepPayment(p, j)) out.push({ type: "step", step: j }); });
-    if (!s.schemed && p.hand.length) {
-      s.heroRow.forEach((h, k) => {
-        if (h === null) return;
-        s.players.forEach((q, t) => {
-          if (t === me || s.finished.indexOf(t) !== -1) return;
-          for (let pl = 0; pl < 3; pl++) if (!heroAt(q, pl)) out.push({ type: "scheme", hero: k, target: t, place: pl });
-        });
-      });
-    }
     out.push({ type: "end" });
     return out;
   }
@@ -291,7 +302,6 @@ const VillainsCore = (function () {
     s.actionsLeft = ACTIONS;
     s.phase = "act";
     s.collectLeft = 0;
-    s.schemed = false;
   }
   function actionDone(s) {
     s.actionsLeft--;
@@ -312,8 +322,10 @@ const VillainsCore = (function () {
         let id;
         if (act.from === -1) id = drawSpell(s, rnd);
         else { id = s.market[act.from]; s.market[act.from] = null; refillMarket(s, rnd); }
-        p.hand.push(id);
-        log(s, { k: "take", p: me, c: act.from === -1 ? null : id });
+        if (id !== null) {
+          p.hand.push(id);
+          log(s, { k: "take", p: me, c: act.from === -1 ? null : id });
+        }
         s.collectLeft--;
         if (s.collectLeft <= 0 || !legalActions(s).length) {
           s.collectLeft = 0;
@@ -349,23 +361,6 @@ const VillainsCore = (function () {
         actionDone(s);
         break;
       }
-      case "scheme": {
-        const q = s.players[act.target];
-        const id = s.heroRow[act.hero];
-        const ci = schemeCard(p.hand);
-        const paid = p.hand.splice(ci, 1)[0];
-        s.discard.push(paid);
-        s.heroRow[act.hero] = null;
-        q.heroes.push({ card: id, place: act.place });
-        s.schemed = true;
-        log(s, { k: "hero", p: me, t: act.target, c: id, place: act.place, paid });
-        if (id === "kingsson" && q.villain === "thornfairy") {
-          const j = stepsOf(q).findIndex((st, k) => st[1] === act.place && q.done[k]);
-          if (j !== -1) { q.done[j] = false; log(s, { k: "cuthedge", t: act.target, place: act.place }); }
-        }
-        refillHeroes(s, rnd);
-        break;
-      }
       case "end":
         log(s, { k: "end", p: me });
         endTurn(s);
@@ -376,20 +371,14 @@ const VillainsCore = (function () {
 
   // --- the computer -----------------------------------------------------
   // Levels: 1 = easy (mostly random), 2 = medium (steps when it can, takes
-  // any card of a sign it still needs, never schemes), 3 = hard (highest
-  // useful cards, keeps fairy dust, the step that leaves the best hand,
-  // sends the strongest hero to the cheapest open step of the leader; it
-  // only knows what a human could see of the others: steps, heroes, number
-  // of hand cards).
+  // any card of a sign it still needs), 3 = hard (highest useful cards,
+  // keeps fairy dust, the step that leaves the best hand, first the steps
+  // at places where a hero could still appear).
 
   function clone(s) { return JSON.parse(JSON.stringify(s)); }
-  // Level 3 schemes when the leader's distance (see distance) is at most
-  // SCHEME_AT[players] (with 3 or 4 players only late: a scheme costs a
-  // card and helps the third ones too); a player who still plays in this
-  // round counts TURN_GAIN nearer when choosing the leader (values from
-  // computer games).
-  const SCHEME_AT = { 2: 10, 3: 3, 4: 4 };
-  const TURN_GAIN = 1.2;
+  // Hard: bonus for a step at a place without a hero (a hero could still
+  // appear there and make it dearer); value from computer games.
+  const HERO_RISK = 2;
 
   // What is still missing per sign: price sum of the open steps minus the
   // hand cards of that sign (fairy dust counts later).
@@ -444,53 +433,6 @@ const VillainsCore = (function () {
     return best;
   }
 
-  // Remaining distance of player q to the goal from what everyone can see
-  // (price sum of the open steps minus about 1.7 per hand card; the cards
-  // themselves are secret), for choosing whom to scheme against.
-  function distance(q) {
-    let left = 0;
-    stepsOf(q).forEach((st, j) => { if (!q.done[j]) left += stepPrice(q, j); });
-    return left - 1.7 * q.hand.length;
-  }
-
-  function bestScheme(s, legal, level) {
-    const me = s.current, n = s.players.length;
-    const schemes = legal.filter((a) => a.type === "scheme");
-    if (!schemes.length) return null;
-    // The leader among the others (on a tie the one who plays sooner).
-    let lead = -1, la = Infinity;
-    for (let k = 1; k < n; k++) {
-      const t = (me + k) % n;
-      if (s.finished.indexOf(t) !== -1) continue;
-      // Who plays after me in this round has one turn less behind him.
-      const dq = distance(s.players[t]) - (t > me ? TURN_GAIN : 0);
-      if (dq < la) { la = dq; lead = t; }
-    }
-    if (lead < 0) return null;
-    const q = s.players[lead];
-    const ld = distance(q);
-    const open = stepsOf(q).map((st, j) => j).filter((j) => !q.done[j]);
-    if (ld > SCHEME_AT[n]) return null;
-    // The place of the cheapest step the leader can do now.
-    let bestPlace = -1, bv = -Infinity;
-    open.forEach((j) => {
-      const pl = stepsOf(q)[j][1];
-      if (heroAt(q, pl)) return;
-      const v = (stepOpen(q, j) ? 20 : 0) - stepPrice(q, j);
-      if (v > bv) { bv = v; bestPlace = pl; }
-    });
-    if (bestPlace === -1) return null;
-    let bestHero = -1, hs = -1;
-    s.heroRow.forEach((h, k) => {
-      if (h === null) return;
-      let str = card(h).str;
-      if (h === "kingsson" && q.villain === "thornfairy") str += 4;
-      if (str > hs) { hs = str; bestHero = k; }
-    });
-    if (level < 3) bestHero = s.heroRow.findIndex((h) => h !== null);
-    const act = { type: "scheme", hero: bestHero, target: lead, place: bestPlace };
-    return schemes.some((a) => same(a, act)) ? act : null;
-  }
 
   // The computer's next action. level 1, 2 or 3 (default 3).
   function chooseAction(s, rng, level) {
@@ -533,20 +475,19 @@ const VillainsCore = (function () {
     const steps = legal.filter((a) => a.type === "step");
     if (lv === 1) {
       if (steps.length && rnd() < 0.7) return steps[Math.floor(rnd() * steps.length)];
-      if (rnd() < 0.15) { const sc = legal.filter((a) => a.type === "scheme"); if (sc.length) return sc[Math.floor(rnd() * sc.length)]; }
       return legal.find((a) => a.type === "collect") || legal[legal.length - 1];
     }
     // A step that finishes the plan wins.
     const win = steps.find((a) => { const t = clone(s); apply(t, a, makeRng(1)); return hasWon(t.players[me]); });
     if (win) return win;
-    const sc = lv >= 3 ? bestScheme(s, legal, lv) : null;
-    if (sc) return sc;
     if (steps.length) {
-      // Prefer the step that leaves the best hand behind.
+      // Prefer the step that leaves the best hand behind; Hard also likes
+      // a step at a place without a hero, where one could still appear.
       let best = null, bv = -Infinity;
       steps.forEach((a) => {
         const t = clone(s); apply(t, a, makeRng(1));
-        const v = lv >= 3 ? evaluate(t, me) : -stepsOf(p)[a.step][2];
+        const free = !heroAt(p, stepsOf(p)[a.step][1]);
+        const v = lv >= 3 ? evaluate(t, me) + (free ? HERO_RISK : 0) : -stepsOf(p)[a.step][2];
         if (v > bv) { bv = v; best = a; }
       });
       return best;
@@ -557,7 +498,7 @@ const VillainsCore = (function () {
   }
 
   return {
-    RULES, HAND_MAX, ACTIONS, SIGNS, HEROES, VILLAINS, VILLAIN_IDS, card, spellDeck, makeRng, createGame, isCurrentState,
+    RULES, HAND_MAX, ACTIONS, EVENTS, SIGNS, HEROES, VILLAINS, VILLAIN_IDS, card, spellDeck, makeRng, createGame, isCurrentState, heroesInDeck,
     legalActions, isLegal, apply, heroAt, placeSign, stepsOf, stepOpen, stepPrice, stepPayment, payment, progress, hasWon,
     chooseAction, evaluate, clone
   };
