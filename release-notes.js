@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v275",
+    date: "2026-10-27",
+    key: "release_v275",
+    text: "Go: above the board you now always see which color you play and why. Black or White stays as you chose it, also after a new game or a reload. Fixed: after reloading a game against the computer, New game started a game for two players."
+  },
+  {
     version: "v274",
     date: "2026-10-27",
     key: "release_v274",

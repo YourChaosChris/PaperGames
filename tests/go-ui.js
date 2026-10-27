@@ -6,6 +6,9 @@
 // the choice and the game survive a reload; an old save (v273) still loads;
 // 2 players hide the colour and New game stays a 2-player game; the rules
 // page names the choice; no horizontal scrolling, no console errors.
+// Task 161: the line above the board says which colour you play and why
+// (chance, a change from the last game); the colour stays as chosen over
+// new games and reloads, also with the shared "random" setting on.
 const { chromium } = require("playwright");
 const argBase = process.argv.indexOf("--base");
 const BASE = (argBase > 0 && process.argv[argBase + 1]) || process.env.BASE_URL || "http://localhost:8000/";
@@ -41,6 +44,9 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   check("setup visible with 6 buttons of at least 44 px " + JSON.stringify(first), first.setup && first.color && first.picks === 6 && first.small === 0);
   check("setup in German: " + first.title + " / " + first.note, /Brettgröße/.test(first.title) && /Schwarz zieht zuerst/.test(first.note));
   check("no horizontal scrolling at 360 px", first.over <= 0);
+  const you = () => page.evaluate(() => { const el = document.getElementById("go-you"); return el && !el.classList.contains("hidden") ? el.textContent : ""; });
+  const you0 = await you();
+  check("colour line before the first move: " + you0, /Du spielst Schwarz \(erster Zug\)/.test(you0) && !/andere Farbe|Zufall/.test(you0));
   check("first game 9 x 9 with Black: " + JSON.stringify(await state()) + " " + (await pressed()), (await pts()) === 81 && (await state()).human === "b" && (await pressed()).join() === "9,b");
 
   // White on the empty board: new game at once, the computer (Black) moves first.
@@ -48,6 +54,8 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   await waitHuman();
   let st = await state();
   check("White: the computer opens as Black " + JSON.stringify(st), st.human === "w" && st.mode === "offline-ai" && st.moves === 1 && st.turn === "w");
+  const you1 = await you();
+  check("colour line names White and the change: " + you1, /Du spielst Weiß \(zweiter Zug\)/.test(you1) && /andere Farbe als im letzten Spiel/.test(you1));
   check("one black stone on the board", await page.evaluate(() => document.querySelectorAll("#go-grid .go-stone-black").length === 1 && document.querySelectorAll("#go-grid .go-stone-white").length === 0));
 
   // With a stone on the board, 13 x 13 only counts for the next game.
@@ -59,6 +67,12 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   await waitHuman();
   st = await state();
   check("New game: 13 x 13, still White " + JSON.stringify(st), st.size === 13 && (await pts()) === 169 && st.human === "w");
+  const you2 = await you();
+  check("same colour again: no change note: " + you2, /Weiß \(zweiter Zug\)/.test(you2) && !/andere Farbe/.test(you2));
+  // Several new games with White chosen: the colour never changes by itself.
+  let swaps = 0;
+  for (let i = 0; i < 4; i++) { await page.tap("#direct-new-game-button"); await waitHuman(); if ((await state()).human !== "w") swaps++; }
+  check("White stays White over 4 new games", swaps === 0);
 
   // Random: the next new game draws a colour.
   await page.tap('#go-setup .go-pick[data-color="random"]');
@@ -69,6 +83,8 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
     seen.add((await state()).human);
   }
   check("Random gives both colours " + Array.from(seen).join(), seen.size === 2);
+  const you3 = await you();
+  check("Random: the line says chance decided: " + you3, /Zufall hat entschieden/.test(you3) && /Du spielst (Schwarz|Weiß)/.test(you3));
   check("Random is pressed and saved", (await pressed()).join() === "13,random" && (await page.evaluate(() => JSON.parse(localStorage.getItem("papergames_go_setup")).color)) === "random");
 
   // Reload: the game and the choice come back.
@@ -76,6 +92,21 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   await load();
   const st2 = await state();
   check("reload keeps size and colour " + JSON.stringify([st, st2]), st2.size === 13 && st2.human === st.human && (await pts()) === 169 && (await pressed()).join() === "13,random");
+  check("reload keeps the colour line", (await you()) === you3);
+
+  // Task 161: the shared "who moves first: random" setting no longer
+  // overrides an own choice of Black; without an own choice it shows as Random.
+  await page.evaluate(() => localStorage.setItem("papergames_random_start", "random"));
+  await page.tap('#go-setup .go-pick[data-color="b"]');
+  const blacks = [];
+  for (let i = 0; i < 6; i++) { await page.tap("#direct-new-game-button"); await waitHuman(); const s = await state(); blacks.push(s.mode === "offline-ai" ? s.human : s.mode); }
+  check("Black stays Black with the shared random setting on: " + blacks.join(), blacks.every((c) => c === "b"));
+  check("Black is remembered", (await page.evaluate(() => JSON.parse(localStorage.getItem("papergames_go_setup")).color)) === "b");
+  await page.evaluate(() => { localStorage.removeItem("papergames_go_setup"); localStorage.removeItem("einkchess_save_go"); });
+  await load();
+  const you4 = await you();
+  check("fresh device with the shared random setting: Random is pressed " + (await pressed()) + " / " + you4 + " / " + JSON.stringify(await state()), (await pressed()).join() === "9,random" && /Zufall hat entschieden/.test(you4));
+  await page.evaluate(() => { localStorage.removeItem("papergames_random_start"); localStorage.setItem("papergames_go_setup", JSON.stringify({ size: 13, color: "random" })); });
 
   // An old save (v273 format) on 19 x 19 as White still loads.
   await page.evaluate(() => {

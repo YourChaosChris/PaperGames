@@ -100,6 +100,12 @@
   border: 2px solid #ffffff;
 }
 
+/* "You play White (second move)." above the board (task 161). */
+.go-you {
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
 .go-setup-note {
   margin: 6px 0 0;
 }

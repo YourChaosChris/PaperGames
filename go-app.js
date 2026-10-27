@@ -22,7 +22,9 @@ const AppStateGo = {
   captures: { b: 0, w: 0 }, // stones captured BY black / BY white
   // GoCore.boardKey() of every position the game has had so far, for the
   // positional superko rule (no move may recreate an earlier position).
-  boardHistory: []
+  boardHistory: [],
+  colorDrawn: false,      // chance chose the human colour of this game
+  colorChanged: false     // ... or it differs from the last game against the computer
 };
 
 function goHistorySet() {
@@ -38,25 +40,44 @@ const GO_SAVE_KEY = "einkchess_save_go";
 // color: "b" | "w" | "random". Kept on the device like the other settings.
 const GO_SETUP_KEY = "papergames_go_setup";
 const GO_SIZES = [9, 13, 19];
-const GoSetup = { size: 9, color: "b" };
+const GoSetup = { size: 9, color: "b", last: null };  // last: colour of the last game against the computer
 
+// Without an own choice yet, the shared "who moves first: random" setting
+// shows up as a pressed Random button, so the reason for a colour is visible.
 function loadGoSetup() {
-  try {
-    const raw = JSON.parse(localStorage.getItem(GO_SETUP_KEY) || "null");
-    if (raw && GO_SIZES.indexOf(raw.size) !== -1) GoSetup.size = raw.size;
-    if (raw && ["b", "w", "random"].indexOf(raw.color) !== -1) GoSetup.color = raw.color;
-  } catch (e) { /* storage unavailable - defaults */ }
+  let raw = null;
+  try { raw = JSON.parse(localStorage.getItem(GO_SETUP_KEY) || "null"); } catch (e) { /* storage unavailable - defaults */ }
+  if (raw && GO_SIZES.indexOf(raw.size) !== -1) GoSetup.size = raw.size;
+  if (raw && ["b", "w", "random"].indexOf(raw.color) !== -1) GoSetup.color = raw.color;
+  else if (RandomStart.enabled()) GoSetup.color = "random";
+  if (raw && (raw.last === "b" || raw.last === "w")) GoSetup.last = raw.last;
 }
 
 function saveGoSetup() {
-  try { localStorage.setItem(GO_SETUP_KEY, JSON.stringify({ size: GoSetup.size, color: GoSetup.color })); } catch (e) {}
+  try { localStorage.setItem(GO_SETUP_KEY, JSON.stringify({ size: GoSetup.size, color: GoSetup.color, last: GoSetup.last })); } catch (e) {}
 }
 
-// The human's colour for a new game against the computer: Random draws one;
-// otherwise the shared "who starts: random" setting may still decide.
+// The human's colour for a new game against the computer: Random draws one,
+// Black or White stay as chosen (task 161: no silent change of colour).
 function pickHumanColorGo() {
-  if (GoSetup.color === "random") return { color: Math.random() < 0.5 ? "b" : "w", drawn: true };
-  return { color: RandomStart.choose(GoSetup.color, ["w", "b"]), drawn: RandomStart.enabled() };
+  if (GoSetup.color === "random") return { color: RandomStart.pick(["b", "w"]), drawn: true };
+  return { color: GoSetup.color, drawn: false };
+}
+
+// "You play White (second move)." above the board, with the reason when
+// chance decided and a note when the colour differs from the last game.
+function renderGoYou() {
+  const el = document.getElementById("go-you");
+  if (!el) return;
+  const vsAi = AppStateGo.mode === "offline-ai" && AppStateGo.board && document.getElementById("board-container") &&
+    !document.getElementById("board-container").classList.contains("hidden");
+  el.classList.toggle("hidden", !vsAi);
+  if (!vsAi) { el.textContent = ""; return; }
+  const parts = [];
+  if (AppStateGo.colorDrawn) parts.push(I18n.t("go_you_drawn"));
+  parts.push(I18n.t(AppStateGo.humanColor === "w" ? "go_you_white" : "go_you_black"));
+  if (AppStateGo.colorChanged) parts.push(I18n.t("go_you_changed"));
+  el.textContent = parts.join(" ");
 }
 
 function renderGoSetup() {
@@ -68,6 +89,7 @@ function renderGoSetup() {
   if (colorRow) colorRow.classList.toggle("hidden", AppStateGo.mode === "offline");
   const next = document.getElementById("go-setup-next");
   if (next) next.classList.toggle("hidden", !(AppStateGo.moveCount > 0 && !AppStateGo.gameOver));
+  renderGoYou();
 }
 
 function saveGoGame() {
@@ -84,6 +106,8 @@ function saveGoGame() {
     consecutivePasses: AppStateGo.consecutivePasses,
     moveCount: AppStateGo.moveCount,
     captures: AppStateGo.captures,
+    colorDrawn: AppStateGo.colorDrawn,
+    colorChanged: AppStateGo.colorChanged,
     boardHistory: AppStateGo.boardHistory,
     undoStack: AppStateGo.undoStack.slice(-50),
   });
@@ -197,6 +221,7 @@ function initGoApp() {
   const passBtn = document.getElementById("pass-button");
   const resignBtn = document.getElementById("resign-button");
   loadGoSetup();
+  if (typeof I18n.onChange === "function") I18n.onChange(renderGoYou);
 
   function setActiveModeButtonGo(mode) {
     if (!modeOffline || !modeOfflineAi) return;
@@ -225,7 +250,10 @@ function initGoApp() {
     });
   }
 
-  function startNewGame(size, mode, humanColor, level) {
+  function startNewGame(size, mode, humanColor, level, drawn) {
+    AppStateGo.colorDrawn = mode === "offline-ai" && !!drawn;
+    AppStateGo.colorChanged = mode === "offline-ai" && !!GoSetup.last && GoSetup.last !== humanColor;
+    if (mode === "offline-ai") { GoSetup.last = humanColor; saveGoSetup(); }
     AppStateGo.mode = mode;
     AppStateGo.size = size;
     AppStateGo.board = GoCore.createEmptyBoard(size);
@@ -264,7 +292,7 @@ function initGoApp() {
   function startVsComputerGo(level) {
     setActiveModeButtonGo("offline-ai");
     const pick = pickHumanColorGo();
-    startNewGame(GoSetup.size, "offline-ai", pick.color, level);
+    startNewGame(GoSetup.size, "offline-ai", pick.color, level, pick.drawn);
     const levelNames = { 1: "Easy", 2: "Medium", 3: "Hard" };
     const text = "You play " + colorNameGo(pick.color) + ", computer level: " + (levelNames[level] || level) + ".";
     setStatusGo("offline-go-status", pick.drawn ? text.replace(/^You play /, "Chance decided: you play ") : text);
@@ -279,11 +307,12 @@ function initGoApp() {
     setStatusGo("board-info", "");
   });
 
-  // "New game" (also the one next to the board) keeps the current mode:
-  // with the computer controls closed it is a 2-player game.
+  // "New game" (also the one next to the board) keeps the current mode: a
+  // 2-player game stays one until "Against the computer" is picked.
   startGoGameBtn.addEventListener("click", () => {
     const level = goLevelInline ? parseInt(goLevelInline.value, 10) : 2;
-    if (level === 0 || offlineAiControls.classList.contains("hidden")) {
+    const twoPlayerShown = AppStateGo.mode === "offline" && !document.getElementById("board-container").classList.contains("hidden");
+    if (level === 0 || (twoPlayerShown && offlineAiControls.classList.contains("hidden"))) {
       startTwoPlayerGo();
       return;
     }
@@ -357,12 +386,16 @@ function initGoApp() {
     AppStateGo.consecutivePasses = savedGame.consecutivePasses;
     AppStateGo.moveCount = savedGame.moveCount;
     AppStateGo.captures = savedGame.captures;
+    AppStateGo.colorDrawn = !!savedGame.colorDrawn;
+    AppStateGo.colorChanged = !!savedGame.colorChanged;
     AppStateGo.boardHistory = Array.isArray(savedGame.boardHistory) && savedGame.boardHistory.length
       ? savedGame.boardHistory
       : [GoCore.boardKey(AppStateGo.board)];
     AppStateGo.gameOver = false;
     AppStateGo.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
     setActiveModeButtonGo(AppStateGo.mode);
+    offlineAiControls.classList.toggle("hidden", AppStateGo.mode !== "offline-ai");
+    if (goLevelInline && AppStateGo.mode === "offline-ai") goLevelInline.value = String(AppStateGo.aiLevel || 2);
     setGameResultGo("");
     showBoardSectionGo();
     buildGoBoardDOM();
