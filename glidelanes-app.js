@@ -39,7 +39,7 @@ function setStatusAw(text) {
 
 function saveAwGame() {
   if (typeof GameStorage === "undefined" || !AppStateAw.puzzle) return;
-  GameStorage.save(AW_SAVE_KEY, { puzzle: AppStateAw.puzzle, present: AppStateAw.present, history: AppStateAw.history, moves: AppStateAw.moves, hinted: AppStateAw.hinted, pos: AppStateAw.pos });
+  GameStorage.save(AW_SAVE_KEY, { puzzle: AppStateAw.puzzle, present: AppStateAw.present, history: AppStateAw.history, moves: AppStateAw.moves, hinted: AppStateAw.hinted, pos: AppStateAw.pos, misses: AppStateAw.misses });
 }
 
 function glideAw() {
@@ -205,11 +205,8 @@ function onCellGlideAw(i) {
     if (ArrowsCore.cleared(r.pos)) { winAw(); return; }
     text = r.move.type === "leave" ? "The arrow leaves the field." : "The arrow glides forward up to the next arrow.";
   }
-  if (r.move.type !== "leave") {
-    AppStateAw.misses++;
-  } else if (r.move.type !== "blocked" && stuckAw()) {
-    text = "No arrow can move any more - undo some moves.";
-  }
+  if (missesModeAw(p) && r.move.type !== "leave") AppStateAw.misses++;
+  if (r.move.type !== "blocked" && stuckAw()) text = "No arrow can move any more - undo some moves.";
   setStatusAw(text);
   renderAw();
   saveAwGame();
