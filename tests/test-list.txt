@@ -117,3 +117,4 @@
 36 board-sweep.js
 42 interaction-sweep.js
 426 i18n-runtime-sweep.js
+17 dialog-texts.js

@@ -43,7 +43,13 @@ const CLICK_TARGETS = [
 
 async function sweep(browser, slug, mode) {
   const page = await browser.newPage({ viewport: VIEWPORT });
-  page.on("dialog", (d) => d.accept().catch(() => {}));
+  // Native dialogs (the resign confirm at the end, any alert) are checked
+  // like every other text; tests/dialog-texts.js covers them in all languages.
+  const dialogs = [];
+  page.on("dialog", (d) => {
+    dialogs.push(d.type() + ": " + d.message());
+    d.accept().catch(() => {});
+  });
   const errors = [];
   page.on("pageerror", (e) => errors.push("pageerror: " + String(e)));
   await page.addInitScript((lang) => {
@@ -104,6 +110,8 @@ async function sweep(browser, slug, mode) {
     return out;
   }).catch(() => []);
   await page.close();
+  // The type prefix is English by design, so only the message is checked.
+  dialogs.forEach((d) => texts.push(d.slice(d.indexOf(": ") + 2)));
 
   const english = new Set();
   texts.forEach((txt) => {

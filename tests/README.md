@@ -716,9 +716,24 @@ all parts back into one log in list order. The last line is exactly
   (`BASE_URL` env var, default `http://localhost:8000/`) and a browser.
   Plays every game in Russian, 2-player and vs-computer, with random
   clicks (`CLICKS`, default 60), then fails on any status line, result
-  popup, info line, screen-reader label or other visible text still
-  containing an English word. Takes a few minutes. `SWEEP_LANG=ar` runs
-  it in another non-Latin language (Arabic, Ukrainian, Japanese ...).
+  popup, info line, screen-reader label, native dialog (`alert`,
+  `confirm`, `prompt`) or other visible text still containing an English
+  word. Takes a few minutes. `SWEEP_LANG=ar` runs it in another non-Latin
+  language (Arabic, Ukrainian, Japanese ...).
+- `node tests/dialog-texts.js` - same prerequisites. Playwright closes
+  native dialogs silently, so no other sweep sees their text. This test
+  triggers every native dialog the site still has (resign and new-game
+  confirm in Chess and Backgammon, Lichess token prompt (the fallback
+  for old browsers, shown by blocking `lichess-auth.js`), stats reset,
+  Crate Pusher restart/new level, Shape Sort new game) in all eleven
+  languages except English, records type, language and text, dismisses
+  it, and fails when a text is the English one from `lang/en.js` or is
+  recognisably English (non-Latin scripts: any Latin word the language's
+  own texts do not use; Latin scripts: English words the language's own
+  texts do not use, names like Lichess excluded that way). It also fails
+  when an expected dialog no longer appears, and checks first that its
+  own rule catches the English texts. A new native dialog needs a new
+  scenario here.
 - `node tests/css-check.js` - needs a browser only (no server): loads
   `base.css` and every `css/<game>.css` in a real page and confirms each
   parses cleanly.
