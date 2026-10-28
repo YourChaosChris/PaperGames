@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v277",
+    date: "2026-10-28",
+    key: "release_v277",
+    text: "Blocked Path: when the computer begins, the Continue button is now as big as the other buttons."
+  },
+  {
     version: "v276",
     date: "2026-10-28",
     key: "release_v276",

@@ -692,6 +692,7 @@ const STRINGS = {
     release_v271: "Devilish Seven: new cards Wild Chain to choose (numbers up to 14, Link and Mirror, play to 250 or 500) and clearer messages for Bridge and Pass. Arrows is now Glide Lanes and counts misses instead of hearts; Fleet Battle is now Admiral's Grid, and Which One Is Different? is Find the Misfit.",
     release_v270: "Forest Village and Fairy-Tale Villains have new rules of their own; in Fairy-Tale Villains the heroes now turn up from the deck. A game saved under the old rules starts anew.",
     release_v276: "Fixes: Resign against the computer now always counts as your loss, also while the computer is still thinking. Undo right after the computer's first move lets it move again instead of stopping the game. Nim keeps rule, heaps and who starts after a reload. Backgammon for two asks about a double with buttons on the page. Bigger buttons and footer links; the report link now also names browser and screen size.",
+    release_v277: "Blocked Path: when the computer begins, the Continue button is now as big as the other buttons.",
     release_v268: "Zoo Toss has new rules of its own. A game saved under the old rules starts anew.",
     release_v267: "Devilish Seven is now Lucky Chain, with its own rules: numbers 1 to 10, a bonus for numbers in a row, six new special cards and targets of 60, 90 or 120 points. A game saved under the old rules starts anew.",
     release_v263: "The dice race game with blocks on the paths has a new name: “Blocked Path”. Rules, saved games and statistics stay the same.",
