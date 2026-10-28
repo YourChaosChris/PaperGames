@@ -245,7 +245,7 @@ function initUrApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateUr.gameOver) return;
-      const loser = AppStateUr.turn;
+      const loser = UiStatus.resigner(AppStateUr);
       const winner = UrCore.otherColor(loser);
       AppStateUr.gameOver = true;
       announceGameResultUr(resultTitleUr(winner), colorNameUr(winner) + " wins by resignation.");
@@ -458,6 +458,8 @@ function undoLastMove() {
   updateUrBoard();
   updateGameLabelsUr();
   setStatusUr("board-info", "Move undone. " + colorNameUr(AppStateUr.turn) + " to move. Roll the dice.");
+
+  maybeTriggerAiTurnUr();
 }
 
 function showBoardSectionUr() {

@@ -236,7 +236,7 @@ function initFanoronaApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateFanorona.gameOver) return;
-      const loser = AppStateFanorona.turn;
+      const loser = UiStatus.resigner(AppStateFanorona);
       const winner = FanoronaCore.otherColor(loser);
       AppStateFanorona.gameOver = true;
       AppStateFanorona.chain = null;
@@ -518,6 +518,11 @@ function undoLastMove() {
   updateFanoronaBoard();
   updateGameLabelsFanorona();
   setStatusFanorona("board-info", "Move undone.");
+
+  if (UiStatus.computerToMove(AppStateFanorona)) {
+    setStatusFanorona("board-info", "Computer thinking…");
+    setTimeout(aiMoveOfflineFanorona, AiPacing.delay(250));
+  }
 }
 
 function showBoardSectionFanorona() {

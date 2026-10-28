@@ -404,6 +404,10 @@ function undoLastMove() {
   updateFoxGeeseBoard();
   updateGameLabelsFoxGeese();
   setStatusFoxGeese("board-info", "Move undone.");
+  if (UiStatus.computerToMove(AppStateFoxGeese)) {
+    setStatusFoxGeese("board-info", "Computer thinking…");
+    setTimeout(aiMoveFoxGeese, AiPacing.delay(300));
+  }
 }
 
 function showBoardSectionFoxGeese() {

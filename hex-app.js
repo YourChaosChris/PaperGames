@@ -296,7 +296,7 @@ function initHexApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateHex.gameOver) return;
-      const loser = AppStateHex.turn;
+      const loser = UiStatus.resigner(AppStateHex);
       const winner = HexCore.otherPlayer(loser);
       AppStateHex.gameOver = true;
       announceGameResultHex(resultTitleHex(winner), colorNameHex(winner) + " wins by resignation.");
@@ -413,6 +413,11 @@ function undoLastMove() {
   updateHexBoard();
   updateGameLabelsHex();
   setStatusHex("board-info", swapOfferTextHex() || "Move undone. " + colorNameHex(AppStateHex.turn) + " to move.");
+  // Back at the start where the computer opens: it moves again.
+  if (UiStatus.computerToMove(AppStateHex)) {
+    setStatusHex("board-info", "Computer thinking…");
+    setTimeout(aiTurnHex, AiPacing.delay(350));
+  }
 }
 
 function showBoardSectionHex() {

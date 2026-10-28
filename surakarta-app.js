@@ -224,7 +224,7 @@ function initSurakartaApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateSurakarta.gameOver) return;
-      const loser = AppStateSurakarta.turn;
+      const loser = UiStatus.resigner(AppStateSurakarta);
       const winner = SurakartaCore.otherColor(loser);
       AppStateSurakarta.gameOver = true;
       announceGameResultSurakarta(resultTitleSurakarta(winner), colorNameSurakarta(winner) + " wins by resignation.");
@@ -379,6 +379,11 @@ function undoLastMove() {
   updateSurakartaBoard();
   updateGameLabelsSurakarta();
   setStatusSurakarta("board-info", "Move undone.");
+
+  if (UiStatus.computerToMove(AppStateSurakarta)) {
+    setStatusSurakarta("board-info", "Computer thinking…");
+    setTimeout(aiMoveOfflineSurakarta, AiPacing.delay(250));
+  }
 }
 
 function showBoardSectionSurakarta() {

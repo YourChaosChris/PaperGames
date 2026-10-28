@@ -96,6 +96,7 @@
 12 forestvillage-ui.js
 2 go-core.js
 10 go-ui.js
+15 vs-computer-fixes.js
 6 adventurebook-core.js
 1 new-games-order.js
 8 kids-games.js

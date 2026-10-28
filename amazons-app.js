@@ -224,7 +224,7 @@ function initAmazonsApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateAmazons.gameOver) return;
-      const loser = AppStateAmazons.turn;
+      const loser = UiStatus.resigner(AppStateAmazons);
       const winner = AmazonsCore.otherPlayer(loser);
       AppStateAmazons.gameOver = true;
       announceGameResultAmazons(resultTitleAmazons(winner), sideNameAmazons(winner) + " wins by resignation.");
@@ -413,6 +413,11 @@ function undoLastMove() {
   updateAmazonsBoard();
   updateGameLabelsAmazons();
   setStatusAmazons("board-info", "Move undone. " + sideNameAmazons(AppStateAmazons.turn) + " to move.");
+
+  if (UiStatus.computerToMove(AppStateAmazons)) {
+    setStatusAmazons("board-info", "Computer thinking…");
+    setTimeout(aiTurnAmazons, AiPacing.delay(350));
+  }
 }
 
 function showBoardSectionAmazons() {

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v276",
+    date: "2026-10-28",
+    key: "release_v276",
+    text: "Fixes: Resign against the computer now always counts as your loss, also while the computer is still thinking. Undo right after the computer's first move lets it move again instead of stopping the game. Nim keeps rule, heaps and who starts after a reload. Backgammon for two asks about a double with buttons on the page. Bigger buttons and footer links; the report link now also names browser and screen size."
+  },
+  {
     version: "v275",
     date: "2026-10-27",
     key: "release_v275",

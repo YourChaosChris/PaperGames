@@ -23,6 +23,7 @@ const AppStateNim = {
   state: null,
   pick: null,         // { heap, from } stones marked to take
   undoStack: [],
+  setup: null,        // { heaps, rule, first } as chosen in the menu for this game
   generation: 0       // guards a pending computer move after Undo or a new game
 };
 
@@ -45,7 +46,30 @@ function isComputerTurnNim() {
 function saveNim() {
   if (typeof GameStorage === "undefined" || !AppStateNim.state) return;
   if (AppStateNim.state.over) { GameStorage.clear(NIM_SAVE_KEY); return; }
-  GameStorage.save(NIM_SAVE_KEY, { mode: AppStateNim.mode, level: AppStateNim.level, computer: AppStateNim.computer, state: AppStateNim.state, undoStack: AppStateNim.undoStack.slice(-50) });
+  GameStorage.save(NIM_SAVE_KEY, { mode: AppStateNim.mode, level: AppStateNim.level, computer: AppStateNim.computer, setup: AppStateNim.setup, state: AppStateNim.state, undoStack: AppStateNim.undoStack.slice(-50) });
+}
+
+// The menu choices of a saved game. Saves before v276 have none: the rule
+// comes from the game, the heaps from its start position ("Random" when it
+// is no preset), and "Who starts" stays as the menu shows it.
+function setupFromSaveNim(saved) {
+  const s = saved.state;
+  const setup = saved.setup || {};
+  const preset = ["small", "classic"].find((k) => NimCore.PRESETS[k].join() === (s.start || []).join());
+  return {
+    heaps: ["small", "classic", "random"].includes(setup.heaps) ? setup.heaps : (preset || "random"),
+    rule: setup.rule === "misere" || setup.rule === "normal" ? setup.rule : (s.misere ? "misere" : "normal"),
+    first: ["me", "computer", "random"].includes(setup.first) ? setup.first : document.getElementById("nim-first").value
+  };
+}
+
+// Undo is there once the person has made a move: a snapshot in which it was
+// their turn. Before that (the computer began) Undo would only let the
+// computer choose its first move again.
+function canUndoNim() {
+  const stack = AppStateNim.undoStack;
+  if (AppStateNim.mode !== "ai") return stack.length > 0;
+  return stack.some((s) => s.turn !== AppStateNim.computer);
 }
 
 function validStateNim(s) {
@@ -73,6 +97,7 @@ function startNim() {
   let computerFirst = false;
   if (AppStateNim.mode === "ai") computerFirst = firstSel === "computer" || (firstSel === "random" && Math.random() < 0.5);
   AppStateNim.computer = computerFirst ? 0 : 1;
+  AppStateNim.setup = { heaps: heapsSel, rule: misere ? "misere" : "normal", first: firstSel };
   AppStateNim.state = NimCore.newGame({ heaps, misere, first: 0 });
   AppStateNim.pick = null;
   AppStateNim.undoStack = [];
@@ -149,7 +174,7 @@ function computerMoveNim() {
 // the computer's answer (the snapshots before the computer's moves are
 // skipped).
 function undoNim() {
-  if (!AppStateNim.undoStack.length) return;
+  if (!canUndoNim()) return;
   let prev = AppStateNim.undoStack.pop();
   if (AppStateNim.mode === "ai") {
     while (prev.turn === AppStateNim.computer && AppStateNim.undoStack.length) prev = AppStateNim.undoStack.pop();
@@ -229,7 +254,7 @@ function renderNim() {
   const take = document.getElementById("nim-take");
   take.disabled = !canTap || !AppStateNim.pick;
   const undo = document.getElementById("undo-btn");
-  if (undo) undo.disabled = !AppStateNim.undoStack.length;
+  if (undo) undo.disabled = !canUndoNim();
   // The start position: won or lost for whoever begins.
   const startWon = NimCore.isWinning(s.start, s.misere);
   document.getElementById("nim-start-info").textContent = tNim(startWon ? "nim_start_won" : "nim_start_lost", { x: NimCore.nimSum(s.start) }) +
@@ -263,7 +288,11 @@ function initNimApp() {
     AppStateNim.computer = saved.computer === 0 ? 0 : 1;
     AppStateNim.state = saved.state;
     AppStateNim.undoStack = Array.isArray(saved.undoStack) ? saved.undoStack : [];
+    AppStateNim.setup = setupFromSaveNim(saved);
     document.getElementById("nim-level").value = String(AppStateNim.level);
+    document.getElementById("nim-heaps").value = AppStateNim.setup.heaps;
+    document.getElementById("nim-rule").value = AppStateNim.setup.rule;
+    document.getElementById("nim-first").value = AppStateNim.setup.first;
     showBoardNim();
     afterMoveNim();
   }

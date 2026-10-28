@@ -309,7 +309,7 @@ function initShogiApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateShogi.gameOver) return;
-      const loser = AppStateShogi.turn;
+      const loser = UiStatus.resigner(AppStateShogi);
       const winner = ShogiCore.otherColor(loser);
       AppStateShogi.gameOver = true;
       announceGameResultShogi(resultTitleShogi(winner), colorNameShogi(winner) + " wins by resignation.");
@@ -582,6 +582,8 @@ function undoLastMove() {
   updateShogiHands();
   updateGameLabelsShogi();
   setStatusShogi("board-info", "Move undone. " + colorNameShogi(AppStateShogi.turn) + " to move.");
+
+  maybeTriggerAiTurnShogi();
 }
 
 function showBoardSectionShogi() {

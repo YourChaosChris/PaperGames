@@ -624,6 +624,11 @@ function undoLastMoveLudo() {
   updateLudoBoard();
   updateGameLabelsLudo();
   setStatusLudo("board-info", "Move undone. " + ludoColorName(currentColorLudo()) + "'s turn. Roll the die.");
+  // Back at the start where a computer begins: it rolls again.
+  if (AppStateLudo.mode === "vs-ai" && !AppStateLudo.gameOver && isAiColorLudo(currentColorLudo())) {
+    setStatusLudo("board-info", "Computer thinking…");
+    setTimeout(aiRollLudo, AiPacing.delay(300));
+  }
 }
 
 /*** Board construction & rendering ***/
@@ -1043,6 +1048,15 @@ function updateLudoAriaLabels() {
     const idx = parseInt(el.dataset.trackIndex, 10);
     let label = "Track square " + (idx + 1);
     if (LudoCore.isSafeAbs(idx, AppStateLudo.state)) label += ", safe square";
+    const count = el.querySelectorAll(".ludo-token").length;
+    if (count) label += ", " + count + " token" + (count > 1 ? "s" : "");
+    if (el.classList.contains("ludo-cell-movable")) label += ", movable";
+    I18n.setAria(el, label);
+  });
+  // The squares of a colour's own path into the finish (task 162: they had
+  // no label for screen readers).
+  boardEl.querySelectorAll(".ludo-cell-home-column").forEach((el) => {
+    let label = ludoColorName(el.dataset.color).split(" ")[0] + " finish square " + (parseInt(el.dataset.homeStep, 10) + 1);
     const count = el.querySelectorAll(".ludo-token").length;
     if (count) label += ", " + count + " token" + (count > 1 ? "s" : "");
     if (el.classList.contains("ludo-cell-movable")) label += ", movable";

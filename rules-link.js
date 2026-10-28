@@ -63,10 +63,11 @@
 
   // "Report an idea or bug": a plain mailto: link first in the footer of
   // every game page (below the game, so the board never moves). It only
-  // opens the player's own email program with game, version and language
-  // filled in - nothing is sent from here, no server, no tracking. The
-  // version is the running CACHE_NAME, asked from the service worker
-  // (sw.js answers "papergames-version"); without one it says "unknown".
+  // opens the player's own email program with game, version, language,
+  // browser and window size filled in (the device matters most for e-reader
+  // bugs) - nothing is sent from here, no server, no tracking. The version
+  // is the running CACHE_NAME, asked from the service worker (sw.js answers
+  // "papergames-version"), or read from sw.js; else it says "unknown".
   const REPORT_ADDRESS = "yourchaos@googlemail.com";
 
   function injectReportLink(slug) {
@@ -87,14 +88,27 @@
       link.textContent = label;
       const subject = "PaperGames: " + label + " (" + slug + ", " + version + ")";
       const body = t("report_mail_prompt", "What happened? Please describe briefly what you did and what you saw:") +
-        "\n\n\n\n---\nGame: " + game + " (" + slug + ")\nVersion: " + version + "\nLanguage: " + lang + "\n";
+        "\n\n\n\n---\nGame: " + game + " (" + slug + ")\nVersion: " + version + "\nLanguage: " + lang +
+        "\nBrowser: " + (navigator.userAgent || "unknown") + "\nScreen: " + window.innerWidth + " x " + window.innerHeight + "\n";
       link.href = "mailto:" + REPORT_ADDRESS + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
     }
     update();
     footer.insertBefore(link, footer.firstChild);
     if (window.I18n && typeof I18n.onChange === "function") I18n.onChange(update);
 
+    // No service worker controls the page (first visit while the app shell
+    // is still being stored, or a browser without service workers): the
+    // version is read once from sw.js on this same site instead.
+    function versionFromFile() {
+      if (version !== "unknown" || typeof fetch !== "function") return;
+      fetch("sw.js", { cache: "no-store" }).then((r) => (r.ok ? r.text() : "")).then((src) => {
+        const m = /const CACHE_NAME = "([^"]+)"/.exec(src || "");
+        if (m && version === "unknown") { version = m[1]; update(); }
+      }).catch(() => { /* stays "unknown" */ });
+    }
+    window.addEventListener("resize", update);
     const sw = navigator.serviceWorker;
+    if (!sw || !sw.controller) versionFromFile();
     if (!sw) return;
     sw.addEventListener("message", (event) => {
       const data = event.data;

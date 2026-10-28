@@ -214,7 +214,7 @@ function initHalmaApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateHalma.gameOver) return;
-      const loser = AppStateHalma.turn;
+      const loser = UiStatus.resigner(AppStateHalma);
       const winner = HalmaCore.otherPlayer(loser);
       AppStateHalma.gameOver = true;
       announceGameResultHalma(resultTitleHalma(winner), sideNameHalma(winner) + " wins by resignation.");
@@ -361,6 +361,11 @@ function undoLastMove() {
   updateHalmaBoard();
   updateGameLabelsHalma();
   setStatusHalma("board-info", "Move undone. " + sideNameHalma(AppStateHalma.turn) + " to move.");
+
+  if (UiStatus.computerToMove(AppStateHalma)) {
+    setStatusHalma("board-info", "Computer thinking…");
+    setTimeout(aiTurnHalma, AiPacing.delay(350));
+  }
 }
 
 function showBoardSectionHalma() {

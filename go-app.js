@@ -362,7 +362,7 @@ function initGoApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateGo.gameOver) return;
-      const loser = AppStateGo.turn;
+      const loser = UiStatus.resigner(AppStateGo);
       const winner = loser === "b" ? "w" : "b";
       AppStateGo.gameOver = true;
       announceGameResultGo(resultTitleGo(winner), colorNameGo(winner) + " wins by resignation.");
@@ -512,6 +512,10 @@ function undoLastMove() {
   updateGoBoard();
   updateGameLabelsGo();
   setStatusGo("board-info", "Move undone.");
+  if (UiStatus.computerToMove(AppStateGo)) {
+    setStatusGo("board-info", "Computer thinking…");
+    setTimeout(aiMoveOfflineGo, AiPacing.delay(10));
+  }
 }
 
 function showBoardSectionGo() {

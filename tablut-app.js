@@ -212,7 +212,7 @@ function initTablutApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateTablut.gameOver) return;
-      const loser = AppStateTablut.turn;
+      const loser = UiStatus.resigner(AppStateTablut);
       const winner = TablutCore.otherPlayer(loser);
       AppStateTablut.gameOver = true;
       announceGameResultTablut(resultTitleTablut(winner), sideNameTablut(winner) + " win by resignation.");
@@ -367,6 +367,11 @@ function undoLastMove() {
   updateTablutBoard();
   updateGameLabelsTablut();
   setStatusTablut("board-info", "Move undone. " + sideNameTablut(AppStateTablut.turn) + " to move.");
+
+  if (UiStatus.computerToMove(AppStateTablut)) {
+    setStatusTablut("board-info", "Computer thinking…");
+    setTimeout(aiTurnTablut, AiPacing.delay(350));
+  }
 }
 
 function showBoardSectionTablut() {

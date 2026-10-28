@@ -44,7 +44,7 @@ async function startBeginner(page) {
   await page.waitForTimeout(1200);
   c = await clock(page);
   check("interval with Zeit anzeigen", c.interval);
-  check("clock shown: " + c.text, !c.hidden && /^⏱ \d+s$/.test(c.text));
+  check("clock shown: " + c.text, !c.hidden && /^⏱ \d+ s$/.test(c.text));
   await page.uncheck("#minesweeper-show-time");
   c = await clock(page);
   check("interval stops when switched off", !c.interval && c.hidden);

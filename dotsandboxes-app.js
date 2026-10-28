@@ -346,6 +346,8 @@ function undoLastMove() {
   updateDotsAndBoxesBoard();
   updateGameLabelsDotsAndBoxes();
   setStatusDotsAndBoxes("board-info", "Move undone. " + playerNameDotsAndBoxes(AppStateDotsAndBoxes.state.turn) + " to move.");
+  // Back at the start where the computer opens: it moves again.
+  if (!AppStateDotsAndBoxes.gameOver) maybeTriggerAiTurnDotsAndBoxes();
 }
 
 function showBoardSectionDotsAndBoxes() {

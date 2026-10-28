@@ -86,7 +86,8 @@ let einkResizeTimeoutId = null;
     },
     login: function () {
       return new Promise(function (resolve, reject) {
-        var msg = "Please enter your Lichess API token with the permission 'board:play'.\n" +
+        var msg = window.I18n ? I18n.t("lichess_token_prompt") :
+                  "Please enter your Lichess API token with the permission 'board:play'.\n" +
                   "You can create it on lichess.org under Settings → API access tokens.";
         var token = window.prompt(msg, "");
         if (token && token.trim()) {
@@ -453,7 +454,7 @@ loginBtn.addEventListener("click", async () => {
         window.location.href = "https://lichess.org/login";
       }
     } catch (e) {
-      alert("Login failed: " + e.message);
+      setStatus("online-status", "Login failed: " + e.message);
     }
   });
 
@@ -701,7 +702,7 @@ aiLevelInline.addEventListener("change", () => {
 
   startSeekBtn.addEventListener("click", async () => {
     if (!window.LichessAuth || !window.LichessAuth.getAccessToken || !window.LichessAuth.getAccessToken()) {
-      alert("Please connect your online account first.");
+      setStatus("online-status", "Please connect your online account first.");
       return;
     }
     AppState.gameOver = false;
@@ -745,7 +746,7 @@ aiLevelInline.addEventListener("change", () => {
   if (startAiChallengeBtn) {
     startAiChallengeBtn.addEventListener("click", async () => {
       if (!window.LichessAuth || !window.LichessAuth.getAccessToken || !window.LichessAuth.getAccessToken()) {
-        alert("Please connect your online account first.");
+        setStatus("online-status", "Please connect your online account first.");
         return;
       }
       AppState.gameOver = false;
@@ -767,7 +768,7 @@ aiLevelInline.addEventListener("change", () => {
 
   attachBtn.addEventListener("click", async () => {
     if (!window.LichessAuth || !window.LichessAuth.getAccessToken || !window.LichessAuth.getAccessToken()) {
-      alert("Please connect your online account first.");
+      setStatus("online-status", "Please connect your online account first.");
       return;
     }
     try {

@@ -588,6 +588,11 @@ function undoLastMove() {
   updateKonaneBoard();
   updateGameLabelsKonane();
   setStatusKonane("board-info", "Move undone.");
+  // Back at the start where the computer opens: it moves again.
+  if (AppStateKonane.mode === "offline-ai" && !AppStateKonane.gameOver && !isHumanTurnKonane()) {
+    setStatusKonane("board-info", "Computer thinking…");
+    setTimeout(aiActKonane, AiPacing.delay(250));
+  }
 }
 
 function currentActorForSnapshotKonane(snapshot) {

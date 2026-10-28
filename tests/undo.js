@@ -58,6 +58,9 @@ for (const game of games) {
     if (!/undoStack/.test(undo[0])) failures.push(`${game}: undo handler does not restore snapshots`);
     if (game !== "chess" && !/while\s*\(/.test(undo[0])) failures.push(`${game}: computer mode must undo through the computer reply`);
     if (/gameOver\)\s*return|\.gameOver\s*\|\|\s*!/.test(undo[0])) failures.push(`${game}: undo is blocked after game end`);
+    // Task 162: when Undo goes back to a position where the computer moves
+    // (it opened the game), the computer's move is scheduled again.
+    if (game !== "chess" && !/UiStatus\.computerToMove\(|maybeTrigger\w*\(|afterMove\w*\(|afterAction\w*\(|scheduleAi\w*\(|setTimeout\(\s*\w*[Aa]i\w*/.test(undo[0])) failures.push(`${game}: Undo does not schedule the computer's move again`);
   }
   if (!/undoStack\.push\(/.test(app)) failures.push(`${game}: no pre-move snapshots are recorded`);
   if (!/GameStorage\.save\([\s\S]{0,900}undoStack: [^,]+\.slice\(-50\)/.test(app)) failures.push(`${game}: saved games do not include the bounded undo history`);

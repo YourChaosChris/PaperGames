@@ -203,7 +203,7 @@ function initMancalaApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateMancala.gameOver) return;
-      const loser = AppStateMancala.turn;
+      const loser = UiStatus.resigner(AppStateMancala);
       const winner = MancalaCore.otherPlayer(loser);
       AppStateMancala.gameOver = true;
       announceGameResultMancala(resultTitleMancala(winner), sideNameMancala(winner) + " wins by resignation.");
@@ -349,6 +349,8 @@ function undoLastMove() {
   updateMancalaBoard();
   updateGameLabelsMancala();
   setStatusMancala("board-info", "Move undone. " + sideNameMancala(AppStateMancala.turn) + " to move.");
+
+  maybeTriggerAiTurnMancala();
 }
 
 function showBoardSectionMancala() {

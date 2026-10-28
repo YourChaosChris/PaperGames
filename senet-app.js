@@ -219,7 +219,7 @@ function initSenetApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateSenet.gameOver) return;
-      const loser = AppStateSenet.turn;
+      const loser = UiStatus.resigner(AppStateSenet);
       const winner = SenetCore.otherPlayer(loser);
       AppStateSenet.gameOver = true;
       announceGameResultSenet(resultTitleSenet(winner), colorNameSenet(winner) + " wins by resignation.");
@@ -442,6 +442,8 @@ function undoLastMove() {
   updateSenetBoard();
   updateGameLabelsSenet();
   setStatusSenet("board-info", "Move undone. " + colorNameSenet(AppStateSenet.turn) + " to move. Throw the sticks.");
+
+  maybeTriggerAiTurnSenet();
 }
 
 function showBoardSectionSenet() {

@@ -217,7 +217,7 @@ function initCheckersApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateCheckers.gameOver) return;
-      const loser = AppStateCheckers.turn;
+      const loser = UiStatus.resigner(AppStateCheckers);
       const winner = CheckersCore.otherColor(loser);
       AppStateCheckers.gameOver = true;
       announceGameResultCheckers(resultTitleCheckers(winner), colorNameCheckers(winner) + " wins by resignation.");
@@ -465,6 +465,11 @@ function undoLastMove() {
   updateCheckersBoard();
   updateGameLabelsCheckers();
   setStatusCheckers("board-info", "Move undone.");
+
+  if (UiStatus.computerToMove(AppStateCheckers)) {
+    setStatusCheckers("board-info", "Computer thinking…");
+    setTimeout(aiMoveOfflineCheckers, AiPacing.delay(10));
+  }
 }
 
 function showBoardSectionCheckers() {

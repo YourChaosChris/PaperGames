@@ -207,7 +207,7 @@ function initReversiApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateReversi.gameOver) return;
-      const loser = AppStateReversi.turn;
+      const loser = UiStatus.resigner(AppStateReversi);
       const winner = ReversiCore.otherColor(loser);
       AppStateReversi.gameOver = true;
       announceGameResultReversi(resultTitleReversi(winner), colorNameReversi(winner) + " wins by resignation.");
@@ -371,6 +371,8 @@ function undoLastMove() {
   updateReversiBoard();
   updateGameLabelsReversi();
   setStatusReversi("board-info", "Move undone. " + colorNameReversi(AppStateReversi.turn) + " to move.");
+
+  maybeTriggerAiTurnReversi();
 }
 
 function showBoardSectionReversi() {

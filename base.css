@@ -196,6 +196,30 @@ button.small {
   min-height: 44px;
 }
 
+/* The action buttons under or beside a game board (roll, deal, build,
+   lay out, discard ...) are at least 44 px high as well (task 162); a
+   plain primary/secondary button is about 37 px. Board cells that are
+   buttons are not matched. */
+.dg-actions button,
+.bj-buttons button,
+.fv-actions button,
+.ur-dice-area > button,
+.bg-double-offer button,
+#nim-take,
+#romme-meld-button,
+#romme-discard-button,
+#romme-choice-low,
+#romme-choice-high,
+#bl-roll,
+#ludo-roll-button,
+#sl-roll,
+#sl-next,
+#mt-undo,
+#mt-reset,
+#mt-hint {
+  min-height: 44px;
+}
+
 button:disabled {
   opacity: 0.5;
   cursor: default;
@@ -1254,8 +1278,13 @@ margin: var(--space-2) 0;
   margin-right: 4px;
 }
 
+/* A name too long for the field ends in "…" instead of being cut off. */
 .game-page .game-select {
   max-width: 150px;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .game-page #rules-link-button,
@@ -1386,19 +1415,21 @@ margin: var(--space-2) 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-margin: 2rem 0 var(--space-4);
-  padding-top: var(--space-4);
+  align-items: center;
+  margin: 1rem 0 var(--space-4);
+  padding-top: var(--space-3);
   border-top: 1px solid var(--border);
 }
 
 /* Flexbox `gap` fallback: margin-based spacing instead, since some E-Ink browsers (Tolino confirmed) don't support `gap` on a flex container and render items with zero space between them. */
+/* No gap under the rows: every link is a 44 px tap area of its own. */
 .site-footer > * {
-  margin: 0 var(--space-4) var(--space-1) 0;
+  margin: 0 var(--space-2) 0 0;
 }
 
 [dir="rtl"] .site-footer > * {
   margin-right: 0;
-  margin-left: var(--space-4);
+  margin-left: var(--space-2);
 }
 
 .site-footer > *:last-child {
@@ -1409,10 +1440,21 @@ margin: 2rem 0 var(--space-4);
   margin-left: 0;
 }
 
+/* Footer links are real tap areas (task 162): a 15 px line was hard to hit
+   on a touch e-reader. At least 32 px where ten links wrap onto several
+   rows (home page, which must stay one 600 x 800 screen); 44 px on game
+   pages, where only three stand side by side. */
 .site-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
   font-size: 0.8rem;
   color: var(--muted);
   text-decoration: none;
+}
+
+.game-page .site-footer a {
+  min-height: 44px;
 }
 
 .site-footer a:hover,
@@ -2177,9 +2219,10 @@ max-width: 540px;
   margin-right: 0;
 }
 
+/* 44 px keys (task 162); on 360 px the row of nine wraps onto two rows. */
 .sudoku-numpad-btn {
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 44px;
+  height: 44px;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   background: #fff;
@@ -3601,7 +3644,11 @@ button.concan-meld {
   font-weight: 700;
   font-size: 0.85rem;
   margin-top: var(--space-1);
-  overflow-wrap: anywhere;
+  /* Long words ("Strategiespiele") break at a syllable with a hyphen (the
+     page has lang set), not anywhere; break-word only as a last resort. */
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  overflow-wrap: break-word;
 }
 
 .category-tile-count {

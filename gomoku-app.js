@@ -201,7 +201,7 @@ function initGomokuApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateGomoku.gameOver) return;
-      const loser = AppStateGomoku.turn;
+      const loser = UiStatus.resigner(AppStateGomoku);
       const winner = GomokuCore.otherColor(loser);
       AppStateGomoku.gameOver = true;
       announceGameResultGomoku(resultTitleGomoku(winner), colorNameGomoku(winner) + " wins by resignation.");
@@ -337,6 +337,8 @@ function undoLastMove() {
   updateGomokuBoard();
   updateGameLabelsGomoku();
   setStatusGomoku("board-info", "Move undone. " + colorNameGomoku(AppStateGomoku.turn) + " to move.");
+
+  maybeTriggerAiTurnGomoku();
 }
 
 function showBoardSectionGomoku() {

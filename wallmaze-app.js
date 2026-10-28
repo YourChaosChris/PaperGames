@@ -240,7 +240,7 @@ function initWallMazeApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateWallMaze.gameOver) return;
-      const loser = AppStateWallMaze.turn;
+      const loser = UiStatus.resigner(AppStateWallMaze);
       const winner = WallMazeCore.otherPlayer(loser);
       AppStateWallMaze.gameOver = true;
       announceGameResultWallMaze(resultTitleWallMaze(winner), sideNameWallMaze(winner) + " wins by resignation.");
@@ -452,6 +452,11 @@ function undoLastMove() {
   updateWallMazeBoard();
   updateGameLabelsWallMaze();
   setStatusWallMaze("board-info", "Move undone. " + sideNameWallMaze(AppStateWallMaze.turn) + " to move.");
+
+  if (UiStatus.computerToMove(AppStateWallMaze)) {
+    setStatusWallMaze("board-info", "Computer thinking…");
+    setTimeout(aiTurnWallMaze, AiPacing.delay(350));
+  }
 }
 
 function showBoardSectionWallMaze() {

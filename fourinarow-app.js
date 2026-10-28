@@ -198,7 +198,7 @@ function initFourInARowApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateFourInARow.gameOver) return;
-      const loser = AppStateFourInARow.turn;
+      const loser = UiStatus.resigner(AppStateFourInARow);
       const winner = FourInARowCore.otherColor(loser);
       AppStateFourInARow.gameOver = true;
       announceGameResultFourInARow(resultTitleFourInARow(winner), colorNameFourInARow(winner) + " wins by resignation.");
@@ -335,6 +335,8 @@ function undoLastMove() {
   updateFourInARowBoard();
   updateGameLabelsFourInARow();
   setStatusFourInARow("board-info", "Move undone. " + colorNameFourInARow(AppStateFourInARow.turn) + " to move.");
+
+  maybeTriggerAiTurnFourInARow();
 }
 
 function showBoardSectionFourInARow() {

@@ -259,7 +259,7 @@ function initMorrisApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateMorris.gameOver) return;
-      const loser = AppStateMorris.turn;
+      const loser = UiStatus.resigner(AppStateMorris);
       const winner = MorrisCore.otherColor(loser);
       AppStateMorris.gameOver = true;
       announceGameResultMorris(resultTitleMorris(winner), colorNameMorris(winner) + " wins by resignation.");
@@ -479,6 +479,11 @@ function undoLastMove() {
   updateMorrisBoard();
   updateGameLabelsMorris();
   setStatusMorris("board-info", "Move undone.");
+
+  if (UiStatus.computerToMove(AppStateMorris)) {
+    setStatusMorris("board-info", "Computer thinking…");
+    setTimeout(aiMoveOfflineMorris, AiPacing.delay(300));
+  }
 }
 
 function showBoardSectionMorris() {

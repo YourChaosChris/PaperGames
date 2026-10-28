@@ -415,6 +415,9 @@ STRINGS.de = {
     backgammon_tray_bar: "Bar",
     backgammon_tray_off: "Raus",
     backgammon_double_button: "Verdoppeln",
+    backgammon_double_ask: "{color}: Verdopplung auf {n} annehmen?",
+    backgammon_double_accept: "Annehmen",
+    backgammon_double_decline: "Ablehnen (Partie verloren)",
 
 
 
@@ -586,7 +589,7 @@ STRINGS.de = {
     privacy_paypal_heading: "5. PayPal-Spendenlink",
     privacy_paypal_body: "Auf der Seite „Über“ bieten wir einen freiwilligen Spendenlink zu PayPal an. Beim bloßen Besuch dieser Seite findet keine Datenübertragung an PayPal statt. Erst wenn Sie aktiv auf den Link oder den QR-Code klicken und die Seite paypal.com aufrufen, verarbeitet PayPal (PayPal (Europe) S.à r.l. et Cie, S.C.A., 22-24 Boulevard Royal, L-2449 Luxemburg) Ihre Daten in eigener Verantwortung und gemäß der Datenschutzerklärung von PayPal: https://www.paypal.com/de/webapps/mpp/ua/privacy-full. Der QR-Code selbst wird lokal von dieser Website erzeugt und lädt keine Inhalte von einem Drittserver nach.",
     privacy_no_tracking_heading: "6. Keine Analyse, keine Werbung, keine Weitergabe",
-    privacy_no_tracking_body: "Diese Website setzt keine Analyse- oder Tracking-Tools, kein Werbenetzwerk und keine Web-Fonts oder sonstigen Drittanbieter-Einbindungen ein, die eine Datenübertragung an Dritte auslösen würden – abgesehen vom technisch notwendigen Hosting über GitHub Pages und den oben beschriebenen, von Ihnen ausdrücklich ausgelösten Verbindungen zu Lichess bzw. PayPal. Es findet keine Weitergabe Ihrer Daten an Dritte zu Werbe- oder Analysezwecken statt. Der Link „Idee oder Fehler melden“ in den Spielen öffnet nur Ihr eigenes E-Mail-Programm mit einer vorbereiteten Nachricht (Spiel, Version, Sprache); gesendet wird erst, wenn Sie die E-Mail selbst abschicken. E-Mails an uns verwenden wir nur, um Ihnen zu antworten und die Spiele zu verbessern.",
+    privacy_no_tracking_body: "Diese Website setzt keine Analyse- oder Tracking-Tools, kein Werbenetzwerk und keine Web-Fonts oder sonstigen Drittanbieter-Einbindungen ein, die eine Datenübertragung an Dritte auslösen würden – abgesehen vom technisch notwendigen Hosting über GitHub Pages und den oben beschriebenen, von Ihnen ausdrücklich ausgelösten Verbindungen zu Lichess bzw. PayPal. Es findet keine Weitergabe Ihrer Daten an Dritte zu Werbe- oder Analysezwecken statt. Der Link „Idee oder Fehler melden“ in den Spielen öffnet nur Ihr eigenes E-Mail-Programm mit einer vorbereiteten Nachricht (Spiel, Version, Sprache, Browser und Fenstergröße); gesendet wird erst, wenn Sie die E-Mail selbst abschicken. E-Mails an uns verwenden wir nur, um Ihnen zu antworten und die Spiele zu verbessern.",
     privacy_rights_heading: "7. Ihre Rechte",
     privacy_rights_body: "Soweit personenbezogene Daten verarbeitet werden, haben Sie im Rahmen der gesetzlichen Vorgaben das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16 DSGVO), Löschung (Art. 17 DSGVO), Einschränkung der Verarbeitung (Art. 18 DSGVO), Datenübertragbarkeit (Art. 20 DSGVO) sowie Widerspruch gegen die Verarbeitung (Art. 21 DSGVO). Bitte wenden Sie sich hierzu an die oben genannte E-Mail-Adresse.",
     privacy_complaint_heading: "8. Beschwerderecht",
@@ -676,6 +679,7 @@ STRINGS.de = {
     release_v275: "Go: Über dem Brett steht jetzt immer, welche Farbe du spielst und warum. Schwarz oder Weiß bleibt so, wie du es gewählt hast, auch nach einem neuen Spiel oder Neuladen. Behoben: Nach dem Neuladen eines Spiels gegen den Computer startete „Neues Spiel“ ein Spiel für zwei Personen.",
     release_v271: "Teuflische Sieben: neue Karten Wilde Kette zur Wahl (Zahlen bis 14, Kettenglied und Spiegel, Ziel 250 oder 500) und klarere Meldungen zu Brücke und Weitergabe. Pfeile heißt jetzt Freie Bahn und zählt Fehlversuche statt Herzen.",
     release_v270: "Waldsiedlung und Märchen-Schurken haben eigene neue Regeln; bei Märchen-Schurken tauchen die Helden jetzt aus dem Stapel auf. Ein Spielstand nach den alten Regeln beginnt neu.",
+    release_v276: "Behoben: „Aufgeben“ gegen den Computer zählt jetzt immer als deine Niederlage, auch während der Computer noch nachdenkt. „Rückgängig“ direkt nach dem ersten Computerzug lässt den Computer neu ziehen, statt das Spiel anzuhalten. Nim behält Regel, Haufen und Beginner nach dem Neuladen. Backgammon zu zweit fragt beim Verdoppeln mit Knöpfen auf der Seite. Größere Knöpfe und Fußzeilenlinks; der Melde-Link nennt jetzt auch Browser und Bildschirmgröße.",
     release_v268: "Zoowurf hat neue, eigene Regeln. Eine nach den alten Regeln gespeicherte Partie beginnt neu.",
     release_v267: "Teuflische Sieben heißt jetzt Glückskette und hat eigene Regeln: Zahlen 1 bis 10, ein Bonus für Zahlen in Folge, sechs neue Sonderkarten und Ziele von 60, 90 oder 120 Punkten. Eine nach den alten Regeln gespeicherte Partie beginnt neu.",
     release_v263: "Das Würfel-Laufspiel mit Sperrklötzen auf den Wegen hat einen neuen Namen: „Wegesperre“. Regeln, Spielstände und Statistik bleiben gleich.",
@@ -4866,6 +4870,10 @@ STRINGS.de = {
     msg_t_pegs_left: "Noch {n} Stifte.",
     msg_t_daily: "Tägliche Herausforderung ({n}).",
     msg_t_error: "Fehler: {r}",
+    msg_t_login_failed: "Anmeldung fehlgeschlagen: {r}",
+    msg_connect_online_first: "Bitte verbinde zuerst dein Online-Konto.",
+    lichess_token_prompt: "Bitte gib dein Lichess-API-Token mit der Berechtigung 'board:play' ein.\nDu kannst es auf lichess.org unter Einstellungen → API-Zugangs-Token erstellen.",
+    msg_t_ms_timer: "⏱ {n} s",
 
     // Game-specific status/result messages and info lines (I18n.msg)
     msg_no_further_move: "In diesem Zug ist kein weiterer gültiger Zug möglich.",
@@ -5164,6 +5172,7 @@ STRINGS.de = {
     msg_t_aria_square: "Feld {n}",
     msg_t_aria_point: "Punkt {n}",
     msg_t_aria_track: "Laufbahnfeld {n}",
+    msg_t_aria_finish_square: "{p}: Zielfeld {n}",
     msg_t_aria_path: "Wegfeld {n}",
     msg_t_aria_free_cell: "Freie Zelle {n}",
     msg_t_aria_foundation: "Ablagestapel {r}",

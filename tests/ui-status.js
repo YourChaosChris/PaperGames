@@ -67,6 +67,43 @@ for (const file of fs.readdirSync(ROOT).filter((n) => n.endsWith("-app.js") || n
 for (const [game, exception] of Object.entries(exceptions)) {
   if (!exception.reason.trim()) failures.push(`${game}: exception needs a reason`);
 }
+// Task 162: the shared helpers themselves, run in a sandbox.
+{
+  const vm = require("vm");
+  const sandbox = { I18n: { t: (k) => ({ ui_status_your_turn: "Your turn.", ui_status_computer_turn: "The computer's turn." })[k] || k } };
+  vm.runInNewContext(central + "\nthis.UiStatus = UiStatus;", sandbox);
+  const U = sandbox.UiStatus;
+  const ai = (turn, extra) => Object.assign({ mode: "offline-ai", humanColor: "b", turn, gameOver: false }, extra || {});
+  // "Player 2 played. Player 1 to move." no longer becomes "Your turn. Player 1 to move."
+  const cases = [
+    [U.rewrite("Player 2 played. Player 1 to move.", { mode: "offline-ai", humanPlayer: "1", state: { turn: "1" } }), "Your turn."],
+    [U.rewrite("Black passed. White to move.", ai("w", { humanColor: "w" })), "Your turn."],
+    [U.rewrite("Move undone. Black to move. Throw the sticks.", ai("b")), "Your turn. Throw the sticks."],
+    [U.rewrite("White captured 2 stones. Black's turn.", ai("b")), "Your turn."],
+    [U.rewrite("Computer played. Your move.", ai("b")), "Your turn."]
+  ];
+  cases.forEach(([got, want], i) => { if (got !== want) failures.push(`rewrite case ${i + 1}: "${got}" instead of "${want}"`); });
+  // Resigning against the computer: always the human, also while the computer is to move.
+  if (U.resigner(ai("w")) !== "b") failures.push("resigner: the computer's turn must still make the human the loser");
+  if (U.resigner(ai("b")) !== "b") failures.push("resigner: the human's turn makes the human the loser");
+  if (U.resigner({ mode: "offline-ai", humanSide: "defender", turn: "attacker" }) !== "defender") failures.push("resigner: humanSide is the human");
+  if (U.resigner({ mode: "offline", humanColor: "b", turn: "w" }) !== "w") failures.push("resigner: two players - whoever is to move");
+  // After Undo: the computer has to move again when it is its turn.
+  if (!U.computerToMove(ai("w"))) failures.push("computerToMove: computer's turn not seen");
+  if (U.computerToMove(ai("b"))) failures.push("computerToMove: human's turn seen as computer's");
+  if (U.computerToMove(ai("w", { gameOver: true }))) failures.push("computerToMove: game over");
+  if (U.computerToMove({ mode: "offline", humanColor: "b", turn: "w" })) failures.push("computerToMove: two players");
+}
+// Task 162: every game with "Resign" against the computer takes the loser
+// from the shared helper, not from whoever is to move.
+const resignGames = ["sternhalma", "xiangqi", "marblepush", "reversi", "shogi", "ur", "mancala", "morris", "wallmaze", "go", "gomoku", "senet", "tablut", "surakarta", "backgammon", "hnefatafl", "checkers", "fanorona", "halma", "fourinarow", "amazons", "hex"];
+for (const game of resignGames) {
+  const src = fs.readFileSync(path.join(ROOT, `${game}-app.js`), "utf8");
+  if (!/const loser = UiStatus\.resigner\(AppState\w+\);/.test(src)) failures.push(`${game}-app.js: Resign must use UiStatus.resigner`);
+}
+for (const file of fs.readdirSync(ROOT).filter((n) => n.endsWith("-app.js"))) {
+  if (/const loser = AppState\w+\.turn;/.test(fs.readFileSync(path.join(ROOT, file), "utf8"))) failures.push(`${file}: Resign takes the loser from the turn`);
+}
 if (failures.length) {
   console.error("UI status checks failed:\n- " + failures.join("\n- "));
   process.exit(1);

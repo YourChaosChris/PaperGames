@@ -338,7 +338,7 @@ function initXiangqiApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateXiangqi.gameOver) return;
-      const loser = AppStateXiangqi.turn;
+      const loser = UiStatus.resigner(AppStateXiangqi);
       const winner = XiangqiCore.otherColor(loser);
       AppStateXiangqi.gameOver = true;
       announceGameResultXq(resultTitleXq(winner), colorNameXq(winner) + " wins by resignation.");
@@ -551,6 +551,11 @@ function undoLastMove() {
   updateXiangqiBoard();
   updateGameLabelsXq();
   setStatusXq("board-info", "Move undone.");
+
+  if (UiStatus.computerToMove(AppStateXiangqi)) {
+    setStatusXq("board-info", "Computer thinking…");
+    setTimeout(aiMoveOfflineXq, AiPacing.delay(300));
+  }
 }
 
 function showBoardSectionXq() {

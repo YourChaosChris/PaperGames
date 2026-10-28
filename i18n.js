@@ -427,6 +427,9 @@ const STRINGS = {
     backgammon_tray_bar: "Bar",
     backgammon_tray_off: "Off",
     backgammon_double_button: "Double",
+    backgammon_double_ask: "{color}: accept the double to {n}?",
+    backgammon_double_accept: "Accept",
+    backgammon_double_decline: "Decline (game lost)",
 
 
 
@@ -598,7 +601,7 @@ const STRINGS = {
     privacy_paypal_heading: "5. PayPal donation link",
     privacy_paypal_body: "The About page offers an optional donation link to PayPal. Simply visiting that page does not transmit any data to PayPal. Only if you actively click the link or QR code and open paypal.com does PayPal (PayPal (Europe) S.à r.l. et Cie, S.C.A., 22-24 Boulevard Royal, L-2449 Luxembourg) process your data under its own responsibility and in accordance with PayPal's privacy policy: https://www.paypal.com/webapps/mpp/ua/privacy-full. The QR code itself is generated locally by this website and does not load any content from a third-party server.",
     privacy_no_tracking_heading: "6. No analytics, no advertising, no data sharing",
-    privacy_no_tracking_body: "This website uses no analytics or tracking tools, no advertising network, and no web fonts or other third-party embeds that would trigger data transfers to third parties — aside from the technically necessary GitHub Pages hosting and the connections to Lichess or PayPal described above, each of which you explicitly trigger yourself. Your data is not shared with third parties for advertising or analytics purposes. The link “Report an idea or bug” in the games only opens your own email program with a prepared message (game, version, language); nothing is sent until you send the email yourself. We use emails you send us only to answer you and to improve the games.",
+    privacy_no_tracking_body: "This website uses no analytics or tracking tools, no advertising network, and no web fonts or other third-party embeds that would trigger data transfers to third parties — aside from the technically necessary GitHub Pages hosting and the connections to Lichess or PayPal described above, each of which you explicitly trigger yourself. Your data is not shared with third parties for advertising or analytics purposes. The link “Report an idea or bug” in the games only opens your own email program with a prepared message (game, version, language, browser and window size); nothing is sent until you send the email yourself. We use emails you send us only to answer you and to improve the games.",
     privacy_rights_heading: "7. Your rights",
     privacy_rights_body: "To the extent personal data is processed, you have the following rights under applicable law: access (Art. 15 GDPR), rectification (Art. 16 GDPR), erasure (Art. 17 GDPR), restriction of processing (Art. 18 GDPR), data portability (Art. 20 GDPR), and objection to processing (Art. 21 GDPR). Please contact us at the email address above to exercise these rights.",
     privacy_complaint_heading: "8. Right to lodge a complaint",
@@ -688,6 +691,7 @@ const STRINGS = {
     release_v275: "Go: above the board you now always see which color you play and why. Black or White stays as you chose it, also after a new game or a reload. Fixed: after reloading a game against the computer, New game started a game for two players.",
     release_v271: "Devilish Seven: new cards Wild Chain to choose (numbers up to 14, Link and Mirror, play to 250 or 500) and clearer messages for Bridge and Pass. Arrows is now Glide Lanes and counts misses instead of hearts; Fleet Battle is now Admiral's Grid, and Which One Is Different? is Find the Misfit.",
     release_v270: "Forest Village and Fairy-Tale Villains have new rules of their own; in Fairy-Tale Villains the heroes now turn up from the deck. A game saved under the old rules starts anew.",
+    release_v276: "Fixes: Resign against the computer now always counts as your loss, also while the computer is still thinking. Undo right after the computer's first move lets it move again instead of stopping the game. Nim keeps rule, heaps and who starts after a reload. Backgammon for two asks about a double with buttons on the page. Bigger buttons and footer links; the report link now also names browser and screen size.",
     release_v268: "Zoo Toss has new rules of its own. A game saved under the old rules starts anew.",
     release_v267: "Devilish Seven is now Lucky Chain, with its own rules: numbers 1 to 10, a bonus for numbers in a row, six new special cards and targets of 60, 90 or 120 points. A game saved under the old rules starts anew.",
     release_v263: "The dice race game with blocks on the paths has a new name: “Blocked Path”. Rules, saved games and statistics stay the same.",
@@ -4878,6 +4882,10 @@ const STRINGS = {
     msg_t_pegs_left: "{n} pegs left.",
     msg_t_daily: "Daily Challenge ({n}).",
     msg_t_error: "Error: {r}",
+    msg_t_login_failed: "Login failed: {r}",
+    msg_connect_online_first: "Please connect your online account first.",
+    lichess_token_prompt: "Please enter your Lichess API token with the permission 'board:play'.\nYou can create it on lichess.org under Settings → API access tokens.",
+    msg_t_ms_timer: "⏱ {n}s",
 
     // Game-specific status/result messages and info lines (I18n.msg)
     msg_no_further_move: "No further legal move this turn.",
@@ -5176,6 +5184,7 @@ const STRINGS = {
     msg_t_aria_square: "Square {n}",
     msg_t_aria_point: "Point {n}",
     msg_t_aria_track: "Track square {n}",
+    msg_t_aria_finish_square: "{p} finish square {n}",
     msg_t_aria_path: "Path square {n}",
     msg_t_aria_free_cell: "Free cell {n}",
     msg_t_aria_foundation: "Foundation {r}",

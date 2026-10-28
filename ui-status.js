@@ -43,11 +43,34 @@ const UiStatus = (function () {
     }
     if (key && !keep) {
       const extraRaw = t.replace(/^.*?(?:\.|…|!)(?:\s+|$)/, "").trim();
-      const extra = /^(?:you win|you won|you lose|you lost|the computer wins|computer wins|your (?:move|turn)|the computer(?:\x27s)? turn|computer thinking)\W*$/i.test(extraRaw) ? "" : extraRaw;
+      // A sentence "<Name> to move." / "<Name>'s turn." repeats the turn
+      // sentence just written ("Your turn. Player 1 to move.") and goes.
+      const extraTurnless = extraRaw.replace(/(?:^|\s+)[^.!?…]*?\b(?:to move|\x27s turn)[.!]?(?=\s|$)/gi, "").trim();
+      const extra = /^(?:you win|you won|you lose|you lost|the computer wins|computer wins|your (?:move|turn)|the computer(?:\x27s)? turn|computer thinking)\W*$/i.test(extraTurnless) ? "" : extraTurnless;
       return I18n.t(key) + (extra ? " " + extra : "");
     }
     return text;
   }
 
-  return { rewrite: rewrite };
+  // The human's seat in a game whose AppState has mode "offline-ai" and
+  // humanColor or humanSide.
+  function humanSeat(app) {
+    return app.humanColor !== undefined ? app.humanColor : app.humanSide;
+  }
+
+  // Who gives up when "Resign" is tapped: against the computer always the
+  // human, also while the computer is still thinking about its move (the
+  // button stays tappable then); between two people whoever is to move.
+  function resigner(app) {
+    return app.mode === "offline-ai" ? humanSeat(app) : app.turn;
+  }
+
+  // True when a game against the computer waits for a computer move, e.g.
+  // after "Undo" went back to the start where the computer opens: the caller
+  // then schedules the computer move again, as at the start of the game.
+  function computerToMove(app) {
+    return app.mode === "offline-ai" && !app.gameOver && String(app.turn) !== String(humanSeat(app));
+  }
+
+  return { rewrite: rewrite, resigner: resigner, computerToMove: computerToMove };
 })();

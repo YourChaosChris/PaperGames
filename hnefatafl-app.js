@@ -210,7 +210,7 @@ function initHnefataflApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateHnefatafl.gameOver) return;
-      const loser = AppStateHnefatafl.turn;
+      const loser = UiStatus.resigner(AppStateHnefatafl);
       const winner = HnefataflCore.otherPlayer(loser);
       AppStateHnefatafl.gameOver = true;
       announceGameResultHnefatafl(resultTitleHnefatafl(winner), sideNameHnefatafl(winner) + " win by resignation.");
@@ -365,6 +365,11 @@ function undoLastMove() {
   updateHnefataflBoard();
   updateGameLabelsHnefatafl();
   setStatusHnefatafl("board-info", "Move undone. " + sideNameHnefatafl(AppStateHnefatafl.turn) + " to move.");
+
+  if (UiStatus.computerToMove(AppStateHnefatafl)) {
+    setStatusHnefatafl("board-info", "Computer thinking…");
+    setTimeout(aiTurnHnefatafl, AiPacing.delay(350));
+  }
 }
 
 function showBoardSectionHnefatafl() {

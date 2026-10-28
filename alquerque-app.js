@@ -429,6 +429,10 @@ function undoLastMove() {
   updateAlquerqueBoard();
   updateGameLabelsAlquerque();
   setStatusAlquerque("board-info", "Move undone.");
+  if (UiStatus.computerToMove(AppStateAlquerque)) {
+    setStatusAlquerque("board-info", "Computer thinking…");
+    setTimeout(aiMoveAlquerque, AiPacing.delay(300));
+  }
 }
 
 function showBoardSectionAlquerque() {

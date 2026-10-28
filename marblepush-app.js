@@ -221,7 +221,7 @@ function initMarblePushApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateMarblePush.gameOver) return;
-      const loser = AppStateMarblePush.turn;
+      const loser = UiStatus.resigner(AppStateMarblePush);
       const winner = MarblePushCore.otherColor(loser);
       AppStateMarblePush.gameOver = true;
       AppStateMarblePush.selected = [];
@@ -404,6 +404,11 @@ function undoLastMove() {
   updateMarblePushBoard();
   updateGameLabelsMarblePush();
   setStatusMarblePush("board-info", "Move undone.");
+
+  if (UiStatus.computerToMove(AppStateMarblePush)) {
+    setStatusMarblePush("board-info", "Computer thinking…");
+    setTimeout(aiMoveOfflineMarblePush, AiPacing.delay(300));
+  }
 }
 
 function showBoardSectionMarblePush() {

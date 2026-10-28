@@ -388,6 +388,11 @@ function undoLastMove() {
   updateBaghChalBoard();
   updateGameLabelsBaghChal();
   setStatusBaghChal("board-info", "Move undone. " + sideNameBaghChal(AppStateBaghChal.state.currentPlayer) + " to move.");
+  // Back at the start where the computer opens: it moves again.
+  if (AppStateBaghChal.mode === "offline-ai" && !AppStateBaghChal.gameOver && AppStateBaghChal.state.currentPlayer !== AppStateBaghChal.humanSide) {
+    setStatusBaghChal("board-info", "Computer thinking…");
+    setTimeout(aiTurnBaghChal, AiPacing.delay(350));
+  }
 }
 
 function showBoardSectionBaghChal() {

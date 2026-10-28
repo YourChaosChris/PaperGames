@@ -221,7 +221,7 @@ function initSternhalmaApp() {
   if (resignBtn) {
     resignBtn.addEventListener("click", () => {
       if (AppStateSternhalma.gameOver) return;
-      const loser = AppStateSternhalma.turn;
+      const loser = UiStatus.resigner(AppStateSternhalma);
       const winner = SternhalmaCore.otherPlayer(loser);
       AppStateSternhalma.gameOver = true;
       announceGameResultSternhalma(resultTitleSternhalma(winner), sideNameSternhalma(winner) + " wins by resignation.");
@@ -368,6 +368,11 @@ function undoLastMove() {
   updateSternhalmaBoard();
   updateGameLabelsSternhalma();
   setStatusSternhalma("board-info", "Move undone. " + sideNameSternhalma(AppStateSternhalma.turn) + " to move.");
+
+  if (UiStatus.computerToMove(AppStateSternhalma)) {
+    setStatusSternhalma("board-info", "Computer thinking…");
+    setTimeout(aiTurnSternhalma, AiPacing.delay(350));
+  }
 }
 
 function showBoardSectionSternhalma() {

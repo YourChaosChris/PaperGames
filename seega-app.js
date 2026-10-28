@@ -359,6 +359,11 @@ function undoLastMove() {
   updateSeegaBoard();
   updateGameLabelsSeega();
   setStatusSeega("board-info", "Move undone. " + promptSeega());
+  // Back at the start where the computer opens: it moves again.
+  if (isAiTurnSeega()) {
+    setStatusSeega("board-info", "Computer thinking…");
+    setTimeout(aiStepSeega, AiPacing.delay(300));
+  }
 }
 
 function showBoardSectionSeega() {
