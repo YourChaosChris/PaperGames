@@ -499,13 +499,22 @@ all parts back into one log in list order. The last line is exactly
   at one place, at least 4 board units apart, inside the board, no crossing
   in the closed line, dot counts per level, at least 5 pictures per level
   with a name in 12 languages; no number covers another number or a dot at
-  the tap-target scale (closest dots 44 px apart) and on a 324 px and a
-  560 px board; play, wrong dots, undo, saved state.
+  the tap-target scale (closest dots 44 px apart); easy on a 324 px and a
+  560 px board with dots 44 px apart; from medium on (task 169) the whole
+  picture fitted to 324, 352, 560 and 636 px boards, numbers from 8 px up,
+  none covering another number or a dot and all inside the board, the same
+  at the "Magnify" scale (closest dots 30 px), the closest distances per
+  level and board printed; taps between two close dots count for the dot
+  looked for; play, wrong dots, undo, saved state.
 - `node tests/zahlenbild-ui.js` - needs the server and Playwright. German
   page at 360 x 640: wrong dot named, an easy picture tapped through to the
-  end with its name, very hard with the magnified part (visible dots 44 px
-  apart, no numbers overlapping), save and load, undo, hint, "Ganzes Bild";
-  every picture of every level on a 600 x 800 reader screen.
+  end with its name; very hard (task 169) with the whole picture by
+  default, taps that neither build the board again nor change its scale, a
+  tap between two close dots, save and load (also an old save with
+  "zoom"), undo, hint, "Vergrößern" with a fixed part that does not move
+  with taps, "Zum nächsten Punkt", "Ganzes Bild"; every picture of every
+  level on 384 x 752 and on a 600 x 800 reader screen, no number
+  overlapping or cut off.
 - `node tests/slidepuzzle-core.js`, `node tests/hanoi-core.js`,
   `node tests/nim-core.js` - no server or browser needed (task 118).
   Sliding puzzle: 1000 mixed 3 x 3 and 4 x 4 puzzles (100 of 5 x 5) all

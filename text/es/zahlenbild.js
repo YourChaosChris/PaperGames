@@ -14,7 +14,7 @@ Object.assign(STRINGS.es, {
     zb_term_levels: "Los niveles",
     zb_rules_levels: "Fácil (para niños): de 10 a 15 puntos grandes y separados. Medio: unos 25 puntos. Difícil: unos 40 puntos. Muy difícil (para adultos): de 50 a 60 puntos muy juntos; el dibujo solo aparece al final. Cada nivel tiene cinco dibujos, uno tras otro.",
     zb_term_zoom: "Vista ampliada",
-    zb_rules_zoom: "Cuando los puntos están muy juntos en una pantalla pequeña, el tablero amplía la zona del siguiente punto para que sea fácil tocarlo. «Imagen completa» muestra todo con números más pequeños; «Ampliar» vuelve a la vista anterior.",
+    zb_rules_zoom: "El tablero muestra siempre el dibujo entero con un tamaño fijo; al tocar solo se añaden el punto y la línea, nada se mueve. Desde Medio, los puntos están juntos y los números son más pequeños. Un toque vale para el punto que buscas si es uno de los dos puntos más cercanos a tu dedo. «Ampliar» muestra una parte fija alrededor del punto siguiente, con los puntos más separados; «Ir al punto siguiente» mueve esa parte y «Imagen completa» vuelve atrás.",
     zb_term_help: "Deshacer y pista",
     zb_rules_help: "Deshacer quita el último punto. La pista marca el siguiente punto con un doble círculo.",
     zb_history_title: "La historia del Dibujo de puntos",

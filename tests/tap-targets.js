@@ -75,7 +75,11 @@ const pages = fs.readdirSync(ROOT).filter((f) => /^games(-[a-z]+)?\.html$/.test(
   // Task 164: when the computer begins, Blockers and Snakes & Ladders show
   // "Continue" (#bl-next, #sl-next) instead of the roll button. Sternjagd's
   // "Continue" (#sj-next, task 165) is measured in tests/sternjagd-ui.js.
-  const ACTION_SEL = ".dg-actions button, .bj-buttons button, .fv-actions button, .ur-dice-area > button, #nim-take, #romme-meld-button, #romme-discard-button, #bl-roll, #bl-next, #ludo-roll-button, #sl-roll, #sl-next, #sj-next, #mt-undo, #mt-reset, #mt-hint";
+  // Exception (task 169): the dots of Zahlenbild are no buttons in this
+  // sense - from medium on they are closer than 44 px on purpose (Kirsten's
+  // wish, the whole picture at once); tests/zahlenbild-ui.js checks them.
+  // Its buttons (#zb-zoom, #zb-follow) count like all others.
+  const ACTION_SEL = ".dg-actions button, .bj-buttons button, .fv-actions button, .ur-dice-area > button, #nim-take, #romme-meld-button, #romme-discard-button, #bl-roll, #bl-next, #ludo-roll-button, #sl-roll, #sl-next, #sj-next, #mt-undo, #mt-reset, #mt-hint, #zb-zoom, #zb-follow";
   const ACTION = ["romme", "blockers", "ludo", "snakesladders", "matches", "forestvillage", "blackjack", "nim", "backgammon", "klappenkasten", "index"];
   let actions = 0, footer = 0;
   for (const slug of ACTION) {

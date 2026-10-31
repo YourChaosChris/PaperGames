@@ -14,7 +14,7 @@ Object.assign(STRINGS.en, {
     zb_term_levels: "Levels",
     zb_rules_levels: "Easy (for children): 10 to 15 big dots far apart. Medium: about 25 dots. Hard: about 40 dots. Very hard (for adults): about 50 to 60 dots close together; the picture only shows at the end. Each level has five pictures, one after the other.",
     zb_term_zoom: "Magnified view",
-    zb_rules_zoom: "When the dots lie close together on a small screen, the board shows a magnified part around the next dot, so that every dot is easy to tap. \"Whole picture\" shows everything with smaller numbers; \"Magnify\" goes back.",
+    zb_rules_zoom: "The board always shows the whole picture at one fixed size; a tap only adds the dot and the line, nothing moves. From medium on the dots lie close together and the numbers are smaller. A tap counts for the dot you look for when it is one of the two dots nearest to your finger. \"Magnify\" shows a fixed part around the next dot with the dots further apart; \"Go to the next dot\" moves that part, \"Whole picture\" goes back.",
     zb_term_help: "Undo and hint",
     zb_rules_help: "Undo takes back the last dot. The hint gives the next dot a double ring.",
     zb_history_title: "The History of Dot Pictures",
