@@ -412,6 +412,12 @@ all parts back into one log in list order. The last line is exactly
   win, the computer's choices (high flaps first) and 1000 computer games
   (2-4 players, 9 or 12 flaps, 1/3/5 rounds) that all end without an
   error. A few seconds.
+- `node tests/steckwuerfeln-ui.js` - needs the server and Playwright (task
+  167). German page at 360 x 640 against two computers: your last roll stays
+  with "Weiter", each computer turn on "Weiter" with all its rolls in the
+  status line, the result only on "Ergebnis", save and load while a
+  computer waits and at the end, ring on the holes a computer pegged on the
+  shared board, an old save.
 - `node tests/steckwuerfeln-core.js` - no server or browser needed. Rules of
   Steckwuerfeln (pegs and two dice): the total or the two single dice,
   refused pegs, the double-six joker (roll again / turn ends / hole 12),

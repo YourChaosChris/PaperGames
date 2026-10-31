@@ -38,6 +38,17 @@
   color: #fff;
 }
 
+/* Task 167: holes a computer has just pegged - a dashed ring around them. */
+.sw-hole-last {
+  outline: 3px dashed #141413;
+  outline-offset: 3px;
+}
+
+.sw-dice-who {
+  text-align: center;
+  min-height: 1.4em;
+}
+
 .sw-ways {
   display: flex;
   flex-wrap: wrap;

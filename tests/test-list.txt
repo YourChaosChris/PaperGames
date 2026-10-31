@@ -57,6 +57,7 @@
 41 loosen-core.js
 1 klappenkasten-core.js
 1 steckwuerfeln-core.js
+8 steckwuerfeln-ui.js
 1 sternjagd-core.js
 8 sternjagd-start.js
 3 sternjagd-balance.js
