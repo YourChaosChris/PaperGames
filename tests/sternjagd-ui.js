@@ -12,6 +12,12 @@
 // there is none; `balance` and `bonus` are saved and come back; an old
 // 2-player save without them plays without a balance; remembered settings
 // (quick-rules.js) keep the choice and hide it with 3 players.
+// Task 165: against three computers, computer 1 plays right after the
+// person, computers 2 and 3 each wait for "Weiter" (#sj-next, at least 44 px,
+// instead of the roll button); the field of the last computer move has a
+// dashed ring (.sj-mark) and the status line names the move; a reload while a
+// computer waits keeps the wait and the ring; the ring stays after the
+// person's roll.
 const { chromium } = require("playwright");
 const BASE = process.env.BASE_URL || process.argv[2] || "http://localhost:8000/";
 const fails = [];
@@ -74,7 +80,9 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   const info = await page.evaluate(() => ({ visible: !!document.getElementById("sj-starter") && document.getElementById("sj-starter").offsetHeight > 0, overflow: document.documentElement.scrollWidth - innerWidth }));
   check("starter line visible", info.visible);
   check("no sideways scroll", info.overflow <= 0);
-  // The person's first roll removes the line.
+  // The person's first roll removes the line (a waiting computer goes on
+  // with "Continue", task 165).
+  for (let i = 0; i < 4 && (await page.isVisible("#sj-next")); i++) await page.tap("#sj-next");
   await page.waitForFunction(() => AppStateSJ.state.phase === "roll" && !AppStateSJ.state.computer[AppStateSJ.state.current], null, { timeout: 10000 });
   await page.tap("#sj-roll");
   await page.waitForTimeout(200);
@@ -126,6 +134,69 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   await page.waitForTimeout(200);
   check("and plays on", await page.evaluate(() => AppStateSJ.state.phase === "move" || AppStateSJ.state.seq > 0));
 
+  // Task 165: one person against three computers. After the person's move
+  // computer 1 plays at once, every further computer waits for "Weiter"; the
+  // field it moved to has a dashed ring and the status line names the move.
+  const view = () => page.evaluate(() => {
+    const s = AppStateSJ.state;
+    const ring = document.querySelector("#sj-board .sj-mark");
+    const next = document.getElementById("sj-next");
+    return {
+      cur: s.current, seq: s.seq, last: s.last, phase: s.phase,
+      ring: ring ? [ring.getAttribute("cx"), ring.getAttribute("cy")].join(",") : "",
+      want: s.last && s.last.kind !== "pass" && s.computer[s.last.player] ? SJ_XY[s.last.to].join(",") : "",
+      status: document.getElementById("board-info").textContent.trim(),
+      next: next.offsetHeight > 0, nextH: next.getBoundingClientRect().height,
+      roll: document.getElementById("sj-roll").offsetHeight > 0,
+      overflow: document.documentElement.scrollWidth - innerWidth
+    };
+  });
+  const cpuLine = (v, k) => v.status.indexOf("Computer " + k) === 0 && /gewürfelt/.test(v.status) && (v.last.kind === "pass" || /gestrichelten Ring/.test(v.status));
+  await page.evaluate(() => {
+    const s = SternjagdCore.newGame({ players: 4, computer: [false, true, true, true], first: 0 });
+    localStorage.setItem("einkchess_save_sternjagd", JSON.stringify({ state: s, undoStack: [] }));
+  });
+  await page.reload({ waitUntil: "load" });
+  await page.waitForTimeout(800);
+  let v = null;
+  for (let i = 0; i < 12; i++) {
+    if (await page.isVisible("#sj-next")) { await page.tap("#sj-next"); continue; }
+    await page.tap("#sj-roll");
+    await page.waitForTimeout(100);
+    if (!(await page.$(".sj-goal"))) continue;
+    await page.evaluate(() => moveSJ(parseInt(document.querySelector(".sj-goal").getAttribute("data-node"), 10)));
+    await page.waitForTimeout(100);
+    v = await view();
+    if (v.last && v.last.player === 1) break;
+  }
+  check("computer 1 played right after the person " + JSON.stringify(v), v && v.last.player === 1 && v.cur === 2 && v.phase === "roll");
+  check("its field ringed " + JSON.stringify(v && [v.ring, v.want]), v && v.ring === v.want);
+  check("status names its move and Weiter: " + (v && v.status), v && cpuLine(v, 1) && /Computer 2 ist dran: tippe auf Weiter\.$/.test(v.status));
+  check("Weiter instead of the roll button", v && v.next && !v.roll);
+  check("Weiter at least 44 px high (" + (v && v.nextH) + ")", v && v.nextH >= 43.5);
+  check("no sideways scroll while waiting", v && v.overflow <= 0);
+  // Saved while computer 2 waits: after a reload it still waits, ring and line are back.
+  await page.reload({ waitUntil: "load" });
+  await page.waitForTimeout(800);
+  const r = await view();
+  check("reload keeps the wait and the ring " + JSON.stringify({ seq: [r.seq, v && v.seq], ring: r.ring }), v && r.seq === v.seq && r.cur === 2 && r.ring === r.want && r.next && cpuLine(r, 1));
+  // Weiter: computer 2, then computer 3, each one on its own.
+  await page.tap("#sj-next");
+  await page.waitForTimeout(100);
+  const v2 = await view();
+  check("Weiter plays computer 2 only " + JSON.stringify({ last: v2.last, cur: v2.cur }), v2.last.player === 2 && v2.cur === 3 && v2.seq === r.seq + 1 && v2.ring === v2.want && cpuLine(v2, 2));
+  await page.tap("#sj-next");
+  await page.waitForTimeout(100);
+  const v3 = await view();
+  check("then computer 3, your turn: " + v3.status, v3.last.player === 3 && v3.cur === 0 && v3.ring === v3.want && cpuLine(v3, 3) && /Du bist dran\. Würfle\.$/.test(v3.status) && !v3.next && v3.roll);
+  // The ring stays while you roll, until you move.
+  await page.tap("#sj-roll");
+  await page.waitForTimeout(100);
+  const v4 = await view();
+  // (A roll with no field to go to is a move of yours: then computer 1 plays.)
+  check("ring stays after your roll", v4.phase !== "move" || (v4.ring === v3.ring && v4.last.player === 3));
+  check("page errors after task 165 checks " + errors.join(" | "), errors.length === 0);
+
   // quick-rules.js restores the remembered settings without a change event:
   // switched off stays off, and with 3 players the row stays hidden.
   await page.evaluate(() => {
@@ -148,6 +219,6 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   check("page errors " + errors.join(" | "), errors.length === 0);
   await browser.close();
   fails.forEach((f) => console.log("FAIL " + f));
-  console.log("=== STERNJAGD UI: starter named, random starter, balance for the second (choice, line, double turn), save and load, old saves, " + fails.length + " failure(s) ===");
+  console.log("=== STERNJAGD UI: starter named, random starter, balance for the second (choice, line, double turn), save and load, old saves, computer turns one by one with ring and Weiter, " + fails.length + " failure(s) ===");
   process.exit(fails.length ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

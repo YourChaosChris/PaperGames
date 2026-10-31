@@ -443,7 +443,11 @@ all parts back into one log in list order. The last line is exactly
   Zweiten" (2 players only, on by default), the starter line names the
   double turn, your second move after the computer started, off and 3
   players without it, `balance`/`bonus` saved and loaded, an old 2-player
-  save without them, remembered settings (quick-rules.js).
+  save without them, remembered settings (quick-rules.js). Task 165:
+  against three computers, computer 1 plays right after you, computers 2 and
+  3 each wait for "Weiter" (`#sj-next`, at least 44 px), the field of the last
+  computer move has a dashed ring (`.sj-mark`), the status line names the
+  move, a reload while a computer waits keeps both.
 - `node tests/trix-ai-games.js` - no server or browser needed. 60 Trix games
   computer against computer (all three levels and mixed seats, fixed seeds)
   that must reach the end of the fourth kingdom without a refused move:

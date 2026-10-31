@@ -6,8 +6,15 @@
 // tap one of the ringed fields (a field where exactly that many steps along
 // the arrows can end). Whoever ends on an opponent takes one of its three
 // stars. One person plays against one to three computers, or 2 to 4 people
-// pass the device around. The computers play at once; a short list under the
-// board tells what happened. Nothing is animated.
+// pass the device around. A short list under the board tells what happened.
+// Nothing is animated.
+//
+// Computer turns one at a time (task 165): right after a person's move the
+// next computer plays its turn at once; every further computer turn waits for
+// "Continue" (#sj-next). The field a computer moved to gets a thick dashed
+// ring and the status line names the move; both stay until a person moves.
+// The ring comes from `state.last`, so it is saved and comes back on load.
+// Once no person has stars left, the computers play the rest at once.
 //
 // Undo takes back the last move (the state before it, the die included),
 // also against the computer: snapshots are only taken where a person
@@ -92,15 +99,50 @@ function noteSJ() {
   AppStateSJ.log = AppStateSJ.log.slice(0, 3);
 }
 
-// The computers play at once until a person is to move or the game is over.
-function runComputersSJ() {
+// The last event was a computer's move (its field is ringed, task 165).
+function lastByComputerSJ(s) {
+  return !!s.last && !!s.computer[s.last.player];
+}
+
+// A computer is to move and waits for "Continue".
+function waitingSJ(s) {
+  return s.phase !== "over" && !!s.computer[s.current];
+}
+
+function humanAliveSJ(s) {
+  return s.computer.some((c, i) => !c && s.alive[i]);
+}
+
+// One whole turn of the computer to move: roll, then move (or pass).
+function computerTurnSJ() {
+  const seq = AppStateSJ.state.seq;
   let guard = 0;
-  while (AppStateSJ.state.phase !== "over" && AppStateSJ.state.computer[AppStateSJ.state.current] && guard++ < 5000) {
+  while (waitingSJ(AppStateSJ.state) && AppStateSJ.state.seq === seq && guard++ < 50) {
     const next = SternjagdCore.aiStep(AppStateSJ.state);
     if (next === AppStateSJ.state) break;
     AppStateSJ.state = next;
-    noteSJ();
   }
+  noteSJ();
+}
+
+// After a person's move (or at the start) the next computer plays at once;
+// after a computer's move the next one waits for "Continue". With no person
+// left in the game the computers play the rest at once.
+function runComputersSJ() {
+  const s = AppStateSJ.state;
+  if (!waitingSJ(s)) return;
+  if (!humanAliveSJ(s)) {
+    let guard = 0;
+    while (waitingSJ(AppStateSJ.state) && guard++ < 5000) computerTurnSJ();
+    return;
+  }
+  if (!lastByComputerSJ(s)) computerTurnSJ();
+}
+
+function nextSJ() {
+  if (!AppStateSJ.state || !waitingSJ(AppStateSJ.state)) return;
+  computerTurnSJ();
+  afterActionSJ();
 }
 
 function afterActionSJ() {
@@ -192,9 +234,28 @@ function eventTextSJ(l) {
   return l.again ? text + " " + I18n.t("sj_last_again") : text;
 }
 
+// The status sentence for a computer's move (task 165): what it rolled and
+// where it went; the field has the dashed ring.
+function computerEventTextSJ(l) {
+  const s = AppStateSJ.state;
+  const name = nameSJ(l.player);
+  let text;
+  if (l.kind === "capture") {
+    const you = humansSJ() === 1 && !s.computer[l.captured];
+    text = you ? tSJ("sj_cpu_capture_you", { name: name, n: l.die }) : tSJ("sj_cpu_capture", { name: name, n: l.die, victim: nameSJ(l.captured) });
+  } else if (l.kind === "pass") text = tSJ("sj_last_pass", { name: name, n: l.die });
+  else text = tSJ("sj_cpu_move", { name: name, n: l.die });
+  return l.again ? text + " " + I18n.t("sj_last_again") : text;
+}
+
+// The field to ring: where the last computer moved to, until a person moves.
+function markSJ(s) {
+  return lastByComputerSJ(s) && s.last.kind !== "pass" ? s.last.to : -1;
+}
+
 function turnStatusSJ() {
   const s = AppStateSJ.state;
-  if (s.computer[s.current]) return I18n.t("ui_status_computer_turn");
+  if (s.computer[s.current]) return humanAliveSJ(s) ? tSJ("sj_next_hint", { name: nameSJ(s.current) }) : I18n.t("ui_status_computer_turn");
   const who = humansSJ() === 1 ? I18n.t("ui_status_your_turn") : tSJ("dg_turn_of", { name: nameSJ(s.current) });
   const hint = s.phase === "roll" ? tSJ("sj_roll_hint") : tSJ("sj_move_hint", { n: s.die });
   return who + " " + hint;
@@ -232,6 +293,7 @@ function boardHtmlSJ() {
   const s = AppStateSJ.state;
   const human = !s.computer[s.current] && s.phase === "move";
   const goals = human ? SternjagdCore.destinations(s) : [];
+  const mark = markSJ(s);
   let html = '<svg viewBox="-5 -5 110 110" width="400" height="400" role="group" aria-label="' + tSJ("sj_board_aria") + '" focusable="false">';
   SternjagdCore.NEXT.forEach((list, a) => list.forEach((b) => { html += arrowSJ(a, b); }));
   for (let v = 0; v < SternjagdCore.NODES; v++) {
@@ -242,7 +304,10 @@ function boardHtmlSJ() {
     let label = tSJ("sj_field_aria", { n: v + 1 });
     if (owner >= 0) label = tSJ("sj_field_piece_aria", { n: v + 1, name: nameSJ(owner) });
     if (goal) label = tSJ("sj_field_move_aria", { n: v + 1 });
+    if (v === mark) label += ". " + tSJ("sj_mark_aria", { name: nameSJ(s.last.player) });
     html += '<g' + (goal ? ' class="sj-goal" data-node="' + v + '" role="button" tabindex="0"' : ' role="img"') + ' aria-label="' + label + '">';
+    // The computer's last move: a thick dashed ring outside the goal ring.
+    if (v === mark) html += '<circle class="sj-mark" cx="' + c[0] + '" cy="' + c[1] + '" r="' + (SJ_R + 5.5) + '" fill="none" stroke="#141413" stroke-width="2.4" stroke-dasharray="4 2.4"/>';
     if (goal) html += '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="' + (SJ_R + 3) + '" fill="#fff" stroke="#141413" stroke-width="1.8"/>';
     if (v < 4) {
       html += '<rect x="' + (c[0] - SJ_R) + '" y="' + (c[1] - SJ_R) + '" width="' + (2 * SJ_R) + '" height="' + (2 * SJ_R) + '" rx="2" fill="#fff" stroke="#141413" stroke-width="' + (goal ? 2.6 : 1.6) + '"/>';
@@ -301,10 +366,16 @@ function renderSJ() {
   renderDiceSJ();
   renderBoardSJ();
   const humanTurn = !over && !s.computer[s.current];
-  document.getElementById("sj-roll").disabled = !(humanTurn && s.phase === "roll");
+  const roll = document.getElementById("sj-roll");
+  roll.disabled = !(humanTurn && s.phase === "roll");
+  // While a computer waits, "Continue" stands where the roll button is.
+  const waiting = waitingSJ(s) && humanAliveSJ(s);
+  roll.classList.toggle("hidden", waiting);
+  document.getElementById("sj-next").classList.toggle("hidden", !waiting);
   document.getElementById("undo-btn").disabled = AppStateSJ.undoStack.length === 0;
   renderLogSJ();
-  setStatusSJ(over ? "" : turnStatusSJ());
+  const lead = !over && lastByComputerSJ(s) ? computerEventTextSJ(s.last) + " " : "";
+  setStatusSJ(over ? "" : lead + turnStatusSJ());
 }
 
 /*** Setup ***/
@@ -337,6 +408,7 @@ function initSternjagdApp() {
   document.getElementById("mode-offline").addEventListener("click", () => DiceCommon.setMode("hotseat"));
   document.getElementById("start-sj-game").addEventListener("click", startGameSJ);
   document.getElementById("sj-roll").addEventListener("click", rollSJ);
+  document.getElementById("sj-next").addEventListener("click", nextSJ);
   document.getElementById("undo-btn").addEventListener("click", undoSJ);
   const board = document.getElementById("sj-board");
   board.addEventListener("click", (e) => {
