@@ -6,7 +6,7 @@ const fs = require("fs");
 const path = require("path");
 const ROOT = path.join(__dirname, "..");
 const LANGS = ["en", "de", "fr", "es", "it", "nl", "pl", "uk", "ru", "ja", "zh", "ar"];
-const GAMES = { bingo: "bingo", steckwuerfeln: "sw", klappenkasten: "kk", zoowurf: "zw", weidefreunde: "wf", linkpairs: "linkpairs", oldmaid: "oldmaid", snakesladders: "snakesladders" };
+const GAMES = { bingo: "bingo", steckwuerfeln: "sw", klappenkasten: "kk", zoowurf: "zw", weidefreunde: "wf", linkpairs: "linkpairs", oldmaid: "oldmaid", snakesladders: "snakesladders", zahlenbild: "zb" };
 const files = (l) => (l === "en" ? ["i18n.js"] : ["lang/" + l + ".js"]).map((f) => fs.readFileSync(path.join(ROOT, f), "utf8")).join("\n");
 const text = {};
 LANGS.forEach((l) => { text[l] = files(l); });
@@ -29,7 +29,7 @@ for (const [game, prefix] of Object.entries(GAMES)) {
 }
 // Short sentences (task 116): at most 8 words, in Japanese and Chinese at
 // most 24 characters, for the games added then.
-const SHORT = ["linkpairs", "oldmaid", "snakesladders"];
+const SHORT = ["linkpairs", "oldmaid", "snakesladders", "zahlenbild"];
 SHORT.forEach((game) => {
   for (let i = 1; i <= 4; i++) {
     const key = GAMES[game] + "_howto_" + i;

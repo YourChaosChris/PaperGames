@@ -133,7 +133,8 @@
     ["nim", "game_nim"],
     ["teufelsieben", "game_teufelsieben"],
     ["advent", "game_advent", "latin"],
-    ["gipfelwurf", "game_gipfelwurf", "dicegames"]
+    ["gipfelwurf", "game_gipfelwurf", "dicegames"],
+    ["zahlenbild", "game_zahlenbild"]
   ];
 
   var GAME_SLUGS = {};

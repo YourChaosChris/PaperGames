@@ -1354,6 +1354,17 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-26T13:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M3 35L15 13L21 22L27 9L37 35Z\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.6\" stroke-linejoin=\"round\"/><path d=\"M27 9V2L33 4.5L27 7\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><circle cx=\"16\" cy=\"29\" r=\"2.2\" fill=\"#141413\"/><circle cx=\"24\" cy=\"29\" r=\"2.2\" fill=\"#141413\"/></svg></span>"
+  },
+  {
+    slug: "zahlenbild",
+    category: "puzzles",
+    nameKey: "game_zahlenbild",
+    nameText: "Dot Picture",
+    descKey: "home_zahlenbild_desc",
+    descText: "Join the numbered dots in order - 1, 2, 3 ... - and a picture appears. Easy with big dots for children, up to very hard with many dots close together for adults. Simple pictures drawn just for this game, undo, hint and a magnified view.",
+    popular: false,
+    added: "2026-10-31T12:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><polyline points=\"8,32 8,18 20,7 32,18 32,32\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><g fill=\"#141413\"><circle cx=\"8\" cy=\"32\" r=\"2.4\"/><circle cx=\"8\" cy=\"18\" r=\"2.4\"/><circle cx=\"20\" cy=\"7\" r=\"2.4\"/><circle cx=\"32\" cy=\"18\" r=\"2.4\"/><circle cx=\"32\" cy=\"32\" r=\"2.4\"/></g></svg></span>"
   }
 ];
 

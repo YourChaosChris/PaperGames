@@ -82,6 +82,8 @@
 8 advent-ui.js
 30 gipfelwurf-core.js
 10 gipfelwurf-ui.js
+1 zahlenbild-core.js
+10 zahlenbild-ui.js
 12 small-games-ui.js
 8 romme-ui.js
 12 domino-ui.js

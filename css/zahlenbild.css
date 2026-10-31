@@ -1,0 +1,40 @@
+/* zahlenbild: rules used only by the zahlenbild pages (loaded after base.css). */
+/* ---- Dot Picture ----
+   One square board (an svg) as wide as the card allows, at most 640 px:
+   white dots with their numbers, joined dots black, the line between them.
+   The finished picture shows its name underneath in big letters. Nothing
+   animated. */
+.zb-board {
+  direction: ltr;
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  border: 2px solid #141413;
+  border-radius: var(--radius);
+  background: #fff;
+  overflow: hidden;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.zb-board svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.zb-num {
+  paint-order: stroke;
+  stroke: #fff;
+  stroke-width: 0.25em;
+  stroke-linejoin: round;
+}
+
+.zb-name {
+  margin: 10px 0 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+}

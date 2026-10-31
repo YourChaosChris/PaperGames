@@ -108,7 +108,8 @@ const STATS_GAME_NAME_KEY = {
   nim: "game_nim",
   teufelsieben: "game_teufelsieben",
   advent: "game_advent",
-  gipfelwurf: "game_gipfelwurf"
+  gipfelwurf: "game_gipfelwurf",
+  zahlenbild: "game_zahlenbild"
 };
 
 function gameDisplayName(game) {
