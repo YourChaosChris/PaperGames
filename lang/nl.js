@@ -525,6 +525,7 @@ STRINGS.nl = {
     release_v270: "Bosdorp en Sprookjesschurken hebben nieuwe eigen regels; in Sprookjesschurken komen de helden nu uit de stapel. Een spel dat met de oude regels is opgeslagen, begint opnieuw.",
     release_v276: "Opgelost: Opgeven tegen de computer telt nu altijd als jouw verlies, ook terwijl de computer nog nadenkt. Ongedaan maken direct na de eerste zet van de computer laat hem opnieuw zetten in plaats van het spel stil te zetten. Nim houdt regel, hopen en wie begint na opnieuw laden. Backgammon met z'n tweeën vraagt naar het verdubbelen met knoppen op de pagina. Grotere knoppen en voettekstlinks; de meldlink noemt nu ook browser en schermgrootte.",
     release_v277: "Wegversperring: als de computer begint, is de knop ‘Verder’ nu even groot als de andere knoppen.",
+    release_v278: "Sternjagd: de computers zetten nu één voor één - tik op Verder voor de volgende; een gestreepte ring toont waar de computer heen ging.",
     release_v268: "Dierentuinworp heeft nieuwe, eigen regels. Een spel dat met de oude regels is opgeslagen, begint opnieuw.",
     release_v267: "Duivelse Zeven heet nu Geluksreeks en heeft eigen regels: getallen 1 tot 10, een bonus voor getallen op rij, zes nieuwe speciale kaarten en doelen van 60, 90 of 120 punten. Een spel dat met de oude regels is opgeslagen, begint opnieuw.",
     release_v263: "Het dobbelracespel met blokken op de paden heeft een nieuwe naam: ‘Wegversperring’. Regels, opgeslagen spellen en statistieken blijven gelijk.",

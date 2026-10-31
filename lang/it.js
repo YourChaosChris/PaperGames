@@ -617,6 +617,7 @@ STRINGS.it = {
     release_v270: "Villaggio nel bosco e Cattivi delle fiabe hanno nuove regole proprie; in Cattivi delle fiabe, gli eroi ora arrivano dal mazzo. Una partita salvata con le vecchie regole ricomincia.",
     release_v276: "Correzioni: Arrendersi contro il computer conta ora sempre come tua sconfitta, anche mentre il computer sta ancora pensando. Annulla subito dopo la prima mossa del computer lo fa muovere di nuovo invece di fermare la partita. Nim mantiene regola, mucchi e chi inizia dopo un ricaricamento. Il backgammon in due chiede del raddoppio con pulsanti nella pagina. Pulsanti e link a piè di pagina più grandi; il link per le segnalazioni indica ora anche browser e dimensioni dello schermo.",
     release_v277: "Strada sbarrata: quando inizia il computer, il pulsante «Continua» ora è grande come gli altri pulsanti.",
+    release_v278: "Sternjagd: ora i computer muovono uno alla volta - tocca Continua per il prossimo; un anello tratteggiato mostra dove è andato il computer.",
     release_v268: "Dadi dello zoo ha regole nuove e proprie. Una partita salvata con le vecchie regole ricomincia.",
     release_v267: "Il Sette del Diavolo ora si chiama Catena fortunata e ha regole proprie: numeri da 1 a 10, un bonus per i numeri di fila, sei nuove carte speciali e obiettivi di 60, 90 o 120 punti. Una partita salvata con le vecchie regole ricomincia.",
     release_v263: "Il gioco di percorso con i dadi e i blocchi sui sentieri ha un nuovo nome: «Strada sbarrata». Regole, partite salvate e statistiche restano uguali.",

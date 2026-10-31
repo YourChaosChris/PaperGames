@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v278",
+    date: "2026-10-31",
+    key: "release_v278",
+    text: "Sternjagd: the computers now move one at a time - tap Continue for the next one; a dashed ring shows where the computer went."
+  },
+  {
     version: "v277",
     date: "2026-10-28",
     key: "release_v277",
