@@ -26,7 +26,8 @@ const AppStateZB = {
   zoom: true,    // magnified part when the dots are close together
   hint: false,   // the next dot has a double ring
   hints: 0,
-  note: ""       // the last message (wrong dot), until the next tap
+  note: "",      // the last message (wrong dot), until the next tap
+  view: null     // the part of the board drawn (see viewZB), for taps
 };
 
 function tZB(key, values) {
@@ -168,39 +169,45 @@ function viewZB() {
   return { x: clamp(at[0] - size / 2), y: clamp(at[1] - size / 2), size, scale: need, zoomable, zoomed: true, need };
 }
 
+// The svg is drawn in pixels (so numbers have their real font size); board
+// units map to pixels with X() and Y().
 function boardHtmlZB(v) {
   const s = AppStateZB.state;
   const dots = dotsZB();
   const look = ZahlenbildCore.LOOK[s.level];
   const m = ZahlenbildCore.motif(s.level, s.motif);
+  const side = v.size * v.scale;
+  const X = (x) => f2ZB((x - v.x) * v.scale);
+  const Y = (y) => f2ZB((y - v.y) * v.scale);
   // Below the scale of a tap target ("Whole picture") everything shrinks a little.
   const k = Math.min(1, v.scale / v.need);
-  const u = (pxv) => pxv / v.scale;
-  const r = u(Math.max(3, look.dot * k));
-  const font = u(Math.max(9, look.font * k));
-  let html = '<svg viewBox="' + f2ZB(v.x) + " " + f2ZB(v.y) + " " + f2ZB(v.size) + " " + f2ZB(v.size) + '" width="100%" height="100%" role="group" aria-label="' + tZB("zb_board_aria") + '" focusable="false">';
-  html += '<rect x="' + f2ZB(v.x) + '" y="' + f2ZB(v.y) + '" width="' + f2ZB(v.size) + '" height="' + f2ZB(v.size) + '" fill="#fff"/>';
-  const pts = dots.slice(0, s.done).map((p) => p[0] + "," + p[1]).join(" ");
+  const r = Math.max(3, look.dot * k);
+  const font = Math.max(9, look.font * k);
+  let html = '<svg viewBox="0 0 ' + f2ZB(side) + " " + f2ZB(side) + '" width="100%" height="100%" role="group" aria-label="' + tZB("zb_board_aria") + '" focusable="false">';
+  html += '<rect x="0" y="0" width="' + f2ZB(side) + '" height="' + f2ZB(side) + '" fill="#fff"/>';
+  const pts = dots.slice(0, s.done).map((p) => X(p[0]) + "," + Y(p[1])).join(" ");
   if (s.solved) {
-    html += '<polygon points="' + pts + '" fill="none" stroke="#141413" stroke-width="' + f2ZB(u(3.5)) + '" stroke-linejoin="round"/>';
-    m.details.forEach((d) => { html += '<path d="' + d + '" fill="none" stroke="#141413" stroke-width="' + f2ZB(u(3)) + '" stroke-linecap="round" stroke-linejoin="round"/>'; });
-    return html + "</svg>";
+    html += '<polygon points="' + pts + '" fill="none" stroke="#141413" stroke-width="3.5" stroke-linejoin="round"/>';
+    html += '<g transform="translate(' + X(0) + " " + Y(0) + ") scale(" + f2ZB(v.scale) + ')">';
+    m.details.forEach((d) => { html += '<path d="' + d + '" fill="none" stroke="#141413" stroke-width="3" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>'; });
+    return html + "</g></svg>";
   }
-  if (s.done > 1) html += '<polyline points="' + pts + '" fill="none" stroke="#141413" stroke-width="' + f2ZB(u(2.6)) + '" stroke-linejoin="round" stroke-linecap="round"/>';
+  if (s.done > 1) html += '<polyline points="' + pts + '" fill="none" stroke="#141413" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>';
   const dirs = ZahlenbildCore.labels(s.level, s.motif);
   dots.forEach((p, i) => {
     const next = i === s.done;
     const done = i < s.done;
+    const cx = X(p[0]), cy = Y(p[1]);
     html += '<g' + (next ? ' class="zb-next" data-dot="' + i + '" role="button" tabindex="0"' : ' role="img"') + ' aria-label="' + tZB("zb_dot_aria", { n: i + 1 }) + '">';
     if (next && AppStateZB.hint) {
-      html += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + f2ZB(r + u(6)) + '" fill="none" stroke="#141413" stroke-width="' + f2ZB(u(2)) + '"/>';
-      html += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + f2ZB(r + u(11)) + '" fill="none" stroke="#141413" stroke-width="' + f2ZB(u(2)) + '"/>';
+      html += '<circle cx="' + cx + '" cy="' + cy + '" r="' + f2ZB(r + 6) + '" fill="none" stroke="#141413" stroke-width="2"/>';
+      html += '<circle cx="' + cx + '" cy="' + cy + '" r="' + f2ZB(r + 11) + '" fill="none" stroke="#141413" stroke-width="2"/>';
     }
-    html += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + f2ZB(r) + '" fill="' + (done ? "#141413" : "#fff") + '" stroke="#141413" stroke-width="' + f2ZB(u(2)) + '"/>';
+    html += '<circle cx="' + cx + '" cy="' + cy + '" r="' + f2ZB(r) + '" fill="' + (done ? "#141413" : "#fff") + '" stroke="#141413" stroke-width="2"/>';
     const box = ZahlenbildCore.labelBox(i, look.font);
     const off = ZahlenbildCore.offsetFor(dirs[i], box, look.dot);
-    const lx = p[0] + u(off[0] * k);
-    const ly = p[1] + u(off[1] * k) + font * 0.36;
+    const lx = (p[0] - v.x) * v.scale + off[0] * k;
+    const ly = (p[1] - v.y) * v.scale + off[1] * k + font * 0.36;
     html += '<text class="zb-num" x="' + f2ZB(lx) + '" y="' + f2ZB(ly) + '" text-anchor="middle" font-family="sans-serif" font-weight="' + (next ? 700 : 400) + '" font-size="' + f2ZB(font) + '" fill="#141413">' + (i + 1) + "</text>";
     html += "</g>";
   });
@@ -214,6 +221,7 @@ function renderZB() {
   // Square also where aspect-ratio is unknown (older e-reader browsers).
   wrap.style.height = wrap.offsetWidth + "px";
   const v = viewZB();
+  AppStateZB.view = v;
   wrap.innerHTML = boardHtmlZB(v);
   const n = dotsZB().length;
   document.getElementById("game-meta").textContent = tZB("zb_progress", { n: s.done, m: n }) + " · " + I18n.t("zb_level_" + s.level);
@@ -241,8 +249,11 @@ function dotAtZB(clientX, clientY) {
   const pt = svg.createSVGPoint();
   pt.x = clientX;
   pt.y = clientY;
-  const p = pt.matrixTransform(svg.getScreenCTM().inverse());
-  const scale = svg.getScreenCTM().a || 1;
+  const q = pt.matrixTransform(svg.getScreenCTM().inverse());
+  // svg pixels -> board units (the svg may be drawn a little smaller or larger).
+  const v = AppStateZB.view;
+  const p = { x: v.x + q.x / v.scale, y: v.y + q.y / v.scale };
+  const scale = v.scale * (svg.getScreenCTM().a || 1);
   const reach = ZB_HIT_PX / scale;
   const dots = dotsZB();
   const d = (i) => Math.hypot(dots[i][0] - p.x, dots[i][1] - p.y);

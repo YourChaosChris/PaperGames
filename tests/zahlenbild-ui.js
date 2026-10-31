@@ -18,7 +18,8 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
 const dotXY = (page, i) => page.evaluate((k) => {
   const svg = document.querySelector("#zb-board svg");
   const p = ZahlenbildCore.dotsOf(AppStateZB.state.level, AppStateZB.state.motif)[k];
-  const at = () => { const pt = svg.createSVGPoint(); pt.x = p[0]; pt.y = p[1]; return pt.matrixTransform(svg.getScreenCTM()); };
+  const v = AppStateZB.view;
+  const at = () => { const pt = svg.createSVGPoint(); pt.x = (p[0] - v.x) * v.scale; pt.y = (p[1] - v.y) * v.scale; return pt.matrixTransform(svg.getScreenCTM()); };
   let q = at();
   if (q.y < 20 || q.y > innerHeight - 20) { window.scrollBy(0, q.y - innerHeight / 2); q = at(); }
   return [q.x, q.y];
@@ -46,8 +47,8 @@ const layout = (page) => page.evaluate(() => {
     // 1 px of slack for the white halo and rounding.
     if (a.left + 1 < b.right - 1 && b.left + 1 < a.right - 1 && a.top + 1 < b.bottom - 1 && b.top + 1 < a.bottom - 1) overlap++;
   }
-  const vb = document.querySelector("#zb-board svg").getAttribute("viewBox").split(" ").map(Number);
-  return { dots: dots.length, nums: nums.length, min, overlap, size: vb[2], square: Math.abs(board.width - board.height) < 2 };
+  const font = Math.min(...Array.from(document.querySelectorAll("#zb-board .zb-num")).map((t) => parseFloat(getComputedStyle(t).fontSize)));
+  return { dots: dots.length, nums: nums.length, min, overlap, size: AppStateZB.view.size, font, square: Math.abs(board.width - board.height) < 2 };
 });
 
 (async () => {
@@ -86,6 +87,7 @@ const layout = (page) => page.evaluate(() => {
   check("expert: 'Ganzes Bild' shown", (await page.isVisible("#zb-zoom")) && (await page.textContent("#zb-zoom")).trim() === "Ganzes Bild");
   check("expert: visible dots at least 44 px apart (" + ex.min.toFixed(1) + ")", ex.min >= 43.5);
   check("expert: no numbers overlap (" + ex.overlap + ")", ex.overlap === 0);
+  check("expert: numbers at least 14 px (" + ex.font + ")", ex.font >= 14);
   for (let i = 0; i < 5; i++) await tapDot(page, i);
   const mid = await layout(page);
   check("expert: still clear after 5 dots " + JSON.stringify(mid), mid.min >= 43.5 && mid.overlap === 0);

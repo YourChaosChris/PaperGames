@@ -1900,7 +1900,7 @@ const FILE_HASHES = {
   "zahlenbild-rules.html": "c2e53278",
   "zahlenbild-history.html": "87873273",
   "zahlenbild-core.js": "3b87f229",
-  "zahlenbild-app.js": "05cc013a",
+  "zahlenbild-app.js": "6d634bdf",
   "kleeberg.html": "94b03a2d",
   "kleeberg-core.js": "2d1ab4bf",
   "kleeberg-app.js": "d05f8445",
