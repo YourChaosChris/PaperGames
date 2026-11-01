@@ -527,6 +527,30 @@ all parts back into one log in list order. The last line is exactly
   ziehen" (remembered): one mouse stroke through an easy picture, taps
   still work, a finger (touch events) on 384 x 752 draws dots 1 to 6
   without scrolling the page.
+- `node tests/irrgarten-core.js` - no server or browser needed (task 170).
+  All 20 mazes (5 per level, 6 x 6 to 20 x 20): walls match on both sides,
+  perfect (n * n - 1 passages, every cell reachable, so exactly one way
+  between any two cells), start and goal joined, the same maze from a
+  freshly loaded core, the five mazes of a level differ; solved by single
+  steps and by straight taps; walls, back, tap on the own way, drawing up
+  to three cells, hint out of a dead end, broken saves refused.
+- `node tests/irrgarten-ui.js` - needs the server and Playwright. German
+  page at 360 x 640: wall note, the right way by real taps to the flag
+  (result, no save after the end), per tap no element added or removed,
+  back, hint rings, save and load; "Mit dem Finger ziehen" (remembered) with
+  touch events on medium, the page does not scroll; very hard cells at least
+  16 px, on the 600 x 800 reader at least 28 px; buttons 44 px, no tap flash.
+- `node tests/suchbild-core.js` - no server or browser needed (task 171).
+  All 20 rounds: grid size, 1 to 10 odd ones as the level says, two
+  different signs, every sign inside its own cell (sign size plus move below
+  half a cell, so no overlap), the same round from a freshly loaded core,
+  rounds differ; a normal sign is counted wrong, an odd one twice counts
+  once, all found solves; itemAt, hint area holds an odd one, saves.
+- `node tests/suchbild-ui.js` - needs the server and Playwright. German page
+  at 360 x 640 and 600 x 800: drawn sign boxes never overlap on any level
+  and round; wrong tap only a note, a find adds one ring and nothing else,
+  "Gefunden: n von m", hint box, save and load, all found; very hard cells
+  at least 16 px; "Vergrößern" doubles the board, stays with taps, is saved.
 - `node tests/slidepuzzle-core.js`, `node tests/hanoi-core.js`,
   `node tests/nim-core.js` - no server or browser needed (task 118).
   Sliding puzzle: 1000 mixed 3 x 3 and 4 x 4 puzzles (100 of 5 x 5) all

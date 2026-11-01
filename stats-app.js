@@ -109,7 +109,9 @@ const STATS_GAME_NAME_KEY = {
   teufelsieben: "game_teufelsieben",
   advent: "game_advent",
   gipfelwurf: "game_gipfelwurf",
-  zahlenbild: "game_zahlenbild"
+  zahlenbild: "game_zahlenbild",
+  irrgarten: "game_irrgarten",
+  suchbild: "game_suchbild"
 };
 
 function gameDisplayName(game) {

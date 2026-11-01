@@ -1,0 +1,40 @@
+/* suchbild: rules used only by the suchbild pages (loaded after base.css). */
+/* ---- Hidden Odd Ones ----
+   One board (an svg) as wide as the card allows, at most 640 px, full of
+   small black signs; found ones get a thick ring. "Magnify" makes the board
+   twice as wide inside a box that the reader scrolls by hand - the part
+   shown never moves by itself. Nothing animated, no tap flash. */
+.sb-scroll {
+  direction: ltr;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  overflow: auto;
+  border: 2px solid #141413;
+  border-radius: var(--radius);
+}
+
+.sb-board {
+  position: relative;
+  width: 100%;
+  background: #fff;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.sb-scroll.sb-magnified {
+  max-height: 80vh;
+}
+
+.sb-scroll.sb-magnified .sb-board {
+  width: 200%;
+}
+
+.sb-board svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

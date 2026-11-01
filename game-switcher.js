@@ -134,7 +134,9 @@
     ["teufelsieben", "game_teufelsieben"],
     ["advent", "game_advent", "latin"],
     ["gipfelwurf", "game_gipfelwurf", "dicegames"],
-    ["zahlenbild", "game_zahlenbild"]
+    ["zahlenbild", "game_zahlenbild"],
+    ["irrgarten", "game_irrgarten"],
+    ["suchbild", "game_suchbild"]
   ];
 
   var GAME_SLUGS = {};

@@ -1,0 +1,31 @@
+/* irrgarten: rules used only by the irrgarten pages (loaded after base.css). */
+/* ---- Maze ----
+   One square board (an svg) as wide as the card allows, at most 640 px:
+   black walls, the walked way as a thick black line, a black circle where
+   you are, a flag at the goal. Nothing animated, no tap flash. */
+.ig-board {
+  direction: ltr;
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  background: #fff;
+  overflow: hidden;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Drawing with a finger: the page does not scroll under it. */
+.ig-board.ig-drag-mode {
+  touch-action: none;
+}
+
+.ig-board svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

@@ -1365,6 +1365,28 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-10-31T12:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><polyline points=\"8,32 8,18 20,7 32,18 32,32\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><g fill=\"#141413\"><circle cx=\"8\" cy=\"32\" r=\"2.4\"/><circle cx=\"8\" cy=\"18\" r=\"2.4\"/><circle cx=\"20\" cy=\"7\" r=\"2.4\"/><circle cx=\"32\" cy=\"18\" r=\"2.4\"/><circle cx=\"32\" cy=\"32\" r=\"2.4\"/></g></svg></span>"
+  },
+  {
+    slug: "irrgarten",
+    category: "puzzles",
+    nameKey: "game_irrgarten",
+    nameText: "Maze",
+    descKey: "home_irrgarten_desc",
+    descText: "Find the way through a maze from the start to the goal. Easy with wide passages for children, up to very hard with a big grid. Every maze made by the program, tap or draw, hint and back.",
+    popular: false,
+    added: "2026-11-01T12:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M4 4H36V36H4Z M12 4V20 M4 28H20 M20 12V28 M28 12H36 M28 12V36\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"square\"/><circle cx=\"8\" cy=\"8\" r=\"2.6\" fill=\"#141413\"/><path d=\"M31 33V24L35 26L31 28\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/></svg></span>"
+  },
+  {
+    slug: "suchbild",
+    category: "puzzles",
+    nameKey: "game_suchbild",
+    nameText: "Hidden Odd Ones",
+    descKey: "home_suchbild_desc",
+    descText: "A page full of the same little sign - and a few that are different. Find them all. Easy with big faces for children, up to very hard with tiny mirrored letters. No time limit, hint and magnify.",
+    popular: false,
+    added: "2026-11-01T12:01",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><g fill=\"none\" stroke=\"#141413\" stroke-width=\"2\"><circle cx=\"8\" cy=\"8\" r=\"4\"/><circle cx=\"20\" cy=\"8\" r=\"4\"/><circle cx=\"32\" cy=\"8\" r=\"4\"/><circle cx=\"8\" cy=\"20\" r=\"4\"/><rect x=\"16\" y=\"16\" width=\"8\" height=\"8\"/><circle cx=\"32\" cy=\"20\" r=\"4\"/><circle cx=\"8\" cy=\"32\" r=\"4\"/><circle cx=\"20\" cy=\"32\" r=\"4\"/><circle cx=\"32\" cy=\"32\" r=\"4\"/><circle cx=\"20\" cy=\"20\" r=\"8.5\" stroke-width=\"2.6\"/></g></svg></span>"
   }
 ];
 
