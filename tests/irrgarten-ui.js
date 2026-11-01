@@ -76,7 +76,7 @@ const watch = (page) => page.evaluate(() => {
   console.log("per tap: " + perTap.map((m) => m.records).join(", ") + " changes, 0 elements replaced");
   check("three steps walked, board not built again", await page.evaluate(() => AppStateIG.state.path.length === 4 && document.querySelector("#ig-board svg") === window.__svg));
   // Back and hint.
-  await page.click("#undo-btn");
+  await page.click("#ig-back");
   check("back takes one cell back", await page.evaluate(() => AppStateIG.state.path.length === 3));
   await page.click("#hint-btn");
   check("hint: three dashed rings and the note", (await page.evaluate(() => document.querySelectorAll("#ig-hint circle").length)) === 3 && /gestrichelten Ringe/.test(await page.textContent("#board-info")));
@@ -100,7 +100,7 @@ const watch = (page) => page.evaluate(() => {
   check("goal reached " + JSON.stringify(done), done.solved && done.status === "Geschafft! Du hast den Weg zur Fahne gefunden." && done.saved === null);
   console.log("easy maze walked with " + (taps + 3) + " taps for " + (sol.length - 1) + " cells");
   await page.evaluate(() => { if (window.ResultModal) window.ResultModal.hide(); });
-  const heights = await page.evaluate(() => ["undo-btn", "hint-btn", "start-ig-game"].map((id) => document.getElementById(id).getBoundingClientRect().height));
+  const heights = await page.evaluate(() => ["ig-back", "hint-btn", "start-ig-game"].map((id) => document.getElementById(id).getBoundingClientRect().height));
   check("buttons at least 44 px " + JSON.stringify(heights), heights.every((h) => h === 0 || h >= 43.5));
   // Very hard on 360 x 640: smallest cell.
   await page.evaluate(() => { document.getElementById("ig-level").value = "expert"; startIG(); });

@@ -86,9 +86,9 @@ const pages = fs.readdirSync(ROOT).filter((f) => /^games(-[a-z]+)?\.html$/.test(
   // no buttons in this sense either (on the dense levels smaller than 44 px so
   // the board can be filled; tests/irrgarten-ui.js and tests/suchbild-ui.js
   // check their sizes). Suchbild's "Vergrößern" (#sb-zoom) counts like all
-  // other buttons; "Zurück" and "Tipp" of Irrgarten are #undo-btn and
-  // #hint-btn, measured in tests/irrgarten-ui.js.
-  const ACTION_SEL = ".dg-actions button, .bj-buttons button, .fv-actions button, .ur-dice-area > button, #nim-take, #romme-meld-button, #romme-discard-button, #bl-roll, #bl-next, #bingo-cpu-toggle, #ludo-roll-button, #sl-roll, #sl-next, #sj-next, #sw-next, #mt-undo, #mt-reset, #mt-hint, #zb-zoom, #zb-follow, #sb-zoom";
+  // other buttons, and so does "Zurück" of Irrgarten (#ig-back; also
+  // measured in tests/irrgarten-ui.js).
+  const ACTION_SEL = ".dg-actions button, .bj-buttons button, .fv-actions button, .ur-dice-area > button, #nim-take, #romme-meld-button, #romme-discard-button, #bl-roll, #bl-next, #bingo-cpu-toggle, #ludo-roll-button, #sl-roll, #sl-next, #sj-next, #sw-next, #mt-undo, #mt-reset, #mt-hint, #zb-zoom, #zb-follow, #sb-zoom, #ig-back";
   const ACTION = ["romme", "blockers", "ludo", "snakesladders", "matches", "forestvillage", "blackjack", "nim", "backgammon", "klappenkasten", "index"];
   let actions = 0, footer = 0;
   for (const slug of ACTION) {

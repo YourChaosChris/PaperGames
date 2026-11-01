@@ -12,7 +12,8 @@
 //   passage; a tap on a cell of your way goes back to it.
 // - Drawing: the finger draws the way; the circle follows from cell to cell
 //   (up to three cells at once round a corner). Taps work as well.
-// "Back" takes one cell back, "Hint" shows the next three cells of the right
+// "Back" (#ig-back, "Zurück" as task 170 asks, not the shared "Undo" label:
+// it steps back along the way) takes one cell back, "Hint" shows the next three cells of the right
 // way (also out of a dead end).
 
 const IRRGARTEN_SAVE_KEY = "einkchess_save_irrgarten";
@@ -250,7 +251,7 @@ function renderInfoIG() {
   const s = AppStateIG.state;
   const n = IrrgartenCore.mazeOf(s).n;
   textIG(document.getElementById("game-meta"), tIG("ig_meta", { k: s.k + 1, m: IrrgartenCore.COUNT, n: n }) + " · " + I18n.t("ig_level_" + s.level));
-  const undo = document.getElementById("undo-btn");
+  const undo = document.getElementById("ig-back");
   if (undo.disabled !== s.path.length < 2) undo.disabled = s.path.length < 2;
   const hint = document.getElementById("hint-btn");
   if (hint.disabled !== !!s.solved) hint.disabled = !!s.solved;
@@ -309,7 +310,7 @@ function initIrrgartenApp() {
     });
   }
   document.getElementById("start-ig-game").addEventListener("click", startIG);
-  document.getElementById("undo-btn").addEventListener("click", undoIG);
+  document.getElementById("ig-back").addEventListener("click", undoIG);
   document.getElementById("hint-btn").addEventListener("click", hintIG);
   const board = document.getElementById("ig-board");
   board.addEventListener("click", (e) => {

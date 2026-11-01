@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v279",
+    date: "2026-11-01",
+    key: "release_v279",
+    text: "Steckwürfeln shows the last roll and the computers' rolls; Bingo shows the computers' cards; Dot Picture no longer flickers, and you can draw the line with your finger."
+  },
+  {
     version: "v278",
     date: "2026-10-31",
     key: "release_v278",
