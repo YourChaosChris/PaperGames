@@ -17,9 +17,22 @@
 // next dot". A tap counts for the dot being looked for when it is one of the
 // two dots closest to the tap within 22 px. Nothing is animated, no timer.
 // Undo takes back dots, the hint gives the next dot a double ring.
+//
+// Task 169, second report (flicker also on easy and on the reader): besides
+// the board built again per tap (gone, see above) the phone browser laid its
+// grey tap highlight over the whole board on every tap (the board is
+// clickable), and every "resize" built the board again - the phone sends one
+// when its address bar comes or goes. Now: no tap highlight, no focus ring
+// on a tap, only a change of the board width draws again, and texts round
+// the board are only written when they change.
+// "Draw a line" (setting "Antippen" / "Ziehen", remembered): the finger draws
+// from dot to dot; when it reaches the next dot the line snaps there and that
+// piece stays. While drawing only one dashed preview line changes. Taps work
+// in both ways.
 
 const ZAHLENBILD_SAVE_KEY = "einkchess_save_zahlenbild";
 const ZB_LAST_KEY = "papergames_zahlenbild_last";
+const ZB_INPUT_KEY = "papergames_zahlenbild_input";
 const ZB_HIT_PX = 22;
 const ZB_MIN = -4;
 const ZB_SPAN = 108;
@@ -30,8 +43,32 @@ const AppStateZB = {
   hint: false,   // the next dot has a double ring
   hints: 0,
   note: "",      // the last message (wrong dot), until the next tap
-  view: null     // the part of the board drawn (see viewZB), for taps
+  view: null,    // the part of the board drawn (see viewZB), for taps
+  input: "tap",  // "tap" or "drag" (task 169), see inputZB
+  width: 0       // board width of the last drawing (resize only redraws on a change)
 };
+
+// The way of playing, remembered for the next visit. Tap is the default.
+function loadInputZB() {
+  let v = "";
+  try { v = window.localStorage.getItem(ZB_INPUT_KEY) || ""; } catch (e) { v = ""; }
+  return v === "drag" ? "drag" : "tap";
+}
+
+function setInputZB(v) {
+  AppStateZB.input = v === "drag" ? "drag" : "tap";
+  try { window.localStorage.setItem(ZB_INPUT_KEY, AppStateZB.input); } catch (e) { /* only for this visit */ }
+  const sel = document.getElementById("zb-input");
+  if (sel) sel.value = AppStateZB.input;
+  const board = document.getElementById("zb-board");
+  if (board) board.classList.toggle("zb-drag-mode", AppStateZB.input === "drag");
+  if (AppStateZB.state) renderInfoZB();
+}
+
+// Writes a text only when it is new (no needless change of the page).
+function textZB(el, text) {
+  if (el && el.textContent !== text) el.textContent = text;
+}
 
 function tZB(key, values) {
   let text = I18n.t(key);
@@ -164,7 +201,7 @@ function finishZB() {
 
 function setStatusZB(text) {
   const el = document.getElementById("board-info");
-  if (el) { el.removeAttribute("data-i18n"); el.textContent = text || ""; }
+  if (el) { if (el.hasAttribute("data-i18n")) el.removeAttribute("data-i18n"); textZB(el, text || ""); }
 }
 
 function setResultZB(text) {
@@ -231,6 +268,8 @@ function boardHtmlZB(v) {
   // The line (always there, so a tap only adds a point) and the hint rings.
   html += '<polyline id="zb-line" points="' + pts + '" fill="none" stroke="#141413" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>';
   html += '<g id="zb-hint"></g>';
+  // Preview of the line being drawn (task 169), hidden until a finger draws.
+  html += '<line id="zb-drag" x1="0" y1="0" x2="0" y2="0" stroke="#141413" stroke-width="2" stroke-dasharray="6 5" stroke-linecap="round" visibility="hidden"/>';
   const dirs = lay.dirs;
   dots.forEach((p, i) => {
     const next = i === s.done;
@@ -298,6 +337,7 @@ function renderZB() {
   const wrap = document.getElementById("zb-board");
   // Square also where aspect-ratio is unknown (older e-reader browsers).
   wrap.style.height = wrap.offsetWidth + "px";
+  AppStateZB.width = wrap.clientWidth;
   const v = viewZB();
   AppStateZB.view = v;
   wrap.innerHTML = boardHtmlZB(v);
@@ -310,21 +350,93 @@ function renderInfoZB() {
   const s = AppStateZB.state;
   const v = AppStateZB.view;
   const n = dotsZB().length;
-  document.getElementById("game-meta").textContent = tZB("zb_progress", { n: s.done, m: n }) + " · " + I18n.t("zb_level_" + s.level);
+  textZB(document.getElementById("game-meta"), tZB("zb_progress", { n: s.done, m: n }) + " · " + I18n.t("zb_level_" + s.level));
   const zoomBtn = document.getElementById("zb-zoom");
   zoomBtn.classList.toggle("hidden", !v.zoomable || s.solved);
-  zoomBtn.setAttribute("data-i18n", v.zoomed ? "zb_zoom_out" : "zb_zoom_in");
-  zoomBtn.textContent = I18n.t(v.zoomed ? "zb_zoom_out" : "zb_zoom_in");
+  const zoomKey = v.zoomed ? "zb_zoom_out" : "zb_zoom_in";
+  if (zoomBtn.getAttribute("data-i18n") !== zoomKey) zoomBtn.setAttribute("data-i18n", zoomKey);
+  textZB(zoomBtn, I18n.t(zoomKey));
   const follow = document.getElementById("zb-follow");
   follow.classList.toggle("hidden", !v.zoomed || s.solved || nextInViewZB(v));
-  document.getElementById("undo-btn").disabled = !s.done;
-  document.getElementById("hint-btn").disabled = s.solved;
+  const undo = document.getElementById("undo-btn");
+  if (undo.disabled !== !s.done) undo.disabled = !s.done;
+  const hint = document.getElementById("hint-btn");
+  if (hint.disabled !== !!s.solved) hint.disabled = !!s.solved;
   const name = document.getElementById("zb-name");
   const title = I18n.t("zb_motif_" + s.motif);
-  name.textContent = s.solved ? title.charAt(0).toUpperCase() + title.slice(1) : "";
+  textZB(name, s.solved ? title.charAt(0).toUpperCase() + title.slice(1) : "");
   name.classList.toggle("hidden", !s.solved);
   if (s.solved) setStatusZB(tZB("zb_done", { s: I18n.t("zb_motif_" + s.motif) }));
-  else setStatusZB(AppStateZB.note || tZB("zb_tap_next", { n: s.done + 1 }));
+  else setStatusZB(AppStateZB.note || tZB(AppStateZB.input === "drag" ? "zb_drag_next" : "zb_tap_next", { n: s.done + 1 }));
+}
+
+/*** Drawing a line (task 169) ***/
+
+// Board pixels (svg) of a screen point.
+function svgPointZB(clientX, clientY) {
+  const svg = document.querySelector("#zb-board svg");
+  if (!svg || !svg.getScreenCTM()) return null;
+  const pt = svg.createSVGPoint();
+  pt.x = clientX;
+  pt.y = clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+
+// The dashed preview from the last joined dot to the finger; only this line
+// changes while the finger moves (and only after 4 px or more).
+function previewZB(clientX, clientY) {
+  const line = document.getElementById("zb-drag");
+  const s = AppStateZB.state;
+  if (!line || !s || !s.done) return;
+  const q = svgPointZB(clientX, clientY);
+  if (!q) return;
+  const d = AppStateZB.drag;
+  if (d.px && Math.abs(d.px[0] - q.x) < 4 && Math.abs(d.px[1] - q.y) < 4) return;
+  d.px = [q.x, q.y];
+  const c = pxZB(s.done - 1);
+  line.setAttribute("x1", f2ZB(c[0]));
+  line.setAttribute("y1", f2ZB(c[1]));
+  line.setAttribute("x2", f2ZB(q.x));
+  line.setAttribute("y2", f2ZB(q.y));
+  if (line.getAttribute("visibility") !== "visible") line.setAttribute("visibility", "visible");
+}
+
+function hidePreviewZB() {
+  const line = document.getElementById("zb-drag");
+  if (line && line.getAttribute("visibility") !== "hidden") line.setAttribute("visibility", "hidden");
+}
+
+function dragStartZB(clientX, clientY) {
+  if (AppStateZB.input !== "drag" || !AppStateZB.state || AppStateZB.state.solved) return false;
+  AppStateZB.drag = { x: clientX, y: clientY, moved: false, px: null };
+  dragMoveZB(clientX, clientY);
+  return true;
+}
+
+// While drawing: only the next dot counts (other dots on the way are passed
+// over without a message); reaching it joins it like a tap.
+function dragMoveZB(clientX, clientY) {
+  const d = AppStateZB.drag;
+  const s = AppStateZB.state;
+  if (!d || !s || s.solved) return;
+  if (Math.abs(clientX - d.x) > 8 || Math.abs(clientY - d.y) > 8) d.moved = true;
+  const i = dotAtZB(clientX, clientY);
+  if (i >= 0 && i === s.done) {
+    d.px = null;
+    d.joined = true;
+    tapDotZB(i);
+    if (AppStateZB.state.solved) { AppStateZB.drag = null; AppStateZB.skipClick = Date.now(); return; }
+  }
+  previewZB(clientX, clientY);
+}
+
+function dragEndZB() {
+  const d = AppStateZB.drag;
+  AppStateZB.drag = null;
+  hidePreviewZB();
+  // A drawn line is no tap: the click that follows it is ignored (also when
+  // the finger only touched the next dot - it is joined already).
+  if (d && (d.moved || d.joined)) AppStateZB.skipClick = Date.now();
 }
 
 /*** Taps ***/
@@ -369,9 +481,30 @@ function initZahlenbildApp() {
   const board = document.getElementById("zb-board");
   board.addEventListener("click", (e) => {
     if (!AppStateZB.state || AppStateZB.state.solved) return;
+    if (AppStateZB.skipClick && Date.now() - AppStateZB.skipClick < 600) { AppStateZB.skipClick = 0; return; }
     const i = dotAtZB(e.clientX, e.clientY);
     if (i >= 0) tapDotZB(i);
   });
+  // Drawing a line: pointer events where there are, touch events else
+  // (older e-reader browsers).
+  if (window.PointerEvent) {
+    board.addEventListener("pointerdown", (e) => {
+      if (e.button > 0 || !dragStartZB(e.clientX, e.clientY)) return;
+      if (board.setPointerCapture) { try { board.setPointerCapture(e.pointerId); } catch (err) { /* moves outside the board are lost */ } }
+    });
+    board.addEventListener("pointermove", (e) => { if (AppStateZB.drag) { e.preventDefault(); dragMoveZB(e.clientX, e.clientY); } });
+    board.addEventListener("pointerup", dragEndZB);
+    board.addEventListener("pointercancel", dragEndZB);
+  } else {
+    const at = (e) => e.touches && e.touches[0] ? e.touches[0] : null;
+    board.addEventListener("touchstart", (e) => { const t = at(e); if (t) dragStartZB(t.clientX, t.clientY); }, { passive: true });
+    board.addEventListener("touchmove", (e) => { const t = at(e); if (t && AppStateZB.drag) { e.preventDefault(); dragMoveZB(t.clientX, t.clientY); } }, { passive: false });
+    board.addEventListener("touchend", dragEndZB);
+    board.addEventListener("touchcancel", dragEndZB);
+  }
+  const inputSel = document.getElementById("zb-input");
+  if (inputSel) inputSel.addEventListener("change", () => setInputZB(inputSel.value));
+  setInputZB(loadInputZB());
   board.addEventListener("keydown", (e) => {
     if (e.key !== "Enter" && e.key !== " ") return;
     const g = e.target && e.target.closest ? e.target.closest(".zb-next") : null;
@@ -388,7 +521,12 @@ function initZahlenbildApp() {
     { pics: S + dot(12, 48, 1, true) + dot(30, 12, 2) + dot(48, 48, 3) + '<path d="M40 30L56 46M56 30L40 46" stroke="#141413" stroke-width="3" stroke-linecap="round"/></svg>', key: "zb_howto_3" },
     { pics: S + '<polygon points="10,54 10,28 30,8 50,28 50,54" fill="none" stroke="#141413" stroke-width="3" stroke-linejoin="round"/><path d="M25 54V40H35V54" fill="none" stroke="#141413" stroke-width="2.5"/></svg>', key: "zb_howto_4" }
   ] });
-  window.addEventListener("resize", () => { if (AppStateZB.state) renderZB(); });
+  // Only a new board width draws again (the phone sends "resize" when its
+  // address bar comes or goes; that changed nothing on the board).
+  window.addEventListener("resize", () => {
+    const w = document.getElementById("zb-board").clientWidth;
+    if (AppStateZB.state && w !== AppStateZB.width) renderZB();
+  });
   if (window.I18n && typeof I18n.onChange === "function") I18n.onChange(() => { if (AppStateZB.state) renderZB(); });
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(ZAHLENBILD_SAVE_KEY) : null;
   if (saved && ZahlenbildCore.valid(saved.state) && !saved.state.solved) {

@@ -521,7 +521,12 @@ all parts back into one log in list order. The last line is exactly
   "zoom"), undo, hint, "Vergrößern" with a fixed part that does not move
   with taps, "Zum nächsten Punkt", "Ganzes Bild"; every picture of every
   level on 384 x 752 and on a 600 x 800 reader screen, no number
-  overlapping or cut off.
+  overlapping or cut off. Second report of task 169: per tap no element
+  added or removed and at most 14 changes on the page (MutationObserver),
+  no rebuild on a "resize" with the same width, no tap highlight; "Linie
+  ziehen" (remembered): one mouse stroke through an easy picture, taps
+  still work, a finger (touch events) on 384 x 752 draws dots 1 to 6
+  without scrolling the page.
 - `node tests/slidepuzzle-core.js`, `node tests/hanoi-core.js`,
   `node tests/nim-core.js` - no server or browser needed (task 118).
   Sliding puzzle: 1000 mixed 3 x 3 and 4 x 4 puzzles (100 of 5 x 5) all

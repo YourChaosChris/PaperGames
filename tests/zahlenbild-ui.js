@@ -17,6 +17,12 @@
 // never overlap. Exception (task 169): from medium on the dots themselves
 // are closer than 44 px on purpose (Kirsten's wish); the 44 px rule of task
 // 164 applies to the buttons.
+// Task 169, second report: per tap no element is added or removed and at
+// most 14 changes happen on the page; a "resize" with the same width keeps
+// the board; no grey tap flash. "Linie ziehen" (remembered): one mouse
+// stroke through an easy picture joins every dot without building the board
+// again and without messages for dots on the way; taps still work; a finger
+// (touch events) on 384 x 752 draws dots 1 to 6 and the page does not scroll.
 const { chromium } = require("playwright");
 const BASE = process.env.BASE_URL || process.argv[2] || "http://localhost:8000/";
 const fails = [];
@@ -119,6 +125,36 @@ const layout = (page) => page.evaluate(() => {
   });
   await page.mouse.click(half[0], half[1]);
   check("tap between two close dots counts for the next one", await page.evaluate(() => AppStateZB.state.done === 6));
+  // Task 169 (second report): changes of the page per tap. No element is
+  // added or removed anywhere; only a few attributes and the status text.
+  await page.evaluate(() => {
+    window.__mut = { records: 0, attrs: 0, added: 0, removed: 0, texts: 0 };
+    window.__obs = new MutationObserver((list) => list.forEach((m) => {
+      window.__mut.records++;
+      if (m.type === "attributes") window.__mut.attrs++;
+      if (m.type === "characterData") window.__mut.texts++;
+      m.addedNodes.forEach((n) => { if (n.nodeType === 1) window.__mut.added++; else window.__mut.texts++; });
+      m.removedNodes.forEach((n) => { if (n.nodeType === 1) window.__mut.removed++; });
+    }));
+    window.__obs.observe(document.body, { subtree: true, childList: true, attributes: true, characterData: true });
+  });
+  const perTap = [];
+  for (let k = 0; k < 3; k++) {
+    await page.evaluate(() => { window.__mut = { records: 0, attrs: 0, added: 0, removed: 0, texts: 0 }; });
+    await tapDot(page, await page.evaluate(() => AppStateZB.state.done));
+    await page.waitForTimeout(50);
+    perTap.push(await page.evaluate(() => Object.assign({}, window.__mut)));
+  }
+  const svgElements = await page.evaluate(() => document.querySelectorAll("#zb-board svg *").length);
+  check("per tap no element added or removed, at most 14 changes " + JSON.stringify(perTap), perTap.every((m) => m.added === 0 && m.removed === 0 && m.records <= 14));
+  console.log("per tap: " + perTap.map((m) => m.records + " changes (" + m.attrs + " attributes)").join(", ") + ", 0 elements replaced; the board has " + svgElements + " elements (before task 169 all of them were built again per tap)");
+  // A "resize" with the same width (the phone's address bar) draws nothing again.
+  await page.evaluate(() => { window.__svg2 = document.querySelector("#zb-board svg"); window.dispatchEvent(new Event("resize")); });
+  check("resize with the same width keeps the board", await page.evaluate(() => document.querySelector("#zb-board svg") === window.__svg2));
+  check("no grey tap flash on the board", await page.evaluate(() => { const c = getComputedStyle(document.getElementById("zb-board")).webkitTapHighlightColor; return c === "rgba(0, 0, 0, 0)" || c === "transparent"; }));
+  await page.evaluate(() => window.__obs.disconnect());
+  // Back to six dots for the checks below.
+  while (await page.evaluate(() => AppStateZB.state.done > 6)) await page.click("#undo-btn");
   const heights = await page.evaluate(() => ["undo-btn", "hint-btn", "zb-zoom"].map((id) => document.getElementById(id).getBoundingClientRect().height));
   check("buttons at least 44 px " + JSON.stringify(heights), heights.every((h) => h >= 43.5));
   check("no sideways scroll (expert)", await page.evaluate(() => document.documentElement.scrollWidth - innerWidth <= 0));
@@ -166,6 +202,65 @@ const layout = (page) => page.evaluate(() => {
   check("old save with zoom loads whole", await page.evaluate(() => AppStateZB.state.done === 3 && AppStateZB.view.zoomed === false));
   check("page errors " + errors.join(" | "), errors.length === 0);
 
+  // Task 169: "Linie ziehen". Default is tapping; the choice is remembered.
+  check("default way: tapping", await page.evaluate(() => document.getElementById("zb-input").value === "tap" && AppStateZB.input === "tap"));
+  if (!(await page.isVisible("#zb-input"))) await page.click("#menu-toggle");
+  await page.selectOption("#zb-input", "drag");
+  await page.reload({ waitUntil: "load" });
+  await page.waitForTimeout(600);
+  check("drawing remembered after reload", await page.evaluate(() => document.getElementById("zb-input").value === "drag" && AppStateZB.input === "drag" && document.getElementById("zb-board").classList.contains("zb-drag-mode")));
+  check("drawing: page does not scroll under the finger", await page.evaluate(() => getComputedStyle(document.getElementById("zb-board")).touchAction === "none"));
+  // Mouse: one stroke through all dots of an easy picture, passing over the
+  // board in between; other dots on the way give no message.
+  await page.evaluate(() => { document.getElementById("zb-level").value = "easy"; startZB(); window.scrollTo(0, document.getElementById("zb-board").getBoundingClientRect().top + scrollY - 10); });
+  await page.waitForTimeout(200);
+  check("drawing: status asks to draw: " + (await page.textContent("#board-info")), (await page.textContent("#board-info")).trim() === "Zieh die Linie zu Punkt 1.");
+  const nEasy = await page.evaluate(() => ZahlenbildCore.dotsOf(AppStateZB.state.level, AppStateZB.state.motif).length);
+  await page.evaluate(() => {
+    window.__svg3 = document.querySelector("#zb-board svg");
+    window.__mut = { added: 0, removed: 0, records: 0 };
+    window.__obs = new MutationObserver((list) => list.forEach((m) => { window.__mut.records++; m.addedNodes.forEach((n) => { if (n.nodeType === 1) window.__mut.added++; }); m.removedNodes.forEach((n) => { if (n.nodeType === 1) window.__mut.removed++; }); }));
+    window.__obs.observe(document.getElementById("zb-board"), { subtree: true, childList: true, attributes: true });
+  });
+  let p0 = await dotXY(page, 0);
+  await page.mouse.move(p0[0], p0[1]);
+  await page.mouse.down();
+  let wrongSeen = false;
+  for (let i = 1; i < nEasy - 1; i++) {
+    const p1 = await dotXY(page, i);
+    await page.mouse.move(p1[0], p1[1], { steps: 8 });
+    if (/Das ist Punkt/.test(await page.textContent("#board-info"))) wrongSeen = true;
+  }
+  // Half-way to the last dot: the preview line is out.
+  const pl = await dotXY(page, nEasy - 1);
+  const pm = await dotXY(page, nEasy - 2);
+  await page.mouse.move((pl[0] + pm[0]) / 2, (pl[1] + pm[1]) / 2, { steps: 4 });
+  const midDrag = await page.evaluate(() => ({ done: AppStateZB.state.done, svg: document.querySelector("#zb-board svg") === window.__svg3, mut: Object.assign({}, window.__mut), preview: document.getElementById("zb-drag").getAttribute("visibility") }));
+  // The last dot finishes the picture.
+  await page.mouse.move(pl[0], pl[1], { steps: 4 });
+  await page.mouse.up();
+  await page.waitForTimeout(100);
+  check("drawing: dots joined one after the other, board not built again " + JSON.stringify(midDrag), midDrag.done === nEasy - 1 && midDrag.svg && midDrag.mut.added === 0 && midDrag.mut.removed === 0);
+  check("drawing: preview line shown while drawing", midDrag.preview === "visible");
+  check("drawing: no message for dots passed on the way", !wrongSeen);
+  check("drawing: picture finished", await page.evaluate(() => AppStateZB.state.solved === true));
+  console.log("drawing (" + nEasy + " dots, one stroke): " + midDrag.mut.records + " changes on the board, 0 elements replaced");
+  await page.evaluate(() => { window.__obs.disconnect(); if (window.ResultModal) window.ResultModal.hide(); });
+  // A tap still works when drawing is chosen, and a lifted finger hides the preview.
+  await page.evaluate(() => { document.getElementById("zb-level").value = "medium"; startZB(); });
+  await page.waitForTimeout(200);
+  await tapDot(page, 0);
+  await tapDot(page, 1);
+  check("drawing chosen: taps still join dots", await page.evaluate(() => AppStateZB.state.done === 2));
+  check("drawing chosen: preview hidden after lifting", await page.evaluate(() => document.getElementById("zb-drag").getAttribute("visibility") === "hidden"));
+  check("drawing chosen: no wrong message after a tap on the next dot: " + (await page.textContent("#board-info")), (await page.textContent("#board-info")).trim() === "Zieh die Linie zu Punkt 3.");
+  // Saved game and the way of playing both back after a reload.
+  await page.reload({ waitUntil: "load" });
+  await page.waitForTimeout(600);
+  check("drawing: game and way back after reload", await page.evaluate(() => AppStateZB.state.done === 2 && AppStateZB.input === "drag"));
+  await page.evaluate(() => { localStorage.removeItem("papergames_zahlenbild_input"); localStorage.removeItem("einkchess_save_zahlenbild"); });
+  check("page errors (drawing) " + errors.join(" | "), errors.length === 0);
+
   // Phone 384 x 752: every level clear, easy 44 px.
   const phone = await browser.newContext({ viewport: { width: 384, height: 752 }, hasTouch: true, serviceWorkers: "block" });
   const pp = await phone.newPage();
@@ -183,6 +278,26 @@ const layout = (page) => page.evaluate(() => {
   }
   check("no sideways scroll (384 x 752)", await pp.evaluate(() => document.documentElement.scrollWidth - innerWidth <= 0));
   console.log("384 x 752 closest dots px " + JSON.stringify(Object.fromEntries(Object.entries(phoneMin).map(([a, b]) => [a, Math.round(b)]))));
+  // Drawing with a real finger (touch events) on the phone, medium level.
+  await pp.evaluate(() => { localStorage.setItem("papergames_zahlenbild_input", "drag"); });
+  await pp.reload({ waitUntil: "load" });
+  await pp.waitForTimeout(400);
+  await pp.evaluate(() => { document.getElementById("zb-level").value = "medium"; startZB(); window.scrollTo(0, document.getElementById("zb-board").getBoundingClientRect().top + scrollY - 10); });
+  await pp.waitForTimeout(200);
+  const cdp = await phone.newCDPSession(pp);
+  const touch = (type, pts) => cdp.send("Input.dispatchTouchEvent", { type, touchPoints: pts.map(([x, y]) => ({ x, y })) });
+  const scrollBefore = await pp.evaluate(() => scrollY);
+  let q = await dotXY(pp, 0);
+  await touch("touchStart", [q]);
+  for (let i = 1; i < 6; i++) {
+    const r = await dotXY(pp, i);
+    for (let k = 1; k <= 8; k++) await touch("touchMove", [[q[0] + (r[0] - q[0]) * k / 8, q[1] + (r[1] - q[1]) * k / 8]]);
+    q = r;
+  }
+  await touch("touchEnd", []);
+  await pp.waitForTimeout(100);
+  const fing = await pp.evaluate((y0) => ({ done: AppStateZB.state.done, still: Math.abs(scrollY - y0) < 2, status: document.getElementById("board-info").textContent }), scrollBefore);
+  check("phone: a finger draws dots 1 to 6, the page stays " + JSON.stringify(fing), fing.done === 6 && fing.still && fing.status === "Zieh die Linie zu Punkt 7.");
 
   // Reader screen 600 x 800: every level clear.
   const reader = await browser.newContext({ viewport: { width: 600, height: 800 }, serviceWorkers: "block" });
@@ -202,6 +317,6 @@ const layout = (page) => page.evaluate(() => {
   check("no sideways scroll (reader)", await rp.evaluate(() => document.documentElement.scrollWidth - innerWidth <= 0));
   check("page errors (reader) " + errors.join(" | "), errors.length === 0);
   await browser.close();
-  console.log("=== ZAHLENBILD UI: wrong dot, easy picture finished, whole picture fixed without rebuild, close taps, save and load, undo, hint, fixed magnified part, 384 x 752 and reader screen (closest dots px " + JSON.stringify(Object.fromEntries(Object.entries(levels).map(([a, b]) => [a, Math.round(b)]))) + "), " + fails.length + " failure(s) ===");
+  console.log("=== ZAHLENBILD UI: wrong dot, easy picture finished, whole picture fixed without rebuild, close taps, few changes per tap, no tap flash, save and load, undo, hint, fixed magnified part, drawing a line (mouse and finger, remembered), 384 x 752 and reader screen (closest dots px " + JSON.stringify(Object.fromEntries(Object.entries(levels).map(([a, b]) => [a, Math.round(b)]))) + "), " + fails.length + " failure(s) ===");
   process.exit(fails.length ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

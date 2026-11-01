@@ -17,6 +17,24 @@
   overflow: hidden;
   touch-action: manipulation;
   cursor: pointer;
+  /* Task 169: no grey tap flash over the board (flicker on e-ink). */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Drawing a line: the finger draws, the page does not scroll. */
+.zb-board.zb-drag-mode {
+  touch-action: none;
+}
+
+/* No focus ring after a tap; the keyboard still shows one. */
+.zb-board [tabindex]:focus {
+  outline: none;
+}
+
+.zb-board [tabindex]:focus-visible circle {
+  stroke-width: 4;
 }
 
 .zb-board svg {
