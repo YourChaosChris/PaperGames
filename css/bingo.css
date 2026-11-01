@@ -124,6 +124,79 @@
   outline-offset: -6px;
 }
 
+/* The computers' cards (task 168): small, only to look at. Two side by
+   side, numbers 0.8rem (about 13 px) on 3 x 3 and 5 x 5. */
+.bingo-cpu-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr));
+  gap: 0.5rem;
+  max-width: 24rem;
+  margin: 0 auto 0.5rem;
+}
+
+.bingo-mini {
+  padding: 0.3rem;
+}
+
+.bingo-mini .bingo-card-title {
+  font-size: 0.85rem;
+  margin: 0 0 0.25rem;
+}
+
+.bingo-mini-cell {
+  position: relative;
+  display: block;
+  min-width: 0;
+  border: 1px solid #141413;
+  background: #fff;
+  color: #141413;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.bingo-mini-cell::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.bingo-mini-cell svg {
+  width: 80%;
+  height: 80%;
+}
+
+.bingo-mini-cell.marked::after {
+  content: "";
+  position: absolute;
+  top: 6%;
+  right: 6%;
+  bottom: 6%;
+  left: 6%;
+  border: 2px solid #141413;
+  border-radius: 50%;
+}
+
+/* The item just called: a dashed frame inside the cell. */
+.bingo-mini-cell.bingo-just {
+  outline: 2px dashed #141413;
+  outline-offset: -3px;
+}
+
+/* A computer's bingo: the winning cells in black. */
+.bingo-mini-cell.bingo-win {
+  background: #141413;
+  color: #fff;
+}
+
+.bingo-mini-cell.bingo-win.marked::after {
+  border-color: #fff;
+}
+
+.bingo-mini-cell.bingo-win svg g {
+  stroke: #fff;
+}
+
 .bingo-called-title {
   font-size: 1rem;
   margin: 0.5rem 0 0.3rem;

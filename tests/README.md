@@ -155,6 +155,7 @@ all parts back into one log in list order. The last line is exactly
   solve the puzzle and count a win, family theme says "Personen", no
   horizontal scrolling at 360 and 600 px (7x7 too), no page errors.
 - `node tests/bingo-core.js` - no server or browser needed. 1,000 decks (3 x 3 / 5 x 5, numbers / pictures), every item called exactly once, all win patterns against a brute-force check, wrong marks, 1,000 games against computer cards.
+- `node tests/bingo-ui.js` - needs the local server (BASE_URL) and Playwright. German page at 360 x 640 against two computers (task 168): their cards shown small under your own, cell for cell as in the saved game; the status line names which computer marked the call (or that none has it), the called cell is framed; the switch hides and shows the cards, is 44 px high and comes back with the game after a reload; small numbers at least 12 px, no overlap, no sideways scroll; a computer bingo is named and its winning cells are black.
 - `node tests/sudoku-seeds.js` - no server or browser needed. 20 Sudoku
   and 20 Killer Sudoku puzzles per level from fixed seeds; each must have
   exactly one solution, and a fingerprint of all of them must equal the

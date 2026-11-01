@@ -5,10 +5,18 @@
 // cards on one device, shown one after the other with "Next card"), and
 // "computer" (your card against computer cards that mark by themselves).
 // "Bingo!" checks the shown card; wrong marks get a dashed frame, no penalty.
+// Against the computer the computers' cards are shown small under your own
+// card (task 168): numbers or pictures and their marks, the item just
+// called framed, a bingo in black; a switch hides them. The status line
+// names which computer marked the call or has a bingo. The game is saved
+// (with the switch) and comes back after a reload.
 (function () {
   const $ = (id) => document.getElementById(id);
   const t = (k) => (typeof I18n !== "undefined" ? I18n.t(k) : k);
-  const state = { game: null, cards: [], active: 0, current: null };
+  const SAVE_KEY = "einkchess_save_bingo";
+  const state = { game: null, cards: [], active: 0, current: null, showCpu: true, cpuWin: -1 };
+  const fill = (text, values) => String(text).replace(/\{(\w+)\}/g, (m, k) => (values[k] !== undefined ? values[k] : m));
+  const cpuName = (ci) => fill(t("dg_computer_n"), { n: ci });
   const PICTURES = ["dog","cat","rabbit","mouse","owl","fish","turtle","snail","duck","frog","pig","elephant","butterfly","bee","lion","giraffe","sheep","apple","pear","car","boat","ball","flower","house"];
   const DRAWINGS = {
     dog:'<circle cx="50" cy="52" r="24"/><path d="M28 39 20 18 41 30M72 39l8-21-21 12"/><circle cx="42" cy="50" r="2"/><circle cx="58" cy="50" r="2"/><ellipse cx="50" cy="60" rx="7" ry="5"/>',
@@ -59,6 +67,7 @@
     state.cards = s.mode === "caller" ? [] : Array.from({ length: s.count }, () => BingoCore.createDeck(s.kind, s.size));
     state.active = 0;
     state.current = null;
+    state.cpuWin = -1;
     setResult("");
     setStatus(s.mode === "caller" ? t("bingo_status_caller") : t("bingo_status_start"));
     $("board-placeholder").classList.add("hidden");
@@ -66,6 +75,37 @@
     $("settings-panel").classList.add("hidden");
     I18n.setKey($("menu-toggle"), "menu_toggle");
     render();
+    save();
+  }
+
+  /*** Save and load ***/
+
+  function save() {
+    if (typeof GameStorage === "undefined" || !state.game) return;
+    if (state.game.over || state.game.mode === "caller") { GameStorage.clear(SAVE_KEY); return; }
+    GameStorage.save(SAVE_KEY, { game: state.game, cards: state.cards, active: state.active, current: state.current, showCpu: state.showCpu });
+  }
+
+  function validSave(d) {
+    if (!d || !d.game || !Array.isArray(d.cards) || !d.cards.length || !Array.isArray(d.game.drawn)) return false;
+    if (d.game.over || ["two", "computer"].indexOf(d.game.mode) === -1) return false;
+    return d.cards.every((c) => c && Array.isArray(c.board) && Array.isArray(c.marked) && c.board.length === c.marked.length && (c.size === 3 || c.size === 5) && c.board.length === c.size * c.size);
+  }
+
+  function load() {
+    const d = typeof GameStorage !== "undefined" ? GameStorage.load(SAVE_KEY) : null;
+    if (!validSave(d)) return false;
+    state.game = d.game;
+    state.cards = d.cards;
+    state.active = d.active > 0 && d.active < d.cards.length ? d.active : 0;
+    state.current = d.current === undefined ? null : d.current;
+    state.showCpu = d.showCpu !== false;
+    state.cpuWin = -1;
+    $("board-placeholder").classList.add("hidden");
+    $("board-container").classList.remove("hidden");
+    setStatus(state.game.mode === "computer" ? t("ui_status_your_turn") : t("bingo_status_marked"));
+    render();
+    return true;
   }
 
   function visibleIndex() { return state.game.mode === "computer" ? 0 : state.active; }
@@ -80,9 +120,43 @@
     return html + "</div>";
   }
 
+  // A computer's card, small and only to look at (task 168): the item just
+  // called gets a dashed frame, marks a ring, a bingo is black.
+  function smallCardHtml(card, ci) {
+    const g = state.game;
+    const win = BingoCore.check(card, g.pattern);
+    const winning = win.valid ? win.winning : [];
+    const count = card.marked.filter(Boolean).length;
+    const label = fill(t("bingo_cpu_card_aria"), { name: cpuName(ci), n: count, m: card.marked.length });
+    let html = '<h3 class="bingo-card-title">' + cpuName(ci) + (win.valid ? " – " + t("bingo_check") : "") + '</h3><div class="bingo-grid bingo-mini-grid" style="--bingo-n:' + card.size + '" role="img" aria-label="' + label.replace(/"/g, "") + '">';
+    card.board.forEach((v, i) => {
+      const cls = ["bingo-mini-cell"];
+      if (card.marked[i]) cls.push("marked");
+      if (v !== null && v === state.current && card.marked[i]) cls.push("bingo-just");
+      if (winning.indexOf(i) !== -1) cls.push("bingo-win");
+      html += '<span class="' + cls.join(" ") + '"><span class="bingo-in">' + (v === null ? "&#9733;" : card.kind === "pictures" ? drawIcon(v) : String(v)) + "</span></span>";
+    });
+    return html + "</div>";
+  }
+
+  function renderCpu() {
+    const g = state.game;
+    const wrap = $("bingo-cpu");
+    const on = g.mode === "computer" && state.cards.length > 1;
+    wrap.classList.toggle("hidden", !on);
+    if (!on) return;
+    const btn = $("bingo-cpu-toggle");
+    btn.setAttribute("aria-pressed", state.showCpu ? "true" : "false");
+    I18n.setKey(btn, state.showCpu ? "bingo_cpu_hide" : "bingo_cpu_show");
+    const host = $("bingo-cpu-cards");
+    host.classList.toggle("hidden", !state.showCpu);
+    host.innerHTML = state.showCpu ? state.cards.slice(1).map((c, k) => '<article class="bingo-card bingo-mini">' + smallCardHtml(c, k + 1) + "</article>").join("") : "";
+  }
+
   function render() {
     const g = state.game;
     if (!g) return;
+    renderCpu();
     const showCards = g.mode !== "caller" && state.cards.length > 0;
     const vi = visibleIndex();
     const host = $("bingo-cards");
@@ -135,6 +209,7 @@
     if (card.board[i] === null) return;
     card.marked[i] = !card.marked[i];
     render();
+    save();
     const el = $("bingo-cards").querySelectorAll(".bingo-cell")[i];
     if (el) el.focus();
   }
@@ -148,20 +223,30 @@
     state.current = v;
     if (v === null) { setStatus(t("bingo_draw_empty")); render(); return; }
     let computerWin = false;
+    const marked = [], bingos = [];
     state.cards.forEach((c, ci) => {
       c.drawn = g.drawn.slice();
       if (g.mode === "computer" && ci > 0) {
-        BingoCore.autoMark(c, v);
-        if (BingoCore.check(c, g.pattern).valid) computerWin = true;
+        if (BingoCore.autoMark(c, v) >= 0) marked.push(ci);
+        if (BingoCore.check(c, g.pattern).valid) { computerWin = true; bingos.push(ci); }
       }
     });
+    // What the computers did with this call (task 168).
+    let done = "";
+    if (g.mode === "computer") {
+      const item = itemLabel(v);
+      done = marked.length ? marked.map((ci) => fill(t("bingo_cpu_marked"), { name: cpuName(ci), v: item })).join(" ") : fill(t("bingo_cpu_none"), { v: item });
+      bingos.forEach((ci) => { done += " " + fill(t("bingo_cpu_bingo"), { name: cpuName(ci) }); });
+      done += " ";
+    }
     if (computerWin) {
       g.over = true;
-      setStatus(t("ui_status_computer_wins"));
+      setStatus(done + t("ui_status_computer_wins"));
       setResult(t("ui_status_computer_wins"));
       if (typeof GameStats !== "undefined") GameStats.record("bingo", "loss");
-    } else setStatus(g.mode === "computer" ? t("ui_status_your_turn") : t("bingo_status_marked"));
+    } else setStatus(g.mode === "computer" ? done + t("ui_status_your_turn") : t("bingo_status_marked"));
     render();
+    save();
   }
 
   function onCheck() {
@@ -181,6 +266,7 @@
       $("bingo-draw").disabled = true;
       $("bingo-check").disabled = true;
     } else setStatus(res.incorrect.length ? t("bingo_incorrect") : t("bingo_not_yet"));
+    save();
   }
 
   function onNext() {
@@ -188,6 +274,7 @@
     state.active = (state.active + 1) % state.cards.length;
     setStatus(t("bingo_card") + " " + (state.active + 1));
     render();
+    save();
   }
 
   function syncCount() {
@@ -210,7 +297,9 @@
     $("bingo-print-btn").addEventListener("click", () => { if (!state.game) start(); renderPrint(); window.print(); });
     window.addEventListener("beforeprint", renderPrint);
     $("bingo-mode").addEventListener("change", syncCount);
+    $("bingo-cpu-toggle").addEventListener("click", () => { state.showCpu = !state.showCpu; render(); save(); });
     syncCount();
+    load();
     const T = (n, st) => Howto.tile(n, st, 44);
     Howto.init({ slug: "bingo", actions: ["bingo-draw"], steps: [
       { pics: T("17"), key: "bingo_howto_1" },
