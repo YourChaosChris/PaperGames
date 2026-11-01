@@ -14,7 +14,7 @@ Object.assign(STRINGS.nl, {
     zb_term_levels: "Niveaus",
     zb_rules_levels: "Makkelijk (voor kinderen): 10 tot 15 grote stippen met veel ruimte ertussen. Gemiddeld: ongeveer 25 stippen. Moeilijk: ongeveer 40 stippen. Heel moeilijk (voor volwassenen): ongeveer 50 tot 60 dicht bij elkaar; de tekening verschijnt pas aan het einde. Elk niveau heeft vijf tekeningen, een voor een.",
     zb_term_zoom: "Vergrote weergave",
-    zb_rules_zoom: "Als de stippen dicht bij elkaar staan op een klein scherm, toont het bord een vergroot deel rond de volgende stip, zodat je elke stip makkelijk kunt aantikken. ‘Hele afbeelding’ toont alles met kleinere nummers; ‘Vergroten’ gaat terug.",
+    zb_rules_zoom: "Het bord toont altijd de hele tekening op een vaste grootte; een tik voegt alleen de stip en de lijn toe, er schuift niets. Vanaf Gemiddeld liggen de stippen dicht bij elkaar en zijn de getallen kleiner. Een tik telt voor de gezochte stip als die een van de twee stippen is die het dichtst bij je vinger liggen. ‘Vergroten’ toont een vast stuk rond de volgende stip met de stippen verder uit elkaar; ‘Naar het volgende punt’ verschuift dat stuk, ‘Hele afbeelding’ gaat terug.",
     zb_term_help: "Ongedaan maken en hint",
     zb_rules_help: "Ongedaan maken haalt de laatste stip weg. De hint geeft de volgende stip een dubbele ring.",
     zb_history_title: "De geschiedenis van Stippentekening",

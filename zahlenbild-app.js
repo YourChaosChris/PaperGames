@@ -7,13 +7,16 @@
 // being looked for. After the last dot the line closes back to dot 1 and the
 // finished picture shows with its name (and its small extra lines).
 //
-// Tap targets (task 166): a tap counts for the dot being looked for when it
-// is less than 22 px from it. When the closest two dots of a picture would be
-// less than 44 px apart on this screen, the board shows a magnified part
-// around the next dot ("Magnify", on by default); "Whole picture" shows all
-// of it with smaller numbers. The magnified part follows the next dot.
-// Nothing is animated, no timer. Undo takes back dots, the hint gives the next
-// dot a double ring.
+// Task 169 (no flicker, closer dots): the board shows the whole picture at
+// one fixed scale for the whole game (from medium on fitted to the board, the
+// numbers as large as they fit without covering each other). A tap does not
+// build the board again: the dot turns black, the line grows by one piece,
+// the next number turns bold - nothing moves, the scale never changes.
+// "Magnify" (only on request, remembered) draws the closest dots 30 px apart
+// in a fixed part around the next dot; the part only moves with "Go to the
+// next dot". A tap counts for the dot being looked for when it is one of the
+// two dots closest to the tap within 22 px. Nothing is animated, no timer.
+// Undo takes back dots, the hint gives the next dot a double ring.
 
 const ZAHLENBILD_SAVE_KEY = "einkchess_save_zahlenbild";
 const ZB_LAST_KEY = "papergames_zahlenbild_last";
@@ -23,7 +26,7 @@ const ZB_SPAN = 108;
 
 const AppStateZB = {
   state: null,
-  zoom: true,    // magnified part when the dots are close together
+  magnify: null, // centre {x, y} (board units) of the fixed magnified part, or null: whole picture
   hint: false,   // the next dot has a double ring
   hints: 0,
   note: "",      // the last message (wrong dot), until the next tap
@@ -46,7 +49,7 @@ function dotsZB() {
 function saveZB() {
   if (typeof GameStorage === "undefined" || !AppStateZB.state) return;
   if (AppStateZB.state.solved) { GameStorage.clear(ZAHLENBILD_SAVE_KEY); return; }
-  GameStorage.save(ZAHLENBILD_SAVE_KEY, { state: AppStateZB.state, zoom: AppStateZB.zoom, hints: AppStateZB.hints });
+  GameStorage.save(ZAHLENBILD_SAVE_KEY, { state: AppStateZB.state, magnify: AppStateZB.magnify, hints: AppStateZB.hints });
 }
 
 // The picture after the last one played at this level (a circle of five).
@@ -68,6 +71,7 @@ function startZB() {
   AppStateZB.hint = false;
   AppStateZB.hints = 0;
   AppStateZB.note = "";
+  AppStateZB.magnify = null;
   setResultZB("");
   if (window.ResultModal) window.ResultModal.hide();
   showBoardZB();
@@ -94,11 +98,12 @@ function tapDotZB(i) {
   if (r.ok) {
     AppStateZB.hint = false;
     AppStateZB.note = "";
-    if (r.state.solved) finishZB();
+    if (r.state.solved) { finishZB(); renderZB(); }
+    else updateDotZB(i);
   } else if (r.reason === "wrong") {
     AppStateZB.note = tZB("zb_wrong", { n: i + 1, m: s.done + 1 });
+    renderInfoZB();
   }
-  renderZB();
   saveZB();
 }
 
@@ -119,14 +124,32 @@ function hintZB() {
   AppStateZB.hint = true;
   AppStateZB.hints++;
   AppStateZB.note = tZB("zb_hint_text", { n: s.done + 1 });
+  drawHintZB();
+  renderInfoZB();
+  saveZB();
+}
+
+// "Magnify" / "Whole picture": the magnified part is centred on the next
+// dot once, when the button is pressed, and then stays where it is.
+function zoomZB() {
+  AppStateZB.magnify = AppStateZB.magnify ? null : nextCentreZB();
   renderZB();
   saveZB();
 }
 
-function zoomZB() {
-  AppStateZB.zoom = !AppStateZB.zoom;
+// "Go to the next dot": moves the magnified part to the next dot.
+function followZB() {
+  if (!AppStateZB.magnify) return;
+  AppStateZB.magnify = nextCentreZB();
   renderZB();
   saveZB();
+}
+
+function nextCentreZB() {
+  const s = AppStateZB.state;
+  const dots = dotsZB();
+  const p = dots[Math.min(s.done, dots.length - 1)];
+  return { x: p[0], y: p[1] };
 }
 
 function finishZB() {
@@ -153,20 +176,32 @@ function f2ZB(x) {
   return (Math.round(x * 100) / 100).toString();
 }
 
-// The part of the board shown: [x, y, size] in board units, and pixels per unit.
+// The part of the board shown: [x, y, size] in board units, and pixels per
+// unit. The whole picture unless "Magnify" is on; the scale depends only on
+// the picture, the board width and the button, never on the taps.
 function viewZB() {
   const s = AppStateZB.state;
   const wrap = document.getElementById("zb-board");
   const px = Math.max(200, wrap.clientWidth || 320);
-  const need = ZahlenbildCore.scaleFor(s.level, s.motif);
-  const whole = px / ZB_SPAN;
-  const zoomable = whole < need - 1e-9;
-  if (!zoomable || !AppStateZB.zoom || s.solved) return { x: ZB_MIN, y: ZB_MIN, size: ZB_SPAN, scale: whole, zoomable, zoomed: false, need };
-  const size = px / need;
+  const whole = ZahlenbildCore.wholeView(s.level, s.motif, px);
+  const mag = ZahlenbildCore.magnifyScale(s.level, s.motif);
+  const zoomable = s.level !== "easy" && mag > whole.scale * 1.05;
+  const base = { zoomable: zoomable, zoomed: false };
+  if (!zoomable || !AppStateZB.magnify || s.solved) return Object.assign(base, whole);
+  const size = px / mag;
+  const clampX = (v) => Math.max(Math.min(whole.x, ZB_MIN), Math.min(Math.max(whole.x + whole.size, ZB_MIN + ZB_SPAN) - size, v));
+  const clampY = (v) => Math.max(Math.min(whole.y, ZB_MIN), Math.min(Math.max(whole.y + whole.size, ZB_MIN + ZB_SPAN) - size, v));
+  return Object.assign(base, { x: clampX(AppStateZB.magnify.x - size / 2), y: clampY(AppStateZB.magnify.y - size / 2), size: size, scale: mag, zoomed: true });
+}
+
+// Is the next dot inside the part shown (with room for a tap round it)?
+function nextInViewZB(v) {
+  const s = AppStateZB.state;
   const dots = dotsZB();
-  const at = dots[Math.min(s.done, dots.length - 1)];
-  const clamp = (v) => Math.max(ZB_MIN, Math.min(ZB_MIN + ZB_SPAN - size, v));
-  return { x: clamp(at[0] - size / 2), y: clamp(at[1] - size / 2), size, scale: need, zoomable, zoomed: true, need };
+  if (s.done >= dots.length) return true;
+  const p = dots[s.done];
+  const m = 22 / v.scale;
+  return p[0] >= v.x + m && p[0] <= v.x + v.size - m && p[1] >= v.y + m && p[1] <= v.y + v.size - m;
 }
 
 // The svg is drawn in pixels (so numbers have their real font size); board
@@ -174,15 +209,16 @@ function viewZB() {
 function boardHtmlZB(v) {
   const s = AppStateZB.state;
   const dots = dotsZB();
-  const look = ZahlenbildCore.LOOK[s.level];
   const m = ZahlenbildCore.motif(s.level, s.motif);
   const side = v.size * v.scale;
   const X = (x) => f2ZB((x - v.x) * v.scale);
   const Y = (y) => f2ZB((y - v.y) * v.scale);
-  // Below the scale of a tap target ("Whole picture") everything shrinks a little.
-  const k = Math.min(1, v.scale / v.need);
-  const r = Math.max(3, look.dot * k);
-  const font = Math.max(9, look.font * k);
+  // Number size, dot radius and number places for this scale (task 169).
+  // The whole picture keeps every number inside the board.
+  const lay = ZahlenbildCore.layout(s.level, s.motif, v.scale, v.zoomed ? null : { x: v.x, y: v.y, size: v.size });
+  AppStateZB.layout = lay;
+  const r = lay.dot;
+  const font = lay.font;
   let html = '<svg viewBox="0 0 ' + f2ZB(side) + " " + f2ZB(side) + '" width="100%" height="100%" role="group" aria-label="' + tZB("zb_board_aria") + '" focusable="false">';
   html += '<rect x="0" y="0" width="' + f2ZB(side) + '" height="' + f2ZB(side) + '" fill="#fff"/>';
   const pts = dots.slice(0, s.done).map((p) => X(p[0]) + "," + Y(p[1])).join(" ");
@@ -192,26 +228,68 @@ function boardHtmlZB(v) {
     m.details.forEach((d) => { html += '<path d="' + d + '" fill="none" stroke="#141413" stroke-width="3" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>'; });
     return html + "</g></svg>";
   }
-  if (s.done > 1) html += '<polyline points="' + pts + '" fill="none" stroke="#141413" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>';
-  const dirs = ZahlenbildCore.labels(s.level, s.motif);
+  // The line (always there, so a tap only adds a point) and the hint rings.
+  html += '<polyline id="zb-line" points="' + pts + '" fill="none" stroke="#141413" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>';
+  html += '<g id="zb-hint"></g>';
+  const dirs = lay.dirs;
   dots.forEach((p, i) => {
     const next = i === s.done;
     const done = i < s.done;
     const cx = X(p[0]), cy = Y(p[1]);
-    html += '<g' + (next ? ' class="zb-next" data-dot="' + i + '" role="button" tabindex="0"' : ' role="img"') + ' aria-label="' + tZB("zb_dot_aria", { n: i + 1 }) + '">';
-    if (next && AppStateZB.hint) {
-      html += '<circle cx="' + cx + '" cy="' + cy + '" r="' + f2ZB(r + 6) + '" fill="none" stroke="#141413" stroke-width="2"/>';
-      html += '<circle cx="' + cx + '" cy="' + cy + '" r="' + f2ZB(r + 11) + '" fill="none" stroke="#141413" stroke-width="2"/>';
-    }
+    html += '<g id="zb-d' + i + '" data-dot="' + i + '"' + (next ? ' class="zb-next" role="button" tabindex="0"' : ' role="img"') + ' aria-label="' + tZB("zb_dot_aria", { n: i + 1 }) + '">';
     html += '<circle cx="' + cx + '" cy="' + cy + '" r="' + f2ZB(r) + '" fill="' + (done ? "#141413" : "#fff") + '" stroke="#141413" stroke-width="2"/>';
-    const box = ZahlenbildCore.labelBox(i, look.font);
-    const off = ZahlenbildCore.offsetFor(dirs[i], box, look.dot);
-    const lx = (p[0] - v.x) * v.scale + off[0] * k;
-    const ly = (p[1] - v.y) * v.scale + off[1] * k + font * 0.36;
+    const box = ZahlenbildCore.labelBox(i, font);
+    const off = ZahlenbildCore.offsetFor(dirs[i], box, r);
+    const lx = (p[0] - v.x) * v.scale + off[0];
+    const ly = (p[1] - v.y) * v.scale + off[1] + font * 0.36;
     html += '<text class="zb-num" x="' + f2ZB(lx) + '" y="' + f2ZB(ly) + '" text-anchor="middle" font-family="sans-serif" font-weight="' + (next ? 700 : 400) + '" font-size="' + f2ZB(font) + '" fill="#141413">' + (i + 1) + "</text>";
     html += "</g>";
   });
   return html + "</svg>";
+}
+
+// Point of dot i in svg pixels.
+function pxZB(i) {
+  const v = AppStateZB.view;
+  const p = dotsZB()[i];
+  return [(p[0] - v.x) * v.scale, (p[1] - v.y) * v.scale];
+}
+
+// The double ring of the hint round the next dot (only that group changes).
+function drawHintZB() {
+  const g = document.getElementById("zb-hint");
+  if (!g) return;
+  const s = AppStateZB.state;
+  if (!AppStateZB.hint || s.solved) { g.innerHTML = ""; return; }
+  const c = pxZB(s.done);
+  const r = AppStateZB.layout ? AppStateZB.layout.dot : 5;
+  g.innerHTML = '<circle cx="' + f2ZB(c[0]) + '" cy="' + f2ZB(c[1]) + '" r="' + f2ZB(r + 6) + '" fill="none" stroke="#141413" stroke-width="2"/>' +
+    '<circle cx="' + f2ZB(c[0]) + '" cy="' + f2ZB(c[1]) + '" r="' + f2ZB(r + 11) + '" fill="none" stroke="#141413" stroke-width="2"/>';
+}
+
+// After a right tap on dot i (task 169): only dot i, the next dot, the line
+// and the hint change - the board is not drawn again, nothing moves.
+function updateDotZB(i) {
+  const done = document.getElementById("zb-d" + i);
+  if (!done) { renderZB(); return; }
+  done.classList.remove("zb-next");
+  done.setAttribute("role", "img");
+  done.removeAttribute("tabindex");
+  done.querySelector("circle").setAttribute("fill", "#141413");
+  done.querySelector("text").setAttribute("font-weight", "400");
+  const next = document.getElementById("zb-d" + (i + 1));
+  if (next) {
+    next.classList.add("zb-next");
+    next.setAttribute("role", "button");
+    next.setAttribute("tabindex", "0");
+    next.querySelector("text").setAttribute("font-weight", "700");
+  }
+  const line = document.getElementById("zb-line");
+  const c = pxZB(i);
+  const pts = line.getAttribute("points");
+  line.setAttribute("points", (pts ? pts + " " : "") + f2ZB(c[0]) + "," + f2ZB(c[1]));
+  drawHintZB();
+  renderInfoZB();
 }
 
 function renderZB() {
@@ -223,12 +301,22 @@ function renderZB() {
   const v = viewZB();
   AppStateZB.view = v;
   wrap.innerHTML = boardHtmlZB(v);
+  drawHintZB();
+  renderInfoZB();
+}
+
+// Everything round the board: progress, buttons, name, status line.
+function renderInfoZB() {
+  const s = AppStateZB.state;
+  const v = AppStateZB.view;
   const n = dotsZB().length;
   document.getElementById("game-meta").textContent = tZB("zb_progress", { n: s.done, m: n }) + " · " + I18n.t("zb_level_" + s.level);
   const zoomBtn = document.getElementById("zb-zoom");
   zoomBtn.classList.toggle("hidden", !v.zoomable || s.solved);
-  zoomBtn.setAttribute("data-i18n", AppStateZB.zoom ? "zb_zoom_out" : "zb_zoom_in");
-  zoomBtn.textContent = I18n.t(AppStateZB.zoom ? "zb_zoom_out" : "zb_zoom_in");
+  zoomBtn.setAttribute("data-i18n", v.zoomed ? "zb_zoom_out" : "zb_zoom_in");
+  zoomBtn.textContent = I18n.t(v.zoomed ? "zb_zoom_out" : "zb_zoom_in");
+  const follow = document.getElementById("zb-follow");
+  follow.classList.toggle("hidden", !v.zoomed || s.solved || nextInViewZB(v));
   document.getElementById("undo-btn").disabled = !s.done;
   document.getElementById("hint-btn").disabled = s.solved;
   const name = document.getElementById("zb-name");
@@ -241,8 +329,9 @@ function renderZB() {
 
 /*** Taps ***/
 
-// The dot for a tap at (clientX, clientY): the next dot when it is close
-// enough, else the closest dot within reach, else -1.
+// The dot for a tap at (clientX, clientY): the next dot when it is one of
+// the two closest dots within reach (task 169), else the closest dot within
+// reach, else -1.
 function dotAtZB(clientX, clientY) {
   const svg = document.querySelector("#zb-board svg");
   if (!svg || !svg.getScreenCTM()) return -1;
@@ -255,13 +344,12 @@ function dotAtZB(clientX, clientY) {
   const p = { x: v.x + q.x / v.scale, y: v.y + q.y / v.scale };
   const scale = v.scale * (svg.getScreenCTM().a || 1);
   const reach = ZB_HIT_PX / scale;
-  const dots = dotsZB();
-  const d = (i) => Math.hypot(dots[i][0] - p.x, dots[i][1] - p.y);
-  const next = AppStateZB.state.done;
-  if (next < dots.length && d(next) <= reach) return next;
-  let best = -1;
-  dots.forEach((q, i) => { if (d(i) <= reach && (best < 0 || d(i) < d(best))) best = i; });
-  return best;
+  // Only dots inside the part shown can be meant.
+  const s = AppStateZB.state;
+  const hit = ZahlenbildCore.dotAt(s.level, s.motif, p.x, p.y, reach, s.done);
+  if (hit < 0) return -1;
+  const q2 = dotsZB()[hit];
+  return q2[0] >= v.x && q2[0] <= v.x + v.size && q2[1] >= v.y && q2[1] <= v.y + v.size ? hit : -1;
 }
 
 function initZahlenbildApp() {
@@ -277,6 +365,7 @@ function initZahlenbildApp() {
   document.getElementById("undo-btn").addEventListener("click", undoZB);
   document.getElementById("hint-btn").addEventListener("click", hintZB);
   document.getElementById("zb-zoom").addEventListener("click", zoomZB);
+  document.getElementById("zb-follow").addEventListener("click", followZB);
   const board = document.getElementById("zb-board");
   board.addEventListener("click", (e) => {
     if (!AppStateZB.state || AppStateZB.state.solved) return;
@@ -304,7 +393,8 @@ function initZahlenbildApp() {
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(ZAHLENBILD_SAVE_KEY) : null;
   if (saved && ZahlenbildCore.valid(saved.state) && !saved.state.solved) {
     AppStateZB.state = saved.state;
-    AppStateZB.zoom = saved.zoom !== false;
+    // Older saves had "zoom" (magnified by default): they start with the whole picture.
+    AppStateZB.magnify = saved.magnify && typeof saved.magnify.x === "number" && typeof saved.magnify.y === "number" ? saved.magnify : null;
     AppStateZB.hints = saved.hints || 0;
     document.getElementById("zb-level").value = saved.state.level;
     showBoardZB();

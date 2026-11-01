@@ -14,7 +14,7 @@ Object.assign(STRINGS.it, {
     zb_term_levels: "I livelli",
     zb_rules_levels: "Facile (per i bambini): da 10 a 15 punti grandi e distanti. Medio: circa 25 punti. Difficile: circa 40 punti. Molto difficile (per gli adulti): da 50 a 60 punti ravvicinati; il disegno appare solo alla fine. Ogni livello ha cinque disegni, uno dopo l’altro.",
     zb_term_zoom: "Vista ingrandita",
-    zb_rules_zoom: "Quando i punti sono vicini su uno schermo piccolo, il tabellone ingrandisce la zona attorno al punto successivo, così è facile toccarlo. «Immagine intera» mostra tutto con numeri più piccoli; «Ingrandisci» torna indietro.",
+    zb_rules_zoom: "Il tabellone mostra sempre l'intera immagine a una grandezza fissa; un tocco aggiunge solo il punto e la linea, niente si sposta. Da Medio in poi i punti sono vicini e i numeri più piccoli. Un tocco vale per il punto cercato se è uno dei due punti più vicini al tuo dito. «Ingrandisci» mostra una parte fissa intorno al punto successivo, con i punti più distanti; «Vai al punto successivo» sposta questa parte, «Immagine intera» torna indietro.",
     zb_term_help: "Annulla e aiuto",
     zb_rules_help: "Annulla rimuove l’ultimo punto. L’aiuto indica il punto successivo con un doppio cerchio.",
     zb_history_title: "La storia del Disegno a puntini",

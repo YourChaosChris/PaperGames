@@ -14,7 +14,7 @@ Object.assign(STRINGS.fr, {
     zb_term_levels: "Les niveaux",
     zb_rules_levels: "Facile (pour les enfants) : 10 à 15 gros points espacés. Moyen : environ 25 points. Difficile : environ 40 points. Très difficile (pour les adultes) : environ 50 à 60 points rapprochés ; l’image apparaît seulement à la fin. Chaque niveau propose cinq images, l’une après l’autre.",
     zb_term_zoom: "Vue agrandie",
-    zb_rules_zoom: "Quand les points sont rapprochés sur un petit écran, le plateau agrandit la zone autour du prochain point pour faciliter chaque touche. « Image entière » affiche tout avec des numéros plus petits ; « Agrandir » permet de revenir.",
+    zb_rules_zoom: "Le plateau montre toujours l'image entière à une taille fixe ; un appui ajoute seulement le point et la ligne, rien ne bouge. À partir de Moyen, les points sont serrés et les nombres plus petits. Un appui compte pour le point cherché s'il est l'un des deux points les plus proches de votre doigt. « Agrandir » montre une partie fixe autour du point suivant, avec des points plus espacés ; « Aller au point suivant » déplace cette partie, « Image entière » revient en arrière.",
     zb_term_help: "Annuler et indice",
     zb_rules_help: "Annuler retire le dernier point. L’indice entoure le prochain point d’un double cercle.",
     zb_history_title: "L’histoire d’Image à points",

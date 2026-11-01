@@ -78,7 +78,11 @@ const pages = fs.readdirSync(ROOT).filter((f) => /^games(-[a-z]+)?\.html$/.test(
   // Steckwürfeln's "Weiter"/"Ergebnis" (#sw-next, task 167) in
   // tests/steckwuerfeln-ui.js, Bingo's switch (#bingo-cpu-toggle, task 168)
   // in tests/bingo-ui.js.
-  const ACTION_SEL = ".dg-actions button, .bj-buttons button, .fv-actions button, .ur-dice-area > button, #nim-take, #romme-meld-button, #romme-discard-button, #bl-roll, #bl-next, #bingo-cpu-toggle, #ludo-roll-button, #sl-roll, #sl-next, #sj-next, #sw-next, #mt-undo, #mt-reset, #mt-hint";
+  // Exception (task 169): the dots of Zahlenbild are no buttons in this
+  // sense - from medium on they are closer than 44 px on purpose (Kirsten's
+  // wish, the whole picture at once); tests/zahlenbild-ui.js checks them.
+  // Its buttons (#zb-zoom, #zb-follow) count like all others.
+  const ACTION_SEL = ".dg-actions button, .bj-buttons button, .fv-actions button, .ur-dice-area > button, #nim-take, #romme-meld-button, #romme-discard-button, #bl-roll, #bl-next, #bingo-cpu-toggle, #ludo-roll-button, #sl-roll, #sl-next, #sj-next, #sw-next, #mt-undo, #mt-reset, #mt-hint, #zb-zoom, #zb-follow";
   const ACTION = ["romme", "blockers", "ludo", "snakesladders", "matches", "forestvillage", "blackjack", "nim", "backgammon", "klappenkasten", "index"];
   let actions = 0, footer = 0;
   for (const slug of ACTION) {

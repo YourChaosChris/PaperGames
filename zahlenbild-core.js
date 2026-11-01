@@ -15,14 +15,24 @@
 //
 // Numbers sit next to their dot. `labels()` picks for every dot one of eight
 // places so that no number covers another number or a dot, measured at the
-// smallest scale the app draws with numbers (`scaleFor()`: the closest two
-// dots 44 px apart, the size of a tap target).
+// scale where the closest two dots are 44 px apart (`scaleFor()`); the easy
+// level is drawn that way.
+//
+// Task 169: from medium on the app shows the whole picture, fitted to the
+// board (`wholeView()`), at one fixed scale for the whole game, so the dots
+// are closer together. `layout()` gives the numbers for any scale: the
+// largest font (down to 8 px) at which no number covers another number or a
+// dot, with the eight places as before. "Magnify" draws the picture at the
+// scale where the closest dots are 30 px apart (`magnifyScale()`).
 //
 // The state is a plain serialisable object; functions return a new state.
 
 const ZahlenbildCore = (() => {
   const LEVELS = ["easy", "medium", "hard", "expert"];
   const TAP_PX = 44;
+  const MAG_PX = 30;      // "Magnify": the closest dots this far apart (task 169)
+  const MARGIN_PX = 24;   // room for numbers round the fitted whole picture
+  const MIN_FONT = 8;     // smallest number size of the fitted whole picture
 
   // Sizes in CSS pixels: dot radius and number height per level.
   const LOOK = {
@@ -260,9 +270,19 @@ const ZahlenbildCore = (() => {
   function labels(level, id) {
     const key = level + ":" + id;
     if (labelCache[key]) return labelCache[key];
-    const dots = dotsOf(level, id);
     const look = LOOK[level];
-    const s = scaleFor(level, id);
+    labelCache[key] = placeAt(dotsOf(level, id), scaleFor(level, id), look.font, look.dot).dirs;
+    return labelCache[key];
+  }
+
+  // The places of all numbers at s pixels per unit with the given number size
+  // and dot radius; `bad` counts the numbers that found no free place. With
+  // `bounds` ({ x, y, size } in board units) a number must also lie inside.
+  function placeAt(dots, s, font, dot, bounds) {
+    const B = bounds ? { x0: bounds.x * s, y0: bounds.y * s, x1: (bounds.x + bounds.size) * s, y1: (bounds.y + bounds.size) * s } : null;
+    const outside = (c) => !!B && (c.x - c.w / 2 < B.x0 + 1 || c.x + c.w / 2 > B.x1 - 1 || c.y - c.h / 2 < B.y0 + 1 || c.y + c.h / 2 > B.y1 - 1);
+    const look = { font: font, dot: dot };
+    let bad = 0;
     const P = dots.map((p) => [p[0] * s, p[1] * s]);
     const cx = P.reduce((a, p) => a + p[0], 0) / P.length;
     const cy = P.reduce((a, p) => a + p[1], 0) / P.length;
@@ -278,6 +298,7 @@ const ZahlenbildCore = (() => {
         for (const d of order) {
           const off = offsetFor(d, box, look.dot);
           const c = { x: P[i][0] + off[0], y: P[i][1] + off[1], w: box.w, h: box.h };
+          if (outside(c)) continue;
           if (P.some((p) => boxHitsCircle(c.x, c.y, box, p[0], p[1], look.dot + 1))) continue;
           if (placed.some((b) => boxesOverlap(b, c))) continue;
           if (strict && P.some((p, j) => boxHitsSegment(c, box, p, P[(j + 1) % n]))) continue;
@@ -287,11 +308,56 @@ const ZahlenbildCore = (() => {
         }
         if (chosen >= 0) break;
       }
-      if (chosen < 0) { chosen = order[0]; const off = offsetFor(chosen, box, look.dot); placed.push({ x: P[i][0] + off[0], y: P[i][1] + off[1], w: box.w, h: box.h }); }
+      if (chosen < 0) { bad++; chosen = order[0]; const off = offsetFor(chosen, box, look.dot); placed.push({ x: P[i][0] + off[0], y: P[i][1] + off[1], w: box.w, h: box.h }); }
       dirs.push(chosen);
     }
-    labelCache[key] = dirs;
-    return dirs;
+    return { dirs: dirs, bad: bad };
+  }
+
+  // Smallest and largest coordinates of the dots: [x0, y0, x1, y1].
+  function bbox(level, id) {
+    const d = dotsOf(level, id);
+    const xs = d.map((p) => p[0]), ys = d.map((p) => p[1]);
+    return [Math.min.apply(null, xs), Math.min.apply(null, ys), Math.max.apply(null, xs), Math.max.apply(null, ys)];
+  }
+
+  // The whole picture on a square board of px pixels: { x, y, size } in board
+  // units and the scale (pixels per unit). Easy as before (the board -4..104);
+  // from medium on fitted to the picture with MARGIN_PX round it (task 169).
+  function wholeView(level, id, px) {
+    if (level === "easy") return { x: -4, y: -4, size: 108, scale: px / 108 };
+    const b = bbox(level, id);
+    const span = Math.max(b[2] - b[0], b[3] - b[1]);
+    const scale = Math.max(0.5, (px - 2 * MARGIN_PX)) / span;
+    const size = px / scale;
+    return { x: (b[0] + b[2]) / 2 - size / 2, y: (b[1] + b[3]) / 2 - size / 2, size: size, scale: scale };
+  }
+
+  // Pixels per unit of "Magnify": the closest dots MAG_PX apart.
+  function magnifyScale(level, id) {
+    return MAG_PX / minSpacing(dotsOf(level, id));
+  }
+
+  // Numbers at `scale` pixels per unit: the largest size from the level's
+  // own (LOOK) down to MIN_FONT at which every number has a free place (with
+  // `bounds`, the whole picture: inside the board too), the dot radius with
+  // it, and the places. Easy keeps LOOK and labels().
+  const layoutCache = {};
+  function layout(level, id, scale, bounds) {
+    const look = LOOK[level];
+    if (level === "easy") return { font: look.font, dot: look.dot, dirs: labels(level, id), bad: 0 };
+    const key = level + ":" + id + ":" + Math.round(scale * 50) + (bounds ? ":" + Math.round(bounds.x * 10) + "," + Math.round(bounds.y * 10) + "," + Math.round(bounds.size * 10) : "");
+    if (layoutCache[key]) return layoutCache[key];
+    const dots = dotsOf(level, id);
+    let best = null;
+    for (let font = look.font; font >= MIN_FONT; font--) {
+      const dot = Math.min(look.dot, Math.max(3, Math.round(font * 0.36 * 10) / 10));
+      const r = placeAt(dots, scale, font, dot, bounds);
+      best = { font: font, dot: dot, dirs: r.dirs, bad: r.bad };
+      if (!r.bad) break;
+    }
+    layoutCache[key] = best;
+    return best;
   }
 
   // ---- Game ----
@@ -328,7 +394,19 @@ const ZahlenbildCore = (() => {
     return list[(at + 1) % list.length].id;
   }
 
-  return { LEVELS, LOOK, TAP_PX, MOTIFS, DIRS, motif, dotsOf, minSpacing, scaleFor, crossings, labels, labelBox, offsetFor, newGame, valid, tap, undo, nextMotif };
+  // The dot a tap at (x, y) board units means, with `reach` units of room
+  // (task 169): the dot being looked for (`next`) when it is one of the two
+  // dots closest to the tap within reach, else the closest dot within reach,
+  // else -1.
+  function dotAt(level, id, x, y, reach, next) {
+    const dots = dotsOf(level, id);
+    const near = dots.map((p, i) => [Math.hypot(p[0] - x, p[1] - y), i]).filter((e) => e[0] <= reach).sort((a, b) => a[0] - b[0]);
+    if (!near.length) return -1;
+    if (near.slice(0, 2).some((e) => e[1] === next)) return next;
+    return near[0][1];
+  }
+
+  return { LEVELS, LOOK, TAP_PX, MAG_PX, MARGIN_PX, MIN_FONT, MOTIFS, DIRS, motif, dotsOf, minSpacing, scaleFor, crossings, labels, labelBox, offsetFor, placeAt, bbox, wholeView, magnifyScale, layout, dotAt, newGame, valid, tap, undo, nextMotif };
 })();
 
 if (typeof module !== "undefined") module.exports = ZahlenbildCore;

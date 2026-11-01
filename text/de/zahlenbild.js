@@ -14,7 +14,7 @@ Object.assign(STRINGS.de, {
     zb_term_levels: "Stufen",
     zb_rules_levels: "Leicht (für Kinder): 10 bis 15 große Punkte mit viel Abstand. Mittel: etwa 25 Punkte. Schwer: etwa 40 Punkte. Sehr schwer (für Erwachsene): etwa 50 bis 60 dicht liegende Punkte; das Bild zeigt sich erst am Ende. Jede Stufe hat fünf Bilder, eines nach dem anderen.",
     zb_term_zoom: "Vergrößerung",
-    zb_rules_zoom: "Liegen die Punkte auf einem kleinen Bildschirm dicht beieinander, zeigt das Brett einen vergrößerten Ausschnitt um den nächsten Punkt, damit sich jeder Punkt leicht antippen lässt. „Ganzes Bild“ zeigt alles mit kleineren Zahlen; „Vergrößern“ geht zurück.",
+    zb_rules_zoom: "Das Brett zeigt immer das ganze Bild in einer festen Größe; ein Tipp ergänzt nur den Punkt und die Linie, nichts verschiebt sich. Ab Mittel liegen die Punkte eng beieinander und die Zahlen sind kleiner. Ein Tipp zählt für den gesuchten Punkt, wenn er einer der zwei Punkte ist, die deinem Finger am nächsten sind. „Vergrößern“ zeigt einen festen Ausschnitt um den nächsten Punkt mit weiter auseinanderliegenden Punkten; „Zum nächsten Punkt“ verschiebt ihn, „Ganzes Bild“ geht zurück.",
     zb_term_help: "Rückgängig und Hinweis",
     zb_rules_help: "Rückgängig nimmt den letzten Punkt zurück. Der Hinweis gibt dem nächsten Punkt einen doppelten Ring.",
     zb_history_title: "Die Geschichte der Zahlenbilder",

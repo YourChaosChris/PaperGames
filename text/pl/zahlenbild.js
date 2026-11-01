@@ -14,7 +14,7 @@ Object.assign(STRINGS.pl, {
     zb_term_levels: "Poziomy",
     zb_rules_levels: "Łatwy (dla dzieci): od 10 do 15 dużych kropek w dużych odstępach. Średni: około 25 kropek. Trudny: około 40 kropek. Bardzo trudny (dla dorosłych): około 50–60 blisko siebie; obrazek pojawia się dopiero na końcu. Na każdym poziomie jest pięć obrazków, po kolei.",
     zb_term_zoom: "Powiększenie",
-    zb_rules_zoom: "Gdy kropki leżą blisko siebie na małym ekranie, plansza powiększa obszar wokół następnej kropki, by łatwo było ją dotknąć. „Cały obrazek” pokazuje wszystko z mniejszymi numerami; „Powiększ” wraca do poprzedniego widoku.",
+    zb_rules_zoom: "Plansza zawsze pokazuje cały obrazek w stałym rozmiarze; dotknięcie dodaje tylko punkt i linię, nic się nie przesuwa. Od poziomu średniego punkty leżą blisko siebie, a liczby są mniejsze. Dotknięcie liczy się dla szukanego punktu, jeśli jest on jednym z dwóch punktów najbliższych palca. „Powiększ” pokazuje stały fragment wokół następnego punktu z punktami dalej od siebie; „Do następnego punktu” przesuwa ten fragment, „Cały obrazek” wraca.",
     zb_term_help: "Cofnij i podpowiedź",
     zb_rules_help: "Cofnij usuwa ostatnią kropkę. Podpowiedź oznacza następną kropkę podwójnym okręgiem.",
     zb_history_title: "Historia Obrazka z kropek",
