@@ -5542,6 +5542,7 @@ STRINGS.pl = {
     bingo_cpu_none: "Żaden komputer nie ma {v}.",
     bingo_cpu_bingo: "{name} ma bingo!",
     bingo_cpu_card_aria: "Karta: {name}, zaznaczone pola: {n} z {m}",
+    bingo_age_aria: "Osoba, wiek: {n}",
     quickrules_bingo_1: "Naciśnij Losuj, aby wywołać liczbę lub obrazek – nie ma zegara.",
     quickrules_bingo_2: "Dotykaj każdego wywołanego pola na swojej karcie. Wygrywa kompletny wzór (wiersz, kolumna, przekątna lub cała karta, zależnie od ustawienia).",
     quickrules_bingo_3: "Naciśnij Bingo!, aby sprawdzić kartę: błędne zaznaczenia są obrysowane, bez kary. W trybie Tylko prowadzący wydrukuj karty dla dzieci.",

@@ -5541,6 +5541,7 @@ STRINGS.it = {
     bingo_cpu_none: "Nessun computer ha {v}.",
     bingo_cpu_bingo: "{name} ha fatto bingo!",
     bingo_cpu_card_aria: "Cartella di {name}: {n} caselle segnate su {m}",
+    bingo_age_aria: "Persona, età {n}",
     quickrules_bingo_1: "Premi Estrai per chiamare un numero o un'immagine: non c'è nessun timer.",
     quickrules_bingo_2: "Tocca sulla tua scheda ogni elemento chiamato. Vince uno schema completo (riga, colonna, diagonale o scheda piena, secondo lo schema scelto).",
     quickrules_bingo_3: "Premi Bingo! per controllare la scheda: i segni sbagliati vengono cerchiati, senza penalità. Con Solo chiamata stampa le schede per i bambini.",

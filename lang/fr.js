@@ -5541,6 +5541,7 @@ STRINGS.fr = {
     bingo_cpu_none: "Aucun ordinateur n'a {v}.",
     bingo_cpu_bingo: "{name} a un bingo !",
     bingo_cpu_card_aria: "Carte de {name} : {n} cases marquées sur {m}",
+    bingo_age_aria: "Personne, âge {n}",
     quickrules_bingo_1: "Appuyez sur Tirer pour annoncer un nombre ou une image : il n'y a pas de chronomètre.",
     quickrules_bingo_2: "Touchez chaque élément tiré sur votre carte. Un motif complet (ligne, colonne, diagonale ou carte pleine, selon le motif choisi) gagne.",
     quickrules_bingo_3: "Appuyez sur Bingo ! pour vérifier votre carte : les marques fausses sont entourées, sans pénalité. Avec Annonceur seul, imprimez des cartes pour les enfants.",

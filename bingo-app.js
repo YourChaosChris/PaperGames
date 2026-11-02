@@ -10,6 +10,8 @@
 // called framed, a bingo in black; a switch hides them. The status line
 // names which computer marked the call or has a bingo. The game is saved
 // (with the switch) and comes back after a reload.
+// Numbers run 1-90 (task 173); a called number is shown large next to a
+// person of that age, from the youngest child (1) to the old man (90).
 (function () {
   const $ = (id) => document.getElementById(id);
   const t = (k) => (typeof I18n !== "undefined" ? I18n.t(k) : k);
@@ -45,6 +47,50 @@
     house:'<path d="M12 48 50 15l38 33M22 43v43h56V43M43 86V59h16v27M31 53h8v9h-8zm24 0h8v9h-8z"/>'
   };
 
+  // Person of age n (task 173): line drawing from BingoCore.ageFigure, the
+  // same for every language. Baby with dummy, small child with ball, school
+  // child with satchel, teenager with cap, adult, glasses from 40, grey
+  // (dashed) hair from 60, beard, stick and bent back from 75.
+  function drawAge(n) {
+    const f = BingoCore.ageFigure(n);
+    const H = f.height, ground = 96, top = ground - H;
+    const r = H * [0.17, 0.14, 0.12, 0.1, 0.1, 0.1, 0.1, 0.1][f.stage];
+    const lean = f.bend * 12;
+    const hx = 46 + lean, hy = top + r + f.bend * 4;
+    const neck = hy + r, hip = neck + (ground - neck) * (f.stage === 0 ? 0.75 : 0.48);
+    const arm = (ground - neck) * 0.36;
+    const p = [];
+    p.push('<circle cx="' + hx + '" cy="' + hy.toFixed(1) + '" r="' + r.toFixed(1) + '"/>');
+    // eyes and mouth
+    p.push('<circle cx="' + (hx - r * 0.35).toFixed(1) + '" cy="' + (hy - r * 0.1).toFixed(1) + '" r="1"/><circle cx="' + (hx + r * 0.35).toFixed(1) + '" cy="' + (hy - r * 0.1).toFixed(1) + '" r="1"/>');
+    if (f.stage === 0) {
+      // baby: round body, short legs, dummy at the mouth
+      p.push('<ellipse cx="46" cy="' + ((neck + ground) / 2).toFixed(1) + '" rx="' + (r * 0.9).toFixed(1) + '" ry="' + ((ground - neck) / 2).toFixed(1) + '"/>');
+      p.push('<circle cx="' + hx + '" cy="' + (hy + r * 0.5).toFixed(1) + '" r="2.5"/>');
+      p.push('<path d="M' + (46 - r * 0.8).toFixed(1) + " " + (neck + 4).toFixed(1) + "l-6 6M" + (46 + r * 0.8).toFixed(1) + " " + (neck + 4).toFixed(1) + 'l6 6"/>');
+    } else {
+      p.push('<path d="M' + (hx + r * 0.3).toFixed(1) + " " + (hy + r * 0.45).toFixed(1) + "h-" + (r * 0.6).toFixed(1) + '"/>');
+      // back, legs, arms
+      p.push('<path d="M' + hx + " " + neck.toFixed(1) + "L46 " + hip.toFixed(1) + "M46 " + hip.toFixed(1) + "l-7 " + (ground - hip).toFixed(1) + "M46 " + hip.toFixed(1) + "l7 " + (ground - hip).toFixed(1) + '"/>');
+      const sx = hx - lean * 0.3, sy = neck + 3;
+      p.push('<path d="M' + sx.toFixed(1) + " " + sy.toFixed(1) + "l-9 " + arm.toFixed(1) + "M" + sx.toFixed(1) + " " + sy.toFixed(1) + "l9 " + arm.toFixed(1) + '"/>');
+      const hand = sy + arm;
+      if (f.stage === 1) p.push('<circle cx="70" cy="89" r="7"/>');
+      if (f.stage === 2) p.push('<rect x="' + (46 - 13).toFixed(1) + '" y="' + (neck + 3).toFixed(1) + '" width="8" height="' + ((hip - neck) * 0.7).toFixed(1) + '"/>');
+      if (f.stage === 3) p.push('<path d="M' + (hx - r).toFixed(1) + " " + (hy - r * 0.3).toFixed(1) + "h" + (r * 3).toFixed(1) + '"/>');
+      // hair: a line over the head, dashed (grey) from 60
+      if (f.stage >= 1) p.push('<path d="M' + (hx - r * 0.9).toFixed(1) + " " + (hy - r * 0.5).toFixed(1) + "Q" + hx + " " + (hy - r * 2.4).toFixed(1) + " " + (hx + r * 0.9).toFixed(1) + " " + (hy - r * 0.5).toFixed(1) + '"' + (f.stage >= 6 ? ' stroke-dasharray="2 2"' : "") + "/>");
+      // glasses: two rings over the eyes with a bridge
+      if (f.stage >= 5) p.push('<circle cx="' + (hx - r * 0.38).toFixed(1) + '" cy="' + (hy - r * 0.1).toFixed(1) + '" r="' + (r * 0.3).toFixed(1) + '" stroke-width="2"/><circle cx="' + (hx + r * 0.38).toFixed(1) + '" cy="' + (hy - r * 0.1).toFixed(1) + '" r="' + (r * 0.3).toFixed(1) + '" stroke-width="2"/>');
+      if (f.stage === 7) {
+        p.push('<path d="M' + (hx - r * 0.7).toFixed(1) + " " + (hy + r * 0.3).toFixed(1) + "Q" + hx + " " + (hy + r * 2).toFixed(1) + " " + (hx + r * 0.7).toFixed(1) + " " + (hy + r * 0.3).toFixed(1) + '"/>');
+        const cx = sx + 9;
+        p.push('<path d="M' + cx.toFixed(1) + " " + (hand - 3).toFixed(1) + "V" + ground + "M" + cx.toFixed(1) + " " + (hand - 3).toFixed(1) + 'h-4"/>');
+      }
+    }
+    return '<svg class="bingo-age" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="' + fill(t("bingo_age_aria"), { n: f.age }).replace(/"/g, "") + '"><g fill="none" stroke="#141413" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' + p.join("") + "</g></svg>";
+  }
+
   function pictureName(v) { return t("bingo_picture_" + PICTURES[Number(String(v).replace("picture", ""))]); }
   function drawIcon(value) {
     const key = String(value).replace("picture", "");
@@ -63,7 +109,7 @@
 
   function start() {
     const s = readSettings();
-    state.game = { kind: s.kind, size: s.size, mode: s.mode, pattern: s.pattern, drawn: [], over: false };
+    state.game = { kind: s.kind, size: s.size, mode: s.mode, pattern: s.pattern, drawn: [], over: false, range: BingoCore.MAX_NUMBER };
     state.cards = s.mode === "caller" ? [] : Array.from({ length: s.count }, () => BingoCore.createDeck(s.kind, s.size));
     state.active = 0;
     state.current = null;
@@ -89,12 +135,14 @@
   function validSave(d) {
     if (!d || !d.game || !Array.isArray(d.cards) || !d.cards.length || !Array.isArray(d.game.drawn)) return false;
     if (d.game.over || ["two", "computer"].indexOf(d.game.mode) === -1) return false;
+    // Number games from before task 173 ran 1-75 with other columns: dropped.
+    if (d.game.kind !== "pictures" && d.game.range !== BingoCore.MAX_NUMBER) return false;
     return d.cards.every((c) => c && Array.isArray(c.board) && Array.isArray(c.marked) && c.board.length === c.marked.length && (c.size === 3 || c.size === 5) && c.board.length === c.size * c.size);
   }
 
   function load() {
     const d = typeof GameStorage !== "undefined" ? GameStorage.load(SAVE_KEY) : null;
-    if (!validSave(d)) return false;
+    if (!validSave(d)) { if (d && typeof GameStorage !== "undefined") GameStorage.clear(SAVE_KEY); return false; }
     state.game = d.game;
     state.cards = d.cards;
     state.active = d.active > 0 && d.active < d.cards.length ? d.active : 0;
@@ -176,7 +224,7 @@
     cur.innerHTML = "";
     if (state.current === null) cur.textContent = "\u2014";
     else if (g.kind === "pictures") cur.innerHTML = drawIcon(state.current) + "<span>" + pictureName(state.current) + "</span>";
-    else cur.textContent = String(state.current);
+    else cur.innerHTML = drawAge(state.current) + '<b class="bingo-current-num">' + state.current + "</b>";
     renderCalled();
     $("bingo-next").classList.toggle("hidden", !(g.mode === "two" && state.cards.length > 1));
     $("bingo-check").classList.toggle("hidden", !showCards);

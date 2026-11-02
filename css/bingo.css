@@ -44,6 +44,18 @@
   font-size: 1.6rem;
 }
 
+/* Number with the person of that age (task 173): figure left, number large. */
+.bingo-current svg.bingo-age {
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+.bingo-current-num {
+  font-size: 3rem;
+  min-width: 2ch;
+  text-align: center;
+}
+
 .bingo-actions button {
   min-height: 44px;
 }

@@ -1,6 +1,6 @@
 // tests/bingo-core.js
 // Bingo core, no server or browser needed.
-// - every deck: right size, no repeated item, number columns 1-15 .. 61-75
+// - every deck: right size, no repeated item, number columns 1-18 .. 73-90
 //   with a free centre in 5 x 5, picture cards 25 cells = 24 pictures + free centre
 // - every number / picture is called exactly once, then the call is empty
 // - patterns row / col / diag / line / full are recognised exactly (checked
@@ -24,14 +24,37 @@ for (let run = 0; run < 1000; run++) {
   if (size === 5) {
     assert.strictEqual(s.board[12], null);
     assert.equal(real.length, 24);
-    if (kind === "numbers") for (let c = 0; c < 5; c++) for (let r = 0; r < 5; r++) { const v = s.board[r * 5 + c]; if (v !== null) assert(v > c * 15 && v <= (c + 1) * 15); }
+    if (kind === "numbers") for (let c = 0; c < 5; c++) for (let r = 0; r < 5; r++) { const v = s.board[r * 5 + c]; if (v !== null) assert(v > c * 18 && v <= (c + 1) * 18); }
     else assert.equal(new Set(real).size, 24, "all 24 pictures on a 5 x 5 picture card");
   } else assert(s.board.every((x) => x !== null));
   assert.deepEqual(s.marked, s.board.map((v) => v === null), "only the free cell starts marked");
   const seen = new Set(); let v;
   while ((v = B.draw(s)) !== null) { assert(!seen.has(v)); seen.add(v); calls++; }
-  assert.equal(seen.size, kind === "pictures" ? 24 : 75);
+  assert.equal(seen.size, kind === "pictures" ? 24 : 90);
+  if (kind === "numbers") assert(Math.min(...seen) === 1 && Math.max(...seen) === 90, "numbers 1 to 90");
   assert.strictEqual(B.draw(s), null);
+}
+
+// Numbers 1 to 90, each with exactly one picture (task 173): the pool is
+// 1..90 without gaps, ageFigure is fixed per number (same result every
+// time, no language involved), the age rises from 1 (youngest child, stage
+// 0) to 90 (old man, last stage): stage never goes down, the child grows
+// until 18, and from 75 on the back bends more with every year.
+{
+  const nums = B.pool("numbers");
+  assert.deepEqual(nums, Array.from({ length: 90 }, (_, i) => i + 1), "pool 1..90");
+  const figs = nums.map((n) => B.ageFigure(n));
+  assert.deepEqual(figs, nums.map((n) => B.ageFigure(n)), "fixed picture per number");
+  figs.forEach((f, i) => assert.equal(f.age, i + 1, "picture shows its own number"));
+  assert.equal(figs[0].stage, 0, "1 is the youngest child");
+  assert.equal(figs[89].stage, B.STAGE_FROM.length - 1, "90 is the old man");
+  assert(figs[89].bend === 1 && figs[0].bend === 0);
+  for (let i = 1; i < 90; i++) {
+    const a = figs[i - 1], b = figs[i];
+    assert(b.stage >= a.stage, "stage never goes down at " + (i + 1));
+    if (i + 1 <= 18) assert(b.height > a.height, "grows until 18 at " + (i + 1));
+    if (i + 1 >= 76) assert(b.bend > a.bend, "bends more from 75 on at " + (i + 1));
+  }
 }
 
 // Patterns against brute force.

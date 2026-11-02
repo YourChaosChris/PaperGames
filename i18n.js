@@ -5624,6 +5624,7 @@ const STRINGS = {
     bingo_cpu_none: "No computer has {v}.",
     bingo_cpu_bingo: "{name} has a bingo!",
     bingo_cpu_card_aria: "Card of {name}: {n} of {m} spaces marked",
+    bingo_age_aria: "Person aged {n}",
     quickrules_bingo_1: "Press Draw next to call one number or picture - there is no timer.",
     quickrules_bingo_2: "Tap each called item on your card. A complete pattern (row, column, diagonal or full card, as set under Winning pattern) wins.",
     quickrules_bingo_3: "Press Bingo! to check your card: wrong marks are outlined, no penalty. With Caller only, print cards for the children.",

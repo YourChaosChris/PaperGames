@@ -5541,6 +5541,7 @@ STRINGS.es = {
     bingo_cpu_none: "Ningún ordenador tiene {v}.",
     bingo_cpu_bingo: "¡{name} tiene bingo!",
     bingo_cpu_card_aria: "Cartón de {name}: {n} de {m} casillas marcadas",
+    bingo_age_aria: "Persona, edad {n}",
     quickrules_bingo_1: "Pulsa «Siguiente extracción» para cantar un número o una imagen: no hay cronómetro.",
     quickrules_bingo_2: "Toca en tu cartón cada elemento cantado. Gana un patrón completo (fila, columna, diagonal o cartón lleno, según el patrón elegido).",
     quickrules_bingo_3: "Pulsa ¡Bingo! para comprobar tu cartón: las marcas erróneas se rodean, sin penalización. Con Solo cantar, imprime cartones para los niños.",

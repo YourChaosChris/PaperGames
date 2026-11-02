@@ -5541,6 +5541,7 @@ STRINGS.ja = {
     bingo_cpu_none: "{v}を持っているコンピューターはいません。",
     bingo_cpu_bingo: "{name}がビンゴです！",
     bingo_cpu_card_aria: "{name}のカード：{m}マス中{n}マスに印",
+    bingo_age_aria: "{n}歳の人",
     quickrules_bingo_1: "「次を引く」を押すと、数字か絵が1つ出ます。時間制限はありません。",
     quickrules_bingo_2: "出たものを自分のカードでタップします。選んだ形（横、縦、斜め、またはカード全部）がそろえば勝ちです。",
     quickrules_bingo_3: "「ビンゴ！」でカードを確認します。違う印は枠で示され、罰はありません。「読み上げだけ」では子ども用のカードを印刷します。",

@@ -5541,6 +5541,7 @@ STRINGS.nl = {
     bingo_cpu_none: "Geen enkele computer heeft {v}.",
     bingo_cpu_bingo: "{name} heeft bingo!",
     bingo_cpu_card_aria: "Kaart van {name}: {n} van {m} vakjes aangekruist",
+    bingo_age_aria: "Persoon, leeftijd {n}",
     quickrules_bingo_1: "Druk op «Volgende trekking» om een getal of plaatje te roepen; er is geen timer.",
     quickrules_bingo_2: "Tik elk geroepen vakje op je kaart aan. Een compleet patroon (rij, kolom, diagonaal of volle kaart, zoals ingesteld) wint.",
     quickrules_bingo_3: "Druk op Bingo! om je kaart te controleren: foute markeringen krijgen een kader, zonder straf. Bij Alleen omroepen print je kaarten voor de kinderen.",

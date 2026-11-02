@@ -9,6 +9,8 @@
 // small numbers are at least 12 px; small cards do not overlap and nothing
 // scrolls sideways; a computer bingo is named in the status line and its
 // winning cells are black. Your own card stays tappable (44 px cells).
+// Task 173: the called number (1-90) is shown large next to a black line
+// drawing of a person that age; an old 1-75 save is dropped.
 const { chromium } = require("playwright");
 const BASE = process.env.BASE_URL || process.argv[2] || "http://localhost:8000/";
 const fails = [];
@@ -74,6 +76,24 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   }
   check("both kinds of status seen (" + named + " named, " + none + " none)", named > 0 && none > 0);
 
+  // Task 173: the called number (1-90) stands large next to the person of
+  // that age; black lines only, readable at 360 x 640.
+  const call = await page.evaluate(() => {
+    const cur = document.getElementById("bingo-current");
+    const svg = cur.querySelector("svg.bingo-age"), num = cur.querySelector(".bingo-current-num");
+    const strokes = Array.from(cur.querySelectorAll("svg g")).map((g) => g.getAttribute("stroke"));
+    return {
+      n: num ? Number(num.textContent) : 0, label: svg ? svg.getAttribute("aria-label") : "",
+      fig: svg ? Math.round(svg.getBoundingClientRect().height) : 0, font: num ? parseFloat(getComputedStyle(num).fontSize) : 0,
+      side: svg && num ? svg.getBoundingClientRect().right <= num.getBoundingClientRect().left + 1 : false, strokes
+    };
+  });
+  check("called number 1-90 " + JSON.stringify(call), call.n >= 1 && call.n <= 90);
+  check("figure names the age " + JSON.stringify(call), call.label === "Person im Alter von " + call.n);
+  check("figure next to the large number " + JSON.stringify(call), call.side && call.fig >= 60 && call.font >= 40);
+  check("figure in black only " + JSON.stringify(call), call.strokes.length > 0 && call.strokes.every((s) => s === "#141413"));
+  console.log("called " + call.n + ": figure " + call.fig + " px, number " + call.font + " px");
+
   // Sizes: own cells tappable, small numbers readable, no overlap, no sideways scroll.
   const geo = await page.evaluate(() => {
     const own = Array.from(document.querySelectorAll("#bingo-cards .bingo-cell")).map((b) => b.getBoundingClientRect().height);
@@ -118,6 +138,19 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   check("computer bingo named " + JSON.stringify(won), !!won && /Computer \d hat Bingo!/.test(won.status));
   check("winning cells black " + JSON.stringify(won), !!won && won.black >= 5);
   check("finished game not saved", !!won && won.saved === null);
+
+  // A number game saved before task 173 (1-75, no range) is dropped on load.
+  await page.evaluate(() => {
+    const old = { game: { kind: "numbers", size: 3, mode: "computer", pattern: "line", drawn: [75], over: false }, cards: [{ kind: "numbers", size: 3, board: [1, 2, 3, 4, 5, 6, 7, 8, 75], marked: [false, false, false, false, false, false, false, false, false], drawn: [75], winner: false }], active: 0, current: 75, showCpu: true };
+    localStorage.setItem("einkchess_save_bingo", JSON.stringify(old));
+  });
+  await page.reload({ waitUntil: "load" });
+  await page.waitForTimeout(600);
+  const dropped = await page.evaluate(() => {
+    const s = JSON.parse(localStorage.getItem("einkchess_save_bingo") || "null");
+    return { current: document.getElementById("bingo-current").textContent.trim(), drawn: s ? s.game.drawn.length : 0, range: s ? s.game.range : 90, has75: s ? s.cards.some((c) => c.size === 3 && c.board.indexOf(75) === 8) : false };
+  });
+  check("old 1-75 save dropped " + JSON.stringify(dropped), dropped.current !== "75" && dropped.drawn === 0 && dropped.range === 90 && !dropped.has75);
 
   check("no page errors " + errors.join("; "), errors.length === 0);
   await browser.close();

@@ -5612,6 +5612,7 @@ STRINGS.de = {
     bingo_cpu_none: "Kein Computer hat {v}.",
     bingo_cpu_bingo: "{name} hat Bingo!",
     bingo_cpu_card_aria: "Karte von {name}: {n} von {m} Feldern markiert",
+    bingo_age_aria: "Person im Alter von {n}",
     quickrules_bingo_1: "Mit „Nächste Ziehung“ wird eine Zahl oder ein Bild gezogen – es gibt keine Uhr.",
     quickrules_bingo_2: "Tippe jedes gezogene Feld auf deiner Karte an. Ein vollständiges Muster (Reihe, Spalte, Diagonale oder volle Karte, je nach Gewinnmuster) gewinnt.",
     quickrules_bingo_3: "Mit „Bingo!“ wird deine Karte geprüft: Falsche Markierungen werden umrandet, ohne Strafe. Im Modus „Nur Ausrufer“ druckst du Karten für die Kinder.",
