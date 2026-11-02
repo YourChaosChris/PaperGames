@@ -25,9 +25,9 @@ Object.assign(STRINGS.ja, {
     futoshiki_rules_win: "すべてのマスが埋まり、どの行や列にも同じ数字が重ならず、すべての記号が成り立った時点で完成です。",
     futoshiki_history_title: "不等式の歴史",
     futoshiki_history_name_title: "名前がすべてを語る",
-    futoshiki_history_name_p1: "Futoshiki（不等式）は、日本語でそのまま不等式を意味する言葉です。ラテン方陣、つまりブロックのない数独、あるいはケージのないCalcudokuと同じ盤面で遊び、追加の手がかりはマスの間の記号だけです。",
+    futoshiki_history_name_p1: "Futoshiki（不等式）は、日本語でそのまま不等式を意味する言葉です。ラテン方陣、つまりブロックのないナンプレ、あるいはケージのないCalcudokuと同じ盤面で遊び、追加の手がかりはマスの間の記号だけです。",
     futoshiki_history_spread_title: "日本から新聞へ",
-    futoshiki_history_spread_p1: "この種の多くの数字パズルと同じく、まず日本で知られるようになりました。2000年代半ばの数独ブームを受けて、ほかの国々の新聞やパズル雑誌にも掲載されるようになりました。",
+    futoshiki_history_spread_p1: "この種の多くの数字パズルと同じく、まず日本で知られるようになりました。2000年代半ばのナンプレブームを受けて、ほかの国々の新聞やパズル雑誌にも掲載されるようになりました。",
     futoshiki_history_modern_title: "PaperGamesでは",
     futoshiki_history_modern_p1: "ここでの問題はすべてお使いの端末上で作られ、当てずっぽうなしでたどり着ける答えがちょうど1通りであることを確認しています。記号は入力した文字ではなく小さな三角形として描かれるので、電子ペーパーの画面でも大きくはっきり見えます。"
 });

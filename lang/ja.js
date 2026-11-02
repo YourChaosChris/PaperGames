@@ -27,10 +27,10 @@ STRINGS.ja = {
     seo_desc_games_new: "PaperGamesの電子書籍リーダー向け無料ゲームの新作。オフライン、広告なし、12言語。",
     catpage_intro_popular: "多くの人が最初に遊ぶゲーム。",
     seo_title_games_popular: "人気のゲーム – PaperGames",
-    seo_desc_games_popular: "チェス、チェッカー、バックギャモン、数独など定番のゲームを、電子書籍リーダーで無料・オフライン・広告なしで。",
+    seo_desc_games_popular: "チェス、チェッカー、バックギャモン、ナンプレなど定番のゲームを、電子書籍リーダーで無料・オフライン・広告なしで。",
     catpage_intro_kids: "子ども向け：ほとんどが字を読めなくても遊べます。",
     seo_title_games_kids: "子ども向けゲーム – PaperGames",
-    seo_desc_games_kids: "電子書籍リーダーやタブレット向けの無料の子どもゲーム：ペア、動物数独、はしごゲームなど。オフライン、広告なし。",
+    seo_desc_games_kids: "電子書籍リーダーやタブレット向けの無料の子どもゲーム：ペア、どうぶつナンプレ、はしごゲームなど。オフライン、広告なし。",
     catpage_intro_strategy: "2人以上で遊ぶ、作戦が勝負を決めるゲーム。",
     seo_title_games_strategy: "戦略ゲーム – PaperGames",
     seo_desc_games_strategy: "チェス、囲碁、チェッカー、ミルなど多くの戦略ゲームを電子書籍リーダーで。コンピューター対戦や1台で2人対戦、無料でオフライン。",
@@ -39,7 +39,7 @@ STRINGS.ja = {
     seo_desc_games_race: "バックギャモン、ルドー、ウルのロイヤルゲームなど、電子書籍リーダー向けのサイコロゲーム。無料、オフライン、広告なし。",
     catpage_intro_puzzles: "ひとりで自分のペースで解くパズル。",
     seo_title_games_puzzles: "パズル – PaperGames",
-    seo_desc_games_puzzles: "数独、ノノグラム、マインスイーパー、カックロなど多くのパズルを電子書籍リーダーで。無料、オフライン、広告なし。",
+    seo_desc_games_puzzles: "ナンプレ、ノノグラム、マインスイーパー、加算クロスなど多くのパズルを電子書籍リーダーで。無料、オフライン、広告なし。",
     catpage_intro_cards: "カードゲーム",
     seo_title_games_cards: 'カードゲーム' + " – PaperGames",
     seo_desc_games_cards: "電子書籍リーダー向けの無料カードゲームとソリティア。オフライン、広告なし。",
@@ -362,7 +362,7 @@ STRINGS.ja = {
     tictactoe_history_intro: "おそらく最もよく知られた紙と鉛筆のゲーム。そのルーツは古代ローマにあり、コンピューターの歴史にも名を残しています。",
     senet_history_intro: "これまでに発見された中で最も古いボードゲームの一つでありながら、その正確なルールが何千年もの間失われたままになっているゲームです。",
     shogi_history_intro: "チェス一族の中で日本独自に発展した将棋は、取った駒がゲームから去るのではなく、取った側の戦力に加わるという珍しい特徴を持つ唯一の主要なバリエーションです。",
-    sudoku_history_intro: "このコレクションの他のどのゲームとも違い、数独にはまったく古代の系譜がありません。今の形のパズルが生まれたのは1979年のことです。",
+    sudoku_history_intro: "このコレクションの他のどのゲームとも違い、ナンプレにはまったく古代の系譜がありません。今の形のパズルが生まれたのは1979年のことです。",
     pegsolitaire_history_intro: "起源にまつわる伝説を持つほど古い一人用パズルであり、レクリエーション数学における意外な結果の一つの題材でもあります。",
     minesweeper_history_intro: "「最初の一手は絶対に安全」という、このゲームを特徴づけるルールは、印刷されたページではなくコンピューターがその場で盤を生成できるようになって初めて標準になったものです。",
     nonogram_history_intro: "日本でほぼ同じ時期に、2人がそれぞれ独立して考案した論理パズルです。名前は、そのうちの一人にちなんでいます。",
@@ -680,7 +680,7 @@ STRINGS.ja = {
     msg_aria_card_new: "新しい",
     seo_t_game: "電子ペーパーで{s} – オフライン・広告なし",
     seo_title_index: "PaperGames – 電子ペーパー端末向けの無料ゲーム{games}種",
-    seo_desc_index: "ブラウザ付き電子ペーパー端末向けの無料ゲーム{games}種（Tolino・Boox・PocketBookで動作確認）。チェス、数独、囲碁など。オフライン対応、広告なし、12言語。",
+    seo_desc_index: "ブラウザ付き電子ペーパー端末向けの無料ゲーム{games}種（Tolino・Boox・PocketBookで動作確認）。チェス、ナンプレ、囲碁など。オフライン対応、広告なし、12言語。",
     seo_title_about: "PaperGamesについて – 電子ペーパー向け無料ボードゲーム{games}種",
     seo_desc_about: "PaperGamesが生まれた理由、作り方、プロジェクトを支援する方法。クラシックなボードゲームとパズル{games}種を集めた、無料・オフライン・広告なしのコレクションです。",
     nav_calm: "静かに遊ぶ",
@@ -1133,7 +1133,7 @@ STRINGS.ja = {
     family_inarow: "並べるゲーム",
     family_ancientrace: "古代のすごろく",
     family_dicerace: "サイコロすごろく",
-    family_sudoku: "数独",
+    family_sudoku: "ナンバープレース",
     family_latin: "数の方陣",
     family_math: "計算パズル",
     family_tiling: "しきつめパズル",
@@ -1561,7 +1561,7 @@ STRINGS.ja = {
     game_killersudoku: "サムナンプレ",
     home_killersudoku_desc: "最初の数字がほとんどないナンプレ。点線のケージが合計を示し、ケージの中では同じ数字を使えません。難易度は3段階、答えは1通り。",
     killersudoku_board_label: "サムナンプレの盤面",
-    killersudoku_history_intro: "数独とカックロの合計が出会ったパズル。最初の数字の代わりに計算を手がかりにする変種です。",
+    killersudoku_history_intro: "ナンプレと加算クロスの合計が出会ったパズル。最初の数字の代わりに計算を手がかりにする変種です。",
     msg_t_cage: "ケージ {s}",
     msg_t_block_cells: "{n}マスのブロック",
     game_slitherlink: "ループパズル",
@@ -1577,11 +1577,11 @@ STRINGS.ja = {
     slitherlink_win_title: "クリア!",
     slitherlink_win_message: "ループが完成しました!お見事です。",
     slitherlink_edges_drawn: " 本の辺を描画済み",
-    slitherlink_history_intro: "他の場所で生まれて後から日本を経由したカクロや数独とは違い、スリザーリンクは最初からニコリ独自の発明で、さかのぼれるような欧米の原型はありません。",
+    slitherlink_history_intro: "他の場所で生まれて後から日本を経由したカクロやナンプレとは違い、スリザーリンクは最初からニコリ独自の発明で、さかのぼれるような欧米の原型はありません。",
 
 
 
-    kakuro_history_intro: "数独と同じように、カクロもアメリカのパズル雑誌で別の名前として生まれ、太平洋の反対側で広く知られるようになったのは何十年も後のことでした。",
+    kakuro_history_intro: "ナンプレと同じように、カクロもアメリカのパズル雑誌で別の名前として生まれ、太平洋の反対側で広く知られるようになったのは何十年も後のことでした。",
     game_skyscrapers: "スカイスクレイパーズ",
     home_skyscrapers_desc: "N×Nの盤面に1からNまでの建物の高さを入れ、各行と各列にすべての高さがちょうど1回ずつ現れるようにします。盤面の周囲にある番号のヒントは、その方向から見える建物の数を示しています。毎回新しく生成され、難易度は3段階です。",
 
@@ -1597,7 +1597,7 @@ STRINGS.ja = {
     skyscrapers_win_message: "パズルをクリアしました!よくできました。",
 
 
-    skyscrapers_history_intro: "スカイスクレイパーズは数独と同じラテン方陣パズルの仲間ですが、その名前の由来となった独自のひねりが加わっています - 盤面のすぐ外側から読み取る「見通し線」のルールです。",
+    skyscrapers_history_intro: "スカイスクレイパーズはナンプレと同じラテン方陣パズルの仲間ですが、その名前の由来となった独自のひねりが加わっています - 盤面のすぐ外側から読み取る「見通し線」のルールです。",
 
 
     cake_dog_name: "犬",
@@ -2004,17 +2004,17 @@ STRINGS.ja = {
 
 
     cake_level_hard: "むずかしい (7x7、容疑者5人)",
-    game_animalsudoku: "動物数独",
-    home_animalsudoku_desc: "数字のかわりに動物を使う子ども向けの数独：4x4か6x6で、どの動物も各行・各列・各ブロックに1回ずつ。動物を選んでマスをタップするだけで、文字を読む必要はありません。",
+    game_animalsudoku: "どうぶつナンプレ",
+    home_animalsudoku_desc: "数字のかわりに動物を使う子ども向けのナンプレ：4x4か6x6で、どの動物も各行・各列・各ブロックに1回ずつ。動物を選んでマスをタップするだけで、文字を読む必要はありません。",
     animalsudoku_new_game: "新しい問題",
     animalsudoku_size_label: "盤の大きさ",
     animalsudoku_size_4: "4x4(動物4種)",
     animalsudoku_size_6: "6x6(動物6種)",
     animalsudoku_level_label: "レベル",
-    animalsudoku_board_label: "動物数独の盤",
+    animalsudoku_board_label: "どうぶつナンプレの盤",
     animalsudoku_palette_label: "置くもの",
     animalsudoku_erase: "消す",
-    animalsudoku_history_intro: "小さな盤の絵の数独は、2000年代半ばに世界中で知られるようになった数字パズルの子ども向けバージョンです。",
+    animalsudoku_history_intro: "小さな盤の絵のナンプレは、2000年代半ばに世界中で知られるようになった数字パズルの子ども向けバージョンです。",
     quickrules_animalsudoku_1: "どの動物も、各行・各列・各ブロックにちょうど1回ずつ入るように動物を置きます。",
     quickrules_animalsudoku_2: "盤の下のボタンから動物を選び、空いているマスをタップします。消しゴムで動物を取り除けます。",
     quickrules_animalsudoku_3: "太い枠の動物は問題の一部で動かせません。「ヒント」ボタンはまず間違いを示し、その後で次の一手を示します。",
@@ -4190,7 +4190,7 @@ STRINGS.ja = {
     gw_howto_3: "早めに止めましょう。登山者がキャンプになります。",
     gw_howto_4: "山小屋は守ってくれます。クレバスでは後退します。",
     game_advent: "パズルアドベントカレンダー",
-    home_advent_desc: "24個の扉の向こうに、それぞれ小さなパズルがあります。ライトスイッチ、ミニ数独、ノノグラム、Futoshiki、ビルディングパズル、Calcudokuです。12月の該当日に、前の扉を解くと開きます。",
+    home_advent_desc: "24個の扉の向こうに、それぞれ小さなパズルがあります。ライトスイッチ、ミニナンプレ、ノノグラム、Futoshiki、ビルディングパズル、Calcudokuです。12月の該当日に、前の扉を解くと開きます。",
     quickrules_advent_1: "12月1日から24日まで、毎日ひとつ扉が開きます。中には数分で解ける小さなパズルがあります。",
     quickrules_advent_2: "前の扉を解くと次の扉が開きます。日を逃しても大丈夫。先の日付の扉を解けば、その後の扉も開きます。",
     quickrules_advent_3: "マスをタップしてから、下の数字を選びます。ノノグラムでは、マスは塗りつぶし、バツ印、空白の順に切り替わります。",
@@ -4222,7 +4222,7 @@ STRINGS.ja = {
     adv_closed_previous: "先に扉{m}を解いてください。",
     adv_door_title: "扉{n}：{name}",
     adv_kind_lights: "ライトスイッチ",
-    adv_kind_sudoku: "ミニ数独",
+    adv_kind_sudoku: "ミニナンプレ",
     adv_kind_nonogram: "ノノグラム",
     adv_kind_futoshiki: "不等式",
     adv_kind_skyscrapers: "ビルディングパズル",
@@ -4625,7 +4625,7 @@ STRINGS.ja = {
     hashi_win_message: "すべての島がつながりました! お見事です。",
 
 
-    hashi_history_intro: "数独を世界的な現象にしたのと同じ日本の出版社による、純粋に数え上げと連結性を扱うパズルで、その名前も雰囲気も「橋で物をつなぐ」という発想にさかのぼります。",
+    hashi_history_intro: "ナンプレを世界的な現象にしたのと同じ日本の出版社による、純粋に数え上げと連結性を扱うパズルで、その名前も雰囲気も「橋で物をつなぐ」という発想にさかのぼります。",
 
 
     game_klondike: "クロンダイク",

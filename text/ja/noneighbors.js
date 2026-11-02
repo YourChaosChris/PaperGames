@@ -22,7 +22,7 @@ Object.assign(STRINGS.ja, {
     numberblocks_history_title: "となりなしの歴史",
     numberblocks_history_origins_title: "ある考案者のパズル",
     numberblocks_history_origins_p1: "となりなしは日本のパズル作家、稲葉直貴氏が考案し、2001年に発表しました。稲葉氏は非常に多くの論理パズルを生み出しており、その多くはひとつの明快なルールから驚くほど深い推理が生まれるものです。",
-    numberblocks_history_origins_p2: "このパズルは2つのよく知られた考えを組み合わせています。数独のブロックのように決まった数字の組を入れる領域と、チェスのキングの動きにならった近所のルールです。キングが進めるマスには同じ数字を置けません。",
+    numberblocks_history_origins_p2: "このパズルは2つのよく知られた考えを組み合わせています。ナンプレのブロックのように決まった数字の組を入れる領域と、チェスのキングの動きにならった近所のルールです。キングが進めるマスには同じ数字を置けません。",
     numberblocks_history_names_title: "ほかの名前で",
     numberblocks_history_names_p1: "このパズルはSuguruやTectonicの名でも知られています。いずれも領域と隣接に関する同じルールです。",
     numberblocks_history_names_p2: "ここのパズルはすべてお使いの端末で新しく作られます。ブロックと正しい答えを1マスずつ一緒に組み立て、内蔵のソルバーが答えをちょうど1通り見つけられる限り、数字を1つずつ取り除いていきます。"
