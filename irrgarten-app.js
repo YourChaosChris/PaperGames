@@ -15,10 +15,26 @@
 // "Back" (#ig-back, "Zurück" as task 170 asks, not the shared "Undo" label:
 // it steps back along the way) takes one cell back, "Hint" shows the next three cells of the right
 // way (also out of a dead end).
+//
+// Task 174: start and goal lie anywhere (from the maze). Mode "Several
+// figures" (setting #ig-mode, remembered): 2 or 3 figures - child (filled
+// circle) to school, dog (filled square) to kennel, cat (filled triangle)
+// to basket; each goal is the same shape drawn open, so black and white
+// tell them apart by form. Each figure has its own line (solid, dashed,
+// dotted). Tap a figure on the board or its button under the board
+// (#ig-figs) to choose it; the chosen one gets a ring. A move changes only
+// the lines, the figures' shapes, the ring and the buttons' marks.
 
 const IRRGARTEN_SAVE_KEY = "einkchess_save_irrgarten";
 const IG_LAST_KEY = "papergames_irrgarten_last";
 const IG_INPUT_KEY = "papergames_irrgarten_input";
+const IG_MODE_KEY = "papergames_irrgarten_mode";
+// Figure f: shape, line dash (in cell widths), name and goal keys.
+const IG_FIGS = [
+  { shape: "circle", dash: "", name: "ig_fig_0", goal: "ig_goal_0" },
+  { shape: "square", dash: "0.5 0.35", name: "ig_fig_1", goal: "ig_goal_1" },
+  { shape: "triangle", dash: "0.04 0.35", name: "ig_fig_2", goal: "ig_goal_2" }
+];
 
 const AppStateIG = {
   state: null,
@@ -50,12 +66,13 @@ function saveIG() {
   GameStorage.save(IRRGARTEN_SAVE_KEY, { state: AppStateIG.state, hints: AppStateIG.hints });
 }
 
-// The maze after the last one played at this level (a circle of five).
-function nextMazeIG(level) {
+// The maze after the last one played at this level and mode (a circle of five).
+function nextMazeIG(level, mode) {
   let last = {};
   try { last = JSON.parse(window.localStorage.getItem(IG_LAST_KEY) || "{}") || {}; } catch (e) { last = {}; }
-  const k = Number.isInteger(last[level]) ? IrrgartenCore.nextMaze(last[level]) : 0;
-  last[level] = k;
+  const key = mode === "multi" ? level + ":multi" : level;
+  const k = Number.isInteger(last[key]) ? IrrgartenCore.nextMaze(last[key]) : 0;
+  last[key] = k;
   try { window.localStorage.setItem(IG_LAST_KEY, JSON.stringify(last)); } catch (e) { /* the same maze may come again */ }
   return k;
 }
@@ -76,12 +93,28 @@ function setInputIG(v) {
   if (AppStateIG.state) renderInfoIG();
 }
 
+function loadModeIG() {
+  let v = "";
+  try { v = window.localStorage.getItem(IG_MODE_KEY) || ""; } catch (e) { v = ""; }
+  return v === "multi" ? "multi" : "one";
+}
+
+function setModeIG(v) {
+  const mode = v === "multi" ? "multi" : "one";
+  try { window.localStorage.setItem(IG_MODE_KEY, mode); } catch (e) { /* only for this visit */ }
+  const sel = document.getElementById("ig-mode");
+  if (sel) sel.value = mode;
+}
+
 /*** Game flow ***/
 
 function startIG() {
   const level = document.getElementById("ig-level").value;
   const lv = IrrgartenCore.LEVELS.indexOf(level) >= 0 ? level : "easy";
-  AppStateIG.state = IrrgartenCore.newGame(lv, nextMazeIG(lv));
+  const modeSel = document.getElementById("ig-mode");
+  const mode = modeSel && modeSel.value === "multi" ? "multi" : "one";
+  setModeIG(mode);
+  AppStateIG.state = IrrgartenCore.newGame(lv, nextMazeIG(lv, mode), mode);
   AppStateIG.hint = false;
   AppStateIG.hints = 0;
   AppStateIG.note = "";
@@ -107,14 +140,23 @@ function showBoardIG() {
 function applyIG(r) {
   const s = AppStateIG.state;
   if (r.ok) {
+    const before = s.sel;
     AppStateIG.state = r.state;
     AppStateIG.note = "";
     AppStateIG.hint = false;
+    if (s.mode === "multi" && !r.state.solved) {
+      // Who has just arrived, or who is chosen now.
+      if (IrrgartenCore.arrived(r.state, before) && !IrrgartenCore.arrived(s, before)) AppStateIG.note = tIG("ig_fig_home", { fig: I18n.t(IG_FIGS[before].name), goal: I18n.t(IG_FIGS[before].goal) });
+      else if (r.reason === "select") AppStateIG.note = tIG("ig_fig_chosen", { fig: I18n.t(IG_FIGS[r.state.sel].name), goal: I18n.t(IG_FIGS[r.state.sel].goal) });
+    }
     updateWayIG();
     if (r.state.solved) finishIG();
     saveIG();
   } else if (r.reason === "wall" || r.reason === "far") {
     AppStateIG.note = I18n.t(r.reason === "wall" ? "ig_wall" : "ig_far");
+    renderInfoIG();
+  } else if (r.reason === "home") {
+    AppStateIG.note = tIG("ig_fig_is_home", { fig: I18n.t(IG_FIGS[s.sel].name) });
     renderInfoIG();
   }
   return s !== AppStateIG.state;
@@ -126,9 +168,15 @@ function tapCellIG(c) {
   applyIG(IrrgartenCore.tap(s, c));
 }
 
+function selectFigIG(f) {
+  const s = AppStateIG.state;
+  if (!s || s.solved || s.mode !== "multi" || f === s.sel) return;
+  applyIG({ ok: true, reason: "select", state: IrrgartenCore.select(s, f) });
+}
+
 function undoIG() {
   const s = AppStateIG.state;
-  if (!s || s.path.length < 2) return;
+  if (!s || IrrgartenCore.path(s).length < 2) return;
   applyIG({ ok: true, state: IrrgartenCore.undo(s) });
   setResultIG("");
   if (window.ResultModal) window.ResultModal.hide();
@@ -146,7 +194,7 @@ function hintIG() {
 }
 
 function finishIG() {
-  const text = I18n.t("ig_done");
+  const text = I18n.t(AppStateIG.state.mode === "multi" ? "ig_done_multi" : "ig_done");
   setResultIG(text);
   if (window.ResultModal) window.ResultModal.show("You win!", text);
   if (typeof GameStats !== "undefined") GameStats.record("irrgarten", "win", { hinted: AppStateIG.hints > 0 });
@@ -198,31 +246,93 @@ function boardHtmlIG() {
   const pad = wall / 2;
   let html = '<svg viewBox="' + f2IG(-pad) + " " + f2IG(-pad) + " " + f2IG(side + wall) + " " + f2IG(side + wall) + '" width="100%" height="100%" role="img" aria-label="' + tIG("ig_board_aria", { n: m.n }) + '" focusable="false">';
   html += '<rect x="' + f2IG(-pad) + '" y="' + f2IG(-pad) + '" width="' + f2IG(side + wall) + '" height="' + f2IG(side + wall) + '" fill="#fff"/>';
-  // Start: an open ring; goal: a small flag.
-  const st = centreIG(m.start), gl = centreIG(m.goal);
-  html += '<circle cx="' + f2IG(st[0]) + '" cy="' + f2IG(st[1]) + '" r="' + f2IG(z * 0.32) + '" fill="none" stroke="#141413" stroke-width="' + f2IG(Math.max(1.5, z * 0.06)) + '"/>';
-  const fx = gl[0] - z * 0.15, fy = gl[1] + z * 0.3;
-  html += '<path d="M' + f2IG(fx) + " " + f2IG(fy) + "V" + f2IG(gl[1] - z * 0.32) + "L" + f2IG(fx + z * 0.38) + " " + f2IG(gl[1] - z * 0.18) + "L" + f2IG(fx) + " " + f2IG(gl[1] - z * 0.04) + '" fill="#141413" stroke="#141413" stroke-width="' + f2IG(Math.max(1.5, z * 0.06)) + '" stroke-linejoin="round"/>';
+  const line = f2IG(Math.max(1.5, z * 0.06));
+  const multi = s.mode === "multi";
+  if (multi) {
+    // Goals: the figure's shape drawn open (school, kennel, basket).
+    m.goals.forEach((c, f) => {
+      const p = centreIG(c);
+      html += shapeIG(IG_FIGS[f].shape, p[0], p[1], z * 0.36, false, line);
+    });
+  } else {
+    // Start: an open ring; goal: a small flag.
+    const st = centreIG(m.start), gl = centreIG(m.goal);
+    html += '<circle cx="' + f2IG(st[0]) + '" cy="' + f2IG(st[1]) + '" r="' + f2IG(z * 0.32) + '" fill="none" stroke="#141413" stroke-width="' + line + '"/>';
+    const fx = gl[0] - z * 0.15, fy = gl[1] + z * 0.3;
+    html += '<path d="M' + f2IG(fx) + " " + f2IG(fy) + "V" + f2IG(gl[1] - z * 0.32) + "L" + f2IG(fx + z * 0.38) + " " + f2IG(gl[1] - z * 0.18) + "L" + f2IG(fx) + " " + f2IG(gl[1] - z * 0.04) + '" fill="#141413" stroke="#141413" stroke-width="' + line + '" stroke-linejoin="round"/>';
+  }
   html += '<path d="' + wallsIG(m, z) + '" fill="none" stroke="#141413" stroke-width="' + f2IG(wall) + '" stroke-linecap="square"/>';
   html += '<g id="ig-hint"></g>';
-  html += '<polyline id="ig-way" points="" fill="none" stroke="#141413" stroke-width="' + f2IG(Math.max(2, z * 0.22)) + '" stroke-linejoin="round" stroke-linecap="round"/>';
-  html += '<circle id="ig-me" cx="' + f2IG(st[0]) + '" cy="' + f2IG(st[1]) + '" r="' + f2IG(Math.max(3, z * 0.3)) + '" fill="#141413"/>';
+  // One line per figure: solid, dashed, dotted.
+  const width = Math.max(2, z * (multi ? 0.14 : 0.22));
+  s.paths.forEach((_, f) => {
+    const dash = multi && IG_FIGS[f].dash ? ' stroke-dasharray="' + IG_FIGS[f].dash.split(" ").map((x) => f2IG(Number(x) * z)).join(" ") + '"' : "";
+    html += '<polyline id="ig-way' + (f ? "-" + f : "") + '" points="" fill="none" stroke="#141413" stroke-width="' + f2IG(width) + '"' + dash + ' stroke-linejoin="round" stroke-linecap="round"/>';
+  });
+  if (multi) {
+    html += '<circle id="ig-sel" cx="0" cy="0" r="' + f2IG(z * 0.47) + '" fill="none" stroke="#141413" stroke-width="' + line + '"/>';
+    // Each figure drawn once at (0, 0) and moved by its transform.
+    s.paths.forEach((_, f) => { html += '<g id="ig-fig-' + f + '">' + shapeIG(IG_FIGS[f].shape, 0, 0, z * 0.3, true, 0) + "</g>"; });
+  } else {
+    const st = centreIG(m.start);
+    html += '<circle id="ig-me" cx="' + f2IG(st[0]) + '" cy="' + f2IG(st[1]) + '" r="' + f2IG(Math.max(3, z * 0.3)) + '" fill="#141413"/>';
+  }
   return html + "</svg>";
 }
 
-// After a move: only the line, the circle and the hint change.
+// A figure's shape at (x, y): filled (the figure) or open (its goal).
+function shapeIG(shape, x, y, r, filled, line) {
+  const paint = filled ? 'fill="#141413"' : 'fill="#fff" stroke="#141413" stroke-width="' + line + '"';
+  if (shape === "square") return '<rect x="' + f2IG(x - r * 0.85) + '" y="' + f2IG(y - r * 0.85) + '" width="' + f2IG(r * 1.7) + '" height="' + f2IG(r * 1.7) + '" ' + paint + "/>";
+  if (shape === "triangle") return '<path d="M' + f2IG(x) + " " + f2IG(y - r) + "L" + f2IG(x + r) + " " + f2IG(y + r * 0.8) + "H" + f2IG(x - r) + 'Z" ' + paint + ' stroke-linejoin="round"/>';
+  return '<circle cx="' + f2IG(x) + '" cy="' + f2IG(y) + '" r="' + f2IG(r * 0.9) + '" ' + paint + "/>";
+}
+
+// After a move: only the lines, the figures, the ring and the hint change.
 function updateWayIG() {
   const s = AppStateIG.state;
-  const way = document.getElementById("ig-way");
-  const me = document.getElementById("ig-me");
-  if (!way || !me) { renderIG(); return; }
-  const pts = s.path.length > 1 ? s.path.map((c) => { const p = centreIG(c); return f2IG(p[0]) + "," + f2IG(p[1]); }).join(" ") : "";
-  if (way.getAttribute("points") !== pts) way.setAttribute("points", pts);
+  const multi = s.mode === "multi";
+  const me = document.getElementById(multi ? "ig-sel" : "ig-me");
+  if (!me || !document.getElementById("ig-way")) { renderIG(); return; }
+  s.paths.forEach((path, f) => {
+    const way = document.getElementById("ig-way" + (f ? "-" + f : ""));
+    if (!way) return;
+    const pts = path.length > 1 ? path.map((c) => { const p = centreIG(c); return f2IG(p[0]) + "," + f2IG(p[1]); }).join(" ") : "";
+    if (way.getAttribute("points") !== pts) way.setAttribute("points", pts);
+    if (multi) {
+      const g = document.getElementById("ig-fig-" + f);
+      const p = centreIG(IrrgartenCore.last(s, f));
+      const move = "translate(" + f2IG(p[0]) + " " + f2IG(p[1]) + ")";
+      if (g && g.getAttribute("transform") !== move) g.setAttribute("transform", move);
+    }
+  });
   const p = centreIG(IrrgartenCore.last(s));
-  me.setAttribute("cx", f2IG(p[0]));
-  me.setAttribute("cy", f2IG(p[1]));
+  if (me.getAttribute("cx") !== f2IG(p[0])) me.setAttribute("cx", f2IG(p[0]));
+  if (me.getAttribute("cy") !== f2IG(p[1])) me.setAttribute("cy", f2IG(p[1]));
   drawHintIG();
+  renderFigsIG();
   renderInfoIG();
+}
+
+// The buttons under the board in "multi": one per figure, with its shape,
+// "child -> school" and a tick once it has arrived; the chosen one pressed.
+function renderFigsIG() {
+  const box = document.getElementById("ig-figs");
+  if (!box) return;
+  const s = AppStateIG.state;
+  const multi = !!s && s.mode === "multi";
+  if (box.classList.contains("hidden") === multi) box.classList.toggle("hidden", !multi);
+  if (!multi) { if (box.firstChild) box.innerHTML = ""; return; }
+  if (box.children.length !== s.paths.length) {
+    box.innerHTML = s.paths.map((_, f) => '<button type="button" class="secondary small ig-fig-btn" data-fig="' + f + '"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">' + shapeIG(IG_FIGS[f].shape, 10, 10, 8, true, 0) + "</svg><span></span></button>").join("");
+    Array.from(box.children).forEach((b) => b.addEventListener("click", () => selectFigIG(Number(b.getAttribute("data-fig")))));
+  }
+  Array.from(box.children).forEach((b, f) => {
+    const home = IrrgartenCore.arrived(s, f);
+    textIG(b.querySelector("span"), tIG("ig_fig_line", { fig: I18n.t(IG_FIGS[f].name), goal: I18n.t(IG_FIGS[f].goal) }) + (home ? " ✓" : ""));
+    const pressed = String(f === s.sel);
+    if (b.getAttribute("aria-pressed") !== pressed) b.setAttribute("aria-pressed", pressed);
+  });
 }
 
 function drawHintIG() {
@@ -250,12 +360,18 @@ function renderIG() {
 function renderInfoIG() {
   const s = AppStateIG.state;
   const n = IrrgartenCore.mazeOf(s).n;
-  textIG(document.getElementById("game-meta"), tIG("ig_meta", { k: s.k + 1, m: IrrgartenCore.COUNT, n: n }) + " · " + I18n.t("ig_level_" + s.level));
+  const multi = s.mode === "multi";
+  textIG(document.getElementById("game-meta"), tIG("ig_meta", { k: s.k + 1, m: IrrgartenCore.COUNT, n: n }) + " · " + I18n.t("ig_level_" + s.level) + (multi ? " · " + I18n.t("ig_mode_multi") : ""));
+  const goalLine = document.querySelector("#board-section .goal-line");
+  const goalKey = multi ? "ig_goal_line_multi" : "ig_goal_line";
+  if (goalLine && goalLine.getAttribute("data-i18n") !== goalKey) I18n.setKey(goalLine, goalKey);
+  const short = IrrgartenCore.path(s).length < 2;
   const undo = document.getElementById("ig-back");
-  if (undo.disabled !== s.path.length < 2) undo.disabled = s.path.length < 2;
+  if (undo.disabled !== short) undo.disabled = short;
   const hint = document.getElementById("hint-btn");
   if (hint.disabled !== !!s.solved) hint.disabled = !!s.solved;
-  if (s.solved) setStatusIG(I18n.t("ig_done"));
+  if (s.solved) setStatusIG(I18n.t(multi ? "ig_done_multi" : "ig_done"));
+  else if (multi) setStatusIG(AppStateIG.note || tIG("ig_status_multi", { fig: I18n.t(IG_FIGS[s.sel].name), goal: I18n.t(IG_FIGS[s.sel].goal) }));
   else setStatusIG(AppStateIG.note || I18n.t(AppStateIG.input === "drag" ? "ig_status_drag" : "ig_status_tap"));
 }
 
@@ -276,7 +392,10 @@ function cellAtIG(clientX, clientY) {
 
 function dragStartIG(clientX, clientY) {
   if (AppStateIG.input !== "drag" || !AppStateIG.state || AppStateIG.state.solved) return false;
-  AppStateIG.drag = { x: clientX, y: clientY, moved: false, joined: false };
+  // A finger put down on another figure chooses it and then draws its way.
+  const other = IrrgartenCore.figureAt(AppStateIG.state, cellAtIG(clientX, clientY));
+  if (other >= 0) applyIG({ ok: true, reason: "select", state: IrrgartenCore.select(AppStateIG.state, other) });
+  AppStateIG.drag = { x: clientX, y: clientY, moved: false, joined: other >= 0 };
   dragMoveIG(clientX, clientY);
   return true;
 }
@@ -339,6 +458,9 @@ function initIrrgartenApp() {
   const inputSel = document.getElementById("ig-input");
   if (inputSel) inputSel.addEventListener("change", () => setInputIG(inputSel.value));
   setInputIG(loadInputIG());
+  const modeSel = document.getElementById("ig-mode");
+  if (modeSel) modeSel.addEventListener("change", () => setModeIG(modeSel.value));
+  setModeIG(loadModeIG());
   const S = '<svg class="howto-svg" viewBox="0 0 60 60" width="60" height="60" aria-hidden="true" focusable="false">';
   const walls = '<path d="M4 4H56V56H4Z M22 4V38 M40 22V56" fill="none" stroke="#141413" stroke-width="3"/>';
   const flag = '<path d="M46 52V36L54 40L46 44" fill="#141413" stroke="#141413" stroke-width="2" stroke-linejoin="round"/>';
@@ -355,11 +477,15 @@ function initIrrgartenApp() {
     if (AppStateIG.state && w !== AppStateIG.width) renderIG();
   });
   if (window.I18n && typeof I18n.onChange === "function") I18n.onChange(() => { if (AppStateIG.state) renderIG(); });
+  // An old save (rules 1, before task 174) does not fit the new mazes: dropped.
+  const old = typeof GameStorage !== "undefined" ? GameStorage.load(IRRGARTEN_SAVE_KEY) : null;
+  if (old && !IrrgartenCore.valid(old.state)) GameStorage.clear(IRRGARTEN_SAVE_KEY);
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(IRRGARTEN_SAVE_KEY) : null;
   if (saved && IrrgartenCore.valid(saved.state) && !saved.state.solved) {
     AppStateIG.state = saved.state;
     AppStateIG.hints = saved.hints || 0;
     document.getElementById("ig-level").value = saved.state.level;
+    setModeIG(saved.state.mode);
     showBoardIG();
     renderIG();
   }

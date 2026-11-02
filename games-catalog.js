@@ -1372,7 +1372,7 @@ const GAMES_CATALOG = [
     nameKey: "game_irrgarten",
     nameText: "Maze",
     descKey: "home_irrgarten_desc",
-    descText: "Find the way through a maze from the start to the goal. Easy with wide passages for children, up to very hard with a big grid. Every maze made by the program, tap or draw, hint and back.",
+    descText: "Find the way through a maze from the start to the goal. Easy with wide passages for children, up to very hard with a big grid. Every maze made by the program, tap or draw, hint and back. Also with two or three figures, each to its own goal.",
     popular: false,
     added: "2026-11-01T12:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><path d=\"M4 4H36V36H4Z M12 4V20 M4 28H20 M20 12V28 M28 12H36 M28 12V36\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.4\" stroke-linecap=\"square\"/><circle cx=\"8\" cy=\"8\" r=\"2.6\" fill=\"#141413\"/><path d=\"M31 33V24L35 26L31 28\" fill=\"#141413\" stroke=\"#141413\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/></svg></span>"

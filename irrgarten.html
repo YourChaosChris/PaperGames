@@ -72,6 +72,10 @@
     <label for="ig-input" data-i18n="ig_input_label">Play by:</label>
     <select id="ig-input"><option value="tap" data-i18n="ig_input_tap" selected>Tapping cells</option><option value="drag" data-i18n="ig_input_drag">Drawing with a finger</option></select>
   </div>
+  <div class="field-row">
+    <label for="ig-mode" data-i18n="ig_mode_label">Game:</label>
+    <select id="ig-mode"><option value="one" data-i18n="ig_mode_one" selected>One way</option><option value="multi" data-i18n="ig_mode_multi">Several figures</option></select>
+  </div>
 </section>
 </div>
 
@@ -93,6 +97,7 @@
   </div>
   <div id="board-container" class="hidden">
     <div id="ig-board" class="ig-board"></div>
+    <div id="ig-figs" class="ig-figs hidden" role="group" data-i18n-attr="aria-label:ig_figs_aria" aria-label="Figures"></div>
   </div>
   <div id="board-actions" class="board-actions">
     <button id="ig-back" class="secondary small" type="button" data-i18n="ig_back" disabled>Back</button>
