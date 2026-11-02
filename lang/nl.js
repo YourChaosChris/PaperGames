@@ -525,6 +525,7 @@ STRINGS.nl = {
     release_v270: "Bosdorp en Sprookjesschurken hebben nieuwe eigen regels; in Sprookjesschurken komen de helden nu uit de stapel. Een spel dat met de oude regels is opgeslagen, begint opnieuw.",
     release_v276: "Opgelost: Opgeven tegen de computer telt nu altijd als jouw verlies, ook terwijl de computer nog nadenkt. Ongedaan maken direct na de eerste zet van de computer laat hem opnieuw zetten in plaats van het spel stil te zetten. Nim houdt regel, hopen en wie begint na opnieuw laden. Backgammon met z'n tweeën vraagt naar het verdubbelen met knoppen op de pagina. Grotere knoppen en voettekstlinks; de meldlink noemt nu ook browser en schermgrootte.",
     release_v277: "Wegversperring: als de computer begint, is de knop ‘Verder’ nu even groot als de andere knoppen.",
+    release_v280: "Bingo loopt nu van 1 tot 90, elk getal naast een persoon van die leeftijd. Doolhof: vanaf de start gaan twee of drie wegen weg, start en doel kunnen overal liggen, en een nieuw spel met meerdere figuren. Japans: eigen namen in plaats van beschermde puzzelnamen.",
     release_v279: "Steckwürfeln toont de laatste worp en de worpen van de computers; Bingo toont de kaarten van de computers; de Stippentekening flikkert niet meer en je kunt de lijn met je vinger trekken.",
     release_v278: "Sternjagd: de computers zetten nu één voor één - tik op Verder voor de volgende; een gestreepte ring toont waar de computer heen ging.",
     release_v268: "Dierentuinworp heeft nieuwe, eigen regels. Een spel dat met de oude regels is opgeslagen, begint opnieuw.",

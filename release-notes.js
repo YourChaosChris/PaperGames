@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v280",
+    date: "2026-11-02",
+    key: "release_v280",
+    text: "Bingo now runs from 1 to 90, each number next to a person of that age. Maze: two or three ways leave the start, start and goal can be anywhere, and a new game with several figures. Japanese: own names instead of trademarked puzzle names."
+  },
+  {
     version: "v279",
     date: "2026-11-01",
     key: "release_v279",

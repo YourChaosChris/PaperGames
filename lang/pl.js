@@ -625,6 +625,7 @@ STRINGS.pl = {
     release_v270: "Leśna osada i Baśniowi złoczyńcy mają nowe, własne zasady; w grze „Baśniowi złoczyńcy” bohaterowie pojawiają się teraz z talii. Gra zapisana według starych zasad zaczyna się od nowa.",
     release_v276: "Poprawki: Poddanie się w grze z komputerem liczy się teraz zawsze jako twoja porażka, także gdy komputer jeszcze myśli. Cofnij zaraz po pierwszym ruchu komputera pozwala mu ruszyć się ponownie, zamiast zatrzymywać grę. Nim zachowuje zasadę, stosy i to, kto zaczyna, po ponownym wczytaniu. Backgammon we dwoje pyta o podwojenie przyciskami na stronie. Większe przyciski i linki w stopce; link do zgłoszeń podaje teraz także przeglądarkę i rozmiar ekranu.",
     release_v277: "Zablokowana droga: gdy zaczyna komputer, przycisk „Dalej” jest teraz tak duży jak pozostałe przyciski.",
+    release_v280: "Bingo ma teraz liczby od 1 do 90, każda obok osoby w tym wieku. Labirynt: ze startu wychodzą dwie lub trzy drogi, start i cel mogą być wszędzie, a także nowa gra z kilkoma postaciami. Japoński: własne nazwy zamiast zastrzeżonych nazw łamigłówek.",
     release_v279: "Steckwürfeln pokazuje ostatni rzut i rzuty komputerów; Bingo pokazuje karty komputerów; Obrazek z kropek już nie miga, a linię możesz rysować palcem.",
     release_v278: "Sternjagd: komputery ruszają się teraz po kolei - dotknij Dalej, aby zobaczyć następny ruch; przerywany pierścień pokazuje, dokąd poszedł komputer.",
     release_v268: "Rzut w zoo ma nowe, własne zasady. Gra zapisana według starych zasad zaczyna się od nowa.",

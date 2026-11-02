@@ -681,6 +681,7 @@ STRINGS.de = {
     release_v270: "Waldsiedlung und Märchen-Schurken haben eigene neue Regeln; bei Märchen-Schurken tauchen die Helden jetzt aus dem Stapel auf. Ein Spielstand nach den alten Regeln beginnt neu.",
     release_v276: "Behoben: „Aufgeben“ gegen den Computer zählt jetzt immer als deine Niederlage, auch während der Computer noch nachdenkt. „Rückgängig“ direkt nach dem ersten Computerzug lässt den Computer neu ziehen, statt das Spiel anzuhalten. Nim behält Regel, Haufen und Beginner nach dem Neuladen. Backgammon zu zweit fragt beim Verdoppeln mit Knöpfen auf der Seite. Größere Knöpfe und Fußzeilenlinks; der Melde-Link nennt jetzt auch Browser und Bildschirmgröße.",
     release_v277: "Wegesperre: Beginnt der Computer, ist der Knopf „Weiter“ jetzt so groß wie die anderen Knöpfe.",
+    release_v280: "Bingo geht jetzt von 1 bis 90, jede Zahl neben einer Person in diesem Alter. Irrgarten: Vom Start gehen zwei oder drei Wege ab, Start und Ziel liegen überall, dazu ein neues Spiel mit mehreren Figuren. Japanisch: eigene Namen statt geschützter Rätselnamen.",
     release_v279: "Steckwürfeln zeigt den letzten Wurf und die Würfe der Computer; Bingo zeigt die Karten der Computer; Zahlenbild flackert nicht mehr, und du kannst die Linie mit dem Finger ziehen.",
     release_v278: "Sternjagd: Die Computer ziehen jetzt einzeln - tippe auf Weiter für den nächsten; ein gestrichelter Ring zeigt, wohin der Computer gezogen ist.",
     release_v268: "Zoowurf hat neue, eigene Regeln. Eine nach den alten Regeln gespeicherte Partie beginnt neu.",

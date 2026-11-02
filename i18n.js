@@ -693,6 +693,7 @@ const STRINGS = {
     release_v270: "Forest Village and Fairy-Tale Villains have new rules of their own; in Fairy-Tale Villains the heroes now turn up from the deck. A game saved under the old rules starts anew.",
     release_v276: "Fixes: Resign against the computer now always counts as your loss, also while the computer is still thinking. Undo right after the computer's first move lets it move again instead of stopping the game. Nim keeps rule, heaps and who starts after a reload. Backgammon for two asks about a double with buttons on the page. Bigger buttons and footer links; the report link now also names browser and screen size.",
     release_v277: "Blocked Path: when the computer begins, the Continue button is now as big as the other buttons.",
+    release_v280: "Bingo now runs from 1 to 90, each number next to a person of that age. Maze: two or three ways leave the start, start and goal can be anywhere, and a new game with several figures. Japanese: own names instead of trademarked puzzle names.",
     release_v279: "Steckwürfeln shows the last roll and the computers' rolls; Bingo shows the computers' cards; Dot Picture no longer flickers, and you can draw the line with your finger.",
     release_v278: "Sternjagd: the computers now move one at a time - tap Continue for the next one; a dashed ring shows where the computer went.",
     release_v268: "Zoo Toss has new rules of its own. A game saved under the old rules starts anew.",
