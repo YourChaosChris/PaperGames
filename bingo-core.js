@@ -4,8 +4,6 @@
 // 73-90) with a free centre; picture cards use the 24 pictures (5 x 5: all
 // 24 plus a free centre). Patterns: "row", "col", "diag" (any one), "line"
 // (any row, column or diagonal), "full".
-// Every number n is also an age: ageFigure(n) says how the person of that
-// age is drawn, 1 the youngest child up to 90 the old man.
 (function (root) {
   "use strict";
   const PICTURE_COUNT = 24;
@@ -13,20 +11,6 @@
   const COLUMN = MAX_NUMBER / 5;
   function pool(kind) {
     return kind === "pictures" ? Array.from({ length: PICTURE_COUNT }, (_, i) => "picture" + i) : Array.from({ length: MAX_NUMBER }, (_, i) => i + 1);
-  }
-  // Stages: 0 baby (1-2), 1 small child (3-5), 2 school child (6-12),
-  // 3 teenager (13-17), 4 young adult (18-39), 5 adult with glasses
-  // (40-59), 6 grey-haired (60-74), 7 old man with beard and stick (75-90).
-  // height (0-100) grows until 18, stays, and shrinks from 70 on; bend
-  // (0-1) grows from 75 on, so the age keeps rising picture by picture.
-  const STAGE_FROM = [1, 3, 6, 13, 18, 40, 60, 75];
-  function ageFigure(n) {
-    const a = Math.max(1, Math.min(MAX_NUMBER, Math.round(Number(n)) || 1));
-    let stage = 0;
-    STAGE_FROM.forEach((from, i) => { if (a >= from) stage = i; });
-    const height = a <= 18 ? 34 + (a - 1) * 3 : a < 70 ? 85 : 85 - (a - 70) * 0.4;
-    const bend = a < 75 ? 0 : (a - 74) / 16;
-    return { age: a, stage, height: Math.round(height * 10) / 10, bend: Math.round(bend * 100) / 100 };
   }
   function shuffled(items, random) {
     const a = items.slice();
@@ -93,7 +77,7 @@
     if (i >= 0) state.marked[i] = true;
     return i;
   }
-  const api = { PICTURE_COUNT, MAX_NUMBER, COLUMN, STAGE_FROM, ageFigure, pool, createDeck, draw, hasPattern, lines, wrongMarks, check, autoMark, shuffled };
+  const api = { PICTURE_COUNT, MAX_NUMBER, COLUMN, pool, createDeck, draw, hasPattern, lines, wrongMarks, check, autoMark, shuffled };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   root.BingoCore = api;
 })(typeof globalThis !== "undefined" ? globalThis : this);

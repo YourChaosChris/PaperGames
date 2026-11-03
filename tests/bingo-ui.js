@@ -9,8 +9,9 @@
 // small numbers are at least 12 px; small cards do not overlap and nothing
 // scrolls sideways; a computer bingo is named in the status line and its
 // winning cells are black. Your own card stays tappable (44 px cells).
-// Task 173: the called number (1-90) is shown large next to a black line
-// drawing of a person that age; an old 1-75 save is dropped.
+// Task 173: numbers run 1-90; an old 1-75 save is dropped.
+// Task 178: the called number stands large (48 px or more) and alone in the
+// field, no figure beside it, also in the caller-only mode.
 const { chromium } = require("playwright");
 const BASE = process.env.BASE_URL || process.argv[2] || "http://localhost:8000/";
 const fails = [];
@@ -76,23 +77,19 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   }
   check("both kinds of status seen (" + named + " named, " + none + " none)", named > 0 && none > 0);
 
-  // Task 173: the called number (1-90) stands large next to the person of
-  // that age; black lines only, readable at 360 x 640.
-  const call = await page.evaluate(() => {
+  // Task 178: the called number (1-90) stands large and alone, no figure.
+  const alone = () => page.evaluate(() => {
     const cur = document.getElementById("bingo-current");
-    const svg = cur.querySelector("svg.bingo-age"), num = cur.querySelector(".bingo-current-num");
-    const strokes = Array.from(cur.querySelectorAll("svg g")).map((g) => g.getAttribute("stroke"));
-    return {
-      n: num ? Number(num.textContent) : 0, label: svg ? svg.getAttribute("aria-label") : "",
-      fig: svg ? Math.round(svg.getBoundingClientRect().height) : 0, font: num ? parseFloat(getComputedStyle(num).fontSize) : 0,
-      side: svg && num ? svg.getBoundingClientRect().right <= num.getBoundingClientRect().left + 1 : false, strokes
-    };
+    return { text: cur.textContent.trim(), kids: cur.children.length, svg: cur.querySelectorAll("svg, img").length, font: parseFloat(getComputedStyle(cur).fontSize) };
   });
-  check("called number 1-90 " + JSON.stringify(call), call.n >= 1 && call.n <= 90);
-  check("figure names the age " + JSON.stringify(call), call.label === "Person im Alter von " + call.n);
-  check("figure next to the large number " + JSON.stringify(call), call.side && call.fig >= 60 && call.font >= 40);
-  check("figure in black only " + JSON.stringify(call), call.strokes.length > 0 && call.strokes.every((s) => s === "#141413"));
-  console.log("called " + call.n + ": figure " + call.fig + " px, number " + call.font + " px");
+  const checkAlone = (where, c) => {
+    check(where + ": called number 1-90 " + JSON.stringify(c), /^\d+$/.test(c.text) && Number(c.text) >= 1 && Number(c.text) <= 90);
+    check(where + ": no figure beside the number " + JSON.stringify(c), c.svg === 0 && c.kids === 0);
+    check(where + ": number 48 px or larger " + JSON.stringify(c), c.font >= 48);
+  };
+  const call = await alone();
+  checkAlone("vs computer", call);
+  console.log("called " + call.text + ": number " + call.font + " px, no figure");
 
   // Sizes: own cells tappable, small numbers readable, no overlap, no sideways scroll.
   const geo = await page.evaluate(() => {
@@ -152,6 +149,22 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   });
   check("old 1-75 save dropped " + JSON.stringify(dropped), dropped.current !== "75" && dropped.drawn === 0 && dropped.range === 90 && !dropped.has75);
 
+  // Caller only: all 90 numbers, each shown alone and large.
+  if (!(await page.isVisible("#start-bingo-game"))) await page.tap("#menu-toggle");
+  await page.selectOption("#bingo-kind", "numbers");
+  await page.selectOption("#bingo-mode", "caller");
+  await page.tap("#start-bingo-game");
+  await page.waitForTimeout(300);
+  const calledAlone = new Set();
+  for (let d = 0; d < 95; d++) {
+    await page.tap("#bingo-draw");
+    const c = await alone();
+    if (calledAlone.has(c.text)) break;
+    checkAlone("caller " + d, c);
+    calledAlone.add(c.text);
+  }
+  check("caller drew 1 to 90 (" + calledAlone.size + ")", calledAlone.size === 90 && calledAlone.has("1") && calledAlone.has("90"));
+
   check("no page errors " + errors.join("; "), errors.length === 0);
   await browser.close();
   if (fails.length) {
@@ -159,5 +172,5 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
     console.log("=== BINGO UI: " + fails.length + " failure(s) ===");
     process.exit(1);
   }
-  console.log("=== BINGO UI: computer cards, status, switch, save and load, 0 failures ===");
+  console.log("=== BINGO UI: computer cards, status, switch, save and load, number alone 1-90, 0 failures ===");
 })();

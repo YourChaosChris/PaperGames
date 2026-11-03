@@ -35,26 +35,15 @@ for (let run = 0; run < 1000; run++) {
   assert.strictEqual(B.draw(s), null);
 }
 
-// Numbers 1 to 90, each with exactly one picture (task 173): the pool is
-// 1..90 without gaps, ageFigure is fixed per number (same result every
-// time, no language involved), the age rises from 1 (youngest child, stage
-// 0) to 90 (old man, last stage): stage never goes down, the child grows
-// until 18, and from 75 on the back bends more with every year.
+// Numbers 1 to 90 (task 173), without age figures since task 178: the
+// pool is 1..90 without gaps, five columns of 18, and the core no longer
+// offers ageFigure.
 {
   const nums = B.pool("numbers");
   assert.deepEqual(nums, Array.from({ length: 90 }, (_, i) => i + 1), "pool 1..90");
-  const figs = nums.map((n) => B.ageFigure(n));
-  assert.deepEqual(figs, nums.map((n) => B.ageFigure(n)), "fixed picture per number");
-  figs.forEach((f, i) => assert.equal(f.age, i + 1, "picture shows its own number"));
-  assert.equal(figs[0].stage, 0, "1 is the youngest child");
-  assert.equal(figs[89].stage, B.STAGE_FROM.length - 1, "90 is the old man");
-  assert(figs[89].bend === 1 && figs[0].bend === 0);
-  for (let i = 1; i < 90; i++) {
-    const a = figs[i - 1], b = figs[i];
-    assert(b.stage >= a.stage, "stage never goes down at " + (i + 1));
-    if (i + 1 <= 18) assert(b.height > a.height, "grows until 18 at " + (i + 1));
-    if (i + 1 >= 76) assert(b.bend > a.bend, "bends more from 75 on at " + (i + 1));
-  }
+  assert.equal(B.MAX_NUMBER, 90);
+  assert.equal(B.COLUMN, 18);
+  assert.strictEqual(B.ageFigure, undefined, "no age figure (task 178)");
 }
 
 // Patterns against brute force.

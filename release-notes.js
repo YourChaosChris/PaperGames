@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v281",
+    date: "2026-11-03",
+    key: "release_v281",
+    text: "Dot Picture is now among the children's games. Bingo shows the called number large and on its own again, without a figure beside it."
+  },
+  {
     version: "v280",
     date: "2026-11-02",
     key: "release_v280",

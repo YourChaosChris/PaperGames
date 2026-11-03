@@ -1363,6 +1363,7 @@ const GAMES_CATALOG = [
     descKey: "home_zahlenbild_desc",
     descText: "Join the numbered dots in order - 1, 2, 3 ... - and a picture appears. Easy with big dots for children, up to very hard with many dots close together for adults. Simple pictures drawn just for this game, undo, hint and a magnified view.",
     popular: false,
+    kids: true,
     added: "2026-10-31T12:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><polyline points=\"8,32 8,18 20,7 32,18 32,32\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><g fill=\"#141413\"><circle cx=\"8\" cy=\"32\" r=\"2.4\"/><circle cx=\"8\" cy=\"18\" r=\"2.4\"/><circle cx=\"20\" cy=\"7\" r=\"2.4\"/><circle cx=\"32\" cy=\"18\" r=\"2.4\"/><circle cx=\"32\" cy=\"32\" r=\"2.4\"/></g></svg></span>"
   },
