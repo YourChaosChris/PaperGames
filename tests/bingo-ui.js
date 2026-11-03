@@ -159,7 +159,7 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   for (let d = 0; d < 95; d++) {
     await page.tap("#bingo-draw");
     const c = await alone();
-    if (calledAlone.has(c.text)) break;
+    if (calledAlone.has(c.text) || !/^\d+$/.test(c.text)) break; // after number 90 the pool is empty and the field shows a dash
     checkAlone("caller " + d, c);
     calledAlone.add(c.text);
   }
