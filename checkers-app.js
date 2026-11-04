@@ -14,6 +14,7 @@ const AppStateCheckers = {
   lastMove: null,         // { from: [r,c], to: [r,c] } | null
   humanColor: "b",
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
+  rules: "en",            // "en" | "de" - rule set of the running game (task 179)
   gameOver: false,
   moveCount: 0,
   pendingChains: null,   // { board, turn, chains } while the player picks between jump chains
@@ -26,11 +27,22 @@ let einkCheckersResizeHandlerAttached = false;
 let einkCheckersResizeTimeoutId = null;
 
 const CHECKERS_SAVE_KEY = "einkchess_save_checkers";
+const CHECKERS_RULES_KEY = "papergames_checkers_rules";
+
+// The rule set chosen in the settings, used for the next new game.
+function loadRulesCheckers() {
+  try { return CheckersCore.normalizeRules(window.localStorage.getItem(CHECKERS_RULES_KEY)); } catch (e) { return "en"; }
+}
+
+function saveRulesCheckers(rules) {
+  try { window.localStorage.setItem(CHECKERS_RULES_KEY, CheckersCore.normalizeRules(rules)); } catch (e) { /* the choice just isn't remembered */ }
+}
 
 function saveCheckersGame() {
   if (typeof GameStorage === "undefined") return;
   GameStorage.save(CHECKERS_SAVE_KEY, {
     mode: AppStateCheckers.mode,
+    rules: AppStateCheckers.rules,
     board: AppStateCheckers.board,
     turn: AppStateCheckers.turn,
     lastMove: AppStateCheckers.lastMove,
@@ -119,6 +131,12 @@ function initCheckersApp() {
   const levelInline = document.getElementById("checkers-level-inline");
   const startGameBtn = document.getElementById("start-checkers-game");
   const resignBtn = document.getElementById("resign-button");
+  const rulesSelect = document.getElementById("checkers-rules");
+  if (rulesSelect) rulesSelect.value = loadRulesCheckers();
+
+  function chosenRules() {
+    return CheckersCore.normalizeRules(rulesSelect ? rulesSelect.value : loadRulesCheckers());
+  }
 
   function updateColorChoiceVisibility() {
     if (!colorChoice || !levelInline) return;
@@ -152,6 +170,8 @@ function initCheckersApp() {
 
   function startNewGame(mode, humanColor, level) {
     AppStateCheckers.mode = mode;
+    AppStateCheckers.rules = chosenRules();
+    AppStateCheckers.pendingChains = null;
     AppStateCheckers.board = CheckersCore.createInitialBoard();
     AppStateCheckers.turn = "b";
     AppStateCheckers.selected = null;
@@ -195,6 +215,31 @@ function initCheckersApp() {
     levelInline.addEventListener("change", updateColorChoiceVisibility);
   }
 
+  // A running game never goes on under other rules: changing them asks
+  // first and then starts a new game (same mode, colour and level);
+  // saying no puts the choice back.
+  if (rulesSelect) {
+    rulesSelect.addEventListener("change", () => {
+      const rules = chosenRules();
+      const running = !AppStateCheckers.gameOver && AppStateCheckers.moveCount > 0;
+      if (running && rules !== AppStateCheckers.rules) {
+        if (!window.confirm(I18n.t("checkers_ruleset_change_confirm"))) {
+          rulesSelect.value = AppStateCheckers.rules;
+          return;
+        }
+        saveRulesCheckers(rules);
+        startNewGame(AppStateCheckers.mode, AppStateCheckers.humanColor, AppStateCheckers.aiLevel);
+        return;
+      }
+      saveRulesCheckers(rules);
+      // A game without any move yet simply switches to the new rules.
+      if (!AppStateCheckers.gameOver && AppStateCheckers.moveCount === 0 &&
+          !document.getElementById("board-container").classList.contains("hidden")) {
+        startNewGame(AppStateCheckers.mode, AppStateCheckers.humanColor, AppStateCheckers.aiLevel);
+      }
+    });
+  }
+
   startGameBtn.addEventListener("click", () => {
     const level = levelInline ? parseInt(levelInline.value, 10) : 2;
     const colorInput = document.querySelector("input[name='checkers-color']:checked");
@@ -231,6 +276,9 @@ function initCheckersApp() {
   const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(CHECKERS_SAVE_KEY) : null;
   if (savedGame && savedGame.board) {
     AppStateCheckers.mode = savedGame.mode;
+    // Saves from before the rule choice have no rules field: English.
+    AppStateCheckers.rules = CheckersCore.normalizeRules(savedGame.rules);
+    if (rulesSelect) rulesSelect.value = AppStateCheckers.rules;
     AppStateCheckers.board = savedGame.board;
     AppStateCheckers.turn = savedGame.turn;
     AppStateCheckers.selected = null;
@@ -283,12 +331,19 @@ function onCheckersSquareClick(e) {
   AppStateCheckers.pendingChains = null;
   if (pending && pending.board === board && pending.turn === turn) {
     const left = pending.chains.filter((m) => m.captured.some(([cr, cc]) => cr === r && cc === c));
-    if (left.length === 1) {
-      applyCheckersMoveFromClick(left[0]);
+    const before = pending.picked || [];
+    const picked = before.some(([pr, pc]) => pr === r && pc === c) ? before : before.concat([[r, c]]);
+    // One path may take exactly the tapped pieces while a longer one takes
+    // those and more (a flying king can choose): tapping all pieces of the
+    // shorter path picks it.
+    const exact = left.filter((m) => m.captured.length === picked.length);
+    if (left.length === 1 || (left.length > 1 && exact.length === 1 &&
+        picked.every(([pr, pc]) => exact[0].captured.some(([cr, cc]) => cr === pr && cc === pc)))) {
+      applyCheckersMoveFromClick(left.length === 1 ? left[0] : exact[0]);
       return;
     }
     if (left.length > 1) {
-      AppStateCheckers.pendingChains = { board, turn, chains: left };
+      AppStateCheckers.pendingChains = { board, turn, chains: left, picked };
       setStatusCheckers("board-info", "Several capture paths lead there. Tap a piece you want to jump over.");
       return;
     }
@@ -305,6 +360,19 @@ function onCheckersSquareClick(e) {
 
   const [sr, sc] = AppStateCheckers.selected;
   if (sr === r && sc === c) {
+    // A king's capture chain can lead round back to its own square: then
+    // tapping it again is that move, not a deselect.
+    const loops = distinctChainsCheckers(CheckersCore.getLegalMoves(board, turn, AppStateCheckers.rules)
+      .filter((m) => m.captured.length && m.from[0] === r && m.from[1] === c && m.to[0] === r && m.to[1] === c));
+    if (loops.length === 1) {
+      applyCheckersMoveFromClick(loops[0]);
+      return;
+    }
+    if (loops.length > 1) {
+      AppStateCheckers.pendingChains = { board, turn, chains: loops };
+      setStatusCheckers("board-info", "Several capture paths lead there. Tap a piece you want to jump over.");
+      return;
+    }
     AppStateCheckers.selected = null;
     updateCheckersBoard();
     return;
@@ -318,7 +386,7 @@ function onCheckersSquareClick(e) {
     return;
   }
 
-  const legalMoves = CheckersCore.getLegalMoves(board, turn);
+  const legalMoves = CheckersCore.getLegalMoves(board, turn, AppStateCheckers.rules);
   const matches = legalMoves.filter((m) => m.from[0] === sr && m.from[1] === sc && m.to[0] === r && m.to[1] === c);
   const match = matches[0];
   if (distinctChainsCheckers(matches).length > 1) {
@@ -387,7 +455,7 @@ function applyCheckersMove(move) {
     return;
   }
 
-  const end = CheckersCore.detectGameEnd(AppStateCheckers.board, AppStateCheckers.turn);
+  const end = CheckersCore.detectGameEnd(AppStateCheckers.board, AppStateCheckers.turn, AppStateCheckers.rules);
   if (end.status !== "normal") {
     const winnerName = colorNameCheckers(end.winner);
     const reason = end.status === "no-pieces" ? "no pieces left" : "no legal moves";
@@ -406,7 +474,7 @@ function aiMoveOfflineCheckers() {
   const aiColor = CheckersCore.otherColor(AppStateCheckers.humanColor);
   if (AppStateCheckers.turn !== aiColor) return;
 
-  const move = CheckersAi.chooseMove(AppStateCheckers.board, aiColor, AppStateCheckers.aiLevel);
+  const move = CheckersAi.chooseMove(AppStateCheckers.board, aiColor, AppStateCheckers.aiLevel, AppStateCheckers.rules);
   if (!move) return; // detectGameEnd after the human's move already caught a no-moves loss
 
   pushUndoSnapshotCheckers();
@@ -431,7 +499,7 @@ function aiMoveOfflineCheckers() {
     return;
   }
 
-  const end = CheckersCore.detectGameEnd(AppStateCheckers.board, AppStateCheckers.turn);
+  const end = CheckersCore.detectGameEnd(AppStateCheckers.board, AppStateCheckers.turn, AppStateCheckers.rules);
   if (end.status !== "normal") {
     const winnerName = colorNameCheckers(end.winner);
     const reason = end.status === "no-pieces" ? "no pieces left" : "no legal moves";
@@ -619,6 +687,8 @@ function updateScoreLineCheckers() {
 function updateGameLabelsCheckers() {
   const meta = document.getElementById("game-meta");
   if (meta) I18n.setMsg(meta, AppStateCheckers.moveCount ? "Move " + AppStateCheckers.moveCount : "");
+  const label = document.getElementById("game-label");
+  if (label) I18n.setKey(label, AppStateCheckers.rules === "de" ? "checkers_ruleset_de" : "checkers_ruleset_en");
   updateUndoButtonVisibilityCheckers();
   updateResignVisibilityCheckers();
 

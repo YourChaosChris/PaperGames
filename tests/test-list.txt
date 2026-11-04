@@ -18,6 +18,8 @@
 10 cake-ui.js
 2 bingo-core.js
 6 bingo-ui.js
+150 checkers-core.js
+10 checkers-ui.js
 1 animalsudoku-core.js
 2 sudoku-seeds.js
 5 shapesort-core.js

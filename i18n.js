@@ -81,6 +81,7 @@ const STRINGS = {
     quickrules_checkers_1: "Win by capturing all of your opponent's pieces, or by leaving them with no legal move on their turn.",
     quickrules_checkers_2: "Men move one square diagonally forward; you capture by jumping over an adjacent enemy piece into the empty square right behind it.",
     quickrules_checkers_3: "If any capture is available, you must take one - a quiet move is illegal while a capture exists.",
+    quickrules_checkers_4: "In the settings you choose English rules (kings step one square) or German rules (kings move and capture any distance, men also capture backward).",
     quickrules_xiangqi_1: "Checkmate the opponent's General, or leave them with no legal move on their turn - here that also counts as a win.",
     quickrules_xiangqi_2: "Pieces stand on the intersections, not in squares, and on your turn you move one of them according to its own rule.",
     quickrules_xiangqi_3: "The two Generals may never face each other on a fully open file.",
@@ -693,6 +694,7 @@ const STRINGS = {
     release_v270: "Forest Village and Fairy-Tale Villains have new rules of their own; in Fairy-Tale Villains the heroes now turn up from the deck. A game saved under the old rules starts anew.",
     release_v276: "Fixes: Resign against the computer now always counts as your loss, also while the computer is still thinking. Undo right after the computer's first move lets it move again instead of stopping the game. Nim keeps rule, heaps and who starts after a reload. Backgammon for two asks about a double with buttons on the page. Bigger buttons and footer links; the report link now also names browser and screen size.",
     release_v277: "Blocked Path: when the computer begins, the Continue button is now as big as the other buttons.",
+    release_v282: "Checkers: in the settings you can now choose German rules, with kings that move and capture any distance and men that also capture backward. English rules stay the default.",
     release_v281: "Dot Picture is now among the children's games. Bingo shows the called number large and on its own again, without a figure beside it.",
     release_v280: "Bingo now runs from 1 to 90, each number next to a person of that age. Maze: two or three ways leave the start, start and goal can be anywhere, and a new game with several figures. Japanese: own names instead of trademarked puzzle names.",
     release_v279: "Steckwürfeln shows the last roll and the computers' rolls; Bingo shows the computers' cards; Dot Picture no longer flickers, and you can draw the line with your finger.",
@@ -5673,6 +5675,10 @@ const STRINGS = {
     bingo_picture_house: 'House',
     bingo_history_linktitle: 'The story of Bingo',
     bingo_history_teaser: 'Bingo grew from number-drawing and lottery games in Europe. During the nineteenth and twentieth centuries, versions with cards and marked numbers spread widely. Picture cards later made the same simple call-and-mark idea easy for young children too.',
+    checkers_ruleset_label: "Rules:",
+    checkers_ruleset_en: "English rules",
+    checkers_ruleset_de: "German rules",
+    checkers_ruleset_change_confirm: "Change the rules? The current game ends and a new game starts with the new rules.",
   }
 };
 

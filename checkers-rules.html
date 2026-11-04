@@ -60,14 +60,14 @@
   <main>
     <section class="card content-page">
       <h1 data-i18n="checkers_rules_title">Checkers Rules</h1>
-      <p data-i18n="checkers_rules_intro">A quick reference for how PaperGames plays checkers - useful if you're rusty, or learning.</p>
+      <p data-i18n="checkers_rules_intro">A quick reference for how PaperGames plays checkers - useful if you're rusty, or learning. In the settings you choose English rules (the default, described first) or German rules (last section).</p>
 
       <h2 data-i18n="checkers_rules_basics_title">The basic idea</h2>
       <dl class="rule-list">
         <dt><span class="checkers-icon-disc checkers-icon-disc-black" aria-hidden="true"></span> <span data-i18n="checkers_term_men">Men</span></dt>
         <dd data-i18n="checkers_rules_men">Black and White each start with 12 men on the dark squares of their own three back rows, and move diagonally forward one square at a time, alternating turns, Black first.</dd>
         <dt data-i18n="checkers_term_kings">Kings</dt>
-        <dd data-i18n="checkers_rules_kings">A man reaching the far back row becomes a king. Kings move diagonally in any direction, still one square at a time.</dd>
+        <dd data-i18n="checkers_rules_kings">A man reaching the far back row becomes a king. Under English rules kings move diagonally in any direction, still one square at a time.</dd>
       </dl>
 
       <h2 data-i18n="checkers_rules_capture_title">Capturing</h2>
@@ -88,6 +88,17 @@
         <dd data-i18n="checkers_rules_resignation">A player can resign at any time, ending the game immediately in the opponent's favor.</dd>
         <dt data-i18n="checkers_term_draw">Draw</dt>
         <dd data-i18n="checkers_rules_draw">If 40 moves pass in a row with no capture by either side, the game is a draw.</dd>
+      </dl>
+
+      <h2 data-i18n="checkers_rules_german_title">German rules</h2>
+      <p data-i18n="checkers_rules_german_intro">Chosen in the settings. Everything above holds, except for these points.</p>
+      <dl class="rule-list">
+        <dt data-i18n="checkers_term_german_kings">Flying kings</dt>
+        <dd data-i18n="checkers_rules_german_kings">A king moves any number of free squares along a diagonal, forward or backward. It also captures from a distance: it jumps a single enemy piece further along the diagonal and lands on any free square behind it. If one of those squares allows a further capture, it must land there.</dd>
+        <dt data-i18n="checkers_term_german_men">Capturing backward</dt>
+        <dd data-i18n="checkers_rules_german_men">Men still move one square diagonally forward, but they capture forward and backward.</dd>
+        <dt data-i18n="checkers_term_german_chain">Capture chains</dt>
+        <dd data-i18n="checkers_rules_german_chain">Capturing is mandatory, and a chain must go on as long as it can. You may choose freely between different captures - you don't have to take the most pieces. Taken pieces are removed only after the move; until then they block the way and can't be jumped twice. A man is crowned only if its move ends on the far back row; if it can capture on from there, it carries on as a man.</dd>
       </dl>
 
       <p class="about-back"><a href="checkers.html" data-i18n="about_back">&larr; Back to the board</a></p>

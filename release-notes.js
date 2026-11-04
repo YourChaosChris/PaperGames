@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v282",
+    date: "2026-11-04",
+    key: "release_v282",
+    text: "Checkers: in the settings you can now choose German rules, with kings that move and capture any distance and men that also capture backward. English rules stay the default."
+  },
+  {
     version: "v281",
     date: "2026-11-03",
     key: "release_v281",

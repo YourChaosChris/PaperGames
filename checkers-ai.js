@@ -19,8 +19,11 @@ const CheckersAi = (function () {
     return color === "b" ? "w" : "b";
   }
 
-  function pieceValue(piece) {
-    return CheckersCore.isKing(piece) ? 130 : 100;
+  // A flying king (German rules) covers whole diagonals, so it is worth
+  // far more than an English king that steps one square.
+  function pieceValue(piece, rules) {
+    if (!CheckersCore.isKing(piece)) return 100;
+    return rules === "de" ? 300 : 130;
   }
 
   // Cheap positional terms: reward advancing men toward promotion, and
@@ -35,7 +38,7 @@ const CheckersAi = (function () {
     return bonus;
   }
 
-  function evaluateFor(color, board) {
+  function evaluateFor(color, board, rules) {
     let score = 0; // positive favors black
     for (let r = 0; r < CheckersCore.SIZE; r++) {
       for (let c = 0; c < CheckersCore.SIZE; c++) {
@@ -43,7 +46,7 @@ const CheckersAi = (function () {
         if (!piece) continue;
         const pieceColor = CheckersCore.colorOf(piece);
         const sign = pieceColor === "b" ? 1 : -1;
-        score += sign * pieceValue(piece);
+        score += sign * pieceValue(piece, rules);
         score += sign * positionalBonus(piece, r, pieceColor);
       }
     }
@@ -55,7 +58,7 @@ const CheckersAi = (function () {
     return moves.slice().sort((a, b) => b.captured.length - a.captured.length);
   }
 
-  function minimax(board, colorToMove, depth, maxDepth, alpha, beta, perspective, searchState) {
+  function minimax(board, colorToMove, depth, maxDepth, alpha, beta, perspective, searchState, rules) {
     if (searchState) {
       if (searchState.aborted) return 0;
       searchState.nodes++;
@@ -65,13 +68,13 @@ const CheckersAi = (function () {
       }
     }
 
-    const moves = CheckersCore.getLegalMoves(board, colorToMove);
+    const moves = CheckersCore.getLegalMoves(board, colorToMove, rules);
     if (!moves.length) {
       // colorToMove has no legal moves and therefore loses immediately.
       return colorToMove === perspective ? -INF / 2 : INF / 2;
     }
     if (depth >= maxDepth) {
-      return evaluateFor(perspective, board);
+      return evaluateFor(perspective, board, rules);
     }
 
     const ordered = orderMoves(moves);
@@ -80,7 +83,7 @@ const CheckersAi = (function () {
 
     for (const m of ordered) {
       const b2 = CheckersCore.applyMove(board, m);
-      const score = minimax(b2, otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState);
+      const score = minimax(b2, otherColor(colorToMove), depth + 1, maxDepth, alpha, beta, perspective, searchState, rules);
       if (searchState && searchState.aborted) return best;
       if (isMaximizing) {
         if (score > best) best = score;
@@ -99,13 +102,13 @@ const CheckersAi = (function () {
   // each candidate's own subtree) and a shared node budget: if a slow
   // device can't finish the target depth in time, the last fully
   // completed shallower depth's move is kept instead of hanging.
-  function searchBestMove(board, color, moves, maxDepth, nodeBudget) {
+  function searchBestMove(board, color, moves, maxDepth, nodeBudget, rules) {
     const searchState = { nodes: 0, budget: nodeBudget, aborted: false };
     let orderedMoves = orderMoves(moves);
 
     const rootScored = orderedMoves.map((m) => ({
       move: m,
-      score: evaluateFor(color, CheckersCore.applyMove(board, m)) + (Math.random() - 0.5) * 2
+      score: evaluateFor(color, CheckersCore.applyMove(board, m), rules) + (Math.random() - 0.5) * 2
     }));
     rootScored.sort((a, b) => b.score - a.score);
     orderedMoves = rootScored.map((e) => e.move);
@@ -120,7 +123,7 @@ const CheckersAi = (function () {
 
       for (const m of orderedMoves) {
         const b2 = CheckersCore.applyMove(board, m);
-        const score = minimax(b2, otherColor(color), 1, depth, alpha, INF, color, searchState);
+        const score = minimax(b2, otherColor(color), 1, depth, alpha, INF, color, searchState, rules);
         if (searchState.aborted) {
           depthAborted = true;
           break;
@@ -147,8 +150,10 @@ const CheckersAi = (function () {
     3: { style: "search", maxDepth: 11, nodeBudget: 600000 }
   };
 
-  function chooseMove(board, color, level) {
-    const moves = CheckersCore.getLegalMoves(board, color);
+  // `rules` is "en" (default) or "de", see checkers-core.js.
+  function chooseMove(board, color, level, rules) {
+    rules = CheckersCore.normalizeRules(rules);
+    const moves = CheckersCore.getLegalMoves(board, color, rules);
     if (!moves.length) return null;
 
     if (typeof level !== "number" || level < 1) level = 1;
@@ -161,14 +166,14 @@ const CheckersAi = (function () {
     if (config.style === "greedy") {
       const scored = moves.map((m) => ({
         move: m,
-        score: evaluateFor(color, CheckersCore.applyMove(board, m))
+        score: evaluateFor(color, CheckersCore.applyMove(board, m), rules)
       }));
       scored.sort((a, b) => b.score - a.score);
       const topN = Math.min(config.topN, scored.length);
       return scored[Math.floor(Math.random() * topN)].move;
     }
 
-    return searchBestMove(board, color, moves, config.maxDepth, config.nodeBudget);
+    return searchBestMove(board, color, moves, config.maxDepth, config.nodeBudget, rules);
   }
 
   return {
