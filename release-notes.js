@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v283",
+    date: "2026-11-05",
+    key: "release_v283",
+    text: "Checkers: a new Hint button marks a good move; when you must capture, it marks the piece that captures and the square where the capture ends. Clearer messages when a capture is mandatory or a multiple capture goes on. The computer now waits a moment before it moves, and its move stays framed."
+  },
+  {
     version: "v282",
     date: "2026-11-04",
     key: "release_v282",

@@ -9,6 +9,8 @@
 //     long and a short capture (no majority rule), a man passing the back
 //     row mid-chain captures on as a man and is crowned only at the end,
 //     a taken piece blocks the line and is never jumped twice.
+//   - The position from Kirsten's screenshot (task 180): German rules have
+//     exactly the double capture to (3,2), English rules the single one.
 //   - Random games computer against computer, both rule sets, all three
 //     levels: every move is one of getLegalMoves, every taken square held
 //     an enemy piece, every game ends (no pieces, no moves, or the
@@ -141,6 +143,27 @@ check("normalizeRules: missing/unknown = en", C.normalizeRules(undefined) === "e
 {
   const b = put(empty(), [[7, 0, "w"], [6, 1, "b"], [5, 2, "b"]]);
   check("de: game end when no moves (white man boxed in)", C.detectGameEnd(b, "w", "de").status === "no-moves");
+}
+
+// ---- Position from Kirsten's screenshot (task 180) ----
+// Black (top) to move. German rules: the only move is the double capture
+// (3,6) over (4,5) to (5,4), then backward over (4,3) to (3,2); (5,4) is
+// only a stop on the way. English rules: men don't capture backward, so
+// the capture ends on (5,4).
+{
+  const b = put(empty(), [
+    [0, 1, "b"], [0, 3, "b"], [0, 5, "b"], [0, 7, "b"], [1, 0, "b"], [1, 2, "b"], [1, 4, "b"], [1, 6, "b"],
+    [2, 1, "b"], [2, 3, "b"], [2, 7, "b"], [3, 6, "b"],
+    [4, 3, "w"], [4, 5, "w"], [5, 0, "w"], [5, 6, "w"], [6, 1, "w"], [6, 3, "w"], [6, 5, "w"], [6, 7, "w"],
+    [7, 0, "w"], [7, 2, "w"], [7, 4, "w"], [7, 6, "w"]
+  ]);
+  const de = C.getLegalMoves(b, "b", "de");
+  check("screenshot de: one move, (3,6) to (3,2) taking (4,3) and (4,5) (" + de.map(moveKey).join(" ") + ")",
+    de.length === 1 && moveKey(de[0]) === "3,6>3,2:4,3;4,5");
+  check("screenshot de: (5,4) is no end square", !de.some((m) => sq(m.to) === "5,4"));
+  const en = C.getLegalMoves(b, "b", "en");
+  check("screenshot en: one move, (3,6) to (5,4) taking (4,5) (" + en.map(moveKey).join(" ") + ")",
+    en.length === 1 && moveKey(en[0]) === "3,6>5,4:4,5");
 }
 
 // ---- Random games, both rule sets, all levels ----

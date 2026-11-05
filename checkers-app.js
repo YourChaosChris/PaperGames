@@ -18,6 +18,7 @@ const AppStateCheckers = {
   gameOver: false,
   moveCount: 0,
   pendingChains: null,   // { board, turn, chains } while the player picks between jump chains
+  hint: null,             // { from, to } shown by the Hint button until the next move (task 180)
   movesSinceCapture: 0,   // draw-by-inactivity counter, mirrors chess's 50-move rule
   undoStack: [],
   captures: { b: 0, w: 0 } // pieces captured BY black / BY white
@@ -28,6 +29,10 @@ let einkCheckersResizeTimeoutId = null;
 
 const CHECKERS_SAVE_KEY = "einkchess_save_checkers";
 const CHECKERS_RULES_KEY = "papergames_checkers_rules";
+// Wait before the computer moves: AiPacing makes this about a second at
+// the normal speed, so the player's own move is on the E-Ink screen
+// before the answer comes (task 180, it used to answer at once).
+const CHECKERS_AI_WAIT = 400;
 
 // The rule set chosen in the settings, used for the next new game.
 function loadRulesCheckers() {
@@ -172,6 +177,7 @@ function initCheckersApp() {
     AppStateCheckers.mode = mode;
     AppStateCheckers.rules = chosenRules();
     AppStateCheckers.pendingChains = null;
+    AppStateCheckers.hint = null;
     AppStateCheckers.board = CheckersCore.createInitialBoard();
     AppStateCheckers.turn = "b";
     AppStateCheckers.selected = null;
@@ -191,7 +197,7 @@ function initCheckersApp() {
 
     if (mode === "offline-ai" && humanColor !== "b") {
       setStatusCheckers("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineCheckers, AiPacing.delay(10));
+      setTimeout(aiMoveOfflineCheckers, AiPacing.delay(CHECKERS_AI_WAIT));
     } else {
       setStatusCheckers("board-info", colorNameCheckers(AppStateCheckers.turn) + " to move.");
     }
@@ -271,6 +277,9 @@ function initCheckersApp() {
     });
   }
 
+  const hintBtn = document.getElementById("checkers-hint");
+  if (hintBtn) hintBtn.addEventListener("click", showHintCheckers);
+
   updateColorChoiceVisibility();
 
   const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(CHECKERS_SAVE_KEY) : null;
@@ -298,7 +307,7 @@ function initCheckersApp() {
     updateGameLabelsCheckers();
     if (AppStateCheckers.mode === "offline-ai" && AppStateCheckers.turn !== AppStateCheckers.humanColor) {
       setStatusCheckers("board-info", "Computer thinking…");
-      setTimeout(aiMoveOfflineCheckers, AiPacing.delay(10));
+      setTimeout(aiMoveOfflineCheckers, AiPacing.delay(CHECKERS_AI_WAIT));
     } else {
       setStatusCheckers("board-info", colorNameCheckers(AppStateCheckers.turn) + " to move.");
     }
@@ -398,9 +407,15 @@ function onCheckersSquareClick(e) {
   }
   if (!match) {
     const hadCaptures = legalMoves.some((m) => m.captured.length > 0);
-    setStatusCheckers("board-info", hadCaptures
-      ? "Invalid move: a capture is available and must be taken."
-      : "Invalid move.");
+    // Tapping a square on the way of a multiple capture (Kirsten, task
+    // 180): the move stays invalid, the message says the end square is
+    // meant. Which pieces must capture is only shown by the Hint button.
+    const ownChain = legalMoves.some((m) => m.from[0] === sr && m.from[1] === sc && m.captured.length > 1);
+    setStatusCheckers("board-info", !hadCaptures
+      ? "Invalid move."
+      : ownChain
+        ? "Invalid move: this capture goes on. Tap the square where it ends, not a square on the way."
+        : "Invalid move: you must capture and play the move through to the end.");
     AppStateCheckers.selected = null;
     updateCheckersBoard();
     return;
@@ -426,7 +441,7 @@ function applyCheckersMoveFromClick(move) {
 
   if (AppStateCheckers.mode === "offline-ai" && !AppStateCheckers.gameOver && AppStateCheckers.turn !== AppStateCheckers.humanColor) {
     setStatusCheckers("board-info", "Computer thinking…");
-    setTimeout(aiMoveOfflineCheckers, AiPacing.delay(10));
+    setTimeout(aiMoveOfflineCheckers, AiPacing.delay(CHECKERS_AI_WAIT));
   }
 }
 
@@ -442,6 +457,7 @@ function applyCheckersMove(move) {
   }
   AppStateCheckers.lastMove = { from: move.from, to: move.to };
   AppStateCheckers.selected = null;
+  AppStateCheckers.hint = null;
   AppStateCheckers.moveCount++;
   AppStateCheckers.turn = CheckersCore.otherColor(mover);
   updateCheckersBoard();
@@ -486,6 +502,7 @@ function aiMoveOfflineCheckers() {
     AppStateCheckers.movesSinceCapture++;
   }
   AppStateCheckers.lastMove = { from: move.from, to: move.to };
+  AppStateCheckers.hint = null;
   AppStateCheckers.moveCount++;
   AppStateCheckers.turn = CheckersCore.otherColor(aiColor);
   updateCheckersBoard();
@@ -510,7 +527,42 @@ function aiMoveOfflineCheckers() {
     return;
   }
 
-  setStatusCheckers("board-info", "Computer played. Your move.");
+  // Its start and end square carry the last-move frame; the line says
+  // what it did (task 180). The turn sentence comes first: UiStatus.rewrite
+  // turns it into "Your turn." and keeps the sentences after it.
+  setStatusCheckers("board-info", "Your move. " + (move.captured.length
+    ? "Computer moved the marked piece. Pieces captured: " + move.captured.length + "."
+    : "Computer moved the marked piece."));
+}
+
+// The Hint button (task 180): marks a legal move of the side to move,
+// a capture when capturing is mandatory, with the piece and the square
+// where the whole move ends (both texts say "tap", so UiStatus.rewrite
+// keeps them). Nothing is marked before it is pressed, so
+// the player can think for themselves first. The move is the one the
+// evaluation likes best, so pressing again shows the same hint.
+function hintMoveCheckers() {
+  const board = AppStateCheckers.board;
+  const turn = AppStateCheckers.turn;
+  const moves = CheckersCore.getLegalMoves(board, turn, AppStateCheckers.rules);
+  let best = null;
+  let bestScore = -Infinity;
+  moves.forEach((m) => {
+    const score = CheckersAi.evaluateFor(turn, CheckersCore.applyMove(board, m), AppStateCheckers.rules);
+    if (score > bestScore) { bestScore = score; best = m; }
+  });
+  return best;
+}
+
+function showHintCheckers() {
+  if (AppStateCheckers.gameOver || UiStatus.computerToMove(AppStateCheckers)) return;
+  const move = hintMoveCheckers();
+  if (!move) return;
+  AppStateCheckers.hint = { from: move.from, to: move.to };
+  updateCheckersBoard();
+  setStatusCheckers("board-info", move.captured.length
+    ? "Hint: the marked piece must capture. Tap it, then the marked square where the capture ends."
+    : "Hint: tap the marked piece, then the marked square.");
 }
 
 function undoLastMove() {
@@ -529,6 +581,7 @@ function undoLastMove() {
   AppStateCheckers.captures = prev.captures;
   AppStateCheckers.lastMove = prev.lastMove;
   AppStateCheckers.selected = null;
+  AppStateCheckers.hint = null;
   setGameResultCheckers("");
   updateCheckersBoard();
   updateGameLabelsCheckers();
@@ -536,7 +589,7 @@ function undoLastMove() {
 
   if (UiStatus.computerToMove(AppStateCheckers)) {
     setStatusCheckers("board-info", "Computer thinking…");
-    setTimeout(aiMoveOfflineCheckers, AiPacing.delay(10));
+    setTimeout(aiMoveOfflineCheckers, AiPacing.delay(CHECKERS_AI_WAIT));
   }
 }
 
@@ -650,6 +703,9 @@ function updateCheckersBoard() {
 
     const isSelected = !!(AppStateCheckers.selected && AppStateCheckers.selected[0] === r && AppStateCheckers.selected[1] === c);
     sq.classList.toggle("selected", isSelected);
+    const hint = AppStateCheckers.hint;
+    sq.classList.toggle("hint-cell", !!(hint &&
+      ((hint.from[0] === r && hint.from[1] === c) || (hint.to[0] === r && hint.to[1] === c))));
     sq.classList.toggle("last-move", !!(AppStateCheckers.lastMove &&
       ((AppStateCheckers.lastMove.from[0] === r && AppStateCheckers.lastMove.from[1] === c) ||
        (AppStateCheckers.lastMove.to[0] === r && AppStateCheckers.lastMove.to[1] === c))));
@@ -701,6 +757,8 @@ function updateUndoButtonVisibilityCheckers() {
   if (!btn) return;
   const hasUndo = (AppStateCheckers.undoStack || []).length > 0;
   btn.disabled = !(hasUndo);
+  const hintBtn = document.getElementById("checkers-hint");
+  if (hintBtn) hintBtn.disabled = AppStateCheckers.gameOver || UiStatus.computerToMove(AppStateCheckers);
 }
 
 function updateResignVisibilityCheckers() {

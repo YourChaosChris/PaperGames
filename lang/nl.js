@@ -526,6 +526,7 @@ STRINGS.nl = {
     release_v270: "Bosdorp en Sprookjesschurken hebben nieuwe eigen regels; in Sprookjesschurken komen de helden nu uit de stapel. Een spel dat met de oude regels is opgeslagen, begint opnieuw.",
     release_v276: "Opgelost: Opgeven tegen de computer telt nu altijd als jouw verlies, ook terwijl de computer nog nadenkt. Ongedaan maken direct na de eerste zet van de computer laat hem opnieuw zetten in plaats van het spel stil te zetten. Nim houdt regel, hopen en wie begint na opnieuw laden. Backgammon met z'n tweeën vraagt naar het verdubbelen met knoppen op de pagina. Grotere knoppen en voettekstlinks; de meldlink noemt nu ook browser en schermgrootte.",
     release_v277: "Wegversperring: als de computer begint, is de knop ‘Verder’ nu even groot als de andere knoppen.",
+    release_v283: "Dammen: een nieuwe Tip-knop markeert een goede zet; als je moet slaan, markeert hij de schijf die slaat en het veld waar de slagzet eindigt. Duidelijkere meldingen als slaan verplicht is of een meervoudige slag doorgaat. De computer wacht nu even voordat hij zet, en zijn zet blijft omkaderd.",
     release_v282: "Dammen: je kunt nu in de instellingen Duitse regels kiezen, waarbij dammen over elke afstand bewegen en slaan en schijven ook achteruit slaan. Engelse regels blijven de standaard.",
     release_v281: "Stippentekening staat nu bij de kinderspellen. Bingo toont het getrokken getal weer groot en alleen, zonder figuur ernaast.",
     release_v280: "Bingo loopt nu van 1 tot 90, elk getal naast een persoon van die leeftijd. Doolhof: vanaf de start gaan twee of drie wegen weg, start en doel kunnen overal liggen, en een nieuw spel met meerdere figuren. Japans: eigen namen in plaats van beschermde puzzelnamen.",
@@ -5596,4 +5597,10 @@ STRINGS.nl = {
     checkers_ruleset_en: "Engelse regels",
     checkers_ruleset_de: "Duitse regels",
     checkers_ruleset_change_confirm: "De regels wijzigen? De huidige partij eindigt en er begint een nieuwe partij met de nieuwe regels.",
+    msg_checkers_capture_chain: "Ongeldige zet: de slagzet gaat verder. Tik op het veld waar hij eindigt, niet op een veld onderweg.",
+    msg_checkers_capture_forced: "Ongeldige zet: je moet slaan en de zet helemaal afmaken.",
+    msg_checkers_hint_capture: "Tip: de gemarkeerde schijf moet slaan. Tik erop en daarna op het gemarkeerde veld waar de slagzet eindigt.",
+    msg_checkers_hint_move: "Tip: tik op de gemarkeerde schijf en daarna op het gemarkeerde veld.",
+    msg_checkers_ai_moved: "De computer heeft de gemarkeerde schijf verzet.",
+    msg_t_checkers_ai_captured: "De computer heeft de gemarkeerde schijf verzet. Geslagen schijven: {n}.",
 };

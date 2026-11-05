@@ -618,6 +618,7 @@ STRINGS.fr = {
     release_v270: "Village de la forêt et Méchants des contes ont chacun leurs propres nouvelles règles ; dans Méchants des contes, les héros arrivent désormais de la pioche. Une partie enregistrée avec les anciennes règles recommence.",
     release_v276: "Corrections : Abandonner contre l'ordinateur compte désormais toujours comme ta défaite, même pendant que l'ordinateur réfléchit. Annuler juste après le premier coup de l'ordinateur le laisse rejouer au lieu de bloquer la partie. Nim garde la règle, les tas et qui commence après un rechargement. Le backgammon à deux demande le double avec des boutons sur la page. Boutons et liens du pied de page plus grands ; le lien de signalement indique aussi le navigateur et la taille de l'écran.",
     release_v277: "Chemin barré : quand l’ordinateur commence, le bouton « Continuer » est maintenant aussi grand que les autres boutons.",
+    release_v283: "Dames : un nouveau bouton Indice marque un bon coup ; quand la prise est obligatoire, il marque le pion qui doit prendre et la case où la prise se termine. Messages plus clairs quand la prise est obligatoire ou qu’une prise multiple continue. L’ordinateur attend maintenant un instant avant de jouer, et son coup reste encadré.",
     release_v282: "Dames : vous pouvez désormais choisir les règles allemandes dans les paramètres. Les dames se déplacent et prennent à n'importe quelle distance, et les pions peuvent aussi prendre en arrière. Les règles anglaises restent celles par défaut.",
     release_v281: "Image à points fait désormais partie des jeux pour enfants. Le bingo affiche de nouveau le nombre tiré en grand et seul, sans personnage à côté.",
     release_v280: "Le bingo va maintenant de 1 à 90, chaque nombre à côté d'une personne de cet âge. Dédale : deux ou trois chemins partent du départ, départ et but peuvent être partout, et un nouveau jeu avec plusieurs personnages. Japonais : noms propres au lieu de noms de puzzles déposés.",
@@ -5596,4 +5597,10 @@ STRINGS.fr = {
     checkers_ruleset_en: "Règles anglaises",
     checkers_ruleset_de: "Règles allemandes",
     checkers_ruleset_change_confirm: "Changer les règles ? La partie en cours se termine et une nouvelle partie commence avec les nouvelles règles.",
+    msg_checkers_capture_chain: "Coup invalide : la prise continue. Touche la case où elle se termine, pas une case en chemin.",
+    msg_checkers_capture_forced: "Coup invalide : tu dois prendre et jouer le coup jusqu’au bout.",
+    msg_checkers_hint_capture: "Indice : le pion marqué doit prendre. Touche-le, puis la case marquée où la prise se termine.",
+    msg_checkers_hint_move: "Indice : touche le pion marqué, puis la case marquée.",
+    msg_checkers_ai_moved: "L’ordinateur a joué le pion marqué.",
+    msg_t_checkers_ai_captured: "L’ordinateur a joué le pion marqué. Pions pris : {n}.",
 };

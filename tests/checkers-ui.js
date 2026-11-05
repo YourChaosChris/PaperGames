@@ -10,7 +10,14 @@
 //   - German rules: a flying king with three capture paths to the same
 //     square shows "Mehrere Schlagwege ..." and tapping a piece of one
 //     path plays exactly that path.
-//   - A few moves against the computer (German rules) without page error.
+//   - Task 180, the position from Kirsten's screenshot: nothing is marked
+//     on its own, a tap on the square on the way explains the end square,
+//     a move without capture says "Du musst schlagen ...", the Hint button
+//     marks the capturing piece and the end square, the hint goes with the
+//     move.
+//   - A few moves against the computer (German rules) without page error;
+//     the computer waits before it moves, its move is framed and the line
+//     says what it did (task 180).
 const { chromium } = require("playwright");
 const BASE = process.env.BASE_URL || process.argv[2] || "http://localhost:8000/";
 const fails = [];
@@ -122,6 +129,46 @@ const state = (page) => page.evaluate(() => ({
     after.b[6][3] === "B" && after.b[5][0] === null && after.b[4][1] === null && after.b[2][5] === null && after.b[5][4] === null &&
     after.b[3][4] === "w" && after.b[1][6] === "w" && after.cap === 3 && after.turn === "w");
 
+  // Task 180: the position from Kirsten's screenshot, German rules, Black
+  // to move. The only move is (3,6) over (4,5) and (4,3) to (3,2).
+  await page.evaluate(() => {
+    const b = [];
+    for (let r = 0; r < 8; r++) b.push(new Array(8).fill(null));
+    [[0, 1], [0, 3], [0, 5], [0, 7], [1, 0], [1, 2], [1, 4], [1, 6], [2, 1], [2, 3], [2, 7], [3, 6]].forEach(([r, c]) => { b[r][c] = "b"; });
+    [[4, 3], [4, 5], [5, 0], [5, 6], [6, 1], [6, 3], [6, 5], [6, 7], [7, 0], [7, 2], [7, 4], [7, 6]].forEach(([r, c]) => { b[r][c] = "w"; });
+    AppStateCheckers.board = b;
+    AppStateCheckers.turn = "b";
+    AppStateCheckers.lastMove = null;
+    updateCheckersBoard();
+    updateGameLabelsCheckers();
+  });
+  const info = async () => (await page.textContent("#board-info")).trim();
+  const hinted = () => page.$$eval(".checkers-square.hint-cell", (els) => els.map((e) => e.dataset.row + "," + e.dataset.col).sort().join(" "));
+  check("nothing marked before the hint (" + (await hinted()) + ")", (await hinted()) === "");
+  await page.tap(sqSel(3, 6));
+  await page.tap(sqSel(5, 4));
+  await page.waitForTimeout(150);
+  let m180 = await info();
+  check("square on the way explains the end square (" + m180 + ")", /Schlagzug geht weiter.*Feld, auf dem er endet/.test(m180));
+  await page.tap(sqSel(2, 3));
+  await page.tap(sqSel(3, 4));
+  await page.waitForTimeout(150);
+  m180 = await info();
+  check("forced capture message (" + m180 + ")", m180 === "Ungültiger Zug: Du musst schlagen und den Zug bis zum Ende ziehen.");
+  check("still nothing marked (" + (await hinted()) + ")", (await hinted()) === "");
+  check("hint button in German", (await page.textContent("#checkers-hint")).trim() === "Tipp" && !(await page.isDisabled("#checkers-hint")));
+  await page.tap("#checkers-hint");
+  await page.waitForTimeout(150);
+  m180 = await info();
+  check("hint marks piece and end square (" + (await hinted()) + ")", (await hinted()) === "3,2 3,6");
+  check("hint text (" + m180 + ")", /^Tipp: Der markierte Stein muss schlagen\./.test(m180));
+  await page.tap(sqSel(3, 6));
+  await page.tap(sqSel(3, 2));
+  await page.waitForTimeout(150);
+  const done180 = await page.evaluate(() => ({ to: AppStateCheckers.board[3][2], a: AppStateCheckers.board[4][5], b: AppStateCheckers.board[4][3], turn: AppStateCheckers.turn }));
+  check("capture played after the hint (" + JSON.stringify(done180) + ")", done180.to === "b" && !done180.a && !done180.b && done180.turn === "w");
+  check("hint gone after the move (" + (await hinted()) + ")", (await hinted()) === "");
+
   // A few moves against the computer under German rules.
   await openMenu();
   await page.tap("#mode-offline-ai");
@@ -144,6 +191,20 @@ const state = (page) => page.evaluate(() => ({
     await page.tap(sqSel(mv.from[0], mv.from[1]));
     await page.tap(sqSel(mv.to[0], mv.to[1]));
     played++;
+    if (played === 1) {
+      // Task 180: the computer waits (about a second), then its move is
+      // framed and the line says what it did.
+      await page.waitForTimeout(300);
+      const waiting = await page.evaluate(() => AppStateCheckers.turn !== AppStateCheckers.humanColor);
+      check("computer waits before its move", waiting);
+      await page.waitForFunction(() => AppStateCheckers.gameOver || AppStateCheckers.turn === AppStateCheckers.humanColor, null, { timeout: 30000 }).catch(() => {});
+      const shown = await page.evaluate(() => ({
+        text: document.getElementById("board-info").textContent.trim(),
+        framed: document.querySelectorAll(".checkers-square.last-move").length
+      }));
+      check("computer move framed and named (" + JSON.stringify(shown) + ")",
+        shown.framed === 2 && /^Du bist dran\. Der Computer hat den markierten Stein gezogen\./.test(shown.text));
+    }
   }
   s = await state(page);
   check("vs computer under German rules (" + played + " moves, rules " + s.rules + ")", played >= 3 && s.rules === "de" && s.mode === "offline-ai");

@@ -682,6 +682,7 @@ STRINGS.de = {
     release_v270: "Waldsiedlung und Märchen-Schurken haben eigene neue Regeln; bei Märchen-Schurken tauchen die Helden jetzt aus dem Stapel auf. Ein Spielstand nach den alten Regeln beginnt neu.",
     release_v276: "Behoben: „Aufgeben“ gegen den Computer zählt jetzt immer als deine Niederlage, auch während der Computer noch nachdenkt. „Rückgängig“ direkt nach dem ersten Computerzug lässt den Computer neu ziehen, statt das Spiel anzuhalten. Nim behält Regel, Haufen und Beginner nach dem Neuladen. Backgammon zu zweit fragt beim Verdoppeln mit Knöpfen auf der Seite. Größere Knöpfe und Fußzeilenlinks; der Melde-Link nennt jetzt auch Browser und Bildschirmgröße.",
     release_v277: "Wegesperre: Beginnt der Computer, ist der Knopf „Weiter“ jetzt so groß wie die anderen Knöpfe.",
+    release_v283: "Dame: Neue Tipp-Taste – sie markiert einen guten Zug, bei Schlagzwang den Stein, der schlagen muss, und das Feld, auf dem der Schlagzug endet. Klarere Meldungen bei Schlagzwang und bei Mehrfachschlägen. Der Computer wartet jetzt kurz, bevor er zieht, und sein Zug bleibt markiert.",
     release_v282: "Dame: In den Einstellungen kannst du jetzt deutsche Regeln wählen – die Dame zieht und schlägt beliebig weit, Steine schlagen auch rückwärts. Englische Regeln bleiben die Voreinstellung.",
     release_v281: "Zahlenbild steht jetzt bei den Kinderspielen. Bingo zeigt die gezogene Zahl wieder groß und allein, ohne Figur daneben.",
     release_v280: "Bingo geht jetzt von 1 bis 90, jede Zahl neben einer Person in diesem Alter. Irrgarten: Vom Start gehen zwei oder drei Wege ab, Start und Ziel liegen überall, dazu ein neues Spiel mit mehreren Figuren. Japanisch: eigene Namen statt geschützter Rätselnamen.",
@@ -5667,4 +5668,10 @@ STRINGS.de = {
     checkers_ruleset_en: "Englische Regeln",
     checkers_ruleset_de: "Deutsche Regeln",
     checkers_ruleset_change_confirm: "Regeln wechseln? Die laufende Partie endet, und eine neue Partie mit den neuen Regeln beginnt.",
+    msg_checkers_capture_chain: "Ungültiger Zug: Der Schlagzug geht weiter. Tippe auf das Feld, auf dem er endet, nicht auf ein Feld unterwegs.",
+    msg_checkers_capture_forced: "Ungültiger Zug: Du musst schlagen und den Zug bis zum Ende ziehen.",
+    msg_checkers_hint_capture: "Tipp: Der markierte Stein muss schlagen. Tippe ihn an, dann das markierte Feld, auf dem der Schlagzug endet.",
+    msg_checkers_hint_move: "Tipp: Tippe den markierten Stein an, dann das markierte Feld.",
+    msg_checkers_ai_moved: "Der Computer hat den markierten Stein gezogen.",
+    msg_t_checkers_ai_captured: "Der Computer hat den markierten Stein gezogen. Geschlagene Steine: {n}.",
 };

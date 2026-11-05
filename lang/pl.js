@@ -626,6 +626,7 @@ STRINGS.pl = {
     release_v270: "Leśna osada i Baśniowi złoczyńcy mają nowe, własne zasady; w grze „Baśniowi złoczyńcy” bohaterowie pojawiają się teraz z talii. Gra zapisana według starych zasad zaczyna się od nowa.",
     release_v276: "Poprawki: Poddanie się w grze z komputerem liczy się teraz zawsze jako twoja porażka, także gdy komputer jeszcze myśli. Cofnij zaraz po pierwszym ruchu komputera pozwala mu ruszyć się ponownie, zamiast zatrzymywać grę. Nim zachowuje zasadę, stosy i to, kto zaczyna, po ponownym wczytaniu. Backgammon we dwoje pyta o podwojenie przyciskami na stronie. Większe przyciski i linki w stopce; link do zgłoszeń podaje teraz także przeglądarkę i rozmiar ekranu.",
     release_v277: "Zablokowana droga: gdy zaczyna komputer, przycisk „Dalej” jest teraz tak duży jak pozostałe przyciski.",
+    release_v283: "Warcaby: nowy przycisk Podpowiedź zaznacza dobry ruch; gdy bicie jest obowiązkowe, zaznacza pionek, który bije, i pole, na którym kończy się bicie. Jaśniejsze komunikaty, gdy bicie jest obowiązkowe lub bicie wielokrotne trwa dalej. Komputer czeka teraz chwilę przed ruchem, a jego ruch pozostaje zaznaczony.",
     release_v282: "Warcaby: w ustawieniach możesz teraz wybrać zasady niemieckie, w których damki poruszają się i biją na dowolną odległość, a pionki biją także do tyłu. Zasady angielskie pozostają domyślne.",
     release_v281: "Obrazek z kropek jest teraz wśród gier dla dzieci. Bingo znów pokazuje wylosowaną liczbę dużą i samą, bez postaci obok.",
     release_v280: "Bingo ma teraz liczby od 1 do 90, każda obok osoby w tym wieku. Labirynt: ze startu wychodzą dwie lub trzy drogi, start i cel mogą być wszędzie, a także nowa gra z kilkoma postaciami. Japoński: własne nazwy zamiast zastrzeżonych nazw łamigłówek.",
@@ -5597,4 +5598,10 @@ STRINGS.pl = {
     checkers_ruleset_en: "Zasady angielskie",
     checkers_ruleset_de: "Zasady niemieckie",
     checkers_ruleset_change_confirm: "Zmienić zasady? Bieżąca partia się zakończy i rozpocznie się nowa, rozgrywana według nowych zasad.",
+    msg_checkers_capture_chain: "Nieprawidłowy ruch: bicie trwa dalej. Dotknij pola, na którym się kończy, a nie pola po drodze.",
+    msg_checkers_capture_forced: "Nieprawidłowy ruch: musisz bić i wykonać ruch do końca.",
+    msg_checkers_hint_capture: "Podpowiedź: zaznaczony pionek musi bić. Dotknij go, a potem zaznaczonego pola, na którym kończy się bicie.",
+    msg_checkers_hint_move: "Podpowiedź: dotknij zaznaczonego pionka, a potem zaznaczonego pola.",
+    msg_checkers_ai_moved: "Komputer przesunął zaznaczony pionek.",
+    msg_t_checkers_ai_captured: "Komputer przesunął zaznaczony pionek. Zbite pionki: {n}.",
 };

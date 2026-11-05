@@ -694,6 +694,7 @@ const STRINGS = {
     release_v270: "Forest Village and Fairy-Tale Villains have new rules of their own; in Fairy-Tale Villains the heroes now turn up from the deck. A game saved under the old rules starts anew.",
     release_v276: "Fixes: Resign against the computer now always counts as your loss, also while the computer is still thinking. Undo right after the computer's first move lets it move again instead of stopping the game. Nim keeps rule, heaps and who starts after a reload. Backgammon for two asks about a double with buttons on the page. Bigger buttons and footer links; the report link now also names browser and screen size.",
     release_v277: "Blocked Path: when the computer begins, the Continue button is now as big as the other buttons.",
+    release_v283: "Checkers: a new Hint button marks a good move; when you must capture, it marks the piece that captures and the square where the capture ends. Clearer messages when a capture is mandatory or a multiple capture goes on. The computer now waits a moment before it moves, and its move stays framed.",
     release_v282: "Checkers: in the settings you can now choose German rules, with kings that move and capture any distance and men that also capture backward. English rules stay the default.",
     release_v281: "Dot Picture is now among the children's games. Bingo shows the called number large and on its own again, without a figure beside it.",
     release_v280: "Bingo now runs from 1 to 90, each number next to a person of that age. Maze: two or three ways leave the start, start and goal can be anywhere, and a new game with several figures. Japanese: own names instead of trademarked puzzle names.",
@@ -5679,6 +5680,12 @@ const STRINGS = {
     checkers_ruleset_en: "English rules",
     checkers_ruleset_de: "German rules",
     checkers_ruleset_change_confirm: "Change the rules? The current game ends and a new game starts with the new rules.",
+    msg_checkers_capture_chain: "Invalid move: this capture goes on. Tap the square where it ends, not a square on the way.",
+    msg_checkers_capture_forced: "Invalid move: you must capture and play the move through to the end.",
+    msg_checkers_hint_capture: "Hint: the marked piece must capture. Tap it, then the marked square where the capture ends.",
+    msg_checkers_hint_move: "Hint: tap the marked piece, then the marked square.",
+    msg_checkers_ai_moved: "Computer moved the marked piece.",
+    msg_t_checkers_ai_captured: "Computer moved the marked piece. Pieces captured: {n}.",
   }
 };
 

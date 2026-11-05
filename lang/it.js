@@ -618,6 +618,7 @@ STRINGS.it = {
     release_v270: "Villaggio nel bosco e Cattivi delle fiabe hanno nuove regole proprie; in Cattivi delle fiabe, gli eroi ora arrivano dal mazzo. Una partita salvata con le vecchie regole ricomincia.",
     release_v276: "Correzioni: Arrendersi contro il computer conta ora sempre come tua sconfitta, anche mentre il computer sta ancora pensando. Annulla subito dopo la prima mossa del computer lo fa muovere di nuovo invece di fermare la partita. Nim mantiene regola, mucchi e chi inizia dopo un ricaricamento. Il backgammon in due chiede del raddoppio con pulsanti nella pagina. Pulsanti e link a piè di pagina più grandi; il link per le segnalazioni indica ora anche browser e dimensioni dello schermo.",
     release_v277: "Strada sbarrata: quando inizia il computer, il pulsante «Continua» ora è grande come gli altri pulsanti.",
+    release_v283: "Dama: un nuovo pulsante Suggerimento segna una buona mossa; quando la presa è obbligatoria, segna la pedina che deve prendere e la casella dove finisce la presa. Messaggi più chiari quando la presa è obbligatoria o una presa multipla continua. Il computer ora aspetta un attimo prima di muovere, e la sua mossa resta evidenziata.",
     release_v282: "Dama: nelle impostazioni ora puoi scegliere le regole tedesche, con dame che si muovono e catturano a qualsiasi distanza e pedine che catturano anche all'indietro. Le regole inglesi restano quelle predefinite.",
     release_v281: "Disegno a puntini è ora tra i giochi per bambini. Il bingo mostra di nuovo il numero estratto grande e da solo, senza figura accanto.",
     release_v280: "Il bingo ora va da 1 a 90, ogni numero accanto a una persona di quell'età. Labirinto: dalla partenza escono due o tre strade, partenza e arrivo possono essere ovunque, e un nuovo gioco con più personaggi. Giapponese: nomi propri al posto di nomi di rompicapi registrati.",
@@ -5596,4 +5597,10 @@ STRINGS.it = {
     checkers_ruleset_en: "Regole inglesi",
     checkers_ruleset_de: "Regole tedesche",
     checkers_ruleset_change_confirm: "Cambiare le regole? La partita in corso termina e ne inizia una nuova con le nuove regole.",
+    msg_checkers_capture_chain: "Mossa non valida: la presa continua. Tocca la casella dove finisce, non una casella intermedia.",
+    msg_checkers_capture_forced: "Mossa non valida: devi prendere e completare la mossa fino alla fine.",
+    msg_checkers_hint_capture: "Suggerimento: la pedina segnata deve prendere. Toccala, poi la casella segnata dove finisce la presa.",
+    msg_checkers_hint_move: "Suggerimento: tocca la pedina segnata, poi la casella segnata.",
+    msg_checkers_ai_moved: "Il computer ha mosso la pedina segnata.",
+    msg_t_checkers_ai_captured: "Il computer ha mosso la pedina segnata. Pedine prese: {n}.",
 };

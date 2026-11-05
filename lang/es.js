@@ -618,6 +618,7 @@ STRINGS.es = {
     release_v270: "Aldea del bosque y Villanos de cuento tienen sus propias reglas nuevas; en Villanos de cuento, los héroes ahora aparecen del mazo. Una partida guardada con las reglas antiguas empieza de nuevo.",
     release_v276: "Correcciones: Rendirse contra el ordenador cuenta ahora siempre como tu derrota, también mientras el ordenador piensa. Deshacer justo después del primer movimiento del ordenador le deja mover de nuevo en lugar de detener la partida. Nim conserva la regla, los montones y quién empieza al recargar. El backgammon para dos pregunta por el doble con botones en la página. Botones y enlaces del pie más grandes; el enlace para informar indica ahora también el navegador y el tamaño de pantalla.",
     release_v277: "Camino cortado: cuando empieza el ordenador, el botón «Continuar» ahora es tan grande como los demás botones.",
+    release_v283: "Damas: un nuevo botón Pista marca una buena jugada; cuando hay que capturar, marca la pieza que captura y la casilla donde termina la captura. Mensajes más claros cuando la captura es obligatoria o una captura múltiple continúa. La computadora ahora espera un momento antes de mover, y su jugada queda enmarcada.",
     release_v282: "Damas: ahora puedes elegir las reglas alemanas en los ajustes. Las damas se mueven y capturan a cualquier distancia, y las fichas también pueden capturar hacia atrás. Las reglas inglesas siguen siendo las predeterminadas.",
     release_v281: "Dibujo de puntos está ahora entre los juegos para niños. El bingo vuelve a mostrar el número sacado grande y solo, sin figura al lado.",
     release_v280: "El bingo va ahora del 1 al 90, cada número junto a una persona de esa edad. Laberinto: del inicio salen dos o tres caminos, inicio y meta pueden estar en cualquier sitio, y un juego nuevo con varias figuras. Japonés: nombres propios en lugar de nombres de pasatiempos registrados.",
@@ -5596,4 +5597,10 @@ STRINGS.es = {
     checkers_ruleset_en: "Reglas inglesas",
     checkers_ruleset_de: "Reglas alemanas",
     checkers_ruleset_change_confirm: "¿Cambiar las reglas? La partida actual terminará y empezará una nueva con las reglas nuevas.",
+    msg_checkers_capture_chain: "Jugada no válida: la captura continúa. Toca la casilla donde termina, no una casilla intermedia.",
+    msg_checkers_capture_forced: "Jugada no válida: tienes que capturar y completar la jugada hasta el final.",
+    msg_checkers_hint_capture: "Pista: la pieza marcada tiene que capturar. Tócala y luego la casilla marcada donde termina la captura.",
+    msg_checkers_hint_move: "Pista: toca la pieza marcada y luego la casilla marcada.",
+    msg_checkers_ai_moved: "La computadora ha movido la pieza marcada.",
+    msg_t_checkers_ai_captured: "La computadora ha movido la pieza marcada. Piezas capturadas: {n}.",
 };

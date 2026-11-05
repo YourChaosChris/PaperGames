@@ -13,6 +13,25 @@
   margin: 0 auto;
 }
 
+/* The computer's last move (start and end square) with a thicker frame
+   than the shared 2px one, so it is clearly seen on E-Ink (task 180). */
+.checkers-square.last-move {
+  box-shadow: inset 0 0 0 4px var(--accent);
+}
+
+/* Hint button (task 180): the piece and the end square of the move, the
+   same double frame as the hints in the puzzles. */
+.checkers-square.hint-cell {
+  outline: 6px double var(--text);
+  outline-offset: -7px;
+}
+
+/* A hinted piece the player has picked up: solid, so the pick shows. */
+.checkers-square.hint-cell.selected {
+  outline: 6px solid var(--text);
+  outline-offset: -6px;
+}
+
 .checkers-piece {
   position: absolute;
   top: 50%;
