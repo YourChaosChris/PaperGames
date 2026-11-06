@@ -1,5 +1,5 @@
-// text/uk/mathcross.js
-// Rules and history texts of mathcross (uk). Loaded by mathcross-rules.html and mathcross-history.html only (see i18n.js, data-i18n-text).
+// text/uk/calcgrid.js
+// Rules and history texts of calcgrid (uk). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.uk, {
     mc_rules_title: "Обчислювальна сітка – правила",

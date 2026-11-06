@@ -356,7 +356,7 @@ all parts back into one log in list order. The last line is exactly
   page at 360 px: no once-a-second interval and no clock by default, the
   result still names the seconds; "Zeit anzeigen" shows the clock and is
   remembered; more flags than mines gives "Flaggen: 2 mehr als Minen.".
-- `node tests/mathcross-core.js` - no server or browser needed. 500
+- `node tests/calcgrid-core.js` - no server or browser needed. 500
   "Math Cross" puzzles per level: worked from left to right with whole
   numbers above 0, only the level's operators, exactly one solution,
   solvable by deduction alone, and playable to the end with the hint.

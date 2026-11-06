@@ -1,5 +1,5 @@
-// text/en/mathcross.js
-// Rules and history texts of mathcross (en). Loaded by mathcross-rules.html and mathcross-history.html only (see i18n.js, data-i18n-text).
+// text/en/calcgrid.js
+// Rules and history texts of calcgrid (en). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.en, {
     mc_rules_title: "Calculation Grid Rules",

@@ -50,7 +50,7 @@
 1 tenpairs-core.js
 68 domino-core.js
 6 hex-core.js
-3 mathcross-core.js
+3 calcgrid-core.js
 1 differences-core.js
 50 pentomino-core.js
 190 glidelanes-core.js --levels=grandmaster

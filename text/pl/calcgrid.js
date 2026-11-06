@@ -1,5 +1,5 @@
-// text/pl/mathcross.js
-// Rules and history texts of mathcross (pl). Loaded by mathcross-rules.html and mathcross-history.html only (see i18n.js, data-i18n-text).
+// text/pl/calcgrid.js
+// Rules and history texts of calcgrid (pl). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.pl, {
     mc_rules_title: "Siatka działań – zasady",

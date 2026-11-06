@@ -1,4 +1,4 @@
-// tests/mathcross-core.js
+// tests/calcgrid-core.js
 // "Math Cross" (Rechenkreuz): 500 generated puzzles per level.
 //
 // Checks: the solution uses 1-9 once each and every row and column gives
@@ -10,9 +10,9 @@
 // solving with the hint alone fills every cell correctly, a wrong entry
 // is reported first. Fixed examples of the left-to-right rule.
 //
-// Run: node tests/mathcross-core.js
+// Run: node tests/calcgrid-core.js
 
-const C = require("../mathcross-core.js");
+const C = require("../calcgrid-core.js");
 
 function rng(seed) {
   let s = seed >>> 0;

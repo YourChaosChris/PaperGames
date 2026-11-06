@@ -1,5 +1,5 @@
-// text/zh/mathcross.js
-// Rules and history texts of mathcross (zh). Loaded by mathcross-rules.html and mathcross-history.html only (see i18n.js, data-i18n-text).
+// text/zh/calcgrid.js
+// Rules and history texts of calcgrid (zh). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.zh, {
     mc_rules_title: "计算网格规则",

@@ -1,5 +1,5 @@
-// text/ru/mathcross.js
-// Rules and history texts of mathcross (ru). Loaded by mathcross-rules.html and mathcross-history.html only (see i18n.js, data-i18n-text).
+// text/ru/calcgrid.js
+// Rules and history texts of calcgrid (ru). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.ru, {
     mc_rules_title: "Сетка вычислений – правила",

@@ -1,5 +1,5 @@
-// mathcross-app.js
-// Wires MathCrossCore ("Math Cross", Rechenkreuz) to mathcross.html.
+// calcgrid-app.js
+// Wires MathCrossCore ("Math Cross", Rechenkreuz) to calcgrid.html.
 // Solitaire like the other logic puzzles: a level picker, a fresh puzzle
 // each time, a hint button, the game saved between visits.
 //
@@ -10,7 +10,7 @@
 // another square moves here. Once a row or column is full it shows a
 // tick or a cross next to its result.
 
-const MC_SAVE_KEY = "einkchess_save_mathcross";
+const MC_SAVE_KEY = "einkchess_save_calcgrid";
 
 const AppStateMc = {
   level: "easy",
@@ -193,7 +193,7 @@ function winMc() {
   const result = document.getElementById("game-result");
   if (result) I18n.setMsg(result, text);
   setStatusMc(text);
-  if (typeof GameStats !== "undefined") GameStats.record("mathcross", "win", { hinted: AppStateMc.hinted });
+  if (typeof GameStats !== "undefined") GameStats.record("calcgrid", "win", { hinted: AppStateMc.hinted });
   if (window.ResultModal) window.ResultModal.show(tMc("mc_win_title"), I18n.msg(text));
   clearSavedMcGame();
   renderMc();

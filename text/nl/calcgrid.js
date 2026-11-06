@@ -1,5 +1,5 @@
-// text/nl/mathcross.js
-// Rules and history texts of mathcross (nl). Loaded by mathcross-rules.html and mathcross-history.html only (see i18n.js, data-i18n-text).
+// text/nl/calcgrid.js
+// Rules and history texts of calcgrid (nl). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.nl, {
     mc_rules_title: "Rekenrooster – regels",

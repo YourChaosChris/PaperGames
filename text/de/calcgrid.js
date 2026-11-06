@@ -1,5 +1,5 @@
-// text/de/mathcross.js
-// Rules and history texts of mathcross (de). Loaded by mathcross-rules.html and mathcross-history.html only (see i18n.js, data-i18n-text).
+// text/de/calcgrid.js
+// Rules and history texts of calcgrid (de). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.de, {
     mc_rules_title: "Rechengitter – Regeln",

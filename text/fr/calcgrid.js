@@ -1,5 +1,5 @@
-// text/fr/mathcross.js
-// Rules and history texts of mathcross (fr). Loaded by mathcross-rules.html and mathcross-history.html only (see i18n.js, data-i18n-text).
+// text/fr/calcgrid.js
+// Rules and history texts of calcgrid (fr). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.fr, {
     mc_rules_title: "Grille de calcul – règles",

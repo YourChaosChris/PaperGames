@@ -106,7 +106,7 @@
     ["canasta", "game_canasta", "rummy"],
     ["bridge", "game_bridge", "tricks"],
     ["tenpairs", "game_tenpairs"],
-    ["mathcross", "game_mathcross", "math"],
+    ["calcgrid", "game_calcgrid", "math"],
     ["differences", "game_differences"],
     ["pentomino", "game_pentomino", "tiling"],
     ["cardduel", "game_cardduel"],
