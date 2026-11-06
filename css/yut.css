@@ -1,0 +1,39 @@
+/* yut: rules used only by the yut pages (loaded after base.css). */
+/* Yut: the board is one SVG; throw buttons and piece choice are buttons above it. */
+.yut-acts {
+  margin: 0.4rem 0;
+  text-align: center;
+}
+
+.yut-acts button {
+  min-height: 44px;
+  margin: 0.2rem;
+}
+
+.yut-acts button.on {
+  background: #141413;
+  color: #fff;
+}
+
+.yut-board-wrap {
+  max-width: 34rem;
+  margin: 0 auto;
+}
+
+.yut-board {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 2px solid #141413;
+  background: #fff;
+}
+
+.yut-board [data-from],
+.yut-board [data-mv] {
+  cursor: pointer;
+}
+
+#yut-info {
+  margin-top: 0.5rem;
+  text-align: center;
+}

@@ -72,6 +72,7 @@ const STATS_GAME_NAME_KEY = {
   oldmaid: "game_oldmaid",
   war: "game_war",
   snakesladders: "game_snakesladders",
+  yut: "game_yut",
   blockers: "game_blockers",
   blackjack: "game_blackjack",
   poker: "game_poker",

@@ -186,6 +186,8 @@ all parts back into one log in list order. The last line is exactly
   Checks both "Snakes and Ladders" boards and plays 1000 computer games
   per board and finishing rule; every game must end with no token
   outside the board.
+- `node tests/yut-core.js` and `node tests/yut-ai.js` - no server or browser needed. Rules of Yut (path, shortcuts, captures, stacks, backdo, extra throws) and a computer-versus-computer series in which level 2 must beat level 1.
+- `node tests/yut-ui.js` - Yut in the browser at 360 px: taps, computer answers, language switch, a won game and the statistics.
 - `node tests/blockers-core.js` - no server or browser needed. Plays
   500 "Blocked Path" games each for 2, 3 and 4 players with mixed
   computer levels and fails unless every move uses the full roll, steps

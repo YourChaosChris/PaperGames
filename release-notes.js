@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v284",
+    date: "2026-11-07",
+    key: "release_v284",
+    text: "New game: Yut, the Korean stick-throwing race game, with computer opponents on two levels."
+  },
+  {
     version: "v283",
     date: "2026-11-05",
     key: "release_v283",

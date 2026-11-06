@@ -22,6 +22,7 @@ const exceptions = {
   romme: "Hands are private and the discard can be reshuffled into stock; exact random state is not saved.",
   schwimmen: "Hands and the stock are private; undoing revealed cards would preserve information the player has learned.",
   snakesladders: "Dice rolls are generated randomly and the roll state is not saved.",
+  yut: "Stick throws are generated randomly and the throw state is not saved.",
   trix: "Hands are private; undoing a played card would preserve information the player has learned.",
   villains: "Hands and card decks are private; undoing a revealed computer play or draw would preserve information.",
   weidefreunde: "The animal die is rolled randomly and the roll state is not saved, so an undo could not restore the exact state.",

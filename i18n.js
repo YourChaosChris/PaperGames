@@ -694,6 +694,7 @@ const STRINGS = {
     release_v270: "Forest Village and Fairy-Tale Villains have new rules of their own; in Fairy-Tale Villains the heroes now turn up from the deck. A game saved under the old rules starts anew.",
     release_v276: "Fixes: Resign against the computer now always counts as your loss, also while the computer is still thinking. Undo right after the computer's first move lets it move again instead of stopping the game. Nim keeps rule, heaps and who starts after a reload. Backgammon for two asks about a double with buttons on the page. Bigger buttons and footer links; the report link now also names browser and screen size.",
     release_v277: "Blocked Path: when the computer begins, the Continue button is now as big as the other buttons.",
+    release_v284: "New game: Yut, the Korean stick-throwing race game, with computer opponents on two levels.",
     release_v283: "Checkers: a new Hint button marks a good move; when you must capture, it marks the piece that captures and the square where the capture ends. Clearer messages when a capture is mandatory or a multiple capture goes on. The computer now waits a moment before it moves, and its move stays framed.",
     release_v282: "Checkers: in the settings you can now choose German rules, with kings that move and capture any distance and men that also capture backward. English rules stay the default.",
     release_v281: "Dot Picture is now among the children's games. Bingo shows the called number large and on its own again, without a figure beside it.",
@@ -2254,7 +2255,31 @@ const STRINGS = {
     msg_t_war_cpu_aria: "The computer's pile, {n} cards",
     msg_war_facedown: "face-down card",
     game_snakesladders: "Snakes and Ladders",
+    game_yut: "Yut",
     home_snakesladders_desc: "The classic dice game for children: roll, move, climb up the ladders and slide down the snakes. Two boards - 100 fields, or 50 for small children - for 2 to 4 players on one device or against the computer.",
+    home_yut_desc: "Yut Nori, the Korean stick-throwing race game: throw four sticks, bring your four pieces round the board, take shortcuts at the corners and capture opponents. 2 to 4 players on one device, computer opponents on two levels.",
+    yut_players_label: "Players (you are A, the others are the computer):",
+    yut_level_label: "Computer level:",
+    yut_level_1: "Easy",
+    yut_level_2: "Hard",
+    yut_throw: "Throw sticks",
+    yut_hint: "Hint",
+    yut_waiting_piece: "Piece waiting at the start",
+    yut_start_home: "Start / home",
+    yut_home: "home",
+    yut_ring: "ring",
+    yut_shortcut: "shortcut",
+    yut_pieces: "Pieces",
+    yut_waiting: "waiting",
+    yut_status_throw: "{p} throws.",
+    yut_status_move: "{p} moves: choose a throw, then a piece, then a target.",
+    yut_win: "{p} wins!",
+    yut_thrown: "{p} throws {n} ({s}).",
+    yut_moved: "{p} moves from {a} to {b}.",
+    yut_captures: "Captures!",
+    yut_lost: "The throw is lost.",
+    yut_board_aria: "Yut board with 29 fields",
+    yut_history_intro: "Yut Nori is a traditional Korean folk game with four sticks, played above all at the Lunar New Year.",
     sl_board_label: "Board",
     sl_board_big: "100 fields",
     sl_board_small: "50 fields (small children)",
@@ -5782,7 +5807,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 113;
+  const GAME_COUNT = 114;
 
   function t(key, lang) {
     const l = lang || getLang();

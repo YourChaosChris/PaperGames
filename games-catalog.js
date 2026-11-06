@@ -907,6 +907,20 @@ const GAMES_CATALOG = [
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><path d=\"M10 32L20 8M17 34L27 10M12 27L19 29M14 21L21 23M16 15L23 17\" stroke=\"#141413\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M31 9C24 13 34 18 27 22C21 26 31 29 26 33\" stroke=\"#141413\" stroke-width=\"3.4\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"31\" cy=\"9\" r=\"3\" fill=\"#141413\"/></svg></span>"
   },
   {
+    slug: "yut",
+    category: "race",
+    family: "dicerace",
+    nameKey: "game_yut",
+    nameText: "Yut",
+    descKey: "home_yut_desc",
+    descText: "Yut Nori, the Korean stick-throwing race game: throw four sticks, bring your four pieces round the board, take shortcuts at the corners and capture opponents. 2 to 4 players on one device, computer opponents on two levels.",
+    popular: false,
+    kids: false,
+    added: "2026-11-07T12:00",
+    noRead: true,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><rect x=\"5\" y=\"5\" width=\"30\" height=\"30\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><path d=\"M5 5L35 35M35 5L5 35\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"35\" cy=\"35\" r=\"4\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"5\" cy=\"5\" r=\"4\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"35\" cy=\"5\" r=\"4\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"5\" cy=\"35\" r=\"4\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><circle cx=\"20\" cy=\"20\" r=\"4.5\" fill=\"#141413\"/></svg></span>"
+  },
+  {
     slug: "blockers",
     category: "race",
     family: "dicerace",

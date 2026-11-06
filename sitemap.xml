@@ -1154,7 +1154,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/checkers.html</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/checkers.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/checkers.html?lang=de"/>
@@ -6335,6 +6335,60 @@
     <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/yatzy.html?lang=zh"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/yatzy.html?lang=ar"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/yatzy.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/yut-history.html</loc>
+    <lastmod>2026-11-06</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/yut-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/yut-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/yut-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/yut-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/yut-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/yut-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/yut-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/yut-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/yut-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/yut-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/yut-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/yut-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/yut-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/yut-rules.html</loc>
+    <lastmod>2026-11-06</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/yut-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/yut-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/yut-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/yut-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/yut-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/yut-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/yut-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/yut-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/yut-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/yut-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/yut-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/yut-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/yut-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/yut.html</loc>
+    <lastmod>2026-11-06</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/yut.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/yut.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/yut.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/yut.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/yut.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/yut.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/yut.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/yut.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/yut.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/yut.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/yut.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/yut.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/yut.html"/>
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/zahlenbild-history.html</loc>
