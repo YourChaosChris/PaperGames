@@ -204,6 +204,12 @@ const state = (page) => page.evaluate(() => ({
       }));
       check("computer move framed and named (" + JSON.stringify(shown) + ")",
         shown.framed === 2 && /^Du bist dran\. Der Computer hat den markierten Stein gezogen\./.test(shown.text));
+      // Task 181: every taken piece leaves a cross on its square.
+      const marks = await page.evaluate(() => ({
+        crosses: document.querySelectorAll(".checkers-square.captured-cell").length,
+        taken: ((AppStateCheckers.lastMove && AppStateCheckers.lastMove.captured) || []).length
+      }));
+      check("taken pieces marked (" + JSON.stringify(marks) + ")", marks.crosses === marks.taken);
     }
   }
   s = await state(page);

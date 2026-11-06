@@ -11,7 +11,7 @@ const AppStateCheckers = {
   board: CheckersCore.createInitialBoard(),
   turn: "b",              // "b" | "w" - Black always moves first
   selected: null,         // [r, c] | null
-  lastMove: null,         // { from: [r,c], to: [r,c] } | null
+  lastMove: null,         // { from: [r,c], to: [r,c], captured?: [[r,c]] } | null
   humanColor: "b",
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
   rules: "en",            // "en" | "de" - rule set of the running game (task 179)
@@ -455,7 +455,7 @@ function applyCheckersMove(move) {
   } else {
     AppStateCheckers.movesSinceCapture++;
   }
-  AppStateCheckers.lastMove = { from: move.from, to: move.to };
+  AppStateCheckers.lastMove = { from: move.from, to: move.to, captured: (move.captured || []).slice() };
   AppStateCheckers.selected = null;
   AppStateCheckers.hint = null;
   AppStateCheckers.moveCount++;
@@ -501,7 +501,7 @@ function aiMoveOfflineCheckers() {
   } else {
     AppStateCheckers.movesSinceCapture++;
   }
-  AppStateCheckers.lastMove = { from: move.from, to: move.to };
+  AppStateCheckers.lastMove = { from: move.from, to: move.to, captured: (move.captured || []).slice() };
   AppStateCheckers.hint = null;
   AppStateCheckers.moveCount++;
   AppStateCheckers.turn = CheckersCore.otherColor(aiColor);
@@ -706,6 +706,10 @@ function updateCheckersBoard() {
     const hint = AppStateCheckers.hint;
     sq.classList.toggle("hint-cell", !!(hint &&
       ((hint.from[0] === r && hint.from[1] === c) || (hint.to[0] === r && hint.to[1] === c))));
+    // Squares where the last move took pieces off the board (task 181): a
+    // chain of jumps shows where every piece stood.
+    sq.classList.toggle("captured-cell", !!(AppStateCheckers.lastMove && AppStateCheckers.lastMove.captured &&
+      AppStateCheckers.lastMove.captured.some((p) => p[0] === r && p[1] === c)));
     sq.classList.toggle("last-move", !!(AppStateCheckers.lastMove &&
       ((AppStateCheckers.lastMove.from[0] === r && AppStateCheckers.lastMove.from[1] === c) ||
        (AppStateCheckers.lastMove.to[0] === r && AppStateCheckers.lastMove.to[1] === c))));
