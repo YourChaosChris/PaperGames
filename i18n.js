@@ -610,6 +610,7 @@ const STRINGS = {
     privacy_as_of: "As of: 25 October 2026",
     about_lichess_disclaimer: "PaperGames's online chess feature runs on lichess.org's public API. PaperGames is an independent project and is not affiliated with, endorsed by, or reviewed by Lichess.",
     about_trademarks: "The history pages mention names of commercial games to place the origin of a game principle in context. Some of these names are registered trademarks of their respective owners. PaperGames is not affiliated with these owners and is not endorsed, sponsored or reviewed by them. All games here are independent implementations; no material from commercial editions is used.",
+    about_trademarks_devices: "Device and browser names such as Kindle, Kobo, Tolino, Boox, PocketBook and Chrome are trademarks of their respective owners. They are mentioned only to say on which devices and in which browsers PaperGames works. PaperGames is not affiliated with these owners and is not endorsed, sponsored or reviewed by them.",
     nikoli_trademark_heading: "A Note on the Names",
     nikoli_trademark_notice: "The names 数独 (Sudoku), カックロ (Kakuro) and スリザーリンク (Slitherlink) are registered trademarks of the publisher Nikoli in Japan, and 橋をかけろ (Hashiwokakero) is the name under which Nikoli publishes that puzzle. PaperGames is not affiliated with Nikoli, is not endorsed or reviewed by Nikoli, and therefore uses other names in its Japanese version. The puzzle types themselves are free; every puzzle here is generated fresh on the device.",
     about_back: "← Back to the board",
