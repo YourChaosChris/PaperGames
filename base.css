@@ -4112,3 +4112,11 @@ button.concan-meld {
 .howto-card svg {
   margin: 0;
 }
+
+/* Move link (task 187): button and message under the board line. */
+.movelink {
+  margin: var(--space-2) 0;
+}
+.movelink .status-text {
+  margin: var(--space-2) 0 0;
+}

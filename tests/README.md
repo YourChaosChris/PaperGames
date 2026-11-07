@@ -405,6 +405,15 @@ all parts back into one log in list order. The last line is exactly
   thousands of hints, none wrong.
 - `node tests/hints-solo-ui.js` - Mahjong, Peg Solitaire and Minesweeper hint
   buttons in the browser (360 x 640, touch), framed hint, status line, German.
+- `node tests/app-mode.js` - App mode and cream theme (task 186): donation
+  block hidden and cream background with ?app=ios, white on the website, the
+  choice in Settings kept after a reload, contrast of black text on cream,
+  German texts.
+- `node tests/move-link.js` - Move link (task 187): for each of the 27
+  two-player games without chance, a game saved for two players on one device
+  becomes a link, opens in an empty browser as the same game with the message
+  "It is your turn"; broken, foreign, too long, tampered and computer-mode
+  codes are refused; a running different game is asked about first.
 - `node tests/computer-levels.js` - no server or browser needed. Kleeberg,
   Klappenkasten, Steckwuerfeln and Pfotenwurf (task 181): the computer plays
   itself at Easy, Medium and Hard (400 games each, seat swapped); every game
