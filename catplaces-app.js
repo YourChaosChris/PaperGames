@@ -52,6 +52,14 @@ function initKzApp() {
       I18n.setKey(menuToggle, hidden ? "menu_toggle" : "menu_close");
     });
   }
+  const animalSel = document.getElementById("kz-animal");
+  if (animalSel) {
+    animalSel.value = animalKz();
+    animalSel.addEventListener("change", () => {
+      setAnimalKz(animalSel.value);
+      if (AppStateKz.puzzle) renderKz();
+    });
+  }
   document.getElementById("start-kz-game").addEventListener("click", () => startNewKzGame(levelSel.value));
   document.getElementById("kz-undo").addEventListener("click", undoKz);
   document.getElementById("kz-hint").addEventListener("click", hintKz);
@@ -197,6 +205,101 @@ function catSvgKz(x, y, S) {
     "</g>";
 }
 
+// Figures (task 181): the same puzzle with other animals. Own simple
+// drawings in a 40 x 40 box: a head in black and white, like the cat.
+const KZ_ANIMALS = ["cat", "dog", "monkey", "elephant", "horse", "cow", "zebra", "giraffe", "bird"];
+const KZ_ANIMAL_KEY = "einkchess_kz_animal";
+const KZ_INK = "#141413";
+
+function animalKz() {
+  try {
+    const v = localStorage.getItem(KZ_ANIMAL_KEY);
+    if (KZ_ANIMALS.indexOf(v) !== -1) return v;
+  } catch (e) { /* storage may be blocked */ }
+  return "cat";
+}
+
+function setAnimalKz(v) {
+  try { localStorage.setItem(KZ_ANIMAL_KEY, v); } catch (e) { /* ignore */ }
+}
+
+function eyesKz(x1, x2, y, r) {
+  return '<circle cx="' + x1 + '" cy="' + y + '" r="' + r + '" fill="' + KZ_INK + '"/><circle cx="' + x2 + '" cy="' + y + '" r="' + r + '" fill="' + KZ_INK + '"/>';
+}
+
+const KZ_DRAW = {
+  dog: () =>
+    '<ellipse cx="10" cy="19" rx="4.5" ry="9" fill="' + KZ_INK + '" transform="rotate(12 10 19)"/>' +
+    '<ellipse cx="30" cy="19" rx="4.5" ry="9" fill="' + KZ_INK + '" transform="rotate(-12 30 19)"/>' +
+    '<ellipse cx="20" cy="21" rx="9.5" ry="10.5" fill="#fff" stroke="' + KZ_INK + '" stroke-width="2.2"/>' +
+    eyesKz(16, 24, 18, 1.6) +
+    '<ellipse cx="20" cy="26" rx="5" ry="3.6" fill="#fff" stroke="' + KZ_INK + '" stroke-width="1.6"/>' +
+    '<ellipse cx="20" cy="24.6" rx="2.2" ry="1.5" fill="' + KZ_INK + '"/>' +
+    '<path d="M20 26 V29 M16.5 29.5 Q20 32 23.5 29.5" fill="none" stroke="' + KZ_INK + '" stroke-width="1.4" stroke-linecap="round"/>',
+  monkey: () =>
+    '<circle cx="8.5" cy="20" r="5" fill="#fff" stroke="' + KZ_INK + '" stroke-width="2.2"/>' +
+    '<circle cx="31.5" cy="20" r="5" fill="#fff" stroke="' + KZ_INK + '" stroke-width="2.2"/>' +
+    '<circle cx="20" cy="19" r="11" fill="' + KZ_INK + '"/>' +
+    '<path d="M12 18 Q14 13 20 16 Q26 13 28 18 Q29 26 20 31 Q11 26 12 18Z" fill="#fff"/>' +
+    eyesKz(16.5, 23.5, 19, 1.5) +
+    '<ellipse cx="18.4" cy="24.5" rx="0.9" ry="1.2" fill="' + KZ_INK + '"/><ellipse cx="21.6" cy="24.5" rx="0.9" ry="1.2" fill="' + KZ_INK + '"/>' +
+    '<path d="M16.5 27.5 Q20 29.5 23.5 27.5" fill="none" stroke="' + KZ_INK + '" stroke-width="1.4" stroke-linecap="round"/>',
+  elephant: () =>
+    '<ellipse cx="8" cy="18" rx="6.5" ry="9" fill="#fff" stroke="' + KZ_INK + '" stroke-width="2.2"/>' +
+    '<ellipse cx="32" cy="18" rx="6.5" ry="9" fill="#fff" stroke="' + KZ_INK + '" stroke-width="2.2"/>' +
+    '<circle cx="20" cy="17" r="9" fill="#fff" stroke="' + KZ_INK + '" stroke-width="2.2"/>' +
+    eyesKz(16.5, 23.5, 15, 1.5) +
+    '<path d="M16 22 Q15 33 20 35 Q23 36 24 32 M24 22 Q25 28 24 32" fill="none" stroke="' + KZ_INK + '" stroke-width="2.2" stroke-linecap="round"/>' +
+    '<path d="M14 26 Q12 32 14.5 34" fill="none" stroke="' + KZ_INK + '" stroke-width="1.6" stroke-linecap="round"/>',
+  horse: () =>
+    '<path d="M13 14 L12 4 L18 10 Z M27 14 L28 4 L22 10 Z" fill="' + KZ_INK + '"/>' +
+    '<path d="M20 5 Q16 8 17 14 L23 14 Q24 8 20 5Z" fill="' + KZ_INK + '"/>' +
+    '<path d="M13 12 Q20 8 27 12 L25 28 Q24 35 20 35 Q16 35 15 28Z" fill="#fff" stroke="' + KZ_INK + '" stroke-width="2.2" stroke-linejoin="round"/>' +
+    '<path d="M18 10 Q20 6 22 10" fill="' + KZ_INK + '"/>' +
+    eyesKz(15.8, 24.2, 16, 1.5) +
+    '<ellipse cx="18" cy="31" rx="1" ry="1.5" fill="' + KZ_INK + '"/><ellipse cx="22" cy="31" rx="1" ry="1.5" fill="' + KZ_INK + '"/>',
+  cow: () =>
+    '<path d="M11 11 Q8 5 4 6 M29 11 Q32 5 36 6" fill="none" stroke="' + KZ_INK + '" stroke-width="2.4" stroke-linecap="round"/>' +
+    '<ellipse cx="7" cy="16" rx="5" ry="2.8" fill="' + KZ_INK + '" transform="rotate(-15 7 16)"/>' +
+    '<ellipse cx="33" cy="16" rx="5" ry="2.8" fill="' + KZ_INK + '" transform="rotate(15 33 16)"/>' +
+    '<ellipse cx="20" cy="20" rx="10" ry="11" fill="#fff" stroke="' + KZ_INK + '" stroke-width="2.2"/>' +
+    '<path d="M11 14 Q14 9 19 11 Q18 17 13 18 Q10 18 11 14Z" fill="' + KZ_INK + '"/>' +
+    eyesKz(16, 25, 19, 1.5) +
+    '<ellipse cx="20" cy="29" rx="6.5" ry="4.5" fill="#fff" stroke="' + KZ_INK + '" stroke-width="1.8"/>' +
+    '<ellipse cx="17.6" cy="29" rx="1" ry="1.4" fill="' + KZ_INK + '"/><ellipse cx="22.4" cy="29" rx="1" ry="1.4" fill="' + KZ_INK + '"/>',
+  zebra: () =>
+    '<path d="M13 14 L12 4 L18 10 Z M27 14 L28 4 L22 10 Z" fill="' + KZ_INK + '"/>' +
+    '<path d="M20 5 Q16 8 17 14 L23 14 Q24 8 20 5Z" fill="' + KZ_INK + '"/>' +
+    '<path d="M13 12 Q20 8 27 12 L25 28 Q24 35 20 35 Q16 35 15 28Z" fill="#fff" stroke="' + KZ_INK + '" stroke-width="2.2" stroke-linejoin="round"/>' +
+    '<path d="M13.2 16 L19 18 M26.8 16 L21 18 M14 21 L19 22.5 M26 21 L21 22.5 M14.6 26 L18.6 26.5 M25.4 26 L21.4 26.5" stroke="' + KZ_INK + '" stroke-width="2.2" stroke-linecap="round"/>' +
+    '<path d="M18 10 Q20 6 22 10" fill="' + KZ_INK + '"/>' +
+    '<ellipse cx="18" cy="31" rx="1" ry="1.5" fill="' + KZ_INK + '"/><ellipse cx="22" cy="31" rx="1" ry="1.5" fill="' + KZ_INK + '"/>',
+  giraffe: () =>
+    '<path d="M16 11 L15 4 M24 11 L25 4" stroke="' + KZ_INK + '" stroke-width="2" stroke-linecap="round"/>' +
+    '<circle cx="15" cy="3.8" r="2" fill="' + KZ_INK + '"/><circle cx="25" cy="3.8" r="2" fill="' + KZ_INK + '"/>' +
+    '<ellipse cx="9" cy="15" rx="5" ry="2.4" fill="#fff" stroke="' + KZ_INK + '" stroke-width="1.8" transform="rotate(-20 9 15)"/>' +
+    '<ellipse cx="31" cy="15" rx="5" ry="2.4" fill="#fff" stroke="' + KZ_INK + '" stroke-width="1.8" transform="rotate(20 31 15)"/>' +
+    '<path d="M14 11 Q20 8 26 11 L25 28 Q24 35 20 35 Q16 35 15 28Z" fill="#fff" stroke="' + KZ_INK + '" stroke-width="2.2" stroke-linejoin="round"/>' +
+    '<circle cx="17" cy="13" r="1.6" fill="' + KZ_INK + '"/><circle cx="23.5" cy="14" r="1.2" fill="' + KZ_INK + '"/><circle cx="19.5" cy="26" r="1.2" fill="' + KZ_INK + '"/>' +
+    eyesKz(16.5, 23.5, 18, 1.5) +
+    '<ellipse cx="18.2" cy="31" rx="0.9" ry="1.3" fill="' + KZ_INK + '"/><ellipse cx="21.8" cy="31" rx="0.9" ry="1.3" fill="' + KZ_INK + '"/>',
+  bird: () =>
+    '<path d="M9 24 L2 20 L3 29Z" fill="' + KZ_INK + '"/>' +
+    '<ellipse cx="19" cy="25" rx="12" ry="9" fill="#fff" stroke="' + KZ_INK + '" stroke-width="2.2"/>' +
+    '<path d="M12 24 Q18 17 26 26 Q19 32 12 24Z" fill="' + KZ_INK + '"/>' +
+    '<circle cx="28" cy="15" r="6" fill="#fff" stroke="' + KZ_INK + '" stroke-width="2.2"/>' +
+    '<path d="M33 13.5 L39 16 L33 18Z" fill="' + KZ_INK + '"/>' +
+    '<circle cx="28.5" cy="14" r="1.4" fill="' + KZ_INK + '"/>' +
+    '<path d="M18 34 V38 M23 34 V38" stroke="' + KZ_INK + '" stroke-width="1.8" stroke-linecap="round"/>'
+};
+
+function animalSvgKz(x, y, S) {
+  const k = S / 40;
+  const kind = animalKz();
+  if (kind === "cat" || !KZ_DRAW[kind]) return catSvgKz(x, y, S);
+  return '<g class="kz-cat" transform="translate(' + x.toFixed(1) + " " + y.toFixed(1) + ") scale(" + k.toFixed(3) + ')">' + KZ_DRAW[kind]() + "</g>";
+}
+
 function renderKz() {
   const p = AppStateKz.puzzle;
   if (!p) return;
@@ -216,7 +319,7 @@ function renderKz() {
   svg += '<path d="' + thin + '" stroke="#141413" stroke-width="0.7" stroke-dasharray="2 3"/>';
   for (let i = 0; i < n * n; i++) {
     const x = (i % n) * S, y = Math.floor(i / n) * S, m = AppStateKz.marks[i];
-    if (m === 1) svg += catSvgKz(x, y, S);
+    if (m === 1) svg += animalSvgKz(x, y, S);
     else if (m === 2) svg += '<circle class="kz-dot" cx="' + (x + S / 2) + '" cy="' + (y + S / 2) + '" r="' + (S * 0.09) + '" fill="#141413"/>';
     if (m === 1 && bad.has(i)) svg += '<rect class="kz-conflict" x="' + (x + 3) + '" y="' + (y + 3) + '" width="' + (S - 6) + '" height="' + (S - 6) + '"/>';
   }
@@ -236,7 +339,7 @@ function renderKz() {
   boardEl.querySelectorAll(".pt-cell").forEach((btn) => {
     const i = parseInt(btn.getAttribute("data-i"), 10);
     const m = AppStateKz.marks[i];
-    const what = tKz(m === 1 ? "kz_aria_cat" : m === 2 ? "kz_aria_dot" : "kz_aria_empty");
+    const what = tKz(m === 1 ? "kz_animal_" + animalKz() : m === 2 ? "kz_aria_dot" : "kz_aria_empty");
     const label = tKz("kz_aria_cell").split("{R}").join(String(Math.floor(i / n) + 1)).split("{C}").join(String((i % n) + 1)).split("{K}").join(String(p.rooms[i] + 1));
     btn.setAttribute("aria-label", label + ": " + what);
     btn.addEventListener("click", () => onCellKz(i));
