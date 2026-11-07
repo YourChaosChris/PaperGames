@@ -13,6 +13,8 @@ const Peg = require(path.join(root, "pegsolitaire-core.js"));
 const Mines = require(path.join(root, "minesweeper-core.js"));
 const FreeCell = require(path.join(root, "freecell-core.js"));
 const Klondike = require(path.join(root, "klondike-core.js"));
+const Pyramid = require(path.join(root, "pyramidsolitaire-core.js"));
+const Spider = require(path.join(root, "spidersolitaire-core.js"));
 const fails = [];
 const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " + name); } };
 
@@ -131,5 +133,40 @@ function seeded(seed) {
   check("klondike: hints put cards on the foundations (" + toFoundation + ")", toFoundation > 200);
 }
 
+{
+  // Pyramid: every hint is legal; the hints clear at least one pyramid.
+  let wins = 0, illegal = 0;
+  for (let g = 1; g <= 12; g++) {
+    let s = Pyramid.createInitialState(seeded(g));
+    for (let i = 0; i < 400 && !Pyramid.isWon(s) && !Pyramid.isLost(s); i++) {
+      const h = Pyramid.hintMove(s);
+      if (!h) break;
+      const r = h.kind === "king" ? Pyramid.removeSingleKing(s, h.loc) : h.kind === "pair" ? Pyramid.removePair(s, h.a, h.b) : Pyramid.drawFromStock(s);
+      if (!r.ok) { illegal++; break; }
+      s = r.state;
+    }
+    if (Pyramid.isWon(s)) wins++;
+  }
+  check("pyramid: all hints legal", illegal === 0);
+  check("pyramid: hints clear at least one board (" + wins + "/12)", wins >= 1);
+}
+{
+  // Spider: every hint is legal; the hints complete runs (1 suit).
+  let illegal = 0, runs = 0;
+  for (let g = 1; g <= 10; g++) {
+    let s = Spider.createInitialState(1, seeded(g));
+    for (let i = 0; i < 600 && !Spider.isWon(s); i++) {
+      const h = Spider.hintMove(s);
+      if (!h) break;
+      const r = h.kind === "deal" ? Spider.dealFromStock(s) : Spider.moveColumnToColumn(s, h.from, h.count, h.to);
+      if (!r.ok) { illegal++; break; }
+      s = r.state;
+    }
+    runs += s.completed;
+  }
+  check("spider: all hints legal", illegal === 0);
+  check("spider: hints complete runs (" + runs + ")", runs >= 10);
+}
+
 if (fails.length) { console.log("FAIL hints-solo: " + fails.length + " problem(s)"); process.exit(1); }
-console.log("OK hints-solo: Mahjong, Peg Solitaire, Minesweeper, FreeCell and Klondike hints are always legal and correct");
+console.log("OK hints-solo: Mahjong, Peg Solitaire, Minesweeper, FreeCell, Klondike, Pyramid and Spider hints are always legal and correct");

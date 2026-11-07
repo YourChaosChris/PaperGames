@@ -221,6 +221,72 @@ const PyramidSolitaireCore = (function () {
     return !hasAnyMove(state);
   }
 
+
+  // Hint (task 185): budgeted depth-first search for a line that clears
+  // the pyramid; returns the first move of the best line found:
+  // { kind: "king", loc } | { kind: "pair", a, b } | { kind: "draw" } | null.
+  function legalMoves(state) {
+    const moves = [];
+    const locs = getExposedPyramidLocations(state);
+    if (state.waste.length) locs.push({ type: "waste" });
+    locs.forEach((l) => { if (cardAt(state, l).rank === TARGET_SUM) moves.push({ kind: "king", loc: l }); });
+    for (let i = 0; i < locs.length; i++) {
+      for (let j = i + 1; j < locs.length; j++) {
+        if (cardAt(state, locs[i]).rank + cardAt(state, locs[j]).rank === TARGET_SUM) {
+          moves.push({ kind: "pair", a: locs[i], b: locs[j] });
+        }
+      }
+    }
+    if (state.stock.length > 0 || (state.waste.length > 0 && state.redealsLeft > 0)) moves.push({ kind: "draw" });
+    return moves;
+  }
+
+  function applyMove(state, m) {
+    if (m.kind === "king") return removeSingleKing(state, m.loc);
+    if (m.kind === "pair") return removePair(state, m.a, m.b);
+    return drawFromStock(state);
+  }
+
+  function pyramidLeft(state) {
+    let n = 0;
+    state.pyramid.forEach((row) => row.forEach((c) => { if (c) n++; }));
+    return n;
+  }
+
+  function stateKey(state) {
+    return state.pyramid.map((r) => r.map((c) => (c ? c.rank + c.suit : "-")).join("")).join("/") +
+      "|" + state.stock.length + "|" + state.waste.length + "|" + state.redealsLeft;
+  }
+
+  function hintMove(state, budget) {
+    if (isWon(state)) return null;
+    let nodes = budget || 4000;
+    const seen = new Set();
+    let best = { left: pyramidLeft(state) + 1, first: null };
+    function dfs(s, first, depth) {
+      if (nodes-- <= 0) return;
+      const left = pyramidLeft(s);
+      if (first && left < best.left) best = { left, first };
+      if (left === 0) { nodes = 0; return; }
+      const moves = legalMoves(s);
+      // Removals first (cheapest way to progress), draws last.
+      moves.sort((a, b) => (a.kind === "draw" ? 1 : 0) - (b.kind === "draw" ? 1 : 0));
+      for (const m of moves) {
+        const r = applyMove(s, m);
+        if (!r.ok) continue;
+        const k = stateKey(r.state);
+        if (seen.has(k)) continue;
+        seen.add(k);
+        dfs(r.state, first || m, depth + 1);
+        if (nodes <= 0) return;
+      }
+    }
+    dfs(state, null, 0);
+    if (best.first) return best.first;
+    const moves = legalMoves(state);
+    return moves.length ? moves[0] : null;
+  }
+
   return {
     SUITS,
     ROWS,
@@ -242,7 +308,9 @@ const PyramidSolitaireCore = (function () {
     getExposedPyramidLocations,
     isWon,
     hasAnyMove,
-    isLost
+    isLost,
+    legalMoves,
+    hintMove
   };
 })();
 

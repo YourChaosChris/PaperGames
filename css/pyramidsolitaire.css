@@ -119,3 +119,9 @@
   font-size: 0.65rem;
   font-weight: 700;
 }
+
+/* Hint (task 185): the card(s) to remove, or the stock. */
+.pyramidsolitaire-hint {
+  outline: 3px dashed var(--text);
+  outline-offset: -3px;
+}

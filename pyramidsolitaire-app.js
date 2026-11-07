@@ -41,6 +41,7 @@ function t18nPyramid(key) {
 
 const AppStatePyramid = {
   state: null,
+  hint: null,
   selected: null, // { type: "pyramid", row, col } | { type: "waste" } | null
   gameOver: false,
   moveCount: 0,
@@ -100,6 +101,8 @@ function pushUndoSnapshotPyramid() {
 }
 
 function initPyramidApp() {
+  const hintBtn = document.getElementById("pyramidsolitaire-hint-button");
+  if (hintBtn) hintBtn.addEventListener("click", hintPyramid);
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const startGameBtn = document.getElementById("start-pyramidsolitaire-game");
@@ -194,6 +197,7 @@ function tryPickLocation(loc) {
 
 function onPyramidLocationClick(loc) {
   if (AppStatePyramid.gameOver || !AppStatePyramid.state) return;
+  AppStatePyramid.hint = null;
   const state = AppStatePyramid.state;
   if (!PyramidSolitaireCore.isLocationPlayable(state, loc)) {
     setStatusPyramid("board-info", t18nPyramid("pyramidsolitaire_msg_covered"));
@@ -229,6 +233,7 @@ function onPyramidLocationClick(loc) {
 
 function onPyramidStockClick() {
   if (AppStatePyramid.gameOver || !AppStatePyramid.state) return;
+  AppStatePyramid.hint = null;
   const result = PyramidSolitaireCore.drawFromStock(AppStatePyramid.state);
   if (!result.ok) {
     setStatusPyramid("board-info", t18nPyramid("pyramidsolitaire_msg_stock_empty"));
@@ -277,7 +282,26 @@ function finishPyramidAction(message) {
   setStatusPyramid("board-info", message || t18nPyramid("pyramidsolitaire_hint_default"));
 }
 
+// Hint button (task 185): frames the card(s) to remove, or the stock.
+function hintPyramid() {
+  const st = AppStatePyramid;
+  if (!st.state || st.gameOver) return;
+  const h = PyramidSolitaireCore.hintMove(st.state);
+  st.selected = null;
+  st.hint = h;
+  setStatusPyramid("board-info", !h ? t18nPyramid("pyramidsolitaire_tip_none")
+    : h.kind === "draw" ? t18nPyramid("pyramidsolitaire_tip_draw") : t18nPyramid("pyramidsolitaire_tip_remove"));
+  updatePyramidBoard();
+}
+
+function hintHasLocPyramid(hint, loc) {
+  if (!hint) return false;
+  const list = hint.kind === "king" ? [hint.loc] : hint.kind === "pair" ? [hint.a, hint.b] : [];
+  return list.some((l) => PyramidSolitaireCore.locationsEqual(l, loc));
+}
+
 function undoLastMove() {
+  AppStatePyramid.hint = null;
   if (!AppStatePyramid.undoStack || !AppStatePyramid.undoStack.length) return;
   const prev = AppStatePyramid.undoStack.pop();
   AppStatePyramid.state = prev.state;
@@ -409,6 +433,7 @@ function updatePyramidBoard() {
       btn.removeAttribute("aria-hidden");
       const isSelected = !!(sel && sel.type === "pyramid" && sel.row === row && sel.col === col);
       btn.classList.toggle("pyramidsolitaire-card-selected", isSelected);
+      btn.classList.toggle("pyramidsolitaire-hint", hintHasLocPyramid(AppStatePyramid.hint, { type: "pyramid", row, col }));
       I18n.setAria(btn, pyramidCardLabel(card) + (exposed
         ? ""
         : ", " + t18nPyramid("pyramidsolitaire_aria_covered")));
@@ -420,7 +445,7 @@ function updatePyramidBoard() {
     const hasStock = state.stock.length > 0;
     const hasWaste = state.waste.length > 0;
     const canRedeal = !hasStock && hasWaste && state.redealsLeft > 0;
-    stockEl.className = "pyramidsolitaire-cell pyramidsolitaire-stock" + (hasStock ? " pyramidsolitaire-card-back" : "");
+    stockEl.className = "pyramidsolitaire-cell pyramidsolitaire-stock" + (hasStock ? " pyramidsolitaire-card-back" : "") + (AppStatePyramid.hint && AppStatePyramid.hint.kind === "draw" ? " pyramidsolitaire-hint" : "");
     stockEl.textContent = hasStock ? "" : (canRedeal ? "↺" : "");
     stockEl.disabled = !hasStock && !canRedeal;
     I18n.setAria(stockEl, hasStock
@@ -433,7 +458,7 @@ function updatePyramidBoard() {
   const wasteEl = document.getElementById("pyramidsolitaire-waste");
   if (wasteEl) {
     const top = PyramidSolitaireCore.topOfWaste(state);
-    wasteEl.className = "pyramidsolitaire-cell pyramidsolitaire-waste" + (sel && sel.type === "waste" ? " pyramidsolitaire-card-selected" : "");
+    wasteEl.className = "pyramidsolitaire-cell pyramidsolitaire-waste" + (sel && sel.type === "waste" ? " pyramidsolitaire-card-selected" : "") + (hintHasLocPyramid(AppStatePyramid.hint, { type: "waste" }) ? " pyramidsolitaire-hint" : "");
     wasteEl.textContent = top ? pyramidCardLabel(top) : "";
     wasteEl.disabled = !top;
     I18n.setAria(wasteEl, t18nPyramid("pyramidsolitaire_aria_waste") + ", " + (top ? pyramidCardLabel(top) : t18nPyramid("pyramidsolitaire_aria_empty")));

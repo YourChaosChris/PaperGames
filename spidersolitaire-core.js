@@ -239,6 +239,48 @@ const SpiderSolitaireCore = (function () {
     return Math.floor(state.stock.length / STOCK_DEAL_SIZE);
   }
 
+
+  // Hint (task 185): scored one-move look-ahead. Returns
+  // { kind: "move", from, index, count, to } | { kind: "deal" } | null.
+  function hintMove(state) {
+    const cands = [];
+    for (let from = 0; from < COLUMN_COUNT; from++) {
+      const col = state.tableau[from];
+      const run = movableSequenceLength(col);
+      for (let count = 1; count <= run; count++) {
+        const index = col.length - count;
+        const card = col[index];
+        for (let to = 0; to < COLUMN_COUNT; to++) {
+          if (to === from) continue;
+          const dest = state.tableau[to];
+          if (!canPlaceOnColumn(card, dest)) continue;
+          const below = index > 0 ? col[index - 1] : null;
+          let score = count;
+          if (below && !below.faceUp) score += 50;
+          if (!below) score += 15;
+          if (dest.length) {
+            const top = dest[dest.length - 1];
+            if (top.suit === card.suit) score += 30;
+          } else {
+            score -= 25;
+            if (!below) score -= 100; // moving a whole column onto an empty one gains nothing
+          }
+          if (below && below.faceUp && below.suit === card.suit && below.rank === card.rank + 1) {
+            score -= 60; // would break an existing same-suit chain
+          }
+          cands.push({ kind: "move", from, index, count, to, score, toEmpty: dest.length === 0 });
+        }
+      }
+    }
+    cands.sort((a, b) => b.score - a.score);
+    const good = cands.find((c) => c.score >= 5);
+    if (good) return good;
+    if (canDealStock(state)) return { kind: "deal" };
+    const fill = cands.find((c) => c.toEmpty && c.score > -100);
+    if (fill) return fill;
+    return null;
+  }
+
   return {
     SUITS,
     COLUMN_COUNT,
@@ -259,7 +301,8 @@ const SpiderSolitaireCore = (function () {
     canDealStock,
     dealFromStock,
     isWon,
-    remainingStockDeals
+    remainingStockDeals,
+    hintMove
   };
 })();
 

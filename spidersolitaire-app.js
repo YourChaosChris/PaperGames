@@ -37,6 +37,7 @@ function t18nSpider(key) {
 
 const AppStateSpider = {
   state: null,
+  hint: null,
   selected: null, // { type: "column", col, index } | null
   gameOver: false,
   moveCount: 0,
@@ -91,6 +92,8 @@ function pushUndoSnapshotSpider() {
 }
 
 function initSpiderApp() {
+  const hintBtn = document.getElementById("spider-hint-button");
+  if (hintBtn) hintBtn.addEventListener("click", hintSpider);
   if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
@@ -172,6 +175,7 @@ function trySelectSourceSpider(col, index) {
 }
 
 function onSpiderColumnClick(colIndex, cardIndex) {
+  AppStateSpider.hint = null;
   if (AppStateSpider.gameOver || !AppStateSpider.state) return;
   const sel = AppStateSpider.selected;
 
@@ -209,6 +213,7 @@ function onSpiderColumnClick(colIndex, cardIndex) {
 
 function onSpiderDealClick() {
   if (AppStateSpider.gameOver || !AppStateSpider.state) return;
+  AppStateSpider.hint = null;
   if (!SpiderSolitaireCore.canDealStock(AppStateSpider.state)) {
     setStatusSpider("board-info", AppStateSpider.state.stock.length === 0
       ? t18nSpider("spidersolitaire_msg_stock_empty")
@@ -242,7 +247,20 @@ function finishSpiderAction(completedSuits) {
   }
 }
 
+// Hint button (task 185): frames the card to move and its target, or the stock.
+function hintSpider() {
+  const st = AppStateSpider;
+  if (!st.state || st.gameOver) return;
+  const h = SpiderSolitaireCore.hintMove(st.state);
+  st.selected = null;
+  st.hint = h;
+  setStatusSpider("board-info", !h ? t18nSpider("spidersolitaire_tip_none")
+    : h.kind === "deal" ? t18nSpider("spidersolitaire_tip_deal") : t18nSpider("spidersolitaire_tip_move"));
+  updateSpiderBoard();
+}
+
 function undoLastMove() {
+  AppStateSpider.hint = null;
   if (!AppStateSpider.undoStack || !AppStateSpider.undoStack.length) return;
   const prev = AppStateSpider.undoStack.pop();
   AppStateSpider.state = prev.state;
@@ -297,6 +315,7 @@ function updateSpiderBoard() {
     stockEl.className = "spider-cell spider-stock" + (state.stock.length > 0 ? " spider-card-back" : "");
     stockEl.textContent = state.stock.length > 0 ? String(deals) : "";
     stockEl.disabled = state.stock.length === 0;
+    stockEl.classList.toggle("spider-hint", !!AppStateSpider.hint && AppStateSpider.hint.kind === "deal");
     stockEl.classList.toggle("spider-stock-blocked", state.stock.length > 0 && !canDeal);
     I18n.setAria(stockEl, t18nSpider("spidersolitaire_aria_stock") + ": " +
       (state.stock.length > 0 ? deals + " " + t18nSpider("spidersolitaire_aria_deals_left") : t18nSpider("spidersolitaire_aria_empty")));
@@ -316,7 +335,8 @@ function updateSpiderBoard() {
       const column = state.tableau[c];
       if (!column.length) {
         const empty = document.createElement("span");
-        empty.className = "spider-empty-slot";
+        const hh = AppStateSpider.hint;
+        empty.className = "spider-empty-slot" + (hh && hh.kind === "move" && hh.to === c ? " spider-hint" : "");
         empty.setAttribute("aria-hidden", "true");
         colEl.appendChild(empty);
         return;
@@ -330,6 +350,10 @@ function updateSpiderBoard() {
           CardFaces.render(cardEl, card);
           const isSelected = !!(sel && sel.col === c && index >= sel.index);
           cardEl.classList.toggle("spider-card-selected", isSelected);
+          const hh = AppStateSpider.hint;
+          cardEl.classList.toggle("spider-hint", !!hh && hh.kind === "move" && (
+            (hh.from === c && index === hh.index) ||
+            (hh.to === c && index === column.length - 1)));
           I18n.setAria(cardEl, spiderCardLabel(card));
         } else {
           cardEl.className = "spider-card spider-card-back";

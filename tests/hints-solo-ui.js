@@ -85,8 +85,26 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
     check("klondike: tap removes the frame", (await p.evaluate(() => document.querySelectorAll(".klondike-hint").length)) === 0);
     await p.close();
   }
+  {
+    const p = await open("pyramidsolitaire", "#start-pyramidsolitaire-game");
+    await p.tap("#pyramidsolitaire-hint-button");
+    await p.waitForTimeout(300);
+    const n = await p.evaluate(() => document.querySelectorAll(".pyramidsolitaire-hint").length);
+    check("pyramid: hint frames something (" + n + ")", n >= 1);
+    check("pyramid: line says so (" + (await info(p)) + ")", /^Hint: (remove the marked|no good move)/.test(await info(p)));
+    await p.close();
+  }
+  {
+    const p = await open("spidersolitaire", "#start-spidersolitaire-game");
+    await p.tap("#spider-hint-button");
+    await p.waitForTimeout(300);
+    const n = await p.evaluate(() => document.querySelectorAll(".spider-hint").length);
+    check("spider: hint frames something (" + n + ")", n >= 1);
+    check("spider: line says so (" + (await info(p)) + ")", /^Hint: (move the marked card|no good move)/.test(await info(p)));
+    await p.close();
+  }
   check("no page error (" + errors.join(" | ") + ")", errors.length === 0);
   await browser.close();
   if (fails.length) { console.log("FAIL hints-solo-ui: " + fails.length + " problem(s)"); process.exit(1); }
-  console.log("OK hints-solo-ui: Mahjong, Peg Solitaire, Minesweeper and Klondike hint buttons");
+  console.log("OK hints-solo-ui: Mahjong, Peg Solitaire, Minesweeper, Klondike, Pyramid and Spider hint buttons");
 })();
