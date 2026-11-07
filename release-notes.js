@@ -16,7 +16,7 @@ const RELEASE_NOTES = [
     version: "v284",
     date: "2026-11-07",
     key: "release_v284",
-    text: "New game: Yut, the Korean stick-throwing race game, with computer opponents on two levels."
+    text: "New game: Yut, the Korean stick-throwing race game. Checkers marks captured pieces and has a stronger Medium level. Cat Places has nine animals to choose from. Kleeberg, Klappenkasten, Steckwürfeln and Critter Roll have Easy, Medium and Hard. Hint buttons in Mahjong, Peg Solitaire and Minesweeper."
   },
   {
     version: "v283",
