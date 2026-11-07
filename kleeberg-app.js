@@ -76,10 +76,18 @@ function validStateKB(s) {
 
 /*** Game flow ***/
 
+// Computer strength from the setup choice (1 easy, 2 medium, 3 hard).
+function levelOfKB() {
+  const el = document.getElementById("kb-level");
+  const v = el ? parseInt(el.value, 10) : 3;
+  return v === 1 || v === 2 ? v : 3;
+}
+
 function startGameKB() {
   const mode = DiceCommon.activeMode();
   AppStateKB.state = KleebergCore.newGame({
     computer: DiceCommon.seats(mode, 2),
+    level: levelOfKB(),
     first: Math.floor(Math.random() * 2)
   });
   AppStateKB.undoStack = [];

@@ -54,6 +54,7 @@ const SteckwuerfelnCore = (() => {
     }
     return {
       game: "steckwuerfeln",
+      level: [1, 2, 3].indexOf(o.level) >= 0 ? o.level : 3,
       n: n,
       computer: computer,
       mode: o.mode === "shared" ? "shared" : "score",
@@ -221,15 +222,23 @@ const SteckwuerfelnCore = (() => {
   // "score": keep as many later rolls playable as possible.
   // "shared": leave the next player as few playable rolls as possible.
   // Ties: the way with the higher hole (it is the harder one to peg later).
-  function chooseAi(s) {
+  // Level 1 pegs any way that fits, level 2 does so in every third turn.
+  function chooseAi(s, rng, level) {
     const list = choices(s);
     if (!list.length) return null;
+    const lv = level || s.level || 3;
+    const r = rng || Math.random;
+    if (lv === 2 && r() < 0.35) return list[Math.floor(r() * list.length)];
+    // Level 1 plays the plain opposite: the way that keeps the fewest later
+    // rolls playable (in the shared mode the most).
+    const sign = lv === 1 ? -1 : 1;
     let best = null;
     let bestScore = 0;
     list.forEach((c) => {
       const rest = s.open.filter((f) => c.indexOf(f) < 0);
       let value = playableShare(rest, s.sixes);
       if (s.mode === "shared") value = -value;
+      value *= sign;
       const high = Math.max.apply(null, c);
       if (best === null || value > bestScore + 1e-9 || (Math.abs(value - bestScore) <= 1e-9 && high > Math.max.apply(null, best))) {
         best = c;
@@ -239,9 +248,9 @@ const SteckwuerfelnCore = (() => {
     return best;
   }
 
-  function aiStep(s, rng) {
+  function aiStep(s, rng, level) {
     if (s.phase === "roll") return roll(s, rng);
-    if (s.phase === "plug") return plug(s, chooseAi(s));
+    if (s.phase === "plug") return plug(s, chooseAi(s, rng, level));
     return s;
   }
 

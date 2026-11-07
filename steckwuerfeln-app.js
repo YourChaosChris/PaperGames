@@ -78,6 +78,12 @@ function validStateSW(s, pending) {
 
 /*** Game flow ***/
 
+// Computer strength from the setup choice (1 easy, 2 medium, 3 hard).
+function levelOfSW() {
+  const v = parseInt(document.getElementById("sw-level").value, 10);
+  return v === 1 || v === 2 ? v : 3;
+}
+
 function startGameSW() {
   updateSetupSW();
   const mode = DiceCommon.activeMode();
@@ -87,7 +93,8 @@ function startGameSW() {
     computer: DiceCommon.seats(mode, n),
     mode: document.getElementById("sw-mode").value,
     sixes: document.getElementById("sw-sixes").value,
-    rounds: parseInt(document.getElementById("sw-rounds").value, 10) || 3
+    rounds: parseInt(document.getElementById("sw-rounds").value, 10) || 3,
+    level: levelOfSW()
   });
   AppStateSW.undoStack = [];
   AppStateSW.log = [];

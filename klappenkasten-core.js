@@ -46,6 +46,7 @@ const KlappenkastenCore = (() => {
     for (let i = 0; i < n; i++) scores.push([]);
     return {
       game: "klappenkasten",
+      level: [1, 2, 3].indexOf(o.level) >= 0 ? o.level : 3,
       n: n,
       size: size,
       rounds: rounds,
@@ -191,16 +192,22 @@ const KlappenkastenCore = (() => {
   }
 
   // One die only when it gives the better chance that a flap fits.
-  function aiDiceCount(s) {
+  function aiDiceCount(s, rng, level) {
     if (!canOneDie(s)) return 2;
+    const lv = level || s.level || 3;
+    if (lv === 1) return (rng || Math.random)() < 0.5 ? 1 : 2;
     return playableShare(s.open, 1) > playableShare(s.open, 2) ? 1 : 2;
   }
 
   // High flaps first: the set that contains the highest flap, then the
   // next highest, and so on (they are the hardest to close later).
-  function chooseAi(s) {
+  // Level 1 closes any set that fits, level 2 does so in every third turn.
+  function chooseAi(s, rng, level) {
     const list = choices(s);
     if (!list.length) return null;
+    const lv = level || s.level || 3;
+    const r = rng || Math.random;
+    if (lv === 1 || (lv === 2 && r() < 0.35)) return list[Math.floor(r() * list.length)];
     const key = (c) => c.slice().sort((a, b) => b - a);
     let best = null;
     list.forEach((c) => {
@@ -217,9 +224,9 @@ const KlappenkastenCore = (() => {
   }
 
   // One action of the computer on its turn.
-  function aiStep(s, rng) {
-    if (s.phase === "roll") return roll(s, aiDiceCount(s), rng);
-    if (s.phase === "close") return close(s, chooseAi(s));
+  function aiStep(s, rng, level) {
+    if (s.phase === "roll") return roll(s, aiDiceCount(s, rng, level), rng);
+    if (s.phase === "close") return close(s, chooseAi(s, rng, level));
     return s;
   }
 

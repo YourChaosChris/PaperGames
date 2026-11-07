@@ -105,6 +105,7 @@ const PfotenwurfCore = (() => {
     }
     return {
       game: "pfotenwurf",
+      level: [1, 2, 3].indexOf(o.level) >= 0 ? o.level : 3,
       n: n,
       computer: computer,
       current: 0,
@@ -212,11 +213,15 @@ const PfotenwurfCore = (() => {
 
   // One step of the computer: roll, keep dice, or put the dice on a field.
   // It stops early when a field with 25 points or more is free and fits.
-  function aiStep(s, rng) {
+  // Level 1 takes the dice after the first throw, level 2 stops at 10
+  // points, level 3 keeps going for 25.
+  function aiStep(s, rng, level) {
     if (s.phase !== "roll") return s;
     if (s.rolls === 0) return roll(s, rng);
+    const lv = level || s.level || 3;
     const best = bestField(s);
-    if (s.rolls >= MAX_ROLLS || best.points >= 25) return choose(s, best.field);
+    const stopAt = lv === 1 ? 0 : lv === 2 ? 10 : 25;
+    if (s.rolls >= MAX_ROLLS || best.points >= stopAt) return choose(s, best.field);
     const keep = keepFor(s);
     const t = clone(s);
     t.held = keep;

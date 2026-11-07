@@ -146,7 +146,7 @@ const CheckersAi = (function () {
 
   const LEVEL_CONFIG = {
     1: { style: "random" },
-    2: { style: "greedy", topN: 4 },
+    2: { style: "search", maxDepth: 4, nodeBudget: 4000 },
     3: { style: "search", maxDepth: 11, nodeBudget: 600000 }
   };
 

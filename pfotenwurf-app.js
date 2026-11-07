@@ -56,12 +56,18 @@ function validStateTY(s) {
 
 /*** Game flow ***/
 
+// Computer strength from the setup choice (1 easy, 2 medium, 3 hard).
+function levelOfTY() {
+  const v = parseInt(document.getElementById("ty-level").value, 10);
+  return v === 1 || v === 2 ? v : 3;
+}
+
 function startGameTY() {
   const mode = DiceCommon.activeMode();
   const people = parseInt(document.getElementById("ty-players").value, 10) || 1;
   // Against the computer: one person and one computer.
   const n = mode === "ai" ? 2 : Math.max(1, Math.min(4, people));
-  AppStateTY.state = PfotenwurfCore.newGame({ players: n, computer: mode === "ai" ? [false, true] : new Array(n).fill(false) });
+  AppStateTY.state = PfotenwurfCore.newGame({ players: n, computer: mode === "ai" ? [false, true] : new Array(n).fill(false), level: levelOfTY() });
   AppStateTY.review = null;
   setResultTY("");
   if (window.ResultModal) window.ResultModal.hide();

@@ -399,6 +399,11 @@ all parts back into one log in list order. The last line is exactly
   exactly one solution (counted by a search of its own), solved by
   deduction alone with the level's rules, finished with the hint alone
   after a wrongly placed cat. About two minutes.
+- `node tests/computer-levels.js` - no server or browser needed. Kleeberg,
+  Klappenkasten, Steckwuerfeln and Pfotenwurf (task 181): the computer plays
+  itself at Easy, Medium and Hard (400 games each, seat swapped); every game
+  ends, a higher level wins clearly more often, and an old save without a
+  level plays as Hard.
 - `node tests/catplaces-start.js` - no server or browser needed. 750 random
   "Cat Places" board states (all levels, with and without wrong cats): the
   "Where to start?" cell is always a cell of the solution, and the named

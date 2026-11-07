@@ -59,12 +59,18 @@ function validStateKK(s) {
 
 /*** Game flow ***/
 
+// Computer strength from the setup choice (1 easy, 2 medium, 3 hard).
+function levelOfKK() {
+  const v = parseInt(document.getElementById("kk-level").value, 10);
+  return v === 1 || v === 2 ? v : 3;
+}
+
 function startGameKK() {
   const mode = DiceCommon.activeMode();
   const n = parseInt(document.getElementById("kk-players").value, 10) || 2;
   const size = parseInt(document.getElementById("kk-size").value, 10) === 12 ? 12 : 9;
   const rounds = parseInt(document.getElementById("kk-rounds").value, 10) || 3;
-  AppStateKK.state = KlappenkastenCore.newGame({ players: n, computer: DiceCommon.seats(mode, n), size: size, rounds: rounds });
+  AppStateKK.state = KlappenkastenCore.newGame({ players: n, computer: DiceCommon.seats(mode, n), size: size, rounds: rounds, level: levelOfKK() });
   AppStateKK.undoStack = [];
   AppStateKK.selected = [];
   AppStateKK.log = [];

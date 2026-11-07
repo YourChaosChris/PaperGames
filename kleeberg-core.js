@@ -88,6 +88,7 @@ const KleebergCore = (() => {
     const o = opts || {};
     return {
       game: "kleeberg",
+      level: [1, 2, 3].indexOf(o.level) >= 0 ? o.level : 3,           // 1 easy, 2 medium, 3 hard (computer strength)
       computer: [!!(o.computer && o.computer[0]), !!(o.computer && o.computer[1])],
       board: new Array(CELLS).fill(0),
       current: o.first === 1 ? 1 : 0,
@@ -140,16 +141,21 @@ const KleebergCore = (() => {
   // 2. stop a line of the opponent (take the field where they would win);
   // 3. do not open a field above your piece where the opponent wins;
   // 4. otherwise any allowed field, picked by chance.
-  function chooseAi(s, rng) {
+  // Level 1 picks any allowed field, level 2 only takes a win or stops one,
+  // level 3 (and an old save without a level) uses the whole strategy.
+  function chooseAi(s, rng, level) {
     const cells = destinations(s);
     if (!cells.length) return null;
+    const lv = level || s.level || 3;
     const me = s.current + 1;
     const you = 3 - me;
     const pick = (list) => list[Math.floor((rng || Math.random)() * list.length)];
+    if (lv === 1) return pick(cells);
     const mine = cells.filter((i) => wins(s.board, i, me));
     if (mine.length) return pick(mine);
     const block = cells.filter((i) => wins(s.board, i, you));
     if (block.length) return pick(block);
+    if (lv === 2) return pick(cells);
     const safe = cells.filter((i) => {
       const b = s.board.slice();
       b[i] = me;
@@ -158,9 +164,9 @@ const KleebergCore = (() => {
     return pick(safe.length ? safe : cells);
   }
 
-  function aiStep(s, rng) {
+  function aiStep(s, rng, level) {
     if (s.phase !== "play") return s;
-    return place(s, chooseAi(s, rng));
+    return place(s, chooseAi(s, rng, level));
   }
 
   function outcomeFor(s, player) {
