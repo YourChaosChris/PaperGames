@@ -26,6 +26,7 @@ function freecellCardLabel(card) {
 
 const AppStateFreeCell = {
   state: null,
+  hint: null,     // { from, to } a hint shows, or null
   selected: null, // { type: "column", col, index } | { type: "freecell", index } | null
   gameOver: false,
   moveCount: 0,
@@ -85,6 +86,8 @@ function pushUndoSnapshotFreeCell() {
 }
 
 function initFreeCellApp() {
+  const hintBtn = document.getElementById("freecell-hint-button");
+  if (hintBtn) hintBtn.addEventListener("click", hintFreeCell);
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const startGameBtn = document.getElementById("start-freecell-game");
@@ -172,6 +175,24 @@ function initFreeCellApp() {
   // player presses "New game".
 }
 
+// Removes a shown hint (and its frames) when the player acts.
+function clearHintFreeCell() {
+  if (!AppStateFreeCell.hint) return;
+  AppStateFreeCell.hint = null;
+  updateFreeCellBoard();
+}
+
+// Hint button: frames the card to move and the place to put it.
+function hintFreeCell() {
+  const st = AppStateFreeCell;
+  if (!st.state || st.gameOver) return;
+  const h = FreeCellCore.hintMove(st.state);
+  st.selected = null;
+  st.hint = h ? h.move : null;
+  setStatusFreeCell("board-info", h ? "Hint: move the marked card to the marked place." : "No move is left.");
+  updateFreeCellBoard();
+}
+
 function selectionsEqual(a, b) {
   if (!a || !b || a.type !== b.type) return false;
   if (a.type === "column") return a.col === b.col && a.index === b.index;
@@ -189,6 +210,7 @@ function trySelectSource(type, col, index) {
 }
 
 function onFreeCellColumnCardClick(colIndex, cardIndex) {
+  clearHintFreeCell();
   if (AppStateFreeCell.gameOver || !AppStateFreeCell.state) return;
   const sel = AppStateFreeCell.selected;
 
@@ -232,6 +254,7 @@ function onFreeCellColumnCardClick(colIndex, cardIndex) {
 }
 
 function onFreeCellCellClick(cellIndex) {
+  clearHintFreeCell();
   if (AppStateFreeCell.gameOver || !AppStateFreeCell.state) return;
   const sel = AppStateFreeCell.selected;
   const card = AppStateFreeCell.state.freeCells[cellIndex];
@@ -270,6 +293,7 @@ function onFreeCellCellClick(cellIndex) {
 }
 
 function onFreeCellFoundationClick(suit) {
+  clearHintFreeCell();
   if (AppStateFreeCell.gameOver || !AppStateFreeCell.state) return;
   const sel = AppStateFreeCell.selected;
   if (!sel) return;
@@ -298,6 +322,7 @@ function onFreeCellFoundationClick(suit) {
 }
 
 function finishFreeCellAction() {
+  AppStateFreeCell.hint = null;
   updateFreeCellBoard();
   updateGameLabelsFreeCell();
 
@@ -375,6 +400,7 @@ function updateFreeCellBoard() {
   const state = AppStateFreeCell.state;
   if (!state) return;
   const sel = AppStateFreeCell.selected;
+  const hint = AppStateFreeCell.hint;
 
   const freeCellsEl = document.getElementById("freecell-freecells");
   if (freeCellsEl) {
@@ -384,6 +410,7 @@ function updateFreeCellBoard() {
       if (card) CardFaces.render(cell, card);
       else cell.textContent = "";
       cell.classList.toggle("freecell-cell-selected", !!(sel && sel.type === "freecell" && sel.index === i));
+      cell.classList.toggle("freecell-hint", !!hint && ((hint.from.type === "freecell" && hint.from.index === i) || (hint.to.type === "freecell" && hint.to.index === i)));
       I18n.setAria(cell, "Free cell " + (i + 1) + (card ? ", " + freecellCardLabel(card) : ", empty"));
     });
   }
@@ -396,6 +423,7 @@ function updateFreeCellBoard() {
       if (rank) CardFaces.render(cell, { rank, suit });
       else CardFaces.renderSuit(cell, suit);
       cell.classList.toggle("freecell-foundation-empty", rank === 0);
+      cell.classList.toggle("freecell-hint", !!hint && hint.to.type === "foundation" && hint.to.suit === suit);
       I18n.setAria(cell, "Foundation " + SUIT_SYMBOL[suit] + (rank ? ", up to " + freecellCardLabel({ rank, suit }) : ", empty"));
     });
   }
@@ -405,6 +433,7 @@ function updateFreeCellBoard() {
     columnsEl.querySelectorAll(".freecell-column").forEach((colEl) => {
       const c = parseInt(colEl.dataset.col, 10);
       colEl.innerHTML = "";
+      colEl.classList.toggle("freecell-hint", !!hint && hint.to.type === "column" && hint.to.col === c && state.columns[c].length === 0);
       state.columns[c].forEach((card, index) => {
         const cardEl = document.createElement("button");
         cardEl.type = "button";
@@ -413,6 +442,10 @@ function updateFreeCellBoard() {
         cardEl.style.zIndex = String(index + 1);
         const isSelected = !!(sel && sel.type === "column" && sel.col === c && index >= sel.index);
         cardEl.classList.toggle("freecell-card-selected", isSelected);
+        const last = index === state.columns[c].length - 1;
+        cardEl.classList.toggle("freecell-hint", !!hint && last && (
+          (hint.from.type === "column" && hint.from.col === c) ||
+          (hint.to.type === "column" && hint.to.col === c && state.columns[c].length > 0)));
         cardEl.addEventListener("click", (e) => {
           e.stopPropagation(); // not also the column's own click handler
           onFreeCellColumnCardClick(c, index);

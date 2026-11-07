@@ -62,6 +62,18 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
     check("peg solitaire in German (" + t + ")", /^Hinweis: Springe mit dem markierten Stein/.test(t));
     await p.close();
   }
+  {
+    const p = await open("freecell", "#start-freecell-game");
+    await p.tap("#freecell-hint-button");
+    await p.waitForTimeout(500);
+    const n = await p.evaluate(() => document.querySelectorAll(".freecell-hint").length);
+    check("freecell: hint frames the card and the place (" + n + ")", n >= 1 && n <= 2);
+    check("freecell: line says so (" + (await info(p)) + ")", /^Hint: move the marked card/.test(await info(p)));
+    await p.tap("#freecell-hint-button");
+    await p.tap(".freecell-column");
+    check("freecell: tap removes the frame", (await p.evaluate(() => document.querySelectorAll(".freecell-hint").length)) === 0);
+    await p.close();
+  }
   check("no page error (" + errors.join(" | ") + ")", errors.length === 0);
   await browser.close();
   if (fails.length) { console.log("FAIL hints-solo-ui: " + fails.length + " problem(s)"); process.exit(1); }

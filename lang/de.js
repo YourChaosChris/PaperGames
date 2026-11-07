@@ -1561,6 +1561,8 @@ STRINGS.de = {
     msg_hint_ms_safe: "Hinweis: Das markierte Feld ist sicher.",
     msg_hint_ms_mine: "Hinweis: Das markierte Feld ist definitiv eine Mine – markiere es.",
     msg_hint_ms_none: "Kein sicheres Feld – du musst raten.",
+    msg_hint_fc_move: "Hinweis: Bewege die markierte Karte an den markierten Ort.",
+    msg_hint_fc_none: "Keine Züge mehr übrig.",
     stats_with_hints: "{n} mit Tipps",
     msg_t_hint_hidden_row: "In Zeile {n} bleibt für eine Zahl nur noch ein Feld übrig. Das Feld ist markiert.",
     msg_t_hint_hidden_column: "In Spalte {n} bleibt für eine Zahl nur noch ein Feld übrig. Das Feld ist markiert.",

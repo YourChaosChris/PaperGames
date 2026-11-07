@@ -11,6 +11,7 @@ const root = path.join(__dirname, "..");
 const Mahjong = require(path.join(root, "mahjong-core.js"));
 const Peg = require(path.join(root, "pegsolitaire-core.js"));
 const Mines = require(path.join(root, "minesweeper-core.js"));
+const FreeCell = require(path.join(root, "freecell-core.js"));
 const fails = [];
 const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " + name); } };
 
@@ -78,5 +79,34 @@ function seeded(seed) {
   check("minesweeper: no hint before the first reveal", Mines.hintCell(Mines.createState(9, 9, 10)) === null);
 }
 
+{
+  // FreeCell: the plan behind the hint is legal move by move and clears the deal.
+  let solved = 0;
+  for (let g = 0; g < 10; g++) {
+    const s0 = FreeCell.createInitialState(seeded(g + 1));
+    const r = FreeCell.solvePlan(s0, 8000);
+    check("freecell: a plan or a move comes back (deal " + g + ")", !!r && r.plan.length >= 1);
+    if (!r || !r.sure) continue;
+    let st = s0;
+    let legal = true;
+    for (const m of r.plan) {
+      let res;
+      if (m.from.type === "column") {
+        res = m.to.type === "foundation" ? FreeCell.moveColumnToFoundation(st, m.from.col)
+          : m.to.type === "column" ? FreeCell.moveColumnToColumn(st, m.from.col, 1, m.to.col)
+          : FreeCell.moveColumnToFreeCell(st, m.from.col, m.to.index);
+      } else {
+        res = m.to.type === "foundation" ? FreeCell.moveFreeCellToFoundation(st, m.from.index) : FreeCell.moveFreeCellToColumn(st, m.from.index, m.to.col);
+      }
+      if (!res.ok) { legal = false; break; }
+      st = res.state;
+    }
+    check("freecell: every move of the plan is legal (deal " + g + ")", legal);
+    check("freecell: the plan clears the deal (deal " + g + ")", FreeCell.isWon(st));
+    solved++;
+  }
+  check("freecell: plans found for at least 4 of 10 deals (" + solved + ")", solved >= 4);
+}
+
 if (fails.length) { console.log("FAIL hints-solo: " + fails.length + " problem(s)"); process.exit(1); }
-console.log("OK hints-solo: Mahjong, Peg Solitaire and Minesweeper hints are always legal and correct");
+console.log("OK hints-solo: Mahjong, Peg Solitaire, Minesweeper and FreeCell hints are always legal and correct");

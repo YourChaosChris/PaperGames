@@ -1490,6 +1490,8 @@ STRINGS.fr = {
     msg_hint_ms_safe: "Indice : la case marquée est sûre.",
     msg_hint_ms_mine: "Indice : la case marquée est certainement une mine - signalez-la.",
     msg_hint_ms_none: "Aucune case sûre - vous devez deviner.",
+    msg_hint_fc_move: "Indice : déplacez la carte marquée vers l'emplacement marqué.",
+    msg_hint_fc_none: "Il n'y a plus de coups possibles.",
     stats_with_hints: "{n} avec indices",
     msg_t_hint_hidden_row: "Dans la ligne {n}, un chiffre n'a plus qu'une seule case possible. La case est marquée.",
     msg_t_hint_hidden_column: "Dans la colonne {n}, un chiffre n'a plus qu'une seule case possible. La case est marquée.",

@@ -1573,6 +1573,8 @@ const STRINGS = {
     msg_hint_ms_safe: "Hint: the marked field is safe.",
     msg_hint_ms_mine: "Hint: the marked field is certainly a mine - flag it.",
     msg_hint_ms_none: "No sure field - you have to guess.",
+    msg_hint_fc_move: "Hint: move the marked card to the marked place.",
+    msg_hint_fc_none: "No move is left.",
     stats_with_hints: "{n} with hints",
     msg_t_hint_hidden_row: "In row {n}, one number has only one cell left. The cell is marked.",
     msg_t_hint_hidden_column: "In column {n}, one number has only one cell left. The cell is marked.",

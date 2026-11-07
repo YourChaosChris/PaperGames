@@ -1490,6 +1490,8 @@ STRINGS.es = {
     msg_hint_ms_safe: "Pista: la casilla marcada es segura.",
     msg_hint_ms_mine: "Pista: la casilla marcada es sin duda una mina; márcala.",
     msg_hint_ms_none: "No hay casillas seguras: tienes que adivinar.",
+    msg_hint_fc_move: "Pista: mueve la carta marcada al lugar marcado.",
+    msg_hint_fc_none: "No quedan movimientos.",
     stats_with_hints: "{n} con pistas",
     msg_t_hint_hidden_row: "En la fila {n}, a un número solo le queda una casilla. La casilla está marcada.",
     msg_t_hint_hidden_column: "En la columna {n}, a un número solo le queda una casilla. La casilla está marcada.",

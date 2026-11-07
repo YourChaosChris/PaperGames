@@ -1490,6 +1490,8 @@ STRINGS.it = {
     msg_hint_ms_safe: "Suggerimento: il campo contrassegnato è sicuro.",
     msg_hint_ms_mine: "Suggerimento: il campo contrassegnato è certamente una mina: segnalalo.",
     msg_hint_ms_none: "Nessun campo sicuro: devi indovinare.",
+    msg_hint_fc_move: "Suggerimento: sposta la carta contrassegnata nel punto contrassegnato.",
+    msg_hint_fc_none: "Non ci sono più mosse.",
     stats_with_hints: "{n} con suggerimenti",
     msg_t_hint_hidden_row: "Nella riga {n} a un numero resta una sola casella. La casella è segnata.",
     msg_t_hint_hidden_column: "Nella colonna {n} a un numero resta una sola casella. La casella è segnata.",

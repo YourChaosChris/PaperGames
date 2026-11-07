@@ -1491,6 +1491,8 @@ STRINGS.pl = {
     msg_hint_ms_safe: "Podpowiedź: zaznaczone pole jest bezpieczne.",
     msg_hint_ms_mine: "Podpowiedź: zaznaczone pole to na pewno mina - oznacz je flagą.",
     msg_hint_ms_none: "Brak pewnego pola - musisz zgadywać.",
+    msg_hint_fc_move: "Wskazówka: przesuń zaznaczoną kartę w zaznaczone miejsce.",
+    msg_hint_fc_none: "Brak dostępnych ruchów.",
     stats_with_hints: "{n} z podpowiedziami",
     msg_t_hint_hidden_row: "W wierszu {n} jednej liczbie zostało już tylko jedno pole. Pole jest zaznaczone.",
     msg_t_hint_hidden_column: "W kolumnie {n} jednej liczbie zostało już tylko jedno pole. Pole jest zaznaczone.",

@@ -220,7 +220,144 @@ const FreeCellCore = (function () {
     return SUITS.every((s) => state.foundations[s] === 13);
   }
 
+  // ---- Hint (task 185) ----
+  // Single-card moves only: { from: {type:"column",col} | {type:"freecell",index},
+  // to: {type:"column",col} | {type:"freecell",index} | {type:"foundation",suit} }.
+  // A person can always make them (a one-card selection).
+  function singleMoves(state) {
+    const out = [];
+    const firstEmptyCell = state.freeCells.findIndex((c) => c === null);
+    state.columns.forEach((col, c) => {
+      if (!col.length) return;
+      const card = col[col.length - 1];
+      const from = { type: "column", col: c };
+      if (canPlaceOnFoundation(card, state.foundations)) {
+        out.push({ from, to: { type: "foundation", suit: card.suit }, next: moveColumnToFoundation(state, c) });
+      }
+      state.columns.forEach((dest, t) => {
+        if (t === c) return;
+        if (!dest.length && col.length === 1) return; // pointless
+        if (canPlaceOnColumn(card, dest)) {
+          out.push({ from, to: { type: "column", col: t }, next: moveColumnToColumn(state, c, 1, t) });
+        }
+      });
+      if (firstEmptyCell >= 0) {
+        out.push({ from, to: { type: "freecell", index: firstEmptyCell }, next: moveColumnToFreeCell(state, c, firstEmptyCell) });
+      }
+    });
+    state.freeCells.forEach((card, i) => {
+      if (!card) return;
+      const from = { type: "freecell", index: i };
+      if (canPlaceOnFoundation(card, state.foundations)) {
+        out.push({ from, to: { type: "foundation", suit: card.suit }, next: moveFreeCellToFoundation(state, i) });
+      }
+      state.columns.forEach((dest, t) => {
+        if (canPlaceOnColumn(card, dest)) {
+          out.push({ from, to: { type: "column", col: t }, next: moveFreeCellToColumn(state, i, t) });
+        }
+      });
+    });
+    return out.filter((m) => m.next.ok);
+  }
+
+  function stateKey(state) {
+    const code = (c) => c.suit + c.rank;
+    const cols = state.columns.map((col) => col.map(code).join(",")).sort().join("|");
+    const cells = state.freeCells.filter(Boolean).map(code).sort().join(",");
+    return cols + "#" + cells + "#" + SUITS.map((s) => state.foundations[s]).join(",");
+  }
+
+  // Lower is better: few cards on the foundations is bad, cards stacked on
+  // a card they cannot sit on (blockers), occupied free cells.
+  function weight(state) {
+    let placed = 0;
+    SUITS.forEach((s) => { placed += state.foundations[s]; });
+    let blockers = 0;
+    state.columns.forEach((col) => {
+      for (let i = 1; i < col.length; i++) {
+        const upper = col[i], lower = col[i - 1];
+        const ok = lower.rank === upper.rank + 1 && isRed(lower) !== isRed(upper);
+        if (!ok) blockers += 1 + (col.length - i) * 0.1;
+      }
+      // a low card buried under a higher one of the same colour group costs more
+      col.forEach((card, i) => {
+        for (let j = 0; j < i; j++) if (col[j].suit === card.suit && col[j].rank > card.rank) { blockers += 0.5; break; }
+      });
+    });
+    const cells = state.freeCells.filter(Boolean).length;
+    return (52 - placed) * 3 + blockers * 2 + cells * 2;
+  }
+
+  // Best-first search. Returns { plan: [move, ...], sure: true } when a
+  // way to clear the deal was found inside the node budget, otherwise
+  // { plan: [best first move], sure: false }, or null when no move exists.
+  function solvePlan(start, budget) {
+    const limit = budget || 8000;
+    const heap = [];
+    const push = (n) => {
+      heap.push(n);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p].w <= heap[i].w) break;
+        [heap[p], heap[i]] = [heap[i], heap[p]];
+        i = p;
+      }
+    };
+    const pop = () => {
+      const top = heap[0];
+      const last = heap.pop();
+      if (heap.length) {
+        heap[0] = last;
+        let i = 0;
+        for (;;) {
+          const l = 2 * i + 1, r = l + 1;
+          let m = i;
+          if (l < heap.length && heap[l].w < heap[m].w) m = l;
+          if (r < heap.length && heap[r].w < heap[m].w) m = r;
+          if (m === i) break;
+          [heap[m], heap[i]] = [heap[i], heap[m]];
+          i = m;
+        }
+      }
+      return top;
+    };
+    const seen = new Set([stateKey(start)]);
+    const root = { state: start, parent: null, move: null, w: weight(start) };
+    push(root);
+    let best = root;
+    let nodes = 0;
+    const planOf = (n) => {
+      const plan = [];
+      for (let x = n; x && x.move; x = x.parent) plan.unshift(x.move);
+      return plan;
+    };
+    while (heap.length && nodes < limit) {
+      const n = pop();
+      nodes++;
+      if (isWon(n.state)) return { plan: planOf(n), sure: true };
+      if (n.w < best.w) best = n;
+      singleMoves(n.state).forEach((m) => {
+        const k = stateKey(m.next.state);
+        if (seen.has(k)) return;
+        seen.add(k);
+        push({ state: m.next.state, parent: n, move: { from: m.from, to: m.to }, w: weight(m.next.state) });
+      });
+    }
+    const roots = singleMoves(start);
+    if (!roots.length) return null;
+    const chain = planOf(best);
+    return { plan: chain.length ? chain : [{ from: roots[0].from, to: roots[0].to }], sure: false };
+  }
+
+  function hintMove(state, budget) {
+    const r = solvePlan(state, budget);
+    return r ? { move: r.plan[0], sure: r.sure } : null;
+  }
+
   return {
+    solvePlan,
+    hintMove,
     SUITS,
     COLUMN_COUNT,
     FREE_CELL_COUNT,

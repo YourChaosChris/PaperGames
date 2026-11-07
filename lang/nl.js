@@ -1490,6 +1490,8 @@ STRINGS.nl = {
     msg_hint_ms_safe: "Tip: het gemarkeerde veld is veilig.",
     msg_hint_ms_mine: "Tip: het gemarkeerde veld is zeker een mijn - zet er een vlag op.",
     msg_hint_ms_none: "Geen zeker veld - je moet gokken.",
+    msg_hint_fc_move: "Tip: verplaats de gemarkeerde kaart naar de gemarkeerde plek.",
+    msg_hint_fc_none: "Geen zetten meer mogelijk.",
     stats_with_hints: "{n} met tips",
     msg_t_hint_hidden_row: "In rij {n} heeft een getal nog maar één vak over. Het vak is gemarkeerd.",
     msg_t_hint_hidden_column: "In kolom {n} heeft een getal nog maar één vak over. Het vak is gemarkeerd.",

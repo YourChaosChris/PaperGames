@@ -135,3 +135,9 @@ max-width: 900px;
   font-size: 0.65rem;
   font-weight: 700;
 }
+
+/* Hint (task 185): the card to move and the place for it. */
+.freecell-hint {
+  outline: 3px dashed var(--text);
+  outline-offset: -3px;
+}

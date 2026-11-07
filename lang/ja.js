@@ -1490,6 +1490,8 @@ STRINGS.ja = {
     msg_hint_ms_safe: "ヒント: マークされたマスは安全です。",
     msg_hint_ms_mine: "ヒント: マークされたマスは確実に地雷です - フラグを立ててください。",
     msg_hint_ms_none: "確実なマスがありません - 推測する必要があります。",
+    msg_hint_fc_move: "ヒント: マークされたカードをマークされた場所に移動します。",
+    msg_hint_fc_none: "移動できるカードがありません。",
     stats_with_hints: "うちヒントあり{n}",
     msg_t_hint_hidden_row: "{n}行目で、ある数字の入るマスが1つだけになりました。そのマスに印を付けました。",
     msg_t_hint_hidden_column: "{n}列目で、ある数字の入るマスが1つだけになりました。そのマスに印を付けました。",

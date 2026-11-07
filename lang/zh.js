@@ -1490,6 +1490,8 @@ STRINGS.zh = {
     msg_hint_ms_safe: "提示：标记的格子是安全的。",
     msg_hint_ms_mine: "提示：标记的格子肯定是地雷——插上旗帜。",
     msg_hint_ms_none: "没有确定的格子——你必须猜一下。",
+    msg_hint_fc_move: "提示：将标记的牌移动到标记的位置。",
+    msg_hint_fc_none: "没有可走的步数了。",
     stats_with_hints: "其中{n}次用了提示",
     msg_t_hint_hidden_row: "第{n}行中，有一个数字只剩一个格子可填。该格已标出。",
     msg_t_hint_hidden_column: "第{n}列中，有一个数字只剩一个格子可填。该格已标出。",
