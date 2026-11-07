@@ -12,6 +12,7 @@ const Mahjong = require(path.join(root, "mahjong-core.js"));
 const Peg = require(path.join(root, "pegsolitaire-core.js"));
 const Mines = require(path.join(root, "minesweeper-core.js"));
 const FreeCell = require(path.join(root, "freecell-core.js"));
+const Klondike = require(path.join(root, "klondike-core.js"));
 const fails = [];
 const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " + name); } };
 
@@ -108,5 +109,27 @@ function seeded(seed) {
   check("freecell: plans found for at least 4 of 10 deals (" + solved + ")", solved >= 4);
 }
 
+{
+  // Klondike: every hint is a legal move (or a draw), and the hints reach the foundations.
+  let toFoundation = 0;
+  for (let g = 0; g < 40; g++) {
+    let s = Klondike.createInitialState(seeded(g + 1));
+    for (let step = 0; step < 300 && !Klondike.isWon(s); step++) {
+      const h = Klondike.hintMove(s);
+      if (!h) break;
+      let res;
+      if (h.kind === "draw") res = Klondike.drawFromStock(s);
+      else if (h.from.type === "waste") res = h.to.type === "foundation" ? Klondike.moveWasteToFoundation(s) : Klondike.moveWasteToColumn(s, h.to.col);
+      else res = h.to.type === "foundation" ? Klondike.moveColumnToFoundation(s, h.from.col)
+        : Klondike.moveColumnToColumn(s, h.from.col, s.tableau[h.from.col].length - h.from.index, h.to.col);
+      check("klondike: hint is legal (deal " + g + ", step " + step + ")", res.ok);
+      if (!res.ok) break;
+      if (h.kind === "move" && h.to.type === "foundation") toFoundation++;
+      s = res.state;
+    }
+  }
+  check("klondike: hints put cards on the foundations (" + toFoundation + ")", toFoundation > 200);
+}
+
 if (fails.length) { console.log("FAIL hints-solo: " + fails.length + " problem(s)"); process.exit(1); }
-console.log("OK hints-solo: Mahjong, Peg Solitaire, Minesweeper and FreeCell hints are always legal and correct");
+console.log("OK hints-solo: Mahjong, Peg Solitaire, Minesweeper, FreeCell and Klondike hints are always legal and correct");

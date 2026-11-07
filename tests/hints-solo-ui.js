@@ -74,8 +74,19 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
     check("freecell: tap removes the frame", (await p.evaluate(() => document.querySelectorAll(".freecell-hint").length)) === 0);
     await p.close();
   }
+  {
+    const p = await open("klondike", "#start-klondike-game");
+    await p.tap("#klondike-hint-button");
+    await p.waitForTimeout(300);
+    const n = await p.evaluate(() => document.querySelectorAll(".klondike-hint").length);
+    check("klondike: hint frames something (" + n + ")", n >= 1);
+    check("klondike: line says so (" + (await info(p)) + ")", /^Hint: (move the marked card|no good move)/.test(await info(p)));
+    await p.tap(".klondike-column");
+    check("klondike: tap removes the frame", (await p.evaluate(() => document.querySelectorAll(".klondike-hint").length)) === 0);
+    await p.close();
+  }
   check("no page error (" + errors.join(" | ") + ")", errors.length === 0);
   await browser.close();
   if (fails.length) { console.log("FAIL hints-solo-ui: " + fails.length + " problem(s)"); process.exit(1); }
-  console.log("OK hints-solo-ui: Mahjong, Peg Solitaire and Minesweeper hint buttons");
+  console.log("OK hints-solo-ui: Mahjong, Peg Solitaire, Minesweeper and Klondike hint buttons");
 })();

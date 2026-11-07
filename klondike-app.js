@@ -33,6 +33,7 @@ function t18nKlondike(key) {
 
 const AppStateKlondike = {
   state: null,
+  hint: null,     // a hint from KlondikeCore.hintMove, or null
   selected: null, // { type: "column", col, index } | { type: "waste" } | null
   gameOver: false,
   moveCount: 0,
@@ -87,6 +88,8 @@ function pushUndoSnapshotKlondike() {
 }
 
 function initKlondikeApp() {
+  const hintBtn = document.getElementById("klondike-hint-button");
+  if (hintBtn) hintBtn.addEventListener("click", hintKlondike);
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const startGameBtn = document.getElementById("start-klondike-game");
@@ -150,6 +153,25 @@ function initKlondikeApp() {
   // player presses "New game".
 }
 
+// Removes a shown hint (and its frames) when the player acts.
+function clearHintKlondike() {
+  if (!AppStateKlondike.hint) return;
+  AppStateKlondike.hint = null;
+  updateKlondikeBoard();
+}
+
+// Hint button: frames the card to move and the place for it, or the stock.
+function hintKlondike() {
+  const st = AppStateKlondike;
+  if (!st.state || st.gameOver) return;
+  const h = KlondikeCore.hintMove(st.state);
+  st.selected = null;
+  st.hint = h;
+  setStatusKlondike("board-info", !h ? t18nKlondike("klondike_tip_none")
+    : h.kind === "draw" ? t18nKlondike("klondike_tip_draw") : t18nKlondike("klondike_tip_move"));
+  updateKlondikeBoard();
+}
+
 function selectionsEqualKlondike(a, b) {
   if (!a || !b || a.type !== b.type) return false;
   if (a.type === "column") return a.col === b.col && a.index === b.index;
@@ -176,6 +198,7 @@ function selectedCardKlondike() {
 }
 
 function onKlondikeColumnClick(colIndex, cardIndex) {
+  clearHintKlondike();
   if (AppStateKlondike.gameOver || !AppStateKlondike.state) return;
   const sel = AppStateKlondike.selected;
 
@@ -213,6 +236,7 @@ function onKlondikeColumnClick(colIndex, cardIndex) {
 }
 
 function onKlondikeWasteClick() {
+  clearHintKlondike();
   if (AppStateKlondike.gameOver || !AppStateKlondike.state) return;
   const sel = AppStateKlondike.selected;
 
@@ -232,6 +256,7 @@ function onKlondikeWasteClick() {
 }
 
 function onKlondikeStockClick() {
+  AppStateKlondike.hint = null;
   if (AppStateKlondike.gameOver || !AppStateKlondike.state) return;
   const result = KlondikeCore.drawFromStock(AppStateKlondike.state);
   if (!result.ok) {
@@ -250,6 +275,7 @@ function onKlondikeStockClick() {
 }
 
 function onKlondikeFoundationClick(suit) {
+  clearHintKlondike();
   if (AppStateKlondike.gameOver || !AppStateKlondike.state) return;
   const sel = AppStateKlondike.selected;
   if (!sel) return;
@@ -349,6 +375,7 @@ function updateKlondikeBoard() {
   const state = AppStateKlondike.state;
   if (!state) return;
   const sel = AppStateKlondike.selected;
+  const hint = AppStateKlondike.hint;
 
   const stockEl = document.getElementById("klondike-stock");
   if (stockEl) {
@@ -357,6 +384,7 @@ function updateKlondikeBoard() {
     stockEl.className = "klondike-cell klondike-stock" + (hasStock ? " klondike-card-back" : "");
     stockEl.textContent = hasStock ? "" : (hasWaste ? "↺" : "");
     stockEl.disabled = !hasStock && !hasWaste;
+    stockEl.classList.toggle("klondike-hint", !!hint && hint.kind === "draw");
     I18n.setAria(stockEl, hasStock
       ? t18nKlondike("klondike_aria_stock") + ": " + state.stock.length
       : (hasWaste
@@ -367,7 +395,8 @@ function updateKlondikeBoard() {
   const wasteEl = document.getElementById("klondike-waste");
   if (wasteEl) {
     const top = KlondikeCore.topOfColumn(state.waste);
-    wasteEl.className = "klondike-cell klondike-waste" + (sel && sel.type === "waste" ? " klondike-card-selected" : "");
+    wasteEl.className = "klondike-cell klondike-waste" + (sel && sel.type === "waste" ? " klondike-card-selected" : "") +
+      (hint && hint.kind === "move" && hint.from.type === "waste" ? " klondike-hint" : "");
     if (top) CardFaces.render(wasteEl, top);
     else wasteEl.textContent = "";
     I18n.setAria(wasteEl, t18nKlondike("klondike_aria_waste") + ", " + (top ? klondikeCardLabel(top) : t18nKlondike("klondike_aria_empty")));
@@ -381,6 +410,7 @@ function updateKlondikeBoard() {
       if (rank) CardFaces.render(cell, { rank, suit });
       else CardFaces.renderSuit(cell, suit);
       cell.classList.toggle("klondike-foundation-empty", rank === 0);
+      cell.classList.toggle("klondike-hint", !!hint && hint.kind === "move" && hint.to.type === "foundation" && hint.to.suit === suit);
       I18n.setAria(cell, t18nKlondike("klondike_aria_foundation") + " " + SUIT_SYMBOL_K[suit] + ", " +
         (rank ? t18nKlondike("klondike_aria_up_to") + " " + klondikeCardLabel({ rank, suit }) : t18nKlondike("klondike_aria_empty")));
     });
@@ -394,7 +424,7 @@ function updateKlondikeBoard() {
       const column = state.tableau[c];
       if (!column.length) {
         const empty = document.createElement("span");
-        empty.className = "klondike-empty-slot";
+        empty.className = "klondike-empty-slot" + (hint && hint.kind === "move" && hint.to.type === "column" && hint.to.col === c ? " klondike-hint" : "");
         empty.setAttribute("aria-hidden", "true");
         colEl.appendChild(empty);
         return;
@@ -408,6 +438,10 @@ function updateKlondikeBoard() {
           CardFaces.render(cardEl, card);
           const isSelected = !!(sel && sel.type === "column" && sel.col === c && index >= sel.index);
           cardEl.classList.toggle("klondike-card-selected", isSelected);
+          const lastCard = index === column.length - 1;
+          cardEl.classList.toggle("klondike-hint", !!hint && hint.kind === "move" && (
+            (hint.from.type === "column" && hint.from.col === c && hint.from.index === index) ||
+            (hint.to.type === "column" && hint.to.col === c && lastCard)));
           I18n.setAria(cardEl, klondikeCardLabel(card));
         } else {
           cardEl.className = "klondike-card klondike-card-back";

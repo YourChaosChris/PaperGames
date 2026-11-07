@@ -240,7 +240,48 @@ const KlondikeCore = (function () {
     return SUITS.every((s) => state.foundations[s] === 13);
   }
 
+  // Hint (task 185). In this order: a card to a foundation; a run that
+  // uncovers a face-down card; the waste card onto a column; otherwise
+  // draw from the stock. Returns
+  //   { kind: "move", from: {type:"waste"} | {type:"column",col,index},
+  //     to: {type:"foundation",suit} | {type:"column",col} },
+  //   { kind: "draw" } or null (nothing left to do).
+  function hintMove(state) {
+    const wasteTop = topOfColumn(state.waste);
+    if (wasteTop && canPlaceOnFoundation(wasteTop, state.foundations)) {
+      return { kind: "move", from: { type: "waste" }, to: { type: "foundation", suit: wasteTop.suit } };
+    }
+    for (let c = 0; c < state.tableau.length; c++) {
+      const top = topOfColumn(state.tableau[c]);
+      if (top && top.faceUp && canPlaceOnFoundation(top, state.foundations)) {
+        return { kind: "move", from: { type: "column", col: c, index: state.tableau[c].length - 1 }, to: { type: "foundation", suit: top.suit } };
+      }
+    }
+    let best = null;
+    let bestDown = -1;
+    for (let c = 0; c < state.tableau.length; c++) {
+      const col = state.tableau[c];
+      const first = col.findIndex((card) => card.faceUp);
+      if (first <= 0) continue; // nothing face-down under the run
+      if (movableSequenceLength(col) !== col.length - first) continue;
+      for (let t = 0; t < state.tableau.length; t++) {
+        if (t === c || !canPlaceOnColumn(col[first], state.tableau[t])) continue;
+        if (first > bestDown) { best = { kind: "move", from: { type: "column", col: c, index: first }, to: { type: "column", col: t } }; bestDown = first; }
+        break;
+      }
+    }
+    if (best) return best;
+    if (wasteTop) {
+      for (let t = 0; t < state.tableau.length; t++) {
+        if (canPlaceOnColumn(wasteTop, state.tableau[t])) return { kind: "move", from: { type: "waste" }, to: { type: "column", col: t } };
+      }
+    }
+    if (state.stock.length || state.waste.length) return { kind: "draw" };
+    return null;
+  }
+
   return {
+    hintMove,
     SUITS,
     COLUMN_COUNT,
     isRed,
