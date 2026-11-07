@@ -26,6 +26,7 @@ const AppStateFleetBattle = {
   orientation: "h",      // "h" | "v" - applies to whichever ship is placed next
   human: null,           // { ships: [...] }
   computer: null,        // { ships: [...] } - hidden from rendering until sunk
+  hint: null,            // [row, col] cell shown by the hint button
   humanShots: null,      // shots the human fired at the computer's fleet
   computerShots: null,   // shots the computer fired at the human's fleet
   turn: "human",         // "human" | "computer"
@@ -137,6 +138,8 @@ function initFleetBattleApp() {
   const resetBtn = document.getElementById("fb-reset-btn");
   const startBattleBtn = document.getElementById("fb-start-battle-btn");
   const resignBtn = document.getElementById("fb-resign-btn");
+  const hintBtn = document.getElementById("fb-hint-btn");
+  if (hintBtn) hintBtn.addEventListener("click", hintFb);
 
   function closeSettingsPanel() {
     if (!settingsPanel) return;
@@ -344,6 +347,7 @@ function onFbOwnCellClick(r, c) {
 }
 
 function onFbEnemyCellClick(r, c) {
+  AppStateFleetBattle.hint = null;
   if (AppStateFleetBattle.phase !== "battle" || AppStateFleetBattle.winner) return;
   if (AppStateFleetBattle.turn !== "human") return;
   if (FleetBattleCore.hasShot(AppStateFleetBattle.humanShots, r, c)) return;
@@ -455,7 +459,19 @@ function showFbBattleUI() {
   updateFbResignVisibility();
 }
 
+// Hint button (task 185): frames a cell worth shooting at.
+function hintFb() {
+  const st = AppStateFleetBattle;
+  if (st.phase !== "battle" || st.winner || st.turn !== "human" || !st.computer) return;
+  st.hint = FleetBattleAi.hintShot(st.humanShots, st.computer);
+  const infoEl = document.getElementById("board-info");
+  if (infoEl && st.hint) I18n.setMsg(infoEl, t18nFb("admiralsgrid_tip_shot"));
+  renderFbEnemyGrid();
+}
+
 function updateFbResignVisibility() {
+  const hintBtn = document.getElementById("fb-hint-btn");
+  if (hintBtn) hintBtn.classList.toggle("hidden", AppStateFleetBattle.phase !== "battle" || !!AppStateFleetBattle.winner);
   const resignBtn = document.getElementById("fb-resign-btn");
   if (resignBtn) resignBtn.classList.toggle("hidden", AppStateFleetBattle.phase !== "battle" || !!AppStateFleetBattle.winner);
 }
@@ -601,7 +617,8 @@ function renderFbEnemyGrid() {
     const c = parseInt(btn.dataset.col, 10);
     const cellState = fbCellStateEnemy(r, c);
 
-    btn.classList.remove("fb-ship", "fb-hit", "fb-miss", "fb-sunk", "fb-last", "fb-clickable");
+    btn.classList.remove("fb-ship", "fb-hit", "fb-miss", "fb-sunk", "fb-last", "fb-clickable", "fb-hint");
+    if (AppStateFleetBattle.hint && AppStateFleetBattle.hint[0] === r && AppStateFleetBattle.hint[1] === c) btn.classList.add("fb-hint");
     if (cellState) btn.classList.add("fb-" + cellState);
 
     if (AppStateFleetBattle.lastHumanShot &&

@@ -4732,6 +4732,7 @@ STRINGS.uk = {
     admiralsgrid_your_turn: "Твій хід - стріляй по ворожих водах.",
     admiralsgrid_computer_thinking: "Комп'ютер думає…",
     admiralsgrid_hit: "Влучив!",
+    admiralsgrid_tip_shot: "Підказка: стріляйте в позначену клітинку.",
     admiralsgrid_miss: "Промах.",
     admiralsgrid_win_title: "Перемога!",
     admiralsgrid_win_message: "Ти потопив весь ворожий флот!",

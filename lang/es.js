@@ -4732,6 +4732,7 @@ STRINGS.es = {
     admiralsgrid_your_turn: "Tu turno - dispara en las aguas enemigas.",
     admiralsgrid_computer_thinking: "El ordenador está pensando…",
     admiralsgrid_hit: "¡Tocado!",
+    admiralsgrid_tip_shot: "Pista: dispara a la casilla marcada.",
     admiralsgrid_miss: "Agua.",
     admiralsgrid_win_title: "¡Victoria!",
     admiralsgrid_win_message: "¡Hundiste toda la flota enemiga!",

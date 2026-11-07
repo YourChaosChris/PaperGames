@@ -4803,6 +4803,7 @@ STRINGS.de = {
     admiralsgrid_your_turn: "Du bist dran - feuere in die feindlichen Gewässer.",
     admiralsgrid_computer_thinking: "Computer überlegt…",
     admiralsgrid_hit: "Treffer!",
+    admiralsgrid_tip_shot: "Hinweis: Schieße auf das markierte Feld.",
     admiralsgrid_miss: "Daneben.",
     admiralsgrid_win_title: "Sieg!",
     admiralsgrid_win_message: "Du hast die gesamte feindliche Flotte versenkt!",

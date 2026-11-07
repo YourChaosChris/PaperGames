@@ -15,6 +15,9 @@ const FreeCell = require(path.join(root, "freecell-core.js"));
 const Klondike = require(path.join(root, "klondike-core.js"));
 const Pyramid = require(path.join(root, "pyramidsolitaire-core.js"));
 const Spider = require(path.join(root, "spidersolitaire-core.js"));
+const FleetCore = require(path.join(root, "admiralsgrid-core.js"));
+globalThis.FleetBattleCore = FleetCore;
+const FleetBattleAi = require(path.join(root, "admiralsgrid-ai.js"));
 const fails = [];
 const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " + name); } };
 
@@ -168,5 +171,27 @@ function seeded(seed) {
   check("spider: hints complete runs (" + runs + ")", runs >= 10);
 }
 
+{
+  // Admirals Grid: hint cells are always untried and finish a game in fewer shots than blind shooting.
+  let total = 0, illegal = 0, unfinished = 0;
+  for (let g = 1; g <= 20; g++) {
+    const fleet = FleetBattleAi.placeFleet(seeded(g));
+    let shots = {};
+    let n = 0;
+    for (; n < 100; n++) {
+      const cell = FleetBattleAi.hintShot(shots, fleet);
+      if (!cell || shots[FleetCore.cellKey(cell[0], cell[1])]) { illegal++; break; }
+      const res = FleetCore.fireShot(fleet, shots, cell[0], cell[1]);
+      shots = res.shots;
+      if (res.allSunk) { n++; break; }
+    }
+    if (!FleetCore.isFleetDefeated(fleet, shots)) unfinished++;
+    total += n;
+  }
+  check("admiralsgrid: hints legal", illegal === 0);
+  check("admiralsgrid: games finish (" + unfinished + " unfinished)", unfinished === 0);
+  check("admiralsgrid: average shots " + (total / 20).toFixed(1) + " < 70", total / 20 < 70);
+}
+
 if (fails.length) { console.log("FAIL hints-solo: " + fails.length + " problem(s)"); process.exit(1); }
-console.log("OK hints-solo: Mahjong, Peg Solitaire, Minesweeper, FreeCell, Klondike, Pyramid and Spider hints are always legal and correct");
+console.log("OK hints-solo: Mahjong, Peg Solitaire, Minesweeper, FreeCell, Klondike, Pyramid, Spider and Admirals Grid hints are always legal and correct");

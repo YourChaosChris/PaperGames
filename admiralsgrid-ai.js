@@ -159,12 +159,47 @@ const FleetBattleAi = (function () {
     return { mode: "target", hits, axis };
   }
 
+
+  // Hint for the human (task 185): a cell worth shooting at, from the
+  // shots and the sunk ships the player can see - never from hidden
+  // ship positions. Finishes a damaged ship first, otherwise takes a
+  // checkerboard cell closest to the centre.
+  function hintShot(shots, fleet) {
+    const hits = [];
+    for (let r = 0; r < Core.BOARD_SIZE; r++) {
+      for (let c = 0; c < Core.BOARD_SIZE; c++) {
+        if (shots[Core.cellKey(r, c)] !== "hit") continue;
+        const ship = Core.findShipAt(fleet, r, c);
+        if (ship && Core.isShipSunk(ship, shots)) continue;
+        hits.push([r, c]);
+      }
+    }
+    if (hits.length) {
+      let axis = null;
+      if (hits.length > 1) {
+        if (hits.every((h) => h[0] === hits[0][0])) axis = "row";
+        else if (hits.every((h) => h[1] === hits[0][1])) axis = "col";
+      }
+      const queue = computeTargetQueue(hits, axis, shots);
+      if (queue.length) return queue[0];
+    }
+    const untried = allUntriedCells(shots);
+    if (!untried.length) return null;
+    const mid = (Core.BOARD_SIZE - 1) / 2;
+    const dist = (cell) => Math.abs(cell[0] - mid) + Math.abs(cell[1] - mid);
+    const even = untried.filter((cell) => (cell[0] + cell[1]) % 2 === 0);
+    const pool = even.length ? even : untried;
+    pool.sort((a, b) => dist(a) - dist(b));
+    return pool[0];
+  }
+
   return {
     LEVELS,
     normalizeLevel,
     placeFleet,
     createState,
     chooseShot,
+    hintShot,
     updateStateAfterShot,
     // Exposed for tests only - not used by any normal-play code path.
     _computeTargetQueue: computeTargetQueue

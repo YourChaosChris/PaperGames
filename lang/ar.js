@@ -4487,6 +4487,7 @@ STRINGS.ar = {
     admiralsgrid_your_turn: "دورك - أطلق النار على مياه العدو.",
     admiralsgrid_computer_thinking: "الكمبيوتر يفكر…",
     admiralsgrid_hit: "إصابة!",
+    admiralsgrid_tip_shot: "تلميح: أطلق النار على المربع المحدد.",
     admiralsgrid_miss: "خطأ.",
     admiralsgrid_win_title: "انتصار!",
     admiralsgrid_win_message: "لقد أغرقت أسطول العدو بأكمله!",

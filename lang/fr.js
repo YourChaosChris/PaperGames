@@ -4732,6 +4732,7 @@ STRINGS.fr = {
     admiralsgrid_your_turn: "À vous de jouer - tirez dans les eaux ennemies.",
     admiralsgrid_computer_thinking: "L'ordinateur réfléchit…",
     admiralsgrid_hit: "Touché !",
+    admiralsgrid_tip_shot: "Indice : tirez sur la case marquée.",
     admiralsgrid_miss: "Manqué.",
     admiralsgrid_win_title: "Victoire !",
     admiralsgrid_win_message: "Vous avez coulé toute la flotte ennemie !",

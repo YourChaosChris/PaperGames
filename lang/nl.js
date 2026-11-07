@@ -4732,6 +4732,7 @@ STRINGS.nl = {
     admiralsgrid_your_turn: "Jouw beurt - vuur op de vijandelijke wateren.",
     admiralsgrid_computer_thinking: "Computer denkt na…",
     admiralsgrid_hit: "Raak!",
+    admiralsgrid_tip_shot: "Tip: schiet op het gemarkeerde vakje.",
     admiralsgrid_miss: "Mis.",
     admiralsgrid_win_title: "Overwinning!",
     admiralsgrid_win_message: "Je hebt de hele vijandelijke vloot tot zinken gebracht!",

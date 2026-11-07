@@ -4732,6 +4732,7 @@ STRINGS.ru = {
     admiralsgrid_your_turn: "Твой ход - стреляй по водам противника.",
     admiralsgrid_computer_thinking: "Компьютер думает…",
     admiralsgrid_hit: "Попадание!",
+    admiralsgrid_tip_shot: "Подсказка: стреляйте в отмеченную клетку.",
     admiralsgrid_miss: "Мимо.",
     admiralsgrid_win_title: "Победа!",
     admiralsgrid_win_message: "Ты потопил весь вражеский флот!",

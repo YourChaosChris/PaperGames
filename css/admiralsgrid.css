@@ -157,3 +157,9 @@
   background: var(--square-light);
   box-sizing: border-box;
 }
+
+/* Hint (task 185): a cell worth shooting at. */
+.fb-cell.fb-hint {
+  outline: 3px dashed var(--text);
+  outline-offset: -3px;
+}

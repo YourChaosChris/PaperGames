@@ -4732,6 +4732,7 @@ STRINGS.zh = {
     admiralsgrid_your_turn: "轮到你了 - 向敌方海域开火。",
     admiralsgrid_computer_thinking: "电脑正在思考…",
     admiralsgrid_hit: "命中！",
+    admiralsgrid_tip_shot: "提示：向标记的格子开火。",
     admiralsgrid_miss: "未命中。",
     admiralsgrid_win_title: "胜利！",
     admiralsgrid_win_message: "你击沉了敌方的整支舰队！",

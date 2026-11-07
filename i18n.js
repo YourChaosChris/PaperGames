@@ -4815,6 +4815,7 @@ const STRINGS = {
     admiralsgrid_your_turn: "Your turn - fire at the enemy waters.",
     admiralsgrid_computer_thinking: "Computer thinking…",
     admiralsgrid_hit: "Hit!",
+    admiralsgrid_tip_shot: "Hint: shoot at the marked cell.",
     admiralsgrid_miss: "Miss.",
     admiralsgrid_win_title: "Victory!",
     admiralsgrid_win_message: "You sank the entire enemy fleet!",

@@ -103,8 +103,21 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
     check("spider: line says so (" + (await info(p)) + ")", /^Hint: (move the marked card|no good move)/.test(await info(p)));
     await p.close();
   }
+  {
+    const p = await open("admiralsgrid", "#start-admiralsgrid-game");
+    await p.evaluate(() => { document.getElementById("fb-random-btn").click(); });
+    await p.waitForTimeout(200);
+    await p.evaluate(() => { document.getElementById("fb-start-battle-btn").click(); });
+    await p.waitForTimeout(300);
+    await p.evaluate(() => { document.getElementById("fb-hint-btn").click(); });
+    await p.waitForTimeout(300);
+    const n = await p.evaluate(() => document.querySelectorAll("#fb-enemy-grid .fb-hint").length);
+    check("admiralsgrid: hint frames one cell (" + n + ")", n === 1);
+    check("admiralsgrid: line says so (" + (await info(p)) + ")", /^Hint: shoot at the marked cell/.test(await info(p)));
+    await p.close();
+  }
   check("no page error (" + errors.join(" | ") + ")", errors.length === 0);
   await browser.close();
   if (fails.length) { console.log("FAIL hints-solo-ui: " + fails.length + " problem(s)"); process.exit(1); }
-  console.log("OK hints-solo-ui: Mahjong, Peg Solitaire, Minesweeper, Klondike, Pyramid and Spider hint buttons");
+  console.log("OK hints-solo-ui: Mahjong, Peg Solitaire, Minesweeper, Klondike, Pyramid, Spider and Admirals Grid hint buttons");
 })();

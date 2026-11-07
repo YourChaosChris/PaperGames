@@ -4733,6 +4733,7 @@ STRINGS.pl = {
     admiralsgrid_your_turn: "Twoja tura - strzelaj w wody wroga.",
     admiralsgrid_computer_thinking: "Komputer myśli…",
     admiralsgrid_hit: "Trafiony!",
+    admiralsgrid_tip_shot: "Podpowiedź: strzelaj w zaznaczone pole.",
     admiralsgrid_miss: "Pudło.",
     admiralsgrid_win_title: "Zwycięstwo!",
     admiralsgrid_win_message: "Zatopiłeś całą flotę wroga!",

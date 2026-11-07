@@ -4732,6 +4732,7 @@ STRINGS.it = {
     admiralsgrid_your_turn: "Tocca a te - spara nelle acque nemiche.",
     admiralsgrid_computer_thinking: "Il computer sta pensando…",
     admiralsgrid_hit: "Colpito!",
+    admiralsgrid_tip_shot: "Suggerimento: spara sulla casella evidenziata.",
     admiralsgrid_miss: "Acqua.",
     admiralsgrid_win_title: "Vittoria!",
     admiralsgrid_win_message: "Hai affondato l'intera flotta nemica!",

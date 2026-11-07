@@ -4732,6 +4732,7 @@ STRINGS.ja = {
     admiralsgrid_your_turn: "あなたの番です - 敵の海域を攻撃してください。",
     admiralsgrid_computer_thinking: "コンピューターが考え中…",
     admiralsgrid_hit: "命中！",
+    admiralsgrid_tip_shot: "ヒント: マークされたマスを撃ってください。",
     admiralsgrid_miss: "はずれ。",
     admiralsgrid_win_title: "勝利！",
     admiralsgrid_win_message: "敵の艦隊をすべて沈めました！",
