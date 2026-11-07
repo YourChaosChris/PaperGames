@@ -34,6 +34,7 @@ const AppStateMinesweeper = {
   preset: "intermediate",
   state: null,
   flagMode: false,
+  hint: null,   // { r, c, kind } a hint shows, or null
   gameOver: false,
   elapsedSeconds: 0,
   runStart: null,
@@ -133,6 +134,8 @@ function updateTimerDisplayMinesweeper() {
 }
 
 function initMinesweeperApp() {
+  const hintBtn = document.getElementById("minesweeper-hint-button");
+  if (hintBtn) hintBtn.addEventListener("click", hintMinesweeper);
   if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
@@ -245,7 +248,19 @@ function initMinesweeperApp() {
   // player picks a difficulty and presses New game.
 }
 
+// Hint button: frames a field that is certainly safe or certainly a mine.
+function hintMinesweeper() {
+  const st = AppStateMinesweeper;
+  if (st.gameOver || !st.state) return;
+  const h = MinesweeperCore.hintCell(st.state);
+  st.hint = h;
+  setStatusMinesweeper("board-info", !h ? "No sure field - you have to guess."
+    : h.kind === "safe" ? "Hint: the marked field is safe." : "Hint: the marked field is certainly a mine - flag it.");
+  updateMinesweeperBoard();
+}
+
 function onMinesweeperCellClick(r, c) {
+  AppStateMinesweeper.hint = null;
   if (AppStateMinesweeper.gameOver || !AppStateMinesweeper.state) return;
   const cell = AppStateMinesweeper.state.cells[r][c];
 
@@ -290,6 +305,7 @@ function doToggleFlagMinesweeper(r, c) {
 }
 
 function finishMinesweeperAction() {
+  AppStateMinesweeper.hint = null;
   updateMinesweeperBoard();
   updateGameLabelsMinesweeper();
 
@@ -403,6 +419,7 @@ function updateMinesweeperBoard() {
     sq.classList.toggle("minesweeper-cell-revealed", cell.revealed);
     sq.classList.toggle("minesweeper-cell-flagged", cell.flagged && !cell.revealed);
     sq.classList.toggle("minesweeper-cell-mine", cell.revealed && cell.mine);
+    sq.classList.toggle("minesweeper-cell-hint", !!AppStateMinesweeper.hint && AppStateMinesweeper.hint.r === r && AppStateMinesweeper.hint.c === c);
     sq.classList.toggle("minesweeper-cell-exploded",
       !!(explodedAt && explodedAt[0] === r && explodedAt[1] === c));
 

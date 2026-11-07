@@ -399,6 +399,12 @@ all parts back into one log in list order. The last line is exactly
   exactly one solution (counted by a search of its own), solved by
   deduction alone with the level's rules, finished with the hint alone
   after a wrongly placed cat. About two minutes.
+- `node tests/hints-solo.js` - no server needed. Hint buttons of Mahjong,
+  Peg Solitaire and Minesweeper (task 181): hints are always legal; the Peg
+  Solitaire hints end with one peg on every board; 200 Minesweeper games with
+  thousands of hints, none wrong.
+- `node tests/hints-solo-ui.js` - Mahjong, Peg Solitaire and Minesweeper hint
+  buttons in the browser (360 x 640, touch), framed hint, status line, German.
 - `node tests/computer-levels.js` - no server or browser needed. Kleeberg,
   Klappenkasten, Steckwuerfeln and Pfotenwurf (task 181): the computer plays
   itself at Easy, Medium and Hard (400 games each, seat swapped); every game

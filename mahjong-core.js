@@ -187,7 +187,54 @@ const MahjongCore = (function () {
     return false;
   }
 
+  // Hint (task 181): two free tiles that match, [idA, idB], or null.
+  // Depth-first search (dead positions remembered, budget of nodes) for a
+  // pair from which the whole board can still be cleared; pairs that free
+  // the most tiles are tried first. When the budget runs out the pair that
+  // frees the most tiles is given.
+  function pairsOf(state) {
+    const freeIds = getFreeTiles(state);
+    const list = [];
+    for (let i = 0; i < freeIds.length; i++) {
+      for (let j = i + 1; j < freeIds.length; j++) {
+        if (state.symbols[freeIds[i]] !== state.symbols[freeIds[j]]) continue;
+        const open = getFreeTiles(removePair(state, freeIds[i], freeIds[j])).length;
+        list.push({ a: freeIds[i], b: freeIds[j], open });
+      }
+    }
+    list.sort((x, y) => y.open - x.open);
+    return list;
+  }
+
+  function findMatch(state, budget) {
+    const roots = pairsOf(state);
+    if (!roots.length) return null;
+    const dead = new Set();
+    let nodes = 0;
+    const limit = budget || 400;
+    const key = (s) => s.removed.map((r) => (r ? "1" : "0")).join("");
+    function solve(s) {
+      if (s.removed.every((r) => r)) return true;
+      const k = key(s);
+      if (dead.has(k)) return false;
+      if (++nodes > limit) throw new Error("budget");
+      const next = pairsOf(s);
+      for (let i = 0; i < next.length; i++) {
+        if (solve(removePair(s, next[i].a, next[i].b))) return true;
+      }
+      dead.add(k);
+      return false;
+    }
+    try {
+      for (let i = 0; i < roots.length; i++) {
+        if (solve(removePair(state, roots[i].a, roots[i].b))) return [roots[i].a, roots[i].b];
+      }
+    } catch (e) { /* budget used up */ }
+    return [roots[0].a, roots[0].b];
+  }
+
   return {
+    findMatch,
     LAYOUT,
     SYMBOLS,
     createInitialState,

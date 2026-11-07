@@ -174,7 +174,69 @@ const MinesweeperCore = (function () {
     return state.mineCount - state.flagCount;
   }
 
+  // Hint (task 181): a field that is certainly safe or certainly a mine,
+  // worked out only from what is visible (the numbers of the opened fields;
+  // flags are the player's guesses and are not trusted). Rules: a number
+  // that equals the count of its closed neighbours makes them all mines, a
+  // number already met by known mines makes the rest safe, and when one
+  // number's closed neighbours lie inside another's, the difference follows.
+  // Returns { r, c, kind: "safe" | "mine" } or null.
+  function hintCell(state) {
+    if (!state || !state.minesPlaced || state.gameOver) return null;
+    const R = state.rows, C = state.cols;
+    const id = (r, c) => r * C + c;
+    const cons = [];
+    for (let r = 0; r < R; r++) {
+      for (let c = 0; c < C; c++) {
+        const cell = state.cells[r][c];
+        if (!cell.revealed || cell.mine) continue;
+        const u = neighborsOf(R, C, r, c).filter(([nr, nc]) => !state.cells[nr][nc].revealed).map(([nr, nc]) => id(nr, nc));
+        if (u.length) cons.push({ u: new Set(u), n: cell.adjacent });
+      }
+    }
+    const mines = new Set();
+    const safe = new Set();
+    let changed = true;
+    while (changed) {
+      changed = false;
+      const live = cons.map((k) => {
+        let n = k.n;
+        const u = new Set();
+        k.u.forEach((x) => { if (mines.has(x)) n--; else if (!safe.has(x)) u.add(x); });
+        return { u, n };
+      }).filter((k) => k.u.size);
+      const mark = (set, list) => list.forEach((x) => { if (!set.has(x)) { set.add(x); changed = true; } });
+      live.forEach((k) => {
+        if (k.n === 0) mark(safe, [...k.u]);
+        else if (k.n === k.u.size) mark(mines, [...k.u]);
+      });
+      for (let i = 0; i < live.length; i++) {
+        for (let j = 0; j < live.length; j++) {
+          if (i === j || live[i].u.size >= live[j].u.size) continue;
+          if (![...live[i].u].every((x) => live[j].u.has(x))) continue;
+          const diff = [...live[j].u].filter((x) => !live[i].u.has(x));
+          const dn = live[j].n - live[i].n;
+          if (dn === 0) mark(safe, diff);
+          else if (dn === diff.length) mark(mines, diff);
+        }
+      }
+    }
+    const pick = (set, kind, wantFlagged) => {
+      let best = null;
+      set.forEach((x) => {
+        const r = Math.floor(x / C), c = x % C;
+        const cell = state.cells[r][c];
+        if (cell.revealed || cell.flagged !== wantFlagged) return;
+        if (!best || x < best.x) best = { x, r, c, kind };
+      });
+      return best;
+    };
+    const found = pick(safe, "safe", false) || pick(mines, "mine", false);
+    return found ? { r: found.r, c: found.c, kind: found.kind } : null;
+  }
+
   return {
+    hintCell,
     neighborsOf,
     createState,
     cloneState,

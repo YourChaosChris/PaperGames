@@ -18,6 +18,7 @@
 const AppStatePegSolitaire = {
   board: null,
   variant: "english", // key of PegSolitaireCore.BOARDS
+  hint: null,       // the jump a hint shows, or null
   selected: null,   // [r, c] or null
   legalTargets: {}, // "r,c" -> the move that lands there
   gameOver: false,
@@ -79,6 +80,8 @@ function pushUndoSnapshotPegSolitaire() {
 }
 
 function initPegSolitaireApp() {
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.addEventListener("click", hintPegSolitaire);
   if (typeof BoardA11y !== "undefined") BoardA11y.enableArrowNav("#board-container");
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
@@ -161,8 +164,25 @@ function computeLegalTargetsPegSolitaire(r, c) {
   return targets;
 }
 
+// Hint button: frames the peg to jump and the hole it lands in.
+function hintPegSolitaire() {
+  if (AppStatePegSolitaire.gameOver || !AppStatePegSolitaire.board) return;
+  const h = PegSolitaireCore.hintMove(AppStatePegSolitaire.board, AppStatePegSolitaire.variant);
+  AppStatePegSolitaire.selected = null;
+  AppStatePegSolitaire.legalTargets = {};
+  if (!h) {
+    AppStatePegSolitaire.hint = null;
+    setStatusPegSolitaire("board-info", "No jump is left.");
+  } else {
+    AppStatePegSolitaire.hint = h.move;
+    setStatusPegSolitaire("board-info", "Hint: jump the marked peg over its neighbour into the marked empty hole.");
+  }
+  updatePegSolitaireBoard();
+}
+
 function onPegSolitaireCellClick(r, c) {
   if (AppStatePegSolitaire.gameOver) return;
+  AppStatePegSolitaire.hint = null;
   const key = targetKeyPeg(r, c);
   const cellValue = AppStatePegSolitaire.board[r][c];
 
@@ -189,6 +209,7 @@ function onPegSolitaireCellClick(r, c) {
 }
 
 function applyPegSolitaireMove(move) {
+  AppStatePegSolitaire.hint = null;
   pushUndoSnapshotPegSolitaire();
   AppStatePegSolitaire.board = PegSolitaireCore.applyMove(AppStatePegSolitaire.board, move);
   AppStatePegSolitaire.moveCount++;
@@ -219,6 +240,7 @@ function undoLastMove() {
   const prev = AppStatePegSolitaire.undoStack.pop();
   AppStatePegSolitaire.board = prev.board;
   AppStatePegSolitaire.moveCount = prev.moveCount;
+  AppStatePegSolitaire.hint = null;
   AppStatePegSolitaire.selected = null;
   AppStatePegSolitaire.legalTargets = {};
   AppStatePegSolitaire.gameOver = false;
@@ -338,6 +360,8 @@ function updatePegSolitaireBoard() {
       && AppStatePegSolitaire.selected[0] === r && AppStatePegSolitaire.selected[1] === c;
     sq.classList.toggle("selected", !!isSelected);
     sq.classList.toggle("peg-square-movable", !!AppStatePegSolitaire.legalTargets[targetKeyPeg(r, c)]);
+    const hn = AppStatePegSolitaire.hint;
+    sq.classList.toggle("peg-square-hint", !!hn && ((hn.from[0] === r && hn.from[1] === c) || (hn.to[0] === r && hn.to[1] === c)));
 
     let label = "Row " + (r + 1) + ", column " + (c + 1) + (value ? ", peg" : ", empty hole");
     I18n.setAria(sq, label);
@@ -360,6 +384,8 @@ function updateUndoButtonVisibilityPegSolitaire() {
   if (!btn) return;
   const hasUndo = (AppStatePegSolitaire.undoStack || []).length > 0;
   btn.disabled = !(hasUndo);
+  const hintBtn = document.getElementById("hint-btn");
+  if (hintBtn) hintBtn.disabled = AppStatePegSolitaire.gameOver;
 }
 
 document.addEventListener("DOMContentLoaded", initPegSolitaireApp);

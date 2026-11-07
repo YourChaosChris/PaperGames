@@ -206,8 +206,46 @@ const PegSolitaireCore = (function () {
     };
   }
 
+  // Hint (task 181): the first jump of a way that ends with one peg, found
+  // by depth-first search that remembers dead positions. When the search
+  // budget runs out or no way exists, any jump that keeps the most jumps
+  // open is given (sure: false). null when no jump is left.
+  function hintMove(board, variant, budget) {
+    const moves = getLegalMoves(board, variant);
+    if (!moves.length) return null;
+    const dead = new Set();
+    let nodes = 0;
+    const limit = budget || 200000;
+    const key = (b) => b.map((row) => row.map((v) => (v === true ? "1" : v === false ? "0" : "x")).join("")).join("|");
+    function solve(b) {
+      if (countPegs(b) === 1) return true;
+      const k = key(b);
+      if (dead.has(k)) return false;
+      if (++nodes > limit) throw new Error("budget");
+      const next = getLegalMoves(b, variant);
+      for (let i = 0; i < next.length; i++) {
+        if (solve(applyMove(b, next[i]))) return true;
+      }
+      dead.add(k);
+      return false;
+    }
+    try {
+      for (let i = 0; i < moves.length; i++) {
+        if (solve(applyMove(board, moves[i]))) return { move: moves[i], sure: true };
+      }
+    } catch (e) { /* budget used up */ }
+    let best = moves[0];
+    let bestOpen = -1;
+    moves.forEach((m) => {
+      const open = getLegalMoves(applyMove(board, m), variant).length;
+      if (open > bestOpen) { best = m; bestOpen = open; }
+    });
+    return { move: best, sure: false };
+  }
+
   return {
     BOARDS,
+    hintMove,
     VARIANTS,
     DEFAULT_VARIANT,
     variantOf,

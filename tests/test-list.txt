@@ -132,3 +132,5 @@
 426 i18n-runtime-sweep.js
 17 dialog-texts.js
 40 computer-levels.js
+25 hints-solo.js
+12 hints-solo-ui.js

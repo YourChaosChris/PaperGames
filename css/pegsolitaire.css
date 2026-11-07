@@ -72,3 +72,9 @@
   border: 2px solid var(--border);
   box-sizing: border-box;
 }
+
+/* Hint (task 181): the peg to jump and the hole it lands in. */
+.peg-square-hint {
+  outline: 3px dashed var(--text);
+  outline-offset: -4px;
+}

@@ -19,6 +19,7 @@
 
 const AppStateMahjong = {
   state: null,
+  hint: null,     // [idA, idB] a hint shows, or null
   selected: null, // tile id or null
   gameOver: false,
   moveCount: 0,
@@ -78,6 +79,8 @@ function pushUndoSnapshotMahjong() {
 }
 
 function initMahjongApp() {
+  const hintBtn = document.getElementById("mahjong-hint-button");
+  if (hintBtn) hintBtn.addEventListener("click", hintMahjong);
   const menuToggle = document.getElementById("menu-toggle");
   const settingsPanel = document.getElementById("settings-panel");
   const startGameBtn = document.getElementById("start-mahjong-game");
@@ -149,7 +152,18 @@ function initMahjongApp() {
   // player presses "New game".
 }
 
+// Hint button: frames two free tiles that match.
+function hintMahjong() {
+  const st = AppStateMahjong;
+  if (!st.state || st.gameOver) return;
+  st.selected = null;
+  st.hint = MahjongCore.findMatch(st.state);
+  setStatusMahjong("board-info", st.hint ? "Hint: these two free tiles match." : "No pair is free - shuffle the remaining tiles or undo.");
+  updateMahjongBoard();
+}
+
 function onMahjongTileClick(id) {
+  AppStateMahjong.hint = null;
   if (AppStateMahjong.gameOver || !AppStateMahjong.state) return;
   const state = AppStateMahjong.state;
   if (state.removed[id]) return;
@@ -210,6 +224,7 @@ function undoLastMove() {
   const prev = AppStateMahjong.undoStack.pop();
   AppStateMahjong.state = prev.state;
   AppStateMahjong.moveCount = prev.moveCount;
+  AppStateMahjong.hint = null;
   AppStateMahjong.selected = null;
   AppStateMahjong.gameOver = false;
   setGameResultMahjong("");
@@ -303,6 +318,7 @@ function updateMahjongBoard() {
     const free = MahjongCore.isFree(state, id);
     btn.classList.toggle("mahjong-tile-blocked", !free);
     btn.classList.toggle("mahjong-tile-selected", AppStateMahjong.selected === id);
+    btn.classList.toggle("mahjong-tile-hint", !!AppStateMahjong.hint && AppStateMahjong.hint.indexOf(id) !== -1);
 
     const label = btn.querySelector(".mahjong-tile-label");
     if (label) label.textContent = state.symbols[id];
@@ -334,6 +350,8 @@ function updateShuffleButtonVisibilityMahjong() {
   const btn = document.getElementById("mahjong-shuffle-button");
   if (!btn) return;
   btn.classList.toggle("hidden", AppStateMahjong.gameOver);
+  const hintBtn = document.getElementById("mahjong-hint-button");
+  if (hintBtn) hintBtn.classList.toggle("hidden", AppStateMahjong.gameOver);
 }
 
 document.addEventListener("DOMContentLoaded", initMahjongApp);

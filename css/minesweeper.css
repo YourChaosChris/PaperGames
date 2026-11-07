@@ -104,3 +104,9 @@ margin-bottom: 0.5rem;
   font-size: 1em;
   line-height: 1;
 }
+
+/* Hint (task 181): a field that is certainly safe or certainly a mine. */
+.minesweeper-cell-hint {
+  outline: 3px dashed var(--text);
+  outline-offset: -3px;
+}

@@ -56,6 +56,7 @@
 .mahjong-actions-row {
   display: flex;
   justify-content: center;
+  gap: 0.5rem;
   margin-top: 0.5rem;
 }
 
@@ -66,4 +67,10 @@
   width: 1.4em;
   height: 1.4em;
   font-size: 1.1rem;
+}
+
+/* Hint (task 181): the two tiles that match. */
+.mahjong-tile-hint {
+  outline: 4px dashed var(--text);
+  outline-offset: 1px;
 }
