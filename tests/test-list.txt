@@ -136,3 +136,5 @@
 12 hints-solo-ui.js
 6 app-mode.js
 10 move-link.js
+6 arrowludo-core.js
+14 arrowludo-ui.js

@@ -1,0 +1,8 @@
+/* Arrow Ludo (task 189): arrow squares, the two flight lines, the hint */
+.ludo-cell-arrow { position: relative; }
+.ludo-arrow-mark { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; color: #141413; opacity: 0.6; }
+.ludo-arrow-mark svg { width: 100%; height: 100%; display: block; }
+.ludo-arrow-lines { pointer-events: none; color: #141413; }
+.ludo-arrow-lines svg { width: 100%; height: 100%; display: block; }
+.ludo-arrow-lines line { stroke: currentColor; stroke-width: 0.12; stroke-dasharray: 0.3 0.22; opacity: 0.7; }
+.ludo-hint { outline: 4px dashed #141413; outline-offset: -4px; }

@@ -707,6 +707,7 @@ const STRINGS = {
     release_v270: "Forest Village and Fairy-Tale Villains have new rules of their own; in Fairy-Tale Villains the heroes now turn up from the deck. A game saved under the old rules starts anew.",
     release_v276: "Fixes: Resign against the computer now always counts as your loss, also while the computer is still thinking. Undo right after the computer's first move lets it move again instead of stopping the game. Nim keeps rule, heaps and who starts after a reload. Backgammon for two asks about a double with buttons on the page. Bigger buttons and footer links; the report link now also names browser and screen size.",
     release_v277: "Blocked Path: when the computer begins, the Continue button is now as big as the other buttons.",
+    release_v285: "New game: Arrow Ludo, Ludo with arrow squares that fly your token across the middle. New setting: a cream background. In 27 two-player games without dice you can send your move to the other player as a link.",
     release_v284: "New game: Yut, the Korean stick-throwing race game. Checkers marks captured pieces and has a stronger Medium level. Cat Places has nine animals to choose from. Kleeberg, Klappenkasten, Steckwürfeln and Critter Roll have Easy, Medium and Hard. Hint buttons in Mahjong, Peg Solitaire, Minesweeper, FreeCell, Klondike, Pyramid, Spider and Admirals Grid.",
     release_v283: "Checkers: a new Hint button marks a good move; when you must capture, it marks the piece that captures and the square where the capture ends. Clearer messages when a capture is mandatory or a multiple capture goes on. The computer now waits a moment before it moves, and its move stays framed.",
     release_v282: "Checkers: in the settings you can now choose German rules, with kings that move and capture any distance and men that also capture backward. English rules stay the default.",
@@ -1208,6 +1209,16 @@ const STRINGS = {
     ludo_board_4: "4 players (classic)",
     ludo_board_6: "6 players",
     ludo_roll_die: "Roll",
+    game_arrowludo: "Arrow Ludo",
+    home_arrowludo_desc: "Ludo with arrows across the middle: land exactly on the arrow square of your color and fly over the centre, 26 squares ahead. Race your four tokens home against computer opponents or on one device, 2 to 4 players.",
+    quickrules_arrowludo_1: "Be the first to bring all 4 of your tokens around the track into the finish in the center.",
+    quickrules_arrowludo_2: "Roll the die and move one token by the number rolled; a token leaves its home base only on a 6, and a 6 gives another roll.",
+    quickrules_arrowludo_3: "Land exactly on the arrow square at the end of your own arm and your token flies across the middle to the arrow square on the opposite side.",
+    quickrules_arrowludo_4: "Landing on an opponent's token sends it home; two tokens on one square form a block, and the finish needs an exact roll.",
+    arrowludo_history_intro: "Ludo with a shortcut across the middle, built on the old race game Pachisi.",
+    msg_t_ludo_flew: "{p} moved token {n} forward {m} and flew across the middle!",
+    msg_t_ludo_flew_captured: "{p} moved token {n} forward {m} and flew across the middle and captured {q}!",
+    msg_t_ludo_hint: "Hint: move token {n}.",
     ludo_history_intro: "A modern, mass-produced descendant of one of India's oldest board games.",
 
     konane_history_intro: "A traditional Native Hawaiian game of stones and strategy, carved directly into the land it was played on.",
@@ -5852,7 +5863,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 114;
+  const GAME_COUNT = 115;
 
   function t(key, lang) {
     const l = lang || getLang();

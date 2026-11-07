@@ -38,6 +38,13 @@
 // constants below (TRACK_LENGTH, START_INDEX, ...) describe the classic
 // board; geometry(board) gives the numbers for either board.
 
+// Arrow Ludo (task 189): the same rules as Ludo on the classic four-arm
+// board, plus one arrow square per color. Each color's arrow square is
+// the last square of its own arm (own route square 12); a token that
+// lands on it with its exact roll flies across the middle to the arrow
+// square on the opposite side (own route square 38), 26 squares ahead.
+// The four arrow squares are 12, 25, 38 and 51 on the track. A state
+// for this game carries `arrows: true`; every other state is plain Ludo.
 const LudoCore = (function () {
   const COLOR_ORDER = ["red", "green", "yellow", "blue"];
   const PIECES_PER_COLOR = 4;
@@ -49,6 +56,8 @@ const LudoCore = (function () {
   const SIX_STREAK_LIMIT = 3; // three 6s in a row forfeits the turn (common Ludo variant)
 
   const START_INDEX = { red: 0, green: 13, yellow: 26, blue: 39 };
+  const ARROW_FROM_REL = 12;
+  const ARROW_TO_REL = 38;
   // The traditional "star" safe square on each arm, 8 squares ahead of
   // that color's own start square.
   const STAR_OFFSET = 8;
@@ -100,7 +109,8 @@ const LudoCore = (function () {
   // options.board: 6 for the six-arm board; the classic state has no
   // `board` field at all, exactly as before.
   function createInitialState(activeColors, options) {
-    const board = options && options.board === 6 ? 6 : 4;
+    const arrows = !!(options && options.arrows);
+    const board = !arrows && options && options.board === 6 ? 6 : 4;
     const colors = (activeColors && activeColors.length ? activeColors : geometry(board).colors).slice();
     const tokens = {};
     colors.forEach((c) => {
@@ -115,6 +125,7 @@ const LudoCore = (function () {
       winner: null
     };
     if (board === 6) state.board = 6;
+    if (arrows) state.arrows = true;
     return state;
   }
 
@@ -131,6 +142,7 @@ const LudoCore = (function () {
       winner: state.winner
     };
     if (state.board === 6) copy.board = 6;
+    if (state.arrows) copy.arrows = true;
     return copy;
   }
 
@@ -193,7 +205,15 @@ const LudoCore = (function () {
     // active
     const target = token.rel + roll;
     if (target > geometry(state).finishRel) return false; // would overshoot the finish hub
-    return !pathBlocked(state, color, token.rel, roll);
+    if (pathBlocked(state, color, token.rel, roll)) return false;
+    return !arrowBlocked(state, color, target);
+  }
+
+  // Landing on the arrow square sends the token to the far arrow square,
+  // so an opposing block there stops the move.
+  function arrowBlocked(state, color, target) {
+    return !!state.arrows && target === ARROW_FROM_REL &&
+      isBlockedForOpponent(state, color, absTrackIndex(color, ARROW_TO_REL, state));
   }
 
   // Why a move isn't allowed - for the on-screen hint, not for the rules
@@ -209,6 +229,7 @@ const LudoCore = (function () {
     }
     if (token.rel + roll > geometry(state).finishRel) return "overshoot";
     if (pathBlocked(state, color, token.rel, roll)) return "blocked";
+    if (arrowBlocked(state, color, token.rel + roll)) return "blocked";
     return null;
   }
 
@@ -230,6 +251,7 @@ const LudoCore = (function () {
     const captured = [];
     let finished = false;
     let enteredPlay = false;
+    let jumped = false;
 
     if (token.state === "home") {
       token.state = "active";
@@ -249,6 +271,11 @@ const LudoCore = (function () {
         if (target <= g.lastTrackRel) {
           maybeCapture(next, color, absTrackIndex(color, target, next), captured);
         }
+        if (next.arrows && target === ARROW_FROM_REL) {
+          token.rel = ARROW_TO_REL;
+          jumped = true;
+          maybeCapture(next, color, absTrackIndex(color, ARROW_TO_REL, next), captured);
+        }
       }
     }
 
@@ -258,7 +285,7 @@ const LudoCore = (function () {
       next.winner = color;
     }
 
-    return { state: next, captured, finished, enteredPlay };
+    return { state: next, captured, finished, enteredPlay, jumped };
   }
 
   function maybeCapture(state, movingColor, absIndex, captured) {
@@ -294,6 +321,8 @@ const LudoCore = (function () {
     FINISH_REL,
     SIX_STREAK_LIMIT,
     START_INDEX,
+    ARROW_FROM_REL,
+    ARROW_TO_REL,
     STAR_OFFSET,
     COLOR_ORDER_6,
     geometry,

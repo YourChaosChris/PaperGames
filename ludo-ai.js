@@ -48,6 +48,7 @@ const LudoAi = (function () {
         tokenIndex,
         captured: result.captured.length,
         finished: result.finished,
+        jumped: !!result.jumped,
         wasHome,
         wasInDanger,
         progress: wasHome ? 0 : token.rel
@@ -70,6 +71,10 @@ const LudoAi = (function () {
       captureMoves.sort((a, b) => b.captured - a.captured);
       return captureMoves[0].tokenIndex;
     }
+
+    // Arrow Ludo: the flight across the middle is worth 26 squares.
+    const jumpMoves = moves.filter((m) => m.jumped);
+    if (jumpMoves.length) return jumpMoves[0].tokenIndex;
 
     const leaveHomeMoves = moves.filter((m) => m.wasHome);
     if (leaveHomeMoves.length) return pickRandom(leaveHomeMoves).tokenIndex;

@@ -348,6 +348,16 @@ all parts back into one log in list order. The last line is exactly
   cells, 30 home-column cells and six bases, offers 5-6 players and purple
   and orange only there; a six-player hotseat game moves a token; the game
   is back after a reload; large view cells at least 28 px.
+- `node tests/arrowludo-core.js` - no server or browser needed. Arrow Ludo
+  (`state.arrows`): arrow squares 12/25/38/51, an exact landing on the own
+  arrow square flies 26 squares for every color, passing or stopping short
+  does not, plain Ludo unchanged, captures on the arrow square and at the
+  target, a block at the target refuses the move, the token plays on to the
+  finish, Medium and Hard choose the flight, 300 computer games.
+- `node tests/arrowludo-ui.js` - needs the server and Playwright. German page
+  at 360 px: no board choice, players 2-4, four arrow squares and two flight
+  lines, a tapped token flies and the message says so, the Hint button, own
+  save key and reload, Ludo has no arrows.
 - `node tests/hex-ui.js` - needs the server and Playwright. German page at
   360 px: the "Tauschen" button with two players and its texts, the
   computer swapping a central first stone, Undo over a swap, no button

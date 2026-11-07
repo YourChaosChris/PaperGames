@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v285",
+    date: "2026-11-08",
+    key: "release_v285",
+    text: "New game: Arrow Ludo, Ludo with arrow squares that fly your token across the middle. New setting: a cream background. In 27 two-player games without dice you can send your move to the other player as a link."
+  },
+  {
     version: "v284",
     date: "2026-11-07",
     key: "release_v284",

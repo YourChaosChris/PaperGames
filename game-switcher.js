@@ -97,6 +97,7 @@
     ["oldmaid", "game_oldmaid"],
     ["war", "game_war"],
     ["snakesladders", "game_snakesladders", "dicerace"],
+    ["arrowludo", "game_arrowludo", "dicerace"],
     ["yut", "game_yut", "dicerace"],
     ["blockers", "game_blockers", "dicerace"],
     ["blackjack", "game_blackjack", "casino"],

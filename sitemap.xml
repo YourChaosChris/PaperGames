@@ -218,7 +218,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/alquerque.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/alquerque.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/alquerque.html?lang=de"/>
@@ -272,7 +272,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/amazons.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/amazons.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/amazons.html?lang=de"/>
@@ -341,6 +341,60 @@
     <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/animalsudoku.html?lang=zh"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/animalsudoku.html?lang=ar"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/animalsudoku.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/arrowludo-history.html</loc>
+    <lastmod>2026-11-07</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/arrowludo-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/arrowludo-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/arrowludo-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/arrowludo-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/arrowludo-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/arrowludo-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/arrowludo-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/arrowludo-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/arrowludo-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/arrowludo-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/arrowludo-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/arrowludo-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/arrowludo-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html</loc>
+    <lastmod>2026-11-07</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/arrowludo-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/arrowludo.html</loc>
+    <lastmod>2026-11-07</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/arrowludo.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/arrowludo.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/arrowludo.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/arrowludo.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/arrowludo.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/arrowludo.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/arrowludo.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/arrowludo.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/arrowludo.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/arrowludo.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/arrowludo.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/arrowludo.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/arrowludo.html"/>
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/backgammon-history.html</loc>
@@ -434,7 +488,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/baghchal.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/baghchal.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/baghchal.html?lang=de"/>
@@ -1208,7 +1262,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/checkers.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/checkers.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/checkers.html?lang=de"/>
@@ -1262,7 +1316,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/chess.html</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/chess.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/chess.html?lang=de"/>
@@ -1622,7 +1676,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/dotsandboxes.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/dotsandboxes.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/dotsandboxes.html?lang=de"/>
@@ -1730,7 +1784,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/fanorona.html</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/fanorona.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/fanorona.html?lang=de"/>
@@ -1838,7 +1892,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/fourinarow.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/fourinarow.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/fourinarow.html?lang=de"/>
@@ -1892,7 +1946,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/foxandgeese.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/foxandgeese.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/foxandgeese.html?lang=de"/>
@@ -2342,7 +2396,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/go.html</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/go.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/go.html?lang=de"/>
@@ -2396,7 +2450,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/gomoku.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/gomoku.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/gomoku.html?lang=de"/>
@@ -2468,7 +2522,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/halma.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/halma.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/halma.html?lang=de"/>
@@ -2630,7 +2684,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/hex.html</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/hex.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/hex.html?lang=de"/>
@@ -2702,7 +2756,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/hnefatafl.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/hnefatafl.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/hnefatafl.html?lang=de"/>
@@ -3116,7 +3170,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/konane.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/konane.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/konane.html?lang=de"/>
@@ -3440,7 +3494,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/mancala.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/mancala.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/mancala.html?lang=de"/>
@@ -3494,7 +3548,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/marblepush.html</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/marblepush.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/marblepush.html?lang=de"/>
@@ -3710,7 +3764,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/morris.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/morris.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/morris.html?lang=de"/>
@@ -4412,7 +4466,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/reversi.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/reversi.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/reversi.html?lang=de"/>
@@ -4682,7 +4736,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/seega.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/seega.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/seega.html?lang=de"/>
@@ -4898,7 +4952,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/shogi.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/shogi.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/shogi.html?lang=de"/>
@@ -5348,7 +5402,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/sternhalma.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/sternhalma.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/sternhalma.html?lang=de"/>
@@ -5564,7 +5618,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/surakarta.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/surakarta.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/surakarta.html?lang=de"/>
@@ -5618,7 +5672,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/tablut.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/tablut.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/tablut.html?lang=de"/>
@@ -5834,7 +5888,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/tictactoe.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/tictactoe.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/tictactoe.html?lang=de"/>
@@ -6104,7 +6158,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/wallmaze.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/wallmaze.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/wallmaze.html?lang=de"/>
@@ -6266,7 +6320,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/xiangqi.html</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/xiangqi.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/xiangqi.html?lang=de"/>

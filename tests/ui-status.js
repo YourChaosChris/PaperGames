@@ -11,7 +11,7 @@ const games = [
   "durak", "fanorona", "admiralsgrid", "forestvillage", "fourinarow", "foxandgeese",
   "go", "gomoku", "halma", "hex", "hnefatafl", "klappenkasten", "kleeberg", "konane", "ludo", "mancala",
   "marblepush", "maumau", "morris", "pairs", "poker", "reversi", "romme",
-  "schwimmen", "seega", "senet", "shogi", "snakesladders", "yut", "steckwuerfeln", "sternhalma", "sternjagd",
+  "schwimmen", "seega", "senet", "shogi", "snakesladders", "arrowludo", "yut", "steckwuerfeln", "sternhalma", "sternjagd",
   "surakarta", "tablut", "tictactoe", "trix", "ur", "villains", "wallmaze",
   "war", "weidefreunde", "xiangqi", "zoowurf", "pfotenwurf", "nim", "teufelsieben", "gipfelwurf"
 ];

@@ -1,0 +1,22 @@
+// text/pl/arrowludo.js
+// Rules and history texts of arrowludo (pl). Loaded by arrowludo-rules.html and arrowludo-history.html only (see i18n.js, data-i18n-text).
+
+Object.assign(STRINGS.pl, {
+    arrowludo_rules_title: "Zasady Chińczyka ze strzałkami",
+    arrowludo_rules_intro: "Chińczyk ze skrótem: plansza ma strzałki przez środek. Doprowadź wszystkie cztery pionki po torze do mety przed innymi.",
+    arrowludo_rules_basics_title: "Zasady",
+    arrowludo_term_ludo: "Jak w Chińczyku",
+    arrowludo_rules_ludo: "Każdy gracz ma 4 pionki. Rzuć kostką i przesuń jeden pionek o wyrzuconą liczbę. Pionek wchodzi do gry tylko przy szóstce, a szóstka daje kolejny rzut (trzy szóstki z rzędu przepadają wraz z kolejką). Stanięcie na pionku przeciwnika odsyła go do bazy, z wyjątkiem zaznaczonych pól bezpiecznych. Dwa pionki jednego koloru na jednym polu tworzą blokadę, na którą przeciwnicy nie mogą ani wejść, ani jej minąć. Na metę trzeba wejść dokładnym rzutem.",
+    arrowludo_term_arrow: "Pola strzałek",
+    arrowludo_rules_arrow: "Każdy kolor ma jedno pole strzałki: ostatnie pole swojego ramienia, 12 kroków po starcie. Cztery pola strzałek są oznaczone strzałką wskazującą środek, a dwie linie z grotami przez planszę łączą pola leżące naprzeciw siebie.",
+    arrowludo_term_flight: "Lot",
+    arrowludo_rules_flight: "Jeśli twój pionek stanie dokładnie na twoim polu strzałki, od razu przelatuje przez środek i ląduje na polu strzałki po przeciwnej stronie, 26 pól do przodu. Jeśli stoi tam pionek przeciwnika, zostaje odesłany do bazy; jeśli dwa pionki przeciwnika tworzą tam blokadę, nie możesz wykonać tego ruchu. Minięcie pola strzałki bez zatrzymania się na nim nic nie daje, a pola strzałek innych kolorów są dla ciebie zwykłymi polami.",
+    arrowludo_term_players: "Gracze",
+    arrowludo_rules_players: "Od 2 do 4 graczy na klasycznej planszy. Ty grasz jednym kolorem, pozostałymi gra komputer (Łatwy, Średni lub Trudny), albo wszyscy grają na jednym urządzeniu. Przycisk Podpowiedź pokazuje dobry ruch dla twojego rzutu. Każdy kolor ma własny kształt, żeby można było grać bez kolorów: czerwony pełne koło, zielony puste koło, żółty trójkąt, niebieski pusty kwadrat.",
+    arrowludo_history_title: "Historia Chińczyka ze strzałkami",
+    arrowludo_history_origins_title: "Od Pachisi do Chińczyka",
+    arrowludo_history_origins_p1: "Chińczyk to prosta, nowoczesna postać Pachisi, indyjskiej gry wyścigowej, w którą gra się od wielu wieków. Gracze przesuwają pionki po planszy w kształcie krzyża, odsyłają sobie nawzajem pionki do bazy i ścigają się do środka. Z czasem rodziny i gracze na całym świecie wymyślali własne zasady, także skróty przez środek.",
+    arrowludo_history_modern_title: "Chińczyk ze strzałkami w PaperGames",
+    arrowludo_history_modern_p1: "Chińczyk ze strzałkami to własna odmiana PaperGames. Pola strzałek i lot przez środek to nasza prosta zasada, z własnym rysunkiem planszy i własnymi tekstami. Zwykły Chińczyk pozostaje osobną grą."
+});
+I18n.markTextLoaded("pl");

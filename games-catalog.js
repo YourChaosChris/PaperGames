@@ -907,6 +907,20 @@ const GAMES_CATALOG = [
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"3\" y=\"3\" width=\"34\" height=\"34\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2.2\"/><path d=\"M10 32L20 8M17 34L27 10M12 27L19 29M14 21L21 23M16 15L23 17\" stroke=\"#141413\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M31 9C24 13 34 18 27 22C21 26 31 29 26 33\" stroke=\"#141413\" stroke-width=\"3.4\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"31\" cy=\"9\" r=\"3\" fill=\"#141413\"/></svg></span>"
   },
   {
+    slug: "arrowludo",
+    category: "race",
+    family: "dicerace",
+    nameKey: "game_arrowludo",
+    nameText: "Arrow Ludo",
+    descKey: "home_arrowludo_desc",
+    descText: "Ludo with arrows across the middle: land exactly on the arrow square of your color and fly over the centre, 26 squares ahead. Race your four tokens home against computer opponents or on one device, 2 to 4 players.",
+    popular: false,
+    kids: true,
+    added: "2026-11-07T15:00",
+    noRead: true,
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\"/><path d=\"M5.5 18.5L18.5 5.5\"/><path d=\"M11.5 5.5H18.5V12.5\"/><circle cx=\"6.5\" cy=\"6.5\" r=\"1.9\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
+  },
+  {
     slug: "yut",
     category: "race",
     family: "dicerace",

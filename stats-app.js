@@ -13,6 +13,7 @@ const STATS_GAME_NAME_KEY = {
   xiangqi: "game_xiangqi_short",
   mancala: "game_mancala",
   ludo: "game_ludo",
+  arrowludo: "game_arrowludo",
   reversi: "game_reversi",
   fourinarow: "game_four_in_a_row",
   gomoku: "game_gomoku",
