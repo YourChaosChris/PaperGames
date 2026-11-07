@@ -134,3 +134,4 @@
 40 computer-levels.js
 25 hints-solo.js
 12 hints-solo-ui.js
+6 app-mode.js

@@ -51,3 +51,52 @@ const HighContrast = (function () {
 if (typeof window !== "undefined") {
   window.HighContrast = HighContrast;
 }
+
+// App mode and colour theme (task 186). The iOS app wrapper sets
+// window.PAPERGAMES_APP = "ios" before the page loads; "?app=ios" does the
+// same for tests (remembered for the browser tab only). In app mode the
+// donation link is hidden (class app-ios, see base.css .web-only) and the
+// cream theme is the default. On the website white stays the default.
+const Theme = (function () {
+  const KEY = "papergames_theme";
+  const APP_KEY = "papergames_app_mode";
+
+  function isApp() {
+    try {
+      if (window.PAPERGAMES_APP === "ios") return true;
+      if (/[?&]app=ios(?:&|$)/.test(window.location.search)) {
+        try { window.sessionStorage.setItem(APP_KEY, "ios"); } catch (e) { /* ignore */ }
+        return true;
+      }
+      return window.sessionStorage.getItem(APP_KEY) === "ios";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function get() {
+    try {
+      const v = window.localStorage.getItem(KEY);
+      if (v === "cream" || v === "white") return v;
+    } catch (e) { /* ignore */ }
+    return isApp() ? "cream" : "white";
+  }
+
+  function apply() {
+    const root = document.documentElement;
+    if (!root) return;
+    root.classList.toggle("app-ios", isApp());
+    root.classList.toggle("theme-cream", get() === "cream");
+  }
+
+  function set(v) {
+    if (v !== "cream" && v !== "white") return;
+    try { window.localStorage.setItem(KEY, v); } catch (e) { /* not remembered */ }
+    apply();
+  }
+
+  apply();
+  return { isApp: isApp, get: get, set: set };
+})();
+
+if (typeof window !== "undefined") window.Theme = Theme;

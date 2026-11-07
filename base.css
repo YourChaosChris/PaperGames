@@ -2550,6 +2550,23 @@ margin-bottom: 0.5rem;
   padding-right: 0.625rem;
 }
 
+/* Cream theme (task 186): warm paper background, black text. Default in the
+   iOS app, optional on the website (Settings > Display). High contrast, being
+   declared after this block, still wins when both are on. */
+:root.theme-cream {
+  --bg: #f7f1e3;
+  --bg-alt: #ebe3cf;
+  --square-light: #fbf6ea;
+  --square-dark: #d8cfb8;
+  --square-selected: #c3b898;
+}
+
+/* Parts that only make sense on the website (donation link and its
+   privacy note); hidden inside the iOS app, where Apple forbids them. */
+:root.app-ios .web-only {
+  display: none !important;
+}
+
 /* Opt-in high-contrast mode for low-light e-ink reading conditions -
    see high-contrast.js. Overrides the same shared CSS custom
    properties every card, button and board grid line across all 46

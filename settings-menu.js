@@ -169,6 +169,28 @@ const SettingsMenu = (function () {
     });
   }
 
+  function wireTheme(overlay) {
+    if (typeof Theme === "undefined") return;
+    const group = overlay.querySelector("#settings-theme-group");
+    if (!group) return;
+    const buttons = Array.prototype.slice.call(group.querySelectorAll("button[data-theme]"));
+    function refresh() {
+      const current = Theme.get();
+      buttons.forEach((btn) => {
+        const active = btn.getAttribute("data-theme") === current;
+        btn.classList.toggle("active", active);
+        btn.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+    }
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        Theme.set(btn.getAttribute("data-theme"));
+        refresh();
+      });
+    });
+    refresh();
+  }
+
   function wireUpdate(overlay) {
     const btn = overlay.querySelector("#settings-force-update");
     if (!btn) return;
@@ -256,6 +278,13 @@ const SettingsMenu = (function () {
             '<input type="checkbox" id="settings-high-contrast-checkbox">' +
             '<span data-i18n="high_contrast_toggle">High contrast</span>' +
           '</label>' +
+          (typeof Theme !== "undefined"
+            ? '<h3 class="settings-subheading" data-i18n="settings_section_theme">Background</h3>' +
+              '<div class="settings-segmented" id="settings-theme-group" role="group">' +
+                '<button type="button" class="secondary" data-theme="white" data-i18n="settings_theme_white">White</button>' +
+                '<button type="button" class="secondary" data-theme="cream" data-i18n="settings_theme_cream">Cream</button>' +
+              '</div>'
+            : '') +
           // Every page that loads this menu also loads density.js; the
           // check only guards against one that doesn't.
           (typeof Density !== "undefined"
@@ -312,6 +341,7 @@ const SettingsMenu = (function () {
 
     wireTextSize(overlay);
     wireHighContrast(overlay);
+    wireTheme(overlay);
     wireMoveHints(overlay);
     wireDensity(overlay);
     wireAiPacing(overlay);
