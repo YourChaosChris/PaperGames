@@ -1,5 +1,5 @@
-// text/zh/calcgrid.js
-// Rules and history texts of calcgrid (zh). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
+// text/zh/rechengitter.js
+// Rules and history texts of rechengitter (zh). Loaded by rechengitter-rules.html and rechengitter-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.zh, {
     mc_rules_title: "计算网格规则",

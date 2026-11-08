@@ -829,60 +829,6 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/cake.html"/>
   </url>
   <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/calcgrid-history.html</loc>
-    <lastmod>2026-11-07</lastmod>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/calcgrid-history.html?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/calcgrid-history.html?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/calcgrid-history.html?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/calcgrid-history.html?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/calcgrid-history.html?lang=it"/>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/calcgrid-history.html?lang=nl"/>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/calcgrid-history.html?lang=pl"/>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/calcgrid-history.html?lang=uk"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/calcgrid-history.html?lang=ru"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/calcgrid-history.html?lang=ja"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/calcgrid-history.html?lang=zh"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/calcgrid-history.html?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/calcgrid-history.html"/>
-  </url>
-  <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html</loc>
-    <lastmod>2026-11-07</lastmod>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html?lang=it"/>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html?lang=nl"/>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html?lang=pl"/>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html?lang=uk"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html?lang=ru"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html?lang=ja"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html?lang=zh"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/calcgrid-rules.html"/>
-  </url>
-  <url>
-    <loc>https://yourchaoschris.github.io/PaperGames/calcgrid.html</loc>
-    <lastmod>2026-11-07</lastmod>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/calcgrid.html?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/calcgrid.html?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/calcgrid.html?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/calcgrid.html?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/calcgrid.html?lang=it"/>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/calcgrid.html?lang=nl"/>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/calcgrid.html?lang=pl"/>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/calcgrid.html?lang=uk"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/calcgrid.html?lang=ru"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/calcgrid.html?lang=ja"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/calcgrid.html?lang=zh"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/calcgrid.html?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/calcgrid.html"/>
-  </url>
-  <url>
     <loc>https://yourchaoschris.github.io/PaperGames/calcudoku-history.html</loc>
     <lastmod>2026-10-21</lastmod>
     <priority>0.6</priority>
@@ -3350,7 +3296,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/ludo-history.html</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/ludo-history.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/ludo-history.html?lang=de"/>
@@ -3368,7 +3314,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/ludo-rules.html</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/ludo-rules.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/ludo-rules.html?lang=de"/>
@@ -3386,7 +3332,7 @@
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/ludo.html</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/ludo.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/ludo.html?lang=de"/>
@@ -4427,6 +4373,60 @@
     <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/pyramidsolitaire.html?lang=zh"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/pyramidsolitaire.html?lang=ar"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/pyramidsolitaire.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/rechengitter-history.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/rechengitter-history.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/rechengitter-history.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/rechengitter-history.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/rechengitter-history.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/rechengitter-history.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/rechengitter-history.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/rechengitter-history.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/rechengitter-history.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/rechengitter-history.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/rechengitter-history.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/rechengitter-history.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/rechengitter-history.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/rechengitter-history.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/rechengitter-rules.html"/>
+  </url>
+  <url>
+    <loc>https://yourchaoschris.github.io/PaperGames/rechengitter.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourchaoschris.github.io/PaperGames/rechengitter.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourchaoschris.github.io/PaperGames/rechengitter.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourchaoschris.github.io/PaperGames/rechengitter.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourchaoschris.github.io/PaperGames/rechengitter.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourchaoschris.github.io/PaperGames/rechengitter.html?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yourchaoschris.github.io/PaperGames/rechengitter.html?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://yourchaoschris.github.io/PaperGames/rechengitter.html?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://yourchaoschris.github.io/PaperGames/rechengitter.html?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yourchaoschris.github.io/PaperGames/rechengitter.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://yourchaoschris.github.io/PaperGames/rechengitter.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://yourchaoschris.github.io/PaperGames/rechengitter.html?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://yourchaoschris.github.io/PaperGames/rechengitter.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourchaoschris.github.io/PaperGames/rechengitter.html"/>
   </url>
   <url>
     <loc>https://yourchaoschris.github.io/PaperGames/reversi-history.html</loc>

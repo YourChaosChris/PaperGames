@@ -82,7 +82,7 @@ const STATS_GAME_NAME_KEY = {
   canasta: "game_canasta",
   bridge: "game_bridge",
   tenpairs: "game_tenpairs",
-  calcgrid: "game_calcgrid",
+  rechengitter: "game_rechengitter",
   differences: "game_differences",
   pentomino: "game_pentomino",
   cardduel: "game_cardduel",

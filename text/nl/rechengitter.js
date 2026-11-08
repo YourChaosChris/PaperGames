@@ -1,5 +1,5 @@
-// text/nl/calcgrid.js
-// Rules and history texts of calcgrid (nl). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
+// text/nl/rechengitter.js
+// Rules and history texts of rechengitter (nl). Loaded by rechengitter-rules.html and rechengitter-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.nl, {
     mc_rules_title: "Rekenrooster – regels",

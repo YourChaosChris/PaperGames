@@ -1,4 +1,4 @@
-// calcgrid-core.js
+// rechengitter-core.js
 // "Math Cross" (Rechenkreuz) - a 3 x 3 grid of the numbers 1 to 9, each
 // used once, linked by calculations: every row and every column is a
 // sum like "a + b x c = 24" with its result at the end. Dependency-free,

@@ -1034,12 +1034,12 @@ const GAMES_CATALOG = [
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><rect x=\"2\" y=\"4\" width=\"36\" height=\"32\" rx=\"3\" fill=\"#fff\" stroke=\"#141413\" stroke-width=\"2\"/><text x=\"10\" y=\"18\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">3</text><text x=\"30\" y=\"18\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">4</text><text x=\"10\" y=\"32\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">7</text><text x=\"30\" y=\"32\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" font-family=\"sans-serif\" fill=\"#141413\">1</text><path d=\"M5 22 L35 8\" stroke=\"#141413\" stroke-width=\"2.5\"/></svg></span>"
   },
   {
-    slug: "calcgrid",
+    slug: "rechengitter",
     category: "puzzles",
     family: "math",
-    nameKey: "game_calcgrid",
+    nameKey: "game_rechengitter",
     nameText: "Calculation Grid",
-    descKey: "home_calcgrid_desc",
+    descKey: "home_rechengitter_desc",
     descText: "Place the numbers 1 to 9 once each so every row and every column works out, worked from left to right. Three levels, always exactly one solution, solvable without guessing.",
     popular: false,
     added: "2026-10-11T16:10",

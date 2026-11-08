@@ -1,5 +1,5 @@
-// text/ar/calcgrid.js
-// Rules and history texts of calcgrid (ar). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
+// text/ar/rechengitter.js
+// Rules and history texts of rechengitter (ar). Loaded by rechengitter-rules.html and rechengitter-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.ar, {
     mc_rules_title: "شبكة الحساب – القواعد",

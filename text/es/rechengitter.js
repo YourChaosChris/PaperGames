@@ -1,5 +1,5 @@
-// text/es/calcgrid.js
-// Rules and history texts of calcgrid (es). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
+// text/es/rechengitter.js
+// Rules and history texts of rechengitter (es). Loaded by rechengitter-rules.html and rechengitter-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.es, {
     mc_rules_title: "Cuadrícula de cálculo – reglas",

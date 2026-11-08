@@ -1,5 +1,5 @@
-// text/ja/calcgrid.js
-// Rules and history texts of calcgrid (ja). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
+// text/ja/rechengitter.js
+// Rules and history texts of rechengitter (ja). Loaded by rechengitter-rules.html and rechengitter-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.ja, {
     mc_rules_title: "計算グリッドのルール",

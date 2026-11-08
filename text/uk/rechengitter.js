@@ -1,5 +1,5 @@
-// text/uk/calcgrid.js
-// Rules and history texts of calcgrid (uk). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
+// text/uk/rechengitter.js
+// Rules and history texts of rechengitter (uk). Loaded by rechengitter-rules.html and rechengitter-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.uk, {
     mc_rules_title: "Обчислювальна сітка – правила",

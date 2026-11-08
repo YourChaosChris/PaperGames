@@ -1,5 +1,5 @@
-// text/fr/calcgrid.js
-// Rules and history texts of calcgrid (fr). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
+// text/fr/rechengitter.js
+// Rules and history texts of rechengitter (fr). Loaded by rechengitter-rules.html and rechengitter-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.fr, {
     mc_rules_title: "Grille de calcul – règles",

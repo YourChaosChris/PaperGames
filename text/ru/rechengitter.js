@@ -1,5 +1,5 @@
-// text/ru/calcgrid.js
-// Rules and history texts of calcgrid (ru). Loaded by calcgrid-rules.html and calcgrid-history.html only (see i18n.js, data-i18n-text).
+// text/ru/rechengitter.js
+// Rules and history texts of rechengitter (ru). Loaded by rechengitter-rules.html and rechengitter-history.html only (see i18n.js, data-i18n-text).
 
 Object.assign(STRINGS.ru, {
     mc_rules_title: "Сетка вычислений – правила",
