@@ -47,7 +47,9 @@ for (const required of [
 const style = fs.readFileSync(path.join(ROOT, "base.css"), "utf8");
 const homeStyle = style.match(/\.game-page \.game-home-link\s*\{([^}]*)\}/);
 if (!homeStyle || !/min-height:\s*44px/.test(homeStyle[1])) failures.push("base.css: home link must be at least 44 px high");
-if (!homeStyle || !/color:\s*#000/.test(homeStyle[1]) || !/background:\s*#fff/.test(homeStyle[1])) failures.push("base.css: home link must be black on white");
+// Task 191: var(--surface) is white too (cream only in the cream theme).
+const surfaceWhite = /:root\s*\{[^}]*--surface:\s*#fff\b/.test(style);
+if (!homeStyle || !/color:\s*#000/.test(homeStyle[1]) || !(/background:\s*#fff/.test(homeStyle[1]) || (surfaceWhite && /background:\s*var\(--surface\)/.test(homeStyle[1])))) failures.push("base.css: home link must be black on white");
 if (!homeStyle || !/animation:\s*none/.test(homeStyle[1]) || !/transition:\s*none/.test(homeStyle[1])) failures.push("base.css: home link must not animate");
 if (!/\[dir="rtl"\] \.game-page \.game-home-link\s*\{[^}]*margin-right:\s*0;[^}]*margin-left:\s*4px;/s.test(style)) {
   failures.push("base.css: home link needs physical RTL margin overrides");
