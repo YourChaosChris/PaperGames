@@ -219,6 +219,11 @@ const SAMPLES = [
   "Blue moved token 3 forward 6 and captured Red, Green!",
   "Yellow brought token 4 into play and captured Blue!",
   "Green moved token 1 forward 2 and got it home!",
+  // Arrow Ludo flights (task 191)
+  "Red moved token 1 forward 3, landed on an arrow square and flew across the middle, 26 squares ahead!",
+  "Blue moved token 2 forward 4, landed on an arrow square and flew across the middle, 26 squares ahead, and captured Green!",
+  "Yellow moved token 3 forward 2, landed on an arrow square and flew across the middle, 26 squares back!",
+  "Red moved token 4 forward 1, landed on an arrow square and flew across the middle, 26 squares back, and captured Green, Blue!",
   "Goats win",
   "Solved “Hourglass” - well done!",
   "Black wins (6 marbles pushed off the board).",

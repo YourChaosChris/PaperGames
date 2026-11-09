@@ -6,7 +6,7 @@ Object.assign(STRINGS.en, {
     yut_rules_intro: "The Korean stick-throwing race game: throw four sticks, bring all four of your pieces once round the board and home before the others.",
     yut_rules_basics_title: "The rules",
     yut_term_throw: "The throw",
-    yut_rules_throw: "Four sticks are thrown. Count the flat sides facing up: 1 is do 도 (1 step), 2 is gae 개 (2 steps), 3 is geol 걸 (3 steps), 4 is yut 윷 (4 steps) and none is mo 모 (5 steps). Yut and mo give another throw. If the one marked stick is the only flat one, the throw is backdo 빽도: one step back. Unused throws are kept until you have used them.",
+    yut_rules_throw: "Four sticks are thrown. Count the flat sides facing up: 1 is do 도 (1 step), 2 is gae 개 (2 steps), 3 is geol 걸 (3 steps), 4 is yut 윷 (4 steps) and none is mo 모 (5 steps). Yut and mo give another throw. If the one marked stick is the only flat one, the throw is backdo 빽도: one step back. Unused throws are kept until you have used them. A backdo on the first field after the start sends the piece back to the start, where it waits to come in again.",
     yut_term_move: "A move",
     yut_rules_move: "Choose one of your throws, then a piece, then the target field. A piece waiting at the start enters the board with the throw. Pieces on the same field move together as a stack. The ring has 20 fields; start and home are the bottom right corner.",
     yut_term_shortcuts: "Shortcuts",

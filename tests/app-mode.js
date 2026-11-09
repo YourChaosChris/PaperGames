@@ -3,6 +3,9 @@
 // visible, white background. With ?app=ios: donation link and its privacy
 // note hidden, cream background by default. The choice in Settings is kept
 // after a reload. Contrast of black text on cream is checked (WCAG AA).
+// Task 191: in cream, cards, buttons, select fields and dialogs are cream
+// too (not white), at 384 px (phone) and 800 px (tablet); high contrast
+// still turns them white; white stays the website default.
 const { chromium } = require("playwright");
 const BASE = process.env.BASE_URL || process.argv[2] || "http://localhost:8000/";
 const fails = [];
@@ -30,16 +33,16 @@ const lum = (rgb) => {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 800 } });
     const p = await open("about.html?lang=en", ctx);
     check("web: donation link visible", await vis(p, ".about-donate"));
-    check("web: background white-ish by default", lum(await bg(p)) > 0.85 && (await bg(p)) !== "rgb(247, 241, 227)");
+    check("web: background white-ish by default", lum(await bg(p)) > 0.85 && (await bg(p)) !== "rgb(239, 227, 196)");
     await ctx.close();
   }
   {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 800 } });
     const p = await open("about.html?lang=en&app=ios", ctx);
     check("app: donation link hidden", !(await vis(p, ".about-donate")));
-    check("app: cream background by default (" + (await bg(p)) + ")", (await bg(p)) === "rgb(247, 241, 227)");
+    check("app: cream background by default (" + (await bg(p)) + ")", (await bg(p)) === "rgb(239, 227, 196)");
     const text = await p.evaluate(() => getComputedStyle(document.body).color);
-    const ratio = (lum("rgb(247, 241, 227)") + 0.05) / (lum(text) + 0.05);
+    const ratio = (lum("rgb(239, 227, 196)") + 0.05) / (lum(text) + 0.05);
     check("app: contrast text on cream >= 4.5 (" + ratio.toFixed(1) + ")", ratio >= 4.5);
     // remembered for the tab: other page keeps app mode without the parameter
     const p2 = p;
@@ -54,7 +57,7 @@ const lum = (rgb) => {
     const g = p;
     await g.goto(BASE + "chess.html?lang=en");
     await g.waitForTimeout(500);
-    check("app: chess page is cream too", (await bg(g)) === "rgb(247, 241, 227)");
+    check("app: chess page is cream too", (await bg(g)) === "rgb(239, 227, 196)");
     await ctx.close();
   }
   {
@@ -64,11 +67,11 @@ const lum = (rgb) => {
     await p.evaluate(() => window.Theme.set("cream"));
     await p.reload();
     await p.waitForTimeout(400);
-    check("web: cream kept after reload", (await bg(p)) === "rgb(247, 241, 227)");
+    check("web: cream kept after reload", (await bg(p)) === "rgb(239, 227, 196)");
     await p.evaluate(() => window.Theme.set("white"));
     await p.reload();
     await p.waitForTimeout(400);
-    check("web: white kept after reload", (await bg(p)) !== "rgb(247, 241, 227)");
+    check("web: white kept after reload", (await bg(p)) !== "rgb(239, 227, 196)");
     // settings menu shows the two buttons
     await p.waitForTimeout(300);
     await p.evaluate(() => { const b = document.getElementById("settings-menu-button"); if (b) b.click(); });
@@ -85,6 +88,32 @@ const lum = (rgb) => {
     const t = await p.evaluate(() => window.I18n && window.I18n.t ? [I18n.t("settings_theme_cream"), I18n.t("settings_section_theme")] : []);
     check("de: Creme / Hintergrund (" + t + ")", t[0] === "Creme" && t[1] === "Hintergrund");
     await ctx.close();
+  }
+
+  {
+    // Task 191: cream reaches cards, buttons, fields and dialogs.
+    const CREAM_SURFACE = "rgb(248, 239, 217)";
+    for (const width of [384, 800]) {
+      const ctx = await browser.newContext({ viewport: { width, height: 900 } });
+      const p = await open("ludo.html?lang=en", ctx);
+      const surf = () => p.evaluate(() => {
+        const c = (s) => { const e = document.querySelector(s); return e ? getComputedStyle(e).backgroundColor : "none"; };
+        return { card: c(".card"), button: c(".game-home-link"), select: c(".field-row select"), modal: c(".settings-modal") };
+      });
+      const white = await surf();
+      check(width + " px web: cards and buttons white by default (" + JSON.stringify(white) + ")", white.card === "rgb(255, 255, 255)" && white.button === "rgb(255, 255, 255)");
+      await p.evaluate(() => window.Theme.set("cream"));
+      await p.reload();
+      await p.waitForTimeout(400);
+      const cream = await surf();
+      check(width + " px cream: card, button and select are cream (" + JSON.stringify(cream) + ")", cream.card === CREAM_SURFACE && cream.button === CREAM_SURFACE && cream.select === CREAM_SURFACE);
+      const ratio = (lum(CREAM_SURFACE) + 0.05) / (lum(await p.evaluate(() => getComputedStyle(document.body).color)) + 0.05);
+      check(width + " px cream: contrast on cards >= 7 (" + ratio.toFixed(1) + ")", ratio >= 7);
+      await p.evaluate(() => document.documentElement.classList.add("high-contrast"));
+      const hc = await surf();
+      check(width + " px cream + high contrast: cards white (" + hc.card + ")", hc.card === "rgb(255, 255, 255)");
+      await ctx.close();
+    }
   }
 
   await browser.close();

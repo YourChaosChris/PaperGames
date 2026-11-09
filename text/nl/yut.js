@@ -6,7 +6,7 @@ Object.assign(STRINGS.nl, {
     yut_rules_intro: "Het Koreaanse stokjeswerp-racespel: gooi vier stokjes, breng al je vier stenen eenmaal rond het bord en naar huis voordat de anderen dat doen.",
     yut_rules_basics_title: "De regels",
     yut_term_throw: "De worp",
-    yut_rules_throw: "Er worden vier stokjes gegooid. Tel de platte kanten die naar boven wijzen: 1 is do 도 (1 stap), 2 is gae 개 (2 stappen), 3 is geol 걸 (3 stappen), 4 is yut 윷 (4 stappen) en geen is mo 모 (5 stappen). Yut en mo geven nog een worp. Als het ene gemarkeerde stokje het enige platte is, is de worp backdo 빽도: één stap terug. Ongebruikte worpen blijven bewaard totdat je ze hebt gebruikt.",
+    yut_rules_throw: "Er worden vier stokjes gegooid. Tel de platte kanten die naar boven wijzen: 1 is do 도 (1 stap), 2 is gae 개 (2 stappen), 3 is geol 걸 (3 stappen), 4 is yut 윷 (4 stappen) en geen is mo 모 (5 stappen). Yut en mo geven nog een worp. Als het ene gemarkeerde stokje het enige platte is, is de worp backdo 빽도: één stap terug. Ongebruikte worpen blijven bewaard totdat je ze hebt gebruikt. Een backdo op het eerste veld na de start stuurt de steen terug naar de start, waar hij weer wacht om in te komen.",
     yut_term_move: "Een zet",
     yut_rules_move: "Kies een van je worpen, dan een steen en vervolgens het doelveld. Een steen die bij de start wacht, komt met de worp het bord op. Stenen op hetzelfde veld bewegen samen als een stapel. De ring heeft 20 velden; start en thuis bevinden zich rechtsonder.",
     yut_term_shortcuts: "Afkortingen",

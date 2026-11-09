@@ -30,7 +30,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #fff;
+  background: var(--surface);
   border: none;
   padding: 2px 0;
   box-sizing: border-box;
@@ -92,9 +92,44 @@
   border: 2px solid var(--border);
 }
 
-.bg-checker-overflow {
-  font-size: 0.6rem;
+/* Task 191: a restored game says so, with Continue playing / New game. */
+.bg-saved-notice {
+  margin: 0.4rem 0;
+  padding: 0.4rem 0.6rem;
+  border: var(--border-width) solid var(--border);
+  background: var(--surface);
+}
+
+.bg-saved-notice p {
+  margin: 0 0 0.4rem;
   font-weight: 700;
+}
+
+.bg-saved-notice button {
+  margin: 0 0.4rem 0.2rem 0;
+}
+
+[dir="rtl"] .bg-saved-notice button {
+  margin: 0 0 0.2rem 0.4rem;
+}
+
+/* Task 191: the outermost checker of a stack of 5 or more shows how many
+   checkers stand on the point. */
+.bg-checker-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.bg-checker-black.bg-checker-count {
+  color: #fff;
+}
+
+.bg-checker-white.bg-checker-count {
+  color: #000;
 }
 
 .bg-tray {

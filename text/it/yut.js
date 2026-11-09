@@ -6,7 +6,7 @@ Object.assign(STRINGS.it, {
     yut_rules_intro: "Il gioco di corsa coreano con il lancio dei legnetti: lancia quattro bastoncini, fai fare a tutte e quattro le tue pedine un giro completo del tabellone e portale a casa prima degli altri.",
     yut_rules_basics_title: "Le regole",
     yut_term_throw: "Il lancio",
-    yut_rules_throw: "Vengono lanciati quattro bastoncini. Conta i lati piatti rivolti verso l'alto: 1 è do 도 (1 passo), 2 è gae 개 (2 passi), 3 è geol 걸 (3 passi), 4 è yut 윷 (4 passi) e nessuno è mo 모 (5 passi). Yut e mo danno diritto a un altro lancio. Se l'unico bastoncino contrassegnato è l'unico piatto, il lancio è backdo 빽도: un passo indietro. I lanci non utilizzati vengono conservati finché non li usi.",
+    yut_rules_throw: "Vengono lanciati quattro bastoncini. Conta i lati piatti rivolti verso l'alto: 1 è do 도 (1 passo), 2 è gae 개 (2 passi), 3 è geol 걸 (3 passi), 4 è yut 윷 (4 passi) e nessuno è mo 모 (5 passi). Yut e mo danno diritto a un altro lancio. Se l'unico bastoncino contrassegnato è l'unico piatto, il lancio è backdo 빽도: un passo indietro. I lanci non utilizzati vengono conservati finché non li usi. Un backdo sulla prima casella dopo la partenza rimanda la pedina alla partenza, dove aspetta di nuovo di entrare.",
     yut_term_move: "Una mossa",
     yut_rules_move: "Scegli uno dei tuoi lanci, poi una pedina, quindi la casella di arrivo. Una pedina in attesa alla partenza entra nel tabellone con il lancio. Le pedine sulla stessa casella si muovono insieme come una pila. L'anello ha 20 caselle; partenza e arrivo sono nell'angolo in basso a destra.",
     yut_term_shortcuts: "Scorciatoie",

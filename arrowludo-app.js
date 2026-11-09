@@ -46,9 +46,9 @@ const LUDO_HOME_COLUMN_CELLS = {
   blue: [[13, 7], [12, 7], [11, 7], [10, 7], [9, 7]]
 };
 
-// Arrow Ludo: the arrow square of red, green, yellow and blue (the last
-// square of that color's own arm, route square 12).
-const LUDO_ARROW_SQUARES = [12, 25, 38, 51];
+// Arrow Ludo: the arrow square of red, green, yellow and blue (the 4th
+// square after that color's start, at the inner end of its arm; task 191).
+const LUDO_ARROW_SQUARES = LudoCore.ARROW_SQUARES;
 
 const LUDO_HOME_BASE_ORIGIN = { red: [0, 0], green: [0, 9], yellow: [9, 9], blue: [9, 0] };
 const LUDO_HUB_ORIGIN = [6, 6];
@@ -560,7 +560,9 @@ function applyLudoMove(tokenIndex) {
     fromState: fromState,
     fromRel: fromRel,
     toState: after.state,
-    toRel: after.rel
+    toRel: after.rel,
+    // Arrow Ludo: the arrow square the token flew from (null: no flight).
+    flightFromRel: result.jumped ? result.flightFromRel : null
   };
   AppStateLudo.roll = null;
   AppStateLudo.legalMoves = [];
@@ -588,8 +590,12 @@ function applyLudoMove(tokenIndex) {
     : ludoColorName(mover) + " moved token " + tokenNo + " forward " + roll;
   let message = what + ".";
   if (result.jumped) {
-    message = what + " and flew across the middle" + (result.captured.length
-      ? " and captured " + result.captured.map((c) => ludoColorName(c.color)).join(", ")
+    // Say where the token went: an arrow square sends it across the
+    // middle, 26 squares ahead on the first half of its lap and 26 back
+    // on the second half. Both squares stay marked on the board.
+    const back = after.rel < result.flightFromRel;
+    message = what + ", landed on an arrow square and flew across the middle, 26 squares " + (back ? "back" : "ahead") + (result.captured.length
+      ? ", and captured " + result.captured.map((c) => ludoColorName(c.color)).join(", ")
       : "") + "!";
   } else if (result.captured.length) {
     message = what + " and captured " + result.captured.map((c) => ludoColorName(c.color)).join(", ") + "!";
@@ -820,7 +826,8 @@ function buildLudoBoardDOM() {
     const pts = LUDO_ARROW_SQUARES.map((i) => LUDO_TRACK_CELLS[i]);
     const seg = (a, b) => '<line x1="' + (a[1] + 0.5) + '" y1="' + (a[0] + 0.5) + '" x2="' + (b[1] + 0.5) + '" y2="' + (b[0] + 0.5) + '" marker-start="url(#ludo-arrowhead)" marker-end="url(#ludo-arrowhead)"/>';
     lines.innerHTML = '<svg viewBox="0 0 15 15" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
-      '<defs><marker id="ludo-arrowhead" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="currentColor"/></marker></defs>' +
+      '<defs><marker id="ludo-arrowhead" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="currentColor"/></marker>' +
+      '<marker id="ludo-flighthead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="2.4" markerHeight="2.4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="currentColor"/></marker></defs>' +
       seg(pts[0], pts[2]) + seg(pts[1], pts[3]) + "</svg>";
     boardEl.appendChild(lines);
   }
@@ -1028,15 +1035,35 @@ function ludoPositionElement(boardEl, color, state, rel, tokenIndex) {
 }
 
 function markLastMoveLudo(boardEl) {
-  boardEl.querySelectorAll(".ludo-cell-last-from, .ludo-cell-last-to, .ludo-home-slot-last").forEach((el) => {
-    el.classList.remove("ludo-cell-last-from", "ludo-cell-last-to", "ludo-home-slot-last");
+  boardEl.querySelectorAll(".ludo-cell-last-from, .ludo-cell-last-to, .ludo-home-slot-last, .ludo-cell-flight-from, .ludo-cell-flight-to").forEach((el) => {
+    el.classList.remove("ludo-cell-last-from", "ludo-cell-last-to", "ludo-home-slot-last", "ludo-cell-flight-from", "ludo-cell-flight-to");
   });
+  boardEl.querySelectorAll(".ludo-flight-last").forEach((el) => el.remove());
   const lm = AppStateLudo.lastMove;
   if (!lm) return;
   const fromEl = ludoPositionElement(boardEl, lm.color, lm.fromState, lm.fromRel, lm.tokenIndex);
   if (fromEl) fromEl.classList.add(lm.fromState === "home" ? "ludo-home-slot-last" : "ludo-cell-last-from");
   const toEl = ludoPositionElement(boardEl, lm.color, lm.toState, lm.toRel, lm.tokenIndex);
   if (toEl) toEl.classList.add("ludo-cell-last-to");
+  // Arrow Ludo (task 191): a token that flew must not just vanish - the
+  // arrow square it flew from, the square it landed on and the line of the
+  // flight stay marked until the next move (drawn once, no animation).
+  if (lm.flightFromRel === null || lm.flightFromRel === undefined) return;
+  const takeoffEl = ludoPositionElement(boardEl, lm.color, "active", lm.flightFromRel, lm.tokenIndex);
+  if (takeoffEl) takeoffEl.classList.add("ludo-cell-flight-from");
+  if (toEl) toEl.classList.add("ludo-cell-flight-to");
+  const svg = boardEl.querySelector(".ludo-arrow-lines svg");
+  if (!svg || lm.toState !== "active") return;
+  const a = LUDO_TRACK_CELLS[LudoCore.absTrackIndex(lm.color, lm.flightFromRel, AppStateLudo.state)];
+  const b = LUDO_TRACK_CELLS[LudoCore.absTrackIndex(lm.color, lm.toRel, AppStateLudo.state)];
+  const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  line.setAttribute("class", "ludo-flight-last");
+  line.setAttribute("x1", a[1] + 0.5);
+  line.setAttribute("y1", a[0] + 0.5);
+  line.setAttribute("x2", b[1] + 0.5);
+  line.setAttribute("y2", b[0] + 0.5);
+  line.setAttribute("marker-end", "url(#ludo-flighthead)");
+  svg.appendChild(line);
 }
 
 function updateLudoBoard() {

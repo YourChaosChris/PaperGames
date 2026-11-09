@@ -51,6 +51,52 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   await page.evaluate(() => I18n.setLang("de"));
   await page.waitForTimeout(300);
 
+  // Task 191: backdo with a piece on its first field. Before, choosing the
+  // piece threw "Etwas ist schiefgelaufen" and the game was stuck. Now the
+  // target is drawn on the start field, the piece goes back to wait again,
+  // and the message names the start.
+  await page.evaluate(() => {
+    if (AppStateYut.timer) clearTimeout(AppStateYut.timer);
+    AppStateYut.busy = false;
+    const g = YutCore.createGame({ players: 2, piecesPerPlayer: 4 });
+    g.pieces[0].route = [1];
+    g.turn = 0; g.owed = 0; g.pending = [-1];
+    AppStateYut.g = g; AppStateYut.over = false; AppStateYut.from = null; AppStateYut.sel = 0; AppStateYut.hint = null;
+    renderYut();
+  });
+  await page.click("#yut-board g[data-from='1']");
+  const target = await page.evaluate(() => {
+    const c = document.querySelector("#yut-board g[data-mv] circle");
+    return c ? c.getAttribute("cx") + "," + c.getAttribute("cy") + "," + c.parentNode.getAttribute("aria-label") : "";
+  });
+  check("backdo on field 1: target on the start field (" + target + ")", /^540,540,/.test(target));
+  await page.click("#yut-acts button[data-a=hint]");
+  check("backdo on field 1: hint works", (await page.$$("#yut-board circle[stroke-dasharray='2 6']")).length >= 1);
+  await page.click("#yut-board g[data-mv]");
+  await page.waitForTimeout(200);
+  const back = await page.evaluate(() => ({ route: AppStateYut.g.pieces[0].route.length, done: AppStateYut.g.pieces[0].done, turn: AppStateYut.g.turn, info: document.getElementById("board-info").textContent }));
+  check("backdo on field 1: piece waits again (" + JSON.stringify(back) + ")", back.route === 0 && !back.done && back.turn === 1);
+  check("backdo on field 1: message names the start", /Start/.test(back.info));
+  await page.waitForTimeout(600);
+  check("backdo on field 1: the computer plays on", await page.evaluate(() => AppStateYut.g.turn === 0 || AppStateYut.g.pending.length > 0 || AppStateYut.g.owed > 0));
+
+  // Safety net: a broken move must not leave the game stuck.
+  const net = await page.evaluate(() => {
+    if (AppStateYut.timer) clearTimeout(AppStateYut.timer);
+    AppStateYut.busy = false;
+    const g = YutCore.createGame({ players: 2, piecesPerPlayer: 4 });
+    g.turn = 0; g.owed = 0; g.pending = [2];
+    AppStateYut.g = g; AppStateYut.from = -1; AppStateYut.sel = 0;
+    const orig = YutCore.applyMove;
+    YutCore.applyMove = () => { throw new Error("test"); };
+    const quiet = console.error; console.error = () => {};
+    renderYut();
+    document.querySelector("#yut-board g[data-mv]").dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    YutCore.applyMove = orig; console.error = quiet;
+    return { from: AppStateYut.from, acts: document.querySelectorAll("#yut-acts button").length };
+  });
+  check("safety net: selection cleared and buttons drawn (" + JSON.stringify(net) + ")", net.from === null && net.acts >= 1);
+
   // A won game: set up a last piece one step from home.
   await page.evaluate(() => {
     if (AppStateYut.timer) clearTimeout(AppStateYut.timer);

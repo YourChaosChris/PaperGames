@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v286",
+    date: "2026-11-09",
+    key: "release_v286",
+    text: "Arrow Ludo: the arrow squares are now the 4th square after the start, every landing on an arrow square flies, also later in the game, and the flight stays marked. Cream now also colours cards, buttons and fields. Backgammon shows every checker on stacks of five and says when a saved game is loaded. Yut: a backdo on the first field no longer stops the game."
+  },
+  {
     version: "v285",
     date: "2026-11-08",
     key: "release_v285",

@@ -8,6 +8,12 @@
 //   2 = medium - capture > leave home on a 6 > advance the furthest token
 //   3 = hard   - the same priority order, plus preferring to move a
 //                token out of another token's immediate capture range
+//                and not to leave a token where it can be captured next
+//
+// Arrow Ludo (task 191): every arrow square flies a token across the
+// middle - 26 squares forward on the first half of its lap, 26 back on
+// the second half. Medium and Hard take a forward flight right after a
+// capture and avoid a flight back whenever another move is possible.
 
 const LudoAi = (function () {
   // Is `color`'s token `tokenIndex` currently sitting somewhere an
@@ -44,13 +50,19 @@ const LudoAi = (function () {
       const wasHome = token.state === "home";
       const wasInDanger = isTokenInDanger(state, color, tokenIndex);
       const result = LudoCore.applyMove(state, color, tokenIndex, roll);
+      const after = result.state.tokens[color][tokenIndex];
+      // How far the token got: the roll, plus or minus a flight.
+      const gain = wasHome ? 0 : result.finished ? roll : after.rel - token.rel;
       return {
         tokenIndex,
         captured: result.captured.length,
         finished: result.finished,
         jumped: !!result.jumped,
+        flewBack: !!result.jumped && gain < 0,
+        gain,
         wasHome,
         wasInDanger,
+        endsInDanger: after.state === "active" && isTokenInDanger(result.state, color, tokenIndex),
         progress: wasHome ? 0 : token.rel
       };
     });
@@ -64,15 +76,22 @@ const LudoAi = (function () {
     if (typeof level !== "number" || level < 1) level = 1;
     if (level === 1) return pickRandom(legalMoves);
 
-    const moves = describeMoves(state, color, roll, legalMoves);
+    const all = describeMoves(state, color, roll, legalMoves);
+    // A flight back costs half a lap: only when nothing else is left.
+    const forward = all.filter((m) => !m.flewBack);
+    if (!forward.length) {
+      all.sort((a, b) => b.captured - a.captured || b.gain - a.gain);
+      return all[0].tokenIndex;
+    }
+    let moves = forward;
 
     const captureMoves = moves.filter((m) => m.captured > 0);
     if (captureMoves.length) {
-      captureMoves.sort((a, b) => b.captured - a.captured);
+      captureMoves.sort((a, b) => b.captured - a.captured || b.gain - a.gain);
       return captureMoves[0].tokenIndex;
     }
 
-    // Arrow Ludo: the flight across the middle is worth 26 squares.
+    // Arrow Ludo: a flight forward is worth 26 squares.
     const jumpMoves = moves.filter((m) => m.jumped);
     if (jumpMoves.length) return jumpMoves[0].tokenIndex;
 
@@ -80,7 +99,7 @@ const LudoAi = (function () {
     if (leaveHomeMoves.length) return pickRandom(leaveHomeMoves).tokenIndex;
 
     if (level === 3) {
-      const dangerMoves = moves.filter((m) => m.wasInDanger);
+      const dangerMoves = moves.filter((m) => m.wasInDanger && !m.endsInDanger);
       if (dangerMoves.length) {
         dangerMoves.sort((a, b) => b.progress - a.progress);
         return dangerMoves[0].tokenIndex;
@@ -89,6 +108,11 @@ const LudoAi = (function () {
 
     const finishMoves = moves.filter((m) => m.finished);
     if (finishMoves.length) return finishMoves[0].tokenIndex;
+
+    if (level === 3) {
+      const safeMoves = moves.filter((m) => !m.endsInDanger);
+      if (safeMoves.length) moves = safeMoves;
+    }
 
     // Prefer advancing whichever token is furthest along (closest to
     // finishing) - the standard "push your leader home" heuristic.

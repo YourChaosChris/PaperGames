@@ -48,7 +48,10 @@ function shapeYut(p, x, y, on) {
   return s + '<text x="' + x + '" y="' + (y + 6) + '" text-anchor="middle" font-size="16" font-weight="bold" fill="' + ink + '">' + YUT_LETTERS[p] + "</text>";
 }
 
-function fieldLabelYut(n) { return n < 0 ? "–" : n === "finish" ? ty("yut_home") : String(n); }
+// A backdo from the first field sends the piece back to the start (target
+// -1, task 191): it waits there again and is drawn on the start field.
+function fieldLabelYut(n) { return n === -1 ? ty("yut_back_start") : n < 0 ? "–" : n === "finish" ? ty("yut_home") : String(n); }
+function fieldXYYut(n) { return YUT_XY[n === "finish" || n === -1 ? 0 : n]; }
 
 // The last happening, kept as data so it is shown in the current language.
 function noteTextYut() {
@@ -92,14 +95,15 @@ function renderYut() {
   if (st.from !== null) {
     mv.forEach((m, ix) => {
       if (m.from !== st.from) return;
-      const to = m.to === "finish" ? 0 : m.to;
-      const x = YUT_XY[to][0], y = YUT_XY[to][1];
+      const xy = fieldXYYut(m.to);
+      if (!xy) return;
+      const x = xy[0], y = xy[1];
       h += '<g data-mv="' + ix + '" role="button" tabindex="0" aria-label="' + fieldLabelYut(m.to) + '"><circle cx="' + x + '" cy="' + y + '" r="30" fill="#fff" fill-opacity="0.01" stroke="#141413" stroke-width="5"/>' +
         (m.choice ? '<text x="' + x + '" y="' + (y - 36) + '" text-anchor="middle" font-size="16" font-weight="bold">' + ty("yut_" + m.choice) + "</text>" : "") + "</g>";
     });
   }
   if (st.hint) {
-    const hx = YUT_XY[st.hint.to === "finish" ? 0 : st.hint.to];
+    const hx = fieldXYYut(st.hint.to) || YUT_XY[0];
     h += '<circle cx="' + hx[0] + '" cy="' + hx[1] + '" r="36" fill="none" stroke="#141413" stroke-width="3" stroke-dasharray="2 6"/>';
     if (st.hint.from >= 0) h += '<circle cx="' + YUT_XY[st.hint.from][0] + '" cy="' + YUT_XY[st.hint.from][1] + '" r="36" fill="none" stroke="#141413" stroke-width="3" stroke-dasharray="2 6"/>';
   }
@@ -171,18 +175,37 @@ function moveYut(m) {
   afterYut();
 }
 
+// Safety net (task 191): an error in one move or drawing must not leave
+// the game stuck (a player had to start again). The selection is
+// cleared, a throw that can't be used is dropped, and play goes on.
+function safeYut(fn) {
+  return function () {
+    try {
+      return fn.apply(this, arguments);
+    } catch (e) {
+      if (window.console) console.error(e);
+      const st = AppStateYut;
+      st.from = null; st.hint = null; st.sel = 0; st.busy = false;
+      if (!st.g) return undefined;
+      try { st.g = YutCore.skipUnusable(st.g); saveYut(); renderYut(); } catch (e2) { if (window.console) console.error(e2); }
+      scheduleYut();
+      return undefined;
+    }
+  };
+}
+
 function scheduleYut() {
   const st = AppStateYut;
   if (!st.g || st.g.winner !== null || st.g.turn === 0 || st.busy) return;
   st.busy = true;
   const wait = typeof AiPacing !== "undefined" ? AiPacing.delay(500) : 700;
-  st.timer = setTimeout(() => {
+  st.timer = setTimeout(safeYut(() => {
     st.busy = false;
     if (!st.g || st.g.winner !== null || st.g.turn === 0) return;
     if (st.g.owed > 0) { throwYut(); return; }
     const m = YutAI.chooseMove(st.g, Math.random, st.level);
     if (m) moveYut(m); else afterYut();
-  }, wait);
+  }), wait);
 }
 
 function startYut(fromSave) {
@@ -220,17 +243,17 @@ function initYutApp() {
   }
   document.getElementById("start-yut-game").addEventListener("click", () => startYut(false));
   const board = document.getElementById("yut-board");
-  const onBoard = (e) => {
+  const onBoard = safeYut((e) => {
     const el = e.target.closest("[data-mv],[data-from]");
     if (!el || !humanTurnYut()) return;
     const mv = movesYut();
     if (el.getAttribute("data-mv") !== null) { moveYut(mv[+el.getAttribute("data-mv")]); return; }
     AppStateYut.from = +el.getAttribute("data-from");
     renderYut();
-  };
+  });
   board.addEventListener("click", onBoard);
   board.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onBoard(e); } });
-  document.getElementById("yut-acts").addEventListener("click", (e) => {
+  document.getElementById("yut-acts").addEventListener("click", safeYut((e) => {
     const el = e.target.closest("button");
     const st = AppStateYut;
     if (!el || !humanTurnYut()) return;
@@ -243,7 +266,7 @@ function initYutApp() {
     }
     if (el.getAttribute("data-t") !== null) { st.sel = +el.getAttribute("data-t"); st.from = null; st.hint = null; renderYut(); return; }
     if (el.getAttribute("data-from") !== null) { st.from = +el.getAttribute("data-from"); renderYut(); }
-  });
+  }));
   if (typeof I18n.onChange === "function") I18n.onChange(() => { if (AppStateYut.g) renderYut(); });
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(YUT_SAVE_KEY) : null;
   if (saved && saved.g && saved.g.winner === null && Array.isArray(saved.g.pieces)) {

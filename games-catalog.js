@@ -913,7 +913,7 @@ const GAMES_CATALOG = [
     nameKey: "game_arrowludo",
     nameText: "Arrow Ludo",
     descKey: "home_arrowludo_desc",
-    descText: "Ludo with arrows across the middle: land exactly on the arrow square of your color and fly over the centre, 26 squares ahead. Race your four tokens home against computer opponents or on one device, 2 to 4 players.",
+    descText: "Ludo with arrows across the middle: every landing on an arrow square flies your token over the centre to the arrow square opposite - 26 squares ahead, or later in the lap 26 squares back. Race your four tokens home against computer opponents or on one device, 2 to 4 players.",
     popular: false,
     kids: true,
     added: "2026-11-07T15:00",

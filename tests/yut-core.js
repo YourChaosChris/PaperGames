@@ -72,6 +72,16 @@ assert.strictEqual(dest(withPiece([18], 1), 1), 19);
   g3.pending = [-1]; g3.owed = 0;
   assert.strictEqual(Y.legalMoves(g3, -1).length, 0, "no backdo without a piece on the board");
   assert.strictEqual(Y.skipUnusable(g3).turn, 1, "lost backdo passes the turn");
+  // Task 191: backdo on the first field (route [1], a do from the start):
+  // the move goes back to the start (to -1) and the piece waits again.
+  const g4 = withPiece([1], -1);
+  const m4 = Y.legalMoves(g4, -1);
+  assert.strictEqual(m4.length, 1, "backdo on field 1 is a legal move");
+  assert.strictEqual(m4[0].to, -1, "backdo on field 1 goes to the start");
+  const s4 = Y.applyMove(g4, m4[0]);
+  assert.strictEqual(s4.pieces[0].route.length, 0, "backdo on field 1 -> waiting again");
+  assert.strictEqual(s4.pieces[0].done, false, "backdo on field 1 does not finish the piece");
+  assert.strictEqual(Y.legalMoves(Object.assign(s4, { turn: 0, pending: [2], owed: 0 }), 2).some((x) => x.from === -1), true, "the piece can enter again");
 }
 // extra throws
 {

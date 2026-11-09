@@ -6,7 +6,7 @@ Object.assign(STRINGS.pl, {
     yut_rules_intro: "Koreańska gra wyścigowa polegająca na rzucaniu patykami: rzuć czterema patykami i doprowadź wszystkie cztery pionki raz wokół planszy do mety przed innymi.",
     yut_rules_basics_title: "Zasady",
     yut_term_throw: "Rzut",
-    yut_rules_throw: "Rzuca się czterema patykami. Policz płaskie strony zwrócone do 도 góry: 1 to do (1 krok), 2 to gae 개 (2 kroki), 3 to geol 걸 (3 kroki), 4 to yut 윷 (4 kroki), a żadna to mo 모 (5 kroków). Yut i mo dają dodatkowy rzut. Jeśli jedyny zaznaczony patyk jest jedynym płaskim, rzut to backdo 빽도: jeden krok do tyłu. Niewykorzystane rzuty zachowujesz do momentu, gdy ich użyjesz.",
+    yut_rules_throw: "Rzuca się czterema patykami. Policz płaskie strony zwrócone do 도 góry: 1 to do (1 krok), 2 to gae 개 (2 kroki), 3 to geol 걸 (3 kroki), 4 to yut 윷 (4 kroki), a żadna to mo 모 (5 kroków). Yut i mo dają dodatkowy rzut. Jeśli jedyny zaznaczony patyk jest jedynym płaskim, rzut to backdo 빽도: jeden krok do tyłu. Niewykorzystane rzuty zachowujesz do momentu, gdy ich użyjesz. Backdo na pierwszym polu po starcie odsyła pionek na start, gdzie znowu czeka na wejście.",
     yut_term_move: "Ruch",
     yut_rules_move: "Wybierz jeden ze swoich rzutów, następnie pionek, a potem pole docelowe. Pionek czekający na starcie wchodzi na planszę dzięki rzutowi. Pionki na tym samym polu poruszają się razem jako stos. Okrąg ma 20 pól; start i meta znajdują się w prawym dolnym rogu.",
     yut_term_shortcuts: "Skróty",

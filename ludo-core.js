@@ -38,13 +38,22 @@
 // constants below (TRACK_LENGTH, START_INDEX, ...) describe the classic
 // board; geometry(board) gives the numbers for either board.
 
-// Arrow Ludo (task 189): the same rules as Ludo on the classic four-arm
-// board, plus one arrow square per color. Each color's arrow square is
-// the last square of its own arm (own route square 12); a token that
-// lands on it with its exact roll flies across the middle to the arrow
-// square on the opposite side (own route square 38), 26 squares ahead.
-// The four arrow squares are 12, 25, 38 and 51 on the track. A state
-// for this game carries `arrows: true`; every other state is plain Ludo.
+// Arrow Ludo (task 189, rules redone in task 191 after a player's report):
+// the same rules as Ludo on the classic four-arm board, plus one arrow
+// square per color, the 4th square after its start (own route square 4,
+// the inner end of the arm right beside the middle). The four arrow
+// squares are 4, 17, 30 and 43 on the track. A token that ends its move
+// on ANY arrow square - its own or another color's, on its first lap or
+// later - flies diagonally across the middle to the arrow square
+// opposite, 26 track squares away. For a token on the first half of its
+// lap (own route square 4 or 17) that is a jump forward; on the second
+// half (30 or 43) the opposite square lies behind it, so it flies back
+// and has to walk half a lap again. The landing square of a flight never
+// starts a second flight. The flight captures on the arrow square and on
+// the square it lands on, and is not allowed when two opposing tokens
+// block the landing square. It never leaves the shared track, so no
+// token can skip its own path into the finish. A state for this game
+// carries `arrows: true`; every other state is plain Ludo.
 const LudoCore = (function () {
   const COLOR_ORDER = ["red", "green", "yellow", "blue"];
   const PIECES_PER_COLOR = 4;
@@ -56,8 +65,12 @@ const LudoCore = (function () {
   const SIX_STREAK_LIMIT = 3; // three 6s in a row forfeits the turn (common Ludo variant)
 
   const START_INDEX = { red: 0, green: 13, yellow: 26, blue: 39 };
-  const ARROW_FROM_REL = 12;
-  const ARROW_TO_REL = 38;
+  // Own arrow square (route square 4) and where its flight lands (30).
+  const ARROW_FROM_REL = 4;
+  const ARROW_FLIGHT = 26;
+  const ARROW_TO_REL = ARROW_FROM_REL + ARROW_FLIGHT;
+  // The four arrow squares on the track (red, green, yellow, blue).
+  const ARROW_SQUARES = [4, 17, 30, 43];
   // The traditional "star" safe square on each arm, 8 squares ahead of
   // that color's own start square.
   const STAR_OFFSET = 8;
@@ -209,11 +222,22 @@ const LudoCore = (function () {
     return !arrowBlocked(state, color, target);
   }
 
-  // Landing on the arrow square sends the token to the far arrow square,
-  // so an opposing block there stops the move.
+  // Arrow Ludo: where a token of `color` that ends its move on route
+  // square `rel` flies to (a route square again), or null when `rel` is
+  // no arrow square (or the game has no arrows).
+  function arrowFlightRel(state, color, rel) {
+    if (!state.arrows || rel === null || rel > LAST_TRACK_REL) return null;
+    const abs = absTrackIndex(color, rel, state);
+    if (ARROW_SQUARES.indexOf(abs) === -1) return null;
+    const toAbs = (abs + ARROW_FLIGHT) % TRACK_LENGTH;
+    return (toAbs - START_INDEX[color] + TRACK_LENGTH) % TRACK_LENGTH;
+  }
+
+  // Landing on an arrow square sends the token to the arrow square
+  // opposite, so an opposing block there stops the move.
   function arrowBlocked(state, color, target) {
-    return !!state.arrows && target === ARROW_FROM_REL &&
-      isBlockedForOpponent(state, color, absTrackIndex(color, ARROW_TO_REL, state));
+    const to = arrowFlightRel(state, color, target);
+    return to !== null && isBlockedForOpponent(state, color, absTrackIndex(color, to, state));
   }
 
   // Why a move isn't allowed - for the on-screen hint, not for the rules
@@ -252,6 +276,7 @@ const LudoCore = (function () {
     let finished = false;
     let enteredPlay = false;
     let jumped = false;
+    let flightFromRel = null; // the arrow square a flight started from
 
     if (token.state === "home") {
       token.state = "active";
@@ -271,10 +296,12 @@ const LudoCore = (function () {
         if (target <= g.lastTrackRel) {
           maybeCapture(next, color, absTrackIndex(color, target, next), captured);
         }
-        if (next.arrows && target === ARROW_FROM_REL) {
-          token.rel = ARROW_TO_REL;
+        const flyTo = arrowFlightRel(next, color, target);
+        if (flyTo !== null) {
+          flightFromRel = target;
+          token.rel = flyTo;
           jumped = true;
-          maybeCapture(next, color, absTrackIndex(color, ARROW_TO_REL, next), captured);
+          maybeCapture(next, color, absTrackIndex(color, flyTo, next), captured);
         }
       }
     }
@@ -285,7 +312,9 @@ const LudoCore = (function () {
       next.winner = color;
     }
 
-    return { state: next, captured, finished, enteredPlay, jumped };
+    // `jumped`: the token flew from route square `flightFromRel` across
+    // the middle (forward or back) to where it stands now.
+    return { state: next, captured, finished, enteredPlay, jumped, flightFromRel };
   }
 
   function maybeCapture(state, movingColor, absIndex, captured) {
@@ -323,6 +352,8 @@ const LudoCore = (function () {
     START_INDEX,
     ARROW_FROM_REL,
     ARROW_TO_REL,
+    ARROW_FLIGHT,
+    ARROW_SQUARES,
     STAR_OFFSET,
     COLOR_ORDER_6,
     geometry,
@@ -336,6 +367,7 @@ const LudoCore = (function () {
     colorCountAtAbs,
     isBlockedForOpponent,
     isLegalMove,
+    arrowFlightRel,
     illegalReason,
     getLegalMoves,
     applyMove,

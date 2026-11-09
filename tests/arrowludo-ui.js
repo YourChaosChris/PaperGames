@@ -1,16 +1,23 @@
 #!/usr/bin/env node
-// Arrow Ludo in the browser (task 189), German page at 360 px:
+// Arrow Ludo in the browser (task 189, arrow squares moved in task 191),
+// German page at 360 px:
 //   - classic board only: no board choice, players 2 to 4, no purple/orange;
-//   - the four arrow squares and the flight lines are drawn; Ludo has none;
-//   - a hotseat game: a token on route square 8 with a 4 flies to 38 when
-//     its cell is tapped, the message says so, and the move is saved;
+//   - the four arrow squares (track 4, 17, 30, 43: the 4th square after
+//     each start) and the flight lines are drawn; Ludo has none;
+//   - a hotseat game: a token on route square 1 with a 3 flies to 30 when
+//     its cell is tapped, the message says so (26 squares ahead), the
+//     arrow square it flew from, the landing square and the line of the
+//     flight are marked, and the move is saved;
+//   - a flight back (green from 27 with a 3 lands on 30 = track 43 and
+//     flies back to 4 = track 17): the message says "back";
 //   - the Hint button marks a token and names it; before a roll it asks for one;
 //   - after a reload the game is back with its arrows; Ludo and Arrow Ludo
 //     keep separate saves;
 //   - large board: every cell at least 28 px; no sideways scrolling; no error.
 // Run: node tests/arrowludo-ui.js   (needs the server and Playwright)
 const { chromium } = require("playwright");
-const BASE = process.env.BASE_URL || "http://localhost:8000/";
+const argBase = process.argv.indexOf("--base");
+const BASE = (argBase > 0 && process.argv[argBase + 1]) || process.env.BASE_URL || "http://localhost:8000/";
 const fails = [];
 const check = (name, ok, info) => { if (!ok) fails.push(name + (info !== undefined ? ": " + JSON.stringify(info) : "")); };
 
@@ -48,7 +55,7 @@ async function openSettings(page) {
     flag: AppStateLudo.state.arrows === true,
     wide: document.documentElement.scrollWidth - innerWidth
   }));
-  check("52 track cells, 4 arrow squares " + JSON.stringify(board), board.track === 52 && board.arrows === "12,25,38,51" && board.marks === 4);
+  check("52 track cells, 4 arrow squares " + JSON.stringify(board), board.track === 52 && board.arrows === "4,17,30,43" && board.marks === 4);
   check("two flight lines and the state flag", board.lines === 2 && board.flag);
   check("no sideways scrolling", board.wide <= 0);
 
@@ -56,30 +63,56 @@ async function openSettings(page) {
   await page.click("#ludo-hint-button");
   check("hint asks for a roll first", /W.rfle zuerst|Roll the die/i.test(await page.textContent("#board-info")), await page.textContent("#board-info"));
 
-  // Put red token 0 on route square 8 and roll a 4.
+  // Put red token 0 on route square 1 and roll a 3.
   await page.evaluate(() => {
     const s = AppStateLudo.state;
     s.turnIndex = 0;
-    s.tokens.red[0] = { state: "active", rel: 8 };
-    AppStateLudo.roll = 4;
-    AppStateLudo.legalMoves = LudoCore.getLegalMoves(s, "red", 4);
+    s.tokens.red[0] = { state: "active", rel: 1 };
+    AppStateLudo.roll = 3;
+    AppStateLudo.legalMoves = LudoCore.getLegalMoves(s, "red", 3);
     updateLudoBoard();
   });
   await page.click("#ludo-hint-button");
   check("hint marks a cell", (await page.$$(".ludo-hint")).length === 1);
   check("hint names the token", /1/.test(await page.textContent("#board-info")) && /Tipp|Hint/i.test(await page.textContent("#board-info")), await page.textContent("#board-info"));
-  await page.click(".ludo-cell-track[data-track-index='8']");
+  await page.click(".ludo-cell-track[data-track-index='1']");
   await page.waitForTimeout(200);
-  const after = await page.evaluate(() => ({ rel: AppStateLudo.state.tokens.red[0].rel, info: document.getElementById("board-info").textContent, saved: !!localStorage.getItem("einkchess_save_arrowludo"), plain: !!localStorage.getItem("einkchess_save_ludo") }));
-  check("the token flew to 38", after.rel === 38, after);
-  check("the message names the flight", /Mitte/.test(after.info), after.info);
+  const after = await page.evaluate(() => ({
+    rel: AppStateLudo.state.tokens.red[0].rel,
+    info: document.getElementById("board-info").textContent,
+    from: Array.from(document.querySelectorAll(".ludo-cell-flight-from")).map((c) => c.dataset.trackIndex).join(","),
+    to: Array.from(document.querySelectorAll(".ludo-cell-flight-to")).map((c) => c.dataset.trackIndex).join(","),
+    line: document.querySelectorAll(".ludo-arrow-lines line.ludo-flight-last").length,
+    saved: !!localStorage.getItem("einkchess_save_arrowludo"),
+    plain: !!localStorage.getItem("einkchess_save_ludo")
+  }));
+  check("the token flew to 30", after.rel === 30, after);
+  check("the message names the flight", /Pfeilfeld/.test(after.info) && /Mitte/.test(after.info) && /26 Felder voraus/.test(after.info), after.info);
+  check("flight marked: from arrow square 4 to 30, with its line", after.from === "4" && after.to === "30" && after.line === 1, after);
   check("saved under its own key", after.saved && !after.plain);
+
+  // A flight back: green from route square 27 with a 3.
+  await page.evaluate(() => {
+    const s = AppStateLudo.state;
+    s.turnIndex = s.activeColors.indexOf("green");
+    s.tokens.green[0] = { state: "active", rel: 27 };
+    AppStateLudo.roll = 3;
+    AppStateLudo.legalMoves = LudoCore.getLegalMoves(s, "green", 3);
+    updateLudoBoard();
+  });
+  await page.click(".ludo-cell-track[data-track-index='40']");
+  await page.waitForTimeout(200);
+  const backInfo = await page.evaluate(() => ({ rel: AppStateLudo.state.tokens.green[0].rel, info: document.getElementById("board-info").textContent, from: Array.from(document.querySelectorAll(".ludo-cell-flight-from")).map((c) => c.dataset.trackIndex).join(",") }));
+  check("flight back: green lands on track 43 and flies back to route square 4", backInfo.rel === 4 && backInfo.from === "43", backInfo);
+  check("flight back: the message says back", /26 Felder zurück/.test(backInfo.info), backInfo.info);
+  // Red's turn again, so the reload check below finds red's token on 30.
+  await page.evaluate(() => { AppStateLudo.state.tokens.green[0] = { state: "home", rel: null }; AppStateLudo.state.turnIndex = 0; updateLudoBoard(); saveLudoGame(); });
 
   // Reload: the game and its arrows are back.
   await page.reload({ waitUntil: "load" });
   await page.waitForTimeout(500);
   const back = await page.evaluate(() => ({ rel: AppStateLudo.state && AppStateLudo.state.tokens.red[0].rel, arrows: document.querySelectorAll(".ludo-cell-arrow").length }));
-  check("after a reload the game is back " + JSON.stringify(back), back.rel === 38 && back.arrows === 4);
+  check("after a reload the game is back " + JSON.stringify(back), back.rel === 30 && back.arrows === 4);
 
   // Large board cells.
   const cells = await page.evaluate(() => {
@@ -97,5 +130,5 @@ async function openSettings(page) {
   check("no page errors", errors.length === 0, errors);
   await browser.close();
   if (fails.length) { console.error("FAIL (" + fails.length + "):\n  " + fails.join("\n  ")); process.exit(1); }
-  console.log("=== ARROW LUDO UI: board, arrows, flight, hint, save, separate from Ludo, 0 failure(s) ===");
+  console.log("=== ARROW LUDO UI: board, arrow squares 4/17/30/43, flight forward and back marked, hint, save, separate from Ludo, 0 failure(s) ===");
 })().catch((e) => { console.error(e); process.exit(1); });

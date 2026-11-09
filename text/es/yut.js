@@ -6,7 +6,7 @@ Object.assign(STRINGS.es, {
     yut_rules_intro: "El juego coreano de carreras con lanzamiento de palos: lanza cuatro palos, lleva tus cuatro piezas una vez alrededor del tablero y a la meta antes que los demás.",
     yut_rules_basics_title: "Las reglas",
     yut_term_throw: "El lanzamiento",
-    yut_rules_throw: "Se lanzan cuatro palos. Cuenta los lados planos hacia arriba: 1 es do 도 (1 paso), 2 es gae 개 (2 pasos), 3 es geol 걸 (3 pasos), 4 es yut 윷 (4 pasos) y ninguno es mo 모 (5 pasos). Yut y mo conceden otro lanzamiento. Si el único palo marcado es el único plano, el lanzamiento es backdo 빽도: un paso hacia atrás. Los lanzamientos no utilizados se guardan hasta que los uses.",
+    yut_rules_throw: "Se lanzan cuatro palos. Cuenta los lados planos hacia arriba: 1 es do 도 (1 paso), 2 es gae 개 (2 pasos), 3 es geol 걸 (3 pasos), 4 es yut 윷 (4 pasos) y ninguno es mo 모 (5 pasos). Yut y mo conceden otro lanzamiento. Si el único palo marcado es el único plano, el lanzamiento es backdo 빽도: un paso hacia atrás. Los lanzamientos no utilizados se guardan hasta que los uses. Un backdo en la primera casilla después de la salida devuelve la pieza a la salida, donde vuelve a esperar para entrar.",
     yut_term_move: "Un movimiento",
     yut_rules_move: "Elige uno de tus lanzamientos, luego una pieza y después la casilla de destino. Una pieza que espera en la salida entra al tablero con el lanzamiento. Las piezas en la misma casilla se mueven juntas como una pila. El circuito tiene 20 casillas; la salida y la meta están en la esquina inferior derecha.",
     yut_term_shortcuts: "Atajos",

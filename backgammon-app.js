@@ -200,6 +200,7 @@ function initBackgammonApp() {
   }
 
   function startNewGameBg(mode, humanColor, level) {
+    hideSavedNoticeBg();
     AppStateBackgammon.mode = mode;
     AppStateBackgammon.state = BackgammonCore.createInitialState();
     AppStateBackgammon.turn = "b";
@@ -295,7 +296,20 @@ function initBackgammonApp() {
     });
   }
 
-  if (rollBtn) rollBtn.addEventListener("click", rollDiceBg);
+  const savedContinueBtn = document.getElementById("backgammon-saved-continue");
+  const savedNewBtn = document.getElementById("backgammon-saved-new");
+  if (savedContinueBtn) {
+    savedContinueBtn.addEventListener("click", () => {
+      hideSavedNoticeBg();
+      if (!AppStateBackgammon.gameOver && AppStateBackgammon.mode === "offline-ai" && AppStateBackgammon.turn !== AppStateBackgammon.humanColor) {
+        setStatusBg("board-info", "Computer thinking…");
+        setTimeout(aiTurnBg, AiPacing.delay(300));
+      }
+    });
+  }
+  if (savedNewBtn) savedNewBtn.addEventListener("click", () => { hideSavedNoticeBg(); startGameBtn.click(); });
+
+  if (rollBtn) rollBtn.addEventListener("click", () => { hideSavedNoticeBg(); rollDiceBg(); });
   if (doubleBtn) doubleBtn.addEventListener("click", offerDoubleBg);
   const acceptDoubleBtn = document.getElementById("backgammon-double-accept");
   const declineDoubleBtn = document.getElementById("backgammon-double-decline");
@@ -331,9 +345,13 @@ function initBackgammonApp() {
     buildBackgammonBoardDOM();
     updateBackgammonBoard();
     updateGameLabelsBg();
+    // Task 191: a saved game says that it is one, and the computer waits
+    // until "Continue playing" - before, a game on the computer's turn
+    // seemed to run on by itself as soon as the page opened.
+    const notice = document.getElementById("backgammon-saved-notice");
+    if (notice) notice.classList.remove("hidden");
     if (AppStateBackgammon.mode === "offline-ai" && AppStateBackgammon.turn !== AppStateBackgammon.humanColor) {
-      setStatusBg("board-info", "Computer thinking…");
-      setTimeout(aiTurnBg, AiPacing.delay(300));
+      setStatusBg("board-info", "Computer to move.");
     } else if (AppStateBackgammon.dice.length) {
       setStatusBg("board-info", colorNameBg(AppStateBackgammon.turn) + " to move. " + AppStateBackgammon.dice.length + " di" + (AppStateBackgammon.dice.length === 1 ? "e" : "ce") + " left to play.");
     } else {
@@ -747,6 +765,8 @@ function ensureBackgammonBoardSquare() {
   const rect = boardEl.getBoundingClientRect();
   if (!rect || !rect.width) return;
   boardEl.style.height = (rect.width * 0.62) + "px";
+  // The points just got their height: fit the stacks again.
+  boardEl.querySelectorAll(".bg-point").forEach(fitCheckerStackBg);
 }
 
 function ensureBackgammonResizeHandler() {
@@ -761,23 +781,48 @@ function ensureBackgammonResizeHandler() {
   });
 }
 
+function hideSavedNoticeBg() {
+  const notice = document.getElementById("backgammon-saved-notice");
+  if (notice) notice.classList.add("hidden");
+}
+
 const MAX_STACK_SHOWN = 5;
 
 function renderCheckerStack(container, color, count) {
   container.innerHTML = "";
   if (!color || count === 0) return;
+  // Task 191: from 5 checkers on, the outermost checker carries the
+  // number of the whole stack (as on printed boards), and fitCheckerStackBg
+  // lets the checkers overlap when the point is too short - on a 384 px
+  // phone the 5th checker of the starting position was cut off.
   const shown = Math.min(count, MAX_STACK_SHOWN);
   for (let i = 0; i < shown; i++) {
     const checker = document.createElement("span");
     checker.className = "bg-checker " + (color === "b" ? "bg-checker-black" : "bg-checker-white");
+    if (count >= MAX_STACK_SHOWN && i === shown - 1) {
+      checker.classList.add("bg-checker-count");
+      checker.textContent = String(count);
+    }
     container.appendChild(checker);
   }
-  if (count > MAX_STACK_SHOWN) {
-    const badge = document.createElement("span");
-    badge.className = "bg-checker-overflow";
-    badge.textContent = "+" + (count - MAX_STACK_SHOWN);
-    container.appendChild(badge);
-  }
+}
+
+// Overlaps the checkers of a stack just enough that all of them fit into
+// the point (no animation, measured once per drawing).
+function fitCheckerStackBg(cell) {
+  const stack = cell.querySelector(".bg-point-stack");
+  if (!stack) return;
+  const checkers = stack.querySelectorAll(".bg-checker");
+  checkers.forEach((c) => { c.style.marginBottom = ""; });
+  if (checkers.length < 2) return;
+  // The height of the point less its padding and the point number.
+  const label = cell.querySelector(".bg-point-label");
+  const room = cell.clientHeight - 6 - (label ? label.offsetHeight : 0);
+  const size = checkers[0].offsetHeight;
+  if (!size || room <= 0 || checkers.length * (size + 2) <= room) return;
+  // Every checker but the outermost one is partly covered by the next.
+  const step = Math.max(size * 0.35, (room - size) / (checkers.length - 1));
+  checkers.forEach((c, i) => { if (i < checkers.length - 1) c.style.marginBottom = (step - size).toFixed(1) + "px"; });
 }
 
 function updateBackgammonBoard() {
@@ -806,6 +851,7 @@ function updateBackgammonBoard() {
     const p = parseInt(cell.dataset.point, 10);
     const pt = AppStateBackgammon.state.points[p];
     renderCheckerStack(cell.querySelector(".bg-point-stack"), pt.color, pt.count);
+    fitCheckerStackBg(cell);
     const isSelected = AppStateBackgammon.selected === p;
     const isMovable = destSet.has(p);
     cell.classList.toggle("bg-point-selected", isSelected);

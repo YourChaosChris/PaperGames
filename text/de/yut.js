@@ -6,7 +6,7 @@ Object.assign(STRINGS.de, {
     yut_rules_intro: "Das koreanische Wurfstäbchen-Rennspiel: Wirf vier Stäbe und bringe alle vier Figuren einmal um das Brett und ins Ziel, bevor die anderen es schaffen.",
     yut_rules_basics_title: "Die Regeln",
     yut_term_throw: "Der Wurf",
-    yut_rules_throw: "Es werden vier Stäbe geworfen. Gezählt werden die flachen Seiten, die oben liegen: 1 ist do 도 (1 Schritt), 2 ist gae 개 (2 Schritte), 3 ist geol 걸 (3 Schritte), 4 ist yut 윷 (4 Schritte), keine ist mo 모 (5 Schritte). Yut und mo geben einen weiteren Wurf. Ist nur der eine markierte Stab flach, heißt der Wurf backdo 빽도: ein Schritt zurück. Nicht benutzte Würfe bleiben stehen, bis du sie benutzt hast.",
+    yut_rules_throw: "Es werden vier Stäbe geworfen. Gezählt werden die flachen Seiten, die oben liegen: 1 ist do 도 (1 Schritt), 2 ist gae 개 (2 Schritte), 3 ist geol 걸 (3 Schritte), 4 ist yut 윷 (4 Schritte), keine ist mo 모 (5 Schritte). Yut und mo geben einen weiteren Wurf. Ist nur der eine markierte Stab flach, heißt der Wurf backdo 빽도: ein Schritt zurück. Nicht benutzte Würfe bleiben stehen, bis du sie benutzt hast. Ein Backdo auf dem ersten Feld nach dem Start schickt die Figur an den Start zurück; dort wartet sie wieder auf ihren Einsatz.",
     yut_term_move: "Ein Zug",
     yut_rules_move: "Wähle einen deiner Würfe, dann eine Figur, dann das Zielfeld. Eine Figur, die am Start wartet, kommt mit dem Wurf aufs Brett. Figuren auf demselben Feld ziehen zusammen als Stapel. Der Ring hat 20 Felder; Start und Ziel sind die Ecke unten rechts.",
     yut_term_shortcuts: "Abkürzungen",

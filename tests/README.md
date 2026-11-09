@@ -187,7 +187,7 @@ all parts back into one log in list order. The last line is exactly
   per board and finishing rule; every game must end with no token
   outside the board.
 - `node tests/yut-core.js` and `node tests/yut-ai.js` - no server or browser needed. Rules of Yut (path, shortcuts, captures, stacks, backdo, extra throws) and a computer-versus-computer series in which level 2 must beat level 1.
-- `node tests/yut-ui.js` - Yut in the browser at 360 px: taps, computer answers, language switch, a won game and the statistics.
+- `node tests/yut-ui.js` - Yut in the browser at 360 px: taps, computer answers, language switch, a backdo on the first field (target on the start field, the piece waits again, no error; task 191), the safety net after a broken move, a won game and the statistics.
 - `node tests/blockers-core.js` - no server or browser needed. Plays
   500 "Blocked Path" games each for 2, 3 and 4 players with mixed
   computer levels and fails unless every move uses the full roll, steps
@@ -349,15 +349,24 @@ all parts back into one log in list order. The last line is exactly
   and orange only there; a six-player hotseat game moves a token; the game
   is back after a reload; large view cells at least 28 px.
 - `node tests/arrowludo-core.js` - no server or browser needed. Arrow Ludo
-  (`state.arrows`): arrow squares 12/25/38/51, an exact landing on the own
-  arrow square flies 26 squares for every color, passing or stopping short
-  does not, plain Ludo unchanged, captures on the arrow square and at the
-  target, a block at the target refuses the move, the token plays on to the
-  finish, Medium and Hard choose the flight, 300 computer games.
-- `node tests/arrowludo-ui.js` - needs the server and Playwright. German page
-  at 360 px: no board choice, players 2-4, four arrow squares and two flight
-  lines, a tapped token flies and the message says so, the Hint button, own
-  save key and reload, Ludo has no arrows.
+  (`state.arrows`, task 191): arrow squares 4/17/30/43 (the 4th square after
+  each start), every landing on any arrow square flies 26 squares across the
+  middle - ahead on the first half of the lap, back on the second - also in
+  a later lap, no second flight on arrival, passing or stopping short does
+  not fly, plain Ludo unchanged, captures on the arrow square and at the
+  target, a block at the target refuses the move, flights never reach the
+  path into the finish, a v285 save plays on, Medium and Hard take a flight
+  forward and avoid one back, 300 computer games.
+- `node tests/arrowludo-ui.js [--base URL]` - needs the server and
+  Playwright. German page at 360 px: no board choice, players 2-4, four
+  arrow squares and two flight lines, a tapped token flies forward and back,
+  the message says so, takeoff and landing square and the flight line are
+  marked, the Hint button, own save key and reload, Ludo has no arrows.
+- `node tests/backgammon-ui.js [--base URL]` - needs the server and
+  Playwright (task 191). Starting position at 360/384/600/800 px: no
+  checker cut off, 15 per side, the 5-stacks carry their number; a saved
+  game shows the notice with Continue playing / New game and the computer
+  waits until Continue; a new visitor sees no notice.
 - `node tests/hex-ui.js` - needs the server and Playwright. German page at
   360 px: the "Tauschen" button with two players and its texts, the
   computer swapping a central first stone, Undo over a swap, no button
@@ -418,7 +427,9 @@ all parts back into one log in list order. The last line is exactly
 - `node tests/app-mode.js` - App mode and cream theme (task 186): donation
   block hidden and cream background with ?app=ios, white on the website, the
   choice in Settings kept after a reload, contrast of black text on cream,
-  German texts.
+  German texts; task 191: at 384 and 800 px cards, buttons and select fields
+  are cream too (white on the website by default, white again with high
+  contrast).
 - `node tests/move-link.js` - Move link (task 187): for each of the 27
   two-player games without chance, a game saved for two players on one device
   becomes a link, opens in an empty browser as the same game with the message

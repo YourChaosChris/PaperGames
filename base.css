@@ -9,6 +9,8 @@
   --accent: #111;
   --danger: var(--text);
   --square-light: #fdfdfd;
+  /* Cards, buttons, fields, dialogs (task 191: cream in the cream theme). */
+  --surface: #fff;
   --square-dark: #d5d5d5;
   --square-selected: #bbb;
   --space-1: 0.25rem;
@@ -162,7 +164,7 @@ a.secondary {
   font-family: inherit;
   border-radius: var(--radius);
   border: var(--border-width) solid var(--border);
-  background: #fff;
+  background: var(--surface);
   padding: var(--space-2) var(--space-3);
   font-size: 0.9rem;
   font-weight: 700;
@@ -229,7 +231,7 @@ button:disabled {
 button[data-i18n="undo_button"]:disabled {
   opacity: 1;
   color: #111;
-  background: #fff;
+  background: var(--surface);
   border-color: #111;
 }
 
@@ -325,7 +327,7 @@ button.active-mode,
 }
 
 .card {
-  background: #fff;
+  background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   box-shadow: none;
@@ -372,7 +374,7 @@ margin: 0 0 var(--space-2);
   padding: var(--space-2) var(--space-3);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--surface);
   color: var(--text);
   font-weight: 700;
   font-size: 0.9rem;
@@ -432,7 +434,7 @@ margin: 0 0 var(--space-2);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius);
   border: var(--border-width) solid var(--border);
-  background: #fff;
+  background: var(--surface);
   font-weight: 600;
 }
 
@@ -1168,7 +1170,7 @@ margin: var(--space-2) 0;
   line-height: 1.2;
   text-decoration: none;
   color: var(--text);
-  background: #fff;
+  background: var(--surface);
 }
 
 .site-nav-link.active-mode {
@@ -1304,7 +1306,7 @@ margin: var(--space-2) 0;
   border: 2px solid #000;
   border-radius: 0;
   color: #000;
-  background: #fff;
+  background: var(--surface);
   font-weight: 700;
   line-height: 1.2;
   text-decoration: none;
@@ -1727,7 +1729,7 @@ margin: var(--space-2) 0;
 
 .game-select-item {
   position: relative;
-  background: #fff;
+  background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   padding: var(--space-3);
@@ -1812,7 +1814,7 @@ margin: var(--space-2) 0;
 .achievement-badge {
   display: flex;
   align-items: flex-start;
-  background: #fff;
+  background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   padding: var(--space-2) var(--space-3);
@@ -1882,7 +1884,7 @@ margin: var(--space-2) 0;
   font-size: 0.95rem;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--surface);
   color: var(--text);
   box-sizing: border-box;
   min-height: 44px;
@@ -1894,7 +1896,7 @@ margin: var(--space-2) 0;
   font-size: 0.95rem;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--surface);
   color: var(--text);
 }
 
@@ -2038,7 +2040,7 @@ margin: var(--space-2) 0;
 }
 
 .result-modal {
-  background: #fff;
+  background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   padding: var(--space-5);
@@ -2226,7 +2228,7 @@ max-width: 540px;
   height: 44px;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--surface);
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
@@ -2371,6 +2373,7 @@ margin-bottom: 0.5rem;
       --danger: #000;
       --square-light: #fff;
       --square-selected: #fff;
+      --surface: #fff;
       background: #fff !important;
       color: #000 !important;
       margin: 0 !important;
@@ -2451,7 +2454,7 @@ margin-bottom: 0.5rem;
   flex-wrap: wrap;
   align-items: center;
   padding: var(--space-2) var(--space-3);
-  background: #fff;
+  background: var(--surface);
   border-bottom: var(--border-width) solid var(--border);
 }
 
@@ -2552,13 +2555,25 @@ margin-bottom: 0.5rem;
 
 /* Cream theme (task 186): warm paper background, black text. Default in the
    iOS app, optional on the website (Settings > Display). High contrast, being
-   declared after this block, still wins when both are on. */
+   declared after this block, still wins when both are on.
+   Task 191: cards, buttons, fields and dialogs are cream as well (--surface),
+   not only the page behind them - with white cards on a barely tinted page
+   the switch looked like it did nothing on a phone. Black text keeps a
+   contrast of about 15:1. Playing cards and white pieces stay white. */
 :root.theme-cream {
-  --bg: #f7f1e3;
-  --bg-alt: #ebe3cf;
-  --square-light: #fbf6ea;
-  --square-dark: #d8cfb8;
-  --square-selected: #c3b898;
+  --bg: #efe3c4;
+  --bg-alt: #e3d5b0;
+  --surface: #f8efd9;
+  --square-light: #f8efd9;
+  --square-dark: #d6c69e;
+  --square-selected: #c2b088;
+}
+
+:root.theme-cream input:not([type="checkbox"]):not([type="radio"]),
+:root.theme-cream textarea,
+:root.theme-cream select,
+:root.theme-cream dialog {
+  background-color: var(--surface);
 }
 
 /* Parts that only make sense on the website (donation link and its
@@ -2574,6 +2589,7 @@ margin-bottom: 0.5rem;
 :root.high-contrast {
   --bg: #ffffff;
   --bg-alt: #ffffff;
+  --surface: #ffffff;
   --muted: #000000;
   --border-width: 3px;
   --square-dark: #bdbdbd;
@@ -2605,7 +2621,7 @@ margin-bottom: 0.5rem;
 }
 
 .settings-modal {
-  background: #fff;
+  background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   padding: var(--space-5);
@@ -3647,7 +3663,7 @@ button.concan-meld {
   padding: var(--space-2) var(--space-1);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--surface);
   color: var(--text);
   text-align: center;
   text-decoration: none;
@@ -3968,7 +3984,7 @@ button.concan-meld {
   padding: 8px;
   border: 3px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--surface);
   cursor: pointer;
 }
 
@@ -4038,7 +4054,7 @@ button.concan-meld {
   margin: 0 0 var(--space-4);
   padding: var(--space-2) var(--space-3);
   border: var(--border-width) solid var(--border);
-  background: #fff;
+  background: var(--surface);
   color: #000;
   font-size: 0.95rem;
 }
@@ -4434,7 +4450,7 @@ button.concan-meld {
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
   font-weight: 700;
-  background: #fff;
+  background: var(--surface);
 }
 
 /* Small shape icons for the color picker, board placeholder and game
