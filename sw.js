@@ -1704,7 +1704,7 @@ const FILE_HASHES = {
   "rules-link.js": "cebeef42",
   "quick-rules.js": "7b2b538d",
   "adaptive-difficulty.js": "abfa62fe",
-  "update-banner.js": "2c928b7f",
+  "update-banner.js": "124f893b",
   "release-notes.js": "5beeb8a2",
   "error-banner.js": "a67457c5",
   "force-update.js": "75f1558c",
@@ -3412,10 +3412,31 @@ function storedTextLanguages(oldCaches) {
     });
 }
 
+// The number of a cache name ("papergames-cache-v296" -> 296), NaN if none.
+function versionNumber(name) {
+  const m = /^papergames-cache-v(\d+)$/.exec(name || "");
+  return m ? parseInt(m[1], 10) : NaN;
+}
+
 function installShell() {
   installProgress = { done: 0, total: APP_SHELL.length };
   let cache, oldCaches = [], keepLangs = [];
   return caches.keys()
+    .then((keys) => {
+      // Task 215: right after a release the servers of GitHub Pages hand out
+      // the new and the old sw.js in turn for some minutes. The browser takes
+      // each change for an update, so the device loaded the old version
+      // again, then the new one, three or four times. A version older than
+      // one already stored on this device never installs (the browser keeps
+      // the worker it has; the next check finds the new sw.js again).
+      const own = versionNumber(CACHE_NAME);
+      const newer = keys.filter((key) => versionNumber(key) > own);
+      if (newer.length) {
+        installProgress = null; // nothing to report: this worker just goes away
+        throw new Error("older than " + newer.join(", "));
+      }
+      return keys;
+    })
     .then((keys) => Promise.all(keys
       .filter((key) => key !== CACHE_NAME && key.indexOf(CACHE_PREFIX) === 0)
       .map((key) => caches.open(key))))

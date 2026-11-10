@@ -282,6 +282,14 @@
 
   if (hadController) window.addEventListener("load", () => setTimeout(remember, 2000));
 
+  // Task 215: the version this page runs (asked at once, before any change)
+  // and the newest one this page has already announced. A change to a
+  // version that is not newer than both (the same one again, or an older
+  // one) shows nothing: one update, one banner.
+  let pageVersion = NaN;
+  if (hadController) workerVersion(3000).then((v) => { if (v) pageVersion = vnum(v); });
+  let announced = NaN;
+
   navigator.serviceWorker.addEventListener("controllerchange", () => {
     if (!hadController && !ignoredFirstChange) {
       ignoredFirstChange = true;
@@ -289,6 +297,11 @@
       setTimeout(remember, 2000);
       return;
     }
-    within(collect(), 5000).then(showBanner);
+    workerVersion(3000).then((v) => {
+      const n = vnum(v);
+      if (!isNaN(n) && ((!isNaN(pageVersion) && n <= pageVersion) || (!isNaN(announced) && n <= announced))) return;
+      if (!isNaN(n)) announced = n;
+      within(collect(), 5000).then(showBanner);
+    });
   });
 })();

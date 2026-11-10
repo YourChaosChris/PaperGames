@@ -136,6 +136,7 @@ free_port() {
 export OFFLINE_TEST_PORT="${OFFLINE_TEST_PORT:-$(free_port $((PORT + 21)))}"
 export OFFLINE_UPDATE_PORT="${OFFLINE_UPDATE_PORT:-$(free_port $((PORT + 22)))}"
 export BANNER_TEST_PORT="${BANNER_TEST_PORT:-$(free_port $((PORT + 23)))}"
+export UPDATE_ONCE_PORT="${UPDATE_ONCE_PORT:-$(free_port $((PORT + 24)))}"
 
 # Does one part: its own server, then its tests in list order.
 run_shard() {
@@ -197,7 +198,7 @@ s=0
 while [ "$s" -le "$SHARDS" ]; do touch "$WORK/shard-$s"; s=$((s + 1)); done
 
 echo "Testreihe: $TOTAL Tests in $SHARDS Teil(en), Ports $PORT bis $((PORT + SHARDS - 1))"
-echo "Feste Ports: offline-install $OFFLINE_TEST_PORT, offline-update $OFFLINE_UPDATE_PORT, update-banner $BANNER_TEST_PORT"
+echo "Feste Ports: offline-install $OFFLINE_TEST_PORT, offline-update $OFFLINE_UPDATE_PORT, update-banner $BANNER_TEST_PORT, update-once $UPDATE_ONCE_PORT"
 START="$(date +%s)"
 PIDS=""
 s=1
