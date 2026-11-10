@@ -16,7 +16,7 @@ Object.assign(STRINGS.de, {
     yut_term_finish: "Das Ziel",
     yut_rules_finish: "Eine Figur, die über das Startfeld hinauszieht, ist im Ziel. Wer zuerst alle vier Figuren im Ziel hat, gewinnt.",
     yut_term_players: "Spieler",
-    yut_rules_players: "2 bis 4 Spieler. Du spielst A, die anderen spielt der Computer, leicht oder schwer. Die Figuren unterscheiden sich durch Form und Buchstabe: Kreis A, Quadrat B, Dreieck C, Raute D.",
+    yut_rules_players: "2 bis 4 Spieler. Du wählst deine Seite (A bis D) und wer anfängt: du, der Computer oder der Zufall. Die anderen spielt der Computer, leicht oder schwer. Die Figuren unterscheiden sich durch Form und Buchstabe: Kreis A, Quadrat B, Dreieck C, Raute D.",
     yut_history_title: "Die Geschichte von Yut",
     yut_history_origins_title: "Ein koreanisches Volksspiel",
     yut_history_origins_p1: "Yut Nori (Yunnori) ist ein traditionelles Spiel Koreas. Familien und Nachbarn spielen es gemeinsam, besonders zum Mondneujahr (Seollal). Der genaue Ursprung ist unsicher; es zählt allgemein zu den alten Volksspielen Koreas. Die Würfe haben in der koreanischen Überlieferung Tiernamen: do, gae, geol, yut und mo.",

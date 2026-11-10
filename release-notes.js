@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v288",
+    date: "2026-11-10",
+    key: "release_v288",
+    text: "Yut: you can now choose your side (A, B, …) and who starts: you, the computer or chance."
+  },
+  {
     version: "v287",
     date: "2026-11-10",
     key: "release_v287",

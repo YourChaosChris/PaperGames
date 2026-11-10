@@ -16,7 +16,7 @@ Object.assign(STRINGS.en, {
     yut_term_finish: "The finish",
     yut_rules_finish: "A piece that moves past the start field is home. The first player to bring all four pieces home wins.",
     yut_term_players: "Players",
-    yut_rules_players: "2 to 4 players. You play A, the others are played by the computer, on Easy or Hard. The pieces are told apart by shape and letter: circle A, square B, triangle C, diamond D.",
+    yut_rules_players: "2 to 4 players. You choose your side (A to D) and who starts: you, the computer or chance. The others are played by the computer, on Easy or Hard. The pieces are told apart by shape and letter: circle A, square B, triangle C, diamond D.",
     yut_history_title: "The History of Yut",
     yut_history_origins_title: "A Korean folk game",
     yut_history_origins_p1: "Yut Nori (yunnori) is a traditional game of Korea. Families and neighbours play it together, especially at the Lunar New Year (Seollal). Its exact origin is uncertain; it is generally counted among the old folk games of Korea. The throws have animal names in Korean tradition: do, gae, geol, yut and mo.",

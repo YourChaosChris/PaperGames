@@ -16,7 +16,7 @@ Object.assign(STRINGS.nl, {
     yut_term_finish: "De finish",
     yut_rules_finish: "Een steen die het startveld voorbijgaat is thuis. De eerste speler die alle vier de stenen thuis heeft gebracht, wint.",
     yut_term_players: "Spelers",
-    yut_rules_players: "2 tot 4 spelers. Jij speelt A, de anderen worden bestuurd door de computer, op Makkelijk of Moeilijk. De stenen zijn te onderscheiden door vorm en letter: cirkel A, vierkant B, driehoek C, ruit D.",
+    yut_rules_players: "2 tot 4 spelers. Je kiest je kant (A tot D) en wie begint: jij, de computer of het toeval. De anderen worden bestuurd door de computer, op Makkelijk of Moeilijk. De stenen zijn te onderscheiden door vorm en letter: cirkel A, vierkant B, driehoek C, ruit D.",
     yut_history_title: "De geschiedenis van Yut",
     yut_history_origins_title: "Een Koreaans volksspel",
     yut_history_origins_p1: "Yut Nori (yunnori) is een traditioneel spel uit Korea. Families en buren spelen het samen, vooral tijdens het Maannieuwjaar (Seollal). De exacte oorsprong is onzeker; het wordt over het algemeen gerekend tot de oude volksspelen van Korea. De worpen hebben dierennamen in de Koreaanse traditie: do, gae, geol, yut en mo.",

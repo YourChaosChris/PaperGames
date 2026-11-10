@@ -70,7 +70,8 @@
     for (let p = 0; p < players; p++) {
       for (let i = 0; i < per; i++) pieces.push({ id: p * per + i, player: p, route: [], done: false });
     }
-    return { players, piecesPerPlayer: per, pieces, turn: 0, pending: [], owed: 1, winner: null };
+    const first = opts && Number.isInteger(opts.first) && opts.first >= 0 && opts.first < players ? opts.first : 0; // task 193: who starts
+    return { players, piecesPerPlayer: per, pieces, turn: first, pending: [], owed: 1, winner: null };
   }
 
   const clone = (s) => JSON.parse(JSON.stringify(s));

@@ -1,7 +1,8 @@
 // yut-app.js
 // Yut (Yut Nori) page: board drawing, input and computer turns.
 // Rules live in yut-core.js, the computer's choices in yut-ai.js.
-// You play A; the other players are the computer.
+// You choose your side (A to D, A by default) and who starts (task 193);
+// the other players are the computer.
 
 const YUT_SAVE_KEY = "einkchess_save_yut";
 const YUT_LETTERS = ["A", "B", "C", "D"];
@@ -28,7 +29,7 @@ const YUT_XY = (function () {
 // 10, and the centre after diagonal A, task 192).
 const YUT_CHOICE_KEYS = { ring: "yut_ring", diag: "yut_shortcut", straight: "yut_straight" };
 
-const AppStateYut = { g: null, players: 2, level: 2, sel: 0, from: null, hint: null, note: null, busy: false, over: false, timer: null };
+const AppStateYut = { g: null, players: 2, human: 0, level: 2, sel: 0, from: null, hint: null, note: null, busy: false, over: false, timer: null };
 
 function ty(key, params) {
   let s = I18n.t(key);
@@ -37,7 +38,7 @@ function ty(key, params) {
 }
 
 function posYut(pc) { return pc.route.length ? pc.route[pc.route.length - 1] : -1; }
-function humanTurnYut() { return AppStateYut.g && AppStateYut.g.turn === 0 && AppStateYut.g.winner === null; }
+function humanTurnYut() { return AppStateYut.g && AppStateYut.g.turn === AppStateYut.human && AppStateYut.g.winner === null; }
 function stepsYut() { const g = AppStateYut.g; return g.pending[Math.min(AppStateYut.sel, g.pending.length - 1)]; }
 function movesYut() { const g = AppStateYut.g; return g.pending.length ? YutCore.legalMoves(g, stepsYut()) : []; }
 
@@ -67,9 +68,9 @@ function noteTextYut() {
 
 function statusTextYut() {
   const g = AppStateYut.g;
-  if (g.winner !== null) return ty(g.winner === 0 ? "ui_status_you_win" : "ui_status_computer_wins");
-  if (g.turn !== 0) return ty("ui_status_computer_turn");
-  return ty("ui_status_your_turn") + (g.owed > 0 ? "" : " " + ty("yut_status_move", { p: YUT_LETTERS[0] }));
+  if (g.winner !== null) return ty(g.winner === AppStateYut.human ? "ui_status_you_win" : "ui_status_computer_wins");
+  if (g.turn !== AppStateYut.human) return ty("ui_status_computer_turn");
+  return ty("ui_status_your_turn") + (g.owed > 0 ? "" : " " + ty("yut_status_move", { p: YUT_LETTERS[AppStateYut.human] }));
 }
 
 function renderYut() {
@@ -90,7 +91,7 @@ function renderYut() {
   Object.keys(groups).forEach((k) => {
     const gr = groups[k];
     const x = YUT_XY[k][0], y = YUT_XY[k][1];
-    const can = gr[0].player === 0 && mv.some((m) => m.from === +k);
+    const can = gr[0].player === st.human && mv.some((m) => m.from === +k);
     h += "<g" + (can ? ' data-from="' + k + '" role="button" tabindex="0" aria-label="' + YUT_LETTERS[gr[0].player] + " " + k + '"' : "") + ">" + shapeYut(gr[0].player, x, y, st.from === +k);
     if (gr.length > 1) h += '<circle cx="' + (x + 18) + '" cy="' + (y - 18) + '" r="11" fill="#141413"/><text x="' + (x + 18) + '" y="' + (y - 13) + '" text-anchor="middle" font-size="14" fill="#fff">' + gr.length + "</text>";
     if (can) h += '<circle cx="' + x + '" cy="' + y + '" r="26" fill="none" stroke="#141413" stroke-width="2" stroke-dasharray="5 4"/>';
@@ -140,7 +141,7 @@ function renderYut() {
 
 function saveYut() {
   if (typeof GameStorage === "undefined" || !AppStateYut.g) return;
-  GameStorage.save(YUT_SAVE_KEY, { players: AppStateYut.players, level: AppStateYut.level, g: AppStateYut.g, note: AppStateYut.note });
+  GameStorage.save(YUT_SAVE_KEY, { players: AppStateYut.players, human: AppStateYut.human, level: AppStateYut.level, g: AppStateYut.g, note: AppStateYut.note });
 }
 function clearSaveYut() { if (typeof GameStorage !== "undefined") GameStorage.clear(YUT_SAVE_KEY); }
 
@@ -160,7 +161,7 @@ function finishYut() {
   const text = ty("yut_win", { p: YUT_LETTERS[st.g.winner] });
   const res = document.getElementById("game-result");
   if (res) res.textContent = text;
-  if (typeof GameStats !== "undefined") GameStats.record("yut", st.g.winner === 0 ? "win" : "loss");
+  if (typeof GameStats !== "undefined") GameStats.record("yut", st.g.winner === st.human ? "win" : "loss");
   clearSaveYut();
   renderYut();
   if (window.ResultModal) window.ResultModal.show(text, "");
@@ -204,12 +205,12 @@ function safeYut(fn) {
 
 function scheduleYut() {
   const st = AppStateYut;
-  if (!st.g || st.g.winner !== null || st.g.turn === 0 || st.busy) return;
+  if (!st.g || st.g.winner !== null || st.g.turn === st.human || st.busy) return;
   st.busy = true;
   const wait = typeof AiPacing !== "undefined" ? AiPacing.delay(500) : 700;
   st.timer = setTimeout(safeYut(() => {
     st.busy = false;
-    if (!st.g || st.g.winner !== null || st.g.turn === 0) return;
+    if (!st.g || st.g.winner !== null || st.g.turn === st.human) return;
     if (st.g.owed > 0) { throwYut(); return; }
     const m = YutAI.chooseMove(st.g, Math.random, st.level);
     if (m) moveYut(m); else afterYut();
@@ -223,7 +224,17 @@ function startYut(fromSave) {
   if (!fromSave) {
     st.players = parseInt(document.getElementById("yut-num-players").value, 10);
     st.level = parseInt(document.getElementById("yut-level").value, 10);
-    st.g = YutCore.createGame({ players: st.players, piecesPerPlayer: 4 });
+    // Task 193: choose your side and who starts. The shared setting "Who
+    // moves first = Random" also draws the side.
+    const sides = []; for (let i = 0; i < st.players; i++) sides.push(i);
+    const sideSel = parseInt(document.getElementById("yut-side").value, 10);
+    st.human = typeof RandomStart !== "undefined" ? RandomStart.choose(sideSel < st.players ? sideSel : 0, sides) : (sideSel < st.players ? sideSel : 0);
+    const firstSel = document.getElementById("yut-first").value;
+    const others = sides.filter((i) => i !== st.human);
+    let first = st.human;
+    if (firstSel === "computer") first = others[Math.floor(Math.random() * others.length)];
+    else if (firstSel === "random") first = sides[Math.floor(Math.random() * sides.length)];
+    st.g = YutCore.createGame({ players: st.players, piecesPerPlayer: 4, first: first });
     st.note = null;
   }
   st.sel = 0; st.from = null; st.hint = null; st.over = false;
@@ -250,6 +261,18 @@ function initYutApp() {
     });
   }
   document.getElementById("start-yut-game").addEventListener("click", () => startYut(false));
+  // Task 193: the side list follows the number of players.
+  const playersSel = document.getElementById("yut-num-players");
+  const sideEl = document.getElementById("yut-side");
+  const fillSides = () => {
+    const n = parseInt(playersSel.value, 10), keep = sideEl.value;
+    let o = "";
+    for (let i = 0; i < n; i++) o += '<option value="' + i + '">' + YUT_LETTERS[i] + "</option>";
+    sideEl.innerHTML = o;
+    sideEl.value = +keep < n ? keep : "0";
+  };
+  playersSel.addEventListener("change", fillSides);
+  fillSides();
   const board = document.getElementById("yut-board");
   const onBoard = safeYut((e) => {
     const el = e.target.closest("[data-mv],[data-from]");
@@ -278,7 +301,7 @@ function initYutApp() {
   if (typeof I18n.onChange === "function") I18n.onChange(() => { if (AppStateYut.g) renderYut(); });
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(YUT_SAVE_KEY) : null;
   if (saved && saved.g && saved.g.winner === null && Array.isArray(saved.g.pieces)) {
-    Object.assign(AppStateYut, { players: saved.players, level: saved.level, g: saved.g, note: saved.note || null });
+    Object.assign(AppStateYut, { players: saved.players, human: Number.isInteger(saved.human) && saved.human >= 0 && saved.human < saved.players ? saved.human : 0, level: saved.level, g: saved.g, note: saved.note || null });
     startYut(true);
   }
 }

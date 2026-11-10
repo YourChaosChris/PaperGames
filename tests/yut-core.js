@@ -166,4 +166,22 @@ let centreChoices = 0;
   }
 });
 assert(centreChoices > 0, "the random games reach the centre choice");
+// Task 193: who starts. createGame({ first }) sets the first player; a value
+// outside the players falls back to player 0.
+assert.strictEqual(Y.createGame({ players: 2, piecesPerPlayer: 4 }).turn, 0);
+assert.strictEqual(Y.createGame({ players: 3, piecesPerPlayer: 4, first: 2 }).turn, 2);
+assert.strictEqual(Y.createGame({ players: 2, piecesPerPlayer: 4, first: 5 }).turn, 0);
+assert.strictEqual(Y.createGame({ players: 2, piecesPerPlayer: 4, first: -1 }).turn, 0);
+{
+  // A full game started by player 1 plays to the end like any other.
+  const rng2 = (() => { let x = 7; return () => { x = (x * 1103515245 + 12345) % 2147483648; return x / 2147483648; }; })();
+  let s2 = Y.createGame({ players: 2, piecesPerPlayer: 4, first: 1 });
+  for (let i = 0; i < 4000 && s2.winner === null; i++) {
+    if (s2.owed > 0) { s2 = Y.skipUnusable(Y.addThrow(s2, Y.throwSticks(rng2))); continue; }
+    const all = []; s2.pending.forEach((st) => Y.legalMoves(s2, st).forEach((m) => all.push(m)));
+    if (!all.length) { s2 = Y.skipUnusable(s2); continue; }
+    s2 = Y.applyMove(s2, all[Math.floor(rng2() * all.length)]);
+  }
+  assert(s2.winner !== null, "a game started by player 1 ends");
+}
 console.log("yut-core: ALL CHECKS PASS");

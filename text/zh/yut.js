@@ -16,7 +16,7 @@ Object.assign(STRINGS.zh, {
     yut_term_finish: "终点",
     yut_rules_finish: "越过起点格子的棋子即到达终点。第一个将四枚棋子全部送到终点的玩家获胜。",
     yut_term_players: "玩家",
-    yut_rules_players: "2至4名玩家。你扮演A，其余由电脑扮演，可选择简单或困难难度。棋子通过形状和字母区分：圆形A、方形B、三角形C、菱形D。",
+    yut_rules_players: "2至4名玩家。你可以选择自己的一方（A到D）以及谁先开始：你、电脑或随机。其余由电脑扮演，可选择简单或困难难度。棋子通过形状和字母区分：圆形A、方形B、三角形C、菱形D。",
     yut_history_title: "Yut 的历史",
     yut_history_origins_title: "韩国民间游戏",
     yut_history_origins_p1: "Yut Nori（yunnori）是韩国的传统游戏。家人和邻居经常一起玩，尤其是在农历新年（Seollal）期间。其确切起源尚不明确；它通常被归类为韩国的古老民间游戏。在韩国传统中，这些投掷结果有动物名称：do、gae、geol、yut 和 mo。",

@@ -16,7 +16,7 @@ Object.assign(STRINGS.it, {
     yut_term_finish: "L'arrivo",
     yut_rules_finish: "Una pedina che supera la casella di partenza è arrivata a casa. Il primo giocatore che porta tutte e quattro le pedine a casa vince.",
     yut_term_players: "Giocatori",
-    yut_rules_players: "Da 2 a 4 giocatori. Tu giochi come A, gli altri sono gestiti dal computer, a livello Facile o Difficile. Le pedine si distinguono per forma e lettera: cerchio A, quadrato B, triangolo C, rombo D.",
+    yut_rules_players: "Da 2 a 4 giocatori. Scegli il tuo lato (da A a D) e chi inizia: tu, il computer o il caso. Gli altri sono gestiti dal computer, a livello Facile o Difficile. Le pedine si distinguono per forma e lettera: cerchio A, quadrato B, triangolo C, rombo D.",
     yut_history_title: "La storia di Yut",
     yut_history_origins_title: "Un gioco popolare coreano",
     yut_history_origins_p1: "Yut Nori (yunnori) è un gioco tradizionale della Corea. Famiglie e vicini ci giocano insieme, specialmente durante il Capodanno lunare (Seollal). La sua origine esatta è incerta; è generalmente annoverato tra gli antichi giochi popolari della Corea. I lanci hanno nomi di animali nella tradizione coreana: do, gae, geol, yut e mo.",

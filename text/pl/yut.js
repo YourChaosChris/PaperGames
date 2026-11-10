@@ -16,7 +16,7 @@ Object.assign(STRINGS.pl, {
     yut_term_finish: "Meta",
     yut_rules_finish: "Pionek, który minie pole startowe, dociera do mety. Wygrywa gracz, który jako pierwszy doprowadzi do mety wszystkie cztery pionki.",
     yut_term_players: "Gracze",
-    yut_rules_players: "Od 2 do 4 graczy. Grasz jako A, pozostałymi steruje komputer na poziomie łatwym lub trudnym. Pionki różnią się kształtem i literą: koło A, kwadrat B, trójkąt C, romb D.",
+    yut_rules_players: "Od 2 do 4 graczy. Wybierasz swoją stronę (od A do D) i to, kto zaczyna: ty, komputer lub los. Pozostałymi steruje komputer na poziomie łatwym lub trudnym. Pionki różnią się kształtem i literą: koło A, kwadrat B, trójkąt C, romb D.",
     yut_history_title: "Historia Yut",
     yut_history_origins_title: "Koreańska gra ludowa",
     yut_history_origins_p1: "Yut Nori (yunnori) to tradycyjna gra z Korei. Rodziny i sąsiedzi grają w nią razem, zwłaszcza podczas Księżycowego Nowego Roku (Seollal). Jej dokładne pochodzenie jest niepewne; powszechnie zalicza się ją do dawnych gier ludowych Korei. Rzuty mają w koreańskiej tradycji nazwy zwierząt: do, gae, geol, yut i mo.",

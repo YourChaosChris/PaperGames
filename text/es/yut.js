@@ -16,7 +16,7 @@ Object.assign(STRINGS.es, {
     yut_term_finish: "La meta",
     yut_rules_finish: "Una pieza que pasa la casilla de salida llega a la meta. El primer jugador en llevar las cuatro piezas a la meta gana.",
     yut_term_players: "Jugadores",
-    yut_rules_players: "De 2 a 4 jugadores. Juegas como A, los demás son manejados por la computadora, en nivel Fácil o Difícil. Las piezas se distinguen por su forma y letra: círculo A, cuadrado B, triángulo C, rombo D.",
+    yut_rules_players: "De 2 a 4 jugadores. Eliges tu lado (de A a D) y quién empieza: tú, la computadora o el azar. Los demás son manejados por la computadora, en nivel Fácil o Difícil. Las piezas se distinguen por su forma y letra: círculo A, cuadrado B, triángulo C, rombo D.",
     yut_history_title: "La historia de Yut",
     yut_history_origins_title: "Un juego folclórico coreano",
     yut_history_origins_p1: "Yut Nori (yunnori) es un juego tradicional de Corea. Las familias y los vecinos juegan juntos, especialmente en el Año Nuevo Lunar (Seollal). Su origen exacto es incierto; generalmente se cuenta entre los antiguos juegos folclóricos de Corea. Los lanzamientos tienen nombres de animales en la tradición coreana: do, gae, geol, yut y mo.",

@@ -186,8 +186,8 @@ all parts back into one log in list order. The last line is exactly
   Checks both "Snakes and Ladders" boards and plays 1000 computer games
   per board and finishing rule; every game must end with no token
   outside the board.
-- `node tests/yut-core.js` and `node tests/yut-ai.js` - no server or browser needed. Rules of Yut (path, shortcuts, the choice home or straight on when a piece stops on the centre after diagonal A (task 192), captures, stacks, backdo, extra throws), 3000 random games and a computer-versus-computer series in which level 2 must beat level 1.
-- `node tests/yut-ui.js` - Yut in the browser at 360 px: taps, computer answers, language switch, a backdo on the first field (target on the start field, the piece waits again, no error; task 191), the safety net after a broken move, the centre choice with a capture straight on, the translated corner labels, the reason shown when only home is possible (task 192), a won game and the statistics.
+- `node tests/yut-core.js` and `node tests/yut-ai.js` - no server or browser needed. Rules of Yut (path, shortcuts, the choice home or straight on when a piece stops on the centre after diagonal A (task 192), captures, stacks, backdo, extra throws), 3000 random games, the first player (task 193) and a computer-versus-computer series in which level 2 must beat level 1.
+- `node tests/yut-ui.js` - Yut in the browser at 360 px: taps, computer answers, language switch, a backdo on the first field (target on the start field, the piece waits again, no error; task 191), the safety net after a broken move, the centre choice with a capture straight on, the translated corner labels, the reason shown when only home is possible (task 192), the choice of side (A to D) and of who starts, also after a reload (task 193), a won game and the statistics.
 - `node tests/blockers-core.js` - no server or browser needed. Plays
   500 "Blocked Path" games each for 2, 3 and 4 players with mixed
   computer levels and fails unless every move uses the full roll, steps

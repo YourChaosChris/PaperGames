@@ -67,8 +67,20 @@
     <button id="start-yut-game" class="primary" data-i18n="ui_new_game">New game</button>
   </div>
   <div class="field-row">
-    <label for="yut-num-players" data-i18n="yut_players_label">Players (you are A, the others are the computer):</label>
+    <label for="yut-num-players" data-i18n="yut_players_label">Players (the others are the computer):</label>
     <select id="yut-num-players"><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option></select>
+  </div>
+  <div class="field-row">
+    <label for="yut-side" data-i18n="yut_side_label">You play:</label>
+    <select id="yut-side"><option value="0" selected>A</option><option value="1">B</option></select>
+  </div>
+  <div class="field-row">
+    <label for="yut-first" data-i18n="sl_first_label">Who starts:</label>
+    <select id="yut-first">
+      <option value="me" selected data-i18n="sl_first_me">Me</option>
+      <option value="computer" data-i18n="sl_first_computer">Computer</option>
+      <option value="random" data-i18n="sl_first_random">Random</option>
+    </select>
   </div>
   <div class="field-row">
     <label for="yut-level" data-i18n="yut_level_label">Computer level:</label>
