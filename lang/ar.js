@@ -748,6 +748,8 @@ STRINGS.ar = {
     msg_rm_joker_end_choice: "الجوكر يناسب طرفي المتتالية: أين تضعه؟",
     msg_t_rm_joker_low: "أضف في الأسفل (بدل {s})",
     msg_t_rm_joker_high: "أضف في الأعلى (بدل {s})",
+    msg_rm_joker_meld_choice: "يمكن أن يكون الجوكر في أي من طرفي المتتالية: بدل أي ورقة؟",
+    msg_t_rm_joker_pick: "الجوكر بدل {s}",
     msg_t_rm_knock_btn: "اطرق على {s}",
     msg_t_rm_status_hand: "رمي اليد · نقاط الجزاء: {n}",
     msg_t_rm_round_hand: "الجولة {n} · رمي اليد",

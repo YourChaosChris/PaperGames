@@ -767,6 +767,8 @@ STRINGS.fr = {
     msg_rm_joker_end_choice: "Le joker convient aux deux bouts de la suite : où le placer ?",
     msg_t_rm_joker_low: "Ajouter en bas (comme {s})",
     msg_t_rm_joker_high: "Ajouter en haut (comme {s})",
+    msg_rm_joker_meld_choice: "Le joker peut se placer aux deux bouts de la suite : pour quelle carte ?",
+    msg_t_rm_joker_pick: "Joker comme {s}",
     msg_t_rm_knock_btn: "Frapper sur le {s}",
     msg_t_rm_status_hand: "Hand-Rommé · Points de pénalité : {n}",
     msg_t_rm_round_hand: "Manche {n} · Hand-Rommé",

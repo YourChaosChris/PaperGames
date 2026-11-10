@@ -846,6 +846,8 @@ const STRINGS = {
     msg_rm_joker_end_choice: "The joker fits at both ends of the run: where should it go?",
     msg_t_rm_joker_low: "Add below (as {s})",
     msg_t_rm_joker_high: "Add above (as {s})",
+    msg_rm_joker_meld_choice: "The joker can stand for a card at either end of the run: which one?",
+    msg_t_rm_joker_pick: "Joker as {s}",
     msg_t_rm_knock_btn: "Knock on the {s}",
     msg_t_rm_status_hand: "Hand-Rommé · Penalty points: {n}",
     msg_t_rm_round_hand: "Round {n} · Hand-Rommé",

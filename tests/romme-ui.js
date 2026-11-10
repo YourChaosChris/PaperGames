@@ -3,6 +3,8 @@
 //   - a joker tapped onto a run with room at both ends asks "Unten anlegen
 //     (als 3♥)" / "Oben anlegen (als 7♥)"; below, then the 2 of hearts
 //     empties the hand;
+//   - task 214: Q♥, K♥ and a joker laid out as a new run ask "Joker als J♥"
+//     / "Joker als A♥"; both answers are reachable;
 //   - knocking: the "Klopfen auf …" button shows only when the human is
 //     not next; after knocking the computer decides; when it gives the
 //     card, only discarding is possible and the player after the human
@@ -115,6 +117,30 @@ const overflow = (page) => page.evaluate(() => document.documentElement.scrollWi
     const won = await page.evaluate(() => ({ over: AppStateRomme.state.over, winner: AppStateRomme.state.winner }));
     check(w + "106: the 2 follows, round won", won.over && won.winner === 0);
     await page.evaluate(() => window.ResultModal && window.ResultModal.hide());
+
+    // ---- 214: Q, K and a joker as a new run: Jack or Ace ------------------
+    for (const pick of ["low", "high"]) {
+      await setState(page, { players: 2, dealer: 1 }, `
+        const q = card(12, "H"), k = card(13, "H"), j = joker();
+        s.players[0].hand = [q, k, j, card(2, "C"), card(7, "D")];
+        s.players[0].opened = true; s.players[1].opened = true;
+        s.melds = []; s.turn = 0; s.phase = "play"; s.firstTurn = false;
+        window.__ids = { q: q.id, k: k.id, j: j.id };`);
+      const ids214 = await page.evaluate(() => window.__ids);
+      for (const id of [ids214.q, ids214.k, ids214.j]) await tapCard(page, id);
+      await page.click("#romme-meld-button");
+      check(w + "214: both buttons shown", (await visible(page, "#romme-choice-low")) && (await visible(page, "#romme-choice-high")));
+      check(w + "214: add/split buttons hidden", !(await visible(page, "#romme-choice-extend")) && !(await visible(page, "#romme-choice-split")));
+      const l214 = await text(page, "#romme-choice-low"), h214 = await text(page, "#romme-choice-high");
+      check(w + "214: labels Joker als J / A: " + l214 + " / " + h214, /^Joker als J♥/.test(l214.trim()) && /^Joker als A♥/.test(h214.trim()));
+      check(w + "214: question in German", (await text(page, "#board-info")).includes("Der Joker kann an beiden Enden"));
+      check(w + "214: nothing laid out before the answer", (await page.evaluate(() => AppStateRomme.state.melds.length)) === 0);
+      check(w + "214: no sideways scroll with the choice", (await overflow(page)) <= 0);
+      await page.click("#romme-choice-" + pick);
+      const r214 = await page.evaluate(() => AppStateRomme.state.melds.length ? AppStateRomme.state.melds[0].entries.map((e) => (e.card.joker ? "*" : "") + e.rank).join(",") : "");
+      check(w + "214: " + pick + " gives " + r214, r214 === (pick === "low" ? "*11,12,13" : "12,13,*14"));
+      check(w + "214: buttons gone after the answer", !(await visible(page, "#romme-choice-low")) && !(await visible(page, "#romme-choice-high")));
+    }
 
     // ---- 108: knocking -------------------------------------------------
     // Computer 1 has discarded, Computer 2 is to draw, the human may knock.

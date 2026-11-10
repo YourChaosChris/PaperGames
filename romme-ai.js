@@ -156,7 +156,35 @@ const RommeAi = (function () {
       const grown = C.extendMeld(meld, joker, e.end);
       if (grown && rest.some((c) => C.extendMeld(grown, c))) return e.end;
     }
-    return "high";
+    // Task 214: otherwise not as an ace (that end is closed afterwards).
+    const plain = ends.find((e) => e.rank !== 1 && e.rank !== 14);
+    return plain ? plain.end : "high";
+  }
+
+  // Task 214: a new run whose left-over jokers could go below or above.
+  // Like jokerEndFor: where a natural hand card can follow at once, else
+  // not as an ace; before the first meld never for fewer points than the
+  // plain build (the threshold sums count on it). undefined: no choice.
+  function jokerLowFor(s, hand, ids) {
+    const cards = ids.map((id) => hand.find((c) => c.id === id));
+    if (cards.some((c) => !c)) return undefined;
+    let choices = C.runJokerChoices(cards);
+    if (choices.length < 2) return undefined;
+    if (!s.players[s.turn].opened) {
+      const plain = C.buildMeld(cards);
+      const need = plain ? C.meldValue(plain) : 0;
+      choices = choices.filter((o) => C.meldValue(o.meld) >= need);
+      if (!choices.length) return undefined;
+    }
+    const rest = hand.filter((c) => ids.indexOf(c.id) === -1 && !c.joker);
+    const score = (m) => {
+      const first = m.entries[0], last = m.entries[m.entries.length - 1];
+      const aceJoker = (first.card.joker && first.rank === 1) || (last.card.joker && last.rank === 14);
+      return (rest.some((c) => C.extendMeld(m, c)) ? 2 : 0) + (aceJoker ? 0 : 1);
+    };
+    let best = choices[0];
+    choices.forEach((o) => { if (score(o.meld) > score(best.meld)) best = o; });
+    return best.low;
   }
 
   function extendMove(s, i, hand, card) {
@@ -221,6 +249,15 @@ const RommeAi = (function () {
   }
 
   function chooseMove(s, level, rng) {
+    const move = chooseMovePlain(s, level, rng);
+    if (move && move.type === "meld") {
+      const low = jokerLowFor(s, s.players[s.turn].hand, move.ids);
+      if (low !== undefined) move.low = low;
+    }
+    return move;
+  }
+
+  function chooseMovePlain(s, level, rng) {
     const random = rng || Math.random;
     const p = s.turn;
     const pl = s.players[p];

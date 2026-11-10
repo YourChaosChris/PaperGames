@@ -834,6 +834,8 @@ STRINGS.de = {
     msg_rm_joker_end_choice: "Der Joker passt an beide Enden der Folge: Wohin soll er?",
     msg_t_rm_joker_low: "Unten anlegen (als {s})",
     msg_t_rm_joker_high: "Oben anlegen (als {s})",
+    msg_rm_joker_meld_choice: "Der Joker kann an beiden Enden der Folge stehen: Für welche Karte?",
+    msg_t_rm_joker_pick: "Joker als {s}",
     msg_t_rm_knock_btn: "Klopfen auf die {s}",
     msg_t_rm_status_hand: "Hand-Rommé · Strafpunkte: {n}",
     msg_t_rm_round_hand: "Runde {n} · Hand-Rommé",

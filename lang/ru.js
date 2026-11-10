@@ -767,6 +767,8 @@ STRINGS.ru = {
     msg_rm_joker_end_choice: "Джокер подходит к обоим концам последовательности: куда его положить?",
     msg_t_rm_joker_low: "Добавить снизу (как {s})",
     msg_t_rm_joker_high: "Добавить сверху (как {s})",
+    msg_rm_joker_meld_choice: "Джокер может стоять на обоих концах последовательности: вместо какой карты?",
+    msg_t_rm_joker_pick: "Джокер как {s}",
     msg_t_rm_knock_btn: "Постучать на {s}",
     msg_t_rm_status_hand: "Рамми с руки · Штрафные очки: {n}",
     msg_t_rm_round_hand: "Раунд {n} · рамми с руки",

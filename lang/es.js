@@ -767,6 +767,8 @@ STRINGS.es = {
     msg_rm_joker_end_choice: "El comodín cabe en los dos extremos de la escalera: ¿dónde lo pones?",
     msg_t_rm_joker_low: "Añadir abajo (como {s})",
     msg_t_rm_joker_high: "Añadir arriba (como {s})",
+    msg_rm_joker_meld_choice: "El comodín puede ir en los dos extremos de la escalera: ¿qué carta sustituye?",
+    msg_t_rm_joker_pick: "Comodín como {s}",
     msg_t_rm_knock_btn: "Golpear por el {s}",
     msg_t_rm_status_hand: "Hand-Rommé · Puntos de penalización: {n}",
     msg_t_rm_round_hand: "Ronda {n} · Hand-Rommé",

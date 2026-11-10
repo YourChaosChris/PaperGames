@@ -767,6 +767,8 @@ STRINGS.it = {
     msg_rm_joker_end_choice: "Il jolly sta a entrambe le estremità della scala: dove lo metti?",
     msg_t_rm_joker_low: "Aggiungi sotto (come {s})",
     msg_t_rm_joker_high: "Aggiungi sopra (come {s})",
+    msg_rm_joker_meld_choice: "Il jolly può stare a entrambe le estremità della scala: per quale carta?",
+    msg_t_rm_joker_pick: "Jolly come {s}",
     msg_t_rm_knock_btn: "Bussa per il {s}",
     msg_t_rm_status_hand: "Hand-Rommé · Punti di penalità: {n}",
     msg_t_rm_round_hand: "Mano {n} · Hand-Rommé",

@@ -74,6 +74,8 @@
 //     and no card discarded; it can't be used to split a run.
 //   - A joker added to a run with room at both ends goes to the end the
 //     player chooses (move "extend" with `end`; task 106, 24.10.2026).
+//     So does a joker left over in a new run, e.g. Q, K and a joker as
+//     J-Q-K or Q-K-A (move "meld" with `low`; task 214, 10.11.2026).
 //   - handRule, "Hand-Rommé" (default off; asked for by a player on
 //     24.10.2026, after pagat.com "Rummy"; the sources differ in detail,
 //     PaperGames fixed it like this): nobody lays out or adds to melds
@@ -148,8 +150,10 @@ const RommeCore = (function () {
   }
 
   // The meld these cards form, or null. Jokers in a run fill gaps first,
-  // then extend upwards, then downwards.
-  function buildMeld(cards) {
+  // then extend upwards, then downwards. Task 214: `low` (optional) is the
+  // number of the remaining jokers that go below the lowest card, the
+  // others go above (null if they don't fit there); see runJokerChoices.
+  function buildMeld(cards, low) {
     if (cards.length < 3) return null;
     const naturals = cards.filter((c) => !c.joker);
     const jokers = cards.filter((c) => c.joker);
@@ -187,14 +191,45 @@ const RommeCore = (function () {
         if (i > 0) for (let r = placed[i - 1].rank + 1; r < placed[i].rank; r++) entries.push({ card: jokers[j++], rank: r, suit });
         entries.push({ card: placed[i].card, rank: placed[i].rank, suit });
       }
-      let low = placed[0].rank, high = placed[placed.length - 1].rank;
+      let bottom = placed[0].rank, high = placed[placed.length - 1].rank;
+      if (typeof low === "number") {
+        const rest = jokers.length - j;
+        if (low < 0 || low > rest || low > bottom - 1 || rest - low > 14 - high) continue;
+        for (let k = 0; k < rest - low; k++) { high++; entries.push({ card: jokers[j++], rank: high, suit }); }
+        for (let k = 0; k < low; k++) { bottom--; entries.unshift({ card: jokers[j++], rank: bottom, suit }); }
+      }
       while (j < jokers.length && high < 14) { high++; entries.push({ card: jokers[j++], rank: high, suit }); }
-      while (j < jokers.length && low > 1) { low--; entries.unshift({ card: jokers[j++], rank: low, suit }); }
+      while (j < jokers.length && bottom > 1) { bottom--; entries.unshift({ card: jokers[j++], rank: bottom, suit }); }
       if (j < jokers.length) continue;
       if (entries.length > 13) continue;
       return { type: "run", entries };
     }
     return null;
+  }
+
+  // Task 214: the different runs these cards can form when jokers are
+  // left over after filling the gaps and could go below or above, e.g.
+  // Q, K and a joker: [{ low: 1, meld: J-Q-K }, { low: 0, meld: Q-K-A }],
+  // lowest run first. Fewer than two entries: nothing to choose.
+  function runJokerChoices(cards) {
+    const out = [];
+    const n = cards.filter((c) => c.joker).length;
+    for (let low = n; low >= 0; low--) {
+      const meld = buildMeld(cards, low);
+      if (!meld || meld.type !== "run") continue;
+      if (out.some((o) => o.meld.entries[0].rank === meld.entries[0].rank)) continue;
+      out.push({ low, meld });
+    }
+    out.sort((a, b) => a.meld.entries[0].rank - b.meld.entries[0].rank);
+    return out;
+  }
+
+  // The jokers of `meld` standing at its low or high end (for labels):
+  // [{ rank, suit }, ...].
+  function endJokers(meld) {
+    return meld.entries.filter((e, i) => e.card.joker &&
+      (meld.entries.slice(0, i).every((x) => x.card.joker) || meld.entries.slice(i + 1).every((x) => x.card.joker)))
+      .map((e) => ({ rank: e.rank, suit: e.suit }));
   }
 
   // The ends of a run a joker may be added to: [{ end: "low"|"high",
@@ -552,7 +587,8 @@ const RommeCore = (function () {
     if (move.type === "meld") {
       const cards = move.ids.map((id) => pl.hand.find((c) => c.id === id));
       if (cards.some((c) => !c)) return { ok: false, state, reason: "not-in-hand" };
-      const meld = buildMeld(cards);
+      // Task 214: `low` places left-over jokers of a run (runJokerChoices).
+      const meld = buildMeld(cards, typeof move.low === "number" ? move.low : undefined);
       if (!meld) return { ok: false, state, reason: "not-a-meld" };
       if (s.pendingJoker !== null && !move.ids.includes(s.pendingJoker)) return { ok: false, state, reason: "joker-first" };
       takeFromHand(pl.hand, move.ids);
@@ -771,7 +807,7 @@ const RommeCore = (function () {
 
   return {
     SUITS, JOKERS, THRESHOLDS, DEFAULT_THRESHOLD, ROUND_CHOICES, MAX_RESHUFFLES, makeDeck, handValue, entryValue, meldValue, buildMeld,
-    extendMeld, jokerEnds, canKnock, jokerSlotFor, jokerUsable, jokerFitsTable, createInitialState, nextRound, matchResult, canTakeFrom, takeOptions, splitIndex, discardCardOpen, topDiscard, pendingValue,
+    extendMeld, jokerEnds, runJokerChoices, endJokers, canKnock, jokerSlotFor, jokerUsable, jokerFitsTable, createInitialState, nextRound, matchResult, canTakeFrom, takeOptions, splitIndex, discardCardOpen, topDiscard, pendingValue,
     applyMove, cardCount, clone
   };
 })();

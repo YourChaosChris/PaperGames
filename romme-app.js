@@ -551,7 +551,20 @@ function onHandCardRomme(id) {
 function onMeldButtonRomme() {
   if (!humanCanActRomme()) return;
   if (AppStateRomme.selected.length < 3) { setStatusRomme("Select three or more cards for a meld."); return; }
-  humanMoveRomme({ type: "meld", ids: AppStateRomme.selected.slice() });
+  // Task 214: a joker that can stand below or above the new run (Q, K and
+  // a joker: jack or ace) - the player chooses, no fixed ace.
+  const s = AppStateRomme.state;
+  const ids = AppStateRomme.selected.slice();
+  const cards = ids.map((id) => s.players[s.turn].hand.find((c) => c.id === id));
+  const choices = cards.every(Boolean) ? RommeCore.runJokerChoices(cards) : [];
+  if (choices.length >= 2) {
+    AppStateRomme.choice = { newMeld: ids, lows: [choices[0].low, choices[choices.length - 1].low],
+      labels: [choices[0].meld, choices[choices.length - 1].meld].map((m) => RommeCore.endJokers(m).map((e) => CardFaces.labelAny(e)).join(", ")) };
+    setStatusRomme("The joker can stand for a card at either end of the run: which one?");
+    renderRomme();
+    return;
+  }
+  humanMoveRomme({ type: "meld", ids });
 }
 
 function onTableMeldRomme(index) {
@@ -606,8 +619,9 @@ function onChoiceRomme(split) {
 function onJokerEndRomme(end) {
   const c = AppStateRomme.choice;
   AppStateRomme.choice = null;
-  if (!c || !c.ends || !humanCanActRomme()) { renderRomme(); return; }
-  humanMoveRomme({ type: "extend", meld: c.meld, id: c.id, end });
+  if (!c || !(c.ends || c.newMeld) || !humanCanActRomme()) { renderRomme(); return; }
+  if (c.newMeld) humanMoveRomme({ type: "meld", ids: c.newMeld, low: c.lows[end === "low" ? 0 : 1] });
+  else humanMoveRomme({ type: "extend", meld: c.meld, id: c.id, end });
   renderRomme();
 }
 
@@ -831,13 +845,19 @@ function renderRomme() {
   I18n.setKey(document.getElementById("romme-sort-button"), getSortRomme() === "rank" ? "romme_sort_by_suit" : "romme_sort_by_rank");
   document.getElementById("romme-cancel-button").classList.toggle("hidden", !s.pending.length && !(s.takenIds && s.takenIds.length));
   const choice = AppStateRomme.choice;
-  const asking = !!choice && !choice.ends;
+  const asking = !!choice && !choice.ends && !choice.newMeld;
   document.getElementById("romme-choice-extend").classList.toggle("hidden", !asking);
   document.getElementById("romme-choice-split").classList.toggle("hidden", !asking);
-  // Which end for the joker: "Add below (as 3♥)" / "Add above (as 7♥)".
+  // Which end for the joker: "Add below (as 3♥)" / "Add above (as 7♥)";
+  // for a new run (task 214) "Joker as J♥" / "Joker as A♥".
   const ends = choice && choice.ends && s.melds[choice.meld] ? RommeCore.jokerEnds(s.melds[choice.meld]) : [];
-  ["low", "high"].forEach((end) => {
+  ["low", "high"].forEach((end, k) => {
     const btn = document.getElementById("romme-choice-" + end);
+    if (choice && choice.newMeld) {
+      btn.classList.remove("hidden");
+      I18n.setMsg(btn, "Joker as " + choice.labels[k]);
+      return;
+    }
     const e = ends.find((x) => x.end === end);
     btn.classList.toggle("hidden", !e);
     if (e) I18n.setMsg(btn, (end === "low" ? "Add below (as " : "Add above (as ") + CardFaces.labelAny({ rank: e.rank, suit: e.suit }) + ")");

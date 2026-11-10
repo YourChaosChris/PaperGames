@@ -776,6 +776,8 @@ STRINGS.pl = {
     msg_rm_joker_end_choice: "Joker pasuje do obu końców sekwensu: gdzie ma pójść?",
     msg_t_rm_joker_low: "Dołóż na dole (jako {s})",
     msg_t_rm_joker_high: "Dołóż na górze (jako {s})",
+    msg_rm_joker_meld_choice: "Joker może stać na obu końcach sekwensu: jako która karta?",
+    msg_t_rm_joker_pick: "Joker jako {s}",
     msg_t_rm_knock_btn: "Zapukaj po {s}",
     msg_t_rm_status_hand: "Hand-Rommé · Punkty karne: {n}",
     msg_t_rm_round_hand: "Rozdanie {n} · Hand-Rommé",

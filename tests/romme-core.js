@@ -142,6 +142,57 @@ const ranks = (m) => m.entries.map((e) => e.rank).join(",");
   ok(mv3.type === "extend" && mv3.id === j.id && mv3.end === "high", "106 AI: with the 8 the joker goes high: " + JSON.stringify(mv3));
 }
 
+// ---- Task 214: a joker at either end of a new run --------------------------
+{
+  // Queen, King and a joker: the joker can be the Jack or the Ace.
+  const q = card(12, "H"), k = card(13, "H"), j = joker();
+  const choices = C.runJokerChoices([q, k, j]);
+  ok(choices.map((o) => ranks(o.meld)).join(" ") === "11,12,13 12,13,14", "214: both runs offered (J-Q-K and Q-K-A): " + choices.map((o) => ranks(o.meld)).join(" "));
+  ok(choices.map((o) => C.endJokers(o.meld).map((e) => e.rank).join()).join(" ") === "11 14", "214: labels name the joker as Jack and Ace");
+  const asJack = apply(playState([q, k, j, card(2, "C")], []), { type: "meld", ids: [q.id, k.id, j.id], low: choices[0].low }, "214: lay out with the joker as Jack");
+  ok(ranks(asJack.melds[0]) === "11,12,13" && asJack.melds[0].entries[0].card.joker, "214: joker stands for the Jack: " + ranks(asJack.melds[0]));
+  const asAce = apply(playState([q, k, j, card(2, "C")], []), { type: "meld", ids: [q.id, k.id, j.id], low: choices[1].low }, "214: lay out with the joker as Ace");
+  ok(ranks(asAce.melds[0]) === "12,13,14", "214: joker stands for the Ace: " + ranks(asAce.melds[0]));
+  const plain = apply(playState([q, k, j, card(2, "C")], []), { type: "meld", ids: [q.id, k.id, j.id] }, "214: without low as before");
+  ok(ranks(plain.melds[0]) === "12,13,14", "214: without low the old build (old moves stay valid)");
+  ok(!C.applyMove(playState([q, k, j, card(2, "C")], []), { type: "meld", ids: [q.id, k.id, j.id], low: 2 }).ok, "214: an impossible low is refused");
+  // No choice: a joker in a gap, A-2-joker (only the 3), and sets.
+  ok(C.runJokerChoices([card(5, "S"), j, card(7, "S")]).length === 1, "214: a joker in a gap has no choice");
+  ok(C.runJokerChoices([card(1, "S"), card(2, "S"), j]).length === 1, "214: A-2 and joker: only as 3");
+  ok(C.runJokerChoices([card(8, "S"), card(8, "H"), j]).length === 0, "214: no run choice for a set");
+  // Two jokers with 5-6: lowest and highest runs both reachable.
+  const two = C.runJokerChoices([card(5, "D"), card(6, "D"), joker(), joker()]);
+  ok(two.length === 3 && ranks(two[0].meld) === "3,4,5,6" && ranks(two[2].meld) === "5,6,7,8", "214: two jokers: 3-6, 4-7, 5-8");
+  const isQKJ = (mv) => mv.type === "meld" && mv.ids.length === 3 && [q.id, k.id, j.id].every((id) => mv.ids.indexOf(id) !== -1);
+  // Computer without a fitting card, every level: the joker as Jack, not Ace
+  // (the Ace end is closed afterwards).
+  for (const level of [1, 2, 3]) {
+    const sA = playState([q, k, j, card(2, "C"), card(7, "D")], []);
+    const mvA = AI.chooseMove(sA, level, rng(3));
+    ok(isQKJ(mvA) && mvA.low === choices[0].low, "214 AI level " + level + ": Q-K-joker with the joker as Jack: " + JSON.stringify(mvA));
+  }
+  // With the Jack of hearts in hand: J-Q-K plus the joker as 10, not as Ace.
+  const sJ = playState([q, k, j, card(11, "H"), card(2, "C"), card(7, "D")], []);
+  const mvJ = AI.chooseMove(sJ, 3, rng(3));
+  const laidJ = C.applyMove(sJ, mvJ);
+  ok(laidJ.ok && laidJ.state.melds.length === 1 && ranks(laidJ.state.melds[0]) === "10,11,12,13", "214 AI: J-Q-K and joker as 10: " + JSON.stringify(mvJ));
+  // Before the first meld the computer never loses points by the choice
+  // (Q-K-A counts more than J-Q-K): the threshold sums stay right.
+  const sP = playState([q, k, j, card(2, "C"), card(7, "D")], []);
+  sP.players[0].opened = false;
+  const mvP = AI.chooseMove(sP, 3, rng(3));
+  if (isQKJ(mvP)) {
+    const laidP = C.applyMove(sP, mvP);
+    ok(laidP.ok && C.meldValue(laidP.state.pending[0]) >= C.meldValue(C.buildMeld([q, k, j])), "214 AI: no points lost before the first meld: " + JSON.stringify(mvP));
+  }
+  // Adding a joker to a table run Q-K: not as Ace when no card follows.
+  const qk = C.buildMeld([card(11, "S"), card(12, "S"), card(13, "S")]);
+  qk.owner = 1;
+  const sE = playState([j, card(2, "C")], [qk]);
+  const mvE = AI.chooseMove(sE, 2, rng(3));
+  ok(mvE.type !== "extend" || mvE.id !== j.id || mvE.end === "low", "214 AI: joker added to J-Q-K goes low (as 10), not as Ace: " + JSON.stringify(mvE));
+}
+
 // ---- Task 107: Hand-Rommé ------------------------------------------------
 function handState(hand, extra) {
   const s = C.createInitialState(Object.assign({ players: 3, dealer: 2, rng: rng(11), handRule: true }, extra || {}));

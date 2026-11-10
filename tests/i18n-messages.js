@@ -53,6 +53,8 @@ const SAMPLES = [
   "Staged for the first meld: 25 of 40 points.",
   "The joker fits at both ends of the run: where should it go?",
   "Add below (as 3♥)",
+  "The joker can stand for a card at either end of the run: which one?",
+  "Joker as J♥",
   "Add above (as 7♥)",
   "You add the joker to a meld. Your turn: lay out melds or add to melds, then discard a card.",
   "Staged for Hand-Rommé · cards still in hand: 4",

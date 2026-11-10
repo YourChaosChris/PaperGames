@@ -653,6 +653,8 @@ STRINGS.ja = {
     msg_rm_joker_end_choice: "ジョーカーは順番の両端に付けられます。どちらに付けますか？",
     msg_t_rm_joker_low: "下に付ける（{s}として）",
     msg_t_rm_joker_high: "上に付ける（{s}として）",
+    msg_rm_joker_meld_choice: "ジョーカーは順番のどちらの端にも置けます。どのカードとして置きますか？",
+    msg_t_rm_joker_pick: "ジョーカーを{s}として",
     msg_t_rm_knock_btn: "{s}にノック",
     msg_t_rm_status_hand: "ハンドラミー・ペナルティ点：{n}",
     msg_t_rm_round_hand: "ラウンド{n}・ハンドラミー",

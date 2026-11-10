@@ -767,6 +767,8 @@ STRINGS.zh = {
     msg_rm_joker_end_choice: "王牌可以加在顺子两端：放在哪一端？",
     msg_t_rm_joker_low: "加在下端（当作{s}）",
     msg_t_rm_joker_high: "加在上端（当作{s}）",
+    msg_rm_joker_meld_choice: "王牌可以放在顺子的任一端：当作哪张牌？",
+    msg_t_rm_joker_pick: "王牌当作{s}",
     msg_t_rm_knock_btn: "敲牌要{s}",
     msg_t_rm_status_hand: "一次亮完 · 罚分：{n}",
     msg_t_rm_round_hand: "第{n}局 · 一次亮完",

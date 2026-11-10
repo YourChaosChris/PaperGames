@@ -653,6 +653,8 @@ STRINGS.nl = {
     msg_rm_joker_end_choice: "De joker past aan beide uiteinden van de reeks: waar moet hij heen?",
     msg_t_rm_joker_low: "Onderaan aanleggen (als {s})",
     msg_t_rm_joker_high: "Bovenaan aanleggen (als {s})",
+    msg_rm_joker_meld_choice: "De joker kan aan beide uiteinden van de reeks staan: voor welke kaart?",
+    msg_t_rm_joker_pick: "Joker als {s}",
     msg_t_rm_knock_btn: "Kloppen op de {s}",
     msg_t_rm_status_hand: "Hand-Rommé · Strafpunten: {n}",
     msg_t_rm_round_hand: "Ronde {n} · Hand-Rommé",

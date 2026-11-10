@@ -767,6 +767,8 @@ STRINGS.uk = {
     msg_rm_joker_end_choice: "Джокер підходить до обох кінців послідовності: куди його покласти?",
     msg_t_rm_joker_low: "Докласти знизу (як {s})",
     msg_t_rm_joker_high: "Докласти зверху (як {s})",
+    msg_rm_joker_meld_choice: "Джокер може стояти на обох кінцях послідовності: замість якої карти?",
+    msg_t_rm_joker_pick: "Джокер як {s}",
     msg_t_rm_knock_btn: "Стукнути на {s}",
     msg_t_rm_status_hand: "Ремі з руки · Штрафні очки: {n}",
     msg_t_rm_round_hand: "Раунд {n} · ремі з руки",
