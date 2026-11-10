@@ -10,7 +10,7 @@ Object.assign(STRINGS.de, {
     yut_term_move: "Ein Zug",
     yut_rules_move: "Wähle einen deiner Würfe, dann eine Figur, dann das Zielfeld. Eine Figur, die am Start wartet, kommt mit dem Wurf aufs Brett. Figuren auf demselben Feld ziehen zusammen als Stapel. Der Ring hat 20 Felder; Start und Ziel sind die Ecke unten rechts.",
     yut_term_shortcuts: "Abkürzungen",
-    yut_rules_shortcuts: "Beginnt eine Figur ihren Zug auf einer der beiden markierten Ecken oben, darf sie die Abkürzung quer über das Brett nehmen, statt dem Ring zu folgen. Das Mittelfeld führt auf kürzerem Weg ins Ziel. Wer an einer Ecke nur vorbeizieht, ohne dort zu stehen, darf keine Abkürzung nehmen.",
+    yut_rules_shortcuts: "Beginnt eine Figur ihren Zug auf einer der beiden markierten Ecken oben, darf sie die Abkürzung quer über das Brett nehmen, statt dem Ring zu folgen. Eine Figur, die auf dem Mittelfeld anhält, zieht auf kürzerem Weg ins Ziel; kam sie von der Ecke oben rechts, darf sie stattdessen geradeaus zur Ecke unten links weiterziehen. Wer an einer Ecke nur vorbeizieht, ohne dort zu stehen, darf keine Abkürzung nehmen.",
     yut_term_capture: "Schlagen",
     yut_rules_capture: "Landest du auf einem Feld mit gegnerischen Figuren, müssen diese zurück zum Start und du wirfst noch einmal. Eigene Figuren auf dem Feld schließen sich dir als Stapel an.",
     yut_term_finish: "Das Ziel",

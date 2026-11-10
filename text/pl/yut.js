@@ -10,7 +10,7 @@ Object.assign(STRINGS.pl, {
     yut_term_move: "Ruch",
     yut_rules_move: "Wybierz jeden ze swoich rzutów, następnie pionek, a potem pole docelowe. Pionek czekający na starcie wchodzi na planszę dzięki rzutowi. Pionki na tym samym polu poruszają się razem jako stos. Okrąg ma 20 pól; start i meta znajdują się w prawym dolnym rogu.",
     yut_term_shortcuts: "Skróty",
-    yut_rules_shortcuts: "Pionek, który rozpoczyna ruch na jednym z dwóch zaznaczonych narożników na górze, może skorzystać ze skrótu przez środek planszy zamiast podążać okręgiem. Pole środkowe prowadzi do mety krótszą drogą. Minięcie narożnika bez zatrzymywania się na nim nie pozwala na skorzystanie ze skrótu.",
+    yut_rules_shortcuts: "Pionek, który rozpoczyna ruch na jednym z dwóch zaznaczonych narożników na górze, może skorzystać ze skrótu przez środek planszy zamiast podążać okręgiem. Pionek, który zatrzyma się na polu środkowym, idzie do mety krótszą drogą; jeśli przyszedł z prawego górnego narożnika, może zamiast tego iść prosto do lewego dolnego narożnika. Minięcie narożnika bez zatrzymywania się na nim nie pozwala na skorzystanie ze skrótu.",
     yut_term_capture: "Zbijanie",
     yut_rules_capture: "Jeśli staniesz na polu zajmowanym przez pionki przeciwnika, wracają one na start, a ty rzucasz ponownie. Twoje własne pionki na tym polu dołączają do ciebie, tworząc stos.",
     yut_term_finish: "Meta",

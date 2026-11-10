@@ -10,7 +10,7 @@ Object.assign(STRINGS.nl, {
     yut_term_move: "Een zet",
     yut_rules_move: "Kies een van je worpen, dan een steen en vervolgens het doelveld. Een steen die bij de start wacht, komt met de worp het bord op. Stenen op hetzelfde veld bewegen samen als een stapel. De ring heeft 20 velden; start en thuis bevinden zich rechtsonder.",
     yut_term_shortcuts: "Afkortingen",
-    yut_rules_shortcuts: "Een steen die zijn zet begint op een van de twee gemarkeerde hoeken bovenaan, kan de kortere weg over het bord nemen in plaats van de ring te volgen. Het middelste veld leidt via de kortere weg naar huis. Een hoek passeren zonder erop te stoppen geeft geen afkorting.",
+    yut_rules_shortcuts: "Een steen die zijn zet begint op een van de twee gemarkeerde hoeken bovenaan, kan de kortere weg over het bord nemen in plaats van de ring te volgen. Een steen die op het middelste veld stopt, gaat via de kortere weg naar huis; kwam hij van de hoek rechtsboven, dan mag hij in plaats daarvan rechtdoor naar de hoek linksonder. Een hoek passeren zonder erop te stoppen geeft geen afkorting.",
     yut_term_capture: "Slaan",
     yut_rules_capture: "Als je op een veld landt met stenen van een tegenstander, gaan deze terug naar de start en mag je opnieuw gooien. Je eigen stenen op het veld sluiten zich bij je aan als een stapel.",
     yut_term_finish: "De finish",

@@ -24,6 +24,10 @@ const YUT_XY = (function () {
   return c;
 })();
 
+// Labels above the targets when a piece may choose its way (corners 5 and
+// 10, and the centre after diagonal A, task 192).
+const YUT_CHOICE_KEYS = { ring: "yut_ring", diag: "yut_shortcut", straight: "yut_straight" };
+
 const AppStateYut = { g: null, players: 2, level: 2, sel: 0, from: null, hint: null, note: null, busy: false, over: false, timer: null };
 
 function ty(key, params) {
@@ -99,7 +103,7 @@ function renderYut() {
       if (!xy) return;
       const x = xy[0], y = xy[1];
       h += '<g data-mv="' + ix + '" role="button" tabindex="0" aria-label="' + fieldLabelYut(m.to) + '"><circle cx="' + x + '" cy="' + y + '" r="30" fill="#fff" fill-opacity="0.01" stroke="#141413" stroke-width="5"/>' +
-        (m.choice ? '<text x="' + x + '" y="' + (y - 36) + '" text-anchor="middle" font-size="16" font-weight="bold">' + ty("yut_" + m.choice) + "</text>" : "") + "</g>";
+        (m.choice || m.finishes ? '<text x="' + x + '" y="' + (y - 36) + '" text-anchor="middle" font-size="16" font-weight="bold">' + ty(m.finishes ? "yut_home" : YUT_CHOICE_KEYS[m.choice]) + "</text>" : "") + "</g>";
     });
   }
   if (st.hint) {
@@ -123,7 +127,11 @@ function renderYut() {
 
   const note = noteTextYut();
   const info = document.getElementById("board-info");
-  if (info) info.textContent = statusTextYut() + (note ? " " + note : "");
+  // Task 192: say why home is the only target (the way ends at the start;
+  // a piece never goes round a second time).
+  const sel = st.from !== null ? mv.filter((m) => m.from === st.from) : [];
+  const onlyHome = sel.length > 0 && sel.every((m) => m.finishes);
+  if (info) info.textContent = statusTextYut() + (note ? " " + note : "") + (onlyHome ? " " + ty("yut_only_home") : "");
   document.getElementById("yut-info").textContent = ty("yut_pieces") + ": " + YUT_LETTERS.slice(0, g.players).map((l, p) => {
     const mine = g.pieces.filter((x) => x.player === p);
     return l + " " + mine.filter((x) => !x.done && !x.route.length).length + " " + ty("yut_waiting") + ", " + mine.filter((x) => x.done).length + " " + ty("yut_home");

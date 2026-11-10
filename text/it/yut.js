@@ -10,7 +10,7 @@ Object.assign(STRINGS.it, {
     yut_term_move: "Una mossa",
     yut_rules_move: "Scegli uno dei tuoi lanci, poi una pedina, quindi la casella di arrivo. Una pedina in attesa alla partenza entra nel tabellone con il lancio. Le pedine sulla stessa casella si muovono insieme come una pila. L'anello ha 20 caselle; partenza e arrivo sono nell'angolo in basso a destra.",
     yut_term_shortcuts: "Scorciatoie",
-    yut_rules_shortcuts: "Una pedina che inizia il suo movimento su uno dei due angoli contrassegnati in alto può prendere la scorciatoia attraverso il tabellone invece di seguire l'anello. La casella centrale porta all'arrivo per la via più breve. Superare un angolo senza fermarsi sopra non consente di prendere una scorciatoia.",
+    yut_rules_shortcuts: "Una pedina che inizia il suo movimento su uno dei due angoli contrassegnati in alto può prendere la scorciatoia attraverso il tabellone invece di seguire l'anello. Una pedina che si ferma sulla casella centrale va all'arrivo per la via più breve; se è arrivata dall'angolo in alto a destra, può invece proseguire dritto fino all'angolo in basso a sinistra. Superare un angolo senza fermarsi sopra non consente di prendere una scorciatoia.",
     yut_term_capture: "Cattura",
     yut_rules_capture: "Se ti fermi su una casella con pedine avversarie, queste tornano alla partenza e tu tiri di nuovo. Le tue pedine già sulla casella si uniscono a te formando una pila.",
     yut_term_finish: "L'arrivo",

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v287",
+    date: "2026-11-10",
+    key: "release_v287",
+    text: "Yut: a piece that stops on the centre after the first shortcut may now go home or straight on to the next corner. The way choices at the corners are labelled properly, and when a throw can only bring a piece home, the game says why."
+  },
+  {
     version: "v286",
     date: "2026-11-09",
     key: "release_v286",

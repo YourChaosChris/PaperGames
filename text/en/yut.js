@@ -10,7 +10,7 @@ Object.assign(STRINGS.en, {
     yut_term_move: "A move",
     yut_rules_move: "Choose one of your throws, then a piece, then the target field. A piece waiting at the start enters the board with the throw. Pieces on the same field move together as a stack. The ring has 20 fields; start and home are the bottom right corner.",
     yut_term_shortcuts: "Shortcuts",
-    yut_rules_shortcuts: "A piece that starts its move on one of the two marked corners at the top may take the shortcut across the board instead of following the ring. The centre field leads on to home by the shorter way. Passing a corner without stopping on it does not allow a shortcut.",
+    yut_rules_shortcuts: "A piece that starts its move on one of the two marked corners at the top may take the shortcut across the board instead of following the ring. A piece that stops on the centre field goes home by the shorter way; if it came down from the top right corner, it may instead go straight on to the bottom left corner. Passing a corner without stopping on it does not allow a shortcut.",
     yut_term_capture: "Capturing",
     yut_rules_capture: "If you land on a field with opponent pieces, they go back to the start and you throw again. Your own pieces on the field join you as a stack.",
     yut_term_finish: "The finish",

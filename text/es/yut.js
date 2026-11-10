@@ -10,7 +10,7 @@ Object.assign(STRINGS.es, {
     yut_term_move: "Un movimiento",
     yut_rules_move: "Elige uno de tus lanzamientos, luego una pieza y después la casilla de destino. Una pieza que espera en la salida entra al tablero con el lanzamiento. Las piezas en la misma casilla se mueven juntas como una pila. El circuito tiene 20 casillas; la salida y la meta están en la esquina inferior derecha.",
     yut_term_shortcuts: "Atajos",
-    yut_rules_shortcuts: "Una pieza que comienza su movimiento en una de las dos esquinas marcadas en la parte superior puede tomar el atajo a través del tablero en lugar de seguir el circuito. La casilla central conduce a la meta por el camino más corto. Pasar por una esquina sin detenerse en ella no permite tomar un atajo.",
+    yut_rules_shortcuts: "Una pieza que comienza su movimiento en una de las dos esquinas marcadas en la parte superior puede tomar el atajo a través del tablero en lugar de seguir el circuito. Una pieza que se detiene en la casilla central va a la meta por el camino más corto; si llegó desde la esquina superior derecha, puede en cambio seguir recto hasta la esquina inferior izquierda. Pasar por una esquina sin detenerse en ella no permite tomar un atajo.",
     yut_term_capture: "Captura",
     yut_rules_capture: "Si caes en una casilla con piezas oponentes, estas vuelven a la salida y vuelves a lanzar. Tus propias piezas en la casilla se unen a ti formando una pila.",
     yut_term_finish: "La meta",

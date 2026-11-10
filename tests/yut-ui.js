@@ -97,6 +97,38 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   });
   check("safety net: selection cleared and buttons drawn (" + JSON.stringify(net) + ")", net.from === null && net.acts >= 1);
 
+  // Task 192: on the centre after diagonal A the piece may go home or
+  // straight on (to catch a computer piece on 16); corners show "Ring" and
+  // "Abkürzung" (before: the raw key yut_diag); a piece that can only go
+  // home gets a reason in the status line.
+  const setYut = (route, steps, other) => page.evaluate(([r, s, o]) => {
+    if (AppStateYut.timer) clearTimeout(AppStateYut.timer);
+    AppStateYut.busy = false;
+    const g = YutCore.createGame({ players: 2, piecesPerPlayer: 4 });
+    g.pieces[0].route = r;
+    if (o) g.pieces[4].route = o;
+    g.turn = 0; g.owed = 0; g.pending = [s];
+    AppStateYut.g = g; AppStateYut.over = false; AppStateYut.from = null; AppStateYut.sel = 0; AppStateYut.hint = null; AppStateYut.note = null;
+    renderYut();
+  }, [route, steps, other]);
+  const targets = () => page.evaluate(() => Array.from(document.querySelectorAll("#yut-board g[data-mv]")).map((el) => el.getAttribute("aria-label") + ":" + (el.querySelector("text") ? el.querySelector("text").textContent : "")));
+  await setYut([5, 20, 21, 22], 4, [14, 15, 16]);
+  await page.click("#yut-board g[data-from='22']");
+  const ct = await targets();
+  check("centre after diagonal A: home and straight on (" + ct.join(" ") + ")", ct.length === 2 && ct.includes("Ziel:Ziel") && ct.includes("16:geradeaus"));
+  await page.click("#yut-board g[data-mv][aria-label='16']");
+  await page.waitForTimeout(200);
+  const caught = await page.evaluate(() => ({ at: AppStateYut.g.pieces[0].route.slice(-1)[0], other: AppStateYut.g.pieces[4].route.length, turn: AppStateYut.g.turn, owed: AppStateYut.g.owed }));
+  check("straight on catches the computer piece (" + JSON.stringify(caught) + ")", caught.at === 16 && caught.other === 0 && caught.turn === 0 && caught.owed === 1);
+  await setYut([1, 2, 3, 4, 5], 2);
+  await page.click("#yut-board g[data-from='5']");
+  const cor = await targets();
+  check("corner labels translated (" + cor.join(" ") + ")", cor.includes("7:Ring") && cor.includes("21:Abkürzung") && !/yut_/.test(cor.join(" ")));
+  await setYut([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], 2);
+  await page.click("#yut-board g[data-from='19']");
+  const only = await page.textContent("#board-info");
+  check("only home: reason shown (" + only + ")", /zweite Runde/.test(only) && (await targets()).join() === "Ziel:Ziel");
+
   // A won game: set up a last piece one step from home.
   await page.evaluate(() => {
     if (AppStateYut.timer) clearTimeout(AppStateYut.timer);

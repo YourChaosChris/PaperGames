@@ -33,6 +33,37 @@ assert.strictEqual(dest(withPiece([5, 20], 4), 4), 24, "pass center on diag A");
 assert.strictEqual(dest(withPiece([5, 20], 5), 5), 15);
 assert.strictEqual(dest(withPiece([10, 25], 4), 4), 28, "pass center on diag B");
 assert.strictEqual(dest(withPiece([10, 25], 5), 5), "finish");
+// Task 192: a piece that stopped on the centre after diagonal A may go
+// home (diag) or straight on to corner 15; coming from diagonal B there is
+// no choice (straight on is the way home).
+{
+  const g = withPiece([5, 20, 21, 22], 4);
+  g.pieces[4].route = [14, 15, 16]; // computer piece ahead of corner 15
+  const ms = Y.legalMoves(g, 4).filter((m) => m.from === 22);
+  assert.deepStrictEqual(ms.map((m) => m.choice).sort(), ["diag", "straight"], "two ways from the centre after diagonal A");
+  const home = ms.find((m) => m.choice === "diag");
+  const on = ms.find((m) => m.choice === "straight");
+  assert.strictEqual(home.to, "finish", "diag from the centre with 4 goes home");
+  assert.strictEqual(on.to, 16, "straight on: 23, 24, 15, 16");
+  assert.deepStrictEqual(on.captures, [4], "straight on catches the computer piece");
+  const s = Y.applyMove(g, on);
+  assert.deepStrictEqual(s.pieces[0].route, [5, 20, 21, 22, 23, 24, 15, 16]);
+  assert.deepStrictEqual(s.pieces[4].route, [], "caught piece waits again");
+  assert.strictEqual(s.pieces[0].done, false);
+  assert.strictEqual(dest(withPiece([5, 20, 21, 22], 1), 1, "straight"), 23);
+  assert.strictEqual(dest(withPiece([5, 20, 21, 22], 1), 1, "diag"), 27);
+  assert.strictEqual(dest(withPiece([5, 20, 21, 22], 2), 2, "straight"), 24);
+  assert.strictEqual(dest(withPiece([5, 20, 21, 22], 5), 5, "straight"), 17);
+  const b = Y.legalMoves(withPiece([10, 25, 26, 22], 2), 2).filter((m) => m.from === 22);
+  assert.strictEqual(b.length, 1, "no choice on the centre after diagonal B");
+  assert.strictEqual(b[0].to, 28);
+  // after a backdo from 23 back onto the centre the choice is offered again
+  const bd = Y.applyMove(withPiece([5, 20, 21, 22, 23], -1), Y.legalMoves(withPiece([5, 20, 21, 22, 23], -1), -1)[0]);
+  bd.turn = 0; bd.pending = [3]; bd.owed = 0;
+  assert.strictEqual(Y.legalMoves(bd, 3).filter((m) => m.from === 22).length, 2, "choice again after backdo onto the centre");
+  // passing the centre on diagonal A still goes straight on, landing on 15 or beyond has no choice
+  assert.strictEqual(Y.legalMoves(withPiece([5, 20, 21, 22, 23, 24, 15], 3), 3).filter((m) => m.from === 15).length, 1);
+}
 // ring finish
 assert.strictEqual(dest(withPiece([18], 2), 2), "finish");
 assert.strictEqual(dest(withPiece([18], 1), 1), 19);
@@ -103,9 +134,10 @@ assert.strictEqual(dest(withPiece([18], 1), 1), 19);
   const exp = { mo: 1 / 16, yut: 1 / 16, geol: 4 / 16, gae: 6 / 16, do: 3 / 16, backdo: 1 / 16 };
   Object.keys(exp).forEach((k) => assert(Math.abs(c[k] / N - exp[k]) < 0.01, "distribution " + k));
 }
-// random full games
+// random full games: 3 x 1000 = 3000 games (task 192)
+let centreChoices = 0;
 [2, 3, 4].forEach((n) => {
-  for (let seed = 1; seed <= 20; seed++) {
+  for (let seed = 1; seed <= 1000; seed++) {
     const rng = lcg(seed * 31 + n);
     let s = Y.createGame({ players: n });
     let guard = 0;
@@ -117,6 +149,14 @@ assert.strictEqual(dest(withPiece([18], 1), 1), 19);
       const all = [];
       s.pending.forEach((st) => Y.legalMoves(s, st).forEach((m) => all.push(m)));
       if (!all.length) continue;
+      all.forEach((m) => {
+        const rep = s.pieces.find((pc) => pc.id === m.pieceIds[0]);
+        if (m.from === 22 && m.steps > 0 && rep.route[rep.route.length - 2] === 21) {
+          assert(m.choice === "diag" || m.choice === "straight", "centre after diagonal A offers a choice");
+          if (m.choice === "straight") centreChoices++;
+        }
+        if (m.from === 22 && m.choice === "straight") assert(typeof m.to === "number" && m.to !== 27 && m.to !== 28, "straight on from the centre never goes via 27");
+      });
       s = Y.applyMove(s, all[Math.floor(rng() * all.length)]);
       assert.strictEqual(s.pieces.length, n * 4);
       s.pieces.forEach((pc) => assert(pc.route.length === 0 || !pc.done));
@@ -125,4 +165,5 @@ assert.strictEqual(dest(withPiece([18], 1), 1), 19);
     assert(s.pieces.filter((pc) => pc.player === s.winner).every((pc) => pc.done));
   }
 });
+assert(centreChoices > 0, "the random games reach the centre choice");
 console.log("yut-core: ALL CHECKS PASS");

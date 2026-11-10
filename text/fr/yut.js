@@ -10,7 +10,7 @@ Object.assign(STRINGS.fr, {
     yut_term_move: "Un déplacement",
     yut_rules_move: "Choisissez l'un de vos lancers, puis une pièce, puis la case cible. Une pièce en attente au départ entre sur le plateau avec le lancer. Les pièces sur la même case se déplacent ensemble sous forme de pile. La piste comporte 20 cases ; le départ et l'arrivée se trouvent dans le coin inférieur droit.",
     yut_term_shortcuts: "Raccourcis",
-    yut_rules_shortcuts: "Une pièce qui commence son déplacement sur l'un des deux coins marqués en haut peut emprunter le raccourci à travers le plateau au lieu de suivre la piste. La case centrale mène à l'arrivée par le chemin le plus court. Passer un coin sans s'y arrêter ne permet pas de prendre un raccourci.",
+    yut_rules_shortcuts: "Une pièce qui commence son déplacement sur l'un des deux coins marqués en haut peut emprunter le raccourci à travers le plateau au lieu de suivre la piste. Une pièce qui s'arrête sur la case centrale va à l'arrivée par le chemin le plus court ; si elle vient du coin en haut à droite, elle peut à la place continuer tout droit jusqu'au coin en bas à gauche. Passer un coin sans s'y arrêter ne permet pas de prendre un raccourci.",
     yut_term_capture: "La capture",
     yut_rules_capture: "Si vous atterrissez sur une case occupée par des pièces adverses, celles-ci retournent au départ et vous relancez. Vos propres pièces sur la case se joignent à vous pour former une pile.",
     yut_term_finish: "L'arrivée",

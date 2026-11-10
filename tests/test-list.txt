@@ -27,7 +27,7 @@
 1 oldmaid-core.js
 1 war-core.js
 1 snakesladders-core.js
-2 yut-core.js
+9 yut-core.js
 5 yut-ai.js
 25 yut-ui.js
 51 blockers-core.js

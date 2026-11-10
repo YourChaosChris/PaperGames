@@ -13,10 +13,13 @@
   "use strict";
 
   // Next node; prev = node before (null when the move starts here).
+  // A piece that stopped on the centre after coming down diagonal A may
+  // go home by the shortcut (27) or straight on towards corner 15
+  // (choice "straight", task 192); without a choice it takes the shortcut.
   function nextNode(node, prev, choice) {
     if (node === 5) return choice === "diag" && prev === null ? 20 : 6;
     if (node === 10) return choice === "diag" && prev === null ? 25 : 11;
-    if (node === 22) return prev === 21 ? 23 : 27;
+    if (node === 22) return prev === 21 || (prev === null && choice === "straight") ? 23 : 27;
     if (node === 19 || node === 28) return "finish";
     if (node === 20) return 21;
     if (node === 21) return 22;
@@ -111,7 +114,9 @@
         moves.push({ pieceIds: g.ids, from: g.from, to: back, steps, captures: [], finishes: false });
         return;
       }
-      const choices = g.from === 5 || g.from === 10 ? ["ring", "diag"] : [undefined];
+      const cameFrom = g.rep.route.length > 1 ? g.rep.route[g.rep.route.length - 2] : null;
+      const choices = g.from === 5 || g.from === 10 ? ["ring", "diag"]
+        : g.from === 22 && cameFrom === 21 ? ["diag", "straight"] : [undefined];
       choices.forEach((choice) => {
         const w = walk(g.rep, steps, choice);
         const to = w.finished ? "finish" : w.nodes[w.nodes.length - 1];
