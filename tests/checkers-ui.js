@@ -47,7 +47,7 @@ const state = (page) => page.evaluate(() => ({
   await load();
   await openMenu();
   const opts = await page.$$eval("#checkers-rules option", (os) => os.map((o) => o.value + "=" + o.textContent.trim()));
-  check("options in German (" + opts.join(", ") + ")", opts.join("|") === "en=Englische Regeln|de=Deutsche Regeln");
+  check("options in German (" + opts.join(", ") + ")", opts.join("|") === "en=Englische Regeln|de=Deutsche Regeln|ru=Russische Regeln|br=Brasilianische Regeln|it=Italienische Regeln");
   check("label Regeln:", (await page.textContent('label[for="checkers-rules"]')).trim() === "Regeln:");
   check("default English", (await page.inputValue("#checkers-rules")) === "en");
 

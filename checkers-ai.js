@@ -23,7 +23,7 @@ const CheckersAi = (function () {
   // far more than an English king that steps one square.
   function pieceValue(piece, rules) {
     if (!CheckersCore.isKing(piece)) return 100;
-    return rules === "de" ? 300 : 130;
+    return CheckersCore.isFlyingRules(rules) ? 300 : 130;
   }
 
   // Cheap positional terms: reward advancing men toward promotion, and
@@ -150,7 +150,7 @@ const CheckersAi = (function () {
     3: { style: "search", maxDepth: 11, nodeBudget: 600000 }
   };
 
-  // `rules` is "en" (default) or "de", see checkers-core.js.
+  // `rules` is "en" (default), "de", "it", "br" or "ru", see checkers-core.js.
   function chooseMove(board, color, level, rules) {
     rules = CheckersCore.normalizeRules(rules);
     const moves = CheckersCore.getLegalMoves(board, color, rules);

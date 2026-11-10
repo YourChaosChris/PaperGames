@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v294",
+    date: "2026-11-10",
+    key: "release_v294",
+    text: "Checkers has three more rule sets to choose from: Russian, Brazilian and Italian rules."
+  },
+  {
     version: "v293",
     date: "2026-11-10",
     key: "release_v293",

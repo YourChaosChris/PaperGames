@@ -13,8 +13,17 @@
 //          and is crowned only if the move ends there. Taken pieces stay
 //          on the board until the move is over: they can't be jumped
 //          twice and block the way.
+//   "br" - Brazilian draughts (task 200): German rules, but the player must
+//          take the most pieces (a king counts as one piece).
+//   "ru" - Russian draughts (task 200): German rules, but a man that
+//          reaches the back row in the middle of a chain is crowned at
+//          once and carries on capturing as a flying king.
+//   "it" - Italian draughts (task 200): English-style short kings, men
+//          move and capture forward only and may not capture a king; the
+//          player must take the most pieces, with equal numbers capture
+//          with a king, then take the most kings.
 // Every function that needs the rules takes them as its last argument;
-// anything but "de" (including a missing value, so old saves) is "en".
+// anything not listed (including a missing value, so old saves) is "en".
 // Mirrors the separation of concerns in go-core.js/chess-core.js - rules
 // only, no DOM/UI.
 //
@@ -76,10 +85,16 @@ const CheckersCore = (function () {
 
   const ALL_DIAGONALS = [[1, -1], [1, 1], [-1, -1], [-1, 1]];
 
-  const RULES = ["en", "de"];
+  const RULES = ["en", "de", "it", "br", "ru"];
 
   function normalizeRules(rules) {
-    return rules === "de" ? "de" : "en";
+    return RULES.indexOf(rules) !== -1 ? rules : "en";
+  }
+
+  // German, Brazilian and Russian rules share flying kings and men that
+  // capture backward.
+  function isFlyingRules(rules) {
+    return rules === "de" || rules === "br" || rules === "ru";
   }
 
   function keysToCoords(keySet) {
@@ -98,7 +113,7 @@ const CheckersCore = (function () {
   // exists is never a legal result on its own, only as a prefix of a
   // longer one returned here. Promotion ends the chain immediately, even
   // if a further capture would otherwise be available (standard rule).
-  function findCaptureChains(board, r, c, color, king, captured) {
+  function findCaptureChains(board, r, c, color, king, captured, manNoKing) {
     const dirs = king ? ALL_DIAGONALS : forwardDirs(color);
     const results = [];
 
@@ -114,6 +129,7 @@ const CheckersCore = (function () {
 
       const midPiece = board[midR][midC];
       if (!midPiece || colorOf(midPiece) === color) continue; // must be an enemy piece
+      if (manNoKing && !king && isKing(midPiece)) continue; // Italian rules: a man can't take a king
       if (board[landR][landC] !== null) continue; // landing square must be empty
 
       const newBoard = cloneBoard(board);
@@ -130,7 +146,7 @@ const CheckersCore = (function () {
         continue;
       }
 
-      const further = findCaptureChains(newBoard, landR, landC, color, king, newCaptured);
+      const further = findCaptureChains(newBoard, landR, landC, color, king, newCaptured, manNoKing);
       if (further.length) {
         results.push(...further);
       } else {
@@ -148,7 +164,7 @@ const CheckersCore = (function () {
   // on one of them (the chain has to go on while it can). Men are only
   // crowned at the end of the chain, so a man passing the back row
   // mid-chain keeps capturing as a man.
-  function findCaptureChainsDe(board, r, c, color, king, captured) {
+  function findCaptureChainsDe(board, r, c, color, king, captured, midCrown, crowned) {
     const results = [];
     for (const [dr, dc] of ALL_DIAGONALS) {
       let midR = r + dr;
@@ -179,10 +195,13 @@ const CheckersCore = (function () {
       const newCaptured = new Set(captured);
       newCaptured.add(midKey);
       const branches = landings.map(([lr, lc]) => {
+        const crownNow = !!midCrown && !king && lr === promotionRow(color);
+        const king2 = king || crownNow;
+        const crowned2 = !!crowned || crownNow;
         const newBoard = cloneBoard(board);
         newBoard[r][c] = null;
-        newBoard[lr][lc] = encodePiece(color, king);
-        return { to: [lr, lc], further: findCaptureChainsDe(newBoard, lr, lc, color, king, newCaptured) };
+        newBoard[lr][lc] = encodePiece(color, king2);
+        return { to: [lr, lc], crowned: crowned2, king: king2, further: findCaptureChainsDe(newBoard, lr, lc, color, king2, newCaptured, midCrown, crowned2) };
       });
       const goesOn = branches.some((b) => b.further.length > 0);
       branches.forEach((b) => {
@@ -192,12 +211,28 @@ const CheckersCore = (function () {
           results.push({
             to: b.to,
             captured: keysToCoords(newCaptured),
-            promoted: !king && b.to[0] === promotionRow(color)
+            promoted: b.crowned || (!b.king && b.to[0] === promotionRow(color))
           });
         }
       });
     }
     return results;
+  }
+
+  // Majority rule of Brazilian and Italian draughts: only the captures
+  // with the most pieces are legal. Italian rules go on: with equal
+  // numbers a king has to capture, then the move taking the most kings.
+  function mostPieces(board, moves, italian) {
+    const most = Math.max.apply(null, moves.map((m) => m.captured.length));
+    let best = moves.filter((m) => m.captured.length === most);
+    if (italian) {
+      const byKing = best.filter((m) => isKing(board[m.from[0]][m.from[1]]));
+      if (byKing.length) best = byKing;
+      const kings = (m) => m.captured.filter((p) => isKing(board[p[0]][p[1]])).length;
+      const mostKings = Math.max.apply(null, best.map(kings));
+      best = best.filter((m) => kings(m) === mostKings);
+    }
+    return best;
   }
 
   // Returns every legal move for `color` under `rules` ("en" when left
@@ -206,7 +241,8 @@ const CheckersCore = (function () {
   // checkers. Each move is
   // { from: [r,c], to: [r,c], captured: [[r,c], ...], promoted: bool }.
   function getLegalMoves(board, color, rules) {
-    const german = normalizeRules(rules) === "de";
+    rules = normalizeRules(rules);
+    const german = isFlyingRules(rules);
     const captureMoves = [];
     const seen = new Set();
     for (let r = 0; r < SIZE; r++) {
@@ -214,8 +250,8 @@ const CheckersCore = (function () {
         const piece = board[r][c];
         if (!piece || colorOf(piece) !== color) continue;
         const chains = german
-          ? findCaptureChainsDe(board, r, c, color, isKing(piece), new Set())
-          : findCaptureChains(board, r, c, color, isKing(piece), new Set());
+          ? findCaptureChainsDe(board, r, c, color, isKing(piece), new Set(), rules === "ru", false)
+          : findCaptureChains(board, r, c, color, isKing(piece), new Set(), rules === "it");
         chains.forEach((chain) => {
           if (german) {
             // A flying king can take the same pieces in another order and
@@ -229,7 +265,7 @@ const CheckersCore = (function () {
         });
       }
     }
-    if (captureMoves.length) return captureMoves;
+    if (captureMoves.length) return rules === "br" || rules === "it" ? mostPieces(board, captureMoves, rules === "it") : captureMoves;
 
     const simpleMoves = [];
     for (let r = 0; r < SIZE; r++) {
@@ -296,6 +332,7 @@ const CheckersCore = (function () {
     SIZE,
     RULES,
     normalizeRules,
+    isFlyingRules,
     createInitialBoard,
     cloneBoard,
     inBounds,

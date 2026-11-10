@@ -14,7 +14,7 @@ const AppStateCheckers = {
   lastMove: null,         // { from: [r,c], to: [r,c], captured?: [[r,c]] } | null
   humanColor: "b",
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
-  rules: "en",            // "en" | "de" - rule set of the running game (task 179)
+  rules: "en",            // "en" | "de" | "it" | "br" | "ru" - rule set of the running game (task 179)
   gameOver: false,
   moveCount: 0,
   pendingChains: null,   // { board, turn, chains } while the player picks between jump chains
@@ -748,7 +748,7 @@ function updateGameLabelsCheckers() {
   const meta = document.getElementById("game-meta");
   if (meta) I18n.setMsg(meta, AppStateCheckers.moveCount ? "Move " + AppStateCheckers.moveCount : "");
   const label = document.getElementById("game-label");
-  if (label) I18n.setKey(label, AppStateCheckers.rules === "de" ? "checkers_ruleset_de" : "checkers_ruleset_en");
+  if (label) I18n.setKey(label, "checkers_ruleset_" + CheckersCore.normalizeRules(AppStateCheckers.rules));
   updateUndoButtonVisibilityCheckers();
   updateResignVisibilityCheckers();
 
