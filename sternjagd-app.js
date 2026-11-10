@@ -78,6 +78,7 @@ function startGameSJ() {
     players: n,
     computer: DiceCommon.seats(mode, n),
     first: Math.floor(Math.random() * n),
+    level: parseInt(document.getElementById("sj-level").value, 10) || 3,
     balance: n === 2 && !!(balance && balance.checked)
   });
   AppStateSJ.undoStack = [];
@@ -404,8 +405,10 @@ function initSternjagdApp() {
   // DOMContentLoaded (without a change event); look again after it.
   updateBalanceRowSJ();
   window.setTimeout(updateBalanceRowSJ, 0);
-  document.getElementById("mode-ai").addEventListener("click", () => DiceCommon.setMode("ai"));
-  document.getElementById("mode-offline").addEventListener("click", () => DiceCommon.setMode("hotseat"));
+  const showLevelSJ = () => document.getElementById("sj-level-row").classList.toggle("hidden", DiceCommon.activeMode() === "hotseat");
+  document.getElementById("mode-ai").addEventListener("click", () => { DiceCommon.setMode("ai"); showLevelSJ(); });
+  document.getElementById("mode-offline").addEventListener("click", () => { DiceCommon.setMode("hotseat"); showLevelSJ(); });
+  showLevelSJ();
   document.getElementById("start-sj-game").addEventListener("click", startGameSJ);
   document.getElementById("sj-roll").addEventListener("click", rollSJ);
   document.getElementById("sj-next").addEventListener("click", nextSJ);

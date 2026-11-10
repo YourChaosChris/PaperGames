@@ -474,6 +474,7 @@ all parts back into one log in list order. The last line is exactly
   stars and the return to a free corner, the last player left wins, the
   draw after 600 moves, the computer's capture and 1000 computer games
   (2-4 players) that all end without an error. A few seconds.
+- `node tests/sternjagd-level.js` - no server or browser needed. Computer level of Sternjagd (default hard, hard beats easy).
 - `node tests/sternjagd-start.js` - no server or browser needed. Who starts
   (task 128): `GAMES` (default 1000) computer games each with 2, 3 and 4
   players, seat 1 always starting and a random starter; with the random

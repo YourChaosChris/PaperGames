@@ -60,7 +60,8 @@ function validStateZW(s) {
 function startGameZW() {
   const mode = DiceCommon.activeMode();
   const n = parseInt(document.getElementById("zw-players").value, 10) || 2;
-  const level = document.getElementById("zw-level").value === "beginner" ? "beginner" : "normal";
+  const lv = document.getElementById("zw-level").value;
+  const level = lv === "beginner" || lv === "medium" ? lv : "normal";
   AppStateZW.state = ZoowurfCore.newGame({ players: n, computer: DiceCommon.seats(mode, n), level: level });
   AppStateZW.log = [];
   AppStateZW.review = null;
@@ -394,7 +395,7 @@ function initZoowurfApp() {
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(ZOOWURF_SAVE_KEY) : null;
   if (saved && validStateZW(saved.state)) {
     AppStateZW.state = saved.state;
-    document.getElementById("zw-level").value = saved.state.level === "beginner" ? "beginner" : "normal";
+    document.getElementById("zw-level").value = saved.state.level === "beginner" || saved.state.level === "medium" ? saved.state.level : "normal";
     AppStateZW.log = [];
     AppStateZW.logged = saved.state.seq || 0;
     DiceCommon.showBoard();

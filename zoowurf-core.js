@@ -156,7 +156,7 @@ const ZoowurfCore = (() => {
       last: null,           // the turn that ended last, see endTurn()
       seq: 0                // counts the turns that ended
     };
-    if (o.level === "beginner") game.level = "beginner";
+    if (o.level === "beginner" || o.level === "medium") game.level = o.level;
     return game;
   }
 
@@ -382,12 +382,19 @@ const ZoowurfCore = (() => {
     return best;
   }
 
+  // Beginner plays at random, medium at random in half of the decisions.
+  function isDumb(s, rng, opts) {
+    if (opts && opts.dumb !== undefined) return !!opts.dumb;
+    if (s.level === "beginner") return true;
+    return s.level === "medium" && (rng || Math.random)() < 0.5;
+  }
+
   // The animal the computer puts a paw on: the open place that leaves the
   // fewest turns to fill the card (the beginner level takes one at random).
   function chooseAnimal(s, rng, opts) {
     const open = [];
     playOf(s).need.forEach((n, a) => { if (n > 0) open.push(a); });
-    const dumb = opts && opts.dumb !== undefined ? !!opts.dumb : s.level === "beginner";
+    const dumb = isDumb(s, rng, opts);
     if (dumb) return open[Math.floor((rng || Math.random)() * open.length)];
     let best = open[0];
     let bestValue = Infinity;
@@ -404,7 +411,7 @@ const ZoowurfCore = (() => {
   // by default the level of the game decides ("beginner" is random).
   function aiStep(s, rng, opts) {
     if (s.phase === "choose") {
-      const dumb = opts && opts.dumb !== undefined ? !!opts.dumb : s.level === "beginner";
+      const dumb = isDumb(s, rng, opts);
       return choose(s, dumb ? Math.floor((rng || Math.random)() * s.yard.length) : chooseCard(s));
     }
     if (s.phase === "roll") return roll(s, rng);

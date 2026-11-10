@@ -77,6 +77,7 @@ check("equal points share the win (a draw for each of them)", t.phase === "over"
 check("same seed, same game", JSON.stringify(C.newGame({ players: 3, rng: C.makeRng(7) })) === JSON.stringify(C.newGame({ players: 3, rng: C.makeRng(7) })));
 check("player count limited to 2..4", C.newGame({ players: 9 }).n === 4 && C.newGame({ players: 1 }).n === 2);
 check("an old state (first rules: shared card, no rules field) is not current", !C.isCurrentState({ game: "zoowurf", n: 2, computer: [false, true], current: 0, target: 4, scores: [0, 0], yard: [], pile: [], phase: "choose", play: null, rolls: 0 }) && !C.isCurrentState(null));
+check("medium level is stored", C.newGame({ players: 2, level: "medium" }).level === "medium");
 check("no level means normal; beginner is stored", !("level" in C.newGame({ players: 2 })) && C.newGame({ players: 2, level: "beginner" }).level === "beginner" && !("level" in C.newGame({ players: 2, level: "x" })));
 
 // ---- the cards ----

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v289",
+    date: "2026-11-10",
+    key: "release_v289",
+    text: "Yut, Zoowurf and Sternjagd: the computer now has a Medium level. Sternjagd has a level choice for the first time."
+  },
+  {
     version: "v288",
     date: "2026-11-10",
     key: "release_v288",

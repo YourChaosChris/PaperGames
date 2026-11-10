@@ -117,6 +117,7 @@ const SternjagdCore = (() => {
       die: 0,                   // 0 until rolled
       phase: "roll",            // "roll" | "move" | "over"
       moves: 0,
+      level: o.level === 1 || o.level === 2 ? o.level : 3,   // computer: 1 easy, 2 medium, 3 hard
       winner: null,             // player index, -1 for a draw, null while playing
       last: null,               // what happened last (see `seq`)
       seq: 0                    // counts events; a new `last` has a new number
@@ -230,6 +231,8 @@ const SternjagdCore = (() => {
   function chooseAi(s) {
     const list = destinations(s);
     if (!list.length) return null;
+    const lv = s.level || 3;
+    if (lv === 1 || (lv === 2 && Math.random() < 0.5)) return list[Math.floor(Math.random() * list.length)];
     const me = s.current;
     let best = null;
     let bestValue = -Infinity;

@@ -50,7 +50,7 @@
     const r = ranked(state);
     if (!r.length) return null;
     const rand = typeof rng === "function" ? rng : Math.random;
-    if (level === 1 && rand() < 0.7) return r[Math.floor(rand() * r.length)].move;
+    if ((level === 1 && rand() < 0.7) || (level === 3 && rand() < 0.3)) return r[Math.floor(rand() * r.length)].move;
     const best = r.filter((x) => x.score === r[0].score);
     return best[Math.floor(rand() * best.length)].move;
   }
