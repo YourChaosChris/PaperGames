@@ -36,9 +36,14 @@ const LEGAL = {
   nim: "same(NimCore.legalMoves(AppStateNim.state.heaps), m)",
   chess: "same(AiEngine.generateLegalMoves(AppState.board, AppState.turn), { from: m.from, to: m.to })",
   // Task 210: Blocked Path, hint for the current roll (move) or the captured block.
-  blockers: "m.stone !== undefined ? BlockersCore.stoneTargets(AppStateBL.state).indexOf(m.stone) !== -1 : same(BlockersCore.legalMoves(AppStateBL.state), m)"
+  blockers: "m.stone !== undefined ? BlockersCore.stoneTargets(AppStateBL.state).indexOf(m.stone) !== -1 : same(BlockersCore.legalMoves(AppStateBL.state), m)",
+  // Task 212: card games - the rules accept the hinted step.
+  romme: "RommeCore.applyMove(AppStateRomme.state, m).ok",
+  canasta: "CanastaCore.applyMove(AppStateCn.state, m).ok",
+  teufelsieben: "AppStateTS.state.phase === 'turn' && (m === 'draw' || (m === 'stop' && AppStateTS.state.hands[AppStateTS.state.current].drawn >= 1))"
 };
-const START = { chess: ["#mode-offline", null], kleeberg: ["#mode-offline", "#start-kb-game"], blockers: ["#mode-offline", "#start-bl-game", "document.getElementById('bl-computers').value = '0'; document.getElementById('bl-computers').dispatchEvent(new Event('change'));"] };
+const START = { chess: ["#mode-offline", null], kleeberg: ["#mode-offline", "#start-kb-game"],
+  romme: ["#mode-offline-ai", "#start-romme-game"], canasta: ["#cn-level", "#start-cn-game"], teufelsieben: ["#ts-mode", "#start-ts-game"], blockers: ["#mode-offline", "#start-bl-game", "document.getElementById('bl-computers').value = '0'; document.getElementById('bl-computers').dispatchEvent(new Event('change'));"] };
 // Dice games: roll first, so there is a move to hint.
 const BEFORE = { blockers: "#bl-roll" };
 

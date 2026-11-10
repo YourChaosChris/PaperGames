@@ -177,6 +177,21 @@ function initTeufelSiebenApp() {
   syncTargetsTS();
   setTimeout(syncTargetsTS, 0);
   if (window.I18n && typeof I18n.onChange === "function") I18n.onChange(() => { if (AppStateTS.state) renderTS(); });
+  // Task 212: Hint marks "Turn up a card" or "Stop" - what the hard
+  // computer would do with this row (chance to bust against what one more
+  // card is worth).
+  if (typeof MoveHint !== "undefined") {
+    MoveHint.init({
+      button: "teufelsieben-hint", board: "board-container", app: AppStateTS,
+      canHint: () => humanTurnTS(),
+      move: () => {
+        const s = AppStateTS.state;
+        const hard = Object.assign({}, s, { levels: s.levels.map((l, i) => (i === s.current ? 3 : l)) });
+        return TeufelSiebenCore.wantsToStop(hard) ? "stop" : "draw";
+      },
+      marks: (m) => [m === "stop" ? "#ts-stop" : "#ts-draw"]
+    });
+  }
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(TEUFELSIEBEN_SAVE_KEY) : null;
   if (saved) {
     if (TeufelSiebenCore.isCurrentState(saved.state) && saved.state.phase !== "over") { AppStateTS.state = saved.state; DiceCommon.showBoard(); afterTS(); }

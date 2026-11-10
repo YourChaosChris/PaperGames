@@ -663,6 +663,7 @@ function renderMeldRomme(meld, tappable, onTap, takeIds, onTake) {
   meld.entries.forEach((e) => {
     if (takes.indexOf(e.card.id) !== -1) {
       const btn = cardElRomme(e.card, "button", "pc-card-small romme-takeable", null);
+      btn.dataset.cid = String(e.card.id);
       I18n.setAria(btn, "Take " + cardLabelRomme(e.card));
       btn.addEventListener("click", () => onTake(e.card.id));
       group.appendChild(btn);
@@ -744,7 +745,9 @@ function renderRomme() {
         if (meld.owner !== owner) return;
         any = true;
         const takeIds = takeOpts.filter((o) => o.meld === i).map((o) => o.id);
-        area.appendChild(renderMeldRomme(meld, canTap && !takeIds.length, () => onTableMeldRomme(i), takeIds, (id) => humanMoveRomme({ type: "take", meld: i, id })));
+        const group = renderMeldRomme(meld, canTap && !takeIds.length, () => onTableMeldRomme(i), takeIds, (id) => humanMoveRomme({ type: "take", meld: i, id }));
+        group.dataset.meld = String(i);
+        area.appendChild(group);
       });
       if (!any) {
         const none = document.createElement("span");
@@ -814,6 +817,7 @@ function renderRomme() {
       const sel = AppStateRomme.selected.indexOf(c.id) !== -1;
       const fresh = (AppStateRomme.newIds || []).indexOf(c.id) !== -1;
       const btn = cardElRomme(c, "button", (sel ? "pc-card-selected" : "") + (fresh ? " card-new" : ""));
+      btn.dataset.cid = String(c.id);
       btn.disabled = !(myTurn && (s.phase === "play" || s.phase === "knockDiscard"));
       I18n.setAria(btn, (c.joker ? "Joker" : "Card " + cardLabelRomme(c)) + (sel ? ", selected" : "") + (fresh ? ", new" : ""));
       btn.addEventListener("click", () => onHandCardRomme(c.id));
@@ -860,3 +864,33 @@ function renderRomme() {
 }
 
 document.addEventListener("DOMContentLoaded", initRommeApp);
+
+// Task 212: Hint marks the next step the hard computer would take: draw
+// from the stock or take the discard, the cards of a meld and "Meld", the
+// card and the meld it goes to, or the card to discard and "Discard".
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof MoveHint === "undefined") return;
+  const card = (id) => '#romme-hand [data-cid="' + id + '"]';
+  MoveHint.init({
+    button: "romme-hint", board: "board-container", app: AppStateRomme,
+    canHint: () => {
+      const s = AppStateRomme.state;
+      return !!s && AppStateRomme.started && !s.over && !isAiRomme(s.turn) &&
+        !(AppStateRomme.mode === "hotseat" && !AppStateRomme.revealed) &&
+        (s.phase === "draw" || s.phase === "play" || s.phase === "knockDiscard");
+    },
+    move: () => RommeAi.chooseMove(AppStateRomme.state, 3),
+    marks: (m) => {
+      if (m.type === "draw") return ["#romme-stock"];
+      if (m.type === "takeDiscard") return ["#romme-discard"];
+      if (m.type === "meld") return m.ids.map(card).concat(["#romme-meld-button"]);
+      if (m.type === "extend" || m.type === "swapJoker" || m.type === "split") return [card(m.id), '#romme-table [data-meld="' + m.meld + '"]'];
+      if (m.type === "take") return ['#romme-table [data-meld="' + m.meld + '"] [data-cid="' + m.id + '"]'];
+      if (m.type === "discard") return [card(m.id), "#romme-discard-button"];
+      if (m.type === "confirmOpen") return ["#romme-confirm-button"];
+      if (m.type === "cancelPending") return ["#romme-cancel-button"];
+      if (m.type === "returnDiscard") return ["#romme-return-button"];
+      return [];
+    }
+  });
+});

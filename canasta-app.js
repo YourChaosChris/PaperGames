@@ -582,3 +582,36 @@ function renderScoreCn() {
 }
 
 document.addEventListener("DOMContentLoaded", initCanastaApp);
+
+// Task 212: Hint marks the next step of the hard computer: the stock, or
+// the pile with the cards to meld it with, the cards of a meld (and your
+// meld they go to), or the card to discard. Not while melds are staged:
+// the computer's plan does not know them.
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof MoveHint === "undefined") return;
+  const card = (id) => '#cn-hand [data-card="' + id + '"]';
+  const groupMarks = (groups) => {
+    const out = [];
+    (groups || []).forEach((g) => {
+      g.ids.forEach((id) => out.push(card(id)));
+      if (g.target !== undefined && g.target !== null) out.push('#cn-melds-0 [data-rank="' + g.target + '"]');
+    });
+    return out;
+  };
+  MoveHint.init({
+    button: "canasta-hint", board: "board-container", app: AppStateCn,
+    canHint: () => { const s = AppStateCn.state; return !!s && s.turn === 0 && (s.phase === "draw" || s.phase === "play") && !AppStateCn.staged.length; },
+    move: () => CanastaAi.chooseMove(AppStateCn.state, 3),
+    marks: (m) => {
+      if (m.type === "draw") return ["#cn-stock"];
+      if (m.type === "takePile") return groupMarks(m.groups).concat(["#cn-discard"]);
+      if (m.type === "meld") {
+        const marks = groupMarks(m.groups);
+        if (m.groups.some((g) => g.target === undefined || g.target === null)) marks.push("#cn-meld-button");
+        return marks;
+      }
+      if (m.type === "discard") return [card(m.id), "#cn-discard-button"];
+      return [];
+    }
+  });
+});
