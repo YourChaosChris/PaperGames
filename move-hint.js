@@ -8,6 +8,8 @@
 // pressed, so the player can think first.
 const MoveHint = (function () {
   "use strict";
+  // The move behind the latest marks, for tests (tests/move-hint-legal.js).
+  let lastMove = null;
 
   function init(cfg) {
     const btn = document.getElementById(cfg.button);
@@ -38,6 +40,7 @@ const MoveHint = (function () {
       clear();
       let m = null;
       try { m = cfg.move(); } catch (e) { m = null; }
+      lastMove = { button: cfg.button, move: m === undefined ? null : m, key: positionKey(), n: lastMove ? lastMove.n + 1 : 1 };
       if (m === null || m === undefined) { shown = null; return; }
       shown = { key: positionKey(), selectors: cfg.marks(m) };
       apply();
@@ -47,7 +50,7 @@ const MoveHint = (function () {
     refresh();
   }
 
-  return { init: init };
+  return { init: init, last: () => lastMove };
 })();
 
 if (typeof window !== "undefined") window.MoveHint = MoveHint;

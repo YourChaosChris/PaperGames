@@ -1731,3 +1731,15 @@ function undoLastMove() {
 
 
 document.addEventListener("DOMContentLoaded", initApp);
+
+// Task 209: Hint marks the move the engine (level 3) would play for the
+// side to move - against the computer and with two players, not online.
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof MoveHint === "undefined") return;
+  MoveHint.init({
+    button: "chess-hint", board: "board", app: AppState,
+    canHint: () => AppState.mode !== "online" && !AppState.gameOver,
+    move: () => AiEngine.chooseMove(AppState.board.map((row) => row.slice()), AppState.turn, 3),
+    marks: (m) => (m && m.from ? ['[data-coord="' + m.from + '"]', '[data-coord="' + m.to + '"]'] : [])
+  });
+});

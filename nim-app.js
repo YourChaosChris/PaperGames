@@ -281,6 +281,16 @@ function initNimApp() {
   document.getElementById("nim-take").addEventListener("click", confirmNim);
   document.getElementById("undo-btn").addEventListener("click", undoNim);
   if (window.I18n && typeof I18n.onChange === "function") I18n.onChange(() => { if (AppStateNim.state) renderNim(); });
+  // Task 209: Hint marks the stone to tap for the computer's best move
+  // (level hard): from there to the end of the row the stones are taken.
+  if (typeof MoveHint !== "undefined") {
+    MoveHint.init({
+      button: "nim-hint", board: "nim-heaps-board", app: AppStateNim,
+      canHint: () => !!AppStateNim.state && !AppStateNim.state.over && !isComputerTurnNim(),
+      move: () => NimCore.aiMove(AppStateNim.state, "hard"),
+      marks: (m) => [".nim-row:nth-child(" + (m.heap + 1) + ") .nim-stones > .nim-stone:nth-child(" + (AppStateNim.state.heaps[m.heap] - m.count + 1) + ")"]
+    });
+  }
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(NIM_SAVE_KEY) : null;
   if (saved && validStateNim(saved.state)) {
     setModeNim(saved.mode);

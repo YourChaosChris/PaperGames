@@ -19,6 +19,13 @@
   cursor: pointer;
 }
 
+/* Task 209: the field the Hint button suggests - an svg group has no
+   outline, so its rings get thick and dashed instead. */
+.kb-board .mh-mark circle {
+  stroke-width: 5;
+  stroke-dasharray: 4 2;
+}
+
 .kb-goal {
   display: flex;
   align-items: center;

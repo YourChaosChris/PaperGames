@@ -325,6 +325,15 @@ function initKleebergApp() {
   if (window.I18n && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateKB.state) renderKB(); });
   }
+  // Task 209: Hint rings the field the computer (level hard) would take.
+  if (typeof MoveHint !== "undefined") {
+    MoveHint.init({
+      button: "kleeberg-hint", board: "kb-board", app: AppStateKB,
+      canHint: () => !!AppStateKB.state && AppStateKB.state.phase === "play" && !AppStateKB.state.computer[AppStateKB.state.current],
+      move: () => KleebergCore.chooseAi(AppStateKB.state, null, 3),
+      marks: (i) => (typeof i === "number" ? ['[data-cell="' + i + '"]'] : [])
+    });
+  }
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(KLEEBERG_SAVE_KEY) : null;
   if (saved && validStateKB(saved.state)) {
     AppStateKB.state = saved.state;
