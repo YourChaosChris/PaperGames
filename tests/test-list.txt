@@ -148,3 +148,4 @@
 4 level-medium.js
 6 catplaces-animals.js
 40 move-hint-legal.js
+10 pegsolitaire-solve.js

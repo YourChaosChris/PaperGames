@@ -92,6 +92,12 @@ function pickLinkPairsPuzzle(level) {
   return index;
 }
 
+// Task 211: where new puzzles come from, "stored" (default) or "random".
+const LINKPAIRS_SOURCE_KEY = "papergames_linkpairs_source";
+function linkPairsSource() {
+  try { return localStorage.getItem(LINKPAIRS_SOURCE_KEY) === "random" ? "random" : "stored"; } catch (e) { return "stored"; }
+}
+
 /*** Setup ***/
 
 function initLinkPairsApp() {
@@ -115,6 +121,13 @@ function initLinkPairsApp() {
       AppStateLinkPairs.symbols = symbolSelect.value === "animals" ? "animals" : "numbers";
       try { localStorage.setItem(LINKPAIRS_SYMBOLS_KEY, AppStateLinkPairs.symbols); } catch (e) { /* not kept */ }
       if (AppStateLinkPairs.puzzle) renderLinkPairs();
+    });
+  }
+  const sourceSelect = document.getElementById("linkpairs-source");
+  if (sourceSelect) {
+    sourceSelect.value = linkPairsSource();
+    sourceSelect.addEventListener("change", () => {
+      try { localStorage.setItem(LINKPAIRS_SOURCE_KEY, sourceSelect.value === "random" ? "random" : "stored"); } catch (e) { /* not kept */ }
     });
   }
   document.getElementById("start-linkpairs-game").addEventListener("click", () => startNewLinkPairs(levelSelect.value));
@@ -162,10 +175,13 @@ function initLinkPairsApp() {
 function startNewLinkPairs(level) {
   const s = AppStateLinkPairs;
   s.level = LinkPairsCore.LEVELS[level] ? level : "easy";
-  // Task 198: every game is a new puzzle with exactly one solution, made
-  // on the device (a few milliseconds). Only if that fails, a stored one.
+  // Task 211: the collection (300 fixed puzzles per level) or, by choice,
+  // a new puzzle with exactly one solution made on the device (task 198,
+  // a few milliseconds). If making one fails, a stored one.
   let made = null;
-  try { made = LinkPairsCore.generatePuzzle(s.level); } catch (e) { made = null; }
+  if (linkPairsSource() === "random") {
+    try { made = LinkPairsCore.generatePuzzle(s.level); } catch (e) { made = null; }
+  }
   if (made) {
     s.index = -1;
     s.text = LinkPairsCore.encode(made);

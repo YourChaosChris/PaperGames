@@ -1,8 +1,11 @@
 #!/usr/bin/env node
-// Link the Pairs (task 198): every new game is a puzzle made on the device
-// with exactly one solution; it survives a reload (saved as text).
+// Link the Pairs (task 198, 211): by default a new game comes from the
+// collection (300 fixed puzzles per level); with "New random puzzle" it is
+// made on the device with exactly one solution and survives a reload
+// (saved as text).
 const { chromium } = require("playwright");
 const Core = require("../linkpairs-core.js");
+const Stored = require("../linkpairs-puzzles.js");
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const fails = [];
 const check = (name, ok) => { if (!ok) fails.push(name); };
@@ -17,6 +20,7 @@ for (const level of ["easy", "medium", "hard"]) {
     if (Core.countSolutions(q, 2) === 1) ok++;
   }
   check(level + ": 30 of 30 generated puzzles have exactly one solution (" + ok + ")", ok === 30);
+  check(level + ": the collection keeps 300 puzzles (" + Stored[level].length + ")", Stored[level].length === 300);
 }
 
 (async () => {
@@ -28,6 +32,14 @@ for (const level of ["easy", "medium", "hard"]) {
   await page.goto(BASE + "linkpairs.html?lang=de", { waitUntil: "load" });
   await page.waitForTimeout(500);
   if (!(await page.isVisible("#start-linkpairs-game"))) await page.click("#menu-toggle");
+  // Default: from the collection.
+  check("default source is the collection", (await page.$eval("#linkpairs-source", (s) => s.value)) === "stored");
+  await page.click("#start-linkpairs-game");
+  await page.waitForTimeout(200);
+  const fixed = await page.evaluate(() => ({ index: AppStateLinkPairs.index, text: AppStateLinkPairs.text }));
+  check("collection game uses a stored puzzle " + JSON.stringify(fixed), fixed.index >= 0 && fixed.index < 300 && fixed.text === null);
+  if (!(await page.isVisible("#start-linkpairs-game"))) await page.click("#menu-toggle");
+  await page.selectOption("#linkpairs-source", "random");
   const seen = new Set();
   for (let i = 0; i < 4; i++) {
     await page.click("#start-linkpairs-game");
@@ -43,6 +55,7 @@ for (const level of ["easy", "medium", "hard"]) {
   await page.waitForTimeout(500);
   const after = await page.evaluate(() => AppStateLinkPairs.text);
   check("the puzzle is back after a reload", before === after);
+  check("the source choice is kept", (await page.$eval("#linkpairs-source", (s) => s.value)) === "random");
   check("no page error " + errors.join("|"), errors.length === 0);
   await browser.close();
   if (fails.length) { console.log("FAIL:\n" + fails.join("\n")); process.exit(1); }
