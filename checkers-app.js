@@ -728,6 +728,23 @@ function updateCheckersBoard() {
   });
   ensureCheckersSquareAspectRatio();
   updateScoreLineCheckers();
+  updateCheckersBoardSummary();
+}
+
+// Task 207: how many pieces and kings each side has, for screen readers.
+function updateCheckersBoardSummary() {
+  if (typeof BoardSummary === "undefined") return;
+  const count = { b: [0, 0], w: [0, 0] };
+  AppStateCheckers.board.forEach((row) => row.forEach((piece) => {
+    if (!piece) return;
+    const c = count[CheckersCore.colorOf(piece)];
+    if (!c) return;
+    c[0]++;
+    if (CheckersCore.isKing(piece)) c[1]++;
+  }));
+  BoardSummary.set(document.getElementById("checkers-board"), (tr) =>
+    [["w", "a11y_white"], ["b", "a11y_black"]].map(([side, key]) =>
+      tr("a11y_t_checkers_side", { side: tr(key), n: count[side][0], m: count[side][1] })).join(" "));
 }
 
 function updateScoreLineCheckers() {

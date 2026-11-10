@@ -651,6 +651,14 @@ function updateMorrisBoard() {
     else if (isMovable) label += ", movable";
     I18n.setAria(pt, label);
   });
+  // Task 207: pieces on the board and still to place, for screen readers.
+  if (typeof BoardSummary !== "undefined") {
+    const toPlace = AppStateMorris.state.toPlace || { b: 0, w: 0 };
+    const on = { b: 0, w: 0 };
+    board.forEach((p) => { if (p === "b" || p === "w") on[p]++; });
+    BoardSummary.set(boardEl, (tr) => [["w", "a11y_white"], ["b", "a11y_black"]].map(([side, key]) =>
+      tr("a11y_t_morris_side", { side: tr(key), n: on[side], m: toPlace[side] || 0 })).join(" "));
+  }
 }
 
 function updateGameLabelsMorris() {

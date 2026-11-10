@@ -10,7 +10,8 @@
 const FontSizeToggle = (function () {
   const KEY = "einkchess_text_size";
   const LEVELS = ["normal", "large", "xlarge"];
-  const LABELS = { normal: "A", large: "A+", xlarge: "A++" };
+  // Task 207: "large" is 125 %, "xlarge" 150 % (base.css).
+  const LABELS = { normal: "A 100 %", large: "A+ 125 %", xlarge: "A++ 150 %" };
 
   function getLevel() {
     try {

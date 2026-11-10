@@ -11,7 +11,7 @@ const check = (n, ok) => { if (!ok) fails.push(n); };
 
 // Files on disk
 const files = ["press/papergames-logo.png", "press/papergames-logo.svg"];
-["home", "games", "chess", "checkers", "sudoku", "klondike"].forEach((k) => files.push("press/papergames-" + k + ".png"));
+["home", "games", "chess", "checkers", "sudoku", "klondike"].forEach((k) => files.push("press/papergames-" + k + ".png", "press/papergames-" + k + "-1072.png"));
 ["nim", "hanoi", "sudoku", "checkers", "guide"].forEach((k) => ["de", "en"].forEach((l) => files.push("downloads/papergames-" + k + "-" + l + ".pdf")));
 files.forEach((f) => check("file exists: " + f, fs.existsSync(path.join(ROOT, f)) && fs.statSync(path.join(ROOT, f)).size > 1000));
 
@@ -27,6 +27,12 @@ fs.readdirSync(ROOT).filter((f) => /^[a-z0-9]+\.html$/.test(f)).forEach((f) => {
   const html = fs.readFileSync(path.join(ROOT, f), "utf8");
   const m = /<div id="offline-[a-z0-9]+-status" class="status-text"([^>]*)>/.exec(html);
   if (m) check(f + ": status line has aria-live", /aria-live="polite"/.test(m[1]));
+});
+// Task 207: every site footer links the press page.
+fs.readdirSync(ROOT).filter((f) => f.endsWith(".html")).forEach((f) => {
+  const html = fs.readFileSync(path.join(ROOT, f), "utf8");
+  const m = /<footer class="site-footer">([\s\S]*?)<\/footer>/.exec(html);
+  if (m) check(f + ": footer links press.html", m[1].indexOf('href="press.html"') !== -1);
 });
 check("base.css has a :focus-visible outline", /:focus-visible\s*\{[^}]*outline:/.test(fs.readFileSync(path.join(ROOT, "base.css"), "utf8")));
 
@@ -52,11 +58,16 @@ check("base.css has a :focus-visible outline", /:focus-visible\s*\{[^}]*outline:
         }
         if (p === "school") check("school " + lang + ": 8 PDF links", (await page.$$eval('a[href^="downloads/"][href$=".pdf"]', (e) => e.length)) === 8);
         if (p === "guide") check("guide " + lang + ": 2 PDF links", (await page.$$eval('a[href^="downloads/papergames-guide-"]', (e) => e.length)) === 2);
+        if (p === "guide") check("guide " + lang + ": 5 device sections", (await page.$$eval("#guide-devices h3", (e) => e.length)) === 5);
+        if (p === "guide") check("guide " + lang + ": device texts translated", !/guide_device/.test(await page.textContent("#guide-devices")));
+        if (p === "press") check("press " + lang + ": 6 large screenshots", (await page.$$eval('a[href$="-1072.png"]', (e) => e.length)) === 6);
         if (p === "about") {
           check("about " + lang + ": press link", (await page.$('a[href="press.html"]')) !== null);
           check("about " + lang + ": school link", (await page.$('a[href="school.html"]')) !== null);
         }
       }
+      await page.goto(BASE + "index.html?lang=" + lang, { waitUntil: "load" });
+      check("home " + lang + ": link to the device steps", (await page.$('.home-guide-link a[href="guide.html#guide-devices"]')) !== null);
       check(lang + " " + width + ": no page error " + errors.join("|"), errors.length === 0);
       await ctx.close();
     }

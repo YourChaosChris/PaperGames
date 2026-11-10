@@ -1073,6 +1073,34 @@ function updateBoard() {
   // Keep squares square, in case something changed the board width
   ensureSquareAspectRatio();
   updateScoreLine();
+  updateChessBoardSummary(boardEl);
+}
+
+// Task 207: the whole position in one text for screen readers, e.g.
+// "White: king e1, queen d1, rook a1 h1. Black: ...".
+function updateChessBoardSummary(boardEl) {
+  if (typeof BoardSummary === "undefined") return;
+  const board = AppState.board.map((row) => row.slice());
+  BoardSummary.set(boardEl, (tr, list) => {
+    const order = ["k", "q", "r", "b", "n", "p"];
+    const sides = [["w", "a11y_white"], ["b", "a11y_black"]].map(([side, key]) => {
+      const parts = [];
+      order.forEach((type) => {
+        const squares = [];
+        for (let rank = 0; rank < 8; rank++) {
+          for (let file = 0; file < 8; file++) {
+            const piece = board[rank][file];
+            if (piece && piece.toLowerCase() === type && (ChessCore.isWhitePiece(piece) ? "w" : "b") === side) {
+              squares.push(ChessCore.indexToCoord(file, rank));
+            }
+          }
+        }
+        if (squares.length) parts.push(tr("msg_noun_" + CHESS_PIECE_NAMES[type]) + " " + squares.sort().join(" "));
+      });
+      return tr("a11y_t_side", { side: tr(key), list: parts.length ? list(parts) : tr("a11y_none") });
+    });
+    return sides.join(" ");
+  });
 }
 
 

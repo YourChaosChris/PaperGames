@@ -11,12 +11,19 @@
   display: inline-block;
   vertical-align: top;
   min-width: 9.5rem;
+  /* Task 207: never wider than the screen with 150 % text. */
+  max-width: calc(100% - 0.4rem);
   margin: 0.2rem;
   padding: 0.3rem 0.4rem;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: #fff;
   text-align: center;
+}
+
+html.text-size-large .pk-seat,
+html.text-size-xlarge .pk-seat {
+  min-width: 0;
 }
 
 .pk-seat-active {

@@ -33,9 +33,9 @@ const SHOTS = [
   fs.mkdirSync(path.join(ROOT, "press"), { recursive: true });
   const browser = await chromium.launch();
 
-  // PDFs
+  // PDFs (SRC "-" skips them and only takes the screenshots)
   const pdfPage = await browser.newPage();
-  const names = fs.readdirSync(SRC).filter((f) => f.endsWith(".html")).sort();
+  const names = SRC === "-" ? [] : fs.readdirSync(SRC).filter((f) => f.endsWith(".html")).sort();
   for (const f of names) {
     await pdfPage.goto("file://" + path.join(SRC, f));
     const out = path.join(ROOT, "downloads", "papergames-" + f.replace(/\.html$/, ".pdf"));
@@ -43,16 +43,21 @@ const SHOTS = [
     console.log("pdf", path.basename(out));
   }
 
-  // Screenshots, e-ink portrait size, English, light theme
-  const ctx = await browser.newContext({ viewport: { width: 758, height: 1024 }, deviceScaleFactor: 1 });
-  await ctx.addInitScript(() => { try { localStorage.setItem("einkchess_lang", "en"); } catch (e) {} });
-  const page = await ctx.newPage();
-  for (const [name, url] of SHOTS) {
-    await page.goto("http://localhost:" + PORT + "/" + url + "?lang=en", { waitUntil: "load" });
-    await page.waitForTimeout(1200);
-    const out = path.join(ROOT, "press", "papergames-" + name + ".png");
-    await page.screenshot({ path: out });
-    console.log("png", path.basename(out));
+  // Screenshots in two e-ink portrait sizes (758 x 1024 and, task 207,
+  // 1072 x 1448 as "-1072"), English, light theme, turned to greyscale.
+  let page = null;
+  for (const [w, h, suffix] of [[758, 1024, ""], [1072, 1448, "-1072"]]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+    await ctx.addInitScript(() => { try { localStorage.setItem("einkchess_lang", "en"); } catch (e) {} });
+    page = await ctx.newPage();
+    for (const [name, url] of SHOTS) {
+      await page.goto("http://localhost:" + PORT + "/" + url + "?lang=en", { waitUntil: "load" });
+      await page.waitForTimeout(1200);
+      await page.addStyleTag({ content: "html { filter: grayscale(1); }" });
+      const out = path.join(ROOT, "press", "papergames-" + name + suffix + ".png");
+      await page.screenshot({ path: out });
+      console.log("png", path.basename(out));
+    }
   }
 
   // Logo: the brand icon from the page header

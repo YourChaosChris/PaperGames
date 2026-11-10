@@ -442,6 +442,17 @@ function updateFourInARowBoard() {
     if (isLanding) label += ", drop here";
     I18n.setAria(sq, label);
   });
+  // Task 207: discs of each side and free places per column, for screen
+  // readers.
+  if (typeof BoardSummary !== "undefined") {
+    const board = AppStateFourInARow.board;
+    const on = { b: 0, w: 0 };
+    const free = board[0].map(() => 0);
+    board.forEach((row) => row.forEach((p, c) => { if (p === "b" || p === "w") on[p]++; else free[c]++; }));
+    BoardSummary.set(boardEl, (tr, list) =>
+      tr("a11y_t_discs", { w: on.w, b: on.b, white: tr("a11y_white"), black: tr("a11y_black") }) + " " +
+      tr("a11y_t_free_columns", { list: list(free.map(String)) }));
+  }
 }
 
 function updateGameLabelsFourInARow() {

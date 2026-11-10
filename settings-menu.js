@@ -267,9 +267,9 @@ const SettingsMenu = (function () {
         '<section class="settings-section">' +
           '<h3 data-i18n="settings_section_textsize">Text size</h3>' +
           '<div class="settings-segmented" id="settings-textsize-group" role="group">' +
-            '<button type="button" class="secondary" data-level="normal" data-i18n-attr="aria-label:settings_textsize_normal">A</button>' +
-            '<button type="button" class="secondary" data-level="large" data-i18n-attr="aria-label:settings_textsize_large">A+</button>' +
-            '<button type="button" class="secondary" data-level="xlarge" data-i18n-attr="aria-label:settings_textsize_xlarge">A++</button>' +
+            '<button type="button" class="secondary" data-level="normal" data-i18n-attr="aria-label:settings_textsize_normal">A 100 %</button>' +
+            '<button type="button" class="secondary" data-level="large" data-i18n-attr="aria-label:settings_textsize_large">A+ 125 %</button>' +
+            '<button type="button" class="secondary" data-level="xlarge" data-i18n-attr="aria-label:settings_textsize_xlarge">A++ 150 %</button>' +
           '</div>' +
         '</section>' +
         '<section class="settings-section">' +

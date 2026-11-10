@@ -425,6 +425,13 @@ function updateSudokuBoard() {
     if (conflicts.has(index)) label2 += ", conflict";
     I18n.setAria(cell, label2);
   });
+  // Task 207: filled cells and conflicts in one text for screen readers.
+  if (typeof BoardSummary !== "undefined" && AppStateSudoku.grid) {
+    const filled = AppStateSudoku.grid.filter((v) => v !== 0).length;
+    const conflictCount = conflicts.size;
+    BoardSummary.set(boardEl, (tr) => tr("a11y_t_sudoku", { n: filled, m: 81 - filled }) +
+      (conflictCount ? " " + tr("a11y_t_conflicts", { n: conflictCount }) : ""));
+  }
 }
 
 function updateGameLabelsSudoku() {

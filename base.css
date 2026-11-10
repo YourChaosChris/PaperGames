@@ -45,13 +45,52 @@ html, body {
    rem/em (nearly everywhere in this file), while leaving fixed-px board
    /card layouts (already sized to fit the viewport, board-a11y.js's
    float-grids, etc.) untouched, since those are unrelated to reading
-   comfort and enlarging them would just waste screen space. */
+   comfort and enlarging them would just waste screen space.
+   Task 207: the two steps are 125 % and 150 %. */
 html.text-size-large {
-  font-size: 112.5%;
+  font-size: 125%;
 }
 
 html.text-size-xlarge {
-  font-size: 125%;
+  font-size: 150%;
+}
+
+/* Long words must wrap rather than push the page sideways at 150 %. */
+html.text-size-large body,
+html.text-size-xlarge body {
+  overflow-wrap: break-word;
+}
+
+/* Text only for screen readers (board-summary.js). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+html.text-size-large .score-line-captures,
+html.text-size-xlarge .score-line-captures {
+  white-space: normal;
+  text-align: center;
+}
+
+html.text-size-large .score-line,
+html.text-size-xlarge .score-line {
+  grid-template-columns: minmax(0, 1fr) auto auto;
+}
+
+html.text-size-large .dg-scores th,
+html.text-size-large .dg-scores td,
+html.text-size-xlarge .dg-scores th,
+html.text-size-xlarge .dg-scores td {
+  padding: var(--space-1);
+  word-break: break-word;
 }
 
 #app {
@@ -2590,10 +2629,35 @@ margin-bottom: 0.5rem;
   --bg: #ffffff;
   --bg-alt: #ffffff;
   --surface: #ffffff;
+  --text: #000000;
+  --border: #000000;
+  --accent: #000000;
   --muted: #000000;
   --border-width: 3px;
+  --shadow: 0 0 0 2px #000;
   --square-dark: #bdbdbd;
   --square-selected: #999999;
+}
+
+/* Task 207: pure black on white, also where a game sets its own grey
+   text, and thicker outlines on every control. */
+:root.high-contrast body,
+:root.high-contrast .status-text,
+:root.high-contrast small,
+:root.high-contrast .muted {
+  color: #000000;
+}
+
+:root.high-contrast button,
+:root.high-contrast select,
+:root.high-contrast input,
+:root.high-contrast textarea {
+  border-width: 3px;
+  border-color: #000000;
+}
+
+:root.high-contrast :focus-visible {
+  outline-width: 4px;
 }
 
 /* Settings menu - see settings-menu.js. Same fixed-overlay technique as
@@ -2700,6 +2764,7 @@ margin-bottom: 0.5rem;
 
 .settings-segmented button {
   flex: 1;
+  min-width: 0;
 }
 
 .settings-segmented button.active {
@@ -3550,6 +3615,11 @@ button.concan-meld {
 
 .home-hero-short .home-hero-actions > * {
   margin-top: var(--space-2);
+}
+
+/* Task 207: small link to the device steps of the guide. */
+.home-guide-link {
+  font-size: 0.8rem;
 }
 
 .game-compact-grid {

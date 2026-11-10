@@ -144,3 +144,4 @@
 8 checkers-variants-ui.js
 5 sudoku-daily-keep.js
 20 press-school.js
+60 a11y-settings.js

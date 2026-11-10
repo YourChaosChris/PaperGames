@@ -53,6 +53,18 @@ flex: 0 0 15%;
 .mancala-store-label {
   font-size: 0.75rem;
   color: var(--muted);
+  /* Task 207: long names wrap inside the store with 150 % text. */
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.mancala-store {
+  min-width: 0;
+}
+
+html.text-size-xlarge .mancala-store-count {
+  font-size: 1.2rem;
 }
 
 .mancala-store-count {
