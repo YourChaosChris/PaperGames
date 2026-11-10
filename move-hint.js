@@ -43,6 +43,8 @@ const MoveHint = (function () {
       lastMove = { button: cfg.button, move: m === undefined ? null : m, key: positionKey(), n: lastMove ? lastMove.n + 1 : 1 };
       if (m === null || m === undefined) { shown = null; return; }
       shown = { key: positionKey(), selectors: cfg.marks(m) };
+      lastMove.board = cfg.board;
+      lastMove.selectors = shown.selectors;
       apply();
     });
     board.addEventListener("click", () => window.setTimeout(refresh, 0));

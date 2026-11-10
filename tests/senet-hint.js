@@ -28,8 +28,10 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
     if (await page.isEnabled("#senet-hint")) {
       await page.click("#senet-hint");
       await page.waitForTimeout(100);
-      const r = await page.evaluate(() => ({ marks: document.querySelectorAll(".senet-hint").length, movable: AppStateSenet.legalMoves.length }));
+      // Task 210: the marked piece is one of the legal moves for this throw.
+      const r = await page.evaluate(() => ({ marks: document.querySelectorAll(".senet-hint").length, movable: AppStateSenet.legalMoves.length, legal: AppStateSenet.legalMoves.indexOf(AppStateSenet.hintFrom) !== -1, from: AppStateSenet.hintFrom }));
       check("exactly one mark " + JSON.stringify(r), r.marks === 1 && r.movable > 0);
+      check("hinted piece may move with this throw " + JSON.stringify(r), r.legal);
       ok = true;
     } else await page.waitForTimeout(300);
   }

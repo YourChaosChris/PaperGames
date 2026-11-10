@@ -755,6 +755,7 @@ function renderBoardBL() {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "bl-field";
+    btn.dataset.field = String(f);
     btn.style.left = (f % C.COLS) * u + "px";
     btn.style.top = Math.floor(f / C.COLS) * u + "px";
     btn.style.width = u + "px";
@@ -775,3 +776,26 @@ function renderBoardBL() {
 }
 
 document.addEventListener("DOMContentLoaded", initBlockersApp);
+
+// Task 210: Hint shows what the hard computer would do with this roll:
+// the token's field and where it goes (only the target when the token is
+// still in its house), or, after a capture of a block, the field for it.
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof MoveHint === "undefined") return;
+  MoveHint.init({
+    // The whole game area, so the house (in the list of players) can be marked too.
+    button: "blockers-hint", board: "board-container", app: AppStateBL,
+    canHint: () => humanCanActBL() && (AppStateBL.state.phase === "move" || AppStateBL.state.phase === "stone"),
+    move: () => {
+      const s = AppStateBL.state;
+      if (s.phase === "stone") { const f = BlockersAi.chooseStone(s, 3); return f === null ? null : { stone: f }; }
+      return BlockersAi.chooseMove(s, 3);
+    },
+    marks: (m) => {
+      const s = AppStateBL.state;
+      if (m.stone !== undefined) return ['#bl-board [data-field="' + m.stone + '"]'];
+      const from = s.tokens[s.turn][m.token];
+      return [from >= 0 ? '#bl-board [data-field="' + from + '"]' : "#bl-players > :nth-child(" + (s.turn + 1) + ")", '#bl-board [data-field="' + m.to + '"]'];
+    }
+  });
+});

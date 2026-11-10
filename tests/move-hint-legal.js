@@ -18,7 +18,8 @@ const LEGAL = {
   reversi: "same(ReversiCore.getLegalMoves(AppStateReversi.board, AppStateReversi.turn), m)",
   gomoku: "!AppStateGomoku.board[m[0]][m[1]]",
   morris: "same(MorrisCore.getLegalMoves(AppStateMorris.state, AppStateMorris.turn), m)",
-  fanorona: "same(FanoronaCore.getLegalMoves(AppStateFanorona.board, AppStateFanorona.turn), m)",
+  // A hint may be a whole capture chain: compare with the full moves.
+  fanorona: "same(FanoronaCore.enumerateFullMoves(AppStateFanorona.board, AppStateFanorona.turn), m)",
   surakarta: "same(SurakartaCore.getLegalMoves(AppStateSurakarta.board, AppStateSurakarta.turn), m)",
   fourinarow: "same(FourInARowCore.getLegalMoves(AppStateFourInARow.board, AppStateFourInARow.turn), m)",
   halma: "same(HalmaCore.getLegalMoves(AppStateHalma.state, AppStateHalma.turn), m)",
@@ -30,12 +31,16 @@ const LEGAL = {
   mancala: "same(MancalaCore.getLegalMoves(AppStateMancala.state, AppStateMancala.turn), m)",
   dotsandboxes: "DotsAndBoxesCore.isLegalMove(AppStateDotsAndBoxes.state, m)",
   shogi: "m.kind === 'move' ? same(ShogiCore.legalMoves(AppStateShogi.state, AppStateShogi.turn), { from: m.from, to: m.to }) : same(ShogiCore.legalDrops(AppStateShogi.state, AppStateShogi.turn), m)",
-  konane: "same(KonaneCore.getLegalMoves(AppStateKonane.board, AppStateKonane.turn), m)",
+  konane: "same(KonaneCore.enumerateFullMoves(AppStateKonane.board, AppStateKonane.turn), m)",
   kleeberg: "KleebergCore.destinations(AppStateKB.state).indexOf(m) !== -1",
   nim: "same(NimCore.legalMoves(AppStateNim.state.heaps), m)",
-  chess: "same(AiEngine.generateLegalMoves(AppState.board, AppState.turn), { from: m.from, to: m.to })"
+  chess: "same(AiEngine.generateLegalMoves(AppState.board, AppState.turn), { from: m.from, to: m.to })",
+  // Task 210: Blocked Path, hint for the current roll (move) or the captured block.
+  blockers: "m.stone !== undefined ? BlockersCore.stoneTargets(AppStateBL.state).indexOf(m.stone) !== -1 : same(BlockersCore.legalMoves(AppStateBL.state), m)"
 };
-const START = { chess: ["#mode-offline", null], kleeberg: ["#mode-offline", "#start-kb-game"] };
+const START = { chess: ["#mode-offline", null], kleeberg: ["#mode-offline", "#start-kb-game"], blockers: ["#mode-offline", "#start-bl-game", "document.getElementById('bl-computers').value = '0'; document.getElementById('bl-computers').dispatchEvent(new Event('change'));"] };
+// Dice games: roll first, so there is a move to hint.
+const BEFORE = { blockers: "#bl-roll" };
 
 // Konane begins with a ritual (each side removes one stone), in which the
 // hint stays quiet; take the first allowed stones like a person would.
@@ -65,19 +70,25 @@ let checked = 0;
     page.on("dialog", (d) => d.accept());
     await page.goto(BASE + g + ".html?lang=en", { waitUntil: "load" });
     await page.waitForTimeout(400);
-    const [modeSel, startSel] = START[g] || ["#mode-offline", "#start-" + g + "-game"];
-    await page.evaluate(([mode, start]) => {
+    const [modeSel, startSel, setup] = START[g] || ["#mode-offline", "#start-" + g + "-game"];
+    await page.evaluate(([mode, start, setup]) => {
+      if (setup) eval(setup);
       const m = document.querySelector(mode);
       if (m) m.click();
       const s = start && document.querySelector(start);
       if (s) s.click();
-    }, [modeSel, startSel]);
+    }, [modeSel, startSel, setup || ""]);
     await page.waitForTimeout(500);
     const btn = "#" + g + "-hint";
     let n = 0;
     let prevKey = null;
     if (g === "konane") await konaneOpening(page);
     for (let k = 0; k < POSITIONS; k++) {
+      if (BEFORE[g]) {
+        await page.waitForTimeout(300);
+        await page.evaluate((sel) => { const b = document.querySelector(sel); if (b && !b.disabled && b.offsetParent) b.click(); }, BEFORE[g]);
+        await page.waitForTimeout(300);
+      }
       // Against the computer the button waits for the person's turn.
       const ready = await page.waitForFunction((sel) => { const b = document.querySelector(sel); return b && !b.disabled; }, btn, { timeout: 10000 }).then(() => true).catch(() => false);
       if (!ready) break;
@@ -104,9 +115,11 @@ let checked = 0;
       check(g + ": hint marks cells (" + r.marks + ")", r.marks >= 1);
       n++;
       // The hint itself does not move anything; then play it by tapping the marks.
-      const handles = await page.$$(".mh-mark");
-      for (const h of handles) {
-        await h.click({ force: true, timeout: 2000 }).catch(() => {});
+      // Tap the marks in the order the game gives them (from, to, ...).
+      const last = await page.evaluate(() => MoveHint.last());
+      for (const sel of (last && last.selectors) || []) {
+        const h = await page.$("#" + last.board + " " + sel);
+        if (h) await h.click({ force: true, timeout: 2000 }).catch(() => {});
         await page.waitForTimeout(150);
       }
       if (g === "nim") await page.click("#nim-take", { timeout: 2000 }).catch(() => {});

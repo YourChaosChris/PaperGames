@@ -28,8 +28,10 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
     if (await page.isEnabled("#ur-hint")) {
       await page.click("#ur-hint");
       await page.waitForTimeout(100);
-      const r = await page.evaluate(() => ({ marks: document.querySelectorAll(".ur-hint").length, movable: AppStateUr.legalMoves.length }));
+      // Task 210: the marked start is one of the legal moves for this roll.
+      const r = await page.evaluate(() => ({ marks: document.querySelectorAll(".ur-hint").length, movable: AppStateUr.legalMoves.length, legal: AppStateUr.legalMoves.some((m) => m.from === AppStateUr.hintFrom), from: AppStateUr.hintFrom }));
       check("exactly one mark " + JSON.stringify(r), r.marks === 1 && r.movable > 0);
+      check("hinted piece may move with this roll " + JSON.stringify(r), r.legal);
       ok = true;
     } else await page.waitForTimeout(300);
   }
