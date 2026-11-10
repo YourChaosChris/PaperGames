@@ -537,6 +537,7 @@ STRINGS.nl = {
     release_v292: "Solitaire heeft een nieuw bord, de grote driehoek met 21 gaten. Verbind de paren maakt voor elk spel een nieuwe puzzel en raakt nooit op.",
     release_v293: "Schwimmen, Concan en Card Tactics hebben nu een hintknop die de beste zet toont.",
     release_v294: "Dammen heeft drie extra regelsets om uit te kiezen: Russische, Braziliaanse en Italiaanse regels.",
+    release_v295: "De dagelijkse Sudoku-uitdaging bewaart nu je invoer, ook als je tussendoor iets anders speelt.",
     release_v286: "Pijl-Ludo: de pijlvakken zijn nu het 4e vak na de start, elke landing op een pijlvak vliegt, ook later in het spel, en de vlucht blijft gemarkeerd. Crème kleurt nu ook kaarten, knoppen en velden. Backgammon toont elke schijf op stapels van vijf en meldt wanneer een opgeslagen spel wordt geladen. Yut: een backdo op het eerste veld zet het spel niet meer vast.",
     release_v285: "Nieuw spel: Pijl-Ludo, met pijlvakken waarmee je pion over het midden vliegt. Nieuwe instelling: een crèmekleurige achtergrond. In 27 spellen voor twee spelers zonder dobbelstenen kun je je zet als link naar de andere speler sturen.",
     release_v284: "Nieuw spel: Yut, het Koreaanse stokjeswerp-racepel. Dammen markeert geslagen stenen en heeft een sterker gemiddeld niveau. Cat Places heeft negen dieren om uit te kiezen. Kleeberg, Klappenkasten, Steckwürfeln en Critter Roll hebben Gemakkelijk, Gemiddeld en Moeilijk. Hulpknoppen in Mahjong, Solitaire, Mijnenveger, FreeCell, Klondike, Piramide, Spider en Admirals Grid.",

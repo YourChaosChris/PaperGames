@@ -34,21 +34,40 @@ const sudokuHintSession = typeof HintEngine !== "undefined" ? HintEngine.createS
 
 const SUDOKU_SAVE_KEY = "einkchess_save_sudoku";
 
+// Task 201: today's Daily Challenge has its own save slot. Starting a normal
+// puzzle in between, or leaving for another game, no longer loses the entries:
+// the Daily button goes back to the saved state of the same day.
+const SUDOKU_DAILY_KEY = "einkchess_save_sudoku_daily";
+
 function saveSudokuGame() {
   if (typeof GameStorage === "undefined") return;
-  GameStorage.save(SUDOKU_SAVE_KEY, {
+  const data = {
     difficulty: AppStateSudoku.difficulty,
     puzzle: AppStateSudoku.puzzle,
     solution: AppStateSudoku.solution,
     grid: AppStateSudoku.grid,
     moveCount: AppStateSudoku.moveCount,
     hinted: AppStateSudoku.hinted
-  });
+  };
+  if (AppStateSudoku.isDaily) {
+    data.daily = DailyChallenge.todayKey();
+    GameStorage.save(SUDOKU_DAILY_KEY, data);
+  }
+  GameStorage.save(SUDOKU_SAVE_KEY, data);
 }
 
 function clearSavedSudokuGame() {
   if (typeof GameStorage === "undefined") return;
   GameStorage.clear(SUDOKU_SAVE_KEY);
+  // A solved Daily Challenge is over for today: the Daily button starts it afresh.
+  if (AppStateSudoku.isDaily) GameStorage.clear(SUDOKU_DAILY_KEY);
+}
+
+// The unfinished Daily Challenge of today, or null.
+function savedDailySudoku() {
+  if (typeof GameStorage === "undefined") return null;
+  const d = GameStorage.load(SUDOKU_DAILY_KEY);
+  return d && d.puzzle && d.daily === DailyChallenge.todayKey() ? d : null;
 }
 
 function recordSudokuStats() {
@@ -162,6 +181,8 @@ function initSudokuApp() {
   const dailyBtn = document.getElementById("daily-sudoku-button");
   if (dailyBtn) {
     dailyBtn.addEventListener("click", () => {
+      const saved = savedDailySudoku();
+      if (saved) { restoreSudoku(saved); return; }
       startNewGameSudoku("medium", DailyChallenge.makeTodaysRng("sudoku"), true);
     });
   }
@@ -182,9 +203,9 @@ function initSudokuApp() {
     }
   });
 
-  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(SUDOKU_SAVE_KEY) : null;
-  if (savedGame && savedGame.puzzle) {
+  function restoreSudoku(savedGame) {
     AppStateSudoku.difficulty = savedGame.difficulty;
+    AppStateSudoku.isDaily = !!savedGame.daily && savedGame.daily === DailyChallenge.todayKey();
     AppStateSudoku.puzzle = savedGame.puzzle;
     AppStateSudoku.solution = savedGame.solution;
     AppStateSudoku.grid = savedGame.grid;
@@ -203,8 +224,14 @@ function initSudokuApp() {
     buildSudokuNumpadDOM();
     updateSudokuBoard();
     updateGameLabelsSudoku();
-    setStatusSudoku("board-info", "Select a cell, then pick a number.");
+    if (window.PrintPuzzle) PrintPuzzle.setDaily(AppStateSudoku.isDaily);
+    setStatusSudoku("board-info", AppStateSudoku.isDaily
+      ? "Daily Challenge (" + DailyChallenge.todayKey() + "). Select a cell, then pick a number."
+      : "Select a cell, then pick a number.");
   }
+
+  const savedGame = typeof GameStorage !== "undefined" ? GameStorage.load(SUDOKU_SAVE_KEY) : null;
+  if (savedGame && savedGame.puzzle) restoreSudoku(savedGame);
   // Otherwise no puzzle is pre-generated: the placeholder shows until
   // the player picks a difficulty and presses New puzzle.
 }

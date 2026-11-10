@@ -719,6 +719,7 @@ const STRINGS = {
     release_v292: "Peg Solitaire has a new board, the large triangle with 21 holes. Link the Pairs now makes a new puzzle for every game, so it never runs out.",
     release_v293: "Swimming, Concan and Card Tactics now have a Hint button that shows the best move.",
     release_v294: "Checkers has three more rule sets to choose from: Russian, Brazilian and Italian rules.",
+    release_v295: "The Sudoku Daily Challenge now keeps your entries when you play something else in between.",
     release_v286: "Arrow Ludo: the arrow squares are now the 4th square after the start, every landing on an arrow square flies, also later in the game, and the flight stays marked. Cream now also colours cards, buttons and fields. Backgammon shows every checker on stacks of five and says when a saved game is loaded. Yut: a backdo on the first field no longer stops the game.",
     release_v285: "New game: Arrow Ludo, Ludo with arrow squares that fly your token across the middle. New setting: a cream background. In 27 two-player games without dice you can send your move to the other player as a link.",
     release_v284: "New game: Yut, the Korean stick-throwing race game. Checkers marks captured pieces and has a stronger Medium level. Cat Places has nine animals to choose from. Kleeberg, Klappenkasten, Steckwürfeln and Critter Roll have Easy, Medium and Hard. Hint buttons in Mahjong, Peg Solitaire, Minesweeper, FreeCell, Klondike, Pyramid, Spider and Admirals Grid.",

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v295",
+    date: "2026-11-10",
+    key: "release_v295",
+    text: "The Sudoku Daily Challenge now keeps your entries when you play something else in between."
+  },
+  {
     version: "v294",
     date: "2026-11-10",
     key: "release_v294",
