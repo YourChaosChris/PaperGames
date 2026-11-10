@@ -431,6 +431,9 @@ const STRINGS = {
     xiangqi_style_show_symbols: "Switch to symbols",
     xiangqi_style_show_classic: "Switch to characters",
     mancala_store: "Store",
+    mancala_rules_label: "Rules:",
+    mancala_rules_kalah: "Standard rules (with stores)",
+    mancala_rules_oware: "Oware (West Africa)",
 
     chess_piece_pawn: "Pawn",
     chess_piece_knight: "Knight",
@@ -526,6 +529,9 @@ const STRINGS = {
     ur_history_intro: "At roughly 4,600 years old, the Royal Game of Ur is one of the oldest board games ever discovered - and, thanks to a piece of detective work spanning two millennia, one of the few ancient games we can still play by rules reconstructed from an ancient written source.",
 
     morris_history_intro: "Few games have been carved into as many different surfaces across as many centuries as Nine Men's Morris - from Egyptian temple roofs to English cathedral cloisters.",
+    morris_variant_label: "Board:",
+    morris_variant_nine: "Nine Men's Morris (9 pieces)",
+    morris_variant_twelve: "Twelve Men's Morris (12 pieces, diagonals)",
 
     backgammon_history_intro: "Backgammon's family tree runs through nearly every civilization that has rolled dice - from ancient Mesopotamia and Rome to the coffee houses of the modern Middle East.",
 
@@ -5402,6 +5408,7 @@ const STRINGS = {
     msg_noun_queen: "queen",
     msg_noun_king: "king",
     msg_noun_piece: "piece",
+    msg_morris_full: "Draw: the board is full.",
     msg_noun_stone: "stone",
     msg_noun_marble: "marble",
     msg_noun_disc: "disc",
@@ -5840,6 +5847,7 @@ const STRINGS = {
     checkers_ruleset_en: "English rules",
     checkers_ruleset_de: "German rules",
     checkers_ruleset_it: "Italian rules",
+    checkers_ruleset_es: "Spanish rules",
     checkers_ruleset_br: "Brazilian rules",
     checkers_ruleset_ru: "Russian rules",
     checkers_ruleset_change_confirm: "Change the rules? The current game ends and a new game starts with the new rules.",

@@ -35,6 +35,8 @@ Object.assign(STRINGS.de, {
     checkers_rules_more_intro: "Ebenfalls in den Einstellungen wählbar. Jeder Regelsatz ist durch das beschrieben, was er gegenüber den Regeln oben ändert.",
     checkers_term_it: "Italienische Regeln",
     checkers_rules_it: "Steine ziehen und schlagen nur vorwärts, und ein Stein darf keine Dame schlagen. Damen ziehen ein Feld weit, wie bei den englischen Regeln. Es muss die größte Zahl an Steinen geschlagen werden; bei gleicher Zahl muss mit einer Dame geschlagen werden, danach gilt: möglichst viele Damen schlagen.",
+    checkers_term_es: "Spanische Regeln",
+    checkers_rules_es: "Wie bei den italienischen Regeln ziehen und schlagen Steine nur vorwärts, aber Damen ziehen weit wie bei den deutschen Regeln, und ein Stein darf eine Dame schlagen. Du musst die meisten Steine schlagen; bei gleicher Zahl die meisten Damen.",
     checkers_term_br: "Brasilianische Regeln",
     checkers_rules_br: "Wie die deutschen Regeln (weit ziehende Damen, Steine schlagen auch rückwärts), aber es muss immer die größte Zahl an Steinen geschlagen werden. Eine Dame zählt als ein Stein.",
     checkers_term_ru: "Russische Regeln",

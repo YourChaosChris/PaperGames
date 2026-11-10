@@ -149,3 +149,6 @@
 6 catplaces-animals.js
 40 move-hint-legal.js
 10 pegsolitaire-solve.js
+3 mancala-oware.js
+3 morris-twelve.js
+10 variants-213-ui.js

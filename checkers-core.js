@@ -22,6 +22,10 @@
 //          move and capture forward only and may not capture a king; the
 //          player must take the most pieces, with equal numbers capture
 //          with a king, then take the most kings.
+//   "es" - Spanish draughts (task 213): like Italian, men move and capture
+//          forward only, but kings fly (as in German rules) and a man may
+//          capture a king; the player must take the most pieces, with
+//          equal numbers the most kings.
 // Every function that needs the rules takes them as its last argument;
 // anything not listed (including a missing value, so old saves) is "en".
 // Mirrors the separation of concerns in go-core.js/chess-core.js - rules
@@ -85,15 +89,19 @@ const CheckersCore = (function () {
 
   const ALL_DIAGONALS = [[1, -1], [1, 1], [-1, -1], [-1, 1]];
 
-  const RULES = ["en", "de", "it", "br", "ru"];
+  const RULES = ["en", "de", "it", "br", "ru", "es"];
 
   function normalizeRules(rules) {
     return RULES.indexOf(rules) !== -1 ? rules : "en";
   }
 
-  // German, Brazilian and Russian rules share flying kings and men that
-  // capture backward.
+  // German, Brazilian, Russian and Spanish rules have flying kings.
   function isFlyingRules(rules) {
+    return rules === "de" || rules === "br" || rules === "ru" || rules === "es";
+  }
+
+  // Men capture backward too (German, Brazilian, Russian), not in Spanish.
+  function menCaptureBackward(rules) {
     return rules === "de" || rules === "br" || rules === "ru";
   }
 
@@ -164,9 +172,10 @@ const CheckersCore = (function () {
   // on one of them (the chain has to go on while it can). Men are only
   // crowned at the end of the chain, so a man passing the back row
   // mid-chain keeps capturing as a man.
-  function findCaptureChainsDe(board, r, c, color, king, captured, midCrown, crowned) {
+  // menForward (Spanish rules): men jump forward only.
+  function findCaptureChainsDe(board, r, c, color, king, captured, midCrown, crowned, menForward) {
     const results = [];
-    for (const [dr, dc] of ALL_DIAGONALS) {
+    for (const [dr, dc] of (menForward && !king ? forwardDirs(color) : ALL_DIAGONALS)) {
       let midR = r + dr;
       let midC = c + dc;
       if (king) {
@@ -201,7 +210,7 @@ const CheckersCore = (function () {
         const newBoard = cloneBoard(board);
         newBoard[r][c] = null;
         newBoard[lr][lc] = encodePiece(color, king2);
-        return { to: [lr, lc], crowned: crowned2, king: king2, further: findCaptureChainsDe(newBoard, lr, lc, color, king2, newCaptured, midCrown, crowned2) };
+        return { to: [lr, lc], crowned: crowned2, king: king2, further: findCaptureChainsDe(newBoard, lr, lc, color, king2, newCaptured, midCrown, crowned2, menForward) };
       });
       const goesOn = branches.some((b) => b.further.length > 0);
       branches.forEach((b) => {
@@ -235,6 +244,14 @@ const CheckersCore = (function () {
     return best;
   }
 
+  // Spanish rules: among the captures with the most pieces, those taking
+  // the most kings.
+  function mostKingsToo(board, moves) {
+    const kings = (m) => m.captured.filter((p) => isKing(board[p[0]][p[1]])).length;
+    const most = Math.max.apply(null, moves.map(kings));
+    return moves.filter((m) => kings(m) === most);
+  }
+
   // Returns every legal move for `color` under `rules` ("en" when left
   // out). If any capture is available for any piece, only (maximal)
   // capturing moves are legal - mandatory capture, the defining rule of
@@ -250,7 +267,7 @@ const CheckersCore = (function () {
         const piece = board[r][c];
         if (!piece || colorOf(piece) !== color) continue;
         const chains = german
-          ? findCaptureChainsDe(board, r, c, color, isKing(piece), new Set(), rules === "ru", false)
+          ? findCaptureChainsDe(board, r, c, color, isKing(piece), new Set(), rules === "ru", false, !menCaptureBackward(rules))
           : findCaptureChains(board, r, c, color, isKing(piece), new Set(), rules === "it");
         chains.forEach((chain) => {
           if (german) {
@@ -265,7 +282,11 @@ const CheckersCore = (function () {
         });
       }
     }
-    if (captureMoves.length) return rules === "br" || rules === "it" ? mostPieces(board, captureMoves, rules === "it") : captureMoves;
+    if (captureMoves.length) {
+      if (rules === "br" || rules === "it") return mostPieces(board, captureMoves, rules === "it");
+      if (rules === "es") return mostKingsToo(board, mostPieces(board, captureMoves, false));
+      return captureMoves;
+    }
 
     const simpleMoves = [];
     for (let r = 0; r < SIZE; r++) {

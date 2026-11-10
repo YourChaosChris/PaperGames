@@ -35,6 +35,8 @@ Object.assign(STRINGS.nl, {
     checkers_rules_more_intro: "Ook gekozen in de instellingen. Elke set wordt beschreven door wat deze verandert in vergelijking met de bovenstaande regels.",
     checkers_term_it: "Italiaanse regels",
     checkers_rules_it: "Schijven bewegen en slaan alleen voorwaarts, en een schijf mag geen dam slaan. Dammen bewegen één veld tegelijk, net als bij de Engelse regels. Je moet de meeste stenen slaan; bij gelijke aantallen moet je met een dam slaan, en daarna de meeste dammen slaan.",
+    checkers_term_es: "Spaanse regels",
+    checkers_rules_es: "Zoals bij de Italiaanse regels zetten en slaan schijven alleen vooruit, maar dammen gaan ver zoals bij de Duitse regels, en een schijf mag een dam slaan. Je moet de meeste stukken slaan; bij een gelijk aantal de meeste dammen.",
     checkers_term_br: "Braziliaanse regels",
     checkers_rules_br: "Als de Duitse regels (vliegende dammen, schijven slaan achterwaarts), maar je moet altijd de meeste stenen slaan. Een dam telt als één steen.",
     checkers_term_ru: "Russische regels",

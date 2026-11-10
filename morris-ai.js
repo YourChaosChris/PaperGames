@@ -34,7 +34,7 @@ const MorrisAi = (function () {
       const piece = board[i];
       if (!piece) continue;
       const sign = piece === color ? 1 : -1;
-      const mobility = MorrisCore.ADJACENCY[i].filter((j) => !board[j]).length;
+      const mobility = MorrisCore.adjacencyOf(state)[i].filter((j) => !board[j]).length;
       score += sign * mobility * 3;
     }
 
@@ -43,7 +43,7 @@ const MorrisAi = (function () {
     // add a bonus (a real "double mill" threat, i.e. two such lines
     // sharing that empty point, naturally scores twice - a fair proxy
     // for the classic swinging-mill trap).
-    MorrisCore.MILLS.forEach((mill) => {
+    MorrisCore.millsOf(state).forEach((mill) => {
       const mine = mill.filter((p) => board[p] === color).length;
       const theirs = mill.filter((p) => board[p] === opp).length;
       const empty = mill.filter((p) => !board[p]).length;
@@ -69,6 +69,7 @@ const MorrisAi = (function () {
     }
 
     const end = MorrisCore.detectGameEnd(state, colorToMove);
+    if (end.status === "full") return 0; // Twelve Men's Morris: full board, a draw
     if (end.status !== "normal") {
       return colorToMove === perspective ? -INF / 2 : INF / 2;
     }

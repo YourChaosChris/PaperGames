@@ -419,6 +419,9 @@ STRINGS.de = {
     xiangqi_style_show_symbols: "Symbole anzeigen",
     xiangqi_style_show_classic: "Zeichen anzeigen",
     mancala_store: "Kalaha",
+    mancala_rules_label: "Regeln:",
+    mancala_rules_kalah: "Standardregeln (mit Kalahas)",
+    mancala_rules_oware: "Oware (Westafrika)",
 
     chess_piece_pawn: "Bauer",
     chess_piece_knight: "Springer",
@@ -514,6 +517,9 @@ STRINGS.de = {
     ur_history_intro: "Mit rund 4600 Jahren ist das Königliche Spiel von Ur eines der ältesten je entdeckten Brettspiele – und dank einer über zwei Jahrtausende reichenden Ermittlungsarbeit eines der wenigen antiken Spiele, das wir noch nach Regeln spielen können, die aus einer antiken Schriftquelle rekonstruiert wurden.",
 
     morris_history_intro: "Kaum ein Spiel wurde über so viele Jahrhunderte in so viele verschiedene Oberflächen eingeritzt wie Mühle – von ägyptischen Tempeldächern bis zu englischen Kathedral-Kreuzgängen.",
+    morris_variant_label: "Brett:",
+    morris_variant_nine: "Neunermühle (9 Steine)",
+    morris_variant_twelve: "Zwölfermühle (12 Steine, Diagonalen)",
 
     backgammon_history_intro: "Der Stammbaum von Backgammon verläuft durch fast jede Zivilisation, die je Würfel geworfen hat – vom alten Mesopotamien und Rom bis zu den Kaffeehäusern des heutigen Nahen Ostens.",
 
@@ -5390,6 +5396,7 @@ STRINGS.de = {
     msg_noun_queen: "Dame",
     msg_noun_king: "König",
     msg_noun_piece: "Stein",
+    msg_morris_full: "Unentschieden: Das Brett ist voll.",
     msg_noun_stone: "Stein",
     msg_noun_marble: "Kugel",
     msg_noun_disc: "Scheibe",
@@ -5828,6 +5835,7 @@ STRINGS.de = {
     checkers_ruleset_en: "Englische Regeln",
     checkers_ruleset_de: "Deutsche Regeln",
     checkers_ruleset_it: "Italienische Regeln",
+    checkers_ruleset_es: "Spanische Regeln",
     checkers_ruleset_br: "Brasilianische Regeln",
     checkers_ruleset_ru: "Russische Regeln",
     checkers_ruleset_change_confirm: "Regeln wechseln? Die laufende Partie endet, und eine neue Partie mit den neuen Regeln beginnt.",

@@ -45,6 +45,7 @@ const SAMPLES = [
   "White wins on stones (9 to 4): neither side can move.",
   "Draw: 6 stones each after 40 turns without a capture.",
   "Draw: 3 stones each, neither side can move.",
+  "Draw: the board is full.",
   "White cannot move and passes. Computer thinking…",
   "Move undone. White: move a stone.",
   "Player 1: draw a card from the stock or take the top discard.",

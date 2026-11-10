@@ -194,7 +194,9 @@ function initMorrisApp() {
 
   function startNewGameMorris(mode, humanColor, level) {
     AppStateMorris.mode = mode;
-    AppStateMorris.state = MorrisCore.createInitialState();
+    // Task 213: Nine or Twelve Men's Morris, as chosen in the menu.
+    const variantSel = document.getElementById("morris-variant");
+    AppStateMorris.state = MorrisCore.createInitialState(variantSel && variantSel.value === "twelve" ? "twelve" : undefined);
     AppStateMorris.turn = "b";
     AppStateMorris.selected = null;
     AppStateMorris.pendingRemoval = null;
@@ -299,6 +301,8 @@ function initMorrisApp() {
     AppStateMorris.moveHistory = savedGame.moveHistory || [];
     AppStateMorris.gameOver = false;
     AppStateMorris.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
+    const variantSel = document.getElementById("morris-variant");
+    if (variantSel) variantSel.value = MorrisCore.isTwelve(savedGame.state) ? "twelve" : "nine";
     renderMoveListMorris();
     setActiveModeButtonMorris(AppStateMorris.mode);
     setGameResultMorris("");
@@ -428,6 +432,14 @@ function applyMorrisMove(move) {
   updateGameLabelsMorris();
 
   const end = MorrisCore.detectGameEnd(AppStateMorris.state, AppStateMorris.turn);
+  if (end.status === "full") {
+    // Twelve Men's Morris: every point taken after placing - a draw.
+    AppStateMorris.gameOver = true;
+    announceGameResultMorris("Draw", "Draw: the board is full.");
+    recordMorrisStatsIfVsAi("draw");
+    updateGameLabelsMorris();
+    return;
+  }
   if (end.status !== "normal") {
     const winnerName = colorNameMorris(end.winner);
     const reason = end.status === "reduced" ? "reduced to two pieces" : "no legal moves left";
@@ -525,7 +537,7 @@ function buildMorrisBoardDOM() {
 
   const seenEdges = new Set();
   for (let i = 0; i < MorrisCore.TOTAL_POINTS; i++) {
-    for (const j of MorrisCore.ADJACENCY[i]) {
+    for (const j of MorrisCore.adjacencyOf(AppStateMorris.state)[i]) {
       if (j <= i) continue;
       const key = i + "-" + j;
       if (seenEdges.has(key)) continue;
@@ -560,6 +572,19 @@ function buildMorrisBoardDOM() {
 
 function buildMorrisLine(a, b) {
   const line = document.createElement("div");
+  if (a.row !== b.row && a.col !== b.col) {
+    // A corner diagonal (Twelve Men's Morris): the board is square, so a
+    // turned line of length d * sqrt(2) grid units joins the two points.
+    const d = Math.abs(b.row - a.row);
+    const angle = Math.atan2(b.row - a.row, b.col - a.col) * 180 / Math.PI;
+    line.className = "morris-line morris-line-d";
+    line.style.top = pct(a.row);
+    line.style.left = pct(a.col);
+    line.style.width = pct(d * Math.SQRT2);
+    line.style.webkitTransform = "rotate(" + angle + "deg)";
+    line.style.transform = "rotate(" + angle + "deg)";
+    return line;
+  }
   if (a.row === b.row) {
     line.className = "morris-line morris-line-h";
     const left = Math.min(a.col, b.col);
@@ -662,6 +687,9 @@ function updateMorrisBoard() {
 }
 
 function updateGameLabelsMorris() {
+  // Task 213: which board this game uses, above the board.
+  const label = document.getElementById("game-label");
+  if (label) I18n.setKey(label, MorrisCore.isTwelve(AppStateMorris.state) ? "morris_variant_twelve" : "morris_variant_nine");
   const meta = document.getElementById("game-meta");
   if (meta) {
     const state = AppStateMorris.state;

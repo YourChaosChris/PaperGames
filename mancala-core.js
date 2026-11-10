@@ -15,6 +15,18 @@
 // Sowing wraps from 13 back to 0. A player's own store collects a seed
 // every time sowing passes it; the opponent's store is always skipped
 // entirely (no seed dropped, no turn consumed) rather than counted.
+//
+// Task 213: rule set "oware" (state.rules; a state without rules is
+// Kalah). Same 12 pits, 4 seeds each; the two stores only hold captured
+// seeds and are never sown into. A move with 12 or more seeds skips the
+// pit it started from. The last seed in an opponent's pit that then holds
+// 2 or 3 captures it, and so do the opponent's pits right before it, as
+// long as they hold 2 or 3 too. A move that would capture all of the
+// opponent's seeds captures nothing (grand slam). No extra turns. Hunger
+// rule: when the opponent has no seeds, a move must give them some. When
+// the player to move has no legal move, or after 100 moves without a
+// capture, each player takes the seeds on their own side. More than 24
+// seeds wins; 24 each is a draw.
 
 const MancalaCore = (function () {
   const SEEDS_PER_PIT = 4;
@@ -35,15 +47,91 @@ const MancalaCore = (function () {
     return player === "a" ? PITS_A : PITS_B;
   }
 
-  function createInitialState() {
+  const OWARE_QUIET_LIMIT = 100;
+
+  function isOware(state) {
+    return !!state && state.rules === "oware";
+  }
+
+  function createInitialState(rules) {
     const board = new Array(14).fill(SEEDS_PER_PIT);
     board[STORE_A] = 0;
     board[STORE_B] = 0;
+    if (rules === "oware") return { board, gameOver: false, rules: "oware", quiet: 0 };
     return { board, gameOver: false };
   }
 
   function cloneState(state) {
-    return { board: state.board.slice(), gameOver: state.gameOver };
+    const out = { board: state.board.slice(), gameOver: state.gameOver };
+    if (isOware(state)) { out.rules = "oware"; out.quiet = state.quiet || 0; }
+    return out;
+  }
+
+  // Oware sowing: the pits after `from`, never a store, and not `from`
+  // itself on a second lap. Returns the board and the last pit.
+  function sowOware(board, from) {
+    let seeds = board[from];
+    board[from] = 0;
+    let idx = from;
+    while (seeds > 0) {
+      idx = (idx + 1) % 14;
+      if (idx === STORE_A || idx === STORE_B || idx === from) continue;
+      board[idx]++;
+      seeds--;
+    }
+    return idx;
+  }
+
+  function sideSeeds(board, player) {
+    return pitsOf(player).reduce((t, i) => t + board[i], 0);
+  }
+
+  function getLegalMovesOware(state, player) {
+    const own = pitsOf(player).filter((i) => state.board[i] > 0);
+    const opp = otherPlayer(player);
+    if (sideSeeds(state.board, opp) > 0) return own;
+    // Hunger rule: the opponent must get seeds.
+    return own.filter((i) => {
+      const b = state.board.slice();
+      sowOware(b, i);
+      return sideSeeds(b, opp) > 0;
+    });
+  }
+
+  // Each player takes the seeds on their own side.
+  function settleOware(board) {
+    PITS_A.forEach((i) => { board[STORE_A] += board[i]; board[i] = 0; });
+    PITS_B.forEach((i) => { board[STORE_B] += board[i]; board[i] = 0; });
+  }
+
+  function applyMoveOware(state, player, from) {
+    const board = state.board.slice();
+    const opp = otherPlayer(player);
+    const last = sowOware(board, from);
+    let captured = 0;
+    const capturedPits = [];
+    if (isOwnPit(opp, last) && (board[last] === 2 || board[last] === 3)) {
+      const oppPits = pitsOf(opp);
+      let k = oppPits.indexOf(last);
+      const take = [];
+      while (k >= 0 && (board[oppPits[k]] === 2 || board[oppPits[k]] === 3)) { take.push(oppPits[k]); k--; }
+      const total = take.reduce((t, i) => t + board[i], 0);
+      // Grand slam: taking every seed of the opponent captures nothing.
+      if (total < sideSeeds(board, opp)) {
+        take.forEach((i) => { captured += board[i]; capturedPits.push(i); board[i] = 0; });
+        board[storeOf(player)] += captured;
+      }
+    }
+    const quiet = captured ? 0 : (state.quiet || 0) + 1;
+    let gameOver = board[STORE_A] > 24 || board[STORE_B] > 24 || (board[STORE_A] === 24 && board[STORE_B] === 24);
+    if (!gameOver) {
+      const next = { board, gameOver: false, rules: "oware", quiet };
+      if (quiet >= OWARE_QUIET_LIMIT || !getLegalMovesOware(next, opp).length) {
+        settleOware(board);
+        gameOver = true;
+      }
+    }
+    return { state: { board, gameOver, rules: "oware", quiet }, extraTurn: false, captured, capturedPits, landedIn: last };
   }
 
   // The pit directly across the board from pit `i` - only meaningful
@@ -57,6 +145,7 @@ const MancalaCore = (function () {
   }
 
   function getLegalMoves(state, player) {
+    if (isOware(state)) return getLegalMovesOware(state, player);
     return pitsOf(player).filter((i) => state.board[i] > 0);
   }
 
@@ -79,6 +168,7 @@ const MancalaCore = (function () {
   // `extraTurn` is true when that slot is the mover's own store (so the
   // same player moves again next).
   function applyMove(state, player, from) {
+    if (isOware(state)) return applyMoveOware(state, player, from);
     const board = state.board.slice();
     let seeds = board[from];
     board[from] = 0;
@@ -111,6 +201,7 @@ const MancalaCore = (function () {
       state: { board, gameOver },
       extraTurn: !gameOver && idx === ownStore,
       captured,
+      capturedPits: captured ? [oppositePit(idx)] : [],
       landedIn: idx
     };
   }
@@ -133,6 +224,8 @@ const MancalaCore = (function () {
     pitsOf,
     oppositePit,
     isOwnPit,
+    isOware,
+    OWARE_QUIET_LIMIT,
     createInitialState,
     cloneState,
     getLegalMoves,

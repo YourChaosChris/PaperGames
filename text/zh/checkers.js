@@ -35,6 +35,8 @@ Object.assign(STRINGS.zh, {
     checkers_rules_more_intro: "也可以在设置中选择。每个规则集都通过其与上述规则相比的改动来描述。",
     checkers_term_it: "意大利规则",
     checkers_rules_it: "兵只能向前移动和吃子，且兵不能吃王。王每次移动一格，类似于英国规则。你必须吃掉最多的子；若数量相等，必须用王吃子，然后吃掉最多的王。",
+    checkers_term_es: "西班牙规则",
+    checkers_rules_es: "与意大利规则一样，普通棋子只能向前走和向前吃，但王棋像德国规则一样可远距离移动，普通棋子也可以吃王棋。必须吃掉最多的棋子；数目相同时，吃掉最多的王棋。",
     checkers_term_br: "巴西规则",
     checkers_rules_br: "类似于德国规则（飞王，兵可向后吃子），但你必须总是吃掉最多的子。王算作一个子。",
     checkers_term_ru: "俄罗斯规则",

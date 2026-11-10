@@ -35,6 +35,8 @@ Object.assign(STRINGS.en, {
     checkers_rules_more_intro: "Also chosen in the settings. Each one is described by what it changes compared to the rules above.",
     checkers_term_it: "Italian rules",
     checkers_rules_it: "Men move and capture forward only, and a man may not capture a king. Kings move one square at a time, as in English rules. You must take the most pieces; with equal numbers, you must capture with a king, and then take the most kings.",
+    checkers_term_es: "Spanish rules",
+    checkers_rules_es: "As Italian rules, men move and capture forward only, but kings fly as in German rules, and a man may capture a king. You must take the most pieces; with equal numbers, the most kings.",
     checkers_term_br: "Brazilian rules",
     checkers_rules_br: "As German rules (flying kings, men capture backward), but you must always take the most pieces. A king counts as one piece.",
     checkers_term_ru: "Russian rules",

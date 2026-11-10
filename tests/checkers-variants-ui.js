@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Checkers rule sets Italian, Brazilian and Russian in the browser (task 200):
+// Checkers rule sets Italian, Brazilian, Russian (task 200) and Spanish
+// (task 213) in the browser:
 // the choice is in the settings, a new game shows the rule set above the board,
 // the choice survives a reload, the computer plays, no page error.
 // Run: node tests/checkers-variants-ui.js
@@ -7,10 +8,10 @@ const { chromium } = require("playwright");
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const fails = [];
 const check = (n, ok) => { if (!ok) fails.push(n); };
-const NAMES = { it: "Italienische Regeln", br: "Brasilianische Regeln", ru: "Russische Regeln" };
+const NAMES = { it: "Italienische Regeln", br: "Brasilianische Regeln", ru: "Russische Regeln", es: "Spanische Regeln" };
 (async () => {
   const browser = await chromium.launch();
-  for (const r of ["it", "br", "ru"]) {
+  for (const r of ["it", "br", "ru", "es"]) {
     const ctx = await browser.newContext({ viewport: { width: 360, height: 640 }, serviceWorkers: "block" });
     await ctx.addInitScript(() => { try { localStorage.setItem("papergames_ai_pacing", "fast"); } catch (e) { /* ignore */ } });
     const page = await ctx.newPage();

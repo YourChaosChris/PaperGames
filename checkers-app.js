@@ -14,7 +14,7 @@ const AppStateCheckers = {
   lastMove: null,         // { from: [r,c], to: [r,c], captured?: [[r,c]] } | null
   humanColor: "b",
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
-  rules: "en",            // "en" | "de" | "it" | "br" | "ru" - rule set of the running game (task 179)
+  rules: "en",            // "en" | "de" | "it" | "br" | "ru" | "es" - rule set of the running game (task 179)
   gameOver: false,
   moveCount: 0,
   pendingChains: null,   // { board, turn, chains } while the player picks between jump chains

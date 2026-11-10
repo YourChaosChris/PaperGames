@@ -915,8 +915,11 @@ change on a real device before shipping it.
 - `node tests/ludo-hint.js`, `backgammon-hint.js`, `senet-hint.js`, `ur-hint.js` - need the server and Playwright. The Hint button of the four dice games (marks the computer-level-3 move, disabled before the roll).
 - `node tests/move-hint-games.js [slug ...]` - needs the server and Playwright. The Hint button of 18 strategy games (move-hint.js): marks 1 to 3 cells, marks stay while nothing moves.
 - `node tests/card-hint.js` - needs the server and Playwright. The Hint button of Schwimmen, Concan and Card Tactics: enabled on the human turn, marks 1 to 4 elements, marks stay.
-- `node tests/checkers-variants.js` - engine only. Italian, Brazilian and Russian draughts: man can't take a king, majority rule, crowning in the middle of a chain, random games.
-- `node tests/checkers-variants-ui.js` - needs the server and Playwright. The three rule sets in the settings, label above the board, kept after a reload.
+- `node tests/checkers-variants.js` - engine only. Italian, Brazilian, Russian and Spanish draughts: man can't take a king, majority rule, crowning in the middle of a chain, Spanish flying kings with forward-only men, random games.
+- `node tests/checkers-variants-ui.js` - needs the server and Playwright. The four rule sets in the settings, label above the board, kept after a reload.
+- `node tests/mancala-oware.js` - engine only. Mancala rule set Oware (task 213): sowing past the stores, capturing 2 and 3 backwards, grand slam, hunger rule, end; computer games at every level only play legal moves, 48 seeds, every game ends.
+- `node tests/morris-twelve.js` - engine only. Twelve Men's Morris (task 213): 12 pieces, corner diagonals as lines and mills, full board is a draw, Nine Men's Morris unchanged; computer games only play legal moves.
+- `node tests/variants-213-ui.js` - needs the server and Playwright. Oware and Twelve Men's Morris chosen in the settings, named above the board, the computer answers, kept after a reload.
 - `node tests/sudoku-daily-keep.js` - needs the server and Playwright. The Sudoku Daily Challenge keeps its entries after a normal puzzle in between and after a reload.
 - `node tests/press-school.js` - needs the server and Playwright. Press page, school page with its worksheets, printable guide, the downloads stay out of APP_SHELL, aria-live on every game status line. Task 207: press link in every site footer, screenshots also in 1072 x 1448, five device sections in the guide, link to them on the home page.
 - `node tests/level-medium.js` - engine only, fixed random numbers. The Medium level of Yut, Zoowurf, Sternjagd and Pairs plays between Easy and Hard (win shares, Pairs: what it remembers).

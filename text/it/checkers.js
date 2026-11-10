@@ -35,6 +35,8 @@ Object.assign(STRINGS.it, {
     checkers_rules_more_intro: "Scelti anche nelle impostazioni. Ciascuno è descritto in base a ciò che cambia rispetto alle regole precedenti.",
     checkers_term_it: "Regole italiane",
     checkers_rules_it: "Le pedine si muovono e catturano solo in avanti e una pedina non può catturare una dama. Le dame si muovono di una casella alla volta, come nelle regole inglesi. Devi prendere più pezzi possibili; a parità di numero, devi catturare con una dama e poi prendere il maggior numero di dame.",
+    checkers_term_es: "Regole spagnole",
+    checkers_rules_es: "Come nelle regole italiane, le pedine muovono e prendono solo in avanti, ma le dame vanno lontano come nelle regole tedesche, e una pedina può prendere una dama. Bisogna prendere il maggior numero di pezzi; a parità, il maggior numero di dame.",
     checkers_term_br: "Regole brasiliane",
     checkers_rules_br: "Come le regole tedesche (dame volanti, le pedine catturano all'indietro), ma devi sempre prendere più pezzi possibili. Una dama vale come un pezzo.",
     checkers_term_ru: "Regole russe",

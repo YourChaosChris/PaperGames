@@ -141,7 +141,9 @@ function initMancalaApp() {
 
   function startNewGameMancala(mode, humanSide, level) {
     AppStateMancala.mode = mode;
-    AppStateMancala.state = MancalaCore.createInitialState();
+    // Task 213: the rule set from the menu (Kalah-style standard or Oware).
+    const rulesSel = document.getElementById("mancala-rules");
+    AppStateMancala.state = MancalaCore.createInitialState(rulesSel && rulesSel.value === "oware" ? "oware" : undefined);
     AppStateMancala.turn = "a";
     AppStateMancala.humanSide = humanSide;
     AppStateMancala.aiLevel = level;
@@ -225,6 +227,8 @@ function initMancalaApp() {
     AppStateMancala.lastMove = null;
     AppStateMancala.gameOver = false;
     AppStateMancala.undoStack = Array.isArray(savedGame.undoStack) ? savedGame.undoStack : [];
+    const rulesSel = document.getElementById("mancala-rules");
+    if (rulesSel) rulesSel.value = MancalaCore.isOware(savedGame.state) ? "oware" : "kalah";
     setActiveModeButton(AppStateMancala.mode);
     setGameResultMancala("");
     showBoardSectionMancala();
@@ -271,8 +275,9 @@ function applyMancalaMove(pit) {
   AppStateMancala.lastMove = {
     from: pit,
     to: result.landedIn,
-    // A capture empties the pit straight across from the last seed.
-    captured: result.captured ? 12 - result.landedIn : null
+    // The pits a capture emptied (straight across in the standard rules,
+    // the opponent's pits with 2 or 3 seeds in Oware).
+    captured: result.capturedPits && result.capturedPits.length ? result.capturedPits : null
   };
   AppStateMancala.moveCount++;
   updateMancalaBoard();
@@ -452,7 +457,8 @@ function updateMancalaBoard() {
   const markLast = (el, i) => {
     el.classList.toggle("lm-from", !!last && last.from === i);
     el.classList.toggle("lm-to", !!last && last.to === i);
-    el.classList.toggle("lm-changed", !!last && last.captured === i);
+    // Older saves keep a single pit number here.
+    el.classList.toggle("lm-changed", !!last && (Array.isArray(last.captured) ? last.captured.indexOf(i) !== -1 : last.captured === i));
   };
 
   pitsEl.querySelectorAll(".mancala-pit").forEach((pitEl) => {
@@ -479,6 +485,9 @@ function updateMancalaBoard() {
 function updateGameLabelsMancala() {
   const meta = document.getElementById("game-meta");
   if (meta) I18n.setMsg(meta, AppStateMancala.moveCount ? "Move " + AppStateMancala.moveCount : "");
+  // Task 213: which rules this game uses, above the board.
+  const label = document.getElementById("game-label");
+  if (label) I18n.setKey(label, MancalaCore.isOware(AppStateMancala.state) ? "mancala_rules_oware" : "mancala_rules_kalah");
   updateUndoButtonVisibilityMancala();
   updateResignVisibilityMancala();
 

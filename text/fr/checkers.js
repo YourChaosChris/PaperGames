@@ -35,6 +35,8 @@ Object.assign(STRINGS.fr, {
     checkers_rules_more_intro: "Également choisis dans les paramètres. Chacun est décrit par ce qu'il change par rapport aux règles ci-dessus.",
     checkers_term_it: "Règles italiennes",
     checkers_rules_it: "Les pions se déplacent et capturent vers l'avant uniquement, et un pion ne peut pas capturer une dame. Les dames se déplacent d'une case à la fois, comme dans les règles anglaises. Vous devez prendre le plus de pièces ; en cas d'égalité, vous devez capturer avec une dame, puis prendre le plus de dames.",
+    checkers_term_es: "Règles espagnoles",
+    checkers_rules_es: "Comme dans les règles italiennes, les pions avancent et prennent seulement vers l'avant, mais les dames vont loin comme dans les règles allemandes, et un pion peut prendre une dame. Il faut prendre le plus de pièces ; à nombre égal, le plus de dames.",
     checkers_term_br: "Règles brésiliennes",
     checkers_rules_br: "Comme les règles allemandes (dames volantes, les pions capturent vers l'arrière), mais vous devez toujours prendre le plus de pièces. Une dame compte pour une pièce.",
     checkers_term_ru: "Règles russes",

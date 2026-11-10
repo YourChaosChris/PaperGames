@@ -35,6 +35,8 @@ Object.assign(STRINGS.pl, {
     checkers_rules_more_intro: "Wybierane również w ustawieniach. Każdy z nich jest opisany przez to, co zmienia w porównaniu do powyższych zasad.",
     checkers_term_it: "Zasady włoskie",
     checkers_rules_it: "Piony poruszają się i biją tylko do przodu, a pion nie może bić damki. Damki poruszają się o jedno pole naraz, jak w zasadach angielskich. Musisz bić jak najwięcej bierek; przy równej liczbie musisz bić damką, a następnie zbić najwięcej damek.",
+    checkers_term_es: "Zasady hiszpańskie",
+    checkers_rules_es: "Jak w zasadach włoskich piony ruszają się i biją tylko do przodu, ale damki są dalekobieżne jak w zasadach niemieckich, a pion może bić damkę. Trzeba bić jak najwięcej bierek; przy równej liczbie jak najwięcej damek.",
     checkers_term_br: "Zasady brazylijskie",
     checkers_rules_br: "Jak zasady niemieckie (damki latające, piony biją do tyłu), ale zawsze musisz bić jak najwięcej bierek. Damka liczy się jako jedna bierka.",
     checkers_term_ru: "Zasady rosyjskie",

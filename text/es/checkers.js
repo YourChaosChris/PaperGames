@@ -35,6 +35,8 @@ Object.assign(STRINGS.es, {
     checkers_rules_more_intro: "También se eligen en la configuración. Cada uno se describe por lo que cambia en comparación con las reglas anteriores.",
     checkers_term_it: "Reglas italianas",
     checkers_rules_it: "Las piezas normales se mueven y capturan solo hacia adelante, y una pieza normal no puede capturar a un rey. Los reyes se mueven una casilla a la vez, como en las reglas inglesas. Debes capturar la mayor cantidad de piezas; con números iguales, debes capturar con un rey y luego tomar la mayor cantidad de reyes.",
+    checkers_term_es: "Reglas españolas",
+    checkers_rules_es: "Como en las reglas italianas, los peones mueven y capturan solo hacia delante, pero las damas recorren varias casillas como en las reglas alemanas, y un peón puede capturar una dama. Hay que capturar el mayor número de piezas; con el mismo número, el mayor número de damas.",
     checkers_term_br: "Reglas brasileñas",
     checkers_rules_br: "Como las reglas alemanas (reyes voladores, las piezas normales capturan hacia atrás), pero siempre debes tomar la mayor cantidad de piezas. Un rey cuenta como una pieza.",
     checkers_term_ru: "Reglas rusas",
