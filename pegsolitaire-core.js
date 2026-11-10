@@ -91,6 +91,16 @@ const PegSolitaireCore = (function () {
       // Every hole of this board can be solved; of the three holes
       // nearest the middle this is the upper left one.
       start: [2, 1]
+    },
+    triangle21: {
+      size: 6,
+      dirs: TRIANGULAR,
+      offsetRows: true,
+      holes: 21,
+      contains: (r, c) => r < 6 && c <= r,
+      // Every hole of this board can be solved (checked by search); the
+      // second hole of the third row is near the middle.
+      start: [2, 1]
     }
   };
   const VARIANTS = Object.keys(BOARDS);

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v292",
+    date: "2026-11-10",
+    key: "release_v292",
+    text: "Peg Solitaire has a new board, the large triangle with 21 holes. Link the Pairs now makes a new puzzle for every game, so it never runs out."
+  },
+  {
     version: "v291",
     date: "2026-11-10",
     key: "release_v291",

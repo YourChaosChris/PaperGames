@@ -59,7 +59,7 @@ function setStatusLinkPairs(text) {
 function saveLinkPairsGame() {
   if (typeof GameStorage === "undefined" || !AppStateLinkPairs.puzzle) return;
   const s = AppStateLinkPairs;
-  GameStorage.save(LINKPAIRS_SAVE_KEY, { level: s.level, index: s.index, lines: s.lines, history: s.history.slice(-200), hinted: s.hinted });
+  GameStorage.save(LINKPAIRS_SAVE_KEY, { level: s.level, index: s.index, text: s.text || null, lines: s.lines, history: s.history.slice(-200), hinted: s.hinted });
 }
 
 function clearSavedLinkPairsGame() {
@@ -135,11 +135,17 @@ function initLinkPairsApp() {
   }
 
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(LINKPAIRS_SAVE_KEY) : null;
-  if (saved && LinkPairsCore.LEVELS[saved.level] && LinkPairsPuzzles[saved.level] && LinkPairsPuzzles[saved.level][saved.index]) {
+  // Task 198: a puzzle made on the device is saved as its text.
+  let savedText = null;
+  if (saved && LinkPairsCore.LEVELS[saved.level] && typeof saved.text === "string") {
+    try { if (LinkPairsCore.decode(saved.level, saved.text)) savedText = saved.text; } catch (e) { savedText = null; }
+  }
+  if (saved && LinkPairsCore.LEVELS[saved.level] && (savedText || (LinkPairsPuzzles[saved.level] && LinkPairsPuzzles[saved.level][saved.index]))) {
     const s = AppStateLinkPairs;
     s.level = saved.level;
-    s.index = saved.index;
-    s.puzzle = LinkPairsCore.decode(saved.level, LinkPairsPuzzles[saved.level][saved.index]);
+    s.index = savedText ? -1 : saved.index;
+    s.text = savedText;
+    s.puzzle = LinkPairsCore.decode(saved.level, savedText || LinkPairsPuzzles[saved.level][saved.index]);
     const k = s.puzzle.ends.length;
     s.lines = Array.isArray(saved.lines) && saved.lines.length === k ? saved.lines : s.puzzle.ends.map(() => []);
     s.history = Array.isArray(saved.history) ? saved.history : [];
@@ -156,8 +162,19 @@ function initLinkPairsApp() {
 function startNewLinkPairs(level) {
   const s = AppStateLinkPairs;
   s.level = LinkPairsCore.LEVELS[level] ? level : "easy";
-  s.index = pickLinkPairsPuzzle(s.level);
-  s.puzzle = LinkPairsCore.decode(s.level, LinkPairsPuzzles[s.level][s.index]);
+  // Task 198: every game is a new puzzle with exactly one solution, made
+  // on the device (a few milliseconds). Only if that fails, a stored one.
+  let made = null;
+  try { made = LinkPairsCore.generatePuzzle(s.level); } catch (e) { made = null; }
+  if (made) {
+    s.index = -1;
+    s.text = LinkPairsCore.encode(made);
+    s.puzzle = LinkPairsCore.decode(s.level, s.text);
+  } else {
+    s.text = null;
+    s.index = pickLinkPairsPuzzle(s.level);
+    s.puzzle = LinkPairsCore.decode(s.level, LinkPairsPuzzles[s.level][s.index]);
+  }
   s.lines = s.puzzle.ends.map(() => []);
   s.active = -1;
   s.history = [];
