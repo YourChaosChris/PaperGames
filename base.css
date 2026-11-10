@@ -4563,3 +4563,13 @@ button.concan-meld {
   outline: 5px double var(--text);
   outline-offset: -6px;
 }
+
+/* Press page (task 202): screenshots as a wrapping row of framed pictures. */
+.press-shots { display: flex; flex-wrap: wrap; gap: 12px; margin: 8px 0 16px; }
+.press-shots .press-shot { flex: 1 1 150px; max-width: 240px; }
+.press-shot img { display: block; max-width: 100%; height: auto; border: 2px solid #000; }
+
+/* Accessibility (task 203): a clearly visible keyboard focus everywhere. */
+:focus-visible { outline: 3px solid #000; outline-offset: 2px; }
+
+.school-sheets li { margin-bottom: 12px; line-height: 1.6; }

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v296",
+    date: "2026-11-10",
+    key: "release_v296",
+    text: "New pages: Press (texts, screenshots, logo) and For schools (free worksheets on Nim, Towers of Hanoi, Sudoku and Checkers). The guide has a one-page version to print. Screen readers now announce the status line in every game."
+  },
+  {
     version: "v295",
     date: "2026-11-10",
     key: "release_v295",

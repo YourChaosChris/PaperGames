@@ -59,7 +59,7 @@ function loadCatalog() {
 
 // Pages that are neither a game nor its rules or history page: their own
 // title and description keys (seo_title_<name>, seo_desc_<name>).
-const OTHER_PAGES = ["index", "about", "games", "guide", "devices", "impressum", "datenschutz", "stats", "history", "calm",
+const OTHER_PAGES = ["index", "about", "games", "guide", "devices", "impressum", "datenschutz", "stats", "history", "calm", "press", "school",
   "games-new", "games-popular", "games-cards", "games-kids", "games-strategy", "games-race", "games-puzzles", "games-party", "games-favorites"];
 
 function isStub(html, file) {

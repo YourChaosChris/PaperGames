@@ -918,5 +918,6 @@ change on a real device before shipping it.
 - `node tests/checkers-variants.js` - engine only. Italian, Brazilian and Russian draughts: man can't take a king, majority rule, crowning in the middle of a chain, random games.
 - `node tests/checkers-variants-ui.js` - needs the server and Playwright. The three rule sets in the settings, label above the board, kept after a reload.
 - `node tests/sudoku-daily-keep.js` - needs the server and Playwright. The Sudoku Daily Challenge keeps its entries after a normal puzzle in between and after a reload.
+- `node tests/press-school.js` - needs the server and Playwright. Press page, school page with its worksheets, printable guide, the downloads stay out of APP_SHELL, aria-live on every game status line.
 - `node tests/yut-side.js` - needs the server and Playwright. Yut keeps the side chosen in the menu, also with the Random start setting on.
 - `node tests/linkpairs-new.js` - needs the server and Playwright. Link the Pairs makes a new puzzle with one solution for every game and keeps it over a reload.

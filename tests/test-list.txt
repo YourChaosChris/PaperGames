@@ -139,3 +139,8 @@
 6 arrowludo-core.js
 14 arrowludo-ui.js
 12 backgammon-ui.js
+8 card-hint.js
+3 checkers-variants.js
+8 checkers-variants-ui.js
+5 sudoku-daily-keep.js
+20 press-school.js
