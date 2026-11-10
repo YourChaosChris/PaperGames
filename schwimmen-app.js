@@ -541,3 +541,19 @@ function renderSchwimmen() {
 }
 
 document.addEventListener("DOMContentLoaded", initSchwimmenApp);
+
+// Hint button (task 199): the move the computer would make for the side to move.
+document.addEventListener("DOMContentLoaded", () => {
+  MoveHint.init({
+    button: "schwimmen-hint", board: "board-container", app: AppStateSchwimmen,
+    canHint: () => !!AppStateSchwimmen.state && !AppStateSchwimmen.state.roundOver && !AppStateSchwimmen.gameOver && !isAiSchwimmen(AppStateSchwimmen.state.turn) && document.getElementById("schwimmen-hand-cover").classList.contains("hidden"),
+    move: () => SchwimmenAi.chooseMove(AppStateSchwimmen.state, 3),
+    marks: (m) => {
+      if (m.type === "swap") return ["#schwimmen-hand > :nth-child(" + (m.hand + 1) + ")", "#schwimmen-table > :nth-child(" + (m.table + 1) + ")"];
+      if (m.type === "swapAll") return ["#schwimmen-swap-all"];
+      if (m.type === "pass") return ["#schwimmen-pass"];
+      if (m.type === "knock") return ["#schwimmen-knock"];
+      return [];
+    }
+  });
+});

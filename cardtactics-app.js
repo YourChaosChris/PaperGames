@@ -658,3 +658,17 @@ function updateResignVisibilityCardTactics() {
 }
 
 document.addEventListener("DOMContentLoaded", initCardTacticsApp);
+
+// Hint button (task 199): the move the computer would make for the side to move.
+document.addEventListener("DOMContentLoaded", () => {
+  MoveHint.init({
+    button: "cardtactics-hint", board: "board-container", app: AppStateCardTactics,
+    move: () => CardTacticsAi.chooseMove(AppStateCardTactics.state, AppStateCardTactics.turn, 3),
+    marks: (m) => {
+      const sq = (p) => '[data-row="' + p[0] + '"][data-col="' + p[1] + '"]';
+      const out = [sq(m.from), '[data-card="' + m.card + '"]'];
+      if (m.to) out.push(sq(m.to));
+      return out;
+    }
+  });
+});

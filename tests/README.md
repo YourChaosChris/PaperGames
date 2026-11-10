@@ -914,5 +914,6 @@ change on a real device before shipping it.
 
 - `node tests/ludo-hint.js`, `backgammon-hint.js`, `senet-hint.js`, `ur-hint.js` - need the server and Playwright. The Hint button of the four dice games (marks the computer-level-3 move, disabled before the roll).
 - `node tests/move-hint-games.js [slug ...]` - needs the server and Playwright. The Hint button of 18 strategy games (move-hint.js): marks 1 to 3 cells, marks stay while nothing moves.
+- `node tests/card-hint.js` - needs the server and Playwright. The Hint button of Schwimmen, Concan and Card Tactics: enabled on the human turn, marks 1 to 4 elements, marks stay.
 - `node tests/yut-side.js` - needs the server and Playwright. Yut keeps the side chosen in the menu, also with the Random start setting on.
 - `node tests/linkpairs-new.js` - needs the server and Playwright. Link the Pairs makes a new puzzle with one solution for every game and keeps it over a reload.

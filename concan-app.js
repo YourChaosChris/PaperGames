@@ -529,6 +529,7 @@ function renderConcan() {
       const sel = AppStateConcan.selected.indexOf(i) !== -1;
       const fresh = (AppStateConcan.newKeys || []).indexOf(cardKeyConcan(c)) !== -1;
       const btn = cardElConcan(c, "button", (sel ? "pc-card-selected" : "") + (fresh ? " card-new" : ""));
+      btn.dataset.ck = cardKeyConcan(c);
       btn.disabled = !myTurn || s.phase !== "meld";
       I18n.setAria(btn, "Card " + CardFaces.label(c) + (sel ? ", selected" : "") + (fresh ? ", new" : ""));
       btn.addEventListener("click", () => onHandCardConcan(i));
@@ -541,3 +542,21 @@ function renderConcan() {
 }
 
 document.addEventListener("DOMContentLoaded", initConcanApp);
+
+// Hint button (task 199): the move the computer would make for the side to move.
+document.addEventListener("DOMContentLoaded", () => {
+  const key = (card) => '[data-ck="' + cardKeyConcan(card) + '"]';
+  MoveHint.init({
+    button: "concan-hint", board: "board-container", app: AppStateConcan,
+    canHint: () => !!AppStateConcan.state && !AppStateConcan.state.gameOver && !isAiConcan(AppStateConcan.state.turn) && document.getElementById("concan-hand-cover").classList.contains("hidden"),
+    move: () => ConcanAi.chooseMove(AppStateConcan.state, 3),
+    marks: (m) => {
+      if (m.type === "takeDiscard") return ["#concan-discard"];
+      if (m.type === "draw") return ["#concan-stock"];
+      if (m.type === "meld") return (m.cards || []).map(key).concat(["#concan-taken .pc-card", "#concan-meld-button"]);
+      if (m.type === "extend") return [m.card ? key(m.card) : "#concan-taken .pc-card", "#concan-my-melds > :nth-child(" + (m.meld + 1) + ")"];
+      if (m.type === "discard") return [key(m.card), "#concan-discard-button"];
+      return [];
+    }
+  });
+});

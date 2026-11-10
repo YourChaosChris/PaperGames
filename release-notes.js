@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v293",
+    date: "2026-11-10",
+    key: "release_v293",
+    text: "Swimming, Concan and Card Tactics now have a Hint button that shows the best move."
+  },
+  {
     version: "v292",
     date: "2026-11-10",
     key: "release_v292",
