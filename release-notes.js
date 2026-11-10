@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v297",
+    date: "2026-11-10",
+    key: "release_v297",
+    text: "New rule variants: Spanish draughts, Oware for Mancala and Twelve Men's Morris with diagonals. More games have a Hint button, and the settings offer text at 125 or 150 % and high contrast. In Rummy you choose which card a joker at the end of a new run stands for, and an update now loads only once."
+  },
+  {
     version: "v296",
     date: "2026-11-10",
     key: "release_v296",
