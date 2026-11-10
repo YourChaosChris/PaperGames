@@ -507,3 +507,14 @@ function updateResignVisibilityTablut() {
 }
 
 document.addEventListener("DOMContentLoaded", initTablutApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  const pt = (i) => `[data-point="${i}"]`;
+  MoveHint.init({
+    button: "tablut-hint", board: "tablut-board", app: AppStateTablut,
+    move: () => TablutAi.chooseMove(AppStateTablut.state, AppStateTablut.turn, 3),
+    marks: (m) => [rc(m.from[0], m.from[1]), rc(m.to[0], m.to[1])]
+  });
+});

@@ -467,3 +467,14 @@ function updateResignVisibilityFourInARow() {
 }
 
 document.addEventListener("DOMContentLoaded", initFourInARowApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  const pt = (i) => `[data-point="${i}"]`;
+  MoveHint.init({
+    button: "fourinarow-hint", board: "fourinarow-board", app: AppStateFourInARow,
+    move: () => FourInARowAi.chooseMove(AppStateFourInARow.board, AppStateFourInARow.turn, 3),
+    marks: (m) => [`[data-row="0"][data-col="${m}"]`]
+  });
+});

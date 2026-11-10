@@ -516,3 +516,14 @@ function updateResignVisibilityReversi() {
 }
 
 document.addEventListener("DOMContentLoaded", initReversiApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  const pt = (i) => `[data-point="${i}"]`;
+  MoveHint.init({
+    button: "reversi-hint", board: "reversi-board", app: AppStateReversi,
+    move: () => ReversiAi.chooseMove(AppStateReversi.board, AppStateReversi.turn, 3),
+    marks: (m) => [rc(m.row, m.col)]
+  });
+});

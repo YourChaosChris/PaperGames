@@ -682,3 +682,14 @@ function updateResignVisibilityMorris() {
 }
 
 document.addEventListener("DOMContentLoaded", initMorrisApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  const pt = (i) => `[data-point="${i}"]`;
+  MoveHint.init({
+    button: "morris-hint", board: "morris-board", app: AppStateMorris,
+    move: () => MorrisAi.chooseMove(AppStateMorris.state, AppStateMorris.turn, 3),
+    marks: (m) => m.type === "place" ? [pt(m.to)] : [pt(m.from), pt(m.to)]
+  });
+});

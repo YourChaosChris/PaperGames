@@ -477,3 +477,14 @@ function updateResignVisibilityGomoku() {
 }
 
 document.addEventListener("DOMContentLoaded", initGomokuApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  const pt = (i) => `[data-point="${i}"]`;
+  MoveHint.init({
+    button: "gomoku-hint", board: "gomoku-board", app: AppStateGomoku,
+    move: () => GomokuAi.chooseMove(AppStateGomoku.board, AppStateGomoku.turn, 3),
+    marks: (m) => [rc(m[0], m[1])]
+  });
+});

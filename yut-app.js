@@ -224,11 +224,11 @@ function startYut(fromSave) {
   if (!fromSave) {
     st.players = parseInt(document.getElementById("yut-num-players").value, 10);
     st.level = parseInt(document.getElementById("yut-level").value, 10);
-    // Task 193: choose your side and who starts. The shared setting "Who
-    // moves first = Random" also draws the side.
+    // Task 193: choose your side and who starts. Your choice of side is kept
+    // exactly (task 197: the shared "Random start" setting no longer draws it).
     const sides = []; for (let i = 0; i < st.players; i++) sides.push(i);
     const sideSel = parseInt(document.getElementById("yut-side").value, 10);
-    st.human = typeof RandomStart !== "undefined" ? RandomStart.choose(sideSel < st.players ? sideSel : 0, sides) : (sideSel < st.players ? sideSel : 0);
+    st.human = sideSel < st.players ? sideSel : 0;
     const firstSel = document.getElementById("yut-first").value;
     const others = sides.filter((i) => i !== st.human);
     let first = st.human;

@@ -102,6 +102,7 @@
     <div id="xiangqi-board" class="xq-board" role="group" aria-label="Xiangqi board"><div id="xiangqi-grid" class="xq-grid"></div></div>
   </div>
   <div id="board-actions" class="board-actions">
+    <button id="xiangqi-hint" class="secondary small hint-btn" type="button" data-i18n="hint_button" disabled>Hint</button>
     <button id="undo-btn" class="secondary small" data-i18n="undo_button" onclick="undoLastMove()" disabled>Undo</button>
     <button id="toggle-moves" class="secondary small" type="button" data-i18n="toggle_moves_button">Moves</button>
     <button id="resign-button" class="secondary small hidden" data-i18n="resign_button">Resign 🏳</button>
@@ -140,6 +141,7 @@
 <script src="adaptive-difficulty.js"></script>
 <script src="board-a11y.js"></script>
 <script src="ui-status.js"></script>
+<script src="move-hint.js"></script>
 <script src="xiangqi-pieces.js"></script>
 <script src="xiangqi-app.js"></script>
 <script src="confirm-actions.js"></script>

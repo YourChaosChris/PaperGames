@@ -505,3 +505,14 @@ function updateResignVisibilityHnefatafl() {
 }
 
 document.addEventListener("DOMContentLoaded", initHnefataflApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  const pt = (i) => `[data-point="${i}"]`;
+  MoveHint.init({
+    button: "hnefatafl-hint", board: "hnefatafl-board", app: AppStateHnefatafl,
+    move: () => HnefataflAi.chooseMove(AppStateHnefatafl.state, AppStateHnefatafl.turn, 3),
+    marks: (m) => [rc(m.from[0], m.from[1]), rc(m.to[0], m.to[1])]
+  });
+});

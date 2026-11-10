@@ -749,3 +749,14 @@ function updateResignVisibilityXq() {
 }
 
 document.addEventListener("DOMContentLoaded", initXiangqiApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  const pt = (i) => `[data-point="${i}"]`;
+  MoveHint.init({
+    button: "xiangqi-hint", board: "xiangqi-board", app: AppStateXiangqi,
+    move: () => XiangqiAi.chooseMove(AppStateXiangqi.board, AppStateXiangqi.turn, 3, (mv) => isMoveAllowedXq(mv, AppStateXiangqi.turn)),
+    marks: (m) => [rc(m.from[0], m.from[1]), rc(m.to[0], m.to[1])]
+  });
+});

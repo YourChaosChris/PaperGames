@@ -793,3 +793,13 @@ function updateResignVisibilityKonane() {
 }
 
 document.addEventListener("DOMContentLoaded", initKonaneApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  MoveHint.init({
+    button: "konane-hint", board: "konane-board", app: AppStateKonane,
+    move: () => AppStateKonane.phase === "playing" ? KonaneAi.chooseMove(AppStateKonane.board, AppStateKonane.turn, 3) : null,
+    marks: (m) => [rc(m.from[0], m.from[1]), rc(m.to[0], m.to[1])]
+  });
+});

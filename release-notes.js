@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v291",
+    date: "2026-11-10",
+    key: "release_v291",
+    text: "Hint button for 18 strategy games against the computer: Go, Hex, Reversi, Gomoku, Nine Men's Morris, Fanorona, Surakarta, Four in a Row, Halma, Hnefatafl, Tablut, Sternhalma, Xiangqi, Amazons, Mancala, Dots and Boxes, Shogi and Konane."
+  },
+  {
     version: "v290",
     date: "2026-11-10",
     key: "release_v290",

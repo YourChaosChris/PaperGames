@@ -4556,3 +4556,10 @@ button.concan-meld {
   outline: 5px solid var(--text);
   outline-offset: -4px;
 }
+
+/* Task 197: cells marked by the Hint button of the strategy games
+   (move-hint.js): a thick double frame, visible without colour. */
+.mh-mark {
+  outline: 5px double var(--text);
+  outline-offset: -6px;
+}

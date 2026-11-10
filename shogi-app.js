@@ -752,3 +752,13 @@ function updateResignVisibilityShogi() {
 }
 
 document.addEventListener("DOMContentLoaded", initShogiApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  MoveHint.init({
+    button: "shogi-hint", board: "shogi-board", app: AppStateShogi,
+    move: () => ShogiAi.chooseAction(AppStateShogi.state, AppStateShogi.turn, 3),
+    marks: (m) => m.kind === "move" ? [rc(m.from[0], m.from[1]), rc(m.to[0], m.to[1])] : [rc(m.to[0], m.to[1])]
+  });
+});

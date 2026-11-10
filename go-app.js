@@ -683,3 +683,14 @@ function updatePassResignVisibilityGo() {
 }
 
 document.addEventListener("DOMContentLoaded", initGoApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  const pt = (i) => `[data-point="${i}"]`;
+  MoveHint.init({
+    button: "go-hint", board: "go-board", app: AppStateGo,
+    move: () => GoAi.chooseMove(AppStateGo.board, AppStateGo.size, AppStateGo.turn, 3, AppStateGo.koPoint, goHistorySet()),
+    marks: (m) => m && typeof m.r === "number" ? [rc(m.r, m.c)] : []
+  });
+});

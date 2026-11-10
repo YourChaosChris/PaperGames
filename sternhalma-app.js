@@ -560,3 +560,14 @@ function updateResignVisibilitySternhalma() {
 }
 
 document.addEventListener("DOMContentLoaded", initSternhalmaApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  const pt = (i) => `[data-point="${i}"]`;
+  MoveHint.init({
+    button: "sternhalma-hint", board: "sternhalma-board", app: AppStateSternhalma,
+    move: () => SternhalmaAi.chooseMove(AppStateSternhalma.state, AppStateSternhalma.turn, 3),
+    marks: (m) => [`[data-x="${m.from[0]}"][data-y="${m.from[1]}"]`, `[data-x="${m.to[0]}"][data-y="${m.to[1]}"]`]
+  });
+});

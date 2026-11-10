@@ -108,6 +108,7 @@
     <div id="halma-board" class="halma-board" role="group" aria-label="Halma board"></div>
   </div>
   <div id="board-actions" class="board-actions">
+    <button id="halma-hint" class="secondary small hint-btn" type="button" data-i18n="hint_button" disabled>Hint</button>
     <button id="undo-btn" class="secondary small" data-i18n="undo_button" onclick="undoLastMove()" disabled>Undo</button>
     <button id="resign-button" class="secondary small hidden" data-i18n="resign_button">Resign 🏳</button>
   </div>
@@ -143,6 +144,7 @@
 <script src="adaptive-difficulty.js"></script>
 <script src="board-a11y.js"></script>
 <script src="ui-status.js"></script>
+<script src="move-hint.js"></script>
 <script src="halma-app.js"></script>
 <script src="confirm-actions.js"></script>
 <script src="sw-register.js"></script>

@@ -580,3 +580,14 @@ function updateResignVisibilityAmazons() {
 }
 
 document.addEventListener("DOMContentLoaded", initAmazonsApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  const pt = (i) => `[data-point="${i}"]`;
+  MoveHint.init({
+    button: "amazons-hint", board: "amazons-board", app: AppStateAmazons,
+    move: () => AmazonsAi.chooseMove(AppStateAmazons.state, AppStateAmazons.turn, 3),
+    marks: (m) => [rc(m.from[0], m.from[1]), rc(m.to[0], m.to[1]), rc(m.arrow[0], m.arrow[1])]
+  });
+});

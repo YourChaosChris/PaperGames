@@ -769,3 +769,14 @@ function updateResignVisibilityFanorona() {
 }
 
 document.addEventListener("DOMContentLoaded", initFanoronaApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  const pt = (i) => `[data-point="${i}"]`;
+  MoveHint.init({
+    button: "fanorona-hint", board: "fanorona-board", app: AppStateFanorona,
+    move: () => FanoronaAi.chooseMove(AppStateFanorona.board, AppStateFanorona.turn, 3),
+    marks: (m) => [pt(m.from), pt(m.to)]
+  });
+});

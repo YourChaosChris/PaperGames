@@ -630,3 +630,13 @@ function updateResignVisibilityDotsAndBoxes() {
 }
 
 document.addEventListener("DOMContentLoaded", initDotsAndBoxesApp);
+
+// Task 197: Hint button - marks the move the hard computer would make.
+document.addEventListener("DOMContentLoaded", () => {
+  const rc = (r, c) => `[data-row="${r}"][data-col="${c}"]`;
+  MoveHint.init({
+    button: "dotsandboxes-hint", board: "dotsandboxes-board", app: AppStateDotsAndBoxes,
+    move: () => DotsAndBoxesAi.chooseMove(AppStateDotsAndBoxes.state, AppStateDotsAndBoxes.turn, 3),
+    marks: (m) => [`.dab-line[data-type="${m.type}"][data-r="${m.r}"][data-c="${m.c}"]`]
+  });
+});
