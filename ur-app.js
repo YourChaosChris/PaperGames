@@ -25,6 +25,7 @@ const AppStateUr = {
   gameOver: false,
   roll: null,             // null until rolled this turn, then 0-4
   legalMoves: [],
+  hintFrom: null,        // start of the move the Hint button recommends (task 196)
   moveCount: 0,
   lastMove: null,         // {color, from, to, captured} of the latest move, for the board marker
   undoStack: []
@@ -306,6 +307,7 @@ function rollDiceUr() {
 
   const roll = UrCore.rollDice();
   AppStateUr.roll = roll;
+  AppStateUr.hintFrom = null;
   AppStateUr.legalMoves = UrCore.getLegalMoves(AppStateUr.state, AppStateUr.turn, roll);
   updateDiceDisplayUr(roll);
   updateUrBoard();
@@ -585,6 +587,7 @@ function updateUrBoard() {
     }
     const isMovable = movableFrom.has(pos);
     sq.classList.toggle("ur-square-movable", isMovable);
+    sq.classList.toggle("ur-hint", isMovable && AppStateUr.hintFrom === pos);
     // Positions 1-4 and 13-14 exist once per side, so the row has to
     // belong to the mover as well (row 1 is the shared middle lane).
     const last = AppStateUr.lastMove;
@@ -618,10 +621,12 @@ function updateUrTrays() {
   const bottomStartBtn = document.getElementById("ur-tray-bottom-start");
   if (topStartBtn) {
     topStartBtn.classList.toggle("ur-tray-slot-movable", movableFromStart && AppStateUr.turn === "b");
+    topStartBtn.classList.toggle("ur-hint", movableFromStart && AppStateUr.hintFrom === 0 && AppStateUr.turn === "b");
     I18n.setAria(topStartBtn, "Black start, " + topStart + " piece" + (topStart === 1 ? "" : "s") + " waiting");
   }
   if (bottomStartBtn) {
     bottomStartBtn.classList.toggle("ur-tray-slot-movable", movableFromStart && AppStateUr.turn === "w");
+    bottomStartBtn.classList.toggle("ur-hint", movableFromStart && AppStateUr.hintFrom === 0 && AppStateUr.turn === "w");
     I18n.setAria(bottomStartBtn, "White start, " + bottomStart + " piece" + (bottomStart === 1 ? "" : "s") + " waiting");
   }
 
@@ -685,6 +690,23 @@ function updateRollButtonVisibilityUr() {
   if (!rollBtn) return;
   const isHumanTurn = !(AppStateUr.mode === "offline-ai" && AppStateUr.turn !== AppStateUr.humanColor);
   rollBtn.disabled = AppStateUr.gameOver || !isHumanTurn || AppStateUr.roll !== null;
+  const hintBtn = document.getElementById("ur-hint");
+  if (hintBtn) hintBtn.disabled = AppStateUr.gameOver || !isHumanTurn || AppStateUr.roll === null || !AppStateUr.legalMoves.length;
 }
+
+// Task 196: the Hint button marks the piece the hard computer would move.
+function showHintUr() {
+  const s = AppStateUr;
+  if (s.gameOver || s.roll === null || !s.legalMoves.length) return;
+  if (s.mode === "offline-ai" && s.turn !== s.humanColor) return;
+  const move = UrAi.chooseMove(s.state, s.turn, s.roll, 3);
+  s.hintFrom = move ? move.from : s.legalMoves[0].from;
+  updateUrBoard();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const hb = document.getElementById("ur-hint");
+  if (hb) hb.addEventListener("click", showHintUr);
+});
 
 document.addEventListener("DOMContentLoaded", initUrApp);

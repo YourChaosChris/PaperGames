@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v290",
+    date: "2026-11-10",
+    key: "release_v290",
+    text: "Ludo, Backgammon, Senet and Ur: new Hint button that shows the move the computer would make."
+  },
+  {
     version: "v289",
     date: "2026-11-10",
     key: "release_v289",

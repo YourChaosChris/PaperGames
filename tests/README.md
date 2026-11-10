@@ -911,3 +911,5 @@ change on a real device before shipping it.
 - `node tests/search-keywords.js` - pure Node check of catalogue keyword search,
   multilingual query terms and accent/umlaut normalization; prints German and
   English hits for every checked query.
+
+- `node tests/ludo-hint.js`, `backgammon-hint.js`, `senet-hint.js`, `ur-hint.js` - need the server and Playwright. The Hint button of the four dice games (marks the computer-level-3 move, disabled before the roll).

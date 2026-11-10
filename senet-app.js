@@ -29,6 +29,7 @@ const AppStateSenet = {
   gameOver: false,
   roll: null,             // null until thrown this turn, then { value, extraTurn }
   legalMoves: [],
+  hintFrom: null,         // square of the piece the Hint button recommends (task 196)
   moveCount: 0,
   lastMove: null,         // {from, to: [...], changed: [...]} of the latest move, for the board marker
   undoStack: []
@@ -277,6 +278,7 @@ function throwSticksSenet() {
 
   const roll = SenetCore.rollSticks();
   AppStateSenet.roll = roll;
+  AppStateSenet.hintFrom = null;
   AppStateSenet.legalMoves = SenetCore.getLegalMoves(AppStateSenet.state, AppStateSenet.turn, roll.value);
   updateSticksDisplaySenet(roll);
   updateSenetBoard();
@@ -563,6 +565,7 @@ function updateSenetBoard() {
     }
     const isMovable = movableFrom.has(pos);
     sq.classList.toggle("senet-square-movable", isMovable);
+    sq.classList.toggle("senet-hint", isMovable && AppStateSenet.hintFrom === pos);
     const last = AppStateSenet.lastMove;
     sq.classList.toggle("lm-from", !!last && last.from === pos);
     sq.classList.toggle("lm-to", !!last && last.to.indexOf(pos) !== -1);
@@ -634,6 +637,23 @@ function updateThrowButtonVisibilitySenet() {
   if (!throwBtn) return;
   const isHumanTurn = !(AppStateSenet.mode === "offline-ai" && AppStateSenet.turn !== AppStateSenet.humanColor);
   throwBtn.disabled = AppStateSenet.gameOver || !isHumanTurn || AppStateSenet.roll !== null;
+  const hintBtn = document.getElementById("senet-hint");
+  if (hintBtn) hintBtn.disabled = AppStateSenet.gameOver || !isHumanTurn || AppStateSenet.roll === null || !AppStateSenet.legalMoves.length;
 }
+
+// Task 196: the Hint button marks the piece the hard computer would move.
+function showHintSenet() {
+  const s = AppStateSenet;
+  if (s.gameOver || s.roll === null || !s.legalMoves.length) return;
+  if (s.mode === "offline-ai" && s.turn !== s.humanColor) return;
+  const from = SenetAi.chooseMove(s.state, s.turn, s.roll.value, 3);
+  s.hintFrom = s.legalMoves.indexOf(from) !== -1 ? from : s.legalMoves[0];
+  updateSenetBoard();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const hb = document.getElementById("senet-hint");
+  if (hb) hb.addEventListener("click", showHintSenet);
+});
 
 document.addEventListener("DOMContentLoaded", initSenetApp);

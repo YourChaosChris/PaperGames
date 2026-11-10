@@ -4334,6 +4334,13 @@ button.concan-meld {
   outline-offset: 2px;
 }
 
+/* Task 196: the token the Hint button recommends (a thick solid frame). */
+.ludo-cell.ludo-hint,
+.ludo-home-slot.ludo-hint {
+  outline: 5px solid var(--text);
+  outline-offset: -3px;
+}
+
 /* The center hub's decorative cells: a closed 3x3 block the track runs
    around (see ludo-app.js). None of them take clicks. */
 .ludo-hub-corner {
@@ -4527,3 +4534,25 @@ button.concan-meld {
 .ludo-home-base-purple::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,2 98,50 50,98 2,50' fill='%23111'/%3E%3C/svg%3E"); }
 .ludo-cell-home-column-orange::before,
 .ludo-home-base-orange::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,3 62,37 98,37 69,59 80,95 50,73 20,95 31,59 2,37 38,37' fill='%23111'/%3E%3C/svg%3E"); }
+
+/* Task 196: the point (or the tray) the Hint button recommends. */
+.bg-point.bg-hint,
+.bg-tray.bg-hint,
+#backgammon-off-top.bg-hint,
+#backgammon-off-bottom.bg-hint {
+  outline: 5px double var(--text);
+  outline-offset: -6px;
+}
+
+/* Task 196: the piece the Hint button recommends. */
+.senet-square.senet-hint {
+  outline: 5px solid var(--text);
+  outline-offset: -4px;
+}
+
+/* Task 196: the piece (or start tray) the Hint button recommends. */
+.ur-square.ur-hint,
+.ur-tray-slot.ur-hint {
+  outline: 5px solid var(--text);
+  outline-offset: -4px;
+}

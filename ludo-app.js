@@ -60,6 +60,7 @@ const AppStateLudo = {
   aiLevel: 2,           // 1 = easy, 2 = medium, 3 = hard
   state: null,
   roll: null,           // null until rolled this turn, then 1-6
+  hintToken: null,      // token index shown by the Hint button until the next roll (task 196)
   legalMoves: [],        // legal token indices for the current color+roll
   sixStreak: 0,
   gameOver: false,
@@ -450,6 +451,7 @@ function performRollLudo() {
     return;
   }
 
+  AppStateLudo.hintToken = null;
   AppStateLudo.legalMoves = LudoCore.getLegalMoves(AppStateLudo.state, color, value);
   updateLudoBoard();
   updateGameLabelsLudo();
@@ -988,9 +990,9 @@ function updateLudoBoard() {
 
   // Clear all cells first.
   boardEl.querySelectorAll(".ludo-cell-tokens").forEach((el) => { el.innerHTML = ""; });
-  boardEl.querySelectorAll(".ludo-cell").forEach((el) => el.classList.remove("ludo-cell-movable"));
+  boardEl.querySelectorAll(".ludo-cell").forEach((el) => el.classList.remove("ludo-cell-movable", "ludo-hint"));
   boardEl.querySelectorAll(".ludo-home-slot").forEach((el) => {
-    el.classList.remove("ludo-home-slot-filled", "ludo-home-slot-movable");
+    el.classList.remove("ludo-home-slot-filled", "ludo-home-slot-movable", "ludo-hint");
     el.innerHTML = "";
   });
 
@@ -1000,12 +1002,14 @@ function updateLudoBoard() {
     const tokens = state.tokens[color];
     tokens.forEach((token, tokenIndex) => {
       const isMovable = color === currentColor && legalSet.has(tokenIndex);
+      const isHint = isMovable && AppStateLudo.hintToken === tokenIndex;
       if (token.state === "home") {
         const slot = boardEl.querySelector(".ludo-home-slot-" + color + "[data-slot='" + tokenIndex + "']");
         if (slot) {
           slot.classList.add("ludo-home-slot-filled");
           slot.innerHTML = ludoShapeSvg(color);
           if (isMovable) slot.classList.add("ludo-home-slot-movable");
+          if (isHint) slot.classList.add("ludo-hint");
         }
       } else if (token.state === "active") {
         let cellEl;
@@ -1022,6 +1026,7 @@ function updateLudoBoard() {
           dot.innerHTML = ludoShapeSvg(color);
           cellEl.querySelector(".ludo-cell-tokens").appendChild(dot);
           if (isMovable) cellEl.classList.add("ludo-cell-movable");
+          if (isHint) cellEl.classList.add("ludo-hint");
         }
       }
       // "finished" tokens have no board cell - tallied below.
@@ -1039,6 +1044,7 @@ function updateLudoBoard() {
   markLastMoveLudo(boardEl);
   updateLudoAriaLabels();
   updateTurnIndicatorLudo();
+  updateThrowButtonVisibilityLudo();
 }
 
 function updateLudoAriaLabels() {
@@ -1145,6 +1151,22 @@ function updateThrowButtonVisibilityLudo() {
   const color = AppStateLudo.started ? currentColorLudo() : null;
   const isHumanTurn = AppStateLudo.started && !isAiColorLudo(color);
   rollBtn.disabled = AppStateLudo.gameOver || !isHumanTurn || AppStateLudo.roll !== null;
+  const hintBtn = document.getElementById("ludo-hint");
+  if (hintBtn) hintBtn.disabled = AppStateLudo.gameOver || !isHumanTurn || AppStateLudo.roll === null || !AppStateLudo.legalMoves.length;
 }
 
+// Task 196: the Hint button marks the token the hard computer would move.
+function showHintLudo() {
+  if (!AppStateLudo.started || AppStateLudo.gameOver || AppStateLudo.roll === null || !AppStateLudo.legalMoves.length) return;
+  const color = currentColorLudo();
+  if (isAiColorLudo(color)) return;
+  const t = LudoAi.chooseMove(AppStateLudo.state, color, AppStateLudo.roll, 3);
+  AppStateLudo.hintToken = AppStateLudo.legalMoves.indexOf(t) !== -1 ? t : AppStateLudo.legalMoves[0];
+  updateLudoBoard();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const hb = document.getElementById("ludo-hint");
+  if (hb) hb.addEventListener("click", showHintLudo);
+});
 document.addEventListener("DOMContentLoaded", initLudoApp);

@@ -25,6 +25,7 @@ const AppStateBackgammon = {
   turn: "b",              // "b" | "w" - Black always moves first
   dice: [],               // remaining unplayed die values this turn
   selected: null,         // 'bar' | point number | null
+  hint: null,             // { from, to } shown by the Hint button (task 196)
   humanColor: "b",
   aiLevel: 2,             // 1 = easy, 2 = medium, 3 = hard
   gameOver: false,
@@ -552,6 +553,7 @@ function onBackgammonDestClick(pointRef, trayColor) {
 }
 
 function applyBackgammonMove(move, die) {
+  AppStateBackgammon.hint = null;
   pushUndoSnapshotBg();
   const mover = AppStateBackgammon.turn;
   const target = move.to === "off" ? null : AppStateBackgammon.state.points[move.to];
@@ -831,6 +833,8 @@ function updateBackgammonBoard() {
 
   const dests = AppStateBackgammon.selected !== null ? legalDestinationsFrom(AppStateBackgammon.selected) : [];
   const destSet = new Set(dests.map((d) => d.to));
+  const hintOn = AppStateBackgammon.hint && AppStateBackgammon.hint.from === AppStateBackgammon.selected ? AppStateBackgammon.hint : null;
+  const hintOff = !!(hintOn && hintOn.to === "off");
 
   // Latest turn: dashed where a checker left, solid where it landed; a
   // point passed through on the way ends up with its last role.
@@ -856,6 +860,7 @@ function updateBackgammonBoard() {
     const isMovable = destSet.has(p);
     cell.classList.toggle("bg-point-selected", isSelected);
     cell.classList.toggle("bg-point-movable", isMovable);
+    cell.classList.toggle("bg-hint", !!(hintOn && hintOn.to === p));
     markLast(cell, p);
 
     let label = "Point " + p;
@@ -886,18 +891,45 @@ function updateBackgammonBoard() {
   if (offTop) {
     setStatusBg("backgammon-off-top-count", String(AppStateBackgammon.state.off.b));
     offTop.classList.toggle("bg-tray-movable", destSet.has("off") && AppStateBackgammon.turn === "b");
+    offTop.classList.toggle("bg-hint", hintOff && AppStateBackgammon.turn === "b");
     I18n.setAria(offTop, "Borne off, " + AppStateBackgammon.state.off.b + " Black checker" + (AppStateBackgammon.state.off.b === 1 ? "" : "s"));
   }
   if (offBottom) {
     setStatusBg("backgammon-off-bottom-count", String(AppStateBackgammon.state.off.w));
     offBottom.classList.toggle("bg-tray-movable", destSet.has("off") && AppStateBackgammon.turn === "w");
+    offBottom.classList.toggle("bg-hint", hintOff && AppStateBackgammon.turn === "w");
     I18n.setAria(offBottom, "Borne off, " + AppStateBackgammon.state.off.w + " White checker" + (AppStateBackgammon.state.off.w === 1 ? "" : "s"));
   }
 
   updateDiceDisplayBg();
   updateCubeDisplayBg();
   updatePipCountDisplayBg();
+  const hb = document.getElementById("backgammon-hint");
+  if (hb) hb.disabled = AppStateBackgammon.gameOver || !AppStateBackgammon.dice.length || !!AppStateBackgammon.pendingDouble ||
+    (AppStateBackgammon.mode === "offline-ai" && AppStateBackgammon.turn !== AppStateBackgammon.humanColor);
 }
+
+// Task 196: the Hint button selects the checker the hard computer would move
+// and frames the point it would move to.
+function showHintBg() {
+  const s = AppStateBackgammon;
+  const hb = document.getElementById("backgammon-hint");
+  if (!hb || hb.disabled) return;
+  for (let i = 0; i < s.dice.length; i++) {
+    const move = BackgammonAi.chooseMove(s.state, s.turn, s.dice[i], 3, s.dice);
+    if (move) {
+      s.selected = move.from;
+      s.hint = { from: move.from, to: move.to };
+      updateBackgammonBoard();
+      return;
+    }
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const hb = document.getElementById("backgammon-hint");
+  if (hb) hb.addEventListener("click", showHintBg);
+});
 
 function updateDiceDisplayBg() {
   const el = document.getElementById("backgammon-dice-display");
