@@ -919,6 +919,8 @@ change on a real device before shipping it.
 - `node tests/checkers-variants-ui.js` - needs the server and Playwright. The three rule sets in the settings, label above the board, kept after a reload.
 - `node tests/sudoku-daily-keep.js` - needs the server and Playwright. The Sudoku Daily Challenge keeps its entries after a normal puzzle in between and after a reload.
 - `node tests/press-school.js` - needs the server and Playwright. Press page, school page with its worksheets, printable guide, the downloads stay out of APP_SHELL, aria-live on every game status line. Task 207: press link in every site footer, screenshots also in 1072 x 1448, five device sections in the guide, link to them on the home page.
+- `node tests/level-medium.js` - engine only, fixed random numbers. The Medium level of Yut, Zoowurf, Sternjagd and Pairs plays between Easy and Hard (win shares, Pairs: what it remembers).
+- `node tests/catplaces-animals.js` - needs the server and Playwright. Katzenplätzchen offers nine animals, each with its own drawing, kept over a reload, names translated.
 - `node tests/a11y-settings.js` - needs the server and Playwright. Text size 125 % and 150 %, high contrast (black text, 3 px borders), no sideways scroll on any main page at 360 px with 150 % and high contrast, board summary for screen readers in Chess, Checkers, Sudoku, Mill and Four in a Row.
 - `node tests/yut-side.js` - needs the server and Playwright. Yut keeps the side chosen in the menu, also with the Random start setting on.
 - `node tests/linkpairs-new.js` - needs the server and Playwright. Link the Pairs makes a new puzzle with one solution for every game and keeps it over a reload.

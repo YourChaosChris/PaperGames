@@ -145,3 +145,5 @@
 5 sudoku-daily-keep.js
 20 press-school.js
 60 a11y-settings.js
+4 level-medium.js
+6 catplaces-animals.js
