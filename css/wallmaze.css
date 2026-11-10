@@ -101,6 +101,12 @@
   opacity: 0.55;
 }
 
+/* The wall the Hint button suggests: a dashed bar, set apart from placed walls. */
+.wallmaze-wall-bar-hint {
+  border: 2px dashed var(--text);
+  outline: none;
+}
+
 /* Small icons for the side-choice picker and board placeholder,
    matching the board's own piece styling. */
 .wallmaze-icon-piece {

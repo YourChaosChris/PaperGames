@@ -40,12 +40,21 @@ const LEGAL = {
   // Task 212: card games - the rules accept the hinted step.
   romme: "RommeCore.applyMove(AppStateRomme.state, m).ok",
   canasta: "CanastaCore.applyMove(AppStateCn.state, m).ok",
-  teufelsieben: "AppStateTS.state.phase === 'turn' && (m === 'draw' || (m === 'stop' && AppStateTS.state.hands[AppStateTS.state.current].drawn >= 1))"
+  teufelsieben: "AppStateTS.state.phase === 'turn' && (m === 'draw' || (m === 'stop' && AppStateTS.state.hands[AppStateTS.state.current].drawn >= 1))",
+  // Task 216: the last games with a computer player.
+  marblepush: "same(MarblePushCore.getLegalMoves(AppStateMarblePush.board, AppStateMarblePush.turn), m)",
+  wallmaze: "same(WallMazeCore.getLegalMoves(AppStateWallMaze.state, AppStateWallMaze.turn), m)",
+  poker: "PokerCore.legal(AppStatePK.state)[m] === true",
+  villains: "VillainsCore.isLegal(AppStateVl.state, m)",
+  forestvillage: "ForestVillageCore.isLegal(AppStateFv.state, m)"
 };
 const START = { chess: ["#mode-offline", null], kleeberg: ["#mode-offline", "#start-kb-game"],
+  poker: ["#pk-level", "#start-pk-game"], villains: ["#mode-offline-ai", "#start-villains-game"], forestvillage: ["#mode-offline-ai", "#start-forestvillage-game"],
   romme: ["#mode-offline-ai", "#start-romme-game"], canasta: ["#cn-level", "#start-cn-game"], teufelsieben: ["#ts-mode", "#start-ts-game"], blockers: ["#mode-offline", "#start-bl-game", "document.getElementById('bl-computers').value = '0'; document.getElementById('bl-computers').dispatchEvent(new Event('change'));"] };
 // Dice games: roll first, so there is a move to hint.
 const BEFORE = { blockers: "#bl-roll" };
+// Poker: a hand can end while the computers act; go on to the next hand.
+const NEXT = { poker: "#pk-next" };
 
 // Konane begins with a ritual (each side removes one stone), in which the
 // hint stays quiet; take the first allowed stones like a person would.
@@ -95,7 +104,12 @@ let checked = 0;
         await page.waitForTimeout(300);
       }
       // Against the computer the button waits for the person's turn.
-      const ready = await page.waitForFunction((sel) => { const b = document.querySelector(sel); return b && !b.disabled; }, btn, { timeout: 10000 }).then(() => true).catch(() => false);
+      const ready = await page.waitForFunction(([sel, next]) => {
+        const n = next && document.querySelector(next);
+        if (n && !n.disabled && n.offsetParent) n.click();
+        const b = document.querySelector(sel);
+        return b && !b.disabled;
+      }, [btn, NEXT[g] || null], { timeout: 10000 }).then(() => true).catch(() => false);
       if (!ready) break;
       await page.click(btn);
       await page.waitForTimeout(150);
@@ -122,7 +136,10 @@ let checked = 0;
       // The hint itself does not move anything; then play it by tapping the marks.
       // Tap the marks in the order the game gives them (from, to, ...).
       const last = await page.evaluate(() => MoveHint.last());
-      for (const sel of (last && last.selectors) || []) {
+      // A hinted wall is only drawn, there is nothing to tap: place it directly.
+      const wall = g === "wallmaze" && last && last.move.type === "wall";
+      if (wall) await page.evaluate((m) => applyWallMazeMove(m), last.move);
+      for (const sel of (!wall && last && last.selectors) || []) {
         const h = await page.$("#" + last.board + " " + sel);
         if (h) await h.click({ force: true, timeout: 2000 }).catch(() => {});
         await page.waitForTimeout(150);

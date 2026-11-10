@@ -416,3 +416,23 @@ function logLineFv(s, e) {
 }
 
 document.addEventListener("DOMContentLoaded", initFvApp);
+
+// Task 216: Hint button - marks the next action of the hard computer: a
+// field, a card plus Build, or End turn. The chance part of its choice is
+// fixed, so pressing Hint twice shows the same action.
+document.addEventListener("DOMContentLoaded", () => {
+  MoveHint.init({
+    button: "forestvillage-hint", board: "board-container", app: AppStateFv,
+    canHint: humanTurnFv,
+    move: () => {
+      AppStateFv.sel = null;
+      renderFv();
+      return FC().chooseAction(AppStateFv.state, "hard", () => 0.5);
+    },
+    marks: (a) => {
+      if (a.type === "place") return [`#fv-fields [data-field="${a.field}"]`];
+      if (a.type === "build") return [`#fv-${a.from} [data-from="${a.from}"][data-index="${a.index}"]`, "#fv-build"];
+      return ["#fv-end"];
+    }
+  });
+});

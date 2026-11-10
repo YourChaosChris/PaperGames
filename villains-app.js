@@ -441,3 +441,23 @@ function logLineVl(s, e) {
 }
 
 document.addEventListener("DOMContentLoaded", initVlApp);
+
+// Task 216: Hint button - marks the next action of the hard computer. The
+// same step twice has one button, so a step marks the first open one.
+document.addEventListener("DOMContentLoaded", () => {
+  MoveHint.init({
+    button: "villains-hint", board: "board-container", app: AppStateVl,
+    canHint: humanTurnVl,
+    move: () => VC().chooseAction(AppStateVl.state, Math.random, 3),
+    marks: (a) => {
+      if (a.type === "collect") return ['#vl-actions [data-kind="collect"]'];
+      if (a.type === "take") return [`#vl-chooser [data-value="${a.from}"]`];
+      if (a.type === "drop") return [`#vl-hand [data-hand="${a.card}"]`];
+      if (a.type === "end") return ["#vl-end"];
+      const p = AppStateVl.state.players[AppStateVl.state.current];
+      const steps = VC().stepsOf(p);
+      const first = steps.findIndex((st, k) => VC().stepOpen(p, k) && st[0] === steps[a.step][0] && st[1] === steps[a.step][1]);
+      return [`#vl-actions [data-kind="step"][data-extra="${first}"]`];
+    }
+  });
+});

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v298",
+    date: "2026-11-10",
+    key: "release_v298",
+    text: "Marble Brink, Wall Maze, Poker, Fairy-Tale Villains and Forest Village now have a Hint button too."
+  },
+  {
     version: "v297",
     date: "2026-11-10",
     key: "release_v297",

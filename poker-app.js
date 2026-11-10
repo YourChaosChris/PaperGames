@@ -361,3 +361,19 @@ function renderPK() {
 }
 
 document.addEventListener("DOMContentLoaded", initPokerApp);
+
+// Task 216: Hint button - marks the action the computer's plain odds rule
+// gives for your cards (level 2 with more samples: Hard also bluffs, and a
+// bluff is no advice). It looks only at your cards and the shared cards.
+document.addEventListener("DOMContentLoaded", () => {
+  const BUTTON = { fold: "#pk-fold", check: "#pk-call", call: "#pk-call", raise: "#pk-raise" };
+  MoveHint.init({
+    button: "poker-hint", board: "board-container", app: AppStatePK,
+    canHint: () => {
+      const s = AppStatePK.state;
+      return !!s && !AppStatePK.over && !AppStatePK.busy && s.phase === "betting" && s.toAct === 0;
+    },
+    move: () => PokerAi.choose(AppStatePK.state, 2, undefined, { samples: 300 }),
+    marks: (a) => [BUTTON[a]]
+  });
+});

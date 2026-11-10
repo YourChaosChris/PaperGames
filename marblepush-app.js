@@ -628,3 +628,25 @@ function updateResignVisibilityMarblePush() {
 }
 
 document.addEventListener("DOMContentLoaded", initMarblePushApp);
+
+// Task 216: Hint button - marks the marbles the hard computer would move and
+// a target cell. A sideways target can belong to two moves of the group, so
+// the marked one is a cell only this move reaches.
+document.addEventListener("DOMContentLoaded", () => {
+  const cell = (i) => `[data-cell="${i}"]`;
+  MoveHint.init({
+    button: "marblepush-hint", board: "marblepush-board", app: AppStateMarblePush,
+    move: () => {
+      AppStateMarblePush.selected = [];
+      updateMarblePushBoard();
+      return MarblePushAi.chooseMove(AppStateMarblePush.board, AppStateMarblePush.turn, 3);
+    },
+    marks: (m) => {
+      const board = AppStateMarblePush.board, turn = AppStateMarblePush.turn;
+      const others = MarblePushCore.getGroupMoves(board, turn, MarblePushCore.resolveGroup(board, turn, m.cells)).filter((o) => o.dir !== m.dir);
+      const targets = MarblePushCore.moveNewCells(m);
+      const target = targets.find((c) => !others.some((o) => MarblePushCore.moveNewCells(o).indexOf(c) !== -1));
+      return m.cells.concat([target === undefined ? targets[0] : target]).map(cell);
+    }
+  });
+});

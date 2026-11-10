@@ -37,7 +37,8 @@ const AppStateWallMaze = {
   undoStack: [],
   wallMode: false,        // true while the player is placing a wall instead of moving
   wallOrientation: "h",   // "h" | "v" - which orientation new taps preview
-  pendingWall: null       // { wr, wc, orientation } | null - a wall placement being previewed
+  pendingWall: null,      // { wr, wc, orientation } | null - a wall placement being previewed
+  hintWall: null          // the wall move the Hint button suggests, until the position changes
 };
 
 const WALLMAZE_SAVE_KEY = "einkchess_save_wallmaze";
@@ -184,6 +185,7 @@ function initWallMazeApp() {
     AppStateWallMaze.gameOver = false;
     AppStateWallMaze.moveCount = 0;
     AppStateWallMaze.pendingWall = null;
+    AppStateWallMaze.hintWall = null;
     AppStateWallMaze.wallMode = false;
     resetUndoStackWallMaze();
     setGameResultWallMaze("");
@@ -401,6 +403,7 @@ function applyWallMazeMove(move) {
   AppStateWallMaze.state = WallMazeCore.applyMove(AppStateWallMaze.state, mover, move);
   AppStateWallMaze.lastMove = move;
   AppStateWallMaze.pendingWall = null;
+  AppStateWallMaze.hintWall = null;
   AppStateWallMaze.moveCount++;
   AppStateWallMaze.turn = WallMazeCore.otherPlayer(mover);
   updateWallMazeBoard();
@@ -447,6 +450,7 @@ function undoLastMove() {
   AppStateWallMaze.moveCount = prev.moveCount;
   AppStateWallMaze.lastMove = prev.lastMove;
   AppStateWallMaze.pendingWall = null;
+  AppStateWallMaze.hintWall = null;
   AppStateWallMaze.wallMode = false;
   setGameResultWallMaze("");
   updateWallMazeBoard();
@@ -623,6 +627,11 @@ function renderWallMazeWallBars(state) {
   if (pending) {
     layer.appendChild(makeWallMazeWallBar(pending.orientation, pending.wr, pending.wc, "wallmaze-wall-bar-preview"));
   }
+
+  const hint = AppStateWallMaze.hintWall;
+  if (hint) {
+    layer.appendChild(makeWallMazeWallBar(hint.orientation, hint.row, hint.col, "wallmaze-wall-bar-hint"));
+  }
 }
 
 function makeWallMazeWallBar(orientation, wr, wc, extraClass) {
@@ -686,3 +695,18 @@ function updateWallMazeWallModeUI() {
 }
 
 document.addEventListener("DOMContentLoaded", initWallMazeApp);
+
+// Task 216: Hint button - marks the cell the hard computer would step to, or
+// draws the wall it would place as a dashed bar.
+document.addEventListener("DOMContentLoaded", () => {
+  MoveHint.init({
+    button: "wallmaze-hint", board: "wallmaze-board", app: AppStateWallMaze,
+    move: () => {
+      const m = WallMazeAi.chooseMove(AppStateWallMaze.state, AppStateWallMaze.turn, 3);
+      AppStateWallMaze.hintWall = m && m.type === "wall" ? m : null;
+      updateWallMazeBoard();
+      return m;
+    },
+    marks: (m) => [m.type === "wall" ? ".wallmaze-wall-bar-hint" : `.wallmaze-cell[data-row="${m.to[0]}"][data-col="${m.to[1]}"]`]
+  });
+});
