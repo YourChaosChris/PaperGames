@@ -132,8 +132,18 @@ max-width: 900px;
   font-weight: 700;
 }
 
-/* Hint (task 185): the card to move and the place for it. */
+/* Hint (task 185): the card to move and the place for it. Thick, solid
+   and outside the card's own border (task 220): a thin dashed frame inside
+   the card vanished in the hatched stock and on narrow phone cards. */
 .klondike-hint {
-  outline: 3px dashed var(--text);
-  outline-offset: -3px;
+  outline: 4px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* The cards on top of a hinted card in its column: the same frame, drawn
+   only at the sides and bottom (shadows), so it does not cross the rank
+   of the card underneath. */
+.klondike-hint-run {
+  box-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 2px 2px 0 #fff, -2px 2px 0 #fff,
+    6px 0 0 var(--text), -6px 0 0 var(--text), 0 6px 0 var(--text), 6px 6px 0 var(--text), -6px 6px 0 var(--text);
 }

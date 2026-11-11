@@ -86,6 +86,52 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
     await p.close();
   }
   {
+    // Task 220: on a 384 x 752 phone the frame must be thick, solid, have a
+    // size and lie in the visible part - for a column move, for the stock,
+    // and with no move left a clear line instead.
+    const phone = await browser.newContext({ viewport: { width: 384, height: 752 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true,
+      userAgent: "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Mobile Safari/537.36" });
+    const p = await phone.newPage();
+    p.on("pageerror", (e) => errors.push("klondike phone: " + e.message));
+    await p.addInitScript(() => { try { localStorage.setItem("einkchess_lang", "en"); } catch (e) { /* ignore */ } });
+    await p.goto(BASE + "klondike.html");
+    await p.waitForTimeout(500);
+    await p.evaluate(() => document.querySelector("#start-klondike-game").click());
+    await p.waitForTimeout(300);
+    const setState = (tableau, stock) => p.evaluate(([tab, stk]) => {
+      // "9H" is a face-up nine of hearts, "-5S" a face-down five of spades.
+      const c = (s) => ({ rank: parseInt(s.replace("-", ""), 10), suit: s.slice(-1), faceUp: s[0] !== "-" });
+      AppStateKlondike.state = { tableau: tab.map((col) => col.map(c)),
+        foundations: { S: 0, H: 0, D: 0, C: 0 }, stock: stk.map((s) => c("-" + s)), waste: [] };
+      AppStateKlondike.selected = null; AppStateKlondike.hint = null; AppStateKlondike.gameOver = false;
+      updateKlondikeBoard();
+    }, [tableau, stock]);
+    const frames = () => p.evaluate(() => [...document.querySelectorAll(".klondike-hint")].map((e) => {
+      const b = e.getBoundingClientRect();
+      const cs = getComputedStyle(e);
+      return { w: b.width, h: b.height, inView: b.left >= 0 && b.top >= 0 && b.right <= innerWidth && b.bottom <= innerHeight,
+        style: cs.outlineStyle, width: parseFloat(cs.outlineWidth), color: cs.outlineColor, stock: e.classList.contains("klondike-stock") };
+    }));
+    const visible = (f) => f.w > 0 && f.h > 0 && f.inView && f.style === "solid" && f.width >= 4 && /^rgb\((\d+), \1, \1\)$/.test(f.color) && parseInt(f.color.slice(4), 10) < 40;
+    // 9H 8S 7H lie on a face-down card in column 1 and go onto the 10C.
+    await setState([["13S"], ["-5S", "9H", "8S", "7H"], ["-2D", "10C"], ["-3C", "4C"], ["-6S", "12H"], ["11D"], ["-3H", "-1S", "5D"]], ["2S"]);
+    await p.tap("#klondike-hint-button");
+    let f = await frames();
+    check("klondike phone: card and place framed (" + JSON.stringify(f) + ")", f.length === 2 && f.every(visible));
+    check("klondike phone: cards on the hinted one carry the frame on",
+      (await p.evaluate(() => document.querySelectorAll(".klondike-hint-run").length)) === 2);
+    await setState([["2S"], ["2H"], ["2D"], ["2C"], ["4S"], ["4C"], ["6S"]], ["1S", "1H"]);
+    await p.tap("#klondike-hint-button");
+    f = await frames();
+    check("klondike phone: only the stock framed (" + JSON.stringify(f) + ")", f.length === 1 && f[0].stock && visible(f[0]));
+    check("klondike phone: draw line (" + (await info(p)) + ")", /^Hint: no good move/.test(await info(p)));
+    await setState([["2S"], ["2H"], ["2D"], ["2C"], ["4S"], ["4C"], ["6S"]], []);
+    await p.tap("#klondike-hint-button");
+    check("klondike phone: no move, no frame", (await frames()).length === 0);
+    check("klondike phone: no move, clear line (" + (await info(p)) + ")", (await info(p)).length > 5 && !/^Hint:/.test(await info(p)));
+    await phone.close();
+  }
+  {
     const p = await open("pyramidsolitaire", "#start-pyramidsolitaire-game");
     await p.tap("#pyramidsolitaire-hint-button");
     await p.waitForTimeout(300);

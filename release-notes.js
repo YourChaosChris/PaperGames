@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v301",
+    date: "2026-11-11",
+    key: "release_v301",
+    text: "In Klondike the Hint button now marks the card and its place with a thick black frame that is easy to see on small phone screens too."
+  },
+  {
     version: "v300",
     date: "2026-11-11",
     key: "release_v300",

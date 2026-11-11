@@ -442,6 +442,11 @@ function updateKlondikeBoard() {
           cardEl.classList.toggle("klondike-hint", !!hint && hint.kind === "move" && (
             (hint.from.type === "column" && hint.from.col === c && hint.from.index === index) ||
             (hint.to.type === "column" && hint.to.col === c && lastCard)));
+          // The cards lying on the hinted one move with it: they carry the
+          // frame on down the stack, so it shows even when the hinted card
+          // is mostly covered (task 220).
+          cardEl.classList.toggle("klondike-hint-run", !!hint && hint.kind === "move" &&
+            hint.from.type === "column" && hint.from.col === c && index > hint.from.index);
           I18n.setAria(cardEl, klondikeCardLabel(card));
         } else {
           cardEl.className = "klondike-card klondike-card-back";
