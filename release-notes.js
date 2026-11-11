@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v299",
+    date: "2026-11-11",
+    key: "release_v299",
+    text: "Kindle browsers now ask with Yes and No buttons, so resigning, restarting, resetting statistics, changing draughts rules and opening move links work there. Thanks to Brandon Ooi for reporting this and contributing a fix."
+  },
+  {
     version: "v298",
     date: "2026-11-10",
     key: "release_v298",

@@ -229,12 +229,14 @@ function initCheckersApp() {
       const rules = chosenRules();
       const running = !AppStateCheckers.gameOver && AppStateCheckers.moveCount > 0;
       if (running && rules !== AppStateCheckers.rules) {
-        if (!window.confirm(I18n.t("checkers_ruleset_change_confirm"))) {
-          rulesSelect.value = AppStateCheckers.rules;
-          return;
-        }
-        saveRulesCheckers(rules);
-        startNewGame(AppStateCheckers.mode, AppStateCheckers.humanColor, AppStateCheckers.aiLevel);
+        window.safeConfirm(I18n.t("checkers_ruleset_change_confirm"), (yes) => {
+          if (!yes) {
+            rulesSelect.value = AppStateCheckers.rules;
+            return;
+          }
+          saveRulesCheckers(rules);
+          startNewGame(AppStateCheckers.mode, AppStateCheckers.humanColor, AppStateCheckers.aiLevel);
+        });
         return;
       }
       saveRulesCheckers(rules);

@@ -28,6 +28,24 @@
     return (window.I18n && typeof I18n.t === "function") ? I18n.t(key) : fallback;
   }
 
+  // A Kindle answers later (browser-compat.js): the click is stopped now
+  // and sent again after a yes, this time let through.
+  let released = null;
+
+  function guard(e, target, message) {
+    if (released === target) return;
+    const yes = window.safeConfirm(message, function (answer) {
+      if (!answer || !window.safeConfirm.inline) return;
+      released = target;
+      target.click();
+      released = null;
+    });
+    if (!yes) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  }
+
   function isGameInProgress() {
     const btn = document.getElementById("resign-button");
     if (!btn) return false;
@@ -44,18 +62,12 @@
     // while the question makes sense.
     const confirmKey = target.getAttribute("data-confirm");
     if (confirmKey) {
-      if (!window.confirm(label(confirmKey, "Are you sure?"))) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
+      guard(e, target, label(confirmKey, "Are you sure?"));
       return;
     }
 
     if (target.id === "resign-button") {
-      if (!window.confirm(label("resign_confirm_dialog", "Resign this game?"))) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
+      guard(e, target, label("resign_confirm_dialog", "Resign this game?"));
       return;
     }
 
@@ -73,10 +85,7 @@
     // reasonable but mistaken fear that it would count against them.
     const startsGameNow = (target.id.indexOf("start-") === 0 && target.id !== "start-seek-button") || target.id === "mode-offline";
     if (startsGameNow && isGameInProgress()) {
-      if (!window.confirm(label("new_game_confirm_dialog", "Start a new game? Your current game will be lost, but it won't count as a loss in your stats."))) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
+      guard(e, target, label("new_game_confirm_dialog", "Start a new game? Your current game will be lost, but it won't count as a loss in your stats."));
     }
   }, true);
 })();

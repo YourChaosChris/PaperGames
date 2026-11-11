@@ -435,6 +435,10 @@ all parts back into one log in list order. The last line is exactly
   becomes a link, opens in an empty browser as the same game with the message
   "It is your turn"; broken, foreign, too long, tampered and computer-mode
   codes are refused; a running different game is asked about first.
+- `node tests/kindle-confirm.js` - Confirmations on a Kindle (task 217):
+  `safeConfirm` uses the browser's dialog normally and a Yes/No panel with a
+  Kindle user agent (stats reset, Resign, German labels, 44 px); every page
+  that asks loads `browser-compat.js` before the scripts that use it.
 - `node tests/computer-levels.js` - no server or browser needed. Kleeberg,
   Klappenkasten, Steckwuerfeln and Pfotenwurf (task 181): the computer plays
   itself at Easy, Medium and Hard (400 games each, seat swapped); every game

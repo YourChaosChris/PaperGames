@@ -153,3 +153,4 @@
 3 morris-twelve.js
 10 variants-213-ui.js
 45 update-once.js
+8 kindle-confirm.js
