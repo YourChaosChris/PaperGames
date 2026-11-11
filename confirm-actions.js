@@ -44,7 +44,7 @@
     // while the question makes sense.
     const confirmKey = target.getAttribute("data-confirm");
     if (confirmKey) {
-      if (!window.confirm(label(confirmKey, "Are you sure?"))) {
+      if (!window.safeConfirm(label(confirmKey, "Are you sure?"))) {
         e.stopPropagation();
         e.preventDefault();
       }
@@ -52,7 +52,7 @@
     }
 
     if (target.id === "resign-button") {
-      if (!window.confirm(label("resign_confirm_dialog", "Resign this game?"))) {
+      if (!window.safeConfirm(label("resign_confirm_dialog", "Resign this game?"))) {
         e.stopPropagation();
         e.preventDefault();
       }
@@ -73,7 +73,7 @@
     // reasonable but mistaken fear that it would count against them.
     const startsGameNow = (target.id.indexOf("start-") === 0 && target.id !== "start-seek-button") || target.id === "mode-offline";
     if (startsGameNow && isGameInProgress()) {
-      if (!window.confirm(label("new_game_confirm_dialog", "Start a new game? Your current game will be lost, but it won't count as a loss in your stats."))) {
+      if (!window.safeConfirm(label("new_game_confirm_dialog", "Start a new game? Your current game will be lost, but it won't count as a loss in your stats."))) {
         e.stopPropagation();
         e.preventDefault();
       }

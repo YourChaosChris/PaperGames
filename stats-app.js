@@ -212,7 +212,7 @@ function initStatsApp() {
   if (resetBtn) {
     resetBtn.addEventListener("click", () => {
       const msg = (window.I18n && window.I18n.t("stats_reset_confirm")) || "Reset all stats? This cannot be undone.";
-      if (window.confirm(msg)) {
+      if (window.safeConfirm(msg)) {
         GameStats.reset();
         renderStats();
         renderAchievements();

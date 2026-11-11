@@ -318,6 +318,7 @@ STRINGS.it = {
     devices_screen_unknown: "modello non indicato",
     devices_untested: "Tutti gli altri dispositivi non sono testati. PaperGames potrebbe funzionarci benissimo, ma nessuno ha ancora dato un riscontro.",
     devices_requirements: "PaperGames richiede un browser aggiornato che supporti JavaScript ES2015 (const, funzioni freccia, promise), fetch, Flexbox e variabili CSS, oltre ai service worker per giocare offline. Per quanto si sa, il vecchio browser Kindle e il browser Kobo basato su Qt WebKit 538 non ne sono capaci; lì PaperGames mostra solo un breve avviso.",
+    devices_kindle_note: "I Kindle recenti abbandonano una rete Wi-Fi senza Internet, perché al collegamento interrogano un server di Amazon. Per giocare a PaperGames da un server senza Internet - per esempio dall'hotspot del telefono - crea via USB un file vuoto denominato WIFI_NO_NET_PROBE (tutto in maiuscolo, senza estensione) nella cartella più in alto della memoria del Kindle e riavvialo una volta; poi resterà collegato alle reti senza Internet.",
     devices_check_title: "Verificalo sul tuo dispositivo",
     devices_step1_title: "1. Aprire la pagina",
     devices_step1_text: "Apri PaperGames nel browser del tuo e-reader. Fai attenzione che: la pagina si carichi, il testo sia nitido e niente venga tagliato ai lati.",

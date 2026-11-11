@@ -318,6 +318,7 @@ STRINGS.zh = {
     devices_screen_unknown: "未提供型号",
     devices_untested: "其他所有设备均未测试。PaperGames 在上面很可能可以运行，但还没有人反馈。",
     devices_requirements: "PaperGames 需要一款较新的浏览器，支持 ES2015 JavaScript（const、箭头函数、Promise）、fetch、Flexbox 和 CSS 变量，并支持用于离线游玩的 Service Worker。据目前所知，旧版 Kindle 浏览器和基于 Qt WebKit 538 的 Kobo 浏览器都做不到；在这些浏览器上，PaperGames 只会显示一条简短提示。",
+    devices_kindle_note: "较新的 Kindle 在没有互联网时会离开 Wi-Fi 网络，因为连接时会询问亚马逊服务器。要在没有互联网的服务器上玩 PaperGames——例如手机热点——请通过 USB 在 Kindle 存储的最上层文件夹中创建一个名为 WIFI_NO_NET_PROBE 的空文件（全大写，无扩展名），并重启一次 Kindle；之后它就会停留在没有互联网的网络上。",
     devices_check_title: "在你自己的设备上检查",
     devices_step1_title: "1. 打开页面",
     devices_step1_text: "在你阅读器自带的浏览器中打开 PaperGames。注意：页面能加载，文字清晰，边缘没有内容被截断。",

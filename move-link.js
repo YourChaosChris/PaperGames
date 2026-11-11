@@ -167,7 +167,7 @@ const MoveLink = (function () {
       const existing = readSave(slug);
       const running = existing && !existing.gameOver && !existing.over;
       if (running && JSON.stringify(existing.board) !== JSON.stringify(save.board)) {
-        if (!window.confirm(t("movelink_replace_confirm", "This link replaces your current game. Continue?"))) {
+        if (!window.safeConfirm(t("movelink_replace_confirm", "This link replaces your current game. Continue?"))) {
           guard.release();
           window.history.replaceState(null, "", clean);
           return "stay";

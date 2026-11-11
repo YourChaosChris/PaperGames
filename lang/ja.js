@@ -1191,6 +1191,7 @@ STRINGS.ja = {
     devices_screen_unknown: "モデル未報告",
     devices_untested: "その他の端末はすべて未確認です。PaperGamesが問題なく動く可能性はありますが、まだ誰からも報告がありません。",
     devices_requirements: "PaperGamesには、ES2015のJavaScript（const、アロー関数、Promise）、fetch、Flexbox、CSS変数、そしてオフラインで遊ぶためのService Workerに対応した最新のブラウザーが必要です。知られている限り、旧Kindleブラウザーと、Qt WebKit 538ベースのKoboブラウザーはこれに対応していません。その場合、PaperGamesは短いお知らせだけを表示します。",
+    devices_kindle_note: "新しいKindleは、接続時にAmazonのサーバーに尋ねるため、インターネットのないWi-Fiネットワークから離れます。インターネットのないサーバー - たとえばスマートフォンのホットスポット - でPaperGamesを遊ぶには、USBでKindleの記憶域の一番上のフォルダーにWIFI_NO_NET_PROBEという名前の空のファイルを作り（すべて大文字、拡張子なし）、Kindleを一度再起動します。その後はインターネットのないネットワークにもとどまります。",
     devices_check_title: "お使いの端末で確認する",
     devices_step1_title: "1. ページを開く",
     devices_step1_text: "お使いの端末の内蔵ブラウザでPaperGamesを開いてください。確認すること：ページが読み込まれ、文字がくっきり表示され、端が何も切れていないこと。",

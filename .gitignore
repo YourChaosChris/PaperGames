@@ -13,3 +13,8 @@ Thumbs.db
 *.log
 log-*.txt
 tests/_shard*
+
+# Export / phone copy
+build/
+papergames.zip
+Makefile

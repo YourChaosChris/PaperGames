@@ -1191,6 +1191,7 @@ STRINGS.nl = {
     devices_screen_unknown: "model niet vermeld",
     devices_untested: "Alle andere apparaten zijn niet getest. PaperGames werkt er misschien prima op, maar niemand heeft zich nog gemeld.",
     devices_requirements: "PaperGames heeft een actuele browser nodig die JavaScript volgens ES2015 (const, pijlfuncties, promises), fetch, Flexbox en CSS-variabelen ondersteunt, plus service workers om offline te spelen. Voor zover bekend kunnen de oudere Kindle-browser en de Kobo-browser op basis van Qt WebKit 538 dat niet; daar toont PaperGames alleen een korte melding.",
+    devices_kindle_note: "Nieuwere Kindles verlaten een wifi-netwerk zonder internet, omdat ze bij het verbinden een server van Amazon raadplegen. Om PaperGames vanaf een server zonder internet te spelen - bijvoorbeeld de hotspot van de telefoon - maak je via USB een leeg bestand met de naam WIFI_NO_NET_PROBE (allemaal hoofdletters, zonder extensie) in de bovenste map van de Kindle-opslag en herstart je de Kindle één keer; daarna blijft hij verbonden met netwerken zonder internet.",
     devices_check_title: "Controleer het op je eigen apparaat",
     devices_step1_title: "1. Pagina openen",
     devices_step1_text: "Open PaperGames in de eigen browser van je reader. Let erop dat: de pagina laadt, de tekst scherp is en er aan de zijkant niets wordt afgesneden.",
