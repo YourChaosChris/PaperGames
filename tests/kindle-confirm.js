@@ -125,6 +125,38 @@ for (const f of fs.readdirSync(ROOT).filter((n) => n.endsWith(".html"))) {
     await ctx.close();
   }
 
+  // Kindle: a move link over a running game waits for the answer.
+  {
+    const { ctx, page } = await open("checkers.html?lang=en", KINDLE);
+    const saved = () => page.evaluate(() => JSON.parse(window.localStorage.getItem("einkchess_save_checkers")).moveCount);
+    // Move links exist for two-player games only.
+    await page.evaluate(() => document.getElementById("mode-offline").click());
+    await page.waitForTimeout(250);
+    if (await page.$(panel)) await page.click(panel + " button.primary");
+    await page.waitForTimeout(250);
+    const link = await page.evaluate(async () => {
+      saveCheckersGame();
+      const s = JSON.parse(window.localStorage.getItem("einkchess_save_checkers"));
+      s.board = s.board.slice().reverse();
+      s.moveCount = 3;
+      return window.MoveLink.makeLink("checkers", s);
+    });
+    const follow = async () => {
+      await page.goto(BASE + "checkers.html?lang=en#zug=" + link.split("#zug=")[1]);
+      await page.waitForSelector(panel);
+    };
+    await follow();
+    check("Kindle link: no browser dialog", page.dialogs.length === 0);
+    await page.click(panel + " button.secondary");
+    await page.waitForTimeout(300);
+    check("Kindle link: No keeps the game", (await saved()) === 0);
+    await follow();
+    await page.click(panel + " button.primary");
+    await page.waitForTimeout(1200);
+    check("Kindle link: Yes opens it", (await saved()) === 3);
+    await ctx.close();
+  }
+
   await browser.close();
   errors.forEach((e) => check("page error: " + e, false));
   if (fails.length) { console.log(fails.length + " check(s) failed"); process.exit(1); }
