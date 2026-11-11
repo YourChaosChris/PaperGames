@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v302",
+    date: "2026-11-11",
+    key: "release_v302",
+    text: "The worksheets and the guide to print now open in a new window, so you can get back to PaperGames from the installed app on a tablet too."
+  },
+  {
     version: "v301",
     date: "2026-11-11",
     key: "release_v301",

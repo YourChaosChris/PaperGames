@@ -57,6 +57,20 @@ check("base.css has a :focus-visible outline", /:focus-visible\s*\{[^}]*outline:
           check("press " + lang + ": games count filled in", /\d{2,}/.test(await page.textContent('[data-i18n="press_short"]')));
         }
         if (p === "school") check("school " + lang + ": 8 PDF links", (await page.$$eval('a[href^="downloads/"][href$=".pdf"]', (e) => e.length)) === 8);
+        // Task 221: a PDF opened inside the installed app (display: standalone,
+        // no back button) left no way back, so every PDF opens in a new window.
+        const pdfLinks = await page.$$eval('a[href$=".pdf"]', (e) => e.map((a) => [a.getAttribute("href"), a.target, a.rel]));
+        pdfLinks.forEach(([h, t, r]) => check(p + " " + lang + ": " + h + " opens in a new window", t === "_blank" && /\bnoopener\b/.test(r)));
+        if (pdfLinks.length) check(p + " " + lang + ": new-window note shown", (await page.isVisible('[data-i18n="school_pdf_window"]')) && !/school_pdf_window/.test(await page.textContent('[data-i18n="school_pdf_window"]')));
+        if (pdfLinks.length && width === 600 && lang === "de") {
+          const href = pdfLinks[0][0];
+          const before = page.url();
+          const [popup] = await Promise.all([ctx.waitForEvent("page", { timeout: 5000 }).catch(() => null), page.click('a[href="' + href + '"]')]);
+          await page.waitForTimeout(300);
+          check(p + ": clicking " + href + " opens a new page", popup !== null);
+          check(p + ": clicking " + href + " keeps the app page", page.url() === before);
+          if (popup) await popup.close();
+        }
         if (p === "guide") check("guide " + lang + ": 2 PDF links", (await page.$$eval('a[href^="downloads/papergames-guide-"]', (e) => e.length)) === 2);
         if (p === "guide") check("guide " + lang + ": 5 device sections", (await page.$$eval("#guide-devices h3", (e) => e.length)) === 5);
         if (p === "guide") check("guide " + lang + ": device texts translated", !/guide_device/.test(await page.textContent("#guide-devices")));
