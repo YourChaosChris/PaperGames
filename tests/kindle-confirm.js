@@ -2,7 +2,9 @@
 // Kindle confirm (task 217): window.confirm does nothing on a Kindle, so
 // safeConfirm asks with a Yes/No panel there and with the browser's dialog
 // everywhere else. Checks both ways for the stats reset, resigning and the
-// script tag on every page that asks.
+// script tag on every page that asks. window.prompt does nothing there
+// either (task 218): copying a move link and entering the Lichess token
+// happen in a field on the page.
 const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
@@ -154,6 +156,73 @@ for (const f of fs.readdirSync(ROOT).filter((n) => n.endsWith(".html"))) {
     await page.click(panel + " button.primary");
     await page.waitForTimeout(1200);
     check("Kindle link: Yes opens it", (await saved()) === 3);
+    await ctx.close();
+  }
+
+  // Kindle (task 218): without sharing and clipboard the move link is shown
+  // in a field on the page with a Copy button, not with window.prompt.
+  {
+    const { ctx, page } = await open("checkers.html?lang=de", KINDLE);
+    await page.evaluate(() => document.getElementById("mode-offline").click());
+    await page.waitForTimeout(250);
+    if (await page.$(panel)) await page.click(panel + " button.primary");
+    await page.waitForTimeout(250);
+    await page.evaluate(() => {
+      saveCheckersGame();
+      try { delete Navigator.prototype.share; } catch (e) { /* none */ }
+      Object.defineProperty(navigator, "share", { value: undefined, configurable: true });
+      Object.defineProperty(navigator, "clipboard", { value: { writeText: () => Promise.reject(new Error("no")) }, configurable: true });
+      document.execCommand = () => true;
+      document.getElementById("movelink-button").click();
+    });
+    const prompt = "#safe-prompt-overlay";
+    await page.waitForSelector(prompt);
+    check("Kindle copy: no browser dialog", page.dialogs.length === 0);
+    const field = await page.$eval(prompt + " input", (i) => ({ value: i.value, readOnly: i.readOnly }));
+    check("Kindle copy: field holds the link", /checkers\.html#zug=/.test(field.value) && field.readOnly);
+    const labels = await page.$$eval(prompt + " button", (b) => b.map((x) => x.textContent));
+    check("Kindle copy: German buttons (" + labels + ")", labels.join() === "Kopieren,Schließen");
+    await page.click(prompt + " button.primary");
+    await page.waitForTimeout(150);
+    check("Kindle copy: says copied", /Kopiert/.test(await page.textContent(prompt)));
+    await page.click(prompt + " button.secondary");
+    check("Kindle copy: Close removes the field", (await page.$(prompt)) === null);
+    await ctx.close();
+  }
+
+  // Kindle (task 218): the Lichess token is entered on the page. The fallback
+  // in app.js runs when lichess-auth.js does not load.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 600, height: 800 }, userAgent: KINDLE });
+    const page = await ctx.newPage();
+    const dialogs = [];
+    page.on("pageerror", (e) => errors.push("chess token: " + e.message));
+    page.on("dialog", (d) => { dialogs.push(d.message()); d.dismiss(); });
+    await page.route("**/lichess-auth.js", (r) => r.abort());
+    await page.goto(BASE + "chess.html?lang=de");
+    await page.waitForTimeout(400);
+    const prompt = "#safe-prompt-overlay";
+    const login = () => page.evaluate(() => {
+      window.__login = "waiting";
+      window.LichessAuth.login().then(() => { window.__login = "ok"; }, () => { window.__login = "no"; });
+    });
+    await login();
+    await page.waitForSelector(prompt);
+    check("Kindle token: no browser dialog", dialogs.length === 0);
+    check("Kindle token: German question", /board:play/.test(await page.textContent(prompt + " p")));
+    const labels = await page.$$eval(prompt + " button", (b) => b.map((x) => x.textContent));
+    check("Kindle token: German buttons (" + labels + ")", labels.join() === "OK,Abbrechen");
+    await page.click(prompt + " button.secondary");
+    await page.waitForTimeout(100);
+    check("Kindle token: Cancel stores nothing", (await page.evaluate(() => window.__login)) === "no" &&
+      (await page.evaluate(() => window.localStorage.getItem("einkchess_lichess_manual_token"))) === null);
+    await login();
+    await page.waitForSelector(prompt);
+    await page.fill(prompt + " input", "  abc123  ");
+    await page.click(prompt + " button.primary");
+    await page.waitForTimeout(100);
+    check("Kindle token: OK stores it", (await page.evaluate(() => window.__login)) === "ok" &&
+      (await page.evaluate(() => window.localStorage.getItem("einkchess_lichess_manual_token"))) === "abc123");
     await ctx.close();
   }
 

@@ -76,11 +76,14 @@ const SCENARIOS = [
     // The token prompt is app.js's fallback for old browsers where
     // lichess-auth.js does not load; blocking it shows that path.
     block: "**/lichess-auth.js",
-    run: async (page, mark) => {
+    run: async (page, mark, panel) => {
       await tryStart(page);
       mark("new_game_confirm_dialog"); await clickIfThere(page, "#mode-offline"); await page.waitForTimeout(150);
       mark("resign_confirm_dialog"); await clickIfThere(page, "#resign-button"); await page.waitForTimeout(150);
+      // Since task 218 the token is asked for on the page, not with
+      // window.prompt; its text is read from the panel.
       mark("lichess_token_prompt"); await clickIfThere(page, "#login-button"); await page.waitForTimeout(150);
+      await panel(page, "#safe-prompt-overlay");
     }
   },
   {
@@ -159,7 +162,11 @@ async function runOne(browser, lang, sc) {
   try {
     if (sc.block) await page.route(sc.block, (r) => r.abort());
     await page.goto(BASE_URL + sc.page, { waitUntil: "networkidle", timeout: 15000 });
-    await sc.run(page, (key) => { current = key; });
+    const panel = async (p, sel) => {
+      const text = await p.evaluate((s) => { const el = document.querySelector(s + " p"); return el ? el.textContent : null; }, sel).catch(() => null);
+      if (text !== null) seen.push({ key: current, type: "panel", text });
+    };
+    await sc.run(page, (key) => { current = key; }, panel);
   } catch (e) {
     errors.push("flow error: " + String(e));
   }

@@ -434,12 +434,17 @@ all parts back into one log in list order. The last line is exactly
   two-player games without chance, a game saved for two players on one device
   becomes a link, opens in an empty browser as the same game with the message
   "It is your turn"; broken, foreign, too long, tampered and computer-mode
-  codes are refused; a running different game is asked about first.
+  codes are refused; a running different game is asked about first. The
+  button and its hint show only in the mode "two players, one device" and
+  follow every change of mode (task 219).
 - `node tests/kindle-confirm.js` - Confirmations on a Kindle (task 217):
   `safeConfirm` uses the browser's dialog normally and a Yes/No panel with a
   Kindle user agent (stats reset, Resign, new game, draughts rules, move
   link, German labels, 44 px); every page
   that asks loads `browser-compat.js` before the scripts that use it.
+  Task 218: no `window.prompt` either; the move link without share and
+  clipboard appears in a field with Copy/Close, the Lichess token is typed
+  into a field with OK/Cancel.
 - `node tests/computer-levels.js` - no server or browser needed. Kleeberg,
   Klappenkasten, Steckwuerfeln and Pfotenwurf (task 181): the computer plays
   itself at Easy, Medium and Hard (400 games each, seat swapped); every game
@@ -834,7 +839,8 @@ all parts back into one log in list order. The last line is exactly
   native dialogs silently, so no other sweep sees their text. This test
   triggers every native dialog the site still has (resign and new-game
   confirm in Chess and Backgammon, Lichess token prompt (the fallback
-  for old browsers, shown by blocking `lichess-auth.js`), stats reset,
+  for old browsers, shown by blocking `lichess-auth.js`; since task 218 a
+  field on the page, its text is read from the panel), stats reset,
   Crate Pusher restart/new level, Shape Sort new game) in all eleven
   languages except English, records type, language and text, dismisses
   it, and fails when a text is the English one from `lang/en.js` or is

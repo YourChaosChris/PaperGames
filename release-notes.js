@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v300",
+    date: "2026-11-11",
+    key: "release_v300",
+    text: "On Kindle, copying a move link and entering a Lichess token now work too, and Send move only appears when two players share one device. Thanks to Brandon Ooi for reporting this."
+  },
+  {
     version: "v299",
     date: "2026-11-11",
     key: "release_v299",

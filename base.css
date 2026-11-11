@@ -4206,6 +4206,20 @@ button.concan-meld {
 .movelink .status-text {
   margin: var(--space-2) 0 0;
 }
+.movelink .movelink-hint {
+  margin: var(--space-1) 0 0;
+  color: var(--muted);
+}
+
+/* Text field in the on-page prompt (browser-compat.js, task 218). */
+.safe-prompt-field {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 44px;
+  font-size: 1rem;
+  margin-bottom: var(--space-2);
+}
 
 /* ---- Ludo and Arrow Ludo (moved from css/ludo.css, task 189) ---- */
 /* ludo: rules used only by the ludo pages (loaded after base.css). */

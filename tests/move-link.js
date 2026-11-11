@@ -43,8 +43,13 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
       return m ? m[1] : "";
     }, slug);
     check(slug + ": save function found (" + saveFn + ")", !!saveFn);
+    // Task 219: the button only shows for two players on one device.
+    await p.evaluate(() => document.getElementById("mode-offline-ai").click());
+    await p.waitForTimeout(250);
+    check(slug + ": no button against the computer", !(await p.isVisible("#movelink-button")));
     await p.evaluate(() => document.getElementById("mode-offline").click());
     await p.waitForTimeout(250);
+    check(slug + ": button for two players", await p.isVisible("#movelink-button"));
     await p.evaluate((n) => window[n](), saveFn);
     await p.waitForTimeout(100);
     const save = await p.evaluate((s) => window.localStorage.getItem("einkchess_save_" + s), slug);
@@ -124,13 +129,20 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
     await ctx.close();
   }
 
-  // pressing the button without a game for two players
+  // the button follows the mode at once, both ways, with its hint below
   {
     const { ctx, page } = await newPage(BASE + "checkers.html?lang=en");
-    await page.evaluate(() => document.getElementById("movelink-button").click());
-    await page.waitForTimeout(300);
-    const note = await page.evaluate(() => document.getElementById("movelink-note").textContent);
-    check("no game: hint (" + note + ")", /for two players/.test(note));
+    const shown = () => page.isVisible("#movelink-button");
+    await page.evaluate(() => document.getElementById("mode-offline").click());
+    await page.waitForTimeout(250);
+    check("two players: button shown", await shown());
+    check("two players: hint shown", /as a link to your opponent/.test(await page.textContent("#movelink-hint")));
+    await page.evaluate(() => document.getElementById("mode-offline-ai").click());
+    await page.waitForTimeout(250);
+    check("against the computer: button hidden", !(await shown()));
+    await page.evaluate(() => document.getElementById("mode-offline").click());
+    await page.waitForTimeout(250);
+    check("back to two players: button shown again", await shown());
     await ctx.close();
   }
 
@@ -140,6 +152,8 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
     await page.waitForTimeout(800);
     const label = await page.evaluate(() => document.getElementById("movelink-button").textContent);
     check("German button (" + label + ")", label === "Zug senden");
+    const hint = await page.evaluate(() => document.getElementById("movelink-hint").textContent);
+    check("German hint (" + hint + ")", hint === "Schicke deinen Zug als Link an deinen Mitspieler.");
     await ctx.close();
   }
 

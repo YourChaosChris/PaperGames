@@ -225,7 +225,7 @@ const MoveLink = (function () {
       await navigator.clipboard.writeText(link);
       notice(t("movelink_copied", "Link copied. Send it to your opponent."));
     } catch (e) {
-      window.prompt(t("movelink_copy_manually", "Copy this link and send it to your opponent:"), link);
+      window.safePrompt(t("movelink_copy_manually", "Copy this link and send it to your opponent:"), link, () => {}, { copy: true });
     }
   }
 
@@ -243,13 +243,20 @@ const MoveLink = (function () {
     btn.setAttribute("data-i18n", "movelink_button");
     btn.textContent = t("movelink_button", "Send move");
     btn.addEventListener("click", () => { send(); });
+    const hint = document.createElement("p");
+    hint.id = "movelink-hint";
+    hint.className = "status-text movelink-hint";
+    hint.setAttribute("data-i18n", "movelink_hint");
+    hint.textContent = t("movelink_hint", "Send your move as a link to your opponent.");
     noteEl = document.createElement("p");
     noteEl.id = "movelink-note";
     noteEl.className = "status-text hidden";
     noteEl.setAttribute("aria-live", "polite");
     wrap.appendChild(btn);
+    wrap.appendChild(hint);
     wrap.appendChild(noteEl);
     info.parentNode.insertBefore(wrap, info.nextSibling);
+    showForMode(wrap);
     let loaded = null;
     try {
       loaded = window.sessionStorage.getItem("papergames_movelink_loaded");
@@ -257,7 +264,26 @@ const MoveLink = (function () {
     } catch (e) { /* ignore */ }
     if (loaded === slug) notice(t("movelink_loaded", "Game loaded from the link. It is your turn."));
     if (window.I18n && typeof I18n.onChange === "function") {
-      I18n.onChange(() => { btn.textContent = t("movelink_button", "Send move"); });
+      I18n.onChange(() => {
+        btn.textContent = t("movelink_button", "Send move");
+        hint.textContent = t("movelink_hint", "Send your move as a link to your opponent.");
+      });
+    }
+  }
+
+  // The button only does something in the mode "two players, one device"
+  // (task 219), so it is shown only while that mode button is the active
+  // one, and follows every change of mode at once.
+  function showForMode(wrap) {
+    const two = document.getElementById("mode-offline");
+    if (!two) return;
+    const update = () => {
+      const on = two.classList.contains("active-mode") || two.getAttribute("aria-pressed") === "true";
+      wrap.classList.toggle("hidden", !on);
+    };
+    update();
+    if (typeof MutationObserver === "function") {
+      new MutationObserver(update).observe(two, { attributes: true, attributeFilter: ["class", "aria-pressed"] });
     }
   }
 

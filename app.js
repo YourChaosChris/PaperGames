@@ -89,17 +89,19 @@ let einkResizeTimeoutId = null;
         var msg = window.I18n ? I18n.t("lichess_token_prompt") :
                   "Please enter your Lichess API token with the permission 'board:play'.\n" +
                   "You can create it on lichess.org under Settings → API access tokens.";
-        var token = window.prompt(msg, "");
-        if (token && token.trim()) {
-          try {
-            if (window.localStorage) {
-              window.localStorage.setItem(TOKEN_KEY, token.trim());
-            }
-          } catch (e) {}
-          resolve();
-        } else {
-          reject(new Error("No token entered."));
-        }
+        // On the page, not window.prompt: that does nothing on a Kindle (task 218).
+        window.safePrompt(msg, "", function (token) {
+          if (token && token.trim()) {
+            try {
+              if (window.localStorage) {
+                window.localStorage.setItem(TOKEN_KEY, token.trim());
+              }
+            } catch (e) {}
+            resolve();
+          } else {
+            reject(new Error("No token entered."));
+          }
+        });
       });
     },
     maybeFinishLoginFromRedirect: function () {

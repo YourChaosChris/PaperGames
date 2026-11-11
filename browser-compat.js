@@ -26,15 +26,18 @@
     return btn;
   }
 
-  function askInline(message, answer) {
+  // A panel on the page with the message, an optional text field and the
+  // buttons. fill(box, actions, close) adds them; close(result) removes the
+  // panel and passes result on. An open panel is answered with "none".
+  function panel(id, message, none, answer, fill) {
     if (!document.body) {
-      document.addEventListener("DOMContentLoaded", () => askInline(message, answer));
+      document.addEventListener("DOMContentLoaded", () => panel(id, message, none, answer, fill));
       return;
     }
-    if (closeOpen) closeOpen(false);
+    if (closeOpen) closeOpen();
 
     const overlay = document.createElement("div");
-    overlay.id = "safe-confirm-overlay";
+    overlay.id = id;
     overlay.className = "result-modal-overlay";
     const box = document.createElement("div");
     box.className = "result-modal";
@@ -42,21 +45,40 @@
     box.setAttribute("aria-modal", "true");
     const text = document.createElement("p");
     text.textContent = message;
+    box.appendChild(text);
     const actions = document.createElement("div");
     actions.className = "result-modal-actions";
 
-    const close = (yes) => {
+    const close = (result) => {
       closeOpen = null;
       overlay.remove();
-      answer(yes);
+      answer(result);
     };
-    actions.appendChild(button(label("confirm_yes", "Yes"), "primary", () => close(true)));
-    actions.appendChild(button(label("confirm_no", "No"), "secondary", () => close(false)));
-    box.appendChild(text);
+    fill(box, actions, close);
     box.appendChild(actions);
     overlay.appendChild(box);
     document.body.appendChild(overlay);
-    closeOpen = close;
+    closeOpen = () => close(none);
+  }
+
+  function askInline(message, answer) {
+    panel("safe-confirm-overlay", message, false, answer, (box, actions, close) => {
+      actions.appendChild(button(label("confirm_yes", "Yes"), "primary", () => close(true)));
+      actions.appendChild(button(label("confirm_no", "No"), "secondary", () => close(false)));
+    });
+  }
+
+  function copyField(field, done) {
+    const viaSelection = () => {
+      field.focus();
+      field.select();
+      try { done(document.execCommand("copy")); } catch (e) { done(false); }
+    };
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+      navigator.clipboard.writeText(field.value).then(() => done(true), viaSelection);
+    } else {
+      viaSelection();
+    }
   }
 
   window.safeConfirm = function (message, answer) {
@@ -69,4 +91,41 @@
     return yes;
   };
   window.safeConfirm.inline = inline;
+
+  // window.prompt does not work on a Kindle either (task 218), so text is
+  // always asked for on the page. answer(text) gets the entered text, or
+  // null after Cancel. With opts.copy the field only shows value, ready to
+  // be marked and copied, and answer(null) runs on Close.
+  window.safePrompt = function (message, value, answer, opts) {
+    const copy = !!(opts && opts.copy);
+    panel("safe-prompt-overlay", message, null, answer, (box, actions, close) => {
+      const field = document.createElement("input");
+      field.type = "text";
+      field.className = "safe-prompt-field";
+      field.value = value || "";
+      field.setAttribute("aria-label", message);
+      field.setAttribute("autocomplete", "off");
+      box.appendChild(field);
+      if (copy) {
+        field.readOnly = true;
+        field.addEventListener("focus", () => field.select());
+        const note = document.createElement("p");
+        note.className = "status-text";
+        note.setAttribute("aria-live", "polite");
+        const copyBtn = button(label("prompt_copy", "Copy"), "primary", () => {
+          copyField(field, (ok) => {
+            note.textContent = ok ? label("prompt_copied", "Copied.") : "";
+            if (!ok) { field.focus(); field.select(); }
+          });
+        });
+        box.appendChild(note);
+        actions.appendChild(copyBtn);
+        actions.appendChild(button(label("prompt_close", "Close"), "secondary", () => close(null)));
+      } else {
+        field.addEventListener("keydown", (e) => { if (e.key === "Enter") close(field.value); });
+        actions.appendChild(button(label("prompt_ok", "OK"), "primary", () => close(field.value)));
+        actions.appendChild(button(label("prompt_cancel", "Cancel"), "secondary", () => close(null)));
+      }
+    });
+  };
 })();
