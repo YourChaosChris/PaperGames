@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v303",
+    date: "2026-11-12",
+    key: "release_v303",
+    text: "With high contrast switched on, Sudoku and the other grid puzzles show thin lines inside a box and thick lines around it again."
+  },
+  {
     version: "v302",
     date: "2026-11-11",
     key: "release_v302",

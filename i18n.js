@@ -750,6 +750,7 @@ const STRINGS = {
     release_v297: "New rule variants: Spanish draughts, Oware for Mancala and Twelve Men's Morris with diagonals. More games have a Hint button, and the settings offer text at 125 or 150 % and high contrast. In Rummy you choose which card a joker at the end of a new run stands for, and an update now loads only once.",
     release_v298: "Marble Brink, Wall Maze, Poker, Fairy-Tale Villains and Forest Village now have a Hint button too.",
     release_v299: "Kindle browsers now ask with Yes and No buttons, so resigning, restarting, resetting statistics, changing draughts rules and opening move links work there. Thanks to Brandon Ooi for reporting this and contributing a fix.",
+    release_v303: "With high contrast switched on, Sudoku and the other grid puzzles show thin lines inside a box and thick lines around it again.",
     release_v302: "The worksheets and the guide to print now open in a new window, so you can get back to PaperGames from the installed app on a tablet too.",
     release_v301: "In Klondike the Hint button now marks the card and its place with a thick black frame that is easy to see on small phone screens too.",
     release_v300: "On Kindle, copying a move link and entering a Lichess token now work too, and Send move only appears when two players share one device. Thanks to Brandon Ooi for reporting this.",

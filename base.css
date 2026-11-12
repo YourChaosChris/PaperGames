@@ -2648,7 +2648,11 @@ margin-bottom: 0.5rem;
   color: #000000;
 }
 
-:root.high-contrast button,
+/* Task 222: board cells and cards that are buttons keep their own border
+   widths (thin cell lines, thick 3x3 box lines, a thicker selected card) -
+   set to 3px everywhere, a Sudoku grid lost its boxes. They are black in
+   high contrast anyway through --border. */
+:root.high-contrast button:not(.square):not(.pc-card):not(.mc-cell):not(.nonogram-cell),
 :root.high-contrast select,
 :root.high-contrast input,
 :root.high-contrast textarea {

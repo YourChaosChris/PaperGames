@@ -672,6 +672,7 @@ STRINGS.es = {
     release_v297: "Nuevas variantes: damas españolas, oware para el mancala y el molino de doce piezas con diagonales. Más juegos tienen un botón de pista, y los ajustes ofrecen texto al 125 o 150 % y alto contraste. En el rummy eliges qué carta sustituye un comodín al final de una escalera nueva, y una actualización ya solo se carga una vez.",
     release_v298: "Empuja canicas, Laberinto de Muros, Póquer, Villanos de cuento y Aldea del bosque ya también tienen botón de pista.",
     release_v299: "En los navegadores Kindle, el juego pregunta ahora con los botones Sí y No, así que rendirse, reiniciar, restablecer las estadísticas, cambiar las reglas de las damas y abrir enlaces de jugada ya funcionan. Gracias a Brandon Ooi por avisar del problema y aportar una solución.",
+    release_v303: "Con el contraste alto activado, el Sudoku y los demás pasatiempos de cuadrícula vuelven a mostrar líneas finas dentro de cada bloque y líneas gruesas alrededor.",
     release_v302: "Las fichas y la guía para imprimir se abren ahora en una ventana nueva, así puedes volver a PaperGames también desde la app instalada en una tableta.",
     release_v301: "En Klondike, el botón Pista marca ahora la carta y su lugar con un marco negro grueso, fácil de ver también en pantallas de móvil pequeñas.",
     release_v300: "En Kindle ya funcionan también copiar un enlace de jugada e introducir un token de Lichess, y «Enviar jugada» solo aparece cuando dos personas juegan en un mismo dispositivo. Gracias a Brandon Ooi por avisar.",

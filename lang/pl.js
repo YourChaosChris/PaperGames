@@ -681,6 +681,7 @@ STRINGS.pl = {
     release_v297: "Nowe warianty zasad: warcaby hiszpańskie, oware w mankali i młynek dwunastu pionków z przekątnymi. Więcej gier ma przycisk podpowiedzi, a w ustawieniach jest tekst 125 lub 150 % i wysoki kontrast. W remiku wybierasz, którą kartę zastępuje joker na końcu nowego sekwensu, a aktualizacja wczytuje się już tylko raz.",
     release_v298: "Również Pchanie kulek, Labirynt Murów, Poker, Baśniowi złoczyńcy i Leśna osada mają teraz przycisk podpowiedzi.",
     release_v299: "W przeglądarkach Kindle gra pyta teraz przyciskami Tak i Nie, więc poddanie się, nowa gra, reset statystyk, zmiana zasad warcabów i otwieranie linków z ruchem już tam działają. Podziękowania dla Brandon Ooi za zgłoszenie i wkład w rozwiązanie.",
+    release_v303: "Przy wysokim kontraście Sudoku i inne łamigłówki z siatką znów pokazują cienkie linie wewnątrz bloku i grube linie wokół niego.",
     release_v302: "Karty pracy i przewodnik do wydruku otwierają się teraz w nowym oknie, więc także w zainstalowanej aplikacji na tablecie wrócisz do PaperGames.",
     release_v301: "W Klondike przycisk Podpowiedź zaznacza teraz kartę i jej miejsce grubą czarną ramką, dobrze widoczną także na małych ekranach telefonów.",
     release_v300: "Na Kindle działa teraz także kopiowanie linku z ruchem i wpisywanie tokenu Lichess, a „Wyślij ruch” pojawia się tylko wtedy, gdy dwie osoby grają na jednym urządzeniu. Podziękowania dla Brandon Ooi za zgłoszenie.",

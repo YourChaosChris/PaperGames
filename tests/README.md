@@ -445,6 +445,11 @@ all parts back into one log in list order. The last line is exactly
   Task 218: no `window.prompt` either; the move link without share and
   clipboard appears in a field with Copy/Close, the Lichess token is typed
   into a field with OK/Cancel.
+- `node tests/grid-lines.js` - needs the server and Playwright. Task 222:
+  Sudoku, Animal Sudoku, Killer Sudoku, Calcudoku, Nonogram and Cake keep
+  lines of two widths (thin inside a box, thick around it), normally, with
+  high contrast and with high contrast plus 150 % text; in Sudoku the box
+  line is 3 px and the cell line 1 px.
 - `node tests/computer-levels.js` - no server or browser needed. Kleeberg,
   Klappenkasten, Steckwuerfeln and Pfotenwurf (task 181): the computer plays
   itself at Easy, Medium and Hard (400 games each, seat swapped); every game

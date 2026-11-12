@@ -556,6 +556,7 @@ STRINGS.nl = {
     release_v297: "Nieuwe regelvarianten: Spaans dammen, oware bij mancala en twaalf-mansmolen met diagonalen. Meer spellen hebben een tipknop, en de instellingen bieden tekst op 125 of 150 % en hoog contrast. Bij rummy kies je voor welke kaart een joker aan het eind van een nieuwe reeks staat, en een update wordt nog maar één keer geladen.",
     release_v298: "Ook Knikkerduw, Muurlabyrint, Poker, Sprookjesschurken en Bosdorp hebben nu een tipknop.",
     release_v299: "In Kindle-browsers vraagt het spel nu met de knoppen Ja en Nee, zodat opgeven, opnieuw beginnen, statistieken resetten, damregels wijzigen en zetlinks openen daar werken. Dank aan Brandon Ooi voor de melding en de bijdrage aan de oplossing.",
+    release_v303: "Met hoog contrast tonen Sudoku en de andere rasterpuzzels weer dunne lijnen binnen een blok en dikke lijnen eromheen.",
     release_v302: "De werkbladen en de handleiding om te printen openen nu in een nieuw venster, zodat je ook in de geïnstalleerde app op een tablet terugkomt bij PaperGames.",
     release_v301: "In Klondike omlijst de Tip-knop de kaart en haar plek nu met een dikke zwarte rand, ook goed te zien op kleine telefoonschermen.",
     release_v300: "Op de Kindle werken nu ook het kopiëren van een zetlink en het invoeren van een Lichess-token, en 'Zet versturen' verschijnt alleen nog als twee spelers één apparaat delen. Dank aan Brandon Ooi voor de melding.",

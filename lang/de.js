@@ -738,6 +738,7 @@ STRINGS.de = {
     release_v297: "Neue Regelvarianten: Spanische Dame, Oware bei Mancala und die Zwölfermühle mit Diagonalen. Mehr Spiele haben eine Tipp-Taste, und in den Einstellungen gibt es Schrift in 125 oder 150 % und hohen Kontrast. Bei Rommé wählst du, für welche Karte ein Joker am Ende einer neuen Folge steht, und ein Update wird nur noch einmal geladen.",
     release_v298: "Auch Kugelschub, Mauerlabyrinth, Poker, Märchen-Schurken und Waldsiedlung haben jetzt eine Tipp-Taste.",
     release_v299: "Auf Kindle-Browsern fragt das Spiel jetzt mit den Tasten Ja und Nein, so gehen dort Aufgeben, Neustart, Statistik zurücksetzen, Dame-Regelwechsel und Zuglinks. Danke an Brandon Ooi für die Meldung und den Beitrag zur Lösung.",
+    release_v303: "Mit hohem Kontrast zeigen Sudoku und die anderen Gitterrätsel wieder dünne Linien innerhalb eines Blocks und dicke Linien um den Block.",
     release_v302: "Die Arbeitsblätter und die Anleitung zum Ausdrucken öffnen sich jetzt in einem neuen Fenster, so kommst du auch in der installierten App auf dem Tablet zu PaperGames zurück.",
     release_v301: "In Klondike rahmt die Tipp-Taste die Karte und ihren Platz jetzt dick und schwarz ein, gut sichtbar auch auf kleinen Handybildschirmen.",
     release_v300: "Auf dem Kindle gehen jetzt auch das Kopieren eines Zuglinks und die Eingabe des Lichess-Tokens, und „Zug senden“ erscheint nur noch, wenn zwei Personen an einem Gerät spielen. Danke an Brandon Ooi für die Meldung.",
