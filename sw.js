@@ -1982,7 +1982,7 @@ const FILE_HASHES = {
   "viererzug-history.html": "f3432b67",
   "viererzug-core.js": "869b38d4",
   "viererzug-ai.js": "b0aca2bb",
-  "viererzug-app.js": "17fdea21",
+  "viererzug-app.js": "681bb4a6",
   "kleeberg.html": "311123c7",
   "kleeberg-core.js": "f0347ccc",
   "kleeberg-app.js": "f662a67c",

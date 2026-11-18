@@ -33,7 +33,7 @@ function saveViererzugGame() {
     aiLevel: AppStateViererzug.aiLevel,
     moveCount: AppStateViererzug.moveCount,
     lastMove: AppStateViererzug.lastMove,
-    undoStack: AppStateViererzug.undoStack.slice(-60)
+    undoStack: AppStateViererzug.undoStack.slice(-50)
   });
 }
 
@@ -208,7 +208,8 @@ function initViererzugApp() {
     AppStateViererzug.moveCount = saved.moveCount || 0;
     AppStateViererzug.lastMove = saved.lastMove || null;
     AppStateViererzug.selected = null;
-    AppStateViererzug.undoStack = Array.isArray(saved.undoStack) ? saved.undoStack.filter((u) => u && isViererzugState(u.state)) : [];
+    AppStateViererzug.undoStack = Array.isArray(saved.undoStack) ? saved.undoStack : [];
+    AppStateViererzug.undoStack = AppStateViererzug.undoStack.filter((u) => u && isViererzugState(u.state));
     setActiveModeButton(AppStateViererzug.mode);
     setGameResultViererzug("");
     showBoardSectionViererzug();
