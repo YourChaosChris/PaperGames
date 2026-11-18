@@ -113,7 +113,8 @@ const STATS_GAME_NAME_KEY = {
   gipfelwurf: "game_gipfelwurf",
   zahlenbild: "game_zahlenbild",
   irrgarten: "game_irrgarten",
-  suchbild: "game_suchbild"
+  suchbild: "game_suchbild",
+  viererzug: "game_viererzug"
 };
 
 function gameDisplayName(game) {

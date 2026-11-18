@@ -560,6 +560,21 @@ all parts back into one log in list order. The last line is exactly
   possible points on the sheet, a field written, the computer's panel and
   "Weiter", the game back after a reload, a whole game to the result; rows
   at least 44 px, no sideways scroll, no key names in the page.
+- `node tests/viererzug-core.js` - no server or browser needed (task 224).
+  Four Moves: the 44 winning sets (28 lines, 16 squares) win for both
+  colours and three stones do not; placing (25 fields at the start, four
+  stones each), moving (only to a free neighbour, diagonals too), square
+  and line wins with their cells, the third repetition is a draw, a side
+  without a move is skipped, random games never pass; the computer on all
+  three levels always answers with a legal move and takes a win, Hard beats
+  Easy (about one minute).
+- `node tests/viererzug-ui.js` - needs the server and Playwright. German page
+  at 360 x 640: eight stones placed (status names the side and "n von 4"),
+  a stone picked up (marked, its fields marked), moved, undo, a square of
+  four ends the game with the four stones marked, save and load after a
+  reload, Hint (one mark while placing, two while moving, tapping the marks
+  plays the move), a whole game against the computer on each level; fields
+  at least 44 px, no sideways scroll, no key names in the page.
 - `node tests/zahlenbild-core.js` - no server or browser needed (task 166).
   Every picture of every level: dots numbered from 1 without gaps, no two
   at one place, at least 4 board units apart, inside the board, no crossing

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v304",
+    date: "2026-11-18",
+    key: "release_v304",
+    text: "New game: Four Moves. Put four stones each on a 5 x 5 board, then slide them: four in a row or in a square wins."
+  },
+  {
     version: "v303",
     date: "2026-11-12",
     key: "release_v303",

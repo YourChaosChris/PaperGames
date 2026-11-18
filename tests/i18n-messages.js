@@ -31,6 +31,7 @@ const FULL = loadI18n();
 // One sample per message shape, as the games actually produce them.
 const SAMPLES = [
   "White: place a stone (1 of 2).",
+  "Black wins - a square of four!",
   "Black: place a stone (2 of 2).",
   "Black can capture again with the same stone. Tap it to end the turn.",
   "Move undone. White can capture again with the same stone. Tap it to end the turn.",

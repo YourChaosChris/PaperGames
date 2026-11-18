@@ -750,6 +750,7 @@ const STRINGS = {
     release_v297: "New rule variants: Spanish draughts, Oware for Mancala and Twelve Men's Morris with diagonals. More games have a Hint button, and the settings offer text at 125 or 150 % and high contrast. In Rummy you choose which card a joker at the end of a new run stands for, and an update now loads only once.",
     release_v298: "Marble Brink, Wall Maze, Poker, Fairy-Tale Villains and Forest Village now have a Hint button too.",
     release_v299: "Kindle browsers now ask with Yes and No buttons, so resigning, restarting, resetting statistics, changing draughts rules and opening move links work there. Thanks to Brandon Ooi for reporting this and contributing a fix.",
+    release_v304: "New game: Four Moves. Put four stones each on a 5 x 5 board, then slide them: four in a row or in a square wins.",
     release_v303: "With high contrast switched on, Sudoku and the other grid puzzles show thin lines inside a box and thick lines around it again.",
     release_v302: "The worksheets and the guide to print now open in a new window, so you can get back to PaperGames from the installed app on a tablet too.",
     release_v301: "In Klondike the Hint button now marks the card and its place with a thick black frame that is easy to see on small phone screens too.",
@@ -4036,6 +4037,14 @@ const STRINGS = {
     quickrules_zahlenbild_2: "A wrong dot changes nothing; a short note names the dot that comes next.",
     quickrules_zahlenbild_3: "After the last dot the line closes back to dot 1 and the finished picture appears with its name.",
     quickrules_zahlenbild_4: "The board shows the whole picture and does not move; \"Magnify\" shows a fixed part around the next dot.",
+    game_viererzug: "Four Moves",
+    home_viererzug_desc: "Put four stones each on a small 5 x 5 board, then slide them one step at a time: four in a row or in a square wins. Local 2-player or vs. the built-in engine, three levels, hint and undo.",
+    viererzug_history_intro: "Put a few stones down, then slide them: a small board game built on a very old pattern.",
+    quickrules_viererzug_1: "Take turns putting four stones each on free fields, Black first. Then take turns sliding one of your stones one step to a free neighbouring field, diagonals too.",
+    quickrules_viererzug_2: "While placing, tap a free field. While moving, tap one of your stones, then the field it should go to.",
+    quickrules_viererzug_3: "Four of your stones in a row or in a 2 x 2 square win at once. The same position for the third time is a draw.",
+    vz_board_aria: "Four Moves board",
+    msg_t_vz_wins_square: "{p} wins - a square of four!",
     zb_level_label: "Level:",
     zb_level_easy: "Easy (children)",
     zb_level_medium: "Medium",
@@ -5972,7 +5981,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 115;
+  const GAME_COUNT = 116;
 
   function t(key, lang) {
     const l = lang || getLang();

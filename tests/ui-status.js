@@ -8,7 +8,7 @@ const games = [
   "bingo",
   "alquerque", "amazons", "backgammon", "baghchal", "blockers", "cardduel",
   "cardtactics", "checkers", "concan", "domino", "doppelkopf", "dotsandboxes",
-  "durak", "fanorona", "admiralsgrid", "forestvillage", "fourinarow", "foxandgeese",
+  "durak", "fanorona", "admiralsgrid", "forestvillage", "fourinarow", "viererzug", "foxandgeese",
   "go", "gomoku", "halma", "hex", "hnefatafl", "klappenkasten", "kleeberg", "konane", "ludo", "mancala",
   "marblepush", "maumau", "morris", "pairs", "poker", "reversi", "romme",
   "schwimmen", "seega", "senet", "shogi", "snakesladders", "arrowludo", "yut", "steckwuerfeln", "sternhalma", "sternjagd",
@@ -96,7 +96,7 @@ for (const [game, exception] of Object.entries(exceptions)) {
 }
 // Task 162: every game with "Resign" against the computer takes the loser
 // from the shared helper, not from whoever is to move.
-const resignGames = ["sternhalma", "xiangqi", "marblepush", "reversi", "shogi", "ur", "mancala", "morris", "wallmaze", "go", "gomoku", "senet", "tablut", "surakarta", "backgammon", "hnefatafl", "checkers", "fanorona", "halma", "fourinarow", "amazons", "hex"];
+const resignGames = ["sternhalma", "xiangqi", "marblepush", "reversi", "shogi", "ur", "mancala", "morris", "wallmaze", "go", "gomoku", "senet", "tablut", "surakarta", "backgammon", "hnefatafl", "checkers", "fanorona", "halma", "fourinarow", "viererzug", "amazons", "hex"];
 for (const game of resignGames) {
   const src = fs.readFileSync(path.join(ROOT, `${game}-app.js`), "utf8");
   if (!/const loser = UiStatus\.resigner\(AppState\w+\);/.test(src)) failures.push(`${game}-app.js: Resign must use UiStatus.resigner`);

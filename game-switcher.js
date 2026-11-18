@@ -138,7 +138,8 @@
     ["gipfelwurf", "game_gipfelwurf", "dicegames"],
     ["zahlenbild", "game_zahlenbild"],
     ["irrgarten", "game_irrgarten"],
-    ["suchbild", "game_suchbild"]
+    ["suchbild", "game_suchbild"],
+    ["viererzug", "game_viererzug", "inarow"]
   ];
 
   var GAME_SLUGS = {};

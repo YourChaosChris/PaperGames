@@ -4,7 +4,7 @@
 // disappear once a move has been made. Run: node tests/move-hint-games.js [slug ...]
 const { chromium } = require("playwright");
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
-const ALL = ["go", "hex", "reversi", "gomoku", "morris", "fanorona", "surakarta", "fourinarow", "halma", "hnefatafl", "tablut", "sternhalma", "xiangqi", "amazons", "mancala", "dotsandboxes", "shogi", "konane"];
+const ALL = ["go", "hex", "reversi", "gomoku", "morris", "fanorona", "surakarta", "fourinarow", "viererzug", "halma", "hnefatafl", "tablut", "sternhalma", "xiangqi", "amazons", "mancala", "dotsandboxes", "shogi", "konane"];
 const games = process.argv.slice(2).length ? process.argv.slice(2) : ALL;
 const fails = [];
 const check = (name, ok) => { if (!ok) fails.push(name); };

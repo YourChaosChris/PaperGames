@@ -28,7 +28,7 @@ const RESIGN = {
   shogi: "AppStateShogi", ur: "AppStateUr", mancala: "AppStateMancala", morris: "AppStateMorris", wallmaze: "AppStateWallMaze",
   go: "AppStateGo", gomoku: "AppStateGomoku", senet: "AppStateSenet", tablut: "AppStateTablut", surakarta: "AppStateSurakarta",
   backgammon: "AppStateBackgammon", hnefatafl: "AppStateHnefatafl", checkers: "AppStateCheckers", fanorona: "AppStateFanorona",
-  halma: "AppStateHalma", fourinarow: "AppStateFourInARow", amazons: "AppStateAmazons", hex: "AppStateHex"
+  halma: "AppStateHalma", fourinarow: "AppStateFourInARow", viererzug: "AppStateViererzug", amazons: "AppStateAmazons", hex: "AppStateHex"
 };
 const RED_BLACK = ["xiangqi", "hex"];
 const A_B = ["mancala", "senet"];

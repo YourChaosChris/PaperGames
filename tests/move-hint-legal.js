@@ -22,6 +22,7 @@ const LEGAL = {
   fanorona: "same(FanoronaCore.enumerateFullMoves(AppStateFanorona.board, AppStateFanorona.turn), m)",
   surakarta: "same(SurakartaCore.getLegalMoves(AppStateSurakarta.board, AppStateSurakarta.turn), m)",
   fourinarow: "same(FourInARowCore.getLegalMoves(AppStateFourInARow.board, AppStateFourInARow.turn), m)",
+  viererzug: "same(ViererzugCore.getLegalMoves(AppStateViererzug.state), m)",
   halma: "same(HalmaCore.getLegalMoves(AppStateHalma.state, AppStateHalma.turn), m)",
   hnefatafl: "same(HnefataflCore.getLegalMoves(AppStateHnefatafl.state, AppStateHnefatafl.turn), m)",
   tablut: "same(TablutCore.getLegalMoves(AppStateTablut.state, AppStateTablut.turn), m)",

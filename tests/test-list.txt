@@ -91,6 +91,8 @@
 10 gipfelwurf-ui.js
 1 zahlenbild-core.js
 10 zahlenbild-ui.js
+55 viererzug-core.js
+12 viererzug-ui.js
 1 irrgarten-core.js
 10 irrgarten-ui.js
 1 suchbild-core.js

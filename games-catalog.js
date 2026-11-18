@@ -1416,6 +1416,18 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-11-01T12:01",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\"><g fill=\"none\" stroke=\"#141413\" stroke-width=\"2\"><circle cx=\"8\" cy=\"8\" r=\"4\"/><circle cx=\"20\" cy=\"8\" r=\"4\"/><circle cx=\"32\" cy=\"8\" r=\"4\"/><circle cx=\"8\" cy=\"20\" r=\"4\"/><rect x=\"16\" y=\"16\" width=\"8\" height=\"8\"/><circle cx=\"32\" cy=\"20\" r=\"4\"/><circle cx=\"8\" cy=\"32\" r=\"4\"/><circle cx=\"20\" cy=\"32\" r=\"4\"/><circle cx=\"32\" cy=\"32\" r=\"4\"/><circle cx=\"20\" cy=\"20\" r=\"8.5\" stroke-width=\"2.6\"/></g></svg></span>"
+  },
+  {
+    slug: "viererzug",
+    category: "strategy",
+    family: "inarow",
+    nameKey: "game_viererzug",
+    nameText: "Four Moves",
+    descKey: "home_viererzug_desc",
+    descText: "Put four stones each on a small 5 x 5 board, then slide them one step at a time: four in a row or in a square wins. Local 2-player or vs. the built-in engine, three levels, hint and undo.",
+    popular: false,
+    added: "2026-11-18T12:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\" rx=\"2\"/><circle cx=\"7.5\" cy=\"7.5\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"16.5\" cy=\"7.5\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"7.5\" cy=\"16.5\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"16.5\" cy=\"16.5\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
   }
 ];
 
