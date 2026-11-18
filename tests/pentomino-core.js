@@ -1,6 +1,6 @@
 // tests/pentomino-core.js
 // "Pentomino Puzzle" (Legepuzzle): 500 generated puzzles per mode and
-// level.
+// level, plus 1000 "Fit the Pattern" patterns per level.
 //
 // Checks: the 12 pieces have 63 orientations in all (the known count);
 // every puzzle's stored solution covers the board exactly once with
@@ -20,7 +20,7 @@ function rng(seed) {
   return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
 }
 
-const PER = 500, HINT_PLAY = 50;
+const PER = 500, HINT_PLAY = 50, PATTERN_PER = 1000;
 const fails = [];
 const key = (cells) => JSON.stringify(P.normalize(cells));
 
@@ -91,6 +91,57 @@ for (const mode of ["free", "fixed"]) {
     }
   }
 }
+// "Fit the Pattern": 1000 random patterns per level. Each has 3 / 4 / 5
+// pieces, a connected shape of exactly that many squares inside a
+// bounding box that fits the screen (at most 9 high, 7 wide, not wider
+// than high), the stored solution fills the shape exactly (blocked
+// squares stay empty), and an independent search finds a filling.
+const patternSeen = {};
+for (const level of ["easy", "medium", "hard"]) {
+  for (let seed = 1; seed <= PATTERN_PER; seed++) {
+    const tag = "pattern " + level + " #" + seed;
+    const p = P.generatePuzzle("pattern", level, {}, rng(seed * 31 + level.length + 4242));
+    if (!p) { fails.push(tag + ": no puzzle"); continue; }
+    if (p.mode !== "pattern" || p.pieces.length !== P.PATTERN_PIECES[level]) { fails.push(tag + ": wrong piece count"); continue; }
+    if (p.rows > 9 || p.cols > 7 || p.cols > p.rows) fails.push(tag + ": box " + p.rows + "x" + p.cols);
+    const area = p.rows * p.cols - p.blocked.length;
+    if (area !== p.pieces.length * 5) fails.push(tag + ": area " + area);
+    // The shape is one connected piece of ground.
+    const open = []; for (let i = 0; i < p.rows * p.cols; i++) if (p.blocked.indexOf(i) === -1) open.push(i);
+    const seen = { [open[0]]: true }, queue = [open[0]];
+    while (queue.length) {
+      const i = queue.pop(), r = Math.floor(i / p.cols), c = i % p.cols;
+      [[r - 1, c], [r + 1, c], [r, c - 1], [r, c + 1]].forEach((q) => {
+        if (q[0] < 0 || q[1] < 0 || q[0] >= p.rows || q[1] >= p.cols) return;
+        const j = q[0] * p.cols + q[1];
+        if (p.blocked.indexOf(j) === -1 && !seen[j]) { seen[j] = true; queue.push(j); }
+      });
+    }
+    if (Object.keys(seen).length !== open.length) fails.push(tag + ": shape not connected");
+    // Stored solution: legal shapes, each piece once, covers exactly the open squares.
+    const used = {}, cover = {};
+    let bad = null;
+    for (const pl of p.solution) {
+      if (used[pl.piece] || p.pieces.indexOf(pl.piece) === -1) bad = "piece " + pl.piece;
+      used[pl.piece] = true;
+      const shape = pl.cells.map((i) => [Math.floor(i / p.cols), i % p.cols]);
+      if (!P.ORIENTS[pl.piece].some((o) => JSON.stringify(o) === key(shape))) bad = pl.piece + " illegal shape";
+      for (const i of pl.cells) { if (cover[i] || p.blocked.indexOf(i) !== -1) bad = "overlap/blocked"; cover[i] = true; }
+    }
+    if (bad || Object.keys(cover).length !== open.length) { fails.push(tag + ": " + (bad || "solution does not cover the shape")); continue; }
+    patternSeen[level + " " + p.rows + "x" + p.cols] = true;
+    // An independent search (not the stored solution) also fills it.
+    if (seed <= 200) {
+      const s = P.solve(p.rows, p.cols, p.pieces, [], null, null, p.blocked);
+      if (!s) fails.push(tag + ": search finds no filling");
+    }
+    if (seed <= HINT_PLAY) {
+      const hb = hintPlay(p, tag);
+      if (hb) fails.push(hb);
+    }
+  }
+}
+console.log("pattern boxes seen: " + Object.keys(patternSeen).length);
 // A blocking piece is named: X in the corner of an empty 10 x 6 board
 // leaves the corner square unreachable.
 {
@@ -101,5 +152,5 @@ for (const mode of ["free", "fixed"]) {
 
 console.log("free fields seen: " + Object.keys(sizesSeen).join(", "));
 fails.slice(0, 20).forEach((f) => console.log("FAIL " + f));
-console.log("\n=== PENTOMINO CORE: " + (PER * 6) + " puzzles (500 per mode and level), " + (HINT_PLAY * 6) + " solved by hint only, " + fails.length + " failure(s) ===");
+console.log("\n=== PENTOMINO CORE: " + (PER * 6) + " puzzles (500 per mode and level) + " + (PATTERN_PER * 3) + " patterns (1000 per level), " + (HINT_PLAY * 9) + " solved by hint only, " + fails.length + " failure(s) ===");
 process.exit(fails.length ? 1 : 0);

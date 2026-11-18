@@ -13,6 +13,8 @@ Object.assign(STRINGS.de, {
     pt_rules_free: "Lege die Teile, bis das Rechteck voll ist – jede Füllung zählt. Leicht: 5 Teile in 5 × 5. Mittel: 8 Teile in 5 × 8. Schwer: alle 12 in 6 × 10, 5 × 12, 4 × 15 oder 3 × 20.",
     pt_term_fixed: "Startteile vorgegeben",
     pt_rules_fixed: "Auf 6 × 10 liegen einige Teile fest (gestrichelte Innenrahmen); die übrigen passen auf genau eine Weise dazu. Leicht: 3 Teile zu legen, Mittel: 5, Schwer: 7.",
+    pt_term_pattern: "Muster legen",
+    pt_rules_pattern: "Es erscheint eine zufällige Form aus 3 Teilen (Leicht), 4 (Mittel) oder 5 (Schwer), die Kante an Kante zusammenliegen. Die schwarzen Felder sind gesperrt. Lege genau die Teile unter dem Brett so, dass sie die Form ausfüllen. Jede Form ist lösbar, und es gibt keine Zeitgrenze.",
     pt_term_help: "Tipp",
     pt_rules_help: "Der Tipp markiert, wohin das nächste Teil passt. Versperrt ein gelegtes Teil jeden Weg zum Ziel, nennt er dieses Teil.",
     pt_rules_example_title: "Beispiel",

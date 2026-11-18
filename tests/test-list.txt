@@ -53,6 +53,7 @@
 3 rechengitter-core.js
 1 differences-core.js
 50 pentomino-core.js
+8 pentomino-ui.js
 190 glidelanes-core.js --levels=grandmaster
 310 glidelanes-core.js --levels=pictures
 180 glidelanes-core.js --levels=easy,medium,hard,master

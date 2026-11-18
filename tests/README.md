@@ -391,7 +391,16 @@ all parts back into one log in list order. The last line is exactly
   "Pentomino Puzzle" puzzles per mode and level: every stored solution
   fills the board legally, the free fields have the right sizes, the
   start-pieces puzzles have exactly one solution, and the first 50 of
-  each can be finished with the hint alone. About 45 seconds.
+  each can be finished with the hint alone. Also 1000 "Fit the Pattern"
+  patterns per level (3 / 4 / 5 pieces): a connected shape of the right
+  area that fits the screen, the stored solution fills it exactly, a
+  separate search finds a filling too, the first 50 per level can be
+  finished with the hint alone. About 45 seconds.
+- `node tests/pentomino-ui.js [base url]` - "Fit the Pattern" in the
+  browser (German, 360 x 640): mode in the list, blocked squares drawn
+  black and labelled, a blocked square refuses a piece, Hint marks cells,
+  save and load after a reload, laying the stored solution shows the
+  message "pattern is full", no sideways scroll, no page error.
 - `node tests/glidelanes-core.js` - no server or browser needed. 500
   "Glide Lanes" puzzles per level: every arrow a line of neighbouring cells
   with its head pointing the way of its last step, no overlaps, the

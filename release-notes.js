@@ -16,7 +16,7 @@ const RELEASE_NOTES = [
     version: "v304",
     date: "2026-11-18",
     key: "release_v304",
-    text: "New game: Four Moves. Put four stones each on a 5 x 5 board, then slide them: four in a row or in a square wins."
+    text: "New game: Four Moves. Put four stones each on a 5 x 5 board, then slide them: four in a row or in a square wins. Pentomino has a new mode, Fit the Pattern: fill a random shape with a few pieces."
   },
   {
     version: "v303",

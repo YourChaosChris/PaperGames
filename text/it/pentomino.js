@@ -13,6 +13,8 @@ Object.assign(STRINGS.it, {
     pt_rules_free: "Posa i pezzi finché il rettangolo è pieno: vale qualsiasi riempimento. Facile: 5 pezzi in 5 × 5. Medio: 8 pezzi in 5 × 8. Difficile: tutti i 12 in 6 × 10, 5 × 12, 4 × 15 o 3 × 20.",
     pt_term_fixed: "Pezzi di partenza dati",
     pt_rules_fixed: "Su 6 × 10 alcuni pezzi sono fissi (cornici interne tratteggiate); gli altri si incastrano in un solo modo. Facile: 3 pezzi da posare, Medio: 5, Difficile: 7.",
+    pt_term_pattern: "Riempi la forma",
+    pt_rules_pattern: "Compare una forma casuale formata da 3 pezzi (Facile), 4 (Medio) o 5 (Difficile) uniti lato a lato. Le caselle nere sono bloccate. Posa esattamente i pezzi sotto la scacchiera in modo da riempire la forma. Ogni forma ha una soluzione e non c'è limite di tempo.",
     pt_term_help: "Suggerimento",
     pt_rules_help: "Il suggerimento segna dove va il pezzo successivo. Se un pezzo posato blocca ogni soluzione, lo indica.",
     pt_rules_example_title: "Esempio",

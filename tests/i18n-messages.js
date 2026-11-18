@@ -406,6 +406,7 @@ const SAMPLES = [
   "That piece is fixed.",
   "Piece W picked up.",
   "The rectangle is full - solved!",
+  "The pattern is full - solved!",
   "Hint: piece L goes in the marked place.",
   "Hint: piece X blocks the solution - take it off.",
   "Hint: no way found - take off a piece.",

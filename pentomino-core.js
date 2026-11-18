@@ -14,8 +14,12 @@
 //   fixed    - "start pieces given": on 10 x 6 some pieces lie fixed and
 //              the rest must fit around them; exactly one solution. Easy:
 //              3 pieces to lay, Medium: 5, Hard: 7.
+//   pattern  - "Fit the Pattern": a random irregular shape made by joining
+//              3 / 4 / 5 pieces edge to edge (Easy / Medium / Hard); the
+//              squares of its bounding box outside the shape are blocked.
+//              Solvable by construction (the joined pieces are a solution).
 // A puzzle: { mode, level, rows, cols, pieces: [letters to use],
-//             givens: [{ piece, cells }] }.
+//             givens: [{ piece, cells }], blocked: [cells] (pattern only) }.
 
 const PentominoCore = (function () {
   const SHAPES = {
@@ -35,6 +39,8 @@ const PentominoCore = (function () {
   const LETTERS = Object.keys(SHAPES);
   const FREE_SIZES = { easy: [[5, 5]], medium: [[8, 5]], hard: [[10, 6], [12, 5], [15, 4], [20, 3]] };
   const FIXED_FREE = { easy: 3, medium: 5, hard: 7 };
+  const PATTERN_PIECES = { easy: 3, medium: 4, hard: 5 };
+  const BLOCKED = "#";
 
   // Shift to the top left corner and sort, so equal shapes compare equal.
   function normalize(cells) {
@@ -127,31 +133,84 @@ const PentominoCore = (function () {
     return aborted;
   }
 
-  function emptyBoard(rows, cols, placements) {
+  function emptyBoard(rows, cols, placements, blocked) {
     const board = new Array(rows * cols).fill(null);
+    (blocked || []).forEach((i) => { board[i] = BLOCKED; });
     (placements || []).forEach((pl) => pl.cells.forEach((i) => { board[i] = pl.piece; }));
     return board;
   }
 
   // Number of ways to fill the board with `letters` around `placements`,
   // counting up to `limit`.
-  function countSolutions(rows, cols, letters, placements, limit) {
+  function countSolutions(rows, cols, letters, placements, limit, blocked) {
     let n = 0;
-    search(rows, cols, emptyBoard(rows, cols, placements), letters, null, () => ++n >= (limit || 2));
+    search(rows, cols, emptyBoard(rows, cols, placements, blocked), letters, null, () => ++n >= (limit || 2));
     return n;
   }
 
   // One way to fill the board (random when rng is given), or null. With
   // a step budget, undefined means "not found within the budget".
-  function solve(rows, cols, letters, placements, rng, budget) {
+  function solve(rows, cols, letters, placements, rng, budget, blocked) {
     let found = null;
-    const aborted = search(rows, cols, emptyBoard(rows, cols, placements), letters, rng || null, (s) => { found = s; return true; }, budget);
+    const aborted = search(rows, cols, emptyBoard(rows, cols, placements, blocked), letters, rng || null, (s) => { found = s; return true; }, budget);
     return found || (aborted ? undefined : null);
+  }
+
+  // Join `k` random pieces edge to edge on a scratch grid, then cut out
+  // the bounding box (turned so it is not wider than high). Returns null
+  // when the shape is too big for the screen; the caller tries again.
+  function generatePattern(lv, random) {
+    const G = 14, k = PATTERN_PIECES[lv];
+    const letters = shuffle(LETTERS, random).slice(0, k);
+    const occ = new Array(G * G).fill(null);
+    const sol = [];
+    for (let n = 0; n < k; n++) {
+      const L = letters[n], options = [];
+      for (const shape of ORIENTS[L]) {
+        for (let at = 0; at < G * G; at++) {
+          const cells = cellsAt(G, G, shape, 0, at);
+          if (!cells || cells.some((i) => occ[i] !== null)) continue;
+          const touches = n === 0 || cells.some((i) => {
+            const r = Math.floor(i / G), c = i % G;
+            return (r > 0 && occ[i - G]) || (r < G - 1 && occ[i + G]) || (c > 0 && occ[i - 1]) || (c < G - 1 && occ[i + 1]);
+          });
+          if (n === 0 ? (Math.floor(at / G) === 5 && at % G === 5) : touches) options.push(cells);
+        }
+      }
+      if (!options.length) return null;
+      const cells = options[Math.floor(random() * options.length)];
+      cells.forEach((i) => { occ[i] = L; });
+      sol.push({ piece: L, cells });
+    }
+    const all = [].concat.apply([], sol.map((pl) => pl.cells));
+    const rs = all.map((i) => Math.floor(i / G)), cs = all.map((i) => i % G);
+    const r0 = Math.min.apply(null, rs), c0 = Math.min.apply(null, cs);
+    let rows = Math.max.apply(null, rs) - r0 + 1, cols = Math.max.apply(null, cs) - c0 + 1;
+    const turn = cols > rows;
+    if (turn) { const t = rows; rows = cols; cols = t; }
+    if (rows > 9 || cols > 7) return null;
+    const map = (i) => {
+      const r = Math.floor(i / G) - r0, c = i % G - c0;
+      return turn ? c * cols + r : r * cols + c;
+    };
+    const solution = sol.map((pl) => ({ piece: pl.piece, cells: pl.cells.map(map) }));
+    const covered = {};
+    solution.forEach((pl) => pl.cells.forEach((i) => { covered[i] = true; }));
+    const blocked = [];
+    for (let i = 0; i < rows * cols; i++) if (!covered[i]) blocked.push(i);
+    return { mode: "pattern", level: lv, rows, cols, pieces: letters.slice().sort(), givens: [], blocked, solution };
   }
 
   function generatePuzzle(mode, level, opts, rng) {
     const random = rng || Math.random;
     const lv = FIXED_FREE[level] ? level : "easy";
+    if (mode === "pattern") {
+      for (let attempt = 0; attempt < 500; attempt++) {
+        const p = generatePattern(lv, random);
+        if (p) return p;
+      }
+      return null;
+    }
     if (mode === "fixed") {
       for (let attempt = 0; attempt < 50; attempt++) {
         const sol = solve(10, 6, LETTERS, [], random);
@@ -180,12 +239,12 @@ const PentominoCore = (function () {
   // Is `cells` a legal place for piece `letter` on a board with the
   // placements so far (shape matches one orientation, cells free)?
   function fits(p, placements, cells) {
-    const board = emptyBoard(p.rows, p.cols, p.givens.concat(placements));
+    const board = emptyBoard(p.rows, p.cols, p.givens.concat(placements), p.blocked);
     return cells.every((i) => i >= 0 && i < p.rows * p.cols && board[i] === null);
   }
 
   function isComplete(p, placements) {
-    const board = emptyBoard(p.rows, p.cols, p.givens.concat(placements));
+    const board = emptyBoard(p.rows, p.cols, p.givens.concat(placements), p.blocked);
     return board.every((x) => x !== null) && placements.length + p.givens.length === p.pieces.length;
   }
 
@@ -213,7 +272,7 @@ const PentominoCore = (function () {
     const left = (ps) => p.pieces.filter((L) => !p.givens.some((g) => g.piece === L) && !ps.some((x) => x.piece === L));
     for (let drop = 0; drop <= placements.length; drop++) {
       const keep = placements.slice(0, placements.length - drop);
-      const sol = solve(p.rows, p.cols, left(keep), p.givens.concat(keep), null, HINT_BUDGET);
+      const sol = solve(p.rows, p.cols, left(keep), p.givens.concat(keep), null, HINT_BUDGET, p.blocked);
       if (!sol) continue;
       if (drop > 0) return { kind: "remove", piece: placements[placements.length - drop].piece };
       return { kind: "place", piece: sol[0].piece, cells: sol[0].cells };
@@ -221,7 +280,7 @@ const PentominoCore = (function () {
     return { kind: "none" };
   }
 
-  return { SHAPES, LETTERS, ORIENTS, FREE_SIZES, FIXED_FREE, normalize, transform, cellsAt, countSolutions, solve, generatePuzzle, fits, isComplete, findHint, emptyBoard };
+  return { SHAPES, LETTERS, ORIENTS, FREE_SIZES, FIXED_FREE, PATTERN_PIECES, BLOCKED, normalize, transform, cellsAt, countSolutions, solve, generatePuzzle, fits, isComplete, findHint, emptyBoard };
 })();
 
 if (typeof module !== "undefined" && module.exports) {

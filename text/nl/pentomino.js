@@ -13,6 +13,8 @@ Object.assign(STRINGS.nl, {
     pt_rules_free: "Leg de stukken tot de rechthoek vol is - elke vulling telt. Makkelijk: 5 stukken in 5 × 5. Gemiddeld: 8 stukken in 5 × 8. Moeilijk: alle 12 in 6 × 10, 5 × 12, 4 × 15 of 3 × 20.",
     pt_term_fixed: "Startstukken gegeven",
     pt_rules_fixed: "Op 6 × 10 liggen enkele stukken vast (gestippelde binnenranden); de andere passen er op precies één manier bij. Makkelijk: 3 stukken te leggen, Gemiddeld: 5, Moeilijk: 7.",
+    pt_term_pattern: "Patroon vullen",
+    pt_rules_pattern: "Er verschijnt een willekeurige vorm van 3 stukken (Makkelijk), 4 (Gemiddeld) of 5 (Moeilijk), zijde aan zijde samengevoegd. De zwarte vakjes zijn geblokkeerd. Leg precies de stukken onder het bord zo dat ze de vorm vullen. Elke vorm is oplosbaar en er is geen tijdslimiet.",
     pt_term_help: "Tip",
     pt_rules_help: "De tip markeert waar het volgende stuk past. Blokkeert een gelegd stuk elke weg naar het einde, dan noemt hij dat stuk.",
     pt_rules_example_title: "Voorbeeld",

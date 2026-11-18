@@ -13,6 +13,8 @@ Object.assign(STRINGS.fr, {
     pt_rules_free: "Posez les pièces jusqu'à remplir le rectangle : tout remplissage compte. Facile : 5 pièces en 5 × 5. Moyen : 8 pièces en 5 × 8. Difficile : les 12 en 6 × 10, 5 × 12, 4 × 15 ou 3 × 20.",
     pt_term_fixed: "Pièces de départ imposées",
     pt_rules_fixed: "Sur 6 × 10, certaines pièces sont fixes (cadres intérieurs en pointillés) ; les autres s'y emboîtent d'une seule façon. Facile : 3 pièces à poser, Moyen : 5, Difficile : 7.",
+    pt_term_pattern: "Remplir la forme",
+    pt_rules_pattern: "Une forme au hasard apparaît, composée de 3 pièces (Facile), 4 (Moyen) ou 5 (Difficile) jointes côté à côté. Les cases noires sont bloquées. Posez exactement les pièces affichées sous le plateau pour remplir la forme. Chaque forme a une solution, et il n'y a pas de limite de temps.",
     pt_term_help: "Indice",
     pt_rules_help: "L'indice marque où va la pièce suivante. Si une pièce posée bloque toute solution, il la nomme.",
     pt_rules_example_title: "Exemple",

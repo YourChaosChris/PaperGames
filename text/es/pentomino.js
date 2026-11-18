@@ -13,6 +13,8 @@ Object.assign(STRINGS.es, {
     pt_rules_free: "Coloca las piezas hasta llenar el rectángulo: cualquier relleno vale. Fácil: 5 piezas en 5 × 5. Medio: 8 piezas en 5 × 8. Difícil: las 12 en 6 × 10, 5 × 12, 4 × 15 o 3 × 20.",
     pt_term_fixed: "Piezas de inicio dadas",
     pt_rules_fixed: "En 6 × 10 algunas piezas están fijas (marcos interiores discontinuos); las demás encajan de una sola manera. Fácil: 3 piezas por colocar, Medio: 5, Difícil: 7.",
+    pt_term_pattern: "Rellenar la figura",
+    pt_rules_pattern: "Aparece una figura al azar formada por 3 piezas (Fácil), 4 (Medio) o 5 (Difícil) unidas por los lados. Las casillas negras están bloqueadas. Coloca exactamente las piezas que hay bajo el tablero para llenar la figura. Toda figura tiene solución y no hay límite de tiempo.",
     pt_term_help: "Pista",
     pt_rules_help: "La pista marca dónde va la siguiente pieza. Si una pieza colocada bloquea toda solución, la nombra.",
     pt_rules_example_title: "Ejemplo",

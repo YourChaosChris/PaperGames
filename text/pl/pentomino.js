@@ -13,6 +13,8 @@ Object.assign(STRINGS.pl, {
     pt_rules_free: "Układaj klocki, aż prostokąt będzie pełny - liczy się każde wypełnienie. Łatwy: 5 klocków w 5 × 5. Średni: 8 klocków w 5 × 8. Trudny: wszystkie 12 w 6 × 10, 5 × 12, 4 × 15 lub 3 × 20.",
     pt_term_fixed: "Podane klocki startowe",
     pt_rules_fixed: "Na planszy 6 × 10 niektóre klocki leżą na stałe (przerywane ramki wewnątrz); pozostałe pasują do nich tylko w jeden sposób. Łatwy: 3 klocki do ułożenia, Średni: 5, Trudny: 7.",
+    pt_term_pattern: "Wypełnij wzór",
+    pt_rules_pattern: "Pojawia się losowy kształt z 3 klocków (Łatwy), 4 (Średni) lub 5 (Trudny) złożonych bokiem do boku. Czarne pola są zablokowane. Połóż dokładnie klocki spod planszy tak, aby wypełniły kształt. Każdy kształt da się ułożyć i nie ma limitu czasu.",
     pt_term_help: "Podpowiedź",
     pt_rules_help: "Podpowiedź zaznacza, gdzie pasuje następny klocek. Jeśli położony klocek blokuje każdą drogę do celu, podaje ten klocek.",
     pt_rules_example_title: "Przykład",

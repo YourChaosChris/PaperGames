@@ -211,7 +211,11 @@ function currentShapePt() {
 function onCellPt(i) {
   if (AppStatePt.gameOver) return;
   const p = AppStatePt.puzzle;
-  const board = PentominoCore.emptyBoard(p.rows, p.cols, p.givens.concat(AppStatePt.placements));
+  const board = PentominoCore.emptyBoard(p.rows, p.cols, p.givens.concat(AppStatePt.placements), p.blocked);
+  if (board[i] === PentominoCore.BLOCKED) {
+    setStatusPt("The piece does not fit there.");
+    return;
+  }
   if (board[i] !== null) {
     if (isGivenPt(board[i])) setStatusPt("That piece is fixed.");
     else selectPt(board[i]);
@@ -241,7 +245,7 @@ function onCellPt(i) {
 
 function winPt() {
   AppStatePt.gameOver = true;
-  const text = "The rectangle is full - solved!";
+  const text = AppStatePt.puzzle.mode === "pattern" ? "The pattern is full - solved!" : "The rectangle is full - solved!";
   const result = document.getElementById("game-result");
   if (result) I18n.setMsg(result, text);
   setStatusPt(text);
@@ -278,11 +282,15 @@ function renderPt() {
   const p = AppStatePt.puzzle;
   if (!p) return;
   const S = PT_CELL, W = p.cols * S, H = p.rows * S;
-  const board = PentominoCore.emptyBoard(p.rows, p.cols, p.givens.concat(AppStatePt.placements));
+  const board = PentominoCore.emptyBoard(p.rows, p.cols, p.givens.concat(AppStatePt.placements), p.blocked);
   let svg = '<svg class="pt-svg" viewBox="-2 -2 ' + (W + 4) + " " + (H + 4) + '" aria-hidden="true" focusable="false">' + ptDefs("ptb") +
     '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="#fff"/>';
   for (let r = 0; r <= p.rows; r++) svg += '<path d="M0 ' + r * S + "H" + W + '" stroke="#141413" stroke-width="0.8"/>';
   for (let c = 0; c <= p.cols; c++) svg += '<path d="M' + c * S + " 0V" + H + '" stroke="#141413" stroke-width="0.8"/>';
+  // Pattern mode: the squares outside the shape are solid black.
+  (p.blocked || []).forEach((i) => {
+    svg += '<rect x="' + (i % p.cols) * S + '" y="' + Math.floor(i / p.cols) * S + '" width="' + S + '" height="' + S + '" fill="#141413"/>';
+  });
   p.givens.concat(AppStatePt.placements).forEach((pl) => {
     const cells = pl.cells.map((i) => [Math.floor(i / p.cols), i % p.cols]);
     svg += '<g class="' + (isGivenPt(pl.piece) ? "pt-given" : "pt-laid") + '">' + ptShapeSvg(cells, pl.piece, "ptb", S, null) + "</g>";
@@ -312,7 +320,7 @@ function renderPt() {
     const i = parseInt(btn.getAttribute("data-i"), 10);
     const r = Math.floor(i / p.cols) + 1, c = (i % p.cols) + 1;
     let label = tPt("pt_aria_cell").split("{R}").join(String(r)).split("{C}").join(String(c)) + ": " +
-      (board[i] ? tPt("pt_aria_piece").split("{L}").join(board[i]) + (isGivenPt(board[i]) ? ", " + tPt("pt_aria_fixed") : "") : tPt("pt_aria_empty"));
+      (board[i] === PentominoCore.BLOCKED ? tPt("pt_aria_blocked") : board[i] ? tPt("pt_aria_piece").split("{L}").join(board[i]) + (isGivenPt(board[i]) ? ", " + tPt("pt_aria_fixed") : "") : tPt("pt_aria_empty"));
     btn.setAttribute("aria-label", label);
     btn.addEventListener("click", () => onCellPt(i));
   });

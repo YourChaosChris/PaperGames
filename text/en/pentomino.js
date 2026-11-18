@@ -13,6 +13,8 @@ Object.assign(STRINGS.en, {
     pt_rules_free: "Lay the pieces until the rectangle is full - any filling counts. Easy: 5 pieces in 5 × 5. Medium: 8 pieces in 5 × 8. Hard: all 12 in 6 × 10, 5 × 12, 4 × 15 or 3 × 20.",
     pt_term_fixed: "Start pieces given",
     pt_rules_fixed: "On 6 × 10 some pieces lie fixed (dashed inner frames); the others fit around them in exactly one way. Easy: 3 pieces to lay, Medium: 5, Hard: 7.",
+    pt_term_pattern: "Fit the Pattern",
+    pt_rules_pattern: "A random shape appears, made of 3 pieces (Easy), 4 (Medium) or 5 (Hard) joined edge to edge. The black squares are blocked. Lay exactly the pieces shown below the board so that they fill the shape. Every shape can be solved, and there is no time limit.",
     pt_term_help: "Hint",
     pt_rules_help: "The hint marks where the next piece can go. If a laid piece blocks every way to finish, it names that piece.",
     pt_rules_example_title: "Example",
