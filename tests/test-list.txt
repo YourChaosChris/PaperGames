@@ -94,6 +94,8 @@
 10 zahlenbild-ui.js
 55 viererzug-core.js
 12 viererzug-ui.js
+1 zahlenschritt-core.js
+12 zahlenschritt-ui.js
 1 irrgarten-core.js
 10 irrgarten-ui.js
 1 suchbild-core.js

@@ -584,6 +584,22 @@ all parts back into one log in list order. The last line is exactly
   reload, Hint (one mark while placing, two while moving, tapping the marks
   plays the move), a whole game against the computer on each level; fields
   at least 44 px, no sideways scroll, no key names in the page.
+- `node tests/zahlenschritt-core.js` - no server or browser needed (task 226).
+  Step Numbers: the three levels (0-5 with 4 rows, 0-9 with 7, 0-15 with 10),
+  setting up the middle column (numbers out of range refused, repeats allowed,
+  take back the last number, Black then White), blocked edge fields, which
+  fields a card fits (one less on the left, one more on the right), a card
+  that fits nowhere is out and the turn passes, an empty stack is shuffled
+  again, the win with the last open field, 300 whole computer games on the
+  three levels (every move legal, every game ends), Hard's middle column
+  costs less than Easy's.
+- `node tests/zahlenschritt-ui.js` - needs the server and Playwright. German
+  page at 360 x 640: numbers tapped (status "n von 7"), take back, random
+  numbers, highlighted and enabled fields for a card, a card that fits
+  nowhere, the field written is marked, game back after a reload, Hint
+  (draw button, fitting field), the last open field wins, a whole game
+  against the computer on each level; fields at least 44 px, no sideways
+  scroll on the hard level, no key names in the page.
 - `node tests/zahlenbild-core.js` - no server or browser needed (task 166).
   Every picture of every level: dots numbered from 1 without gaps, no two
   at one place, at least 4 board units apart, inside the board, no crossing

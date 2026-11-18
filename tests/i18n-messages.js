@@ -32,6 +32,12 @@ const FULL = loadI18n();
 const SAMPLES = [
   "White: place a stone (1 of 2).",
   "Black wins - a square of four!",
+  "Black: choose a number for your middle column (3 of 7).",
+  "White: draw a card.",
+  "Black drew 4: tap a highlighted field to write it in.",
+  "White wrote 5 in.",
+  "White drew 9: no field fits, the card is out.",
+  "White wins - every field is filled!",
   "Black: place a stone (2 of 2).",
   "Black can capture again with the same stone. Tap it to end the turn.",
   "Move undone. White can capture again with the same stone. Tap it to end the turn.",

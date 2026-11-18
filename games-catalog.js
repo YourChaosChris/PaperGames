@@ -1428,6 +1428,18 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-11-18T12:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\" rx=\"2\"/><circle cx=\"7.5\" cy=\"7.5\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"16.5\" cy=\"7.5\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"7.5\" cy=\"16.5\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"16.5\" cy=\"16.5\" r=\"2.2\" fill=\"#141413\" stroke=\"none\"/></svg></span>"
+  },
+  {
+    slug: "zahlenschritt",
+    category: "puzzles",
+    family: "math",
+    nameKey: "game_zahlenschritt",
+    nameText: "Step Numbers",
+    descKey: "home_zahlenschritt_desc",
+    descText: "Write numbers into the middle of your sheet, then turn up cards and write each one next to its neighbour: one less on the left, one more on the right. Local 2-player or vs. the built-in engine, three levels with 0-5, 0-9 and 0-15, and a hint.",
+    popular: false,
+    added: "2026-11-18T18:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1.5\" y=\"8\" width=\"6\" height=\"8\"/><rect x=\"9\" y=\"8\" width=\"6\" height=\"8\" fill=\"#141413\"/><rect x=\"16.5\" y=\"8\" width=\"6\" height=\"8\"/><path d=\"M4.5 4.5v1.5M12 4.5v1.5M19.5 4.5v1.5M4.5 19v1.5M12 19v1.5M19.5 19v1.5\"/></svg></span>"
   }
 ];
 

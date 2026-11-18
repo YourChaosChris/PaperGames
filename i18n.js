@@ -750,6 +750,7 @@ const STRINGS = {
     release_v297: "New rule variants: Spanish draughts, Oware for Mancala and Twelve Men's Morris with diagonals. More games have a Hint button, and the settings offer text at 125 or 150 % and high contrast. In Rummy you choose which card a joker at the end of a new run stands for, and an update now loads only once.",
     release_v298: "Marble Brink, Wall Maze, Poker, Fairy-Tale Villains and Forest Village now have a Hint button too.",
     release_v299: "Kindle browsers now ask with Yes and No buttons, so resigning, restarting, resetting statistics, changing draughts rules and opening move links work there. Thanks to Brandon Ooi for reporting this and contributing a fix.",
+    release_v305: "New game: Step Numbers. Write numbers into the middle of your sheet, turn up cards and write each one next to its neighbour: the first with every field filled wins.",
     release_v304: "New game: Four Moves. Put four stones each on a 5 x 5 board, then slide them: four in a row or in a square wins. Pentomino has a new mode, Fit the Pattern: fill a random shape with a few pieces.",
     release_v303: "With high contrast switched on, Sudoku and the other grid puzzles show thin lines inside a box and thick lines around it again.",
     release_v302: "The worksheets and the guide to print now open in a new window, so you can get back to PaperGames from the installed app on a tablet too.",
@@ -4048,6 +4049,26 @@ const STRINGS = {
     quickrules_viererzug_3: "Four of your stones in a row or in a 2 x 2 square win at once. The same position for the third time is a draw.",
     vz_board_aria: "Four Moves board",
     msg_t_vz_wins_square: "{p} wins - a square of four!",
+    game_zahlenschritt: "Step Numbers",
+    home_zahlenschritt_desc: "Write numbers into the middle of your sheet, then turn up cards and write each one next to its neighbour: one less on the left, one more on the right. Local 2-player or vs. the built-in engine, three levels with 0-5, 0-9 and 0-15, and a hint.",
+    zahlenschritt_history_intro: "A paper game that children made up themselves: numbers, a pack of cards and neighbours.",
+    quickrules_zahlenschritt_1: "Each side fills the middle column of its sheet with numbers, as many as there are rows. Numbers may repeat. Black begins.",
+    quickrules_zahlenschritt_2: "Take turns turning up a card. It fits the left field of a row whose middle number is one more, and the right field of a row whose middle number is one less. Tap a highlighted field; if none fits, the card is out.",
+    quickrules_zahlenschritt_3: "Whoever first has every field filled wins. Easy uses 0-5, Medium 0-9, Hard 0-15.",
+    zs_board_aria: "Step Numbers sheets",
+    zs_card_label: "Card:",
+    zs_draw_button: "Draw a card",
+    zs_random: "Random numbers",
+    msg_t_zs_setup: "{p}: choose a number for your middle column ({n} of {m}).",
+    msg_t_zs_draw: "{p}: draw a card.",
+    msg_t_zs_drew: "{p} drew {n}: tap a highlighted field to write it in.",
+    msg_t_zs_wrote: "{p} wrote {n} in.",
+    msg_t_zs_nofit: "{p} drew {n}: no field fits, the card is out.",
+    msg_t_zs_wins: "{p} wins - every field is filled!",
+    msg_t_zs_aria_mid: "{p}, row {n}: middle number {m}",
+    msg_t_zs_aria_open: "{p}, row {n}: field for {m}",
+    msg_t_zs_aria_done: "{p}, row {n}: {m} written in",
+    msg_t_zs_aria_none: "{p}, row {n}: field not needed",
     zb_level_label: "Level:",
     zb_level_easy: "Easy (children)",
     zb_level_medium: "Medium",
@@ -5984,7 +6005,7 @@ const I18n = (function () {
   // The number of games in the collection. Texts write it as {games};
   // tools/seo.js sets this from games-catalog.js (and the copies in the
   // static HTML), so a new game only needs that script run once.
-  const GAME_COUNT = 116;
+  const GAME_COUNT = 117;
 
   function t(key, lang) {
     const l = lang || getLang();

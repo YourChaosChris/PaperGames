@@ -29,6 +29,8 @@ function getGameSlugs() {
   let m;
   while ((m = re.exec(src))) slugs.push(m[1]);
   if (!slugs.length) throw new Error("could not find any slugs in games-catalog.js");
+  // ONLY=slug,slug limits a sweep to some games while one game is being built.
+  if (process.env.ONLY) return slugs.filter((s) => process.env.ONLY.split(",").indexOf(s) !== -1);
   return slugs;
 }
 

@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v305",
+    date: "2026-11-18",
+    key: "release_v305",
+    text: "New game: Step Numbers. Write numbers into the middle of your sheet, turn up cards and write each one next to its neighbour: the first with every field filled wins."
+  },
+  {
     version: "v304",
     date: "2026-11-18",
     key: "release_v304",

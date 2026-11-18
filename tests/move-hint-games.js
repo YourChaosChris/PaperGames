@@ -4,7 +4,7 @@
 // disappear once a move has been made. Run: node tests/move-hint-games.js [slug ...]
 const { chromium } = require("playwright");
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
-const ALL = ["go", "hex", "reversi", "gomoku", "morris", "fanorona", "surakarta", "fourinarow", "viererzug", "halma", "hnefatafl", "tablut", "sternhalma", "xiangqi", "amazons", "mancala", "dotsandboxes", "shogi", "konane"];
+const ALL = ["go", "hex", "reversi", "gomoku", "morris", "fanorona", "surakarta", "fourinarow", "viererzug", "zahlenschritt", "halma", "hnefatafl", "tablut", "sternhalma", "xiangqi", "amazons", "mancala", "dotsandboxes", "shogi", "konane"];
 const games = process.argv.slice(2).length ? process.argv.slice(2) : ALL;
 const fails = [];
 const check = (name, ok) => { if (!ok) fails.push(name); };
@@ -21,7 +21,8 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
     check(g + ": hint button exists", (await page.$("#" + g + "-hint")) !== null);
     if (!(await page.isVisible("#start-" + g + "-game"))) await page.click("#menu-toggle");
     await page.click("#mode-offline");
-    await page.click("#start-" + g + "-game");
+    // Step Numbers starts the two-player game with the mode button and closes the menu.
+    if (g !== "zahlenschritt") await page.click("#start-" + g + "-game");
     await page.waitForTimeout(500);
     if (g === "konane") { await page.waitForTimeout(100); } // opening phase: hint stays quiet
     const enabled = await page.isEnabled("#" + g + "-hint");

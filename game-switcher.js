@@ -139,7 +139,8 @@
     ["zahlenbild", "game_zahlenbild"],
     ["irrgarten", "game_irrgarten"],
     ["suchbild", "game_suchbild"],
-    ["viererzug", "game_viererzug", "inarow"]
+    ["viererzug", "game_viererzug", "inarow"],
+    ["zahlenschritt", "game_zahlenschritt", "math"]
   ];
 
   var GAME_SLUGS = {};
