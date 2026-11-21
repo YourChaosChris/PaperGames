@@ -47,16 +47,18 @@ const LEGAL = {
   marblepush: "same(MarblePushCore.getLegalMoves(AppStateMarblePush.board, AppStateMarblePush.turn), m)",
   wallmaze: "same(WallMazeCore.getLegalMoves(AppStateWallMaze.state, AppStateWallMaze.turn), m)",
   poker: "PokerCore.legal(AppStatePK.state)[m] === true",
+  // Task 227: Poch - a bet action the rules allow, or a card in your hand to lead with.
+  poch: "PochCore.isLegalMove(AppStatePoch.state, m)",
   villains: "VillainsCore.isLegal(AppStateVl.state, m)",
   forestvillage: "ForestVillageCore.isLegal(AppStateFv.state, m)"
 };
 const START = { chess: ["#mode-offline", null], kleeberg: ["#mode-offline", "#start-kb-game"],
-  poker: ["#pk-level", "#start-pk-game"], villains: ["#mode-offline-ai", "#start-villains-game"], forestvillage: ["#mode-offline-ai", "#start-forestvillage-game"],
+  poker: ["#pk-level", "#start-pk-game"], poch: ["#poch-level", "#start-poch-game"], villains: ["#mode-offline-ai", "#start-villains-game"], forestvillage: ["#mode-offline-ai", "#start-forestvillage-game"],
   romme: ["#mode-offline-ai", "#start-romme-game"], canasta: ["#cn-level", "#start-cn-game"], teufelsieben: ["#ts-mode", "#start-ts-game"], blockers: ["#mode-offline", "#start-bl-game", "document.getElementById('bl-computers').value = '0'; document.getElementById('bl-computers').dispatchEvent(new Event('change'));"] };
 // Dice games: roll first, so there is a move to hint.
 const BEFORE = { blockers: "#bl-roll" };
 // Poker: a hand can end while the computers act; go on to the next hand.
-const NEXT = { poker: "#pk-next" };
+const NEXT = { poker: "#pk-next", poch: "#poch-next" };
 
 // Konane begins with a ritual (each side removes one stone), in which the
 // hint stays quiet; take the first allowed stones like a person would.

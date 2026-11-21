@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v306",
+    date: "2026-11-21",
+    key: "release_v306",
+    text: "New game: Poch, the old card game with nine pools. Win pools with the cards of the pay suit, bet on your best set and play your cards out in runs."
+  },
+  {
     version: "v305",
     date: "2026-11-18",
     key: "release_v305",

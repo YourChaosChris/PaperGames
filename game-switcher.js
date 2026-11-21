@@ -140,7 +140,8 @@
     ["irrgarten", "game_irrgarten"],
     ["suchbild", "game_suchbild"],
     ["viererzug", "game_viererzug", "inarow"],
-    ["zahlenschritt", "game_zahlenschritt", "math"]
+    ["zahlenschritt", "game_zahlenschritt", "math"],
+    ["poch", "game_poch", "casino"]
   ];
 
   var GAME_SLUGS = {};

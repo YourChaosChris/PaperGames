@@ -1440,6 +1440,18 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-11-18T18:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1.5\" y=\"8\" width=\"6\" height=\"8\"/><rect x=\"9\" y=\"8\" width=\"6\" height=\"8\" fill=\"#141413\"/><rect x=\"16.5\" y=\"8\" width=\"6\" height=\"8\"/><path d=\"M4.5 4.5v1.5M12 4.5v1.5M19.5 4.5v1.5M4.5 19v1.5M12 19v1.5M19.5 19v1.5\"/></svg></span>"
+  },
+  {
+    slug: "poch",
+    category: "party",
+    family: "casino",
+    nameKey: "game_poch",
+    nameText: "Poch",
+    descKey: "home_poch_desc",
+    descText: "Poch, the old German card game, against 1 to 3 computers: every hand starts with chips on nine pools, the cards of the pay suit win them, then you bet on your best pair or set and finally play your cards out in runs. Six hands, three levels, and a hint. Played with chips that are only points.",
+    popular: false,
+    added: "2026-11-21T14:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"2\" width=\"6\" height=\"6\" rx=\"1.2\"/><rect x=\"9\" y=\"2\" width=\"6\" height=\"6\" rx=\"1.2\"/><rect x=\"16\" y=\"2\" width=\"6\" height=\"6\" rx=\"1.2\"/><rect x=\"2\" y=\"9\" width=\"6\" height=\"6\" rx=\"1.2\"/><circle cx=\"12\" cy=\"12\" r=\"2.6\" fill=\"#141413\"/><rect x=\"16\" y=\"9\" width=\"6\" height=\"6\" rx=\"1.2\"/><rect x=\"2\" y=\"16\" width=\"6\" height=\"6\" rx=\"1.2\"/><rect x=\"9\" y=\"16\" width=\"6\" height=\"6\" rx=\"1.2\"/><rect x=\"16\" y=\"16\" width=\"6\" height=\"6\" rx=\"1.2\"/></svg></span>"
   }
 ];
 

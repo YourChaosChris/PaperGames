@@ -115,7 +115,8 @@ const STATS_GAME_NAME_KEY = {
   irrgarten: "game_irrgarten",
   suchbild: "game_suchbild",
   viererzug: "game_viererzug",
-  zahlenschritt: "game_zahlenschritt"
+  zahlenschritt: "game_zahlenschritt",
+  poch: "game_poch"
 };
 
 function gameDisplayName(game) {

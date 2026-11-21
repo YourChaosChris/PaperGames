@@ -600,6 +600,24 @@ all parts back into one log in list order. The last line is exactly
   (draw button, fitting field), the last open field wins, a whole game
   against the computer on each level; fields at least 44 px, no sideways
   scroll on the hard level, no key names in the page.
+- `node tests/poch-core.js` - no server or browser needed (task 227). Poch:
+  the deck and the deal (2 to 4 players, 31 cards dealt, one face up), the
+  ante and chips plus pools kept constant, the first-stage payouts (King and
+  Queen of the pay suit take the Marriage pool, 7-8-9 the Sequence pool, a
+  pool whose card lies face up stays), the best set and its tie-break (pay
+  suit, suit order), the betting round (check, call, raise by one up to 4,
+  fold, the one who cannot pay a call may only fold, all check: the pool
+  stays), the chains of the next higher card (face-up card and Ace stop them),
+  going out (centre pot plus one chip per card left), the end after six hands
+  or when somebody cannot pay the 9 chips, and 300 whole computer games on
+  the three levels (every move legal, chips kept, every game ends).
+- `node tests/poch-ui.js` - needs the server and Playwright. German page at
+  360 x 640: the board of nine pools, the pay card, your cards, the log in
+  German, a fixed lead position (the chain 8, 9, 10 of clubs), the game back
+  after a reload, Hint (one mark, a legal move), a whole game against 1, 2
+  and 3 computers on Easy, Medium and Hard up to the result; cards and
+  buttons at least 44 px, no sideways scroll with the longest hand, no key
+  names in the page.
 - `node tests/zahlenbild-core.js` - no server or browser needed (task 166).
   Every picture of every level: dots numbered from 1 without gaps, no two
   at one place, at least 4 board units apart, inside the board, no crossing

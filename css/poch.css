@@ -1,0 +1,174 @@
+/* poch: rules used only by the poch pages (loaded after base.css). */
+/* Poch: our own board of nine pools in a 3 x 3 square, the face-up pay
+   card, the computers' seats, a short log, your cards and the buttons.
+   Black and white only; the player on turn has a thick border, a player
+   who folded a dashed one. */
+.poch-board-wrap {
+  text-align: center;
+  margin: 0.2rem 0 0.4rem;
+}
+
+#poch-board {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.poch-cell-box {
+  fill: #fff;
+  stroke: var(--border);
+  stroke-width: 3;
+}
+
+.poch-cell-centre .poch-cell-box {
+  stroke-width: 5;
+}
+
+.poch-cell-label {
+  fill: var(--text);
+  font-size: 22px;
+  font-weight: 700;
+  font-family: sans-serif;
+}
+
+.poch-cell-count {
+  fill: var(--text);
+  font-size: 34px;
+  font-weight: 700;
+  font-family: sans-serif;
+}
+
+.poch-paycard {
+  text-align: center;
+  margin: 0.2rem 0;
+}
+
+.poch-paycard-label {
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: 700;
+  margin-right: 0.4rem;
+}
+
+.poch-paycard .pc-card {
+  vertical-align: middle;
+  margin-bottom: 0.2rem;
+}
+
+.poch-seats,
+.poch-me {
+  text-align: center;
+}
+
+.poch-seat {
+  display: inline-block;
+  vertical-align: top;
+  min-width: 9.5rem;
+  max-width: calc(100% - 0.4rem);
+  margin: 0.2rem;
+  padding: 0.3rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  text-align: center;
+}
+
+html.text-size-large .poch-seat,
+html.text-size-xlarge .poch-seat {
+  min-width: 0;
+}
+
+.poch-me .poch-seat {
+  min-width: 14rem;
+}
+
+.poch-seat-active {
+  border-width: 3px;
+}
+
+.poch-seat-folded {
+  border-style: dashed;
+}
+
+.poch-seat-head {
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.poch-name {
+  font-weight: 700;
+  margin-right: 0.3rem;
+}
+
+.poch-seat-active .poch-name::before {
+  content: "\25B6\00A0";
+}
+
+.poch-info {
+  display: inline-block;
+  margin: 0 0.15rem;
+  white-space: nowrap;
+}
+
+.poch-tag {
+  padding: 0 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.poch-seat-cards {
+  margin-top: 0.3rem;
+}
+
+.poch-hand-name {
+  display: block;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.poch-log {
+  list-style: none;
+  margin: 0.4rem 0;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.poch-log:empty {
+  display: none;
+}
+
+.poch-hand {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.poch-hand-info {
+  text-align: center;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+}
+
+.poch-buttons {
+  margin: 0.4rem 0;
+  text-align: center;
+}
+
+.poch-buttons > button {
+  min-height: 44px;
+  margin: 0.2rem 0.25rem;
+}
+
+.poch-example {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  margin: 0 auto;
+}
