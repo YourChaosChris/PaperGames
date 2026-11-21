@@ -1731,7 +1731,7 @@ const FILE_HASHES = {
   "error-banner.js": "a67457c5",
   "force-update.js": "75f1558c",
   "games-catalog.js": "b6db07af",
-  "devices-list.js": "d4fd9eef",
+  "devices-list.js": "f3b763eb",
   "favorites.js": "4be2869d",
   "games-render.js": "95cc3c1d",
   "home-app.js": "4d5533a4",
