@@ -326,6 +326,7 @@ function updateZahlenschrittBoard() {
           cell.disabled = true;
           if (mid !== undefined) {
             cell.textContent = String(mid);
+            cell.dataset.n = String(mid);
             I18n.setAria(cell, name + ", row " + (row + 1) + ": middle number " + mid);
           } else {
             cell.setAttribute("aria-hidden", "true");
@@ -343,6 +344,7 @@ function updateZahlenschrittBoard() {
             I18n.setAria(cell, name + ", row " + (row + 1) + ": field not needed");
           } else if (v !== null) {
             cell.textContent = String(v);
+            cell.dataset.n = String(v);
             I18n.setAria(cell, name + ", row " + (row + 1) + ": " + v + " written in");
           } else if (mid !== undefined) {
             I18n.setAria(cell, name + ", row " + (row + 1) + ": field for " + (c === 0 ? mid - 1 : mid + 1));
@@ -391,7 +393,9 @@ function updateZahlenschrittBoard() {
     I18n.setKey(label, "zs_card_label");
     line.appendChild(label);
     line.appendChild(document.createTextNode(" "));
-    line.appendChild(zsEl("span", "zs-card-value", st.card === null ? "–" : String(st.card)));
+    const cardValue = zsEl("span", "zs-card-value", st.card === null ? "–" : String(st.card));
+    if (st.card !== null) cardValue.dataset.n = String(st.card);
+    line.appendChild(cardValue);
     controls.appendChild(line);
     const draw = zsEl("button", "primary");
     draw.type = "button";

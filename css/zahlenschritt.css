@@ -36,25 +36,71 @@
   display: flex;
 }
 
+/* Every field is a playing card: rounded black frame, big number in the
+   middle, small number in two corners (data-n). White, no grey. */
 .zs-cell {
+  position: relative;
   flex: 1 1 0;
   min-width: 0;
   min-height: 44px;
   height: 44px;
-  margin: 0;
+  margin: 2px;
   padding: 0;
-  border: 1px solid var(--border);
+  border: 2px dashed var(--border);
   background: var(--square-light);
   color: var(--text);
   font: inherit;
-  font-size: 1.15em;
+  font-size: 1.1em;
   font-weight: bold;
+  line-height: 1;
   text-align: center;
-  border-radius: 0;
+  border-radius: 6px;
 }
 
+.zs-cell[data-n],
+.zs-card-value[data-n] {
+  border-style: solid;
+}
+
+.zs-cell[data-n]::before,
+.zs-cell[data-n]::after,
+.zs-card-value[data-n]::before,
+.zs-card-value[data-n]::after {
+  content: attr(data-n);
+  position: absolute;
+  font-size: 0.6em;
+  line-height: 1;
+}
+
+.zs-cell[data-n]::before,
+.zs-card-value[data-n]::before {
+  top: 2px;
+  left: 3px;
+}
+
+.zs-cell[data-n]::after,
+.zs-card-value[data-n]::after {
+  bottom: 2px;
+  right: 3px;
+  transform: rotate(180deg);
+}
+
+/* Disabled buttons stay black and white, never grey. */
+.zs-cell:disabled:not([aria-hidden="true"]):not(.zs-blocked) {
+  color: var(--text);
+  border-color: var(--border);
+  opacity: 1;
+}
+
+/* The number written first in each row: thicker frame instead of grey. */
 .zs-mid {
-  background: var(--square-dark);
+  border: 4px solid var(--border);
+}
+
+/* Not part of the sheet (rows not chosen yet): no frame. */
+.zs-cell[aria-hidden="true"] {
+  border-color: transparent;
+  background: transparent;
 }
 
 /* A field the open card fits: thick inner frame (black on white, no grey). */
@@ -64,7 +110,8 @@
 
 /* A field that can never be filled. */
 .zs-blocked {
-  background: var(--square-dark);
+  border-color: transparent;
+  background: transparent;
   color: var(--text);
 }
 
@@ -89,10 +136,13 @@
 }
 
 .zs-card-value {
+  position: relative;
   display: inline-block;
-  min-width: 2.2em;
-  padding: 2px 8px;
-  border: 3px solid var(--border);
+  min-width: 2.6em;
+  padding: 10px 14px;
+  border: 3px dashed var(--border);
+  border-radius: 8px;
+  background: var(--square-light);
   font-weight: bold;
   font-size: 1.4em;
 }
@@ -117,4 +167,10 @@
   letter-spacing: 0.1em;
   border: 2px solid var(--border);
   padding: 0.1em 0.3em;
+}
+
+@media (max-width: 420px) {
+  .zs-cell {
+    font-size: 1em;
+  }
 }
