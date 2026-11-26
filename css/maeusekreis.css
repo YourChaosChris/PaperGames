@@ -1,0 +1,123 @@
+/* maeusekreis: rules used only by the maeusekreis pages (loaded after base.css). */
+/* Mouse Ring: a square board, the ring and the lines across as SVG behind,
+   one round button per point on top. Black and white only, no grey. */
+#maeusekreis-board {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+/* Square without aspect-ratio (older e-ink browsers): the padding gives the height. */
+#maeusekreis-board::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+#maeusekreis-board .mk-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* A point: a round tap area of at least 48 px around a small dot. */
+.mk-point {
+  position: absolute;
+  width: 14%;
+  height: 14%;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.mk-point:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.mk-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 34%;
+  height: 34%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 3px solid #141413;
+  background: #fff;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.mk-figure {
+  position: absolute;
+  top: 6%;
+  left: 6%;
+  width: 88%;
+  height: 88%;
+  pointer-events: none;
+}
+
+.mk-figure svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Under a figure the dot is not needed; a white disc keeps the lines off the figure. */
+.mk-occupied .mk-dot {
+  width: 92%;
+  height: 92%;
+  border: 0;
+}
+
+/* Where the figure on the move may step: a thick ring. */
+.mk-point.mk-target {
+  border: 5px solid #141413;
+  background: #fff;
+}
+
+/* The point the last step started from: a thin dashed ring. */
+.mk-point.mk-from:not(.mk-target) {
+  border: 2px dashed #141413;
+}
+
+/* Small figures for the side choice and the board placeholder. */
+.mk-choice-icon {
+  display: inline-block;
+  width: 1.6em;
+  height: 1.6em;
+  vertical-align: middle;
+}
+
+.mk-choice-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#maeusekreis-side-choice .color-choice {
+  min-height: 44px;
+  min-width: 44px;
+  margin-right: 0.6em;
+  cursor: pointer;
+}
+
+/* The Hint mark: a double frame outside the ring, so it does not hide in it. */
+.mk-point.mh-mark {
+  outline: 5px double #141413;
+  outline-offset: 2px;
+}
