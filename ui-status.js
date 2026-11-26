@@ -10,12 +10,14 @@
    functions humanTurn(turn) and humanWon(winner) for games whose seats are
    not compared with ===. */
 const UiStatus = (function () {
-  const KEEP = /(n't|\bnot\b|cannot|\billegal\b|\binvalid\b|\bfirst\b|\bmust\b|\bneed|\bempty\b|\bchoose\b|\btap\b|\bselect\b|\bpick\b|\balready\b|\bno tile\b|\bno card\b|\bno move\b|\bplay the card\b|\bplay a\b|\bdraw\b.*\bstock\b)/i;
+  const KEEP = /(n't|\bnot\b|cannot|\billegal\b|\binvalid\b|\bfirst\b|\bmust\b|\bneed|\bempty\b|\bchoose\b|\btap\b|\bselect\b|\bpick\b|\balready\b|\bno tile\b|\bno card\b|\bno move\b|\bplay the card\b|\bplay a\b|\bdraw\b.*\bstock\b|\bgame is over\b)/i;
   const COMPUTER_TURN = /(?:^|[.!?]\s+)(?:the\s+)?computer(?:\s+\d+)?(?:\x27s)?\s+(?:turn|thinking|to move|is thinking|is playing|plays|acts|rolling)\b/i;
 
   function rewrite(text, app, o) {
     o = o || {};
     const t = String(text);
+    // The start line under "New game" says which side the person plays.
+    if (/^(?:chance decided:\s*)?you play\b[^.!?]*,\s*computer level\b/i.test(t)) return text;
     const keep = KEEP.test(t) && !/\b(wins?|won|winner)\b/i.test(t);
     const st = o.state || app.state || app;
     const over = app.gameOver === true || app.over === true || st.gameOver === true || st.over === true;

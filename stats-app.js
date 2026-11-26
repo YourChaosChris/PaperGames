@@ -116,7 +116,10 @@ const STATS_GAME_NAME_KEY = {
   suchbild: "game_suchbild",
   viererzug: "game_viererzug",
   zahlenschritt: "game_zahlenschritt",
-  poch: "game_poch"
+  poch: "game_poch",
+  dreitafeln: "game_dreitafeln",
+  maeusekreis: "game_maeusekreis",
+  zahlenschloss: "game_zahlenschloss"
 };
 
 function gameDisplayName(game) {

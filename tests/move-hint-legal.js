@@ -49,6 +49,9 @@ const LEGAL = {
   poker: "PokerCore.legal(AppStatePK.state)[m] === true",
   // Task 227: Poch - a bet action the rules allow, or a card in your hand to lead with.
   poch: "PochCore.isLegalMove(AppStatePoch.state, m)",
+  // Tasks 229, 230: Three Grids (a face-up card and a board), Mouse Ring (a point).
+  dreitafeln: "DreitafelnCore.isLegalMove(AppStateDreitafeln.state, m)",
+  maeusekreis: "MaeusekreisCore.isLegalMove(AppStateMaeusekreis.state, m)",
   villains: "VillainsCore.isLegal(AppStateVl.state, m)",
   forestvillage: "ForestVillageCore.isLegal(AppStateFv.state, m)"
 };

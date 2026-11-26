@@ -98,6 +98,12 @@
 12 zahlenschritt-ui.js
 3 poch-core.js
 17 poch-ui.js
+2 dreitafeln-core.js
+15 dreitafeln-ui.js
+2 maeusekreis-core.js
+15 maeusekreis-ui.js
+5 zahlenschloss-core.js
+15 zahlenschloss-ui.js
 1 irrgarten-core.js
 10 irrgarten-ui.js
 1 suchbild-core.js

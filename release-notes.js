@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v307",
+    date: "2026-11-26",
+    key: "release_v307",
+    text: "Three new games: Three Grids, noughts and crosses on three boards with number cards; Mouse Ring, a cat chasing a mouse around a circle; and Lock Logic, a code to work out from fixed clues."
+  },
+  {
     version: "v306",
     date: "2026-11-21",
     key: "release_v306",

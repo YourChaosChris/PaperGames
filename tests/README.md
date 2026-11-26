@@ -618,6 +618,41 @@ all parts back into one log in list order. The last line is exactly
   and 3 computers on Easy, Medium and Hard up to the result; cards and
   buttons at least 44 px, no sideways scroll with the longest hand, no key
   names in the page.
+- `node tests/dreitafeln-core.js` - no server or browser needed (task 229).
+  Three Grids: the stack of 27 cards (1 to 9 three times), every face-up card
+  fits somewhere, a board is won for good by the first line, two boards win,
+  the end after 27 cards with counting or a draw, marks on a won board are
+  allowed, illegal moves are refused; 100 computer games each for Hard
+  against Easy, Hard against Medium and Medium against Easy (sides swapped)
+  and the share of the first player at equal levels.
+- `node tests/dreitafeln-ui.js` - needs the server and Playwright. Card
+  choice, highlighted fields, a direct tap on a field, a won board, two
+  boards win, Undo (the hidden stack is shuffled again), the game back after
+  a reload, Hint, the random side, 360 and 600 px without sideways scroll,
+  fields at least 44 px, a whole game against the computer on each level.
+- `node tests/maeusekreis-core.js` - no server or browser needed (task 230).
+  Mouse Ring: neighbours (the mouse only on the circle, the cat also across
+  the lines), catching, the mouse may not step onto the cat, the end after
+  the cat's steps, the backward search: per board the starts and their step
+  counts, with best play the cat always wins with the limit and the mouse
+  always gets away with one step less, and with mistakes both sides win
+  (100 games each).
+- `node tests/maeusekreis-ui.js` - needs the server and Playwright. Boards
+  with 8, 10 and 12 points, the lines across, marked targets, catching and
+  getting away, Undo, save and load, Hint, cat and mouse against the
+  computer on three levels, points at least 44 px, 360 and 600 px.
+- `node tests/zahlenschloss-core.js` - no server or browser needed (task
+  231). Lock Logic: the example of the source (983, 914, 309, 728, 780) has
+  the one solution 043, also when digits may repeat; 100 puzzles per level
+  with exactly one solution and no clue too many, different digits, a clue
+  with no right digit on Easy and none on Medium, four digits on Hard, the
+  same number gives the same puzzle, the hint chain leads to the code and
+  every hint is true; the slowest puzzle in ms.
+- `node tests/zahlenschloss-ui.js` - needs the server and Playwright. The
+  puzzle starts at once, clue sentences, notes (strike a digit) and Undo,
+  used digits locked on the keys, Delete, mistakes, Hint, the same state
+  after a reload, one puzzle solved on each level and the next numbers,
+  360 and 600 px without sideways scroll, keys at least 44 px.
 - `node tests/zahlenbild-core.js` - no server or browser needed (task 166).
   Every picture of every level: dots numbered from 1 without gaps, no two
   at one place, at least 4 board units apart, inside the board, no crossing

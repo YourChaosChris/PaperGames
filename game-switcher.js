@@ -141,7 +141,10 @@
     ["suchbild", "game_suchbild"],
     ["viererzug", "game_viererzug", "inarow"],
     ["zahlenschritt", "game_zahlenschritt", "math"],
-    ["poch", "game_poch", "casino"]
+    ["poch", "game_poch", "casino"],
+    ["dreitafeln", "game_dreitafeln", "inarow"],
+    ["maeusekreis", "game_maeusekreis", "hunt"],
+    ["zahlenschloss", "game_zahlenschloss"]
   ];
 
   var GAME_SLUGS = {};

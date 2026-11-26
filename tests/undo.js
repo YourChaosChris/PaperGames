@@ -37,8 +37,8 @@ const exceptions = {
 const failures = [];
 const read = (name) => fs.readFileSync(path.join(ROOT, name), "utf8");
 const undoPages = fs.readdirSync(ROOT).filter((name) => name.endsWith(".html") && /id="undo-btn"/.test(read(name)));
-// 57 since task 166 (Zahlenbild), 58 with Arrow Ludo (task 189), 59 with Viererzug (task 224).
-if (undoPages.length !== 59) failures.push(`expected the 59 existing Undo pages, found ${undoPages.length}`);
+// 57 since task 166 (Zahlenbild), 58 with Arrow Ludo (task 189), 59 with Viererzug (task 224), 61 with Three Grids and Mouse Ring (tasks 229, 230).
+if (undoPages.length !== 61) failures.push(`expected the 61 existing Undo pages, found ${undoPages.length}`);
 for (const page of undoPages) {
   const html = read(page);
   if (!/data-i18n="undo_button"/.test(html)) failures.push(`${page}: button must use the shared localized Undo label`);

@@ -1452,6 +1452,41 @@ const GAMES_CATALOG = [
     popular: false,
     added: "2026-11-21T14:00",
     icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"2\" width=\"6\" height=\"6\" rx=\"1.2\"/><rect x=\"9\" y=\"2\" width=\"6\" height=\"6\" rx=\"1.2\"/><rect x=\"16\" y=\"2\" width=\"6\" height=\"6\" rx=\"1.2\"/><rect x=\"2\" y=\"9\" width=\"6\" height=\"6\" rx=\"1.2\"/><circle cx=\"12\" cy=\"12\" r=\"2.6\" fill=\"#141413\"/><rect x=\"16\" y=\"9\" width=\"6\" height=\"6\" rx=\"1.2\"/><rect x=\"2\" y=\"16\" width=\"6\" height=\"6\" rx=\"1.2\"/><rect x=\"9\" y=\"16\" width=\"6\" height=\"6\" rx=\"1.2\"/><rect x=\"16\" y=\"16\" width=\"6\" height=\"6\" rx=\"1.2\"/></svg></span>"
+  },
+  {
+    slug: "dreitafeln",
+    category: "strategy",
+    family: "inarow",
+    nameKey: "game_dreitafeln",
+    nameText: "Three Grids",
+    descKey: "home_dreitafeln_desc",
+    descText: "Noughts and crosses on three boards at once: take one of three face-up number cards and put your mark on that field of a board. Win two boards first. Local 2-player or vs. the built-in engine, three levels, a hint and undo.",
+    popular: false,
+    added: "2026-11-26T12:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"8\" width=\"6.5\" height=\"6.5\"/><rect x=\"8.75\" y=\"8\" width=\"6.5\" height=\"6.5\"/><rect x=\"16.5\" y=\"8\" width=\"6.5\" height=\"6.5\"/><path d=\"M2.8 9.8l2.9 2.9M5.7 9.8l-2.9 2.9\"/><circle cx=\"12\" cy=\"11.25\" r=\"1.7\"/><path d=\"M18.3 9.8l2.9 2.9M21.2 9.8l-2.9 2.9\"/><path d=\"M4 18v2.5M12 18v2.5M20 18v2.5\"/></svg></span>"
+  },
+  {
+    slug: "maeusekreis",
+    category: "strategy",
+    family: "hunt",
+    nameKey: "game_maeusekreis",
+    nameText: "Mouse Ring",
+    descKey: "home_maeusekreis_desc",
+    descText: "A cat chases a mouse around a circle of points. The mouse keeps to the circle, the cat may cut across the dashed lines, and it has only so many steps. Local 2-player or vs. the built-in engine as cat or mouse, three boards, a hint and undo.",
+    popular: false,
+    added: "2026-11-26T13:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3.6 9.2L20.4 14.8\" stroke-dasharray=\"2 2\"/><circle cx=\"12\" cy=\"3\" r=\"2.4\" fill=\"#141413\" stroke=\"none\"/><circle cx=\"12\" cy=\"21\" r=\"2.2\" fill=\"#ffffff\"/></svg></span>"
+  },
+  {
+    slug: "zahlenschloss",
+    category: "puzzles",
+    nameKey: "game_zahlenschloss",
+    nameText: "Lock Logic",
+    descKey: "home_zahlenschloss_desc",
+    descText: "Find the secret code of a lock from a few fixed clues: which digits are right, and which are at the right place. Every puzzle has exactly one solution. Three levels with three or four digits, notes and a hint.",
+    popular: false,
+    added: "2026-11-26T14:00",
+    icon: "<span class=\"game-select-icon-svg\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#141413\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 10V7a5 5 0 0 1 10 0v3\"/><rect x=\"3\" y=\"10\" width=\"18\" height=\"12\" rx=\"2\"/><path d=\"M8 14v4M12 14v4M16 14v4\"/></svg></span>"
   }
 ];
 

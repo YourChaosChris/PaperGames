@@ -1,0 +1,168 @@
+/* zahlenschloss: rules used only by the zahlenschloss pages (loaded after base.css). */
+/* Lock Logic: clue cards with their digits as boxes, the code fields and a
+   digit keypad. Black and white only, nothing animated. */
+.zl-clues {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* A clue: its digits in a row, the sentences under them. */
+.zl-clue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 6px 8px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--square-light);
+}
+
+/* The clues the last hint used: a thick frame. */
+.zl-clue.zl-hinted {
+  border-width: 5px;
+  padding: 3px 5px;
+}
+
+.zl-digits {
+  display: flex;
+  gap: 4px;
+  flex: 0 0 auto;
+  direction: ltr;
+}
+
+.zl-says {
+  width: 100%;
+}
+
+.zl-say {
+  margin: 0;
+  text-align: start;
+  line-height: 1.3;
+}
+
+/* A digit of a clue, drawn like a card. */
+.zl-digit,
+.zl-slot,
+.zl-key {
+  position: relative;
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  background: var(--square-light);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.3em;
+  font-weight: bold;
+  line-height: 1;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.zl-digit:disabled,
+.zl-slot:disabled,
+.zl-key:disabled {
+  opacity: 1;
+  color: var(--text);
+  text-decoration: none;
+  cursor: default;
+}
+
+/* Crossed out as a note: a thick diagonal stroke. */
+.zl-digit[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: 50%;
+  border-top: 4px solid var(--text);
+  transform: rotate(-45deg);
+}
+
+.zl-notes-line {
+  margin: 8px auto 4px;
+  max-width: 560px;
+  font-size: 0.9em;
+}
+
+.zl-entry {
+  max-width: 560px;
+  margin: 8px auto 0;
+  text-align: center;
+}
+
+.zl-code {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 6px 0 10px;
+  direction: ltr;
+}
+
+.zl-slot {
+  width: 56px;
+  height: 56px;
+  font-size: 1.6em;
+}
+
+/* An empty field: dashed. The chosen one: a thick frame. */
+.zl-slot.zl-empty {
+  border-style: dashed;
+}
+
+.zl-slot.zl-sel {
+  border: 5px solid var(--border);
+}
+
+.zl-keys {
+  display: grid;
+  grid-template-columns: repeat(5, 52px);
+  justify-content: center;
+  gap: 6px;
+  direction: ltr;
+}
+
+.zl-key {
+  width: 52px;
+}
+
+/* A digit already in another field: dashed frame, struck. */
+.zl-key.zl-locked {
+  border-style: dashed;
+  text-decoration: line-through;
+}
+
+.zl-entry-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.zl-entry-actions button {
+  min-width: 96px;
+}
+
+.zl-icon {
+  display: inline-block;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  border: 2px solid var(--border);
+  padding: 0.1em 0.3em;
+}
+
+@media (max-width: 420px) {
+  .zl-digits {
+    gap: 2px;
+  }
+  .zl-say {
+    font-size: 0.9em;
+  }
+}
