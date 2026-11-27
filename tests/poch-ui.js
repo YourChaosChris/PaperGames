@@ -83,6 +83,9 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
     page.waitForNavigation({ waitUntil: "domcontentloaded" }),
     page.evaluate(() => {
       const saved = JSON.parse(localStorage.getItem("einkchess_save_poch")).state;
+      // The old page runs on until the new one arrives; without this a computer move
+      // could still come (and be saved) there. Only in memory: the save stays as it is.
+      AppStatePoch.gameOver = true;
       location.reload();
       return saved;
     })
