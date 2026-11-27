@@ -16,7 +16,7 @@ const RELEASE_NOTES = [
     version: "v308",
     date: "2026-11-27",
     key: "release_v308",
-    text: "Checkers: the computer on Hard now thinks at most five seconds per move. Hint, Undo and a few other buttons are bigger, and puzzles show “New puzzle” instead of “New game”."
+    text: "Checkers: the computer on Hard now thinks at most five seconds per move. Hint, Undo and a few other buttons are bigger, and puzzles show “New puzzle” instead of “New game”. Steckwürfeln no longer marks the allowed holes unless move suggestions are on. In Card Duel, Fairy-Tale Villains, Forest Village, Card Tactics and Skat, cards you have just drawn are marked."
   },
   {
     version: "v307",
