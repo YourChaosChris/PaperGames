@@ -75,14 +75,15 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
   await page.waitForTimeout(600);
   // Read the save and reload in one step: a computer move (timer) cannot come in between.
   const [, before] = await Promise.all([
-    page.waitForNavigation({ waitUntil: "load" }),
+    page.waitForNavigation({ waitUntil: "domcontentloaded" }),
     page.evaluate(() => {
       const saved = JSON.parse(localStorage.getItem("einkchess_save_poch")).state;
       location.reload();
       return saved;
     })
   ]);
-  // Right after load: the restored game, before the next computer move (at least 900 ms later).
+  // Right after DOMContentLoaded (the game restores itself there): before the next computer
+  // move, which comes 900 ms later; "load" can come later than that on a busy machine.
   const after = await S();
   check("game back after a reload", !!after && after.handNo === before.handNo && JSON.stringify(after.chips) === JSON.stringify(before.chips) && JSON.stringify(after.hands[0]) === JSON.stringify(before.hands[0]));
   check("board visible after reload", await page.evaluate(() => !document.getElementById("board-container").classList.contains("hidden")));
