@@ -90,7 +90,10 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
   // The game restores itself on DOMContentLoaded; the init script keeps a copy right after
   // that (timeout 0), before the next computer move (timer of at least 150 ms), however busy the machine.
   const after = await page.evaluate(() => window.__pochRestored ? JSON.parse(window.__pochRestored) : null);
-  check("game back after a reload", !!after && after.handNo === before.handNo && JSON.stringify(after.chips) === JSON.stringify(before.chips) && JSON.stringify(after.hands[0]) === JSON.stringify(before.hands[0]));
+  const brief = (x) => x && JSON.stringify({ hand: x.handNo, chips: x.chips, turn: x.turn, phase: x.phase, mine: (x.hands[0] || []).length });
+  const back = !!after && after.handNo === before.handNo && JSON.stringify(after.chips) === JSON.stringify(before.chips) && JSON.stringify(after.hands[0]) === JSON.stringify(before.hands[0]);
+  if (!back) console.log("  saved " + brief(before) + ", restored " + brief(after) + ", now " + brief(await S()) + ", url " + page.url());
+  check("game back after a reload", back);
   check("board visible after reload", await page.evaluate(() => !document.getElementById("board-container").classList.contains("hidden")));
 
   // Hint
