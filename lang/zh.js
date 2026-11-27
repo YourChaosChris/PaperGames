@@ -5301,6 +5301,8 @@ STRINGS.zh = {
     msg_t_no_move_passes: "{p}无合法走法,停一手。",
     msg_t_mines_left: "剩余地雷:{n}。",
     msg_t_mines_too_many: "旗子比地雷多{n}个。",
+    msg_t_sw_wrong_two: "骰子 {n} 和 {m}：{k} 号孔，或两个骰子各自的孔。",
+    msg_t_sw_wrong_one: "骰子 {n} 和 {m}：只能插 {k} 号孔。",
     msg_t_pegs_left: "剩余棋钉:{n}。",
     msg_t_daily: "每日挑战({n})。",
     msg_t_error: "错误:{r}",

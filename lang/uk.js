@@ -5301,6 +5301,8 @@ STRINGS.uk = {
     msg_t_no_move_passes: "{p}: немає допустимого ходу, пас.",
     msg_t_mines_left: "Залишилося мін: {n}.",
     msg_t_mines_too_many: "Прапорців на {n} більше, ніж мін.",
+    msg_t_sw_wrong_two: "Кубики {n} і {m}: отвір {k} або отвори обох кубиків.",
+    msg_t_sw_wrong_one: "Кубики {n} і {m}: лише отвір {k}.",
     msg_t_pegs_left: "Залишилося кілочків: {n}.",
     msg_t_daily: "Щоденний виклик ({n}).",
     msg_t_error: "Помилка: {r}",

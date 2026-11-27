@@ -5301,6 +5301,8 @@ STRINGS.it = {
     msg_t_no_move_passes: "{p} non ha mosse valide e passa.",
     msg_t_mines_left: "{n} mine rimaste.",
     msg_t_mines_too_many: "Bandierine: {n} più delle mine.",
+    msg_t_sw_wrong_two: "Dadi {n} e {m}: foro {k}, oppure i fori dei due dadi.",
+    msg_t_sw_wrong_one: "Dadi {n} e {m}: solo il foro {k}.",
     msg_t_pegs_left: "{n} pioli rimasti.",
     msg_t_daily: "Sfida del giorno ({n}).",
     msg_t_error: "Errore: {r}",

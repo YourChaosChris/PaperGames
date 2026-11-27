@@ -5301,6 +5301,8 @@ STRINGS.fr = {
     msg_t_no_move_passes: "{p} n'a aucun coup légal et passe.",
     msg_t_mines_left: "{n} mines restantes.",
     msg_t_mines_too_many: "Drapeaux : {n} de plus que de mines.",
+    msg_t_sw_wrong_two: "Dés {n} et {m} : trou {k}, ou les trous des deux dés.",
+    msg_t_sw_wrong_one: "Dés {n} et {m} : seulement le trou {k}.",
     msg_t_pegs_left: "{n} fiches restantes.",
     msg_t_daily: "Défi du jour ({n}).",
     msg_t_error: "Erreur : {r}",

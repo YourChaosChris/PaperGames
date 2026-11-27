@@ -5373,6 +5373,8 @@ STRINGS.de = {
     msg_t_no_move_passes: "{p} hat keinen gültigen Zug und muss passen.",
     msg_t_mines_left: "Noch {n} Minen.",
     msg_t_mines_too_many: "Flaggen: {n} mehr als Minen.",
+    msg_t_sw_wrong_two: "Würfel {n} und {m}: Loch {k} oder die Löcher beider Würfel.",
+    msg_t_sw_wrong_one: "Würfel {n} und {m}: nur Loch {k}.",
     msg_t_pegs_left: "Noch {n} Stifte.",
     msg_t_daily: "Tägliche Herausforderung ({n}).",
     msg_t_error: "Fehler: {r}",

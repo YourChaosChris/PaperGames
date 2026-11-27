@@ -5385,6 +5385,8 @@ const STRINGS = {
     msg_t_no_move_passes: "{p} has no legal move and passes.",
     msg_t_mines_left: "{n} mines left.",
     msg_t_mines_too_many: "Flags: {n} more than mines.",
+    msg_t_sw_wrong_two: "Dice {n} and {m}: hole {k}, or the holes of both dice.",
+    msg_t_sw_wrong_one: "Dice {n} and {m}: only hole {k}.",
     msg_t_pegs_left: "{n} pegs left.",
     msg_t_daily: "Daily Challenge ({n}).",
     msg_t_error: "Error: {r}",

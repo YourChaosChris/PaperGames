@@ -5301,6 +5301,8 @@ STRINGS.ru = {
     msg_t_no_move_passes: "{p}: нет допустимого хода, пас.",
     msg_t_mines_left: "Осталось мин: {n}.",
     msg_t_mines_too_many: "Флажков на {n} больше, чем мин.",
+    msg_t_sw_wrong_two: "Кубики {n} и {m}: отверстие {k} или отверстия обоих кубиков.",
+    msg_t_sw_wrong_one: "Кубики {n} и {m}: только отверстие {k}.",
     msg_t_pegs_left: "Осталось колышков: {n}.",
     msg_t_daily: "Ежедневное испытание ({n}).",
     msg_t_error: "Ошибка: {r}",

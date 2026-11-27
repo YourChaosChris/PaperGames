@@ -17,6 +17,9 @@
 // the last roll stays too and the result only opens with "Result" (the same
 // button). Shown turn and waiting result are saved with the game.
 //
+// Nothing is suggested in advance (task 234): the legal holes are only
+// marked with "Show move suggestions" (move-hints.js) or on level Easy.
+//
 // Two ways to play: points (every player on a fresh board, 1/3/5 rounds)
 // or one shared board where whoever cannot peg any more is out. The double
 // six joker is chosen before the game.
@@ -293,24 +296,59 @@ function turnStatusSW() {
   return who + " " + hint;
 }
 
+// Whether the legal ways are shown in advance (task 234): only with the
+// setting "Show move suggestions" or on level Easy (children). Otherwise
+// every free hole looks the same and the person works out where to peg.
+function hintsSW() {
+  const s = AppStateSW.state;
+  return s.level === 1 || (typeof MoveHints !== "undefined" && MoveHints.enabled());
+}
+
+// The ways the roll itself allows, whatever is pegged: the total, and the
+// two holes of the single dice (different dice, no 1).
+function rollWaysSW(s) {
+  const a = s.dice[0], b = s.dice[1];
+  const out = [[a + b]];
+  if (a !== b && a >= 2 && b >= 2) out.push([Math.min(a, b), Math.max(a, b)]);
+  return out;
+}
+
+function sameWaySW(x, y) {
+  return x.length === y.length && x.every((f, i) => f === y[i]);
+}
+
+// A tap that does not fit the roll pegs nothing and says what would.
+function wrongSW() {
+  const s = AppStateSW.state;
+  const a = s.dice[0], b = s.dice[1];
+  const two = rollWaysSW(s).length === 2;
+  const text = "Dice " + a + " and " + b + ": " + (two ? "hole " + (a + b) + ", or the holes of both dice." : "only hole " + (a + b) + ".");
+  setStatusSW(I18n.msg(text));
+}
+
 function renderHolesSW() {
   const s = AppStateSW.state;
   const wrap = document.getElementById("sw-holes");
   wrap.innerHTML = "";
-  // While a person pegs, every hole of a legal way can be tapped; the tap
-  // pegs the whole way (one hole, or both holes of the single dice).
-  const ways = s.phase === "plug" && !s.computer[s.current] ? SteckwuerfelnCore.choices(s) : [];
+  // While a person pegs, every free hole can be tapped; a hole of a legal
+  // way pegs the whole way (one hole, or both holes of the single dice),
+  // any other says what fits. The legal holes are only marked with move
+  // suggestions or on level Easy (task 234).
+  const active = s.phase === "plug" && !s.computer[s.current];
+  const ways = active ? SteckwuerfelnCore.choices(s) : [];
+  const marked = active && hintsSW();
   // The holes a computer has just pegged on the shared board (task 167).
   const fresh = s.last && s.last.kind === "plug" && s.computer[s.last.player] && AppStateSW.lead === s.seq ? s.last.fields : [];
   SteckwuerfelnCore.FIELDS.forEach((n) => {
     const free = s.open.indexOf(n) >= 0;
     const way = free ? ways.filter((w) => w.indexOf(n) >= 0)[0] : null;
-    const hole = document.createElement(way ? "button" : "span");
-    hole.className = "sw-hole" + (free ? "" : " sw-hole-pegged") + (way ? " sw-hole-way" : "") + (fresh.indexOf(n) >= 0 ? " sw-hole-last" : "");
-    if (way) {
+    const tappable = active && free;
+    const hole = document.createElement(tappable ? "button" : "span");
+    hole.className = "sw-hole" + (free ? "" : " sw-hole-pegged") + (way && marked ? " sw-hole-way" : "") + (fresh.indexOf(n) >= 0 ? " sw-hole-last" : "");
+    if (tappable) {
       hole.type = "button";
-      hole.setAttribute("aria-label", way.length === 1 ? tSW("sw_way_one", { n: way[0] }) : tSW("sw_way_two", { a: way[0], b: way[1] }));
-      hole.addEventListener("click", () => plugSW(way));
+      hole.setAttribute("aria-label", !way ? tSW("sw_hole_aria", { n: n }) : way.length === 1 ? tSW("sw_way_one", { n: way[0] }) : tSW("sw_way_two", { a: way[0], b: way[1] }));
+      hole.addEventListener("click", () => { if (way) plugSW(way); else wrongSW(); });
     } else {
       hole.setAttribute("role", "img");
       hole.setAttribute("aria-label", tSW(free ? "sw_hole_aria" : "sw_hole_pegged_aria", { n: n }));
@@ -359,12 +397,16 @@ function renderWaysSW() {
   const wrap = document.getElementById("sw-ways");
   wrap.innerHTML = "";
   if (s.phase !== "plug" || s.computer[s.current]) return;
-  SteckwuerfelnCore.choices(s).forEach((way) => {
+  // Without move suggestions the buttons name the ways of the roll, also
+  // one whose holes are taken (task 234); such a tap says what fits.
+  const legal = SteckwuerfelnCore.choices(s);
+  (hintsSW() ? legal : rollWaysSW(s)).forEach((way) => {
+    const ok = legal.some((w) => sameWaySW(w, way));
     const b = document.createElement("button");
     b.type = "button";
     b.className = "primary sw-way";
     b.textContent = way.length === 1 ? tSW("sw_way_one", { n: way[0] }) : tSW("sw_way_two", { a: way[0], b: way[1] });
-    b.addEventListener("click", () => plugSW(way));
+    b.addEventListener("click", () => { if (ok) plugSW(way); else wrongSW(); });
     wrap.appendChild(b);
   });
 }
@@ -456,6 +498,7 @@ function initSteckwuerfelnApp() {
   if (window.I18n && typeof I18n.onChange === "function") {
     I18n.onChange(() => { if (AppStateSW.state) renderSW(); });
   }
+  if (typeof MoveHints !== "undefined") MoveHints.onChange(() => { if (AppStateSW.state) renderSW(); });
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(STECKWUERFELN_SAVE_KEY) : null;
   if (saved && validStateSW(saved.state, saved.pending)) {
     AppStateSW.state = saved.state;

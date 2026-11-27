@@ -31,12 +31,20 @@ const view = (page) => page.evaluate(() => {
   };
 });
 
+// Taps the first hole of a legal way (task 234: the way buttons may also
+// name a way whose holes are taken).
+async function tapLegal(page) {
+  const n = await page.evaluate(() => SteckwuerfelnCore.choices(AppStateSW.state)[0][0]);
+  const holes = await page.$$("#sw-holes button");
+  for (const h of holes) if ((await h.textContent()).trim() === String(n)) { await h.click(); return; }
+}
+
 // The person's whole turn: roll and take the first way until the turn ends.
 async function humanTurn(page) {
   for (let i = 0; i < 40; i++) {
     const st = await page.evaluate(() => ({ phase: AppStateSW.state.phase, cpu: !!AppStateSW.state.computer[AppStateSW.state.current] }));
     if (st.phase === "over" || st.cpu) return;
-    if (st.phase === "plug") await page.click("#sw-ways button");
+    if (st.phase === "plug") await tapLegal(page);
     else await page.click("#sw-roll");
     await page.waitForTimeout(30);
   }
@@ -98,7 +106,7 @@ async function humanTurn(page) {
     await page.click("#sw-roll");
     await page.waitForTimeout(30);
     if (!(await page.$("#sw-ways button"))) continue;
-    await page.click("#sw-ways button");
+    await tapLegal(page);
     await page.waitForTimeout(50);
     const r = await page.evaluate(() => ({ last: AppStateSW.state.last, rings: Array.from(document.querySelectorAll(".sw-hole-last")).map((h) => parseInt(h.textContent, 10)), status: document.getElementById("board-info").textContent.trim() }));
     if (r.last && r.last.player === 1 && r.last.kind === "plug") {
@@ -107,6 +115,53 @@ async function humanTurn(page) {
     }
   }
   check("shared: computer pegged after you", ringed);
+
+  // Task 234: nothing suggested in advance. Without move suggestions no hole
+  // is marked, every free hole can be tapped, a hole that does not fit pegs
+  // nothing and says what would; level Easy or the setting mark them again.
+  const toPlug = async (level, hints) => {
+    await page.evaluate(([lv, h]) => {
+      MoveHints.setEnabled(h);
+      DiceCommon.setMode("ai");
+      document.getElementById("sw-players").value = "2";
+      document.getElementById("sw-mode").value = "score";
+      document.getElementById("sw-sixes").value = "plug";
+      document.getElementById("sw-level").value = String(lv);
+      startGameSW();
+    }, [level, hints]);
+    await page.click("#sw-roll");
+    await page.waitForTimeout(30);
+    return page.evaluate(() => {
+      const s = AppStateSW.state;
+      const legal = [].concat.apply([], SteckwuerfelnCore.choices(s)).sort((x, y) => x - y);
+      return {
+        phase: s.phase, dice: s.dice.slice(), legal: legal,
+        marked: Array.from(document.querySelectorAll(".sw-hole-way")).map((h) => parseInt(h.textContent, 10)).sort((x, y) => x - y),
+        buttons: document.querySelectorAll("#sw-holes button").length, free: s.open.length
+      };
+    });
+  };
+  const h0 = await toPlug(3, false);
+  check("234: no marked hole without suggestions " + JSON.stringify(h0), h0.phase === "plug" && h0.marked.length === 0 && h0.buttons === h0.free);
+  if (process.env.SHOT_DIR) await page.screenshot({ path: process.env.SHOT_DIR + "/sw-234-360.png", fullPage: true });
+  const wrong = await page.evaluate(() => {
+    const s = AppStateSW.state;
+    const legal = [].concat.apply([], SteckwuerfelnCore.choices(s));
+    const n = s.open.filter((f) => legal.indexOf(f) < 0)[0];
+    const before = JSON.stringify(s);
+    Array.from(document.querySelectorAll("#sw-holes button")).filter((b) => b.textContent === String(n))[0].click();
+    return { same: JSON.stringify(AppStateSW.state) === before, status: document.getElementById("board-info").textContent.trim(), dice: s.dice };
+  });
+  const a0 = wrong.dice[0], b0 = wrong.dice[1];
+  const want = a0 !== b0 && a0 >= 2 && b0 >= 2 ? "Würfel " + a0 + " und " + b0 + ": Loch " + (a0 + b0) + " oder die Löcher beider Würfel." : "Würfel " + a0 + " und " + b0 + ": nur Loch " + (a0 + b0) + ".";
+  check("234: wrong hole pegs nothing and says why " + JSON.stringify(wrong), wrong.same && wrong.status === want);
+  await tapLegal(page);
+  check("234: a fitting hole pegs", await page.evaluate(() => AppStateSW.state.phase === "roll" && AppStateSW.state.open.length < 11));
+  const h1 = await toPlug(1, false);
+  check("234: level Easy marks the legal holes " + JSON.stringify(h1), h1.marked.length > 0 && JSON.stringify(h1.marked) === JSON.stringify(h1.legal));
+  const h2 = await toPlug(3, true);
+  check("234: suggestions mark the legal holes " + JSON.stringify(h2), h2.marked.length > 0 && JSON.stringify(h2.marked) === JSON.stringify(h2.legal));
+  await page.evaluate(() => MoveHints.setEnabled(false));
 
   // An old save (before task 167) loads and plays on.
   await page.evaluate(() => {
@@ -119,6 +174,6 @@ async function humanTurn(page) {
   check("old save loads " + JSON.stringify(old), old.phase === "roll" && old.roll && old.status === "Du bist dran. Wirf die zwei Würfel.");
   check("page errors " + errors.join(" | "), errors.length === 0);
   await browser.close();
-  console.log("=== STECKWUERFELN UI: last roll stays, computer turns on Weiter with their rolls, result on Ergebnis, save and load while waiting and at the end, shared board ring, old save, " + fails.length + " failure(s) ===");
+  console.log("=== STECKWUERFELN UI: last roll stays, computer turns on Weiter with their rolls, result on Ergebnis, save and load while waiting and at the end, shared board ring, no marked holes without suggestions (task 234), old save, " + fails.length + " failure(s) ===");
   process.exit(fails.length ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

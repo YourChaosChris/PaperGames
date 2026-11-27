@@ -5054,6 +5054,8 @@ STRINGS.ar = {
     msg_t_no_move_passes: "لا نقلة ممكنة لـ {p}، ينتقل الدور.",
     msg_t_mines_left: "الألغام المتبقية: {n}.",
     msg_t_mines_too_many: "الأعلام أكثر من الألغام بـ {n}.",
+    msg_t_sw_wrong_two: "النردان {n} و{m}: الفتحة {k} أو فتحتا النردين.",
+    msg_t_sw_wrong_one: "النردان {n} و{m}: الفتحة {k} فقط.",
     msg_t_pegs_left: "الأوتاد المتبقية: {n}.",
     msg_t_daily: "التحدي اليومي ({n}).",
     msg_t_error: "خطأ: {r}",

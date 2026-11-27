@@ -5301,6 +5301,8 @@ STRINGS.ja = {
     msg_t_no_move_passes: "{p}は指せる手がないのでパスします。",
     msg_t_mines_left: "残り地雷: {n}。",
     msg_t_mines_too_many: "フラグが地雷より{n}個多い。",
+    msg_t_sw_wrong_two: "サイコロ{n}と{m}：{k}の穴、または両方の目の穴。",
+    msg_t_sw_wrong_one: "サイコロ{n}と{m}：{k}の穴だけ。",
     msg_t_pegs_left: "残りペグ: {n}。",
     msg_t_daily: "デイリーチャレンジ({n})。",
     msg_t_error: "エラー: {r}",

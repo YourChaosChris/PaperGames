@@ -507,6 +507,8 @@ const SAMPLES = [
   "No tile fits after three draws - pass.",
   // Task 115: Minesweeper with more flags than mines, Hex swap rule
   "Flags: 6 more than mines.",
+  "Dice 3 and 5: hole 8, or the holes of both dice.",
+  "Dice 2 and 2: only hole 4.",
   // Task 120: Hex sides are Black and White
   "Your turn: place a stone, or tap Swap to take over the black stone.",
   "White to move: place a stone, or tap Swap to take over the black stone.",

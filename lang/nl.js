@@ -5301,6 +5301,8 @@ STRINGS.nl = {
     msg_t_no_move_passes: "{p} heeft geen geldige zet en past.",
     msg_t_mines_left: "Nog {n} mijnen.",
     msg_t_mines_too_many: "Vlaggen: {n} meer dan mijnen.",
+    msg_t_sw_wrong_two: "Dobbelstenen {n} en {m}: gat {k}, of de gaten van beide stenen.",
+    msg_t_sw_wrong_one: "Dobbelstenen {n} en {m}: alleen gat {k}.",
     msg_t_pegs_left: "Nog {n} pinnen.",
     msg_t_daily: "Dagelijkse uitdaging ({n}).",
     msg_t_error: "Fout: {r}",

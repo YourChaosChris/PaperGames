@@ -5302,6 +5302,8 @@ STRINGS.pl = {
     msg_t_no_move_passes: "{p}: brak dozwolonego ruchu, pas.",
     msg_t_mines_left: "Pozostało min: {n}.",
     msg_t_mines_too_many: "Flagi: o {n} więcej niż min.",
+    msg_t_sw_wrong_two: "Kostki {n} i {m}: otwór {k} albo otwory obu kostek.",
+    msg_t_sw_wrong_one: "Kostki {n} i {m}: tylko otwór {k}.",
     msg_t_pegs_left: "Pozostało kołków: {n}.",
     msg_t_daily: "Wyzwanie dnia ({n}).",
     msg_t_error: "Błąd: {r}",

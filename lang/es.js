@@ -5301,6 +5301,8 @@ STRINGS.es = {
     msg_t_no_move_passes: "{p} no tiene jugadas legales y pasa.",
     msg_t_mines_left: "Quedan {n} minas.",
     msg_t_mines_too_many: "Banderas: {n} más que minas.",
+    msg_t_sw_wrong_two: "Dados {n} y {m}: agujero {k}, o los agujeros de los dos dados.",
+    msg_t_sw_wrong_one: "Dados {n} y {m}: solo el agujero {k}.",
     msg_t_pegs_left: "Quedan {n} clavijas.",
     msg_t_daily: "Reto diario ({n}).",
     msg_t_error: "Error: {r}",
