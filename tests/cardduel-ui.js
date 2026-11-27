@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Card Duel UI (task 149): new rules on the German page at 360 x 640.
-// Start against the computer (start life 17 / 20, rules: 3), a new creature
+// Start against the computer (chosen decks, starter has 17, rules: 3), a new creature
 // attacks at once (tap card, Play, tap creature, tap the other mage), a
 // Warden strikes the attacker first, the computer takes its turn and the
 // log shows it, button sizes (44 px), the mage line names the discard pile,
@@ -29,11 +29,17 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   await page.selectOption("#cd-deck1", "fire");
   await page.selectOption("#cd-deck2", "stone");
   await page.selectOption("#cd-level", "easy");
+  // The page opens with a game already running (direct play), so "New game"
+  // asks first (task 232): without a yes the test went on with that game
+  // (forest against a random deck), and a water computer healed to 20.
+  page.once("dialog", (d) => d.accept());
   await page.tap("#start-cardduel-game");
+  const start = await page.evaluate(() => { const s = AppStateCd.state; return { rules: s.rules, lives: [s.players[0].life, s.players[1].life], starter: s.starter, decks: s.decks }; });
   await waitHuman();
-  const start = await page.evaluate(() => { const s = AppStateCd.state; return { rules: s.rules, lives: [s.players[0].life, s.players[1].life], starter: s.starter }; });
   check("new game has rules: 3 " + JSON.stringify(start), start.rules === 3);
-  check("start life: the starter 17, the other 20 " + JSON.stringify(start), start.lives[start.starter] === 17 || start.lives[start.starter] < 17);
+  check("decks as chosen: fire and stone " + JSON.stringify(start), start.decks[0] === "fire" && start.decks[1] === "stone");
+  // Neither deck heals, so the starter keeps 17 even if the computer began.
+  check("start life: the starter 17 " + JSON.stringify(start), start.lives[start.starter] === 17);
 
   // A fixed position: a Spark Imp in hand, a Granite Keeper (Warden) on the other side.
   await page.evaluate(() => {

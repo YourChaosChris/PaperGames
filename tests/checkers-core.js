@@ -205,9 +205,9 @@ for (const g of plan) {
   if (res.bad) { fails.push(res.bad); break; }
   results[g.rules]++;
 }
-// Only a guard against a hang: the node budget bounds every search, but the
-// test series runs six parts at once, so the time itself varies a lot.
-check("slowest computer move under 60 s (" + playGame.maxMs + " ms)", playGame.maxMs < 60000);
+// "Hard" stops its search after 5 s (task 232); the test series runs six
+// parts at once, so allow twice that.
+check("slowest computer move under 10 s (" + playGame.maxMs + " ms)", playGame.maxMs < 10000);
 
 if (fails.length) {
   console.log("FAIL checkers-core: " + fails.length + " problem(s)");

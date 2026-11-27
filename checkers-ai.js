@@ -62,7 +62,8 @@ const CheckersAi = (function () {
     if (searchState) {
       if (searchState.aborted) return 0;
       searchState.nodes++;
-      if (searchState.nodes > searchState.budget) {
+      if (searchState.nodes > searchState.budget ||
+          ((searchState.nodes & 1023) === 0 && Date.now() > searchState.deadline)) {
         searchState.aborted = true;
         return 0;
       }
@@ -103,7 +104,9 @@ const CheckersAi = (function () {
   // device can't finish the target depth in time, the last fully
   // completed shallower depth's move is kept instead of hanging.
   function searchBestMove(board, color, moves, maxDepth, nodeBudget, rules) {
-    const searchState = { nodes: 0, budget: nodeBudget, aborted: false };
+    // Time limit as well (task 232): 600000 nodes took 18 s on average and up
+    // to 108 s per move on the Mac mini, far longer on an e-ink reader.
+    const searchState = { nodes: 0, budget: nodeBudget, deadline: Date.now() + MOVE_MS, aborted: false };
     let orderedMoves = orderMoves(moves);
 
     const rootScored = orderedMoves.map((m) => ({
@@ -144,6 +147,7 @@ const CheckersAi = (function () {
     return lastCompleteBestMove || moves[Math.floor(Math.random() * moves.length)];
   }
 
+  const MOVE_MS = 5000;
   const LEVEL_CONFIG = {
     1: { style: "random" },
     2: { style: "search", maxDepth: 4, nodeBudget: 4000 },
