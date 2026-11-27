@@ -71,7 +71,10 @@ const SUMMARY = [["chess", "#board"], ["checkers", "#checkers-board"], ["sudoku"
     page.on("dialog", (d) => d.accept());
     await page.goto(BASE + name + "?lang=de", { waitUntil: "load" });
     await page.waitForTimeout(250);
-    const ov = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+    const measure = () => page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+    // Old names (othello.html ...) forward to the new page; under load that
+    // can happen during the measurement (Pflege 233): measure the new page.
+    const ov = await measure().catch(async () => { await page.waitForLoadState("load"); await page.waitForTimeout(250); return measure(); });
     check(name + ": horizontal overflow " + ov + " px at 150 %", ov <= 0);
     n++;
     await ctx.close();
