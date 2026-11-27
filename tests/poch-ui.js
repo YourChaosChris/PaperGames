@@ -16,6 +16,11 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: { width: 360, height: 640 }, serviceWorkers: "block" });
   await ctx.addInitScript(() => { try { localStorage.setItem("papergames_ai_pacing", "fast"); } catch (e) { /* ignore */ } });
+  await ctx.addInitScript(() => {
+    document.addEventListener("DOMContentLoaded", () => setTimeout(() => {
+      try { window.__pochRestored = JSON.stringify(AppStatePoch.state); } catch (e) { /* not the Poch page */ }
+    }, 0));
+  });
   const page = await ctx.newPage();
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
@@ -82,9 +87,9 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
       return saved;
     })
   ]);
-  // Right after DOMContentLoaded (the game restores itself there): before the next computer
-  // move, which comes 900 ms later; "load" can come later than that on a busy machine.
-  const after = await S();
+  // The game restores itself on DOMContentLoaded; the init script keeps a copy right after
+  // that (timeout 0), before the next computer move (timer of at least 150 ms), however busy the machine.
+  const after = await page.evaluate(() => window.__pochRestored ? JSON.parse(window.__pochRestored) : null);
   check("game back after a reload", !!after && after.handNo === before.handNo && JSON.stringify(after.chips) === JSON.stringify(before.chips) && JSON.stringify(after.hands[0]) === JSON.stringify(before.hands[0]));
   check("board visible after reload", await page.evaluate(() => !document.getElementById("board-container").classList.contains("hidden")));
 
