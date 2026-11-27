@@ -215,8 +215,10 @@
         again.type = "button";
         again.id = "direct-new-game-button";
         again.className = "secondary small direct-new-game-button";
-        again.setAttribute("data-i18n", "ui_new_game");
-        again.textContent = window.I18n ? I18n.t("ui_new_game") : "New game";
+        // Puzzles say "New puzzle" like their own start button (Pflege 233).
+        const againKey = start.getAttribute("data-i18n") === "ui_new_puzzle" ? "ui_new_puzzle" : "ui_new_game";
+        again.setAttribute("data-i18n", againKey);
+        again.textContent = window.I18n ? I18n.t(againKey) : "New game";
         again.addEventListener("click", () => start.click());
         actions.insertBefore(again, actions.firstChild);
       }

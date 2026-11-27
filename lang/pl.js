@@ -681,6 +681,7 @@ STRINGS.pl = {
     release_v297: "Nowe warianty zasad: warcaby hiszpańskie, oware w mankali i młynek dwunastu pionków z przekątnymi. Więcej gier ma przycisk podpowiedzi, a w ustawieniach jest tekst 125 lub 150 % i wysoki kontrast. W remiku wybierasz, którą kartę zastępuje joker na końcu nowego sekwensu, a aktualizacja wczytuje się już tylko raz.",
     release_v298: "Również Pchanie kulek, Labirynt Murów, Poker, Baśniowi złoczyńcy i Leśna osada mają teraz przycisk podpowiedzi.",
     release_v299: "W przeglądarkach Kindle gra pyta teraz przyciskami Tak i Nie, więc poddanie się, nowa gra, reset statystyk, zmiana zasad warcabów i otwieranie linków z ruchem już tam działają. Podziękowania dla Brandon Ooi za zgłoszenie i wkład w rozwiązanie.",
+    release_v308: "Warcaby: komputer na poziomie trudnym myśli teraz najwyżej pięć sekund nad ruchem. Przyciski Podpowiedź, Cofnij i kilka innych są większe, a łamigłówki pokazują „Nowa łamigłówka” zamiast „Nowa gra”.",
     release_v307: "Trzy nowe gry: Trzy plansze, kółko i krzyżyk na trzech planszach z kartami z liczbami; Krąg myszy, kot goni mysz po okręgu; oraz Szyfr kłódki, kod do odgadnięcia ze stałych wskazówek.",
     release_v306: "Nowa gra: Poch, stara gra karciana z dziewięcioma pulami. Wygrywaj pule kartami koloru płatniczego, licytuj swój najlepszy zestaw i wykładaj karty w ciągach.",
     release_v305: "Nowa gra: Krok liczb. Wpisz liczby na środku swojej kartki, odkrywaj karty i zapisuj każdą obok sąsiada: wygrywa ten, kto pierwszy wypełni wszystkie pola.",

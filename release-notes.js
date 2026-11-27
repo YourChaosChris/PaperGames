@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v308",
+    date: "2026-11-27",
+    key: "release_v308",
+    text: "Checkers: the computer on Hard now thinks at most five seconds per move. Hint, Undo and a few other buttons are bigger, and puzzles show “New puzzle” instead of “New game”."
+  },
+  {
     version: "v307",
     date: "2026-11-26",
     key: "release_v307",

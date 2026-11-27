@@ -258,7 +258,19 @@ button.small {
 #sl-next,
 #mt-undo,
 #mt-reset,
-#mt-hint {
+#mt-hint,
+/* Pflege 233: the shared Hint and Undo buttons and a few more were 37 px. */
+button[data-i18n="hint_button"],
+button[data-i18n="undo_button"],
+#pt-rotate,
+#pt-mirror,
+#zs-draw,
+#tp-add,
+#bullsandcows-submit-btn,
+#cd-viewer-close,
+.home-play-button,
+.settings-modal button,
+.settings-modal .lang-select {
   min-height: 44px;
 }
 
@@ -2715,7 +2727,7 @@ margin-bottom: 0.5rem;
 }
 
 .settings-modal-close {
-  min-width: 2rem;
+  min-width: 44px;
   padding: var(--space-1) var(--space-2);
 }
 
