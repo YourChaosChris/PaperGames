@@ -321,6 +321,8 @@ const VillainsCore = (function () {
         else { id = s.market[act.from]; s.market[act.from] = null; refillMarket(s, rnd); }
         if (id !== null) {
           p.hand.push(id);
+          // Cards drawn face down so far (task 235: the page marks them).
+          if (act.from === -1) p.drawn = (p.drawn || 0) + 1;
           log(s, { k: "take", p: me, c: act.from === -1 ? null : id });
         }
         s.collectLeft--;

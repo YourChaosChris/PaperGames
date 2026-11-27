@@ -492,10 +492,13 @@ function renderSk() {
   const myPlay = s.phase === "play" && s.turn === 0 && !AppStateSk.busy;
   const discarding = s.phase === "discard" && s.declarer === 0;
   const legal = myPlay ? SkatCore.legalCards(s, 0) : [];
+  // Task 235: after taking the skat its two cards are marked until you discard.
+  const fromSkat = discarding && !s.handGame && Array.isArray(s.skat) ? s.skat : [];
   sortedSk(mine, s.game).forEach((c) => {
     const sel = AppStateSk.selected.some((x) => SkatCore.same(x, c));
     const playable = legal.some((x) => SkatCore.same(x, c));
-    const btn = cardElSk(c, "button", (myPlay && !playable && hintsSk() ? "pc-card-dim" : "") + (sel ? " pc-card-selected" : ""));
+    const fresh = fromSkat.some((x) => SkatCore.same(x, c));
+    const btn = cardElSk(c, "button", (myPlay && !playable && hintsSk() ? "pc-card-dim" : "") + (sel ? " pc-card-selected" : "") + (fresh ? " card-new" : ""));
     btn.disabled = !(myPlay || discarding);
     if (sel) I18n.setAria(btn, cardTextSk(c) + ", selected");
     btn.addEventListener("click", () => onHandCardSk(c));

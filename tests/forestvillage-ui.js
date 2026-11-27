@@ -63,6 +63,30 @@ const KEY = "einkchess_save_forestvillage_v2";
   await waitHuman();
   check("the computer has moved", await page.evaluate(() => AppStateFv.state.log.some((e) => e.p === 1)));
 
+  // Task 235: cards drawn from a field are marked and named; the next own
+  // action takes the marks away.
+  const drawFv = await page.evaluate(() => {
+    const s = AppStateFv.state, p = s.players[0];
+    const before = p.hand.length, drawn = p.drawn || 0;
+    const field = [7, 6, 5, 4, 3].find((f) => FC().isLegal(s, { type: "place", field: f }));
+    if (field === undefined) return { skip: true };
+    doFv({ type: "place", field });
+    const marks = Array.from(document.querySelectorAll("#fv-hand .fv-card")).map((b, i) => (b.classList.contains("card-new") ? i : -1)).filter((i) => i >= 0);
+    const d = (p.drawn || 0) - drawn;
+    const want = []; for (let k = d; k >= 1; k--) want.push(p.hand.length - k);
+    return { d, marks, want, status: document.getElementById("board-info").textContent, names: want.map((i) => cardNameFv(p.hand[i])).join(", "), before, field };
+  });
+  check("235: drawn cards marked and named " + JSON.stringify(drawFv), drawFv.skip || (drawFv.d > 0 && JSON.stringify(drawFv.marks) === JSON.stringify(drawFv.want) && drawFv.status.indexOf("Du hast gezogen: " + drawFv.names + ".") >= 0));
+  if (!drawFv.skip) {
+    const gone = await page.evaluate(() => {
+      if (!(AppStateFv.state.current === 0 && AppStateFv.state.phase === "build")) return { fresh: 0, marks: 0, noBuild: true };
+      doFv({ type: "end" });
+      return { fresh: (AppStateFv.fresh[0] || []).length, marks: document.querySelectorAll("#fv-hand .card-new").length };
+    });
+    check("235: marks gone after the next own action " + JSON.stringify(gone), gone.fresh === 0 && gone.marks === 0);
+    await waitHuman();
+  }
+
   // Save and reload in the middle of the game.
   await page.reload({ waitUntil: "load" }); await page.waitForTimeout(500);
   check("save resumes on reload", await page.evaluate(() => !!AppStateFv.state && AppStateFv.state.rules === 3 && AppStateFv.state.players[0].village.length === 1));

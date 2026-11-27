@@ -87,6 +87,23 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   // 9 - 1 - 3 = 5 left, 3 more in the new turn.
   check("unused power stays: 5 + 3 = 8", await page.evaluate(() => AppStateCd.gameOver || AppStateCd.state.players[0].power === 8));
 
+  // Task 235: the card drawn at the start of the turn is marked (card-new)
+  // and named in the status line; after the next own action it is not.
+  const drew = await page.evaluate(() => {
+    const hand = AppStateCd.state.players[0].hand;
+    const marked = Array.from(document.querySelectorAll("#cd-hand .cd-card")).map((b, i) => (b.classList.contains("card-new") ? i : -1)).filter((i) => i >= 0);
+    return { over: AppStateCd.gameOver, n: hand.length, marked, name: hand.length ? cardNameCd(hand[hand.length - 1]) : "", status: document.getElementById("board-info").textContent.trim() };
+  });
+  check("235: exactly the drawn card is marked " + JSON.stringify(drew), drew.over || (drew.marked.length === 1 && drew.marked[0] === drew.n - 1));
+  check("235: status names the drawn card " + JSON.stringify(drew), drew.over || drew.status.indexOf("Du hast gezogen: " + drew.name + ".") >= 0);
+  const cleared = await page.evaluate(() => {
+    if (AppStateCd.gameOver) return { over: true };
+    doActionCd({ type: "end" });
+    return { marks: document.querySelectorAll("#cd-hand .card-new").length, fresh: AppStateCd.fresh[0].length };
+  });
+  check("235: mark gone after the next own action " + JSON.stringify(cleared), cleared.over || (cleared.marks === 0 && cleared.fresh === 0));
+  await waitHuman();
+
   // Save and reload.
   await page.reload({ waitUntil: "load" }); await page.waitForTimeout(500);
   check("save resumes on reload", await page.evaluate(() => !!AppStateCd.state && AppStateCd.state.rules === 3 && AppStateCd.state.players[1].life <= 18));
@@ -119,6 +136,6 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   check("no console or page errors: " + errors.join(" | "), errors.length === 0);
   await browser.close();
   fails.forEach((x) => console.log("FAIL " + x));
-  console.log("=== CARD DUEL UI: 360 px, attack at once, Warden, computer turn, save/load, old save, rules page, " + fails.length + " failure(s) ===");
+  console.log("=== CARD DUEL UI: 360 px, attack at once, Warden, computer turn, drawn card marked (task 235), save/load, old save, rules page, " + fails.length + " failure(s) ===");
   process.exit(fails.length ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

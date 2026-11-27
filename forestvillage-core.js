@@ -196,6 +196,8 @@ const ForestVillageCore = (function () {
     const c = drawOne(s, rnd);
     if (c === null || c === undefined) return false;
     p.hand.push(c);
+    // Cards drawn face down so far (task 235: the page marks the new ones).
+    p.drawn = (p.drawn || 0) + 1;
     return true;
   }
 

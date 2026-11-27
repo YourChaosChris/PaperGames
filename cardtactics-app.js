@@ -274,6 +274,7 @@ function startNewGameCardTactics(mode, humanColor, level) {
   AppStateCardTactics.legalTargets = {};
   AppStateCardTactics.moveCount = 0;
   AppStateCardTactics.lastMove = null;
+  AppStateCardTactics.fresh = {};
   resetUndoStackCardTactics();
   setGameResultCardTactics("");
   showBoardSectionCardTactics();
@@ -372,6 +373,10 @@ function applyCardTacticsMove(move) {
     ? CardTacticsCore.applyMove(before, mover, move)
     : CardTacticsCore.applyPass(before, mover);
   AppStateCardTactics.lastMove = move ? { from: move.from.slice(), to: move.to.slice() } : null;
+  // Task 235: the card that came from the mover's face-down pile in place of
+  // the used one is marked until the mover's next move.
+  const fresh = AppStateCardTactics.fresh || (AppStateCardTactics.fresh = {});
+  fresh[mover] = AppStateCardTactics.state.hands[mover].filter((id) => id && before.hands[mover].indexOf(id) < 0)[0] || null;
   AppStateCardTactics.moveCount++;
   AppStateCardTactics.selectedCard = null;
   AppStateCardTactics.selectedPiece = null;
@@ -412,8 +417,14 @@ function applyCardTacticsMove(move) {
   if (AppStateCardTactics.mode === "offline-ai" && next !== AppStateCardTactics.humanColor) {
     maybeTriggerAiTurnCardTactics();
   } else {
-    setStatusCardTactics("board-info", note + " " + colorNameCardTactics(next) + " to move. Choose a card.");
+    setStatusCardTactics("board-info", note + " " + colorNameCardTactics(next) + " to move. Choose a card." + drewTextCardTactics(next));
   }
+}
+
+// " You drew: <card>." for the side to move, if a card of its pile came up.
+function drewTextCardTactics(color) {
+  const id = AppStateCardTactics.fresh && AppStateCardTactics.fresh[color];
+  return id ? " You drew: " + I18n.t("cardtactics_card_" + id) + "." : "";
 }
 
 function maybeTriggerAiTurnCardTactics() {
@@ -448,6 +459,7 @@ function undoLastMove() {
     }
   }
   AppStateCardTactics.state = prev.state;
+  AppStateCardTactics.fresh = {};
   AppStateCardTactics.turn = prev.turn;
   AppStateCardTactics.gameOver = prev.gameOver;
   AppStateCardTactics.moveCount = prev.moveCount;
@@ -598,6 +610,7 @@ function buildCardElement(cardId, forColor) {
   card.className = "cardtactics-card";
   card.dataset.card = cardId;
   card.classList.toggle("cardtactics-card-selected", AppStateCardTactics.selectedCard === cardId);
+  card.classList.toggle("card-new", !!(AppStateCardTactics.fresh && AppStateCardTactics.fresh[forColor] === cardId));
   card.setAttribute("aria-pressed", AppStateCardTactics.selectedCard === cardId ? "true" : "false");
   card.addEventListener("click", () => onCardTacticsCardClick(cardId));
   const label = document.createElement("div");

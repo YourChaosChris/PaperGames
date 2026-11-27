@@ -208,6 +208,8 @@ const CardDuelCore = (function () {
       log(s, { k: "reshuffle", p, n: pl.deck.length });
     }
     pl.hand.push(pl.deck.pop());
+    // Cards drawn so far (task 235: the page marks the new ones in the hand).
+    pl.drawn = (pl.drawn || 0) + 1;
   }
 
   function startTurn(s) {

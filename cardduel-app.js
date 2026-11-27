@@ -29,7 +29,8 @@ const AppStateCd = {
   targeting: false,   // waiting for a target of the selected card/creature
   info: null,         // what the explanation line shows: { kind, ... }
   status: null,       // { key, vars }
-  busy: false
+  busy: false,
+  fresh: [[], []]     // per player: hand indexes just drawn from the deck (task 235)
 };
 
 function tCd(key) {
@@ -89,6 +90,32 @@ const CD_EMBLEM = {
 
 function emblemCd(el, cls) {
   return '<svg class="' + (cls || "cd-emblem") + '" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + CD_EMBLEM[el] + "</svg>";
+}
+
+// Task 235: cards drawn face down are marked (card-new) in their owner's
+// hand until that player's next own action, and named in the status line.
+// The core counts every card drawn per player (players[p].drawn); a draw
+// puts the card at the end of the hand.
+function drawnCountsCd(s) {
+  return s.players.map((pl) => pl.drawn || 0);
+}
+
+function noteDrawnCd(s, before, actor) {
+  if (actor !== null) AppStateCd.fresh[actor] = [];
+  s.players.forEach((pl, p) => {
+    const d = (pl.drawn || 0) - before[p];
+    for (let k = d; k >= 1; k--) {
+      const i = pl.hand.length - k;
+      if (i >= 0 && AppStateCd.fresh[p].indexOf(i) < 0) AppStateCd.fresh[p].push(i);
+    }
+  });
+}
+
+function drewTextCd() {
+  const s = AppStateCd.state, me = viewerCd();
+  const hand = s.players[me].hand;
+  const names = (AppStateCd.fresh[me] || []).filter((i) => hand[i]).map((i) => cardNameCd(hand[i]));
+  return names.length ? I18n.msg("You drew: " + names.join(", ") + ".") : "";
 }
 
 function setStatusCd(key, vars) {
@@ -196,6 +223,7 @@ function initCdApp() {
     AppStateCd.mode = saved.mode === "hotseat" ? "hotseat" : "vs-ai";
     AppStateCd.level = saved.level || "medium";
     AppStateCd.state = saved.state;
+    AppStateCd.fresh = [[], []];
     AppStateCd.gameOver = false;
     AppStateCd.revealed = AppStateCd.mode !== "hotseat";
     clearSelCd();
@@ -223,6 +251,7 @@ function startNewCdGame(mode, level, decks) {
   AppStateCd.level = level;
   const starter = Math.random() < 0.5 ? 0 : 1;
   AppStateCd.state = coreCd().createGame(decks, starter);
+  AppStateCd.fresh = [[], []];
   AppStateCd.gameOver = false;
   AppStateCd.busy = false;
   AppStateCd.revealed = mode !== "hotseat";
@@ -258,6 +287,9 @@ function promptCd(first) {
   } else {
     setStatusCd(first ? "cd_status_player_starts" : "cd_status_player_turn", { p: playerNameCd(s.current) });
   }
+  const drew = AppStateCd.mode === "hotseat" && !AppStateCd.revealed ? "" : drewTextCd();
+  const el = document.getElementById("board-info");
+  if (drew && el) el.textContent += " " + drew;
   renderCd();
 }
 
@@ -343,7 +375,9 @@ function onEndTurnCd() {
 function doActionCd(act) {
   const s = AppStateCd.state;
   const p = s.current;
+  const drawn = drawnCountsCd(s);
   if (!coreCd().apply(s, act)) return;
+  noteDrawnCd(s, drawn, p);
   clearSelCd();
   if (s.winner !== null) { endGameCd(); return; }
   if (act.type === "end") {
@@ -372,7 +406,9 @@ function stepAiCd() {
   const s = AppStateCd.state;
   if (!s || AppStateCd.gameOver || !isAiCd(s.current)) { AppStateCd.busy = false; return; }
   const act = coreCd().chooseAction(s, AppStateCd.level);
-  coreCd().apply(s, act);
+  const drawn = drawnCountsCd(s);
+  const actor = s.current;
+  if (coreCd().apply(s, act)) noteDrawnCd(s, drawn, actor);
   if (s.winner !== null) { AppStateCd.busy = false; endGameCd(); return; }
   saveCdGame();
   if (act.type === "end") {
@@ -475,11 +511,12 @@ function mageFactsLongCd(side) {
   return fillCd("cd_mage_facts_long", { l: pl.life, h: pl.hand.length, d: pl.deck.length, g: pl.grave.length, p: pl.power, e: tCd("cd_el_" + s.decks[side]) });
 }
 
-function handCardHtmlCd(id, i, playable, selected) {
+function handCardHtmlCd(id, i, playable, selected, fresh) {
   const c = coreCd().card(id);
   const cls = ["cd-card"];
   if (!playable) cls.push("cd-unplayable");
   if (selected) cls.push("cd-selected");
+  if (fresh) cls.push("card-new");
   const stats = c.kind === "creature" ? '<span class="cd-card-stats">' + c.atk + " / " + c.hp + "</span>" : "";
   return '<li><button type="button" class="' + cls.join(" ") + '" data-hand="' + i + '">' +
     pictureCd(id, "cda-pic cd-card-pic", c.el) +
@@ -652,7 +689,8 @@ function renderCd() {
   hand.classList.toggle("hidden", covered);
   if (!covered) {
     const pl = s.players[me];
-    hand.innerHTML = pl.hand.map((id, i) => handCardHtmlCd(id, i, !myTurn || !hintsCd() || coreCd().canPlay(s, i), selHand && AppStateCd.sel.index === i)).join("");
+    const fresh = AppStateCd.fresh[me] || [];
+    hand.innerHTML = pl.hand.map((id, i) => handCardHtmlCd(id, i, !myTurn || !hintsCd() || coreCd().canPlay(s, i), selHand && AppStateCd.sel.index === i, fresh.indexOf(i) >= 0)).join("");
     hand.setAttribute("aria-label", fillCd("cd_hand_label", { n: pl.hand.length }));
     hand.querySelectorAll(".cd-card").forEach((btn) => {
       const i = parseInt(btn.getAttribute("data-hand"), 10);

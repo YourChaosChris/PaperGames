@@ -81,6 +81,9 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   check("the Hunter appears at the witch's moon place, she gets the spell card below: " + JSON.stringify(ev),
     ev.heroes.length === 1 && ev.heroes[0].card === "hunter" && ev.heroes[0].place === 0 && ev.other === 0 && ev.last === "herb1" && /Jäger/.test(ev.place));
   check("German log line for the hero: " + ev.log, /Jäger.*kommt aus dem Stapel/.test(ev.log));
+  // Task 235: the card from the deck is marked and named.
+  const nw = await page.evaluate(() => ({ marks: Array.from(document.querySelectorAll("#vl-hand .vl-card")).map((b, i) => (b.classList.contains("card-new") ? i : -1)).filter((i) => i >= 0), n: AppStateVl.state.players[0].hand.length, name: spellNameVl("herb1"), status: document.getElementById("board-info").textContent }));
+  check("235: the card from the deck is marked " + JSON.stringify(nw), nw.marks.length === 1 && nw.marks[0] === nw.n - 1 && nw.status.indexOf("Du hast gezogen: " + nw.name + ".") >= 0);
   await page.tap('#vl-chooser [data-value="0"]');
 
   await humanTurn();
@@ -90,7 +93,11 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   await page.tap('#vl-chooser [data-value="-1"]');
   await page.tap('#vl-chooser [data-value="-1"]');
   check("8 cards: drop phase", await page.evaluate(() => AppStateVl.state.phase === "trim"));
+  const two = await page.evaluate(() => Array.from(document.querySelectorAll("#vl-hand .vl-card")).map((b, i) => (b.classList.contains("card-new") ? i : -1)).filter((i) => i >= 0));
+  check("235: both cards of one collect from the deck marked " + JSON.stringify(two), JSON.stringify(two) === "[6,7]");
   await page.tap('#vl-hand [data-hand="0"]');
+  const none = await page.evaluate(() => Array.from(document.querySelectorAll("#vl-hand .vl-card")).map((b, i) => (b.classList.contains("card-new") ? i : -1)).filter((i) => i >= 0));
+  check("235: marks gone after the next own action " + JSON.stringify(none), none.length === 0);
   await page.tap('#vl-hand [data-hand="0"]');
   check("after dropping two cards the turn goes on with 6", await page.evaluate(() => AppStateVl.state.players[0].hand.length === 6 && AppStateVl.state.actionsLeft === 1));
   await page.tap("#vl-end");

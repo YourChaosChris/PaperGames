@@ -26,7 +26,8 @@ const AppStateFv = {
   revealed: true,
   busy: false,
   sel: null,         // { from: "hand" | "clearing", index }
-  status: null
+  status: null,
+  fresh: {}          // per player: hand indexes just drawn from the deck (task 235)
 };
 
 const FC = () => ForestVillageCore;
@@ -169,10 +170,36 @@ function showBoardFv() {
   if (menuToggle) I18n.setKey(menuToggle, "menu_toggle");
 }
 
+// Task 235: cards drawn face down (field, building, new season) are marked
+// (card-new) in the hand until the player's next own action, and named in
+// the status line. The core counts the cards drawn per player
+// (players[p].drawn); a drawn card goes to the end of the hand.
+function drawnCountsFv(s) {
+  return s.players.map((p) => p.drawn || 0);
+}
+
+function noteDrawnFv(s, before, actor) {
+  AppStateFv.fresh[actor] = [];
+  s.players.forEach((p, i) => {
+    const d = (p.drawn || 0) - before[i];
+    if (d <= 0) return;
+    const list = AppStateFv.fresh[i] || [];
+    for (let k = d; k >= 1; k--) if (list.indexOf(p.hand.length - k) < 0) list.push(p.hand.length - k);
+    AppStateFv.fresh[i] = list;
+  });
+}
+
+function drewTextFv() {
+  const s = AppStateFv.state, me = viewerFv(), hand = s.players[me].hand;
+  const names = (AppStateFv.fresh[me] || []).filter((i) => hand[i]).map((i) => cardNameFv(hand[i]));
+  return names.length ? I18n.msg("You drew: " + names.join(", ") + ".") : "";
+}
+
 function startNewFvGame(mode, level, n) {
   AppStateFv.mode = n === 1 ? "hotseat" : mode;
   AppStateFv.level = level;
   AppStateFv.state = FC().createGame(n);
+  AppStateFv.fresh = {};
   AppStateFv.gameOver = false;
   AppStateFv.busy = false;
   AppStateFv.revealed = AppStateFv.mode !== "hotseat" || n === 1;
@@ -196,6 +223,9 @@ function promptFv() {
   if (AppStateFv.mode === "hotseat" && !AppStateFv.revealed) setStatusFv("fv_status_pass", { p: playerNameFv(s.current) });
   else if (s.phase === "build") setStatusFv(s.players.length === 1 || AppStateFv.mode === "vs-ai" ? "fv_status_build_you" : "fv_status_build", { p: playerNameFv(s.current) });
   else setStatusFv(s.players.length === 1 || AppStateFv.mode === "vs-ai" ? "fv_status_turn" : "fv_status_turn_player", { p: playerNameFv(s.current) });
+  const drew = AppStateFv.mode === "hotseat" && !AppStateFv.revealed ? "" : drewTextFv();
+  const el = document.getElementById("board-info");
+  if (drew && el) el.textContent += " " + drew;
   renderFv();
 }
 
@@ -204,7 +234,9 @@ function promptFv() {
 function doFv(act) {
   const s = AppStateFv.state;
   const me = s.current;
+  const drawn = drawnCountsFv(s);
   if (!FC().apply(s, act)) return false;
+  noteDrawnFv(s, drawn, me);
   AppStateFv.sel = null;
   if (s.over) { endGameFv(); return true; }
   saveFvGame();
@@ -245,7 +277,9 @@ function stepAiFv() {
   const s = AppStateFv.state;
   if (!s || AppStateFv.gameOver || !isAiFv(s.current)) { AppStateFv.busy = false; return; }
   const act = FC().chooseAction(s, AppStateFv.level);
-  FC().apply(s, act);
+  const drawn = drawnCountsFv(s);
+  const actor = s.current;
+  if (FC().apply(s, act)) noteDrawnFv(s, drawn, actor);
   if (s.over) { AppStateFv.busy = false; endGameFv(); return; }
   saveFvGame();
   if (!isAiFv(s.current)) { AppStateFv.busy = false; promptFv(); return; }
@@ -298,7 +332,7 @@ function resignFv() {
 
 /*** Drawing ***/
 
-function cardHtmlFv(id, from, index, p, s, canTap) {
+function cardHtmlFv(id, from, index, p, s, canTap, fresh) {
   const c = FC().card(id);
   const sel = AppStateFv.sel && AppStateFv.sel.from === from && AppStateFv.sel.index === index;
   const built = from === "village";
@@ -307,6 +341,7 @@ function cardHtmlFv(id, from, index, p, s, canTap) {
   const cls = ["fv-card"];
   if (sel) cls.push("fv-selected");
   if (!ok) cls.push("fv-unaffordable");
+  if (fresh) cls.push("card-new");
   // Cards already in the village show no price.
   const cost = built ? "" : discounted ? fillFv("fv_cost_discount", { s: resTextFv(FC().costFor(p, id)) }) : fillFv("fv_cost", { s: resTextFv(c.cost) });
   const kind = tFv(c.kind === "animal" ? "fv_kind_animal" : "fv_kind_building");
@@ -369,7 +404,7 @@ function renderFv() {
   cover.classList.toggle("hidden", !covered);
   if (covered) document.getElementById("fv-hand-cover-text").textContent = fillFv("fv_status_pass", { p: playerNameFv(s.current) });
   hand.classList.toggle("hidden", covered);
-  hand.innerHTML = covered ? "" : p.hand.map((id, i) => cardHtmlFv(id, "hand", i, p, s, true)).join("");
+  hand.innerHTML = covered ? "" : p.hand.map((id, i) => cardHtmlFv(id, "hand", i, p, s, true, (AppStateFv.fresh[me] || []).indexOf(i) >= 0)).join("");
   [clearing, hand].forEach((box) => box.querySelectorAll(".fv-card").forEach((b) => b.addEventListener("click", () => onCardFv(b.getAttribute("data-from"), parseInt(b.getAttribute("data-index"), 10)))));
 
   // Buttons and the line under them.

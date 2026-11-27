@@ -54,6 +54,13 @@ const check = (name, ok) => { if (!ok) fails.push(name); };
   check("move applied and card back in the pile", await page.evaluate((c) => AppStateCardTactics.state.ply >= 1 && (AppStateCardTactics.state.piles.black.includes(c) || AppStateCardTactics.state.hands.black.includes(c) || AppStateCardTactics.state.piles.white.includes(c) || AppStateCardTactics.state.hands.white.includes(c)), plan.card));
   await page.waitForFunction(() => AppStateCardTactics.turn === AppStateCardTactics.humanColor && AppStateCardTactics.moveCount >= 2, null, { timeout: 15000 });
   check("computer replied", await page.evaluate(() => AppStateCardTactics.moveCount >= 2));
+  // Task 235: the card that came from the own pile is marked and named.
+  const drew = await page.evaluate(() => {
+    const me = AppStateCardTactics.humanColor, id = AppStateCardTactics.fresh[me];
+    const marked = Array.from(document.querySelectorAll("#cardtactics-display .cardtactics-card.card-new")).map((b) => b.dataset.card);
+    return { id, marked, name: id ? I18n.t("cardtactics_card_" + id) : "", inHand: AppStateCardTactics.state.hands[me].indexOf(id) >= 0, status: document.getElementById("board-info").textContent };
+  });
+  check("235: the card from the pile is marked and named " + JSON.stringify(drew), drew.inHand && drew.marked.length === 1 && drew.marked[0] === drew.id && drew.status.indexOf("Du hast gezogen: " + drew.name + ".") >= 0);
 
   // Save and reload resumes the game.
   const plyBefore = await page.evaluate(() => AppStateCardTactics.state.ply);

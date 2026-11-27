@@ -28,7 +28,8 @@ const AppStateVl = {
   busy: false,
   pick: null,         // a choice in progress: { kind, ... }
   showOther: -1,      // the other player whose domain is shown in full
-  status: null
+  status: null,
+  fresh: {}           // per player: hand indexes just drawn from the deck (task 235)
 };
 
 function tVl(key) { return typeof I18n !== "undefined" ? I18n.t(key) : key; }
@@ -69,6 +70,31 @@ function setStatusVl(key, vars) {
       else el.textContent = fillVl(key, vars);
     } else el.textContent = key ? fillVl(key, vars) : "";
   }
+}
+
+// Task 235: a card taken from the face-down deck is marked (card-new) in
+// the hand until the player's next own action (both cards of one collect
+// stay marked), and named in the status line. The core counts the cards
+// drawn per player (players[p].drawn); a drawn card goes to the end.
+function drawnCountsVl(s) {
+  return s.players.map((p) => p.drawn || 0);
+}
+
+function noteDrawnVl(s, before, actor, act) {
+  if (act.type !== "take") AppStateVl.fresh[actor] = [];
+  s.players.forEach((p, i) => {
+    const d = (p.drawn || 0) - before[i];
+    if (d <= 0) return;
+    const list = AppStateVl.fresh[i] || [];
+    for (let k = d; k >= 1; k--) list.push(p.hand.length - k);
+    AppStateVl.fresh[i] = list;
+  });
+}
+
+function drewTextVl() {
+  const s = AppStateVl.state, hand = s.players[viewerVl()].hand;
+  const names = (AppStateVl.fresh[viewerVl()] || []).filter((i) => hand[i]).map((i) => spellNameVl(hand[i]));
+  return names.length ? I18n.msg("You drew: " + names.join(", ") + ".") : "";
 }
 
 function saveVlGame() {
@@ -129,6 +155,7 @@ function initVlApp() {
     AppStateVl.mode = saved.mode === "hotseat" ? "hotseat" : "vs-ai";
     AppStateVl.level = [1, 2, 3].indexOf(saved.level) !== -1 ? saved.level : 2;
     AppStateVl.state = saved.state;
+    AppStateVl.fresh = {};
     AppStateVl.gameOver = false;
     AppStateVl.revealed = AppStateVl.mode !== "hotseat";
     setMode(AppStateVl.mode);
@@ -152,6 +179,7 @@ function showBoardVl() {
 function startNewVlGame(mode, villains) {
   AppStateVl.mode = mode;
   AppStateVl.state = VC().createGame(villains);
+  AppStateVl.fresh = {};
   AppStateVl.gameOver = false;
   AppStateVl.busy = false;
   AppStateVl.revealed = mode !== "hotseat";
@@ -178,6 +206,9 @@ function promptVl() {
   else if (s.phase === "trim") setStatusVl("vl_status_trim");
   else if (s.finished.length) setStatusVl("vl_status_last_round", { p: playerNameVl(s.finished[0]), n: s.actionsLeft });
   else setStatusVl(AppStateVl.mode === "vs-ai" ? "vl_status_turn" : "vl_status_turn_player", { p: playerNameVl(s.current), n: s.actionsLeft });
+  const drew = AppStateVl.mode === "hotseat" && !AppStateVl.revealed ? "" : drewTextVl();
+  const el = document.getElementById("board-info");
+  if (drew && el) el.textContent += " " + drew;
   renderVl();
 }
 
@@ -186,7 +217,9 @@ function promptVl() {
 function doVl(act) {
   const s = AppStateVl.state;
   const me = s.current;
+  const drawn = drawnCountsVl(s);
   if (!VC().apply(s, act)) return false;
+  noteDrawnVl(s, drawn, me, act);
   AppStateVl.pick = null;
   if (s.winner !== null) { endGameVl(); return true; }
   saveVlGame();
@@ -238,7 +271,8 @@ function stepAiVl() {
   if (!s || AppStateVl.gameOver || !isAiVl(s.current)) { AppStateVl.busy = false; return; }
   const me = s.current;
   const act = VC().chooseAction(s, Math.random, AppStateVl.level);
-  VC().apply(s, act);
+  const drawn = drawnCountsVl(s);
+  if (VC().apply(s, act)) noteDrawnVl(s, drawn, me, act);
   if (s.winner !== null) { AppStateVl.busy = false; endGameVl(); return; }
   saveVlGame();
   if (s.current !== me && !isAiVl(s.current)) {
@@ -398,9 +432,11 @@ function renderVl() {
   hand.classList.toggle("hidden", covered);
   if (!covered) {
     const trim = myTurn && s.phase === "trim";
+    const fresh = AppStateVl.fresh[viewerVl()] || [];
     hand.innerHTML = p.hand.map((id, i) => {
       const cls = ["vl-card"];
       if (!trim) cls.push("vl-unplayable");
+      if (fresh.indexOf(i) >= 0) cls.push("card-new");
       return '<li><button type="button" class="' + cls.join(" ") + '" data-hand="' + i + '"' + (trim ? "" : ' aria-disabled="true"') + ">" + escVl(spellNameVl(id)) + "</button></li>";
     }).join("");
     hand.querySelectorAll(".vl-card").forEach((b) => b.addEventListener("click", () => onHandVl(parseInt(b.getAttribute("data-hand"), 10))));
