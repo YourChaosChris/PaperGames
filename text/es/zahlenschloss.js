@@ -12,7 +12,7 @@ Object.assign(STRINGS.es, {
     zahlenschloss_term_notes: "Notas",
     zahlenschloss_rules_notes: "Toca una cifra de una pista para tacharla, por ejemplo, si sabes que no está en el código. Tócala otra vez para recuperarla. Deshacer elimina tu última nota. Las notas son solo para ti y nunca cuentan.",
     zahlenschloss_term_enter: "Abrir el candado",
-    zahlenschloss_rules_enter: "Escribe el código con las teclas numéricas en las casillas vacías y toca Comprobar. Un código incorrecto cuenta como error, pero puedes volver a intentarlo enseguida. El botón Pista indica una deducción a partir de una o dos pistas.",
+    zahlenschloss_rules_enter: "Escribe el código con las teclas numéricas en las casillas vacías y toca Abrir. Un código incorrecto cuenta como error, pero puedes volver a intentarlo enseguida. El botón Pista indica una deducción a partir de una o dos pistas. Ver solución pone el código en las casillas tras una pregunta; el acertijo cuenta entonces como abandonado.",
     zahlenschloss_term_levels: "Niveles",
     zahlenschloss_rules_levels: "Fácil tiene tres cifras e incluye siempre una pista sin ninguna cifra correcta. Medio tiene tres cifras y todas las pistas tienen al menos una cifra correcta. Difícil tiene cuatro cifras. Cada acertijo tiene un número; el mismo número siempre corresponde al mismo acertijo.",
     zahlenschloss_history_title: "La historia de Código del candado",

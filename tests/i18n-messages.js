@@ -52,6 +52,7 @@ const SAMPLES = [
   "From 309 it follows: 3 is in the code.",
   "One digit of the code: 4 is in place 2.",
   "Puzzle 12 · Mistakes: 0",
+  "The code is 043. Puzzle given up.",
   "White: place a stone (1 of 2).",
   "Black wins - a square of four!",
   "Black: choose a number for your middle column (3 of 7).",

@@ -12,7 +12,7 @@ Object.assign(STRINGS.fr, {
     zahlenschloss_term_notes: "Notes",
     zahlenschloss_rules_notes: "Touchez un chiffre d’un indice pour le barrer, par exemple si vous savez qu’il ne fait pas partie du code. Touchez-le encore pour le rétablir. Annuler retire votre dernière note. Ces notes sont personnelles et ne comptent jamais.",
     zahlenschloss_term_enter: "Ouvrir le cadenas",
-    zahlenschloss_rules_enter: "Saisissez le code avec les touches des chiffres dans les cases vides, puis touchez Vérifier. Un code incorrect compte comme une erreur, mais vous pouvez réessayer tout de suite. Le bouton Indice donne une déduction tirée d’un ou deux indices.",
+    zahlenschloss_rules_enter: "Saisissez le code avec les touches des chiffres dans les cases vides, puis touchez Déverrouiller. Un code incorrect compte comme une erreur, mais vous pouvez réessayer tout de suite. Le bouton Indice donne une déduction tirée d’un ou deux indices. Voir la solution place le code dans les cases après une question ; l’énigme compte alors comme abandonnée.",
     zahlenschloss_term_levels: "Niveaux",
     zahlenschloss_rules_levels: "Facile a trois chiffres et comporte toujours un indice sans chiffre correct. Moyen a trois chiffres et chaque indice contient au moins un chiffre correct. Difficile a quatre chiffres. Chaque énigme porte un numéro ; le même numéro désigne toujours la même énigme.",
     zahlenschloss_history_title: "L’histoire du Code du cadenas",

@@ -6,7 +6,10 @@
 // Delete); a wrong code counts a mistake, the right one opens the lock with
 // a result and a win in the stats; save and load after a reload; Hint
 // marks clues and says a true fact; "New puzzle" takes the next number per
-// level; every level solved once. Taps at least 44 px, no sideways scroll,
+// level; every level solved once; the button says Unlock; Show solution
+// asks on the page (No changes nothing, Yes puts the code in, marks it and
+// counts a loss), then a new puzzle; an old save of Kirsten's easy 4 (903)
+// stays playable. Taps at least 44 px, no sideways scroll,
 // no page error, no key names.
 const { chromium } = require("playwright");
 const BASE = process.env.BASE_URL || process.argv[2] || "http://localhost:8000/";
@@ -94,7 +97,7 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
   check("hint sentence back after reload", /follows|One digit/.test(await status()));
 
   // Sizes and scrolling at 360 px.
-  const sizes = async () => page.evaluate(() => Array.from(document.querySelectorAll(".zl-digit, .zl-slot, .zl-key, #zl-erase, #zl-check, #zl-undo, #hint-btn")).filter((b) => b.offsetParent).every((b) => { const r = b.getBoundingClientRect(); return r.width >= 44 && r.height >= 44; }));
+  const sizes = async () => page.evaluate(() => Array.from(document.querySelectorAll(".zl-digit, .zl-slot, .zl-key, #zl-erase, #zl-check, #zl-undo, #hint-btn, #zl-solve, #zl-solve-yes, #zl-solve-no")).filter((b) => b.offsetParent).every((b) => { const r = b.getBoundingClientRect(); return r.width >= 44 && r.height >= 44; }));
   const noScroll = async () => page.evaluate(() => document.documentElement.scrollWidth - innerWidth <= 0);
   check("taps at least 44 px (360)", await sizes());
   check("no sideways scroll (360)", await noScroll());
@@ -146,6 +149,44 @@ const check = (name, ok) => { if (!ok) { fails.push(name); console.log("FAIL " +
   await page.waitForTimeout(100);
   check("hard at 360: no sideways scroll", await noScroll());
   if (SHOTS) await page.screenshot({ path: SHOTS + "/zl-360-hard.png", fullPage: true });
+
+  // Task 237: "Unlock" instead of "Check"; "Show solution" asks on the page.
+  check("button says Unlock " + await page.textContent("#zl-check"), (await page.textContent("#zl-check")).trim() === "Unlock");
+  const losses = () => page.evaluate(() => (GameStats.getAll().zahlenschloss || {}).losses || 0);
+  const lost0 = await losses();
+  const before237 = JSON.stringify(await S());
+  check("ask panel hidden at first", await page.evaluate(() => document.getElementById("zl-solve-ask").classList.contains("hidden")));
+  await page.click("#zl-solve");
+  check("Show solution asks on the page", await page.evaluate(() => !document.getElementById("zl-solve-ask").classList.contains("hidden")) && /Show the solution\?/.test(await page.textContent("#zl-solve-ask")));
+  await page.click("#zl-solve-no");
+  check("No changes nothing", JSON.stringify(await S()) === before237 && await losses() === lost0 && await page.evaluate(() => document.getElementById("zl-solve-ask").classList.contains("hidden")));
+  await page.click("#zl-solve");
+  await page.click("#zl-solve-yes");
+  const gave = await page.evaluate(() => ({ s: AppStateZL.state, slots: Array.from(document.querySelectorAll(".zl-slot")).map((b) => b.textContent).join(""), shown: Array.from(document.querySelectorAll(".zl-slot")).every((b) => b.classList.contains("zl-shown")), result: document.getElementById("game-result").textContent, modal: (document.getElementById("result-modal-message") || {}).textContent || "" }));
+  check("code in the fields " + gave.slots, gave.slots === gave.s.code && gave.s.entry === gave.s.code && gave.s.solved && gave.s.gaveUp);
+  check("every digit marked as the solution", gave.shown);
+  check("result says given up " + gave.result, gave.result === "The code is " + gave.s.code + ". Puzzle given up." && gave.modal === gave.result);
+  check("counted as given up (loss, no win) " + lost0 + " -> " + await losses(), await losses() === lost0 + 1 && (await page.evaluate(() => GameStats.getAll().zahlenschloss.wins)) === 4);
+  check("Show solution and Hint locked after", await page.evaluate(() => document.getElementById("zl-solve").disabled && document.getElementById("hint-btn").disabled));
+  await page.evaluate(() => document.querySelector("#result-modal-overlay .result-modal-replay").click());
+  await page.waitForTimeout(50);
+  check("then a new puzzle", await page.evaluate(() => !AppStateZL.state.solved && !AppStateZL.state.gaveUp && !document.querySelector(".zl-slot.zl-shown")));
+
+  // A puzzle saved before easy changed (Kirsten's easy 4, solution 903) stays playable.
+  await page.evaluate(() => {
+    const clues = [{ guess: "069", right: 0, wrong: 2 }, { guess: "241", right: 0, wrong: 0 }, { guess: "367", right: 0, wrong: 1 }, { guess: "582", right: 0, wrong: 0 }, { guess: "638", right: 0, wrong: 1 }];
+    GameStorage.save("einkchess_save_zahlenschloss", { state: { level: 1, number: 4, clues: clues, digits: 3, code: "903", entry: "9__", struck: clues.map(() => []), mistakes: 0, hints: [], solved: false } });
+  });
+  await page.reload({ waitUntil: "load" });
+  await page.waitForTimeout(400);
+  const old = await S();
+  check("old saved easy 4 kept " + JSON.stringify([old.number, old.code, old.entry]), old.level === 1 && old.number === 4 && old.code === "903" && old.entry === "9__");
+  await page.click('.zl-slot[data-place="1"]');
+  await page.click('.zl-key[data-digit="0"]');
+  await page.click('.zl-key[data-digit="3"]');
+  await page.click("#zl-check");
+  check("903 opens Kirsten's lock", (await S()).solved && !(await S()).gaveUp);
+  await closeModal();
 
   check("no key names in the page", await page.evaluate(() => !/\b(zl_|zahlenschloss_|msg_t_)/.test(document.body.innerText)));
   check("page errors " + errors.join(" | "), errors.length === 0);

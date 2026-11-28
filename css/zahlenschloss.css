@@ -121,6 +121,21 @@
   border: 5px solid var(--border);
 }
 
+/* The code after "Show solution": double frame, so it reads as shown, not typed. */
+.zl-slot.zl-shown {
+  border: 6px double var(--border);
+}
+
+.zl-solve-ask {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.zl-solve-ask button {
+  min-width: 96px;
+  margin: 0 5px;
+}
+
 .zl-keys {
   display: grid;
   grid-template-columns: repeat(5, 52px);

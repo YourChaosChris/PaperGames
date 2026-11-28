@@ -25,6 +25,17 @@ check(Core.solutions(example, 3).join() === "043", "example: only 043 (different
 check(Core.solutions(example, 3, true).join() === "043", "example: only 043 (digits may repeat) " + Core.solutions(example, 3, true).join());
 example.forEach((c) => { const f = Core.feedback("043", c.guess); check(f.right === c.right && f.wrong === c.wrong, "feedback 043 / " + c.guess); });
 
+// Kirsten's puzzle (easy 4 up to v308, task 237): one solution 903, but only
+// with a case dropped ("with the 6 none would be left"), so no easy puzzle.
+const kirsten = [
+  { guess: "069", right: 0, wrong: 2 },
+  { guess: "241", right: 0, wrong: 0 },
+  { guess: "367", right: 0, wrong: 1 },
+  { guess: "582", right: 0, wrong: 0 },
+  { guess: "638", right: 0, wrong: 1 }
+];
+check(Core.solutions(kirsten, 3).join() === "903", "Kirsten's puzzle: only 903 " + Core.solutions(kirsten, 3).join());
+check(Core.direct(kirsten, 3) === null, "Kirsten's puzzle needs more than direct conclusions");
 function holds(code, f) {
   const ch = String(f.digit);
   if (f.kind === "absent") return code.indexOf(ch) === -1;
@@ -56,7 +67,7 @@ const N = 100;
     check(Core.minimal(p.clues, p.digits), "no clue too many " + tag);
     const none = p.clues.some((c) => c.right + c.wrong === 0);
     if (lv === 1) check(none, "easy has a clue with no right digit " + tag);
-    if (lv === 2) check(!none, "medium has no clue without right digits " + tag);
+    if (lv === 1) check(Core.direct(p.clues, p.digits) === p.code, "easy falls to direct conclusions " + tag);    if (lv === 2) check(!none, "medium has no clue without right digits " + tag);
     check(p.clues.length >= cfg.minClues && p.clues.length <= cfg.maxClues, "clue count " + tag);
     if (n <= 20) check(JSON.stringify(Core.generate(lv, n)) === JSON.stringify(p), "same number, same puzzle " + tag);
     // Hint chain: apply facts until one code is left.

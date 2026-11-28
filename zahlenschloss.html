@@ -99,13 +99,19 @@
       <div id="zl-keys" class="zl-keys" role="group" data-i18n-attr="aria-label:zl_keys_aria" aria-label="Digits"></div>
       <div class="zl-entry-actions">
         <button id="zl-erase" class="secondary small" type="button" data-i18n="zl_erase">Delete</button>
-        <button id="zl-check" class="primary small" type="button" data-i18n="zl_check">Check</button>
+        <button id="zl-check" class="primary small" type="button" data-i18n="zl_check">Unlock</button>
       </div>
     </div>
   </div>
   <div id="board-actions" class="board-actions">
     <button id="zl-undo" class="secondary small" type="button" data-i18n="undo_button" disabled>Undo</button>
     <button id="hint-btn" class="secondary small hint-btn" type="button" data-i18n="hint_button">Hint</button>
+    <button id="zl-solve" class="secondary small" type="button" data-i18n="zl_solve">Show solution</button>
+  </div>
+  <div id="zl-solve-ask" class="zl-solve-ask hidden" role="group" aria-live="polite">
+    <p class="status-text" data-i18n="zl_solve_ask">Show the solution? This puzzle then counts as given up.</p>
+    <button id="zl-solve-yes" class="primary small" type="button" data-i18n="confirm_yes">Yes</button>
+    <button id="zl-solve-no" class="secondary small" type="button" data-i18n="confirm_no">No</button>
   </div>
 </section>
   </main>

@@ -6,13 +6,14 @@
 // place. All clues are given at the start; nothing is guessed, everything
 // follows from them. Each puzzle has exactly one solution and no clue can be
 // left out (without it there would be several solutions).
-// Levels: 1 = easy (3 digits, with a clue "no digit is right"),
+// Levels: 1 = easy (3 digits, with a clue "no digit is right", solvable
+//             with direct conclusions only, see direct()),
 //         2 = medium (3 digits, every clue has at least one right digit),
 //         3 = hard (4 digits).
 
 const ZahlenschlossCore = (function () {
   const LEVELS = {
-    1: { digits: 3, none: true, minClues: 4, maxClues: 6 },
+    1: { digits: 3, none: true, minClues: 4, maxClues: 6, direct: true },
     2: { digits: 3, none: false, minClues: 4, maxClues: 7 },
     3: { digits: 4, none: false, minClues: 5, maxClues: 8 }
   };
@@ -116,11 +117,60 @@ const ZahlenschlossCore = (function () {
       clues = clues.filter(Boolean);
       if (clues.length > cfg.maxClues || clues.length < cfg.minClues) continue;
       if (cfg.none && !clues.some((c) => c.right + c.wrong === 0)) continue;
+      if (cfg.direct && direct(clues, cfg.digits) !== code) continue;
       // Clues sorted by their number, so the order says nothing.
       clues.sort((a, b) => (a.guess < b.guess ? -1 : 1));
       return { level: LEVELS[level] ? level : 2, number: number, digits: cfg.digits, code: code, clues: clues };
     }
     return null;
+  }
+
+  // The code found with direct conclusions only (task 237, level easy), or
+  // null. Each round looks at one clue at a time: "no digit is right" rules
+  // its digits out; as many digits left as the clue counts are all in the
+  // code; as many known as it counts rules the rest out; "right place" or
+  // "wrong place" alone places or bars them; a digit with one place left, or
+  // a place with one digit left, is fixed; three digits known rule all
+  // others out. No case is tried and dropped ("with the 6 none would be left").
+  function direct(clues, n) {
+    const absent = new Set(), present = new Set();
+    const fixed = new Array(n).fill(null);
+    const notAt = [];
+    for (let d = 0; d <= 9; d++) notAt.push(new Set());
+    const all = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let changed = true;
+    const add = (set, v) => { if (!set.has(v)) { set.add(v); changed = true; } };
+    const fix = (p, d) => { if (fixed[p] === null) { fixed[p] = d; present.add(d); changed = true; } };
+    const placeOk = (d, p) => !absent.has(d) && !notAt[d].has(p) && (fixed[p] === null || fixed[p] === d) && !fixed.some((x, q) => x === d && q !== p);
+    while (changed) {
+      changed = false;
+      for (const c of clues) {
+        const g = c.guess.split("").map(Number);
+        const k = c.right + c.wrong;
+        const live = g.filter((d) => !absent.has(d));
+        if (k === 0) g.forEach((d) => add(absent, d));
+        if (live.length === k) live.forEach((d) => add(present, d));
+        if (g.filter((d) => present.has(d)).length === k) g.forEach((d) => { if (!present.has(d)) add(absent, d); });
+        if (c.right === 0) g.forEach((d, i) => add(notAt[d], i));
+        if (c.wrong === 0) g.forEach((d, i) => { if (present.has(d)) fix(i, d); });
+        if (g.filter((d, i) => fixed[i] === d).length === c.right) g.forEach((d, i) => { if (fixed[i] !== d) add(notAt[d], i); });
+      }
+      if (present.size === n) all.forEach((d) => { if (!present.has(d)) add(absent, d); });
+      const open = all.filter((d) => !absent.has(d));
+      if (open.length === n) open.forEach((d) => add(present, d));
+      present.forEach((d) => {
+        if (fixed.indexOf(d) !== -1) return;
+        const ps = [];
+        for (let p = 0; p < n; p++) if (placeOk(d, p)) ps.push(p);
+        if (ps.length === 1) fix(ps[0], d);
+      });
+      for (let p = 0; p < n; p++) {
+        if (fixed[p] !== null) continue;
+        const ds = all.filter((d) => placeOk(d, p));
+        if (ds.length === 1) fix(p, ds[0]);
+      }
+    }
+    return fixed.every((x) => x !== null) ? fixed.join("") : null;
   }
 
   // True when every clue is needed: leaving any one out gives more solutions.
@@ -212,7 +262,7 @@ const ZahlenschlossCore = (function () {
     };
   }
 
-  return { LEVELS, rng, hash, codes, feedback, fits, solutions, makeClue, generate, minimal, hint, createInitialState };
+  return { LEVELS, rng, hash, codes, feedback, fits, solutions, makeClue, generate, direct, minimal, hint, createInitialState };
 })();
 
 if (typeof module !== "undefined") module.exports = ZahlenschlossCore;

@@ -12,7 +12,7 @@ Object.assign(STRINGS.it, {
     zahlenschloss_term_notes: "Appunti",
     zahlenschloss_rules_notes: "Tocca una cifra di un indizio per cancellarla, per esempio se sai che non è nel codice. Toccala di nuovo per ripristinarla. Annulla toglie il tuo ultimo appunto. Gli appunti servono solo a te e non vengono conteggiati.",
     zahlenschloss_term_enter: "Aprire il lucchetto",
-    zahlenschloss_rules_enter: "Inserisci il codice con i tasti numerici negli spazi vuoti e tocca Controlla. Un codice sbagliato conta come errore, ma puoi riprovare subito. Il pulsante Suggerimento indica una deduzione da uno o due indizi.",
+    zahlenschloss_rules_enter: "Inserisci il codice con i tasti numerici negli spazi vuoti e tocca Apri. Un codice sbagliato conta come errore, ma puoi riprovare subito. Il pulsante Suggerimento indica una deduzione da uno o due indizi. Mostra soluzione mette il codice negli spazi dopo una domanda; l’enigma conta allora come abbandonato.",
     zahlenschloss_term_levels: "Livelli",
     zahlenschloss_rules_levels: "Facile ha tre cifre e un indizio senza cifre giuste. Medio ha tre cifre e ogni indizio ne contiene almeno una giusta. Difficile ha quattro cifre. Ogni enigma ha un numero; lo stesso numero indica sempre lo stesso enigma.",
     zahlenschloss_history_title: "La storia del Codice del lucchetto",

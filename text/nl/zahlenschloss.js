@@ -12,7 +12,7 @@ Object.assign(STRINGS.nl, {
     zahlenschloss_term_notes: "Notities",
     zahlenschloss_rules_notes: "Tik op een cijfer in een aanwijzing om het door te strepen, bijvoorbeeld als je weet dat het niet in de code zit. Tik er nog eens op om het terug te zetten. Ongedaan maken verwijdert je laatste notitie. Notities zijn alleen voor jou en tellen nooit mee.",
     zahlenschloss_term_enter: "Het slot openen",
-    zahlenschloss_rules_enter: "Vul de code met de cijfertoetsen in de lege vakjes in en tik op Controleren. Een foute code telt als fout, maar je kunt meteen opnieuw proberen. De knop Tip noemt een conclusie uit één of twee aanwijzingen.",
+    zahlenschloss_rules_enter: "Vul de code met de cijfertoetsen in de lege vakjes in en tik op Openen. Een foute code telt als fout, maar je kunt meteen opnieuw proberen. De knop Tip noemt een conclusie uit één of twee aanwijzingen. Oplossing tonen zet na een vraag de code in de vakjes; de puzzel telt dan als opgegeven.",
     zahlenschloss_term_levels: "Niveaus",
     zahlenschloss_rules_levels: "Makkelijk heeft drie cijfers en altijd een aanwijzing zonder goed cijfer. Gemiddeld heeft drie cijfers en elke aanwijzing bevat minstens één goed cijfer. Moeilijk heeft vier cijfers. Elke puzzel heeft een nummer; hetzelfde nummer is altijd dezelfde puzzel.",
     zahlenschloss_history_title: "De geschiedenis van Cijferslot",

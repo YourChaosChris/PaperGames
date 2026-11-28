@@ -12,7 +12,7 @@ Object.assign(STRINGS.en, {
     zahlenschloss_term_notes: "Notes",
     zahlenschloss_rules_notes: "Tap a digit in a clue to strike it out, for example when you know it is not in the code; tap again to bring it back. Undo takes back your last note. Notes are only for you and never count.",
     zahlenschloss_term_enter: "Opening the lock",
-    zahlenschloss_rules_enter: "Type the code with the digit keys into the empty fields and tap Check. A wrong code counts as a mistake, but you can try again at once. The Hint button names one conclusion from one or two clues.",
+    zahlenschloss_rules_enter: "Type the code with the digit keys into the empty fields and tap Unlock. A wrong code counts as a mistake, but you can try again at once. The Hint button names one conclusion from one or two clues. Show solution puts the code into the fields after a question; the puzzle then counts as given up.",
     zahlenschloss_term_levels: "Levels",
     zahlenschloss_rules_levels: "Easy has three digits and always a clue with no right digit. Medium has three digits and every clue has at least one right digit. Hard has four digits. Every puzzle has a number; the same number is always the same puzzle.",
     zahlenschloss_history_title: "The History of Lock Logic",

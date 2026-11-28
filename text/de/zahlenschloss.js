@@ -12,7 +12,7 @@ Object.assign(STRINGS.de, {
     zahlenschloss_term_notes: "Notizen",
     zahlenschloss_rules_notes: "Tippe eine Ziffer in einem Hinweis an, um sie durchzustreichen, zum Beispiel wenn du weißt, dass sie nicht im Code ist; noch einmal tippen holt sie zurück. „Rückgängig“ nimmt deine letzte Notiz zurück. Notizen sind nur für dich und zählen nie.",
     zahlenschloss_term_enter: "Das Schloss öffnen",
-    zahlenschloss_rules_enter: "Tippe den Code mit den Zifferntasten in die leeren Felder und dann auf „Prüfen“. Ein falscher Code zählt als Fehler, du kannst aber sofort weiterprobieren. Der Tipp-Knopf nennt einen Schluss aus einem oder zwei Hinweisen.",
+    zahlenschloss_rules_enter: "Tippe den Code mit den Zifferntasten in die leeren Felder und dann auf „Aufschließen“. Ein falscher Code zählt als Fehler, du kannst aber sofort weiterprobieren. Der Tipp-Knopf nennt einen Schluss aus einem oder zwei Hinweisen. „Lösung zeigen“ setzt nach einer Rückfrage den Code in die Felder; das Rätsel zählt dann als aufgegeben.",
     zahlenschloss_term_levels: "Stufen",
     zahlenschloss_rules_levels: "Leicht hat drei Ziffern und immer einen Hinweis ohne richtige Ziffer. Mittel hat drei Ziffern, und jeder Hinweis hat mindestens eine richtige Ziffer. Schwer hat vier Ziffern. Jedes Rätsel hat eine Nummer; dieselbe Nummer ist immer dasselbe Rätsel.",
     zahlenschloss_history_title: "Die Geschichte von Zahlenschloss",

@@ -12,7 +12,7 @@ Object.assign(STRINGS.zh, {
     zahlenschloss_term_notes: "笔记",
     zahlenschloss_rules_notes: "点线索中的数字可以将它划掉，例如你确定它不在密码中时。再点一次可恢复。撤销会删除你最近的笔记。笔记只供你自己参考，不会计入结果。",
     zahlenschloss_term_enter: "打开数字锁",
-    zahlenschloss_rules_enter: "用数字键把密码输入空格，然后点“检查”。输错会算一次错误，但你可以马上重试。提示按钮会根据一条或两条线索给出一个推论。",
+    zahlenschloss_rules_enter: "用数字键把密码输入空格，然后点“开锁”。输错会算一次错误，但你可以马上重试。提示按钮会根据一条或两条线索给出一个推论。“显示答案”会在确认后把密码填入空格，这道题算作放弃。",
     zahlenschloss_term_levels: "难度",
     zahlenschloss_rules_levels: "简单模式是3位数，并且总有一条线索中没有正确数字。中等模式是3位数，每条线索至少有一个正确数字。困难模式是4位数。每道谜题都有编号；相同编号始终对应同一道题。",
     zahlenschloss_history_title: "数字锁的历史",

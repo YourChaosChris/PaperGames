@@ -12,7 +12,7 @@ Object.assign(STRINGS.pl, {
     zahlenschloss_term_notes: "Notatki",
     zahlenschloss_rules_notes: "Dotknij cyfry w podpowiedzi, aby ją skreślić, na przykład gdy wiesz, że nie ma jej w kodzie. Dotknij ponownie, aby ją przywrócić. Cofnij usuwa twoją ostatnią notatkę. Notatki są tylko dla ciebie i nie są liczone.",
     zahlenschloss_term_enter: "Otwieranie kłódki",
-    zahlenschloss_rules_enter: "Wpisz kod klawiszami z cyframi w puste pola i dotknij Sprawdź. Błędny kod liczy się jako pomyłka, ale możesz od razu spróbować ponownie. Przycisk Podpowiedź podaje jeden wniosek z jednej lub dwóch podpowiedzi.",
+    zahlenschloss_rules_enter: "Wpisz kod klawiszami z cyframi w puste pola i dotknij Otwórz. Błędny kod liczy się jako pomyłka, ale możesz od razu spróbować ponownie. Przycisk Podpowiedź podaje jeden wniosek z jednej lub dwóch podpowiedzi. Pokaż rozwiązanie po pytaniu wpisuje kod w pola; zagadka liczy się wtedy jako poddana.",
     zahlenschloss_term_levels: "Poziomy",
     zahlenschloss_rules_levels: "Łatwy ma trzy cyfry i zawsze jedną podpowiedź bez dobrej cyfry. Średni ma trzy cyfry, a każda podpowiedź zawiera przynajmniej jedną dobrą cyfrę. Trudny ma cztery cyfry. Każda łamigłówka ma numer; ten sam numer zawsze oznacza tę samą łamigłówkę.",
     zahlenschloss_history_title: "Historia Szyfru kłódki",

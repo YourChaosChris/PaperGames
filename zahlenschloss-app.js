@@ -1,7 +1,8 @@
 // zahlenschloss-app.js
 // Wires ZahlenschlossCore ("Zahlenschloss", en "Lock Logic") to
 // zahlenschloss.html. A puzzle for one person: find the code from the
-// clues. No mode, no resigning, no timer, nothing animated.
+// clues. No mode, no timer, nothing animated. "Show solution" (after a
+// question on the page) puts the code in and counts the puzzle as given up.
 //
 // - Clues: one card per clue, its digits as boxes (like cards), under them
 //   the sentences (each its own element, through I18n.setMsg).
@@ -9,7 +10,7 @@
 //   (state.struck[clue] = places). "Undo" (#zl-undo, not #undo-btn: that id
 //   is counted by tests/undo.js) takes the last note back (state.undo).
 // - Code: 3 or 4 fields, the chosen one has a thick frame; digit keys 0-9,
-//   "Delete", "Check". Digits may not repeat: a digit already in another
+//   "Delete", "Unlock" (#zl-check). Digits may not repeat: a digit already in another
 //   field is locked on the keypad (dashed frame) until it is deleted there.
 // - Hint: ZahlenschlossCore.hint(puzzle, state.hints); the facts join
 //   state.hints, the clues it uses get a thick frame, the sentence shows in
@@ -46,12 +47,16 @@ function nextNumberZL(level) {
   return n;
 }
 
-// A saved state that fits the puzzle it names (else it is dropped).
+// A saved state whose clues lead to its code alone (else it is dropped).
+// Checked against the clues, not against generate(): a puzzle saved before
+// the easy level changed (task 237) stays playable.
 function validZL(s) {
   if (!s || !ZahlenschlossCore.LEVELS[s.level] || !Number.isInteger(s.number) || s.number < 1) return false;
-  const p = ZahlenschlossCore.generate(s.level, s.number);
-  if (!p || p.code !== s.code || !Array.isArray(s.clues) || s.clues.length !== p.clues.length) return false;
-  if (!Array.isArray(s.struck) || s.struck.length !== p.clues.length) return false;
+  const d = ZahlenschlossCore.LEVELS[s.level].digits;
+  if (s.digits !== d || typeof s.code !== "string" || !Array.isArray(s.clues) || !s.clues.length) return false;
+  if (!s.clues.every((c) => c && typeof c.guess === "string" && c.guess.length === d && Number.isInteger(c.right) && Number.isInteger(c.wrong))) return false;
+  if (ZahlenschlossCore.solutions(s.clues, d).join() !== s.code) return false;
+  if (!Array.isArray(s.struck) || s.struck.length !== s.clues.length) return false;
   return typeof s.entry === "string" && Array.isArray(s.hints);
 }
 
@@ -81,6 +86,7 @@ function setStateZL(s) {
   AppStateZL.state = s;
   AppStateZL.sel = firstEmptyZL(s, 0);
   document.getElementById("zahlenschloss-level").value = String(s.level);
+  askSolveZL(false);
   showBoardZL();
   buildZL();
   updateZL();
@@ -174,6 +180,31 @@ function finishZL() {
   setStatusZL("");
   if (window.ResultModal) window.ResultModal.show("You win!", text);
   if (typeof GameStats !== "undefined") GameStats.record("zahlenschloss", "win", { hinted: s.hintCount > 0 });
+}
+
+// "Show solution": asks on the page first (a Kindle has no window.confirm).
+function askSolveZL(open) {
+  const s = AppStateZL.state;
+  document.getElementById("zl-solve-ask").classList.toggle("hidden", !open || !s || s.solved);
+}
+
+function solveZL() {
+  const s = AppStateZL.state;
+  askSolveZL(false);
+  if (!s || s.solved) return;
+  s.entry = s.code;
+  s.solved = true;
+  s.gaveUp = true;
+  s.lastHint = null;
+  updateZL();
+  setStatusZL("");
+  if (window.ResultModal) window.ResultModal.show("Game over", shownTextZL(s));
+  if (typeof GameStats !== "undefined") GameStats.record("zahlenschloss", "loss");
+  saveZL();
+}
+
+function shownTextZL(s) {
+  return "The code is " + s.code + ". Puzzle given up.";
 }
 
 function toggleNoteZL(clue, place) {
@@ -328,6 +359,7 @@ function updateZL() {
     if (b.textContent !== text) b.textContent = text;
     b.classList.toggle("zl-empty", ch === ZL_EMPTY);
     b.classList.toggle("zl-sel", !s.solved && p === AppStateZL.sel);
+    b.classList.toggle("zl-shown", !!s.gaveUp);
     b.disabled = !!s.solved;
     const aria = ch === ZL_EMPTY ? "Field " + (p + 1) + ": empty" : "Field " + (p + 1) + ": " + ch;
     if (b.getAttribute("data-i18n-aria") !== aria) I18n.setAria(b, aria);
@@ -343,7 +375,9 @@ function updateZL() {
   document.getElementById("zl-check").disabled = !!s.solved;
   document.getElementById("zl-undo").disabled = !!s.solved || !s.undo.length;
   document.getElementById("hint-btn").disabled = !!s.solved;
-  if (s.solved) setResultZL("The lock is open.");
+  document.getElementById("zl-solve").disabled = !!s.solved;
+  if (s.solved) askSolveZL(false);
+  if (s.solved) setResultZL(s.gaveUp ? shownTextZL(s) : "The lock is open.");
   else {
     setResultZL("");
     const info = document.getElementById("board-info");
@@ -366,6 +400,9 @@ function initZahlenschlossApp() {
   document.getElementById("zl-check").addEventListener("click", checkZL);
   document.getElementById("zl-undo").addEventListener("click", undoZL);
   document.getElementById("hint-btn").addEventListener("click", hintZL);
+  document.getElementById("zl-solve").addEventListener("click", () => askSolveZL(true));
+  document.getElementById("zl-solve-yes").addEventListener("click", solveZL);
+  document.getElementById("zl-solve-no").addEventListener("click", () => askSolveZL(false));
   if (window.I18n && typeof I18n.onChange === "function") I18n.onChange(() => { if (AppStateZL.state) updateZL(); });
   const saved = typeof GameStorage !== "undefined" ? GameStorage.load(ZAHLENSCHLOSS_SAVE_KEY) : null;
   if (saved && saved.state && validZL(saved.state) && !saved.state.solved) {
