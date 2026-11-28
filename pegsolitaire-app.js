@@ -266,7 +266,8 @@ function buildPegSolitaireBoardDOM() {
   if (!boardEl) return;
   boardEl.innerHTML = "";
 
-  const size = AppStatePegSolitaire.board.length;
+  const rows = AppStatePegSolitaire.board.length;
+  const size = AppStatePegSolitaire.board[0].length; // columns; rows differ on rect24, heart27 ...
   boardEl.dataset.size = size;
   boardEl.style.setProperty("--peg-cols", String(size));
   // The triangle's rows are shifted by half a hole per missing hole and
@@ -281,7 +282,7 @@ function buildPegSolitaireBoardDOM() {
     sp.style.width = (100 / size * halfCells / 2) + "%";
     boardEl.appendChild(sp);
   }
-  for (let r = 0; r < size; r++) {
+  for (let r = 0; r < rows; r++) {
     const rowHoles = offsetRows ? AppStatePegSolitaire.board[r].filter((v) => v !== null).length : size;
     if (offsetRows) addSpacer(size - rowHoles);
     for (let c = 0; c < size; c++) {
@@ -326,7 +327,7 @@ function ensurePegSolitaireSquareAspectRatio() {
   if (!boardEl) return;
   const rect = boardEl.getBoundingClientRect();
   if (!rect || !rect.width) return;
-  const squareSize = rect.width / (AppStatePegSolitaire.board ? AppStatePegSolitaire.board.length : 7);
+  const squareSize = rect.width / (AppStatePegSolitaire.board ? AppStatePegSolitaire.board[0].length : 7);
   boardEl.querySelectorAll(".peg-square").forEach((sq) => {
     sq.style.height = squareSize + "px";
   });

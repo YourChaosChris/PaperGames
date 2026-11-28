@@ -498,6 +498,20 @@ const STRINGS = {
 
     pegsolitaire_board_triangle21: "Large triangle (21 holes)",
 
+    pegsolitaire_board_square25: "Small square (25 holes)",
+
+    pegsolitaire_board_cross20: "Narrow cross (20 holes)",
+
+    pegsolitaire_board_rect24: "Rectangle (24 holes)",
+
+    pegsolitaire_board_octagon24: "Octagon (24 holes)",
+
+    pegsolitaire_board_heart27: "Heart (27 holes)",
+
+    pegsolitaire_board_castle30: "House (30 holes)",
+
+    pegsolitaire_board_rect32: "Tall rectangle (32 holes)",
+
     minesweeper_new_game: "New game",
     minesweeper_level_easy: "Easy (9x9, 10 mines)",
     minesweeper_level_medium: "Medium (16x16, 40 mines)",

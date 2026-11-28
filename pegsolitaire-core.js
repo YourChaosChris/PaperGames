@@ -4,7 +4,9 @@
 // itself - so this is simpler than the two-player cores: no color, no
 // turn order, just pegs and jumps.
 //
-// Boards (BOARDS), all played with the same orthogonal jumps:
+// Boards (BOARDS), all played with the same orthogonal jumps (task 239
+// added square25, cross20, rect24, octagon24, heart27, castle30, rect32,
+// see shaped() below):
 //   english   - 7x7 without the four 2x2 corners, 33 holes (the default)
 //   european  - 7x7 without a three-hole corner at each corner, 37 holes
 //   wiegleb   - 9x9 without the four 3x3 corners, 45 holes (J. C.
@@ -19,7 +21,7 @@
 // be solvable down to a single peg. The European board is not solvable
 // from its centre, so it starts with the hole directly above the centre.
 //
-// A board is a size x size grid; a cell is null when it's off the board,
+// A board is a size x size grid (rows x size when `rows` is set); a cell is null when it's off the board,
 // otherwise a boolean - true for a peg, false for an empty hole. Every
 // function reads the grid size from the board it is given. A peg jumps
 // over an adjacent peg into an empty hole two cells further in the same
@@ -40,6 +42,19 @@ const PegSolitaireCore = (function () {
     { dr: 1, dc: 0 }, { dr: 1, dc: 1 }
   ];
   const DEFAULT_VARIANT = "english";
+
+  // A board drawn as lines ("o" a hole, "_" none); `size` is the width,
+  // `rows` the height when it differs (task 239).
+  function shaped(lines, start) {
+    return {
+      size: lines[0].length,
+      rows: lines.length,
+      dirs: ORTHOGONAL,
+      holes: lines.join("").split("o").length - 1,
+      contains: (r, c) => lines[r][c] === "o",
+      start: start
+    };
+  }
 
   const BOARDS = {
     english: {
@@ -101,7 +116,17 @@ const PegSolitaireCore = (function () {
       // Every hole of this board can be solved (checked by search); the
       // second hole of the third row is near the middle.
       start: [2, 1]
-    }
+    },
+    // Task 239: smaller and other shapes, all orthogonal. Each start is the
+    // hole nearest the middle that a search solved down to one peg
+    // (tests/pegsolitaire-solve.js plays the solution again).
+    square25: shaped(["ooooo", "ooooo", "ooooo", "ooooo", "ooooo"], [1, 2]),
+    cross20: shaped(["__oo__", "__oo__", "oooooo", "oooooo", "__oo__", "__oo__"], [1, 2]),
+    rect24: shaped(["oooooo", "oooooo", "oooooo", "oooooo"], [1, 2]),
+    octagon24: shaped(["__oo__", "_oooo_", "oooooo", "oooooo", "_oooo_", "__oo__"], [1, 2]),
+    heart27: shaped(["_oo_oo_", "ooooooo", "ooooooo", "_ooooo_", "__ooo__", "___o___"], [1, 3]),
+    castle30: shaped(["___o___", "__ooo__", "_ooooo_", "ooooooo", "ooooooo", "ooooooo"], [2, 3]),
+    rect32: shaped(["oooo", "oooo", "oooo", "oooo", "oooo", "oooo", "oooo", "oooo"], [2, 1])
   };
   const VARIANTS = Object.keys(BOARDS);
 
@@ -113,7 +138,7 @@ const PegSolitaireCore = (function () {
 
   function isOnBoard(r, c, variant) {
     const b = BOARDS[variantOf(variant)];
-    if (r < 0 || r >= b.size || c < 0 || c >= b.size) return false;
+    if (r < 0 || r >= (b.rows || b.size) || c < 0 || c >= b.size) return false;
     return b.contains(r, c);
   }
 
@@ -121,7 +146,7 @@ const PegSolitaireCore = (function () {
     const v = variantOf(variant);
     const b = BOARDS[v];
     const board = [];
-    for (let r = 0; r < b.size; r++) {
+    for (let r = 0; r < (b.rows || b.size); r++) {
       const row = [];
       for (let c = 0; c < b.size; c++) {
         row.push(isOnBoard(r, c, v) ? true : null);

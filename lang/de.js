@@ -486,6 +486,20 @@ STRINGS.de = {
 
     pegsolitaire_board_triangle21: "Großes Dreieck (21 Felder)",
 
+    pegsolitaire_board_square25: "Kleines Quadrat (25 Felder)",
+
+    pegsolitaire_board_cross20: "Schmales Kreuz (20 Felder)",
+
+    pegsolitaire_board_rect24: "Rechteck (24 Felder)",
+
+    pegsolitaire_board_octagon24: "Achteck (24 Felder)",
+
+    pegsolitaire_board_heart27: "Herz (27 Felder)",
+
+    pegsolitaire_board_castle30: "Haus (30 Felder)",
+
+    pegsolitaire_board_rect32: "Hohes Rechteck (32 Felder)",
+
     minesweeper_new_game: "Neues Spiel",
     minesweeper_level_easy: "Leicht (9x9, 10 Minen)",
     minesweeper_level_medium: "Mittel (16x16, 40 Minen)",
