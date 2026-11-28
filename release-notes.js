@@ -13,6 +13,12 @@
 
 const RELEASE_NOTES = [
   {
+    version: "v309",
+    date: "2026-11-28",
+    key: "release_v309",
+    text: "Lock Logic: the button is now called Unlock, a new Show solution button gives the puzzle up, and Easy puzzles need only direct conclusions. Peg Solitaire has seven new boards, among them a heart, a house and a small square."
+  },
+  {
     version: "v308",
     date: "2026-11-27",
     key: "release_v308",
